@@ -3,7 +3,6 @@ import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
 import "package:angular2/src/compiler/selector.dart"
     show CssSelector, SelectorMatcher;
-import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/linker/app_view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -54,6 +53,7 @@ import "template_ast.dart"
         VariableAst;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
 import "../core/security.dart";
+import "package:logging/logging.dart";
 
 // Group 1 = "bind-"
 // Group 2 = "var-"
@@ -94,10 +94,9 @@ class TemplateParser {
   Parser _exprParser;
   ElementSchemaRegistry _schemaRegistry;
   HtmlParser _htmlParser;
-  Console _console;
+  Logger logger = new Logger('angulardart.templateparser');
 
-  TemplateParser(
-      this._exprParser, this._schemaRegistry, this._htmlParser, this._console);
+  TemplateParser(this._exprParser, this._schemaRegistry, this._htmlParser);
 
   List<TemplateAst> parse(
       CompileDirectiveMetadata component,
@@ -113,7 +112,7 @@ class TemplateParser {
         .where((error) => identical(error.level, ParseErrorLevel.FATAL))
         .toList();
     if (warnings.isNotEmpty) {
-      _console.warn('Template parse warnings:\n${warnings.join("\n")}');
+      logger.warning('Template parse warnings:\n${warnings.join("\n")}');
     }
     if (errors.isNotEmpty) {
       var errorString = errors.join("\n");

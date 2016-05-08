@@ -12,8 +12,7 @@ import "package:angular2/core.dart"
         ReflectiveInjector,
         PlatformRef,
         getPlatform,
-        createPlatform,
-        assertPlatform;
+        createPlatform;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
@@ -23,10 +22,7 @@ import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
 export "package:angular2/src/core/security.dart"
     show SanitizationService, TemplateSecurityContext;
 import "package:angular2/src/platform/browser_common.dart"
-    show
-        BROWSER_PROVIDERS,
-        BROWSER_APP_COMMON_PROVIDERS,
-        BROWSER_PLATFORM_MARKER;
+    show BROWSER_PROVIDERS, BROWSER_APP_COMMON_PROVIDERS;
 
 export "package:angular2/src/core/angular_entrypoint.dart";
 export "package:angular2/src/platform/browser_common.dart"
@@ -58,7 +54,7 @@ PlatformRef browserPlatform() {
   if (getPlatform() == null) {
     createPlatform(ReflectiveInjector.resolveAndCreate(BROWSER_PROVIDERS));
   }
-  return assertPlatform(BROWSER_PLATFORM_MARKER);
+  return getPlatform();
 }
 
 /// Bootstrapping for Angular applications.

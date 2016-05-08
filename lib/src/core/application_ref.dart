@@ -44,25 +44,6 @@ PlatformRefImpl createPlatform(Injector injector) {
   return _platform;
 }
 
-/// Checks that there currently is a platform which contains the given token as
-/// a provider.
-PlatformRef assertPlatform(dynamic requiredToken) {
-  var platform = getPlatform();
-  assert(() {
-    if (platform == null) {
-      throw new BaseException('No platform exists.');
-    }
-    if (platform != null &&
-        platform.injector.get(requiredToken, null) == null) {
-      throw new BaseException(
-          'A platform with a different configuration has been created. '
-          'Please destroy it first.');
-    }
-    return true;
-  });
-  return platform;
-}
-
 /// Dispose the existing platform.
 void disposePlatform() {
   if (_platform != null && !_platform.disposed) {

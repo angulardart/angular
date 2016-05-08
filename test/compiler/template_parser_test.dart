@@ -3,7 +3,6 @@ library angular2.test.compiler.template_parser_test;
 
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/core/di.dart" show provide;
-import "package:angular2/src/core/console.dart" show Console;
 import "test_bindings.dart" show TEST_PROVIDERS;
 import "package:angular2/src/compiler/template_parser.dart"
     show TemplateParser, splitClasses;
@@ -13,6 +12,7 @@ import "package:angular2/src/compiler/identifiers.dart"
     show identifierToken, Identifiers;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
+import "package:logging/logging.dart";
 import "schema_registry_mock.dart" show MockSchemaRegistry;
 import "expression_parser/unparser.dart" show Unparser;
 import 'package:test/test.dart';
@@ -57,7 +57,6 @@ void main() {
       beforeEachProviders(() => [
             TEST_PROVIDERS,
             MOCK_SCHEMA_REGISTRY,
-            provide(Console, useValue: console)
           ]);
       await commonSetup();
     });
@@ -1988,9 +1987,20 @@ bool compareProviderList(List a, List b) {
   return true;
 }
 
-class ArrayConsole implements Console {
+class ArrayConsole {
   List<String> logs = [];
   List<String> warnings = [];
+
+  ArrayConsole() {
+    Logger.root.onRecord.listen((LogRecord rec) {
+      if (rec.level == Level.WARNING) {
+        warn(rec.message);
+      } else {
+        log(rec.message);
+      }
+    });
+  }
+
   void log(String msg) {
     this.logs.add(msg);
   }

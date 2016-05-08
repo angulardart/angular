@@ -240,7 +240,6 @@ var NG_CORE = [
   'createPlatform',
   'disposePlatform',
   'getPlatform',
-  'assertPlatform',
   'PLATFORM_COMMON_PROVIDERS',
   'PLATFORM_INITIALIZER',
   'AfterContentChecked',

@@ -3,7 +3,6 @@ library angular2.test.compiler.offline_compiler_util;
 import "dart:async";
 import "package:angular2/src/compiler/output/abstract_emitter.dart"
     show OutputEmitter;
-import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/compiler/offline_compiler.dart"
     show OfflineCompiler, NormalizedComponentWithViewDirectives;
 import "package:angular2/src/compiler/template_parser.dart" show TemplateParser;
@@ -51,8 +50,8 @@ OfflineCompiler _createOfflineCompiler(MockXHR xhr, OutputEmitter emitter) {
   var normalizer = new DirectiveNormalizer(xhr, urlResolver, htmlParser);
   return new OfflineCompiler(
       normalizer,
-      new TemplateParser(new Parser(new Lexer()),
-          new MockSchemaRegistry({}, {}), htmlParser, new Console()),
+      new TemplateParser(
+          new Parser(new Lexer()), new MockSchemaRegistry({}, {}), htmlParser),
       new StyleCompiler(urlResolver),
       new ViewCompiler(new CompilerConfig(true, true, true)),
       new InjectorCompiler(),

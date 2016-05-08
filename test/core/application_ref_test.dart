@@ -24,7 +24,6 @@ import "package:angular2/core.dart"
         disposePlatform,
         ComponentResolver,
         ChangeDetectorRef;
-import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, ComponentRefImpl, ComponentRef;
@@ -58,7 +57,6 @@ void main() {
       var appInjector = ReflectiveInjector.resolveAndCreate([
         APPLICATION_CORE_PROVIDERS,
         BROWSER_APP_COMMON_PROVIDERS,
-        new Provider(Console, useValue: new _MockConsole()),
         new Provider(ExceptionHandler,
             useValue: new ExceptionHandler(errorLogger, false)),
         new Provider(ComponentResolver,
@@ -197,9 +195,4 @@ class _MockComponentRef extends ComponentRefImpl {
   }
 
   onDestroy(Function cb) {}
-}
-
-class _MockConsole implements Console {
-  void log(message) {}
-  void warn(message) {}
 }

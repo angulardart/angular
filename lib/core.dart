@@ -5,7 +5,6 @@ export 'src/core/application_common_providers.dart';
 export 'src/core/application_ref.dart'
     show
         createPlatform,
-        assertPlatform,
         disposePlatform,
         getPlatform,
         coreLoadAndBootstrap,

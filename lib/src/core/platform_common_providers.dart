@@ -1,4 +1,3 @@
-import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
@@ -18,5 +17,4 @@ const List<dynamic /* Type | Provider | List < dynamic > */ >
   const Provider(Reflector, useFactory: reflectorFactory, deps: const []),
   const Provider(ReflectorReader, useExisting: Reflector),
   TestabilityRegistry,
-  Console
 ];
