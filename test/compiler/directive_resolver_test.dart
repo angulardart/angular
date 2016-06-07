@@ -38,10 +38,10 @@ class SomeDirectiveWithDuplicateOutputs {
   var a;
 }
 
-@Directive(selector: 'someDirective', properties: const ['a'])
+@Directive(selector: 'someDirective', inputs: const ['a'])
 class SomeDirectiveWithProperties {}
 
-@Directive(selector: 'someDirective', events: const ['a'])
+@Directive(selector: 'someDirective', outputs: const ['a'])
 class SomeDirectiveWithEvents {}
 
 @Directive(selector: 'someDirective')

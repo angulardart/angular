@@ -195,7 +195,7 @@ ProviderBuilder bind(token) {
   return new ProviderBuilder(token);
 }
 
-/// Helper class for the [bind] function.
+/// Helper class for the [provide] function.
 class ProviderBuilder {
   final token;
   ProviderBuilder(this.token);

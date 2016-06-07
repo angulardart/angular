@@ -1,4 +1,5 @@
-import 'package:analyzer/src/generated/ast.dart';
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/mirror_matcher.dart';
 import 'package:angular2/src/transform/common/mirror_mode.dart';

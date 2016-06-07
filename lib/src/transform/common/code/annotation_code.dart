@@ -1,5 +1,5 @@
 import 'package:analyzer/analyzer.dart';
-import 'package:analyzer/src/generated/ast.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:angular2/src/transform/common/model/annotation_model.pb.dart';
 import 'package:barback/barback.dart' show AssetId;
 
