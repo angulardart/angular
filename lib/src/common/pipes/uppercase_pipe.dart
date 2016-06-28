@@ -15,7 +15,7 @@ import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 @Pipe(name: "uppercase")
 @Injectable()
 class UpperCasePipe implements PipeTransform {
-  String transform(String value, [List<dynamic> args = null]) {
+  String transform(String value) {
     if (isBlank(value)) return value;
     if (!isString(value)) {
       throw new InvalidPipeArgumentException(UpperCasePipe, value);

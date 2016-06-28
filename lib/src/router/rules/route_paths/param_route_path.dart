@@ -183,7 +183,10 @@ class ParamRoutePath implements RoutePath {
     for (var i = 0; i < this._segments.length; i++) {
       var segment = this._segments[i];
       if (!(segment is ContinuationPathSegment)) {
-        path.add(segment.generate(paramTokens));
+        var generated = segment.generate(paramTokens);
+        if (isPresent(generated) || !(segment is StarPathSegment)) {
+          path.add(generated);
+        }
       }
     }
     var urlPath = path.join("/");

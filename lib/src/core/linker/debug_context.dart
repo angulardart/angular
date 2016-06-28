@@ -11,9 +11,9 @@ import "view_type.dart" show ViewType;
 class StaticNodeDebugInfo {
   final List<dynamic> providerTokens;
   final dynamic componentToken;
-  final Map<String, dynamic> varTokens;
+  final Map<String, dynamic> refTokens;
   const StaticNodeDebugInfo(
-      this.providerTokens, this.componentToken, this.varTokens);
+      this.providerTokens, this.componentToken, this.refTokens);
 }
 
 class DebugContext implements RenderDebugInfo {
@@ -84,17 +84,17 @@ class DebugContext implements RenderDebugInfo {
     // change, but should change this later!
     ListWrapper.forEachWithIndex(this._view.staticNodeDebugInfos,
         (StaticNodeDebugInfo staticNodeInfo, num nodeIndex) {
-      var vars = staticNodeInfo.varTokens;
-      StringMapWrapper.forEach(vars, (varToken, varName) {
+      var refs = staticNodeInfo.refTokens;
+      StringMapWrapper.forEach(refs, (refToken, refName) {
         var varValue;
-        if (isBlank(varToken)) {
+        if (isBlank(refToken)) {
           varValue = isPresent(this._view.allNodes)
               ? this._view.allNodes[nodeIndex]
               : null;
         } else {
-          varValue = this._view.injectorGet(varToken, nodeIndex, null);
+          varValue = this._view.injectorGet(refToken, nodeIndex, null);
         }
-        varValues[varName] = varValue;
+        varValues[refName] = varValue;
       });
     });
     StringMapWrapper.forEach(this._view.locals, (localValue, localName) {

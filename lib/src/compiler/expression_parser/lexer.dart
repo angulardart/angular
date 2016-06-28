@@ -53,8 +53,12 @@ class Token {
     return (this.type == TokenType.Keyword);
   }
 
-  bool isKeywordVar() {
+  bool isKeywordDeprecatedVar() {
     return (this.type == TokenType.Keyword && this.strValue == "var");
+  }
+
+  bool isKeywordLet() {
+    return (this.type == TokenType.Keyword && this.strValue == "let");
   }
 
   bool isKeywordNull() {
@@ -486,4 +490,4 @@ var OPERATORS = SetWrapper.createFromList([
   "?."
 ]);
 var KEYWORDS = SetWrapper.createFromList(
-    ["var", "null", "undefined", "true", "false", "if", "else"]);
+    ["var", "let", "null", "undefined", "true", "false", "if", "else"]);

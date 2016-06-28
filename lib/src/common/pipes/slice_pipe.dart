@@ -2,7 +2,6 @@ library angular2.src.common.pipes.slice_pipe;
 
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isString, isArray, StringWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/core.dart"
     show Injectable, PipeTransform, WrappedValue, Pipe;
@@ -62,16 +61,11 @@ import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 @Pipe(name: "slice", pure: false)
 @Injectable()
 class SlicePipe implements PipeTransform {
-  dynamic transform(dynamic value, [List<dynamic> args = null]) {
-    if (isBlank(args) || args.length == 0) {
-      throw new BaseException("Slice pipe requires one argument");
-    }
+  dynamic transform(dynamic value, num start, [num end = null]) {
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(SlicePipe, value);
     }
     if (isBlank(value)) return value;
-    num start = args[0];
-    num end = args.length > 1 ? args[1] : null;
     if (isString(value)) {
       return StringWrapper.slice(value, start, end);
     }

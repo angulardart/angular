@@ -20,6 +20,8 @@ class SpyLocation implements Location {
   EventEmitter<dynamic> _subject = new EventEmitter();
   /** @internal */
   String _baseHref = "";
+  /** @internal */
+  String _hash = "";
   setInitialPath(String url) {
     this._path = url;
   }
@@ -28,8 +30,16 @@ class SpyLocation implements Location {
     this._baseHref = url;
   }
 
+  setHash(String hash) {
+    this._hash = hash;
+  }
+
   String path() {
     return this._path;
+  }
+
+  String hash() {
+    return this._hash;
   }
 
   simulateUrlPop(String pathname) {

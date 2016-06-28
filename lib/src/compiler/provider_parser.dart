@@ -10,7 +10,7 @@ import "template_ast.dart"
         NgContentAst,
         EmbeddedTemplateAst,
         ElementAst,
-        VariableAst,
+        ReferenceAst,
         BoundEventAst,
         BoundElementPropertyAst,
         AttrAst,
@@ -83,7 +83,7 @@ class ProviderElementContext {
       this._isViewRoot,
       this._directiveAsts,
       List<AttrAst> attrs,
-      List<VariableAst> vars,
+      List<ReferenceAst> refs,
       this._sourceSpan) {
     this._attrs = {};
     attrs.forEach((attrAst) => this._attrs[attrAst.name] = attrAst.value);
@@ -96,9 +96,9 @@ class ProviderElementContext {
     this._allProviders.values().forEach((provider) {
       this._addQueryReadsTo(provider.token, queriedTokens);
     });
-    vars.forEach((varAst) {
-      var varToken = new CompileTokenMetadata(value: varAst.name);
-      this._addQueryReadsTo(varToken, queriedTokens);
+    refs.forEach((refAst) {
+      this._addQueryReadsTo(
+          new CompileTokenMetadata(value: refAst.name), queriedTokens);
     });
     if (isPresent(
         queriedTokens.get(identifierToken(Identifiers.ViewContainerRef)))) {

@@ -8,7 +8,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "element.dart" show AppElement;
 import "exceptions.dart" show ExpressionChangedAfterItHasBeenCheckedException;
 import "package:angular2/src/core/change_detection/change_detection.dart"
-    show devModeEqual;
+    show devModeEqual, uninitialized;
 import "package:angular2/src/core/di.dart" show Inject, Injectable;
 import "package:angular2/src/core/render/api.dart"
     show RootRenderer, RenderComponentType, Renderer;
@@ -250,4 +250,279 @@ bool mapLooseIdentical/*< V >*/(
     }
   }
   return true;
+}
+
+dynamic/*= T */ castByValue/*< T >*/(dynamic input, dynamic/*= T */ value) {
+  return (input as dynamic/*= T */);
+}
+
+const EMPTY_ARRAY = const [];
+const EMPTY_MAP = const {};
+dynamic /* (p0: P0) => R */ pureProxy1/*< P0, R >*/(
+    dynamic/*= R */ fn(dynamic/*= P0 */ p0)) {
+  dynamic/*= R */ result;
+  var v0;
+  v0 = uninitialized;
+  return (p0) {
+    if (!looseIdentical(v0, p0)) {
+      v0 = p0;
+      result = fn(p0);
+    }
+    return result;
+  };
+}
+
+dynamic /* (p0: P0, p1: P1) => R */ pureProxy2/*< P0, P1, R >*/(
+    dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1)) {
+  dynamic/*= R */ result;
+  var v0, v1;
+  v0 = v1 = uninitialized;
+  return (p0, p1) {
+    if (!looseIdentical(v0, p0) || !looseIdentical(v1, p1)) {
+      v0 = p0;
+      v1 = p1;
+      result = fn(p0, p1);
+    }
+    return result;
+  };
+}
+
+dynamic
+    /* (p0: P0, p1: P1,
+                                                                               p2: P2) => R */
+    pureProxy3/*< P0, P1, P2, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2;
+  v0 = v1 = v2 = uninitialized;
+  return (p0, p1, p2) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      result = fn(p0, p1, p2);
+    }
+    return result;
+  };
+}
+
+dynamic /* (
+    p0: P0, p1: P1, p2: P2, p3: P3) => R */
+    pureProxy4/*< P0, P1, P2, P3, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2, dynamic/*= P3 */ p3)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2, v3;
+  v0 = v1 = v2 = v3 = uninitialized;
+  return (p0, p1, p2, p3) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2) ||
+        !looseIdentical(v3, p3)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      v3 = p3;
+      result = fn(p0, p1, p2, p3);
+    }
+    return result;
+  };
+}
+
+dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) =>
+    R */
+    pureProxy5/*< P0, P1, P2, P3, P4, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2, dynamic/*= P3 */ p3, dynamic/*= P4 */ p4)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2, v3, v4;
+  v0 = v1 = v2 = v3 = v4 = uninitialized;
+  return (p0, p1, p2, p3, p4) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2) ||
+        !looseIdentical(v3, p3) ||
+        !looseIdentical(v4, p4)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      v3 = p3;
+      v4 = p4;
+      result = fn(p0, p1, p2, p3, p4);
+    }
+    return result;
+  };
+}
+
+dynamic
+    /* (p0: P0, p1: P1, p2: P2, p3: P3,
+                                                                 p4: P4, p5: P5) => R */
+    pureProxy6/*< P0, P1, P2, P3, P4, P5, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2, dynamic/*= P3 */ p3, dynamic/*= P4 */ p4, dynamic/*= P5 */ p5)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2, v3, v4, v5;
+  v0 = v1 = v2 = v3 = v4 = v5 = uninitialized;
+  return (p0, p1, p2, p3, p4, p5) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2) ||
+        !looseIdentical(v3, p3) ||
+        !looseIdentical(v4, p4) ||
+        !looseIdentical(v5, p5)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      v3 = p3;
+      v4 = p4;
+      v5 = p5;
+      result = fn(p0, p1, p2, p3, p4, p5);
+    }
+    return result;
+  };
+}
+
+dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */ pureProxy7/*< P0, P1, P2, P3, P4, P5, P6, R >*/(
+    dynamic/*= R */ fn(
+        dynamic/*= P0 */ p0,
+        dynamic/*= P1 */ p1,
+        dynamic/*= P2 */ p2,
+        dynamic/*= P3 */ p3,
+        dynamic/*= P4 */ p4,
+        dynamic/*= P5 */ p5,
+        dynamic/*= P6 */ p6)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2, v3, v4, v5, v6;
+  v0 = v1 = v2 = v3 = v4 = v5 = v6 = uninitialized;
+  return (p0, p1, p2, p3, p4, p5, p6) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2) ||
+        !looseIdentical(v3, p3) ||
+        !looseIdentical(v4, p4) ||
+        !looseIdentical(v5, p5) ||
+        !looseIdentical(v6, p6)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      v3 = p3;
+      v4 = p4;
+      v5 = p5;
+      v6 = p6;
+      result = fn(p0, p1, p2, p3, p4, p5, p6);
+    }
+    return result;
+  };
+}
+
+dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) => R */ pureProxy8/*< P0, P1, P2, P3, P4, P5, P6, P7, R >*/(
+    dynamic/*= R */ fn(
+        dynamic/*= P0 */ p0,
+        dynamic/*= P1 */ p1,
+        dynamic/*= P2 */ p2,
+        dynamic/*= P3 */ p3,
+        dynamic/*= P4 */ p4,
+        dynamic/*= P5 */ p5,
+        dynamic/*= P6 */ p6,
+        dynamic/*= P7 */ p7)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2, v3, v4, v5, v6, v7;
+  v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = uninitialized;
+  return (p0, p1, p2, p3, p4, p5, p6, p7) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2) ||
+        !looseIdentical(v3, p3) ||
+        !looseIdentical(v4, p4) ||
+        !looseIdentical(v5, p5) ||
+        !looseIdentical(v6, p6) ||
+        !looseIdentical(v7, p7)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      v3 = p3;
+      v4 = p4;
+      v5 = p5;
+      v6 = p6;
+      v7 = p7;
+      result = fn(p0, p1, p2, p3, p4, p5, p6, p7);
+    }
+    return result;
+  };
+}
+
+dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8) => R */ pureProxy9/*< P0, P1, P2, P3, P4, P5, P6, P7, P8, R >*/(
+    dynamic/*= R */ fn(
+        dynamic/*= P0 */ p0,
+        dynamic/*= P1 */ p1,
+        dynamic/*= P2 */ p2,
+        dynamic/*= P3 */ p3,
+        dynamic/*= P4 */ p4,
+        dynamic/*= P5 */ p5,
+        dynamic/*= P6 */ p6,
+        dynamic/*= P7 */ p7,
+        dynamic/*= P8 */ p8)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2, v3, v4, v5, v6, v7, v8;
+  v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = v8 = uninitialized;
+  return (p0, p1, p2, p3, p4, p5, p6, p7, p8) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2) ||
+        !looseIdentical(v3, p3) ||
+        !looseIdentical(v4, p4) ||
+        !looseIdentical(v5, p5) ||
+        !looseIdentical(v6, p6) ||
+        !looseIdentical(v7, p7) ||
+        !looseIdentical(v8, p8)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      v3 = p3;
+      v4 = p4;
+      v5 = p5;
+      v6 = p6;
+      v7 = p7;
+      v8 = p8;
+      result = fn(p0, p1, p2, p3, p4, p5, p6, p7, p8);
+    }
+    return result;
+  };
+}
+
+dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9) => R */ pureProxy10/*< P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, R >*/(
+    dynamic/*= R */ fn(
+        dynamic/*= P0 */ p0,
+        dynamic/*= P1 */ p1,
+        dynamic/*= P2 */ p2,
+        dynamic/*= P3 */ p3,
+        dynamic/*= P4 */ p4,
+        dynamic/*= P5 */ p5,
+        dynamic/*= P6 */ p6,
+        dynamic/*= P7 */ p7,
+        dynamic/*= P8 */ p8,
+        dynamic/*= P9 */ p9)) {
+  dynamic/*= R */ result;
+  var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9;
+  v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = v8 = v9 = uninitialized;
+  return (p0, p1, p2, p3, p4, p5, p6, p7, p8, p9) {
+    if (!looseIdentical(v0, p0) ||
+        !looseIdentical(v1, p1) ||
+        !looseIdentical(v2, p2) ||
+        !looseIdentical(v3, p3) ||
+        !looseIdentical(v4, p4) ||
+        !looseIdentical(v5, p5) ||
+        !looseIdentical(v6, p6) ||
+        !looseIdentical(v7, p7) ||
+        !looseIdentical(v8, p8) ||
+        !looseIdentical(v9, p9)) {
+      v0 = p0;
+      v1 = p1;
+      v2 = p2;
+      v3 = p3;
+      v4 = p4;
+      v5 = p5;
+      v6 = p6;
+      v7 = p7;
+      v8 = p8;
+      v9 = p9;
+      result = fn(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+    return result;
+  };
 }

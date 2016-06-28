@@ -103,7 +103,20 @@ class BoundEventAst implements TemplateAst {
 }
 
 /**
- * A variable declaration on an element (e.g. `#var="expression"`).
+ * A reference declaration on an element (e.g. `let someName="expression"`).
+ */
+class ReferenceAst implements TemplateAst {
+  String name;
+  CompileTokenMetadata value;
+  ParseSourceSpan sourceSpan;
+  ReferenceAst(this.name, this.value, this.sourceSpan) {}
+  dynamic visit(TemplateAstVisitor visitor, dynamic context) {
+    return visitor.visitReference(this, context);
+  }
+}
+
+/**
+ * A variable declaration on a <template> (e.g. `var-someName="someLocalName"`).
  */
 class VariableAst implements TemplateAst {
   String name;
@@ -123,7 +136,7 @@ class ElementAst implements TemplateAst {
   List<AttrAst> attrs;
   List<BoundElementPropertyAst> inputs;
   List<BoundEventAst> outputs;
-  List<VariableAst> exportAsVars;
+  List<ReferenceAst> references;
   List<DirectiveAst> directives;
   List<ProviderAst> providers;
   bool hasViewContainer;
@@ -135,7 +148,7 @@ class ElementAst implements TemplateAst {
       this.attrs,
       this.inputs,
       this.outputs,
-      this.exportAsVars,
+      this.references,
       this.directives,
       this.providers,
       this.hasViewContainer,
@@ -153,7 +166,8 @@ class ElementAst implements TemplateAst {
 class EmbeddedTemplateAst implements TemplateAst {
   List<AttrAst> attrs;
   List<BoundEventAst> outputs;
-  List<VariableAst> vars;
+  List<ReferenceAst> references;
+  List<VariableAst> variables;
   List<DirectiveAst> directives;
   List<ProviderAst> providers;
   bool hasViewContainer;
@@ -163,7 +177,8 @@ class EmbeddedTemplateAst implements TemplateAst {
   EmbeddedTemplateAst(
       this.attrs,
       this.outputs,
-      this.vars,
+      this.references,
+      this.variables,
       this.directives,
       this.providers,
       this.hasViewContainer,
@@ -198,10 +213,9 @@ class DirectiveAst implements TemplateAst {
   List<BoundDirectivePropertyAst> inputs;
   List<BoundElementPropertyAst> hostProperties;
   List<BoundEventAst> hostEvents;
-  List<VariableAst> exportAsVars;
   ParseSourceSpan sourceSpan;
   DirectiveAst(this.directive, this.inputs, this.hostProperties,
-      this.hostEvents, this.exportAsVars, this.sourceSpan) {}
+      this.hostEvents, this.sourceSpan) {}
   dynamic visit(TemplateAstVisitor visitor, dynamic context) {
     return visitor.visitDirective(this, context);
   }
@@ -275,6 +289,7 @@ abstract class TemplateAstVisitor {
   dynamic visitNgContent(NgContentAst ast, dynamic context);
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context);
   dynamic visitElement(ElementAst ast, dynamic context);
+  dynamic visitReference(ReferenceAst ast, dynamic context);
   dynamic visitVariable(VariableAst ast, dynamic context);
   dynamic visitEvent(BoundEventAst ast, dynamic context);
   dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context);

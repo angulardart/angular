@@ -225,6 +225,12 @@ abstract class AbstractEmitterVisitor
     var name = expr.name;
     if (isPresent(expr.builtin)) {
       name = this.getBuiltinMethodName(expr.builtin);
+      if (isBlank(name)) {
+        // some builtins just mean to skip the call.
+
+        // e.g. `bind` in Dart.
+        return null;
+      }
     }
     ctx.print('''.${ name}(''');
     this.visitAllExpressions(expr.args, ctx, ''',''');

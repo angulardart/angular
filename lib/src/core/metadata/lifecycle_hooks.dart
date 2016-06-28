@@ -154,7 +154,7 @@ abstract class OnInit {
  *   template: `
  *     <p>Changes:</p>
  *     <ul>
- *       <li *ngFor="#line of logs">{{line}}</li>
+ *       <li *ngFor="let line of logs">{{line}}</li>
  *     </ul>`,
  *   directives: [NgFor]
  * })

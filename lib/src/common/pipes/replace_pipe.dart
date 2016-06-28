@@ -2,7 +2,6 @@ library angular2.src.common.pipes.replace_pipe;
 
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isString, isNumber, isFunction, RegExpWrapper, StringWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -34,10 +33,8 @@ import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 @Pipe(name: "replace")
 @Injectable()
 class ReplacePipe implements PipeTransform {
-  dynamic transform(dynamic value, List<dynamic> args) {
-    if (isBlank(args) || !identical(args.length, 2)) {
-      throw new BaseException("ReplacePipe requires two arguments");
-    }
+  dynamic transform(dynamic value, dynamic /* String | RegExp */ pattern,
+      dynamic /* Function | String */ replacement) {
     if (isBlank(value)) {
       return value;
     }
@@ -45,8 +42,6 @@ class ReplacePipe implements PipeTransform {
       throw new InvalidPipeArgumentException(ReplacePipe, value);
     }
     var input = value.toString();
-    var pattern = args[0];
-    var replacement = args[1];
     if (!this._supportedPattern(pattern)) {
       throw new InvalidPipeArgumentException(ReplacePipe, pattern);
     }
@@ -57,15 +52,18 @@ class ReplacePipe implements PipeTransform {
 
     // var rgx = pattern instanceof RegExp ? pattern : RegExpWrapper.create(pattern);
     if (isFunction(replacement)) {
-      var rgxPattern =
-          isString(pattern) ? RegExpWrapper.create(pattern) : pattern;
-      return StringWrapper.replaceAllMapped(input, rgxPattern, replacement);
+      var rgxPattern = isString(pattern)
+          ? RegExpWrapper.create((pattern as String))
+          : (pattern as RegExp);
+      return StringWrapper.replaceAllMapped(
+          input, rgxPattern, (replacement as Function));
     }
     if (pattern is RegExp) {
       // use the replaceAll variant
-      return StringWrapper.replaceAll(input, pattern, replacement);
+      return StringWrapper.replaceAll(input, pattern, (replacement as String));
     }
-    return StringWrapper.replace(input, pattern, replacement);
+    return StringWrapper.replace(
+        input, (pattern as String), (replacement as String));
   }
 
   bool _supportedInput(dynamic input) {

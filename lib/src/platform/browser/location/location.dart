@@ -68,6 +68,10 @@ class Location {
     return this.normalize(this.platformStrategy.path());
   }
 
+  String hash() {
+    return this.normalize(this.platformStrategy.hash());
+  }
+
   /**
    * Given a string representing a URL, returns the normalized URL path without leading or
    * trailing slashes

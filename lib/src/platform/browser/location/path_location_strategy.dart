@@ -85,6 +85,10 @@ class PathLocationStrategy extends LocationStrategy {
     return Location.joinWithSlash(this._baseHref, internal);
   }
 
+  String hash() {
+    return this._platformLocation.hash;
+  }
+
   String path() {
     return this._platformLocation.pathname +
         Location.normalizeQueryParams(this._platformLocation.search);

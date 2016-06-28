@@ -55,7 +55,7 @@ class AttributeMetadata extends DependencyMetadata {
  * ```html
  * <tabs>
  *   <pane title="Overview">...</pane>
- *   <pane *ngFor="#o of objects" [title]="o.title">{{o.text}}</pane>
+ *   <pane *ngFor="let o of objects" [title]="o.title">{{o.text}}</pane>
  * </tabs>
  * ```
  *
@@ -74,7 +74,7 @@ class AttributeMetadata extends DependencyMetadata {
  *  selector: 'tabs',
  *  template: `
  *    <ul>
- *      <li *ngFor="#pane of panes">{{pane.title}}</li>
+ *      <li *ngFor="let pane of panes">{{pane.title}}</li>
  *    </ul>
  *    <ng-content></ng-content>
  *  `

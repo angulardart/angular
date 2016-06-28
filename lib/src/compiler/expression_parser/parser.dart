@@ -70,6 +70,12 @@ class SplitInterpolation {
   SplitInterpolation(this.strings, this.expressions) {}
 }
 
+class TemplateBindingParseResult {
+  List<TemplateBinding> templateBindings;
+  List<String> warnings;
+  TemplateBindingParseResult(this.templateBindings, this.warnings) {}
+}
+
 @Injectable()
 class Parser {
   Lexer _lexer;
@@ -120,7 +126,8 @@ class Parser {
     return new Quote(prefix, uninterpretedExpression, location);
   }
 
-  List<TemplateBinding> parseTemplateBindings(String input, dynamic location) {
+  TemplateBindingParseResult parseTemplateBindings(
+      String input, dynamic location) {
     var tokens = this._lexer.tokenize(input);
     return new _ParseAST(input, location, tokens, false)
         .parseTemplateBindings();
@@ -245,17 +252,16 @@ class _ParseAST {
     }
   }
 
-  bool optionalKeywordVar() {
-    if (this.peekKeywordVar()) {
-      this.advance();
-      return true;
-    } else {
-      return false;
-    }
+  bool peekKeywordLet() {
+    return this.next.isKeywordLet();
   }
 
-  bool peekKeywordVar() {
-    return this.next.isKeywordVar() || this.next.isOperator("#");
+  bool peekDeprecatedKeywordVar() {
+    return this.next.isKeywordDeprecatedVar();
+  }
+
+  bool peekDeprecatedOperatorHash() {
+    return this.next.isOperator("#");
   }
 
   expectCharacter(num code) {
@@ -615,11 +621,25 @@ class _ParseAST {
     return result.toString();
   }
 
-  List<dynamic> parseTemplateBindings() {
-    var bindings = [];
+  TemplateBindingParseResult parseTemplateBindings() {
+    List<TemplateBinding> bindings = [];
     var prefix = null;
+    List<String> warnings = [];
     while (this.index < this.tokens.length) {
-      bool keyIsVar = this.optionalKeywordVar();
+      bool keyIsVar = this.peekKeywordLet();
+      if (!keyIsVar && this.peekDeprecatedKeywordVar()) {
+        keyIsVar = true;
+        warnings.add(
+            '''"var" inside of expressions is deprecated. Use "let" instead!''');
+      }
+      if (!keyIsVar && this.peekDeprecatedOperatorHash()) {
+        keyIsVar = true;
+        warnings.add(
+            '''"#" inside of expressions is deprecated. Use "let" instead!''');
+      }
+      if (keyIsVar) {
+        this.advance();
+      }
       var key = this.expectTemplateBindingKey();
       if (!keyIsVar) {
         if (prefix == null) {
@@ -637,7 +657,10 @@ class _ParseAST {
         } else {
           name = "\$implicit";
         }
-      } else if (!identical(this.next, EOF) && !this.peekKeywordVar()) {
+      } else if (!identical(this.next, EOF) &&
+          !this.peekKeywordLet() &&
+          !this.peekDeprecatedKeywordVar() &&
+          !this.peekDeprecatedOperatorHash()) {
         var start = this.inputIndex;
         var ast = this.parsePipe();
         var source = this.input.substring(start, this.inputIndex);
@@ -648,7 +671,7 @@ class _ParseAST {
         this.optionalCharacter($COMMA);
       }
     }
-    return bindings;
+    return new TemplateBindingParseResult(bindings, warnings);
   }
 
   error(String message, [num index = null]) {

@@ -307,6 +307,9 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinMethod.SubscribeObservable:
         name = "subscribe";
         break;
+      case o.BuiltinMethod.bind:
+        name = "bind";
+        break;
       default:
         throw new BaseException('''Unknown builtin method: ${ method}''');
     }

@@ -90,12 +90,12 @@ bindDirectiveDestroyLifecycleCallbacks(CompileDirectiveMetadata directiveMeta,
   }
 }
 
-bindPipeDestroyLifecycleCallbacks(CompilePipeMetadata pipeMeta,
-    o.Expression directiveInstance, CompileView view) {
+bindPipeDestroyLifecycleCallbacks(
+    CompilePipeMetadata pipeMeta, o.Expression pipeInstance, CompileView view) {
   var onDestroyMethod = view.destroyMethod;
   if (!identical(
       pipeMeta.lifecycleHooks.indexOf(LifecycleHooks.OnDestroy), -1)) {
     onDestroyMethod
-        .addStmt(directiveInstance.callMethod("ngOnDestroy", []).toStmt());
+        .addStmt(pipeInstance.callMethod("ngOnDestroy", []).toStmt());
   }
 }

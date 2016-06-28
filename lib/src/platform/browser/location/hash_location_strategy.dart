@@ -67,6 +67,10 @@ class HashLocationStrategy extends LocationStrategy {
     return this._baseHref;
   }
 
+  String hash() {
+    return this._platformLocation.hash;
+  }
+
   String path() {
     // the hash value is always prefixed with a `#`
 

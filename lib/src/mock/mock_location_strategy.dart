@@ -14,6 +14,7 @@ class MockLocationStrategy extends LocationStrategy {
   String internalBaseHref = "/";
   String internalPath = "/";
   String internalTitle = "";
+  String internalHash = "";
   List<String> urlChanges = [];
   /** @internal */
   EventEmitter<dynamic> _subject = new EventEmitter();
@@ -24,6 +25,10 @@ class MockLocationStrategy extends LocationStrategy {
     this.internalPath = url;
     ObservableWrapper.callEmit(
         this._subject, new _MockPopStateEvent(this.path()));
+  }
+
+  String hash() {
+    return this.internalHash;
   }
 
   String path() {

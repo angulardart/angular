@@ -275,7 +275,7 @@ class WritePropExpr extends Expression {
   }
 }
 
-enum BuiltinMethod { ConcatArray, SubscribeObservable }
+enum BuiltinMethod { ConcatArray, SubscribeObservable, bind }
 
 class InvokeMethodExpr extends Expression {
   Expression receiver;

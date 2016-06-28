@@ -13,7 +13,7 @@ import "package:angular2/core.dart"
 @Pipe(name: "json", pure: false)
 @Injectable()
 class JsonPipe implements PipeTransform {
-  String transform(dynamic value, [List<dynamic> args = null]) {
+  String transform(dynamic value) {
     return Json.stringify(value);
   }
 

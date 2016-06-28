@@ -41,10 +41,9 @@ RegExp interpolationExp = RegExpWrapper.create("#");
 @Pipe(name: "i18nPlural", pure: true)
 @Injectable()
 class I18nPluralPipe implements PipeTransform {
-  String transform(num value, [List<dynamic> args = null]) {
+  String transform(num value, Map<String, String> pluralMap) {
     String key;
     String valueStr;
-    Map<String, String> pluralMap = ((args[0]) as Map<String, String>);
     if (!isStringMap(pluralMap)) {
       throw new InvalidPipeArgumentException(I18nPluralPipe, pluralMap);
     }

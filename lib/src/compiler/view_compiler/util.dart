@@ -1,6 +1,7 @@
 library angular2.src.compiler.view_compiler.util;
 
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "../output/output_ast.dart" as o;
 import "../compile_metadata.dart"
     show
@@ -8,23 +9,30 @@ import "../compile_metadata.dart"
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
 import "compile_view.dart" show CompileView;
+import "../identifiers.dart" show Identifiers;
 
 o.Expression getPropertyInView(
-    o.Expression property, List<CompileView> viewPath) {
-  if (identical(viewPath.length, 0)) {
+    o.Expression property, CompileView callingView, CompileView definedView) {
+  if (identical(callingView, definedView)) {
     return property;
   } else {
     o.Expression viewProp = o.THIS_EXPR;
-    for (var i = 0; i < viewPath.length; i++) {
-      viewProp = viewProp.prop("declarationAppElement").prop("parentView");
+    CompileView currView = callingView;
+    while (!identical(currView, definedView) &&
+        isPresent(currView.declarationElement.view)) {
+      currView = currView.declarationElement.view;
+      viewProp = viewProp.prop("parent");
+    }
+    if (!identical(currView, definedView)) {
+      throw new BaseException(
+          '''Internal error: Could not calculate a property in a parent view: ${ property}''');
     }
     if (property is o.ReadPropExpr) {
-      var lastView = viewPath[viewPath.length - 1];
       o.ReadPropExpr readPropExpr = property;
       // Note: Don't cast for members of the AppView base class...
-      if (lastView.fields.any((field) => field.name == readPropExpr.name) ||
-          lastView.getters.any((field) => field.name == readPropExpr.name)) {
-        viewProp = viewProp.cast(lastView.classType);
+      if (definedView.fields.any((field) => field.name == readPropExpr.name) ||
+          definedView.getters.any((field) => field.name == readPropExpr.name)) {
+        viewProp = viewProp.cast(definedView.classType);
       }
     }
     return o.replaceVarInExpression(o.THIS_EXPR.name, viewProp, property);
@@ -87,4 +95,21 @@ o.Expression convertValueToOutputAst(dynamic value) {
   } else {
     return o.literal(value);
   }
+}
+
+createPureProxy(o.Expression fn, num argCount, o.ReadPropExpr pureProxyProp,
+    CompileView view) {
+  view.fields.add(
+      new o.ClassField(pureProxyProp.name, null, [o.StmtModifier.Private]));
+  var pureProxyId = argCount < Identifiers.pureProxies.length
+      ? Identifiers.pureProxies[argCount]
+      : null;
+  if (isBlank(pureProxyId)) {
+    throw new BaseException(
+        '''Unsupported number of argument for pure functions: ${ argCount}''');
+  }
+  view.createMethod.addStmt(o.THIS_EXPR
+      .prop(pureProxyProp.name)
+      .set(o.importExpr(pureProxyId).callFn([fn]))
+      .toStmt());
 }

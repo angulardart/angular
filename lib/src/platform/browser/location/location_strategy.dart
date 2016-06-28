@@ -21,6 +21,7 @@ import "platform_location.dart" show UrlChangeListener;
  */
 abstract class LocationStrategy {
   String path();
+  String hash();
   String prepareExternalUrl(String internal);
   void pushState(dynamic state, String title, String url, String queryParams);
   void replaceState(

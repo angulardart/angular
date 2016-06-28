@@ -32,7 +32,6 @@ import "template_ast.dart"
         NgContentAst,
         EmbeddedTemplateAst,
         ElementAst,
-        VariableAst,
         BoundEventAst,
         BoundElementPropertyAst,
         AttrAst,

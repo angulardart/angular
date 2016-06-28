@@ -30,14 +30,13 @@ class CompileQuery {
   addValue(o.Expression value, CompileView view) {
     var currentView = view;
     List<CompileElement> elPath = [];
-    List<CompileView> viewPath = [];
     while (isPresent(currentView) && !identical(currentView, this.view)) {
       var parentEl = currentView.declarationElement;
       (elPath..insert(0, parentEl)).length;
       currentView = parentEl.view;
-      viewPath.add(currentView);
     }
-    var queryListForDirtyExpr = getPropertyInView(this.queryList, viewPath);
+    var queryListForDirtyExpr =
+        getPropertyInView(this.queryList, view, this.view);
     var viewValues = this._values;
     elPath.forEach((el) {
       var last = viewValues.values.length > 0
