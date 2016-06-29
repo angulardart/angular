@@ -200,11 +200,8 @@ class Provider {
   }
 }
 
-/**
- * See [Provider] instead.
- *
- * 
- */
+/// See [Provider] instead.
+@Deprecated('Use Provider instead')
 class Binding extends Provider {
   const Binding(token,
       {Type toClass,
@@ -249,25 +246,13 @@ class Binding extends Provider {
   }
 }
 
-/**
- * Creates a [Provider].
- *
- * To construct a [Provider], bind a `token` to either a class, a value, a factory function,
- * or
- * to an existing `token`.
- * See [ProviderBuilder] for more details.
- *
- * The `token` is most commonly a class or [OpaqueToken-class.html].
- *
- * 
- */
+/// Deprecated Use provide instead.
+@Deprecated('Use provide instead')
 ProviderBuilder bind(token) {
   return new ProviderBuilder(token);
 }
 
-/**
- * Helper class for the [bind] function.
- */
+/// Helper class for the [bind] function.
 class ProviderBuilder {
   var token;
   ProviderBuilder(this.token) {}
@@ -389,13 +374,13 @@ class ProviderBuilder {
   }
 }
 
-/**
- * Creates a [Provider].
- *
- * See [Provider] for more details.
- *
- * <!-- TODO: improve the docs -->
- */
+/// Creates a [Provider].
+///
+/// To construct a [Provider], bind a `token` to either a class, a value, a factory function,
+/// or to an existing `token`.
+/// See [ProviderBuilder] for more details.
+///
+/// The `token` is most commonly a class or [OpaqueToken-class.html].
 Provider provide(token,
     {Type useClass,
     dynamic useValue,
