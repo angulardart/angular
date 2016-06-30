@@ -6,13 +6,17 @@ import "compile_metadata.dart"
         CompileDirectiveMetadata,
         CompileIdentifierMetadata,
         CompilePipeMetadata,
-        createHostComponentMeta;
+        createHostComponentMeta,
+        CompileInjectorModuleMetadata,
+        CompileTypeMetadata;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, unimplemented;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "style_compiler.dart"
     show StyleCompiler, StylesCompileDependency, StylesCompileResult;
 import "view_compiler/view_compiler.dart" show ViewCompiler, ViewCompileResult;
+import "view_compiler/injector_compiler.dart"
+    show InjectorCompiler, InjectorCompileResult;
 import "template_parser.dart" show TemplateParser;
 import "directive_normalizer.dart" show DirectiveNormalizer;
 import "output/abstract_emitter.dart" show OutputEmitter;
@@ -46,22 +50,32 @@ class OfflineCompiler {
   TemplateParser _templateParser;
   StyleCompiler _styleCompiler;
   ViewCompiler _viewCompiler;
+  InjectorCompiler _injectorCompiler;
   OutputEmitter _outputEmitter;
-  OfflineCompiler(this._directiveNormalizer, this._templateParser,
-      this._styleCompiler, this._viewCompiler, this._outputEmitter) {}
+  OfflineCompiler(
+      this._directiveNormalizer,
+      this._templateParser,
+      this._styleCompiler,
+      this._viewCompiler,
+      this._injectorCompiler,
+      this._outputEmitter) {}
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
     return this._directiveNormalizer.normalizeDirective(directive);
   }
 
-  SourceModule compileTemplates(
-      List<NormalizedComponentWithViewDirectives> components) {
-    if (identical(components.length, 0)) {
-      throw new BaseException("No components given");
+  SourceModule compile(List<NormalizedComponentWithViewDirectives> components,
+      List<CompileInjectorModuleMetadata> injectorModules) {
+    String moduleUrl;
+    if (components.length > 0) {
+      moduleUrl = _templateModuleUrl(components[0].component.type);
+    } else if (injectorModules.length > 0) {
+      moduleUrl = _templateModuleUrl(injectorModules[0].type);
+    } else {
+      throw new BaseException("No components nor injectorModules given");
     }
     var statements = [];
     var exportedVars = [];
-    var moduleUrl = _templateModuleUrl(components[0].component);
     components.forEach((componentWithDirs) {
       var compMeta = (componentWithDirs.component as CompileDirectiveMetadata);
       _assertComponent(compMeta);
@@ -78,12 +92,19 @@ class OfflineCompiler {
               [
                 o.literal(compMeta.selector),
                 o.variable(hostViewFactoryVar),
-                o.importExpr(compMeta.type)
+                o.importExpr(compMeta.type),
+                o.METADATA_MAP
               ],
               o.importType(
                   _COMPONENT_FACTORY_IDENTIFIER, null, [o.TypeModifier.Const])))
           .toDeclStmt(null, [o.StmtModifier.Final]));
       exportedVars.add(compFactoryVar);
+    });
+    injectorModules.forEach((injectorModuleMeta) {
+      var compileResult =
+          this._injectorCompiler.compileInjector(injectorModuleMeta);
+      compileResult.statements.forEach((stmt) => statements.add(stmt));
+      exportedVars.add(compileResult.injectorFactoryVar);
     });
     return this._codegenSourceModule(moduleUrl, statements, exportedVars);
   }
@@ -128,7 +149,7 @@ class OfflineCompiler {
 
 List<o.Statement> _resolveViewStatements(ViewCompileResult compileResult) {
   compileResult.dependencies.forEach((dep) {
-    dep.factoryPlaceholder.moduleUrl = _templateModuleUrl(dep.comp);
+    dep.factoryPlaceholder.moduleUrl = _templateModuleUrl(dep.comp.type);
   });
   return compileResult.statements;
 }
@@ -141,8 +162,8 @@ List<o.Statement> _resolveStyleStatements(StylesCompileResult compileResult) {
   return compileResult.statements;
 }
 
-String _templateModuleUrl(CompileDirectiveMetadata comp) {
-  var moduleUrl = comp.type.moduleUrl;
+String _templateModuleUrl(CompileTypeMetadata type) {
+  var moduleUrl = type.moduleUrl;
   var urlWithoutSuffix =
       moduleUrl.substring(0, moduleUrl.length - MODULE_SUFFIX.length);
   return '''${ urlWithoutSuffix}.template${ MODULE_SUFFIX}''';

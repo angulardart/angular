@@ -2,7 +2,7 @@ library angular2.src.core.metadata.di;
 
 import "package:angular2/src/facade/lang.dart"
     show Type, stringify, isPresent, isString;
-import "package:angular2/src/core/di.dart" show resolveForwardRef;
+import "package:angular2/src/core/di/forward_ref.dart" show resolveForwardRef;
 import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
 
 /**
@@ -464,4 +464,51 @@ class ViewChildMetadata extends ViewQueryMetadata {
   const ViewChildMetadata(dynamic /* Type | String */ _selector,
       {dynamic read: null})
       : super(_selector, descendants: true, first: true, read: read);
+}
+
+/**
+ * Defines an injectable whose value is given by a property on an InjectorModule class.
+ *
+ * ### Example
+ *
+ * ```
+ * @InjectorModule()
+ * class MyModule {
+ *   @Provides(SomeToken)
+ *   someProp: string = 'Hello world';
+ * }
+ * ```
+ * @experimental
+ */
+class ProviderPropertyMetadata {
+  final dynamic token;
+  final bool _multi;
+  const ProviderPropertyMetadata(this.token, {bool multi: false})
+      : _multi = multi;
+  bool get multi {
+    return this._multi;
+  }
+}
+
+/**
+ * Defines an injector module from which an injector can be generated.
+ *
+ * ### Example
+ *
+ * ```
+ * @InjectorModule({
+ *   providers: [SomeService]
+ * })
+ * class MyModule {}
+ *
+ * ```
+ * @experimental
+ */
+class InjectorModuleMetadata {
+  final List<dynamic> _providers;
+  const InjectorModuleMetadata({List<dynamic> providers: const []})
+      : _providers = providers;
+  List<dynamic> get providers {
+    return this._providers;
+  }
 }

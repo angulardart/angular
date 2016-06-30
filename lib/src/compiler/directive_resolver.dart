@@ -26,6 +26,13 @@ bool _isDirectiveMetadata(dynamic type) {
   return type is DirectiveMetadata;
 }
 
+class NoDirectiveAnnotationError extends BaseException {
+  NoDirectiveAnnotationError(Type type)
+      : super('''No Directive annotation found on ${ stringify ( type )}''') {
+    /* super call moved to initializer */;
+  }
+}
+
 /*
  * Resolve a `Type` for [DirectiveMetadata].
  *
@@ -57,8 +64,7 @@ class DirectiveResolver {
             ._mergeWithPropertyMetadata(metadata, propertyMetadata, type);
       }
     }
-    throw new BaseException(
-        '''No Directive annotation found on ${ stringify ( type )}''');
+    throw new NoDirectiveAnnotationError(type);
   }
 
   DirectiveMetadata _mergeWithPropertyMetadata(DirectiveMetadata dm,
@@ -163,5 +169,3 @@ class DirectiveResolver {
     }
   }
 }
-
-var CODEGEN_DIRECTIVE_RESOLVER = new DirectiveResolver(reflector);

@@ -13,7 +13,8 @@ import "package:angular2/core.dart"
         PLATFORM_PIPES,
         ExceptionHandler,
         APPLICATION_COMMON_PROVIDERS,
-        PLATFORM_COMMON_PROVIDERS;
+        PLATFORM_COMMON_PROVIDERS,
+        OpaqueToken;
 import "package:angular2/common.dart"
     show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/src/web_workers/shared/client_message_broker.dart"
@@ -34,7 +35,11 @@ class PrintLogger {
   logGroupEnd() {}
 }
 
-const List<dynamic> WORKER_APP_PLATFORM = const [PLATFORM_COMMON_PROVIDERS];
+const WORKER_APP_PLATFORM_MARKER = const OpaqueToken("WorkerAppPlatformMarker");
+const List<dynamic> WORKER_APP_PLATFORM = const [
+  PLATFORM_COMMON_PROVIDERS,
+  const Provider(WORKER_APP_PLATFORM_MARKER, useValue: true)
+];
 const List<dynamic> WORKER_APP_APPLICATION_COMMON = const [
   APPLICATION_COMMON_PROVIDERS,
   FORM_PROVIDERS,

@@ -27,7 +27,7 @@ RouteDefinition normalizeRouteConfig(
   return config;
 }
 
-void assertComponentExists(Type component, String path) {
+void assertComponentExists(dynamic component, String path) {
   if (component == null) {
     throw new BaseException(
         'Component for route "${path}" is not defined, or is not a class.');

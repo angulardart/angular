@@ -5,7 +5,6 @@ import "package:angular2/platform/common.dart"
 import "package:angular2/src/router/router.dart" show Router, RootRouter;
 import "package:angular2/src/router/route_registry.dart"
     show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
-import "package:angular2/src/facade/lang.dart" show Type;
 import "package:angular2/core.dart" show ApplicationRef, OpaqueToken, Provider;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
@@ -26,16 +25,16 @@ const List<dynamic> ROUTER_PROVIDERS_COMMON = const [
       useFactory: routerPrimaryComponentFactory, deps: const [ApplicationRef])
 ];
 RootRouter routerFactory(RouteRegistry registry, Location location,
-    Type primaryComponent, ApplicationRef appRef) {
+    dynamic primaryComponent, ApplicationRef appRef) {
   var rootRouter = new RootRouter(registry, location, primaryComponent);
   appRef.registerDisposeListener(() => rootRouter.dispose());
   return rootRouter;
 }
 
-Type routerPrimaryComponentFactory(ApplicationRef app) {
-  if (app.componentTypes.length == 0) {
+dynamic routerPrimaryComponentFactory(ApplicationRef app) {
+  if (app.componentFactories.length == 0) {
     throw new BaseException(
         "Bootstrap at least one component before injecting Router.");
   }
-  return app.componentTypes[0];
+  return app.componentFactories[0];
 }

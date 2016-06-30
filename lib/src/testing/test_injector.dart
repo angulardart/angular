@@ -1,7 +1,7 @@
 library angular2.src.testing.test_injector;
 
 import "package:angular2/core.dart"
-    show Injector, Provider, PLATFORM_INITIALIZER;
+    show ReflectiveInjector, Provider, PLATFORM_INITIALIZER;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, ExceptionHandler;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
@@ -10,7 +10,7 @@ import "package:angular2/src/facade/lang.dart"
 
 class TestInjector {
   bool _instantiated = false;
-  Injector _injector = null;
+  ReflectiveInjector _injector = null;
   List<dynamic /* Type | Provider | List < dynamic > */ > _providers = [];
   reset() {
     this._injector = null;
@@ -32,7 +32,8 @@ class TestInjector {
   }
 
   createInjector() {
-    var rootInjector = Injector.resolveAndCreate(this.platformProviders);
+    var rootInjector =
+        ReflectiveInjector.resolveAndCreate(this.platformProviders);
     this._injector = rootInjector.resolveAndCreateChild(
         ListWrapper.concat(this.applicationProviders, this._providers));
     this._instantiated = true;
@@ -83,7 +84,7 @@ setBaseTestProviders(
   testInjector.platformProviders = platformProviders;
   testInjector.applicationProviders = applicationProviders;
   var injector = testInjector.createInjector();
-  List<Function> inits = injector.getOptional(PLATFORM_INITIALIZER);
+  List<Function> inits = injector.get(PLATFORM_INITIALIZER, null);
   if (isPresent(inits)) {
     inits.forEach((init) => init());
   }
@@ -213,7 +214,7 @@ class FunctionWithParamTokens {
   /**
    * Returns the value of the executed function.
    */
-  dynamic execute(Injector injector) {
+  dynamic execute(ReflectiveInjector injector) {
     var params = this._tokens.map((t) => injector.get(t)).toList();
     return FunctionWrapper.apply(this.fn, params);
   }

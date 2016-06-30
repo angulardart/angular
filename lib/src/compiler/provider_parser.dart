@@ -2,6 +2,7 @@ library angular2.src.compiler.provider_parser;
 
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "template_ast.dart"
     show
         TemplateAst,
@@ -24,6 +25,7 @@ import "template_ast.dart"
 import "compile_metadata.dart"
     show
         CompileTypeMetadata,
+        CompileInjectorModuleMetadata,
         CompileTokenMap,
         CompileQueryMetadata,
         CompileTokenMetadata,
@@ -334,6 +336,112 @@ class ProviderElementContext {
   }
 }
 
+class AppProviderParser {
+  ParseSourceSpan _sourceSpan;
+  var _transformedProviders = new CompileTokenMap<ProviderAst>();
+  var _seenProviders = new CompileTokenMap<bool>();
+  CompileTokenMap<ProviderAst> _allProviders;
+  List<ProviderError> _errors = [];
+  AppProviderParser(this._sourceSpan, List<dynamic> providers) {
+    this._allProviders = new CompileTokenMap<ProviderAst>();
+    _resolveProviders(
+        _normalizeProviders(providers, this._sourceSpan, this._errors),
+        ProviderAstType.PublicService,
+        false,
+        this._sourceSpan,
+        this._errors,
+        this._allProviders);
+  }
+  List<ProviderAst> parse() {
+    this._allProviders.values().forEach((provider) {
+      this._getOrCreateLocalProvider(provider.token, provider.eager);
+    });
+    if (this._errors.length > 0) {
+      var errorString = this._errors.join("\n");
+      throw new BaseException('''Provider parse errors:
+${ errorString}''');
+    }
+    return this._transformedProviders.values();
+  }
+
+  ProviderAst _getOrCreateLocalProvider(
+      CompileTokenMetadata token, bool eager) {
+    var resolvedProvider = this._allProviders.get(token);
+    if (isBlank(resolvedProvider)) {
+      return null;
+    }
+    var transformedProviderAst = this._transformedProviders.get(token);
+    if (isPresent(transformedProviderAst)) {
+      return transformedProviderAst;
+    }
+    if (isPresent(this._seenProviders.get(token))) {
+      this._errors.add(new ProviderError(
+          '''Cannot instantiate cyclic dependency! ${ token . name}''',
+          this._sourceSpan));
+      return null;
+    }
+    this._seenProviders.add(token, true);
+    var transformedProviders = resolvedProvider.providers.map((provider) {
+      var transformedUseValue = provider.useValue;
+      var transformedUseExisting = provider.useExisting;
+      var transformedDeps;
+      if (isPresent(provider.useExisting)) {
+        var existingDiDep = this._getDependency(
+            new CompileDiDependencyMetadata(token: provider.useExisting),
+            eager);
+        if (isPresent(existingDiDep.token)) {
+          transformedUseExisting = existingDiDep.token;
+        } else {
+          transformedUseExisting = null;
+          transformedUseValue = existingDiDep.value;
+        }
+      } else if (isPresent(provider.useFactory)) {
+        var deps = isPresent(provider.deps)
+            ? provider.deps
+            : provider.useFactory.diDeps;
+        transformedDeps =
+            deps.map((dep) => this._getDependency(dep, eager)).toList();
+      } else if (isPresent(provider.useClass)) {
+        var deps =
+            isPresent(provider.deps) ? provider.deps : provider.useClass.diDeps;
+        transformedDeps =
+            deps.map((dep) => this._getDependency(dep, eager)).toList();
+      }
+      return _transformProvider(provider,
+          useExisting: transformedUseExisting,
+          useValue: transformedUseValue,
+          deps: transformedDeps);
+    }).toList();
+    transformedProviderAst = _transformProviderAst(resolvedProvider,
+        eager: eager, providers: transformedProviders);
+    this._transformedProviders.add(token, transformedProviderAst);
+    return transformedProviderAst;
+  }
+
+  CompileDiDependencyMetadata _getDependency(CompileDiDependencyMetadata dep,
+      [bool eager = null]) {
+    var foundLocal = false;
+    if (!dep.isSkipSelf && isPresent(dep.token)) {
+      // access the injector
+      if (dep.token.equalsTo(identifierToken(Identifiers.Injector))) {
+        foundLocal = true;
+      } else if (isPresent(this._getOrCreateLocalProvider(dep.token, eager))) {
+        foundLocal = true;
+      }
+    }
+    CompileDiDependencyMetadata result = dep;
+    if (dep.isSelf && !foundLocal) {
+      if (dep.isOptional) {
+        result = new CompileDiDependencyMetadata(isValue: true, value: null);
+      } else {
+        this._errors.add(new ProviderError(
+            '''No provider for ${ dep . token . name}''', this._sourceSpan));
+      }
+    }
+    return result;
+  }
+}
+
 _transformProvider(CompileProviderMetadata provider,
     {CompileTokenMetadata useExisting,
     dynamic useValue,
@@ -344,6 +452,7 @@ _transformProvider(CompileProviderMetadata provider,
       useExisting: useExisting,
       useFactory: provider.useFactory,
       useValue: useValue,
+      useProperty: provider.useProperty,
       deps: deps,
       multi: provider.multi);
 }

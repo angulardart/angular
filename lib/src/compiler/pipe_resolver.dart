@@ -44,5 +44,3 @@ class PipeResolver {
         '''No Pipe decorator found on ${ stringify ( type )}''');
   }
 }
-
-var CODEGEN_PIPE_RESOLVER = new PipeResolver(reflector);

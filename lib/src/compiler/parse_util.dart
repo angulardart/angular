@@ -1,5 +1,7 @@
 library angular2.src.compiler.parse_util;
 
+import "package:angular2/src/facade/lang.dart" show isPresent;
+
 class ParseLocation {
   ParseSourceFile file;
   num offset;
@@ -7,7 +9,9 @@ class ParseLocation {
   num col;
   ParseLocation(this.file, this.offset, this.line, this.col) {}
   String toString() {
-    return '''${ this . file . url}@${ this . line}:${ this . col}''';
+    return isPresent(this.offset)
+        ? '''${ this . file . url}@${ this . line}:${ this . col}'''
+        : this.file.url;
   }
 }
 
@@ -37,35 +41,39 @@ abstract class ParseError {
   String toString() {
     var source = this.span.start.file.content;
     var ctxStart = this.span.start.offset;
-    if (ctxStart > source.length - 1) {
-      ctxStart = source.length - 1;
-    }
-    var ctxEnd = ctxStart;
-    var ctxLen = 0;
-    var ctxLines = 0;
-    while (ctxLen < 100 && ctxStart > 0) {
-      ctxStart--;
-      ctxLen++;
-      if (source[ctxStart] == "\n") {
-        if (++ctxLines == 3) {
-          break;
+    var contextStr = "";
+    if (isPresent(ctxStart)) {
+      if (ctxStart > source.length - 1) {
+        ctxStart = source.length - 1;
+      }
+      var ctxEnd = ctxStart;
+      var ctxLen = 0;
+      var ctxLines = 0;
+      while (ctxLen < 100 && ctxStart > 0) {
+        ctxStart--;
+        ctxLen++;
+        if (source[ctxStart] == "\n") {
+          if (++ctxLines == 3) {
+            break;
+          }
         }
       }
-    }
-    ctxLen = 0;
-    ctxLines = 0;
-    while (ctxLen < 100 && ctxEnd < source.length - 1) {
-      ctxEnd++;
-      ctxLen++;
-      if (source[ctxEnd] == "\n") {
-        if (++ctxLines == 3) {
-          break;
+      ctxLen = 0;
+      ctxLines = 0;
+      while (ctxLen < 100 && ctxEnd < source.length - 1) {
+        ctxEnd++;
+        ctxLen++;
+        if (source[ctxEnd] == "\n") {
+          if (++ctxLines == 3) {
+            break;
+          }
         }
       }
+      var context = source.substring(ctxStart, this.span.start.offset) +
+          "[ERROR ->]" +
+          source.substring(this.span.start.offset, ctxEnd + 1);
+      contextStr = ''' ("${ context}")''';
     }
-    var context = source.substring(ctxStart, this.span.start.offset) +
-        "[ERROR ->]" +
-        source.substring(this.span.start.offset, ctxEnd + 1);
-    return '''${ this . msg} ("${ context}"): ${ this . span . start}''';
+    return '''${ this . msg}${ contextStr}: ${ this . span . start}''';
   }
 }

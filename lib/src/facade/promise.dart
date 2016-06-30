@@ -22,7 +22,6 @@ class PromiseWrapper {
   static Future/*<R>*/ then/*<T, R>*/(
       Future/*<T>*/ promise, dynamic/*=R*/ success(dynamic/*=T*/ value),
       [Function onError]) {
-    if (success == null) return promise.catchError(onError);
     return promise.then(success, onError: onError);
   }
 

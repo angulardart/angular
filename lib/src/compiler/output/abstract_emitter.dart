@@ -258,6 +258,9 @@ abstract class AbstractEmitterVisitor
         case o.BuiltinVar.CatchStack:
           varName = CATCH_STACK_VAR.name;
           break;
+        case o.BuiltinVar.MetadataMap:
+          varName = "null";
+          break;
         default:
           throw new BaseException(
               '''Unknown builtin variable ${ ast . builtin}''');

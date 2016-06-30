@@ -15,6 +15,6 @@ const WORKER_RENDER_ROUTER = const [
 dynamic /* () => void */ initRouterListeners(Injector injector) {
   return () {
     var zone = injector.get(NgZone);
-    zone.run(() => injector.get(MessageBasedPlatformLocation).start());
+    zone.runGuarded(() => injector.get(MessageBasedPlatformLocation).start());
   };
 }

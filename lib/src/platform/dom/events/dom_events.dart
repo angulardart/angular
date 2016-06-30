@@ -16,7 +16,7 @@ class DomEventsPlugin extends EventManagerPlugin {
   Function addEventListener(
       dynamic element, String eventName, Function handler) {
     var zone = this.manager.getZone();
-    var outsideHandler = (event) => zone.run(() => handler(event));
+    var outsideHandler = (event) => zone.runGuarded(() => handler(event));
     return this.manager.getZone().runOutsideAngular(
         () => DOM.onAndCancel(element, eventName, outsideHandler));
   }
@@ -25,7 +25,7 @@ class DomEventsPlugin extends EventManagerPlugin {
       String target, String eventName, Function handler) {
     var element = DOM.getGlobalEventTarget(target);
     var zone = this.manager.getZone();
-    var outsideHandler = (event) => zone.run(() => handler(event));
+    var outsideHandler = (event) => zone.runGuarded(() => handler(event));
     return this.manager.getZone().runOutsideAngular(
         () => DOM.onAndCancel(element, eventName, outsideHandler));
   }

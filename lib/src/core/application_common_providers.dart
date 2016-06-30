@@ -3,8 +3,8 @@ library angular2.src.core.application_common_providers;
 import "package:angular2/src/facade/lang.dart" show Type;
 import "package:angular2/src/core/di.dart"
     show provide, Provider, Injector, OpaqueToken;
-import "application_tokens.dart"
-    show APP_COMPONENT_REF_PROMISE, APP_COMPONENT, APP_ID_RANDOM_PROVIDER;
+import "application_tokens.dart" show APP_ID_RANDOM_PROVIDER;
+import "application_ref.dart" show APPLICATION_CORE_PROVIDERS;
 import "change_detection/change_detection.dart"
     show
         IterableDiffers,
@@ -24,6 +24,7 @@ Type ___unused;
  */
 const List<dynamic /* Type | Provider | List < dynamic > */ >
     APPLICATION_COMMON_PROVIDERS = const [
+  APPLICATION_CORE_PROVIDERS,
   const Provider(ComponentResolver, useClass: ReflectorComponentResolver),
   APP_ID_RANDOM_PROVIDER,
   ViewUtils,

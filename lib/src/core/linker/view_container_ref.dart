@@ -2,9 +2,7 @@ library angular2.src.core.linker.view_container_ref;
 
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show unimplemented;
-import "package:angular2/src/core/di/injector.dart"
-    show Injector, Injector_, ProtoInjector;
-import "package:angular2/src/core/di/provider.dart" show ResolvedProvider;
+import "package:angular2/src/core/di/injector.dart" show Injector;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
 import "element.dart" show AppElement;
@@ -39,6 +37,14 @@ abstract class ViewContainerRef {
     return (unimplemented() as ElementRef);
   }
 
+  Injector get injector {
+    return (unimplemented() as Injector);
+  }
+
+  Injector get parentInjector {
+    return (unimplemented() as Injector);
+  }
+
   /**
    * Destroys all Views in this container.
    */
@@ -67,20 +73,17 @@ abstract class ViewContainerRef {
    * Instantiates a single [Component] and inserts its Host View into this container at the
    * specified `index`.
    *
-   * The component is instantiated using its [ProtoViewRef `protoView`] which can be
-   * obtained via [Compiler#compileInHost].
+   * The component is instantiated using its [ComponentFactory] which can be
+   * obtained via [ComponentResolver#resolveComponent].
    *
    * If `index` is not specified, the new View will be inserted as the last View in the container.
    *
-   * You can optionally specify `dynamicallyCreatedProviders`, which configure the [Injector]
-   * that will be created for the Host View.
+   * You can optionally specify the [Injector] that will be used as parent for the Component.
    *
    * Returns the [ComponentRef] of the Host View created for the newly instantiated Component.
    */
   ComponentRef createComponent(ComponentFactory componentFactory,
-      [num index,
-      List<ResolvedProvider> dynamicallyCreatedProviders,
-      List<List<dynamic>> projectableNodes]);
+      [num index, Injector injector, List<List<dynamic>> projectableNodes]);
   /**
    * Inserts a View identified by a [ViewRef] into the container at the specified `index`.
    *
@@ -123,6 +126,14 @@ class ViewContainerRef_ implements ViewContainerRef {
   ElementRef get element {
     return this._element.elementRef;
   }
+
+  Injector get injector {
+    return this._element.injector;
+  }
+
+  Injector get parentInjector {
+    return this._element.parentInjector;
+  }
   // TODO(rado): profile and decide whether bounds checks should be added
 
   // to the methods below.
@@ -138,17 +149,13 @@ class ViewContainerRef_ implements ViewContainerRef {
       wtfCreateScope("ViewContainerRef#createComponent()");
   ComponentRef createComponent(ComponentFactory componentFactory,
       [num index = -1,
-      List<ResolvedProvider> dynamicallyCreatedProviders = null,
+      Injector injector = null,
       List<List<dynamic>> projectableNodes = null]) {
     var s = this._createComponentInContainerScope();
-    var contextInjector = this._element.parentInjector;
-    var childInjector = isPresent(dynamicallyCreatedProviders) &&
-            dynamicallyCreatedProviders.length > 0
-        ? new Injector_(
-            ProtoInjector.fromResolvedProviders(dynamicallyCreatedProviders),
-            contextInjector)
-        : contextInjector;
-    var componentRef = componentFactory.create(childInjector, projectableNodes);
+    var contextInjector =
+        isPresent(injector) ? injector : this._element.parentInjector;
+    var componentRef =
+        componentFactory.create(contextInjector, projectableNodes);
     this.insert(componentRef.hostView, index);
     return wtfLeave(s, componentRef);
   }

@@ -24,6 +24,7 @@ import "abstract_emitter.dart"
 import "path_util.dart" show getImportModulePath, ImportEnv;
 
 var _debugModuleUrl = "asset://debug/lib";
+var _METADATA_MAP_VAR = '''_METADATA''';
 String debugOutputAstAsDart(
     dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
   var converter = new _DartEmitterVisitor(_debugModuleUrl);
@@ -232,6 +233,15 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         throw new BaseException('''Unknown builtin method: ${ method}''');
     }
     return name;
+  }
+
+  dynamic visitReadVarExpr(o.ReadVarExpr ast, EmitterVisitorContext ctx) {
+    if (identical(ast.builtin, o.BuiltinVar.MetadataMap)) {
+      ctx.print(_METADATA_MAP_VAR);
+    } else {
+      super.visitReadVarExpr(ast, ctx);
+    }
+    return null;
   }
 
   dynamic visitTryCatchStmt(o.TryCatchStmt stmt, EmitterVisitorContext ctx) {

@@ -4,27 +4,6 @@ import "package:angular2/src/core/di.dart" show OpaqueToken, Provider;
 import "package:angular2/src/facade/lang.dart" show Math, StringWrapper;
 
 /**
- *  @internal
- */
-const APP_COMPONENT_REF_PROMISE = const OpaqueToken("Promise<ComponentRef>");
-/**
- * An [OpaqueToken-class.html] representing the application root type in the {@link
- * Injector}.
- *
- * ```
- * @Component(...)
- * class MyApp {
- *   ...
- * }
- *
- * bootstrap(MyApp).then((appRef:ApplicationRef) {
- *   expect(appRef.injector.get(appComponentTypeToken)).toEqual(MyApp);
- * });
- *
- * ```
- */
-const OpaqueToken APP_COMPONENT = const OpaqueToken("AppComponent");
-/**
  * A DI Token representing a unique string id assigned to the application by Angular and used
  * primarily for prefixing application attributes and CSS styles when
  * [ViewEncapsulation#Emulated] is being used.

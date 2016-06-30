@@ -72,7 +72,7 @@ class Route extends AbstractRoute {
       String regex,
       RegexSerializer serializer,
       dynamic data,
-      dynamic /* Type | ComponentDefinition */ component})
+      dynamic /* Type | ComponentFactory | ComponentDefinition */ component})
       : component = component,
         super(
             name: name,
@@ -112,7 +112,7 @@ class AuxRoute extends AbstractRoute {
       String regex,
       RegexSerializer serializer,
       dynamic data,
-      dynamic /* Type | ComponentDefinition */ component})
+      dynamic /* Type | ComponentFactory | ComponentDefinition */ component})
       : component = component,
         super(
             name: name,

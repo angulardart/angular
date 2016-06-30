@@ -8,6 +8,7 @@ import "view_ref.dart" show ViewRef, ViewRef_;
 import "element.dart" show AppElement;
 import "view_utils.dart" show ViewUtils;
 import "../change_detection/change_detection.dart" show ChangeDetectorRef;
+import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 
 /**
  * Represents an instance of a Component created via a [ComponentFactory].
@@ -72,7 +73,9 @@ abstract class ComponentRef {
 class ComponentRef_ extends ComponentRef {
   AppElement _hostElement;
   Type _componentType;
-  ComponentRef_(this._hostElement, this._componentType) : super() {
+  List<dynamic> _metadata;
+  ComponentRef_(this._hostElement, this._componentType, this._metadata)
+      : super() {
     /* super call moved to initializer */;
   }
   ElementRef get location {
@@ -99,6 +102,10 @@ class ComponentRef_ extends ComponentRef {
     return this._componentType;
   }
 
+  List<dynamic> get metadata {
+    return this._metadata;
+  }
+
   void destroy() {
     this._hostElement.parentView.destroy();
   }
@@ -112,9 +119,32 @@ class ComponentFactory {
   final String selector;
   final Function _viewFactory;
   final Type _componentType;
-  const ComponentFactory(this.selector, this._viewFactory, this._componentType);
+  final List<dynamic /* Type | List < dynamic > */ > _metadataPairs;
+  static ComponentFactory cloneWithMetadata(
+      ComponentFactory original, List<dynamic> metadata) {
+    return new ComponentFactory(original.selector, original._viewFactory,
+        original._componentType, [original.componentType, metadata]);
+  }
+  // Note: can't use a Map for the metadata due to
+
+  // https://github.com/dart-lang/sdk/issues/21553
+  const ComponentFactory(this.selector, this._viewFactory, this._componentType,
+      [this._metadataPairs = null]);
   Type get componentType {
     return this._componentType;
+  }
+
+  List<dynamic> get metadata {
+    if (isPresent(this._metadataPairs)) {
+      for (var i = 0; i < this._metadataPairs.length; i += 2) {
+        if (identical(this._metadataPairs[i], this._componentType)) {
+          return (this._metadataPairs[i + 1] as List<dynamic>);
+        }
+      }
+      return [];
+    } else {
+      return reflector.annotations(this._componentType);
+    }
   }
 
   /**
@@ -130,6 +160,6 @@ class ComponentFactory {
     // Note: Host views don't need a declarationAppElement!
     var hostView = this._viewFactory(vu, injector, null);
     var hostElement = hostView.create(projectableNodes, rootSelectorOrNode);
-    return new ComponentRef_(hostElement, this._componentType);
+    return new ComponentRef_(hostElement, this.componentType, this.metadata);
   }
 }

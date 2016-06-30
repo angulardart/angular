@@ -9,7 +9,6 @@ import "package:angular2/core.dart"
         PLATFORM_DIRECTIVES,
         PLATFORM_PIPES,
         ComponentRef,
-        platform,
         ExceptionHandler,
         Reflector,
         reflector,
@@ -17,7 +16,8 @@ import "package:angular2/core.dart"
         PLATFORM_COMMON_PROVIDERS,
         RootRenderer,
         PLATFORM_INITIALIZER,
-        APP_INITIALIZER;
+        APP_INITIALIZER,
+        TestabilityRegistry;
 import "package:angular2/platform/common_dom.dart"
     show EVENT_MANAGER_PLUGINS, EventManager;
 import "package:angular2/src/core/di.dart"
@@ -72,10 +72,15 @@ const List<dynamic> WORKER_RENDER_MESSAGING_PROVIDERS = const [
   MessageBasedRenderer,
   MessageBasedXHRImpl
 ];
+const WORKER_RENDER_PLATFORM_MARKER =
+    const OpaqueToken("WorkerRenderPlatformMarker");
 const List<dynamic> WORKER_RENDER_PLATFORM = const [
   PLATFORM_COMMON_PROVIDERS,
+  const Provider(WORKER_RENDER_PLATFORM_MARKER, useValue: true),
   const Provider(PLATFORM_INITIALIZER,
-      useValue: initWebWorkerRenderPlatform, multi: true)
+      useFactory: initWebWorkerRenderPlatform,
+      multi: true,
+      deps: const [TestabilityRegistry])
 ];
 /**
  * A list of [Provider]s. To use the router in a Worker enabled application you must
@@ -118,17 +123,19 @@ initializeGenericWorkerRenderer(Injector injector) {
   var bus = injector.get(MessageBus);
   var zone = injector.get(NgZone);
   bus.attachToZone(zone);
-  zone.run(() {
+  zone.runGuarded(() {
     WORKER_RENDER_MESSAGING_PROVIDERS.forEach((token) {
       injector.get(token).start();
     });
   });
 }
 
-void initWebWorkerRenderPlatform() {
-  BrowserDomAdapter.makeCurrent();
-  wtfInit();
-  BrowserGetTestability.init();
+Function initWebWorkerRenderPlatform(TestabilityRegistry registry) {
+  return () {
+    BrowserDomAdapter.makeCurrent();
+    wtfInit();
+    registry.setTestabilityGetter(new BrowserGetTestability());
+  };
 }
 
 ExceptionHandler exceptionHandler() {

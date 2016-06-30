@@ -1,4 +1,4 @@
-library angular2.src.core.di.key;
+library angular2.src.core.di.reflective_key;
 
 import "package:angular2/src/facade/lang.dart" show stringify, Type, isBlank;
 import "package:angular2/src/facade/exceptions.dart"
@@ -6,25 +6,27 @@ import "package:angular2/src/facade/exceptions.dart"
 import "forward_ref.dart" show resolveForwardRef;
 
 /**
- * A unique object used for retrieving items from the [Injector].
+ * A unique object used for retrieving items from the [ReflectiveInjector].
  *
  * Keys have:
  * - a system-wide unique `id`.
  * - a `token`.
  *
- * `Key` is used internally by [Injector] because its system-wide unique `id` allows the
+ * `Key` is used internally by [ReflectiveInjector] because its system-wide unique `id` allows
+ * the
  * injector to store created objects in a more efficient way.
  *
- * `Key` should not be created directly. [Injector] creates keys automatically when resolving
+ * `Key` should not be created directly. [ReflectiveInjector] creates keys automatically when
+ * resolving
  * providers.
  */
-class Key {
+class ReflectiveKey {
   Object token;
   num id;
   /**
    * Private
    */
-  Key(this.token, this.id) {
+  ReflectiveKey(this.token, this.id) {
     if (isBlank(token)) {
       throw new BaseException("Token must be defined!");
     }
@@ -39,7 +41,7 @@ class Key {
   /**
    * Retrieves a `Key` for a token.
    */
-  static Key get(Object token) {
+  static ReflectiveKey get(Object token) {
     return _globalKeyRegistry.get(resolveForwardRef(token));
   }
 
@@ -55,13 +57,13 @@ class Key {
  * @internal
  */
 class KeyRegistry {
-  var _allKeys = new Map<Object, Key>();
-  Key get(Object token) {
-    if (token is Key) return token;
+  var _allKeys = new Map<Object, ReflectiveKey>();
+  ReflectiveKey get(Object token) {
+    if (token is ReflectiveKey) return token;
     if (this._allKeys.containsKey(token)) {
       return this._allKeys[token];
     }
-    var newKey = new Key(token, Key.numberOfKeys);
+    var newKey = new ReflectiveKey(token, ReflectiveKey.numberOfKeys);
     this._allKeys[token] = newKey;
     return newKey;
   }

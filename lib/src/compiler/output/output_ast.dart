@@ -204,10 +204,10 @@ abstract class Expression {
   }
 }
 
-enum BuiltinVar { This, Super, CatchError, CatchStack }
+enum BuiltinVar { This, Super, CatchError, CatchStack, MetadataMap }
 
 class ReadVarExpr extends Expression {
-  var name;
+  String name;
   BuiltinVar builtin;
   ReadVarExpr(dynamic /* String | BuiltinVar */ name, [Type type = null])
       : super(type) {
@@ -497,6 +497,7 @@ var THIS_EXPR = new ReadVarExpr(BuiltinVar.This);
 var SUPER_EXPR = new ReadVarExpr(BuiltinVar.Super);
 var CATCH_ERROR_VAR = new ReadVarExpr(BuiltinVar.CatchError);
 var CATCH_STACK_VAR = new ReadVarExpr(BuiltinVar.CatchStack);
+var METADATA_MAP = new ReadVarExpr(BuiltinVar.MetadataMap);
 var NULL_EXPR = new LiteralExpr(null, null);
 //// Statements
 enum StmtModifier { Final, Private }

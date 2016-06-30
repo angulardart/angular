@@ -96,7 +96,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
     return (event) {
       if (StringWrapper.equals(
           KeyEventsPlugin.getEventFullKey(event), fullKey)) {
-        zone.run(() => handler(event));
+        zone.runGuarded(() => handler(event));
       }
     };
   }

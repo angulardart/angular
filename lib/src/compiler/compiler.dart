@@ -25,6 +25,8 @@ import "package:angular2/src/compiler/runtime_metadata.dart"
 import "package:angular2/src/compiler/style_compiler.dart" show StyleCompiler;
 import "package:angular2/src/compiler/view_compiler/view_compiler.dart"
     show ViewCompiler;
+import "package:angular2/src/compiler/view_compiler/injector_compiler.dart"
+    show InjectorCompiler;
 import "config.dart" show CompilerConfig;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
@@ -61,6 +63,7 @@ const List<dynamic /* Type | Provider | List < dynamic > */ >
   DEFAULT_PACKAGE_URL_PROVIDER,
   StyleCompiler,
   ViewCompiler,
+  InjectorCompiler,
   const Provider(CompilerConfig,
       useFactory: createCompilerConfig, deps: const []),
   RuntimeCompiler,

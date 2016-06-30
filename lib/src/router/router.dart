@@ -14,7 +14,7 @@ import "package:angular2/core.dart" show Inject, Injectable;
 import "route_registry.dart" show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
 import "instruction.dart" show ComponentInstruction, Instruction;
 import "directives/router_outlet.dart" show RouterOutlet;
-import "lifecycle/route_lifecycle_reflector.dart" show getCanActivateHook;
+import "utils.dart" show getCanActivateHook;
 import "route_config/route_config_impl.dart" show RouteDefinition;
 
 var _resolveToTrue = PromiseWrapper.resolve(true);
@@ -465,7 +465,7 @@ class RootRouter extends Router {
   /** @internal */
   Object _locationSub;
   RootRouter(RouteRegistry registry, Location location,
-      @Inject(ROUTER_PRIMARY_COMPONENT) Type primaryComponent)
+      @Inject(ROUTER_PRIMARY_COMPONENT) dynamic primaryComponent)
       : super(registry, null, primaryComponent) {
     /* super call moved to initializer */;
     this.root = this;

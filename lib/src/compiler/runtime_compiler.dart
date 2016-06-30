@@ -2,8 +2,17 @@ library angular2.src.compiler.runtime_compiler;
 
 import "dart:async";
 import "package:angular2/src/facade/lang.dart"
-    show IS_DART, Type, Json, isBlank, isPresent, stringify, evalExpression;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+    show
+        IS_DART,
+        Type,
+        Json,
+        isBlank,
+        isPresent,
+        isString,
+        stringify,
+        evalExpression;
+import "package:angular2/src/facade/exceptions.dart"
+    show BaseException, unimplemented;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, SetWrapper, MapWrapper, StringMapWrapper;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
@@ -36,11 +45,14 @@ import "package:angular2/src/core/di.dart" show Injectable;
 import "style_compiler.dart"
     show StyleCompiler, StylesCompileDependency, StylesCompileResult;
 import "view_compiler/view_compiler.dart" show ViewCompiler;
+import "view_compiler/injector_compiler.dart" show InjectorCompiler;
 import "template_parser.dart" show TemplateParser;
 import "directive_normalizer.dart" show DirectiveNormalizer;
 import "runtime_metadata.dart" show RuntimeMetadataResolver;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory;
+import "package:angular2/src/core/linker/injector_factory.dart"
+    show CodegenInjectorFactory;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver, ReflectorComponentResolver;
 import "config.dart" show CompilerConfig;
@@ -48,7 +60,9 @@ import "output/output_ast.dart" as ir;
 import "output/output_jit.dart" show jitStatements;
 import "output/output_interpreter.dart" show interpretStatements;
 import "output/interpretive_view.dart" show InterpretiveAppViewInstanceFactory;
-import "package:angular2/src/compiler/xhr.dart" show XHR;
+import "output/interpretive_injector.dart"
+    show InterpretiveInjectorInstanceFactory;
+import "xhr.dart" show XHR;
 
 /**
  * An internal module of the Angular compiler that begins with component types,
@@ -63,6 +77,7 @@ class RuntimeCompiler implements ComponentResolver {
   StyleCompiler _styleCompiler;
   ViewCompiler _viewCompiler;
   XHR _xhr;
+  InjectorCompiler _injectorCompiler;
   CompilerConfig _genConfig;
   Map<String, Future<String>> _styleCache = new Map<String, Future<String>>();
   var _hostCacheKeys = new Map<Type, dynamic>();
@@ -75,7 +90,30 @@ class RuntimeCompiler implements ComponentResolver {
       this._styleCompiler,
       this._viewCompiler,
       this._xhr,
+      this._injectorCompiler,
       this._genConfig) {}
+  CodegenInjectorFactory<dynamic> createInjectorFactory(Type moduleClass,
+      [List<dynamic> extraProviders = const []]) {
+    var injectorModuleMeta = this
+        ._runtimeMetadataResolver
+        .getInjectorModuleMetadata(moduleClass, extraProviders);
+    var compileResult =
+        this._injectorCompiler.compileInjector(injectorModuleMeta);
+    dynamic factory;
+    if (IS_DART || !this._genConfig.useJit) {
+      factory = interpretStatements(
+          compileResult.statements,
+          compileResult.injectorFactoryVar,
+          new InterpretiveInjectorInstanceFactory());
+    } else {
+      factory = jitStatements(
+          '''${ injectorModuleMeta . type . name}.ngfactory.js''',
+          compileResult.statements,
+          compileResult.injectorFactoryVar);
+    }
+    return factory;
+  }
+
   Future<ComponentFactory> resolveComponent(Type componentType) {
     CompileDirectiveMetadata compMeta =
         this._runtimeMetadataResolver.getDirectiveMetadata(componentType);

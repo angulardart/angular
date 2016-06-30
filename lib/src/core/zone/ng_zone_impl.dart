@@ -117,8 +117,12 @@ class NgZoneImpl {
         zoneValues: {'isAngularZone': true});
   }
 
-  dynamic runInner(fn()) {
+  dynamic runInnerGuarded(fn()) {
     return _innerZone.runGuarded(fn);
+  }
+
+  dynamic runInner(fn()) {
+    return _innerZone.run(fn);
   }
 
   /**

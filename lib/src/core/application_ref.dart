@@ -3,23 +3,26 @@ library angular2.src.core.application_ref;
 import "dart:async";
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
 import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isPresent, assertionsEnabled, print, IS_DART;
-import "package:angular2/src/core/di.dart"
-    show provide, Provider, Injector, OpaqueToken;
-import "application_tokens.dart"
     show
-        APP_COMPONENT_REF_PROMISE,
-        APP_COMPONENT,
-        APP_ID_RANDOM_PROVIDER,
-        PLATFORM_INITIALIZER,
-        APP_INITIALIZER;
+        Type,
+        isBlank,
+        isPresent,
+        assertionsEnabled,
+        print,
+        IS_DART,
+        lockMode,
+        isPromise;
+import "package:angular2/src/core/di.dart"
+    show provide, Provider, Injector, Injectable;
+import "application_tokens.dart"
+    show APP_ID_RANDOM_PROVIDER, PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "package:angular2/src/facade/async.dart"
     show PromiseWrapper, PromiseCompleter, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry, Testability;
-import "package:angular2/src/core/linker/dynamic_component_loader.dart"
-    show DynamicComponentLoader;
+import "package:angular2/src/core/linker/component_resolver.dart"
+    show ComponentResolver;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef;
 import "package:angular2/src/facade/exceptions.dart"
@@ -28,41 +31,8 @@ import "package:angular2/src/core/console.dart" show Console;
 import "profile/profile.dart" show wtfLeave, wtfCreateScope, WtfScopeFn;
 import "package:angular2/src/core/change_detection/change_detector_ref.dart"
     show ChangeDetectorRef;
-import "package:angular2/src/facade/lang.dart" show lockMode;
-
-/**
- * Construct providers specific to an individual root component.
- */
-List<dynamic /* Type | Provider | List < dynamic > */ > _componentProviders(
-    Type appComponentType) {
-  return <dynamic>[
-    provide(APP_COMPONENT, useValue: appComponentType),
-    provide(APP_COMPONENT_REF_PROMISE, useFactory:
-        (DynamicComponentLoader dynamicComponentLoader, ApplicationRef_ appRef,
-            Injector injector) {
-      // Save the ComponentRef for disposal later.
-      ComponentRef ref;
-      // TODO(rado): investigate whether to support providers on root
-
-      // component.
-      return dynamicComponentLoader.loadAsRoot(appComponentType, null, injector,
-          () {
-        appRef._unloadComponent(ref);
-      }).then((componentRef) {
-        ref = componentRef;
-        var testability = injector.getOptional(Testability);
-        if (isPresent(testability)) {
-          injector.get(TestabilityRegistry).registerApplication(
-              componentRef.location.nativeElement, testability);
-        }
-        return componentRef;
-      });
-    }, deps: [DynamicComponentLoader, ApplicationRef, Injector]),
-    provide(appComponentType,
-        useFactory: (Future<dynamic> p) => p.then((ref) => ref.instance),
-        deps: [APP_COMPONENT_REF_PROMISE])
-  ];
-}
+import "package:angular2/src/core/linker/component_factory.dart"
+    show ComponentFactory;
 
 /**
  * Create an Angular zone.
@@ -71,63 +41,89 @@ NgZone createNgZone() {
   return new NgZone(enableLongStackTrace: assertionsEnabled());
 }
 
-PlatformRef _platform;
-List<dynamic> _platformProviders;
+PlatformRef_ _platform;
+bool _inPlatformCreate = false;
 /**
- * Initialize the Angular 'platform' on the page.
- *
- * See [PlatformRef] for details on the Angular platform.
- *
- * It is also possible to specify providers to be made in the new platform. These providers
- * will be shared between all applications on the page. For example, an abstraction for
- * the browser cookie jar should be bound at the platform level, because there is only one
- * cookie jar regardless of how many applications on the page will be accessing it.
- *
- * The platform function can be called multiple times as long as the same list of providers
- * is passed into each call. If the platform function is called with a different set of
- * provides, Angular will throw an exception.
+ * Creates a platform.
+ * Platforms have to be eagerly created via this function.
  */
-PlatformRef platform(
-    [List<dynamic /* Type | Provider | List < dynamic > */ > providers]) {
-  lockMode();
-  if (isPresent(_platform)) {
-    if (ListWrapper.equals(_platformProviders, providers)) {
-      return _platform;
-    } else {
-      throw new BaseException(
-          "platform cannot be initialized with different sets of providers.");
-    }
-  } else {
-    return _createPlatform(providers);
+PlatformRef createPlatform(Injector injector) {
+  if (_inPlatformCreate) {
+    throw new BaseException("Already creating a platform...");
   }
+  if (isPresent(_platform) && !_platform.disposed) {
+    throw new BaseException(
+        "There can be only one platform. Destroy the previous one to create a new one.");
+  }
+  lockMode();
+  _inPlatformCreate = true;
+  try {
+    _platform = injector.get(PlatformRef);
+    _platform.init(injector);
+  } finally {
+    _inPlatformCreate = false;
+  }
+  return _platform;
+}
+
+/**
+ * Checks that there currently is a platform
+ * which contains the given token as a provider.
+ */
+PlatformRef assertPlatform(dynamic requiredToken) {
+  var platform = getPlatform();
+  if (isBlank(platform)) {
+    throw new BaseException("Not platform exists!");
+  }
+  if (isPresent(platform) &&
+      isBlank(platform.injector.get(requiredToken, null))) {
+    throw new BaseException(
+        "A platform with a different configuration has been created. Please destroy it first.");
+  }
+  return platform;
 }
 
 /**
  * Dispose the existing platform.
  */
 void disposePlatform() {
-  if (isPresent(_platform)) {
+  if (isPresent(_platform) && !_platform.disposed) {
     _platform.dispose();
-    _platform = null;
   }
 }
 
-PlatformRef _createPlatform(
-    [List<dynamic /* Type | Provider | List < dynamic > */ > providers]) {
-  _platformProviders = providers;
-  var injector = Injector.resolveAndCreate(providers);
-  _platform = new PlatformRef_(injector, () {
-    _platform = null;
-    _platformProviders = null;
-  });
-  _runPlatformInitializers(injector);
-  return _platform;
+/**
+ * Returns the current platform.
+ */
+PlatformRef getPlatform() {
+  return isPresent(_platform) && !_platform.disposed ? _platform : null;
 }
 
-void _runPlatformInitializers(Injector injector) {
-  List<Function> inits =
-      (injector.getOptional(PLATFORM_INITIALIZER) as List<Function>);
-  if (isPresent(inits)) inits.forEach((init) => init());
+/**
+ * Shortcut for ApplicationRef.bootstrap.
+ * Requires a platform the be created first.
+ */
+ComponentRef coreBootstrap(
+    Injector injector, ComponentFactory componentFactory) {
+  ApplicationRef appRef = injector.get(ApplicationRef);
+  return appRef.bootstrap(componentFactory);
+}
+
+/**
+ * Resolves the componentFactory for the given component,
+ * waits for asynchronous initializers and bootstraps the component.
+ * Requires a platform the be created first.
+ */
+Future<ComponentRef> coreLoadAndBootstrap(
+    Injector injector, Type componentType) {
+  ApplicationRef appRef = injector.get(ApplicationRef);
+  return appRef.run(() {
+    ComponentResolver componentResolver = injector.get(ComponentResolver);
+    return PromiseWrapper.all([
+      componentResolver.resolveComponent(componentType),
+      appRef.waitForAsyncInitializers()
+    ]).then((arr) => appRef.bootstrap(arr[0]));
+  });
 }
 
 /**
@@ -136,7 +132,7 @@ void _runPlatformInitializers(Injector injector) {
  * to every Angular application running on the page are bound in its scope.
  *
  * A page's platform is initialized implicitly when [bootstrap]() is called, or
- * explicitly by calling [platform]().
+ * explicitly by calling [createPlatform]().
  */
 abstract class PlatformRef {
   /**
@@ -152,62 +148,33 @@ abstract class PlatformRef {
   }
 
   /**
-   * Instantiate a new Angular application on the page.
-   *
-   * ### What is an application?
-   *
-   * Each Angular application has its own zone, change detection, compiler,
-   * renderer, and other framework components. An application hosts one or more
-   * root components, which can be initialized via `ApplicationRef.bootstrap()`.
-   *
-   * ### Application Providers
-   *
-   * Angular applications require numerous providers to be properly instantiated.
-   * When using `application()` to create a new app on the page, these providers
-   * must be provided. Fortunately, there are helper functions to configure
-   * typical providers, as shown in the example below.
-   *
-   * ### Example
-   *
-   * {@example core/ts/platform/platform.ts region='longform'}
-   * ### See Also
-   *
-   * See the [bootstrap] documentation for more details.
-   */
-  ApplicationRef application(
-      List<dynamic /* Type | Provider | List < dynamic > */ > providers);
-  /**
-   * Instantiate a new Angular application on the page, using providers which
-   * are only available asynchronously. One such use case is to initialize an
-   * application running in a web worker.
-   *
-   * ### Usage
-   *
-   * `bindingFn` is a function that will be called in the new application's zone.
-   * It should return a `Promise` to a list of providers to be used for the
-   * new application. Once this promise resolves, the application will be
-   * constructed in the same manner as a normal `application()`.
-   */
-  Future<ApplicationRef> asyncApplication(
-      Future<List<dynamic /* Type | Provider | List < dynamic > */ >> bindingFn(
-          NgZone zone),
-      [List<dynamic /* Type | Provider | List < dynamic > */ > providers]);
-  /**
    * Destroy the Angular platform and all Angular applications on the page.
    */
   void dispose();
+  bool get disposed {
+    throw unimplemented();
+  }
 }
 
+@Injectable()
 class PlatformRef_ extends PlatformRef {
-  Injector _injector;
-  dynamic /* () => void */ _dispose;
   /** @internal */
   List<ApplicationRef> _applications = [];
   /** @internal */
   List<Function> _disposeListeners = [];
-  PlatformRef_(this._injector, this._dispose) : super() {
-    /* super call moved to initializer */;
+  bool _disposed = false;
+  Injector _injector;
+  init(Injector injector) {
+    if (!_inPlatformCreate) {
+      throw new BaseException(
+          "Platforms have to be initialized via `createPlatform`!");
+    }
+    this._injector = injector;
+    List<Function> inits =
+        (injector.get(PLATFORM_INITIALIZER, null) as List<Function>);
+    if (isPresent(inits)) inits.forEach((init) => init());
   }
+
   void registerDisposeListener(void dispose()) {
     this._disposeListeners.add(dispose);
   }
@@ -216,101 +183,23 @@ class PlatformRef_ extends PlatformRef {
     return this._injector;
   }
 
-  ApplicationRef application(
-      List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
-    var app = this._initApp(createNgZone(), providers);
-    if (PromiseWrapper.isPromise(app)) {
-      throw new BaseException(
-          "Cannot use asyncronous app initializers with application. Use asyncApplication instead.");
-    }
-    return (app as ApplicationRef);
+  get disposed {
+    return this._disposed;
   }
 
-  Future<ApplicationRef> asyncApplication(
-      Future<List<dynamic /* Type | Provider | List < dynamic > */ >> bindingFn(
-          NgZone zone),
-      [List<
-          dynamic /* Type | Provider | List < dynamic > */ > additionalProviders]) {
-    var zone = createNgZone();
-    var completer = PromiseWrapper.completer/*< ApplicationRef >*/();
-    if (identical(bindingFn, null)) {
-      completer.resolve(this._initApp(zone, additionalProviders));
-    } else {
-      zone.run(() {
-        PromiseWrapper.then(bindingFn(zone), (List<
-            dynamic /* Type | Provider | List < dynamic > */ > providers) {
-          if (isPresent(additionalProviders)) {
-            providers = ListWrapper.concat(providers, additionalProviders);
-          }
-          var promise = this._initApp(zone, providers);
-          completer.resolve(promise);
-        });
-      });
-    }
-    return completer.promise;
-  }
-
-  dynamic /* Future< ApplicationRef > | ApplicationRef */ _initApp(NgZone zone,
-      List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
-    Injector injector;
-    ApplicationRef app;
-    zone.run(() {
-      providers = ListWrapper.concat(providers, [
-        provide(NgZone, useValue: zone),
-        provide(ApplicationRef, useFactory: () => app, deps: [])
-      ]);
-      ExceptionHandler exceptionHandler;
-      try {
-        injector = this.injector.resolveAndCreateChild(providers);
-        exceptionHandler = injector.get(ExceptionHandler);
-        ObservableWrapper.subscribe(zone.onError, (NgZoneError error) {
-          exceptionHandler.call(error.error, error.stackTrace);
-        });
-      } catch (e, e_stack) {
-        if (isPresent(exceptionHandler)) {
-          exceptionHandler.call(e, e_stack);
-        } else {
-          print(e.toString());
-        }
-      }
-    });
-    app = new ApplicationRef_(this, zone, injector);
-    this._applications.add(app);
-    var promise = _runAppInitializers(injector);
-    if (!identical(promise, null)) {
-      return PromiseWrapper.then(promise, (_) => app);
-    } else {
-      return app;
-    }
+  addApplication(ApplicationRef appRef) {
+    this._applications.add(appRef);
   }
 
   void dispose() {
     ListWrapper.clone(this._applications).forEach((app) => app.dispose());
     this._disposeListeners.forEach((dispose) => dispose());
-    this._dispose();
+    this._disposed = true;
   }
 
   /** @internal */
   void _applicationDisposed(ApplicationRef app) {
     ListWrapper.remove(this._applications, app);
-  }
-}
-
-Future<dynamic> _runAppInitializers(Injector injector) {
-  List<Function> inits = injector.getOptional(APP_INITIALIZER);
-  List<Future<dynamic>> promises = [];
-  if (isPresent(inits)) {
-    inits.forEach((init) {
-      var retVal = init();
-      if (PromiseWrapper.isPromise(retVal)) {
-        promises.add(retVal);
-      }
-    });
-  }
-  if (promises.length > 0) {
-    return PromiseWrapper.all(promises);
-  } else {
-    return null;
   }
 }
 
@@ -330,6 +219,16 @@ abstract class ApplicationRef {
    */
   void registerDisposeListener(void dispose());
   /**
+   * Returns a promise that resolves when all asynchronous application initializers
+   * are done.
+   */
+  Future<dynamic> waitForAsyncInitializers();
+  /**
+   * Runs the given callback in the zone and returns the result of the callback.
+   * Exceptions will be forwarded to the ExceptionHandler and rethrown.
+   */
+  dynamic run(Function callback);
+  /**
    * Bootstrap a new component at the root level of the application.
    *
    * ### Bootstrap process
@@ -338,17 +237,10 @@ abstract class ApplicationRef {
    * specified application component onto DOM elements identified by the [componentType]'s
    * selector and kicks off automatic change detection to finish initializing the component.
    *
-   * ### Optional Providers
-   *
-   * Providers for the given component can optionally be overridden via the `providers`
-   * parameter. These providers will only apply for the root component being added and any
-   * child components under it.
-   *
    * ### Example
    * {@example core/ts/platform/platform.ts region='longform'}
    */
-  Future<ComponentRef> bootstrap(Type componentType,
-      [List<dynamic /* Type | Provider | List < dynamic > */ > providers]);
+  ComponentRef bootstrap(ComponentFactory componentFactory);
   /**
    * Retrieve the application [Injector].
    */
@@ -384,8 +276,16 @@ abstract class ApplicationRef {
   List<Type> get componentTypes {
     return (unimplemented() as List<Type>);
   }
+
+  /**
+   * Get a list of component factories registered to this application.
+   */
+  List<ComponentFactory> get componentFactories {
+    return (unimplemented() as List<ComponentFactory>);
+  }
 }
 
+@Injectable()
 class ApplicationRef_ extends ApplicationRef {
   PlatformRef_ _platform;
   NgZone _zone;
@@ -399,23 +299,54 @@ class ApplicationRef_ extends ApplicationRef {
   /** @internal */
   List<ComponentRef> _rootComponents = [];
   /** @internal */
-  List<Type> _rootComponentTypes = [];
+  List<ComponentFactory> _rootComponentFactories = [];
   /** @internal */
   List<ChangeDetectorRef> _changeDetectorRefs = [];
   /** @internal */
   bool _runningTick = false;
   /** @internal */
   bool _enforceNoNewChanges = false;
+  ExceptionHandler _exceptionHandler;
+  Future<dynamic> _asyncInitDonePromise;
+  bool _asyncInitDone;
   ApplicationRef_(this._platform, this._zone, this._injector) : super() {
     /* super call moved to initializer */;
-    if (isPresent(this._zone)) {
-      ObservableWrapper.subscribe(this._zone.onMicrotaskEmpty, (_) {
-        this._zone.run(() {
-          this.tick();
-        });
-      });
-    }
+    NgZone zone = _injector.get(NgZone);
     this._enforceNoNewChanges = assertionsEnabled();
+    zone.run(() {
+      this._exceptionHandler = _injector.get(ExceptionHandler);
+    });
+    this._asyncInitDonePromise = this.run(() {
+      List<Function> inits = _injector.get(APP_INITIALIZER, null);
+      var asyncInitResults = [];
+      var asyncInitDonePromise;
+      if (isPresent(inits)) {
+        for (var i = 0; i < inits.length; i++) {
+          var initResult = inits[i]();
+          if (isPromise(initResult)) {
+            asyncInitResults.add(initResult);
+          }
+        }
+      }
+      if (asyncInitResults.length > 0) {
+        asyncInitDonePromise = PromiseWrapper
+            .all(asyncInitResults)
+            .then((_) => this._asyncInitDone = true);
+        this._asyncInitDone = false;
+      } else {
+        this._asyncInitDone = true;
+        asyncInitDonePromise = PromiseWrapper.resolve(true);
+      }
+      return asyncInitDonePromise;
+    });
+    ObservableWrapper.subscribe(zone.onError, (NgZoneError error) {
+      this._exceptionHandler.call(error.error, error.stackTrace);
+    });
+    ObservableWrapper.subscribe(this._zone.onMicrotaskEmpty, (_) {
+      this._zone.run(() {
+        this.tick();
+      });
+    });
   }
   void registerBootstrapListener(void listener(ComponentRef ref)) {
     this._bootstrapListeners.add(listener);
@@ -433,42 +364,67 @@ class ApplicationRef_ extends ApplicationRef {
     ListWrapper.remove(this._changeDetectorRefs, changeDetector);
   }
 
-  Future<ComponentRef> bootstrap(Type componentType,
-      [List<dynamic /* Type | Provider | List < dynamic > */ > providers]) {
+  Future<dynamic> waitForAsyncInitializers() {
+    return this._asyncInitDonePromise;
+  }
+
+  dynamic run(Function callback) {
+    var zone = this.injector.get(NgZone);
+    var result;
+    // Note: Don't use zone.runGuarded as we want to know about
+
+    // the thrown exception!
+
+    // Note: the completer needs to be created outside
+
+    // of `zone.run` as Dart swallows rejected promises
+
+    // via the onError callback of the promise.
     var completer = PromiseWrapper.completer();
-    this._zone.run(() {
-      var componentProviders = _componentProviders(componentType);
-      if (isPresent(providers)) {
-        componentProviders.add(providers);
-      }
-      var exceptionHandler = this._injector.get(ExceptionHandler);
-      this._rootComponentTypes.add(componentType);
+    zone.run(() {
       try {
-        Injector injector =
-            this._injector.resolveAndCreateChild(componentProviders);
-        Future<ComponentRef> compRefToken =
-            injector.get(APP_COMPONENT_REF_PROMISE);
-        var tick = (ComponentRef componentRef) {
-          this._loadComponent(componentRef);
-          completer.resolve(componentRef);
-        };
-        var tickResult = PromiseWrapper.then(compRefToken, tick);
-        PromiseWrapper.then(tickResult, null, (err, stackTrace) {
-          completer.reject(err, stackTrace);
-          exceptionHandler.call(err, stackTrace);
-        });
+        result = callback();
+        if (isPromise(result)) {
+          PromiseWrapper.then(result, (ref) {
+            completer.resolve(ref);
+          }, (err, stackTrace) {
+            completer.reject(err, stackTrace);
+            this._exceptionHandler.call(err, stackTrace);
+          });
+        }
       } catch (e, e_stack) {
-        exceptionHandler.call(e, e_stack);
-        completer.reject(e, e_stack);
+        this._exceptionHandler.call(e, e_stack);
+        rethrow;
       }
     });
-    return completer.promise.then((ComponentRef ref) {
-      Console c = this._injector.get(Console);
+    return isPromise(result) ? completer.promise : result;
+  }
+
+  ComponentRef bootstrap(ComponentFactory componentFactory) {
+    if (!this._asyncInitDone) {
+      throw new BaseException(
+          "Cannot bootstrap as there are still asynchronous initializers running. Wait for them using waitForAsyncInitializers().");
+    }
+    return this.run(() {
+      this._rootComponentFactories.add(componentFactory);
+      var compRef = componentFactory.create(
+          this._injector, [], componentFactory.selector);
+      compRef.onDestroy(() {
+        this._unloadComponent(compRef);
+      });
+      var testability = compRef.injector.get(Testability, null);
+      if (isPresent(testability)) {
+        compRef.injector
+            .get(TestabilityRegistry)
+            .registerApplication(compRef.location.nativeElement, testability);
+      }
+      this._loadComponent(compRef);
+      var c = (this._injector.get(Console) as Console);
       if (assertionsEnabled()) {
         c.log(
             "Angular 2 is running in the development mode. Call enableProdMode() to enable the production mode.");
       }
-      return ref;
+      return compRef;
     });
   }
 
@@ -524,6 +480,29 @@ class ApplicationRef_ extends ApplicationRef {
   }
 
   List<Type> get componentTypes {
-    return this._rootComponentTypes;
+    return this
+        ._rootComponentFactories
+        .map((factory) => factory.componentType)
+        .toList();
+  }
+
+  List<ComponentFactory> get componentFactories {
+    return this._rootComponentFactories;
   }
 }
+
+/**
+ * @internal
+ */
+const PLATFORM_CORE_PROVIDERS = const [
+  PlatformRef_,
+  const Provider(PlatformRef, useExisting: PlatformRef_)
+];
+/**
+ * @internal
+ */
+const APPLICATION_CORE_PROVIDERS = const [
+  const Provider(NgZone, useFactory: createNgZone, deps: const []),
+  ApplicationRef_,
+  const Provider(ApplicationRef, useExisting: ApplicationRef_)
+];
