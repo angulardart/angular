@@ -4,11 +4,11 @@ import "dart:async";
 import "package:angular2/src/facade/async.dart"
     show PromiseWrapper, EventEmitter, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart"
-    show Map, StringMapWrapper, MapWrapper, ListWrapper;
+    show Map, StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isString, isPresent, Type, isArray;
+    show isBlank, isPresent;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
 import "package:angular2/core.dart" show Inject, Injectable;
@@ -264,7 +264,7 @@ class Router {
       return this._routerCanDeactivate(instruction).then((bool result) {
         if (result) {
           return this.commit(instruction, _skipLocationChange).then((_) {
-            this._emitNavigationFinish(instruction.toRootUrl());
+            this._emitNavigationFinish(instruction.rootUrl);
             return true;
           });
         }
@@ -482,7 +482,7 @@ class RootRouter extends Router {
             if (isPresent(change["pop"]) && change["type"] != "hashchange") {
               return;
             }
-            var emitPath = instruction.toUrlPath();
+            var emitPath = instruction.path;
             var emitQuery = instruction.toUrlQuery();
             if (emitPath.length > 0 && emitPath[0] != "/") {
               emitPath = "/" + emitPath;
@@ -501,7 +501,7 @@ class RootRouter extends Router {
 
             // result, we need to replace the top item on the stack.
             if (change["type"] == "hashchange") {
-              if (instruction.toRootUrl() != this._location.path()) {
+              if (instruction.rootUrl != this._location.path()) {
                 this._location.replaceState(emitPath, emitQuery);
               }
             } else {
@@ -518,7 +518,7 @@ class RootRouter extends Router {
   }
   Future<dynamic> commit(Instruction instruction,
       [bool _skipLocationChange = false]) {
-    var emitPath = instruction.toUrlPath();
+    var emitPath = instruction.path;
     var emitQuery = instruction.toUrlQuery();
     if (emitPath.length > 0 && emitPath[0] != "/") {
       emitPath = "/" + emitPath;

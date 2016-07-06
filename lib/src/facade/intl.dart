@@ -28,7 +28,7 @@ class NumberFormatter {
           throw new Exception(
               'Displaying currency as symbol is not supported.');
         }
-        formatter = new NumberFormat.currencyPattern(locale, currency);
+        formatter = new NumberFormat.currency(locale: locale, symbol: currency);
         break;
     }
     formatter.minimumIntegerDigits = minimumIntegerDigits;

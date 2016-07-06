@@ -9,7 +9,6 @@ import "reflective_key.dart" show ReflectiveKey;
 import "metadata.dart"
     show
         InjectMetadata,
-        InjectableMetadata,
         OptionalMetadata,
         SelfMetadata,
         HostMetadata,
@@ -42,7 +41,6 @@ class ReflectiveDependency {
   }
 }
 
-const _EMPTY_LIST = const [];
 _identityPostProcess(obj) {
   return obj;
 }
@@ -124,7 +122,7 @@ class ResolvedReflectiveFactory {
  */
 ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
   Function factoryFn;
-  var resolvedDeps;
+  List<ReflectiveDependency> resolvedDeps;
   if (isPresent(provider.useClass)) {
     var useClass = resolveForwardRef(provider.useClass);
     factoryFn = reflector.factory(useClass);
@@ -140,7 +138,7 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
         constructDependencies(provider.useFactory, provider.dependencies);
   } else {
     factoryFn = () => provider.useValue;
-    resolvedDeps = _EMPTY_LIST;
+    resolvedDeps = const <ReflectiveDependency>[];
   }
   var postProcess = isPresent(provider.useProperty)
       ? reflector.getter(provider.useProperty)
@@ -314,7 +312,7 @@ List<dynamic> getInjectorModuleProviders(dynamic token) {
     if (isType(token)) {
       annotations = reflector.annotations(resolveForwardRef(token));
     }
-  } catch (e, e_stack) {}
+  } catch (e) {}
   InjectorModuleMetadata metadata = isPresent(annotations)
       ? annotations.firstWhere((type) => type is InjectorModuleMetadata,
           orElse: () => null)

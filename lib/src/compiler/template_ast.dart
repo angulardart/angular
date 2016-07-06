@@ -6,9 +6,7 @@ import "compile_metadata.dart"
     show
         CompileDirectiveMetadata,
         CompileTokenMetadata,
-        CompileProviderMetadata,
-        CompileTokenMap,
-        CompileQueryMetadata;
+        CompileProviderMetadata;
 import "parse_util.dart" show ParseSourceSpan;
 
 /**

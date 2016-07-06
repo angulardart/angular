@@ -4,10 +4,10 @@ import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, RegExpWrapper;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 
 List<String> convertUrlParamsToArray(Map<String, dynamic> urlParams) {
-  var paramsArray = [];
+  var paramsArray = <String>[];
   if (isBlank(urlParams)) {
     return [];
   }

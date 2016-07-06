@@ -13,8 +13,6 @@ import "package:angular2/core.dart"
         ComponentFactory,
         ComponentRef,
         ViewContainerRef,
-        provide,
-        ReflectiveInjector,
         OnDestroy,
         Output,
         MapInjector;
@@ -27,15 +25,13 @@ import "../interfaces.dart"
 
 var _resolveToTrue = PromiseWrapper.resolve(true);
 
-/**
- * A router outlet is a placeholder that Angular dynamically fills based on the application's route.
- *
- * ## Use
- *
- * ```
- * <router-outlet></router-outlet>
- * ```
- */
+/// A router outlet is a placeholder that Angular dynamically fills based on the application's route.
+///
+/// ## Use
+///
+/// ```
+/// <router-outlet></router-outlet>
+/// ```
 @Directive(selector: "router-outlet")
 class RouterOutlet implements OnDestroy {
   ViewContainerRef _viewContainerRef;
@@ -166,7 +162,7 @@ class RouterOutlet implements OnDestroy {
    * or resolves to true if the hook is not present.
    */
   Future<bool> routerCanReuse(ComponentInstruction nextInstruction) {
-    var result;
+    Future<bool> result;
     if (isBlank(this._currentInstruction) ||
         this._currentInstruction.componentType !=
             nextInstruction.componentType) {

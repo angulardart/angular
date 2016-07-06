@@ -1,8 +1,7 @@
 library angular2.src.core.render.api;
 
-import "package:angular2/src/facade/exceptions.dart" show unimplemented;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/core/di.dart" show Injector, Injectable;
+import "package:angular2/src/core/di.dart" show Injector;
 
 class RenderComponentType {
   String id;
@@ -15,25 +14,15 @@ class RenderComponentType {
 }
 
 abstract class RenderDebugInfo {
-  Injector get injector {
-    return unimplemented();
-  }
+  Injector get injector;
 
-  dynamic get component {
-    return unimplemented();
-  }
+  dynamic get component;
 
-  List<dynamic> get providerTokens {
-    return unimplemented();
-  }
+  List<dynamic> get providerTokens;
 
-  Map<String, String> get locals {
-    return unimplemented();
-  }
+  Map<String, String> get locals;
 
-  String get source {
-    return unimplemented();
-  }
+  String get source;
 }
 
 abstract class Renderer {

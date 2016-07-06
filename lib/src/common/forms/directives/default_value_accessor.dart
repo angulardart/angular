@@ -1,7 +1,7 @@
 library angular2.src.common.forms.directives.default_value_accessor;
 
 import "package:angular2/core.dart"
-    show Directive, ElementRef, Renderer, Self, Provider;
+    show Directive, ElementRef, Renderer, Provider;
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 import "package:angular2/src/facade/lang.dart" show isBlank;
@@ -25,7 +25,7 @@ const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
       "(input)": "onChange(\$event.target.value)",
       "(blur)": "onTouched()"
     },
-    bindings: const [
+    providers: const [
       DEFAULT_VALUE_ACCESSOR
     ])
 class DefaultValueAccessor implements ControlValueAccessor {

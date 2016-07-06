@@ -17,9 +17,7 @@ import "../template_ast.dart"
         TextAst,
         DirectiveAst,
         BoundDirectivePropertyAst,
-        templateVisitAll,
-        PropertyBindingType,
-        ProviderAst;
+        templateVisitAll;
 import "property_binder.dart"
     show
         bindRenderText,
@@ -36,7 +34,7 @@ import "lifecycle_binder.dart"
         bindPipeDestroyLifecycleCallbacks,
         bindDirectiveDetectChangesLifecycleCallbacks;
 import "compile_view.dart" show CompileView;
-import "compile_element.dart" show CompileElement, CompileNode;
+import "compile_element.dart" show CompileElement;
 
 void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
   var visitor = new ViewBinderVisitor(view);
@@ -50,22 +48,22 @@ class ViewBinderVisitor implements TemplateAstVisitor {
   CompileView view;
   num _nodeIndex = 0;
   ViewBinderVisitor(this.view) {}
-  dynamic visitBoundText(BoundTextAst ast, CompileElement parent) {
+  dynamic visitBoundText(BoundTextAst ast, dynamic context) {
     var node = this.view.nodes[this._nodeIndex++];
     bindRenderText(ast, node, this.view);
     return null;
   }
 
-  dynamic visitText(TextAst ast, CompileElement parent) {
+  dynamic visitText(TextAst ast, dynamic context) {
     this._nodeIndex++;
     return null;
   }
 
-  dynamic visitNgContent(NgContentAst ast, CompileElement parent) {
+  dynamic visitNgContent(NgContentAst ast, dynamic context) {
     return null;
   }
 
-  dynamic visitElement(ElementAst ast, CompileElement parent) {
+  dynamic visitElement(ElementAst ast, dynamic context) {
     var compileElement = (this.view.nodes[this._nodeIndex++] as CompileElement);
     var eventListeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
@@ -96,7 +94,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
   }
 
   dynamic visitEmbeddedTemplate(
-      EmbeddedTemplateAst ast, CompileElement parent) {
+      EmbeddedTemplateAst ast, dynamic context) {
     var compileElement = (this.view.nodes[this._nodeIndex++] as CompileElement);
     var eventListeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
@@ -117,24 +115,26 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     return null;
   }
 
-  dynamic visitAttr(AttrAst ast, dynamic ctx) {
+  dynamic visitAttr(AttrAst ast, dynamic context) {
     return null;
   }
 
-  dynamic visitDirective(DirectiveAst ast, dynamic ctx) {
+  dynamic visitDirective(DirectiveAst ast, dynamic context) {
     return null;
   }
 
   dynamic visitEvent(
-      BoundEventAst ast, Map<String, BoundEventAst> eventTargetAndNames) {
+      BoundEventAst ast, dynamic context) {
+    var eventTargetAndNames = context as Map<String, BoundEventAst>;
+    assert(eventTargetAndNames != null);
     return null;
   }
 
-  dynamic visitReference(ReferenceAst ast, dynamic ctx) {
+  dynamic visitReference(ReferenceAst ast, dynamic context) {
     return null;
   }
 
-  dynamic visitVariable(VariableAst ast, dynamic ctx) {
+  dynamic visitVariable(VariableAst ast, dynamic context) {
     return null;
   }
 

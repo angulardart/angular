@@ -1,10 +1,10 @@
 library angular2.src.core.reflection.reflector;
 
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, stringify;
+import "package:angular2/src/facade/lang.dart" show Type, isPresent;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, Map, MapWrapper, Set, SetWrapper, StringMapWrapper;
+    show Map, MapWrapper, Set, SetWrapper, StringMapWrapper;
 import "types.dart" show SetterFn, GetterFn, MethodFn;
 import "reflector_reader.dart" show ReflectorReader;
 import "platform_reflection_capabilities.dart"
@@ -100,10 +100,9 @@ class Reflector extends ReflectorReader {
 
   Function factory(Type type) {
     if (this._containsReflectionInfo(type)) {
-      var res = this._getReflectionInfo(type).factory;
-      return isPresent(res) ? res : null;
+      return _getReflectionInfo(type).factory;
     } else {
-      return this.reflectionCapabilities.factory(type);
+      return reflectionCapabilities.factory(type);
     }
   }
 

@@ -14,7 +14,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
   AbstractJsEmitterVisitor() : super(false) {
     /* super call moved to initializer */;
   }
-  dynamic visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.pushClass(stmt);
     this._visitClassConstructor(stmt, ctx);
     if (isPresent(stmt.parent)) {
@@ -28,7 +29,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     return null;
   }
 
-  _visitClassConstructor(o.ClassStmt stmt, EmitterVisitorContext ctx) {
+  _visitClassConstructor(o.ClassStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''function ${ stmt . name}(''');
     if (isPresent(stmt.constructorMethod)) {
       this._visitParams(stmt.constructorMethod.params, ctx);
@@ -46,7 +48,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
   }
 
   _visitClassGetter(
-      o.ClassStmt stmt, o.ClassGetter getter, EmitterVisitorContext ctx) {
+      o.ClassStmt stmt, o.ClassGetter getter, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.println(
         '''Object.defineProperty(${ stmt . name}.prototype, \'${ getter . name}\', { get: function() {''');
     ctx.incIndent();
@@ -59,7 +62,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
   }
 
   _visitClassMethod(
-      o.ClassStmt stmt, o.ClassMethod method, EmitterVisitorContext ctx) {
+      o.ClassStmt stmt, o.ClassMethod method, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''${ stmt . name}.prototype.${ method . name} = function(''');
     this._visitParams(method.params, ctx);
     ctx.println(''') {''');
@@ -72,7 +76,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     ctx.println('''};''');
   }
 
-  String visitReadVarExpr(o.ReadVarExpr ast, EmitterVisitorContext ctx) {
+  String visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (identical(ast.builtin, o.BuiltinVar.This)) {
       ctx.print("self");
     } else if (identical(ast.builtin, o.BuiltinVar.Super)) {
@@ -85,20 +90,23 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
   }
 
   dynamic visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, EmitterVisitorContext ctx) {
+      o.DeclareVarStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''var ${ stmt . name} = ''');
     stmt.value.visitExpression(this, ctx);
     ctx.println(''';''');
     return null;
   }
 
-  dynamic visitCastExpr(o.CastExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitCastExpr(o.CastExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ast.value.visitExpression(this, ctx);
     return null;
   }
 
   String visitInvokeFunctionExpr(
-      o.InvokeFunctionExpr expr, EmitterVisitorContext ctx) {
+      o.InvokeFunctionExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var fnExpr = expr.fn;
     if (fnExpr is o.ReadVarExpr &&
         identical(fnExpr.builtin, o.BuiltinVar.Super)) {
@@ -115,7 +123,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     return null;
   }
 
-  dynamic visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''function(''');
     this._visitParams(ast.params, ctx);
     ctx.println(''') {''');
@@ -127,7 +136,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
   }
 
   dynamic visitDeclareFunctionStmt(
-      o.DeclareFunctionStmt stmt, EmitterVisitorContext ctx) {
+      o.DeclareFunctionStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''function ${ stmt . name}(''');
     this._visitParams(stmt.params, ctx);
     ctx.println(''') {''');
@@ -138,17 +148,18 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     return null;
   }
 
-  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.println('''try {''');
     ctx.incIndent();
     this.visitAllStatements(stmt.bodyStmts, ctx);
     ctx.decIndent();
     ctx.println('''} catch (${ CATCH_ERROR_VAR . name}) {''');
     ctx.incIndent();
-    var catchStmts = (new List.from([
+    List<o.Statement> catchStmts = (new List.from([
       (CATCH_STACK_VAR
           .set(CATCH_ERROR_VAR.prop("stack"))
-          .toDeclStmt(null, [o.StmtModifier.Final]) as o.Statement)
+          .toDeclStmt(null, [o.StmtModifier.Final]))
     ])..addAll(stmt.catchStmts));
     this.visitAllStatements(catchStmts, ctx);
     ctx.decIndent();
@@ -156,7 +167,8 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     return null;
   }
 
-  void _visitParams(List<o.FnParam> params, EmitterVisitorContext ctx) {
+  void _visitParams(List<o.FnParam> params, dynamic context) {
+    EmitterVisitorContext ctx = context;
     this.visitAllObjects((param) => ctx.print(param.name), params, ctx, ",");
   }
 

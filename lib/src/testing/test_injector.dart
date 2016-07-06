@@ -1,12 +1,10 @@
 library angular2.src.testing.test_injector;
 
 import "package:angular2/core.dart"
-    show ReflectiveInjector, Provider, PLATFORM_INITIALIZER;
+    show ReflectiveInjector, PLATFORM_INITIALIZER;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, ExceptionHandler;
+    show BaseException;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/lang.dart"
-    show FunctionWrapper, isPresent, Type;
 
 class TestInjector {
   bool _instantiated = false;
@@ -25,7 +23,7 @@ class TestInjector {
   addProviders(
       List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
     if (this._instantiated) {
-      throw new BaseException(
+      throw new StateError(
           "Cannot add providers after test injector is instantiated");
     }
     this._providers = ListWrapper.concat(this._providers, providers);
@@ -84,10 +82,9 @@ setBaseTestProviders(
   testInjector.platformProviders = platformProviders;
   testInjector.applicationProviders = applicationProviders;
   var injector = testInjector.createInjector();
-  List<Function> inits = injector.get(PLATFORM_INITIALIZER, null);
-  if (isPresent(inits)) {
-    inits.forEach((init) => init());
-  }
+  List<Function> initializers = injector.get(PLATFORM_INITIALIZER, null)
+      as List<Function>;
+  initializers?.forEach((init) => init());
   testInjector.reset();
 }
 
@@ -211,12 +208,11 @@ class FunctionWithParamTokens {
   dynamic /* () => any */ additionalProviders;
   FunctionWithParamTokens(this._tokens, this.fn, this.isAsync,
       [this.additionalProviders = emptyArray]) {}
-  /**
-   * Returns the value of the executed function.
-   */
+
+  /// Returns the value of the executed function.
   dynamic execute(ReflectiveInjector injector) {
     var params = this._tokens.map((t) => injector.get(t)).toList();
-    return FunctionWrapper.apply(this.fn, params);
+    return Function.apply(this.fn, params);
   }
 
   bool hasToken(dynamic token) {

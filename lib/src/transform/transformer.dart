@@ -19,14 +19,14 @@ export 'common/options.dart';
 
 /// Replaces Angular 2 mirror use with generated code.
 class AngularTransformerGroup extends TransformerGroup {
-  AngularTransformerGroup._(phases, {bool formatCode: false}) : super(phases) {
+  AngularTransformerGroup._(Iterable<Iterable> phases, {bool formatCode: false}) : super(phases) {
     if (formatCode) {
       formatter.init(new DartFormatter());
     }
   }
 
   factory AngularTransformerGroup(TransformerOptions options) {
-    var phases;
+    Iterable<Iterable> phases;
     if (options.inlineViews) {
       phases = [
         [new InlinerForTest(options)]

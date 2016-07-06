@@ -3,8 +3,6 @@ library angular2.src.platform.worker_render;
 import 'package:angular2/src/platform/worker_render_common.dart'
     show
         WORKER_RENDER_APPLICATION_COMMON,
-        WORKER_RENDER_MESSAGING_PROVIDERS,
-        WORKER_SCRIPT,
         initializeGenericWorkerRenderer;
 import 'package:angular2/src/web_workers/shared/isolate_message_bus.dart';
 import 'package:angular2/src/web_workers/shared/message_bus.dart';
@@ -50,7 +48,7 @@ class UIMessageBusSource extends IsolateMessageBusSource {
 
   Future<SendPort> get sink => stream.firstWhere((message) {
         return message is SendPort;
-      });
+      }) as Future<SendPort>;
 }
 
 /**

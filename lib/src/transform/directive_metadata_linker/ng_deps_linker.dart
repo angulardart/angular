@@ -37,17 +37,19 @@ Future<NgDepsModel> linkNgDeps(NgDepsModel ngDepsModel, AssetReader reader,
     var idx = 0;
     final allDeps = [ngDepsModel.imports, ngDepsModel.exports].expand((e) => e);
     for (var dep in allDeps) {
-      if (linkedDepsMap.containsKey(dep.uri) && !seen.contains(dep.uri)) {
-        seen.add(dep.uri);
+      var uri;
+      if (dep is ImportModel) uri = dep.uri;
+      if (dep is ExportModel) uri = dep.uri;
+      if (linkedDepsMap.containsKey(uri) && !seen.contains(uri)) {
+        seen.add(uri);
         var linkedModel = new ImportModel()
-          ..uri = toTemplateExtension(dep.uri)
+          ..uri = toTemplateExtension(uri)
           ..prefix = 'i${idx++}';
-        // TODO(kegluneq): Preserve combinators?
         ngDepsModel.depImports.add(linkedModel);
       }
     }
     return ngDepsModel;
-  }, operationName: 'linkNgDeps', assetId: assetId);
+  }, operationName: 'linkNgDeps', assetId: assetId) as Future<NgDepsModel>;
 }
 
 bool _isNotDartDirective(dynamic model) => !isDartCoreUri(model.uri);

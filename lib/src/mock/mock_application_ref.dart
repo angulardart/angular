@@ -41,4 +41,6 @@ class MockApplicationRef extends ApplicationRef {
   List<Type> get componentTypes {
     return null;
   }
+
+  List<ComponentFactory> get componentFactories => null;
 }

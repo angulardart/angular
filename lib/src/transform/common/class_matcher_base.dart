@@ -79,7 +79,8 @@ ImportDirective _getMatchingImport(
   return (className.root as CompilationUnit)
       .directives
       .where((d) => d is ImportDirective)
-      .firstWhere((ImportDirective i) {
+      .firstWhere((importDirective) {
+    ImportDirective i = importDirective;
     var importMatch = false;
     var uriString = i.uri.stringValue;
     if (uriString == descriptor.import) {

@@ -5,41 +5,21 @@ import "package:angular2/src/facade/lang.dart"
     show
         IS_DART,
         Type,
-        Json,
-        isBlank,
-        isPresent,
-        isString,
-        stringify,
-        evalExpression;
+        isBlank;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, unimplemented;
+    show BaseException;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, SetWrapper, MapWrapper, StringMapWrapper;
+    show ListWrapper;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "compile_metadata.dart"
     show
         createHostComponentMeta,
         CompileDirectiveMetadata,
-        CompileTypeMetadata,
-        CompileTemplateMetadata,
         CompilePipeMetadata,
-        CompileMetadataWithType,
         CompileIdentifierMetadata;
 import "template_ast.dart"
     show
-        TemplateAst,
-        TemplateAstVisitor,
-        NgContentAst,
-        EmbeddedTemplateAst,
-        ElementAst,
-        BoundEventAst,
-        BoundElementPropertyAst,
-        AttrAst,
-        BoundTextAst,
-        TextAst,
-        DirectiveAst,
-        BoundDirectivePropertyAst,
-        templateVisitAll;
+        TemplateAst;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "style_compiler.dart"
     show StyleCompiler, StylesCompileDependency, StylesCompileResult;
@@ -53,7 +33,7 @@ import "package:angular2/src/core/linker/component_factory.dart"
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
 import "package:angular2/src/core/linker/component_resolver.dart"
-    show ComponentResolver, ReflectorComponentResolver;
+    show ComponentResolver;
 import "config.dart" show CompilerConfig;
 import "output/output_ast.dart" as ir;
 import "output/output_jit.dart" show jitStatements;
@@ -148,16 +128,16 @@ class RuntimeCompiler implements ComponentResolver {
     if (isBlank(compiledTemplate)) {
       compiledTemplate = new CompiledTemplate();
       this._compiledTemplateCache[cacheKey] = compiledTemplate;
-      done = PromiseWrapper
-          .all((new List.from(
-              [(this._compileComponentStyles(compMeta) as dynamic)])
-            ..addAll(viewDirectives
-                .map((dirMeta) =>
-                    this._templateNormalizer.normalizeDirective(dirMeta))
-                .toList())))
+      List<Future> futures = new List.from(
+          [(this._compileComponentStyles(compMeta) as dynamic)])
+        ..addAll(viewDirectives
+            .map((dirMeta) =>
+            this._templateNormalizer.normalizeDirective(dirMeta))
+            .toList());
+      done = Future.wait(futures)
           .then((List<dynamic> stylesAndNormalizedViewDirMetas) {
-        var normalizedViewDirMetas =
-            ListWrapper.slice(stylesAndNormalizedViewDirMetas, 1);
+        var normalizedViewDirMetas = stylesAndNormalizedViewDirMetas.sublist(1)
+            as List<CompileDirectiveMetadata>;
         var styles = stylesAndNormalizedViewDirMetas[0];
         var parsedTemplate = this._templateParser.parse(
             compMeta,
@@ -165,10 +145,10 @@ class RuntimeCompiler implements ComponentResolver {
             normalizedViewDirMetas,
             pipes,
             compMeta.type.name);
-        var childPromises = [];
+        var childPromises = <Future>[];
         compiledTemplate.init(this._compileComponent(compMeta, parsedTemplate,
-            styles, pipes, compilingComponentsPath, childPromises));
-        return PromiseWrapper.all(childPromises).then((_) {
+            styles as List<String>, pipes, compilingComponentsPath, childPromises));
+        return Future.wait(childPromises).then((_) {
           return compiledTemplate;
         });
       });
@@ -199,10 +179,10 @@ class RuntimeCompiler implements ComponentResolver {
       List<CompilePipeMetadata> childViewPipes = this
           ._runtimeMetadataResolver
           .getViewPipesMetadata(dep.comp.type.runtime);
-      var childIsRecursive =
-          ListWrapper.contains(childCompilingComponentsPath, childCacheKey);
+      var childIsRecursive = childCompilingComponentsPath.contains(
+          childCacheKey);
       childCompilingComponentsPath.add(childCacheKey);
-      var childComp = this._loadAndCompileComponent(
+      var childComp = _loadAndCompileComponent(
           dep.comp.type.runtime,
           dep.comp,
           childViewDirectives,
@@ -259,7 +239,7 @@ class RuntimeCompiler implements ComponentResolver {
       }
       if (IS_DART || !this._genConfig.useJit) {
         return interpretStatements(result.statements, result.stylesVar,
-            new InterpretiveAppViewInstanceFactory());
+            new InterpretiveAppViewInstanceFactory()) as List<String>;
       } else {
         return jitStatements(
             '''${ sourceUrl}.css.js''', result.statements, result.stylesVar);

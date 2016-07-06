@@ -2,7 +2,6 @@ library angular2.src.common.forms.directives.abstract_control_directive;
 
 import "../model.dart" show AbstractControl;
 import "package:angular2/src/facade/lang.dart" show isPresent;
-import "package:angular2/src/facade/exceptions.dart" show unimplemented;
 
 /**
  * Base class for control directives.
@@ -10,9 +9,7 @@ import "package:angular2/src/facade/exceptions.dart" show unimplemented;
  * Only used internally in the forms module.
  */
 abstract class AbstractControlDirective {
-  AbstractControl get control {
-    return unimplemented();
-  }
+  AbstractControl get control;
 
   dynamic get value {
     return isPresent(this.control) ? this.control.value : null;

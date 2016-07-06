@@ -2,7 +2,7 @@ library angular2.src.compiler.expression_parser.lexer;
 
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, SetWrapper;
+    show SetWrapper;
 import "package:angular2/src/facade/lang.dart"
     show NumberWrapper, StringJoiner, StringWrapper, isPresent;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -364,7 +364,7 @@ class _Scanner {
           String hex = input.substring(this.index + 1, this.index + 5);
           try {
             unescapedCode = NumberWrapper.parseInt(hex, 16);
-          } catch (e, e_stack) {
+          } catch (e) {
             this.error('''Invalid unicode escape [\\u${ hex}]''', 0);
           }
           for (num i = 0; i < 5; i++) {

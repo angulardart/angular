@@ -1,13 +1,12 @@
 library angular2.src.core.linker.view_container_ref;
 
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/exceptions.dart" show unimplemented;
 import "package:angular2/src/core/di/injector.dart" show Injector;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
 import "element.dart" show AppElement;
 import "element_ref.dart" show ElementRef;
-import "template_ref.dart" show TemplateRef, TemplateRef_;
+import "template_ref.dart" show TemplateRef;
 import "view_ref.dart" show EmbeddedViewRef, ViewRef, ViewRef_;
 import "component_factory.dart" show ComponentFactory, ComponentRef;
 
@@ -33,17 +32,11 @@ abstract class ViewContainerRef {
    * Anchor element that specifies the location of this container in the containing View.
    * <!-- TODO: rename to anchorElement -->
    */
-  ElementRef get element {
-    return (unimplemented() as ElementRef);
-  }
+  ElementRef get element;
 
-  Injector get injector {
-    return (unimplemented() as Injector);
-  }
+  Injector get injector;
 
-  Injector get parentInjector {
-    return (unimplemented() as Injector);
-  }
+  Injector get parentInjector;
 
   /**
    * Destroys all Views in this container.
@@ -56,9 +49,7 @@ abstract class ViewContainerRef {
   /**
    * Returns the number of Views currently attached to this container.
    */
-  num get length {
-    return (unimplemented() as num);
-  }
+  num get length;
 
   /**
    * Instantiates an Embedded View based on the [TemplateRef `templateRef`] and inserts it
@@ -113,29 +104,22 @@ abstract class ViewContainerRef {
 
 class ViewContainerRef_ implements ViewContainerRef {
   AppElement _element;
-  ViewContainerRef_(this._element) {}
+
+  ViewContainerRef_(this._element);
+
   EmbeddedViewRef get(num index) {
-    return this._element.nestedViews[index].ref;
+    return _element.nestedViews[index].ref;
   }
 
-  num get length {
-    var views = this._element.nestedViews;
-    return isPresent(views) ? views.length : 0;
-  }
+  num get length => _element.nestedViews?.length ?? 0;
 
-  ElementRef get element {
-    return this._element.elementRef;
-  }
+  ElementRef get element => _element.elementRef;
 
-  Injector get injector {
-    return this._element.injector;
-  }
+  Injector get injector => _element.injector;
 
-  Injector get parentInjector {
-    return this._element.parentInjector;
-  }
+  Injector get parentInjector => _element.parentInjector;
+
   // TODO(rado): profile and decide whether bounds checks should be added
-
   // to the methods below.
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef,
       [num index = -1]) {
@@ -144,7 +128,6 @@ class ViewContainerRef_ implements ViewContainerRef {
     return viewRef;
   }
 
-  /** @internal */
   WtfScopeFn _createComponentInContainerScope =
       wtfCreateScope("ViewContainerRef#createComponent()");
   ComponentRef createComponent(ComponentFactory componentFactory,
@@ -160,7 +143,6 @@ class ViewContainerRef_ implements ViewContainerRef {
     return wtfLeave(s, componentRef);
   }
 
-  /** @internal */
   var _insertScope = wtfCreateScope("ViewContainerRef#insert()");
   // TODO(i): refactor insert+remove into move
   ViewRef insert(ViewRef viewRef, [num index = -1]) {
@@ -176,7 +158,6 @@ class ViewContainerRef_ implements ViewContainerRef {
         this._element.nestedViews, ((viewRef as ViewRef_)).internalView);
   }
 
-  /** @internal */
   var _removeScope = wtfCreateScope("ViewContainerRef#remove()");
   // TODO(i): rename to destroy
   void remove([num index = -1]) {
@@ -188,7 +169,6 @@ class ViewContainerRef_ implements ViewContainerRef {
     wtfLeave(s);
   }
 
-  /** @internal */
   var _detachScope = wtfCreateScope("ViewContainerRef#detach()");
   // TODO(i): refactor insert+remove into move
   ViewRef detach([num index = -1]) {

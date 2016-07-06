@@ -39,7 +39,7 @@ class GenericEvent {
     if (_target != null) {
       return _target;
     } else if (properties.containsKey("target")) {
-      _target = new EventTarget(properties['target']);
+      _target = new EventTarget(properties['target'] as Map<String, dynamic>);
       return _target;
     } else {
       return null;
@@ -47,7 +47,7 @@ class GenericEvent {
   }
 
   dynamic _getPoint(name) {
-    Map<String, dynamic> point = properties[name];
+    Map<String, dynamic> point = properties[name] as Map<String, dynamic>;
     return new Point(point['x'], point['y'], point['magnitude']);
   }
 }

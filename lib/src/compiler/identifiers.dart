@@ -38,7 +38,7 @@ import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
 import "package:angular2/src/core/linker/view_container_ref.dart"
     show ViewContainerRef;
 import "package:angular2/src/core/render/api.dart"
-    show Renderer, RenderComponentType, RenderDebugInfo;
+    show Renderer, RenderComponentType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/linker.dart" show QueryList;

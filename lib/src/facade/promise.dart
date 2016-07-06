@@ -35,7 +35,7 @@ class PromiseWrapper {
     return promise.catchError(onError);
   }
 
-  static void scheduleMicrotask(fn) {
+  static void scheduleMicrotask(void fn()) {
     async.scheduleMicrotask(fn);
   }
 

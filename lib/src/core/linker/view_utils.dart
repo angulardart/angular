@@ -1,7 +1,6 @@
 library angular2.src.core.linker.view_utils;
 
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, Type, stringify, looseIdentical;
+import "package:angular2/src/facade/lang.dart" show isPresent, looseIdentical;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -21,9 +20,8 @@ class ViewUtils {
   String _appId;
   num _nextCompTypeId = 0;
   ViewUtils(this._renderer, @Inject(APP_ID) this._appId) {}
-  /**
-   * Used by the generated code
-   */
+
+  /// Used by the generated code.
   RenderComponentType createRenderComponentType(
       String templateUrl,
       num slotCount,
@@ -37,22 +35,21 @@ class ViewUtils {
         styles);
   }
 
-  /** @internal */
   Renderer renderComponent(RenderComponentType renderComponentType) {
     return this._renderer.renderComponent(renderComponentType);
   }
 }
 
-List<dynamic> flattenNestedViewRenderNodes(List<dynamic> nodes) {
+List flattenNestedViewRenderNodes(List nodes) {
   return _flattenNestedViewRenderNodes(nodes, []);
 }
 
-List<dynamic> _flattenNestedViewRenderNodes(
-    List<dynamic> nodes, List<dynamic> renderNodes) {
-  for (var i = 0; i < nodes.length; i++) {
+List _flattenNestedViewRenderNodes(List nodes, List renderNodes) {
+  int nodeCount = nodes.length;
+  for (var i = 0; i < nodeCount; i++) {
     var node = nodes[i];
     if (node is AppElement) {
-      var appEl = (node as AppElement);
+      AppElement appEl = node;
       renderNodes.add(appEl.nativeElement);
       if (isPresent(appEl.nestedViews)) {
         for (var k = 0; k < appEl.nestedViews.length; k++) {
@@ -67,17 +64,16 @@ List<dynamic> _flattenNestedViewRenderNodes(
   return renderNodes;
 }
 
-const EMPTY_ARR = const [];
-List<List<dynamic>> ensureSlotCount(
-    List<List<dynamic>> projectableNodes, num expectedSlotCount) {
+List ensureSlotCount(List projectableNodes, num expectedSlotCount) {
   var res;
-  if (isBlank(projectableNodes)) {
-    res = EMPTY_ARR;
-  } else if (projectableNodes.length < expectedSlotCount) {
+  if (projectableNodes == null) {
+    return const [];
+  }
+  if (projectableNodes.length < expectedSlotCount) {
     var givenSlotCount = projectableNodes.length;
     res = ListWrapper.createFixedSize(expectedSlotCount);
     for (var i = 0; i < expectedSlotCount; i++) {
-      res[i] = (i < givenSlotCount) ? projectableNodes[i] : EMPTY_ARR;
+      res[i] = (i < givenSlotCount) ? projectableNodes[i] : const [];
     }
   } else {
     res = projectableNodes;
@@ -259,7 +255,7 @@ dynamic/*= T */ castByValue/*< T >*/(dynamic input, dynamic/*= T */ value) {
 const EMPTY_ARRAY = const [];
 const EMPTY_MAP = const {};
 dynamic /* (p0: P0) => R */ pureProxy1/*< P0, R >*/(
-    dynamic/*= R */ fn(dynamic/*= P0 */ p0)) {
+    dynamic/*= R */ fn(dynamic /* P0 */ p0)) {
   dynamic/*= R */ result;
   var v0;
   v0 = uninitialized;
@@ -273,7 +269,7 @@ dynamic /* (p0: P0) => R */ pureProxy1/*< P0, R >*/(
 }
 
 dynamic /* (p0: P0, p1: P1) => R */ pureProxy2/*< P0, P1, R >*/(
-    dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1)) {
+    dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1)) {
   dynamic/*= R */ result;
   var v0, v1;
   v0 = v1 = uninitialized;
@@ -290,7 +286,7 @@ dynamic /* (p0: P0, p1: P1) => R */ pureProxy2/*< P0, P1, R >*/(
 dynamic
     /* (p0: P0, p1: P1,
                                                                                p2: P2) => R */
-    pureProxy3/*< P0, P1, P2, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2)) {
+    pureProxy3/*< P0, P1, P2, R >*/(dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2)) {
   dynamic/*= R */ result;
   var v0, v1, v2;
   v0 = v1 = v2 = uninitialized;
@@ -309,7 +305,7 @@ dynamic
 
 dynamic /* (
     p0: P0, p1: P1, p2: P2, p3: P3) => R */
-    pureProxy4/*< P0, P1, P2, P3, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2, dynamic/*= P3 */ p3)) {
+    pureProxy4/*< P0, P1, P2, P3, R >*/(dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2, dynamic /* P3 */ p3)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3;
   v0 = v1 = v2 = v3 = uninitialized;
@@ -330,7 +326,10 @@ dynamic /* (
 
 dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) =>
     R */
-    pureProxy5/*< P0, P1, P2, P3, P4, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2, dynamic/*= P3 */ p3, dynamic/*= P4 */ p4)) {
+    pureProxy5/*< P0, P1, P2, P3, P4, R >*/(
+    dynamic/*= R */
+    fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
+        dynamic /* P3 */ p3, dynamic /* P4 */ p4)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4;
   v0 = v1 = v2 = v3 = v4 = uninitialized;
@@ -354,7 +353,10 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) =>
 dynamic
     /* (p0: P0, p1: P1, p2: P2, p3: P3,
                                                                  p4: P4, p5: P5) => R */
-    pureProxy6/*< P0, P1, P2, P3, P4, P5, R >*/(dynamic/*= R */ fn(dynamic/*= P0 */ p0, dynamic/*= P1 */ p1, dynamic/*= P2 */ p2, dynamic/*= P3 */ p3, dynamic/*= P4 */ p4, dynamic/*= P5 */ p5)) {
+    pureProxy6/*< P0, P1, P2, P3, P4, P5, R >*/(
+    dynamic/*= R */
+    fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
+        dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5;
   v0 = v1 = v2 = v3 = v4 = v5 = uninitialized;
@@ -377,15 +379,11 @@ dynamic
   };
 }
 
-dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */ pureProxy7/*< P0, P1, P2, P3, P4, P5, P6, R >*/(
-    dynamic/*= R */ fn(
-        dynamic/*= P0 */ p0,
-        dynamic/*= P1 */ p1,
-        dynamic/*= P2 */ p2,
-        dynamic/*= P3 */ p3,
-        dynamic/*= P4 */ p4,
-        dynamic/*= P5 */ p5,
-        dynamic/*= P6 */ p6)) {
+dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */
+    pureProxy7/*< P0, P1, P2, P3, P4, P5, P6, R >*/(dynamic/*= R */ fn(
+    dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
+    dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5,
+    dynamic /* P6 */ p6)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5, v6;
   v0 = v1 = v2 = v3 = v4 = v5 = v6 = uninitialized;
@@ -410,16 +408,12 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */ pure
   };
 }
 
-dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) => R */ pureProxy8/*< P0, P1, P2, P3, P4, P5, P6, P7, R >*/(
-    dynamic/*= R */ fn(
-        dynamic/*= P0 */ p0,
-        dynamic/*= P1 */ p1,
-        dynamic/*= P2 */ p2,
-        dynamic/*= P3 */ p3,
-        dynamic/*= P4 */ p4,
-        dynamic/*= P5 */ p5,
-        dynamic/*= P6 */ p6,
-        dynamic/*= P7 */ p7)) {
+dynamic
+    /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) => R */
+    pureProxy8/*< P0, P1, P2, P3, P4, P5, P6, P7, R >*/(dynamic/*= R */ fn(
+    dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
+    dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5,
+    dynamic /* P6 */ p6, dynamic /* P7 */ p7)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5, v6, v7;
   v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = uninitialized;
@@ -448,15 +442,15 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) => R
 
 dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8) => R */ pureProxy9/*< P0, P1, P2, P3, P4, P5, P6, P7, P8, R >*/(
     dynamic/*= R */ fn(
-        dynamic/*= P0 */ p0,
-        dynamic/*= P1 */ p1,
-        dynamic/*= P2 */ p2,
-        dynamic/*= P3 */ p3,
-        dynamic/*= P4 */ p4,
-        dynamic/*= P5 */ p5,
-        dynamic/*= P6 */ p6,
-        dynamic/*= P7 */ p7,
-        dynamic/*= P8 */ p8)) {
+        dynamic/* P0 */ p0,
+        dynamic/* P1 */ p1,
+        dynamic/* P2 */ p2,
+        dynamic/* P3 */ p3,
+        dynamic/* P4 */ p4,
+        dynamic/* P5 */ p5,
+        dynamic/* P6 */ p6,
+        dynamic/* P7 */ p7,
+        dynamic/* P8 */ p8)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5, v6, v7, v8;
   v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = v8 = uninitialized;
@@ -487,16 +481,16 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: 
 
 dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9) => R */ pureProxy10/*< P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, R >*/(
     dynamic/*= R */ fn(
-        dynamic/*= P0 */ p0,
-        dynamic/*= P1 */ p1,
-        dynamic/*= P2 */ p2,
-        dynamic/*= P3 */ p3,
-        dynamic/*= P4 */ p4,
-        dynamic/*= P5 */ p5,
-        dynamic/*= P6 */ p6,
-        dynamic/*= P7 */ p7,
-        dynamic/*= P8 */ p8,
-        dynamic/*= P9 */ p9)) {
+        dynamic/* P0 */ p0,
+        dynamic/* P1 */ p1,
+        dynamic/* P2 */ p2,
+        dynamic/* P3 */ p3,
+        dynamic/* P4 */ p4,
+        dynamic/* P5 */ p5,
+        dynamic/* P6 */ p6,
+        dynamic/* P7 */ p7,
+        dynamic/* P8 */ p8,
+        dynamic/* P9 */ p9)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9;
   v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = v8 = v9 = uninitialized;

@@ -65,7 +65,7 @@ Future<String> rewriteLibrary(AssetId entryPoint, AssetReader reader) async {
 
     return _rewriteLibrary(
         code, deferredImports, declarationsVisitor.loadLibraryInvocations);
-  }, operationName: 'rewriteDeferredLibraries', assetId: entryPoint);
+  }, operationName: 'rewriteDeferredLibraries', assetId: entryPoint) as Future<String>;
 }
 
 /// Rewrites the original [code] to initialize deferred libraries prior to use.

@@ -197,12 +197,12 @@ const List<String> SCHEMA = const [
   "@svg:use^@svg:graphics|",
   "@svg:view^@svg:|#zoomAndPan"
 ];
-Map<String, String> attrToPropMap = ({
+const Map<String, String> attrToPropMap = const {
   "class": "className",
   "innerHtml": "innerHTML",
   "readonly": "readOnly",
   "tabindex": "tabIndex"
-} as dynamic);
+};
 
 @Injectable()
 class DomElementSchemaRegistry implements ElementSchemaRegistry {

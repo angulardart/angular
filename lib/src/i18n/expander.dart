@@ -38,7 +38,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
  */
 ExpansionResult expandNodes(List<HtmlAst> nodes) {
   var e = new _Expander();
-  var n = htmlVisitAll(e, nodes);
+  var n = htmlVisitAll(e, nodes) as List<HtmlAst>;
   return new ExpansionResult(n, e.expanded);
 }
 
@@ -55,7 +55,7 @@ class _Expander implements HtmlAstVisitor {
     return new HtmlElementAst(
         ast.name,
         ast.attrs,
-        htmlVisitAll(this, ast.children),
+        htmlVisitAll(this, ast.children) as List<HtmlAttrAst>,
         ast.sourceSpan,
         ast.startSourceSpan,
         ast.endSourceSpan);
@@ -88,7 +88,7 @@ class _Expander implements HtmlAstVisitor {
 HtmlElementAst _expandPluralForm(HtmlExpansionAst ast) {
   var children = ast.cases.map((c) {
     var expansionResult = expandNodes(c.expression);
-    var i18nAttrs = expansionResult.expanded
+    List<HtmlAttrAst> i18nAttrs = expansionResult.expanded
         ? []
         : [
             new HtmlAttrAst(
@@ -114,7 +114,7 @@ HtmlElementAst _expandPluralForm(HtmlExpansionAst ast) {
 HtmlElementAst _expandDefaultForm(HtmlExpansionAst ast) {
   var children = ast.cases.map((c) {
     var expansionResult = expandNodes(c.expression);
-    var i18nAttrs = expansionResult.expanded
+    List<HtmlAttrAst> i18nAttrs = expansionResult.expanded
         ? []
         : [
             new HtmlAttrAst(

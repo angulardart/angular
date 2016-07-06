@@ -2,7 +2,7 @@ library angular2.src.compiler.view_compiler.compile_view;
 
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper, MapWrapper;
+    show ListWrapper;
 import "../output/output_ast.dart" as o;
 import "constants.dart" show EventHandlerVars;
 import "compile_query.dart"
@@ -21,8 +21,6 @@ import "../compile_metadata.dart"
 import "util.dart"
     show
         getViewFactoryName,
-        injectFromViewParentInjector,
-        createDiTokenExpression,
         getPropertyInView,
         createPureProxy;
 import "../config.dart" show CompilerConfig;

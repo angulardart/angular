@@ -1,7 +1,7 @@
 library angular2.src.compiler.css.lexer;
 
 import "package:angular2/src/facade/lang.dart"
-    show NumberWrapper, StringWrapper, isPresent, resolveEnumToken;
+    show StringWrapper, isPresent, resolveEnumToken;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/compiler/chars.dart"
     show
@@ -24,10 +24,6 @@ import "package:angular2/src/compiler/chars.dart"
         $PLUS,
         $LPAREN,
         $RPAREN,
-        $LBRACE,
-        $RBRACE,
-        $LBRACKET,
-        $RBRACKET,
         $PIPE,
         $COMMA,
         $SEMICOLON,

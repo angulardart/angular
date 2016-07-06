@@ -1,7 +1,7 @@
 library angular2.src.compiler.view_compiler.view_builder;
 
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, StringWrapper;
+    show isPresent, StringWrapper;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper, SetWrapper;
 import "../output/output_ast.dart" as o;
@@ -35,9 +35,7 @@ import "../template_ast.dart"
         TextAst,
         DirectiveAst,
         BoundDirectivePropertyAst,
-        templateVisitAll,
-        PropertyBindingType,
-        ProviderAst;
+        templateVisitAll;
 import "util.dart"
     show getViewFactoryName, createFlatArray, createDiTokenExpression;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
@@ -45,8 +43,7 @@ import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "../compile_metadata.dart"
     show
         CompileIdentifierMetadata,
-        CompileDirectiveMetadata,
-        CompileTokenMetadata;
+        CompileDirectiveMetadata;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";
@@ -125,11 +122,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     }
   }
 
-  dynamic visitBoundText(BoundTextAst ast, CompileElement parent) {
+  dynamic visitBoundText(BoundTextAst ast, dynamic context) {
+    CompileElement parent = context;
     return this._visitText(ast, "", ast.ngContentIndex, parent);
   }
 
-  dynamic visitText(TextAst ast, CompileElement parent) {
+  dynamic visitText(TextAst ast, dynamic context) {
+    CompileElement parent = context;
     return this._visitText(ast, ast.value, ast.ngContentIndex, parent);
   }
 
@@ -157,7 +156,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return renderNode;
   }
 
-  dynamic visitNgContent(NgContentAst ast, CompileElement parent) {
+  dynamic visitNgContent(NgContentAst ast, dynamic context) {
+    CompileElement parent = context;
     // the projected nodes originate from a different view, so we don't
 
     // have debug information for them...
@@ -190,7 +190,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return null;
   }
 
-  dynamic visitElement(ElementAst ast, CompileElement parent) {
+  dynamic visitElement(ElementAst ast, dynamic context) {
+    CompileElement parent = context;
     var nodeIndex = this.view.nodes.length;
     var createRenderNodeExpr;
     var debugContextExpr =
@@ -279,7 +280,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   }
 
   dynamic visitEmbeddedTemplate(
-      EmbeddedTemplateAst ast, CompileElement parent) {
+      EmbeddedTemplateAst ast, dynamic context) {
+    CompileElement parent = context;
     var nodeIndex = this.view.nodes.length;
     var fieldName = '''_anchor_${ nodeIndex}''';
     this.view.fields.add(new o.ClassField(
@@ -341,7 +343,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   }
 
   dynamic visitEvent(
-      BoundEventAst ast, Map<String, BoundEventAst> eventTargetAndNames) {
+      BoundEventAst ast, dynamic context) {
     return null;
   }
 
@@ -408,7 +410,7 @@ List<List<String>> mapToKeyValueArray(Map<String, String> data) {
   // for tests and for caching generated artifacts...
   ListWrapper.sort(entryArray,
       (entry1, entry2) => StringWrapper.compare(entry1[0], entry2[0]));
-  var keyValueArray = [];
+  var keyValueArray = <List<String>>[];
   entryArray.forEach((entry) {
     keyValueArray.add([entry[0], entry[1]]);
   });
@@ -443,7 +445,7 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
   var compileElement = node is CompileElement ? node : null;
   List<o.Expression> providerTokens = [];
   o.Expression componentToken = o.NULL_EXPR;
-  var varTokenEntries = [];
+  var varTokenEntries = <List<dynamic>>[];
   if (isPresent(compileElement)) {
     providerTokens = compileElement.getProviderTokens();
     if (isPresent(compileElement.component)) {
@@ -453,7 +455,7 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
     StringMapWrapper.forEach(compileElement.referenceTokens, (token, varName) {
       varTokenEntries.add([
         varName,
-        isPresent(token) ? createDiTokenExpression(token) : o.NULL_EXPR
+        token != null ? createDiTokenExpression(token) : o.NULL_EXPR
       ]);
     });
   }
@@ -531,7 +533,7 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
       view.fields,
       view.getters,
       viewConstructor,
-      viewMethods.where((method) => method.body.length > 0).toList());
+      viewMethods.where((o.ClassMethod method) => method.body.length > 0).toList() as List<o.ClassMethod>);
   return viewClass;
 }
 
@@ -616,7 +618,7 @@ List<o.Statement> generateCreateMethod(CompileView view) {
 }
 
 List<o.Statement> generateDetectChangesMethod(CompileView view) {
-  var stmts = [];
+  var stmts = <o.Statement>[];
   if (view.detectChangesInInputsMethod.isEmpty() &&
       view.updateContentQueriesMethod.isEmpty() &&
       view.afterContentLifecycleCallbacksMethod.isEmpty() &&
@@ -628,7 +630,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   ListWrapper.addAll(stmts, view.detectChangesInInputsMethod.finish());
   stmts.add(o.THIS_EXPR.callMethod("detectContentChildrenChanges",
       [DetectChangesVars.throwOnChange]).toStmt());
-  var afterContentStmts =
+  List<o.Statement> afterContentStmts =
       (new List.from(view.updateContentQueriesMethod.finish())
         ..addAll(view.afterContentLifecycleCallbacksMethod.finish()));
   if (afterContentStmts.length > 0) {
@@ -638,7 +640,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   ListWrapper.addAll(stmts, view.detectChangesRenderPropertiesMethod.finish());
   stmts.add(o.THIS_EXPR.callMethod(
       "detectViewChildrenChanges", [DetectChangesVars.throwOnChange]).toStmt());
-  var afterViewStmts = (new List.from(view.updateViewQueriesMethod.finish())
+  List<o.Statement> afterViewStmts = (new List.from(view.updateViewQueriesMethod.finish())
     ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
   if (afterViewStmts.length > 0) {
     stmts.add(

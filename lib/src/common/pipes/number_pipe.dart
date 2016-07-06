@@ -5,16 +5,14 @@ import "package:angular2/src/facade/lang.dart"
         isNumber,
         isPresent,
         isBlank,
-        StringWrapper,
         NumberWrapper,
-        RegExpWrapper,
-        FunctionWrapper;
+        RegExpWrapper;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/src/facade/intl.dart"
     show NumberFormatter, NumberFormatStyle;
 import "package:angular2/core.dart"
-    show Injectable, PipeTransform, WrappedValue, Pipe;
+    show Injectable, PipeTransform, Pipe;
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 String defaultLocale = "en-US";

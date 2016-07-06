@@ -86,14 +86,15 @@ class NgMeta {
           log.warning(
               'Unexpected value $ngDepsJsonMap for key "$_NG_DEPS_KEY" in NgMeta.');
         } else {
-          ngDeps = new NgDepsModel()..mergeFromJsonMap(ngDepsJsonMap);
+          ngDeps = new NgDepsModel()..mergeFromJsonMap(ngDepsJsonMap as Map<String, dynamic>);
         }
       }
     }
 
-    final aliases = json[_ALIAS_VALUE] != null ? json[_ALIAS_VALUE] : {};
+    Map<String, List<String>> aliases =
+        json[_ALIAS_VALUE] as Map<String, List<String>> ?? <String, List<String>>{};
 
-    final identifiers = {};
+    final identifiers = <String, dynamic>{};
     if (json.containsKey(_TYPE_VALUE)) {
       for (var key in json[_TYPE_VALUE].keys) {
         var entry = json[_TYPE_VALUE][key];
@@ -101,7 +102,7 @@ class NgMeta {
           log.warning('Unexpected value $entry for key "$key" in NgMeta.');
           continue;
         }
-        identifiers[key] = metadataFromJson(entry);
+        identifiers[key] = metadataFromJson(entry as Map<String, dynamic>);
       }
     }
 

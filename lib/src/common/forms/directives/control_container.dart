@@ -20,7 +20,11 @@ class ControlContainer extends AbstractControlDirective {
   /**
    * Get the path to this container.
    */
+  @override
   List<String> get path {
     return null;
   }
+
+  @override
+  get control => null;
 }

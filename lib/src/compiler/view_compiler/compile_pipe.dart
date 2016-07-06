@@ -1,6 +1,6 @@
 library angular2.src.compiler.view_compiler.compile_pipe;
 
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isBlank;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "../output/output_ast.dart" as o;
 import "compile_view.dart" show CompileView;
@@ -27,7 +27,7 @@ class CompilePipe {
     if (meta.pure) {
       // pure pipes live on the component view
       pipe = compView.purePipes[name];
-      if (isBlank(pipe)) {
+      if (pipe == null) {
         pipe = new CompilePipe(compView, meta);
         compView.purePipes[name] = pipe;
         compView.pipes.add(pipe);

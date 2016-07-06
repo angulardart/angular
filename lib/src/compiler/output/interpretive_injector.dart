@@ -6,7 +6,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "output_interpreter.dart" show InstanceFactory, DynamicInstance;
 
 class InterpretiveInjectorInstanceFactory implements InstanceFactory {
-  dynamic createInstance(
+  DynamicInstance createInstance(
       dynamic superClass,
       dynamic clazz,
       List<dynamic> args,

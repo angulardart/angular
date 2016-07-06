@@ -5,7 +5,7 @@ import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "../output/output_ast.dart" as o;
 import "../identifiers.dart" show Identifiers;
 import "../compile_metadata.dart"
-    show CompileQueryMetadata, CompileIdentifierMetadata, CompileTokenMap;
+    show CompileQueryMetadata, CompileTokenMap;
 import "compile_view.dart" show CompileView;
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
@@ -111,7 +111,7 @@ List<o.Expression> createQueryValues(ViewQueryValues viewValues) {
     } else {
       return (entry as o.Expression);
     }
-  }).toList());
+  }).toList()) as List<o.Expression>;
 }
 
 o.Expression mapNestedViews(o.Expression declarationAppElement,

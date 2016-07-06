@@ -7,7 +7,6 @@ import "package:angular2/core.dart"
         OnChanges,
         OnDestroy,
         SimpleChange,
-        Query,
         Directive,
         Host,
         SkipSelf,
@@ -90,7 +89,7 @@ const controlNameBinding =
  */
 @Directive(
     selector: "[ngControl]",
-    bindings: const [controlNameBinding],
+    providers: const [controlNameBinding],
     inputs: const ["name: ngControl", "model: ngModel"],
     outputs: const ["update: ngModelChange"],
     exportAs: "ngForm")

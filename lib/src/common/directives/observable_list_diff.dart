@@ -21,10 +21,9 @@ class ObservableListDiff extends DefaultIterableDiffer {
     }
   }
 
-  DefaultIterableDiffer diff(ObservableList collection) {
-    if (collection is! ObservableList) {
-      throw "Cannot change the type of a collection";
-    }
+  DefaultIterableDiffer diff(Iterable iterable) {
+    assert(iterable is ObservableList);
+    ObservableList collection = iterable;
 
     // A new collection instance is passed in.
     // - We need to set up a listener.

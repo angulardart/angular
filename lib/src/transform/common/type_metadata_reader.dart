@@ -8,7 +8,8 @@ import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 
 import 'package:angular2/src/core/change_detection/change_detection.dart';
-import 'package:angular2/src/core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
+import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
+    show LifecycleHooks;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/interface_matcher.dart';
@@ -26,8 +27,12 @@ class TypeMetadataReader {
   final _InjectorModuleMetadataVisitor _injectorModuleVisitor;
   final OfflineCompiler _templateCompiler;
 
-  TypeMetadataReader._(this._directiveVisitor, this._pipeVisitor,
-      this._templateCompiler, this._typeVisitor, this._factoryVisitor,
+  TypeMetadataReader._(
+      this._directiveVisitor,
+      this._pipeVisitor,
+      this._templateCompiler,
+      this._typeVisitor,
+      this._factoryVisitor,
       this._injectorModuleVisitor);
 
   /// Accepts an [AnnotationMatcher] which tests that an [Annotation]
@@ -41,12 +46,11 @@ class TypeMetadataReader {
         annotationMatcher, lifecycleVisitor, typeVisitor);
     var pipeVisitor = new _PipeMetadataVisitor(
         annotationMatcher, lifecycleVisitor, typeVisitor);
-    var injectorVisitor = new _InjectorModuleMetadataVisitor(
-        annotationMatcher, typeVisitor);
+    var injectorVisitor =
+        new _InjectorModuleMetadataVisitor(annotationMatcher, typeVisitor);
 
-    return new TypeMetadataReader._(
-        directiveVisitor, pipeVisitor, templateCompiler, typeVisitor, factoryVisitor,
-        injectorVisitor);
+    return new TypeMetadataReader._(directiveVisitor, pipeVisitor,
+        templateCompiler, typeVisitor, factoryVisitor, injectorVisitor);
   }
 
   /// Reads *un-normalized* [CompileDirectiveMetadata]/[CompilePipeMetadata] from the
@@ -84,7 +88,8 @@ class TypeMetadataReader {
     }
   }
 
-  Future<dynamic> readFactoryMetadata(FunctionDeclaration node, AssetId assetId) {
+  Future<dynamic> readFactoryMetadata(
+      FunctionDeclaration node, AssetId assetId) {
     _factoryVisitor.reset(assetId);
 
     node.accept(_factoryVisitor);
@@ -100,21 +105,19 @@ class TypeMetadataReader {
       VariableDeclaration decl, AssetId assetId) {
     final name = decl.name.name;
     return new CompileIdentifierMetadata(
-        name: name, moduleUrl: toAssetUri(assetId), value: _readValue(decl.initializer));
+        name: name,
+        moduleUrl: toAssetUri(assetId),
+        value: _readValue(decl.initializer));
   }
 
   dynamic _readValue(dynamic initializer) {
-    if (initializer is InstanceCreationExpression &&
-        ((initializer as InstanceCreationExpression)
-            .constructorName
-            .toString() ==
-            "Provider" ||
-            (initializer as InstanceCreationExpression)
-                .constructorName
-                .toString() ==
-                "Binding")) {
-      return _readProvider(initializer);
-    } else if (initializer is ListLiteral) {
+    if (initializer is InstanceCreationExpression) {
+      String ctorName = initializer.constructorName.toString();
+      if (ctorName == "Provider" || ctorName == "Binding") {
+        return _readProvider(initializer);
+      }
+    }
+    if (initializer is ListLiteral) {
       return _readProviders(initializer, throwOnErrors: false);
     } else {
       return null;
@@ -146,13 +149,14 @@ void _populateMap(Expression expression, Map map, String propertyName) {
 void _populateList(
     Expression expression, List<String> list, String propertyName) {
   var evaluated = naiveEval(expression);
-  if (evaluated is! List) {
-    throw new FormatException(
-        'Angular 2 expects a List but could not understand the value for '
-        '$propertyName.',
-        '$expression' /* source */);
+  if (evaluated is List) {
+    list.addAll(evaluated.map((e) => e.toString()));
+    return;
   }
-  list.addAll(evaluated.map((e) => e.toString()));
+  throw new FormatException(
+      'Angular 2 expects a List but could not understand the value for '
+      '$propertyName.',
+      '$expression' /* source */);
 }
 
 /// Evaluates `node` and expects that the result will be a string. If not,
@@ -201,26 +205,33 @@ class _CompileTypeMetadataVisitor extends Object
   }
 
   @override
-  Object visitAnnotation(Annotation node) {
+  CompileTypeMetadata visitAnnotation(Annotation node) {
     final isComponent = _annotationMatcher.isComponent(node, _assetId);
     final isDirective = _annotationMatcher.isDirective(node, _assetId);
     final isPipe = _annotationMatcher.isPipe(node, _assetId);
     final isInjectable = _annotationMatcher.isInjectable(node, _assetId);
-    final isInjectorModule = _annotationMatcher.isInjectorModule(node, _assetId);
+    final isInjectorModule =
+        _annotationMatcher.isInjectorModule(node, _assetId);
 
-    _isInjectable = _isInjectable || isComponent || isDirective || isPipe || isInjectable || isInjectorModule;
+    _isInjectable = _isInjectable ||
+        isComponent ||
+        isDirective ||
+        isPipe ||
+        isInjectable ||
+        isInjectorModule;
     return null;
   }
 
   @override
-  Object visitClassDeclaration(ClassDeclaration node) {
+  CompileTypeMetadata visitClassDeclaration(ClassDeclaration node) {
     node.metadata.accept(this);
-    var diDeps;
+    List<CompileDiDependencyMetadata> diDeps;
     if (this._isInjectable) {
       final constructor = node.getConstructor(null);
       final fieldTypes = _readFields(node);
-      diDeps = constructor == null ? [] :
-        _getCompileDiDependencyMetadata(constructor.parameters, fieldTypes);
+      diDeps = constructor == null
+          ? []
+          : _getCompileDiDependencyMetadata(constructor.parameters, fieldTypes);
       _type = new CompileTypeMetadata(
           moduleUrl: toAssetUri(_assetId),
           name: node.name.toString(),
@@ -232,10 +243,13 @@ class _CompileTypeMetadataVisitor extends Object
   }
 
   Map<String, TypeName> _readFields(ClassDeclaration clazz) {
-    final res = {};
-    clazz.members
-        .where((member) => member is FieldDeclaration)
-        .forEach((FieldDeclaration field) {
+    final res = <String, TypeName>{};
+    var members = clazz.members;
+    int memberCount = members.length;
+    for (int i = 0; i < memberCount; i++) {
+      var member = members[i];
+      if (member is! FieldDeclaration) continue;
+      FieldDeclaration field = member;
       var type = field.fields.type;
       if (type != null) {
         field.fields.variables.forEach((VariableDeclaration decl) {
@@ -243,7 +257,7 @@ class _CompileTypeMetadataVisitor extends Object
           res[key] = type;
         });
       }
-    });
+    }
     return res;
   }
 }
@@ -268,21 +282,22 @@ class _CompileFactoryMetadataVisitor extends Object
   }
 
   @override
-  Object visitAnnotation(Annotation node) {
+  CompileFactoryMetadata visitAnnotation(Annotation node) {
     _isInjectable = _annotationMatcher.isInjectable(node, _assetId);
     return null;
   }
 
   @override
-  Object visitFunctionDeclaration(FunctionDeclaration node) {
+  CompileFactoryMetadata visitFunctionDeclaration(FunctionDeclaration node) {
     node.metadata.accept(this);
     if (this._isInjectable) {
       _factory = new CompileFactoryMetadata(
           moduleUrl: toAssetUri(_assetId),
           name: node.name.toString(),
-          diDeps: _getCompileDiDependencyMetadata(node.functionExpression.parameters, {}),
+          diDeps: _getCompileDiDependencyMetadata(
+              node.functionExpression.parameters, {}),
           runtime: null // Intentionally `null`, cannot be provided here.
-      );
+          );
     }
     return null;
   }
@@ -369,8 +384,8 @@ class _DirectiveMetadataVisitor extends Object
         host: _host,
         providers: _providers,
         viewProviders: _viewProviders,
-        queries: _queries,
-        viewQueries: _viewQueries,
+        queries: _queries as List<CompileQueryMetadata>,
+        viewQueries: _viewQueries as List<CompileQueryMetadata>,
         lifecycleHooks: _lifecycleHooks,
         template: _template);
   }
@@ -448,16 +463,20 @@ class _DirectiveMetadataVisitor extends Object
         }
 
         if (_isAnnotation(meta, 'ContentChild')) {
-          this._queries.add(_createQueryMetadata(meta, false, true, variable.name.toString()));
+          this._queries.add(_createQueryMetadata(
+              meta, false, true, variable.name.toString()));
         }
         if (_isAnnotation(meta, 'ContentChildren')) {
-          this._queries.add(_createQueryMetadata(meta, false, false, variable.name.toString()));
+          this._queries.add(_createQueryMetadata(
+              meta, false, false, variable.name.toString()));
         }
         if (_isAnnotation(meta, 'ViewChild')) {
-          this._viewQueries.add(_createQueryMetadata(meta, true, true, variable.name.toString()));
+          this._viewQueries.add(
+              _createQueryMetadata(meta, true, true, variable.name.toString()));
         }
         if (_isAnnotation(meta, 'ViewChildren')) {
-          this._viewQueries.add(_createQueryMetadata(meta, false, false, variable.name.toString()));
+          this._viewQueries.add(_createQueryMetadata(
+              meta, false, false, variable.name.toString()));
         }
       }
     }
@@ -476,16 +495,22 @@ class _DirectiveMetadataVisitor extends Object
       }
 
       if (_isAnnotation(meta, 'ContentChild') && node.isSetter) {
-        this._queries.add(_createQueryMetadata(meta, false, true, node.name.toString()));
+        this
+            ._queries
+            .add(_createQueryMetadata(meta, false, true, node.name.toString()));
       }
       if (_isAnnotation(meta, 'ContentChildren') && node.isSetter) {
-        this._queries.add(_createQueryMetadata(meta, false, false, node.name.toString()));
+        this._queries.add(
+            _createQueryMetadata(meta, false, false, node.name.toString()));
       }
       if (_isAnnotation(meta, 'ViewChild') && node.isSetter) {
-        this._viewQueries.add(_createQueryMetadata(meta, true, true, node.name.toString()));
+        this
+            ._viewQueries
+            .add(_createQueryMetadata(meta, true, true, node.name.toString()));
       }
       if (_isAnnotation(meta, 'ViewChildren') && node.isSetter) {
-        this._viewQueries.add(_createQueryMetadata(meta, false, false, node.name.toString()));
+        this._viewQueries.add(
+            _createQueryMetadata(meta, false, false, node.name.toString()));
       }
 
       if (_isAnnotation(meta, 'HostListener')) {
@@ -939,6 +964,7 @@ class _InjectorModuleMetadataVisitor extends Object
   final _CompileTypeMetadataVisitor _typeVisitor;
 
   bool _isInjectable = false;
+
   /// The [AssetId] we are currently processing.
   AssetId _assetId;
 
@@ -950,8 +976,7 @@ class _InjectorModuleMetadataVisitor extends Object
   CompileTypeMetadata _type;
   List _providers;
 
-  _InjectorModuleMetadataVisitor(
-      this._annotationMatcher, this._typeVisitor) {
+  _InjectorModuleMetadataVisitor(this._annotationMatcher, this._typeVisitor) {
     reset(null);
   }
 
@@ -976,7 +1001,8 @@ class _InjectorModuleMetadataVisitor extends Object
 
   @override
   Object visitAnnotation(Annotation node) {
-    _isInjectable = _isInjectable || _annotationMatcher.isInjectable(node, _assetId);
+    _isInjectable =
+        _isInjectable || _annotationMatcher.isInjectable(node, _assetId);
     var isInjectorModule = _annotationMatcher.isInjectorModule(node, _assetId);
     if (isInjectorModule) {
       if (_hasMetadata) {
@@ -1026,8 +1052,8 @@ class _InjectorModuleMetadataVisitor extends Object
         }
       }
     });
-    _providers.add(new CompileProviderMetadata(token: token, useProperty: name,
-        multi: multi));
+    _providers.add(new CompileProviderMetadata(
+        token: token, useProperty: name, multi: multi));
   }
 
   void _populateProviders(Expression providerValues, List providers) {
@@ -1090,7 +1116,8 @@ List _readProviders(ListLiteral providerValues, {bool throwOnErrors}) {
   var providers = providerValues.elements.map((el) {
     if (el is PrefixedIdentifier || el is SimpleIdentifier) {
       // Support private nested provider lists...
-      return _readIdentifier(el, allowPrivate: true, throwOnErrors: throwOnErrors);
+      return _readIdentifier(el,
+          allowPrivate: true, throwOnErrors: throwOnErrors);
     } else if (el is InstanceCreationExpression &&
         (el.constructorName.toString() == "Provider" ||
             el.constructorName.toString() == "Binding")) {
@@ -1106,14 +1133,17 @@ List _readProviders(ListLiteral providerValues, {bool throwOnErrors}) {
   return hasError ? null : providers;
 }
 
-
 CompileProviderMetadata _readProvider(InstanceCreationExpression el) {
   final token = el.argumentList.arguments.first;
 
-  var useClass, useExisting, useValue, useFactory, deps, multi;
+  var useClass, useExisting, useValue, useFactory, multi;
+  List<CompileDiDependencyMetadata> deps;
   bool hasAnyValue = false;
-  el.argumentList.arguments.skip(1).forEach((arg) {
-    switch (arg.name.toString()) {
+  el.argumentList.arguments.skip(1).forEach((expr) {
+    assert(expr is NamedExpression);
+    String name = (expr is NamedExpression) ? expr.name.toString() : '';
+    NamedExpression arg = expr;
+    switch (name) {
       case "useClass:":
         final id = _readIdentifier(arg.expression);
         useClass = new CompileTypeMetadata(prefix: id.prefix, name: id.name);
@@ -1142,14 +1172,14 @@ CompileProviderMetadata _readProvider(InstanceCreationExpression el) {
         break;
       case "useFactory:":
         final id = _readIdentifier(arg.expression);
-        useFactory = new CompileFactoryMetadata(
-            name: id.name, prefix: id.prefix);
+        useFactory =
+            new CompileFactoryMetadata(name: id.name, prefix: id.prefix);
         hasAnyValue = true;
         break;
       case "toFactory:":
         final id = _readIdentifier(arg.expression);
-        useFactory = new CompileFactoryMetadata(
-            name: id.name, prefix: id.prefix);
+        useFactory =
+            new CompileFactoryMetadata(name: id.name, prefix: id.prefix);
         hasAnyValue = true;
         break;
       case "deps:":
@@ -1161,7 +1191,8 @@ CompileProviderMetadata _readProvider(InstanceCreationExpression el) {
     }
   });
   if (!hasAnyValue) {
-    throw new ArgumentError('No "useClass", "useExisting", "useValue" or "useFactory" found in "${el}".');
+    throw new ArgumentError(
+        'No "useClass", "useExisting", "useValue" or "useFactory" found in "${el}".');
   }
   return new CompileProviderMetadata(
       token: _readToken(token),
@@ -1185,8 +1216,7 @@ List<CompileDiDependencyMetadata> _readDeps(ListLiteral deps) {
 
     var token;
     if (first is InstanceCreationExpression &&
-        (first as InstanceCreationExpression).constructorName.toString() ==
-            "Inject") {
+        first.constructorName.toString() == "Inject") {
       token = _readToken(first.argumentList.arguments[0]);
     } else {
       token = _readToken(first);
@@ -1201,7 +1231,8 @@ List<CompileDiDependencyMetadata> _readDeps(ListLiteral deps) {
   }).toList();
 }
 
-_createQueryMetadata(Annotation a, bool defaultDescendantsValue, bool first, String propertyName) {
+_createQueryMetadata(Annotation a, bool defaultDescendantsValue, bool first,
+    String propertyName) {
   final selector = _readToken(a.arguments.arguments.first);
   var descendants = defaultDescendantsValue;
   var read = null;
@@ -1216,17 +1247,26 @@ _createQueryMetadata(Annotation a, bool defaultDescendantsValue, bool first, Str
     }
   });
 
-  final selectors = selector.value is String ?
-      selector.value.split(",").map( (value) => new CompileTokenMetadata(value: value) ).toList() :
-      [selector];
+  final selectors = <CompileTokenMetadata>[];
+  if (selector.value is String) {
+    List<String> values = (selector.value as String).split(',');
+    for (String v in values) {
+      selectors.add(new CompileTokenMetadata(value: v));
+    }
+  } else {
+    selectors.add(selector);
+  }
   return new CompileQueryMetadata(
-      selectors: selectors, descendants: descendants, first: first,
-      read: read, propertyName: propertyName);
+      selectors: selectors,
+      descendants: descendants,
+      first: first,
+      read: read,
+      propertyName: propertyName);
 }
 
 List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
     FormalParameterList params, Map<String, TypeName> fieldTypes) {
-  return params.parameters.map((p) {
+  return params.parameters.map((dynamic p) {
     if (p is DefaultFormalParameter) {
       p = p.parameter;
     }
@@ -1234,7 +1274,8 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
     var token;
     final isAttribute = _hasAnnotation(p, "Attribute");
     if (isAttribute) {
-      token = _readToken(_getAnnotation(p, "Attribute").arguments.arguments.first);
+      token =
+          _readToken(_getAnnotation(p, "Attribute").arguments.arguments.first);
     } else {
       var type = null;
       if (p is SimpleFormalParameter) {
@@ -1250,19 +1291,23 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
     }
 
     var query;
-    if(_hasAnnotation(p, "Query")) {
-      query = _createQueryMetadata(_getAnnotation(p, "Query"), false, false, null);
+    if (_hasAnnotation(p, "Query")) {
+      query =
+          _createQueryMetadata(_getAnnotation(p, "Query"), false, false, null);
     }
-    if(_hasAnnotation(p, "ContentChildren")) {
-      query = _createQueryMetadata(_getAnnotation(p, "ContentChildren"), true, false, null);
+    if (_hasAnnotation(p, "ContentChildren")) {
+      query = _createQueryMetadata(
+          _getAnnotation(p, "ContentChildren"), true, false, null);
     }
 
     var viewQuery;
-    if(_hasAnnotation(p, "ViewQuery")) {
-      viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewQuery"), false, false, null);
+    if (_hasAnnotation(p, "ViewQuery")) {
+      viewQuery = _createQueryMetadata(
+          _getAnnotation(p, "ViewQuery"), false, false, null);
     }
-    if(_hasAnnotation(p, "ViewChildren")) {
-      viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewChildren"), true, false, null);
+    if (_hasAnnotation(p, "ViewChildren")) {
+      viewQuery = _createQueryMetadata(
+          _getAnnotation(p, "ViewChildren"), true, false, null);
     }
 
     return new CompileDiDependencyMetadata(
@@ -1288,8 +1333,8 @@ bool _hasConst(List list, String name) => list
         m is InstanceCreationExpression && m.constructorName.toString() == name)
     .isNotEmpty;
 
-dynamic _readIdentifier(dynamic el, {bool allowPrivate: false,
-    bool throwOnErrors: true}) {
+dynamic _readIdentifier(dynamic el,
+    {bool allowPrivate: false, bool throwOnErrors: true}) {
   var name;
   var prefix;
   var error;
@@ -1314,15 +1359,17 @@ dynamic _readIdentifier(dynamic el, {bool allowPrivate: false,
       return null;
     }
   } else {
-    return new CompileIdentifierMetadata(
-        name: name, prefix: prefix);
+    return new CompileIdentifierMetadata(name: name, prefix: prefix);
   }
 }
 
 dynamic _readValue(dynamic el) {
-  if (el is DoubleLiteral || el is IntegerLiteral || el is SimpleStringLiteral || el is BooleanLiteral){
+  if (el is DoubleLiteral ||
+      el is IntegerLiteral ||
+      el is SimpleStringLiteral ||
+      el is BooleanLiteral) {
     return el.value;
-  } else if (el is NullLiteral){
+  } else if (el is NullLiteral) {
     return null;
   } else {
     return _readIdentifier(el);
@@ -1330,10 +1377,16 @@ dynamic _readValue(dynamic el) {
 }
 
 dynamic _readToken(dynamic el) {
-  if (el is DoubleLiteral || el is IntegerLiteral || el is SimpleStringLiteral || el is BooleanLiteral) {
+  if (el is DoubleLiteral ||
+      el is IntegerLiteral ||
+      el is SimpleStringLiteral ||
+      el is BooleanLiteral) {
     return new CompileTokenMetadata(value: el.value);
   } else if (el is InstanceCreationExpression) {
-    return new CompileTokenMetadata(identifier: new CompileIdentifierMetadata(name: '${el.constructorName}'), identifierIsInstance: true);
+    return new CompileTokenMetadata(
+        identifier:
+            new CompileIdentifierMetadata(name: '${el.constructorName}'),
+        identifierIsInstance: true);
   } else {
     return new CompileTokenMetadata(identifier: _readIdentifier(el));
   }

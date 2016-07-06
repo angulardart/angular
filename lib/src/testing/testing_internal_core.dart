@@ -22,8 +22,7 @@ export 'matchers.dart' show expect, Expect, NotExpect;
 
 import 'package:angular2/src/core/reflection/reflection.dart';
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
-
-import 'package:angular2/src/core/di/provider.dart' show bind;
+import 'package:angular2/src/core/di/provider.dart' show provide;
 import 'package:angular2/src/facade/collection.dart' show StringMapWrapper;
 
 import 'test_injector.dart';
@@ -74,7 +73,7 @@ void testSetup() {
     _currentTestFuture = null;
   });
 
-  var completerProvider = bind(AsyncTestCompleter).toFactory(() {
+  var completerProvider = provide(AsyncTestCompleter).useFactory(() {
     // Mark the test as async when an AsyncTestCompleter is injected in an it(),
     if (!_inIt) throw 'AsyncTestCompleter can only be injected in an "it()"';
     _isCurrentTestAsync = true;
@@ -95,8 +94,8 @@ void testSetup() {
  * Example:
  *
  *   beforeEachProviders(() => [
- *     bind(Compiler).toClass(MockCompiler),
- *     bind(SomeToken).toValue(myValue),
+ *     provide(Compiler).toClass(MockCompiler),
+ *     provide(SomeToken).toValue(myValue),
  *   ]);
  */
 void beforeEachProviders(Function fn) {
@@ -162,8 +161,6 @@ void xdescribe(name, fn) {
 
 class SpyFunction extends gns.SpyFunction {
   SpyFunction(String name) : super(name);
-
-  // TODO: vsavkin move to guinness
   andReturn(value) {
     return andCallFake(([a0, a1, a2, a3, a4, a5]) => value);
   }
@@ -190,7 +187,8 @@ class SpyObject extends gns.SpyObject {
       object = new SpyObject();
     }
 
-    var m = StringMapWrapper.merge(config, overrides);
+    var m = StringMapWrapper.merge(config as Map<String, dynamic>,
+        overrides as Map<String, dynamic>);
     StringMapWrapper.forEach(m, (value, key) {
       object.spy(key).andReturn(value);
     });

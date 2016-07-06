@@ -35,10 +35,10 @@ class I18nError extends ParseError {
 
 // Man, this is so ugly!
 List<Part> partition(List<HtmlAst> nodes, List<ParseError> errors) {
-  var res = [];
+  var res = <Part>[];
   for (var i = 0; i < nodes.length; ++i) {
     var n = nodes[i];
-    var temp = [];
+    var temp = <HtmlAst>[];
     if (_isOpeningComment(n)) {
       var i18n = ((n as HtmlCommentAst)).value.substring(5).trim();
       i++;
@@ -144,7 +144,7 @@ String removeInterpolation(
     } else {
       return value;
     }
-  } catch (e, e_stack) {
+  } catch (e) {
     return value;
   }
 }
@@ -176,7 +176,7 @@ class _StringifyVisitor implements HtmlAstVisitor {
   _StringifyVisitor(this._parser) {}
   dynamic visitElement(HtmlElementAst ast, dynamic context) {
     var name = this._index++;
-    var children = this._join(htmlVisitAll(this, ast.children), "");
+    var children = this._join(htmlVisitAll(this, ast.children) as List<String>, "");
     return '''<ph name="e${ name}">${ children}</ph>''';
   }
 

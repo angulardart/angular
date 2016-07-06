@@ -66,7 +66,7 @@ class _Linker {
   Future<NgMeta> linkRecursive(NgMeta ngMeta, AssetId assetId, Set<AssetId> seen) async {
     if (seen.contains(assetId)) return ngMeta;
 
-    final newSeen = new Set.from(seen)
+    final newSeen = new Set<AssetId>.from(seen)
       ..add(assetId);
 
     await _resolveDeps(ngMeta, assetId, newSeen);
@@ -210,7 +210,7 @@ class _NgMetaIdentifierResolver {
   List<CompileProviderMetadata> _resolveProviders(Map<String, NgMeta> ngMetaMap, Object value, String neededBy) {
 
     if (value is List) {
-      final res = [];
+      final res = <CompileProviderMetadata>[];
       for (var v in value) {
         res.addAll(_resolveProviders(ngMetaMap, v, neededBy));
       }
@@ -232,7 +232,7 @@ class _NgMetaIdentifierResolver {
       if (resolved is CompileTypeMetadata) {
         var providers = [new CompileProviderMetadata(token: new CompileTokenMetadata(identifier: resolved), useClass: resolved)];
         if (resolved is CompileInjectorModuleMetadata) {
-          var cimm = resolved as CompileInjectorModuleMetadata;
+          CompileInjectorModuleMetadata cimm = resolved;
           providers.addAll(_resolveProviders(ngMetaMap, cimm.providers, cimm.name));
         }
         return providers;
@@ -241,7 +241,7 @@ class _NgMetaIdentifierResolver {
         return _resolveProviders(ngMetaMap, resolved.value, neededBy);
 
       } else if (resolved is CompileIdentifierMetadata && resolved.value is CompileProviderMetadata) {
-        return [_resolveProviders(ngMetaMap, resolved.value, neededBy)];
+        return _resolveProviders(ngMetaMap, resolved.value, neededBy);
 
       } else {
         return [];

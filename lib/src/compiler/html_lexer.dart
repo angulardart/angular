@@ -1,7 +1,7 @@
 library angular2.src.compiler.html_lexer;
 
 import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, NumberWrapper, isPresent, isBlank, serializeEnum;
+    show StringWrapper, NumberWrapper, isPresent, isBlank;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "parse_util.dart"
     show ParseLocation, ParseError, ParseSourceFile, ParseSourceSpan;
@@ -178,7 +178,7 @@ class _HtmlTokenizer {
         } else {
           this._consumeText();
         }
-      } catch (e, e_stack) {
+      } catch (e) {
         if (e is ControlFlowError) {
           this.errors.add(e.error);
         } else {
@@ -350,7 +350,7 @@ class _HtmlTokenizer {
       try {
         var charCode = NumberWrapper.parseInt(strNum, isHex ? 16 : 10);
         return StringWrapper.fromCharCode(charCode);
-      } catch (e, e_stack) {
+      } catch (e) {
         var entity = this.input.substring(start.offset + 1, this.index - 1);
         throw this
             ._createError(unknownEntityErrorMsg(entity), this._getSpan(start));
@@ -469,7 +469,7 @@ class _HtmlTokenizer {
         this._attemptCharCodeUntilFn(isNotWhitespace);
       }
       this._consumeTagOpenEnd();
-    } catch (e, e_stack) {
+    } catch (e) {
       if (e is ControlFlowError) {
         // When the start tag is invalid, assume we want a "<"
         this._restorePosition(savedPos);
@@ -546,7 +546,7 @@ class _HtmlTokenizer {
   _consumeTagClose(ParseLocation start) {
     this._beginToken(HtmlTokenType.TAG_CLOSE, start);
     this._attemptCharCodeUntilFn(isNotWhitespace);
-    var prefixAndName;
+    List<String> prefixAndName;
     prefixAndName = this._consumePrefixAndName();
     this._attemptCharCodeUntilFn(isNotWhitespace);
     this._requireCharCode($GT);
@@ -729,7 +729,7 @@ num toUpperCaseCharCode(num code) {
 }
 
 List<HtmlToken> mergeTextTokens(List<HtmlToken> srcTokens) {
-  var dstTokens = [];
+  var dstTokens = <HtmlToken>[];
   HtmlToken lastDstToken;
   for (var i = 0; i < srcTokens.length; i++) {
     var token = srcTokens[i];

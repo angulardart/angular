@@ -538,7 +538,7 @@ class StringWithEscapedBlocks {
 StringWithEscapedBlocks escapeBlocks(String input) {
   var inputParts = StringWrapper.split(input, _curlyRe);
   var resultParts = [];
-  var escapedBlocks = [];
+  var escapedBlocks = <String>[];
   var bracketCount = 0;
   var currentBlockParts = [];
   for (var partIndex = 0; partIndex < inputParts.length; partIndex++) {

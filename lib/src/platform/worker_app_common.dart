@@ -5,7 +5,6 @@ import "package:angular2/src/web_workers/worker/xhr_impl.dart"
     show WebWorkerXHRImpl;
 import "package:angular2/src/web_workers/worker/renderer.dart"
     show WebWorkerRootRenderer;
-import "package:angular2/src/facade/lang.dart" show print, Type, isPresent;
 import "package:angular2/src/core/render/api.dart" show RootRenderer;
 import "package:angular2/core.dart"
     show

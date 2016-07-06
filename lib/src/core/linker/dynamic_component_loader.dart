@@ -3,8 +3,6 @@ library angular2.src.core.linker.dynamic_component_loader;
 import "dart:async";
 import "package:angular2/src/core/di.dart" show Injector, Injectable;
 import "component_resolver.dart" show ComponentResolver;
-import "package:angular2/src/facade/lang.dart"
-    show isType, Type, stringify, isPresent;
 import "component_factory.dart" show ComponentRef;
 import "view_container_ref.dart" show ViewContainerRef;
 
@@ -121,10 +119,8 @@ class DynamicComponentLoader_ extends DynamicComponentLoader {
       var componentRef = componentFactory.create(
           injector,
           projectableNodes,
-          isPresent(overrideSelectorOrNode)
-              ? overrideSelectorOrNode
-              : componentFactory.selector);
-      if (isPresent(onDispose)) {
+          overrideSelectorOrNode ?? componentFactory.selector);
+      if (onDispose != null) {
         componentRef.onDestroy(onDispose);
       }
       return componentRef;

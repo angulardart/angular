@@ -27,8 +27,8 @@ class ViewCompiler {
       List<TemplateAst> template,
       o.Expression styles,
       List<CompilePipeMetadata> pipes) {
-    var statements = [];
-    var dependencies = [];
+    var statements = <o.Statement>[];
+    var dependencies = <ViewCompileDependency>[];
     var view = new CompileView(component, this._genConfig, pipes, styles, 0,
         CompileElement.createNull(), []);
     buildView(view, template, dependencies);

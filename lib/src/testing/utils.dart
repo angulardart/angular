@@ -1,8 +1,6 @@
 library angular2.src.testing.utils;
 
 import "package:angular2/core.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, MapWrapper;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isString, RegExpWrapper, StringWrapper, RegExp;
@@ -46,52 +44,36 @@ class BrowserDetection {
   }
 
   BrowserDetection(String ua) {
-    if (isPresent(ua)) {
-      this._ua = ua;
-    } else {
-      this._ua = isPresent(DOM) ? DOM.getUserAgent() : "";
-    }
+    _ua = ua ?? (isPresent(DOM) ? DOM.getUserAgent() : '');
   }
-  bool get isFirefox {
-    return this._ua.indexOf("Firefox") > -1;
-  }
+  bool get isFirefox => _ua.indexOf("Firefox") > -1;
 
-  bool get isAndroid {
-    return this._ua.indexOf("Mozilla/5.0") > -1 &&
-        this._ua.indexOf("Android") > -1 &&
-        this._ua.indexOf("AppleWebKit") > -1 &&
-        this._ua.indexOf("Chrome") == -1;
-  }
+  bool get isAndroid =>
+    _ua.indexOf("Mozilla/5.0") > -1 &&
+        _ua.indexOf("Android") > -1 &&
+        _ua.indexOf("AppleWebKit") > -1 &&
+        _ua.indexOf("Chrome") == -1;
 
-  bool get isEdge {
-    return this._ua.indexOf("Edge") > -1;
-  }
+  bool get isEdge => _ua.indexOf("Edge") > -1;
 
-  bool get isIE {
-    return this._ua.indexOf("Trident") > -1;
-  }
+  bool get isIE => _ua.indexOf("Trident") > -1;
 
-  bool get isWebkit {
-    return this._ua.indexOf("AppleWebKit") > -1 &&
-        this._ua.indexOf("Edge") == -1;
-  }
+  bool get isWebkit => _ua.indexOf("AppleWebKit") > -1 &&
+        _ua.indexOf("Edge") == -1;
 
-  bool get isIOS7 {
-    return this._ua.indexOf("iPhone OS 7") > -1 ||
-        this._ua.indexOf("iPad OS 7") > -1;
-  }
+  bool get isIOS7 => _ua.indexOf("iPhone OS 7") > -1 ||
+        _ua.indexOf("iPad OS 7") > -1;
 
-  bool get isSlow {
-    return this.isAndroid || this.isIE || this.isIOS7;
-  }
+  bool get isSlow => isAndroid || isIE || isIOS7;
+
   // The Intl API is only properly supported in recent Chrome and Opera.
 
   // Note: Edge is disguised as Chrome 42, so checking the "Edge" part is needed,
 
   // see https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
-  bool get supportsIntlApi {
-    return this._ua.indexOf("Chrome/4") > -1 && this._ua.indexOf("Edge") == -1;
-  }
+  bool get supportsIntlApi =>
+    _ua.indexOf("Chrome/4") > -1 && _ua.indexOf("Edge") == -1;
+
 }
 
 void dispatchEvent(element, eventType) {
@@ -127,21 +109,30 @@ RegExp containsRegexp(String input) {
       input, _ESCAPE_RE, (match) => '''\\${ match [ 0 ]}'''));
 }
 
+RegExp _normalizerExp1, _normalizerExp2, _normalizerExp3, _normalizerExp4,
+    _normalizerExp5, _normalizerExp6;
+
 String normalizeCSS(String css) {
-  css = StringWrapper.replaceAll(css, new RegExp(r'\s+'), " ");
-  css = StringWrapper.replaceAll(css, new RegExp(r':\s'), ":");
-  css = StringWrapper.replaceAll(css, new RegExp(r'' + "'" + r''), "\"");
-  css = StringWrapper.replaceAll(css, new RegExp(r' }'), "}");
+  _normalizerExp1 ??= new RegExp(r'\s+');
+  _normalizerExp2 ??= new RegExp(r':\s');
+  _normalizerExp3 ??= new RegExp('' + "'" + r'');
+  _normalizerExp4 ??= new RegExp(' }');
+  _normalizerExp5 ??= new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
+  _normalizerExp6 ??= new RegExp(r'\[(.+)=([^"\]]+)\]');
+  css = StringWrapper.replaceAll(css, _normalizerExp1, " ");
+  css = StringWrapper.replaceAll(css, _normalizerExp2, ":");
+  css = StringWrapper.replaceAll(css, _normalizerExp3, "\"");
+  css = StringWrapper.replaceAll(css, _normalizerExp4, "}");
   css = StringWrapper.replaceAllMapped(
       css,
-      new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)'),
+      _normalizerExp5,
       (match) => '''url("${ match [ 2 ]}")''');
-  css = StringWrapper.replaceAllMapped(css, new RegExp(r'\[(.+)=([^"\]]+)\]'),
+  css = StringWrapper.replaceAllMapped(css, _normalizerExp6,
       (match) => '''[${ match [ 1 ]}="${ match [ 2 ]}"]''');
   return css;
 }
 
-var _singleTagWhitelist = ["br", "hr", "input"];
+var _singleTagWhitelist = const ['br', 'hr', 'input'];
 String stringifyElement(el) {
   var result = "";
   if (DOM.isElementNode(el)) {
@@ -152,7 +143,7 @@ String stringifyElement(el) {
     var attributeMap = DOM.attributeMap(el);
     var keys = [];
     attributeMap.forEach((k, v) => keys.add(k));
-    ListWrapper.sort(keys);
+    keys.sort();
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
       var attValue = attributeMap[key];
@@ -170,7 +161,7 @@ String stringifyElement(el) {
       result += stringifyElement(children[j]);
     }
     // Closing tag
-    if (!ListWrapper.contains(_singleTagWhitelist, tagName)) {
+    if (!_singleTagWhitelist.contains(tagName)) {
       result += '''</${ tagName}>''';
     }
   } else if (DOM.isCommentNode(el)) {

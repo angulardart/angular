@@ -3,10 +3,10 @@ library angular2.src.compiler.xhr_mock;
 import "dart:async";
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, Map, MapWrapper;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+    show ListWrapper, Map;
+import "package:angular2/src/facade/lang.dart" show isBlank;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/src/facade/async.dart"
     show PromiseCompleter, PromiseWrapper;
 

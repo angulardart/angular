@@ -1,7 +1,7 @@
 library angular2.src.core.metadata.di;
 
 import "package:angular2/src/facade/lang.dart"
-    show Type, stringify, isPresent, isString;
+    show stringify;
 import "package:angular2/src/core/di/forward_ref.dart" show resolveForwardRef;
 import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
 
@@ -185,16 +185,14 @@ class QueryMetadata extends DependencyMetadata {
   /**
    * whether this is querying for a variable binding or a directive.
    */
-  bool get isVarBindingQuery {
-    return isString(this.selector);
-  }
+  bool get isVarBindingQuery => selector is String;
 
   /**
    * returns a list of variable bindings this is querying for.
    * Only applicable if this is a variable bindings query.
    */
-  List<String> get varBindings {
-    return this.selector.split(",");
+  List get varBindings {
+    return selector.split(",");
   }
 
   String toString() {
@@ -303,7 +301,7 @@ class ViewQueryMetadata extends QueryMetadata {
   }
 
   String toString() {
-    return '''@ViewQuery(${ stringify ( this . selector )})''';
+    return '''@ViewQuery(${ stringify(selector)})''';
   }
 }
 

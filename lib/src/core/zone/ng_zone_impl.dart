@@ -105,7 +105,9 @@ class NgZoneImpl {
     }
   }
 
-  Zone _createInnerZone(Zone zone, {handleUncaughtError}) {
+  Zone _createInnerZone(Zone zone,
+      {handleUncaughtError(Zone _, ZoneDelegate __, Zone ___, dynamic ____,
+          StackTrace s)}) {
     return zone.fork(
         specification: new ZoneSpecification(
             scheduleMicrotask: _scheduleMicrotask,
@@ -117,11 +119,11 @@ class NgZoneImpl {
         zoneValues: {'isAngularZone': true});
   }
 
-  dynamic runInnerGuarded(fn()) {
+  /*=R*/ runInnerGuarded/*<R>*/(/*=R*/ fn()) {
     return _innerZone.runGuarded(fn);
   }
 
-  dynamic runInner(fn()) {
+  /*=R*/ runInner/*<R>*/(/*=R*/ fn()) {
     return _innerZone.run(fn);
   }
 
@@ -144,7 +146,7 @@ class NgZoneImpl {
    * }
    * ```
    */
-  dynamic runOuter(fn()) {
+  /*=R*/ runOuter/*<R>*/(/*=R*/ fn()) {
     return _outerZone.run(fn);
   }
 
@@ -164,7 +166,7 @@ class NgZoneImpl {
           arg1, arg2) =>
       _run(self, parent, zone, () => fn(arg1, arg2));
 
-  void _scheduleMicrotask(Zone self, ZoneDelegate parent, Zone zone, fn) {
+  void _scheduleMicrotask(Zone self, ZoneDelegate parent, Zone zone, void fn()) {
     if (_pendingMicrotasks == 0) {
       setMicrotask(true);
     }

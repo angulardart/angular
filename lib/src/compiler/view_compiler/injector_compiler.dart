@@ -6,10 +6,8 @@ import "../compile_metadata.dart"
     show
         CompileInjectorModuleMetadata,
         CompileDiDependencyMetadata,
-        CompileTokenMetadata,
         CompileTokenMap,
-        CompileProviderMetadata,
-        CompileTypeMetadata;
+        CompileProviderMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
 import "../parse_util.dart"

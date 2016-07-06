@@ -1,9 +1,9 @@
 library angular2.src.compiler.view_compiler.constants;
 
 import "package:angular2/src/facade/lang.dart"
-    show serializeEnum, isBlank, resolveEnumToken;
+    show resolveEnumToken;
 import "../compile_metadata.dart"
-    show CompileIdentifierMetadata, CompileTokenMetadata;
+    show CompileIdentifierMetadata;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorState, ChangeDetectionStrategy;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
@@ -13,7 +13,7 @@ import "../identifiers.dart" show Identifiers;
 
 o.Expression _enumExpression(
     CompileIdentifierMetadata classIdentifier, dynamic value) {
-  if (isBlank(value)) return o.NULL_EXPR;
+  if (value == null) return o.NULL_EXPR;
   var name = resolveEnumToken(classIdentifier.runtime, value);
   return o.importExpr(new CompileIdentifierMetadata(
       name: '''${ classIdentifier . name}.${ name}''',

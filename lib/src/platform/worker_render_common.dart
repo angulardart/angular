@@ -6,22 +6,16 @@ import "package:angular2/src/web_workers/shared/message_bus.dart"
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/core.dart"
     show
-        PLATFORM_DIRECTIVES,
-        PLATFORM_PIPES,
-        ComponentRef,
         ExceptionHandler,
-        Reflector,
-        reflector,
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         RootRenderer,
         PLATFORM_INITIALIZER,
-        APP_INITIALIZER,
         TestabilityRegistry;
 import "package:angular2/platform/common_dom.dart"
     show EVENT_MANAGER_PLUGINS, EventManager;
 import "package:angular2/src/core/di.dart"
-    show provide, Provider, Injector, OpaqueToken;
+    show Provider, Injector, OpaqueToken;
 // TODO change these imports once dom_adapter is moved out of core
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/events/dom_events.dart"

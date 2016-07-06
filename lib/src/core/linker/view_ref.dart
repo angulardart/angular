@@ -1,16 +1,12 @@
 library angular2.src.core.linker.view_ref;
 
-import "package:angular2/src/facade/exceptions.dart" show unimplemented;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "../change_detection/change_detector_ref.dart" show ChangeDetectorRef;
 import "view.dart" show AppView;
 import "package:angular2/src/core/change_detection/constants.dart"
     show ChangeDetectionStrategy;
 
 abstract class ViewRef {
-  bool get destroyed {
-    return (unimplemented() as bool);
-  }
+  bool get destroyed;
 
   onDestroy(Function callback);
 }
@@ -77,9 +73,7 @@ abstract class EmbeddedViewRef extends ViewRef {
    * Checks whether this view has a local variable called `variableName`.
    */
   bool hasLocal(String variableName);
-  List<dynamic> get rootNodes {
-    return (unimplemented() as List<dynamic>);
-  }
+  List<dynamic> get rootNodes;
 
   /**
    * Destroys the view and all of the data structures associated with it.

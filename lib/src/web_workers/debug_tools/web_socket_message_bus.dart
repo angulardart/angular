@@ -27,7 +27,8 @@ class WebSocketMessageBusSink extends GenericMessageBusSink {
 class WebSocketMessageBusSource extends GenericMessageBusSource {
   WebSocketMessageBusSource(WebSocket webSocket) : super(webSocket.onMessage);
 
-  List<dynamic> decodeMessages(MessageEvent event) {
+  List decodeMessages(e) {
+    MessageEvent event = e;
     var messages = event.data;
     return JSON.decode(messages);
   }

@@ -22,6 +22,6 @@ class WebWorkerXHRImpl extends XHR {
   Future<String> get(String url) {
     List<FnArg> fnArgs = [new FnArg(url, null)];
     UiArguments args = new UiArguments("get", fnArgs);
-    return this._messageBroker.runOnService(args, String);
+    return this._messageBroker.runOnService(args, String) as Future<String>;
   }
 }

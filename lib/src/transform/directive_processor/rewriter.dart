@@ -6,7 +6,7 @@ import 'package:analyzer/analyzer.dart';
 import 'package:barback/barback.dart' show AssetId;
 
 import 'package:angular2/src/compiler/compile_metadata.dart'
-    show CompileIdentifierMetadata, CompileProviderMetadata;
+    show CompileIdentifierMetadata;
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
@@ -49,7 +49,7 @@ Future<NgMeta> createNgMeta(AssetReader reader, AssetId assetId,
     parsedCode.accept(ngMetaVisitor);
     await ngMetaVisitor.whenDone();
     return ngMeta;
-  }, operationName: 'createNgMeta', assetId: assetId);
+  }, operationName: 'createNgMeta', assetId: assetId) as Future<NgMeta>;
 }
 
 // TODO(kegluneq): Allow the caller to provide an InterfaceMatcher.
@@ -123,12 +123,12 @@ class _NgMetaVisitor extends Object with SimpleAstVisitor<Object> {
 
       var initializer = variable.initializer;
       if (initializer != null && initializer is ListLiteral) {
-        var otherNames = [];
+        var otherNames = <String>[];
         for (var exp in initializer.elements) {
           // Only simple identifiers are supported for now.
           // TODO(sigmund): add support for prefixes (see issue #3232).
           if (exp is! SimpleIdentifier) continue outer;
-          otherNames.add(exp.name);
+          otherNames.add((exp as SimpleIdentifier).name);
         }
         ngMeta.aliases[variable.name.name] = otherNames;
       }

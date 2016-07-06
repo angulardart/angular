@@ -29,7 +29,6 @@ import "package:angular2/core.dart"
         reflector,
         ReflectiveInjector,
         PlatformRef,
-        OpaqueToken,
         getPlatform,
         createPlatform,
         assertPlatform;

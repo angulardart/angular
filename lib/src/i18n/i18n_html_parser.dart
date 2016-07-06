@@ -22,7 +22,7 @@ import "package:angular2/src/facade/lang.dart"
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/compiler/expression_parser/parser.dart"
     show Parser;
-import "message.dart" show Message, id;
+import "message.dart" show id;
 import "expander.dart" show expandNodes;
 import "shared.dart"
     show
@@ -32,8 +32,6 @@ import "shared.dart"
         I18N_ATTR,
         partition,
         Part,
-        stringifyNodes,
-        meaning,
         getPhNameFromBinding,
         dedupePhName;
 
@@ -149,7 +147,7 @@ class I18nHtmlParser implements HtmlParser {
   List<HtmlAst> _processI18nPart(Part p) {
     try {
       return p.hasI18n ? this._mergeI18Part(p) : this._recurseIntoI18nPart(p);
-    } catch (e, e_stack) {
+    } catch (e) {
       if (e is I18nError) {
         this.errors.add(e);
         return [];
@@ -194,7 +192,7 @@ class I18nHtmlParser implements HtmlParser {
   List<HtmlAst> _recurse(List<HtmlAst> nodes) {
     var ps = partition(nodes, this.errors);
     return ListWrapper
-        .flatten(ps.map((p) => this._processI18nPart(p)).toList());
+        .flatten(ps.map((p) => this._processI18nPart(p)).toList()) as List<HtmlAst>;
   }
 
   List<HtmlAst> _mergeTrees(
@@ -267,7 +265,7 @@ class I18nHtmlParser implements HtmlParser {
       HtmlElementAst t, HtmlTextAst originalNode) {
     var split = this._parser.splitInterpolation(
         originalNode.value, originalNode.sourceSpan.toString());
-    var exps = isPresent(split) ? split.expressions : [];
+    List<String> exps = split?.expressions ?? <String>[];
     var messageSubstring = this
         ._messagesContent
         .substring(t.startSourceSpan.end.offset, t.endSourceSpan.start.offset);
@@ -289,7 +287,7 @@ class I18nHtmlParser implements HtmlParser {
   }
 
   List<HtmlAttrAst> _i18nAttributes(HtmlElementAst el) {
-    var res = [];
+    var res = <HtmlAttrAst>[];
     el.attrs.forEach((attr) {
       if (attr.name.startsWith(I18N_ATTR_PREFIX) || attr.name == I18N_ATTR)
         return;
@@ -317,7 +315,7 @@ class I18nHtmlParser implements HtmlParser {
   String _replaceInterpolationInAttr(HtmlAttrAst attr, List<HtmlAst> msg) {
     var split =
         this._parser.splitInterpolation(attr.value, attr.sourceSpan.toString());
-    var exps = isPresent(split) ? split.expressions : [];
+    List<String> exps = split?.expressions ?? [];
     var first = msg[0];
     var last = msg[msg.length - 1];
     var start = first.sourceSpan.start.offset;

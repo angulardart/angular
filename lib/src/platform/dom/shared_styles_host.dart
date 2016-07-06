@@ -13,7 +13,7 @@ class SharedStylesHost {
   var _stylesSet = new Set<String>();
   SharedStylesHost() {}
   addStyles(List<String> styles) {
-    var additions = [];
+    var additions = <String>[];
     styles.forEach((style) {
       if (!SetWrapper.has(this._stylesSet, style)) {
         this._stylesSet.add(style);

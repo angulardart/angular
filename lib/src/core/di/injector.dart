@@ -2,7 +2,7 @@ library angular2.src.core.di.injector;
 
 import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
 import "package:angular2/src/facade/exceptions.dart"
-    show unimplemented, BaseException;
+    show BaseException;
 
 const _THROW_IF_NOT_FOUND = const Object();
 const THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
@@ -47,9 +47,7 @@ abstract class Injector {
    * expect(injector.get(Injector)).toBe(injector);
    * ```
    */
-  dynamic get(dynamic token, [dynamic notFoundValue]) {
-    return unimplemented();
-  }
+  dynamic get(dynamic token, [dynamic notFoundValue]);
 }
 
 class _EmptyInjectorFactory implements InjectorFactory<dynamic> {

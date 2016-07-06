@@ -1,9 +1,9 @@
 library angular2.src.core.change_detection.differs.default_keyvalue_differ;
 
 import "package:angular2/src/facade/collection.dart"
-    show MapWrapper, StringMapWrapper;
+    show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
-    show stringify, looseIdentical, isJsObject, isBlank;
+    show stringify, looseIdentical, isJsObject;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/keyvalue_differs.dart"
@@ -21,7 +21,7 @@ class DefaultKeyValueDifferFactory implements KeyValueDifferFactory {
   const DefaultKeyValueDifferFactory();
 }
 
-class DefaultKeyValueDiffer implements KeyValueDiffer {
+class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
   Map<dynamic, dynamic> _records = new Map();
   KeyValueChangeRecord _mapHead = null;
   KeyValueChangeRecord _previousMapHead = null;
@@ -82,8 +82,8 @@ class DefaultKeyValueDiffer implements KeyValueDiffer {
     }
   }
 
-  dynamic diff(Map<dynamic, dynamic> map) {
-    if (isBlank(map)) map = MapWrapper.createFromPairs([]);
+  dynamic diff(Map map) {
+    map ??= {};
     if (!(map is Map || isJsObject(map))) {
       throw new BaseException('''Error trying to diff \'${ map}\'''');
     }
@@ -407,13 +407,15 @@ class DefaultKeyValueDiffer implements KeyValueDiffer {
   /** @internal */
   _forEach(obj, Function fn) {
     if (obj is Map) {
-      ((obj as Map<dynamic, dynamic>))
-          .forEach((k, v) => ((fn as dynamic))(v, k));
+      obj.forEach((k, v) => fn(v, k));
     } else {
-      StringMapWrapper.forEach(obj, fn);
+      var handler = fn as _MapHandler;
+      StringMapWrapper.forEach(obj as Map<String, dynamic>, handler);
     }
   }
 }
+
+typedef _MapHandler(dynamic value, String key);
 
 class KeyValueChangeRecord {
   dynamic key;

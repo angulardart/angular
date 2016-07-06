@@ -93,7 +93,8 @@ const _INJECTOR_MODULES = const [
 /// Checks if a given [Annotation] matches any of the given
 /// [ClassDescriptors].
 class AnnotationMatcher extends ClassMatcherBase {
-  AnnotationMatcher._(classDescriptors) : super(classDescriptors);
+  AnnotationMatcher._(List<ClassDescriptor> classDescriptors)
+      : super(classDescriptors);
 
   factory AnnotationMatcher() {
     return new AnnotationMatcher._([]

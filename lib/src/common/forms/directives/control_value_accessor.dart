@@ -10,19 +10,19 @@ import "package:angular2/core.dart" show OpaqueToken;
  *
  * Please see [DefaultValueAccessor] for more information.
  */
-abstract class ControlValueAccessor {
+abstract class ControlValueAccessor<T> {
   /**
    * Write a new value to the element.
    */
-  void writeValue(dynamic obj);
+  void writeValue(T obj);
   /**
    * Set the function to be called when the control receives a change event.
    */
-  void registerOnChange(dynamic fn);
+  void registerOnChange(dynamic fn(T value));
   /**
    * Set the function to be called when the control receives a touch event.
    */
-  void registerOnTouched(dynamic fn);
+  void registerOnTouched(dynamic fn());
 }
 
 /**

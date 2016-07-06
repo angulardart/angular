@@ -1,10 +1,10 @@
 library angular2.src.common.forms.directives.number_value_accessor;
 
 import "package:angular2/core.dart"
-    show Directive, ElementRef, Renderer, Self, Provider;
+    show Directive, ElementRef, Renderer, Provider;
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
-import "package:angular2/src/facade/lang.dart" show isBlank, NumberWrapper;
+import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 
 const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: NumberValueAccessor, multi: true);
@@ -26,28 +26,28 @@ const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
       "(input)": "onChange(\$event.target.value)",
       "(blur)": "onTouched()"
     },
-    bindings: const [
+    providers: const [
       NUMBER_VALUE_ACCESSOR
     ])
 class NumberValueAccessor implements ControlValueAccessor {
   Renderer _renderer;
   ElementRef _elementRef;
-  var onChange = (dynamic _) {};
+  var onChange = (_) {};
   var onTouched = () {};
   NumberValueAccessor(this._renderer, this._elementRef) {}
-  void writeValue(num value) {
+  void writeValue(value) {
     this
         ._renderer
         .setElementProperty(this._elementRef.nativeElement, "value", value);
   }
 
-  void registerOnChange(void fn(num _)) {
+  void registerOnChange(dynamic fn) {
     this.onChange = (value) {
       fn(value == "" ? null : NumberWrapper.parseFloat(value));
     };
   }
 
-  void registerOnTouched(void fn()) {
+  void registerOnTouched(dynamic fn) {
     this.onTouched = fn;
   }
 }

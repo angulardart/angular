@@ -88,7 +88,7 @@ class CompileEventListener {
     this._actionResultExprs.forEach((expr) {
       resultExpr = resultExpr.and(expr);
     });
-    var stmts = (new List.from((new List.from((<o.Statement>[
+    List<o.Statement> stmts = (new List.from((new List.from((<o.Statement>[
       markPathToRootStart.callMethod("markPathToRootAsCheckOnce", []).toStmt()
     ]))..addAll(this._method.finish())))
       ..addAll([new o.ReturnStatement(resultExpr)]));

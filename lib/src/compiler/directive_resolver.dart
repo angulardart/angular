@@ -1,8 +1,7 @@
 library angular2.src.compiler.directive_resolver;
 
 import "package:angular2/src/core/di.dart" show resolveForwardRef, Injectable;
-import "package:angular2/src/facade/lang.dart"
-    show Type, isPresent, isBlank, stringify;
+import "package:angular2/src/facade/lang.dart" show Type, isPresent, stringify;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
@@ -28,15 +27,14 @@ bool _isDirectiveMetadata(dynamic type) {
 
 class NoDirectiveAnnotationError extends BaseException {
   NoDirectiveAnnotationError(Type type)
-      : super('''No Directive annotation found on ${ stringify ( type )}''') {
-    /* super call moved to initializer */;
-  }
+      : super('''No Directive annotation found on ${ stringify ( type )}''') {}
 }
 
 /*
  * Resolve a `Type` for [DirectiveMetadata].
  *
- * This interface can be overridden by the application developer to create custom behavior.
+ * This interface can be overridden by the application developer
+ * to create custom behavior.
  *
  * See [Compiler]
  */
@@ -69,12 +67,11 @@ class DirectiveResolver {
 
   DirectiveMetadata _mergeWithPropertyMetadata(DirectiveMetadata dm,
       Map<String, List<dynamic>> propertyMetadata, Type directiveType) {
-    var inputs = [];
-    var outputs = [];
+    var inputs = <String>[];
+    var outputs = <String>[];
     Map<String, String> host = {};
     Map<String, dynamic> queries = {};
-    StringMapWrapper.forEach(propertyMetadata,
-        (List<dynamic> metadata, String propName) {
+    propertyMetadata.forEach((String propName, List<dynamic> metadata) {
       metadata.forEach((a) {
         if (a is InputMetadata) {
           if (isPresent(a.bindingPropertyName)) {
@@ -98,8 +95,7 @@ class DirectiveResolver {
           }
         }
         if (a is HostListenerMetadata) {
-          var args =
-              isPresent(a.args) ? ((a.args as List<dynamic>)).join(", ") : "";
+          var args = a.args?.join(", ") ?? '';
           host['''(${ a . eventName})'''] = '''${ propName}(${ args})''';
         }
         if (a is ContentChildrenMetadata) {
@@ -126,14 +122,15 @@ class DirectiveResolver {
       Map<String, String> host,
       Map<String, dynamic> queries,
       Type directiveType) {
-    var mergedInputs =
+    List<String> mergedInputs =
         isPresent(dm.inputs) ? ListWrapper.concat(dm.inputs, inputs) : inputs;
-    var mergedOutputs;
+    List<String> mergedOutputs;
     if (isPresent(dm.outputs)) {
       dm.outputs.forEach((String propName) {
         if (ListWrapper.contains(outputs, propName)) {
           throw new BaseException(
-              '''Output event \'${ propName}\' defined multiple times in \'${ stringify ( directiveType )}\'''');
+              '''Output event \'${ propName}\' defined multiple times '
+              'in \'${ stringify ( directiveType )}\'''');
         }
       });
       mergedOutputs = ListWrapper.concat(dm.outputs, outputs);

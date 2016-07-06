@@ -5,27 +5,14 @@ import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "template_ast.dart"
     show
-        TemplateAst,
-        TemplateAstVisitor,
-        NgContentAst,
-        EmbeddedTemplateAst,
-        ElementAst,
         ReferenceAst,
-        BoundEventAst,
-        BoundElementPropertyAst,
         AttrAst,
-        BoundTextAst,
-        TextAst,
         DirectiveAst,
-        BoundDirectivePropertyAst,
-        templateVisitAll,
-        PropertyBindingType,
         ProviderAst,
         ProviderAstType;
 import "compile_metadata.dart"
     show
         CompileTypeMetadata,
-        CompileInjectorModuleMetadata,
         CompileTokenMap,
         CompileQueryMetadata,
         CompileTokenMetadata,
@@ -33,7 +20,7 @@ import "compile_metadata.dart"
         CompileDirectiveMetadata,
         CompileDiDependencyMetadata;
 import "identifiers.dart" show Identifiers, identifierToken;
-import "parse_util.dart" show ParseSourceSpan, ParseError, ParseLocation;
+import "parse_util.dart" show ParseSourceSpan, ParseError;
 
 class ProviderError extends ParseError {
   ProviderError(String message, ParseSourceSpan span) : super(span, message) {
@@ -208,10 +195,10 @@ class ProviderElementContext {
       return null;
     }
     this._seenProviders.add(token, true);
-    var transformedProviders = resolvedProvider.providers.map((provider) {
+    List<CompileProviderMetadata> transformedProviders = resolvedProvider.providers.map((provider) {
       var transformedUseValue = provider.useValue;
       var transformedUseExisting = provider.useExisting;
-      var transformedDeps;
+      List<CompileDiDependencyMetadata> transformedDeps;
       if (isPresent(provider.useExisting)) {
         var existingDiDep = this._getDependency(
             resolvedProvider.providerType,
@@ -242,7 +229,7 @@ class ProviderElementContext {
       return _transformProvider(provider,
           useExisting: transformedUseExisting,
           useValue: transformedUseValue,
-          deps: transformedDeps);
+          deps: transformedDeps) as CompileProviderMetadata;
     }).toList();
     transformedProviderAst = _transformProviderAst(resolvedProvider,
         eager: eager, providers: transformedProviders);
@@ -381,10 +368,10 @@ ${ errorString}''');
       return null;
     }
     this._seenProviders.add(token, true);
-    var transformedProviders = resolvedProvider.providers.map((provider) {
+    List<CompileProviderMetadata> transformedProviders = resolvedProvider.providers.map((provider) {
       var transformedUseValue = provider.useValue;
       var transformedUseExisting = provider.useExisting;
-      var transformedDeps;
+      List<CompileDiDependencyMetadata> transformedDeps;
       if (isPresent(provider.useExisting)) {
         var existingDiDep = this._getDependency(
             new CompileDiDependencyMetadata(token: provider.useExisting),
@@ -410,7 +397,7 @@ ${ errorString}''');
       return _transformProvider(provider,
           useExisting: transformedUseExisting,
           useValue: transformedUseValue,
-          deps: transformedDeps);
+          deps: transformedDeps) as CompileProviderMetadata;
     }).toList();
     transformedProviderAst = _transformProviderAst(resolvedProvider,
         eager: eager, providers: transformedProviders);

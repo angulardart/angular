@@ -1,7 +1,5 @@
 library angular2.src.core.metadata.view;
 
-import "package:angular2/src/facade/lang.dart" show Type;
-
 /**
  * Defines template and style encapsulation options available for Component's [View].
  *

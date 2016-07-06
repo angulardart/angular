@@ -41,7 +41,7 @@ class ReflectionCapabilities extends standard.ReflectionCapabilities {
     return super.annotations(typeOrFunc);
   }
 
-  Map propMetadata(typeOrFunc) {
+  Map<String, List> propMetadata(typeOrFunc) {
     _notify('propMetadata', typeOrFunc);
     return super.propMetadata(typeOrFunc);
   }

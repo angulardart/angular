@@ -1,10 +1,10 @@
 library angular2.src.facade.exception_handler;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, print;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/base_wrapped_exception.dart"
     show BaseWrappedException;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, isListLikeIterable;
+    show isListLikeIterable;
 
 class _ArrayLogger {
   List<dynamic> res = [];
@@ -111,7 +111,7 @@ class ExceptionHandler {
       return isPresent(exception.context)
           ? exception.context
           : this._findContext(exception.originalException);
-    } catch (e, e_stack) {
+    } catch (e) {
       // exception.context can throw an exception. if it happens, we ignore the context.
       return null;
     }

@@ -1,8 +1,8 @@
 library angular2.src.compiler.legacy_template;
 
-import "package:angular2/src/core/di.dart" show Injectable, Provider, provide;
+import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, RegExpWrapper, isBlank, isPresent;
+    show StringWrapper, RegExpWrapper, isPresent;
 import "html_ast.dart"
     show
         HtmlAstVisitor,
@@ -14,7 +14,7 @@ import "html_ast.dart"
         HtmlExpansionCaseAst,
         HtmlAst;
 import "html_parser.dart" show HtmlParser, HtmlParseTreeResult;
-import "util.dart" show dashCaseToCamelCase, camelCaseToDashCase;
+import "util.dart" show dashCaseToCamelCase;
 
 var LONG_SYNTAX_REGEXP = new RegExp(
     r'^(?:on-(.*)|bindon-(.*)|bind-(.*)|var-(.*))$',
@@ -50,9 +50,9 @@ class LegacyHtmlAstTransformer implements HtmlAstVisitor {
 
   HtmlElementAst visitElement(HtmlElementAst ast, dynamic context) {
     this.visitingTemplateEl = ast.name.toLowerCase() == "template";
-    var attrs = ast.attrs.map((attr) => attr.visit(this, null)).toList();
-    var children =
-        ast.children.map((child) => child.visit(this, null)).toList();
+    List<HtmlAttrAst> attrs = ast.attrs.map((attr) => attr.visit(this, null) as HtmlAttrAst).toList();
+    List<HtmlAst> children =
+        ast.children.map((child) => child.visit(this, null) as HtmlAst).toList();
     return new HtmlElementAst(ast.name, attrs, children, ast.sourceSpan,
         ast.startSourceSpan, ast.endSourceSpan);
   }
@@ -89,7 +89,7 @@ class LegacyHtmlAstTransformer implements HtmlAstVisitor {
   }
 
   dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
-    var cases = ast.cases.map((c) => c.visit(this, null)).toList();
+    List<HtmlExpansionCaseAst> cases = ast.cases.map((c) => c.visit(this, null) as HtmlExpansionCaseAst).toList();
     return new HtmlExpansionAst(ast.switchValue, ast.type, cases,
         ast.sourceSpan, ast.switchValueSourceSpan);
   }
@@ -226,8 +226,8 @@ class LegacyHtmlParser extends HtmlParser {
     var transformer = new LegacyHtmlAstTransformer();
     var htmlParseTreeResult =
         super.parse(sourceContent, sourceUrl, parseExpansionForms);
-    var rootNodes = htmlParseTreeResult.rootNodes
-        .map((node) => node.visit(transformer, null))
+    List<HtmlAst> rootNodes = htmlParseTreeResult.rootNodes
+        .map((node) => node.visit(transformer, null) as HtmlAst)
         .toList();
     return transformer.rewrittenAst.length > 0
         ? new HtmlParseTreeResult(rootNodes, htmlParseTreeResult.errors)

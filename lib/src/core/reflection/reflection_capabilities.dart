@@ -260,8 +260,8 @@ class ReflectionCapabilities implements PlatformReflectionCapabilities {
     return meta.map((m) => m.reflectee).toList();
   }
 
-  Map propMetadata(typeOrFunc) {
-    final res = {};
+  Map<String, List> propMetadata(dynamic typeOrFunc) {
+    final res = <String, List>{};
     reflectClass(typeOrFunc).declarations.forEach((k, v) {
       var name = _normalizeName(MirrorSystem.getName(k));
       if (res[name] == null) res[name] = [];
@@ -305,7 +305,7 @@ class ReflectionCapabilities implements PlatformReflectionCapabilities {
   }
 
   List _functionParameters(Function func) {
-    var closureMirror = reflect(func);
+    ClosureMirror closureMirror = reflect(func);
     return closureMirror.function.parameters;
   }
 
@@ -316,7 +316,7 @@ class ReflectionCapabilities implements PlatformReflectionCapabilities {
   }
 
   List _functionMetadata(Function func) {
-    var closureMirror = reflect(func);
+    ClosureMirror closureMirror = reflect(func);
     return closureMirror.function.metadata;
   }
 
@@ -394,7 +394,10 @@ bool _checkImplements(ClassMirror clazz, {ClassMirror iface: null}) {
   var matches = true;
   iface.declarations.forEach((symbol, declarationMirror) {
     if (!matches) return;
-    if (declarationMirror.isConstructor || declarationMirror.isPrivate) return;
+    if (declarationMirror is MethodMirror && declarationMirror.isConstructor) {
+      return;
+    }
+    if (declarationMirror.isPrivate) return;
     matches = clazz.declarations.keys.contains(symbol);
   });
   if (!matches && clazz.superclass != null) {

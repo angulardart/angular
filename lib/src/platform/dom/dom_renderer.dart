@@ -1,6 +1,6 @@
 library angular2.src.platform.dom.dom_renderer;
 
-import "package:angular2/src/core/di.dart" show Inject, Injectable, OpaqueToken;
+import "package:angular2/src/core/di.dart" show Inject, Injectable;
 import "package:angular2/src/animate/animation_builder.dart"
     show AnimationBuilder;
 import "package:angular2/src/facade/lang.dart"
@@ -14,7 +14,7 @@ import "package:angular2/src/facade/lang.dart"
         isArray,
         isString;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "shared_styles_host.dart" show DomSharedStylesHost;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;

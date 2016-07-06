@@ -126,7 +126,7 @@ class ParamRoutePath implements RoutePath {
   MatchedUrl matchUrl(Url url) {
     var nextUrlSegment = url;
     Url currentUrlSegment;
-    var positionalParams = {};
+    var positionalParams = <String, dynamic>{};
     List<String> captured = [];
     for (var i = 0; i < this._segments.length; i += 1) {
       var pathSegment = this._segments[i];
@@ -158,8 +158,8 @@ class ParamRoutePath implements RoutePath {
       return null;
     }
     var urlPath = captured.join("/");
-    var auxiliary = [];
-    var urlParams = [];
+    var auxiliary = <Url>[];
+    var urlParams = <String>[];
     var allParams = positionalParams;
     if (isPresent(currentUrlSegment)) {
       // If this is the root component, read query params. Otherwise, read matrix params.

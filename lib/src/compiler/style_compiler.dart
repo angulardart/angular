@@ -2,7 +2,6 @@ library angular2.src.compiler.style_compiler;
 
 import "compile_metadata.dart"
     show
-        CompileTemplateMetadata,
         CompileIdentifierMetadata,
         CompileDirectiveMetadata;
 import "output/output_ast.dart" as o;
@@ -54,10 +53,11 @@ class StyleCompiler {
 
   StylesCompileResult _compileStyles(String stylesVar, List<String> plainStyles,
       List<String> absUrls, bool shim) {
-    var styleExpressions = plainStyles
+    List<o.Expression> styleExpressions;
+    styleExpressions = plainStyles
         .map((plainStyle) => o.literal(this._shimIfNeeded(plainStyle, shim)))
         .toList();
-    var dependencies = [];
+    var dependencies = <StylesCompileDependency>[];
     for (var i = 0; i < absUrls.length; i++) {
       var identifier =
           new CompileIdentifierMetadata(name: getStylesVarName(null));

@@ -4,11 +4,7 @@ import "output_ast.dart" as o;
 import "package:angular2/src/facade/lang.dart"
     show
         isPresent,
-        isBlank,
-        isString,
-        evalExpression,
-        RegExpWrapper,
-        StringWrapper;
+        isBlank;
 import "abstract_emitter.dart" show OutputEmitter, EmitterVisitorContext;
 import "abstract_js_emitter.dart" show AbstractJsEmitterVisitor;
 import "path_util.dart" show getImportModulePath, ImportEnv;
@@ -37,7 +33,8 @@ class JsEmitterVisitor extends AbstractJsEmitterVisitor {
   JsEmitterVisitor(this._moduleUrl) : super() {
     /* super call moved to initializer */;
   }
-  dynamic visitExternalExpr(o.ExternalExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (isPresent(ast.value.moduleUrl) &&
         ast.value.moduleUrl != this._moduleUrl) {
       var prefix = this.importsWithPrefixes[ast.value.moduleUrl];
@@ -52,7 +49,8 @@ class JsEmitterVisitor extends AbstractJsEmitterVisitor {
   }
 
   dynamic visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, EmitterVisitorContext ctx) {
+      o.DeclareVarStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     super.visitDeclareVarStmt(stmt, ctx);
     if (ctx.isExportedVar(stmt.name)) {
       ctx.println(exportVar(stmt.name));
@@ -61,7 +59,8 @@ class JsEmitterVisitor extends AbstractJsEmitterVisitor {
   }
 
   dynamic visitDeclareFunctionStmt(
-      o.DeclareFunctionStmt stmt, EmitterVisitorContext ctx) {
+      o.DeclareFunctionStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     super.visitDeclareFunctionStmt(stmt, ctx);
     if (ctx.isExportedVar(stmt.name)) {
       ctx.println(exportVar(stmt.name));
@@ -69,7 +68,8 @@ class JsEmitterVisitor extends AbstractJsEmitterVisitor {
     return null;
   }
 
-  dynamic visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     super.visitDeclareClassStmt(stmt, ctx);
     if (ctx.isExportedVar(stmt.name)) {
       ctx.println(exportVar(stmt.name));

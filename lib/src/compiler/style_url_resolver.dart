@@ -27,7 +27,7 @@ bool isStyleUrlResolvable(String url) {
  */
 StyleWithImports extractStyleUrls(
     UrlResolver resolver, String baseUrl, String cssText) {
-  var foundUrls = [];
+  var foundUrls = <String>[];
   var modifiedCssText =
       StringWrapper.replaceAllMapped(cssText, _cssImportRe, (m) {
     var url = isPresent(m[1]) ? m[1] : m[2];

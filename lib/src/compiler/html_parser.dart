@@ -3,12 +3,7 @@ library angular2.src.compiler.html_parser;
 import "package:angular2/src/facade/lang.dart"
     show
         isPresent,
-        isBlank,
-        StringWrapper,
-        stringify,
-        assertionsEnabled,
-        StringJoiner,
-        serializeEnum;
+        isBlank;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "html_ast.dart"
     show
@@ -21,9 +16,9 @@ import "html_ast.dart"
         HtmlExpansionCaseAst;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "html_lexer.dart" show HtmlToken, HtmlTokenType, tokenizeHtml;
-import "parse_util.dart" show ParseError, ParseLocation, ParseSourceSpan;
+import "parse_util.dart" show ParseError, ParseSourceSpan;
 import "html_tags.dart"
-    show HtmlTagDefinition, getHtmlTagDefinition, getNsPrefix, mergeNsAndName;
+    show getHtmlTagDefinition, getNsPrefix, mergeNsAndName;
 
 class HtmlTreeError extends ParseError {
   String elementName;
@@ -53,7 +48,7 @@ class HtmlParser {
     var treeAndErrors = new TreeBuilder(tokensAndErrors.tokens).build();
     return new HtmlParseTreeResult(
         treeAndErrors.rootNodes,
-        (new List.from(((tokensAndErrors.errors as List<ParseError>)))
+        (new List<ParseError>.from(((tokensAndErrors.errors)))
           ..addAll(treeAndErrors.errors)));
   }
 }
@@ -128,7 +123,7 @@ class TreeBuilder {
   _consumeExpansion(HtmlToken token) {
     var switchValue = this._advance();
     var type = this._advance();
-    var cases = [];
+    var cases = <HtmlExpansionCaseAst>[];
     // read =
     while (identical(this.peek.type, HtmlTokenType.EXPANSION_CASE_VALUE)) {
       var expCase = this._parseExpansionCase();
@@ -178,7 +173,7 @@ class TreeBuilder {
   }
 
   List<HtmlToken> _collectExpansionExpTokens(HtmlToken start) {
-    var exp = [];
+    var exp = <HtmlToken>[];
     var expansionFormStack = [HtmlTokenType.EXPANSION_CASE_EXP_START];
     while (true) {
       if (identical(this.peek.type, HtmlTokenType.EXPANSION_FORM_START) ||
@@ -242,7 +237,7 @@ class TreeBuilder {
   _consumeStartTag(HtmlToken startTagToken) {
     var prefix = startTagToken.parts[0];
     var name = startTagToken.parts[1];
-    var attrs = [];
+    var attrs = <HtmlAttrAst>[];
     while (identical(this.peek.type, HtmlTokenType.ATTR_NAME)) {
       attrs.add(this._consumeAttr(this._advance()));
     }

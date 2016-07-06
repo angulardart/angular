@@ -1,7 +1,6 @@
 library angular2.src.core.di.metadata;
 
-import "package:angular2/src/facade/lang.dart"
-    show stringify, isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show stringify;
 
 /**
  * A parameter metadata that specifies a dependency.

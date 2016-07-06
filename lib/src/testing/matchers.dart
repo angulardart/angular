@@ -35,7 +35,7 @@ expectErrorMessage(actual, expectedMessage) {
 expectException(Function actual, expectedMessage) {
   try {
     actual();
-  } catch (e, s) {
+  } catch (e) {
     expectErrorMessage(e, expectedMessage);
   }
 }

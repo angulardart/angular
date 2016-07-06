@@ -41,12 +41,6 @@ class MapWrapper {
   // in opposite to JS, Dart does not create a new map
   static Map/*<K,V>*/ toStringMap/*<K,V>*/(Map/*<K,V>*/ m) => m;
 
-  static Map/*<K,V>*/ createFromPairs/*<K,V>*/(List pairs) =>
-      pairs.fold(/*<K,V>*/ {}, (m, p) {
-        m[p[0]] = p[1];
-        return m;
-      });
-
   static void clearValues(Map m) {
     for (var k in m.keys) {
       m[k] = null;

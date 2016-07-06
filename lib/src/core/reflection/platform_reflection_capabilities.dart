@@ -6,10 +6,10 @@ import "types.dart" show GetterFn, SetterFn, MethodFn;
 abstract class PlatformReflectionCapabilities {
   bool isReflectionEnabled();
   Function factory(Type type);
-  List<dynamic> interfaces(Type type);
-  List<List<dynamic>> parameters(dynamic type);
-  List<dynamic> annotations(dynamic type);
-  Map<String, List<dynamic>> propMetadata(dynamic typeOrFunc);
+  List interfaces(Type type);
+  List<List> parameters(dynamic type);
+  List annotations(dynamic type);
+  Map<String, List> propMetadata(dynamic typeOrFunc);
   GetterFn getter(String name);
   SetterFn setter(String name);
   MethodFn method(String name);

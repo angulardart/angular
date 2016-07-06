@@ -1,10 +1,10 @@
 library angular2.src.common.forms.directives.ng_form;
 
 import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, ObservableWrapper, EventEmitter, PromiseCompleter;
+    show PromiseWrapper, ObservableWrapper, EventEmitter;
 import "package:angular2/src/facade/collection.dart"
-    show StringMapWrapper, ListWrapper;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+    show ListWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/core.dart"
     show Directive, Provider, Optional, Inject, Self;
 import "ng_control.dart" show NgControl;
@@ -18,7 +18,7 @@ import "shared.dart"
         setUpControlGroup,
         composeValidators,
         composeAsyncValidators;
-import "../validators.dart" show Validators, NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 
 const formDirectiveProvider =
     const Provider(ControlContainer, useExisting: NgForm);
@@ -84,7 +84,7 @@ const formDirectiveProvider =
  */
 @Directive(
     selector: "form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]",
-    bindings: const [formDirectiveProvider],
+    providers: const [formDirectiveProvider],
     host: const {"(submit)": "onSubmit()"},
     outputs: const ["ngSubmit"],
     exportAs: "ngForm")

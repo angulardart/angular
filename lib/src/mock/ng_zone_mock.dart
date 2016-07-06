@@ -3,11 +3,9 @@ library angular2.src.mock.ng_zone_mock;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+    show EventEmitter;
 
-/**
- * A mock implementation of [NgZone].
- */
+/// A mock implementation of [NgZone].
 @Injectable()
 class MockNgZone extends NgZone {
   /** @internal */
@@ -19,7 +17,7 @@ class MockNgZone extends NgZone {
     return this._mockOnStable;
   }
 
-  dynamic run(Function fn) {
+  /*=R*/ run/*<R>*/(/*=R*/ fn()) {
     return fn();
   }
 
@@ -28,6 +26,6 @@ class MockNgZone extends NgZone {
   }
 
   void simulateZoneExit() {
-    ObservableWrapper.callNext(this.onStable, null);
+    onStable.add(null);
   }
 }

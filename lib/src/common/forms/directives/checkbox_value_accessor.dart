@@ -1,7 +1,7 @@
 library angular2.src.common.forms.directives.checkbox_value_accessor;
 
 import "package:angular2/core.dart"
-    show Directive, Renderer, ElementRef, Self, Provider;
+    show Directive, Renderer, ElementRef, Provider;
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 
@@ -38,11 +38,11 @@ class CheckboxControlValueAccessor implements ControlValueAccessor {
         .setElementProperty(this._elementRef.nativeElement, "checked", value);
   }
 
-  void registerOnChange(dynamic fn(dynamic _)) {
+  void registerOnChange(dynamic fn) {
     this.onChange = fn;
   }
 
-  void registerOnTouched(dynamic fn()) {
+  void registerOnTouched(dynamic fn) {
     this.onTouched = fn;
   }
 }

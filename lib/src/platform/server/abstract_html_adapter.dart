@@ -6,15 +6,14 @@ import 'package:html/dom.dart';
 import 'package:angular2/platform/common_dom.dart';
 import 'package:angular2/src/compiler/xhr.dart';
 
-import 'package:angular2/src/facade/lang.dart' show isBlank, isPresent;
-
 const _attrToPropMap = const {
   'innerHtml': 'innerHTML',
   'readonly': 'readOnly',
   'tabindex': 'tabIndex',
 };
 
-abstract class AbstractHtml5LibAdapter implements DomAdapter {
+abstract class AbstractHtml5LibAdapter
+    implements DomAdapter<Element, Node, Node> {
   hasProperty(element, String name) {
     // This is needed for serverside compile to generate the right getters/setters.
     // TODO: change this once we have property schema support.
@@ -22,13 +21,11 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     return true;
   }
 
-  void setProperty(Element element, String name, Object value) =>
-      throw 'not implemented';
+  void setProperty(Element element, String name, Object value);
 
-  getProperty(Element element, String name) => throw 'not implemented';
+  getProperty(Element element, String name);
 
-  invoke(Element element, String methodName, List args) =>
-      throw 'not implemented';
+  invoke(Element element, String methodName, List args);
 
   @override
   get attrToPropMap => _attrToPropMap;
@@ -39,42 +36,28 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
   }
 
   @override
-  getGlobalEventTarget(String target) {
-    throw 'not implemented';
-  }
+  getGlobalEventTarget(String target);
 
   @override
-  getTitle() {
-    throw 'not implemented';
-  }
+  getTitle();
 
   @override
-  setTitle(String newTitle) {
-    throw 'not implemented';
-  }
+  setTitle(String newTitle);
 
   @override
-  String getEventKey(event) {
-    throw 'not implemented';
-  }
+  String getEventKey(event);
 
   @override
-  void replaceChild(el, newNode, oldNode) {
-    throw 'not implemented';
-  }
+  void replaceChild(el, newNode, oldNode);
 
   @override
-  dynamic getBoundingClientRect(el) {
-    throw 'not implemented';
-  }
+  dynamic getBoundingClientRect(el);
 
   @override
   Type getXHR() => XHR;
 
   Element parse(String templateHtml) => parser.parse(templateHtml).firstChild;
-  query(selector) {
-    throw 'not implemented';
-  }
+  query(selector);
 
   querySelector(el, String selector) {
     return el.querySelector(selector);
@@ -84,33 +67,19 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     return el.querySelectorAll(selector);
   }
 
-  on(el, evt, listener) {
-    throw 'not implemented';
-  }
+  on(el, evt, listener);
 
-  Function onAndCancel(el, evt, listener) {
-    throw 'not implemented';
-  }
+  Function onAndCancel(el, evt, listener);
 
-  dispatchEvent(el, evt) {
-    throw 'not implemented';
-  }
+  dispatchEvent(el, evt);
 
-  createMouseEvent(eventType) {
-    throw 'not implemented';
-  }
+  createMouseEvent(eventType);
 
-  createEvent(eventType) {
-    throw 'not implemented';
-  }
+  createEvent(eventType);
 
-  preventDefault(evt) {
-    throw 'not implemented';
-  }
+  preventDefault(evt);
 
-  isPrevented(evt) {
-    throw 'not implemented';
-  }
+  isPrevented(evt);
 
   getInnerHTML(el) {
     return el.innerHtml;
@@ -133,16 +102,22 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     }
   }
 
-  String nodeValue(node) => node.data;
+  String nodeValue(Node node) {
+    if (node is Text) return node.data;
+    if (node is Comment) return node.data;
+    return null;
+  }
+
   String type(node) {
-    throw 'not implemented';
+    throw new UnimplementedError();
   }
 
   content(node) {
     return node;
   }
 
-  firstChild(el) => el is NodeList ? el.first : el.firstChild;
+  firstChild(Element el) =>
+      el is NodeList ? (el as NodeList).first : el.firstChild;
 
   nextSibling(el) {
     final parentNode = el.parentNode;
@@ -166,9 +141,7 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
   }
 
   appendChild(el, node) => el.append(node.remove());
-  removeChild(el, node) {
-    throw 'not implemented';
-  }
+  removeChild(el, node);
 
   remove(el) => el.remove();
   insertBefore(el, node) {
@@ -176,13 +149,9 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     el.parent.insertBefore(node, el);
   }
 
-  insertAllBefore(el, nodes) {
-    throw 'not implemented';
-  }
+  insertAllBefore(el, nodes);
 
-  insertAfter(el, node) {
-    throw 'not implemented';
-  }
+  insertAfter(el, node);
 
   setInnerHTML(el, value) {
     el.innerHtml = value;
@@ -194,21 +163,13 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
 
   setText(el, String value) => el.text = value;
 
-  getValue(el) {
-    throw 'not implemented';
-  }
+  getValue(el);
 
-  setValue(el, String value) {
-    throw 'not implemented';
-  }
+  setValue(el, String value);
 
-  getChecked(el) {
-    throw 'not implemented';
-  }
+  getChecked(el);
 
-  setChecked(el, bool value) {
-    throw 'not implemented';
-  }
+  setChecked(el, bool value);
 
   createComment(String text) => new Comment(text);
   createTemplate(String html) => createElement('template')..innerHtml = html;
@@ -216,68 +177,42 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     return new Element.tag(tagName);
   }
 
-  createElementNS(ns, tagName, [doc]) {
-    throw 'not implemented';
-  }
+  createElementNS(ns, tagName, [doc]);
 
   createTextNode(String text, [doc]) => new Text(text);
 
-  createScriptTag(String attrName, String attrValue, [doc]) {
-    throw 'not implemented';
-  }
+  createScriptTag(String attrName, String attrValue, [doc]);
 
-  createStyleElement(String css, [doc]) {
-    throw 'not implemented';
-  }
+  createStyleElement(String css, [doc]);
 
-  createShadowRoot(el) {
-    throw 'not implemented';
-  }
+  createShadowRoot(el);
 
-  getShadowRoot(el) {
-    throw 'not implemented';
-  }
+  getShadowRoot(el);
 
-  getHost(el) {
-    throw 'not implemented';
-  }
+  getHost(el);
 
   clone(node) => node.clone(true);
-  getElementsByClassName(element, String name) {
-    throw 'not implemented';
-  }
+  getElementsByClassName(element, String name);
 
-  getElementsByTagName(element, String name) {
-    throw 'not implemented';
-  }
+  getElementsByTagName(element, String name);
 
-  List classList(element) => element.classes.toList();
+  List<String> classList(Element element) => element.classes.toList();
 
   addClass(element, String className) {
     element.classes.add(className);
   }
 
-  removeClass(element, String className) {
-    throw 'not implemented';
-  }
+  removeClass(element, String className);
 
   hasClass(element, String className) => element.classes.contains(className);
 
-  setStyle(element, String styleName, String styleValue) {
-    throw 'not implemented';
-  }
+  setStyle(element, String styleName, String styleValue);
 
-  bool hasStyle(Element element, String styleName, [String styleValue]) {
-    throw 'not implemented';
-  }
+  bool hasStyle(Element element, String styleName, [String styleValue]);
 
-  removeStyle(element, String styleName) {
-    throw 'not implemented';
-  }
+  removeStyle(element, String styleName);
 
-  getStyle(element, String styleName) {
-    throw 'not implemented';
-  }
+  getStyle(element, String styleName);
 
   String tagName(element) => element.localName;
 
@@ -295,9 +230,7 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     return element.attributes.keys.any((key) => '$key' == attribute);
   }
 
-  hasAttributeNS(element, String ns, String attribute) {
-    throw 'not implemented';
-  }
+  hasAttributeNS(element, String ns, String attribute);
 
   getAttribute(element, String attribute) {
     // `attributes` keys can be {@link AttributeName}s.
@@ -306,39 +239,27 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     return element.attributes[key];
   }
 
-  getAttributeNS(element, String ns, String attribute) {
-    throw 'not implemented';
-  }
+  getAttributeNS(element, String ns, String attribute);
 
   setAttribute(element, String name, String value) {
     element.attributes[name] = value;
   }
 
-  setAttributeNS(element, String ns, String name, String value) {
-    throw 'not implemented';
-  }
+  setAttributeNS(element, String ns, String name, String value);
 
   removeAttribute(element, String attribute) {
     element.attributes.remove(attribute);
   }
 
-  removeAttributeNS(element, String ns, String attribute) {
-    throw 'not implemented';
-  }
+  removeAttributeNS(element, String ns, String attribute);
 
   templateAwareRoot(el) => el;
 
-  createHtmlDocument() {
-    throw 'not implemented';
-  }
+  createHtmlDocument();
 
-  defaultDoc() {
-    throw 'not implemented';
-  }
+  defaultDoc();
 
-  bool elementMatches(n, String selector) {
-    throw 'not implemented';
-  }
+  bool elementMatches(n, String selector);
 
   bool isTemplateElement(Element el) {
     return el != null && el.localName.toLowerCase() == 'template';
@@ -349,33 +270,19 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
 
   bool isElementNode(node) => node.nodeType == Node.ELEMENT_NODE;
 
-  bool hasShadowRoot(node) {
-    throw 'not implemented';
-  }
+  bool hasShadowRoot(node);
 
-  bool isShadowRoot(node) {
-    throw 'not implemented';
-  }
+  bool isShadowRoot(node);
 
-  importIntoDoc(node) {
-    throw 'not implemented';
-  }
+  importIntoDoc(node);
 
-  adoptNode(node) {
-    throw 'not implemented';
-  }
+  adoptNode(node);
 
-  String getHref(element) {
-    throw 'not implemented';
-  }
+  String getHref(element);
 
-  void resolveAndSetHref(element, baseUrl, href) {
-    throw 'not implemented';
-  }
+  void resolveAndSetHref(element, baseUrl, href);
 
-  List getDistributedNodes(Node) {
-    throw 'not implemented';
-  }
+  List getDistributedNodes(Node);
 
   bool supportsDOMEvents() {
     return false;
@@ -385,21 +292,13 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     return false;
   }
 
-  getHistory() {
-    throw 'not implemented';
-  }
+  getHistory();
 
-  getLocation() {
-    throw 'not implemented';
-  }
+  getLocation();
 
-  getBaseHref() {
-    throw 'not implemented';
-  }
+  getBaseHref();
 
-  resetBaseElement() {
-    throw 'not implemented';
-  }
+  resetBaseElement();
 
   String getUserAgent() {
     return 'Angular 2 Dart Transformer';
@@ -409,9 +308,7 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     this.setAttribute(element, 'data-${name}', value);
   }
 
-  getComputedStyle(element) {
-    throw 'not implemented';
-  }
+  getComputedStyle(element);
 
   String getData(Element element, String name) {
     return this.getAttribute(element, 'data-${name}');
@@ -422,27 +319,15 @@ abstract class AbstractHtml5LibAdapter implements DomAdapter {
     // noop on the server
   }
 
-  requestAnimationFrame(callback) {
-    throw 'not implemented';
-  }
+  requestAnimationFrame(callback);
 
-  cancelAnimationFrame(id) {
-    throw 'not implemented';
-  }
+  cancelAnimationFrame(id);
 
-  performanceNow() {
-    throw 'not implemented';
-  }
+  performanceNow();
 
-  getAnimationPrefix() {
-    throw 'not implemented';
-  }
+  getAnimationPrefix();
 
-  getTransitionEnd() {
-    throw 'not implemented';
-  }
+  getTransitionEnd();
 
-  supportsAnimation() {
-    throw 'not implemented';
-  }
+  supportsAnimation();
 }

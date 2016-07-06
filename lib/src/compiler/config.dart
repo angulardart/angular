@@ -1,7 +1,6 @@
 library angular2.src.compiler.config;
 
 import "package:angular2/src/facade/lang.dart" show isBlank;
-import "package:angular2/src/facade/exceptions.dart" show unimplemented;
 import "identifiers.dart" show Identifiers;
 import "compile_metadata.dart" show CompileIdentifierMetadata;
 
@@ -25,29 +24,17 @@ class CompilerConfig {
  * to help tree shaking.
  */
 abstract class RenderTypes {
-  CompileIdentifierMetadata get renderer {
-    return unimplemented();
-  }
+  CompileIdentifierMetadata get renderer;
 
-  CompileIdentifierMetadata get renderText {
-    return unimplemented();
-  }
+  CompileIdentifierMetadata get renderText;
 
-  CompileIdentifierMetadata get renderElement {
-    return unimplemented();
-  }
+  CompileIdentifierMetadata get renderElement;
 
-  CompileIdentifierMetadata get renderComment {
-    return unimplemented();
-  }
+  CompileIdentifierMetadata get renderComment;
 
-  CompileIdentifierMetadata get renderNode {
-    return unimplemented();
-  }
+  CompileIdentifierMetadata get renderNode;
 
-  CompileIdentifierMetadata get renderEvent {
-    return unimplemented();
-  }
+  CompileIdentifierMetadata get renderEvent;
 }
 
 class DefaultRenderTypes implements RenderTypes {

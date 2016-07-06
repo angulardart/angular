@@ -16,9 +16,7 @@ import "../compile_metadata.dart"
         CompileTokenMetadata,
         CompileQueryMetadata,
         CompileProviderMetadata,
-        CompileDiDependencyMetadata,
-        CompileIdentifierMetadata,
-        CompileTypeMetadata;
+        CompileDiDependencyMetadata;
 import "util.dart"
     show
         getPropertyInView,

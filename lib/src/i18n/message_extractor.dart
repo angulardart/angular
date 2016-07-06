@@ -2,17 +2,12 @@ library angular2.src.i18n.message_extractor;
 
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/parse_util.dart"
-    show ParseSourceSpan, ParseError;
+    show ParseError;
 import "package:angular2/src/compiler/html_ast.dart"
     show
         HtmlAst,
-        HtmlAstVisitor,
-        HtmlElementAst,
-        HtmlAttrAst,
-        HtmlTextAst,
-        HtmlCommentAst,
-        htmlVisitAll;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+        HtmlElementAst;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/compiler/expression_parser/parser.dart"
     show Parser;
@@ -24,9 +19,6 @@ import "shared.dart"
         Part,
         I18N_ATTR_PREFIX,
         partition,
-        meaning,
-        description,
-        stringifyNodes,
         messageFromAttribute;
 
 /**
@@ -50,13 +42,13 @@ class ExtractionResult {
  * ```
  */
 List<Message> removeDuplicates(List<Message> messages) {
-  Map<String, Message> uniq = {};
+  var uniq = <String, Message>{};
   messages.forEach((m) {
     if (!StringMapWrapper.contains(uniq, id(m))) {
       uniq[id(m)] = m;
     }
   });
-  return StringMapWrapper.values(uniq);
+  return uniq.values;
 }
 
 /**
@@ -138,13 +130,14 @@ class MessageExtractor {
 
   void _extractMessagesFromPart(Part p) {
     if (p.hasI18n) {
-      this.messages.add(p.createMessage(this._parser));
-      this._recurseToExtractMessagesFromAttributes(p.children);
+      messages.add(p.createMessage(_parser));
+      _recurseToExtractMessagesFromAttributes(p.children);
     } else {
-      this._recurse(p.children);
+      _recurse(p.children);
     }
-    if (isPresent(p.rootElement)) {
-      this._extractMessagesFromAttributes(p.rootElement);
+    var rootElement = p.rootElement;
+    if (rootElement != null) {
+      _extractMessagesFromAttributes(rootElement);
     }
   }
 
@@ -169,7 +162,7 @@ class MessageExtractor {
       if (attr.name.startsWith(I18N_ATTR_PREFIX)) {
         try {
           this.messages.add(messageFromAttribute(this._parser, p, attr));
-        } catch (e, e_stack) {
+        } catch (e) {
           if (e is I18nError) {
             this.errors.add(e);
           } else {

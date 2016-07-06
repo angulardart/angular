@@ -3,37 +3,34 @@ library angular2.src.compiler.output.output_jit;
 import "package:angular2/src/facade/lang.dart"
     show
         isPresent,
-        isBlank,
-        isString,
-        evalExpression,
-        RegExpWrapper,
-        StringWrapper;
+        evalExpression;
 import "output_ast.dart" as o;
 import "abstract_emitter.dart" show EmitterVisitorContext;
 import "abstract_js_emitter.dart" show AbstractJsEmitterVisitor;
 import "../util.dart" show sanitizeIdentifier;
 
-dynamic jitStatements(
+List<String> jitStatements(
     String sourceUrl, List<o.Statement> statements, String resultVar) {
   var converter = new JitEmitterVisitor();
   var ctx = EmitterVisitorContext.createRoot([resultVar]);
   converter.visitAllStatements(statements, ctx);
   return evalExpression(
-      sourceUrl, resultVar, ctx.toSource(), converter.getArgs());
+      sourceUrl, resultVar, ctx.toSource(), converter.getArgs() as Map<String, String>);
 }
 
 class JitEmitterVisitor extends AbstractJsEmitterVisitor {
   List<String> _evalArgNames = [];
   List<dynamic> _evalArgValues = [];
   Map<String, dynamic> getArgs() {
-    var result = {};
+    var result = <String, String>{};
     for (var i = 0; i < this._evalArgNames.length; i++) {
       result[this._evalArgNames[i]] = this._evalArgValues[i];
     }
     return result;
   }
 
-  dynamic visitExternalExpr(o.ExternalExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var value = ast.value.runtime;
     var id = this._evalArgValues.indexOf(value);
     if (identical(id, -1)) {

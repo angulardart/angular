@@ -77,9 +77,9 @@ class ReflectionInfoVisitor extends RecursiveAstVisitor<ReflectionInfoModel> {
     }
 
     if (node.metadata != null) {
-      var componentDirectives = new Iterable.empty();
-      var componentPipes = new Iterable.empty();
-      var viewDirectives, viewPipes;
+      var componentDirectives = new Iterable<PrefixedType>.empty();
+      var componentPipes = new Iterable<PrefixedType>.empty();
+      Iterable<PrefixedType> viewDirectives, viewPipes;
       node.metadata.forEach((node) {
         var keepAnnotation = true;
         if (_annotationMatcher.isComponent(node, assetId)) {
@@ -143,9 +143,10 @@ class ReflectionInfoVisitor extends RecursiveAstVisitor<ReflectionInfoModel> {
     if (node.arguments == null && node.arguments.arguments == null) {
       return const [];
     }
-    final typesNode = node.arguments.arguments.firstWhere((arg) {
-      return arg is NamedExpression && '${arg.name.label}' == fieldName;
-    }, orElse: () => null);
+    final NamedExpression typesNode =
+        node.arguments.arguments.firstWhere((arg) {
+            return arg is NamedExpression && '${arg.name.label}' == fieldName;
+        }, orElse: () => null);
     if (typesNode == null) return const [];
 
     if (typesNode.expression is! ListLiteral) {

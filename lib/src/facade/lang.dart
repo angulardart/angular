@@ -20,7 +20,7 @@ class CONST {
 
 const IS_DART = true;
 
-scheduleMicroTask(Function fn) {
+void scheduleMicroTask(void fn()) {
   Zone.current.scheduleMicrotask(fn);
 }
 
@@ -36,11 +36,13 @@ bool isNumber(Object obj) => obj is num;
 bool isBoolean(Object obj) => obj is bool;
 bool isDate(Object obj) => obj is DateTime;
 
+RegExp _fromFuncExp;
+
 String stringify(obj) {
-  final exp = new RegExp(r"from Function '(\w+)'");
+  _fromFuncExp ??= new RegExp(r"from Function '(\w+)'");
   final str = obj.toString();
-  if (exp.firstMatch(str) != null) {
-    return exp.firstMatch(str).group(1);
+  if (_fromFuncExp.firstMatch(str) != null) {
+    return _fromFuncExp.firstMatch(str).group(1);
   } else {
     return str;
   }
@@ -133,7 +135,7 @@ class StringWrapper {
     return s.substring(start, end);
   }
 
-  static String replaceAllMapped(String s, RegExp from, Function cb) {
+  static String replaceAllMapped(String s, RegExp from, String cb(Match _)) {
     return s.replaceAllMapped(from, cb);
   }
 
@@ -301,18 +303,6 @@ warn(o) {
   print(o);
 }
 
-// Functions below are noop in Dart. Imperatively controlling dev mode kills
-// tree shaking. We should only rely on `assertionsEnabled`.
-@Deprecated(
-    'Do not use this function. It is for JS only. There is no alternative.')
-void lockMode() {}
-@Deprecated(
-    'Do not use this function. It is for JS only. There is no alternative.')
-void enableDevMode() {}
-@Deprecated(
-    'Do not use this function. It is for JS only. There is no alternative.')
-void enableProdMode() {}
-
 /// Use this function to guard debugging code. When Dart is compiled in
 /// production mode, the code guarded using this function will be tree
 /// shaken away, reducing code size.
@@ -381,7 +371,7 @@ bool isPrimitive(Object obj) =>
 // needed to match the exports from lang.js
 var global = null;
 
-dynamic evalExpression(String sourceUrl, String expr, String declarations,
+List<String> evalExpression(String sourceUrl, String expr, String declarations,
     Map<String, String> vars) {
   throw "Dart does not support evaluating expression during runtime!";
 }

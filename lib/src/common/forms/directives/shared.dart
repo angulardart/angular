@@ -5,7 +5,7 @@ import "package:angular2/src/facade/collection.dart"
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, looseIdentical, hasConstructor;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "control_container.dart" show ControlContainer;
 import "ng_control.dart" show NgControl;
 import "abstract_control_directive.dart" show AbstractControlDirective;

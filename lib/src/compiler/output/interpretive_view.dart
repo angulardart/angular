@@ -5,9 +5,11 @@ import "package:angular2/src/core/linker/view.dart" show AppView, DebugAppView;
 import "package:angular2/src/core/linker/element.dart" show AppElement;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "output_interpreter.dart" show InstanceFactory, DynamicInstance;
+import "package:angular2/src/core/linker/debug_context.dart"
+    show StaticNodeDebugInfo;
 
 class InterpretiveAppViewInstanceFactory implements InstanceFactory {
-  dynamic createInstance(
+  DynamicInstance createInstance(
       dynamic superClass,
       dynamic clazz,
       List<dynamic> args,
@@ -37,10 +39,9 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   Map<String, Function> methods;
   _InterpretiveAppView(
       List<dynamic> args, this.props, this.getters, this.methods)
-      : super(args[0], args[1], args[2], args[3], args[4], args[5], args[6],
-            args[7], args[8]) {
-    /* super call moved to initializer */;
-  }
+      : super(args[0], args[1], args[2], args[3] as Map<String, dynamic>, args[4], args[5], args[6],
+            args[7], args[8] as List<StaticNodeDebugInfo>);
+
   AppElement createInternal(dynamic /* String | dynamic */ rootSelector) {
     var m = this.methods["createInternal"];
     if (isPresent(m)) {

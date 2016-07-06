@@ -5,7 +5,7 @@ import "package:angular2/src/platform/browser/browser_adapter.dart"
 import "package:angular2/src/facade/browser.dart" show document, window;
 import "package:angular2/src/facade/lang.dart" show NumberWrapper, isBlank;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 
 var DOM = new BrowserDomAdapter();
 getIntParameter(String name) {

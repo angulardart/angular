@@ -1,9 +1,9 @@
 library angular2.src.web_workers.shared.serializer;
 
 import "package:angular2/src/facade/lang.dart"
-    show Type, isArray, isPresent, serializeEnum, deserializeEnum;
+    show Type, isArray, isPresent, serializeEnum;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/src/facade/collection.dart"
     show Map, StringMapWrapper, MapWrapper;
 import "package:angular2/src/core/render/api.dart" show RenderComponentType;
@@ -63,11 +63,11 @@ class Serializer {
     if (type == RenderStoreObject) {
       return this._renderStore.deserialize(map);
     } else if (identical(type, RenderComponentType)) {
-      return this._deserializeRenderComponentType(map);
+      return this._deserializeRenderComponentType(map as Map<String, dynamic>);
     } else if (identical(type, ViewEncapsulation)) {
       return VIEW_ENCAPSULATION_VALUES[map];
     } else if (identical(type, LocationType)) {
-      return this._deserializeLocation(map);
+      return this._deserializeLocation(map as Map<String, dynamic>);
     } else {
       throw new BaseException("No deserializer for " + type.toString());
     }

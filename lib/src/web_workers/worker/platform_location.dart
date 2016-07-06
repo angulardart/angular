@@ -5,7 +5,7 @@ import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/web_workers/shared/client_message_broker.dart"
     show FnArg, UiArguments, ClientMessageBroker, ClientMessageBrokerFactory;
 import "package:angular2/platform/common.dart"
-    show PlatformLocation, UrlChangeEvent, UrlChangeListener;
+    show PlatformLocation, UrlChangeListener;
 import "package:angular2/src/web_workers/shared/messaging_api.dart"
     show ROUTER_CHANNEL;
 import "package:angular2/src/web_workers/shared/serialized_types.dart"
@@ -46,7 +46,7 @@ class WebWorkerPlatformLocation extends PlatformLocation {
           listeners = this._hashChangeListeners;
         }
         if (!identical(listeners, null)) {
-          var e = deserializeGenericEvent(msg["event"]);
+          var e = deserializeGenericEvent(msg["event"] as Map<String, dynamic>);
           // There was a popState or hashChange event, so the location object thas been updated
           this._location =
               this._serializer.deserialize(msg["location"], LocationType);
@@ -58,8 +58,8 @@ class WebWorkerPlatformLocation extends PlatformLocation {
   /** @internal **/
   Future<bool> init() {
     UiArguments args = new UiArguments("getLocation");
-    Future<LocationType> locationPromise =
-        this._broker.runOnService(args, LocationType);
+    var locationPromise =
+        this._broker.runOnService(args, LocationType) as Future<LocationType>;
     return PromiseWrapper.then(locationPromise, /* bool */ (LocationType val) {
       this._location = val;
       return true;

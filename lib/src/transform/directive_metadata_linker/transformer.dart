@@ -10,6 +10,7 @@ import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:angular2/src/transform/common/options.dart';
 import 'package:angular2/src/transform/common/logging.dart';
+import 'package:angular2/src/transform/common/ng_meta.dart';
 
 import 'ng_meta_linker.dart';
 
@@ -36,7 +37,7 @@ class DirectiveMetadataLinker extends Transformer implements LazyTransformer {
   final _encoder = const JsonEncoder.withIndent('  ');
 
   final TransformerOptions options;
-  final Map ngMetasCache = {};
+  final Map<AssetId, NgMeta> ngMetasCache = <AssetId, NgMeta>{};
   final Set<String> errorMessages = new Set<String>();
 
   DirectiveMetadataLinker(this.options);

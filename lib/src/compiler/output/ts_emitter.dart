@@ -4,11 +4,6 @@ import "output_ast.dart" as o;
 import "package:angular2/src/facade/lang.dart"
     show
         isPresent,
-        isBlank,
-        isString,
-        evalExpression,
-        RegExpWrapper,
-        StringWrapper,
         isArray;
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -72,13 +67,15 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     /* super call moved to initializer */;
   }
   var importsWithPrefixes = new Map<String, String>();
-  dynamic visitExternalExpr(o.ExternalExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     this._visitIdentifier(ast.value, ast.typeParams, ctx);
     return null;
   }
 
   dynamic visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, EmitterVisitorContext ctx) {
+      o.DeclareVarStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (ctx.isExportedVar(stmt.name)) {
       ctx.print('''export ''');
     }
@@ -98,7 +95,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitCastExpr(o.CastExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitCastExpr(o.CastExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''(<''');
     ast.type.visitType(this, ctx);
     ctx.print('''>''');
@@ -107,7 +105,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.pushClass(stmt);
     if (ctx.isExportedVar(stmt.name)) {
       ctx.print('''export ''');
@@ -131,7 +130,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  _visitClassField(o.ClassField field, EmitterVisitorContext ctx) {
+  _visitClassField(o.ClassField field, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (field.hasModifier(o.StmtModifier.Private)) {
       ctx.print('''private ''');
     }
@@ -143,7 +143,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     ctx.println(''';''');
   }
 
-  _visitClassGetter(o.ClassGetter getter, EmitterVisitorContext ctx) {
+  _visitClassGetter(o.ClassGetter getter, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (getter.hasModifier(o.StmtModifier.Private)) {
       ctx.print('''private ''');
     }
@@ -159,7 +160,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     ctx.println('''}''');
   }
 
-  _visitClassConstructor(o.ClassStmt stmt, EmitterVisitorContext ctx) {
+  _visitClassConstructor(o.ClassStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''constructor(''');
     this._visitParams(stmt.constructorMethod.params, ctx);
     ctx.println(''') {''');
@@ -169,7 +171,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     ctx.println('''}''');
   }
 
-  _visitClassMethod(o.ClassMethod method, EmitterVisitorContext ctx) {
+  _visitClassMethod(o.ClassMethod method, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (method.hasModifier(o.StmtModifier.Private)) {
       ctx.print('''private ''');
     }
@@ -188,7 +191,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     ctx.println('''}''');
   }
 
-  dynamic visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''(''');
     this._visitParams(ast.params, ctx);
     ctx.print('''):''');
@@ -206,7 +210,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
   }
 
   dynamic visitDeclareFunctionStmt(
-      o.DeclareFunctionStmt stmt, EmitterVisitorContext ctx) {
+      o.DeclareFunctionStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (ctx.isExportedVar(stmt.name)) {
       ctx.print('''export ''');
     }
@@ -226,17 +231,18 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.println('''try {''');
     ctx.incIndent();
     this.visitAllStatements(stmt.bodyStmts, ctx);
     ctx.decIndent();
     ctx.println('''} catch (${ CATCH_ERROR_VAR . name}) {''');
     ctx.incIndent();
-    var catchStmts = (new List.from([
+    List<o.Statement> catchStmts = (new List<o.Statement>.from([
       (CATCH_STACK_VAR
           .set(CATCH_ERROR_VAR.prop("stack"))
-          .toDeclStmt(null, [o.StmtModifier.Final]) as o.Statement)
+          .toDeclStmt(null, [o.StmtModifier.Final]))
     ])..addAll(stmt.catchStmts));
     this.visitAllStatements(catchStmts, ctx);
     ctx.decIndent();
@@ -244,7 +250,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitBuiltintType(o.BuiltinType type, EmitterVisitorContext ctx) {
+  dynamic visitBuiltintType(o.BuiltinType type, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var typeStr;
     switch (type.name) {
       case o.BuiltinTypeName.Bool:
@@ -272,12 +279,14 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitExternalType(o.ExternalType ast, EmitterVisitorContext ctx) {
+  dynamic visitExternalType(o.ExternalType ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     this._visitIdentifier(ast.value, ast.typeParams, ctx);
     return null;
   }
 
-  dynamic visitArrayType(o.ArrayType type, EmitterVisitorContext ctx) {
+  dynamic visitArrayType(o.ArrayType type, dynamic context) {
+    EmitterVisitorContext ctx = context;
     if (isPresent(type.of)) {
       type.of.visitType(this, ctx);
     } else {
@@ -287,7 +296,8 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitMapType(o.MapType type, EmitterVisitorContext ctx) {
+  dynamic visitMapType(o.MapType type, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''{[key: string]:''');
     if (isPresent(type.valueType)) {
       type.valueType.visitType(this, ctx);
@@ -330,16 +340,16 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
       List<o.Type> typeParams, EmitterVisitorContext ctx) {
     if (isPresent(value.moduleUrl) && value.moduleUrl != this._moduleUrl) {
       var prefix = this.importsWithPrefixes[value.moduleUrl];
-      if (isBlank(prefix)) {
+      if (prefix == null) {
         prefix = '''import${ this . importsWithPrefixes . length}''';
-        this.importsWithPrefixes[value.moduleUrl] = prefix;
+        importsWithPrefixes[value.moduleUrl] = prefix;
       }
       ctx.print('''${ prefix}.''');
     }
     ctx.print(value.name);
     if (isPresent(typeParams) && typeParams.length > 0) {
       ctx.print('''<''');
-      this.visitAllObjects(
+      visitAllObjects(
           (type) => type.visitType(this, ctx), typeParams, ctx, ",");
       ctx.print('''>''');
     }

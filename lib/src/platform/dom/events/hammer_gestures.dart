@@ -48,7 +48,8 @@ class HammerGesturesPlugin extends HammerGesturesPluginCommon {
     return true;
   }
 
-  addEventListener(Element element, String eventName, Function handler) {
+  addEventListener(el, String eventName, Function handler) {
+    Element element = el;
     var zone = this.manager.getZone();
     eventName = eventName.toLowerCase();
 

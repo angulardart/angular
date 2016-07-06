@@ -46,7 +46,7 @@ XmbDeserializationResult deserializeXmb(String content, String url) {
     ]);
   }
   var bundleEl = (parsed.rootNodes[0] as HtmlElementAst);
-  var errors = [];
+  var errors = <ParseError>[];
   Map<String, List<HtmlAst>> messages = {};
   _createMessages(bundleEl.children, messages, errors);
   return (errors.length == 0)
@@ -64,7 +64,7 @@ void _createMessages(List<HtmlAst> nodes, Map<String, List<HtmlAst>> messages,
     List<ParseError> errors) {
   nodes.forEach((item) {
     if (item is HtmlElementAst) {
-      var msg = (item as HtmlElementAst);
+      HtmlElementAst msg = item;
       if (msg.name != _MSG_ELEMENT) {
         errors.add(new XmbDeserializationError(
             item.sourceSpan, '''Unexpected element "${ msg . name}"'''));

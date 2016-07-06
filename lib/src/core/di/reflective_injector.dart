@@ -1,8 +1,8 @@
 library angular2.src.core.di.reflective_injector;
 
 import "package:angular2/src/facade/collection.dart"
-    show Map, MapWrapper, ListWrapper;
-import "provider.dart" show Provider, ProviderBuilder, provide;
+    show ListWrapper;
+import "provider.dart" show Provider;
 import "reflective_provider.dart"
     show
         ResolvedReflectiveProvider,
@@ -15,13 +15,12 @@ import "reflective_exceptions.dart"
         NoProviderError,
         CyclicDependencyError,
         InstantiationError,
-        InvalidProviderError,
         OutOfBoundsError;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent;
+import "package:angular2/src/facade/lang.dart" show Type;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, unimplemented;
+    show BaseException;
 import "reflective_key.dart" show ReflectiveKey;
-import "metadata.dart" show SelfMetadata, HostMetadata, SkipSelfMetadata;
+import "metadata.dart" show SelfMetadata, SkipSelfMetadata;
 import "injector.dart" show Injector, THROW_IF_NOT_FOUND;
 
 Type ___unused;
@@ -477,9 +476,7 @@ abstract class ReflectiveInjector implements Injector {
    * expect(child.parent).toBe(parent);
    * ```
    */
-  Injector get parent {
-    return unimplemented();
-  }
+  Injector get parent;
 
   /**
    * @internal
@@ -516,9 +513,7 @@ abstract class ReflectiveInjector implements Injector {
    * See [Injector#resolve] and [Injector#createChildFromResolved].
    */
   ReflectiveInjector resolveAndCreateChild(
-      List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
-    return unimplemented();
-  }
+      List<dynamic /* Type | Provider | List < dynamic > */ > providers);
 
   /**
    * Creates a child injector from previously resolved providers.
@@ -546,9 +541,7 @@ abstract class ReflectiveInjector implements Injector {
    * ```
    */
   ReflectiveInjector createChildFromResolved(
-      List<ResolvedReflectiveProvider> providers) {
-    return unimplemented();
-  }
+      List<ResolvedReflectiveProvider> providers);
 
   /**
    * Resolves a provider and instantiates an object in the context of the injector.
@@ -574,9 +567,7 @@ abstract class ReflectiveInjector implements Injector {
    * expect(car).not.toBe(injector.resolveAndInstantiate(Car));
    * ```
    */
-  dynamic resolveAndInstantiate(dynamic /* Type | Provider */ provider) {
-    return unimplemented();
-  }
+  dynamic resolveAndInstantiate(dynamic /* Type | Provider */ provider);
 
   /**
    * Instantiates an object using a resolved provider in the context of the injector.
@@ -602,9 +593,7 @@ abstract class ReflectiveInjector implements Injector {
    * expect(car).not.toBe(injector.instantiateResolved(carProvider));
    * ```
    */
-  dynamic instantiateResolved(ResolvedReflectiveProvider provider) {
-    return unimplemented();
-  }
+  dynamic instantiateResolved(ResolvedReflectiveProvider provider);
 
   dynamic get(dynamic token, [dynamic notFoundValue]);
 }
@@ -783,7 +772,7 @@ class ReflectiveInjector_ implements ReflectiveInjector {
       d19 = length > 19
           ? this._getByReflectiveDependency(provider, deps[19])
           : null;
-    } catch (e, e_stack) {
+    } catch (e) {
       if (e is AbstractProviderError || e is InstantiationError) {
         e.addKey(this, provider.key);
       }

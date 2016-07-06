@@ -3,8 +3,8 @@ library angular2.src.web_workers.worker.renderer;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
 import "package:angular2/src/web_workers/shared/client_message_broker.dart"
-    show ClientMessageBroker, ClientMessageBrokerFactory, FnArg, UiArguments;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, print;
+    show ClientMessageBrokerFactory, FnArg, UiArguments;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/web_workers/shared/render_store.dart"
@@ -18,7 +18,7 @@ import "package:angular2/src/web_workers/shared/messaging_api.dart"
 import "package:angular2/src/web_workers/shared/message_bus.dart"
     show MessageBus;
 import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+    show ObservableWrapper;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "event_deserializer.dart" show deserializeGenericEvent;
 
@@ -37,12 +37,13 @@ class WebWorkerRootRenderer implements RootRenderer {
     bus.initChannel(EVENT_CHANNEL);
     var source = bus.from(EVENT_CHANNEL);
     ObservableWrapper.subscribe(
-        source, (message) => this._dispatchEvent(message));
+        source, (Map<String, dynamic> message) => this._dispatchEvent(message));
   }
   void _dispatchEvent(Map<String, dynamic> message) {
     var eventName = message["eventName"];
     var target = message["eventTarget"];
-    var event = deserializeGenericEvent(message["event"]);
+    var event = deserializeGenericEvent(message["event"]
+        as Map<String, dynamic>);
     if (isPresent(target)) {
       this
           .globalEvents
@@ -100,10 +101,10 @@ class WebWorkerRenderer implements Renderer, RenderStoreObject {
   _runOnService(String fnName, List<FnArg> fnArgs) {
     var fnArgsWithRenderer =
         (new List.from([new FnArg(this, RenderStoreObject)])..addAll(fnArgs));
-    this._rootRenderer.runOnService(fnName, fnArgsWithRenderer);
+    this._rootRenderer.runOnService(fnName, fnArgsWithRenderer as List<FnArg>);
   }
 
-  dynamic selectRootElement(String selectorOrNode, RenderDebugInfo debugInfo) {
+  dynamic selectRootElement(selectorOrNode, RenderDebugInfo debugInfo) {
     var node = this._rootRenderer.allocateNode();
     this._runOnService("selectRootElement",
         [new FnArg(selectorOrNode, null), new FnArg(node, RenderStoreObject)]);
@@ -239,7 +240,8 @@ class WebWorkerRenderer implements Renderer, RenderStoreObject {
   }
 
   Function listen(
-      WebWorkerRenderNode renderElement, String name, Function callback) {
+      el, String name, Function callback) {
+    WebWorkerRenderNode renderElement = el;
     renderElement.events.listen(name, callback);
     var unlistenCallbackId = this._rootRenderer.allocateId();
     this._runOnService("listen", [

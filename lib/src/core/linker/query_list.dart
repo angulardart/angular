@@ -10,7 +10,7 @@ import 'package:angular2/src/facade/async.dart';
 class QueryList<T> extends Object with IterableMixin<T> {
   bool _dirty = true;
   List<T> _results = [];
-  EventEmitter _emitter = new EventEmitter();
+  EventEmitter<Iterable<T>> _emitter = new EventEmitter<Iterable<T>>();
 
   Iterator<T> get iterator => _results.iterator;
 
@@ -25,7 +25,7 @@ class QueryList<T> extends Object with IterableMixin<T> {
 
   /** @internal */
   void reset(List<T> newList) {
-    _results = ListWrapper.flatten(newList);
+    _results = ListWrapper.flatten(newList) as List<T>;
     _dirty = false;
   }
 

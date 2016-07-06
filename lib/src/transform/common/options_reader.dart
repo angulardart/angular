@@ -18,7 +18,7 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
       _readBool(config, REFLECT_PROPERTIES_AS_ATTRIBUTES, defaultValue: false);
   var platformDirectives = _readStringList(config, PLATFORM_DIRECTIVES);
   var platformPipes = _readStringList(config, PLATFORM_PIPES);
-  var resolvedIdentifiers = config[RESOLVED_IDENTIFIERS];
+  var resolvedIdentifiers = config[RESOLVED_IDENTIFIERS] as Map<String, String>;
   var errorOnMissingIdentifiers = _readBool(config, ERROR_ON_MISSING_IDENTIFIERS, defaultValue: true);
   var formatCode = _readBool(config, FORMAT_CODE_PARAM, defaultValue: false);
   String mirrorModeVal =
@@ -78,9 +78,9 @@ AssetId _readAssetId(Map config, String paramName) {
 List<String> _readStringList(Map config, String paramName) {
   var value = config[paramName];
   if (value == null) return null;
-  var result = [];
+  var result = <String>[];
   bool error = false;
-  if (value is List) {
+  if (value is List<String>) {
     result = value;
     error = value.any((e) => e is! String);
   } else if (value is String) {
@@ -99,7 +99,7 @@ List<String> _readStringList(Map config, String paramName) {
 /// Parse the [CUSTOM_ANNOTATIONS_PARAM] options out of the transformer into
 /// [ClassDescriptor]s.
 List<ClassDescriptor> _readCustomAnnotations(Map config) {
-  var descriptors = [];
+  var descriptors = <ClassDescriptor>[];
   var customAnnotations = config[CUSTOM_ANNOTATIONS_PARAM];
   if (customAnnotations == null) return descriptors;
   var error = false;

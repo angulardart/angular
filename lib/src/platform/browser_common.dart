@@ -2,18 +2,15 @@ library angular2.src.platform.browser_common;
 
 import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "package:angular2/src/core/di.dart"
-    show provide, Provider, Injector, OpaqueToken;
+    show Provider, OpaqueToken;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/core.dart"
     show
         PLATFORM_INITIALIZER,
         PLATFORM_DIRECTIVES,
         PLATFORM_PIPES,
-        ComponentRef,
         ExceptionHandler,
-        Reflector,
         RootRenderer,
-        reflector,
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;

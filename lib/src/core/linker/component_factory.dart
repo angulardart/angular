@@ -2,9 +2,8 @@ library angular2.src.core.linker.component_factory;
 
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
-import "package:angular2/src/facade/exceptions.dart" show unimplemented;
 import "element_ref.dart" show ElementRef;
-import "view_ref.dart" show ViewRef, ViewRef_;
+import "view_ref.dart" show ViewRef;
 import "element.dart" show AppElement;
 import "view_utils.dart" show ViewUtils;
 import "../change_detection/change_detection.dart" show ChangeDetectorRef;
@@ -21,44 +20,32 @@ abstract class ComponentRef {
   /**
    * Location of the Host Element of this Component Instance.
    */
-  ElementRef get location {
-    return unimplemented();
-  }
+  ElementRef get location;
 
   /**
    * The injector on which the component instance exists.
    */
-  Injector get injector {
-    return unimplemented();
-  }
+  Injector get injector;
 
   /**
    * The instance of the Component.
    */
-  dynamic get instance {
-    return unimplemented();
-  }
+  dynamic get instance;
 
   /**
    * The [ViewRef] of the Host View of this Component instance.
    */
-  ViewRef get hostView {
-    return unimplemented();
-  }
+  ViewRef get hostView;
 
   /**
    * The [ChangeDetectorRef] of the Component instance.
    */
-  ChangeDetectorRef get changeDetectorRef {
-    return unimplemented();
-  }
+  ChangeDetectorRef get changeDetectorRef;
 
   /**
    * The component type.
    */
-  Type get componentType {
-    return unimplemented();
-  }
+  Type get componentType;
 
   /**
    * Destroys the component instance and all of the data structures associated with it.

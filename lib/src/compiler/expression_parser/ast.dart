@@ -298,7 +298,7 @@ class RecursiveAstVisitor implements AstVisitor {
   }
 
   dynamic visitChain(Chain ast, dynamic context) {
-    return this.visitAll(ast.expressions, context);
+    return this.visitAll(ast.expressions as List<AST>, context);
   }
 
   dynamic visitConditional(Conditional ast, dynamic context) {
@@ -310,13 +310,13 @@ class RecursiveAstVisitor implements AstVisitor {
 
   dynamic visitPipe(BindingPipe ast, dynamic context) {
     ast.exp.visit(this);
-    this.visitAll(ast.args, context);
+    this.visitAll(ast.args as List<AST>, context);
     return null;
   }
 
   dynamic visitFunctionCall(FunctionCall ast, dynamic context) {
     ast.target.visit(this);
-    this.visitAll(ast.args, context);
+    this.visitAll(ast.args as List<AST>, context);
     return null;
   }
 
@@ -325,7 +325,7 @@ class RecursiveAstVisitor implements AstVisitor {
   }
 
   dynamic visitInterpolation(Interpolation ast, dynamic context) {
-    return this.visitAll(ast.expressions, context);
+    return this.visitAll(ast.expressions as List<AST>, context);
   }
 
   dynamic visitKeyedRead(KeyedRead ast, dynamic context) {
@@ -342,11 +342,11 @@ class RecursiveAstVisitor implements AstVisitor {
   }
 
   dynamic visitLiteralArray(LiteralArray ast, dynamic context) {
-    return this.visitAll(ast.expressions, context);
+    return this.visitAll(ast.expressions as List<AST>, context);
   }
 
   dynamic visitLiteralMap(LiteralMap ast, dynamic context) {
-    return this.visitAll(ast.values, context);
+    return this.visitAll(ast.values as List<AST>, context);
   }
 
   dynamic visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {
@@ -355,7 +355,7 @@ class RecursiveAstVisitor implements AstVisitor {
 
   dynamic visitMethodCall(MethodCall ast, dynamic context) {
     ast.receiver.visit(this);
-    return this.visitAll(ast.args, context);
+    return this.visitAll(ast.args as List<AST>, context);
   }
 
   dynamic visitPrefixNot(PrefixNot ast, dynamic context) {
@@ -381,7 +381,7 @@ class RecursiveAstVisitor implements AstVisitor {
 
   dynamic visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
     ast.receiver.visit(this);
-    return this.visitAll(ast.args, context);
+    return this.visitAll(ast.args as List<AST>, context);
   }
 
   dynamic visitAll(List<AST> asts, dynamic context) {

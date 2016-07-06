@@ -8,7 +8,7 @@ import "package:angular2/core.dart"
         ElementRef,
         Directive,
         Renderer;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, print;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "../../core/change_detection/differs/default_keyvalue_differ.dart"
     show KeyValueChangeRecord;
 

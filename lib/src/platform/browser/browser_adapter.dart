@@ -4,7 +4,6 @@ import 'dart:html';
 import 'package:angular2/platform/common_dom.dart' show setRootDomAdapter;
 import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;
 import 'package:angular2/src/facade/browser.dart';
-import 'package:angular2/src/facade/lang.dart' show isBlank, isPresent;
 import 'dart:js' as js;
 
 // WARNING: Do not expose outside this class. Parsing HTML using this
@@ -104,7 +103,8 @@ final bool _supportsTemplateElement = () {
   }
 }();
 
-class BrowserDomAdapter extends GenericBrowserDomAdapter {
+class BrowserDomAdapter extends
+    GenericBrowserDomAdapter<Element, Node, EventTarget> {
   js.JsFunction _setProperty;
   js.JsFunction _getProperty;
   js.JsFunction _hasProperty;
@@ -178,7 +178,7 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
   Element querySelector(el, String selector) => el.querySelector(selector);
 
   ElementList querySelectorAll(el, String selector) =>
-      el.querySelectorAll(selector);
+      el.querySelectorAll(selector) as ElementList;
 
   void on(EventTarget element, String event, callback(arg)) {
     // due to https://code.google.com/p/dart/issues/detail?id=17406
@@ -193,19 +193,19 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
     return subscription.cancel;
   }
 
-  void dispatchEvent(EventTarget el, Event evt) {
-    el.dispatchEvent(evt);
+  void dispatchEvent(EventTarget el, evt) {
+    el.dispatchEvent(evt as Event);
   }
 
   MouseEvent createMouseEvent(String eventType) =>
       new MouseEvent(eventType, canBubble: true);
   Event createEvent(String eventType) => new Event(eventType, canBubble: true);
-  void preventDefault(Event evt) {
-    evt.preventDefault();
+  void preventDefault(evt) {
+    (evt as Event).preventDefault();
   }
 
-  bool isPrevented(Event evt) {
-    return evt.defaultPrevented;
+  bool isPrevented(evt) {
+    return (evt as Event).defaultPrevented;
   }
 
   String getInnerHTML(Element el) => el.innerHtml;
@@ -216,9 +216,9 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
 
   String nodeName(Node el) => el.nodeName;
   String nodeValue(Node el) => el.nodeValue;
-  String type(InputElement el) => el.type;
-  Node content(TemplateElement el) =>
-      _supportsTemplateElement ? el.content : el;
+  String type(el) => (el as InputElement).type;
+  Node content(el) =>
+      _supportsTemplateElement ? (el as TemplateElement).content : el;
   Node firstChild(el) => el.firstChild;
   Node nextSibling(Node el) => el.nextNode;
   Element parentElement(Node el) => el.parentNode;
@@ -248,12 +248,14 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
     el.parentNode.insertBefore(node, el);
   }
 
-  void insertAllBefore(Node el, Iterable<Node> nodes) {
+  void insertAllBefore(element, nodes) {
+    Element el = element;
     el.parentNode.insertAllBefore(nodes, el);
   }
 
-  void insertAfter(Node el, Node node) {
-    el.parentNode.insertBefore(node, el.nextNode);
+  void insertAfter(element, node) {
+    Element e = element;
+    e.parentNode.insertBefore(node, e.nextNode);
   }
 
   String getText(Node el) => el.text;
@@ -261,21 +263,21 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
     el.text = value;
   }
 
-  String getValue(el) => el.value;
+  String getValue(el) => (el as InputElement).value;
   void setValue(el, String value) {
-    el.value = value;
+    (el as InputElement).value = value;
   }
 
-  bool getChecked(InputElement el) => el.checked;
-  void setChecked(InputElement el, bool isChecked) {
-    el.checked = isChecked;
+  bool getChecked(el) => (el as InputElement).checked;
+  void setChecked(el, bool isChecked) {
+    (el as InputElement).checked = isChecked;
   }
 
   Comment createComment(String text) {
     return new Comment(text);
   }
 
-  TemplateElement createTemplate(String html) {
+  createTemplate(String html) {
     var t = new TemplateElement();
     // We do not sanitize because templates are part of the application code
     // not user code.
@@ -283,30 +285,31 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
     return t;
   }
 
-  Element createElement(String tagName, [HtmlDocument doc = null]) {
-    if (doc == null) doc = document;
+  Element createElement(String tagName, [d = null]) {
+    HtmlDocument doc = d ?? document;
     return doc.createElement(tagName);
   }
 
   Element createElementNS(String ns, String tagName,
-      [HtmlDocument doc = null]) {
-    if (doc == null) doc = document;
+      [d = null]) {
+    HtmlDocument doc = d ?? document;
     return doc.createElementNS(ns, tagName);
   }
 
-  Text createTextNode(String text, [HtmlDocument doc = null]) {
+  Node createTextNode(String text, [doc = null]) {
     return new Text(text);
   }
 
   createScriptTag(String attrName, String attrValue,
-      [HtmlDocument doc = null]) {
-    if (doc == null) doc = document;
+      [d = null]) {
+    HtmlDocument doc = d ?? document;
     var el = doc.createElement('SCRIPT');
     el.setAttribute(attrName, attrValue);
     return el;
   }
 
-  StyleElement createStyleElement(String css, [HtmlDocument doc = null]) {
+  StyleElement createStyleElement(String css, [d = null]) {
+    HtmlDocument doc = d ?? document;
     if (doc == null) doc = document;
     var el = doc.createElement('STYLE');
     el.text = css;
@@ -316,7 +319,7 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
   ShadowRoot createShadowRoot(Element el) => el.createShadowRoot();
   ShadowRoot getShadowRoot(Element el) => el.shadowRoot;
   Element getHost(Element el) => (el as ShadowRoot).host;
-  clone(Node node) => node.clone(true);
+  Node clone(Node node) => node.clone(true);
   List<Node> getElementsByClassName(Element element, String name) =>
       element.getElementsByClassName(name);
   List<Node> getElementsByTagName(Element element, String name) =>
@@ -338,8 +341,8 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
   }
 
   bool hasStyle(Element element, String styleName, [String styleValue]) {
-    var value = this.getStyle(element, styleName);
-    return isPresent(styleValue) ? value == styleValue : value.length > 0;
+    var value = getStyle(element, styleName);
+    return styleValue != null ? value == styleValue : value.length > 0;
   }
 
   void removeStyle(Element element, String styleName) {
@@ -353,7 +356,7 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
   String tagName(Element element) => element.tagName;
 
   Map<String, String> attributeMap(Element element) {
-    var result = {};
+    var result = <String, String>{};
     result.addAll(element.attributes);
     // TODO(tbosch): element.getNamespacedAttributes() somehow does not return the attribute value
     var xlinkHref =
@@ -428,11 +431,12 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
     return document.adoptNode(node);
   }
 
-  String getHref(AnchorElement element) {
-    return element.href;
+  String getHref(Element element) {
+    return (element as AnchorElement).href;
   }
 
-  String getEventKey(KeyboardEvent event) {
+  String getEventKey(e) {
+    KeyboardEvent event = e;
     int keyCode = event.keyCode;
     return _keyCodeToKeyMap.containsKey(keyCode)
         ? _keyCodeToKeyMap[keyCode]
@@ -499,7 +503,7 @@ class BrowserDomAdapter extends GenericBrowserDomAdapter {
   }
 
   requestAnimationFrame(callback) {
-    return window.requestAnimationFrame(callback);
+    return window.requestAnimationFrame(callback as FrameRequestCallback);
   }
 
   cancelAnimationFrame(id) {

@@ -98,7 +98,7 @@ const formDirectiveProvider =
  */
 @Directive(
     selector: "[ngFormModel]",
-    bindings: const [formDirectiveProvider],
+    providers: const [formDirectiveProvider],
     inputs: const ["form: ngFormModel"],
     host: const {"(submit)": "onSubmit()"},
     outputs: const ["ngSubmit"],

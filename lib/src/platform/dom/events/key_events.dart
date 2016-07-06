@@ -3,7 +3,7 @@ library angular2.src.platform.dom.events.key_events;
 import "dart:html";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, StringWrapper, RegExpWrapper, NumberWrapper;
+    show isPresent, StringWrapper;
 import "package:angular2/src/facade/collection.dart"
     show StringMapWrapper, ListWrapper;
 import "event_manager.dart" show EventManagerPlugin;
@@ -63,7 +63,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
       // returning null instead of throwing to let another plugin process the event
       return null;
     }
-    var result = StringMapWrapper.create();
+    var result = <String, String>{};
     StringMapWrapper.set(result, "domEventName", domEventName);
     StringMapWrapper.set(result, "fullKey", fullKey);
     return result;

@@ -10,13 +10,13 @@ import "compile_metadata.dart"
         CompileInjectorModuleMetadata,
         CompileTypeMetadata;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, unimplemented;
+    show BaseException;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "style_compiler.dart"
-    show StyleCompiler, StylesCompileDependency, StylesCompileResult;
+    show StyleCompiler, StylesCompileResult;
 import "view_compiler/view_compiler.dart" show ViewCompiler, ViewCompileResult;
 import "view_compiler/injector_compiler.dart"
-    show InjectorCompiler, InjectorCompileResult;
+    show InjectorCompiler;
 import "template_parser.dart" show TemplateParser;
 import "directive_normalizer.dart" show DirectiveNormalizer;
 import "output/abstract_emitter.dart" show OutputEmitter;
@@ -74,10 +74,10 @@ class OfflineCompiler {
     } else {
       throw new BaseException("No components nor injectorModules given");
     }
-    var statements = [];
-    var exportedVars = [];
+    var statements = <o.Statement>[];
+    var exportedVars = <String>[];
     components.forEach((componentWithDirs) {
-      var compMeta = (componentWithDirs.component as CompileDirectiveMetadata);
+      CompileDirectiveMetadata compMeta = componentWithDirs.component;
       _assertComponent(compMeta);
       var compViewFactoryVar = this._compileComponent(compMeta,
           componentWithDirs.directives, componentWithDirs.pipes, statements);

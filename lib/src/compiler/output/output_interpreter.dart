@@ -1,20 +1,20 @@
 library angular2.src.compiler.output.output_interpreter;
 
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, isString, evalExpression, IS_DART, FunctionWrapper;
+    show isPresent, IS_DART, FunctionWrapper;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "output_ast.dart" as o;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, unimplemented;
+    show BaseException;
 import "package:angular2/src/facade/collection.dart"
-    show MapWrapper, ListWrapper;
+    show ListWrapper;
 import "dart_emitter.dart" show debugOutputAstAsDart;
 import "ts_emitter.dart" show debugOutputAstAsTypeScript;
 
 dynamic interpretStatements(List<o.Statement> statements, String resultVar,
     InstanceFactory instanceFactory) {
-  var stmtsWithReturn = (new List.from(statements)
+  List<o.Statement> stmtsWithReturn = (new List.from(statements)
     ..addAll([new o.ReturnStatement(o.variable(resultVar))]));
   var ctx = new _ExecutionContext(
       null,
@@ -28,7 +28,7 @@ dynamic interpretStatements(List<o.Statement> statements, String resultVar,
       instanceFactory);
   var visitor = new StatementInterpreter();
   var result = visitor.visitAllStatements(stmtsWithReturn, ctx);
-  return isPresent(result) ? result.value : null;
+  return result?.value;
 }
 
 abstract class InstanceFactory {
@@ -42,21 +42,13 @@ abstract class InstanceFactory {
 }
 
 abstract class DynamicInstance {
-  Map<String, dynamic> get props {
-    return unimplemented();
-  }
+  Map<String, dynamic> get props;
 
-  Map<String, Function> get getters {
-    return unimplemented();
-  }
+  Map<String, Function> get getters;
 
-  Map<String, dynamic> get methods {
-    return unimplemented();
-  }
+  Map<String, dynamic> get methods;
 
-  dynamic get clazz {
-    return unimplemented();
-  }
+  dynamic get clazz;
 }
 
 dynamic isDynamicInstance(dynamic instance) {
@@ -119,8 +111,8 @@ class _ExecutionContext {
 }
 
 class ReturnValue {
-  dynamic value;
-  ReturnValue(this.value) {}
+  final value;
+  const ReturnValue(this.value);
 }
 
 class _DynamicClass {
@@ -179,12 +171,14 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
         : debugOutputAstAsTypeScript(ast);
   }
 
-  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, _ExecutionContext ctx) {
+  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     ctx.vars[stmt.name] = stmt.value.visitExpression(this, ctx);
     return null;
   }
 
-  dynamic visitWriteVarExpr(o.WriteVarExpr expr, _ExecutionContext ctx) {
+  dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context) {
+    _ExecutionContext ctx = context;
     var value = expr.value.visitExpression(this, ctx);
     var currCtx = ctx;
     while (currCtx != null) {
@@ -197,7 +191,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     throw new BaseException('''Not declared variable ${ expr . name}''');
   }
 
-  dynamic visitReadVarExpr(o.ReadVarExpr ast, _ExecutionContext ctx) {
+  dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     var varName = ast.name;
     if (isPresent(ast.builtin)) {
       switch (ast.builtin) {
@@ -227,7 +222,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     throw new BaseException('''Not declared variable ${ varName}''');
   }
 
-  dynamic visitWriteKeyExpr(o.WriteKeyExpr expr, _ExecutionContext ctx) {
+  dynamic visitWriteKeyExpr(o.WriteKeyExpr expr, dynamic context) {
+    _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
     var index = expr.index.visitExpression(this, ctx);
     var value = expr.value.visitExpression(this, ctx);
@@ -235,7 +231,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return value;
   }
 
-  dynamic visitWritePropExpr(o.WritePropExpr expr, _ExecutionContext ctx) {
+  dynamic visitWritePropExpr(o.WritePropExpr expr, dynamic context) {
+    _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
     var value = expr.value.visitExpression(this, ctx);
     if (isDynamicInstance(receiver)) {
@@ -252,7 +249,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   }
 
   dynamic visitInvokeMethodExpr(
-      o.InvokeMethodExpr expr, _ExecutionContext ctx) {
+      o.InvokeMethodExpr expr, dynamic context) {
+    _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
     var args = this.visitAllExpressions(expr.args, ctx);
     var result;
@@ -289,7 +287,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   }
 
   dynamic visitInvokeFunctionExpr(
-      o.InvokeFunctionExpr stmt, _ExecutionContext ctx) {
+      o.InvokeFunctionExpr stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     var args = this.visitAllExpressions(stmt.args, ctx);
     var fnExpr = stmt.fn;
     if (fnExpr is o.ReadVarExpr &&
@@ -304,22 +303,26 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
-  dynamic visitReturnStmt(o.ReturnStatement stmt, _ExecutionContext ctx) {
+  dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     return new ReturnValue(stmt.value.visitExpression(this, ctx));
   }
 
-  dynamic visitDeclareClassStmt(o.ClassStmt stmt, _ExecutionContext ctx) {
+  dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     var clazz = new _DynamicClass(stmt, ctx, this);
     ctx.vars[stmt.name] = clazz;
     return null;
   }
 
   dynamic visitExpressionStmt(
-      o.ExpressionStatement stmt, _ExecutionContext ctx) {
+      o.ExpressionStatement stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     return stmt.expr.visitExpression(this, ctx);
   }
 
-  dynamic visitIfStmt(o.IfStmt stmt, _ExecutionContext ctx) {
+  dynamic visitIfStmt(o.IfStmt stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     var condition = stmt.condition.visitExpression(this, ctx);
     if (condition) {
       return this.visitAllStatements(stmt.trueCase, ctx);
@@ -329,7 +332,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
-  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, _ExecutionContext ctx) {
+  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     try {
       return this.visitAllStatements(stmt.bodyStmts, ctx);
     } catch (e, e_stack) {
@@ -340,7 +344,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
-  dynamic visitThrowStmt(o.ThrowStmt stmt, _ExecutionContext ctx) {
+  dynamic visitThrowStmt(o.ThrowStmt stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     throw stmt.error.visitExpression(this, ctx);
   }
 
@@ -348,7 +353,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
-  dynamic visitInstantiateExpr(o.InstantiateExpr ast, _ExecutionContext ctx) {
+  dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     var args = this.visitAllExpressions(ast.args, ctx);
     var clazz = ast.classExpr.visitExpression(this, ctx);
     if (clazz is _DynamicClass) {
@@ -358,15 +364,16 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
-  dynamic visitLiteralExpr(o.LiteralExpr ast, _ExecutionContext ctx) {
+  dynamic visitLiteralExpr(o.LiteralExpr ast, dynamic context) {
     return ast.value;
   }
 
-  dynamic visitExternalExpr(o.ExternalExpr ast, _ExecutionContext ctx) {
+  dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
     return ast.value.runtime;
   }
 
-  dynamic visitConditionalExpr(o.ConditionalExpr ast, _ExecutionContext ctx) {
+  dynamic visitConditionalExpr(o.ConditionalExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     if (ast.condition.visitExpression(this, ctx)) {
       return ast.trueCase.visitExpression(this, ctx);
     } else if (isPresent(ast.falseCase)) {
@@ -375,28 +382,33 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
-  dynamic visitNotExpr(o.NotExpr ast, _ExecutionContext ctx) {
+  dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     return !ast.condition.visitExpression(this, ctx);
   }
 
-  dynamic visitCastExpr(o.CastExpr ast, _ExecutionContext ctx) {
+  dynamic visitCastExpr(o.CastExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     return ast.value.visitExpression(this, ctx);
   }
 
-  dynamic visitFunctionExpr(o.FunctionExpr ast, _ExecutionContext ctx) {
+  dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     var paramNames = ast.params.map((param) => param.name).toList();
     return _declareFn(paramNames, ast.statements, ctx, this);
   }
 
   dynamic visitDeclareFunctionStmt(
-      o.DeclareFunctionStmt stmt, _ExecutionContext ctx) {
+      o.DeclareFunctionStmt stmt, dynamic context) {
+    _ExecutionContext ctx = context;
     var paramNames = stmt.params.map((param) => param.name).toList();
     ctx.vars[stmt.name] = _declareFn(paramNames, stmt.statements, ctx, this);
     return null;
   }
 
   dynamic visitBinaryOperatorExpr(
-      o.BinaryOperatorExpr ast, _ExecutionContext ctx) {
+      o.BinaryOperatorExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     var lhs = () => ast.lhs.visitExpression(this, ctx);
     var rhs = () => ast.rhs.visitExpression(this, ctx);
     switch (ast.operator) {
@@ -435,7 +447,8 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
-  dynamic visitReadPropExpr(o.ReadPropExpr ast, _ExecutionContext ctx) {
+  dynamic visitReadPropExpr(o.ReadPropExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     var result;
     var receiver = ast.receiver.visitExpression(this, ctx);
     if (isDynamicInstance(receiver)) {
@@ -455,17 +468,20 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return result;
   }
 
-  dynamic visitReadKeyExpr(o.ReadKeyExpr ast, _ExecutionContext ctx) {
+  dynamic visitReadKeyExpr(o.ReadKeyExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     var receiver = ast.receiver.visitExpression(this, ctx);
     var prop = ast.index.visitExpression(this, ctx);
     return receiver[prop];
   }
 
-  dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, _ExecutionContext ctx) {
+  dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     return this.visitAllExpressions(ast.entries, ctx);
   }
 
-  dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, _ExecutionContext ctx) {
+  dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
     var result = {};
     ast.entries.forEach((entry) => result[(entry[0] as String)] =
         ((entry[1] as o.Expression)).visitExpression(this, ctx));
@@ -473,12 +489,14 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   }
 
   dynamic visitAllExpressions(
-      List<o.Expression> expressions, _ExecutionContext ctx) {
+      List<o.Expression> expressions, dynamic context) {
+    _ExecutionContext ctx = context;
     return expressions.map((expr) => expr.visitExpression(this, ctx)).toList();
   }
 
   ReturnValue visitAllStatements(
-      List<o.Statement> statements, _ExecutionContext ctx) {
+      List<o.Statement> statements, dynamic context) {
+    _ExecutionContext ctx = context;
     for (var i = 0; i < statements.length; i++) {
       var stmt = statements[i];
       var val = stmt.visitStatement(this, ctx);

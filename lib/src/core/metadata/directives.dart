@@ -1,6 +1,6 @@
 library angular2.src.core.metadata.directives;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, Type;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/core/di/metadata.dart" show InjectableMetadata;
 import "package:angular2/src/core/change_detection.dart"
     show ChangeDetectionStrategy;

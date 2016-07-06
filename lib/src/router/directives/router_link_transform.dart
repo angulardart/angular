@@ -5,25 +5,22 @@ import "package:angular2/compiler.dart"
         TemplateAstVisitor,
         ElementAst,
         BoundDirectivePropertyAst,
+        BoundElementPropertyAst,
         DirectiveAst,
-        BoundElementPropertyAst;
+        TemplateAst;
 import "package:angular2/src/compiler/expression_parser/ast.dart"
     show
         AstTransformer,
         Quote,
         AST,
-        EmptyExpr,
         LiteralArray,
-        LiteralPrimitive,
-        ASTWithSource;
+        LiteralPrimitive;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/src/compiler/expression_parser/parser.dart"
     show Parser;
 
-/**
- * e.g., './User', 'Modal' in ./User[Modal(param: value)]
- */
+/// e.g., './User', 'Modal' in ./User[Modal(param: value)].
 class FixedPart {
   String value;
   FixedPart(this.value) {}
@@ -185,10 +182,10 @@ class RouterLinkTransform implements TemplateAstVisitor {
 
   dynamic visitElement(ElementAst ast, dynamic context) {
     var updatedChildren =
-        ast.children.map((c) => c.visit(this, context)).toList();
-    var updatedInputs = ast.inputs.map((c) => c.visit(this, context)).toList();
+        ast.children.map((c) => c.visit(this, context) as TemplateAst).toList();
+    var updatedInputs = ast.inputs.map((c) => c.visit(this, context) as BoundElementPropertyAst).toList();
     var updatedDirectives =
-        ast.directives.map((c) => c.visit(this, context)).toList();
+        ast.directives.map((c) => c.visit(this, context) as DirectiveAst).toList();
     return new ElementAst(
         ast.name,
         ast.attrs,
@@ -232,7 +229,7 @@ class RouterLinkTransform implements TemplateAstVisitor {
   }
 
   dynamic visitDirective(DirectiveAst ast, dynamic context) {
-    var updatedInputs = ast.inputs.map((c) => c.visit(this, context)).toList();
+    var updatedInputs = ast.inputs.map((c) => c.visit(this, context) as BoundDirectivePropertyAst).toList();
     return new DirectiveAst(ast.directive, updatedInputs, ast.hostProperties,
         ast.hostEvents, ast.sourceSpan);
   }

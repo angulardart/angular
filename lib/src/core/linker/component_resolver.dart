@@ -3,10 +3,9 @@ library angular2.src.core.linker.component_resolver;
 import "dart:async";
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isString, stringify;
+    show Type, isBlank, stringify;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, unimplemented;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
+    show BaseException;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "component_factory.dart" show ComponentFactory;
 import "injector_factory.dart" show CodegenInjectorFactory;
@@ -17,8 +16,10 @@ import "injector_factory.dart" show CodegenInjectorFactory;
  */
 abstract class ComponentResolver {
   Future<ComponentFactory> resolveComponent(Type componentType);
-  CodegenInjectorFactory<dynamic> createInjectorFactory(Type injectorModule,
-      [List<dynamic> extraProviders]);
+
+  CodegenInjectorFactory createInjectorFactory(Type injectorModule,
+      [List extraProviders]);
+
   clearCache();
 }
 
@@ -27,7 +28,8 @@ bool _isComponentFactory(dynamic type) {
 }
 
 @Injectable()
-class ReflectorComponentResolver extends ComponentResolver {
+class ReflectorComponentResolver implements ComponentResolver {
+
   Future<ComponentFactory> resolveComponent(Type componentType) {
     var metadatas = reflector.annotations(componentType);
     var componentFactory =
@@ -36,12 +38,13 @@ class ReflectorComponentResolver extends ComponentResolver {
       throw new BaseException(
           '''No precompiled component ${ stringify ( componentType )} found''');
     }
-    return PromiseWrapper.resolve(componentFactory);
+    return new Future<ComponentFactory>.value(componentFactory);
   }
 
-  CodegenInjectorFactory<dynamic> createInjectorFactory(Type injectorModule,
-      [List<dynamic> extraProviders]) {
-    return unimplemented();
+  @override
+  CodegenInjectorFactory createInjectorFactory(Type injectorModule,
+      [List extraProviders]) {
+    throw new UnimplementedError();
   }
 
   clearCache() {}

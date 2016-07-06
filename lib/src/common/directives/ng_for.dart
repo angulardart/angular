@@ -12,7 +12,7 @@ import "package:angular2/core.dart"
         EmbeddedViewRef,
         TrackByFn;
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, stringify, getTypeNameForDebugging;
+    show isPresent, isBlank, getTypeNameForDebugging;
 import "../../core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, CollectionChangeRecord;
 import "../../facade/exceptions.dart" show BaseException;
@@ -91,9 +91,15 @@ class NgFor implements DoCheck {
             ._iterableDiffers
             .find(value)
             .create(this._cdr, this._ngForTrackBy);
-      } catch (e, e_stack) {
-        throw new BaseException(
-            '''Cannot find a differ supporting object \'${ value}\' of type \'${ getTypeNameForDebugging ( value )}\'. NgFor only supports binding to Iterables such as Arrays.''');
+      } catch (_) {
+        assert(() {
+          throw new BaseException('Cannot find a differ supporting object'
+                  ' \'${ value}\' of type'
+                  ' \'${ getTypeNameForDebugging( value)}\''
+                  '. NgFor only supports binding to Iterables '
+                  'such as Arrays.');
+        });
+        rethrow;
       }
     }
   }

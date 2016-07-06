@@ -2,44 +2,25 @@ library angular2.src.core.linker.view;
 
 import "package:angular2/src/facade/collection.dart"
     show
-        ListWrapper,
-        MapWrapper,
         Map,
-        StringMapWrapper,
-        isListLikeIterable,
-        areIterablesEqual;
+        StringMapWrapper;
 import "package:angular2/src/core/di.dart" show Injector;
 import "element.dart" show AppElement;
-import "package:angular2/src/facade/lang.dart"
-    show
-        assertionsEnabled,
-        isPresent,
-        isBlank,
-        Type,
-        isArray,
-        isNumber,
-        stringify,
-        isPrimitive,
-        isString;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/core/render/api.dart"
-    show Renderer, RootRenderer, RenderComponentType;
+    show Renderer, RenderComponentType;
 import "view_ref.dart" show ViewRef_;
 import "view_type.dart" show ViewType;
 import "view_utils.dart"
     show
         ViewUtils,
         flattenNestedViewRenderNodes,
-        ensureSlotCount,
-        arrayLooseIdentical,
-        mapLooseIdentical;
+        ensureSlotCount;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show
         ChangeDetectorRef,
         ChangeDetectionStrategy,
-        ChangeDetectorState,
-        isDefaultChangeDetectionStrategy,
-        devModeEqual;
+        ChangeDetectorState;
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
 import "exceptions.dart"
     show
@@ -106,28 +87,28 @@ abstract class AppView<T> {
   AppElement create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | dynamic */ rootSelectorOrNode) {
-    var context;
+    T context;
     var projectableNodes;
     switch (this.type) {
       case ViewType.COMPONENT:
-        context = this.declarationAppElement.component;
+        context = this.declarationAppElement.component as T;
         projectableNodes = ensureSlotCount(
             givenProjectableNodes, this.componentType.slotCount);
         break;
       case ViewType.EMBEDDED:
-        context = this.declarationAppElement.parentView.context;
+        context = this.declarationAppElement.parentView.context as T;
         projectableNodes =
             this.declarationAppElement.parentView.projectableNodes;
         break;
       case ViewType.HOST:
-        context = EMPTY_CONTEXT;
-        // Note: Don't ensure the slot count for the projectableNodes as we store
-
-        // them only for the contained component view (which will later check the slot count...)
+        context = null;
+        // Note: Don't ensure the slot count for the projectableNodes as
+        // we store them only for the contained component view (which will
+        // later check the slot count...)
         projectableNodes = givenProjectableNodes;
         break;
     }
-    this._hasExternalHostElement = isPresent(rootSelectorOrNode);
+    this._hasExternalHostElement = rootSelectorOrNode != null;
     this.context = context;
     this.projectableNodes = projectableNodes;
     return this.createInternal(rootSelectorOrNode);
@@ -161,7 +142,7 @@ abstract class AppView<T> {
       dynamic /* String | dynamic */ rootSelectorOrNode,
       DebugContext debugCtx) {
     var hostElement;
-    if (isPresent(rootSelectorOrNode)) {
+    if (rootSelectorOrNode != null) {
       hostElement =
           this.renderer.selectRootElement(rootSelectorOrNode, debugCtx);
     } else {
@@ -174,47 +155,45 @@ abstract class AppView<T> {
     return this.injectorGetInternal(token, nodeIndex, notFoundResult);
   }
 
-  /**
-   * Overwritten by implementations
-   */
+  /// Overwritten by implementations
   dynamic injectorGetInternal(
       dynamic token, num nodeIndex, dynamic notFoundResult) {
     return notFoundResult;
   }
 
   Injector injector(num nodeIndex) {
-    if (isPresent(nodeIndex)) {
-      return new ElementInjector(this, nodeIndex);
-    } else {
-      return this.parentInjector;
+    if (nodeIndex == null) {
+      return parentInjector;
     }
+    return new ElementInjector(this, nodeIndex);
   }
 
   destroy() {
     if (this._hasExternalHostElement) {
-      this.renderer.detachView(this.flatRootNodes);
-    } else if (isPresent(this.viewContainerElement)) {
-      this
-          .viewContainerElement
-          .detachView(this.viewContainerElement.nestedViews.indexOf(this));
+      this.renderer.detachView(flatRootNodes);
+    } else {
+      viewContainerElement?.detachView(
+          viewContainerElement.nestedViews.indexOf(this));
     }
     this._destroyRecurse();
   }
 
   _destroyRecurse() {
-    if (this.destroyed) {
+    if (destroyed) {
       return;
     }
-    var children = this.contentChildren;
-    for (var i = 0; i < children.length; i++) {
+    var children = contentChildren;
+    int length = children.length;
+    for (var i = 0; i < length; i++) {
       children[i]._destroyRecurse();
     }
-    children = this.viewChildren;
-    for (var i = 0; i < children.length; i++) {
+    children = viewChildren;
+    int viewChildCount = viewChildren.length;
+    for (var i = 0; i < viewChildCount; i++) {
       children[i]._destroyRecurse();
     }
-    this.destroyLocal();
-    this.destroyed = true;
+    destroyLocal();
+    destroyed = true;
   }
 
   destroyLocal() {
@@ -240,11 +219,7 @@ abstract class AppView<T> {
     return this.ref;
   }
 
-  AppView<dynamic> get parent {
-    return isPresent(this.declarationAppElement)
-        ? this.declarationAppElement.parentView
-        : null;
-  }
+  AppView<dynamic> get parent => this.declarationAppElement?.parentView;
 
   List<dynamic> get flatRootNodes {
     return flattenNestedViewRenderNodes(this.rootNodesOrAppElements);
@@ -311,7 +286,7 @@ abstract class AppView<T> {
   }
 
   void removeFromContentChildren(AppElement renderAppElement) {
-    ListWrapper.remove(renderAppElement.parentView.contentChildren, this);
+    renderAppElement.parentView.contentChildren.remove(this);
     this.dirtyParentQueriesInternal();
     this.viewContainerElement = null;
   }
@@ -322,15 +297,16 @@ abstract class AppView<T> {
 
   void markPathToRootAsCheckOnce() {
     AppView<dynamic> c = this;
-    while (isPresent(c) &&
-        !identical(c.cdMode, ChangeDetectionStrategy.Detached)) {
-      if (identical(c.cdMode, ChangeDetectionStrategy.Checked)) {
+    while (c != null) {
+      ChangeDetectionStrategy cdMode = c.cdMode;
+      if (cdMode == ChangeDetectionStrategy.Detached) break;
+      if (cdMode == ChangeDetectionStrategy.Checked) {
         c.cdMode = ChangeDetectionStrategy.CheckOnce;
       }
-      var parentEl = identical(c.type, ViewType.COMPONENT)
+      var parentEl = c.type == ViewType.COMPONENT
           ? c.declarationAppElement
           : c.viewContainerElement;
-      c = isPresent(parentEl) ? parentEl.parentView : null;
+      c = parentEl?.parentView;
     }
   }
 
@@ -362,7 +338,8 @@ class DebugAppView<T> extends AppView<T> {
   }
   AppElement create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      String rootSelector) {
+      selector) {
+    String rootSelector = selector;
     this._resetDebug();
     try {
       return super.create(givenProjectableNodes, rootSelector);
@@ -416,7 +393,7 @@ class DebugAppView<T> extends AppView<T> {
       if (!(e is ExpressionChangedAfterItHasBeenCheckedException)) {
         this.cdState = ChangeDetectorState.Errored;
       }
-      if (isPresent(this._currentDebugContext)) {
+      if (this._currentDebugContext != null) {
         throw new ViewWrappedException(e, stack, this._currentDebugContext);
       }
     }
@@ -439,9 +416,9 @@ class DebugAppView<T> extends AppView<T> {
 dynamic _findLastRenderNode(dynamic node) {
   var lastNode;
   if (node is AppElement) {
-    var appEl = (node as AppElement);
+    AppElement appEl = node;
     lastNode = appEl.nativeElement;
-    if (isPresent(appEl.nestedViews)) {
+    if (appEl.nestedViews != null) {
       // Note: Views might have no root nodes at all!
       for (var i = appEl.nestedViews.length - 1; i >= 0; i--) {
         var nestedView = appEl.nestedViews[i];

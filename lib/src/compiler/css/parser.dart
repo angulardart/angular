@@ -3,14 +3,13 @@ library angular2.src.compiler.css.parser;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseSourceFile, ParseLocation, ParseError;
 import "package:angular2/src/facade/lang.dart"
-    show bitWiseOr, bitWiseAnd, NumberWrapper, StringWrapper, isPresent;
+    show bitWiseOr, bitWiseAnd, isPresent;
 import "package:angular2/src/compiler/css/lexer.dart"
     show
         CssLexerMode,
         CssToken,
         CssTokenType,
         CssScanner,
-        CssScannerError,
         generateErrorMessage,
         $AT,
         $EOF,
@@ -161,7 +160,7 @@ class CssParser {
 
   /** @internal */
   CssStyleSheetAST _parseStyleSheet(delimiters) {
-    var results = [];
+    var results = <CssAST>[];
     this._scanner.consumeEmptyStatements();
     while (this._scanner.peek != $EOF) {
       this._scanner.setMode(CssLexerMode.BLOCK);
@@ -221,7 +220,7 @@ class CssParser {
             type, tokens, this._parseBlock(delimiters));
       // if a custom @rule { ... } is used it should still tokenize the insides
       default:
-        var listOfTokens = [];
+        var listOfTokens = <CssToken>[];
         this._scanner.setMode(CssLexerMode.ALL);
         this._error(
             generateErrorMessage(
@@ -264,7 +263,7 @@ class CssParser {
   /** @internal */
   List<CssSelectorAST> _parseSelectors(num delimiters) {
     delimiters = bitWiseOr([delimiters, LBRACE_DELIM]);
-    var selectors = [];
+    var selectors = <CssSelectorAST>[];
     var isParsingSelectors = true;
     while (isParsingSelectors) {
       selectors.add(this._parseSelector(delimiters));
@@ -306,7 +305,7 @@ class CssParser {
     delimiters = bitWiseOr([delimiters, RBRACE_DELIM]);
     this._scanner.setMode(CssLexerMode.KEYFRAME_BLOCK);
     this._consume(CssTokenType.Character, "{");
-    var definitions = [];
+    var definitions = <CssAST>[];
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
       definitions.add(this._parseKeyframeDefinition(delimiters));
     }
@@ -316,7 +315,7 @@ class CssParser {
 
   /** @internal */
   CssKeyframeDefinitionAST _parseKeyframeDefinition(num delimiters) {
-    var stepTokens = [];
+    var stepTokens = <CssToken>[];
     delimiters = bitWiseOr([delimiters, LBRACE_DELIM]);
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
       stepTokens
@@ -340,7 +339,7 @@ class CssParser {
   CssSelectorAST _parseSelector(num delimiters) {
     delimiters = bitWiseOr([delimiters, COMMA_DELIM, LBRACE_DELIM]);
     this._scanner.setMode(CssLexerMode.SELECTOR);
-    var selectorCssTokens = [];
+    var selectorCssTokens = <CssToken>[];
     var isComplex = false;
     var wsCssToken;
     var previousToken;
@@ -433,7 +432,7 @@ class CssParser {
         bitWiseOr([delimiters, RBRACE_DELIM, SEMICOLON_DELIM, NEWLINE_DELIM]);
     this._scanner.setMode(CssLexerMode.STYLE_VALUE);
     var strValue = "";
-    var tokens = [];
+    var tokens = <CssToken>[];
     CssToken previous;
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
       var token;
@@ -481,7 +480,7 @@ class CssParser {
   /** @internal */
   List<CssToken> _collectUntilDelim(num delimiters,
       [CssTokenType assertType = null]) {
-    var tokens = [];
+    var tokens = <CssToken>[];
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
       var val =
           isPresent(assertType) ? this._consume(assertType) : this._scan();
@@ -496,7 +495,7 @@ class CssParser {
     this._scanner.setMode(CssLexerMode.BLOCK);
     this._consume(CssTokenType.Character, "{");
     this._scanner.consumeEmptyStatements();
-    var results = [];
+    var results = <CssAST>[];
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
       results.add(this._parseRule(delimiters));
     }
@@ -512,7 +511,7 @@ class CssParser {
     this._scanner.setMode(CssLexerMode.STYLE_BLOCK);
     this._consume(CssTokenType.Character, "{");
     this._scanner.consumeEmptyStatements();
-    var definitions = [];
+    var definitions = <CssAST>[];
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
       definitions.add(this._parseDefinition(delimiters));
       this._scanner.consumeEmptyStatements();

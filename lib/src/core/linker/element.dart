@@ -1,13 +1,13 @@
 library angular2.src.core.linker.element;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, Type;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/core/di.dart" show Injector;
 import "view.dart" show AppView;
 import "view_type.dart" show ViewType;
 import "element_ref.dart" show ElementRef;
-import "view_container_ref.dart" show ViewContainerRef, ViewContainerRef_;
+import "view_container_ref.dart" show ViewContainerRef_;
 import "query_list.dart" show QueryList;
 
 /**
@@ -53,8 +53,8 @@ class AppElement {
 
   List<dynamic> mapNestedViews(dynamic nestedViewClass, Function callback) {
     var result = [];
-    if (isPresent(this.nestedViews)) {
-      this.nestedViews.forEach((nestedView) {
+    if (nestedViews != null) {
+      nestedViews.forEach((nestedView) {
         if (identical(nestedView.clazz, nestedViewClass)) {
           result.add(callback(nestedView));
         }

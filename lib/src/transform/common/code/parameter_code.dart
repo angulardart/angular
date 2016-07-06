@@ -22,7 +22,8 @@ class ParameterVisitor extends SimpleAstVisitor<ParameterModel> {
 
     clazz.members
         .where((member) => member is FieldDeclaration)
-        .forEach((FieldDeclaration field) {
+        .forEach((fieldDecl) {
+      FieldDeclaration field = fieldDecl;
       var type = field.fields.type;
       if (type != null) {
         field.fields.variables.forEach((VariableDeclaration decl) {

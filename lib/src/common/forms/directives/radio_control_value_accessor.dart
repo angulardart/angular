@@ -5,9 +5,7 @@ import "package:angular2/core.dart"
         Directive,
         ElementRef,
         Renderer,
-        Self,
         Provider,
-        Attribute,
         Input,
         OnInit,
         OnDestroy,
@@ -17,15 +15,12 @@ import "package:angular2/src/common/forms/directives/control_value_accessor.dart
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 import "package:angular2/src/common/forms/directives/ng_control.dart"
     show NgControl;
-import "package:angular2/src/facade/lang.dart" show looseIdentical, isPresent;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 
 const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: RadioControlValueAccessor, multi: true);
 
-/**
- * Internal class used by Angular to uncheck radio buttons with the matching name.
- */
+/// Internal class used by Angular to uncheck radio buttons with the matching
+/// name.
 @Injectable()
 class RadioControlRegistry {
   List<dynamic> _accessors = [];
@@ -40,7 +35,7 @@ class RadioControlRegistry {
         indexToRemove = i;
       }
     }
-    ListWrapper.removeAt(this._accessors, indexToRemove);
+    _accessors.removeAt(indexToRemove);
   }
 
   select(RadioControlValueAccessor accessor) {
@@ -114,10 +109,8 @@ class RadioControlValueAccessor
 
   void writeValue(dynamic value) {
     this._state = value;
-    if (isPresent(value) && value.checked) {
-      this
-          ._renderer
-          .setElementProperty(this._elementRef.nativeElement, "checked", true);
+    if (value?.checked ?? false) {
+      _renderer.setElementProperty(_elementRef.nativeElement, "checked", true);
     }
   }
 

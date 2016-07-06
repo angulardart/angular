@@ -2,7 +2,7 @@ library angular2.src.router.route_registry;
 
 import "dart:async";
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, Map, MapWrapper, StringMapWrapper;
+    show ListWrapper, Map, StringMapWrapper;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/facade/lang.dart"
     show
@@ -12,16 +12,15 @@ import "package:angular2/src/facade/lang.dart"
         isType,
         isString,
         isStringMap,
-        Type,
         StringWrapper,
         Math,
         getTypeNameForDebugging;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
 import "route_config/route_config_impl.dart"
-    show RouteConfig, AsyncRoute, Route, AuxRoute, Redirect, RouteDefinition;
+    show RouteConfig, Route, AuxRoute, RouteDefinition;
 import "rules/rules.dart" show PathMatch, RedirectMatch, RouteMatch;
 import "rules/rule_set.dart" show RuleSet;
 import "instruction.dart"
@@ -34,7 +33,7 @@ import "instruction.dart"
 import "route_config/route_config_normalizer.dart"
     show normalizeRouteConfig, assertComponentExists;
 import "url_parser.dart"
-    show parser, Url, convertUrlParamsToArray, pathSegmentsToUrl;
+    show parser, Url, convertUrlParamsToArray;
 import "rules/route_paths/route_path.dart" show GeneratedUrl;
 import "utils.dart" show getComponentAnnotations, getComponentType;
 
@@ -382,7 +381,7 @@ class RouteRegistry {
       if (linkParamIndex < linkParams.length) {
         var linkParam = linkParams[linkParamIndex];
         if (isStringMap(linkParam) && !isArray(linkParam)) {
-          routeParams = linkParam;
+          routeParams = linkParam as Map<String, dynamic>;
           linkParamIndex += 1;
         }
       }

@@ -65,7 +65,7 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
 }
 
 o.Expression createFlatArray(List<o.Expression> expressions) {
-  var lastNonArrayExpressions = [];
+  var lastNonArrayExpressions = <o.Expression>[];
   o.Expression result = o.literalArr([]);
   for (var i = 0; i < expressions.length; i++) {
     var expr = expressions[i];

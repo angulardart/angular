@@ -9,9 +9,8 @@ import "../template_ast.dart"
         BoundTextAst,
         BoundElementPropertyAst,
         DirectiveAst,
-        PropertyBindingType,
-        TemplateAst;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent, isArray;
+        PropertyBindingType;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 import "compile_view.dart" show CompileView;
 import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_method.dart" show CompileMethod;
@@ -68,11 +67,10 @@ bind(
   }
   method.addStmt(new o.IfStmt(
       condition,
-      (new List.from(actions)
+      new List.from(actions)
         ..addAll([
-          (o.THIS_EXPR.prop(fieldExpr.name).set(currValExpr).toStmt()
-              as o.Statement)
-        ]))));
+          o.THIS_EXPR.prop(fieldExpr.name).set(currValExpr).toStmt()
+        ])));
 }
 
 bindRenderText(
@@ -109,7 +107,7 @@ bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
     var currValExpr = createCurrValueExpr(bindingIndex);
     String renderMethod;
     o.Expression renderValue = currValExpr;
-    var updateStmts = [];
+    var updateStmts = <o.Statement>[];
     switch (boundProp.type) {
       case PropertyBindingType.Property:
         renderMethod = "setElementProperty";

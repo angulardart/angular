@@ -1,11 +1,11 @@
 library angular2.src.compiler.selector;
 
 import "package:angular2/src/facade/collection.dart"
-    show Map, ListWrapper, MapWrapper;
+    show Map, ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, RegExpWrapper, RegExpMatcherWrapper, StringWrapper;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 
 const _EMPTY_ATTR_VALUE = "";
 // TODO: Can't use `const` here as
@@ -342,12 +342,12 @@ class SelectorMatcher {
 
   /** @internal */
   bool _matchPartial(Map<String, SelectorMatcher> map, name,
-      CssSelector cssSelector, matchedCallback) {
-    if (isBlank(map) || isBlank(name)) {
+      CssSelector cssSelector, void matchedCallback(CssSelector c, dynamic a)) {
+    if (map == null || name == null) {
       return false;
     }
     var nestedSelector = map[name];
-    if (isBlank(nestedSelector)) {
+    if (nestedSelector == null) {
       return false;
     }
     // TODO(perf): get rid of recursion and measure again
@@ -358,6 +358,8 @@ class SelectorMatcher {
     return nestedSelector.match(cssSelector, matchedCallback);
   }
 }
+
+typedef void MatchCallbackHandler(CssSelector, dynamic);
 
 class SelectorListContext {
   List<CssSelector> selectors;

@@ -86,7 +86,8 @@ const _ON_AFTER_VIEW_CHECKED_INTERFACES = const [
 /// Checks if a given [Annotation] matches any of the given
 /// [ClassDescriptors].
 class InterfaceMatcher extends ClassMatcherBase {
-  InterfaceMatcher._(classDescriptors) : super(classDescriptors);
+  InterfaceMatcher._(List<ClassDescriptor> classDescriptors)
+      : super(classDescriptors);
 
   factory InterfaceMatcher() {
     return new InterfaceMatcher._([]

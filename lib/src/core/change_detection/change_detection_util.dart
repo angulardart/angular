@@ -1,9 +1,9 @@
 library angular2.src.core.change_detection.change_detection_util;
 
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, looseIdentical, isPrimitive;
+    show looseIdentical, isPrimitive;
 import "package:angular2/src/facade/collection.dart"
-    show StringMapWrapper, isListLikeIterable, areIterablesEqual;
+    show isListLikeIterable, areIterablesEqual;
 export "package:angular2/src/facade/lang.dart" show looseIdentical;
 
 Object uninitialized = const Object();

@@ -10,8 +10,7 @@ import "package:angular2/src/web_workers/ui/event_serializer.dart"
         serializeEventWithTarget,
         serializeTransitionEvent;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+    show BaseException;
 import "package:angular2/src/facade/async.dart"
     show EventEmitter, ObservableWrapper;
 

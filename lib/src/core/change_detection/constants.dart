@@ -1,27 +1,19 @@
 library angular2.src.core.change_detection.constants;
 
-import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, normalizeBool, isBlank;
-
-/**
- * Describes the current state of the change detector.
- */
+/// Describes the current state of the change detector.
 enum ChangeDetectorState {
-  /**
-   * `NeverChecked` means that the change detector has not been checked yet, and
-   * initialization methods should be called during detection.
-   */
+  /// [NeverChecked] means that the change detector has not been checked yet,
+  /// and initialization methods should be called during detection.
   NeverChecked,
-  /**
-   * `CheckedBefore` means that the change detector has successfully completed at least
-   * one detection previously.
-   */
+
+  /// [CheckedBefore] means that the change detector has successfully completed
+  /// at least one detection previously.
   CheckedBefore,
-  /**
-   * `Errored` means that the change detector encountered an error checking a binding
-   * or calling a directive lifecycle method and is now in an inconsistent state. Change
-   * detectors in this state will no longer detect changes.
-   */
+
+  /// [Errored] means that the change detector encountered an error checking a
+  /// binding or calling a directive lifecycle method and is now in an
+  /// inconsistent state. Change detectors in this state will no longer detect
+  /// changes.
   Errored
 }
 /**
@@ -79,6 +71,6 @@ var CHANGE_DETECTOR_STATE_VALUES = [
 ];
 bool isDefaultChangeDetectionStrategy(
     ChangeDetectionStrategy changeDetectionStrategy) {
-  return isBlank(changeDetectionStrategy) ||
+  return changeDetectionStrategy == null ||
       identical(changeDetectionStrategy, ChangeDetectionStrategy.Default);
 }

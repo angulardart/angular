@@ -2,7 +2,7 @@ library angular2.src.core.application_common_providers;
 
 import "package:angular2/src/facade/lang.dart" show Type;
 import "package:angular2/src/core/di.dart"
-    show provide, Provider, Injector, OpaqueToken;
+    show Provider;
 import "application_tokens.dart" show APP_ID_RANDOM_PROVIDER;
 import "application_ref.dart" show APPLICATION_CORE_PROVIDERS;
 import "change_detection/change_detection.dart"

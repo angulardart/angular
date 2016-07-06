@@ -5,12 +5,10 @@ import "package:angular2/src/facade/lang.dart"
         isPresent,
         isBlank,
         isString,
-        evalExpression,
-        RegExpWrapper,
         StringWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, unimplemented;
+    show BaseException;
 import "output_ast.dart" as o;
 
 var _SINGLE_QUOTE_ESCAPE_STRING_RE = new RegExp(r'' + "'" + r'|\\|\n|\r|\$');
@@ -118,13 +116,15 @@ abstract class AbstractEmitterVisitor
   bool _escapeDollarInStrings;
   AbstractEmitterVisitor(this._escapeDollarInStrings) {}
   dynamic visitExpressionStmt(
-      o.ExpressionStatement stmt, EmitterVisitorContext ctx) {
+      o.ExpressionStatement stmt, context) {
+    EmitterVisitorContext ctx = context;
     stmt.expr.visitExpression(this, ctx);
     ctx.println(";");
     return null;
   }
 
-  dynamic visitReturnStmt(o.ReturnStatement stmt, EmitterVisitorContext ctx) {
+  dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''return ''');
     stmt.value.visitExpression(this, ctx);
     ctx.println(";");
@@ -132,8 +132,9 @@ abstract class AbstractEmitterVisitor
   }
 
   dynamic visitCastExpr(o.CastExpr ast, dynamic context);
-  dynamic visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext ctx);
-  dynamic visitIfStmt(o.IfStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context);
+  dynamic visitIfStmt(o.IfStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''if (''');
     stmt.condition.visitExpression(this, ctx);
     ctx.print(''') {''');
@@ -159,15 +160,17 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, EmitterVisitorContext ctx);
-  dynamic visitThrowStmt(o.ThrowStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context);
+  dynamic visitThrowStmt(o.ThrowStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''throw ''');
     stmt.error.visitExpression(this, ctx);
     ctx.println(''';''');
     return null;
   }
 
-  dynamic visitCommentStmt(o.CommentStmt stmt, EmitterVisitorContext ctx) {
+  dynamic visitCommentStmt(o.CommentStmt stmt, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var lines = stmt.comment.split("\n");
     lines.forEach((line) {
       ctx.println('''// ${ line}''');
@@ -175,8 +178,9 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, EmitterVisitorContext ctx);
-  dynamic visitWriteVarExpr(o.WriteVarExpr expr, EmitterVisitorContext ctx) {
+  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context);
+  dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
       ctx.print("(");
@@ -189,7 +193,8 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitWriteKeyExpr(o.WriteKeyExpr expr, EmitterVisitorContext ctx) {
+  dynamic visitWriteKeyExpr(o.WriteKeyExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
       ctx.print("(");
@@ -205,7 +210,8 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitWritePropExpr(o.WritePropExpr expr, EmitterVisitorContext ctx) {
+  dynamic visitWritePropExpr(o.WritePropExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
       ctx.print("(");
@@ -220,7 +226,8 @@ abstract class AbstractEmitterVisitor
   }
 
   dynamic visitInvokeMethodExpr(
-      o.InvokeMethodExpr expr, EmitterVisitorContext ctx) {
+      o.InvokeMethodExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
     expr.receiver.visitExpression(this, ctx);
     var name = expr.name;
     if (isPresent(expr.builtin)) {
@@ -240,7 +247,8 @@ abstract class AbstractEmitterVisitor
 
   String getBuiltinMethodName(o.BuiltinMethod method);
   dynamic visitInvokeFunctionExpr(
-      o.InvokeFunctionExpr expr, EmitterVisitorContext ctx) {
+      o.InvokeFunctionExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
     expr.fn.visitExpression(this, ctx);
     ctx.print('''(''');
     this.visitAllExpressions(expr.args, ctx, ",");
@@ -248,7 +256,8 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitReadVarExpr(o.ReadVarExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var varName = ast.name;
     if (isPresent(ast.builtin)) {
       switch (ast.builtin) {
@@ -277,7 +286,8 @@ abstract class AbstractEmitterVisitor
   }
 
   dynamic visitInstantiateExpr(
-      o.InstantiateExpr ast, EmitterVisitorContext ctx) {
+      o.InstantiateExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''new ''');
     ast.classExpr.visitExpression(this, ctx);
     ctx.print('''(''');
@@ -286,7 +296,8 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitLiteralExpr(o.LiteralExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitLiteralExpr(o.LiteralExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var value = ast.value;
     if (isString(value)) {
       ctx.print(escapeSingleQuoteString(value, this._escapeDollarInStrings));
@@ -298,9 +309,10 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitExternalExpr(o.ExternalExpr ast, EmitterVisitorContext ctx);
+  dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context);
   dynamic visitConditionalExpr(
-      o.ConditionalExpr ast, EmitterVisitorContext ctx) {
+      o.ConditionalExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print('''(''');
     ast.condition.visitExpression(this, ctx);
     ctx.print("? ");
@@ -311,16 +323,18 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitNotExpr(o.NotExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ctx.print("!");
     ast.condition.visitExpression(this, ctx);
     return null;
   }
 
-  dynamic visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext ctx);
+  dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context);
   dynamic visitDeclareFunctionStmt(o.DeclareFunctionStmt stmt, dynamic context);
   dynamic visitBinaryOperatorExpr(
-      o.BinaryOperatorExpr ast, EmitterVisitorContext ctx) {
+      o.BinaryOperatorExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var opStr;
     switch (ast.operator) {
       case o.BinaryOperator.Equals:
@@ -379,14 +393,16 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitReadPropExpr(o.ReadPropExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitReadPropExpr(o.ReadPropExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ast.receiver.visitExpression(this, ctx);
     ctx.print('''.''');
     ctx.print(ast.name);
     return null;
   }
 
-  dynamic visitReadKeyExpr(o.ReadKeyExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitReadKeyExpr(o.ReadKeyExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     ast.receiver.visitExpression(this, ctx);
     ctx.print('''[''');
     ast.index.visitExpression(this, ctx);
@@ -395,7 +411,8 @@ abstract class AbstractEmitterVisitor
   }
 
   dynamic visitLiteralArrayExpr(
-      o.LiteralArrayExpr ast, EmitterVisitorContext ctx) {
+      o.LiteralArrayExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var useNewLine = ast.entries.length > 1;
     ctx.print('''[''', useNewLine);
     ctx.incIndent();
@@ -405,7 +422,8 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, EmitterVisitorContext ctx) {
+  dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     var useNewLine = ast.entries.length > 1;
     ctx.print('''{''', useNewLine);
     ctx.incIndent();

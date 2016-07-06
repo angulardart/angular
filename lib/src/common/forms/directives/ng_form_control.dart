@@ -7,7 +7,6 @@ import "package:angular2/core.dart"
     show
         OnChanges,
         SimpleChange,
-        Query,
         Directive,
         Provider,
         Inject,
@@ -15,7 +14,7 @@ import "package:angular2/core.dart"
         Self;
 import "ng_control.dart" show NgControl;
 import "../model.dart" show Control;
-import "../validators.dart" show Validators, NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 import "control_value_accessor.dart"
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import "shared.dart"
@@ -79,7 +78,7 @@ const formControlBinding =
  */
 @Directive(
     selector: "[ngFormControl]",
-    bindings: const [formControlBinding],
+    providers: const [formControlBinding],
     inputs: const ["form: ngFormControl", "model: ngModel"],
     outputs: const ["update: ngModelChange"],
     exportAs: "ngForm")

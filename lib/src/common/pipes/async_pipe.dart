@@ -4,7 +4,7 @@ import "dart:async";
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isPromise;
 import "package:angular2/src/facade/async.dart"
-    show ObservableWrapper, Stream, EventEmitter;
+    show ObservableWrapper;
 import "package:angular2/core.dart"
     show Pipe, Injectable, ChangeDetectorRef, OnDestroy, WrappedValue;
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;

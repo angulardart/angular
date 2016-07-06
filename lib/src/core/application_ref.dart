@@ -8,16 +8,13 @@ import "package:angular2/src/facade/lang.dart"
         isBlank,
         isPresent,
         assertionsEnabled,
-        print,
-        IS_DART,
-        lockMode,
         isPromise;
 import "package:angular2/src/core/di.dart"
-    show provide, Provider, Injector, Injectable;
+    show Provider, Injector, Injectable;
 import "application_tokens.dart"
-    show APP_ID_RANDOM_PROVIDER, PLATFORM_INITIALIZER, APP_INITIALIZER;
+    show  PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, PromiseCompleter, ObservableWrapper;
+    show PromiseWrapper, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry, Testability;
@@ -26,7 +23,7 @@ import "package:angular2/src/core/linker/component_resolver.dart"
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException, ExceptionHandler, unimplemented;
+    show BaseException, ExceptionHandler;
 import "package:angular2/src/core/console.dart" show Console;
 import "profile/profile.dart" show wtfLeave, wtfCreateScope, WtfScopeFn;
 import "package:angular2/src/core/change_detection/change_detector_ref.dart"
@@ -55,7 +52,6 @@ PlatformRef createPlatform(Injector injector) {
     throw new BaseException(
         "There can be only one platform. Destroy the previous one to create a new one.");
   }
-  lockMode();
   _inPlatformCreate = true;
   try {
     _platform = injector.get(PlatformRef);
@@ -115,14 +111,13 @@ ComponentRef coreBootstrap(
  * Requires a platform the be created first.
  */
 Future<ComponentRef> coreLoadAndBootstrap(
-    Injector injector, Type componentType) {
+    Injector injector, Type componentType) async {
   ApplicationRef appRef = injector.get(ApplicationRef);
-  return appRef.run(() {
+  return appRef.run(() async {
     ComponentResolver componentResolver = injector.get(ComponentResolver);
-    return PromiseWrapper.all([
-      componentResolver.resolveComponent(componentType),
-      appRef.waitForAsyncInitializers()
-    ]).then((arr) => appRef.bootstrap(arr[0]));
+    ComponentFactory factory = await componentResolver.resolveComponent(componentType);
+    appRef.waitForAsyncInitializers();
+    return appRef.bootstrap(factory);
   });
 }
 
@@ -143,17 +138,13 @@ abstract class PlatformRef {
    * Retrieve the platform [Injector], which is the parent injector for
    * every Angular application on the page and provides singleton providers.
    */
-  Injector get injector {
-    throw unimplemented();
-  }
+  Injector get injector;
 
   /**
    * Destroy the Angular platform and all Angular applications on the page.
    */
   void dispose();
-  bool get disposed {
-    throw unimplemented();
-  }
+  bool get disposed;
 }
 
 @Injectable()
@@ -244,16 +235,12 @@ abstract class ApplicationRef {
   /**
    * Retrieve the application [Injector].
    */
-  Injector get injector {
-    return (unimplemented() as Injector);
-  }
+  Injector get injector;
 
   /**
    * Retrieve the application [NgZone].
    */
-  NgZone get zone {
-    return (unimplemented() as NgZone);
-  }
+  NgZone get zone;
 
   /**
    * Dispose of this application and all of its components.
@@ -273,16 +260,12 @@ abstract class ApplicationRef {
   /**
    * Get a list of component types registered to this application.
    */
-  List<Type> get componentTypes {
-    return (unimplemented() as List<Type>);
-  }
+  List<Type> get componentTypes;
 
   /**
    * Get a list of component factories registered to this application.
    */
-  List<ComponentFactory> get componentFactories {
-    return (unimplemented() as List<ComponentFactory>);
-  }
+  List<ComponentFactory> get componentFactories;
 }
 
 @Injectable()
@@ -317,7 +300,8 @@ class ApplicationRef_ extends ApplicationRef {
       this._exceptionHandler = _injector.get(ExceptionHandler);
     });
     this._asyncInitDonePromise = this.run(() {
-      List<Function> inits = _injector.get(APP_INITIALIZER, null);
+      List<Function> inits = _injector.get(APP_INITIALIZER, null)
+          as List<Function>;
       var asyncInitResults = [];
       var asyncInitDonePromise;
       if (isPresent(inits)) {

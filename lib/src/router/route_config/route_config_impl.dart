@@ -1,7 +1,6 @@
 library angular2.src.router.route_config.route_config_impl;
 
 import "dart:async";
-import "package:angular2/src/facade/lang.dart" show Type, isPresent;
 import "../route_definition.dart" show RouteDefinition;
 import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
 export "../route_definition.dart" show RouteDefinition;
@@ -24,7 +23,7 @@ abstract class AbstractRoute implements RouteDefinition {
   final String path;
   final String regex;
   final RegexSerializer serializer;
-  final Map<String, dynamic> data;
+  final data;
   const AbstractRoute(
       {String name,
       bool useAsDefault,

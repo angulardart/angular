@@ -37,7 +37,7 @@ ExpressionWithWrappedValueInfo convertCdExpressionToIr(
 List<o.Statement> convertCdStatementToIr(
     NameResolver nameResolver, o.Expression implicitReceiver, cdAst.AST stmt) {
   var visitor = new _AstToIrVisitor(nameResolver, implicitReceiver, null);
-  var statements = [];
+  var statements = <o.Statement>[];
   flattenStatements(stmt.visit(visitor, _Mode.Statement), statements);
   return statements;
 }
@@ -71,7 +71,8 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
   bool needsValueUnwrapper = false;
   _AstToIrVisitor(
       this._nameResolver, this._implicitReceiver, this._valueUnwrapper) {}
-  dynamic visitBinary(cdAst.Binary ast, _Mode mode) {
+  dynamic visitBinary(cdAst.Binary ast, dynamic context) {
+    _Mode mode = context;
     var op;
     switch (ast.operation) {
       case "+":
@@ -129,12 +130,14 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
             ast.right.visit(this, _Mode.Expression)));
   }
 
-  dynamic visitChain(cdAst.Chain ast, _Mode mode) {
+  dynamic visitChain(cdAst.Chain ast, dynamic context) {
+    _Mode mode = context;
     ensureStatementMode(mode, ast);
-    return this.visitAll(ast.expressions, mode);
+    return this.visitAll(ast.expressions as List<cdAst.AST>, mode);
   }
 
-  dynamic visitConditional(cdAst.Conditional ast, _Mode mode) {
+  dynamic visitConditional(cdAst.Conditional ast, dynamic context) {
+    _Mode mode = context;
     o.Expression value = ast.condition.visit(this, _Mode.Expression);
     return convertToStatementIfNeeded(
         mode,
@@ -142,29 +145,33 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
             ast.falseExp.visit(this, _Mode.Expression)));
   }
 
-  dynamic visitPipe(cdAst.BindingPipe ast, _Mode mode) {
+  dynamic visitPipe(cdAst.BindingPipe ast, dynamic context) {
+    _Mode mode = context;
     var input = ast.exp.visit(this, _Mode.Expression);
-    var args = this.visitAll(ast.args, _Mode.Expression);
+    var args = this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression) as List<o.Expression>;
     var value = this._nameResolver.callPipe(ast.name, input, args);
     this.needsValueUnwrapper = true;
     return convertToStatementIfNeeded(
         mode, this._valueUnwrapper.callMethod("unwrap", [value]));
   }
 
-  dynamic visitFunctionCall(cdAst.FunctionCall ast, _Mode mode) {
+  dynamic visitFunctionCall(cdAst.FunctionCall ast, dynamic context) {
+    _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
         ast.target
             .visit(this, _Mode.Expression)
-            .callFn(this.visitAll(ast.args, _Mode.Expression)));
+            .callFn(this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression)));
   }
 
-  dynamic visitImplicitReceiver(cdAst.ImplicitReceiver ast, _Mode mode) {
+  dynamic visitImplicitReceiver(cdAst.ImplicitReceiver ast, dynamic context) {
+    _Mode mode = context;
     ensureExpressionMode(mode, ast);
     return IMPLICIT_RECEIVER;
   }
 
-  dynamic visitInterpolation(cdAst.Interpolation ast, _Mode mode) {
+  dynamic visitInterpolation(cdAst.Interpolation ast, dynamic context) {
+    _Mode mode = context;
     ensureExpressionMode(mode, ast);
     var args = [o.literal(ast.expressions.length)];
     for (var i = 0; i < ast.strings.length - 1; i++) {
@@ -175,7 +182,8 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     return o.importExpr(Identifiers.interpolate).callFn(args);
   }
 
-  dynamic visitKeyedRead(cdAst.KeyedRead ast, _Mode mode) {
+  dynamic visitKeyedRead(cdAst.KeyedRead ast, dynamic context) {
+    _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
         ast.obj
@@ -183,23 +191,25 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
             .key(ast.key.visit(this, _Mode.Expression)));
   }
 
-  dynamic visitKeyedWrite(cdAst.KeyedWrite ast, _Mode mode) {
+  dynamic visitKeyedWrite(cdAst.KeyedWrite ast, dynamic context) {
+    _Mode mode = context;
     o.Expression obj = ast.obj.visit(this, _Mode.Expression);
     o.Expression key = ast.key.visit(this, _Mode.Expression);
     o.Expression value = ast.value.visit(this, _Mode.Expression);
     return convertToStatementIfNeeded(mode, obj.key(key).set(value));
   }
 
-  dynamic visitLiteralArray(cdAst.LiteralArray ast, _Mode mode) {
+  dynamic visitLiteralArray(cdAst.LiteralArray ast, dynamic context) {
+    _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
-        this
-            ._nameResolver
-            .createLiteralArray(this.visitAll(ast.expressions, mode)));
+        _nameResolver
+            .createLiteralArray(this.visitAll(ast.expressions as List<cdAst.AST>, mode) as List<o.Expression>));
   }
 
-  dynamic visitLiteralMap(cdAst.LiteralMap ast, _Mode mode) {
-    var parts = [];
+  dynamic visitLiteralMap(cdAst.LiteralMap ast, dynamic context) {
+    _Mode mode = context;
+    var parts = <List>[];
     for (var i = 0; i < ast.keys.length; i++) {
       parts.add([ast.keys[i], ast.values[i].visit(this, _Mode.Expression)]);
     }
@@ -207,12 +217,14 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
         mode, this._nameResolver.createLiteralMap(parts));
   }
 
-  dynamic visitLiteralPrimitive(cdAst.LiteralPrimitive ast, _Mode mode) {
+  dynamic visitLiteralPrimitive(cdAst.LiteralPrimitive ast, dynamic context) {
+    _Mode mode = context;
     return convertToStatementIfNeeded(mode, o.literal(ast.value));
   }
 
-  dynamic visitMethodCall(cdAst.MethodCall ast, _Mode mode) {
-    var args = this.visitAll(ast.args, _Mode.Expression);
+  dynamic visitMethodCall(cdAst.MethodCall ast, dynamic context) {
+    _Mode mode = context;
+    var args = this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression) as List<o.Expression>;
     var result = null;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
@@ -229,12 +241,14 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     return convertToStatementIfNeeded(mode, result);
   }
 
-  dynamic visitPrefixNot(cdAst.PrefixNot ast, _Mode mode) {
+  dynamic visitPrefixNot(cdAst.PrefixNot ast, dynamic context) {
+    _Mode mode = context;
     return convertToStatementIfNeeded(
         mode, o.not(ast.expression.visit(this, _Mode.Expression)));
   }
 
-  dynamic visitPropertyRead(cdAst.PropertyRead ast, _Mode mode) {
+  dynamic visitPropertyRead(cdAst.PropertyRead ast, dynamic context) {
+    _Mode mode = context;
     var result = null;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
@@ -249,7 +263,8 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     return convertToStatementIfNeeded(mode, result);
   }
 
-  dynamic visitPropertyWrite(cdAst.PropertyWrite ast, _Mode mode) {
+  dynamic visitPropertyWrite(cdAst.PropertyWrite ast, dynamic context) {
+    _Mode mode = context;
     o.Expression receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
       var varExpr = this._nameResolver.getLocal(ast.name);
@@ -262,15 +277,17 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
         receiver.prop(ast.name).set(ast.value.visit(this, _Mode.Expression)));
   }
 
-  dynamic visitSafePropertyRead(cdAst.SafePropertyRead ast, _Mode mode) {
+  dynamic visitSafePropertyRead(cdAst.SafePropertyRead ast, dynamic context) {
+    _Mode mode = context;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     return convertToStatementIfNeeded(mode,
         receiver.isBlank().conditional(o.NULL_EXPR, receiver.prop(ast.name)));
   }
 
-  dynamic visitSafeMethodCall(cdAst.SafeMethodCall ast, _Mode mode) {
+  dynamic visitSafeMethodCall(cdAst.SafeMethodCall ast, dynamic context) {
+    _Mode mode = context;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
-    var args = this.visitAll(ast.args, _Mode.Expression);
+    var args = this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression);
     return convertToStatementIfNeeded(
         mode,
         receiver
@@ -278,11 +295,12 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
             .conditional(o.NULL_EXPR, receiver.callMethod(ast.name, args)));
   }
 
-  dynamic visitAll(List<cdAst.AST> asts, _Mode mode) {
+  dynamic visitAll(List<cdAst.AST> asts, dynamic context) {
+    _Mode mode = context;
     return asts.map((ast) => ast.visit(this, mode)).toList();
   }
 
-  dynamic visitQuote(cdAst.Quote ast, _Mode mode) {
+  dynamic visitQuote(cdAst.Quote ast, dynamic context) {
     throw new BaseException("Quotes are not supported for evaluation!");
   }
 }

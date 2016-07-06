@@ -3,7 +3,7 @@ library angular2.src.web_workers.shared.service_message_broker;
 import "dart:async";
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, Map, MapWrapper;
+    show ListWrapper, Map;
 import "package:angular2/src/web_workers/shared/serializer.dart"
     show Serializer;
 import "package:angular2/src/facade/lang.dart"
@@ -60,7 +60,7 @@ class ServiceMessageBroker_ extends ServiceMessageBroker {
     this._sink = messageBus.to(channel);
     var source = messageBus.from(channel);
     ObservableWrapper.subscribe(
-        source, (message) => this._handleMessage(message));
+        source, (message) => this._handleMessage(message as Map<String, dynamic>));
   }
   void registerMethod(String methodName, List<Type> signature, Function method,
       [Type returnType]) {

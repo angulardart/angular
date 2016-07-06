@@ -14,8 +14,8 @@ export "package:angular2/src/compiler/xhr.dart";
 export "view_resolver.dart" show ViewResolver;
 export "directive_resolver.dart" show DirectiveResolver;
 export "pipe_resolver.dart" show PipeResolver;
-import "package:angular2/src/facade/lang.dart" show assertionsEnabled, Type;
-import "package:angular2/src/core/di.dart" show provide, Provider;
+import "package:angular2/src/facade/lang.dart" show assertionsEnabled;
+import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/compiler/template_parser.dart" show TemplateParser;
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/directive_normalizer.dart"

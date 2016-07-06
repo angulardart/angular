@@ -5,10 +5,7 @@ import "compile_metadata.dart"
     show
         CompileTypeMetadata,
         CompileDirectiveMetadata,
-        CompileTemplateMetadata,
-        CompileProviderMetadata,
-        CompileTokenMetadata;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
+        CompileTemplateMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
@@ -22,14 +19,13 @@ import "html_ast.dart"
         HtmlElementAst,
         HtmlTextAst,
         HtmlAttrAst,
-        HtmlAst,
         HtmlCommentAst,
         HtmlExpansionAst,
         HtmlExpansionCaseAst,
         htmlVisitAll;
 import "html_parser.dart" show HtmlParser;
 import "template_preparser.dart"
-    show preparseElement, PreparsedElement, PreparsedElementType;
+    show preparseElement, PreparsedElementType;
 
 @Injectable()
 class DirectiveNormalizer {
@@ -66,10 +62,10 @@ class DirectiveNormalizer {
 
   Future<CompileTemplateMetadata> normalizeTemplate(
       CompileTypeMetadata directiveType, CompileTemplateMetadata template) {
-    if (isPresent(template.template)) {
+    if (template.template != null) {
       return PromiseWrapper.resolve(this.normalizeLoadedTemplate(
           directiveType, template, template.template, directiveType.moduleUrl));
-    } else if (isPresent(template.templateUrl)) {
+    } else if (template.templateUrl != null) {
       var sourceAbsUrl = this
           ._urlResolver
           .resolve(directiveType.moduleUrl, template.templateUrl);
@@ -91,14 +87,14 @@ class DirectiveNormalizer {
         this._htmlParser.parse(template, directiveType.name);
     if (rootNodesAndErrors.errors.length > 0) {
       var errorString = rootNodesAndErrors.errors.join("\n");
-      throw new BaseException('''Template parse errors:
-${ errorString}''');
+      throw new BaseException('Template parse errors: '
+          '${ errorString}');
     }
     var visitor = new TemplatePreparseVisitor();
     htmlVisitAll(visitor, rootNodesAndErrors.rootNodes);
-    var allStyles =
+    List<String> allStyles =
         (new List.from(templateMeta.styles)..addAll(visitor.styles));
-    var allStyleAbsUrls = (new List.from(visitor.styleUrls
+    List<String> allStyleAbsUrls = (new List.from(visitor.styleUrls
         .where(isStyleUrlResolvable)
         .toList()
         .map((url) => this._urlResolver.resolve(templateAbsUrl, url))
@@ -148,13 +144,13 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
         var textContent = "";
         ast.children.forEach((child) {
           if (child is HtmlTextAst) {
-            textContent += ((child as HtmlTextAst)).value;
+            textContent += child.value;
           }
         });
-        this.styles.add(textContent);
+        styles.add(textContent);
         break;
       case PreparsedElementType.STYLESHEET:
-        this.styleUrls.add(preparsedElement.hrefAttr);
+        styleUrls.add(preparsedElement.hrefAttr);
         break;
       default:
         // DDC reports this as error. See:

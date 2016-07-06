@@ -51,12 +51,12 @@ class ReplacePipe implements PipeTransform {
     // template fails with literal RegExp e.g /pattern/igm
 
     // var rgx = pattern instanceof RegExp ? pattern : RegExpWrapper.create(pattern);
-    if (isFunction(replacement)) {
+    if (replacement is _Matcher) {
       var rgxPattern = isString(pattern)
           ? RegExpWrapper.create((pattern as String))
           : (pattern as RegExp);
       return StringWrapper.replaceAllMapped(
-          input, rgxPattern, (replacement as Function));
+          input, rgxPattern, replacement);
     }
     if (pattern is RegExp) {
       // use the replaceAll variant
@@ -78,3 +78,5 @@ class ReplacePipe implements PipeTransform {
     return isString(replacement) || isFunction(replacement);
   }
 }
+
+typedef String _Matcher(Match _);

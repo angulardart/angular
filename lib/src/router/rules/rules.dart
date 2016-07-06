@@ -3,7 +3,6 @@ library angular2.src.router.rules.rules;
 import "dart:async";
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import "package:angular2/src/facade/collection.dart" show Map;
 import "route_handlers/route_handler.dart" show RouteHandler;
 import "../url_parser.dart" show Url, convertUrlParamsToArray;
@@ -64,7 +63,7 @@ class RedirectRule implements AbstractRule {
       match =
           new RedirectMatch(this.redirectTo, this._pathRecognizer.specificity);
     }
-    return PromiseWrapper.resolve(match);
+    return new Future<RouteMatch>.value(match);
   }
 
   ComponentInstruction generate(Map<String, dynamic> params) {
@@ -103,7 +102,8 @@ class RouteRule implements AbstractRule {
     }
     return this.handler.resolveComponentType().then((_) {
       var componentInstruction =
-          this._getInstruction(res.urlPath, res.urlParams, res.allParams);
+          this._getInstruction(res.urlPath, res.urlParams,
+              res.allParams as Map<String, String>);
       return new PathMatch(componentInstruction, res.rest, res.auxiliary);
     });
   }
@@ -113,7 +113,8 @@ class RouteRule implements AbstractRule {
     var urlPath = generated.urlPath;
     var urlParams = generated.urlParams;
     return this
-        ._getInstruction(urlPath, convertUrlParamsToArray(urlParams), params);
+        ._getInstruction(urlPath, convertUrlParamsToArray(urlParams),
+        params as Map<String, String>);
   }
 
   GeneratedUrl generateComponentPathValues(Map<String, dynamic> params) {
@@ -121,7 +122,7 @@ class RouteRule implements AbstractRule {
   }
 
   ComponentInstruction _getInstruction(
-      String urlPath, List<String> urlParams, Map<String, dynamic> params) {
+      String urlPath, List<String> urlParams, Map<String, String> params) {
     if (isBlank(this.handler.componentType)) {
       throw new BaseException(
           '''Tried to get instruction before the type was loaded.''');

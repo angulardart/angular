@@ -34,7 +34,8 @@ Future<CompileDataResults> createCompileData(
     final creator = await _CompileDataCreator.create(
         reader, assetId, platformDirectives, platformPipes);
     return creator != null ? creator.createCompileData() : null;
-  }, operationName: 'createCompileData', assetId: assetId);
+  }, operationName: 'createCompileData', assetId: assetId)
+      as Future<CompileDataResults>;
 }
 
 class CompileDataResults {
@@ -87,7 +88,7 @@ class _CompileDataCreator {
 
     final compileComponentData =
         <ReflectionInfoModel, NormalizedComponentWithViewDirectives>{};
-    final platformDirectives =
+    var platformDirectives =
         await _readPlatformTypes(this.platformDirectives, 'directives');
     final platformPipes = await _readPlatformTypes(this.platformPipes, 'pipes');
     final ngMetaMap = await _extractNgMeta();
@@ -102,12 +103,12 @@ class _CompileDataCreator {
               compileMetadata,
               <CompileDirectiveMetadata>[],
               <CompilePipeMetadata>[]);
-          compileComponentDatum.directives.addAll(platformDirectives);
+          compileComponentDatum.directives.addAll(platformDirectives as Iterable<CompileDirectiveMetadata>);
           compileComponentDatum.directives
-              .addAll(_resolveTypeMetadata(ngMetaMap, reflectable.directives));
-          compileComponentDatum.pipes.addAll(platformPipes);
+              .addAll(_resolveTypeMetadata(ngMetaMap, reflectable.directives) as Iterable<CompileDirectiveMetadata> );
+          compileComponentDatum.pipes.addAll(platformPipes as Iterable<CompilePipeMetadata> );
           compileComponentDatum.pipes
-              .addAll(_resolveTypeMetadata(ngMetaMap, reflectable.pipes));
+              .addAll(_resolveTypeMetadata(ngMetaMap, reflectable.pipes) as Iterable<CompilePipeMetadata>);
           compileComponentData[reflectable] = compileComponentDatum;
         } else if (compileMetadata is CompileInjectorModuleMetadata) {
           injectorModuleMetadatas.add(compileMetadata);

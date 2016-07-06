@@ -4,7 +4,7 @@ import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, StringWrapper;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "lexer.dart"
     show
@@ -152,8 +152,8 @@ class Parser {
     if (parts.length <= 1) {
       return null;
     }
-    var strings = [];
-    var expressions = [];
+    var strings = <String>[];
+    var expressions = <String>[];
     for (var i = 0; i < parts.length; i++) {
       String part = parts[i];
       if (identical(i % 2, 0)) {
@@ -579,7 +579,7 @@ class _ParseAST {
     return null;
   }
 
-  List<BindingPipe> parseCallArguments() {
+  List parseCallArguments() {
     if (this.next.isCharacter($RPAREN)) return [];
     var positionals = [];
     do {

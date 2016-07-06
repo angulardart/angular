@@ -9,7 +9,6 @@ import "package:angular2/src/core/render/api.dart"
     show RootRenderer, Renderer, RenderComponentType;
 import "package:angular2/src/web_workers/shared/messaging_api.dart"
     show EVENT_CHANNEL, RENDERER_CHANNEL;
-import "package:angular2/src/facade/lang.dart" show Type;
 import "bind.dart" show bind;
 import "package:angular2/src/web_workers/ui/event_dispatcher.dart"
     show EventDispatcher;

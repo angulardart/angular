@@ -36,7 +36,7 @@ class MultiClientServerMessageBus extends GenericMessageBus {
           sink.addConnection(wrapper);
           source.addConnection(wrapper);
 
-          wrapper.stream.listen(null, onDone: _handleDisconnect(wrapper));
+          wrapper.stream.listen(null, onDone: () => _handleDisconnect(wrapper));
         });
       }
     });
@@ -199,7 +199,7 @@ class MultiClientServerMessageBusSource extends GenericMessageBusSource {
         decodedMessages.forEach((decodedMessage) {
           var channel = decodedMessage['channel'];
           if (channel == EVENT_CHANNEL) {
-            eventMessages.add(decodedMessage);
+            eventMessages.add(decodedMessage as Map<String, dynamic>);
           }
         });
         if (eventMessages.length > 0) {

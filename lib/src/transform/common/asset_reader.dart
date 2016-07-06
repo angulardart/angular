@@ -22,7 +22,7 @@ class _TransformAssetReader implements AssetReader {
   _TransformAssetReader(this.t);
 
   Future<String> readAsString(AssetId id, {Encoding encoding}) =>
-      t.readInputAsString(id, encoding: encoding);
+      t.readInputAsString(id, encoding: encoding) as Future<String>;
 
-  Future<bool> hasInput(AssetId id) => t.hasInput(id);
+  Future<bool> hasInput(AssetId id) => t.hasInput(id) as Future<bool>;
 }
