@@ -43,7 +43,9 @@ class ComponentFixture {
     elementRef = ref.location;
     debugElement =
         (getDebugNode(elementRef.nativeElement) as DebugElement);
+    assert(debugElement != null);
     componentInstance = ref.instance;
+    assert(componentInstance != null);
     nativeElement = elementRef.nativeElement;
     componentRef = ref;
   }

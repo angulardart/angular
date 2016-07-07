@@ -94,10 +94,10 @@ class NgFor implements DoCheck {
       } catch (_) {
         assert(() {
           throw new BaseException('Cannot find a differ supporting object'
-                  ' \'${ value}\' of type'
-                  ' \'${ getTypeNameForDebugging( value)}\''
-                  '. NgFor only supports binding to Iterables '
-                  'such as Arrays.');
+              ' \'${ value}\' of type'
+              ' \'${ value?.runtimeType }\''
+              '. NgFor only supports binding to Iterables '
+              'such as Arrays.');
         });
         rethrow;
       }
