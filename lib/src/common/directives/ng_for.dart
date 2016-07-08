@@ -11,8 +11,8 @@ import "package:angular2/core.dart"
         TemplateRef,
         EmbeddedViewRef,
         TrackByFn;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "../../core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, CollectionChangeRecord;
 import "../../facade/exceptions.dart" show BaseException;

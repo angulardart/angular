@@ -2,8 +2,7 @@ library angular2.src.testing.internal;
 
 import 'dart:async';
 
-import 'package:angular2/core.dart'
-    show PLATFORM_INITIALIZER;
+import 'package:angular2/core.dart' show PLATFORM_INITIALIZER;
 import 'package:angular2/platform/testing/browser.dart';
 import 'package:angular2/src/core/di/provider.dart' show provide, Provider;
 import 'package:angular2/src/core/reflection/reflection.dart';
@@ -144,9 +143,11 @@ class _ThrowsWith extends Matcher {
   // RegExp or String.
   final expected;
   String exceptionStr;
+
   _ThrowsWith(this.expected) {
     assert(expected is RegExp || expected is String);
   }
+
   bool matches(item, Map matchState) {
     try {
       item();
@@ -161,6 +162,7 @@ class _ThrowsWith extends Matcher {
   }
 
   Description describe(Description description) => description.add('$expected');
+
   Description describeMismatch(
       item, Description mismatchDescription, Map matchState, bool verbose) {
     mismatchDescription.add('Expecting throw \'${expected}\' '

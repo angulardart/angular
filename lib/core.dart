@@ -21,8 +21,7 @@ export 'src/core/debug/debug_node.dart'
 export 'src/core/di.dart' hide ForwardRefFn, resolveForwardRef, forwardRef;
 export 'src/core/linker.dart';
 export 'src/core/metadata.dart';
-export 'src/core/platform_common_providers.dart'
-    show PLATFORM_COMMON_PROVIDERS;
+export 'src/core/platform_common_providers.dart' show PLATFORM_COMMON_PROVIDERS;
 export 'src/core/platform_directives_and_pipes.dart';
 export 'src/core/reflection/reflection.dart';
 export 'src/core/render.dart';
