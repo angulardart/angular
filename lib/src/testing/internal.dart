@@ -116,11 +116,6 @@ void _setBaseTestProviders(
   testInjector.reset();
 }
 
-/// TODO: move into utils.
-dynamic el(String html) {
-  return (DOM.firstChild(DOM.content(DOM.createTemplate(html))) as dynamic);
-}
-
 bool isInInnerZone() => NgZone.isInAngularZone();
 
 class _HasTextContent extends Matcher {
