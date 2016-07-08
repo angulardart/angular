@@ -5,9 +5,9 @@ import "identifiers.dart" show Identifiers;
 import "compile_metadata.dart" show CompileIdentifierMetadata;
 
 class CompilerConfig {
-  bool genDebugInfo;
-  bool logBindingUpdate;
-  bool useJit;
+  final bool genDebugInfo;
+  final bool logBindingUpdate;
+  final bool useJit;
   RenderTypes renderTypes;
   CompilerConfig(this.genDebugInfo, this.logBindingUpdate, this.useJit,
       [RenderTypes renderTypes = null]) {
