@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.testability.testability_test;
 
 import "package:angular2/src/core/di.dart" show Injectable;

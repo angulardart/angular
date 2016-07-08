@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.compiler.output.output_emitter_test;
 
 import "package:angular2/testing_internal.dart";

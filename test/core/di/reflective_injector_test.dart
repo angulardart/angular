@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.di.reflective_injector_test;
 
 import "package:angular2/src/facade/lang.dart"

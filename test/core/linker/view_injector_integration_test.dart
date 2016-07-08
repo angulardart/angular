@@ -1,8 +1,8 @@
+@TestOn('browser')
 library angular2.test.core.linker.view_injector_integration_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, stringify, Type;
+import "package:angular2/src/facade/lang.dart" show isBlank, stringify, Type;
 import "package:angular2/core.dart";
 import "package:angular2/common.dart";
 import 'package:test/test.dart';

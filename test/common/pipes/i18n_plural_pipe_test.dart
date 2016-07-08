@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.common.pipes.i18n_plural_pipe_test;
 
 import "package:angular2/testing_internal.dart";

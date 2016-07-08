@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.compiler.selector_test;
 
 import 'package:angular2/testing_internal.dart';

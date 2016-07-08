@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.compiler.xhr_mock_test;
 
 import "dart:async";

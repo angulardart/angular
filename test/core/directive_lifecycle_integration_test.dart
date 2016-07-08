@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.directive_lifecycle_integration_test;
 
 import "package:angular2/testing_internal.dart";

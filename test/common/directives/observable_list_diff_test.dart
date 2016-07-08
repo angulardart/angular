@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.directives.observable_list_iterable_diff_test;
 
 import 'package:angular2/testing_internal.dart';

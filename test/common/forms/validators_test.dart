@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.common.forms.validators_spec;
 
 import "dart:async";

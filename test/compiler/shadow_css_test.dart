@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.compiler.shadow_css_test;
 
 import "package:angular2/testing_internal.dart";

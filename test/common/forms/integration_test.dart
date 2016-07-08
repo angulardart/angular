@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.common.forms.integration_test;
 
 import "package:angular2/core.dart"

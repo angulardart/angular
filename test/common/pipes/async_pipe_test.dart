@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.common.pipes.async_pipe_test;
 
 import 'dart:async';

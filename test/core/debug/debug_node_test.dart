@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.debug.debug_node_test;
 
 import "package:angular2/testing_internal.dart";

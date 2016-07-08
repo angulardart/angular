@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.di.integration_dart_test;
 
 import 'package:angular2/angular2.dart';

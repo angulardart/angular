@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.application_ref_test;
 
 import "dart:async";

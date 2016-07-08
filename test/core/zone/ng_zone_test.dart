@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.zone.ng_zone_test;
 
 import "dart:async";

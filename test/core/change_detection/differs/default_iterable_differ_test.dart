@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.change_detection.differs.default_iterable_differ_test;
 
 import "package:angular2/testing_internal.dart";

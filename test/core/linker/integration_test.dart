@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.core.linker.integration_test;
 
 import "dart:async";
