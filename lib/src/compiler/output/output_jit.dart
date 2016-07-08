@@ -1,9 +1,6 @@
 library angular2.src.compiler.output.output_jit;
 
-import "package:angular2/src/facade/lang.dart"
-    show
-        isPresent,
-        evalExpression;
+import "package:angular2/src/facade/lang.dart" show isPresent, evalExpression;
 import "output_ast.dart" as o;
 import "abstract_emitter.dart" show EmitterVisitorContext;
 import "abstract_js_emitter.dart" show AbstractJsEmitterVisitor;
@@ -14,8 +11,8 @@ List<String> jitStatements(
   var converter = new JitEmitterVisitor();
   var ctx = EmitterVisitorContext.createRoot([resultVar]);
   converter.visitAllStatements(statements, ctx);
-  return evalExpression(
-      sourceUrl, resultVar, ctx.toSource(), converter.getArgs() as Map<String, String>);
+  return evalExpression(sourceUrl, resultVar, ctx.toSource(),
+      converter.getArgs() as Map<String, String>);
 }
 
 class JitEmitterVisitor extends AbstractJsEmitterVisitor {

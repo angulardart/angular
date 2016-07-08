@@ -1,7 +1,6 @@
 library angular2.src.compiler.util;
 
-import "package:angular2/src/facade/lang.dart"
-    show IS_DART, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show IS_DART, StringWrapper;
 
 var MODULE_SUFFIX = IS_DART ? ".dart" : "";
 var CAMEL_CASE_REGEXP = new RegExp(r'([A-Z])');

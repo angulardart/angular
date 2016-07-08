@@ -49,8 +49,8 @@ class FormBuilder {
   modelModule.ControlGroup group(Map<String, dynamic> controlsConfig,
       [Map<String, dynamic> extra = null]) {
     var controls = this._reduceControls(controlsConfig);
-    var optionals = ((extra != null
-        ? extra['optionals'] : null) as Map<String, bool>);
+    var optionals =
+        ((extra != null ? extra['optionals'] : null) as Map<String, bool>);
     ValidatorFn validator =
         extra != null ? extra['validator'] as ValidatorFn : null;
     AsyncValidatorFn asyncValidator =
@@ -77,8 +77,7 @@ class FormBuilder {
   Map<String, modelModule.AbstractControl> _reduceControls(
       Map<String, dynamic> controlsConfig) {
     Map<String, modelModule.AbstractControl> controls = {};
-    controlsConfig.forEach(
-        (String controlName, dynamic controlConfig) {
+    controlsConfig.forEach((String controlName, dynamic controlConfig) {
       controls[controlName] = this._createControl(controlConfig);
     });
     return controls;
@@ -93,8 +92,9 @@ class FormBuilder {
       var value = controlConfig[0];
       ValidatorFn validator =
           controlConfig.length > 1 ? controlConfig[1] as ValidatorFn : null;
-      AsyncValidatorFn asyncValidator =
-          controlConfig.length > 2 ? controlConfig[2] as AsyncValidatorFn: null;
+      AsyncValidatorFn asyncValidator = controlConfig.length > 2
+          ? controlConfig[2] as AsyncValidatorFn
+          : null;
       return this.control(value, validator, asyncValidator);
     } else {
       return this.control(controlConfig);

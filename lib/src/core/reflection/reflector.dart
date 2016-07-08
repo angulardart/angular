@@ -1,8 +1,7 @@
 library angular2.src.core.reflection.reflector;
 
 import "package:angular2/src/facade/lang.dart" show Type, isPresent;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/collection.dart"
     show Map, MapWrapper, Set, SetWrapper, StringMapWrapper;
 import "types.dart" show SetterFn, GetterFn, MethodFn;

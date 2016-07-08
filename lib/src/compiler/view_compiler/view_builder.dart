@@ -1,7 +1,6 @@
 library angular2.src.compiler.view_compiler.view_builder;
 
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper, SetWrapper;
 import "../output/output_ast.dart" as o;
@@ -41,9 +40,7 @@ import "util.dart"
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "../compile_metadata.dart"
-    show
-        CompileIdentifierMetadata,
-        CompileDirectiveMetadata;
+    show CompileIdentifierMetadata, CompileDirectiveMetadata;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";
@@ -279,8 +276,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return null;
   }
 
-  dynamic visitEmbeddedTemplate(
-      EmbeddedTemplateAst ast, dynamic context) {
+  dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
     CompileElement parent = context;
     var nodeIndex = this.view.nodes.length;
     var fieldName = '''_anchor_${ nodeIndex}''';
@@ -342,8 +338,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return null;
   }
 
-  dynamic visitEvent(
-      BoundEventAst ast, dynamic context) {
+  dynamic visitEvent(BoundEventAst ast, dynamic context) {
     return null;
   }
 
@@ -533,7 +528,9 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
       view.fields,
       view.getters,
       viewConstructor,
-      viewMethods.where((o.ClassMethod method) => method.body.length > 0).toList() as List<o.ClassMethod>);
+      viewMethods
+          .where((o.ClassMethod method) => method.body.length > 0)
+          .toList() as List<o.ClassMethod>);
   return viewClass;
 }
 
@@ -640,8 +637,9 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   ListWrapper.addAll(stmts, view.detectChangesRenderPropertiesMethod.finish());
   stmts.add(o.THIS_EXPR.callMethod(
       "detectViewChildrenChanges", [DetectChangesVars.throwOnChange]).toStmt());
-  List<o.Statement> afterViewStmts = (new List.from(view.updateViewQueriesMethod.finish())
-    ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
+  List<o.Statement> afterViewStmts =
+      (new List.from(view.updateViewQueriesMethod.finish())
+        ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
   if (afterViewStmts.length > 0) {
     stmts.add(
         new o.IfStmt(o.not(DetectChangesVars.throwOnChange), afterViewStmts));

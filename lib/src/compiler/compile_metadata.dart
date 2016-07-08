@@ -12,8 +12,7 @@ import "package:angular2/src/facade/lang.dart"
         isString,
         RegExpWrapper,
         isArray;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, CHANGE_DETECTION_STRATEGY_VALUES;
 import "package:angular2/src/core/metadata/view.dart"
@@ -825,8 +824,9 @@ class CompileInjectorModuleMetadata
         moduleUrl: data["moduleUrl"],
         prefix: data["prefix"],
         value: data["value"],
-        diDeps: _arrayFromJson(
-            data["diDeps"], CompileDiDependencyMetadata.fromJson) as List<CompileDiDependencyMetadata>,
+        diDeps:
+            _arrayFromJson(data["diDeps"], CompileDiDependencyMetadata.fromJson)
+            as List<CompileDiDependencyMetadata>,
         providers: _arrayFromJson(data["providers"], metadataFromJson),
         injectable: data["injectable"]);
   }
@@ -887,5 +887,5 @@ dynamic /* String | Map < String , dynamic > */ _objToJson(dynamic obj) {
   return obj.toJson();
 }
 
-List<dynamic/*=T*/ > _normalizeArray /*<T>*/ (List<dynamic/*=T*/ > obj) =>
+List<dynamic/*=T*/ > _normalizeArray/*<T>*/(List<dynamic/*=T*/ > obj) =>
     obj ?? [];

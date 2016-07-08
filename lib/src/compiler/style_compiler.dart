@@ -1,9 +1,7 @@
 library angular2.src.compiler.style_compiler;
 
 import "compile_metadata.dart"
-    show
-        CompileIdentifierMetadata,
-        CompileDirectiveMetadata;
+    show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import "output/output_ast.dart" as o;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/compiler/shadow_css.dart" show ShadowCss;

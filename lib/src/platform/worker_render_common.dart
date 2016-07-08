@@ -14,8 +14,7 @@ import "package:angular2/core.dart"
         TestabilityRegistry;
 import "package:angular2/platform/common_dom.dart"
     show EVENT_MANAGER_PLUGINS, EventManager;
-import "package:angular2/src/core/di.dart"
-    show Provider, Injector, OpaqueToken;
+import "package:angular2/src/core/di.dart" show Provider, Injector, OpaqueToken;
 // TODO change these imports once dom_adapter is moved out of core
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/events/dom_events.dart"

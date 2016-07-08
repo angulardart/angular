@@ -25,8 +25,8 @@ class MockDirectiveResolver extends DirectiveResolver {
       var viewProviders = dm.viewProviders;
       if (viewOverrides != null) {
         var originalViewProviders = dm.viewProviders ?? [];
-        viewProviders = (new List.from(originalViewProviders)
-          ..addAll(viewOverrides));
+        viewProviders =
+            (new List.from(originalViewProviders)..addAll(viewOverrides));
       }
       return new ComponentMetadata(
           selector: dm.selector,

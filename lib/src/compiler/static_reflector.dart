@@ -104,8 +104,8 @@ class StaticReflector {
     var propMetadata = this.propertyCache[type];
     if (!isPresent(propMetadata)) {
       var classMetadata = this.getTypeMetadata(type);
-      propMetadata =
-          this.getPropertyMetadata(type.moduleId, classMetadata["members"] as Map<String, dynamic>);
+      propMetadata = this.getPropertyMetadata(
+          type.moduleId, classMetadata["members"] as Map<String, dynamic>);
       if (!isPresent(propMetadata)) {
         propMetadata = {};
       }
@@ -145,7 +145,8 @@ class StaticReflector {
     var conversionMap = this.conversionMap;
     conversionMap[this.getStaticType(core_metadata, "Directive")] =
         (moduleContext, expression) {
-      var p0 = getDecoratorParameter(moduleContext, expression as Map<String, dynamic>, 0);
+      var p0 = getDecoratorParameter(
+          moduleContext, expression as Map<String, dynamic>, 0);
       if (!isPresent(p0)) {
         p0 = {};
       }
@@ -189,12 +190,12 @@ class StaticReflector {
           pipes: p0["pipes"],
           encapsulation: p0["encapsulation"]);
     };
-    conversionMap[this.getStaticType(core_metadata, "Input")] =
-        (moduleContext, Map<String, dynamic> expression) => new InputMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
-    conversionMap[this.getStaticType(core_metadata, "Output")] =
-        (moduleContext, Map<String, dynamic> expression) => new OutputMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
+    conversionMap[this.getStaticType(core_metadata, "Input")] = (moduleContext,
+            Map<String, dynamic> expression) =>
+        new InputMetadata(getDecoratorParameter(moduleContext, expression, 0));
+    conversionMap[this.getStaticType(core_metadata, "Output")] = (moduleContext,
+            Map<String, dynamic> expression) =>
+        new OutputMetadata(getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "View")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0);
@@ -210,8 +211,9 @@ class StaticReflector {
           styles: p0["styles"] as List<String>);
     };
     conversionMap[this.getStaticType(core_metadata, "Attribute")] =
-        (moduleContext, Map<String, dynamic> expression) => new AttributeMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
+        (moduleContext, Map<String, dynamic> expression) =>
+            new AttributeMetadata(
+                getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "Query")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0);
@@ -223,17 +225,21 @@ class StaticReflector {
           descendants: p1.descendants, first: p1.first);
     };
     conversionMap[this.getStaticType(core_metadata, "ContentChildren")] =
-        (moduleContext, Map<String, dynamic> expression) => new ContentChildrenMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
+        (moduleContext, Map<String, dynamic> expression) =>
+            new ContentChildrenMetadata(
+                getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "ContentChild")] =
-        (moduleContext, Map<String, dynamic> expression) => new ContentChildMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
+        (moduleContext, Map<String, dynamic> expression) =>
+            new ContentChildMetadata(
+                getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "ViewChildren")] =
-        (moduleContext, Map<String, dynamic> expression) => new ViewChildrenMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
+        (moduleContext, Map<String, dynamic> expression) =>
+            new ViewChildrenMetadata(
+                getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "ViewChild")] =
-        (moduleContext, Map<String, dynamic> expression) => new ViewChildMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
+        (moduleContext, Map<String, dynamic> expression) =>
+            new ViewChildMetadata(
+                getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "ViewQuery")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0);
@@ -253,12 +259,15 @@ class StaticReflector {
       return new PipeMetadata(name: p0["name"], pure: p0["pure"]);
     };
     conversionMap[this.getStaticType(core_metadata, "HostBinding")] =
-        (moduleContext, Map<String, dynamic> expression) => new HostBindingMetadata(
-            getDecoratorParameter(moduleContext, expression, 0));
+        (moduleContext, Map<String, dynamic> expression) =>
+            new HostBindingMetadata(
+                getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "HostListener")] =
-        (moduleContext, Map<String, dynamic> expression) => new HostListenerMetadata(
-            getDecoratorParameter(moduleContext, expression, 0),
-            getDecoratorParameter(moduleContext, expression, 1) as List<String>);
+        (moduleContext, Map<String, dynamic> expression) =>
+            new HostListenerMetadata(
+                getDecoratorParameter(moduleContext, expression, 0),
+                getDecoratorParameter(moduleContext, expression, 1)
+                as List<String>);
     return null;
   }
 
@@ -306,10 +315,8 @@ class StaticReflector {
               .toList()
               .map((d) => d["directives"])
               .toList()
-              .fold(
-                  [],
-                  (p, c) => (new List.from(p)
-                    ..addAll((c as List<dynamic>))));
+              .fold([],
+                  (p, c) => (new List.from(p)..addAll((c as List<dynamic>))));
           if (propertyData.length != 0) {
             StringMapWrapper.set(result, name, propertyData);
           }

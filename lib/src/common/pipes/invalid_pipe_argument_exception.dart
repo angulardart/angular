@@ -1,8 +1,7 @@
 library angular2.src.common.pipes.invalid_pipe_argument_exception;
 
 import "package:angular2/src/facade/lang.dart" show Type, stringify;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 class InvalidPipeArgumentException extends BaseException {
   InvalidPipeArgumentException(Type type, Object value)

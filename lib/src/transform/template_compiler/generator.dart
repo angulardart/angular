@@ -15,7 +15,8 @@ import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/ng_compiler.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:angular2/i18n.dart';
-import 'package:angular2/src/transform/common/options.dart' show CODEGEN_DEBUG_MODE;
+import 'package:angular2/src/transform/common/options.dart'
+    show CODEGEN_DEBUG_MODE;
 
 import 'compile_data_creator.dart';
 
@@ -36,28 +37,28 @@ Future<Outputs> processTemplates(AssetReader reader, AssetId assetId,
     List<String> platformDirectives,
     List<String> platformPipes,
     XmbDeserializationResult translations,
-    Map<String, String> resolvedIdentifiers
-    }) async {
+    Map<String, String> resolvedIdentifiers}) async {
   var compileDefs = await createCompileData(
       reader, assetId, platformDirectives, platformPipes);
   if (compileDefs == null) return null;
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
     templateCompiler = createTemplateCompiler(reader,
-        compilerConfig: new CompilerConfig(
-            codegenMode == CODEGEN_DEBUG_MODE, reflectPropertiesAsAttributes, false),
-            translations: translations);
+        compilerConfig: new CompilerConfig(codegenMode == CODEGEN_DEBUG_MODE,
+            reflectPropertiesAsAttributes, false),
+        translations: translations);
   }
 
   final compileComponentsData =
       compileDefs.viewDefinitions.values.toList(growable: false);
-  if (compileComponentsData.isEmpty && compileDefs.injectorDefinitions.isEmpty) {
+  if (compileComponentsData.isEmpty &&
+      compileDefs.injectorDefinitions.isEmpty) {
     return new Outputs._(compileDefs.ngMeta.ngDeps, null);
   }
 
   final compiledTemplates = logElapsedSync(() {
-    return templateCompiler.compile(compileComponentsData,
-        compileDefs.injectorDefinitions);
+    return templateCompiler.compile(
+        compileComponentsData, compileDefs.injectorDefinitions);
   }, operationName: 'compile', assetId: assetId);
 
   if (compiledTemplates != null) {

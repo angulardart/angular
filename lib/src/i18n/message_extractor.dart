@@ -1,12 +1,9 @@
 library angular2.src.i18n.message_extractor;
 
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
-import "package:angular2/src/compiler/parse_util.dart"
-    show ParseError;
+import "package:angular2/src/compiler/parse_util.dart" show ParseError;
 import "package:angular2/src/compiler/html_ast.dart"
-    show
-        HtmlAst,
-        HtmlElementAst;
+    show HtmlAst, HtmlElementAst;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/compiler/expression_parser/parser.dart"
@@ -14,12 +11,7 @@ import "package:angular2/src/compiler/expression_parser/parser.dart"
 import "message.dart" show Message, id;
 import "expander.dart" show expandNodes;
 import "shared.dart"
-    show
-        I18nError,
-        Part,
-        I18N_ATTR_PREFIX,
-        partition,
-        messageFromAttribute;
+    show I18nError, Part, I18N_ATTR_PREFIX, partition, messageFromAttribute;
 
 /**
  * All messages extracted from a template.

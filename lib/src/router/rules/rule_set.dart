@@ -3,8 +3,7 @@ library angular2.src.router.rules.rule_set;
 import "dart:async";
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isFunction;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
 import "rules.dart"
@@ -48,7 +47,8 @@ class RuleSet {
           '''Route "${ config . path}" with name "${ config . name}" does not begin with an uppercase letter. Route names should be CamelCase like "${ suggestedName}".''');
     }
     if (config is AuxRoute) {
-      handler = new SyncRouteHandler(config.component, config.data as Map<String, dynamic>);
+      handler = new SyncRouteHandler(
+          config.component, config.data as Map<String, dynamic>);
       var routePath = this._getRoutePath(config);
       var auxRule = new RouteRule(routePath, handler, config.name);
       this.auxRulesByPath[routePath.toString()] = auxRule;
@@ -66,10 +66,12 @@ class RuleSet {
       return true;
     }
     if (config is Route) {
-      handler = new SyncRouteHandler(config.component, config.data as Map<String, dynamic>);
+      handler = new SyncRouteHandler(
+          config.component, config.data as Map<String, dynamic>);
       useAsDefault = isPresent(config.useAsDefault) && config.useAsDefault;
     } else if (config is AsyncRoute) {
-      handler = new AsyncRouteHandler(config.loader, config.data as Map<String, dynamic>);
+      handler = new AsyncRouteHandler(
+          config.loader, config.data as Map<String, dynamic>);
       useAsDefault = isPresent(config.useAsDefault) && config.useAsDefault;
     }
     var routePath = this._getRoutePath(config);
@@ -136,7 +138,8 @@ class RuleSet {
     return rule?.generate(params);
   }
 
-  ComponentInstruction generateAuxiliary(String name, Map<String, dynamic> params) {
+  ComponentInstruction generateAuxiliary(
+      String name, Map<String, dynamic> params) {
     RouteRule rule = this.auxRulesByName[name];
     if (isBlank(rule)) {
       return null;
@@ -156,7 +159,8 @@ class RuleSet {
   RoutePath _getRoutePath(RouteDefinition config) {
     if (isPresent(config.regex)) {
       if (isFunction(config.serializer)) {
-        return new RegexRoutePath(config.regex, config.serializer as RegexSerializer);
+        return new RegexRoutePath(
+            config.regex, config.serializer as RegexSerializer);
       } else {
         throw new BaseException(
             '''Route provides a regex property, \'${ config . regex}\', but no serializer property''');

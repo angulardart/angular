@@ -148,7 +148,8 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
   dynamic visitPipe(cdAst.BindingPipe ast, dynamic context) {
     _Mode mode = context;
     var input = ast.exp.visit(this, _Mode.Expression);
-    var args = this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression) as List<o.Expression>;
+    var args = this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression)
+        as List<o.Expression>;
     var value = this._nameResolver.callPipe(ast.name, input, args);
     this.needsValueUnwrapper = true;
     return convertToStatementIfNeeded(
@@ -159,9 +160,8 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
-        ast.target
-            .visit(this, _Mode.Expression)
-            .callFn(this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression)));
+        ast.target.visit(this, _Mode.Expression).callFn(
+            this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression)));
   }
 
   dynamic visitImplicitReceiver(cdAst.ImplicitReceiver ast, dynamic context) {
@@ -203,8 +203,9 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
-        _nameResolver
-            .createLiteralArray(this.visitAll(ast.expressions as List<cdAst.AST>, mode) as List<o.Expression>));
+        _nameResolver.createLiteralArray(
+            this.visitAll(ast.expressions as List<cdAst.AST>, mode)
+            as List<o.Expression>));
   }
 
   dynamic visitLiteralMap(cdAst.LiteralMap ast, dynamic context) {
@@ -224,7 +225,8 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
 
   dynamic visitMethodCall(cdAst.MethodCall ast, dynamic context) {
     _Mode mode = context;
-    var args = this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression) as List<o.Expression>;
+    var args = this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression)
+        as List<o.Expression>;
     var result = null;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {

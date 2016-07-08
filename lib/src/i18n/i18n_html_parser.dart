@@ -191,8 +191,8 @@ class I18nHtmlParser implements HtmlParser {
 
   List<HtmlAst> _recurse(List<HtmlAst> nodes) {
     var ps = partition(nodes, this.errors);
-    return ListWrapper
-        .flatten(ps.map((p) => this._processI18nPart(p)).toList()) as List<HtmlAst>;
+    return ListWrapper.flatten(ps.map((p) => this._processI18nPart(p)).toList())
+        as List<HtmlAst>;
   }
 
   List<HtmlAst> _mergeTrees(

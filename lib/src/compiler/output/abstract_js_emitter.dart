@@ -47,8 +47,7 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     ctx.println('''}''');
   }
 
-  _visitClassGetter(
-      o.ClassStmt stmt, o.ClassGetter getter, dynamic context) {
+  _visitClassGetter(o.ClassStmt stmt, o.ClassGetter getter, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.println(
         '''Object.defineProperty(${ stmt . name}.prototype, \'${ getter . name}\', { get: function() {''');
@@ -61,8 +60,7 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     ctx.println('''}});''');
   }
 
-  _visitClassMethod(
-      o.ClassStmt stmt, o.ClassMethod method, dynamic context) {
+  _visitClassMethod(o.ClassStmt stmt, o.ClassMethod method, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('''${ stmt . name}.prototype.${ method . name} = function(''');
     this._visitParams(method.params, ctx);
@@ -89,8 +87,7 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     return null;
   }
 
-  dynamic visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, dynamic context) {
+  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('''var ${ stmt . name} = ''');
     stmt.value.visitExpression(this, ctx);
@@ -104,8 +101,7 @@ abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
     return null;
   }
 
-  String visitInvokeFunctionExpr(
-      o.InvokeFunctionExpr expr, dynamic context) {
+  String visitInvokeFunctionExpr(o.InvokeFunctionExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     var fnExpr = expr.fn;
     if (fnExpr is o.ReadVarExpr &&

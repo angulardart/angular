@@ -101,9 +101,8 @@ class RouteRule implements AbstractRule {
       return null;
     }
     return this.handler.resolveComponentType().then((_) {
-      var componentInstruction =
-          this._getInstruction(res.urlPath, res.urlParams,
-              res.allParams as Map<String, String>);
+      var componentInstruction = this._getInstruction(
+          res.urlPath, res.urlParams, res.allParams as Map<String, String>);
       return new PathMatch(componentInstruction, res.rest, res.auxiliary);
     });
   }
@@ -112,8 +111,7 @@ class RouteRule implements AbstractRule {
     var generated = this._routePath.generateUrl(params);
     var urlPath = generated.urlPath;
     var urlParams = generated.urlParams;
-    return this
-        ._getInstruction(urlPath, convertUrlParamsToArray(urlParams),
+    return this._getInstruction(urlPath, convertUrlParamsToArray(urlParams),
         params as Map<String, String>);
   }
 

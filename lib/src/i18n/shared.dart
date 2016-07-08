@@ -176,7 +176,8 @@ class _StringifyVisitor implements HtmlAstVisitor {
   _StringifyVisitor(this._parser) {}
   dynamic visitElement(HtmlElementAst ast, dynamic context) {
     var name = this._index++;
-    var children = this._join(htmlVisitAll(this, ast.children) as List<String>, "");
+    var children =
+        this._join(htmlVisitAll(this, ast.children) as List<String>, "");
     return '''<ph name="e${ name}">${ children}</ph>''';
   }
 

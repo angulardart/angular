@@ -13,8 +13,7 @@ import "package:angular2/src/facade/lang.dart"
         StringWrapper,
         isArray,
         isString;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "shared_styles_host.dart" show DomSharedStylesHost;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;

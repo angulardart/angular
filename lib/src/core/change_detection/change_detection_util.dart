@@ -1,7 +1,6 @@
 library angular2.src.core.change_detection.change_detection_util;
 
-import "package:angular2/src/facade/lang.dart"
-    show looseIdentical, isPrimitive;
+import "package:angular2/src/facade/lang.dart" show looseIdentical, isPrimitive;
 import "package:angular2/src/facade/collection.dart"
     show isListLikeIterable, areIterablesEqual;
 export "package:angular2/src/facade/lang.dart" show looseIdentical;

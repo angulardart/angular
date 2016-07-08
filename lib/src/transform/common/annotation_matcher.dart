@@ -83,12 +83,13 @@ const _ENTRYPOINTS = const [
 ];
 
 const _INJECTOR_MODULES = const [
-  const ClassDescriptor('InjectorModule', 'package:angular2/src/core/metadata.dart'),
+  const ClassDescriptor(
+      'InjectorModule', 'package:angular2/src/core/metadata.dart'),
   const ClassDescriptor('InjectorModule', 'package:angular2/angular2.dart'),
   const ClassDescriptor('InjectorModule', 'package:angular2/core.dart'),
-  const ClassDescriptor('InjectorModule', 'package:angular2/web_worker/worker.dart'),
+  const ClassDescriptor(
+      'InjectorModule', 'package:angular2/web_worker/worker.dart'),
 ];
-
 
 /// Checks if a given [Annotation] matches any of the given
 /// [ClassDescriptors].

@@ -49,20 +49,20 @@ class BrowserDetection {
   bool get isFirefox => _ua.indexOf("Firefox") > -1;
 
   bool get isAndroid =>
-    _ua.indexOf("Mozilla/5.0") > -1 &&
-        _ua.indexOf("Android") > -1 &&
-        _ua.indexOf("AppleWebKit") > -1 &&
-        _ua.indexOf("Chrome") == -1;
+      _ua.indexOf("Mozilla/5.0") > -1 &&
+      _ua.indexOf("Android") > -1 &&
+      _ua.indexOf("AppleWebKit") > -1 &&
+      _ua.indexOf("Chrome") == -1;
 
   bool get isEdge => _ua.indexOf("Edge") > -1;
 
   bool get isIE => _ua.indexOf("Trident") > -1;
 
-  bool get isWebkit => _ua.indexOf("AppleWebKit") > -1 &&
-        _ua.indexOf("Edge") == -1;
+  bool get isWebkit =>
+      _ua.indexOf("AppleWebKit") > -1 && _ua.indexOf("Edge") == -1;
 
-  bool get isIOS7 => _ua.indexOf("iPhone OS 7") > -1 ||
-        _ua.indexOf("iPad OS 7") > -1;
+  bool get isIOS7 =>
+      _ua.indexOf("iPhone OS 7") > -1 || _ua.indexOf("iPad OS 7") > -1;
 
   bool get isSlow => isAndroid || isIE || isIOS7;
 
@@ -72,8 +72,7 @@ class BrowserDetection {
 
   // see https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
   bool get supportsIntlApi =>
-    _ua.indexOf("Chrome/4") > -1 && _ua.indexOf("Edge") == -1;
-
+      _ua.indexOf("Chrome/4") > -1 && _ua.indexOf("Edge") == -1;
 }
 
 void dispatchEvent(element, eventType) {
@@ -109,8 +108,12 @@ RegExp containsRegexp(String input) {
       input, _ESCAPE_RE, (match) => '''\\${ match [ 0 ]}'''));
 }
 
-RegExp _normalizerExp1, _normalizerExp2, _normalizerExp3, _normalizerExp4,
-    _normalizerExp5, _normalizerExp6;
+RegExp _normalizerExp1,
+    _normalizerExp2,
+    _normalizerExp3,
+    _normalizerExp4,
+    _normalizerExp5,
+    _normalizerExp6;
 
 String normalizeCSS(String css) {
   _normalizerExp1 ??= new RegExp(r'\s+');
@@ -124,9 +127,7 @@ String normalizeCSS(String css) {
   css = StringWrapper.replaceAll(css, _normalizerExp3, "\"");
   css = StringWrapper.replaceAll(css, _normalizerExp4, "}");
   css = StringWrapper.replaceAllMapped(
-      css,
-      _normalizerExp5,
-      (match) => '''url("${ match [ 2 ]}")''');
+      css, _normalizerExp5, (match) => '''url("${ match [ 2 ]}")''');
   css = StringWrapper.replaceAllMapped(css, _normalizerExp6,
       (match) => '''[${ match [ 1 ]}="${ match [ 2 ]}"]''');
   return css;

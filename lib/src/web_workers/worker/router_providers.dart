@@ -1,8 +1,7 @@
 library angular2.src.web_workers.worker.router_providers;
 
 import "dart:async";
-import "package:angular2/core.dart"
-    show Provider, NgZone, APP_INITIALIZER;
+import "package:angular2/core.dart" show Provider, NgZone, APP_INITIALIZER;
 import "package:angular2/platform/common.dart" show PlatformLocation;
 import "platform_location.dart" show WebWorkerPlatformLocation;
 import "package:angular2/src/router/router_providers_common.dart"

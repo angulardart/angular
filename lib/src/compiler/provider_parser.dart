@@ -4,12 +4,7 @@ import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "template_ast.dart"
-    show
-        ReferenceAst,
-        AttrAst,
-        DirectiveAst,
-        ProviderAst,
-        ProviderAstType;
+    show ReferenceAst, AttrAst, DirectiveAst, ProviderAst, ProviderAstType;
 import "compile_metadata.dart"
     show
         CompileTypeMetadata,
@@ -195,7 +190,8 @@ class ProviderElementContext {
       return null;
     }
     this._seenProviders.add(token, true);
-    List<CompileProviderMetadata> transformedProviders = resolvedProvider.providers.map((provider) {
+    List<CompileProviderMetadata> transformedProviders =
+        resolvedProvider.providers.map((provider) {
       var transformedUseValue = provider.useValue;
       var transformedUseExisting = provider.useExisting;
       List<CompileDiDependencyMetadata> transformedDeps;
@@ -368,7 +364,8 @@ ${ errorString}''');
       return null;
     }
     this._seenProviders.add(token, true);
-    List<CompileProviderMetadata> transformedProviders = resolvedProvider.providers.map((provider) {
+    List<CompileProviderMetadata> transformedProviders =
+        resolvedProvider.providers.map((provider) {
       var transformedUseValue = provider.useValue;
       var transformedUseExisting = provider.useExisting;
       List<CompileDiDependencyMetadata> transformedDeps;

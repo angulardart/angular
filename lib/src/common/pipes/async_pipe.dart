@@ -3,8 +3,7 @@ library angular2.src.common.pipes.async_pipe;
 import "dart:async";
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isPromise;
-import "package:angular2/src/facade/async.dart"
-    show ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/core.dart"
     show Pipe, Injectable, ChangeDetectorRef, OnDestroy, WrappedValue;
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;

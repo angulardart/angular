@@ -1,15 +1,9 @@
 library angular2.src.compiler.runtime_compiler;
 
 import "dart:async";
-import "package:angular2/src/facade/lang.dart"
-    show
-        IS_DART,
-        Type,
-        isBlank;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper;
+import "package:angular2/src/facade/lang.dart" show IS_DART, Type, isBlank;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "compile_metadata.dart"
     show
@@ -17,9 +11,7 @@ import "compile_metadata.dart"
         CompileDirectiveMetadata,
         CompilePipeMetadata,
         CompileIdentifierMetadata;
-import "template_ast.dart"
-    show
-        TemplateAst;
+import "template_ast.dart" show TemplateAst;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "style_compiler.dart"
     show StyleCompiler, StylesCompileDependency, StylesCompileResult;
@@ -128,13 +120,14 @@ class RuntimeCompiler implements ComponentResolver {
     if (isBlank(compiledTemplate)) {
       compiledTemplate = new CompiledTemplate();
       this._compiledTemplateCache[cacheKey] = compiledTemplate;
-      List<Future> futures = new List.from(
-          [(this._compileComponentStyles(compMeta) as dynamic)])
-        ..addAll(viewDirectives
-            .map((dirMeta) =>
-            this._templateNormalizer.normalizeDirective(dirMeta))
-            .toList());
-      done = Future.wait(futures)
+      List<Future> futures =
+          new List.from([(this._compileComponentStyles(compMeta) as dynamic)])
+            ..addAll(viewDirectives
+                .map((dirMeta) =>
+                    this._templateNormalizer.normalizeDirective(dirMeta))
+                .toList());
+      done = Future
+          .wait(futures)
           .then((List<dynamic> stylesAndNormalizedViewDirMetas) {
         var normalizedViewDirMetas = stylesAndNormalizedViewDirMetas.sublist(1)
             as List<CompileDirectiveMetadata>;
@@ -146,8 +139,13 @@ class RuntimeCompiler implements ComponentResolver {
             pipes,
             compMeta.type.name);
         var childPromises = <Future>[];
-        compiledTemplate.init(this._compileComponent(compMeta, parsedTemplate,
-            styles as List<String>, pipes, compilingComponentsPath, childPromises));
+        compiledTemplate.init(this._compileComponent(
+            compMeta,
+            parsedTemplate,
+            styles as List<String>,
+            pipes,
+            compilingComponentsPath,
+            childPromises));
         return Future.wait(childPromises).then((_) {
           return compiledTemplate;
         });
@@ -179,15 +177,11 @@ class RuntimeCompiler implements ComponentResolver {
       List<CompilePipeMetadata> childViewPipes = this
           ._runtimeMetadataResolver
           .getViewPipesMetadata(dep.comp.type.runtime);
-      var childIsRecursive = childCompilingComponentsPath.contains(
-          childCacheKey);
+      var childIsRecursive =
+          childCompilingComponentsPath.contains(childCacheKey);
       childCompilingComponentsPath.add(childCacheKey);
-      var childComp = _loadAndCompileComponent(
-          dep.comp.type.runtime,
-          dep.comp,
-          childViewDirectives,
-          childViewPipes,
-          childCompilingComponentsPath);
+      var childComp = _loadAndCompileComponent(dep.comp.type.runtime, dep.comp,
+          childViewDirectives, childViewPipes, childCompilingComponentsPath);
       dep.factoryPlaceholder.runtime = childComp.proxyViewFactory;
       dep.factoryPlaceholder.name =
           '''viewFactory_${ dep . comp . type . name}''';

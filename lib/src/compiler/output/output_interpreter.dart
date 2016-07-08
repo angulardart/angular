@@ -5,10 +5,8 @@ import "package:angular2/src/facade/lang.dart"
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "output_ast.dart" as o;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "dart_emitter.dart" show debugOutputAstAsDart;
 import "ts_emitter.dart" show debugOutputAstAsTypeScript;
 
@@ -248,8 +246,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return value;
   }
 
-  dynamic visitInvokeMethodExpr(
-      o.InvokeMethodExpr expr, dynamic context) {
+  dynamic visitInvokeMethodExpr(o.InvokeMethodExpr expr, dynamic context) {
     _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
     var args = this.visitAllExpressions(expr.args, ctx);
@@ -286,8 +283,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return result;
   }
 
-  dynamic visitInvokeFunctionExpr(
-      o.InvokeFunctionExpr stmt, dynamic context) {
+  dynamic visitInvokeFunctionExpr(o.InvokeFunctionExpr stmt, dynamic context) {
     _ExecutionContext ctx = context;
     var args = this.visitAllExpressions(stmt.args, ctx);
     var fnExpr = stmt.fn;
@@ -315,8 +311,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
-  dynamic visitExpressionStmt(
-      o.ExpressionStatement stmt, dynamic context) {
+  dynamic visitExpressionStmt(o.ExpressionStatement stmt, dynamic context) {
     _ExecutionContext ctx = context;
     return stmt.expr.visitExpression(this, ctx);
   }
@@ -406,8 +401,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
-  dynamic visitBinaryOperatorExpr(
-      o.BinaryOperatorExpr ast, dynamic context) {
+  dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var lhs = () => ast.lhs.visitExpression(this, ctx);
     var rhs = () => ast.rhs.visitExpression(this, ctx);
@@ -488,8 +482,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return result;
   }
 
-  dynamic visitAllExpressions(
-      List<o.Expression> expressions, dynamic context) {
+  dynamic visitAllExpressions(List<o.Expression> expressions, dynamic context) {
     _ExecutionContext ctx = context;
     return expressions.map((expr) => expr.visitExpression(this, ctx)).toList();
   }

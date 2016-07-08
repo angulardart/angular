@@ -3,12 +3,9 @@ library angular2.src.router.router;
 import "dart:async";
 import "package:angular2/src/facade/async.dart"
     show PromiseWrapper, EventEmitter, ObservableWrapper;
-import "package:angular2/src/facade/collection.dart"
-    show Map, StringMapWrapper;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
 import "package:angular2/core.dart" show Inject, Injectable;

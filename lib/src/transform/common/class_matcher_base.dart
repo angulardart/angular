@@ -88,8 +88,8 @@ ImportDirective _getMatchingImport(
     } else if (uriString.startsWith('package:') || isDartCoreUri(uriString)) {
       return false;
     } else {
-      final candidateAssetId =
-          fromUri(createOfflineCompileUrlResolver().resolve(assetUri, uriString));
+      final candidateAssetId = fromUri(
+          createOfflineCompileUrlResolver().resolve(assetUri, uriString));
 
       importMatch = descriptor.assetId == candidateAssetId;
     }

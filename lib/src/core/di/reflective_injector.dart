@@ -1,7 +1,6 @@
 library angular2.src.core.di.reflective_injector;
 
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "provider.dart" show Provider;
 import "reflective_provider.dart"
     show
@@ -17,8 +16,7 @@ import "reflective_exceptions.dart"
         InstantiationError,
         OutOfBoundsError;
 import "package:angular2/src/facade/lang.dart" show Type;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "reflective_key.dart" show ReflectiveKey;
 import "metadata.dart" show SelfMetadata, SkipSelfMetadata;
 import "injector.dart" show Injector, THROW_IF_NOT_FOUND;

@@ -2,10 +2,7 @@ library angular2.src.compiler.directive_normalizer;
 
 import "dart:async";
 import "compile_metadata.dart"
-    show
-        CompileTypeMetadata,
-        CompileDirectiveMetadata,
-        CompileTemplateMetadata;
+    show CompileTypeMetadata, CompileDirectiveMetadata, CompileTemplateMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
@@ -24,8 +21,7 @@ import "html_ast.dart"
         HtmlExpansionCaseAst,
         htmlVisitAll;
 import "html_parser.dart" show HtmlParser;
-import "template_preparser.dart"
-    show preparseElement, PreparsedElementType;
+import "template_preparser.dart" show preparseElement, PreparsedElementType;
 
 @Injectable()
 class DirectiveNormalizer {

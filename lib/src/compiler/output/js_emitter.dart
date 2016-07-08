@@ -1,10 +1,7 @@
 library angular2.src.compiler.output.js_emitter;
 
 import "output_ast.dart" as o;
-import "package:angular2/src/facade/lang.dart"
-    show
-        isPresent,
-        isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "abstract_emitter.dart" show OutputEmitter, EmitterVisitorContext;
 import "abstract_js_emitter.dart" show AbstractJsEmitterVisitor;
 import "path_util.dart" show getImportModulePath, ImportEnv;
@@ -48,8 +45,7 @@ class JsEmitterVisitor extends AbstractJsEmitterVisitor {
     return null;
   }
 
-  dynamic visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, dynamic context) {
+  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     super.visitDeclareVarStmt(stmt, ctx);
     if (ctx.isExportedVar(stmt.name)) {

@@ -1,14 +1,9 @@
 library angular2.src.compiler.output.abstract_emitter;
 
 import "package:angular2/src/facade/lang.dart"
-    show
-        isPresent,
-        isBlank,
-        isString,
-        StringWrapper;
+    show isPresent, isBlank, isString, StringWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "output_ast.dart" as o;
 
 var _SINGLE_QUOTE_ESCAPE_STRING_RE = new RegExp(r'' + "'" + r'|\\|\n|\r|\$');
@@ -115,8 +110,7 @@ abstract class AbstractEmitterVisitor
     implements o.StatementVisitor, o.ExpressionVisitor {
   bool _escapeDollarInStrings;
   AbstractEmitterVisitor(this._escapeDollarInStrings) {}
-  dynamic visitExpressionStmt(
-      o.ExpressionStatement stmt, context) {
+  dynamic visitExpressionStmt(o.ExpressionStatement stmt, context) {
     EmitterVisitorContext ctx = context;
     stmt.expr.visitExpression(this, ctx);
     ctx.println(";");
@@ -225,8 +219,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitInvokeMethodExpr(
-      o.InvokeMethodExpr expr, dynamic context) {
+  dynamic visitInvokeMethodExpr(o.InvokeMethodExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     expr.receiver.visitExpression(this, ctx);
     var name = expr.name;
@@ -246,8 +239,7 @@ abstract class AbstractEmitterVisitor
   }
 
   String getBuiltinMethodName(o.BuiltinMethod method);
-  dynamic visitInvokeFunctionExpr(
-      o.InvokeFunctionExpr expr, dynamic context) {
+  dynamic visitInvokeFunctionExpr(o.InvokeFunctionExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     expr.fn.visitExpression(this, ctx);
     ctx.print('''(''');
@@ -285,8 +277,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitInstantiateExpr(
-      o.InstantiateExpr ast, dynamic context) {
+  dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('''new ''');
     ast.classExpr.visitExpression(this, ctx);
@@ -310,8 +301,7 @@ abstract class AbstractEmitterVisitor
   }
 
   dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context);
-  dynamic visitConditionalExpr(
-      o.ConditionalExpr ast, dynamic context) {
+  dynamic visitConditionalExpr(o.ConditionalExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('''(''');
     ast.condition.visitExpression(this, ctx);
@@ -332,8 +322,7 @@ abstract class AbstractEmitterVisitor
 
   dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context);
   dynamic visitDeclareFunctionStmt(o.DeclareFunctionStmt stmt, dynamic context);
-  dynamic visitBinaryOperatorExpr(
-      o.BinaryOperatorExpr ast, dynamic context) {
+  dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var opStr;
     switch (ast.operator) {
@@ -410,8 +399,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitLiteralArrayExpr(
-      o.LiteralArrayExpr ast, dynamic context) {
+  dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var useNewLine = ast.entries.length > 1;
     ctx.print('''[''', useNewLine);

@@ -42,10 +42,11 @@ class NgMeta {
   // The NgDeps generated from
   final NgDepsModel ngDeps;
 
-  NgMeta({Map<String, List<String>> aliases,
-  Map<String, dynamic> identifiers,
-  this.ngDeps: null})
-      :this.aliases = aliases != null ? aliases : {},
+  NgMeta(
+      {Map<String, List<String>> aliases,
+      Map<String, dynamic> identifiers,
+      this.ngDeps: null})
+      : this.aliases = aliases != null ? aliases : {},
         this.identifiers = identifiers != null ? identifiers : {};
 
   NgMeta.empty() : this();
@@ -71,8 +72,12 @@ class NgMeta {
 
   bool get needsResolution {
     return identifiers.values.any((id) =>
-      id is CompileDirectiveMetadata || id is CompilePipeMetadata || id is CompileTypeMetadata || id is CompileFactoryMetadata
-          || id is CompileInjectorModuleMetadata || (id is CompileIdentifierMetadata && id.value != null));
+        id is CompileDirectiveMetadata ||
+        id is CompilePipeMetadata ||
+        id is CompileTypeMetadata ||
+        id is CompileFactoryMetadata ||
+        id is CompileInjectorModuleMetadata ||
+        (id is CompileIdentifierMetadata && id.value != null));
   }
 
   /// Parse from the serialized form produced by [toJson].
@@ -86,13 +91,15 @@ class NgMeta {
           log.warning(
               'Unexpected value $ngDepsJsonMap for key "$_NG_DEPS_KEY" in NgMeta.');
         } else {
-          ngDeps = new NgDepsModel()..mergeFromJsonMap(ngDepsJsonMap as Map<String, dynamic>);
+          ngDeps = new NgDepsModel()
+            ..mergeFromJsonMap(ngDepsJsonMap as Map<String, dynamic>);
         }
       }
     }
 
     Map<String, List<String>> aliases =
-        json[_ALIAS_VALUE] as Map<String, List<String>> ?? <String, List<String>>{};
+        json[_ALIAS_VALUE] as Map<String, List<String>> ??
+            <String, List<String>>{};
 
     final identifiers = <String, dynamic>{};
     if (json.containsKey(_TYPE_VALUE)) {
@@ -106,7 +113,8 @@ class NgMeta {
       }
     }
 
-    return new NgMeta(identifiers: identifiers, aliases: aliases, ngDeps: ngDeps);
+    return new NgMeta(
+        identifiers: identifiers, aliases: aliases, ngDeps: ngDeps);
   }
 
   /// Serialized representation of this instance.
@@ -133,9 +141,12 @@ class NgMeta {
   List<dynamic> flatten(String alias) {
     var result = [];
     helper(name, path) {
-      final newPath = []..addAll(path)..add(name);
+      final newPath = []
+        ..addAll(path)
+        ..add(name);
       if (path.contains(name)) {
-        log.error('Circular alias dependency for "$name". Cycle: ${newPath.join(' -> ')}.');
+        log.error(
+            'Circular alias dependency for "$name". Cycle: ${newPath.join(' -> ')}.');
         return;
       }
       if (aliases.containsKey(name)) {
@@ -143,7 +154,8 @@ class NgMeta {
       } else if (identifiers.containsKey(name)) {
         result.add(identifiers[name]);
       } else {
-        log.error('Unknown alias: ${newPath.join(' -> ')}. Make sure you export ${name} from the file where ${path.last} is defined.');
+        log.error(
+            'Unknown alias: ${newPath.join(' -> ')}. Make sure you export ${name} from the file where ${path.last} is defined.');
       }
     }
     helper(alias, []);

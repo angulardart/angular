@@ -1,10 +1,7 @@
 library angular2.src.compiler.output.ts_emitter;
 
 import "output_ast.dart" as o;
-import "package:angular2/src/facade/lang.dart"
-    show
-        isPresent,
-        isArray;
+import "package:angular2/src/facade/lang.dart" show isPresent, isArray;
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "abstract_emitter.dart"
@@ -73,8 +70,7 @@ class _TsEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, dynamic context) {
+  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (ctx.isExportedVar(stmt.name)) {
       ctx.print('''export ''');

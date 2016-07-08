@@ -17,8 +17,7 @@ import "package:angular2/src/web_workers/shared/messaging_api.dart"
     show EVENT_CHANNEL;
 import "package:angular2/src/web_workers/shared/message_bus.dart"
     show MessageBus;
-import "package:angular2/src/facade/async.dart"
-    show ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "event_deserializer.dart" show deserializeGenericEvent;
 
@@ -42,8 +41,8 @@ class WebWorkerRootRenderer implements RootRenderer {
   void _dispatchEvent(Map<String, dynamic> message) {
     var eventName = message["eventName"];
     var target = message["eventTarget"];
-    var event = deserializeGenericEvent(message["event"]
-        as Map<String, dynamic>);
+    var event =
+        deserializeGenericEvent(message["event"] as Map<String, dynamic>);
     if (isPresent(target)) {
       this
           .globalEvents
@@ -239,8 +238,7 @@ class WebWorkerRenderer implements Renderer, RenderStoreObject {
         [new FnArg(renderNode, RenderStoreObject), new FnArg(text, null)]);
   }
 
-  Function listen(
-      el, String name, Function callback) {
+  Function listen(el, String name, Function callback) {
     WebWorkerRenderNode renderElement = el;
     renderElement.events.listen(name, callback);
     var unlistenCallbackId = this._rootRenderer.allocateId();

@@ -2,7 +2,8 @@ library angular2.transform.template_compiler.url_resolver;
 
 import 'package:barback/barback.dart';
 
-export 'package:angular2/src/compiler/url_resolver.dart' show createOfflineCompileUrlResolver;
+export 'package:angular2/src/compiler/url_resolver.dart'
+    show createOfflineCompileUrlResolver;
 
 String toAssetUri(AssetId assetId) {
   if (assetId == null) throw new ArgumentError.notNull('assetId');

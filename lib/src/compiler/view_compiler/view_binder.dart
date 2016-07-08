@@ -93,8 +93,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     return null;
   }
 
-  dynamic visitEmbeddedTemplate(
-      EmbeddedTemplateAst ast, dynamic context) {
+  dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
     var compileElement = (this.view.nodes[this._nodeIndex++] as CompileElement);
     var eventListeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
@@ -123,8 +122,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     return null;
   }
 
-  dynamic visitEvent(
-      BoundEventAst ast, dynamic context) {
+  dynamic visitEvent(BoundEventAst ast, dynamic context) {
     var eventTargetAndNames = context as Map<String, BoundEventAst>;
     assert(eventTargetAndNames != null);
     return null;

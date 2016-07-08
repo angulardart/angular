@@ -1,8 +1,7 @@
 library angular2.src.platform.browser_common;
 
 import "package:angular2/src/facade/lang.dart" show IS_DART;
-import "package:angular2/src/core/di.dart"
-    show Provider, OpaqueToken;
+import "package:angular2/src/core/di.dart" show Provider, OpaqueToken;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/core.dart"
     show

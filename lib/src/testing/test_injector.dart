@@ -2,8 +2,7 @@ library angular2.src.testing.test_injector;
 
 import "package:angular2/core.dart"
     show ReflectiveInjector, PLATFORM_INITIALIZER;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 
 class TestInjector {
@@ -82,8 +81,8 @@ setBaseTestProviders(
   testInjector.platformProviders = platformProviders;
   testInjector.applicationProviders = applicationProviders;
   var injector = testInjector.createInjector();
-  List<Function> initializers = injector.get(PLATFORM_INITIALIZER, null)
-      as List<Function>;
+  List<Function> initializers =
+      injector.get(PLATFORM_INITIALIZER, null) as List<Function>;
   initializers?.forEach((init) => init());
   testInjector.reset();
 }

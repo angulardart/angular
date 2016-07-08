@@ -1,9 +1,7 @@
 library angular2.src.compiler.view_compiler.constants;
 
-import "package:angular2/src/facade/lang.dart"
-    show resolveEnumToken;
-import "../compile_metadata.dart"
-    show CompileIdentifierMetadata;
+import "package:angular2/src/facade/lang.dart" show resolveEnumToken;
+import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorState, ChangeDetectionStrategy;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;

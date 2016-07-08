@@ -18,8 +18,10 @@ TransformLogger get log {
 /// `asyncOperation`.
 ///
 /// Returns the result of executing `asyncOperation`.
-Future<dynamic /*<T>*/> logElapsedAsync/*<T>*/(Future<dynamic /*<T>*/> asyncOperation(),
-    {String operationName: 'unknown', AssetId assetId}) async {
+Future<dynamic/*<T>*/ > logElapsedAsync/*<T>*/(
+    Future<dynamic/*<T>*/ > asyncOperation(),
+    {String operationName: 'unknown',
+    AssetId assetId}) async {
   final timer = new Stopwatch()..start();
   final result = await asyncOperation();
   timer.stop();

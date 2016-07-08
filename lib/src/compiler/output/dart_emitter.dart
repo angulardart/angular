@@ -1,10 +1,6 @@
 library angular2.src.compiler.output.dart_emitter;
 
-import "package:angular2/src/facade/lang.dart"
-    show
-        isPresent,
-        isBlank,
-        isArray;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
@@ -78,8 +74,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, dynamic context) {
+  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (stmt.hasModifier(o.StmtModifier.Final)) {
       if (isConstType(stmt.type)) {
@@ -268,8 +263,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitBinaryOperatorExpr(
-      o.BinaryOperatorExpr ast, dynamic context) {
+  dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     switch (ast.operator) {
       case o.BinaryOperator.Identical:
@@ -292,8 +286,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  dynamic visitLiteralArrayExpr(
-      o.LiteralArrayExpr ast, dynamic context) {
+  dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (isConstType(ast.type)) {
       ctx.print('''const ''');
@@ -314,8 +307,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return super.visitLiteralMapExpr(ast, ctx);
   }
 
-  dynamic visitInstantiateExpr(
-      o.InstantiateExpr ast, dynamic context) {
+  dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print(isConstType(ast.type) ? '''const''' : '''new''');
     ctx.print(" ");

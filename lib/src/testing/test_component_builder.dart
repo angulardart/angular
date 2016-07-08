@@ -41,8 +41,7 @@ class ComponentFixture {
   ComponentFixture(ComponentRef ref) {
     changeDetectorRef = ref.changeDetectorRef;
     elementRef = ref.location;
-    debugElement =
-        (getDebugNode(elementRef.nativeElement) as DebugElement);
+    debugElement = (getDebugNode(elementRef.nativeElement) as DebugElement);
     assert(debugElement != null);
     componentInstance = ref.instance;
     assert(componentInstance != null);
@@ -184,8 +183,8 @@ class TestComponentBuilder {
     }
     DOM.appendChild(doc.body, rootEl);
     DynamicComponentLoader loader = _injector.get(DynamicComponentLoader);
-    Future<ComponentRef> promise = loader
-        .loadAsRoot(rootComponentType, '''#${ rootElId}''', _injector);
+    Future<ComponentRef> promise =
+        loader.loadAsRoot(rootComponentType, '''#${ rootElId}''', _injector);
     return promise.then((componentRef) {
       return new ComponentFixture(componentRef);
     });

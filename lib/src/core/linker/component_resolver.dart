@@ -2,10 +2,8 @@ library angular2.src.core.linker.component_resolver;
 
 import "dart:async";
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, stringify;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/lang.dart" show Type, isBlank, stringify;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "component_factory.dart" show ComponentFactory;
 import "injector_factory.dart" show CodegenInjectorFactory;
@@ -29,7 +27,6 @@ bool _isComponentFactory(dynamic type) {
 
 @Injectable()
 class ReflectorComponentResolver implements ComponentResolver {
-
   Future<ComponentFactory> resolveComponent(Type componentType) {
     var metadatas = reflector.annotations(componentType);
     var componentFactory =

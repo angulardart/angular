@@ -187,8 +187,8 @@ class SpyObject extends gns.SpyObject {
       object = new SpyObject();
     }
 
-    var m = StringMapWrapper.merge(config as Map<String, dynamic>,
-        overrides as Map<String, dynamic>);
+    var m = StringMapWrapper.merge(
+        config as Map<String, dynamic>, overrides as Map<String, dynamic>);
     StringMapWrapper.forEach(m, (value, key) {
       object.spy(key).andReturn(value);
     });

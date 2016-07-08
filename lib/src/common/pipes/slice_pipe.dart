@@ -3,8 +3,7 @@ library angular2.src.common.pipes.slice_pipe;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isString, isArray, StringWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/core.dart"
-    show Injectable, PipeTransform, Pipe;
+import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 /**

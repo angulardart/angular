@@ -1,8 +1,7 @@
 library angular2.src.compiler.view_compiler.compile_view;
 
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "../output/output_ast.dart" as o;
 import "constants.dart" show EventHandlerVars;
 import "compile_query.dart"
@@ -18,11 +17,7 @@ import "../compile_metadata.dart"
         CompilePipeMetadata,
         CompileIdentifierMetadata,
         CompileTokenMap;
-import "util.dart"
-    show
-        getViewFactoryName,
-        getPropertyInView,
-        createPureProxy;
+import "util.dart" show getViewFactoryName, getPropertyInView, createPureProxy;
 import "../config.dart" show CompilerConfig;
 import "compile_binding.dart" show CompileBinding;
 import "../identifiers.dart" show Identifiers;

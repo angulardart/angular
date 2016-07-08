@@ -4,8 +4,7 @@ import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isString;
 import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
-import "package:angular2/src/facade/collection.dart"
-    show StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/core.dart" show OpaqueToken;
 import "model.dart" as modelModule;
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;

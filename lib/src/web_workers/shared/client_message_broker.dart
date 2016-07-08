@@ -7,8 +7,7 @@ import "package:angular2/src/facade/lang.dart"
     show print, isPresent, DateWrapper, stringify;
 import "package:angular2/src/facade/async.dart"
     show PromiseCompleter, PromiseWrapper, ObservableWrapper, EventEmitter;
-import "package:angular2/src/facade/collection.dart"
-    show StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/web_workers/shared/serializer.dart"
     show Serializer;
 import "package:angular2/src/core/di.dart" show Injectable;

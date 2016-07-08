@@ -1,8 +1,7 @@
 library angular2.src.core.di.injector;
 
 import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 const _THROW_IF_NOT_FOUND = const Object();
 const THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;

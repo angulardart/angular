@@ -18,13 +18,10 @@ import "expression_parser/ast.dart"
         BindingPipe;
 import "expression_parser/parser.dart" show Parser;
 import "compile_metadata.dart"
-    show
-        CompileDirectiveMetadata,
-        CompilePipeMetadata;
+    show CompileDirectiveMetadata, CompilePipeMetadata;
 import "html_parser.dart" show HtmlParser;
 import "html_tags.dart" show splitNsName, mergeNsAndName;
-import "parse_util.dart"
-    show ParseSourceSpan, ParseError, ParseErrorLevel;
+import "parse_util.dart" show ParseSourceSpan, ParseError, ParseErrorLevel;
 import "package:angular2/src/core/linker/view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "template_ast.dart"
@@ -49,8 +46,7 @@ import "package:angular2/src/compiler/selector.dart"
     show CssSelector, SelectorMatcher;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
-import "template_preparser.dart"
-    show preparseElement, PreparsedElementType;
+import "template_preparser.dart" show preparseElement, PreparsedElementType;
 import "style_url_resolver.dart" show isStyleUrlResolvable;
 import "html_ast.dart"
     show
@@ -125,12 +121,8 @@ class TemplateParser {
   HtmlParser _htmlParser;
   Console _console;
   List<TemplateAstVisitor> transforms;
-  TemplateParser(
-      this._exprParser,
-      this._schemaRegistry,
-      this._htmlParser,
-      this._console,
-      @Optional() @Inject(TEMPLATE_TRANSFORMS) this.transforms);
+  TemplateParser(this._exprParser, this._schemaRegistry, this._htmlParser,
+      this._console, @Optional() @Inject(TEMPLATE_TRANSFORMS) this.transforms);
   List<TemplateAst> parse(
       CompileDirectiveMetadata component,
       String template,
@@ -174,7 +166,8 @@ ${ errorString}''');
       var parseVisitor = new TemplateParseVisitor(providerViewContext,
           uniqDirectives, uniqPipes, this._exprParser, this._schemaRegistry);
       result = htmlVisitAll(
-          parseVisitor, htmlAstWithErrors.rootNodes, EMPTY_ELEMENT_CONTEXT) as List<TemplateAst>;
+              parseVisitor, htmlAstWithErrors.rootNodes, EMPTY_ELEMENT_CONTEXT)
+          as List<TemplateAst>;
       errors =
           (new List.from((new List.from(errors)..addAll(parseVisitor.errors)))
             ..addAll(providerViewContext.errors));
@@ -400,10 +393,11 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         references,
         element.sourceSpan);
     List<TemplateAst> children = htmlVisitAll(
-        preparsedElement.nonBindable ? NON_BINDABLE_VISITOR : this,
-        element.children,
-        ElementContext.create(isTemplateElement, directiveAsts,
-            isTemplateElement ? parent.providerContext : providerContext)) as List<TemplateAst>;
+            preparsedElement.nonBindable ? NON_BINDABLE_VISITOR : this,
+            element.children,
+            ElementContext.create(isTemplateElement, directiveAsts,
+                isTemplateElement ? parent.providerContext : providerContext))
+        as List<TemplateAst>;
     providerContext.afterElement();
     // Override the actual selector when the `ngProjectAs` attribute is provided
     var projectionSelector = isPresent(preparsedElement.projectAs)
@@ -953,9 +947,20 @@ class NonBindableVisitor implements HtmlAstVisitor {
         ast.attrs.map((attrAst) => [attrAst.name, attrAst.value]).toList();
     var selector = createElementCssSelector(ast.name, attrNameAndValues);
     var ngContentIndex = parent.findNgContentIndex(selector);
-    var children = htmlVisitAll(this, ast.children, EMPTY_ELEMENT_CONTEXT) as List<TemplateAst>;
-    return new ElementAst(ast.name, htmlVisitAll(this, ast.attrs) as List<AttrAst>, [], [], [],
-        [], [], false, children, ngContentIndex, ast.sourceSpan);
+    var children = htmlVisitAll(this, ast.children, EMPTY_ELEMENT_CONTEXT)
+        as List<TemplateAst>;
+    return new ElementAst(
+        ast.name,
+        htmlVisitAll(this, ast.attrs) as List<AttrAst>,
+        [],
+        [],
+        [],
+        [],
+        [],
+        false,
+        children,
+        ngContentIndex,
+        ast.sourceSpan);
   }
 
   dynamic visitComment(HtmlCommentAst ast, dynamic context) {
@@ -1075,25 +1080,24 @@ class PipeCollector extends RecursiveAstVisitor {
   }
 }
 
-List<dynamic/*=T*/> removeDuplicates/*<T>*/(
-    List<dynamic/*=T*/> items) {
-  var res = /*<T>*/[];
+List<dynamic/*=T*/ > removeDuplicates/*<T>*/(List<dynamic/*=T*/ > items) {
+  var res = /*<T>*/ [];
   items.forEach((item) {
-    var hasMatch = res
-            .where((r) {
-        if (r is CompilePipeMetadata) {
-          CompilePipeMetadata rMeta = r as CompilePipeMetadata;
-          CompilePipeMetadata itemMeta = item as CompilePipeMetadata;
-          return rMeta.type.name == itemMeta.type.name &&
-              rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
-              rMeta.type.runtime == itemMeta.type.runtime;
-        } else if (r is CompileDirectiveMetadata) {
-          CompileDirectiveMetadata rMeta = r as CompileDirectiveMetadata;
-          CompileDirectiveMetadata itemMeta = item as CompileDirectiveMetadata;
-          return rMeta.type.name == itemMeta.type.name &&
-              rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
-              rMeta.type.runtime == itemMeta.type.runtime;
-        } else throw new ArgumentError();
+    var hasMatch = res.where((r) {
+      if (r is CompilePipeMetadata) {
+        CompilePipeMetadata rMeta = r as CompilePipeMetadata;
+        CompilePipeMetadata itemMeta = item as CompilePipeMetadata;
+        return rMeta.type.name == itemMeta.type.name &&
+            rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
+            rMeta.type.runtime == itemMeta.type.runtime;
+      } else if (r is CompileDirectiveMetadata) {
+        CompileDirectiveMetadata rMeta = r as CompileDirectiveMetadata;
+        CompileDirectiveMetadata itemMeta = item as CompileDirectiveMetadata;
+        return rMeta.type.name == itemMeta.type.name &&
+            rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
+            rMeta.type.runtime == itemMeta.type.runtime;
+      } else
+        throw new ArgumentError();
     }).isNotEmpty;
     if (!hasMatch) {
       res.add(item);

@@ -55,8 +55,7 @@ class ReplacePipe implements PipeTransform {
       var rgxPattern = isString(pattern)
           ? RegExpWrapper.create((pattern as String))
           : (pattern as RegExp);
-      return StringWrapper.replaceAllMapped(
-          input, rgxPattern, replacement);
+      return StringWrapper.replaceAllMapped(input, rgxPattern, replacement);
     }
     if (pattern is RegExp) {
       // use the replaceAll variant

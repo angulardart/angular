@@ -24,7 +24,8 @@ export 'package:angular2/src/transform/common/options.dart';
 ///
 /// [the wiki]: https://github.com/angular/angular/wiki/Angular-2-Dart-Transformer
 class CodegenTransformer extends TransformerGroup {
-  CodegenTransformer._(Iterable<Iterable> phases, {bool formatCode: false}) : super(phases) {
+  CodegenTransformer._(Iterable<Iterable> phases, {bool formatCode: false})
+      : super(phases) {
     if (formatCode) {
       formatter.init(new DartFormatter());
     }

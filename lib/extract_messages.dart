@@ -20,7 +20,8 @@ main(List<String> args) async {
   final input = new InputSet(args[0], [args[1]]);
   final output = new AssetId(args[0], args[2]);
 
-  await build(new PhaseGroup.singleAction(new I18nMessageExtractorBuilder(output), input));
+  await build(new PhaseGroup.singleAction(
+      new I18nMessageExtractorBuilder(output), input));
 }
 
 class I18nMessageExtractorBuilder implements Builder {
@@ -32,7 +33,8 @@ class I18nMessageExtractorBuilder implements Builder {
     final resolver = await buildStep.resolve(buildStep.input.id);
     final entryLib = resolver.getLibrary(buildStep.input.id);
 
-    final extractor = new I18nMessageExtractor((path) => buildStep.readAsString(path));
+    final extractor =
+        new I18nMessageExtractor((path) => buildStep.readAsString(path));
     await extractor.processLibrary(entryLib);
     resolver.release();
 
@@ -40,7 +42,6 @@ class I18nMessageExtractorBuilder implements Builder {
       print("Errors:");
       extractor.errors.forEach(print);
       throw "Failed to extract messages";
-
     } else {
       await buildStep.writeAsString(new Asset(outputAssetId, extractor.output));
     }
@@ -62,7 +63,7 @@ class I18nMessageExtractor {
 
   String get output => serializeXmb(removeDuplicates(messages));
 
-  Future processLibrary(LibraryElement el) async  {
+  Future processLibrary(LibraryElement el) async {
     return Future.wait(el.units.map(processCompilationUnit));
   }
 
@@ -89,7 +90,8 @@ class I18nMessageExtractor {
     return Future.wait(filtered.map((m) => processAnnotation(el, m, baseUrl)));
   }
 
-  Future processAnnotation(ClassElement el, ElementAnnotation m, baseUrl) async {
+  Future processAnnotation(
+      ClassElement el, ElementAnnotation m, baseUrl) async {
     final fields = (m.constantValue as dynamic).fields["(super)"].fields;
     final template = fields["template"];
     final templateUrl = fields["templateUrl"];

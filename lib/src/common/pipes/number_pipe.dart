@@ -1,18 +1,11 @@
 library angular2.src.common.pipes.number_pipe;
 
 import "package:angular2/src/facade/lang.dart"
-    show
-        isNumber,
-        isPresent,
-        isBlank,
-        NumberWrapper,
-        RegExpWrapper;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+    show isNumber, isPresent, isBlank, NumberWrapper, RegExpWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/intl.dart"
     show NumberFormatter, NumberFormatStyle;
-import "package:angular2/core.dart"
-    show Injectable, PipeTransform, Pipe;
+import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 String defaultLocale = "en-US";

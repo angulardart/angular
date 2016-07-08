@@ -103,8 +103,8 @@ final bool _supportsTemplateElement = () {
   }
 }();
 
-class BrowserDomAdapter extends
-    GenericBrowserDomAdapter<Element, Node, EventTarget> {
+class BrowserDomAdapter
+    extends GenericBrowserDomAdapter<Element, Node, EventTarget> {
   js.JsFunction _setProperty;
   js.JsFunction _getProperty;
   js.JsFunction _hasProperty;
@@ -290,8 +290,7 @@ class BrowserDomAdapter extends
     return doc.createElement(tagName);
   }
 
-  Element createElementNS(String ns, String tagName,
-      [d = null]) {
+  Element createElementNS(String ns, String tagName, [d = null]) {
     HtmlDocument doc = d ?? document;
     return doc.createElementNS(ns, tagName);
   }
@@ -300,8 +299,7 @@ class BrowserDomAdapter extends
     return new Text(text);
   }
 
-  createScriptTag(String attrName, String attrValue,
-      [d = null]) {
+  createScriptTag(String attrName, String attrValue, [d = null]) {
     HtmlDocument doc = d ?? document;
     var el = doc.createElement('SCRIPT');
     el.setAttribute(attrName, attrValue);

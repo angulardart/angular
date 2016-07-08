@@ -44,7 +44,8 @@ class CompileDataResults {
       viewDefinitions;
   final List<CompileInjectorModuleMetadata> injectorDefinitions;
 
-  CompileDataResults._(this.ngMeta, this.viewDefinitions, this.injectorDefinitions);
+  CompileDataResults._(
+      this.ngMeta, this.viewDefinitions, this.injectorDefinitions);
 }
 
 /// Creates [ViewDefinition] objects for all `View` `Directive`s defined in
@@ -84,7 +85,8 @@ class _CompileDataCreator {
           return false;
         });
 
-    if (!hasTemplate) return new CompileDataResults._(ngMeta, const {}, const []);
+    if (!hasTemplate)
+      return new CompileDataResults._(ngMeta, const {}, const []);
 
     final compileComponentData =
         <ReflectionInfoModel, NormalizedComponentWithViewDirectives>{};
@@ -99,23 +101,27 @@ class _CompileDataCreator {
         final compileMetadata = ngMeta.identifiers[reflectable.name];
         if (compileMetadata is CompileDirectiveMetadata &&
             compileMetadata.template != null) {
-          final compileComponentDatum = new NormalizedComponentWithViewDirectives(
-              compileMetadata,
-              <CompileDirectiveMetadata>[],
-              <CompilePipeMetadata>[]);
-          compileComponentDatum.directives.addAll(platformDirectives as Iterable<CompileDirectiveMetadata>);
+          final compileComponentDatum =
+              new NormalizedComponentWithViewDirectives(compileMetadata,
+                  <CompileDirectiveMetadata>[], <CompilePipeMetadata>[]);
           compileComponentDatum.directives
-              .addAll(_resolveTypeMetadata(ngMetaMap, reflectable.directives) as Iterable<CompileDirectiveMetadata> );
-          compileComponentDatum.pipes.addAll(platformPipes as Iterable<CompilePipeMetadata> );
+              .addAll(platformDirectives as Iterable<CompileDirectiveMetadata>);
+          compileComponentDatum.directives.addAll(
+              _resolveTypeMetadata(ngMetaMap, reflectable.directives)
+              as Iterable<CompileDirectiveMetadata>);
           compileComponentDatum.pipes
-              .addAll(_resolveTypeMetadata(ngMetaMap, reflectable.pipes) as Iterable<CompilePipeMetadata>);
+              .addAll(platformPipes as Iterable<CompilePipeMetadata>);
+          compileComponentDatum.pipes.addAll(
+              _resolveTypeMetadata(ngMetaMap, reflectable.pipes)
+              as Iterable<CompilePipeMetadata>);
           compileComponentData[reflectable] = compileComponentDatum;
         } else if (compileMetadata is CompileInjectorModuleMetadata) {
           injectorModuleMetadatas.add(compileMetadata);
         }
       }
     }
-    return new CompileDataResults._(ngMeta, compileComponentData, injectorModuleMetadatas);
+    return new CompileDataResults._(
+        ngMeta, compileComponentData, injectorModuleMetadatas);
   }
 
   List<dynamic> _resolveTypeMetadata(
@@ -132,10 +138,8 @@ class _CompileDataCreator {
       final depNgMeta = ngMetaMap[dep.prefix];
       if (depNgMeta.aliases.containsKey(dep.name)) {
         resolvedMetadata.addAll(depNgMeta.flatten(dep.name));
-
       } else if (depNgMeta.identifiers.containsKey(dep.name)) {
         resolvedMetadata.add(depNgMeta.identifiers[dep.name]);
-
       } else {
         log.error(
             'Could not find Directive/Pipe entry for $dep. '
@@ -177,10 +181,8 @@ class _CompileDataCreator {
 
         if (newMetadata.aliases.containsKey(token)) {
           return newMetadata.flatten(token);
-
         } else if (newMetadata.identifiers.containsKey(token)) {
           return [newMetadata.identifiers[token]];
-
         } else {
           log.warning('Could not resolve platform type ${token} in ${uri}',
               asset: metaAssetId);

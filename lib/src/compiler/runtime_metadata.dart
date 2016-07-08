@@ -298,8 +298,7 @@ class RuntimeMetadataResolver {
     List<cpl.CompileTokenMetadata> selectors;
     if (q.isVarBindingQuery) {
       selectors = q.varBindings
-          .map((varName) =>
-              this.getTokenMetadata(varName))
+          .map((varName) => this.getTokenMetadata(varName))
           .toList();
     } else {
       selectors = [this.getTokenMetadata(q.selector)];

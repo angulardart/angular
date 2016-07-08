@@ -23,14 +23,14 @@ class ReflectionInfoVisitor extends RecursiveAstVisitor<ReflectionInfoModel> {
   final AnnotationVisitor _annotationVisitor;
   final ParameterVisitor _parameterVisitor = new ParameterVisitor();
 
-  ReflectionInfoVisitor._(this.assetId, this._annotationMatcher,
-      this._annotationVisitor);
+  ReflectionInfoVisitor._(
+      this.assetId, this._annotationMatcher, this._annotationVisitor);
 
   factory ReflectionInfoVisitor(
       AssetId assetId, AnnotationMatcher annotationMatcher) {
     var annotationVisitor = new AnnotationVisitor(assetId);
-    return new ReflectionInfoVisitor._(assetId, annotationMatcher,
-        annotationVisitor);
+    return new ReflectionInfoVisitor._(
+        assetId, annotationMatcher, annotationVisitor);
   }
 
   ConstructorDeclaration _getCtor(ClassDeclaration node) {
@@ -145,8 +145,8 @@ class ReflectionInfoVisitor extends RecursiveAstVisitor<ReflectionInfoModel> {
     }
     final NamedExpression typesNode =
         node.arguments.arguments.firstWhere((arg) {
-            return arg is NamedExpression && '${arg.name.label}' == fieldName;
-        }, orElse: () => null);
+      return arg is NamedExpression && '${arg.name.label}' == fieldName;
+    }, orElse: () => null);
     if (typesNode == null) return const [];
 
     if (typesNode.expression is! ListLiteral) {
@@ -231,8 +231,12 @@ abstract class ReflectionWriterMixin
   _writeLocalMetadataEntry(ReflectionInfoModel model) {
     buffer.write('${model.name}, ');
     _writeListWithSeparator(
-        model.annotations.where( (am) => !am.name.endsWith('NgFactory') ).toList(),
-        writeAnnotationModel, prefix: 'const [', suffix: ']');
+        model.annotations
+            .where((am) => !am.name.endsWith('NgFactory'))
+            .toList(),
+        writeAnnotationModel,
+        prefix: 'const [',
+        suffix: ']');
   }
 
   void writeRegistration(ReflectionInfoModel model) {

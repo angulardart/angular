@@ -39,8 +39,16 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   Map<String, Function> methods;
   _InterpretiveAppView(
       List<dynamic> args, this.props, this.getters, this.methods)
-      : super(args[0], args[1], args[2], args[3] as Map<String, dynamic>, args[4], args[5], args[6],
-            args[7], args[8] as List<StaticNodeDebugInfo>);
+      : super(
+            args[0],
+            args[1],
+            args[2],
+            args[3] as Map<String, dynamic>,
+            args[4],
+            args[5],
+            args[6],
+            args[7],
+            args[8] as List<StaticNodeDebugInfo>);
 
   AppElement createInternal(dynamic /* String | dynamic */ rootSelector) {
     var m = this.methods["createInternal"];

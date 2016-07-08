@@ -116,9 +116,7 @@ class DynamicComponentLoader_ extends DynamicComponentLoader {
       dynamic /* String | dynamic */ overrideSelectorOrNode, Injector injector,
       [void onDispose(), List<List<dynamic>> projectableNodes]) {
     return this._compiler.resolveComponent(type).then((componentFactory) {
-      var componentRef = componentFactory.create(
-          injector,
-          projectableNodes,
+      var componentRef = componentFactory.create(injector, projectableNodes,
           overrideSelectorOrNode ?? componentFactory.selector);
       if (onDispose != null) {
         componentRef.onDestroy(onDispose);

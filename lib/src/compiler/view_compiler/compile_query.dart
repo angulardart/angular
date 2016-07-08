@@ -4,8 +4,7 @@ import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "../output/output_ast.dart" as o;
 import "../identifiers.dart" show Identifiers;
-import "../compile_metadata.dart"
-    show CompileQueryMetadata, CompileTokenMap;
+import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
 import "compile_view.dart" show CompileView;
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;

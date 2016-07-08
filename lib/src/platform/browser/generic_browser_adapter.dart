@@ -22,10 +22,18 @@ abstract class GenericBrowserDomAdapter<T, N, ET> extends DomAdapter<T, N, ET> {
           }
         }
       }
-      const List transitionNames = const ['WebkitTransition',
-          'MozTransition', 'OTransition', 'transition'];
-      const List transitionEndNames = const ['webkitTransitionEnd',
-          'transitionend', 'oTransitionEnd otransitionend', 'transitionend'];
+      const List transitionNames = const [
+        'WebkitTransition',
+        'MozTransition',
+        'OTransition',
+        'transition'
+      ];
+      const List transitionEndNames = const [
+        'webkitTransitionEnd',
+        'transitionend',
+        'oTransitionEnd otransitionend',
+        'transitionend'
+      ];
       for (int i = 0; i < transitionNames.length; i++) {
         String key = transitionNames[i];
         if (getStyle(element, key) != null) {
@@ -54,12 +62,12 @@ abstract class GenericBrowserDomAdapter<T, N, ET> extends DomAdapter<T, N, ET> {
   }
 
   bool supportsNativeShadowDOM() =>
-    this.defaultDoc().body.createShadowRoot is Function;
+      this.defaultDoc().body.createShadowRoot is Function;
 
   String getAnimationPrefix() => _animationPrefix ?? '';
 
   String getTransitionEnd() => _transitionEnd ?? '';
 
   bool supportsAnimation() =>
-    _animationPrefix != null && _transitionEnd != null;
+      _animationPrefix != null && _transitionEnd != null;
 }

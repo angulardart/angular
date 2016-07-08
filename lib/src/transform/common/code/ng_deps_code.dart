@@ -158,8 +158,10 @@ abstract class NgDepsWriterMixin
     model.exports.forEach(writeExportModel);
 
     buffer.writeln(templateCode);
-    if (templateCode != null && templateCode.length > 0 &&
-        model.reflectables != null && model.reflectables.isNotEmpty) {
+    if (templateCode != null &&
+        templateCode.length > 0 &&
+        model.reflectables != null &&
+        model.reflectables.isNotEmpty) {
       writeLocalMetadataMap(model.reflectables);
     }
 
@@ -168,8 +170,8 @@ abstract class NgDepsWriterMixin
       ..writeln('void ${SETUP_METHOD_NAME}() {')
       ..writeln('if (_visited) return; _visited = true;');
 
-    final needsReceiver = (model.reflectables != null &&
-            model.reflectables.isNotEmpty);
+    final needsReceiver =
+        (model.reflectables != null && model.reflectables.isNotEmpty);
 
     if (needsReceiver) {
       buffer.writeln('$REFLECTOR_PREFIX.$REFLECTOR_VAR_NAME');

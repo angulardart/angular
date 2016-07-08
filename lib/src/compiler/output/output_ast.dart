@@ -770,16 +770,17 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
   dynamic visitLiteralMapExpr(LiteralMapExpr ast, dynamic context) {
     return new LiteralMapExpr(ast.entries
         .map((entry) => [
-      entry[0],
-      ((entry[1] as Expression)).visitExpression(this, context)
-    ])
+              entry[0],
+              ((entry[1] as Expression)).visitExpression(this, context)
+            ])
         .toList());
   }
 
   List<Expression> visitAllExpressions(
       List<Expression> exprs, dynamic context) {
-    return exprs.map(
-        (expr) => expr.visitExpression(this, context) as Expression).toList();
+    return exprs
+        .map((expr) => expr.visitExpression(this, context) as Expression)
+        .toList();
   }
 
   dynamic visitDeclareVarStmt(DeclareVarStmt stmt, dynamic context) {
@@ -826,8 +827,9 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
   }
 
   List<Statement> visitAllStatements(List<Statement> stmts, dynamic context) {
-    return stmts.map(
-        (stmt) => stmt.visitStatement(this, context) as Statement).toList();
+    return stmts
+        .map((stmt) => stmt.visitStatement(this, context) as Statement)
+        .toList();
   }
 }
 

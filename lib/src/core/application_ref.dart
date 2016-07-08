@@ -3,16 +3,9 @@ library angular2.src.core.application_ref;
 import "dart:async";
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
 import "package:angular2/src/facade/lang.dart"
-    show
-        Type,
-        isBlank,
-        isPresent,
-        assertionsEnabled,
-        isPromise;
-import "package:angular2/src/core/di.dart"
-    show Provider, Injector, Injectable;
-import "application_tokens.dart"
-    show  PLATFORM_INITIALIZER, APP_INITIALIZER;
+    show Type, isBlank, isPresent, assertionsEnabled, isPromise;
+import "package:angular2/src/core/di.dart" show Provider, Injector, Injectable;
+import "application_tokens.dart" show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "package:angular2/src/facade/async.dart"
     show PromiseWrapper, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
@@ -115,7 +108,8 @@ Future<ComponentRef> coreLoadAndBootstrap(
   ApplicationRef appRef = injector.get(ApplicationRef);
   return appRef.run(() async {
     ComponentResolver componentResolver = injector.get(ComponentResolver);
-    ComponentFactory factory = await componentResolver.resolveComponent(componentType);
+    ComponentFactory factory =
+        await componentResolver.resolveComponent(componentType);
     appRef.waitForAsyncInitializers();
     return appRef.bootstrap(factory);
   });
@@ -300,8 +294,8 @@ class ApplicationRef_ extends ApplicationRef {
       this._exceptionHandler = _injector.get(ExceptionHandler);
     });
     this._asyncInitDonePromise = this.run(() {
-      List<Function> inits = _injector.get(APP_INITIALIZER, null)
-          as List<Function>;
+      List<Function> inits =
+          _injector.get(APP_INITIALIZER, null) as List<Function>;
       var asyncInitResults = [];
       var asyncInitDonePromise;
       if (isPresent(inits)) {

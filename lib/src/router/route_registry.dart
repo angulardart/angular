@@ -15,8 +15,7 @@ import "package:angular2/src/facade/lang.dart"
         StringWrapper,
         Math,
         getTypeNameForDebugging;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
 import "route_config/route_config_impl.dart"
@@ -32,8 +31,7 @@ import "instruction.dart"
         DefaultInstruction;
 import "route_config/route_config_normalizer.dart"
     show normalizeRouteConfig, assertComponentExists;
-import "url_parser.dart"
-    show parser, Url, convertUrlParamsToArray;
+import "url_parser.dart" show parser, Url, convertUrlParamsToArray;
 import "rules/route_paths/route_path.dart" show GeneratedUrl;
 import "utils.dart" show getComponentAnnotations, getComponentType;
 

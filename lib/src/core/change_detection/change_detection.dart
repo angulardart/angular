@@ -5,8 +5,7 @@ import "differs/iterable_differs.dart"
 import "differs/default_iterable_differ.dart" show DefaultIterableDifferFactory;
 import "differs/keyvalue_differs.dart"
     show KeyValueDiffers, KeyValueDifferFactory;
-import "differs/default_keyvalue_differ.dart"
-    show DefaultKeyValueDifferFactory;
+import "differs/default_keyvalue_differ.dart" show DefaultKeyValueDifferFactory;
 export "differs/default_keyvalue_differ.dart"
     show DefaultKeyValueDifferFactory, KeyValueChangeRecord;
 export "differs/default_iterable_differ.dart"

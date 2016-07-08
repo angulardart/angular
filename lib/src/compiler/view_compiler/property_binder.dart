@@ -68,9 +68,8 @@ bind(
   method.addStmt(new o.IfStmt(
       condition,
       new List.from(actions)
-        ..addAll([
-          o.THIS_EXPR.prop(fieldExpr.name).set(currValExpr).toStmt()
-        ])));
+        ..addAll(
+            [o.THIS_EXPR.prop(fieldExpr.name).set(currValExpr).toStmt()])));
 }
 
 bindRenderText(

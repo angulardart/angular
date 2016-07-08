@@ -148,14 +148,15 @@ abstract class Instruction {
 
   // default instructions override these.
   String toLinkUrl() {
-    return urlPath + _stringifyAux() +
-        (child?._toLinkUrl() ?? '') + toUrlQuery();
+    return urlPath +
+        _stringifyAux() +
+        (child?._toLinkUrl() ?? '') +
+        toUrlQuery();
   }
   // this is the non-root version (called recursively)
 
   String _toLinkUrl() {
-    return _stringifyPathMatrixAuxPrefixed() +
-        (child?._toLinkUrl() ?? '');
+    return _stringifyPathMatrixAuxPrefixed() + (child?._toLinkUrl() ?? '');
   }
 
   String _stringifyPathMatrixAuxPrefixed() {
@@ -192,8 +193,7 @@ abstract class Instruction {
 class ResolvedInstruction extends Instruction {
   ResolvedInstruction(ComponentInstruction component, Instruction child,
       Map<String, Instruction> auxInstruction)
-      : super(component, child, auxInstruction) {
-  }
+      : super(component, child, auxInstruction) {}
 
   Future<ComponentInstruction> resolveComponent() =>
       new Future.value(component);
@@ -246,8 +246,7 @@ class RedirectInstruction extends ResolvedInstruction {
   String _specificity;
   RedirectInstruction(ComponentInstruction component, Instruction child,
       Map<String, Instruction> auxInstruction, this._specificity)
-      : super(component, child, auxInstruction) {
-  }
+      : super(component, child, auxInstruction) {}
   String get specificity {
     return this._specificity;
   }

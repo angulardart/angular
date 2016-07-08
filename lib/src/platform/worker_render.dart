@@ -1,9 +1,7 @@
 library angular2.src.platform.worker_render;
 
 import 'package:angular2/src/platform/worker_render_common.dart'
-    show
-        WORKER_RENDER_APPLICATION_COMMON,
-        initializeGenericWorkerRenderer;
+    show WORKER_RENDER_APPLICATION_COMMON, initializeGenericWorkerRenderer;
 import 'package:angular2/src/web_workers/shared/isolate_message_bus.dart';
 import 'package:angular2/src/web_workers/shared/message_bus.dart';
 import 'package:angular2/core.dart';

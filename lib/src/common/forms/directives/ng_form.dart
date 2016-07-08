@@ -2,8 +2,7 @@ library angular2.src.common.forms.directives.ng_form;
 
 import "package:angular2/src/facade/async.dart"
     show PromiseWrapper, ObservableWrapper, EventEmitter;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/core.dart"
     show Directive, Provider, Optional, Inject, Self;

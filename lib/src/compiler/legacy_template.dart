@@ -50,9 +50,11 @@ class LegacyHtmlAstTransformer implements HtmlAstVisitor {
 
   HtmlElementAst visitElement(HtmlElementAst ast, dynamic context) {
     this.visitingTemplateEl = ast.name.toLowerCase() == "template";
-    List<HtmlAttrAst> attrs = ast.attrs.map((attr) => attr.visit(this, null) as HtmlAttrAst).toList();
-    List<HtmlAst> children =
-        ast.children.map((child) => child.visit(this, null) as HtmlAst).toList();
+    List<HtmlAttrAst> attrs =
+        ast.attrs.map((attr) => attr.visit(this, null) as HtmlAttrAst).toList();
+    List<HtmlAst> children = ast.children
+        .map((child) => child.visit(this, null) as HtmlAst)
+        .toList();
     return new HtmlElementAst(ast.name, attrs, children, ast.sourceSpan,
         ast.startSourceSpan, ast.endSourceSpan);
   }
@@ -89,7 +91,9 @@ class LegacyHtmlAstTransformer implements HtmlAstVisitor {
   }
 
   dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
-    List<HtmlExpansionCaseAst> cases = ast.cases.map((c) => c.visit(this, null) as HtmlExpansionCaseAst).toList();
+    List<HtmlExpansionCaseAst> cases = ast.cases
+        .map((c) => c.visit(this, null) as HtmlExpansionCaseAst)
+        .toList();
     return new HtmlExpansionAst(ast.switchValue, ast.type, cases,
         ast.sourceSpan, ast.switchValueSourceSpan);
   }

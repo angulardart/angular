@@ -1,12 +1,10 @@
 library angular2.src.mock.view_resolver_mock;
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show Type, isPresent, stringify, isBlank;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "../core/metadata.dart" show ViewMetadata;
 import "package:angular2/src/compiler/view_resolver.dart" show ViewResolver;
 

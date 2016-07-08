@@ -1,7 +1,6 @@
 library angular2.src.platform.dom.debug.ng_probe;
 
-import "package:angular2/src/facade/lang.dart"
-    show assertionsEnabled;
+import "package:angular2/src/facade/lang.dart" show assertionsEnabled;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/core/debug/debug_node.dart"

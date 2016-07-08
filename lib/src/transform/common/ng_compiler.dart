@@ -51,18 +51,19 @@ OfflineCompiler createTemplateCompiler(AssetReader reader,
       [new RouterLinkTransform(parser)]);
 
   return new OfflineCompiler(
-    new DirectiveNormalizer(_xhr, _urlResolver, _htmlParser),
-    templateParser,
-    new StyleCompiler(_urlResolver),
-    new ViewCompiler(compilerConfig),
-    new InjectorCompiler(),
-    new DartEmitter()
-  );
+      new DirectiveNormalizer(_xhr, _urlResolver, _htmlParser),
+      templateParser,
+      new StyleCompiler(_urlResolver),
+      new ViewCompiler(compilerConfig),
+      new InjectorCompiler(),
+      new DartEmitter());
 }
 
-HtmlParser _createHtmlParser(XmbDeserializationResult translations, ng.Parser parser) {
+HtmlParser _createHtmlParser(
+    XmbDeserializationResult translations, ng.Parser parser) {
   if (translations != null) {
-    return new I18nHtmlParser(new HtmlParser(), parser, translations.content, translations.messages);
+    return new I18nHtmlParser(
+        new HtmlParser(), parser, translations.content, translations.messages);
   } else {
     return new HtmlParser();
   }

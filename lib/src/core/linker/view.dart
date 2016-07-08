@@ -1,9 +1,6 @@
 library angular2.src.core.linker.view;
 
-import "package:angular2/src/facade/collection.dart"
-    show
-        Map,
-        StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
 import "package:angular2/src/core/di.dart" show Injector;
 import "element.dart" show AppElement;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
@@ -12,15 +9,9 @@ import "package:angular2/src/core/render/api.dart"
 import "view_ref.dart" show ViewRef_;
 import "view_type.dart" show ViewType;
 import "view_utils.dart"
-    show
-        ViewUtils,
-        flattenNestedViewRenderNodes,
-        ensureSlotCount;
+    show ViewUtils, flattenNestedViewRenderNodes, ensureSlotCount;
 import "package:angular2/src/core/change_detection/change_detection.dart"
-    show
-        ChangeDetectorRef,
-        ChangeDetectionStrategy,
-        ChangeDetectorState;
+    show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
 import "exceptions.dart"
     show
@@ -172,8 +163,8 @@ abstract class AppView<T> {
     if (this._hasExternalHostElement) {
       this.renderer.detachView(flatRootNodes);
     } else {
-      viewContainerElement?.detachView(
-          viewContainerElement.nestedViews.indexOf(this));
+      viewContainerElement
+          ?.detachView(viewContainerElement.nestedViews.indexOf(this));
     }
     this._destroyRecurse();
   }

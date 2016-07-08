@@ -3,8 +3,7 @@ library angular2.src.compiler.expression_parser.parser;
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, StringWrapper;
-import "package:angular2/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "lexer.dart"
     show
