@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:analyzer/src/generated/element.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:angular2/i18n.dart';
 import 'package:angular2/src/compiler/expression_parser/lexer.dart';
 import 'package:angular2/src/compiler/expression_parser/parser.dart';
