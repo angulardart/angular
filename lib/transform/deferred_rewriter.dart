@@ -2,10 +2,9 @@ library angular2.transform.deferred_rewriter.dart;
 
 import 'dart:async';
 
-import 'package:barback/barback.dart';
-
 import 'package:angular2/src/transform/deferred_rewriter/transformer.dart'
     as base show DeferredRewriter;
+import 'package:barback/barback.dart';
 
 // TODO(kegluneq): Make this a TransformerGroup and add an AggregateTransformer
 // that counts the number of transformed files & primary inputs.

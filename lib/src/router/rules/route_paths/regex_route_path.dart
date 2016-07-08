@@ -2,6 +2,7 @@ library angular2.src.router.rules.route_paths.regex_route_path;
 
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, RegExpMatcherWrapper, isBlank;
+
 import "../../url_parser.dart" show Url;
 import "route_path.dart" show RoutePath, GeneratedUrl, MatchedUrl;
 

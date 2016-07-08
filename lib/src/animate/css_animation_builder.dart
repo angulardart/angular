@@ -1,8 +1,8 @@
 library angular2.src.animate.css_animation_builder;
 
-import "css_animation_options.dart" show CssAnimationOptions;
 import "animation.dart" show Animation;
 import "browser_details.dart" show BrowserDetails;
+import "css_animation_options.dart" show CssAnimationOptions;
 
 class CssAnimationBuilder {
   BrowserDetails browserDetails;

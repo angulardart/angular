@@ -10,8 +10,9 @@ import "package:angular2/core.dart"
         Attribute,
         AfterContentInit,
         Input;
-import "package:angular2/src/facade/lang.dart" show isPresent, NumberWrapper;
 import "package:angular2/src/facade/collection.dart" show Map;
+import "package:angular2/src/facade/lang.dart" show isPresent, NumberWrapper;
+
 import "ng_switch.dart" show SwitchView;
 
 const _CATEGORY_DEFAULT = "other";

@@ -1,7 +1,5 @@
 library angular2.src.common.forms.directives.ng_control_name;
 
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
 import "package:angular2/core.dart"
     show
         OnChanges,
@@ -14,10 +12,15 @@ import "package:angular2/core.dart"
         Inject,
         Optional,
         Self;
+import "package:angular2/src/facade/async.dart"
+    show EventEmitter, ObservableWrapper;
+
+import "../model.dart" show Control;
+import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 import "control_container.dart" show ControlContainer;
-import "ng_control.dart" show NgControl;
 import "control_value_accessor.dart"
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
+import "ng_control.dart" show NgControl;
 import "shared.dart"
     show
         controlPath,
@@ -25,8 +28,6 @@ import "shared.dart"
         composeAsyncValidators,
         isPropertyUpdated,
         selectValueAccessor;
-import "../model.dart" show Control;
-import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 import "validators.dart" show ValidatorFn, AsyncValidatorFn;
 
 const controlNameBinding =

@@ -1,28 +1,11 @@
 library angular2.src.compiler.expression_parser.parser;
 
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, StringWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "lexer.dart"
-    show
-        Lexer,
-        EOF,
-        isIdentifier,
-        isQuote,
-        Token,
-        $PERIOD,
-        $COLON,
-        $SEMICOLON,
-        $LBRACKET,
-        $RBRACKET,
-        $COMMA,
-        $LBRACE,
-        $RBRACE,
-        $LPAREN,
-        $RPAREN,
-        $SLASH;
+
 import "ast.dart"
     show
         AST,
@@ -49,6 +32,24 @@ import "ast.dart"
         ASTWithSource,
         AstVisitor,
         Quote;
+import "lexer.dart"
+    show
+        Lexer,
+        EOF,
+        isIdentifier,
+        isQuote,
+        Token,
+        $PERIOD,
+        $COLON,
+        $SEMICOLON,
+        $LBRACKET,
+        $RBRACKET,
+        $COMMA,
+        $LBRACE,
+        $RBRACE,
+        $LPAREN,
+        $RPAREN,
+        $SLASH;
 
 var _implicitReceiver = new ImplicitReceiver();
 // TODO(tbosch): Cannot make this const/final right now because of the transpiler...

@@ -1,7 +1,9 @@
 library angular2.src.compiler.html_parser;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "html_ast.dart"
     show
         HtmlAst,
@@ -11,10 +13,9 @@ import "html_ast.dart"
         HtmlElementAst,
         HtmlExpansionAst,
         HtmlExpansionCaseAst;
-import "package:angular2/src/core/di.dart" show Injectable;
 import "html_lexer.dart" show HtmlToken, HtmlTokenType, tokenizeHtml;
-import "parse_util.dart" show ParseError, ParseSourceSpan;
 import "html_tags.dart" show getHtmlTagDefinition, getNsPrefix, mergeNsAndName;
+import "parse_util.dart" show ParseError, ParseSourceSpan;
 
 class HtmlTreeError extends ParseError {
   String elementName;

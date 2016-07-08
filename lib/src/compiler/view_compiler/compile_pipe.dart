@@ -1,11 +1,12 @@
 library angular2.src.compiler.view_compiler.compile_pipe;
 
-import "package:angular2/src/facade/lang.dart" show isBlank;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "../output/output_ast.dart" as o;
-import "compile_view.dart" show CompileView;
+import "package:angular2/src/facade/lang.dart" show isBlank;
+
 import "../compile_metadata.dart" show CompilePipeMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
+import "../output/output_ast.dart" as o;
+import "compile_view.dart" show CompileView;
 import "util.dart"
     show injectFromViewParentInjector, createPureProxy, getPropertyInView;
 

@@ -1,6 +1,7 @@
 library angular2.src.compiler.view_compiler.view_binder;
 
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
+
 import "../template_ast.dart"
     show
         TemplateAst,
@@ -18,12 +19,8 @@ import "../template_ast.dart"
         DirectiveAst,
         BoundDirectivePropertyAst,
         templateVisitAll;
-import "property_binder.dart"
-    show
-        bindRenderText,
-        bindRenderInputs,
-        bindDirectiveInputs,
-        bindDirectiveHostProps;
+import "compile_element.dart" show CompileElement;
+import "compile_view.dart" show CompileView;
 import "event_binder.dart"
     show bindRenderOutputs, collectEventListeners, bindDirectiveOutputs;
 import "lifecycle_binder.dart"
@@ -33,8 +30,12 @@ import "lifecycle_binder.dart"
         bindDirectiveDestroyLifecycleCallbacks,
         bindPipeDestroyLifecycleCallbacks,
         bindDirectiveDetectChangesLifecycleCallbacks;
-import "compile_view.dart" show CompileView;
-import "compile_element.dart" show CompileElement;
+import "property_binder.dart"
+    show
+        bindRenderText,
+        bindRenderInputs,
+        bindDirectiveInputs,
+        bindDirectiveHostProps;
 
 void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
   var visitor = new ViewBinderVisitor(view);

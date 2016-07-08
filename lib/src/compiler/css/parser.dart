@@ -1,9 +1,5 @@
 library angular2.src.compiler.css.parser;
 
-import "package:angular2/src/compiler/parse_util.dart"
-    show ParseSourceSpan, ParseSourceFile, ParseLocation, ParseError;
-import "package:angular2/src/facade/lang.dart"
-    show bitWiseOr, bitWiseAnd, isPresent;
 import "package:angular2/src/compiler/css/lexer.dart"
     show
         CssLexerMode,
@@ -23,6 +19,11 @@ import "package:angular2/src/compiler/css/lexer.dart"
         $COLON,
         $SEMICOLON,
         isNewline;
+import "package:angular2/src/compiler/parse_util.dart"
+    show ParseSourceSpan, ParseSourceFile, ParseLocation, ParseError;
+import "package:angular2/src/facade/lang.dart"
+    show bitWiseOr, bitWiseAnd, isPresent;
+
 export "package:angular2/src/compiler/css/lexer.dart" show CssToken;
 
 enum BlockType {

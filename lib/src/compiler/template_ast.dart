@@ -1,12 +1,13 @@
 library angular2.src.compiler.template_ast;
 
-import "expression_parser/ast.dart" show AST;
 import "package:angular2/src/facade/lang.dart" show isPresent;
+
 import "compile_metadata.dart"
     show
         CompileDirectiveMetadata,
         CompileTokenMetadata,
         CompileProviderMetadata;
+import "expression_parser/ast.dart" show AST;
 import "parse_util.dart" show ParseSourceSpan;
 
 /**

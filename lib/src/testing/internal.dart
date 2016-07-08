@@ -1,6 +1,7 @@
 library angular2.src.testing.internal;
 
 import 'dart:async';
+
 import 'package:angular2/core.dart'
     show PLATFORM_INITIALIZER;
 import 'package:angular2/platform/testing/browser.dart';
@@ -9,12 +10,14 @@ import 'package:angular2/src/core/reflection/reflection.dart';
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-export "test_component_builder.dart";
-import "internal_injector.dart";
-export "internal_injector.dart";
-export "fake_async.dart";
-export "utils.dart";
 import 'package:test/test.dart';
+
+import "internal_injector.dart";
+
+export "fake_async.dart";
+export "internal_injector.dart";
+export "test_component_builder.dart";
+export "utils.dart";
 
 /// Allows injecting dependencies in [setUp()] and [test()].
 ///

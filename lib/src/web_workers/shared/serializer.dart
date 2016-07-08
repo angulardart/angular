@@ -1,16 +1,17 @@
 library angular2.src.web_workers.shared.serializer;
 
-import "package:angular2/src/facade/lang.dart"
-    show Type, isArray, isPresent, serializeEnum;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart"
-    show Map, StringMapWrapper, MapWrapper;
-import "package:angular2/src/core/render/api.dart" show RenderComponentType;
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/web_workers/shared/render_store.dart"
-    show RenderStore;
 import "package:angular2/src/core/metadata/view.dart"
     show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
+import "package:angular2/src/core/render/api.dart" show RenderComponentType;
+import "package:angular2/src/facade/collection.dart"
+    show Map, StringMapWrapper, MapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart"
+    show Type, isArray, isPresent, serializeEnum;
+import "package:angular2/src/web_workers/shared/render_store.dart"
+    show RenderStore;
+
 import "serialized_types.dart" show LocationType;
 // PRIMITIVE is any type that does not need to be serialized (string, number, boolean)
 

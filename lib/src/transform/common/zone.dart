@@ -3,10 +3,9 @@ library angular2.src.transform.common.zone;
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
+import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:barback/barback.dart';
 import 'package:source_span/source_span.dart';
-
-import 'package:angular2/src/compiler/offline_compiler.dart';
 
 typedef _SimpleCallback();
 

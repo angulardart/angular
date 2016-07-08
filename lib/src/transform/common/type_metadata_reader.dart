@@ -3,10 +3,8 @@ library angular2.transform.common.type_metadata_reader;
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
-
 import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
-
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;

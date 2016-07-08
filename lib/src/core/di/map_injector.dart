@@ -1,6 +1,7 @@
 library angular2.src.core.di.map_injector;
 
 import "package:angular2/src/facade/lang.dart" show isBlank;
+
 import "injector.dart" show Injector, InjectorFactory, THROW_IF_NOT_FOUND;
 
 /**

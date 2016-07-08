@@ -1,25 +1,26 @@
 library angular2.src.core.linker.view;
 
-import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
-import "package:angular2/src/core/di.dart" show Injector;
-import "element.dart" show AppElement;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
-import "package:angular2/src/core/render/api.dart"
-    show Renderer, RenderComponentType;
-import "view_ref.dart" show ViewRef_;
-import "view_type.dart" show ViewType;
-import "view_utils.dart"
-    show ViewUtils, flattenNestedViewRenderNodes, ensureSlotCount;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
+import "package:angular2/src/core/di.dart" show Injector;
+import "package:angular2/src/core/render/api.dart"
+    show Renderer, RenderComponentType;
+import "package:angular2/src/facade/async.dart" show ObservableWrapper;
+import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
+
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
+import "debug_context.dart" show StaticNodeDebugInfo, DebugContext;
+import "element.dart" show AppElement;
+import "element_injector.dart" show ElementInjector;
 import "exceptions.dart"
     show
         ExpressionChangedAfterItHasBeenCheckedException,
         ViewDestroyedException,
         ViewWrappedException;
-import "debug_context.dart" show StaticNodeDebugInfo, DebugContext;
-import "element_injector.dart" show ElementInjector;
+import "view_ref.dart" show ViewRef_;
+import "view_type.dart" show ViewType;
+import "view_utils.dart"
+    show ViewUtils, flattenNestedViewRenderNodes, ensureSlotCount;
 
 const EMPTY_CONTEXT = const Object();
 WtfScopeFn _scope_check = wtfCreateScope('''AppView#check(ascii id)''');

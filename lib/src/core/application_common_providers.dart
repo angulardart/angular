@@ -1,20 +1,21 @@
 library angular2.src.core.application_common_providers;
 
-import "package:angular2/src/facade/lang.dart" show Type;
 import "package:angular2/src/core/di.dart" show Provider;
-import "application_tokens.dart" show APP_ID_RANDOM_PROVIDER;
+import "package:angular2/src/facade/lang.dart" show Type;
+
 import "application_ref.dart" show APPLICATION_CORE_PROVIDERS;
+import "application_tokens.dart" show APP_ID_RANDOM_PROVIDER;
 import "change_detection/change_detection.dart"
     show
         IterableDiffers,
         defaultIterableDiffers,
         KeyValueDiffers,
         defaultKeyValueDiffers;
-import "linker/view_utils.dart" show ViewUtils;
 import "linker/component_resolver.dart" show ComponentResolver;
 import "linker/component_resolver.dart" show ReflectorComponentResolver;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoader;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoader_;
+import "linker/view_utils.dart" show ViewUtils;
 
 Type ___unused;
 /**

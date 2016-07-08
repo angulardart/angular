@@ -1,9 +1,10 @@
 library angular2.src.router.utils;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, Type;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/core.dart" show ComponentFactory;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, Type;
+
 import "lifecycle/lifecycle_annotations_impl.dart" show CanActivate;
 
 class TouchMap {

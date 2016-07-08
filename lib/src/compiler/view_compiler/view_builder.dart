@@ -1,23 +1,17 @@
 library angular2.src.compiler.view_compiler.view_builder;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper, SetWrapper;
-import "../output/output_ast.dart" as o;
-import "../identifiers.dart" show Identifiers, identifierToken;
-import "constants.dart"
-    show
-        ViewConstructorVars,
-        InjectMethodVars,
-        DetectChangesVars,
-        ViewTypeEnum,
-        ViewEncapsulationEnum,
-        ChangeDetectionStrategyEnum,
-        ViewProperties;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
-import "compile_view.dart" show CompileView;
-import "compile_element.dart" show CompileElement, CompileNode;
+import "package:angular2/src/core/linker/view_type.dart" show ViewType;
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular2/src/facade/collection.dart"
+    show ListWrapper, StringMapWrapper, SetWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
+
+import "../compile_metadata.dart"
+    show CompileIdentifierMetadata, CompileDirectiveMetadata;
+import "../identifiers.dart" show Identifiers, identifierToken;
+import "../output/output_ast.dart" as o;
 import "../template_ast.dart"
     show
         TemplateAst,
@@ -35,12 +29,19 @@ import "../template_ast.dart"
         DirectiveAst,
         BoundDirectivePropertyAst,
         templateVisitAll;
+import "compile_element.dart" show CompileElement, CompileNode;
+import "compile_view.dart" show CompileView;
+import "constants.dart"
+    show
+        ViewConstructorVars,
+        InjectMethodVars,
+        DetectChangesVars,
+        ViewTypeEnum,
+        ViewEncapsulationEnum,
+        ChangeDetectionStrategyEnum,
+        ViewProperties;
 import "util.dart"
     show getViewFactoryName, createFlatArray, createDiTokenExpression;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "../compile_metadata.dart"
-    show CompileIdentifierMetadata, CompileDirectiveMetadata;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";

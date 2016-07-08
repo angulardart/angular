@@ -1,12 +1,13 @@
 library angular2.src.core.platform_common_providers;
 
-import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/console.dart" show Console;
-import "reflection/reflection.dart" show Reflector, reflector;
-import "reflection/reflector_reader.dart" show ReflectorReader;
+import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
+
 import "application_ref.dart" show PLATFORM_CORE_PROVIDERS;
+import "reflection/reflection.dart" show Reflector, reflector;
+import "reflection/reflector_reader.dart" show ReflectorReader;
 
 Reflector reflectorFactory() {
   return reflector;

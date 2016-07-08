@@ -1,36 +1,37 @@
 library angular2.src.compiler.runtime_metadata;
 
-import "package:angular2/src/core/di.dart" show resolveForwardRef;
-import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isPresent, isArray, stringify, isString;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "compile_metadata.dart" as cpl;
-import "package:angular2/src/core/metadata/directives.dart" as md;
-import "package:angular2/src/core/metadata/di.dart" as dimd;
-import "directive_resolver.dart" show DirectiveResolver;
-import "pipe_resolver.dart" show PipeResolver;
-import "view_resolver.dart" show ViewResolver;
-import "package:angular2/src/core/metadata/view.dart" show ViewMetadata;
-import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
-import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
-    show LIFECYCLE_HOOKS_VALUES;
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/core/di.dart" show Injectable, Inject, Optional;
-import "package:angular2/src/core/platform_directives_and_pipes.dart"
-    show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
-import "util.dart" show MODULE_SUFFIX, sanitizeIdentifier;
-import "assertions.dart" show assertArrayOfStrings;
 import "package:angular2/src/compiler/url_resolver.dart" show getUrlScheme;
+import "package:angular2/src/core/di.dart" show resolveForwardRef;
+import "package:angular2/src/core/di.dart" show Injectable, Inject, Optional;
+import "package:angular2/src/core/di/metadata.dart"
+    show SelfMetadata, HostMetadata, SkipSelfMetadata;
 import "package:angular2/src/core/di/provider.dart" show Provider;
 import "package:angular2/src/core/di/reflective_provider.dart"
     show
         constructDependencies,
         ReflectiveDependency,
         getInjectorModuleProviders;
-import "package:angular2/src/core/di/metadata.dart"
-    show SelfMetadata, HostMetadata, SkipSelfMetadata;
+import "package:angular2/src/core/metadata/di.dart" as dimd;
 import "package:angular2/src/core/metadata/di.dart" show AttributeMetadata;
+import "package:angular2/src/core/metadata/directives.dart" as md;
+import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
+    show LIFECYCLE_HOOKS_VALUES;
+import "package:angular2/src/core/metadata/view.dart" show ViewMetadata;
+import "package:angular2/src/core/platform_directives_and_pipes.dart"
+    show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
+import "package:angular2/src/core/reflection/reflection.dart" show reflector;
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart"
+    show Type, isBlank, isPresent, isArray, stringify, isString;
+
+import "assertions.dart" show assertArrayOfStrings;
+import "compile_metadata.dart" as cpl;
+import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
+import "directive_resolver.dart" show DirectiveResolver;
+import "pipe_resolver.dart" show PipeResolver;
+import "util.dart" show MODULE_SUFFIX, sanitizeIdentifier;
+import "view_resolver.dart" show ViewResolver;
 
 @Injectable()
 class RuntimeMetadataResolver {

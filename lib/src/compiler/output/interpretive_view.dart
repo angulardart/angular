@@ -1,12 +1,13 @@
 library angular2.src.compiler.output.interpretive_view;
 
-import "package:angular2/src/facade/lang.dart" show isPresent;
-import "package:angular2/src/core/linker/view.dart" show AppView, DebugAppView;
-import "package:angular2/src/core/linker/element.dart" show AppElement;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "output_interpreter.dart" show InstanceFactory, DynamicInstance;
 import "package:angular2/src/core/linker/debug_context.dart"
     show StaticNodeDebugInfo;
+import "package:angular2/src/core/linker/element.dart" show AppElement;
+import "package:angular2/src/core/linker/view.dart" show AppView, DebugAppView;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show isPresent;
+
+import "output_interpreter.dart" show InstanceFactory, DynamicInstance;
 
 class InterpretiveAppViewInstanceFactory implements InstanceFactory {
   DynamicInstance createInstance(

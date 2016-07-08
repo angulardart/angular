@@ -4,12 +4,11 @@ import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/src/generated/ast.dart';
-import 'package:barback/barback.dart';
-
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/url_resolver.dart';
+import 'package:barback/barback.dart';
 
 /// Rewrites `loadLibrary` calls to initialize libraries once loaded.
 ///

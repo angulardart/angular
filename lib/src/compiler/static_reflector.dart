@@ -1,9 +1,5 @@
 library angular2.src.compiler.static_reflector;
 
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
-import "package:angular2/src/facade/lang.dart"
-    show isArray, isPresent, isPrimitive;
 import "package:angular2/src/core/metadata.dart"
     show
         AttributeMetadata,
@@ -21,6 +17,10 @@ import "package:angular2/src/core/metadata.dart"
         ViewChildrenMetadata,
         ViewQueryMetadata,
         QueryMetadata;
+import "package:angular2/src/facade/collection.dart"
+    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/lang.dart"
+    show isArray, isPresent, isPrimitive;
 
 /**
  * The host of the static resolver is expected to be able to provide module metadata in the form of

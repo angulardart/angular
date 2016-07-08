@@ -1,10 +1,10 @@
 library testability.browser_testability;
 
-import 'package:angular2/core.dart';
-import 'package:angular2/platform/common_dom.dart';
-
 import 'dart:html';
 import 'dart:js' as js;
+
+import 'package:angular2/core.dart';
+import 'package:angular2/platform/common_dom.dart';
 
 // Work around http://dartbug.com/17752, copied from
 // https://github.com/angular/angular.dart/blob/master/lib/introspection.dart

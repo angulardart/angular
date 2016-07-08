@@ -1,9 +1,10 @@
 library angular2.src.mock.directive_resolver_mock;
 
-import "package:angular2/src/core/di.dart" show Injectable;
-import "../core/metadata.dart" show DirectiveMetadata, ComponentMetadata;
 import "package:angular2/src/compiler/directive_resolver.dart"
     show DirectiveResolver;
+import "package:angular2/src/core/di.dart" show Injectable;
+
+import "../core/metadata.dart" show DirectiveMetadata, ComponentMetadata;
 
 /// An implementation of [DirectiveResolver] that allows overriding
 /// various properties of directives.

@@ -1,13 +1,14 @@
 library angular2.src.compiler.view_compiler.compile_query;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "../output/output_ast.dart" as o;
-import "../identifiers.dart" show Identifiers;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
-import "compile_view.dart" show CompileView;
+import "../identifiers.dart" show Identifiers;
+import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
+import "compile_view.dart" show CompileView;
 import "util.dart" show getPropertyInView;
 
 class ViewQueryValues {

@@ -1,10 +1,11 @@
 library angular2.src.router.router_providers;
 
-import "router_providers_common.dart" show ROUTER_PROVIDERS_COMMON;
 import "package:angular2/core.dart" show Provider;
+import "package:angular2/platform/common.dart" show PlatformLocation;
 import "package:angular2/src/platform/browser/location/browser_platform_location.dart"
     show BrowserPlatformLocation;
-import "package:angular2/platform/common.dart" show PlatformLocation;
+
+import "router_providers_common.dart" show ROUTER_PROVIDERS_COMMON;
 
 /**
  * A list of [Provider]s. To use the router, you must add this to your application.

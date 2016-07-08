@@ -1,8 +1,10 @@
 library angular2.src.router.route_config.route_config_impl;
 
 import "dart:async";
+
 import "../route_definition.dart" show RouteDefinition;
 import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
+
 export "../route_definition.dart" show RouteDefinition;
 
 Future<dynamic> ___make_dart_analyzer_happy = null;

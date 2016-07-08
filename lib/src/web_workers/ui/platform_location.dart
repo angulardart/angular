@@ -1,23 +1,25 @@
 library angular2.src.web_workers.ui.platform_location;
 
 import "dart:async";
-import "package:angular2/src/platform/browser/location/browser_platform_location.dart"
-    show BrowserPlatformLocation;
+
 import "package:angular2/platform/common.dart" show UrlChangeListener;
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/web_workers/shared/messaging_api.dart"
-    show ROUTER_CHANNEL;
-import "package:angular2/src/web_workers/shared/service_message_broker.dart"
-    show ServiceMessageBrokerFactory, ServiceMessageBroker;
-import "package:angular2/src/web_workers/shared/serializer.dart"
-    show PRIMITIVE, Serializer;
-import "bind.dart" show bind;
-import "package:angular2/src/web_workers/shared/serialized_types.dart"
-    show LocationType;
-import "package:angular2/src/web_workers/shared/message_bus.dart"
-    show MessageBus;
 import "package:angular2/src/facade/async.dart"
     show EventEmitter, ObservableWrapper, PromiseWrapper;
+import "package:angular2/src/platform/browser/location/browser_platform_location.dart"
+    show BrowserPlatformLocation;
+import "package:angular2/src/web_workers/shared/message_bus.dart"
+    show MessageBus;
+import "package:angular2/src/web_workers/shared/messaging_api.dart"
+    show ROUTER_CHANNEL;
+import "package:angular2/src/web_workers/shared/serialized_types.dart"
+    show LocationType;
+import "package:angular2/src/web_workers/shared/serializer.dart"
+    show PRIMITIVE, Serializer;
+import "package:angular2/src/web_workers/shared/service_message_broker.dart"
+    show ServiceMessageBrokerFactory, ServiceMessageBroker;
+
+import "bind.dart" show bind;
 
 @Injectable()
 class MessageBasedPlatformLocation {

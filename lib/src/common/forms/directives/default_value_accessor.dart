@@ -2,9 +2,10 @@ library angular2.src.common.forms.directives.default_value_accessor;
 
 import "package:angular2/core.dart"
     show Directive, ElementRef, Renderer, Provider;
+import "package:angular2/src/facade/lang.dart" show isBlank;
+
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: DefaultValueAccessor, multi: true);

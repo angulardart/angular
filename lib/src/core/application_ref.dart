@@ -1,28 +1,30 @@
 library angular2.src.core.application_ref;
 
 import "dart:async";
-import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
-import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isPresent, assertionsEnabled, isPromise;
+
+import "package:angular2/src/core/change_detection/change_detector_ref.dart"
+    show ChangeDetectorRef;
+import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/di.dart" show Provider, Injector, Injectable;
-import "application_tokens.dart" show PLATFORM_INITIALIZER, APP_INITIALIZER;
+import "package:angular2/src/core/linker/component_factory.dart"
+    show ComponentRef;
+import "package:angular2/src/core/linker/component_factory.dart"
+    show ComponentFactory;
+import "package:angular2/src/core/linker/component_resolver.dart"
+    show ComponentResolver;
+import "package:angular2/src/core/testability/testability.dart"
+    show TestabilityRegistry, Testability;
+import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
 import "package:angular2/src/facade/async.dart"
     show PromiseWrapper, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/core/testability/testability.dart"
-    show TestabilityRegistry, Testability;
-import "package:angular2/src/core/linker/component_resolver.dart"
-    show ComponentResolver;
-import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentRef;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, ExceptionHandler;
-import "package:angular2/src/core/console.dart" show Console;
+import "package:angular2/src/facade/lang.dart"
+    show Type, isBlank, isPresent, assertionsEnabled, isPromise;
+
+import "application_tokens.dart" show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "profile/profile.dart" show wtfLeave, wtfCreateScope, WtfScopeFn;
-import "package:angular2/src/core/change_detection/change_detector_ref.dart"
-    show ChangeDetectorRef;
-import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentFactory;
 
 /**
  * Create an Angular zone.

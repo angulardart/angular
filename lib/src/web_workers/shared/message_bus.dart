@@ -1,7 +1,8 @@
 library angular2.src.web_workers.shared.message_bus;
 
-import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
+
 export "package:angular2/src/facade/async.dart" show EventEmitter, Stream;
 
 /**

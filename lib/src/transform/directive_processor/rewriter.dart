@@ -3,21 +3,20 @@ library angular2.transform.directive_processor.rewriter;
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
-import 'package:barback/barback.dart' show AssetId;
-
 import 'package:angular2/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/code/ng_deps_code.dart';
-import 'package:angular2/src/transform/common/type_metadata_reader.dart';
 import 'package:angular2/src/transform/common/interface_matcher.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/ng_compiler.dart';
 import 'package:angular2/src/transform/common/ng_meta.dart';
+import 'package:angular2/src/transform/common/type_metadata_reader.dart';
 import 'package:angular2/src/transform/common/url_resolver.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
+import 'package:barback/barback.dart' show AssetId;
 
 import 'inliner.dart';
 

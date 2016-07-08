@@ -2,11 +2,10 @@ library angular2.transform.deferred_rewriter.transformer;
 
 import 'dart:async';
 
-import 'package:barback/barback.dart';
-
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
+import 'package:barback/barback.dart';
 
 import 'rewriter.dart';
 

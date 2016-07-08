@@ -1,8 +1,9 @@
 library angular2.src.common.pipes.replace_pipe;
 
+import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isString, isNumber, isFunction, RegExpWrapper, StringWrapper;
-import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
+
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 /**

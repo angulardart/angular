@@ -1,7 +1,8 @@
 library angular2.src.web_workers.worker.web_socket_message_bus;
 
-import 'dart:html';
 import 'dart:convert' show JSON;
+import 'dart:html';
+
 import 'package:angular2/src/web_workers/shared/generic_message_bus.dart';
 
 class WebSocketMessageBus extends GenericMessageBus {

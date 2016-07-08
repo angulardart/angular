@@ -1,10 +1,6 @@
 library angular2.src.compiler.directive_resolver;
 
 import "package:angular2/src/core/di.dart" show resolveForwardRef, Injectable;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, stringify;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
 import "package:angular2/src/core/metadata.dart"
     show
         DirectiveMetadata,
@@ -20,6 +16,10 @@ import "package:angular2/src/core/metadata.dart"
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
+import "package:angular2/src/facade/collection.dart"
+    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show Type, isPresent, stringify;
 
 bool _isDirectiveMetadata(dynamic type) {
   return type is DirectiveMetadata;

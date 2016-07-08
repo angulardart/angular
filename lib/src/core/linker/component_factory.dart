@@ -1,13 +1,14 @@
 library angular2.src.core.linker.component_factory;
 
 import "package:angular2/src/core/di.dart" show Injector;
+import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
+
+import "../change_detection/change_detection.dart" show ChangeDetectorRef;
+import "element.dart" show AppElement;
 import "element_ref.dart" show ElementRef;
 import "view_ref.dart" show ViewRef;
-import "element.dart" show AppElement;
 import "view_utils.dart" show ViewUtils;
-import "../change_detection/change_detection.dart" show ChangeDetectorRef;
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 
 /**
  * Represents an instance of a Component created via a [ComponentFactory].

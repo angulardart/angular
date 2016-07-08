@@ -1,26 +1,27 @@
 library angular2.src.compiler.view_compiler.property_binder;
 
+import "package:angular2/src/core/change_detection/constants.dart"
+    show isDefaultChangeDetectionStrategy;
+import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
+    show LifecycleHooks;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+
 import "../expression_parser/ast.dart" as cdAst;
-import "../output/output_ast.dart" as o;
 import "../identifiers.dart" show Identifiers;
-import "constants.dart" show DetectChangesVars;
+import "../output/output_ast.dart" as o;
 import "../template_ast.dart"
     show
         BoundTextAst,
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
-import "compile_view.dart" show CompileView;
+import "../util.dart" show camelCaseToDashCase;
+import "compile_binding.dart" show CompileBinding;
 import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_method.dart" show CompileMethod;
-import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
-    show LifecycleHooks;
-import "package:angular2/src/core/change_detection/constants.dart"
-    show isDefaultChangeDetectionStrategy;
-import "../util.dart" show camelCaseToDashCase;
+import "compile_view.dart" show CompileView;
+import "constants.dart" show DetectChangesVars;
 import "expression_converter.dart" show convertCdExpressionToIr;
-import "compile_binding.dart" show CompileBinding;
 
 o.ReadPropExpr createBindFieldExpr(num exprIndex) {
   return o.THIS_EXPR.prop('''_expr_${ exprIndex}''');

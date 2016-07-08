@@ -1,5 +1,7 @@
 library angular2.platform.testing.browser_static;
 
+import "package:angular2/compiler.dart" show DirectiveResolver, ViewResolver;
+import "package:angular2/compiler.dart" show XHR;
 import "package:angular2/core.dart"
     show
         APP_ID,
@@ -7,29 +9,27 @@ import "package:angular2/core.dart"
         Provider,
         PLATFORM_COMMON_PROVIDERS,
         PLATFORM_INITIALIZER;
-import "package:angular2/compiler.dart" show DirectiveResolver, ViewResolver;
-import "package:angular2/src/platform/browser_common.dart"
-    show BROWSER_APP_COMMON_PROVIDERS;
-import "package:angular2/src/platform/browser/browser_adapter.dart"
-    show BrowserDomAdapter;
+import "package:angular2/platform/common.dart" show LocationStrategy;
+import "package:angular2/platform/common_dom.dart" show ELEMENT_PROBE_PROVIDERS;
 import "package:angular2/src/animate/animation_builder.dart"
     show AnimationBuilder;
 import "package:angular2/src/mock/animation_builder_mock.dart"
     show MockAnimationBuilder;
 import "package:angular2/src/mock/directive_resolver_mock.dart"
     show MockDirectiveResolver;
-import "package:angular2/src/mock/view_resolver_mock.dart"
-    show MockViewResolver;
 import "package:angular2/src/mock/mock_location_strategy.dart"
     show MockLocationStrategy;
-import "package:angular2/platform/common.dart" show LocationStrategy;
 import "package:angular2/src/mock/ng_zone_mock.dart" show MockNgZone;
+import "package:angular2/src/mock/view_resolver_mock.dart"
+    show MockViewResolver;
+import "package:angular2/src/platform/browser/browser_adapter.dart"
+    show BrowserDomAdapter;
 import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
-import "package:angular2/compiler.dart" show XHR;
+import "package:angular2/src/platform/browser_common.dart"
+    show BROWSER_APP_COMMON_PROVIDERS;
 import "package:angular2/src/testing/test_component_builder.dart"
     show TestComponentBuilder;
 import "package:angular2/src/testing/utils.dart" show BrowserDetection;
-import "package:angular2/platform/common_dom.dart" show ELEMENT_PROBE_PROVIDERS;
 import "package:angular2/src/testing/utils.dart" show Log;
 
 initBrowserTests() {

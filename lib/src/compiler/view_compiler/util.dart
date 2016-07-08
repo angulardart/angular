@@ -1,15 +1,16 @@
 library angular2.src.compiler.view_compiler.util;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "../output/output_ast.dart" as o;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "../compile_metadata.dart"
     show
         CompileTokenMetadata,
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
-import "compile_view.dart" show CompileView;
 import "../identifiers.dart" show Identifiers;
+import "../output/output_ast.dart" as o;
+import "compile_view.dart" show CompileView;
 
 o.Expression getPropertyInView(
     o.Expression property, CompileView callingView, CompileView definedView) {

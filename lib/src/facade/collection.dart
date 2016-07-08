@@ -2,8 +2,9 @@ library facade.collection;
 
 import 'dart:collection' show IterableBase;
 import 'dart:convert' show JsonEncoder;
-export 'dart:core' show Iterator, Map, List, Set;
 import 'dart:math' show max, min;
+
+export 'dart:core' show Iterator, Map, List, Set;
 
 var jsonEncoder = new JsonEncoder();
 

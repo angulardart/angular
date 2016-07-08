@@ -1,6 +1,7 @@
 library angular2.src.web_workers.shared.isolate_message_bus;
 
 import 'dart:isolate';
+
 import 'package:angular2/src/web_workers/shared/generic_message_bus.dart';
 
 class IsolateMessageBus extends GenericMessageBus {

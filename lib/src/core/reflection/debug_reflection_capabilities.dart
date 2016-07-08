@@ -1,10 +1,12 @@
 library reflection.debug_reflection_capabilities;
 
 import 'dart:mirrors';
+
 import 'package:logging/logging.dart' as log;
 import 'package:stack_trace/stack_trace.dart';
-import 'types.dart';
+
 import 'reflection_capabilities.dart' as standard;
+import 'types.dart';
 
 class ReflectionCapabilities extends standard.ReflectionCapabilities {
   final bool _verbose;

@@ -1,11 +1,12 @@
 library angular2.src.router.rules.route_paths.param_route_path;
 
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, StringWrapper, isPresent, isBlank;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
-import "../../utils.dart" show TouchMap, normalizeString;
+
 import "../../url_parser.dart" show Url, RootUrl, convertUrlParamsToArray;
+import "../../utils.dart" show TouchMap, normalizeString;
 import "route_path.dart" show RoutePath, GeneratedUrl, MatchedUrl;
 
 /**

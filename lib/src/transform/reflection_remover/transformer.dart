@@ -2,14 +2,13 @@ library angular2.transform.reflection_remover.transformer;
 
 import 'dart:async';
 
-import 'package:barback/barback.dart';
-
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/mirror_mode.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/options.dart';
 import 'package:angular2/src/transform/common/options_reader.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
+import 'package:barback/barback.dart';
 
 import 'remove_reflection_capabilities.dart';
 

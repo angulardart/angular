@@ -1,11 +1,12 @@
 library angular2.src.core.testability.testability;
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart" show MapWrapper;
-import "package:angular2/src/facade/lang.dart" show scheduleMicroTask;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "../zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
+import "package:angular2/src/facade/collection.dart" show MapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show scheduleMicroTask;
+
+import "../zone/ng_zone.dart" show NgZone;
 
 /**
  * The Testability service provides testing hooks that can be accessed from

@@ -1,12 +1,14 @@
 library angular2.src.router.rules.rules;
 
 import "dart:async";
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+
 import "package:angular2/src/facade/collection.dart" show Map;
-import "route_handlers/route_handler.dart" show RouteHandler;
-import "../url_parser.dart" show Url, convertUrlParamsToArray;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "../instruction.dart" show ComponentInstruction;
+import "../url_parser.dart" show Url, convertUrlParamsToArray;
+import "route_handlers/route_handler.dart" show RouteHandler;
 import "route_paths/route_path.dart" show RoutePath;
 import "route_paths/route_path.dart" show GeneratedUrl;
 

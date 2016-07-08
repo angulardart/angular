@@ -1,10 +1,9 @@
 library angular2.transform.common.code.import_export_code;
 
 import 'package:analyzer/analyzer.dart';
-
 import 'package:angular2/src/transform/common/mirror_matcher.dart';
-import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/model/import_export_model.pb.dart';
+import 'package:angular2/src/transform/common/names.dart';
 
 const _mirrorMatcher = const MirrorMatcher();
 

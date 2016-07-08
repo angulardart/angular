@@ -1,12 +1,13 @@
-import 'package:build/build.dart';
-import 'package:analyzer/src/generated/element.dart';
-import 'src/transform/common/url_resolver.dart';
-
 import 'dart:async';
+
+import 'package:analyzer/src/generated/element.dart';
 import 'package:angular2/i18n.dart';
-import 'package:angular2/src/compiler/expression_parser/parser.dart';
 import 'package:angular2/src/compiler/expression_parser/lexer.dart';
+import 'package:angular2/src/compiler/expression_parser/parser.dart';
 import 'package:angular2/src/compiler/html_parser.dart';
+import 'package:build/build.dart';
+
+import 'src/transform/common/url_resolver.dart';
 
 /**
  * An command-line utility extracting i18n messages from an application.

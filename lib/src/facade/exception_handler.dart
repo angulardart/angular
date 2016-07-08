@@ -1,9 +1,9 @@
 library angular2.src.facade.exception_handler;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/base_wrapped_exception.dart"
     show BaseWrappedException;
 import "package:angular2/src/facade/collection.dart" show isListLikeIterable;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 class _ArrayLogger {
   List<dynamic> res = [];

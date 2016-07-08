@@ -1,6 +1,7 @@
 library angular2.src.core.reflection.platform_reflection_capabilities;
 
 import "package:angular2/src/facade/lang.dart" show Type;
+
 import "types.dart" show GetterFn, SetterFn, MethodFn;
 
 abstract class PlatformReflectionCapabilities {

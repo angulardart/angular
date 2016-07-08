@@ -1,6 +1,30 @@
 library angular2.platform.browser;
 
 import "dart:async";
+
+import "package:angular2/compiler.dart" show COMPILER_PROVIDERS;
+import "package:angular2/compiler.dart" show XHR;
+import "package:angular2/core.dart"
+    show
+        ComponentRef,
+        coreLoadAndBootstrap,
+        reflector,
+        ReflectiveInjector,
+        PlatformRef,
+        getPlatform,
+        createPlatform,
+        assertPlatform;
+import "package:angular2/src/core/di.dart" show Provider;
+import "package:angular2/src/core/reflection/reflection_capabilities.dart"
+    show ReflectionCapabilities;
+import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
+import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
+import "package:angular2/src/platform/browser_common.dart"
+    show
+        BROWSER_PROVIDERS,
+        BROWSER_APP_COMMON_PROVIDERS,
+        BROWSER_PLATFORM_MARKER;
+
 export "package:angular2/src/core/angular_entrypoint.dart";
 export "package:angular2/src/platform/browser_common.dart"
     show
@@ -15,28 +39,6 @@ export "package:angular2/src/platform/browser_common.dart"
         DOCUMENT,
         enableDebugTools,
         disableDebugTools;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
-import "package:angular2/src/platform/browser_common.dart"
-    show
-        BROWSER_PROVIDERS,
-        BROWSER_APP_COMMON_PROVIDERS,
-        BROWSER_PLATFORM_MARKER;
-import "package:angular2/compiler.dart" show COMPILER_PROVIDERS;
-import "package:angular2/core.dart"
-    show
-        ComponentRef,
-        coreLoadAndBootstrap,
-        reflector,
-        ReflectiveInjector,
-        PlatformRef,
-        getPlatform,
-        createPlatform,
-        assertPlatform;
-import "package:angular2/src/core/reflection/reflection_capabilities.dart"
-    show ReflectionCapabilities;
-import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
-import "package:angular2/compiler.dart" show XHR;
-import "package:angular2/src/core/di.dart" show Provider;
 
 /**
  * An array of providers that should be passed into `application()` when bootstrapping a component.

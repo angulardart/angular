@@ -1,7 +1,7 @@
 library angular2.src.i18n.shared;
 
-import "package:angular2/src/compiler/parse_util.dart"
-    show ParseSourceSpan, ParseError;
+import "package:angular2/src/compiler/expression_parser/parser.dart"
+    show Parser;
 import "package:angular2/src/compiler/html_ast.dart"
     show
         HtmlAst,
@@ -13,11 +13,12 @@ import "package:angular2/src/compiler/html_ast.dart"
         HtmlExpansionAst,
         HtmlExpansionCaseAst,
         htmlVisitAll;
+import "package:angular2/src/compiler/parse_util.dart"
+    show ParseSourceSpan, ParseError;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, StringWrapper;
+
 import "message.dart" show Message;
-import "package:angular2/src/compiler/expression_parser/parser.dart"
-    show Parser;
 
 const I18N_ATTR = "i18n";
 const I18N_ATTR_PREFIX = "i18n-";

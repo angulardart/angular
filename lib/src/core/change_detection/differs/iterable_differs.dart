@@ -1,12 +1,13 @@
 library angular2.src.core.change_detection.differs.iterable_differs;
 
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, getTypeNameForDebugging;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart"
+    show isBlank, isPresent, getTypeNameForDebugging;
+
+import "../change_detector_ref.dart" show ChangeDetectorRef;
 
 /// A strategy for tracking changes over time to an iterable. Used for [NgFor]
 /// to respond to changes in an iterable by effecting equivalent changes in the

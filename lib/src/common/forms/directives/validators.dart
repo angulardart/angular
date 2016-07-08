@@ -1,10 +1,11 @@
 library angular2.src.common.forms.directives.validators;
 
 import "package:angular2/core.dart" show Provider, Attribute, Directive;
-import "../validators.dart" show Validators, NG_VALIDATORS;
+import "package:angular2/src/facade/lang.dart" show NumberWrapper;
+
 import "../model.dart" show AbstractControl;
 import "../model.dart" as modelModule;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper;
+import "../validators.dart" show Validators, NG_VALIDATORS;
 
 /**
  * An interface that can be implemented by classes that can act as validators.

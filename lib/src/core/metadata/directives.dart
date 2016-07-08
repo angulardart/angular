@@ -1,10 +1,10 @@
 library angular2.src.core.metadata.directives;
 
-import "package:angular2/src/facade/lang.dart" show isPresent;
-import "package:angular2/src/core/di/metadata.dart" show InjectableMetadata;
 import "package:angular2/src/core/change_detection.dart"
     show ChangeDetectionStrategy;
+import "package:angular2/src/core/di/metadata.dart" show InjectableMetadata;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 /**
  * Directives allow you to attach behavior to elements in the DOM.

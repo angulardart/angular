@@ -1,9 +1,9 @@
 library angular2.src.platform.dom.debug.by;
 
-import "package:angular2/src/facade/lang.dart" show Type, isPresent;
-import "package:angular2/src/facade/collection.dart" show Predicate;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/core.dart" show DebugElement;
+import "package:angular2/src/facade/collection.dart" show Predicate;
+import "package:angular2/src/facade/lang.dart" show Type, isPresent;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 /**
  * Predicates for use with [DebugElement]'s query functions.

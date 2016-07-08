@@ -1,12 +1,13 @@
 library angular2.src.compiler.html_lexer;
 
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show StringWrapper, NumberWrapper, isPresent, isBlank;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "parse_util.dart"
-    show ParseLocation, ParseError, ParseSourceFile, ParseSourceSpan;
+
 import "html_tags.dart"
     show getHtmlTagDefinition, HtmlTagContentType, NAMED_ENTITIES;
+import "parse_util.dart"
+    show ParseLocation, ParseError, ParseSourceFile, ParseSourceSpan;
 
 enum HtmlTokenType {
   TAG_OPEN_START,

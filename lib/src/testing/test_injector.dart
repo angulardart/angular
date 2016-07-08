@@ -2,8 +2,8 @@ library angular2.src.testing.test_injector;
 
 import "package:angular2/core.dart"
     show ReflectiveInjector, PLATFORM_INITIALIZER;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 class TestInjector {
   bool _instantiated = false;

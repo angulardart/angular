@@ -1,9 +1,7 @@
 library angular2.src.i18n.i18n_html_parser;
 
-import "package:angular2/src/compiler/html_parser.dart"
-    show HtmlParser, HtmlParseTreeResult;
-import "package:angular2/src/compiler/parse_util.dart"
-    show ParseSourceSpan, ParseError;
+import "package:angular2/src/compiler/expression_parser/parser.dart"
+    show Parser;
 import "package:angular2/src/compiler/html_ast.dart"
     show
         HtmlAst,
@@ -15,15 +13,18 @@ import "package:angular2/src/compiler/html_ast.dart"
         HtmlExpansionAst,
         HtmlExpansionCaseAst,
         htmlVisitAll;
+import "package:angular2/src/compiler/html_parser.dart"
+    show HtmlParser, HtmlParseTreeResult;
+import "package:angular2/src/compiler/parse_util.dart"
+    show ParseSourceSpan, ParseError;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, NumberWrapper, isPresent;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/compiler/expression_parser/parser.dart"
-    show Parser;
-import "message.dart" show id;
+
 import "expander.dart" show expandNodes;
+import "message.dart" show id;
 import "shared.dart"
     show
         messageFromAttribute,

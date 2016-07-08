@@ -4,6 +4,7 @@
 library angular2.src.transform.common.model.proto_reflection_info_model;
 
 import 'package:protobuf/protobuf.dart';
+
 import 'annotation_model.pb.dart';
 import 'parameter_model.pb.dart';
 

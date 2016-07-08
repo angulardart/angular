@@ -1,8 +1,9 @@
 library angular2.src.web_workers.worker.xhr_impl;
 
 import "dart:async";
-import "package:angular2/src/core/di.dart" show Injectable;
+
 import "package:angular2/src/compiler/xhr.dart" show XHR;
+import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/web_workers/shared/client_message_broker.dart"
     show FnArg, UiArguments, ClientMessageBroker, ClientMessageBrokerFactory;
 import "package:angular2/src/web_workers/shared/messaging_api.dart"

@@ -1,8 +1,10 @@
 library angular2.src.router.interfaces;
 
 import "dart:async";
-import "instruction.dart" show ComponentInstruction;
+
 import "package:angular2/src/facade/lang.dart" show global;
+
+import "instruction.dart" show ComponentInstruction;
 // This is here only so that after TS transpilation the file is not empty.
 
 // TODO(rado): find a better way to fix this, or remove if likely culprit

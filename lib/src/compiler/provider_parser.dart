@@ -1,10 +1,9 @@
 library angular2.src.compiler.provider_parser;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "template_ast.dart"
-    show ReferenceAst, AttrAst, DirectiveAst, ProviderAst, ProviderAstType;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
+
 import "compile_metadata.dart"
     show
         CompileTypeMetadata,
@@ -16,6 +15,8 @@ import "compile_metadata.dart"
         CompileDiDependencyMetadata;
 import "identifiers.dart" show Identifiers, identifierToken;
 import "parse_util.dart" show ParseSourceSpan, ParseError;
+import "template_ast.dart"
+    show ReferenceAst, AttrAst, DirectiveAst, ProviderAst, ProviderAstType;
 
 class ProviderError extends ParseError {
   ProviderError(String message, ParseSourceSpan span) : super(span, message) {

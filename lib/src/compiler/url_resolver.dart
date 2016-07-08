@@ -1,9 +1,9 @@
 library angular2.src.services.url_resolver;
 
-import 'package:angular2/src/core/di.dart' show Injectable, Inject, Provider;
-import 'package:angular2/src/facade/lang.dart' show isPresent, StringWrapper;
 import 'package:angular2/src/core/application_tokens.dart'
     show PACKAGE_ROOT_URL;
+import 'package:angular2/src/core/di.dart' show Injectable, Inject, Provider;
+import 'package:angular2/src/facade/lang.dart' show isPresent, StringWrapper;
 
 const _ASSET_SCHEME = 'asset:';
 

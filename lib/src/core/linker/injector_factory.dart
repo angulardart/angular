@@ -1,8 +1,9 @@
 library angular2.src.core.linker.injector_factory;
 
-import "../di/injector.dart" show Injector, THROW_IF_NOT_FOUND;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank;
+
+import "../di/injector.dart" show Injector, THROW_IF_NOT_FOUND;
 
 const _UNDEFINED = const Object();
 

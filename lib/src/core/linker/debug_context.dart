@@ -1,10 +1,11 @@
 library angular2.src.core.linker.debug_context;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
+import "package:angular2/src/facade/collection.dart"
+    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "view.dart" show DebugAppView;
 import "view_type.dart" show ViewType;
 

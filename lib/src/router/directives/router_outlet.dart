@@ -1,10 +1,7 @@
 library angular2.src.router.directives.router_outlet;
 
 import "dart:async";
-import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, EventEmitter;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+
 import "package:angular2/core.dart"
     show
         Directive,
@@ -16,12 +13,17 @@ import "package:angular2/core.dart"
         OnDestroy,
         Output,
         MapInjector;
-import "../router.dart" as routerMod;
+import "package:angular2/src/facade/async.dart"
+    show PromiseWrapper, EventEmitter;
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
-import "../lifecycle/lifecycle_annotations.dart" as hookMod;
-import "../lifecycle/route_lifecycle_reflector.dart" show hasLifecycleHook;
 import "../interfaces.dart"
     show OnActivate, CanReuse, OnReuse, OnDeactivate, CanDeactivate;
+import "../lifecycle/lifecycle_annotations.dart" as hookMod;
+import "../lifecycle/route_lifecycle_reflector.dart" show hasLifecycleHook;
+import "../router.dart" as routerMod;
 
 var _resolveToTrue = PromiseWrapper.resolve(true);
 

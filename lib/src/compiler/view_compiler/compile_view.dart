@@ -1,26 +1,27 @@
 library angular2.src.compiler.view_compiler.compile_view;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "../output/output_ast.dart" as o;
-import "constants.dart" show EventHandlerVars;
-import "compile_query.dart"
-    show CompileQuery, createQueryList, addQueryToTokenMap;
-import "expression_converter.dart" show NameResolver;
-import "compile_element.dart" show CompileElement, CompileNode;
-import "compile_method.dart" show CompileMethod;
-import "compile_pipe.dart" show CompilePipe;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "../compile_metadata.dart"
     show
         CompileDirectiveMetadata,
         CompilePipeMetadata,
         CompileIdentifierMetadata,
         CompileTokenMap;
-import "util.dart" show getViewFactoryName, getPropertyInView, createPureProxy;
 import "../config.dart" show CompilerConfig;
-import "compile_binding.dart" show CompileBinding;
 import "../identifiers.dart" show Identifiers;
+import "../output/output_ast.dart" as o;
+import "compile_binding.dart" show CompileBinding;
+import "compile_element.dart" show CompileElement, CompileNode;
+import "compile_method.dart" show CompileMethod;
+import "compile_pipe.dart" show CompilePipe;
+import "compile_query.dart"
+    show CompileQuery, createQueryList, addQueryToTokenMap;
+import "constants.dart" show EventHandlerVars;
+import "expression_converter.dart" show NameResolver;
+import "util.dart" show getViewFactoryName, getPropertyInView, createPureProxy;
 
 class CompileView implements NameResolver {
   CompileDirectiveMetadata component;

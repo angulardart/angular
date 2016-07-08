@@ -2,6 +2,7 @@ library angular2.src.compiler.output.output_ast;
 
 import "package:angular2/src/facade/lang.dart"
     show isString, isPresent, isBlank;
+
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 
 //// Types

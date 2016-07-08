@@ -1,10 +1,10 @@
 library angular2.transform.common.options;
 
+import 'package:barback/src/asset/asset_id.dart';
 import 'package:glob/glob.dart';
 
 import 'annotation_matcher.dart';
 import 'mirror_mode.dart';
-import 'package:barback/src/asset/asset_id.dart';
 
 const CUSTOM_ANNOTATIONS_PARAM = 'custom_annotations';
 const ENTRY_POINT_PARAM = 'entry_points';

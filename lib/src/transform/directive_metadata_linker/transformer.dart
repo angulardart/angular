@@ -3,14 +3,13 @@ library angular2.transform.directive_metadata_linker.transformer;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:barback/barback.dart';
-
 import 'package:angular2/src/transform/common/asset_reader.dart';
-import 'package:angular2/src/transform/common/names.dart';
-import 'package:angular2/src/transform/common/zone.dart' as zone;
-import 'package:angular2/src/transform/common/options.dart';
 import 'package:angular2/src/transform/common/logging.dart';
+import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/ng_meta.dart';
+import 'package:angular2/src/transform/common/options.dart';
+import 'package:angular2/src/transform/common/zone.dart' as zone;
+import 'package:barback/barback.dart';
 
 import 'ng_meta_linker.dart';
 

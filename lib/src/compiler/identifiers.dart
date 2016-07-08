@@ -1,10 +1,28 @@
 library angular2.src.compiler.identifiers;
 
-import "compile_metadata.dart"
-    show CompileIdentifierMetadata, CompileTokenMetadata;
-import "package:angular2/src/core/linker/view.dart" show AppView, DebugAppView;
+import "package:angular2/src/core/change_detection/change_detection.dart"
+    show
+        uninitialized,
+        devModeEqual,
+        SimpleChange,
+        ValueUnwrapper,
+        ChangeDetectorRef,
+        ChangeDetectorState,
+        ChangeDetectionStrategy;
+import "package:angular2/src/core/di/injector.dart" show Injector;
+import "package:angular2/src/core/linker.dart" show QueryList;
 import "package:angular2/src/core/linker/debug_context.dart"
     show StaticNodeDebugInfo, DebugContext;
+import "package:angular2/src/core/linker/element.dart" show AppElement;
+import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
+import "package:angular2/src/core/linker/injector_factory.dart"
+    show CodegenInjector, CodegenInjectorFactory;
+import "package:angular2/src/core/linker/template_ref.dart"
+    show TemplateRef, TemplateRef_;
+import "package:angular2/src/core/linker/view.dart" show AppView, DebugAppView;
+import "package:angular2/src/core/linker/view_container_ref.dart"
+    show ViewContainerRef;
+import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/linker/view_utils.dart"
     show
         ViewUtils,
@@ -24,30 +42,13 @@ import "package:angular2/src/core/linker/view_utils.dart"
         pureProxy8,
         pureProxy9,
         pureProxy10;
-import "package:angular2/src/core/change_detection/change_detection.dart"
-    show
-        uninitialized,
-        devModeEqual,
-        SimpleChange,
-        ValueUnwrapper,
-        ChangeDetectorRef,
-        ChangeDetectorState,
-        ChangeDetectionStrategy;
-import "package:angular2/src/core/linker/element.dart" show AppElement;
-import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/core/linker/view_container_ref.dart"
-    show ViewContainerRef;
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RenderComponentType;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/core/linker.dart" show QueryList;
-import "package:angular2/src/core/di/injector.dart" show Injector;
-import "package:angular2/src/core/linker/template_ref.dart"
-    show TemplateRef, TemplateRef_;
+
+import "compile_metadata.dart"
+    show CompileIdentifierMetadata, CompileTokenMetadata;
 import "util.dart" show MODULE_SUFFIX;
-import "package:angular2/src/core/linker/injector_factory.dart"
-    show CodegenInjector, CodegenInjectorFactory;
 
 var APP_VIEW_MODULE_URL =
     "asset:angular2/lib/src/core/linker/view" + MODULE_SUFFIX;

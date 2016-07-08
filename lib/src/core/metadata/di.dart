@@ -1,8 +1,8 @@
 library angular2.src.core.metadata.di;
 
-import "package:angular2/src/facade/lang.dart" show stringify;
 import "package:angular2/src/core/di/forward_ref.dart" show resolveForwardRef;
 import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
+import "package:angular2/src/facade/lang.dart" show stringify;
 
 /**
  * Specifies that a constant attribute value should be injected.

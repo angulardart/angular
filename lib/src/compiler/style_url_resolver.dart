@@ -3,9 +3,9 @@
 // https://github.com/webcomponents/webcomponentsjs/blob/master/src/HTMLImports/path.js
 library angular2.src.compiler.style_url_resolver;
 
+import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/facade/lang.dart"
     show RegExp, RegExpWrapper, StringWrapper, isPresent, isBlank;
-import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 
 class StyleWithImports {
   String style;

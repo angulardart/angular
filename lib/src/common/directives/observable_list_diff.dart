@@ -1,9 +1,10 @@
 library angular2.directives.observable_list_iterable_diff;
 
-import 'package:observe/observe.dart' show ObservableList;
+import 'dart:async';
+
 import 'package:angular2/core.dart';
 import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
-import 'dart:async';
+import 'package:observe/observe.dart' show ObservableList;
 
 class ObservableListDiff extends DefaultIterableDiffer {
   ChangeDetectorRef _ref;

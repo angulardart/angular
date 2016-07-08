@@ -1,7 +1,8 @@
 library angular2.src.compiler.view_compiler.compile_method;
 
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
+
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show TemplateAst;
 import "compile_view.dart" show CompileView;

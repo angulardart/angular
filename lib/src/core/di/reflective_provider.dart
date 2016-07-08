@@ -1,11 +1,14 @@
 library angular2.src.core.di.reflective_provider;
 
-import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isPresent, isArray, isType;
+import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/collection.dart"
     show MapWrapper, ListWrapper, StringMapWrapper;
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "reflective_key.dart" show ReflectiveKey;
+import "package:angular2/src/facade/lang.dart"
+    show Type, isBlank, isPresent, isArray, isType;
+
+import "../metadata/di.dart"
+    show InjectorModuleMetadata, ProviderPropertyMetadata;
+import "forward_ref.dart" show resolveForwardRef;
 import "metadata.dart"
     show
         InjectMetadata,
@@ -14,15 +17,13 @@ import "metadata.dart"
         HostMetadata,
         SkipSelfMetadata,
         DependencyMetadata;
-import "../metadata/di.dart"
-    show InjectorModuleMetadata, ProviderPropertyMetadata;
+import "provider.dart" show Provider, ProviderBuilder, provide;
 import "reflective_exceptions.dart"
     show
         NoAnnotationError,
         MixingMultiProvidersWithRegularProvidersError,
         InvalidProviderError;
-import "forward_ref.dart" show resolveForwardRef;
-import "provider.dart" show Provider, ProviderBuilder, provide;
+import "reflective_key.dart" show ReflectiveKey;
 
 /**
  * `Dependency` is used by the framework to extend DI.

@@ -1,5 +1,13 @@
 library angular2.src.compiler.compile_metadata;
 
+import "package:angular2/src/compiler/selector.dart" show CssSelector;
+import "package:angular2/src/core/change_detection/change_detection.dart"
+    show ChangeDetectionStrategy, CHANGE_DETECTION_STRATEGY_VALUES;
+import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
+    show LifecycleHooks, LIFECYCLE_HOOKS_VALUES;
+import "package:angular2/src/core/metadata/view.dart"
+    show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show
         isPresent,
@@ -12,16 +20,9 @@ import "package:angular2/src/facade/lang.dart"
         isString,
         RegExpWrapper,
         isArray;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/core/change_detection/change_detection.dart"
-    show ChangeDetectionStrategy, CHANGE_DETECTION_STRATEGY_VALUES;
-import "package:angular2/src/core/metadata/view.dart"
-    show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
-import "package:angular2/src/compiler/selector.dart" show CssSelector;
-import "util.dart" show splitAtColon, sanitizeIdentifier;
-import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
-    show LifecycleHooks, LIFECYCLE_HOOKS_VALUES;
+
 import "url_resolver.dart" show getUrlScheme;
+import "util.dart" show splitAtColon, sanitizeIdentifier;
 // group 1: "property" from "[property]"
 
 // group 2: "event" from "(event)"

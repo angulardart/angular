@@ -1,14 +1,15 @@
 library angular2.src.compiler.style_compiler;
 
+import "package:angular2/src/compiler/shadow_css.dart" show ShadowCss;
+import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
+import "package:angular2/src/core/di.dart" show Injectable;
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular2/src/facade/lang.dart" show isPresent;
+
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import "output/output_ast.dart" as o;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/compiler/shadow_css.dart" show ShadowCss;
-import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "style_url_resolver.dart" show extractStyleUrls;
-import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 const COMPONENT_VARIABLE = "%COMP%";
 final HOST_ATTR = '''_nghost-${ COMPONENT_VARIABLE}''';

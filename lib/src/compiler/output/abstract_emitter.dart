@@ -1,9 +1,10 @@
 library angular2.src.compiler.output.abstract_emitter;
 
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, isString, StringWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart"
+    show isPresent, isBlank, isString, StringWrapper;
+
 import "output_ast.dart" as o;
 
 var _SINGLE_QUOTE_ESCAPE_STRING_RE = new RegExp(r'' + "'" + r'|\\|\n|\r|\$');

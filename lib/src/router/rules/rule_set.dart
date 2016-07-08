@@ -1,22 +1,24 @@
 library angular2.src.router.rules.rule_set;
 
 import "dart:async";
+
+import "package:angular2/src/facade/async.dart" show PromiseWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isFunction;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
-import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
-import "rules.dart"
-    show AbstractRule, RouteRule, RedirectRule, RouteMatch, PathMatch;
+
+import "../instruction.dart" show ComponentInstruction;
 import "../route_config/route_config_impl.dart"
     show Route, AsyncRoute, AuxRoute, Redirect, RouteDefinition;
+import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
+import "../url_parser.dart" show Url;
 import "route_handlers/async_route_handler.dart" show AsyncRouteHandler;
 import "route_handlers/sync_route_handler.dart" show SyncRouteHandler;
-import "route_paths/route_path.dart" show RoutePath;
 import "route_paths/param_route_path.dart" show ParamRoutePath;
 import "route_paths/regex_route_path.dart" show RegexRoutePath;
-import "../url_parser.dart" show Url;
-import "../instruction.dart" show ComponentInstruction;
+import "route_paths/route_path.dart" show RoutePath;
+import "rules.dart"
+    show AbstractRule, RouteRule, RedirectRule, RouteMatch, PathMatch;
 
 /**
  * A `RuleSet` is responsible for recognizing routes for a particular component.

@@ -1,8 +1,12 @@
 library angular2.src.platform.dom.dom_renderer;
 
-import "package:angular2/src/core/di.dart" show Inject, Injectable;
 import "package:angular2/src/animate/animation_builder.dart"
     show AnimationBuilder;
+import "package:angular2/src/core/di.dart" show Inject, Injectable;
+import "package:angular2/src/core/metadata.dart" show ViewEncapsulation;
+import "package:angular2/src/core/render/api.dart"
+    show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show
         isPresent,
@@ -13,14 +17,11 @@ import "package:angular2/src/facade/lang.dart"
         StringWrapper,
         isArray,
         isString;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "shared_styles_host.dart" show DomSharedStylesHost;
-import "package:angular2/src/core/render/api.dart"
-    show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
-import "events/event_manager.dart" show EventManager;
-import "dom_tokens.dart" show DOCUMENT;
-import "package:angular2/src/core/metadata.dart" show ViewEncapsulation;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+
+import "dom_tokens.dart" show DOCUMENT;
+import "events/event_manager.dart" show EventManager;
+import "shared_styles_host.dart" show DomSharedStylesHost;
 import "util.dart" show camelCaseToDashCase;
 
 const NAMESPACE_URIS = const {

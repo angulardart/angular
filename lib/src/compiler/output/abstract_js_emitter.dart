@@ -1,14 +1,15 @@
 library angular2.src.compiler.output.abstract_js_emitter;
 
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "output_ast.dart" as o;
+import "package:angular2/src/facade/lang.dart" show isPresent;
+
 import "abstract_emitter.dart"
     show
         EmitterVisitorContext,
         AbstractEmitterVisitor,
         CATCH_ERROR_VAR,
         CATCH_STACK_VAR;
+import "output_ast.dart" as o;
 
 abstract class AbstractJsEmitterVisitor extends AbstractEmitterVisitor {
   AbstractJsEmitterVisitor() : super(false) {

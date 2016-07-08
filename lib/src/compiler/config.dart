@@ -1,8 +1,9 @@
 library angular2.src.compiler.config;
 
 import "package:angular2/src/facade/lang.dart" show isBlank;
-import "identifiers.dart" show Identifiers;
+
 import "compile_metadata.dart" show CompileIdentifierMetadata;
+import "identifiers.dart" show Identifiers;
 
 class CompilerConfig {
   final bool genDebugInfo;

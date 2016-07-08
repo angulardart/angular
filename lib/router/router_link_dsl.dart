@@ -4,6 +4,7 @@ import "package:angular2/compiler.dart" show TEMPLATE_TRANSFORMS;
 import "package:angular2/core.dart" show Provider;
 import "package:angular2/src/router/directives/router_link_transform.dart"
     show RouterLinkTransform;
+
 export "package:angular2/src/router/directives/router_link_transform.dart"
     show RouterLinkTransform;
 

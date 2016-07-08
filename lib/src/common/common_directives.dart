@@ -1,8 +1,9 @@
 library angular2.src.common.common_directives;
 
 import "package:angular2/src/facade/lang.dart" show Type;
-import "forms.dart" show FORM_DIRECTIVES;
+
 import "directives.dart" show CORE_DIRECTIVES;
+import "forms.dart" show FORM_DIRECTIVES;
 
 /**
  * A collection of Angular core directives that are likely to be used in each and every Angular

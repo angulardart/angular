@@ -1,7 +1,7 @@
 library angular2.src.core.linker.template_ref;
 
-import "element_ref.dart" show ElementRef;
 import "element.dart" show AppElement;
+import "element_ref.dart" show ElementRef;
 import "view.dart" show AppView;
 import "view_ref.dart" show EmbeddedViewRef;
 

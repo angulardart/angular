@@ -1,15 +1,16 @@
 library angular2.src.compiler.directive_normalizer;
 
 import "dart:async";
-import "compile_metadata.dart"
-    show CompileTypeMetadata, CompileDirectiveMetadata, CompileTemplateMetadata;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
-import "package:angular2/src/compiler/xhr.dart" show XHR;
+
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
-import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
+import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular2/src/facade/async.dart" show PromiseWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+
+import "compile_metadata.dart"
+    show CompileTypeMetadata, CompileDirectiveMetadata, CompileTemplateMetadata;
 import "html_ast.dart"
     show
         HtmlAstVisitor,
@@ -21,6 +22,7 @@ import "html_ast.dart"
         HtmlExpansionCaseAst,
         htmlVisitAll;
 import "html_parser.dart" show HtmlParser;
+import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
 
 @Injectable()

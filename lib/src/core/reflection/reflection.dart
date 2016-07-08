@@ -1,10 +1,12 @@
 library reflection.reflection;
 
+import 'package:angular2/src/facade/lang.dart';
+
+import 'platform_reflection_capabilities.dart';
 import 'reflector.dart';
 import 'types.dart';
+
 export 'reflector.dart';
-import 'platform_reflection_capabilities.dart';
-import 'package:angular2/src/facade/lang.dart';
 
 class NoReflectionCapabilities implements PlatformReflectionCapabilities {
   @override

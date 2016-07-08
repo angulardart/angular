@@ -1,14 +1,9 @@
 library angular2.src.compiler.view_compiler.compile_element;
 
-import "../output/output_ast.dart" as o;
-import "../identifiers.dart" show Identifiers, identifierToken;
-import "constants.dart" show InjectMethodVars;
-import "compile_view.dart" show CompileView;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
-import "../template_ast.dart"
-    show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "../compile_metadata.dart"
     show
         CompileTokenMap,
@@ -17,15 +12,21 @@ import "../compile_metadata.dart"
         CompileQueryMetadata,
         CompileProviderMetadata,
         CompileDiDependencyMetadata;
+import "../identifiers.dart" show Identifiers, identifierToken;
+import "../output/output_ast.dart" as o;
+import "../template_ast.dart"
+    show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst;
+import "compile_method.dart" show CompileMethod;
+import "compile_query.dart"
+    show CompileQuery, createQueryList, addQueryToTokenMap;
+import "compile_view.dart" show CompileView;
+import "constants.dart" show InjectMethodVars;
 import "util.dart"
     show
         getPropertyInView,
         createDiTokenExpression,
         injectFromViewParentInjector,
         convertValueToOutputAst;
-import "compile_query.dart"
-    show CompileQuery, createQueryList, addQueryToTokenMap;
-import "compile_method.dart" show CompileMethod;
 
 class CompileNode {
   CompileElement parent;

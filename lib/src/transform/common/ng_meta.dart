@@ -1,6 +1,7 @@
 library angular2.transform.common.ng_meta;
 
 import 'package:angular2/src/compiler/compile_metadata.dart';
+
 import 'logging.dart';
 import 'model/ng_deps_model.pb.dart';
 import 'url_resolver.dart' show isDartCoreUri;

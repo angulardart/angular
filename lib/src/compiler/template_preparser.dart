@@ -1,7 +1,8 @@
 library angular2.src.compiler.template_preparser;
 
-import "html_ast.dart" show HtmlElementAst;
 import "package:angular2/src/facade/lang.dart" show isBlank;
+
+import "html_ast.dart" show HtmlElementAst;
 import "html_tags.dart" show splitNsName;
 
 const NG_CONTENT_SELECT_ATTR = "select";

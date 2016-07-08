@@ -1,8 +1,7 @@
 library angular2.src.platform.browser_common;
 
-import "package:angular2/src/facade/lang.dart" show IS_DART;
-import "package:angular2/src/core/di.dart" show Provider, OpaqueToken;
-import "package:angular2/src/compiler/xhr.dart" show XHR;
+import "package:angular2/common.dart"
+    show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"
     show
         PLATFORM_INITIALIZER,
@@ -13,48 +12,52 @@ import "package:angular2/core.dart"
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;
-import "package:angular2/common.dart"
-    show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
+import "package:angular2/platform/common_dom.dart" show ELEMENT_PROBE_PROVIDERS;
+import "package:angular2/src/animate/animation_builder.dart"
+    show AnimationBuilder;
+import "package:angular2/src/animate/browser_details.dart" show BrowserDetails;
+import "package:angular2/src/compiler/xhr.dart" show XHR;
+import "package:angular2/src/core/di.dart" show Provider, OpaqueToken;
+import "package:angular2/src/core/profile/wtf_init.dart" show wtfInit;
 import "package:angular2/src/core/testability/testability.dart"
     show Testability;
+import "package:angular2/src/facade/lang.dart" show IS_DART;
+import "package:angular2/src/platform/browser/testability.dart"
+    show BrowserGetTestability;
+import "package:angular2/src/platform/browser/xhr_cache.dart" show CachedXHR;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/src/platform/dom/events/dom_events.dart"
-    show DomEventsPlugin;
-import "package:angular2/src/platform/dom/events/key_events.dart"
-    show KeyEventsPlugin;
-import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
-    show HammerGesturesPlugin;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 import "package:angular2/src/platform/dom/dom_renderer.dart"
     show DomRootRenderer, DomRootRenderer_;
+import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+import "package:angular2/src/platform/dom/events/dom_events.dart"
+    show DomEventsPlugin;
+import "package:angular2/src/platform/dom/events/event_manager.dart"
+    show EventManager, EVENT_MANAGER_PLUGINS;
+import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
+    show HammerGesturesPlugin;
+import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
+    show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
+import "package:angular2/src/platform/dom/events/key_events.dart"
+    show KeyEventsPlugin;
 import "package:angular2/src/platform/dom/shared_styles_host.dart"
     show DomSharedStylesHost;
 import "package:angular2/src/platform/dom/shared_styles_host.dart"
     show SharedStylesHost;
-import "package:angular2/src/animate/browser_details.dart" show BrowserDetails;
-import "package:angular2/src/animate/animation_builder.dart"
-    show AnimationBuilder;
+
 import "browser/browser_adapter.dart" show BrowserDomAdapter;
-import "package:angular2/src/platform/browser/testability.dart"
-    show BrowserGetTestability;
-import "package:angular2/src/platform/browser/xhr_cache.dart" show CachedXHR;
-import "package:angular2/src/core/profile/wtf_init.dart" show wtfInit;
-import "package:angular2/src/platform/dom/events/event_manager.dart"
-    show EventManager, EVENT_MANAGER_PLUGINS;
-import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
-    show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
-import "package:angular2/platform/common_dom.dart" show ELEMENT_PROBE_PROVIDERS;
-export "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
-export "package:angular2/src/platform/browser/title.dart" show Title;
+
 export "package:angular2/platform/common_dom.dart"
     show
         ELEMENT_PROBE_PROVIDERS,
         ELEMENT_PROBE_PROVIDERS_PROD_MODE,
         inspectNativeElement,
         By;
-export "browser/browser_adapter.dart" show BrowserDomAdapter;
+export "package:angular2/src/platform/browser/title.dart" show Title;
 export "package:angular2/src/platform/browser/tools/tools.dart"
     show enableDebugTools, disableDebugTools;
+export "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+
+export "browser/browser_adapter.dart" show BrowserDomAdapter;
 export "dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
 

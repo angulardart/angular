@@ -1,7 +1,8 @@
 library angular2.src.compiler.view_compiler.injector_compiler;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/core.dart" show Injectable;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "../compile_metadata.dart"
     show
         CompileInjectorModuleMetadata,

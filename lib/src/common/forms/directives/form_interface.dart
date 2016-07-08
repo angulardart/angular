@@ -1,8 +1,8 @@
 library angular2.src.common.forms.directives.form_interface;
 
+import "../model.dart" show Control, ControlGroup;
 import "ng_control.dart" show NgControl;
 import "ng_control_group.dart" show NgControlGroup;
-import "../model.dart" show Control, ControlGroup;
 
 /**
  * An interface that [NgFormModel] and [NgForm] implement.

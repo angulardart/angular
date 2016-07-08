@@ -1,13 +1,22 @@
 library angular2.src.compiler.template_parser;
 
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper, SetWrapper;
-import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, isPresent, StringWrapper, isBlank;
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, Optional;
+import "package:angular2/src/compiler/schema/element_schema_registry.dart"
+    show ElementSchemaRegistry;
+import "package:angular2/src/compiler/selector.dart"
+    show CssSelector, SelectorMatcher;
 import "package:angular2/src/core/console.dart" show Console;
+import "package:angular2/src/core/linker/view_utils.dart"
+    show MAX_INTERPOLATION_VALUES;
+import "package:angular2/src/facade/collection.dart"
+    show ListWrapper, StringMapWrapper, SetWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart"
+    show RegExpWrapper, isPresent, StringWrapper, isBlank;
+
+import "compile_metadata.dart"
+    show CompileDirectiveMetadata, CompilePipeMetadata;
 import "expression_parser/ast.dart"
     show
         AST,
@@ -17,13 +26,22 @@ import "expression_parser/ast.dart"
         RecursiveAstVisitor,
         BindingPipe;
 import "expression_parser/parser.dart" show Parser;
-import "compile_metadata.dart"
-    show CompileDirectiveMetadata, CompilePipeMetadata;
+import "html_ast.dart"
+    show
+        HtmlAstVisitor,
+        HtmlElementAst,
+        HtmlAttrAst,
+        HtmlTextAst,
+        HtmlCommentAst,
+        HtmlExpansionAst,
+        HtmlExpansionCaseAst,
+        htmlVisitAll;
 import "html_parser.dart" show HtmlParser;
 import "html_tags.dart" show splitNsName, mergeNsAndName;
+import "identifiers.dart" show identifierToken, Identifiers;
 import "parse_util.dart" show ParseSourceSpan, ParseError, ParseErrorLevel;
-import "package:angular2/src/core/linker/view_utils.dart"
-    show MAX_INTERPOLATION_VALUES;
+import "provider_parser.dart" show ProviderElementContext, ProviderViewContext;
+import "style_url_resolver.dart" show isStyleUrlResolvable;
 import "template_ast.dart"
     show
         ElementAst,
@@ -42,25 +60,8 @@ import "template_ast.dart"
         DirectiveAst,
         BoundDirectivePropertyAst,
         VariableAst;
-import "package:angular2/src/compiler/selector.dart"
-    show CssSelector, SelectorMatcher;
-import "package:angular2/src/compiler/schema/element_schema_registry.dart"
-    show ElementSchemaRegistry;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
-import "style_url_resolver.dart" show isStyleUrlResolvable;
-import "html_ast.dart"
-    show
-        HtmlAstVisitor,
-        HtmlElementAst,
-        HtmlAttrAst,
-        HtmlTextAst,
-        HtmlCommentAst,
-        HtmlExpansionAst,
-        HtmlExpansionCaseAst,
-        htmlVisitAll;
 import "util.dart" show splitAtColon;
-import "identifiers.dart" show identifierToken, Identifiers;
-import "provider_parser.dart" show ProviderElementContext, ProviderViewContext;
 // Group 1 = "bind-"
 
 // Group 2 = "var-"

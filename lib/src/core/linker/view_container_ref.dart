@@ -1,14 +1,15 @@
 library angular2.src.core.linker.view_container_ref;
 
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/core/di/injector.dart" show Injector;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
+
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
+import "component_factory.dart" show ComponentFactory, ComponentRef;
 import "element.dart" show AppElement;
 import "element_ref.dart" show ElementRef;
 import "template_ref.dart" show TemplateRef;
 import "view_ref.dart" show EmbeddedViewRef, ViewRef, ViewRef_;
-import "component_factory.dart" show ComponentFactory, ComponentRef;
 
 /**
  * Represents a container where one or more Views can be attached.

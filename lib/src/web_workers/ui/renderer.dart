@@ -1,21 +1,22 @@
 library angular2.src.web_workers.ui.renderer;
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/web_workers/shared/message_bus.dart"
-    show MessageBus;
-import "package:angular2/src/web_workers/shared/serializer.dart"
-    show Serializer, PRIMITIVE, RenderStoreObject;
 import "package:angular2/src/core/render/api.dart"
     show RootRenderer, Renderer, RenderComponentType;
+import "package:angular2/src/web_workers/shared/message_bus.dart"
+    show MessageBus;
 import "package:angular2/src/web_workers/shared/messaging_api.dart"
     show EVENT_CHANNEL, RENDERER_CHANNEL;
-import "bind.dart" show bind;
-import "package:angular2/src/web_workers/ui/event_dispatcher.dart"
-    show EventDispatcher;
 import "package:angular2/src/web_workers/shared/render_store.dart"
     show RenderStore;
+import "package:angular2/src/web_workers/shared/serializer.dart"
+    show Serializer, PRIMITIVE, RenderStoreObject;
 import "package:angular2/src/web_workers/shared/service_message_broker.dart"
     show ServiceMessageBrokerFactory;
+import "package:angular2/src/web_workers/ui/event_dispatcher.dart"
+    show EventDispatcher;
+
+import "bind.dart" show bind;
 
 @Injectable()
 class MessageBasedRenderer {

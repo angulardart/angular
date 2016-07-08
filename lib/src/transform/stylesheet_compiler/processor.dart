@@ -9,7 +9,6 @@ import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/ng_compiler.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
-
 import 'package:barback/barback.dart';
 
 AssetId shimmedStylesheetAssetId(AssetId cssAssetId) => new AssetId(

@@ -1,12 +1,12 @@
 library angular2.transform.reflection_remover.remove_reflection_capabilities;
 
 import 'dart:async';
-import 'package:analyzer/analyzer.dart';
-import 'package:barback/barback.dart';
 
+import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/mirror_mode.dart';
+import 'package:barback/barback.dart';
 
 import 'codegen.dart';
 import 'entrypoint_matcher.dart';

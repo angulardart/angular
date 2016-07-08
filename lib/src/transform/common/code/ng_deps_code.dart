@@ -2,16 +2,16 @@ library angular2.transform.common.code.ng_deps_code;
 
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
-import 'package:angular2/src/transform/common/model/ng_deps_model.pb.dart';
 import 'package:angular2/src/transform/common/model/import_export_model.pb.dart';
+import 'package:angular2/src/transform/common/model/ng_deps_model.pb.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:barback/barback.dart' show AssetId;
 import 'package:path/path.dart' as path;
 
 import 'annotation_code.dart';
 import 'import_export_code.dart';
-import 'reflection_info_code.dart';
 import 'parameter_code.dart';
+import 'reflection_info_code.dart';
 
 /// Visitor responsible for parsing Dart source into [NgDepsModel] objects.
 class NgDepsVisitor extends RecursiveAstVisitor<Object> {

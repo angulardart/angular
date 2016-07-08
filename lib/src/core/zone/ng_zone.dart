@@ -1,8 +1,10 @@
 library angular2.src.core.zone.ng_zone;
 
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "ng_zone_impl.dart" show NgZoneImpl, NgZoneError;
+
 import "../../facade/exceptions.dart" show BaseException;
+import "ng_zone_impl.dart" show NgZoneImpl, NgZoneError;
+
 export "ng_zone_impl.dart" show NgZoneError;
 
 /**

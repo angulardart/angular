@@ -4,10 +4,10 @@ import 'dart:io';
 
 import 'package:barback/barback.dart';
 
+import './url_resolver.dart';
 import 'annotation_matcher.dart';
 import 'mirror_mode.dart';
 import 'options.dart';
-import './url_resolver.dart';
 
 TransformerOptions parseBarbackSettings(BarbackSettings settings) {
   var config = settings.configuration;

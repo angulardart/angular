@@ -1,7 +1,5 @@
 library angular2.src.common.directives.ng_class;
 
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isString, isArray;
 import "package:angular2/core.dart"
     show
         DoCheck,
@@ -17,6 +15,8 @@ import "package:angular2/core.dart"
         KeyValueChangeRecord;
 import "package:angular2/src/facade/collection.dart"
     show StringMapWrapper, isListLikeIterable;
+import "package:angular2/src/facade/lang.dart"
+    show isPresent, isString, isArray;
 
 /**
  * The `NgClass` directive conditionally adds and removes CSS classes on an HTML element based on

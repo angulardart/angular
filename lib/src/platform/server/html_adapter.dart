@@ -1,9 +1,11 @@
 library angular2.dom.htmlAdapter;
 
-import 'abstract_html_adapter.dart';
-import 'package:html/dom.dart';
-import 'package:angular2/platform/common_dom.dart';
 import 'dart:io';
+
+import 'package:angular2/platform/common_dom.dart';
+import 'package:html/dom.dart';
+
+import 'abstract_html_adapter.dart';
 
 class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   static void makeCurrent() {

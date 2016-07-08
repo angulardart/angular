@@ -1,10 +1,11 @@
 library angular2.src.platform.browser.location.hash_location_strategy;
 
 import "package:angular2/core.dart" show Injectable, Inject, Optional;
-import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
-import "location.dart" show Location;
-import "platform_location.dart" show UrlChangeListener, PlatformLocation;
 import "package:angular2/src/facade/lang.dart" show isPresent;
+
+import "location.dart" show Location;
+import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
+import "platform_location.dart" show UrlChangeListener, PlatformLocation;
 
 /**
  * `HashLocationStrategy` is a [LocationStrategy] used to configure the

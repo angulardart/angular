@@ -1,7 +1,7 @@
 library angular2.src.common.forms.directives.control_container;
 
-import "form_interface.dart" show Form;
 import "abstract_control_directive.dart" show AbstractControlDirective;
+import "form_interface.dart" show Form;
 
 /**
  * A directive that contains multiple [NgControl]s.

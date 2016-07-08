@@ -1,13 +1,15 @@
 library angular2.src.platform.dom.events.key_events;
 
 import "dart:html";
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
+
+import "package:angular2/src/core/di.dart" show Injectable;
+import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/collection.dart"
     show StringMapWrapper, ListWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+
 import "event_manager.dart" show EventManagerPlugin;
-import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/core/di.dart" show Injectable;
 
 var modifierKeys = ["alt", "control", "meta", "shift"];
 Map<String, dynamic /* (event: KeyboardEvent) => boolean */ >

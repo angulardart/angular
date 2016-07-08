@@ -1,9 +1,13 @@
 library angular2.src.router.route_registry;
 
 import "dart:async";
+
+import "package:angular2/core.dart"
+    show Injectable, Inject, OpaqueToken, ComponentFactory;
+import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, Map, StringMapWrapper;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show
         isPresent,
@@ -15,13 +19,7 @@ import "package:angular2/src/facade/lang.dart"
         StringWrapper,
         Math,
         getTypeNameForDebugging;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/core.dart"
-    show Injectable, Inject, OpaqueToken, ComponentFactory;
-import "route_config/route_config_impl.dart"
-    show RouteConfig, Route, AuxRoute, RouteDefinition;
-import "rules/rules.dart" show PathMatch, RedirectMatch, RouteMatch;
-import "rules/rule_set.dart" show RuleSet;
+
 import "instruction.dart"
     show
         Instruction,
@@ -29,10 +27,14 @@ import "instruction.dart"
         RedirectInstruction,
         UnresolvedInstruction,
         DefaultInstruction;
+import "route_config/route_config_impl.dart"
+    show RouteConfig, Route, AuxRoute, RouteDefinition;
 import "route_config/route_config_normalizer.dart"
     show normalizeRouteConfig, assertComponentExists;
-import "url_parser.dart" show parser, Url, convertUrlParamsToArray;
 import "rules/route_paths/route_path.dart" show GeneratedUrl;
+import "rules/rule_set.dart" show RuleSet;
+import "rules/rules.dart" show PathMatch, RedirectMatch, RouteMatch;
+import "url_parser.dart" show parser, Url, convertUrlParamsToArray;
 import "utils.dart" show getComponentAnnotations, getComponentType;
 
 var _resolveToNull = PromiseWrapper.resolve/*< Instruction >*/(null);

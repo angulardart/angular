@@ -1,24 +1,26 @@
 library angular2.src.web_workers.worker.platform_location;
 
 import "dart:async";
-import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/web_workers/shared/client_message_broker.dart"
-    show FnArg, UiArguments, ClientMessageBroker, ClientMessageBrokerFactory;
+
 import "package:angular2/platform/common.dart"
     show PlatformLocation, UrlChangeListener;
+import "package:angular2/src/core/di.dart" show Injectable;
+import "package:angular2/src/facade/async.dart"
+    show PromiseWrapper, EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show StringWrapper;
+import "package:angular2/src/web_workers/shared/client_message_broker.dart"
+    show FnArg, UiArguments, ClientMessageBroker, ClientMessageBrokerFactory;
+import "package:angular2/src/web_workers/shared/message_bus.dart"
+    show MessageBus;
 import "package:angular2/src/web_workers/shared/messaging_api.dart"
     show ROUTER_CHANNEL;
 import "package:angular2/src/web_workers/shared/serialized_types.dart"
     show LocationType;
-import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, EventEmitter, ObservableWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/web_workers/shared/serializer.dart"
     show PRIMITIVE, Serializer;
-import "package:angular2/src/web_workers/shared/message_bus.dart"
-    show MessageBus;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
-import "package:angular2/src/facade/lang.dart" show StringWrapper;
+
 import "event_deserializer.dart" show deserializeGenericEvent;
 
 @Injectable()

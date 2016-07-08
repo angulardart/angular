@@ -1,9 +1,9 @@
 library angular2.src.mock.location_mock;
 
+import "package:angular2/platform/common.dart";
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/async.dart"
     show EventEmitter, ObservableWrapper;
-import "package:angular2/platform/common.dart";
 
 /**
  * A spy for [Location] that allows tests to fire simulated location events.

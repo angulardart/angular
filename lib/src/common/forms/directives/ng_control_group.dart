@@ -11,12 +11,13 @@ import "package:angular2/core.dart"
         SkipSelf,
         Provider,
         Self;
+
+import "../model.dart" show ControlGroup;
+import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 import "control_container.dart" show ControlContainer;
+import "form_interface.dart" show Form;
 import "shared.dart"
     show controlPath, composeValidators, composeAsyncValidators;
-import "../model.dart" show ControlGroup;
-import "form_interface.dart" show Form;
-import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 import "validators.dart" show AsyncValidatorFn, ValidatorFn;
 
 const controlGroupProvider =

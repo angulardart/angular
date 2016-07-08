@@ -1,7 +1,7 @@
 library angular2.src.compiler.view_compiler.compile_binding;
 
-import "compile_element.dart" show CompileNode;
 import "../template_ast.dart" show TemplateAst;
+import "compile_element.dart" show CompileNode;
 
 class CompileBinding {
   CompileNode node;

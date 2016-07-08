@@ -1,7 +1,8 @@
 library angular2.src.core.profile.profile;
 
-export "wtf_impl.dart" show WtfScopeFn;
 import "wtf_impl.dart" as impl;
+
+export "wtf_impl.dart" show WtfScopeFn;
 // Change exports to const once https://github.com/angular/ts2dart/issues/150
 
 /**

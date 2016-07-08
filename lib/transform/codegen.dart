@@ -1,8 +1,5 @@
 library angular2.transform.codegen.dart;
 
-import 'package:barback/barback.dart';
-import 'package:dart_style/dart_style.dart';
-
 import 'package:angular2/src/transform/common/eager_transformer_wrapper.dart';
 import 'package:angular2/src/transform/common/formatter.dart' as formatter;
 import 'package:angular2/src/transform/common/options.dart';
@@ -12,6 +9,8 @@ import 'package:angular2/src/transform/directive_processor/transformer.dart';
 import 'package:angular2/src/transform/inliner_for_test/transformer.dart';
 import 'package:angular2/src/transform/stylesheet_compiler/transformer.dart';
 import 'package:angular2/src/transform/template_compiler/transformer.dart';
+import 'package:barback/barback.dart';
+import 'package:dart_style/dart_style.dart';
 
 export 'package:angular2/src/transform/common/options.dart';
 

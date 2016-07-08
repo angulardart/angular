@@ -1,16 +1,18 @@
 library angular2.src.core.reflection.reflector;
 
-import "package:angular2/src/facade/lang.dart" show Type, isPresent;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/collection.dart"
     show Map, MapWrapper, Set, SetWrapper, StringMapWrapper;
-import "types.dart" show SetterFn, GetterFn, MethodFn;
-import "reflector_reader.dart" show ReflectorReader;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show Type, isPresent;
+
 import "platform_reflection_capabilities.dart"
     show PlatformReflectionCapabilities;
-export "types.dart" show SetterFn, GetterFn, MethodFn;
+import "reflector_reader.dart" show ReflectorReader;
+import "types.dart" show SetterFn, GetterFn, MethodFn;
+
 export "platform_reflection_capabilities.dart"
     show PlatformReflectionCapabilities;
+export "types.dart" show SetterFn, GetterFn, MethodFn;
 
 /**
  * Reflective information about a symbol, including annotations, interfaces, and other metadata.

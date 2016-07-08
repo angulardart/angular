@@ -1,10 +1,10 @@
 library angular2.src.compiler.output.dart_emitter;
 
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
+
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
-import "output_ast.dart" as o;
 import "abstract_emitter.dart"
     show
         OutputEmitter,
@@ -12,6 +12,7 @@ import "abstract_emitter.dart"
         AbstractEmitterVisitor,
         CATCH_ERROR_VAR,
         CATCH_STACK_VAR;
+import "output_ast.dart" as o;
 import "path_util.dart" show getImportModulePath, ImportEnv;
 
 var _debugModuleUrl = "asset://debug/lib";

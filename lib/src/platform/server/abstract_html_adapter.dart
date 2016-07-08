@@ -1,10 +1,9 @@
 library angular2.dom.abstractHtmlAdapter;
 
-import 'package:html/parser.dart' as parser;
-import 'package:html/dom.dart';
-
 import 'package:angular2/platform/common_dom.dart';
 import 'package:angular2/src/compiler/xhr.dart';
+import 'package:html/dom.dart';
+import 'package:html/parser.dart' as parser;
 
 const _attrToPropMap = const {
   'innerHtml': 'innerHTML',

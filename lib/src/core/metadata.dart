@@ -1,14 +1,14 @@
 library angular2.src.core.metadata;
 
-import 'package:angular2/src/facade/collection.dart' show List;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/facade/collection.dart' show List;
+
 import './metadata/di.dart';
 import './metadata/directives.dart';
 import './metadata/view.dart';
 
 export './metadata/di.dart';
 export './metadata/directives.dart';
-export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 export './metadata/lifecycle_hooks.dart'
     show
         AfterContentInit,
@@ -19,6 +19,7 @@ export './metadata/lifecycle_hooks.dart'
         OnDestroy,
         OnInit,
         DoCheck;
+export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 
 /**
  * See: [DirectiveMetadata] for docs.

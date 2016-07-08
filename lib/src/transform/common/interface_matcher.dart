@@ -2,6 +2,7 @@ library angular2.transform.common.annotati_ON_matcher;
 
 import 'package:analyzer/src/generated/ast.dart';
 import 'package:barback/barback.dart' show AssetId;
+
 import 'class_matcher_base.dart';
 
 export 'class_matcher_base.dart' show ClassDescriptor;

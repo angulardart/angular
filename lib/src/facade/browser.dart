@@ -4,8 +4,8 @@
  */
 library angular2.src.facade.browser;
 
-import 'dart:js' show context;
 import 'dart:html' show Location, window;
+import 'dart:js' show context;
 
 export 'dart:html'
     show

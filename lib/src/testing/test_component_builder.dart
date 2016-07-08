@@ -1,6 +1,8 @@
 library angular2.src.testing.test_component_builder;
 
 import "dart:async";
+
+import "package:angular2/compiler.dart" show DirectiveResolver, ViewResolver;
 import "package:angular2/core.dart"
     show
         ComponentRef,
@@ -10,13 +12,13 @@ import "package:angular2/core.dart"
         ViewMetadata,
         ElementRef,
         ChangeDetectorRef;
-import "package:angular2/compiler.dart" show DirectiveResolver, ViewResolver;
-import "utils.dart" show el;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/core/debug/debug_node.dart"
     show DebugElement, getDebugNode;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+
 import "fake_async.dart" show tick;
+import "utils.dart" show el;
 
 /// Fixture for debugging and testing a component.
 class ComponentFixture {

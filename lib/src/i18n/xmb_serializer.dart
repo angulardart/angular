@@ -1,13 +1,14 @@
 library angular2.src.i18n.xmb_serializer;
 
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, RegExpWrapper;
 import "package:angular2/src/compiler/html_ast.dart"
     show HtmlAst, HtmlElementAst;
-import "message.dart" show Message, id;
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
+import "package:angular2/src/facade/lang.dart"
+    show isPresent, isBlank, RegExpWrapper;
+
+import "message.dart" show Message, id;
 
 var _PLACEHOLDER_REGEXP =
     RegExpWrapper.create('''\\<ph(\\s)+name=("(\\w)+")\\/\\>''');

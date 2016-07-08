@@ -1,7 +1,8 @@
 library angular2.src.web_workers.debug_tools.single_client_server_message_bus;
 
-import 'dart:io';
 import 'dart:convert' show JSON;
+import 'dart:io';
+
 import 'package:angular2/src/web_workers/shared/generic_message_bus.dart';
 
 class SingleClientServerMessageBus extends GenericMessageBus {

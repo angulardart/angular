@@ -5,19 +5,18 @@ import 'dart:convert' show LineSplitter;
 
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/src/generated/ast.dart';
-import 'package:barback/barback.dart';
-import 'package:dart_style/dart_style.dart';
-
 import 'package:angular2/src/compiler/xhr.dart' show XHR;
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
-import 'package:angular2/src/transform/common/naive_eval.dart';
 import 'package:angular2/src/transform/common/async_string_writer.dart';
+import 'package:angular2/src/transform/common/naive_eval.dart';
 import 'package:angular2/src/transform/common/options.dart';
 import 'package:angular2/src/transform/common/url_resolver.dart';
 import 'package:angular2/src/transform/common/xhr_impl.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:angular2/src/transform/directive_processor/inliner.dart';
+import 'package:barback/barback.dart';
+import 'package:dart_style/dart_style.dart';
 
 /// Processes .dart files and inlines `templateUrl` and styleUrls` values.
 class InlinerForTest extends Transformer {

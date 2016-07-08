@@ -1,8 +1,9 @@
 library angular2.src.animate.animation_builder;
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "css_animation_builder.dart" show CssAnimationBuilder;
+
 import "browser_details.dart" show BrowserDetails;
+import "css_animation_builder.dart" show CssAnimationBuilder;
 
 @Injectable()
 class AnimationBuilder {

@@ -1,17 +1,18 @@
 library angular2.src.compiler.view_compiler.event_binder;
 
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, StringWrapper;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
-import "constants.dart" show EventHandlerVars, ViewProperties;
+import "package:angular2/src/facade/lang.dart"
+    show isBlank, isPresent, StringWrapper;
+
+import "../compile_metadata.dart" show CompileDirectiveMetadata;
 import "../output/output_ast.dart" as o;
+import "../template_ast.dart" show BoundEventAst, DirectiveAst;
+import "compile_binding.dart" show CompileBinding;
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
-import "../template_ast.dart" show BoundEventAst, DirectiveAst;
-import "../compile_metadata.dart" show CompileDirectiveMetadata;
+import "constants.dart" show EventHandlerVars, ViewProperties;
 import "expression_converter.dart" show convertCdStatementToIr;
-import "compile_binding.dart" show CompileBinding;
 
 class CompileEventListener {
   CompileElement compileElement;

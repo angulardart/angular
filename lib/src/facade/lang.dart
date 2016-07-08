@@ -1,9 +1,10 @@
 library angular.core.facade.lang;
 
-export 'dart:core' show Type, RegExp, print, DateTime, Uri;
-import 'dart:math' as math;
-import 'dart:convert' as convert;
 import 'dart:async' show Future, Zone;
+import 'dart:convert' as convert;
+import 'dart:math' as math;
+
+export 'dart:core' show Type, RegExp, print, DateTime, Uri;
 
 String getTypeNameForDebugging(Object type) => type.toString();
 

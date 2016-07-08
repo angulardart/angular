@@ -1,11 +1,12 @@
 library angular2.src.core.change_detection.differs.keyvalue_differs;
 
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+
+import "../change_detector_ref.dart" show ChangeDetectorRef;
 
 /**
  * A differ that tracks changes made to an object over time.

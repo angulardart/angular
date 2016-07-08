@@ -1,6 +1,7 @@
 library angular2.di.decorators;
 
 import 'metadata.dart';
+
 export 'metadata.dart';
 
 /**

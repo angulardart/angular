@@ -1,9 +1,10 @@
 library angular2.src.compiler.output.js_emitter;
 
-import "output_ast.dart" as o;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+
 import "abstract_emitter.dart" show OutputEmitter, EmitterVisitorContext;
 import "abstract_js_emitter.dart" show AbstractJsEmitterVisitor;
+import "output_ast.dart" as o;
 import "path_util.dart" show getImportModulePath, ImportEnv;
 
 class JavaScriptEmitter implements OutputEmitter {

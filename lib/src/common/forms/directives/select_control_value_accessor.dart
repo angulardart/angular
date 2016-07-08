@@ -10,11 +10,12 @@ import "package:angular2/core.dart"
         Host,
         OnDestroy,
         Optional;
-import "control_value_accessor.dart"
-    show NG_VALUE_ACCESSOR, ControlValueAccessor;
+import "package:angular2/src/facade/collection.dart" show MapWrapper;
 import "package:angular2/src/facade/lang.dart"
     show StringWrapper, isPrimitive, isPresent, isBlank, looseIdentical;
-import "package:angular2/src/facade/collection.dart" show MapWrapper;
+
+import "control_value_accessor.dart"
+    show NG_VALUE_ACCESSOR, ControlValueAccessor;
 
 const SELECT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: SelectControlValueAccessor, multi: true);

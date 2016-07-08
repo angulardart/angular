@@ -4,6 +4,7 @@
 library angular2.src.transform.common.model.proto_ng_deps_model;
 
 import 'package:protobuf/protobuf.dart';
+
 import 'import_export_model.pb.dart';
 import 'reflection_info_model.pb.dart';
 

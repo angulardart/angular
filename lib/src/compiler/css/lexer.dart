@@ -1,8 +1,5 @@
 library angular2.src.compiler.css.lexer;
 
-import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, isPresent, resolveEnumToken;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/compiler/chars.dart"
     show
         isWhitespace,
@@ -43,6 +40,10 @@ import "package:angular2/src/compiler/chars.dart"
         $CR,
         $LF,
         $VTAB;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart"
+    show StringWrapper, isPresent, resolveEnumToken;
+
 export "package:angular2/src/compiler/chars.dart"
     show
         $EOF,

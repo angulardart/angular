@@ -1,24 +1,7 @@
 library angular2.platform.browser_static;
 
 import "dart:async";
-export "package:angular2/src/core/angular_entrypoint.dart";
-export "package:angular2/src/platform/browser_common.dart"
-    show
-        BROWSER_PROVIDERS,
-        ELEMENT_PROBE_PROVIDERS,
-        ELEMENT_PROBE_PROVIDERS_PROD_MODE,
-        inspectNativeElement,
-        BrowserDomAdapter,
-        By,
-        Title,
-        enableDebugTools,
-        disableDebugTools;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
-import "package:angular2/src/platform/browser_common.dart"
-    show
-        BROWSER_APP_COMMON_PROVIDERS,
-        BROWSER_PLATFORM_MARKER,
-        createInitDomAdapter;
+
 import "package:angular2/core.dart"
     show
         ComponentRef,
@@ -31,13 +14,32 @@ import "package:angular2/core.dart"
         PLATFORM_INITIALIZER,
         MapInjector;
 import "package:angular2/src/core/application_ref.dart" show PlatformRef_;
+import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/reflection/reflection.dart"
     show Reflector, reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
-import "package:angular2/src/core/console.dart" show Console;
+import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
+import "package:angular2/src/platform/browser_common.dart"
+    show
+        BROWSER_APP_COMMON_PROVIDERS,
+        BROWSER_PLATFORM_MARKER,
+        createInitDomAdapter;
+
+export "package:angular2/src/core/angular_entrypoint.dart";
+export "package:angular2/src/platform/browser_common.dart"
+    show
+        BROWSER_PROVIDERS,
+        ELEMENT_PROBE_PROVIDERS,
+        ELEMENT_PROBE_PROVIDERS_PROD_MODE,
+        inspectNativeElement,
+        BrowserDomAdapter,
+        By,
+        Title,
+        enableDebugTools,
+        disableDebugTools;
 
 /**
  * An array of providers that should be passed into `application()` when bootstrapping a component

@@ -1,9 +1,9 @@
 library angular2.src.compiler.selector;
 
 import "package:angular2/src/facade/collection.dart" show Map, ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, RegExpWrapper, RegExpMatcherWrapper, StringWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 const _EMPTY_ATTR_VALUE = "";
 // TODO: Can't use `const` here as

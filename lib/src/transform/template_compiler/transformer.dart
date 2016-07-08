@@ -2,18 +2,17 @@ library angular2.transform.template_compiler.transformer;
 
 import 'dart:async';
 
-import 'package:barback/barback.dart';
-
+import 'package:angular2/i18n.dart';
 import 'package:angular2/src/platform/server/html_adapter.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/code/ng_deps_code.dart';
 import 'package:angular2/src/transform/common/code/source_module.dart';
 import 'package:angular2/src/transform/common/formatter.dart';
+import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/options.dart';
-import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
-import 'package:angular2/i18n.dart';
+import 'package:barback/barback.dart';
 
 import 'generator.dart';
 

@@ -1,10 +1,11 @@
 library angular2.src.compiler.view_compiler.expression_converter;
 
-import "../expression_parser/ast.dart" as cdAst;
-import "../output/output_ast.dart" as o;
-import "../identifiers.dart" show Identifiers;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank, isPresent, isArray;
+
+import "../expression_parser/ast.dart" as cdAst;
+import "../identifiers.dart" show Identifiers;
+import "../output/output_ast.dart" as o;
 
 var IMPLICIT_RECEIVER = o.variable("#implicit");
 

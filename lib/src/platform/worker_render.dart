@@ -1,13 +1,14 @@
 library angular2.src.platform.worker_render;
 
+import 'dart:async';
+import 'dart:isolate';
+
+import 'package:angular2/core.dart';
+import 'package:angular2/src/core/di.dart';
 import 'package:angular2/src/platform/worker_render_common.dart'
     show WORKER_RENDER_APPLICATION_COMMON, initializeGenericWorkerRenderer;
 import 'package:angular2/src/web_workers/shared/isolate_message_bus.dart';
 import 'package:angular2/src/web_workers/shared/message_bus.dart';
-import 'package:angular2/core.dart';
-import 'package:angular2/src/core/di.dart';
-import 'dart:isolate';
-import 'dart:async';
 
 const WORKER_RENDER_APP = WORKER_RENDER_APPLICATION_COMMON;
 

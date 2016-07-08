@@ -1,8 +1,9 @@
 library testing.fake_async;
 
 import 'dart:async' show runZoned, ZoneSpecification;
-import 'package:quiver/testing/async.dart' as quiver;
+
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:quiver/testing/async.dart' as quiver;
 
 import 'test_injector.dart' show getTestInjector, FunctionWithParamTokens;
 

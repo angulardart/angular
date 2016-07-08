@@ -1,11 +1,12 @@
 library angular2.src.core.di.reflective_exceptions;
 
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, WrappedException;
-import "reflective_key.dart" show ReflectiveKey;
+import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
+
 import "reflective_injector.dart" show ReflectiveInjector;
+import "reflective_key.dart" show ReflectiveKey;
 
 List<dynamic> findFirstClosedCycle(List<dynamic> keys) {
   var res = [];

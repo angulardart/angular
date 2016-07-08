@@ -1,10 +1,11 @@
 library angular2.src.common.pipes.date_pipe;
 
-import "package:angular2/src/facade/lang.dart"
-    show isDate, isNumber, DateWrapper, isBlank;
-import "package:angular2/src/facade/intl.dart" show DateFormatter;
 import "package:angular2/core.dart" show PipeTransform, Pipe, Injectable;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+import "package:angular2/src/facade/intl.dart" show DateFormatter;
+import "package:angular2/src/facade/lang.dart"
+    show isDate, isNumber, DateWrapper, isBlank;
+
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 // TODO: move to a global configurable location along with other i18n components.

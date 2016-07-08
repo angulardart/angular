@@ -1,15 +1,16 @@
 library angular2.src.compiler.view_compiler.view_compiler;
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "../output/output_ast.dart" as o;
-import "compile_element.dart" show CompileElement;
-import "compile_view.dart" show CompileView;
-import "view_builder.dart" show buildView, finishView, ViewCompileDependency;
-import "view_binder.dart" show bindView;
+
 import "../compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
-import "../template_ast.dart" show TemplateAst;
 import "../config.dart" show CompilerConfig;
+import "../output/output_ast.dart" as o;
+import "../template_ast.dart" show TemplateAst;
+import "compile_element.dart" show CompileElement;
+import "compile_view.dart" show CompileView;
+import "view_binder.dart" show bindView;
+import "view_builder.dart" show buildView, finishView, ViewCompileDependency;
 
 class ViewCompileResult {
   List<o.Statement> statements;

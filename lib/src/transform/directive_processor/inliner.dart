@@ -4,14 +4,13 @@ import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/src/generated/ast.dart';
-import 'package:barback/barback.dart' show AssetId;
-import 'package:source_span/source_span.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/async_string_writer.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/url_resolver.dart';
+import 'package:barback/barback.dart' show AssetId;
+import 'package:path/path.dart' as path;
+import 'package:source_span/source_span.dart';
 
 /// Reads the code at `assetId`, inlining any `part` directives in that code.
 ///

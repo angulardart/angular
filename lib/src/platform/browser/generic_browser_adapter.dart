@@ -1,7 +1,7 @@
 library angular2.src.platform.browser.generic_browser_adapter;
 
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DomAdapter;
 import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DomAdapter;
 
 /// Provides DOM operations in any browser environment.
 abstract class GenericBrowserDomAdapter<T, N, ET> extends DomAdapter<T, N, ET> {

@@ -2,10 +2,9 @@ library angular2.transform.template_compiler.generator;
 
 import 'dart:async';
 
-import 'package:barback/barback.dart';
-
-import 'package:angular2/src/compiler/offline_compiler.dart';
+import 'package:angular2/i18n.dart';
 import 'package:angular2/src/compiler/config.dart';
+import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/facade/lang.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/logging.dart';
@@ -13,10 +12,10 @@ import 'package:angular2/src/transform/common/model/annotation_model.pb.dart';
 import 'package:angular2/src/transform/common/model/ng_deps_model.pb.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/ng_compiler.dart';
-import 'package:angular2/src/transform/common/zone.dart' as zone;
-import 'package:angular2/i18n.dart';
 import 'package:angular2/src/transform/common/options.dart'
     show CODEGEN_DEBUG_MODE;
+import 'package:angular2/src/transform/common/zone.dart' as zone;
+import 'package:barback/barback.dart';
 
 import 'compile_data_creator.dart';
 

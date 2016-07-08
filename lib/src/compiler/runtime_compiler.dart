@@ -1,38 +1,40 @@
 library angular2.src.compiler.runtime_compiler;
 
 import "dart:async";
-import "package:angular2/src/facade/lang.dart" show IS_DART, Type, isBlank;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
+
+import "package:angular2/src/core/di.dart" show Injectable;
+import "package:angular2/src/core/linker/component_factory.dart"
+    show ComponentFactory;
+import "package:angular2/src/core/linker/component_resolver.dart"
+    show ComponentResolver;
+import "package:angular2/src/core/linker/injector_factory.dart"
+    show CodegenInjectorFactory;
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show IS_DART, Type, isBlank;
+
 import "compile_metadata.dart"
     show
         createHostComponentMeta,
         CompileDirectiveMetadata,
         CompilePipeMetadata,
         CompileIdentifierMetadata;
-import "template_ast.dart" show TemplateAst;
-import "package:angular2/src/core/di.dart" show Injectable;
-import "style_compiler.dart"
-    show StyleCompiler, StylesCompileDependency, StylesCompileResult;
-import "view_compiler/view_compiler.dart" show ViewCompiler;
-import "view_compiler/injector_compiler.dart" show InjectorCompiler;
-import "template_parser.dart" show TemplateParser;
-import "directive_normalizer.dart" show DirectiveNormalizer;
-import "runtime_metadata.dart" show RuntimeMetadataResolver;
-import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentFactory;
-import "package:angular2/src/core/linker/injector_factory.dart"
-    show CodegenInjectorFactory;
-import "package:angular2/src/core/linker/component_resolver.dart"
-    show ComponentResolver;
 import "config.dart" show CompilerConfig;
-import "output/output_ast.dart" as ir;
-import "output/output_jit.dart" show jitStatements;
-import "output/output_interpreter.dart" show interpretStatements;
-import "output/interpretive_view.dart" show InterpretiveAppViewInstanceFactory;
+import "directive_normalizer.dart" show DirectiveNormalizer;
 import "output/interpretive_injector.dart"
     show InterpretiveInjectorInstanceFactory;
+import "output/interpretive_view.dart" show InterpretiveAppViewInstanceFactory;
+import "output/output_ast.dart" as ir;
+import "output/output_interpreter.dart" show interpretStatements;
+import "output/output_jit.dart" show jitStatements;
+import "runtime_metadata.dart" show RuntimeMetadataResolver;
+import "style_compiler.dart"
+    show StyleCompiler, StylesCompileDependency, StylesCompileResult;
+import "template_ast.dart" show TemplateAst;
+import "template_parser.dart" show TemplateParser;
+import "view_compiler/injector_compiler.dart" show InjectorCompiler;
+import "view_compiler/view_compiler.dart" show ViewCompiler;
 import "xhr.dart" show XHR;
 
 /**

@@ -1,8 +1,5 @@
 library angular2.src.core.debug.debug_renderer;
 
-import "package:angular2/src/facade/lang.dart" show isPresent;
-import "package:angular2/src/core/render/api.dart"
-    show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
 import "package:angular2/src/core/debug/debug_node.dart"
     show
         DebugNode,
@@ -11,6 +8,9 @@ import "package:angular2/src/core/debug/debug_node.dart"
         getDebugNode,
         indexDebugNode,
         removeDebugNodeFromIndex;
+import "package:angular2/src/core/render/api.dart"
+    show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 class DebugDomRootRenderer implements RootRenderer {
   RootRenderer _delegate;

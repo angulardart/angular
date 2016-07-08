@@ -1,8 +1,9 @@
 library angular2.src.common.forms.form_builder;
 
 import "package:angular2/core.dart" show Injectable;
-import "model.dart" as modelModule;
+
 import "directives/validators.dart";
+import "model.dart" as modelModule;
 
 /// Creates a form object from a user-specified configuration.
 ///

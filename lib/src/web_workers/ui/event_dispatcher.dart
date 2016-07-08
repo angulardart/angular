@@ -1,5 +1,8 @@
 library angular2.src.web_workers.ui.event_dispatcher;
 
+import "package:angular2/src/facade/async.dart"
+    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/web_workers/shared/serializer.dart"
     show Serializer, RenderStoreObject;
 import "package:angular2/src/web_workers/ui/event_serializer.dart"
@@ -9,9 +12,6 @@ import "package:angular2/src/web_workers/ui/event_serializer.dart"
         serializeGenericEvent,
         serializeEventWithTarget,
         serializeTransitionEvent;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
 
 class EventDispatcher {
   EventEmitter<dynamic> _sink;

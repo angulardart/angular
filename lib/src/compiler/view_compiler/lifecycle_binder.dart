@@ -1,14 +1,15 @@
 library angular2.src.compiler.view_compiler.lifecycle_binder;
 
-import "../output/output_ast.dart" as o;
-import "constants.dart" show DetectChangesVars, ChangeDetectorStateEnum;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
+
 import "../compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
+import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show DirectiveAst;
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
+import "constants.dart" show DetectChangesVars, ChangeDetectorStateEnum;
 
 var STATE_IS_NEVER_CHECKED =
     o.THIS_EXPR.prop("cdState").identical(ChangeDetectorStateEnum.NeverChecked);

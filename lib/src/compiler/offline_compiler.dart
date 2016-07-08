@@ -1,6 +1,12 @@
 library angular2.src.compiler.offline_compiler;
 
 import "dart:async";
+
+import "package:angular2/src/core/linker/component_factory.dart"
+    show ComponentFactory;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+
 import "compile_metadata.dart"
     show
         CompileDirectiveMetadata,
@@ -9,18 +15,14 @@ import "compile_metadata.dart"
         createHostComponentMeta,
         CompileInjectorModuleMetadata,
         CompileTypeMetadata;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "style_compiler.dart" show StyleCompiler, StylesCompileResult;
-import "view_compiler/view_compiler.dart" show ViewCompiler, ViewCompileResult;
-import "view_compiler/injector_compiler.dart" show InjectorCompiler;
-import "template_parser.dart" show TemplateParser;
 import "directive_normalizer.dart" show DirectiveNormalizer;
 import "output/abstract_emitter.dart" show OutputEmitter;
 import "output/output_ast.dart" as o;
-import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentFactory;
+import "style_compiler.dart" show StyleCompiler, StylesCompileResult;
+import "template_parser.dart" show TemplateParser;
 import "util.dart" show MODULE_SUFFIX;
+import "view_compiler/injector_compiler.dart" show InjectorCompiler;
+import "view_compiler/view_compiler.dart" show ViewCompiler, ViewCompileResult;
 
 var _COMPONENT_FACTORY_IDENTIFIER = new CompileIdentifierMetadata(
     name: "ComponentFactory",

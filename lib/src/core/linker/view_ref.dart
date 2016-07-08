@@ -1,9 +1,10 @@
 library angular2.src.core.linker.view_ref;
 
-import "../change_detection/change_detector_ref.dart" show ChangeDetectorRef;
-import "view.dart" show AppView;
 import "package:angular2/src/core/change_detection/constants.dart"
     show ChangeDetectionStrategy;
+
+import "../change_detection/change_detector_ref.dart" show ChangeDetectorRef;
+import "view.dart" show AppView;
 
 abstract class ViewRef {
   bool get destroyed;

@@ -1,13 +1,12 @@
 library angular2.src.core.di.reflective_injector;
 
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show Type;
+
+import "injector.dart" show Injector, THROW_IF_NOT_FOUND;
+import "metadata.dart" show SelfMetadata, SkipSelfMetadata;
 import "provider.dart" show Provider;
-import "reflective_provider.dart"
-    show
-        ResolvedReflectiveProvider,
-        ReflectiveDependency,
-        ResolvedReflectiveFactory,
-        resolveReflectiveProviders;
 import "reflective_exceptions.dart"
     show
         AbstractProviderError,
@@ -15,11 +14,13 @@ import "reflective_exceptions.dart"
         CyclicDependencyError,
         InstantiationError,
         OutOfBoundsError;
-import "package:angular2/src/facade/lang.dart" show Type;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "reflective_key.dart" show ReflectiveKey;
-import "metadata.dart" show SelfMetadata, SkipSelfMetadata;
-import "injector.dart" show Injector, THROW_IF_NOT_FOUND;
+import "reflective_provider.dart"
+    show
+        ResolvedReflectiveProvider,
+        ReflectiveDependency,
+        ResolvedReflectiveFactory,
+        resolveReflectiveProviders;
 
 Type ___unused;
 // Threshold for the dynamic version

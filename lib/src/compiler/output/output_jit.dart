@@ -1,10 +1,11 @@
 library angular2.src.compiler.output.output_jit;
 
 import "package:angular2/src/facade/lang.dart" show isPresent, evalExpression;
-import "output_ast.dart" as o;
+
+import "../util.dart" show sanitizeIdentifier;
 import "abstract_emitter.dart" show EmitterVisitorContext;
 import "abstract_js_emitter.dart" show AbstractJsEmitterVisitor;
-import "../util.dart" show sanitizeIdentifier;
+import "output_ast.dart" as o;
 
 List<String> jitStatements(
     String sourceUrl, List<o.Statement> statements, String resultVar) {
