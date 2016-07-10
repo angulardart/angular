@@ -11,9 +11,6 @@ import "reflector_common.dart"
         ClassDecorator,
         ParamDecorator,
         PropDecorator,
-        classDecorator,
-        paramDecorator,
-        propDecorator,
         HasGetterAndSetterDecorators;
 import 'package:test/test.dart';
 

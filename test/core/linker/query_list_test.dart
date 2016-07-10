@@ -2,17 +2,9 @@ library angular2.test.core.linker.query_list_spec;
 
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/collection.dart" show iterateListLike;
-import "package:angular2/src/facade/lang.dart" show IS_DART, StringWrapper;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/core/linker/query_list.dart" show QueryList;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import 'package:test/test.dart';
-
-abstract class _JsQueryList {
-  dynamic filter(dynamic c);
-  dynamic reduce(dynamic a, dynamic b);
-  dynamic toArray();
-}
 
 main() {
   group("QueryList", () {
@@ -45,27 +37,6 @@ main() {
       queryList.forEach((x) => join = join + x);
       expect(join, "onetwo");
     });
-    if (!IS_DART) {
-      test("should support filter", () {
-        queryList.reset(["one", "two"]);
-        expect(
-            ((queryList as _JsQueryList)).filter((x) => x == "one"), ["one"]);
-      });
-      test("should support reduce", () {
-        queryList.reset(["one", "two"]);
-        expect(((queryList as _JsQueryList)).reduce((a, x) => a + x, "start:"),
-            "start:onetwo");
-      });
-      test("should support toArray", () {
-        queryList.reset(["one", "two"]);
-        expect(((queryList as _JsQueryList)).reduce((a, x) => a + x, "start:"),
-            "start:onetwo");
-      });
-      test("should support toArray", () {
-        queryList.reset(["one", "two"]);
-        expect(((queryList as _JsQueryList)).toArray(), ["one", "two"]);
-      });
-    }
     test("should support toString", () {
       queryList.reset(["one", "two"]);
       var listString = queryList.toString();

@@ -7,7 +7,7 @@ import "package:angular2/src/core/testability/testability.dart"
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/lang.dart" show scheduleMicroTask;
 import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, EventEmitter, ObservableWrapper;
+    show EventEmitter, ObservableWrapper;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 

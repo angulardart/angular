@@ -7,7 +7,6 @@ import "package:angular2/src/core/application_ref.dart"
     show
         ApplicationRef_,
         ApplicationRef,
-        PlatformRef_,
         PlatformRef,
         PLATFORM_CORE_PROVIDERS,
         APPLICATION_CORE_PROVIDERS;

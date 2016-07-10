@@ -2,7 +2,6 @@ library angular2.test.common.forms.control_mocks;
 
 import 'package:angular2/common.dart';
 import 'package:angular2/src/core/change_detection/change_detection.dart';
-import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
 
 @proxy

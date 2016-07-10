@@ -7,21 +7,16 @@ import "package:angular2/src/platform/browser/browser_adapter.dart"
     show BrowserDomAdapter;
 import "package:angular2/src/facade/lang.dart"
     show
-        Type,
         isPresent,
-        assertionsEnabled,
-        isJsObject,
-        global,
         stringify,
         isBlank;
 import "package:angular2/src/facade/exceptions.dart"
-    show BaseException, WrappedException;
+    show BaseException;
 import "package:angular2/src/facade/async.dart"
     show PromiseWrapper, EventEmitter, ObservableWrapper, PromiseCompleter;
 import "package:angular2/core.dart"
     show
         Injector,
-        bind,
         provide,
         Injectable,
         Provider,

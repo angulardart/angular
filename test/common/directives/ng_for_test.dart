@@ -2,7 +2,6 @@ library angular2.test.common.directives.ng_for_test;
 
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "package:angular2/core.dart" show Component, TemplateRef, ContentChild;
 import "package:angular2/src/common/directives/ng_for.dart" show NgFor;
 import "package:angular2/src/common/directives/ng_if.dart" show NgIf;
@@ -170,7 +169,7 @@ main() {
           try {
             fixture.debugElement.componentInstance.items = 'whaaa';
             fixture.detectChanges();
-          } catch (e, e_stack) {
+          } catch (e) {
             msg = e.originalException.toString();
           }
           expect(

@@ -6,7 +6,7 @@ import 'package:angular2/src/facade/lang.dart' show isBlank;
 import 'package:angular2/common.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
 import 'package:angular2/src/facade/async.dart'
-    show EventEmitter, ObservableWrapper, PromiseWrapper, TimerWrapper;
+    show EventEmitter, ObservableWrapper, TimerWrapper;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';

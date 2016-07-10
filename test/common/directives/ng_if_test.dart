@@ -4,7 +4,6 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/core.dart" show Component;
 import "package:angular2/common.dart" show NgIf;
-import "package:angular2/src/facade/lang.dart" show IS_DART;
 import 'package:test/test.dart';
 
 main() {

@@ -3,7 +3,7 @@ library angular2.test.core.change_detection.differs.iterable_differs_test;
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/core/change_detection/differs/iterable_differs.dart"
     show IterableDiffers;
-import "package:angular2/core.dart" show Injector, provide, ReflectiveInjector;
+import "package:angular2/core.dart" show provide, ReflectiveInjector;
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import '../../core_mocks.dart';

@@ -2,8 +2,6 @@ library angular2.src.testing.internal_injector;
 
 import 'dart:async';
 import 'package:angular2/core.dart' show ReflectiveInjector;
-import 'package:angular2/src/core/reflection/reflection.dart';
-import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
 
 /// Provides reflective injector for executing a test.
 class TestInjector {

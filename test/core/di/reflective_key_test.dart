@@ -1,7 +1,7 @@
 library angular2.test.core.di.reflective_key_test;
 
 import "package:angular2/src/core/di/reflective_key.dart"
-    show ReflectiveKey, KeyRegistry;
+    show KeyRegistry;
 import 'package:test/test.dart';
 
 main() {

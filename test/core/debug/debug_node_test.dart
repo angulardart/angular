@@ -3,7 +3,7 @@ library angular2.test.core.debug.debug_node_test;
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, EventEmitter, ObservableWrapper;
+    show EventEmitter;
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/common.dart" show NgFor, NgIf;
 import "package:angular2/platform/common_dom.dart" show By;

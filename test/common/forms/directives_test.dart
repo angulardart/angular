@@ -103,9 +103,8 @@ main() {
     });
   });
   group("Shared composeValidators", () {
-    var defaultAccessor;
     setUp(() {
-      defaultAccessor = new DefaultValueAccessor(null, null);
+      new DefaultValueAccessor(null, null);
     });
     test("should compose functions", () {
       var dummy1 = (_) => ({"dummy1": true});

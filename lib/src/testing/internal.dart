@@ -2,7 +2,7 @@ library angular2.src.testing.internal;
 
 import 'dart:async';
 import 'package:angular2/core.dart'
-    show ReflectiveInjector, PLATFORM_INITIALIZER;
+    show PLATFORM_INITIALIZER;
 import 'package:angular2/platform/testing/browser.dart';
 import 'package:angular2/src/core/di/provider.dart' show provide, Provider;
 import 'package:angular2/src/core/reflection/reflection.dart';
@@ -41,9 +41,6 @@ Future<dynamic> inject(List<dynamic> tokens, Function fn) async {
   if (funcWithParams.isAsync) {
     Provider p = provide(AsyncTestCompleter);
     assert(p != null);
-    var completerProvider = p.useFactory(() {
-      return funcWithParams.completer;
-    });
     _testInjector.addProviders([funcWithParams.completer]);
   }
   if (_extraPerTestProviders != null) {
@@ -134,6 +131,7 @@ class _HasTextContent extends Matcher {
       item, Description mismatchDescription, Map matchState, bool verbose) {
     mismatchDescription.add('Text content of element: '
         '\'${_elementText(item)}\'');
+    return mismatchDescription;
   }
 }
 
@@ -164,6 +162,7 @@ class _ThrowsWith extends Matcher {
       item, Description mismatchDescription, Map matchState, bool verbose) {
     mismatchDescription.add('Expecting throw \'${expected}\' '
         ' got \'$exceptionStr\'');
+    return mismatchDescription;
   }
 }
 
