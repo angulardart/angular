@@ -17,8 +17,22 @@ import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/router/router_link_dsl.dart';
 import 'package:angular2/i18n.dart';
 
+import 'logging.dart' as logging;
 import 'xhr_impl.dart';
 import 'url_resolver.dart';
+
+/// Implementation of [Console] for transformers.
+class _LoggerConsole implements Console {
+  @override
+  void log(String message) {
+    logging.log.info(message);
+  }
+
+  @override
+  void warn(String message) {
+    logging.log.warning(message);
+  }
+}
 
 OfflineCompiler createTemplateCompiler(AssetReader reader,
     {CompilerConfig compilerConfig, XmbDeserializationResult translations}) {
@@ -33,7 +47,7 @@ OfflineCompiler createTemplateCompiler(AssetReader reader,
       parser,
       new DomElementSchemaRegistry(),
       _htmlParser,
-      new Console(),
+      new _LoggerConsole(),
       [new RouterLinkTransform(parser)]);
 
   return new OfflineCompiler(
