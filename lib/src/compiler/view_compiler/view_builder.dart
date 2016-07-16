@@ -381,29 +381,46 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
     CompileElement parent = context;
+    // When logging updates, we need to create anchor as a field to be able
+    // to update the comment, otherwise we can create simple local field.
+    bool createFieldForAnchor = view.genConfig.logBindingUpdate;
     var nodeIndex = this.view.nodes.length;
     var fieldName = '_anchor_${nodeIndex}';
-    this.view.fields.add(new o.ClassField(fieldName,
-        outputType: o.importType(view.genConfig.renderTypes.renderComment),
-        modifiers: const [o.StmtModifier.Private]));
+    var anchorVarExpr;
+    if (createFieldForAnchor) {
+      this.view.fields.add(new o.ClassField(fieldName,
+          outputType: o.importType(view.genConfig.renderTypes.renderComment),
+          modifiers: const [o.StmtModifier.Private]));
+      anchorVarExpr = new o.ReadClassMemberExpr(fieldName);
+    } else {
+      anchorVarExpr = o.variable(fieldName);
+    }
     // Create a comment to serve as anchor for template.
-    var anchorFieldExpr = new o.ReadClassMemberExpr(fieldName);
-    var createAnchorNodeExpr = new o.WriteClassMemberExpr(
-        fieldName,
-        o
-            .importExpr(Identifiers.HTML_COMMENT_NODE)
-            .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
-    view.createMethod.addStmt(createAnchorNodeExpr.toStmt());
+    if (createFieldForAnchor) {
+      var createAnchorNodeExpr = new o.WriteClassMemberExpr(
+          fieldName,
+          o
+              .importExpr(Identifiers.HTML_COMMENT_NODE)
+              .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
+      view.createMethod.addStmt(createAnchorNodeExpr.toStmt());
+    } else {
+      var createAnchorNodeExpr = anchorVarExpr.set(o
+          .importExpr(Identifiers.HTML_COMMENT_NODE)
+          .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
+      view.createMethod.addStmt(createAnchorNodeExpr.toDeclStmt());
+    }
     var addCommentStmt = _getParentRenderNode(parent)
-        .callMethod('append', [anchorFieldExpr], checked: true)
+        .callMethod('append', [anchorVarExpr], checked: true)
         .toStmt();
 
     view.createMethod.addStmt(addCommentStmt);
 
-    view.createMethod
-        .addStmt(createDbgElementCall(anchorFieldExpr, nodeIndex, ast));
+    if (view.genConfig.genDebugInfo) {
+      view.createMethod
+          .addStmt(createDbgElementCall(anchorVarExpr, nodeIndex, ast));
+    }
 
-    var renderNode = new o.ReadClassMemberExpr(fieldName);
+    var renderNode = anchorVarExpr;
     var templateVariableBindings = ast.variables
         .map((VariableAst varAst) => [
               varAst.value.length > 0 ? varAst.value : IMPLICIT_TEMPLATE_VAR,
