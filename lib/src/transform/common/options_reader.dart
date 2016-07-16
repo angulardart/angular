@@ -64,11 +64,22 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
 /// Print an error message when an `entryPointsGlobs` value doesn't resolve to
 /// at least one file.
 void _checkEntryPointsExist(TransformerOptions transformerOptions) {
+  final invalidEntryPoints = [];
   if (transformerOptions.entryPointGlobs != null) {
     for (var entryPointGlob in transformerOptions.entryPointGlobs) {
-      if (entryPointGlob.listSync().isEmpty) {
-        stderr.writeln('The value "$entryPointGlob" in "entry_points" of the '
-            'Angular 2 transformer configuration does not point to any file.');
+      try {
+        if (entryPointGlob.listSync().isEmpty) {
+          invalidEntryPoints.add('$entryPointGlob');
+        }
+      } on FileSystemException catch (_) {
+        invalidEntryPoints.add('$entryPointGlob');
+      }
+    }
+    if (invalidEntryPoints.isNotEmpty) {
+      stderr.writeln('No matching file found for the following Angular2 '
+          'transformer entry_points:');
+      for (var glob in invalidEntryPoints) {
+        stderr.writeln('  - $glob');
       }
     }
   }
