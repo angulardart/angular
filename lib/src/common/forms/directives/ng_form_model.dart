@@ -1,15 +1,14 @@
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show SimpleChange, OnChanges, Directive, Provider, Inject, Optional, Self;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-
-import "../model.dart" show Control, ControlGroup;
-import "../validators.dart" show Validators, NG_VALIDATORS, NG_ASYNC_VALIDATORS;
-import "control_container.dart" show ControlContainer;
-import "form_interface.dart" show Form;
-import "ng_control.dart" show NgControl;
-import "ng_control_group.dart" show NgControlGroup;
-import "shared.dart"
+import 'package:angular2/src/facade/async.dart' show EventEmitter;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import '../model.dart' show Control, ControlGroup;
+import '../validators.dart' show Validators, NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import 'control_container.dart' show ControlContainer;
+import 'form_interface.dart' show Form;
+import 'ng_control.dart' show NgControl;
+import 'ng_control_group.dart';
+import 'shared.dart'
     show
         setUpControl,
         setUpControlGroup,
@@ -90,12 +89,12 @@ const formDirectiveProvider =
 /// }
 /// ```
 @Directive(
-    selector: "[ngFormModel]",
+    selector: '[ngFormModel]',
     providers: const [formDirectiveProvider],
-    inputs: const ["form: ngFormModel"],
-    host: const {"(submit)": "onSubmit()"},
-    outputs: const ["ngSubmit", "ngBeforeSubmit"],
-    exportAs: "ngForm")
+    inputs: const ['form: ngFormModel'],
+    host: const {'(submit)': 'onSubmit()'},
+    outputs: const ['ngSubmit', 'ngBeforeSubmit'],
+    exportAs: 'ngForm')
 class NgFormModel extends ControlContainer implements Form, OnChanges {
   List<dynamic> _validators;
   List<dynamic> _asyncValidators;
@@ -103,45 +102,38 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   List<NgControl> directives = [];
   var ngSubmit = new EventEmitter<ControlGroup>(false);
   var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);
+
   NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
-      @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators)
-      : super() {
-    /* super call moved to initializer */;
-  }
+      @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators);
+
   void ngOnChanges(Map<String, SimpleChange> changes) {
-    this._checkFormPresent();
+    _checkFormPresent();
     if (changes.containsKey('form')) {
-      var sync = composeValidators(this._validators);
-      this.form.validator = Validators.compose([this.form.validator, sync]);
-      var async = composeAsyncValidators(this._asyncValidators);
-      this.form.asyncValidator =
-          Validators.composeAsync([this.form.asyncValidator, async]);
-      this.form.updateValueAndValidity(onlySelf: true, emitEvent: false);
+      var sync = composeValidators(_validators);
+      this.form.validator = Validators.compose([form.validator, sync]);
+      var async = composeAsyncValidators(_asyncValidators);
+      form.asyncValidator =
+          Validators.composeAsync([form.asyncValidator, async]);
+      form.updateValueAndValidity(onlySelf: true, emitEvent: false);
     }
-    this._updateDomValue();
+    _updateDomValue();
   }
 
-  Form get formDirective {
-    return this;
-  }
+  Form get formDirective => this;
 
-  ControlGroup get control {
-    return this.form;
-  }
+  ControlGroup get control => form;
 
-  List<String> get path {
-    return [];
-  }
+  List<String> get path => [];
 
   void addControl(NgControl dir) {
-    dynamic ctrl = this.form.find(dir.path);
+    dynamic ctrl = form.find(dir.path);
     setUpControl(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
-    this.directives.add(dir);
+    directives.add(dir);
   }
 
   Control getControl(NgControl dir) {
-    return (this.form.find(dir.path) as Control);
+    return (form.find(dir.path) as Control);
   }
 
   void removeControl(NgControl dir) {
@@ -149,18 +141,18 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   addControlGroup(NgControlGroup dir) {
-    dynamic ctrl = this.form.find(dir.path);
+    dynamic ctrl = form.find(dir.path);
     setUpControlGroup(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
   }
 
   removeControlGroup(NgControlGroup dir) {}
   ControlGroup getControlGroup(NgControlGroup dir) {
-    return (this.form.find(dir.path) as ControlGroup);
+    return (form.find(dir.path) as ControlGroup);
   }
 
   void updateModel(NgControl dir, dynamic value) {
-    var ctrl = (this.form.find(dir.path) as Control);
+    var ctrl = (form.find(dir.path) as Control);
     ctrl.updateValue(value);
   }
 
@@ -171,8 +163,8 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   _updateDomValue() {
-    this.directives.forEach((dir) {
-      dynamic ctrl = this.form.find(dir.path);
+    directives.forEach((dir) {
+      dynamic ctrl = form.find(dir.path);
       dir.valueAccessor.writeValue(ctrl.value);
     });
   }
@@ -180,7 +172,8 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   _checkFormPresent() {
     if (form == null) {
       throw new BaseException(
-          '''ngFormModel expects a form. Please pass one in. Example: <form [ngFormModel]="myCoolForm">''');
+          'ngFormModel expects a form. Please pass one in. Example: '
+          '<form [ngFormModel]="myCoolForm">');
     }
   }
 }

@@ -5,27 +5,19 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RenderComponentType;
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular2/src/platform/dom/shared_styles_host.dart";
 
-import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
-import "debug_context.dart" show StaticNodeDebugInfo, DebugContext;
 import "element.dart" show AppElement;
 import "element_injector.dart" show ElementInjector;
-import "exceptions.dart"
-    show
-        ExpressionChangedAfterItHasBeenCheckedException,
-        ViewDestroyedException,
-        ViewWrappedException;
+import "exceptions.dart" show ViewDestroyedException;
 import "view_ref.dart" show ViewRef_;
 import "view_type.dart" show ViewType;
 import "view_utils.dart" show ViewUtils, ensureSlotCount, OnDestroyCallback;
 
 const EMPTY_CONTEXT = const Object();
-WtfScopeFn _scope_check = wtfCreateScope('''AppView#check(ascii id)''');
 
-/**
- * Cost of making objects: http://jsperf.com/instantiate-size-of-object
- *
- */
+/// Cost of making objects: http://jsperf.com/instantiate-size-of-object
 abstract class AppView<T> {
   dynamic clazz;
   RenderComponentType componentType;
@@ -43,15 +35,16 @@ abstract class AppView<T> {
   List<AppView<dynamic>> contentChildren = [];
   List<AppView<dynamic>> viewChildren = [];
   AppView<dynamic> renderParent;
-  AppElement viewContainerElement;
-  // The names of the below fields must be kept in sync with codegen_name_util.ts or
+  AppElement viewContainerElement = null;
 
+  // The names of the below fields must be kept in sync with codegen_name_util.ts or
   // change detection will fail.
   ChangeDetectorState cdState = ChangeDetectorState.NeverChecked;
-  /**
-   * The context against which data-binding expressions in this view are evaluated against.
-   * This is always a component instance.
-   */
+
+  /// The context against which data-binding expressions in this view are
+  /// evaluated against.
+  ///
+  /// This is always a component instance.
   T context = null;
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
@@ -73,6 +66,7 @@ abstract class AppView<T> {
       this.renderer = declarationAppElement.parentView.renderer;
     }
   }
+
   AppElement create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | dynamic */ rootSelectorOrNode) {
@@ -103,15 +97,15 @@ abstract class AppView<T> {
     return this.createInternal(rootSelectorOrNode);
   }
 
-  /**
-   * Overwritten by implementations.
-   * Returns the AppElement for the host element for ViewType.HOST.
-   */
+  /// Returns the AppElement for the host element for ViewType.HOST.
+  ///
+  /// Overwritten by implementations.
   AppElement createInternal(dynamic /* String | dynamic */ rootSelectorOrNode) {
     return null;
   }
 
-  init(List<dynamic> rootNodesOrAppElements, List<dynamic> allNodes,
+  /// Called by createInternal once all dom nodes are available.
+  void init(List<dynamic> rootNodesOrAppElements, List<dynamic> allNodes,
       List<dynamic> subscriptions) {
     this.rootNodesOrAppElements = rootNodesOrAppElements;
     this.allNodes = allNodes;
@@ -124,10 +118,8 @@ abstract class AppView<T> {
     }
   }
 
-  dynamic selectOrCreateHostElement(
-      String elementName,
-      dynamic /* String | dynamic */ rootSelectorOrNode,
-      DebugContext debugCtx) {
+  dynamic selectOrCreateHostElement(String elementName,
+      dynamic /* String | dynamic */ rootSelectorOrNode, debugCtx) {
     var hostElement;
     if (rootSelectorOrNode != null) {
       hostElement =
@@ -155,7 +147,7 @@ abstract class AppView<T> {
     return new ElementInjector(this, nodeIndex);
   }
 
-  destroy() {
+  void destroy() {
     if (this._hasExternalHostElement) {
       this.renderer.detachView(flatRootNodes);
     } else {
@@ -165,7 +157,7 @@ abstract class AppView<T> {
     this._destroyRecurse();
   }
 
-  _destroyRecurse() {
+  void _destroyRecurse() {
     if (destroyed) {
       return;
     }
@@ -202,39 +194,36 @@ abstract class AppView<T> {
     _onDestroyCallbacks.add(callback);
   }
 
-  /**
-   * Overwritten by implementations
-   */
+  /// Overwritten by implementations to destroy view.
   void destroyInternal() {}
-  ChangeDetectorRef get changeDetectorRef {
-    return this.ref;
-  }
+
+  ChangeDetectorRef get changeDetectorRef => ref;
 
   AppView<dynamic> get parent => this.declarationAppElement?.parentView;
 
-  List<dynamic> get flatRootNodes {
-    return flattenNestedViewRenderNodes(this.rootNodesOrAppElements);
-  }
+  List<dynamic> get flatRootNodes =>
+      flattenNestedViewRenderNodes(rootNodesOrAppElements);
 
   dynamic get lastRootNode {
-    var lastNode = this.rootNodesOrAppElements.length > 0
-        ? this.rootNodesOrAppElements[this.rootNodesOrAppElements.length - 1]
+    var lastNode = rootNodesOrAppElements.length > 0
+        ? rootNodesOrAppElements[rootNodesOrAppElements.length - 1]
         : null;
     return _findLastRenderNode(lastNode);
   }
 
+  // TODO: remove when all tests use codegen=debug.
+  void dbgElm(element, num nodeIndex, num rowNum, num colNum) {}
+
   bool hasLocal(String contextName) => locals.containsKey(contextName);
 
   void setLocal(String contextName, dynamic value) {
-    this.locals[contextName] = value;
+    locals[contextName] = value;
   }
 
-  /**
-   * Overwritten by implementations
-   */
+  /// Overwritten by implementations
   void dirtyParentQueriesInternal() {}
+
   void detectChanges() {
-    var s = _scope_check(this.clazz);
     if (identical(this.cdMode, ChangeDetectionStrategy.Detached) ||
         identical(this.cdMode, ChangeDetectionStrategy.Checked) ||
         identical(this.cdState, ChangeDetectorState.Errored)) return;
@@ -245,24 +234,22 @@ abstract class AppView<T> {
     if (identical(this.cdMode, ChangeDetectionStrategy.CheckOnce))
       this.cdMode = ChangeDetectionStrategy.Checked;
     this.cdState = ChangeDetectorState.CheckedBefore;
-    wtfLeave(s);
   }
 
-  /**
-   * Overwritten by implementations
-   */
+  /// Overwritten by implementations
   void detectChangesInternal() {
     this.detectContentChildrenChanges();
     this.detectViewChildrenChanges();
   }
 
-  detectContentChildrenChanges() {
-    for (var i = 0; i < this.contentChildren.length; ++i) {
-      this.contentChildren[i].detectChanges();
+  void detectContentChildrenChanges() {
+    int length = contentChildren.length;
+    for (var i = 0; i < length; ++i) {
+      contentChildren[i].detectChanges();
     }
   }
 
-  detectViewChildrenChanges() {
+  void detectViewChildrenChanges() {
     int len = viewChildren.length;
     for (var i = 0; i < len; ++i) {
       viewChildren[i].detectChanges();
@@ -282,7 +269,7 @@ abstract class AppView<T> {
   }
 
   void markAsCheckOnce() {
-    this.cdMode = ChangeDetectionStrategy.CheckOnce;
+    cdMode = ChangeDetectionStrategy.CheckOnce;
   }
 
   void markPathToRootAsCheckOnce() {
@@ -300,105 +287,52 @@ abstract class AppView<T> {
     }
   }
 
-  Function eventHandler(Function cb) {
+  // Used to get around strong mode error due to loosely typed
+  // subscription handlers.
+  Function evt(Function cb) {
     return cb;
   }
 
   void throwDestroyedError(String details) {
     throw new ViewDestroyedException(details);
   }
-}
 
-class DebugAppView<T> extends AppView<T> {
-  final List<StaticNodeDebugInfo> staticNodeDebugInfos;
-  DebugContext _currentDebugContext = null;
-  DebugAppView(
-      dynamic clazz,
-      RenderComponentType componentType,
-      ViewType type,
-      Map<String, dynamic> locals,
-      ViewUtils viewUtils,
-      Injector parentInjector,
-      AppElement declarationAppElement,
-      ChangeDetectionStrategy cdMode,
-      this.staticNodeDebugInfos)
-      : super(clazz, componentType, type, locals, viewUtils, parentInjector,
-            declarationAppElement, cdMode);
+  static void initializeSharedStyleHost(document) {
+    sharedStylesHost = new DomSharedStylesHost(document);
+  }
 
-  AppElement create(
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      selector) {
-    String rootSelector = selector;
-    this._resetDebug();
-    try {
-      return super.create(givenProjectableNodes, rootSelector);
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
-      rethrow;
+  // Returns content attribute to add to elements for css encapsulation.
+  String get shimCAttr => componentType.contentAttr;
+
+  /// Initializes styling to enable css shim for host element.
+  Element initViewRoot(dynamic hostElement) {
+    assert(componentType.encapsulation != ViewEncapsulation.Native);
+    if (componentType.hostAttr != null) {
+      Element host = hostElement;
+      host.attributes[componentType.hostAttr] = '';
     }
+    return hostElement;
   }
 
-  dynamic injectorGet(dynamic token, num nodeIndex, dynamic notFoundResult) {
-    this._resetDebug();
-    try {
-      return super.injectorGet(token, nodeIndex, notFoundResult);
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
-      rethrow;
+  /// Creates native shadowdom root and initializes styles.
+  ShadowRoot createViewShadowRoot(dynamic hostElement) {
+    assert(componentType.encapsulation == ViewEncapsulation.Native);
+    var nodesParent;
+    Element host = hostElement;
+    nodesParent = host.createShadowRoot();
+    sharedStylesHost.addHost(nodesParent);
+    List<String> styles = componentType.styles;
+    int styleCount = styles.length;
+    for (var i = 0; i < styleCount; i++) {
+      nodesParent.append(createStyleElement(styles[i]));
     }
+    return nodesParent;
   }
 
-  destroyLocal() {
-    this._resetDebug();
-    try {
-      super.destroyLocal();
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
-      rethrow;
-    }
-  }
-
-  void detectChanges() {
-    this._resetDebug();
-    try {
-      super.detectChanges();
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
-      rethrow;
-    }
-  }
-
-  _resetDebug() {
-    this._currentDebugContext = null;
-  }
-
-  DebugContext debug(num nodeIndex, num rowNum, num colNum) {
-    return this._currentDebugContext =
-        new DebugContext(this, nodeIndex, rowNum, colNum);
-  }
-
-  _rethrowWithContext(dynamic e, dynamic stack) {
-    if (!(e is ViewWrappedException)) {
-      if (!(e is ExpressionChangedAfterItHasBeenCheckedException)) {
-        this.cdState = ChangeDetectorState.Errored;
-      }
-      if (this._currentDebugContext != null) {
-        throw new ViewWrappedException(e, stack, this._currentDebugContext);
-      }
-    }
-  }
-
-  Function eventHandler(Function cb) {
-    var superHandler = super.eventHandler(cb);
-    return (event) {
-      this._resetDebug();
-      try {
-        return superHandler(event);
-      } catch (e, e_stack) {
-        this._rethrowWithContext(e, e_stack);
-        rethrow;
-      }
-    };
+  StyleElement createStyleElement(String css) {
+    StyleElement el = document.createElement('STYLE');
+    el.text = css;
+    return el;
   }
 }
 

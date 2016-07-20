@@ -81,15 +81,21 @@ abstract class ImportWriterMixin {
   StringBuffer get buffer;
 
   void writeImportModel(ImportModel model) {
-    buffer.write("import '${model.uri}'");
+    buffer.write(importModelToStmt(model));
+  }
+
+  String importModelToStmt(ImportModel model) {
+    StringBuffer sb = new StringBuffer();
+    sb.write("import '${model.uri}'");
     if (model.isDeferred) {
-      buffer.write(' deferred');
+      sb.write(' deferred');
     }
     if (model.prefix != null && model.prefix.isNotEmpty) {
-      buffer.write(' as ${model.prefix}');
+      sb.write(' as ${model.prefix}');
     }
-    _writeCombinators(buffer, model);
-    buffer.writeln(';');
+    _writeCombinators(sb, model);
+    sb.writeln(';');
+    return sb.toString();
   }
 }
 

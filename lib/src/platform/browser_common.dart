@@ -37,11 +37,6 @@ import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
 import "package:angular2/src/platform/dom/events/key_events.dart"
     show KeyEventsPlugin;
-import "package:angular2/src/platform/dom/shared_styles_host.dart"
-    show DomSharedStylesHost;
-import "package:angular2/src/platform/dom/shared_styles_host.dart"
-    show SharedStylesHost;
-
 import "browser/browser_adapter.dart" show BrowserDomAdapter;
 
 export "package:angular2/src/platform/browser/title.dart" show Title;
@@ -101,8 +96,6 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   const Provider(HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig),
   DomRootRenderer,
   const Provider(RootRenderer, useExisting: DomRootRenderer),
-  const Provider(SharedStylesHost, useExisting: DomSharedStylesHost),
-  DomSharedStylesHost,
   Testability,
   BrowserDetails,
   AnimationBuilder,

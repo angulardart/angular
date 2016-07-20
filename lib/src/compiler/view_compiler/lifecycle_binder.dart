@@ -28,12 +28,12 @@ bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
           .callMethod('ngOnChanges', [DetectChangesVars.changes]).toStmt()
     ]));
   }
-  if (!identical(lifecycleHooks.indexOf(LifecycleHooks.OnInit), -1)) {
+  if (lifecycleHooks.contains(LifecycleHooks.OnInit)) {
     detectChangesInInputsMethod.addStmt(new o.IfStmt(
         STATE_IS_NEVER_CHECKED.and(NOT_THROW_ON_CHANGES),
         [directiveInstance.callMethod('ngOnInit', []).toStmt()]));
   }
-  if (!identical(lifecycleHooks.indexOf(LifecycleHooks.DoCheck), -1)) {
+  if (lifecycleHooks.contains(LifecycleHooks.DoCheck)) {
     detectChangesInInputsMethod.addStmt(new o.IfStmt(NOT_THROW_ON_CHANGES,
         [directiveInstance.callMethod('ngDoCheck', []).toStmt()]));
   }

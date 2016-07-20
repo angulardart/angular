@@ -1,60 +1,61 @@
-import "package:angular2/src/core/di.dart" show Inject, Injectable;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import 'package:angular2/src/core/render/api.dart';
 
-import "dom_tokens.dart" show DOCUMENT;
+/// Returns application level shared style host to shim styles for components.
+///
+/// Initialized by RootRenderer.
+SharedStylesHost sharedStylesHost;
 
-@Injectable()
-class SharedStylesHost {
-  /** @internal */
+/// Implementation of DomSharedStyleHost for DOM.
+class DomSharedStylesHost implements SharedStylesHost {
   List<String> _styles = [];
-  /** @internal */
   var _stylesSet = new Set<String>();
-  SharedStylesHost() {}
-  addStyles(List<String> styles) {
+  var _hostNodes = new Set();
+
+  DomSharedStylesHost(dynamic doc) {
+    _hostNodes.add(doc.head);
+  }
+
+  @override
+  void addStyles(List<String> styles) {
+    int styleCount = styles.length;
     var additions = <String>[];
-    styles.forEach((style) {
-      if (!this._stylesSet.contains(style)) {
-        this._stylesSet.add(style);
-        this._styles.add(style);
-        additions.add(style);
-      }
-    });
-    this.onStylesAdded(additions);
+    for (int i = 0; i < styleCount; i++) {
+      String style = styles[i];
+      if (_stylesSet.contains(style)) continue;
+      _stylesSet.add(style);
+      _styles.add(style);
+      additions.add(style);
+    }
+    onStylesAdded(additions);
   }
 
-  onStylesAdded(List<String> additions) {}
+  @override
   List<String> getAllStyles() {
-    return this._styles;
+    return _styles;
   }
-}
 
-@Injectable()
-class DomSharedStylesHost extends SharedStylesHost {
-  var _hostNodes = new Set<dynamic>();
-  DomSharedStylesHost(@Inject(DOCUMENT) dynamic doc) : super() {
-    /* super call moved to initializer */;
-    this._hostNodes.add(doc.head);
-  }
-  /** @internal */
-  _addStylesToHost(List<String> styles, dynamic host) {
-    for (var i = 0; i < styles.length; i++) {
-      var style = styles[i];
-      DOM.appendChild(host, DOM.createStyleElement(style));
+  void _addStylesToHost(List<String> styles, dynamic host) {
+    int styleCount = styles.length;
+    for (var i = 0; i < styleCount; i++) {
+      DOM.appendChild(host, DOM.createStyleElement(styles[i]));
     }
   }
 
-  addHost(dynamic hostNode) {
-    this._addStylesToHost(this._styles, hostNode);
-    this._hostNodes.add(hostNode);
+  @override
+  void addHost(dynamic hostNode) {
+    _addStylesToHost(_styles, hostNode);
+    _hostNodes.add(hostNode);
   }
 
-  removeHost(dynamic hostNode) {
+  @override
+  void removeHost(dynamic hostNode) {
     _hostNodes.remove(hostNode);
   }
 
-  onStylesAdded(List<String> additions) {
-    this._hostNodes.forEach((hostNode) {
-      this._addStylesToHost(additions, hostNode);
+  void onStylesAdded(List<String> additions) {
+    _hostNodes.forEach((hostNode) {
+      _addStylesToHost(additions, hostNode);
     });
   }
 }

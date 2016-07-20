@@ -188,19 +188,32 @@ abstract class NgDepsWriterMixin
     // We need to import & export (see below) the source file.
     writeImportModel(new ImportModel()..uri = model.sourceFile);
 
+    final needsReceiver =
+        (model.reflectables != null && model.reflectables.isNotEmpty);
+
     // Used to register reflective information.
-    writeImportModel(new ImportModel()
-      ..uri = REFLECTOR_IMPORT
-      ..prefix = REFLECTOR_PREFIX);
+    if (needsReceiver) {
+      writeImportModel(new ImportModel()
+        ..uri = REFLECTOR_IMPORT
+        ..prefix = REFLECTOR_PREFIX);
+    }
 
     // We do not support `partUris`, so skip outputting them.
-
     // Ignore deferred imports here so as to not load the deferred libraries
     // code in the current library causing much of the code to not be
     // deferred. Instead `DeferredRewriter` will rewrite the code as to load
     // `ng_deps` in a deferred way.
-    model.imports.where((i) => !i.isDeferred).forEach(writeImportModel);
-    model.depImports.where((i) => !i.isDeferred).forEach(writeImportModel);
+    // TODO: Needs to check every import as XYZ for XYZ in AppView member names,
+    // otherwise imports such as import 'something' as renderer, causes
+    // generated code for renderer.createElement/etc to fail.
+    model.imports.where((i) => !i.isDeferred).forEach((ImportModel imp) {
+      String stmt = importModelToStmt(imp);
+      if (!templateCode.contains(stmt)) writeImportModel(imp);
+    });
+    model.depImports.where((i) => !i.isDeferred).forEach((ImportModel imp) {
+      String stmt = importModelToStmt(imp);
+      if (!templateCode.contains(stmt)) writeImportModel(imp);
+    });
 
     writeExportModel(new ExportModel()..uri = model.sourceFile);
     model.exports.forEach(writeExportModel);
@@ -212,9 +225,6 @@ abstract class NgDepsWriterMixin
         model.reflectables.isNotEmpty) {
       writeLocalMetadataMap(model.reflectables);
     }
-
-    final needsReceiver =
-        (model.reflectables != null && model.reflectables.isNotEmpty);
 
     bool hasInitializationCode = needsReceiver || model.depImports.isNotEmpty;
 

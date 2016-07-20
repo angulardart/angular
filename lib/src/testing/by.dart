@@ -1,6 +1,5 @@
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/src/testing/debug_node.dart"
-    show DebugElement, Predicate;
+import "package:angular2/src/debug/debug_node.dart";
 
 /// Predicates for use with [DebugElement]'s query functions.
 class By {
@@ -20,6 +19,13 @@ class By {
   static Predicate<DebugElement> directive(Type type) {
     return (debugElement) {
       return !identical(debugElement.providerTokens.indexOf(type), -1);
+    };
+  }
+
+  /// Match elements that have the given directive present.
+  static Predicate<DebugNode> nodeDirective(Type type) {
+    return (debugNode) {
+      return !identical(debugNode.providerTokens.indexOf(type), -1);
     };
   }
 }

@@ -5,6 +5,7 @@ import "../compile_metadata.dart"
 import "../config.dart" show CompilerConfig;
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show TemplateAst;
+import "../style_compiler.dart" show StylesCompileResult;
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
 import "view_binder.dart" show bindView;
@@ -24,14 +25,14 @@ class ViewCompiler {
   ViewCompileResult compileComponent(
       CompileDirectiveMetadata component,
       List<TemplateAst> template,
+      StylesCompileResult stylesCompileResult,
       o.Expression styles,
       List<CompilePipeMetadata> pipes) {
     var statements = <o.Statement>[];
     var dependencies = <ViewCompileDependency>[];
     var view = new CompileView(component, this._genConfig, pipes, styles, 0,
         new CompileElement.root(), []);
-    buildView(view, template, dependencies);
-
+    buildView(view, template, stylesCompileResult, dependencies);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.
     bindView(view, template);

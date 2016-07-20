@@ -13,7 +13,7 @@ import 'package:angular2/platform/common.dart' show LocationStrategy;
 import 'package:angular2/src/animate/animation_builder.dart'
     show AnimationBuilder;
 import 'package:angular2/src/core/render/api.dart' show RootRenderer;
-import 'package:angular2/src/testing/debug_renderer.dart'
+import 'package:angular2/src/debug/debug_renderer.dart'
     show DebugDomRootRenderer;
 import 'package:angular2/src/mock/animation_builder_mock.dart'
     show MockAnimationBuilder;

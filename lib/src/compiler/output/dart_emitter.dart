@@ -42,14 +42,16 @@ class DartEmitter implements OutputEmitter {
       String moduleUrl, List<o.Statement> stmts, List<String> exportedVars) {
     var srcParts = [];
     // Note: We are not creating a library here as Dart does not need it.
-
     // Dart analzyer might complain about it though.
     var converter = new _DartEmitterVisitor(moduleUrl);
     var ctx = EmitterVisitorContext.createRoot(exportedVars);
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
-      srcParts.add(
-          '''import \'${ getImportModulePath ( moduleUrl , importedModuleUrl , ImportEnv . Dart )}\' as ${ prefix};''');
+      String importPath =
+          getImportModulePath(moduleUrl, importedModuleUrl, ImportEnv.Dart);
+      srcParts.add(prefix.isEmpty
+          ? "import '$importPath';"
+          : "import '$importPath' as ${prefix};");
     });
     srcParts.add(ctx.toSource());
     return srcParts.join("\n");
@@ -58,11 +60,44 @@ class DartEmitter implements OutputEmitter {
 
 class _DartEmitterVisitor extends AbstractEmitterVisitor
     implements o.TypeVisitor {
+  // List of packages that are public api and can be imported without prefix.
+  static const List<String> whiteListedImports = const [
+    'package:angular2/angular2.dart',
+    'dart:html',
+    // StaticNodeDebugInfo, DebugContext.
+    'asset:angular2/lib/src/debug/debug_context.dart',
+    'package:angular2/src/debug/debug_context.dart',
+    // ElementRef.
+    'asset:angular2/lib/src/core/linker/element_ref.dart',
+    'package:angular2/src/core/linker/element_ref.dart',
+    // AppElement
+    'asset:angular2/lib/src/core/linker/element.dart',
+    'package:angular2/src/core/linker/element.dart',
+    // TemplateRef.
+    'asset:angular2/lib/src/core/linker/template_ref.dart',
+    'package:angular2/src/core/linker/template_ref.dart',
+    // uninitialized, ChangeDetectionStrategy, Differs*
+    'asset:angular2/lib/src/core/change_detection/change_detection.dart',
+    'package:angular2/src/core/change_detection/change_detection.dart',
+    // NgIf.
+    'asset:angular2/lib/src/common/directives/ng_if.dart',
+    'package:angular2/src/common/directives/ng_if.dart',
+    // AppView, DebugAppView.
+    'asset:angular2/lib/src/core/linker/app_view.dart',
+    'package:angular2/src/core/linker/app_view.dart',
+    'asset:angular2/lib/src/debug/debug_app_view.dart',
+    'package:angular2/src/debug/debug_app_view.dart',
+    // RenderComponentType.
+    'asset:angular2/lib/src/core/render/api.dart',
+    'package:angular2/src/core/render/api.dart',
+  ];
+
   String _moduleUrl;
+
   var importsWithPrefixes = new Map<String, String>();
-  _DartEmitterVisitor(this._moduleUrl) : super(true) {
-    /* super call moved to initializer */;
-  }
+
+  _DartEmitterVisitor(this._moduleUrl) : super(true);
+
   dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     this._visitIdentifier(ast.value, ast.typeParams, ctx);
@@ -73,42 +108,42 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     if (stmt.hasModifier(o.StmtModifier.Final)) {
       if (isConstType(stmt.type)) {
-        ctx.print('''const ''');
+        ctx.print('const ');
       } else {
-        ctx.print('''final ''');
+        ctx.print('final ');
       }
     } else if (stmt.type == null) {
-      ctx.print('''var ''');
+      ctx.print('var ');
     }
     if (stmt.type != null) {
       stmt.type.visitType(this, ctx);
-      ctx.print(''' ''');
+      ctx.print(' ');
     }
-    ctx.print('''${ stmt . name} = ''');
+    ctx.print('${stmt.name} = ');
     stmt.value.visitExpression(this, ctx);
-    ctx.println(''';''');
+    ctx.println(';');
     return null;
   }
 
   dynamic visitCastExpr(o.CastExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''(''');
+    ctx.print('(');
     ast.value.visitExpression(this, ctx);
-    ctx.print(''' as ''');
+    ctx.print(' as ');
     ast.type.visitType(this, ctx);
-    ctx.print(''')''');
+    ctx.print(')');
     return null;
   }
 
   dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.pushClass(stmt);
-    ctx.print('''class ${ stmt . name}''');
+    ctx.print('class ${stmt.name}');
     if (stmt.parent != null) {
-      ctx.print(''' extends ''');
+      ctx.print(' extends ');
       stmt.parent.visitExpression(this, ctx);
     }
-    ctx.println(''' {''');
+    ctx.println(' {');
     ctx.incIndent();
     stmt.fields.forEach((field) => this._visitClassField(field, ctx));
     if (stmt.constructorMethod != null) {
@@ -117,7 +152,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     stmt.getters.forEach((getter) => this._visitClassGetter(getter, ctx));
     stmt.methods.forEach((method) => this._visitClassMethod(method, ctx));
     ctx.decIndent();
-    ctx.println('''}''');
+    ctx.println('}');
     ctx.popClass();
     return null;
   }
@@ -125,75 +160,79 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   _visitClassField(o.ClassField field, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (field.hasModifier(o.StmtModifier.Final)) {
-      ctx.print('''final ''');
+      ctx.print('final ');
     } else if (field.type == null) {
-      ctx.print('''var ''');
+      ctx.print('var ');
     }
     if (field.type != null) {
       field.type.visitType(this, ctx);
-      ctx.print(''' ''');
+      ctx.print(' ');
     }
-    ctx.println('''${ field . name};''');
+    ctx.println('${ field . name};');
   }
 
   _visitClassGetter(o.ClassGetter getter, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (getter.type != null) {
       getter.type.visitType(this, ctx);
-      ctx.print(''' ''');
+      ctx.print(' ');
     }
-    ctx.println('''get ${ getter . name} {''');
+    ctx.println('get ${ getter . name} {');
     ctx.incIndent();
     this.visitAllStatements(getter.body, ctx);
     ctx.decIndent();
-    ctx.println('''}''');
+    ctx.println('}');
   }
 
   _visitClassConstructor(o.ClassStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''${ stmt . name}(''');
+    ctx.print('${ stmt . name}(');
     this._visitParams(stmt.constructorMethod.params, ctx);
-    ctx.print(''')''');
+    ctx.print(')');
     var ctorStmts = stmt.constructorMethod.body;
     var superCtorExpr =
         ctorStmts.length > 0 ? getSuperConstructorCallExpr(ctorStmts[0]) : null;
     if (superCtorExpr != null) {
-      ctx.print(''': ''');
+      ctx.print(': ');
+      ctx.enterSuperCall();
       superCtorExpr.visitExpression(this, ctx);
+      ctx.exitSuperCall();
       ctorStmts = ctorStmts.sublist(1);
     }
-    ctx.println(''' {''');
+    ctx.println(' {');
     ctx.incIndent();
     this.visitAllStatements(ctorStmts, ctx);
     ctx.decIndent();
-    ctx.println('''}''');
+    ctx.println('}');
   }
 
   _visitClassMethod(o.ClassMethod method, dynamic context) {
     EmitterVisitorContext ctx = context;
+    ctx.enterMethod(method);
     if (method.type != null) {
       method.type.visitType(this, ctx);
     } else {
-      ctx.print('''void''');
+      ctx.print('void');
     }
-    ctx.print(''' ${ method . name}(''');
+    ctx.print(' ${method.name}(');
     this._visitParams(method.params, ctx);
-    ctx.println(''') {''');
+    ctx.println(') {');
     ctx.incIndent();
     this.visitAllStatements(method.body, ctx);
     ctx.decIndent();
-    ctx.println('''}''');
+    ctx.println('}');
+    ctx.exitMethod();
   }
 
   dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''(''');
+    ctx.print('(');
     this._visitParams(ast.params, ctx);
-    ctx.println(''') {''');
+    ctx.println(') {');
     ctx.incIndent();
     this.visitAllStatements(ast.statements, ctx);
     ctx.decIndent();
-    ctx.print('''}''');
+    ctx.print('}');
     return null;
   }
 
@@ -203,15 +242,15 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (stmt.type != null) {
       stmt.type.visitType(this, ctx);
     } else {
-      ctx.print('''void''');
+      ctx.print('void');
     }
-    ctx.print(''' ${ stmt . name}(''');
+    ctx.print(' ${ stmt . name}(');
     this._visitParams(stmt.params, ctx);
-    ctx.println(''') {''');
+    ctx.println(') {');
     ctx.incIndent();
     this.visitAllStatements(stmt.statements, ctx);
     ctx.decIndent();
-    ctx.println('''}''');
+    ctx.println('}');
     return null;
   }
 
@@ -228,7 +267,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         name = null;
         break;
       default:
-        throw new BaseException('''Unknown builtin method: ${ method}''');
+        throw new BaseException('Unknown builtin method: ${ method}');
     }
     return name;
   }
@@ -243,18 +282,30 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  dynamic visitReadClassMemberExpr(o.ReadClassMemberExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    if (ctx.activeMethod != null &&
+        !ctx.activeMethod.containsParameterName(ast.name) &&
+        !ctx.inSuperCall) {
+      ctx.print('${ast.name}');
+    } else {
+      ctx.print('this.${ast.name}');
+    }
+    return null;
+  }
+
   dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.println('''try {''');
+    ctx.println('try {');
     ctx.incIndent();
     this.visitAllStatements(stmt.bodyStmts, ctx);
     ctx.decIndent();
     ctx.println(
-        '''} catch (${ CATCH_ERROR_VAR . name}, ${ CATCH_STACK_VAR . name}) {''');
+        '} catch (${ CATCH_ERROR_VAR . name}, ${ CATCH_STACK_VAR . name}) {');
     ctx.incIndent();
     this.visitAllStatements(stmt.catchStmts, ctx);
     ctx.decIndent();
-    ctx.println('''}''');
+    ctx.println('}');
     return null;
   }
 
@@ -262,18 +313,18 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     switch (ast.operator) {
       case o.BinaryOperator.Identical:
-        ctx.print('''identical(''');
+        ctx.print('identical(');
         ast.lhs.visitExpression(this, ctx);
-        ctx.print(''', ''');
+        ctx.print(', ');
         ast.rhs.visitExpression(this, ctx);
-        ctx.print(''')''');
+        ctx.print(')');
         break;
       case o.BinaryOperator.NotIdentical:
-        ctx.print('''!identical(''');
+        ctx.print('!identical(');
         ast.lhs.visitExpression(this, ctx);
-        ctx.print(''', ''');
+        ctx.print(', ');
         ast.rhs.visitExpression(this, ctx);
-        ctx.print(''')''');
+        ctx.print(')');
         break;
       default:
         super.visitBinaryOperatorExpr(ast, ctx);
@@ -292,24 +343,24 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (isConstType(ast.type)) {
-      ctx.print('''const ''');
+      ctx.print('const ');
     }
     if (ast.valueType != null) {
-      ctx.print('''<String, ''');
+      ctx.print('<String, ');
       ast.valueType.visitType(this, ctx);
-      ctx.print('''>''');
+      ctx.print('>');
     }
     return super.visitLiteralMapExpr(ast, ctx);
   }
 
   dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print(isConstType(ast.type) ? '''const''' : '''new''');
+    ctx.print(isConstType(ast.type) ? 'const' : 'new');
     ctx.print(" ");
     ast.classExpr.visitExpression(this, ctx);
-    ctx.print('''(''');
-    this.visitAllExpressions(ast.args, ctx, ''',''');
-    ctx.print(''')''');
+    ctx.print('(');
+    this.visitAllExpressions(ast.args, ctx, ',');
+    ctx.print(')');
     return null;
   }
 
@@ -336,7 +387,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         typeStr = "String";
         break;
       default:
-        throw new BaseException('''Unsupported builtin type ${ type . name}''');
+        throw new BaseException('Unsupported builtin type ${ type . name}');
     }
     ctx.print(typeStr);
     return null;
@@ -350,25 +401,25 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   dynamic visitArrayType(o.ArrayType type, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''List<''');
+    ctx.print('List<');
     if (type.of != null) {
       type.of.visitType(this, ctx);
     } else {
-      ctx.print('''dynamic''');
+      ctx.print('dynamic');
     }
-    ctx.print('''>''');
+    ctx.print('>');
     return null;
   }
 
   dynamic visitMapType(o.MapType type, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''Map<String, ''');
+    ctx.print('Map<String, ');
     if (type.valueType != null) {
       type.valueType.visitType(this, ctx);
     } else {
-      ctx.print('''dynamic''');
+      ctx.print('dynamic');
     }
-    ctx.print('''>''');
+    ctx.print('>');
     return null;
   }
 
@@ -386,20 +437,24 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void _visitIdentifier(CompileIdentifierMetadata value,
       List<o.OutputType> typeParams, dynamic context) {
     EmitterVisitorContext ctx = context;
-    if (value.moduleUrl != null && value.moduleUrl != this._moduleUrl) {
-      var prefix = this.importsWithPrefixes[value.moduleUrl];
+    if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
+      var prefix = importsWithPrefixes[value.moduleUrl];
       if (prefix == null) {
-        prefix = '''import${ this . importsWithPrefixes . length}''';
-        this.importsWithPrefixes[value.moduleUrl] = prefix;
+        if (whiteListedImports.contains(value.moduleUrl)) {
+          prefix = '';
+        } else {
+          prefix = 'import${importsWithPrefixes.length}';
+        }
+        importsWithPrefixes[value.moduleUrl] = prefix;
       }
-      ctx.print('''${ prefix}.''');
+      ctx.print(prefix.isEmpty ? '' : '${prefix}.');
     }
     ctx.print(value.name);
     if (typeParams != null && typeParams.length > 0) {
-      ctx.print('''<''');
-      this.visitAllObjects(
-          (type) => type.visitType(this, ctx), typeParams, ctx, ",");
-      ctx.print('''>''');
+      ctx.print('<');
+      visitAllObjects(
+          (type) => type.visitType(this, ctx), typeParams, ctx, ',');
+      ctx.print('>');
     }
   }
 }

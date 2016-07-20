@@ -10,7 +10,7 @@ import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
 import 'dom_tokens.dart' show DOCUMENT;
 import 'events/event_manager.dart' show EventManager;
-import 'shared_styles_host.dart' show DomSharedStylesHost;
+import 'shared_styles_host.dart';
 import 'util.dart' show camelCaseToDashCase;
 
 const NAMESPACE_URIS = const {
@@ -26,12 +26,13 @@ class DomRootRenderer implements RootRenderer {
   static bool isDirty = false;
   dynamic document;
   EventManager eventManager;
-  DomSharedStylesHost sharedStylesHost;
   AnimationBuilder animate;
   var _registeredComponents = <String, DomRenderer>{};
 
-  DomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager,
-      this.sharedStylesHost, this.animate);
+  DomRootRenderer(
+      @Inject(DOCUMENT) this.document, this.eventManager, this.animate) {
+    sharedStylesHost ??= new DomSharedStylesHost(document);
+  }
 
   Renderer renderComponent(RenderComponentType componentProto) {
     var renderer = this._registeredComponents[componentProto.id];
@@ -46,23 +47,9 @@ class DomRootRenderer implements RootRenderer {
 class DomRenderer implements Renderer {
   DomRootRenderer _rootRenderer;
   RenderComponentType componentProto;
-  String _contentAttr;
-  String _hostAttr;
-  List<String> _styles;
 
   DomRenderer(@Inject(RootRenderer) this._rootRenderer, this.componentProto) {
-    this._styles = _flattenStyles(componentProto.id, componentProto.styles, []);
-    if (!identical(componentProto.encapsulation, ViewEncapsulation.Native)) {
-      this._rootRenderer.sharedStylesHost.addStyles(this._styles);
-    }
-    if (identical(
-        this.componentProto.encapsulation, ViewEncapsulation.Emulated)) {
-      this._contentAttr = _shimContentAttribute(componentProto.id);
-      this._hostAttr = _shimHostAttribute(componentProto.id);
-    } else {
-      this._contentAttr = null;
-      this._hostAttr = null;
-    }
+    componentProto.shimStyles(sharedStylesHost);
   }
 
   dynamic selectRootElement(dynamic /* String | dynamic */ selectorOrNode,
@@ -87,8 +74,8 @@ class DomRenderer implements Renderer {
     var el = nsAndName[0] != null
         ? DOM.createElementNS(NAMESPACE_URIS[nsAndName[0]], nsAndName[1])
         : DOM.createElement(nsAndName[1]);
-    if (_contentAttr != null) {
-      DOM.setAttribute(el, this._contentAttr, '');
+    if (componentProto.contentAttr != null) {
+      DOM.setAttribute(el, componentProto.contentAttr, '');
     }
     if (parent != null) {
       DOM.appendChild(parent, el);
@@ -99,16 +86,17 @@ class DomRenderer implements Renderer {
 
   dynamic createViewRoot(dynamic hostElement) {
     var nodesParent;
-    if (identical(
-        this.componentProto.encapsulation, ViewEncapsulation.Native)) {
+    if (identical(componentProto.encapsulation, ViewEncapsulation.Native)) {
       nodesParent = DOM.createShadowRoot(hostElement);
-      this._rootRenderer.sharedStylesHost.addHost(nodesParent);
-      for (var i = 0; i < this._styles.length; i++) {
-        DOM.appendChild(nodesParent, DOM.createStyleElement(this._styles[i]));
+      sharedStylesHost.addHost(nodesParent);
+      List<String> styles = componentProto.styles;
+      int styleCount = styles.length;
+      for (var i = 0; i < styleCount; i++) {
+        DOM.appendChild(nodesParent, DOM.createStyleElement(styles[i]));
       }
     } else {
-      if (_hostAttr != null) {
-        DOM.setAttribute(hostElement, this._hostAttr, '');
+      if (componentProto.hostAttr != null) {
+        DOM.setAttribute(hostElement, componentProto.hostAttr, '');
       }
       nodesParent = hostElement;
     }
@@ -163,7 +151,7 @@ class DomRenderer implements Renderer {
   destroyView(dynamic hostElement, List<dynamic> viewAllNodes) {
     if (componentProto.encapsulation == ViewEncapsulation.Native &&
         hostElement != null) {
-      _rootRenderer.sharedStylesHost.removeHost(DOM.getShadowRoot(hostElement));
+      sharedStylesHost.removeHost(DOM.getShadowRoot(hostElement));
       DomRootRenderer.isDirty = true;
     }
   }
@@ -318,34 +306,6 @@ Function decoratePreventDefault(Function eventHandler) {
       DOM.preventDefault(event);
     }
   };
-}
-
-var COMPONENT_REGEX = new RegExp(r'%COMP%');
-const COMPONENT_VARIABLE = '%COMP%';
-final HOST_ATTR = '_nghost-${ COMPONENT_VARIABLE}';
-final CONTENT_ATTR = '_ngcontent-${ COMPONENT_VARIABLE}';
-String _shimContentAttribute(String componentShortId) {
-  return CONTENT_ATTR.replaceAll(COMPONENT_REGEX, componentShortId);
-}
-
-String _shimHostAttribute(String componentShortId) {
-  return HOST_ATTR.replaceAll(COMPONENT_REGEX, componentShortId);
-}
-
-List<String> _flattenStyles(
-    String compId,
-    List<dynamic /* dynamic | List < dynamic > */ > styles,
-    List<String> target) {
-  for (var i = 0; i < styles.length; i++) {
-    var style = styles[i];
-    if (style is List) {
-      _flattenStyles(compId, style, target);
-    } else {
-      style = style.replaceAll(COMPONENT_REGEX, compId);
-      target.add(style);
-    }
-  }
-  return target;
 }
 
 var NS_PREFIX_RE = new RegExp(r'^@([^:]+):(.+)');

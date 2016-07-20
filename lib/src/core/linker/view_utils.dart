@@ -37,12 +37,8 @@ class ViewUtils {
       num slotCount,
       ViewEncapsulation encapsulation,
       List<dynamic /* String | List < dynamic > */ > styles) {
-    return new RenderComponentType(
-        '''${ this . _appId}-${ this . _nextCompTypeId ++}''',
-        templateUrl,
-        slotCount,
-        encapsulation,
-        styles);
+    return new RenderComponentType('${_appId}-${_nextCompTypeId++}',
+        templateUrl, slotCount, encapsulation, styles);
   }
 
   Renderer renderComponent(RenderComponentType renderComponentType) {

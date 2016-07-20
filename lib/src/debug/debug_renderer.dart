@@ -1,4 +1,4 @@
-import "package:angular2/src/testing/debug_node.dart"
+import "package:angular2/src/debug/debug_node.dart"
     show
         DebugNode,
         DebugElement,
@@ -16,7 +16,7 @@ import "package:angular2/src/core/render/api.dart"
 import '../platform/dom/dom_tokens.dart' show DOCUMENT;
 import '../platform/dom/dom_renderer.dart' show DomRenderer, DomRootRenderer;
 import '../platform/dom/events/event_manager.dart' show EventManager;
-import '../platform/dom/shared_styles_host.dart' show DomSharedStylesHost;
+import '../platform/dom/shared_styles_host.dart';
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
 const INSPECT_GLOBAL_NAME = "ng.probe";
@@ -30,13 +30,13 @@ class DebugDomRootRenderer implements DomRootRenderer {
   static bool isDirty = false;
   dynamic document;
   EventManager eventManager;
-  DomSharedStylesHost sharedStylesHost;
   AnimationBuilder animate;
   var _registeredComponents = <String, DomRenderer>{};
 
-  DebugDomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager,
-      this.sharedStylesHost, this.animate) {
+  DebugDomRootRenderer(
+      @Inject(DOCUMENT) this.document, this.eventManager, this.animate) {
     DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
+    sharedStylesHost ??= new DomSharedStylesHost(document);
   }
 
   Renderer renderComponent(RenderComponentType componentProto) {
@@ -103,11 +103,15 @@ class DebugDomRenderer extends DomRenderer {
   attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
     var debugNode = getDebugNode(node);
     if (debugNode != null) {
-      var debugParent = debugNode.parent;
+      var debugParent = debugNode?.parent;
       if (viewRootNodes.length > 0 && debugParent != null) {
         List<DebugNode> debugViewRootNodes = [];
-        viewRootNodes.forEach(
-            (rootNode) => debugViewRootNodes.add(getDebugNode(rootNode)));
+        int rootNodeCount = viewRootNodes.length;
+        for (int n = 0; n < rootNodeCount; n++) {
+          var debugNode = getDebugNode(viewRootNodes[n]);
+          if (debugNode == null) continue;
+          debugViewRootNodes.add(debugNode);
+        }
         debugParent.insertChildrenAfter(debugNode, debugViewRootNodes);
       }
     }
@@ -125,9 +129,12 @@ class DebugDomRenderer extends DomRenderer {
   }
 
   destroyView(dynamic hostElement, List<dynamic> viewAllNodes) {
-    viewAllNodes.forEach((node) {
-      removeDebugNodeFromIndex(getDebugNode(node));
-    });
+    int nodeCount = viewAllNodes.length;
+    for (int i = 0; i < nodeCount; i++) {
+      var debugNode = getDebugNode(viewAllNodes[i]);
+      if (debugNode == null) continue;
+      removeDebugNodeFromIndex(debugNode);
+    }
     super.destroyView(hostElement, viewAllNodes);
   }
 

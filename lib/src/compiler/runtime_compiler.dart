@@ -114,9 +114,10 @@ class RuntimeCompiler implements ComponentResolver {
                 .toList());
       done = Future.wait(futures).then/*<Future<CompiledTemplate>>*/(
           (List<dynamic> stylesAndNormalizedViewDirMetas) {
+        _ResolvedStyles resolvedStyles = stylesAndNormalizedViewDirMetas[0];
         var normalizedViewDirMetas = stylesAndNormalizedViewDirMetas.sublist(1)
             as List<CompileDirectiveMetadata>;
-        var styles = stylesAndNormalizedViewDirMetas[0];
+        var styles = resolvedStyles.styles;
         var parsedTemplate = this._templateParser.parse(
             compMeta,
             compMeta.template.template,
@@ -127,7 +128,8 @@ class RuntimeCompiler implements ComponentResolver {
         compiledTemplate.init(this._compileComponent(
             compMeta,
             parsedTemplate,
-            styles as List<String>,
+            resolvedStyles.compileResult,
+            styles,
             pipes,
             compilingComponentsPath,
             childPromises));
@@ -143,6 +145,7 @@ class RuntimeCompiler implements ComponentResolver {
   Function _compileComponent(
       CompileDirectiveMetadata compMeta,
       List<TemplateAst> parsedTemplate,
+      StylesCompileResult stylesCompileResult,
       List<String> styles,
       List<CompilePipeMetadata> pipes,
       List<dynamic> compilingComponentsPath,
@@ -150,6 +153,7 @@ class RuntimeCompiler implements ComponentResolver {
     var compileResult = this._viewCompiler.compileComponent(
         compMeta,
         parsedTemplate,
+        stylesCompileResult,
         new ir.ExternalExpr(new CompileIdentifierMetadata(runtime: styles)),
         pipes);
     compileResult.dependencies.forEach((dep) {
@@ -178,10 +182,14 @@ class RuntimeCompiler implements ComponentResolver {
         compileResult.viewFactoryVar, new InterpretiveAppViewInstanceFactory());
   }
 
-  Future<List<String>> _compileComponentStyles(
+  Future<_ResolvedStyles> _compileComponentStyles(
       CompileDirectiveMetadata compMeta) {
     var compileResult = this._styleCompiler.compileComponent(compMeta);
-    return this._resolveStylesCompileResult(compMeta.type.name, compileResult);
+    return this
+        ._resolveStylesCompileResult(compMeta.type.name, compileResult)
+        .then((List<String> styles) {
+      return new _ResolvedStyles(compileResult, styles);
+    });
   }
 
   Future<List<String>> _resolveStylesCompileResult(
@@ -239,4 +247,10 @@ assertComponent(CompileDirectiveMetadata meta) {
     throw new BaseException(
         '''Could not compile \'${ meta . type . name}\' because it is not a component.''');
   }
+}
+
+class _ResolvedStyles {
+  final List<String> styles;
+  final StylesCompileResult compileResult;
+  _ResolvedStyles(this.compileResult, this.styles);
 }

@@ -1,7 +1,7 @@
 import 'offline_compiler_compa.css.shim.dart' as import0;
-import 'package:angular2/src/core/linker/debug_context.dart' as import1;
+import 'package:angular2/src/debug/debug_context.dart' as import1;
 import 'package:angular2/src/core/render/api.dart' as import2;
-import 'package:angular2/src/core/linker/app_view.dart' as import3;
+import 'package:angular2/src/debug/debug_app_view.dart' as import3;
 import 'offline_compiler_util.dart' as import4;
 import 'package:angular2/src/core/linker/view_utils.dart' as import5;
 import 'package:angular2/src/core/di/injector.dart' as import6;
@@ -38,7 +38,7 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
             nodeDebugInfos_CompA0) {}
   import7.AppElement createInternal(dynamic rootSelector) {
     final parentRenderNode =
-        this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
+        this.initViewRoot(this.declarationAppElement.nativeElement);
     this._text_0 =
         this.renderer.createText(parentRenderNode, '', this.debug(0, 0, 0));
     this._expr_0 = import9.uninitialized;

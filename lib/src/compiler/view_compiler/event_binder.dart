@@ -31,7 +31,8 @@ class CompileEventListener {
   CompileEventListener(this.compileElement, this.eventName, num listenerIndex) {
     this._method = new CompileMethod(compileElement.view);
     this._methodName =
-        '''_handle_${ santitizeEventName ( eventName )}_${ compileElement . nodeIndex}_${ listenerIndex}''';
+        '_handle_${sanitizeEventName(eventName)}_${compileElement.nodeIndex}_'
+        '${ listenerIndex}';
     this._eventParam = new o.FnParam(
         EventHandlerVars.event.name,
         o.importType(
@@ -43,9 +44,7 @@ class CompileEventListener {
       this._hasComponentHostListener = true;
     }
     this._method.resetDebugInfo(this.compileElement.nodeIndex, hostEvent);
-    var context = directiveInstance != null
-        ? directiveInstance
-        : o.THIS_EXPR.prop("context");
+    var context = directiveInstance ?? o.THIS_EXPR.prop("context");
     var actionStmts = convertCdStatementToIr(
         this.compileElement.view, context, hostEvent.handler);
     var lastIndex = actionStmts.length - 1;
@@ -53,11 +52,10 @@ class CompileEventListener {
       var lastStatement = actionStmts[lastIndex];
       var returnExpr = convertStmtIntoExpression(lastStatement);
       var preventDefaultVar =
-          o.variable('''pd_${ this . _actionResultExprs . length}''');
+          o.variable('pd_${ this . _actionResultExprs . length}');
       this._actionResultExprs.add(preventDefaultVar);
       if (returnExpr != null) {
         // Note: We need to cast the result of the method call to dynamic,
-
         // as it might be a void method!
         actionStmts[lastIndex] = preventDefaultVar
             .set(returnExpr.cast(o.DYNAMIC_TYPE).notIdentical(o.literal(false)))
@@ -88,7 +86,7 @@ class CompileEventListener {
   }
 
   listenToRenderer() {
-    var eventListener = o.THIS_EXPR.callMethod("eventHandler", [
+    var eventListener = o.THIS_EXPR.callMethod("evt", [
       o.THIS_EXPR
           .prop(this._methodName)
           .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
@@ -106,10 +104,10 @@ class CompileEventListener {
   }
 
   listenToDirective(o.Expression directiveInstance, String observablePropName) {
-    var subscription = o.variable(
-        '''subscription_${ this . compileElement . view . subscriptions . length}''');
+    var subscription =
+        o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
-    var eventListener = o.THIS_EXPR.callMethod("eventHandler", [
+    var eventListener = o.THIS_EXPR.callMethod("evt", [
       o.THIS_EXPR
           .prop(this._methodName)
           .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
@@ -173,6 +171,6 @@ o.Expression convertStmtIntoExpression(o.Statement stmt) {
   return null;
 }
 
-String santitizeEventName(String name) {
+String sanitizeEventName(String name) {
   return name.replaceAll(new RegExp(r'[^a-zA-Z_]'), "_");
 }

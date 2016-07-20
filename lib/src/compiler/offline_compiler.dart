@@ -119,8 +119,8 @@ class OfflineCompiler {
     var styleResult = _styleCompiler.compileComponent(compMeta);
     var parsedTemplate = _templateParser.parse(compMeta,
         compMeta.template.template, directives, pipes, compMeta.type.name);
-    var viewResult = _viewCompiler.compileComponent(
-        compMeta, parsedTemplate, o.variable(styleResult.stylesVar), pipes);
+    var viewResult = _viewCompiler.compileComponent(compMeta, parsedTemplate,
+        styleResult, o.variable(styleResult.stylesVar), pipes);
     targetStatements.addAll(_resolveStyleStatements(styleResult));
     targetStatements.addAll(_resolveViewStatements(viewResult));
     return viewResult.viewFactoryVar;

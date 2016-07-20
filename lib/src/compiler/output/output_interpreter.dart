@@ -1,14 +1,16 @@
+import 'dart:html';
+
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/compiler/identifiers.dart";
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/core/linker/debug_context.dart"
+import "package:angular2/src/debug/debug_context.dart"
     show StaticNodeDebugInfo, DebugContext;
 import "package:angular2/src/core/linker.dart" show QueryList;
 import "package:angular2/src/core/linker/app_view.dart";
+import "package:angular2/src/debug/debug_app_view.dart";
 import "package:angular2/src/core/linker/component_factory.dart";
 import "package:angular2/src/core/linker/element.dart";
-import "package:angular2/src/core/linker/template_ref.dart"
-    show TemplateRef, TemplateRef_;
+import "package:angular2/src/core/linker/template_ref.dart";
 import "package:angular2/src/core/linker/view_container_ref.dart"
     show ViewContainerRef;
 import "dart_emitter.dart" show debugOutputAstAsDart;
@@ -147,12 +149,14 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return debugOutputAstAsDart(ast);
   }
 
+  @override
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     _ExecutionContext ctx = context;
     ctx.vars[stmt.name] = stmt.value.visitExpression(this, ctx);
     return null;
   }
 
+  @override
   dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context) {
     _ExecutionContext ctx = context;
     var value = expr.value.visitExpression(this, ctx);
@@ -167,6 +171,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     throw new BaseException('''Not declared variable ${ expr . name}''');
   }
 
+  @override
   dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var varName = ast.name;
@@ -198,6 +203,14 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     throw new BaseException('''Not declared variable ${ varName}''');
   }
 
+  @override
+  dynamic visitReadClassMemberExpr(o.ReadClassMemberExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
+    var receiver = o.THIS_EXPR.visitExpression(this, ctx);
+    return _readPropertyValue(receiver, ast.name);
+  }
+
+  @override
   dynamic visitWriteKeyExpr(o.WriteKeyExpr expr, dynamic context) {
     _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
@@ -207,6 +220,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return value;
   }
 
+  @override
   dynamic visitWritePropExpr(o.WritePropExpr expr, dynamic context) {
     _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
@@ -224,6 +238,26 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return value;
   }
 
+  @override
+  dynamic visitWriteClassMemberExpr(
+      o.WriteClassMemberExpr expr, dynamic context) {
+    _ExecutionContext ctx = context;
+    var receiver = o.THIS_EXPR.visitExpression(this, ctx);
+    var value = expr.value.visitExpression(this, ctx);
+    if (isDynamicInstance(receiver)) {
+      var di = (receiver as DynamicInstance);
+      if (di.props.containsKey(expr.name)) {
+        di.props[expr.name] = value;
+      } else {
+        reflector.setter(expr.name)(receiver, value);
+      }
+    } else {
+      reflector.setter(expr.name)(receiver, value);
+    }
+    return value;
+  }
+
+  @override
   dynamic visitInvokeMethodExpr(o.InvokeMethodExpr expr, dynamic context) {
     _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
@@ -245,6 +279,9 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
               '''Unknown builtin method ${ expr . builtin}''');
       }
     } else if (isDynamicInstance(receiver)) {
+      // Don't call if it's a check-for-null safe method call.
+      if (expr.checked && (receiver == null || receiver == o.NULL_EXPR))
+        return null;
       var di = (receiver as DynamicInstance);
       if (di.methods.containsKey(expr.name)) {
         result = Function.apply(di.methods[expr.name], args);
@@ -252,7 +289,31 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
         result = reflector.method(expr.name)(receiver, args);
       }
     } else {
+      if (expr.checked && (receiver == null || receiver == o.NULL_EXPR))
+        return null;
       result = reflector.method(expr.name)(receiver, args);
+    }
+    return result;
+  }
+
+  @override
+  dynamic visitInvokeMemberMethodExpr(
+      o.InvokeMemberMethodExpr expr, dynamic context) {
+    _ExecutionContext ctx = context;
+    var result;
+    var receiver = ctx.superInstance;
+    var methodName = expr.methodName;
+    var args = visitAllExpressions(expr.args, ctx);
+    if (isDynamicInstance(receiver)) {
+      // Don't call if it's a check-for-null safe method call.
+      var di = (receiver as DynamicInstance);
+      if (di.methods.containsKey(methodName)) {
+        result = Function.apply(di.methods[methodName], args);
+      } else {
+        result = reflector.method(methodName)(receiver, args);
+      }
+    } else {
+      result = reflector.method(methodName)(receiver, args);
     }
     return result;
   }
@@ -425,21 +486,25 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
 
   dynamic visitReadPropExpr(o.ReadPropExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
-    var result;
     var receiver = ast.receiver.visitExpression(this, ctx);
+    return _readPropertyValue(receiver, ast.name);
+  }
+
+  dynamic _readPropertyValue(receiver, String name) {
+    var result;
     if (isDynamicInstance(receiver)) {
       var di = (receiver as DynamicInstance);
-      if (di.props.containsKey(ast.name)) {
-        result = di.props[ast.name];
-      } else if (di.getters.containsKey(ast.name)) {
-        result = di.getters[ast.name]();
-      } else if (di.methods.containsKey(ast.name)) {
-        result = di.methods[ast.name];
+      if (di.props.containsKey(name)) {
+        result = di.props[name];
+      } else if (di.getters.containsKey(name)) {
+        result = di.getters[name]();
+      } else if (di.methods.containsKey(name)) {
+        result = di.methods[name];
       } else {
-        result = reflector.getter(ast.name)(receiver);
+        result = reflector.getter(name)(receiver);
       }
     } else {
-      result = reflector.getter(ast.name)(receiver);
+      result = reflector.getter(name)(receiver);
     }
     return result;
   }
@@ -551,10 +616,11 @@ void _initializeInterpreter() {
   Identifiers.StaticNodeDebugInfo.runtime = StaticNodeDebugInfo;
   Identifiers.DebugContext.runtime = DebugContext;
   Identifiers.TemplateRef.runtime = TemplateRef;
-  Identifiers.TemplateRef_.runtime = TemplateRef_;
   Identifiers.ViewContainerRef.runtime = ViewContainerRef;
   Identifiers.flattenNestedViewRenderNodes.runtime =
       flattenNestedViewRenderNodes;
   Identifiers.ComponentFactory.runtime = ComponentFactory;
   Identifiers.QueryList.runtime = QueryList;
+  Identifiers.HTML_TEXT_NODE.runtime = Text;
+  Identifiers.HTML_DOCUMENT.runtime = document;
 }

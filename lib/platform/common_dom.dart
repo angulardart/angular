@@ -11,4 +11,4 @@ export "package:angular2/src/platform/dom/events/dom_events.dart"
 export "package:angular2/src/platform/dom/events/event_manager.dart"
     show EVENT_MANAGER_PLUGINS, EventManager, EventManagerPlugin;
 export "package:angular2/src/platform/dom/shared_styles_host.dart"
-    show SharedStylesHost, DomSharedStylesHost;
+    show sharedStylesHost;

@@ -1,17 +1,15 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-import "element_ref.dart" show ElementRef;
+import "element_ref.dart";
 import "query_list.dart" show QueryList;
-import "app_view.dart" show AppView;
-import "view_container_ref.dart" show ViewContainerRef_;
-import "view_type.dart" show ViewType;
+import "app_view.dart";
+import "view_container_ref.dart";
+import "view_type.dart";
 
-/**
- * An AppElement is created for elements that have a ViewContainerRef,
- * a nested component or a <template> element to keep data around
- * that is needed for later instantiations.
- */
+/// An AppElement is created for elements that have a ViewContainerRef,
+/// a nested component or a <template> element to keep data around
+/// that is needed for later instantiations.
 class AppElement {
   num index;
   num parentIndex;
@@ -21,32 +19,25 @@ class AppElement {
   AppView<dynamic> componentView = null;
   dynamic component;
   List<QueryList<dynamic>> componentConstructorViewQueries;
-  AppElement(
-      this.index, this.parentIndex, this.parentView, this.nativeElement) {}
-  ElementRef get elementRef {
-    return new ElementRef(this.nativeElement);
-  }
 
-  ViewContainerRef_ get vcRef {
-    return new ViewContainerRef_(this);
-  }
+  AppElement(this.index, this.parentIndex, this.parentView, this.nativeElement);
 
-  initComponent(
+  ElementRef get elementRef => new ElementRef(nativeElement);
+
+  ViewContainerRef get vcRef => new ViewContainerRef(this);
+
+  void initComponent(
       dynamic component,
       List<QueryList<dynamic>> componentConstructorViewQueries,
       AppView<dynamic> view) {
     this.component = component;
     this.componentConstructorViewQueries = componentConstructorViewQueries;
-    this.componentView = view;
+    componentView = view;
   }
 
-  Injector get parentInjector {
-    return this.parentView.injector(this.parentIndex);
-  }
+  Injector get parentInjector => parentView.injector(parentIndex);
 
-  Injector get injector {
-    return this.parentView.injector(this.index);
-  }
+  Injector get injector => parentView.injector(index);
 
   List<dynamic> mapNestedViews(dynamic nestedViewClass, Function callback) {
     var result = [];
@@ -60,15 +51,11 @@ class AppElement {
     return result;
   }
 
-  attachView(AppView<dynamic> view, num viewIndex) {
+  void attachView(AppView<dynamic> view, num viewIndex) {
     if (identical(view.type, ViewType.COMPONENT)) {
-      throw new BaseException('''Component views can\'t be moved!''');
+      throw new BaseException("Component views can't be moved!");
     }
-    var nestedViews = this.nestedViews;
-    if (nestedViews == null) {
-      nestedViews = [];
-      this.nestedViews = nestedViews;
-    }
+    nestedViews ??= [];
     nestedViews.insert(viewIndex, view);
     var refRenderNode;
     if (viewIndex > 0) {
@@ -86,7 +73,7 @@ class AppElement {
   AppView<dynamic> detachView(num viewIndex) {
     var view = this.nestedViews.removeAt(viewIndex);
     if (identical(view.type, ViewType.COMPONENT)) {
-      throw new BaseException('''Component views can\'t be moved!''');
+      throw new BaseException("Component views can't be moved!");
     }
     view.renderer.detachView(view.flatRootNodes);
     view.removeFromContentChildren(this);

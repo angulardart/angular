@@ -32,9 +32,8 @@ class ExternalType extends OutputType {
   List<OutputType> typeParams;
   ExternalType(this.value,
       [this.typeParams = null, List<TypeModifier> modifiers = null])
-      : super(modifiers) {
-    /* super call moved to initializer */;
-  }
+      : super(modifiers);
+
   dynamic visitType(TypeVisitor visitor, dynamic context) {
     return visitor.visitExternalType(this, context);
   }
@@ -42,9 +41,8 @@ class ExternalType extends OutputType {
 
 class ArrayType extends OutputType {
   OutputType of;
-  ArrayType(this.of, [List<TypeModifier> modifiers = null]) : super(modifiers) {
-    /* super call moved to initializer */;
-  }
+  ArrayType(this.of, [List<TypeModifier> modifiers = null]) : super(modifiers);
+
   dynamic visitType(TypeVisitor visitor, dynamic context) {
     return visitor.visitArrayType(this, context);
   }
@@ -53,9 +51,8 @@ class ArrayType extends OutputType {
 class MapType extends OutputType {
   OutputType valueType;
   MapType(this.valueType, [List<TypeModifier> modifiers = null])
-      : super(modifiers) {
-    /* super call moved to initializer */;
-  }
+      : super(modifiers);
+
   dynamic visitType(TypeVisitor visitor, dynamic context) {
     return visitor.visitMapType(this, context);
   }
@@ -106,9 +103,14 @@ abstract class Expression {
     return new ReadKeyExpr(this, index, type);
   }
 
+  /// Calls a method on an expression result.
+  ///
+  /// If [checked] is specified, the call will make a safe null check before
+  /// calling using '?' operator.
   InvokeMethodExpr callMethod(
-      dynamic /* String | BuiltinMethod */ name, List<Expression> params) {
-    return new InvokeMethodExpr(this, name, params);
+      dynamic /* String | BuiltinMethod */ name, List<Expression> params,
+      {bool checked: false}) {
+    return new InvokeMethodExpr(this, name, params, checked: checked);
   }
 
   InvokeFunctionExpr callFn(List<Expression> params) {
@@ -210,7 +212,6 @@ class ReadVarExpr extends Expression {
   BuiltinVar builtin;
   ReadVarExpr(dynamic /* String | BuiltinVar */ name, [OutputType type = null])
       : super(type) {
-    /* super call moved to initializer */;
     if (name is String) {
       this.name = name;
       this.builtin = null;
@@ -228,12 +229,34 @@ class ReadVarExpr extends Expression {
   }
 }
 
+class ReadClassMemberExpr extends Expression {
+  final String name;
+  ReadClassMemberExpr(this.name, [OutputType type = null]) : super(type);
+
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitReadClassMemberExpr(this, context);
+  }
+
+  WriteClassMemberExpr set(Expression value) {
+    return new WriteClassMemberExpr(this.name, value);
+  }
+}
+
+class WriteClassMemberExpr extends Expression {
+  String name;
+  Expression value;
+  WriteClassMemberExpr(this.name, this.value, [OutputType type]) : super(type);
+
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitWriteClassMemberExpr(this, context);
+  }
+}
+
 class WriteVarExpr extends Expression {
   String name;
   Expression value;
   WriteVarExpr(this.name, Expression value, [OutputType type = null])
       : super(type ?? value.type) {
-    /* super call moved to initializer */;
     this.value = value;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -253,7 +276,6 @@ class WriteKeyExpr extends Expression {
   WriteKeyExpr(this.receiver, this.index, Expression value,
       [OutputType type = null])
       : super(type ?? value.type) {
-    /* super call moved to initializer */;
     this.value = value;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -268,7 +290,6 @@ class WritePropExpr extends Expression {
   WritePropExpr(this.receiver, this.name, Expression value,
       [OutputType type = null])
       : super(type ?? value.type) {
-    /* super call moved to initializer */;
     this.value = value;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -283,11 +304,12 @@ class InvokeMethodExpr extends Expression {
   List<Expression> args;
   String name;
   BuiltinMethod builtin;
+  bool checked;
+
   InvokeMethodExpr(
       this.receiver, dynamic /* String | BuiltinMethod */ method, this.args,
-      [OutputType type = null])
-      : super(type) {
-    /* super call moved to initializer */;
+      {OutputType outputType, this.checked})
+      : super(outputType) {
     if (method is String) {
       this.name = method;
       this.builtin = null;
@@ -298,6 +320,18 @@ class InvokeMethodExpr extends Expression {
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitInvokeMethodExpr(this, context);
+  }
+}
+
+class InvokeMemberMethodExpr extends Expression {
+  final List<Expression> args;
+  final String methodName;
+
+  InvokeMemberMethodExpr(this.methodName, this.args, {OutputType outputType})
+      : super(outputType);
+
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitInvokeMemberMethodExpr(this, context);
   }
 }
 
@@ -315,9 +349,8 @@ class InvokeFunctionExpr extends Expression {
 class InstantiateExpr extends Expression {
   Expression classExpr;
   List<Expression> args;
-  InstantiateExpr(this.classExpr, this.args, [OutputType type]) : super(type) {
-    /* super call moved to initializer */;
-  }
+  InstantiateExpr(this.classExpr, this.args, [OutputType type]) : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitInstantiateExpr(this, context);
   }
@@ -325,9 +358,8 @@ class InstantiateExpr extends Expression {
 
 class LiteralExpr extends Expression {
   dynamic value;
-  LiteralExpr(this.value, [OutputType type = null]) : super(type) {
-    /* super call moved to initializer */;
-  }
+  LiteralExpr(this.value, [OutputType type = null]) : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitLiteralExpr(this, context);
   }
@@ -337,9 +369,8 @@ class ExternalExpr extends Expression {
   CompileIdentifierMetadata value;
   List<OutputType> typeParams;
   ExternalExpr(this.value, [OutputType type = null, this.typeParams = null])
-      : super(type) {
-    /* super call moved to initializer */;
-  }
+      : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitExternalExpr(this, context);
   }
@@ -352,7 +383,6 @@ class ConditionalExpr extends Expression {
   ConditionalExpr(this.condition, Expression trueCase,
       [this.falseCase = null, OutputType type = null])
       : super(type ?? trueCase.type) {
-    /* super call moved to initializer */;
     this.trueCase = trueCase;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -378,9 +408,8 @@ class IfNullExpr extends Expression {
 
 class NotExpr extends Expression {
   Expression condition;
-  NotExpr(this.condition) : super(BOOL_TYPE) {
-    /* super call moved to initializer */;
-  }
+  NotExpr(this.condition) : super(BOOL_TYPE);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitNotExpr(this, context);
   }
@@ -388,9 +417,8 @@ class NotExpr extends Expression {
 
 class CastExpr extends Expression {
   Expression value;
-  CastExpr(this.value, OutputType type) : super(type) {
-    /* super call moved to initializer */;
-  }
+  CastExpr(this.value, OutputType type) : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitCastExpr(this, context);
   }
@@ -427,7 +455,6 @@ class BinaryOperatorExpr extends Expression {
   BinaryOperatorExpr(this.operator, Expression lhs, this.rhs,
       [OutputType type = null])
       : super(type ?? lhs.type) {
-    /* super call moved to initializer */;
     this.lhs = lhs;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -470,10 +497,8 @@ class ReadKeyExpr extends Expression {
 class LiteralArrayExpr extends Expression {
   List<Expression> entries;
 
-  LiteralArrayExpr(List<Expression> entries, [OutputType type = null])
-      : super(type) {
-    this.entries = entries;
-  }
+  LiteralArrayExpr(this.entries, [OutputType type = null]) : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitLiteralArrayExpr(this, context);
   }
@@ -483,7 +508,6 @@ class LiteralMapExpr extends Expression {
   List<List<dynamic /* String | Expression */ >> entries;
   OutputType valueType = null;
   LiteralMapExpr(this.entries, [MapType type = null]) : super(type) {
-    /* super call moved to initializer */;
     if (type != null) {
       this.valueType = type.valueType;
     }
@@ -495,10 +519,14 @@ class LiteralMapExpr extends Expression {
 
 abstract class ExpressionVisitor {
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context);
+  dynamic visitReadClassMemberExpr(ReadClassMemberExpr ast, dynamic context);
+  dynamic visitWriteClassMemberExpr(WriteClassMemberExpr ast, dynamic context);
   dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context);
   dynamic visitWriteKeyExpr(WriteKeyExpr expr, dynamic context);
   dynamic visitWritePropExpr(WritePropExpr expr, dynamic context);
   dynamic visitInvokeMethodExpr(InvokeMethodExpr ast, dynamic context);
+  dynamic visitInvokeMemberMethodExpr(
+      InvokeMemberMethodExpr ast, dynamic context);
   dynamic visitInvokeFunctionExpr(InvokeFunctionExpr ast, dynamic context);
   dynamic visitInstantiateExpr(InstantiateExpr ast, dynamic context);
   dynamic visitLiteralExpr(LiteralExpr ast, dynamic context);
@@ -539,12 +567,11 @@ class DeclareVarStmt extends Statement {
   String name;
   Expression value;
   OutputType type;
-  DeclareVarStmt(this.name, this.value,
+  DeclareVarStmt(this.name, Expression value,
       [OutputType type = null, List<StmtModifier> modifiers = null])
-      : super(modifiers) {
-    /* super call moved to initializer */;
-    this.type = type ?? value.type;
-  }
+      : this.type = type ?? value.type,
+        this.value = value,
+        super(modifiers);
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitDeclareVarStmt(this, context);
   }
@@ -557,9 +584,8 @@ class DeclareFunctionStmt extends Statement {
   OutputType type;
   DeclareFunctionStmt(this.name, this.params, this.statements,
       [this.type = null, List<StmtModifier> modifiers = null])
-      : super(modifiers) {
-    /* super call moved to initializer */;
-  }
+      : super(modifiers);
+
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitDeclareFunctionStmt(this, context);
   }
@@ -567,9 +593,8 @@ class DeclareFunctionStmt extends Statement {
 
 class ExpressionStatement extends Statement {
   Expression expr;
-  ExpressionStatement(this.expr) : super() {
-    /* super call moved to initializer */;
-  }
+  ExpressionStatement(this.expr);
+
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitExpressionStmt(this, context);
   }
@@ -577,9 +602,8 @@ class ExpressionStatement extends Statement {
 
 class ReturnStatement extends Statement {
   Expression value;
-  ReturnStatement(this.value) : super() {
-    /* super call moved to initializer */;
-  }
+  ReturnStatement(this.value);
+
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitReturnStmt(this, context);
   }
@@ -606,11 +630,24 @@ class ClassField extends AbstractClassPart {
 class ClassMethod extends AbstractClassPart {
   String name;
   List<FnParam> params;
+  // Set for fast lookup of parameter names to see if we need 'this.' prefix.
+  Set<String> paramNames;
   List<Statement> body;
   ClassMethod(this.name, this.params, this.body,
       [OutputType type = null, List<StmtModifier> modifiers = null])
       : super(type, modifiers) {
-    /* super call moved to initializer */;
+    if (params != null) {
+      paramNames = new Set<String>();
+      for (FnParam param in params) {
+        paramNames.add(param.name);
+      }
+    }
+  }
+
+  /// Whether [name] is a parameter name.
+  bool containsParameterName(String name) {
+    if (paramNames == null) return false;
+    return paramNames.contains(name);
   }
 }
 
@@ -619,9 +656,7 @@ class ClassGetter extends AbstractClassPart {
   List<Statement> body;
   ClassGetter(this.name, this.body,
       [OutputType type = null, List<StmtModifier> modifiers = null])
-      : super(type, modifiers) {
-    /* super call moved to initializer */;
-  }
+      : super(type, modifiers);
 }
 
 class ClassStmt extends Statement {
@@ -634,9 +669,7 @@ class ClassStmt extends Statement {
   ClassStmt(this.name, this.parent, this.fields, this.getters,
       this.constructorMethod, this.methods,
       [List<StmtModifier> modifiers = null])
-      : super(modifiers) {
-    /* super call moved to initializer */;
-  }
+      : super(modifiers);
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitDeclareClassStmt(this, context);
   }
@@ -646,9 +679,8 @@ class IfStmt extends Statement {
   Expression condition;
   List<Statement> trueCase;
   List<Statement> falseCase;
-  IfStmt(this.condition, this.trueCase, [this.falseCase = const []]) : super() {
-    /* super call moved to initializer */;
-  }
+  IfStmt(this.condition, this.trueCase, [this.falseCase = const []]);
+
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitIfStmt(this, context);
   }
@@ -656,9 +688,8 @@ class IfStmt extends Statement {
 
 class CommentStmt extends Statement {
   String comment;
-  CommentStmt(this.comment) : super() {
-    /* super call moved to initializer */;
-  }
+  CommentStmt(this.comment);
+
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitCommentStmt(this, context);
   }
@@ -667,9 +698,8 @@ class CommentStmt extends Statement {
 class TryCatchStmt extends Statement {
   List<Statement> bodyStmts;
   List<Statement> catchStmts;
-  TryCatchStmt(this.bodyStmts, this.catchStmts) : super() {
-    /* super call moved to initializer */;
-  }
+  TryCatchStmt(this.bodyStmts, this.catchStmts);
+
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitTryCatchStmt(this, context);
   }
@@ -677,9 +707,8 @@ class TryCatchStmt extends Statement {
 
 class ThrowStmt extends Statement {
   Expression error;
-  ThrowStmt(this.error) : super() {
-    /* super call moved to initializer */;
-  }
+  ThrowStmt(this.error);
+
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitThrowStmt(this, context);
   }
@@ -698,15 +727,23 @@ abstract class StatementVisitor {
 }
 
 class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
+  @override
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) {
     return ast;
   }
 
+  @override
+  dynamic visitReadClassMemberExpr(ReadClassMemberExpr ast, dynamic context) {
+    return ast;
+  }
+
+  @override
   dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context) {
     return new WriteVarExpr(
         expr.name, expr.value.visitExpression(this, context));
   }
 
+  @override
   dynamic visitWriteKeyExpr(WriteKeyExpr expr, dynamic context) {
     return new WriteKeyExpr(
         expr.receiver.visitExpression(this, context),
@@ -714,35 +751,58 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
         expr.value.visitExpression(this, context));
   }
 
+  @override
   dynamic visitWritePropExpr(WritePropExpr expr, dynamic context) {
     return new WritePropExpr(expr.receiver.visitExpression(this, context),
         expr.name, expr.value.visitExpression(this, context));
   }
 
+  @override
+  dynamic visitWriteClassMemberExpr(
+      WriteClassMemberExpr expr, dynamic context) {
+    return new WriteClassMemberExpr(
+        expr.name, expr.value.visitExpression(this, context));
+  }
+
+  @override
   dynamic visitInvokeMethodExpr(InvokeMethodExpr ast, dynamic context) {
     var method = ast.builtin ?? ast.name;
     return new InvokeMethodExpr(ast.receiver.visitExpression(this, context),
-        method, this.visitAllExpressions(ast.args, context), ast.type);
+        method, this.visitAllExpressions(ast.args, context),
+        outputType: ast.type, checked: ast.checked);
   }
 
+  @override
+  dynamic visitInvokeMemberMethodExpr(
+      InvokeMemberMethodExpr ast, dynamic context) {
+    return new InvokeMemberMethodExpr(
+        ast.methodName, this.visitAllExpressions(ast.args, context),
+        outputType: ast.type);
+  }
+
+  @override
   dynamic visitInvokeFunctionExpr(InvokeFunctionExpr ast, dynamic context) {
     return new InvokeFunctionExpr(ast.fn.visitExpression(this, context),
         this.visitAllExpressions(ast.args, context), ast.type);
   }
 
+  @override
   dynamic visitInstantiateExpr(InstantiateExpr ast, dynamic context) {
     return new InstantiateExpr(ast.classExpr.visitExpression(this, context),
         this.visitAllExpressions(ast.args, context), ast.type);
   }
 
+  @override
   dynamic visitLiteralExpr(LiteralExpr ast, dynamic context) {
     return ast;
   }
 
+  @override
   dynamic visitExternalExpr(ExternalExpr ast, dynamic context) {
     return ast;
   }
 
+  @override
   dynamic visitConditionalExpr(ConditionalExpr ast, dynamic context) {
     return new ConditionalExpr(
         ast.condition.visitExpression(this, context),
@@ -750,24 +810,29 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
         ast.falseCase.visitExpression(this, context));
   }
 
+  @override
   dynamic visitIfNullExpr(IfNullExpr ast, dynamic context) {
     return new ConditionalExpr(ast.condition.visitExpression(this, context),
         ast.nullCase.visitExpression(this, context));
   }
 
+  @override
   dynamic visitNotExpr(NotExpr ast, dynamic context) {
     return new NotExpr(ast.condition.visitExpression(this, context));
   }
 
+  @override
   dynamic visitCastExpr(CastExpr ast, dynamic context) {
     return new CastExpr(ast.value.visitExpression(this, context), context);
   }
 
+  @override
   dynamic visitFunctionExpr(FunctionExpr ast, dynamic context) {
     // Don't descend into nested functions
     return ast;
   }
 
+  @override
   dynamic visitBinaryOperatorExpr(BinaryOperatorExpr ast, dynamic context) {
     return new BinaryOperatorExpr(
         ast.operator,
@@ -776,20 +841,24 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
         ast.type);
   }
 
+  @override
   dynamic visitReadPropExpr(ReadPropExpr ast, dynamic context) {
     return new ReadPropExpr(
         ast.receiver.visitExpression(this, context), ast.name, ast.type);
   }
 
+  @override
   dynamic visitReadKeyExpr(ReadKeyExpr ast, dynamic context) {
     return new ReadKeyExpr(ast.receiver.visitExpression(this, context),
         ast.index.visitExpression(this, context), ast.type);
   }
 
+  @override
   dynamic visitLiteralArrayExpr(LiteralArrayExpr ast, dynamic context) {
     return new LiteralArrayExpr(this.visitAllExpressions(ast.entries, context));
   }
 
+  @override
   dynamic visitLiteralMapExpr(LiteralMapExpr ast, dynamic context) {
     return new LiteralMapExpr(ast.entries
         .map((entry) => [
@@ -806,29 +875,35 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
         .toList();
   }
 
+  @override
   dynamic visitDeclareVarStmt(DeclareVarStmt stmt, dynamic context) {
     return new DeclareVarStmt(stmt.name,
         stmt.value.visitExpression(this, context), stmt.type, stmt.modifiers);
   }
 
+  @override
   dynamic visitDeclareFunctionStmt(DeclareFunctionStmt stmt, dynamic context) {
     // Don't descend into nested functions
     return stmt;
   }
 
+  @override
   dynamic visitExpressionStmt(ExpressionStatement stmt, dynamic context) {
     return new ExpressionStatement(stmt.expr.visitExpression(this, context));
   }
 
+  @override
   dynamic visitReturnStmt(ReturnStatement stmt, dynamic context) {
     return new ReturnStatement(stmt.value.visitExpression(this, context));
   }
 
+  @override
   dynamic visitDeclareClassStmt(ClassStmt stmt, dynamic context) {
     // Don't descend into nested functions
     return stmt;
   }
 
+  @override
   dynamic visitIfStmt(IfStmt stmt, dynamic context) {
     return new IfStmt(
         stmt.condition.visitExpression(this, context),
@@ -836,15 +911,18 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
         this.visitAllStatements(stmt.falseCase, context));
   }
 
+  @override
   dynamic visitTryCatchStmt(TryCatchStmt stmt, dynamic context) {
     return new TryCatchStmt(this.visitAllStatements(stmt.bodyStmts, context),
         this.visitAllStatements(stmt.catchStmts, context));
   }
 
+  @override
   dynamic visitThrowStmt(ThrowStmt stmt, dynamic context) {
     return new ThrowStmt(stmt.error.visitExpression(this, context));
   }
 
+  @override
   dynamic visitCommentStmt(CommentStmt stmt, dynamic context) {
     return stmt;
   }
@@ -858,15 +936,23 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
 
 class RecursiveExpressionVisitor
     implements StatementVisitor, ExpressionVisitor {
+  @override
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) {
     return ast;
   }
 
+  @override
+  dynamic visitReadClassMemberExpr(ReadClassMemberExpr ast, dynamic context) {
+    return ast;
+  }
+
+  @override
   dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context) {
     expr.value.visitExpression(this, context);
     return expr;
   }
 
+  @override
   dynamic visitWriteKeyExpr(WriteKeyExpr expr, dynamic context) {
     expr.receiver.visitExpression(this, context);
     expr.index.visitExpression(this, context);
@@ -874,38 +960,60 @@ class RecursiveExpressionVisitor
     return expr;
   }
 
+  @override
   dynamic visitWritePropExpr(WritePropExpr expr, dynamic context) {
     expr.receiver.visitExpression(this, context);
     expr.value.visitExpression(this, context);
     return expr;
   }
 
+  @override
+  dynamic visitWriteClassMemberExpr(
+      WriteClassMemberExpr expr, dynamic context) {
+    THIS_EXPR.visitExpression(this, context);
+    expr.value.visitExpression(this, context);
+    return expr;
+  }
+
+  @override
   dynamic visitInvokeMethodExpr(InvokeMethodExpr ast, dynamic context) {
     ast.receiver.visitExpression(this, context);
     this.visitAllExpressions(ast.args, context);
     return ast;
   }
 
+  @override
+  dynamic visitInvokeMemberMethodExpr(
+      InvokeMemberMethodExpr ast, dynamic context) {
+    this.visitAllExpressions(ast.args, context);
+    return ast;
+  }
+
+  @override
   dynamic visitInvokeFunctionExpr(InvokeFunctionExpr ast, dynamic context) {
     ast.fn.visitExpression(this, context);
     this.visitAllExpressions(ast.args, context);
     return ast;
   }
 
+  @override
   dynamic visitInstantiateExpr(InstantiateExpr ast, dynamic context) {
     ast.classExpr.visitExpression(this, context);
     this.visitAllExpressions(ast.args, context);
     return ast;
   }
 
+  @override
   dynamic visitLiteralExpr(LiteralExpr ast, dynamic context) {
     return ast;
   }
 
+  @override
   dynamic visitExternalExpr(ExternalExpr ast, dynamic context) {
     return ast;
   }
 
+  @override
   dynamic visitConditionalExpr(ConditionalExpr ast, dynamic context) {
     ast.condition.visitExpression(this, context);
     ast.trueCase.visitExpression(this, context);
@@ -913,48 +1021,57 @@ class RecursiveExpressionVisitor
     return ast;
   }
 
+  @override
   dynamic visitIfNullExpr(IfNullExpr ast, dynamic context) {
     ast.condition.visitExpression(this, context);
     ast.nullCase.visitExpression(this, context);
     return ast;
   }
 
+  @override
   dynamic visitNotExpr(NotExpr ast, dynamic context) {
     ast.condition.visitExpression(this, context);
     return ast;
   }
 
+  @override
   dynamic visitCastExpr(CastExpr ast, dynamic context) {
     ast.value.visitExpression(this, context);
     return ast;
   }
 
+  @override
   dynamic visitFunctionExpr(FunctionExpr ast, dynamic context) {
     return ast;
   }
 
+  @override
   dynamic visitBinaryOperatorExpr(BinaryOperatorExpr ast, dynamic context) {
     ast.lhs.visitExpression(this, context);
     ast.rhs.visitExpression(this, context);
     return ast;
   }
 
+  @override
   dynamic visitReadPropExpr(ReadPropExpr ast, dynamic context) {
     ast.receiver.visitExpression(this, context);
     return ast;
   }
 
+  @override
   dynamic visitReadKeyExpr(ReadKeyExpr ast, dynamic context) {
     ast.receiver.visitExpression(this, context);
     ast.index.visitExpression(this, context);
     return ast;
   }
 
+  @override
   dynamic visitLiteralArrayExpr(LiteralArrayExpr ast, dynamic context) {
     this.visitAllExpressions(ast.entries, context);
     return ast;
   }
 
+  @override
   dynamic visitLiteralMapExpr(LiteralMapExpr ast, dynamic context) {
     ast.entries.forEach(
         (entry) => ((entry[1] as Expression)).visitExpression(this, context));
@@ -965,31 +1082,37 @@ class RecursiveExpressionVisitor
     exprs.forEach((expr) => expr.visitExpression(this, context));
   }
 
+  @override
   dynamic visitDeclareVarStmt(DeclareVarStmt stmt, dynamic context) {
     stmt.value.visitExpression(this, context);
     return stmt;
   }
 
+  @override
   dynamic visitDeclareFunctionStmt(DeclareFunctionStmt stmt, dynamic context) {
     // Don't descend into nested functions
     return stmt;
   }
 
+  @override
   dynamic visitExpressionStmt(ExpressionStatement stmt, dynamic context) {
     stmt.expr.visitExpression(this, context);
     return stmt;
   }
 
+  @override
   dynamic visitReturnStmt(ReturnStatement stmt, dynamic context) {
     stmt.value.visitExpression(this, context);
     return stmt;
   }
 
+  @override
   dynamic visitDeclareClassStmt(ClassStmt stmt, dynamic context) {
     // Don't descend into nested functions
     return stmt;
   }
 
+  @override
   dynamic visitIfStmt(IfStmt stmt, dynamic context) {
     stmt.condition.visitExpression(this, context);
     this.visitAllStatements(stmt.trueCase, context);
@@ -997,17 +1120,20 @@ class RecursiveExpressionVisitor
     return stmt;
   }
 
+  @override
   dynamic visitTryCatchStmt(TryCatchStmt stmt, dynamic context) {
     this.visitAllStatements(stmt.bodyStmts, context);
     this.visitAllStatements(stmt.catchStmts, context);
     return stmt;
   }
 
+  @override
   dynamic visitThrowStmt(ThrowStmt stmt, dynamic context) {
     stmt.error.visitExpression(this, context);
     return stmt;
   }
 
+  @override
   dynamic visitCommentStmt(CommentStmt stmt, dynamic context) {
     return stmt;
   }
@@ -1026,9 +1152,8 @@ Expression replaceVarInExpression(
 class _ReplaceVariableTransformer extends ExpressionTransformer {
   String _varName;
   Expression _newValue;
-  _ReplaceVariableTransformer(this._varName, this._newValue) : super() {
-    /* super call moved to initializer */;
-  }
+  _ReplaceVariableTransformer(this._varName, this._newValue);
+
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) {
     return ast.name == this._varName ? this._newValue : ast;
   }

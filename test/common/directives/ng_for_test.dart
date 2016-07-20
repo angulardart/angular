@@ -5,6 +5,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart" show Component, TemplateRef, ContentChild;
 import "package:angular2/src/common/directives/ng_for.dart" show NgFor;
 import "package:angular2/src/common/directives/ng_if.dart" show NgIf;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:test/test.dart';
 
 main() {
@@ -169,7 +170,9 @@ main() {
             fixture.debugElement.componentInstance.items = 'whaaa';
             fixture.detectChanges();
           } catch (e) {
-            msg = e.originalException.toString();
+            msg = e is BaseException
+                ? e.toString()
+                : e.originalException.toString();
           }
           expect(
               msg,

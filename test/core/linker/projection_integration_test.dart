@@ -12,7 +12,7 @@ import 'package:angular2/core.dart'
         ViewContainerRef,
         ViewEncapsulation,
         ViewMetadata;
-import 'package:angular2/src/testing/debug_node.dart' show getAllDebugNodes;
+import 'package:angular2/src/debug/debug_node.dart' show getAllDebugNodes;
 import 'package:angular2/src/testing/by.dart';
 import 'package:test/test.dart';
 
@@ -208,7 +208,7 @@ main() {
             .createAsync(MainComp)
             .then((main) {
           var viewportDirectives = main.debugElement.children[0].childNodes
-              .where(By.directive(ManualViewportDirective))
+              .where(By.nodeDirective(ManualViewportDirective))
               .toList()
               .map((de) => de.inject(ManualViewportDirective))
               .toList();
@@ -259,7 +259,7 @@ main() {
             .createAsync(MainComp)
             .then((main) {
           var viewportDirective = main.debugElement
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           expect(main.debugElement.nativeElement,
               hasTextContent("OUTER(INNER(INNERINNER(,BC)))"));
@@ -286,7 +286,7 @@ main() {
             .createAsync(MainComp)
             .then((main) {
           var viewportDirective = main.debugElement
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           expect(main.debugElement.nativeElement, hasTextContent("(, BC)"));
           viewportDirective.show();
@@ -368,7 +368,7 @@ main() {
             }
           });
           ProjectDirective projectDirective = main.debugElement
-              .queryAllNodes(By.directive(ProjectDirective))[0]
+              .queryAllNodes(By.nodeDirective(ProjectDirective))[0]
               .inject(ProjectDirective);
           expect(main.debugElement.nativeElement, hasTextContent("START()END"));
           projectDirective.show(sourceDirective.templateRef);
@@ -396,10 +396,10 @@ main() {
             .createAsync(MainComp)
             .then((main) {
           ManualViewportDirective sourceDirective = main.debugElement
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           ProjectDirective projectDirective = main.debugElement
-              .queryAllNodes(By.directive(ProjectDirective))[0]
+              .queryAllNodes(By.nodeDirective(ProjectDirective))[0]
               .inject(ProjectDirective);
           expect(main.debugElement.nativeElement,
               hasTextContent("SIMPLE()START()END"));
@@ -430,10 +430,10 @@ main() {
             .createAsync(MainComp)
             .then((main) {
           ManualViewportDirective sourceDirective = main.debugElement
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           ProjectDirective projectDirective = main.debugElement
-              .queryAllNodes(By.directive(ProjectDirective))[0]
+              .queryAllNodes(By.nodeDirective(ProjectDirective))[0]
               .inject(ProjectDirective);
           expect(main.debugElement.nativeElement,
               hasTextContent("(, B)START()END"));
@@ -464,7 +464,7 @@ main() {
             .then((main) {
           main.detectChanges();
           ManualViewportDirective manualDirective = main.debugElement
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           expect(main.debugElement.nativeElement, hasTextContent("TREE(0:)"));
           manualDirective.show();
@@ -498,7 +498,7 @@ main() {
           expect(main.debugElement.nativeElement, hasTextContent("TREE(0:)"));
           var tree = main.debugElement.query(By.directive(Tree));
           ManualViewportDirective manualDirective = tree
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           manualDirective.show();
           main.detectChanges();
@@ -506,7 +506,7 @@ main() {
               hasTextContent("TREE(0:TREE2(1:))"));
           var tree2 = main.debugElement.query(By.directive(Tree2));
           manualDirective = tree2
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           manualDirective.show();
           main.detectChanges();
@@ -570,18 +570,18 @@ main() {
             .overrideView(
                 MainComp,
                 new ViewMetadata(
-                    template: '''<conditional-text>a</conditional-text>''',
+                    template: '<conditional-text>a</conditional-text>',
                     directives: [ConditionalTextComponent]))
             .createAsync(MainComp)
             .then((main) {
           expect(main.debugElement.nativeElement, hasTextContent("MAIN()"));
           var viewportElement = main.debugElement
-              .queryAllNodes(By.directive(ManualViewportDirective))[0];
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0];
           viewportElement.inject(ManualViewportDirective).show();
           expect(
               main.debugElement.nativeElement, hasTextContent("MAIN(FIRST())"));
           viewportElement = main.debugElement
-              .queryAllNodes(By.directive(ManualViewportDirective))[1];
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[1];
           viewportElement.inject(ManualViewportDirective).show();
           expect(main.debugElement.nativeElement,
               hasTextContent("MAIN(FIRST(SECOND(a)))"));
@@ -653,14 +653,14 @@ main() {
           var conditionalComp = main.debugElement
               .query(By.directive(ConditionalContentComponent));
           var viewViewportDir = conditionalComp
-              .queryAllNodes(By.directive(ManualViewportDirective))[0]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
               .inject(ManualViewportDirective);
           expect(main.debugElement.nativeElement, hasTextContent("(, D)"));
           expect(main.debugElement.nativeElement, hasTextContent("(, D)"));
           viewViewportDir.show();
           expect(main.debugElement.nativeElement, hasTextContent("(AC, D)"));
           var contentViewportDir = conditionalComp
-              .queryAllNodes(By.directive(ManualViewportDirective))[1]
+              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[1]
               .inject(ManualViewportDirective);
           contentViewportDir.show();
           expect(main.debugElement.nativeElement, hasTextContent("(ABC, D)"));

@@ -1,14 +1,12 @@
 import "package:angular2/src/facade/lang.dart" show jsSplit;
-/**
- * This file is a port of shadowCSS from webcomponents.js to TypeScript.
- *
- * Please make sure to keep to edits in sync with the source file.
- *
- * Source:
- * https://github.com/webcomponents/webcomponentsjs/blob/4efecd7e0e/src/ShadowCSS/ShadowCSS.js
- *
- * The original file level comment is reproduced below
- */
+
+/// This file is a port of shadowCSS from webcomponents.js to Dart.
+/// Please make sure to keep to edits in sync with the source file.
+///
+/// Source:
+/// https://github.com/webcomponents/webcomponentsjs/blob/4efecd7e0e/src/ShadowCSS/ShadowCSS.js
+///
+/// The original file level comment is reproduced below
 
 /*
   This is a limited shim for ShadowDOM css styling.

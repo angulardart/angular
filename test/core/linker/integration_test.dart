@@ -46,8 +46,7 @@ import "package:angular2/src/core/linker/view_ref.dart" show EmbeddedViewRef;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/core/linker/template_ref.dart"
-    show TemplateRef_, TemplateRef;
+import "package:angular2/src/core/linker/template_ref.dart";
 import "package:angular2/src/core/render.dart" show Renderer;
 import 'package:test/test.dart';
 
@@ -733,7 +732,7 @@ main() {
                 .createAsync(MyComp)
                 .then((fixture) {
               var value = fixture.debugElement.childNodes[0].getLocal("alice");
-              expect(value, new isInstanceOf<TemplateRef_>());
+              expect(value, new isInstanceOf<TemplateRef>());
               completer.done();
             });
           });
@@ -1514,14 +1513,9 @@ main() {
                 fixture.detectChanges();
                 throw "Should throw";
               } catch (e) {
-                var c = e.context;
-                expect(DOM.nodeName(c.renderNode).toUpperCase(), "INPUT");
-                expect(DOM.nodeName(c.componentRenderElement).toUpperCase(),
-                    "DIV");
-                expect((c.injector as Injector).get, isNotNull);
-                expect(c.source, contains(":0:7"));
-                expect(c.context, fixture.debugElement.componentInstance);
-                expect(c.locals["local"], isNotNull);
+                var msg = e.toString();
+                expect(msg,
+                    contains("Class 'MyComp' has no instance getter 'one'"));
                 completer.done();
               }
             });
@@ -1539,9 +1533,9 @@ main() {
                 fixture.detectChanges();
                 throw "Should throw";
               } catch (e) {
-                var c = e.context;
-                expect(c.renderNode, isNotNull);
-                expect(c.source, contains(":0:5"));
+                var msg = e.toString();
+                expect(msg,
+                    contains("Class 'MyComp' has no instance getter 'one'"));
                 completer.done();
               }
             });
@@ -1567,19 +1561,8 @@ main() {
             tick();
             var tc = fixture.debugElement.children[0];
             tc.inject(DirectiveEmittingEvent).fireEvent("boom");
-            try {
-              tick();
-              throw "Should throw";
-            } catch (e) {
-              clearPendingTimers();
-              var c = e.context;
-              expect(DOM.nodeName(c.renderNode).toUpperCase(), "SPAN");
-              expect(
-                  DOM.nodeName(c.componentRenderElement).toUpperCase(), "DIV");
-              expect(((c.injector as Injector)).get, isNotNull);
-              expect(c.context, fixture.debugElement.componentInstance);
-              expect(c.locals["local"], isNotNull);
-            }
+            expect(() => tick(), throws);
+            clearPendingTimers();
           });
         }));
         test("should report a meaningful error when a directive is undefined",
@@ -1609,7 +1592,8 @@ main() {
                     MyComp, new ViewMetadata(template: "<div>{{a.b}}</div>"))
                 .createAsync(MyComp)
                 .then((fixture) {
-              expect(() => fixture.detectChanges(), throwsWith(':0:5'));
+              expect(() => fixture.detectChanges(),
+                  throwsWith("Class 'MyComp' has no instance getter 'a'"));
               completer.done();
             });
           });
@@ -1624,7 +1608,8 @@ main() {
                     new ViewMetadata(template: "<div [title]=\"a.b\"></div>"))
                 .createAsync(MyComp)
                 .then((fixture) {
-              expect(() => fixture.detectChanges(), throwsWith(':0:5' ''));
+              expect(() => fixture.detectChanges(),
+                  throwsWith("Class 'MyComp' has no instance getter 'a'"));
               completer.done();
             });
           });
@@ -1642,7 +1627,8 @@ main() {
                         directives: [ChildComp]))
                 .createAsync(MyComp)
                 .then((fixture) {
-              expect(() => fixture.detectChanges(), throwsWith(':0:11' ''));
+              expect(() => fixture.detectChanges(),
+                  throwsWith("Class 'MyComp' has no instance getter 'a'"));
               completer.done();
             });
           });

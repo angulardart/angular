@@ -141,7 +141,7 @@ class CompileElement extends CompileNode {
     embeddedView = view;
     if (view != null) {
       var createTemplateRefExpr = o
-          .importExpr(Identifiers.TemplateRef_)
+          .importExpr(Identifiers.TemplateRef)
           .instantiate([this.appElement, view.viewFactory]);
       var provider = new CompileProviderMetadata(
           token: identifierToken(Identifiers.TemplateRef),

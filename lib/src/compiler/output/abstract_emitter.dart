@@ -21,6 +21,10 @@ class EmitterVisitorContext {
   List<String> _exportedVars;
   num _indent;
   int _outputPos;
+  // Current method being emitted. Allows expressions access to method
+  // parameter names.
+  o.ClassMethod _activeMethod;
+  bool _inSuperCall;
 
   static EmitterVisitorContext createRoot(List<String> exportedVars) {
     return new EmitterVisitorContext(exportedVars, 0);
@@ -109,6 +113,29 @@ class EmitterVisitorContext {
         .toList()
         .join("\n");
   }
+
+  /// Creates method context for expressions.
+  void enterMethod(o.ClassMethod method) {
+    _activeMethod = method;
+  }
+
+  /// Removes method context for expressions.
+  void exitMethod() {
+    _activeMethod = null;
+  }
+
+  /// Creates super call context for expressions.
+  void enterSuperCall() {
+    _inSuperCall = true;
+  }
+
+  /// Removes super call context for expressions.
+  void exitSuperCall() {
+    _inSuperCall = false;
+  }
+
+  bool get inSuperCall => _inSuperCall;
+  o.ClassMethod get activeMethod => _activeMethod;
 }
 
 abstract class AbstractEmitterVisitor
@@ -224,6 +251,22 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  dynamic visitWriteClassMemberExpr(
+      o.WriteClassMemberExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    var lineWasEmpty = ctx.lineIsEmpty();
+    if (!lineWasEmpty) {
+      ctx.print("(");
+    }
+    o.THIS_EXPR.visitExpression(this, ctx);
+    ctx.print('.${ expr . name} = ');
+    expr.value.visitExpression(this, ctx);
+    if (!lineWasEmpty) {
+      ctx.print(")");
+    }
+    return null;
+  }
+
   dynamic visitInvokeMethodExpr(o.InvokeMethodExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     expr.receiver.visitExpression(this, ctx);
@@ -237,9 +280,21 @@ abstract class AbstractEmitterVisitor
         return null;
       }
     }
-    ctx.print('''.${ name}(''');
-    this.visitAllExpressions(expr.args, ctx, ''',''');
-    ctx.print(''')''');
+    if (expr.checked) {
+      ctx.print('?');
+    }
+    ctx.print('.$name(');
+    this.visitAllExpressions(expr.args, ctx, ',');
+    ctx.print(')');
+    return null;
+  }
+
+  dynamic visitInvokeMemberMethodExpr(
+      o.InvokeMemberMethodExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    ctx.print('${expr.methodName}(');
+    this.visitAllExpressions(expr.args, ctx, ',');
+    ctx.print(')');
     return null;
   }
 
@@ -279,6 +334,12 @@ abstract class AbstractEmitterVisitor
       }
     }
     ctx.print(varName);
+    return null;
+  }
+
+  dynamic visitReadClassMemberExpr(o.ReadClassMemberExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    ctx.print('this.${ast.name}');
     return null;
   }
 

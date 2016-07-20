@@ -16,7 +16,7 @@ export "internal_injector.dart";
 export "test_component_builder.dart";
 export "utils.dart";
 export "by.dart";
-export "debug_node.dart";
+export "package:angular2/src/debug/debug_node.dart";
 
 /// Allows injecting dependencies in [setUp()] and [test()].
 ///

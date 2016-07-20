@@ -1,8 +1,8 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 
-import "app_view.dart" show DebugAppView;
-import "view_type.dart" show ViewType;
+import "package:angular2/src/debug/debug_app_view.dart";
+import "package:angular2/src/core/linker/view_type.dart";
 
 class StaticNodeDebugInfo {
   final List providerTokens;
@@ -15,13 +15,14 @@ class StaticNodeDebugInfo {
 var _EMPTY_DEBUG_PROVIDERS = const [];
 var _EMPTY_REF_TOKENS = <String, dynamic>{};
 
-class DebugContext implements RenderDebugInfo {
-  DebugAppView<dynamic> _view;
+class DebugContext<T> implements RenderDebugInfo {
+  DebugAppView<T> _view;
   num _nodeIndex;
   num _tplRow;
   num _tplCol;
 
-  DebugContext(this._view, this._nodeIndex, this._tplRow, this._tplCol) {}
+  DebugContext(
+      DebugAppView<T> this._view, this._nodeIndex, this._tplRow, this._tplCol);
 
   StaticNodeDebugInfo get _staticNodeInfo => _nodeIndex != null
       ? this._view.staticNodeDebugInfos[this._nodeIndex]
@@ -43,8 +44,8 @@ class DebugContext implements RenderDebugInfo {
     var componentView = this._view;
     while (componentView.declarationAppElement != null &&
         !identical(componentView.type, ViewType.COMPONENT)) {
-      componentView = (componentView.declarationAppElement.parentView
-          as DebugAppView<dynamic>);
+      componentView =
+          (componentView.declarationAppElement.parentView as DebugAppView<T>);
     }
     return componentView.declarationAppElement?.nativeElement;
   }

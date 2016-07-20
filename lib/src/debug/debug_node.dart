@@ -55,7 +55,6 @@ class DebugElement extends DebugNode {
 
   DebugElement(dynamic nativeNode, dynamic parent, RenderDebugInfo _debugInfo)
       : super(nativeNode, parent, _debugInfo) {
-    /* super call moved to initializer */;
     this.properties = {};
     this.attributes = {};
     this.childNodes = [];
@@ -80,10 +79,9 @@ class DebugElement extends DebugNode {
     var siblingIndex = this.childNodes.indexOf(child);
     if (!identical(siblingIndex, -1)) {
       var previousChildren = childNodes.sublist(0, siblingIndex + 1);
-      var nextChildren = childNodes.sublist(siblingIndex + 1);
       this.childNodes = new List.from(previousChildren)
         ..addAll(newChildren)
-        ..addAll(nextChildren);
+        ..addAll(childNodes.sublist(siblingIndex + 1));
       for (var i = 0; i < newChildren.length; ++i) {
         var newChild = newChildren[i];
         newChild.parent?.removeChild(newChild);

@@ -3,7 +3,7 @@ library angular2.test.di.integration_dart_test;
 
 import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart';
-import 'package:angular2/src/testing/debug_node.dart';
+import 'package:angular2/src/debug/debug_node.dart';
 import 'package:angular2/testing_internal.dart';
 import 'package:observe/observe.dart';
 import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
@@ -95,7 +95,8 @@ main() {
             .createAsync(Dummy)
             .then((tc) {
           tc.detectChanges();
-          expect(asNativeElements(tc.debugElement.children),
+          expect(
+              asNativeElements(tc.debugElement.children as List<DebugElement>),
               hasTextContent('prop:foo-prop;map:foo-map'));
           completer.done();
         });

@@ -9,8 +9,10 @@ import "output/output_ast.dart" as o;
 import "style_url_resolver.dart" show extractStyleUrls;
 
 const COMPONENT_VARIABLE = "%COMP%";
-final HOST_ATTR = '''_nghost-${ COMPONENT_VARIABLE}''';
-final CONTENT_ATTR = '''_ngcontent-${ COMPONENT_VARIABLE}''';
+final HOST_ATTR_PREFIX = '_nghost-';
+final HOST_ATTR = '$HOST_ATTR_PREFIX$COMPONENT_VARIABLE';
+final CONTENT_ATTR_PREFIX = '_ngcontent-';
+final CONTENT_ATTR = '$CONTENT_ATTR_PREFIX$COMPONENT_VARIABLE';
 
 class StylesCompileDependency {
   String sourceUrl;
@@ -21,22 +23,36 @@ class StylesCompileDependency {
 }
 
 class StylesCompileResult {
-  List<o.Statement> statements;
-  String stylesVar;
-  List<StylesCompileDependency> dependencies;
-  StylesCompileResult(this.statements, this.stylesVar, this.dependencies) {}
+  final List<o.Statement> statements;
+  final String stylesVar;
+  final List<StylesCompileDependency> dependencies;
+  final bool usesHostAttribute;
+  final bool usesContentAttribute;
+  StylesCompileResult(this.statements, this.stylesVar, this.dependencies,
+      this.usesHostAttribute, this.usesContentAttribute);
 }
 
 @Injectable()
 class StyleCompiler {
   UrlResolver _urlResolver;
   ShadowCss _shadowCss = new ShadowCss();
-  StyleCompiler(this._urlResolver) {}
+  bool usesContentAttribute;
+  bool usesHostAttribute;
+  StyleCompiler(this._urlResolver);
+
+  /// Compile styles to a set of statements that will initialize the global
+  /// styles_ComponentName variable that will be passed to component factory.
+  ///
+  /// [comp.template.styles] contains a list of inline styles (or overrides in
+  /// tests) and [comp.template.styleUrls] contains urls to other css.shim.dart
+  /// resources.
   StylesCompileResult compileComponent(CompileDirectiveMetadata comp) {
-    var shim =
-        identical(comp.template.encapsulation, ViewEncapsulation.Emulated);
+    usesContentAttribute = false;
+    usesHostAttribute = false;
+    var requiresShim =
+        comp.template.encapsulation == ViewEncapsulation.Emulated;
     return this._compileStyles(getStylesVarName(comp), comp.template.styles,
-        comp.template.styleUrls, shim);
+        comp.template.styleUrls, requiresShim);
   }
 
   StylesCompileResult compileStylesheet(
@@ -62,28 +78,41 @@ class StyleCompiler {
           .add(new StylesCompileDependency(absUrls[i], shim, identifier));
       styleExpressions.add(new o.ExternalExpr(identifier));
     }
-    // styles variable contains plain strings and arrays of other styles arrays (recursive),
 
-    // so we set its type to dynamic.
+    // Styles variable contains plain strings and arrays of other styles arrays
+    // (recursive), so we set its type to dynamic.
     var stmt = o
         .variable(stylesVar)
         .set(o.literalArr(styleExpressions,
             new o.ArrayType(o.DYNAMIC_TYPE, [o.TypeModifier.Const])))
         .toDeclStmt(null, [o.StmtModifier.Final]);
-    return new StylesCompileResult([stmt], stylesVar, dependencies);
+    return new StylesCompileResult([stmt], stylesVar, dependencies,
+        usesHostAttribute, usesContentAttribute);
   }
 
   String _shimIfNeeded(String style, bool shim) {
-    return shim
+    String result = shim
         ? this._shadowCss.shimCssText(style, CONTENT_ATTR, HOST_ATTR)
         : style;
+    if (result.contains(CONTENT_ATTR_PREFIX)) {
+      usesContentAttribute = true;
+    }
+    if (result.contains(HOST_ATTR_PREFIX)) {
+      usesHostAttribute = true;
+    }
+    return result;
   }
 }
 
+/// Returns variable name to use to access styles for a particular component
+/// type.
+///
+/// Styles are assigned to style_componentTypeName variables and
+/// passed onto ViewUtils.createRenderComponentType for creating the prototype.
 String getStylesVarName(CompileDirectiveMetadata component) {
-  var result = '''styles''';
+  var result = 'styles';
   if (component != null) {
-    result += '''_${ component . type . name}''';
+    result += '_${component.type.name}';
   }
   return result;
 }

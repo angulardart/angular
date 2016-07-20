@@ -197,8 +197,8 @@ main() {
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb.createAsync(ParentComp).then((fixture) {
           fixture.detectChanges();
-          // The root component has 5 elements and no text node children.
-          expect(fixture.debugElement.childNodes.length, 5);
+          // The root component has 3 elements and no text node children.
+          expect(fixture.debugElement.childNodes.length, 3);
           completer.done();
         });
       });
@@ -208,8 +208,8 @@ main() {
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb.createAsync(ParentComp2).then((fixture) {
           fixture.detectChanges();
-          // The root component has 5 elements and no text node children.
-          expect(fixture.debugElement.childNodes.length, 5);
+          // The root component has 3 elements and no text node children.
+          expect(fixture.debugElement.childNodes.length, 3);
           completer.done();
         });
       });

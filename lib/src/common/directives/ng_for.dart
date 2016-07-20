@@ -136,13 +136,12 @@ class NgFor implements DoCheck {
       this._perViewChange(insertTuples[i].view, insertTuples[i].record);
     }
     for (var i = 0, ilen = this._viewContainer.length; i < ilen; i++) {
-      var viewRef = (this._viewContainer.get(i) as EmbeddedViewRef);
+      var viewRef = _viewContainer.get(i);
       viewRef.setLocal("first", identical(i, 0));
       viewRef.setLocal("last", identical(i, ilen - 1));
     }
     changes.forEachIdentityChange((record) {
-      var viewRef =
-          (this._viewContainer.get(record.currentIndex) as EmbeddedViewRef);
+      var viewRef = _viewContainer.get(record.currentIndex);
       viewRef.setLocal("\$implicit", record.item);
     });
   }
