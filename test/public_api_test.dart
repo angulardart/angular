@@ -1,4 +1,4 @@
-library angular2.test.public_api_test;
+@TestOn('browser')
 
 import "package:angular2/src/facade/lang.dart"
     show IS_DART, RegExpWrapper, StringWrapper;

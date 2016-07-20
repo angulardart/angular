@@ -1,4 +1,4 @@
-library angular2.test.security.url_sanitizer_test;
+@TestOn('browser')
 
 import "package:angular2/src/platform/browser/browser_adapter.dart"
     show BrowserDomAdapter;

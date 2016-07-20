@@ -1,4 +1,4 @@
-library angular2.test.core.linker.security_integration_test;
+@TestOn('browser')
 
 import 'package:angular2/core.dart' show provide, Injectable, OpaqueToken;
 import 'package:angular2/src/core/metadata.dart' show Component, ViewMetadata;
