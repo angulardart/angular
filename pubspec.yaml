@@ -8,7 +8,7 @@ environment:
 dependencies:
   analyzer: '>=0.24.4 <0.28.0'
   barback: ^0.15.2+2
-  build: ^0.0.1
+  build: ^0.3.0
   dart_style: '>=0.1.8 <0.3.0'
   glob: ^1.0.0
   html: ^0.12.0
