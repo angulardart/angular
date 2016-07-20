@@ -47,8 +47,8 @@ class RafQueue {
   }
 
   _raf() {
-    currentFrameId = DOM
-        .requestAnimationFrame((num timestamp) => _nextFrame(timestamp));
+    currentFrameId =
+        DOM.requestAnimationFrame((num timestamp) => _nextFrame(timestamp));
   }
 
   _nextFrame(num timestamp) {
