@@ -1,6 +1,6 @@
 library angular2.transform.common.class_matcher_base;
 
-import 'package:analyzer/src/generated/ast.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:barback/barback.dart' show AssetId;
 import 'package:path/path.dart' as path;
 

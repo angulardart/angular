@@ -6,7 +6,7 @@ homepage: 'https://github.com/dart-lang/angular2'
 environment:
   sdk: '>=1.10.0 <2.0.0'
 dependencies:
-  analyzer: '>=0.24.4 <0.28.0'
+  analyzer: '^0.27.0'
   barback: ^0.15.2+2
   build: '>=0.0.1'
   dart_style: '>=0.1.8 <0.3.0'
