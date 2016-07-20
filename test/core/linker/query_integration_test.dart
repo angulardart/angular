@@ -1,9 +1,7 @@
 @TestOn('browser')
 library angular2.test.core.linker.query_integration_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show isPresent;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
+import "package:angular2/common.dart" show NgIf, NgFor;
 import "package:angular2/core.dart"
     show
         Component,
@@ -21,8 +19,10 @@ import "package:angular2/core.dart"
         AfterViewInit,
         AfterContentChecked,
         AfterViewChecked;
-import "package:angular2/common.dart" show NgIf, NgFor;
 import "package:angular2/core.dart" show asNativeElements, ViewContainerRef;
+import "package:angular2/src/facade/async.dart" show ObservableWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

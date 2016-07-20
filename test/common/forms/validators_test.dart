@@ -2,11 +2,12 @@
 library angular2.test.common.forms.validators_spec;
 
 import "dart:async";
-import "package:angular2/testing_internal.dart";
+
 import "package:angular2/common.dart" show Control, Validators, AbstractControl;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import "package:angular2/src/facade/async.dart"
     show EventEmitter, ObservableWrapper, TimerWrapper;
+import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

@@ -1,12 +1,12 @@
 @TestOn('browser')
 library angular2.test.directives.observable_list_iterable_diff_test;
 
-import 'package:angular2/testing_internal.dart';
-import 'package:observe/observe.dart' show ObservableList;
-import 'package:angular2/core.dart' show ChangeDetectorRef;
 import 'package:angular2/common.dart' show ObservableListDiffFactory;
-import 'package:test/test.dart';
+import 'package:angular2/core.dart' show ChangeDetectorRef;
+import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
+import 'package:observe/observe.dart' show ObservableList;
+import 'package:test/test.dart';
 
 class MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}
 

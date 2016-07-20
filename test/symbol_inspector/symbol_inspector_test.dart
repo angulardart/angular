@@ -1,8 +1,9 @@
 library angular2.test.symbol_inspector.symbol_inspector_test;
 
 import "package:angular2/src/facade/lang.dart" show IS_DART;
-import "symbol_inspector.dart" show getSymbolsFromLibrary;
 import 'package:test/test.dart';
+
+import "symbol_inspector.dart" show getSymbolsFromLibrary;
 
 main() {
   group("symbol inspector", () {

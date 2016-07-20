@@ -1,4 +1,5 @@
 import 'dart:html';
+
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 var _inertElement;

@@ -1,15 +1,7 @@
 @TestOn('browser')
 library angular2.test.core.linker.change_detection_integration_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show isBlank, NumberWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
-import "package:angular2/src/core/change_detection/change_detection.dart"
-    show PipeTransform, ChangeDetectionStrategy, WrappedValue;
-import "package:angular2/src/core/metadata/lifecycle_hooks.dart" show OnDestroy;
-import "package:angular2/src/facade/lang.dart" show IS_DART, Type;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
+import "package:angular2/common.dart" show AsyncPipe, NgFor;
 import "package:angular2/core.dart"
     show
         Component,
@@ -35,16 +27,25 @@ import "package:angular2/core.dart"
         AfterViewInit,
         AfterViewChecked;
 import "package:angular2/platform/common_dom.dart" show By;
-import "package:angular2/common.dart" show AsyncPipe, NgFor;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
-import "../../compiler/schema_registry_mock.dart" show MockSchemaRegistry;
-import "../../compiler/test_bindings.dart" show TEST_PROVIDERS;
+import "package:angular2/src/core/change_detection/change_detection.dart"
+    show PipeTransform, ChangeDetectionStrategy, WrappedValue;
 import "package:angular2/src/core/debug/debug_renderer.dart"
     show DebugDomRenderer;
+import "package:angular2/src/core/metadata/lifecycle_hooks.dart" show OnDestroy;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
+import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show isBlank, NumberWrapper;
+import "package:angular2/src/facade/lang.dart" show IS_DART, Type;
 import "package:angular2/src/platform/dom/dom_renderer.dart"
     show DomRootRenderer;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
+
+import "../../compiler/schema_registry_mock.dart" show MockSchemaRegistry;
+import "../../compiler/test_bindings.dart" show TEST_PROVIDERS;
 
 main() {
   TestComponentBuilder tcb;

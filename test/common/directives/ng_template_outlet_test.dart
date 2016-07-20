@@ -1,11 +1,11 @@
 @TestOn('browser')
 library angular2.test.common.directives.ng_template_outlet_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart"
     show Component, Directive, TemplateRef, ContentChildren, QueryList;
 import "package:angular2/src/common/directives/ng_template_outlet.dart"
     show NgTemplateOutlet;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

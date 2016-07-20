@@ -2,13 +2,14 @@
 library angular2.test.core.zone.ng_zone_test;
 
 import "dart:async";
-import "package:angular2/testing_internal.dart";
+
+import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
 import "package:angular2/src/facade/async.dart"
     show PromiseCompleter, PromiseWrapper, TimerWrapper, ObservableWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show scheduleMicroTask, isPresent;
-import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 var needsLongerTimers = browserDetection.isSlow || browserDetection.isEdge;

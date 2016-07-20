@@ -1,12 +1,12 @@
 @TestOn('browser')
 library angular2.test.compiler.selector_test;
 
-import 'package:angular2/testing_internal.dart';
-import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:angular2/src/compiler/selector.dart' show SelectorMatcher;
 import 'package:angular2/src/compiler/selector.dart' show CssSelector;
 import 'package:angular2/src/platform/browser/browser_adapter.dart'
     show BrowserDomAdapter;
+import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
+import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
 main() {

@@ -17,12 +17,12 @@ import "../template_ast.dart"
     DirectiveAst,
     PropertyBindingType;
 import "../util.dart" show camelCaseToDashCase;
-import "expression_converter.dart" show convertCdExpressionToIr;
 import "compile_binding.dart" show CompileBinding;
 import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_method.dart" show CompileMethod;
 import "compile_view.dart" show CompileView;
 import "constants.dart" show DetectChangesVars, ViewProperties;
+import "expression_converter.dart" show convertCdExpressionToIr;
 
 o.ReadPropExpr createBindFieldExpr(num exprIndex) {
   return o.THIS_EXPR.prop('''_expr_${ exprIndex}''');

@@ -1,8 +1,6 @@
 @TestOn('browser')
 library angular2.test.core.linker.projection_integration_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/core.dart"
     show
         Component,
@@ -14,6 +12,8 @@ import "package:angular2/core.dart"
         ViewMetadata;
 import "package:angular2/platform/common_dom.dart" show By;
 import "package:angular2/src/core/debug/debug_node.dart" show getAllDebugNodes;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

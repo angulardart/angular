@@ -1,14 +1,14 @@
 @TestOn('browser')
 library angular2.test.core.linker.reflector_component_resolver_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart" show provide;
+import "package:angular2/src/core/linker/component_factory.dart"
+    show ComponentFactory;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver, ReflectorComponentResolver;
 import "package:angular2/src/core/reflection/reflection.dart"
     show reflector, ReflectionInfo;
-import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentFactory;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

@@ -1,31 +1,33 @@
 library angular2.test.compiler.offline_compiler_util;
 
 import "dart:async";
-import "package:angular2/src/compiler/output/abstract_emitter.dart"
-    show OutputEmitter;
-import "package:angular2/src/core/console.dart" show Console;
-import "package:angular2/src/compiler/offline_compiler.dart"
-    show OfflineCompiler, NormalizedComponentWithViewDirectives;
-import "package:angular2/src/compiler/template_parser.dart" show TemplateParser;
-import "package:angular2/src/compiler/expression_parser/parser.dart"
-    show Parser;
-import "package:angular2/src/compiler/expression_parser/lexer.dart" show Lexer;
-import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
-import "package:angular2/src/compiler/style_compiler.dart" show StyleCompiler;
-import "package:angular2/src/compiler/view_compiler/view_compiler.dart"
-    show ViewCompiler;
-import "package:angular2/src/compiler/view_compiler/injector_compiler.dart"
-    show InjectorCompiler;
-import "package:angular2/src/compiler/directive_normalizer.dart"
-    show DirectiveNormalizer;
-import "package:angular2/src/compiler/config.dart" show CompilerConfig;
-import "package:angular2/src/compiler/url_resolver.dart"
-    show createOfflineCompileUrlResolver;
-import "schema_registry_mock.dart" show MockSchemaRegistry;
-import "package:angular2/src/compiler/util.dart" show MODULE_SUFFIX;
-import "package:angular2/src/compiler/xhr_mock.dart" show MockXHR;
+
 import "package:angular2/src/compiler/compile_metadata.dart"
     show CompileDirectiveMetadata, CompileTypeMetadata, CompileTemplateMetadata;
+import "package:angular2/src/compiler/config.dart" show CompilerConfig;
+import "package:angular2/src/compiler/directive_normalizer.dart"
+    show DirectiveNormalizer;
+import "package:angular2/src/compiler/expression_parser/lexer.dart" show Lexer;
+import "package:angular2/src/compiler/expression_parser/parser.dart"
+    show Parser;
+import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
+import "package:angular2/src/compiler/offline_compiler.dart"
+    show OfflineCompiler, NormalizedComponentWithViewDirectives;
+import "package:angular2/src/compiler/output/abstract_emitter.dart"
+    show OutputEmitter;
+import "package:angular2/src/compiler/style_compiler.dart" show StyleCompiler;
+import "package:angular2/src/compiler/template_parser.dart" show TemplateParser;
+import "package:angular2/src/compiler/url_resolver.dart"
+    show createOfflineCompileUrlResolver;
+import "package:angular2/src/compiler/util.dart" show MODULE_SUFFIX;
+import "package:angular2/src/compiler/view_compiler/injector_compiler.dart"
+    show InjectorCompiler;
+import "package:angular2/src/compiler/view_compiler/view_compiler.dart"
+    show ViewCompiler;
+import "package:angular2/src/compiler/xhr_mock.dart" show MockXHR;
+import "package:angular2/src/core/console.dart" show Console;
+
+import "schema_registry_mock.dart" show MockSchemaRegistry;
 
 class CompA {
   String user;

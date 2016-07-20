@@ -15,6 +15,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, StringWrapper;
 
+import "../core/security.dart";
 import "compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import "expression_parser/ast.dart"
@@ -62,7 +63,6 @@ import "template_ast.dart"
         VariableAst;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
 import "util.dart" show splitAtColon;
-import "../core/security.dart";
 
 // Group 1 = "bind-"
 // Group 2 = "var-"

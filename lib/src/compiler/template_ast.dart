@@ -1,13 +1,13 @@
 library angular2.src.compiler.template_ast;
 
-import 'expression_parser/ast.dart' show AST;
+import '../core/security.dart';
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompileTokenMetadata,
         CompileProviderMetadata;
+import 'expression_parser/ast.dart' show AST;
 import 'parse_util.dart' show ParseSourceSpan;
-import '../core/security.dart';
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
 abstract class TemplateAst {

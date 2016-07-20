@@ -1,11 +1,11 @@
 library angular2.test.compiler.output.ts_emitter_test;
 
-import "package:angular2/src/facade/lang.dart" show isBlank;
-import "package:angular2/src/compiler/output/ts_emitter.dart"
-    show TypeScriptEmitter;
 import "package:angular2/src/compiler/compile_metadata.dart"
     show CompileIdentifierMetadata;
 import "package:angular2/src/compiler/output/output_ast.dart" as o;
+import "package:angular2/src/compiler/output/ts_emitter.dart"
+    show TypeScriptEmitter;
+import "package:angular2/src/facade/lang.dart" show isBlank;
 import 'package:test/test.dart';
 
 var someModuleUrl = "asset:somePackage/lib/somePath";

@@ -1,10 +1,12 @@
 library angular.core.facade.dom;
 
 import 'dart:html';
-import 'package:angular2/platform/common_dom.dart' show setRootDomAdapter;
-import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;
-import 'package:angular2/src/facade/browser.dart';
 import 'dart:js' as js;
+
+import 'package:angular2/platform/common_dom.dart' show setRootDomAdapter;
+import 'package:angular2/src/facade/browser.dart';
+
+import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;
 
 // WARNING: Do not expose outside this class. Parsing HTML using this
 // sanitizer is a security risk.

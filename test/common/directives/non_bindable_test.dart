@@ -1,10 +1,10 @@
 @TestOn('browser')
 library angular2.test.common.directives.non_bindable_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/core.dart" show Component, Directive;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

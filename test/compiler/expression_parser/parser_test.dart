@@ -1,15 +1,16 @@
 @TestOn('browser')
 library angular2.test.compiler.expression_parser.parser_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
-import "package:angular2/src/compiler/expression_parser/parser.dart"
-    show Parser;
-import "unparser.dart" show Unparser;
-import "package:angular2/src/compiler/expression_parser/lexer.dart" show Lexer;
 import "package:angular2/src/compiler/expression_parser/ast.dart"
     show BindingPipe, AST;
+import "package:angular2/src/compiler/expression_parser/lexer.dart" show Lexer;
+import "package:angular2/src/compiler/expression_parser/parser.dart"
+    show Parser;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/testing_internal.dart";
 import "package:test/test.dart";
+
+import "unparser.dart" show Unparser;
 
 main() {
   createParser() {

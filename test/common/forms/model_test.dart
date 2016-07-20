@@ -1,13 +1,13 @@
 @TestOn('browser')
 library angular2.test.common.forms.model_spec;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart"
     show ControlGroup, Control, ControlArray, Validators;
-import "package:angular2/src/facade/lang.dart" show IS_DART, isPresent;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import "package:angular2/src/facade/async.dart"
     show TimerWrapper, ObservableWrapper, EventEmitter;
+import "package:angular2/src/facade/lang.dart" show IS_DART, isPresent;
+import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

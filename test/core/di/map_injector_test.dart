@@ -1,8 +1,8 @@
 @TestOn('browser')
 library angular2.test.core.di.map_injector_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart" show Injector, MapInjectorFactory;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

@@ -1,7 +1,5 @@
 library angular2.test.compiler.html_ast_spec_utils;
 
-import "package:angular2/src/compiler/html_parser.dart"
-    show HtmlParseTreeResult;
 import "package:angular2/src/compiler/html_ast.dart"
     show
         HtmlAst,
@@ -13,6 +11,8 @@ import "package:angular2/src/compiler/html_ast.dart"
         HtmlExpansionAst,
         HtmlExpansionCaseAst,
         htmlVisitAll;
+import "package:angular2/src/compiler/html_parser.dart"
+    show HtmlParseTreeResult;
 import "package:angular2/src/compiler/parse_util.dart" show ParseLocation;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 

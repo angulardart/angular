@@ -1,18 +1,18 @@
 @TestOn('browser')
 library angular2.test.core.linker.dynamic_component_loader_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/collection.dart" show Predicate;
 import "package:angular2/core.dart"
     show Injector, DebugElement, Type, ViewContainerRef, ViewChild;
-import "package:angular2/src/core/metadata.dart" show Component;
 import "package:angular2/src/core/linker/dynamic_component_loader.dart"
     show DynamicComponentLoader;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import "package:angular2/src/core/metadata.dart" show Component;
+import "package:angular2/src/facade/collection.dart" show Predicate;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

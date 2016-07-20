@@ -1,12 +1,14 @@
 library angular.symbol_inspector.symbol_inspector;
 
 import 'dart:mirrors';
-import './simple_library.dart' as simple_library;
+
 import 'package:angular2/common.dart';
 import 'package:angular2/compiler.dart';
 import 'package:angular2/core.dart';
 import 'package:angular2/instrumentation.dart';
 import 'package:angular2/platform/browser.dart';
+
+import './simple_library.dart' as simple_library;
 
 const IGNORE = const {
   'runtimeType': true,

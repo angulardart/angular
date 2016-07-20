@@ -1,9 +1,9 @@
 @TestOn('browser')
 library angular2.test.compiler.output.path_util_test;
 
-import 'package:angular2/testing_internal.dart';
 import 'package:angular2/src/compiler/output/path_util.dart'
     show getImportModulePath, ImportEnv;
+import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
 main() {

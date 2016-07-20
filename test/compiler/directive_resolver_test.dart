@@ -1,11 +1,11 @@
 @TestOn('browser')
 library angular2.test.compiler.directive_resolver_test;
 
-import 'package:angular2/testing_internal.dart';
 import 'package:angular2/src/compiler/directive_resolver.dart'
     show DirectiveResolver;
-import 'package:angular2/src/facade/lang.dart' show stringify;
 import 'package:angular2/src/core/metadata.dart';
+import 'package:angular2/src/facade/lang.dart' show stringify;
+import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
 @Directive(selector: 'someDirective')

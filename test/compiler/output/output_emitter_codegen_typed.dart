@@ -1,7 +1,8 @@
-import 'output_emitter_util.dart' show ExternalClass;
-import 'package:angular2/src/facade/exceptions.dart' show BaseException;
-import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/core/linker/view_type.dart' show ViewType;
+import 'package:angular2/src/facade/async.dart' show EventEmitter;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+
+import 'output_emitter_util.dart' show ExternalClass;
 
 // This is a comment
 class DynamicClass extends ExternalClass {

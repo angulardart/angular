@@ -1,8 +1,8 @@
 library angular2.test.compiler.css.lexer_test;
 
-import 'package:angular2/src/facade/lang.dart' show isPresent;
 import 'package:angular2/src/compiler/css/lexer.dart'
     show CssToken, CssScannerError, CssLexer, CssLexerMode, CssTokenType;
+import 'package:angular2/src/facade/lang.dart' show isPresent;
 import 'package:test/test.dart';
 
 main() {

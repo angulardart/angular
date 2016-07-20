@@ -1,7 +1,6 @@
 @TestOn('browser')
 library angular2.test.core.directive_lifecycle_integration_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart"
     show
         OnChanges,
@@ -13,6 +12,7 @@ import "package:angular2/core.dart"
         AfterViewChecked;
 import "package:angular2/src/core/metadata.dart"
     show Directive, Component, ViewMetadata;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

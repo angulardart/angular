@@ -4,10 +4,10 @@ import "package:angular2/src/core/application_tokens.dart" show APP_ID;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show devModeEqual, uninitialized;
 import "package:angular2/src/core/di.dart" show Inject, Injectable;
-import "package:angular2/src/core/security.dart" show SafeValue;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart"
     show RootRenderer, RenderComponentType, Renderer;
+import "package:angular2/src/core/security.dart" show SafeValue;
 import 'package:angular2/src/core/security.dart';
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;

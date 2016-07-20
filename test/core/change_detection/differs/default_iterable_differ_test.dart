@@ -1,12 +1,13 @@
 @TestOn('browser')
 library angular2.test.core.change_detection.differs.default_iterable_differ_test;
 
-import "package:angular2/testing_internal.dart";
+import 'dart:collection';
+
 import "package:angular2/src/core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, DefaultIterableDifferFactory;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import 'dart:collection';
+import "package:angular2/src/facade/lang.dart" show NumberWrapper;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 // todo(vicb): UnmodifiableListView / frozen object when implemented

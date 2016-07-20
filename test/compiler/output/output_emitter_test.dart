@@ -1,17 +1,18 @@
 @TestOn('browser')
 library angular2.test.compiler.output.output_emitter_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show IS_DART;
-import "output_emitter_codegen_typed.dart" as typed;
 import "package:angular2/src/compiler/output/output_interpreter.dart"
     show interpretStatements;
+import "package:angular2/src/core/linker/view_type.dart" show ViewType;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show IS_DART;
+import "package:angular2/testing_internal.dart";
+import "package:test/test.dart";
+
+import "output_emitter_codegen_typed.dart" as typed;
 import "output_emitter_util.dart"
     show codegenStmts, ExternalClass, DynamicClassInstanceFactory;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:test/test.dart";
 
 main() {
   var outputDefs = [];

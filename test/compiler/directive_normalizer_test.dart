@@ -1,16 +1,17 @@
 @TestOn('browser')
 library angular2.test.compiler.directive_normalizer_test;
 
-import 'package:angular2/testing_internal.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart'
     show CompileTypeMetadata, CompileTemplateMetadata;
-import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/compiler/directive_normalizer.dart'
     show DirectiveNormalizer;
 import 'package:angular2/src/compiler/xhr.dart' show XHR;
 import 'package:angular2/src/compiler/xhr_mock.dart' show MockXHR;
-import 'test_bindings.dart' show TEST_PROVIDERS;
+import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
+
+import 'test_bindings.dart' show TEST_PROVIDERS;
 
 main() {
   CompileTypeMetadata dirType;

@@ -1,8 +1,8 @@
 library angular2.test.compiler.css.visitor_test;
 
-import 'package:angular2/src/facade/exceptions.dart' show BaseException;
-import 'package:angular2/src/compiler/css/parser.dart';
 import 'package:angular2/src/compiler/css/lexer.dart' show CssLexer;
+import 'package:angular2/src/compiler/css/parser.dart';
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:test/test.dart';
 
 tokensToStringList(tokens) {

@@ -1,10 +1,10 @@
 @TestOn('browser')
 library angular2.test.compiler.shadow_css_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/src/compiler/shadow_css.dart"
     show ShadowCss, processRules, CssRule;
 import "package:angular2/src/facade/lang.dart" show StringWrapper;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

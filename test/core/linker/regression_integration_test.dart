@@ -2,7 +2,8 @@
 library angular2.test.core.linker.regression_integration_test;
 
 import "dart:async";
-import "package:angular2/testing_internal.dart";
+
+import "package:angular2/common.dart" show NgIf, NgClass;
 import "package:angular2/core.dart"
     show
         Component,
@@ -13,7 +14,7 @@ import "package:angular2/core.dart"
         PLATFORM_PIPES,
         OpaqueToken,
         Injector;
-import "package:angular2/common.dart" show NgIf, NgClass;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

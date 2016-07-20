@@ -1,12 +1,6 @@
 @TestOn('browser')
 library angular2.test.compiler.runtime_metadata_test;
 
-import 'package:angular2/testing_internal.dart';
-import 'package:angular2/src/facade/lang.dart' show stringify;
-import 'package:angular2/src/compiler/runtime_metadata.dart'
-    show RuntimeMetadataResolver;
-import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
-    show LIFECYCLE_HOOKS_VALUES;
 import 'package:angular2/core.dart'
     show
         Component,
@@ -23,11 +17,18 @@ import 'package:angular2/core.dart'
         AfterViewChecked,
         SimpleChange,
         provide;
-import 'test_bindings.dart' show TEST_PROVIDERS;
+import 'package:angular2/src/compiler/runtime_metadata.dart'
+    show RuntimeMetadataResolver;
 import 'package:angular2/src/compiler/util.dart' show MODULE_SUFFIX;
+import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
+    show LIFECYCLE_HOOKS_VALUES;
 import 'package:angular2/src/core/platform_directives_and_pipes.dart'
     show PLATFORM_DIRECTIVES;
+import 'package:angular2/src/facade/lang.dart' show stringify;
+import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
+
+import 'test_bindings.dart' show TEST_PROVIDERS;
 
 main() {
   beforeEachProviders(() => TEST_PROVIDERS);

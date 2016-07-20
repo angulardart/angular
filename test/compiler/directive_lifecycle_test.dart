@@ -1,9 +1,9 @@
 @TestOn('browser')
 library angular2.test.core.compiler.directive_lifecycle_test;
 
-import 'package:angular2/testing_internal.dart';
 import 'package:angular2/src/compiler/directive_lifecycle_reflector.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
+import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
 main() {

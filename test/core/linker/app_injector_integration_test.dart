@@ -1,9 +1,6 @@
 @TestOn('browser')
 library angular2.test.core.linker.app_injector_integration_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show stringify;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/core.dart"
     show
         Injector,
@@ -16,6 +13,9 @@ import "package:angular2/core.dart"
         InjectorModule,
         ComponentResolver,
         Provides;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show stringify;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 class Engine {}

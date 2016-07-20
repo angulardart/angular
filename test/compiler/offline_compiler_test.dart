@@ -1,20 +1,21 @@
 @TestOn('browser')
 library angular2.test.compiler.offline_compiler_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "package:angular2/core.dart" show Injector;
 import "package:angular2/src/core/debug/debug_node.dart"
     show DebugElement, getDebugNode;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory;
-import "offline_compiler_codegen_typed.dart" as typed;
-import "offline_compiler_codegen_untyped.dart" as untyped;
+import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/shared_styles_host.dart"
     show SharedStylesHost;
-import "offline_compiler_util.dart" show CompA;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
+
+import "offline_compiler_codegen_typed.dart" as typed;
+import "offline_compiler_codegen_untyped.dart" as untyped;
+import "offline_compiler_util.dart" show CompA;
 
 main() {
   var outputDefs = [];

@@ -1,7 +1,5 @@
 library angular2.src.platform.browser_common;
 
-import "package:angular2/src/compiler/xhr.dart" show XHR;
-import "package:angular2/src/security/dom_sanitization_service.dart";
 import "package:angular2/common.dart"
     show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"
@@ -18,6 +16,7 @@ import "package:angular2/platform/common_dom.dart" show ELEMENT_PROBE_PROVIDERS;
 import "package:angular2/src/animate/animation_builder.dart"
     show AnimationBuilder;
 import "package:angular2/src/animate/browser_details.dart" show BrowserDetails;
+import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Provider, OpaqueToken;
 import "package:angular2/src/core/profile/wtf_init.dart" show wtfInit;
 import "package:angular2/src/core/testability/testability.dart"
@@ -43,6 +42,7 @@ import "package:angular2/src/platform/dom/shared_styles_host.dart"
     show DomSharedStylesHost;
 import "package:angular2/src/platform/dom/shared_styles_host.dart"
     show SharedStylesHost;
+import "package:angular2/src/security/dom_sanitization_service.dart";
 
 import "browser/browser_adapter.dart" show BrowserDomAdapter;
 

@@ -1,8 +1,9 @@
+import '../core/di.dart' show Injectable;
+import '../core/security.dart';
 import 'html_sanitizer.dart';
 import 'style_sanitizer.dart';
 import 'url_sanitizer.dart';
-import '../core/security.dart';
-import '../core/di.dart' show Injectable;
+
 export '../core/security.dart';
 
 abstract class SafeHtml extends SafeValue {}

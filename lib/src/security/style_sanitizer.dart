@@ -1,5 +1,6 @@
-import 'url_sanitizer.dart';
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+
+import 'url_sanitizer.dart';
 
 /// Regular expression for safe style values.
 ///

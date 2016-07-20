@@ -1,11 +1,11 @@
 library angular2.test.compiler.compile_metadata_test;
 
 import "package:angular2/src/compiler/compile_metadata.dart";
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/change_detection.dart"
     show ChangeDetectionStrategy;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:test/test.dart';
 
 main() {

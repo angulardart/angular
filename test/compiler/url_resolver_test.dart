@@ -1,9 +1,9 @@
 @TestOn('browser')
 library angular2.test.compiler.url_resolver_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/src/compiler/url_resolver.dart"
     show UrlResolver, createOfflineCompileUrlResolver;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {

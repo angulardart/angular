@@ -1,9 +1,9 @@
 @TestOn('browser')
 library angular2.test.common.pipes.i18n_plural_pipe_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart" show I18nPluralPipe;
 import "package:angular2/src/compiler/pipe_resolver.dart" show PipeResolver;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 main() {
