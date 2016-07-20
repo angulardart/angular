@@ -7,6 +7,7 @@ import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
 
 import "reflective_injector.dart" show ReflectiveInjector;
 import "reflective_key.dart" show ReflectiveKey;
+import "provider.dart";
 
 List<dynamic> findFirstClosedCycle(List<dynamic> keys) {
   var res = [];
@@ -169,23 +170,24 @@ class InstantiationError extends WrappedException {
   }
 }
 
-/**
- * Thrown when an object other then [Provider] (or `Type`) is passed to [Injector]
- * creation.
- *
- * ### Example ([live demo](http://plnkr.co/edit/YatCFbPAMCL0JSSQ4mvH?p=preview))
- *
- * ```typescript
- * expect(() => Injector.resolveAndCreate(["not a type"])).toThrowError();
- * ```
- */
+/// Thrown when an invalid provider is passed in the provider list to create an
+/// [Injector].
+///
+/// Example:
+///
+///     Injector.resolveAndCreate(["not a type"]);
+///
 class InvalidProviderError extends BaseException {
+
+  /// Thrown when an invalid provider ([Provider] or [Type]) is passed in the
+  /// provider list to the [Injector].
   InvalidProviderError(provider)
-      : super(
-            "Invalid provider - only instances of Provider and Type are allowed, got: " +
-                provider.toString()) {
-    /* super call moved to initializer */;
-  }
+      : this.withCustomMessage(provider,
+          'only instances of Provider and Type are allowed, got ${provider.runtimeType}');
+
+  /// Constructs a error with a custom message.
+  InvalidProviderError.withCustomMessage(provider, String message)
+      : super('Invalid provider (${provider is Provider ? provider.token : provider}): $message');
 }
 
 /**

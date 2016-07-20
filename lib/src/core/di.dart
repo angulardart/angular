@@ -1,8 +1,4 @@
-/**
- * 
- * 
- * The `di` module provides dependency injection container services.
- */
+/// A dependency injection container.
 library angular2.src.core.di;
 
 export "di/metadata.dart"
@@ -20,7 +16,7 @@ export "di/forward_ref.dart" show forwardRef, resolveForwardRef, ForwardRefFn;
 export "di/injector.dart" show Injector, InjectorFactory;
 export "di/reflective_injector.dart" show ReflectiveInjector;
 export "di/provider.dart"
-    show Binding, ProviderBuilder, bind, Provider, provide;
+    show Binding, ProviderBuilder, bind, Provider, provide, noValueProvided;
 export "di/reflective_provider.dart"
     show
         ResolvedReflectiveBinding,

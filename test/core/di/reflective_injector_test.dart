@@ -25,6 +25,7 @@ import "package:angular2/src/core/di/reflective_injector.dart"
         ReflectiveInjectorInlineStrategy,
         ReflectiveInjectorDynamicStrategy,
         ReflectiveProtoInjector;
+import "package:angular2/src/core/di/reflective_exceptions.dart";
 import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
 import "package:angular2/src/core/di/reflective_provider.dart"
     show ResolvedReflectiveProvider_;
@@ -355,8 +356,7 @@ main() {
     test("should throw when given invalid providers", () {
       expect(
           () => createInjector((["blah"])),
-          throwsWith('Invalid provider - only instances of Provider '
-              'and Type are allowed, got: blah'));
+          throwsWith('Invalid provider (blah): only instances of Provider and Type are allowed, got String'));
     });
     test("should provide itself", () {
       var parent = createInjector([]);
@@ -524,6 +524,20 @@ main() {
       });
     });
     group("resolve", () {
+      test("should reject providers that do not resolve to a type either via the token", () {
+        try {
+          ReflectiveInjector.resolve([provide('not a type')]);
+          fail('Expected resolution to fail');
+        } catch(e) {
+          expect(
+            (e as InvalidProviderError).message,
+            'Invalid provider (not a type): token is not a Type and no factory was specified');
+        }
+      });
+      test("should default to token type", () {
+        var obj = ReflectiveInjector.resolveAndCreate([provide(Engine)]).get(Engine);
+        expect(obj.runtimeType == Engine, isTrue);
+      });
       test("should resolve and flatten", () {
         var providers = ReflectiveInjector.resolve([
           Engine,
@@ -878,8 +892,7 @@ main() {
     test("should throw when given invalid providers", () {
       expect(
           () => createInjector((["blah"])),
-          throwsWith('Invalid provider - only instances of Provider '
-              'and Type are allowed, got: blah'));
+          throwsWith('Invalid provider (blah): only instances of Provider and Type are allowed, got String'));
     });
     test("should provide itself", () {
       var parent = createInjector([]);
