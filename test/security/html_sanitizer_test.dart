@@ -78,11 +78,7 @@ main() {
         }
       });
       test('Swallows tag & content', () {
-        var dangerousTags = <String>[
-          'object',
-          'script',
-          'style',
-        ];
+        var dangerousTags = <String>['object', 'script', 'style',];
         for (String tag in dangerousTags) {
           String testInput = '<$tag>evil!</$tag>';
           String expected = '';

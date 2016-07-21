@@ -192,8 +192,7 @@ class Identifiers {
       runtime: impDebugContext);
   static var TemplateSecurityContext = new CompileIdentifierMetadata(
       name: 'TemplateSecurityContext',
-      moduleUrl:
-          'asset:angular2/lib/src/core/security${ MODULE_SUFFIX}',
+      moduleUrl: 'asset:angular2/lib/src/core/security${ MODULE_SUFFIX}',
       runtime: impTemplateSecurityContext);
   static var Renderer = new CompileIdentifierMetadata(
       name: "Renderer",
@@ -219,6 +218,7 @@ class Identifiers {
       runtime: impFlattenNestedViewRenderNodes);
   static var devModeEqual = new CompileIdentifierMetadata(
       name: "devModeEqual", moduleUrl: CD_MODULE_URL, runtime: impDevModeEqual);
+
   /// String interpolation where prefix,suffix are empty
   /// (most common case).
   static var interpolate0 = new CompileIdentifierMetadata(

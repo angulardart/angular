@@ -398,9 +398,8 @@ class BrowserDomAdapter
 
   Node templateAwareRoot(Element el) => el is TemplateElement ? el.content : el;
 
-  HtmlDocument createHtmlDocument() =>
-      js.context.callMethod(
-          'eval', ['document.implementation.createHTMLDocument("")']);
+  HtmlDocument createHtmlDocument() => js.context
+      .callMethod('eval', ['document.implementation.createHTMLDocument("")']);
 
   HtmlDocument defaultDoc() => document;
   Rectangle getBoundingClientRect(el) => el.getBoundingClientRect();

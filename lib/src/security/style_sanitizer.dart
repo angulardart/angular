@@ -15,14 +15,15 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 /// This regular expression was taken from the Closure sanitization library and
 /// augmented for transformation values.
 const _VALUES = '[-,."\'%_!# a-zA-Z0-9]+';
-const _TRANSFORMATION_FNS = '(?:matrix|translate|scale|rotate|skew|perspective)(?:X|Y|3d)?';
+const _TRANSFORMATION_FNS =
+    '(?:matrix|translate|scale|rotate|skew|perspective)(?:X|Y|3d)?';
 const _COLOR_FNS = '(?:rgb|hsl)a?';
 const _FN_ARGS = '\\([-0-9.%, a-zA-Z]+\\)';
 const _KEY = '([a-zA-Z-]+[ ]?\\:)';
 
-final RegExp SAFE_STYLE_VALUE =
-    new RegExp('^(${_VALUES}|(${_KEY}${_VALUES}[ ;]?)|((?:${_TRANSFORMATION_FNS}|'
-        '${_COLOR_FNS})${_FN_ARGS})[ ;]?)+\$');
+final RegExp SAFE_STYLE_VALUE = new RegExp(
+    '^(${_VALUES}|(${_KEY}${_VALUES}[ ;]?)|((?:${_TRANSFORMATION_FNS}|'
+    '${_COLOR_FNS})${_FN_ARGS})[ ;]?)+\$');
 
 /// Matches a `url(...)` value with an arbitrary argument as long as it does
 /// not contain parentheses.

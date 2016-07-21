@@ -58,8 +58,8 @@ import "package:angular2/src/web_workers/shared/render_store.dart"
     show RenderStore;
 import "dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
-import "package:angular2/src/platform/browser_common.dart" show BROWSER_SANITIZATION_PROVIDERS;
-
+import "package:angular2/src/platform/browser_common.dart"
+    show BROWSER_SANITIZATION_PROVIDERS;
 
 const OpaqueToken WORKER_SCRIPT = const OpaqueToken("WebWorkerScript");
 // Message based Worker classes that listen on the MessageBus

@@ -12,10 +12,10 @@ import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart"
     show
-    BoundTextAst,
-    BoundElementPropertyAst,
-    DirectiveAst,
-    PropertyBindingType;
+        BoundTextAst,
+        BoundElementPropertyAst,
+        DirectiveAst,
+        PropertyBindingType;
 import "../util.dart" show camelCaseToDashCase;
 import "expression_converter.dart" show convertCdExpressionToIr;
 import "compile_binding.dart" show CompileBinding;
@@ -142,12 +142,12 @@ bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
   });
 }
 
-o.Expression sanitizedValue(BoundElementPropertyAst boundProp,
-    o.Expression renderValue) {
+o.Expression sanitizedValue(
+    BoundElementPropertyAst boundProp, o.Expression renderValue) {
   String methodName;
   switch (boundProp.securityContext) {
     case TemplateSecurityContext.none:
-      return renderValue;  // No sanitization needed.
+      return renderValue; // No sanitization needed.
     case TemplateSecurityContext.html:
       methodName = 'sanitizeHtml';
       break;
@@ -170,7 +170,6 @@ o.Expression sanitizedValue(BoundElementPropertyAst boundProp,
   var ctx = ViewProperties.viewUtils.prop('sanitizer');
   return ctx.callMethod(methodName, [renderValue]);
 }
-
 
 void bindRenderInputs(
     List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {

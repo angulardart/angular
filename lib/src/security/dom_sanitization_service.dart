@@ -6,9 +6,13 @@ import '../core/di.dart' show Injectable;
 export '../core/security.dart';
 
 abstract class SafeHtml extends SafeValue {}
+
 abstract class SafeStyle extends SafeValue {}
+
 abstract class SafeScript extends SafeValue {}
+
 abstract class SafeUrl extends SafeValue {}
+
 abstract class SafeResourceUrl extends SafeValue {}
 
 /// DomSanitizationService helps preventing Cross Site Scripting Security bugs
@@ -38,7 +42,6 @@ abstract class SafeResourceUrl extends SafeValue {}
 /// HTML snippet that does not contain dangerous code. The sanitizer leaves
 /// safe values intact.
 abstract class DomSanitizationService implements SanitizationService {
-
   /// Sanitizes a value for use in the given SecurityContext.
   ///
   /// If value is trusted for the context, this method will unwrap the contained
@@ -93,7 +96,6 @@ abstract class DomSanitizationService implements SanitizationService {
   SafeResourceUrl bypassSecurityTrustResourceUrl(String value);
 }
 
-
 @Injectable()
 class DomSanitizationServiceImpl implements DomSanitizationService {
   @override
@@ -131,7 +133,8 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
           return value.changingThisWillBypassSecurityTrust;
         }
         this._checkNotSafeValue(value, 'ResourceURL');
-        throw new UnsupportedError('unsafe value used in a resource URL context');
+        throw new UnsupportedError(
+            'unsafe value used in a resource URL context');
       default:
         throw new UnsupportedError('Unexpected SecurityContext ${ctx}');
     }
@@ -215,12 +218,11 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
       new SafeScriptImpl(value ?? '');
 
   @override
-  SafeUrl bypassSecurityTrustUrl(String value) =>
-      new SafeUrlImpl(value ?? '');
+  SafeUrl bypassSecurityTrustUrl(String value) => new SafeUrlImpl(value ?? '');
 
   @override
   SafeResourceUrl bypassSecurityTrustResourceUrl(String value) =>
-    new SafeResourceUrlImpl(value ?? '');
+      new SafeResourceUrlImpl(value ?? '');
 }
 
 abstract class SafeValueImpl implements SafeValue {
@@ -236,26 +238,36 @@ abstract class SafeValueImpl implements SafeValue {
 class SafeHtmlImpl extends SafeValueImpl implements SafeHtml {
   SafeHtmlImpl(String value) : super(value);
   @override
-  String getTypeName() { return 'HTML'; }
+  String getTypeName() {
+    return 'HTML';
+  }
 }
 
 class SafeStyleImpl extends SafeValueImpl implements SafeStyle {
   SafeStyleImpl(String value) : super(value);
   @override
-  String getTypeName() { return 'Style'; }
+  String getTypeName() {
+    return 'Style';
+  }
 }
 
 class SafeScriptImpl extends SafeValueImpl implements SafeScript {
   SafeScriptImpl(String value) : super(value);
-  String getTypeName() { return 'Script'; }
+  String getTypeName() {
+    return 'Script';
+  }
 }
 
 class SafeUrlImpl extends SafeValueImpl implements SafeUrl {
   SafeUrlImpl(String value) : super(value);
-  String getTypeName() { return 'URL'; }
+  String getTypeName() {
+    return 'URL';
+  }
 }
 
 class SafeResourceUrlImpl extends SafeValueImpl implements SafeResourceUrl {
   SafeResourceUrlImpl(String value) : super(value);
-  String getTypeName() { return 'ResourceURL'; }
+  String getTypeName() {
+    return 'ResourceURL';
+  }
 }

@@ -18,8 +18,8 @@ import "package:angular2/src/core/reflection/reflection_capabilities.dart"
     show ReflectionCapabilities;
 import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
 import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
-export "package:angular2/src/core/security.dart" show SanitizationService,
-    TemplateSecurityContext;
+export "package:angular2/src/core/security.dart"
+    show SanitizationService, TemplateSecurityContext;
 import "package:angular2/src/platform/browser_common.dart"
     show
         BROWSER_PROVIDERS,

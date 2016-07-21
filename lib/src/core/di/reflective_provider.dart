@@ -25,7 +25,6 @@ import "reflective_exceptions.dart"
         InvalidProviderError;
 import "reflective_key.dart" show ReflectiveKey;
 
-
 /// `Dependency` is used by the framework to extend DI.
 /// This is internal to Angular and should not be used directly.
 class ReflectiveDependency {
@@ -58,7 +57,6 @@ _identityPostProcess(obj) {
 ///     expect(injector.get('message')).toEqual('Hello');
 ///
 abstract class ResolvedReflectiveProvider {
-
   /// A key, usually a [Type].
   ReflectiveKey key;
 
@@ -68,7 +66,6 @@ abstract class ResolvedReflectiveProvider {
   /// Indicates if the provider is a multi-provider or a regular provider.
   bool multiProvider;
 }
-
 
 /// See [ResolvedProvider] instead.
 abstract class ResolvedReflectiveBinding implements ResolvedReflectiveProvider {
@@ -84,7 +81,6 @@ class ResolvedReflectiveProvider_ implements ResolvedReflectiveBinding {
     return this.resolvedFactories[0];
   }
 }
-
 
 /// An internal resolved representation of a factory function created by
 /// resolving [Provider].
@@ -103,7 +99,6 @@ class ResolvedReflectiveFactory {
   /// [postProcess] function is applied to the value constructed by [factory].
   ResolvedReflectiveFactory(this.factory, this.dependencies, this.postProcess);
 }
-
 
 /// Resolve a single provider.
 ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
@@ -130,8 +125,8 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
     factoryFn = reflector.factory(useClass);
     resolvedDeps = _dependenciesFor(useClass);
   } else {
-    throw new InvalidProviderError.withCustomMessage(provider,
-        'token is not a Type and no factory was specified');
+    throw new InvalidProviderError.withCustomMessage(
+        provider, 'token is not a Type and no factory was specified');
   }
 
   var postProcess = isPresent(provider.useProperty)
@@ -139,7 +134,6 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
       : _identityPostProcess;
   return new ResolvedReflectiveFactory(factoryFn, resolvedDeps, postProcess);
 }
-
 
 /// Converts the [Provider] into [ResolvedProvider].
 ///
@@ -150,7 +144,6 @@ ResolvedReflectiveProvider resolveReflectiveProvider(Provider provider) {
       [resolveReflectiveFactory(provider)], provider.multi);
 }
 
-
 /// Resolve a list of Providers.
 List<ResolvedReflectiveProvider> resolveReflectiveProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
@@ -159,7 +152,6 @@ List<ResolvedReflectiveProvider> resolveReflectiveProviders(
   return MapWrapper.values(mergeResolvedReflectiveProviders(
       resolved, new Map<num, ResolvedReflectiveProvider>()));
 }
-
 
 /// Merges a list of ResolvedProviders into a list where
 /// each key is contained exactly once and multi providers
@@ -292,7 +284,6 @@ ReflectiveDependency _createDependency(
   return new ReflectiveDependency(ReflectiveKey.get(token), optional,
       lowerBoundVisibility, upperBoundVisibility, depProps);
 }
-
 
 /// Retruns [InjectorModuleMetadata] providers for a given token if possible.
 List<dynamic> getInjectorModuleProviders(dynamic token) {

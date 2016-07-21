@@ -10,7 +10,7 @@ class MockSchemaRegistry implements ElementSchemaRegistry {
 
   @override
   bool hasProperty(String tagName, String property) =>
-    existingProperties[property] ?? true;
+      existingProperties[property] ?? true;
 
   @override
   String getMappedPropName(String attrName) =>

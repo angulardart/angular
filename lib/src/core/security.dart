@@ -12,14 +12,19 @@
 enum TemplateSecurityContext {
   /// No security implication.
   none,
+
   /// Context for free form html content.
   html,
+
   /// Context for element style.
   style,
+
   /// Contents of script tag.
   script,
+
   /// Link such as a,href.
   url,
+
   /// Url pointing to a resource to be loaded.
   resourceUrl,
 }

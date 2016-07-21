@@ -22,25 +22,30 @@
 /// e.g. "javascript&#58;...".
 ///
 /// RegExp Source: Closure sanitization library.
-final RegExp SAFE_URL_PATTERN =
-    new RegExp('^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|\$))',
-        caseSensitive: false);
+final RegExp SAFE_URL_PATTERN = new RegExp(
+    '^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|\$))',
+    caseSensitive: false);
 
-final RegExp SAFE_SRCSET_PATTERN =
-    new RegExp('^(?:(?:https?|file):|[^&:/?#]*(?:[/?#]|\$))',
-        caseSensitive: false);
+final RegExp SAFE_SRCSET_PATTERN = new RegExp(
+    '^(?:(?:https?|file):|[^&:/?#]*(?:[/?#]|\$))',
+    caseSensitive: false);
 
-final RegExp DATA_URL_PATTERN = new RegExp('^data:(?:image\/(?:bmp|gif|'
+final RegExp DATA_URL_PATTERN = new RegExp(
+    '^data:(?:image\/(?:bmp|gif|'
     'jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm));'
-    'base64,[a-z0-9+\/]+=*\$', caseSensitive: false);
+    'base64,[a-z0-9+\/]+=*\$',
+    caseSensitive: false);
 
 String internalSanitizeUrl(String url) {
   if (url.isEmpty) return url;
   return (SAFE_URL_PATTERN.hasMatch(url) || DATA_URL_PATTERN.hasMatch(url))
-      ? url : 'unsafe:$url';
+      ? url
+      : 'unsafe:$url';
 }
 
 String internalSanitizeSrcset(String srcset) {
-  return srcset.split(',').map(
-      (String s) => internalSanitizeUrl(s.trim())).join(', ');
+  return srcset
+      .split(',')
+      .map((String s) => internalSanitizeUrl(s.trim()))
+      .join(', ');
 }

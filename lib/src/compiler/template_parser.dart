@@ -504,12 +504,11 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         targetVars
             .add(new VariableAst(binding.key, binding.name, attr.sourceSpan));
       } else if (binding.expression != null) {
-        this._parsePropertyAst(binding.key, binding.expression,
-            attr.sourceSpan, targetMatchableAttrs, targetProps);
+        this._parsePropertyAst(binding.key, binding.expression, attr.sourceSpan,
+            targetMatchableAttrs, targetProps);
       } else {
         targetMatchableAttrs.add([binding.key, ""]);
-        this._parseLiteralAttr(
-            binding.key, null, attr.sourceSpan, targetProps);
+        this._parseLiteralAttr(binding.key, null, attr.sourceSpan, targetProps);
       }
     }
     return true;
@@ -829,8 +828,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     var parts = name.split(PROPERTY_PARTS_SEPARATOR);
     if (identical(parts.length, 1)) {
       boundPropertyName = this._schemaRegistry.getMappedPropName(parts[0]);
-      securityContext = this._schemaRegistry.securityContext(elementName,
-          boundPropertyName);
+      securityContext =
+          this._schemaRegistry.securityContext(elementName, boundPropertyName);
       bindingType = PropertyBindingType.Property;
       if (!this._schemaRegistry.hasProperty(elementName, boundPropertyName)) {
         this._reportError(
@@ -842,9 +841,11 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       if (parts[0] == ATTRIBUTE_PREFIX) {
         boundPropertyName = parts[1];
         if (boundPropertyName.toLowerCase().startsWith('on')) {
-          _reportError('Binding to event attribute \'${boundPropertyName}\' '
+          _reportError(
+              'Binding to event attribute \'${boundPropertyName}\' '
               'is disallowed for security reasons, please use '
-              '(${boundPropertyName.substring(2)})=...', sourceSpan);
+              '(${boundPropertyName.substring(2)})=...',
+              sourceSpan);
         }
         // NB: For security purposes, use the mapped property name, not the
         // attribute name.

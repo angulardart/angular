@@ -135,9 +135,7 @@ main() {
           tcb = tcb.overrideView(
               SecuredComponent, new ViewMetadata(template: tpl));
           tcb.createAsync(SecuredComponent).catchError((e) {
-            expect(
-                e.message,
-                contains('Can\'t bind to \'xlink:href\''));
+            expect(e.message, contains('Can\'t bind to \'xlink:href\''));
             completer.done();
           });
         });
@@ -174,19 +172,18 @@ main() {
         });
       });
       test('should allow bypassing html', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter,
-        DomSanitizationService
-        ],
+        return inject(
+            [TestComponentBuilder, AsyncTestCompleter, DomSanitizationService],
             (TestComponentBuilder tcb, AsyncTestCompleter completer,
-            DomSanitizationService sanitizer) {
+                DomSanitizationService sanitizer) {
           var tpl = '<div [innerHTML]="ctxProp">Text</div>';
           tcb = tcb.overrideView(
               SecuredComponent, new ViewMetadata(template: tpl));
           tcb.createAsync(SecuredComponent).then((fixture) {
             var e = fixture.debugElement.children[0].nativeElement;
             var componentInstance = fixture.debugElement.componentInstance;
-            componentInstance.ctxProp = sanitizer.bypassSecurityTrustHtml(
-                'ha <script>evil()</script>');
+            componentInstance.ctxProp =
+                sanitizer.bypassSecurityTrustHtml('ha <script>evil()</script>');
             fixture.detectChanges();
             expect(DOM.getInnerHTML(e), 'ha <script>evil()</script>');
             completer.done();
@@ -196,5 +193,3 @@ main() {
     });
   });
 }
-
-

@@ -21,7 +21,6 @@ const noValueProvided = '__noValueProvided__';
 ///     ]);
 ///     expect(injector.get("message")).toEqual('Hello');
 class Provider {
-
   /// Token used when retrieving this provider. Usually, it is a type [Type].
   final token;
 
@@ -273,7 +272,6 @@ class ProviderBuilder {
     return new Provider(this.token, useClass: type);
   }
 
-
   /// Binds a DI token to a value.
   ///
   /// ### Example ([live demo](http://plnkr.co/edit/G024PFHmDL0cJFgfZK8O?p=preview))
@@ -288,7 +286,6 @@ class ProviderBuilder {
   Provider toValue(dynamic value) {
     return new Provider(this.token, useValue: value);
   }
-
 
   /// Binds a DI token to an existing token.
   ///
@@ -327,7 +324,6 @@ class ProviderBuilder {
     }
     return new Provider(this.token, useExisting: aliasToken);
   }
-
 
   /// Binds a DI token to a function which computes the value.
   ///

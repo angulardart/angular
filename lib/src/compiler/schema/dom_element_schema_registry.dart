@@ -254,20 +254,17 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
 
   static Map<String, TemplateSecurityContext> _SECURITY_SCHEMA;
 
-  void _registerSecuritySchema(TemplateSecurityContext context,
-      List<String> schemaElements) {
+  void _registerSecuritySchema(
+      TemplateSecurityContext context, List<String> schemaElements) {
     int itemCount = schemaElements.length;
-    for (int i = 0 ; i < itemCount; i++) {
+    for (int i = 0; i < itemCount; i++) {
       _SECURITY_SCHEMA[schemaElements[i]] = context;
     }
   }
 
   void _initializeSecuritySchema() {
-    _registerSecuritySchema(TemplateSecurityContext.html, [
-      'iframe|srcdoc',
-      '*|innerHTML',
-      '*|outerHTML'
-    ]);
+    _registerSecuritySchema(TemplateSecurityContext.html,
+        ['iframe|srcdoc', '*|innerHTML', '*|outerHTML']);
     _registerSecuritySchema(TemplateSecurityContext.style, ['*|style']);
     _registerSecuritySchema(TemplateSecurityContext.url, [
       '*|formAction',
@@ -287,7 +284,7 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
       'q|cite',
       'source|src',
       'source|srcset'
-      'video|poster',
+          'video|poster',
       'video|src'
     ]);
     _registerSecuritySchema(TemplateSecurityContext.resourceUrl, [
@@ -327,7 +324,8 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
     }
     String key = '$tagName|$propName';
     return _SECURITY_SCHEMA[key] ??
-        _SECURITY_SCHEMA['*|$propName'] ?? TemplateSecurityContext.none;
+        _SECURITY_SCHEMA['*|$propName'] ??
+        TemplateSecurityContext.none;
   }
 
   @override
