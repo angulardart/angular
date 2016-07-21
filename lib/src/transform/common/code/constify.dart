@@ -1,18 +1,17 @@
 import 'package:analyzer/analyzer.dart';
-import 'package:analyzer/src/generated/java_core.dart';
 
 /// Serializes the provided [AstNode] to Dart source, replacing `new` in
 /// [InstanceCreationExpression]s and the `@` in [Annotation]s with `const`.
 String constify(AstNode node) {
-  var writer = new PrintStringWriter();
+  var writer = new StringBuffer();
   node.accept(new _ConstifyingVisitor(writer));
   return '$writer';
 }
 
 class _ConstifyingVisitor extends ToSourceVisitor {
-  final PrintWriter writer;
+  final StringBuffer writer;
 
-  _ConstifyingVisitor(PrintWriter writer)
+  _ConstifyingVisitor(StringBuffer writer)
       : this.writer = writer,
         super(writer);
 
@@ -21,7 +20,7 @@ class _ConstifyingVisitor extends ToSourceVisitor {
     if (node.keyword.lexeme == 'const') {
       return super.visitInstanceCreationExpression(node);
     } else if (node.keyword.lexeme == 'new') {
-      writer.print('const ');
+      writer.write('const ');
       if (node.constructorName != null) {
         node.constructorName.accept(this);
       }
@@ -37,25 +36,25 @@ class _ConstifyingVisitor extends ToSourceVisitor {
     var hasArguments =
         node.arguments != null && node.arguments.arguments != null;
     if (hasArguments) {
-      writer.print('const ');
+      writer.write('const ');
     }
     if (node.name != null) {
       node.name.accept(this);
     }
     if (node.constructorName != null) {
-      writer.print('.');
+      writer.write('.');
       node.constructorName.accept(this);
     }
     if (hasArguments) {
       var args = node.arguments.arguments;
-      writer.print('(');
+      writer.write('(');
       for (var i = 0, iLen = args.length; i < iLen; ++i) {
         if (i != 0) {
-          writer.print(', ');
+          writer.write(', ');
         }
         args[i].accept(this);
       }
-      writer.print(')');
+      writer.write(')');
     }
     return null;
   }
