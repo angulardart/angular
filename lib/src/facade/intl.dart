@@ -1,5 +1,3 @@
-library facade.intl;
-
 import 'package:intl/intl.dart';
 
 String _normalizeLocale(String locale) => locale.replaceAll('-', '_');

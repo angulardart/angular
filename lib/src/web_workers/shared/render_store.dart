@@ -1,5 +1,3 @@
-library angular2.src.web_workers.shared.render_store;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 
 @Injectable()

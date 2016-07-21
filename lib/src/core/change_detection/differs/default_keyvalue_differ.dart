@@ -1,5 +1,3 @@
-library angular2.src.core.change_detection.differs.default_keyvalue_differ;
-
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"

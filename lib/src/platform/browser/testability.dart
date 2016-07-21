@@ -1,5 +1,3 @@
-library testability.browser_testability;
-
 import 'dart:html';
 import 'dart:js' as js;
 

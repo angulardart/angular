@@ -1,5 +1,3 @@
-library angular2.src.core.metadata.directives;
-
 import "package:angular2/src/core/change_detection.dart"
     show ChangeDetectionStrategy;
 import "package:angular2/src/core/di/metadata.dart" show InjectableMetadata;

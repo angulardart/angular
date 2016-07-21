@@ -1,5 +1,3 @@
-library angular2.src.testing.benchmark_util;
-
 import "package:angular2/src/facade/browser.dart" show document, window;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show NumberWrapper, isBlank;

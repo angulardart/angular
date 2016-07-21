@@ -1,5 +1,3 @@
-library angular2.src.core.debug.debug_renderer;
-
 import "package:angular2/src/core/debug/debug_node.dart"
     show
         DebugNode,

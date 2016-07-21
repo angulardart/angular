@@ -1,5 +1,3 @@
-library angular2.src.common.pipes.slice_pipe;
-
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"

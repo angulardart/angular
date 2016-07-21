@@ -1,5 +1,3 @@
-library angular2.src.common.common_directives;
-
 import "package:angular2/src/facade/lang.dart" show Type;
 
 import "directives.dart" show CORE_DIRECTIVES;

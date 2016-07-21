@@ -1,5 +1,3 @@
-library angular2.src.router.route_registry;
-
 import "dart:async";
 
 import "package:angular2/core.dart"

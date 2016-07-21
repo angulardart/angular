@@ -1,5 +1,3 @@
-library angular2.dom.htmlAdapter;
-
 import 'dart:io';
 
 import 'package:angular2/platform/common_dom.dart';

@@ -1,5 +1,3 @@
-library angular2.transform.common.asset_reader;
-
 import 'dart:async';
 import 'dart:convert';
 

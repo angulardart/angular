@@ -1,5 +1,3 @@
-library angular2.src.platform.browser.tools.common_tools;
-
 import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef;

@@ -1,5 +1,3 @@
-library angular2.src.router.router;
-
 import "dart:async";
 
 import "package:angular2/core.dart" show Inject, Injectable;

@@ -1,5 +1,3 @@
-library angular2.src.core.metadata;
-
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/facade/collection.dart' show List;
 

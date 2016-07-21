@@ -1,5 +1,3 @@
-library angular2.transform.template_compiler.compile_data_creator;
-
 import 'dart:async';
 import 'dart:convert';
 

@@ -1,5 +1,3 @@
-library angular2.transform.directive_metadata_linker.ng_deps_linker;
-
 import 'dart:async';
 
 import 'package:angular2/compiler.dart' show UrlResolver;

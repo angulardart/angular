@@ -1,5 +1,3 @@
-library angular2.src.compiler.compile_metadata;
-
 import "package:angular2/src/compiler/selector.dart" show CssSelector;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, CHANGE_DETECTION_STRATEGY_VALUES;

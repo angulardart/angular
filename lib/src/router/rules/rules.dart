@@ -1,5 +1,3 @@
-library angular2.src.router.rules.rules;
-
 import "dart:async";
 
 import "package:angular2/src/facade/collection.dart" show Map;

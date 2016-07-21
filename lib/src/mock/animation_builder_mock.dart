@@ -1,5 +1,3 @@
-library angular2.src.mock.animation_builder_mock;
-
 import "package:angular2/src/animate/animation.dart" show Animation;
 import "package:angular2/src/animate/animation_builder.dart"
     show AnimationBuilder;

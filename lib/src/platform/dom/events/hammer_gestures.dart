@@ -1,5 +1,3 @@
-library angular.events;
-
 import 'dart:html';
 import 'dart:js' as js;
 

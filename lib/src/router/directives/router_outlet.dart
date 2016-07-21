@@ -1,5 +1,3 @@
-library angular2.src.router.directives.router_outlet;
-
 import "dart:async";
 
 import "package:angular2/core.dart"

@@ -1,5 +1,3 @@
-library angular2.src.transform.common.zone;
-
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';

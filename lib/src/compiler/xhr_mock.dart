@@ -1,5 +1,3 @@
-library angular2.src.compiler.xhr_mock;
-
 import "dart:async";
 
 import "package:angular2/src/compiler/xhr.dart" show XHR;

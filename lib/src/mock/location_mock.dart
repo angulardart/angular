@@ -1,5 +1,3 @@
-library angular2.src.mock.location_mock;
-
 import "package:angular2/platform/common.dart";
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/async.dart"

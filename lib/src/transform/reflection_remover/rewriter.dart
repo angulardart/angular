@@ -1,5 +1,3 @@
-library angular2.transform.reflection_remover.rewriter;
-
 import 'package:analyzer/src/generated/ast.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/mirror_matcher.dart';

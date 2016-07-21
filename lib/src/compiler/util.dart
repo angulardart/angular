@@ -1,5 +1,3 @@
-library angular2.src.compiler.util;
-
 import "package:angular2/src/facade/lang.dart" show IS_DART, StringWrapper;
 
 var MODULE_SUFFIX = IS_DART ? ".dart" : "";

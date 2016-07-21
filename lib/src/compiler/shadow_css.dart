@@ -1,5 +1,3 @@
-library angular2.src.compiler.shadow_css;
-
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show

@@ -1,5 +1,3 @@
-library angular2.src.i18n.expander;
-
 import "package:angular2/src/compiler/html_ast.dart"
     show
         HtmlAst,

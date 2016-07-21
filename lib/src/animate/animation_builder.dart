@@ -1,5 +1,3 @@
-library angular2.src.animate.animation_builder;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 
 import "browser_details.dart" show BrowserDetails;

@@ -1,5 +1,3 @@
-library angular2.src.core.application_tokens;
-
 import "package:angular2/src/core/di.dart" show OpaqueToken, Provider;
 import "package:angular2/src/facade/lang.dart" show Math, StringWrapper;
 

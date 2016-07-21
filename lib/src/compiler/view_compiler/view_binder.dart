@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.view_binder;
-
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 
 import "../template_ast.dart"

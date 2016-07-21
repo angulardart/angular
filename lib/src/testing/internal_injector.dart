@@ -1,5 +1,3 @@
-library angular2.src.testing.internal_injector;
-
 import 'dart:async';
 
 import 'package:angular2/core.dart' show ReflectiveInjector;

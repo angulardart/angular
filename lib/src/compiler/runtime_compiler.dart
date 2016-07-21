@@ -1,5 +1,3 @@
-library angular2.src.compiler.runtime_compiler;
-
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable;

@@ -1,5 +1,3 @@
-library angular2.src.web_workers.ui.platform_location;
-
 import "dart:async";
 
 import "package:angular2/platform/common.dart" show UrlChangeListener;

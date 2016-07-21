@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.util;
-
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 

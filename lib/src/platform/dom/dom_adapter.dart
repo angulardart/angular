@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.dom_adapter;
-
 import "package:angular2/src/facade/lang.dart" show isBlank, Type;
 
 DomAdapter DOM = null;

@@ -1,5 +1,3 @@
-library angular2.src.core.linker.component_resolver;
-
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable;

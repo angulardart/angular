@@ -1,5 +1,3 @@
-library angular2.src.platform.worker_app_common;
-
 import "package:angular2/common.dart"
     show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"

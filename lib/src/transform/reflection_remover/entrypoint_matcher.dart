@@ -1,5 +1,3 @@
-library angular2.transform.reflection_remover.entrypoint_matcher;
-
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/naive_eval.dart';

@@ -1,5 +1,3 @@
-library angular2.src.router.rules.route_handlers.async_route_handler;
-
 import "dart:async";
 
 import "package:angular2/src/facade/lang.dart" show isPresent;

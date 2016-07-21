@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.constants;
-
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorState, ChangeDetectionStrategy;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;

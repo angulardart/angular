@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.shared_styles_host;
-
 import "package:angular2/src/core/di.dart" show Inject, Injectable;
 import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;

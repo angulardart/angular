@@ -1,5 +1,3 @@
-library angular2.src.platform.worker_app;
-
 import 'dart:isolate';
 
 import 'package:angular2/core.dart';

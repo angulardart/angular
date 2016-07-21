@@ -1,5 +1,3 @@
-library angular2.src.compiler.compiler;
-
 import "package:angular2/src/compiler/directive_normalizer.dart"
     show DirectiveNormalizer;
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;

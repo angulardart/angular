@@ -1,5 +1,3 @@
-library reflection.reflection_capabilities;
-
 import 'dart:mirrors';
 
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';

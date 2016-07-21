@@ -1,5 +1,3 @@
-library angular2.src.web_workers.event_serializer;
-
 import 'dart:core';
 import 'dart:html';
 

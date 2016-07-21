@@ -1,5 +1,3 @@
-library angular2.src.compiler.pipe_resolver;
-
 import "package:angular2/src/core/di.dart" show resolveForwardRef, Injectable;
 import "package:angular2/src/core/metadata.dart" show PipeMetadata;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;

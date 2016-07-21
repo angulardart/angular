@@ -1,5 +1,3 @@
-library angular2.transform.reflection_remover.codegen;
-
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:barback/barback.dart';
 import 'package:path/path.dart' as path;

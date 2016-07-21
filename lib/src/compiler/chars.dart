@@ -1,5 +1,3 @@
-library angular2.src.compiler.chars;
-
 const $EOF = 0;
 const $TAB = 9;
 const $LF = 10;

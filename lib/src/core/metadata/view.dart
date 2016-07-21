@@ -1,5 +1,3 @@
-library angular2.src.core.metadata.view;
-
 /**
  * Defines template and style encapsulation options available for Component's [View].
  *

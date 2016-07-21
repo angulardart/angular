@@ -1,5 +1,3 @@
-library angular2.src.router.router_providers_common;
-
 import "package:angular2/core.dart" show ApplicationRef, Provider;
 import "package:angular2/platform/common.dart"
     show LocationStrategy, PathLocationStrategy, Location;

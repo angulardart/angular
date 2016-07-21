@@ -1,5 +1,3 @@
-library angular2.src.compiler.html_ast;
-
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "parse_util.dart" show ParseSourceSpan;

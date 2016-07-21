@@ -1,5 +1,3 @@
-library angular2.src.compiler.template_ast;
-
 import 'expression_parser/ast.dart' show AST;
 import 'compile_metadata.dart'
     show

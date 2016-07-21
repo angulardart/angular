@@ -1,5 +1,3 @@
-library angular2.src.common.directives.ng_for;
-
 import "package:angular2/core.dart"
     show
         DoCheck,

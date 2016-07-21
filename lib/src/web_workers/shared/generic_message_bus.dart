@@ -1,5 +1,3 @@
-library angular2.src.web_workers.shared.generic_message_bus;
-
 import 'dart:async';
 
 import 'package:angular2/src/core/zone/ng_zone.dart';

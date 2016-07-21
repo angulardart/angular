@@ -1,5 +1,3 @@
-library angular2.src.core.wtf_init;
-
 import 'dart:js' as js;
 
 import 'wtf_impl.dart' as impl;

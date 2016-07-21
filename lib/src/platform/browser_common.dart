@@ -1,5 +1,3 @@
-library angular2.src.platform.browser_common;
-
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/security/dom_sanitization_service.dart";
 import "package:angular2/common.dart"

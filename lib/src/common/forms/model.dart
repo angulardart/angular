@@ -1,5 +1,3 @@
-library angular2.src.common.forms.model;
-
 import "package:angular2/src/facade/async.dart"
     show Stream, EventEmitter, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart"

@@ -1,5 +1,3 @@
-library angular2.src.core.testability.testability;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show MapWrapper;

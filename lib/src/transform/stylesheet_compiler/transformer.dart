@@ -1,5 +1,3 @@
-library angular2.transform.stylesheet_compiler.transformer;
-
 import 'dart:async';
 
 import 'package:angular2/src/platform/server/html_adapter.dart';

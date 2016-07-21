@@ -1,5 +1,3 @@
-library angular2.src.common.forms.form_builder;
-
 import "package:angular2/core.dart" show Injectable;
 
 import "directives/validators.dart";

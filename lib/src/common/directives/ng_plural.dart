@@ -1,5 +1,3 @@
-library angular2.src.common.directives.ng_plural;
-
 import "package:angular2/core.dart"
     show
         Directive,

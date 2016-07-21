@@ -1,5 +1,3 @@
-library angular2.src.core.zone.ng_zone;
-
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../../facade/exceptions.dart" show BaseException;

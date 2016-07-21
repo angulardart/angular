@@ -1,5 +1,3 @@
-library angular2.dom.webWorkerAdapter;
-
 import 'package:angular2/platform/common_dom.dart';
 import 'package:html/dom.dart';
 

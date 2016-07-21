@@ -1,12 +1,12 @@
 library angular.symbol_inspector.symbol_inspector;
 
 import 'dart:mirrors';
-import './simple_library.dart' as simple_library;
-import 'package:angular2/common.dart';
-import 'package:angular2/compiler.dart';
-import 'package:angular2/core.dart';
-import 'package:angular2/instrumentation.dart';
-import 'package:angular2/platform/browser.dart';
+import 'package:angular2/common.dart' as ng2common;
+import 'package:angular2/compiler.dart' as ng2compiler;
+import 'package:angular2/core.dart' as ng2core;
+import 'package:angular2/instrumentation.dart' as ng2instrumentation;
+import 'package:angular2/platform/browser.dart' as ng2platform_browser;
+import 'package:angular2/platform/common.dart' as ng2platform_common;
 
 const IGNORE = const {
   'runtimeType': true,
@@ -17,32 +17,35 @@ const IGNORE = const {
   'originalStack': true
 };
 
-const LIB_MAP = const {
-  'simple_library': 'angular2.test.symbol_inspector.simple_library',
-  'ngCommon': 'angular2.common',
-  'ngCompiler': 'angular2.compiler',
-  'ngCore': 'angular2.core',
-  'ngInstrumentation': 'angular2.instrumentation',
-  'ngPlatformBrowser': 'angular2.platform.browser',
-  'ngPlatformCommon': 'angular2.platform.common'
-};
-
-// Have this list here to trick dart to force import.
-var libs = [
-  simple_library.A,
-  Component,
-  Form,
-  COMPILER_PROVIDERS,
-  NgIf,
-  wtfCreateScope,
-  Title
+// HACK: This list is here only to make the corresponding libraries used. The
+// imports are only needed to reflect on them using mirrors.
+final _ng2libSymbols = [
+  ng2core.Component,
+  ng2compiler.COMPILER_PROVIDERS,
+  ng2common.NgIf,
+  ng2instrumentation.wtfCreateScope,
+  ng2platform_browser.Title,
+  ng2platform_common.Location,
 ];
 
-List<String> getSymbolsFromLibrary(String name) {
-  var libraryName = LIB_MAP[name];
-  if (libs.isEmpty) throw "No libriries loaded.";
-  if (libraryName == null) throw "Don't know how to load '$name' library.";
-  var lib = currentMirrorSystem().findLibrary(new Symbol(libraryName));
+LibraryMirror getLibrary(String uri) {
+  // HACK: this is here only to make _ng2libSymbols used.
+  _ng2libSymbols.forEach((_) { });
+  var lib = currentMirrorSystem().libraries[Uri.parse(uri)];
+  if (lib == null) {
+    throw 'Failed to load library ${uri}';
+  }
+  return lib;
+}
+
+final commonLib = getLibrary('package:angular2/common.dart');
+final compilerLib = getLibrary('package:angular2/compiler.dart');
+final coreLib = getLibrary('package:angular2/core.dart');
+final instrumentationLib = getLibrary('package:angular2/instrumentation.dart');
+final platformBrowserLib = getLibrary('package:angular2/platform/browser.dart');
+final platformCommonLib = getLibrary('package:angular2/platform/common.dart');
+
+List<String> getSymbolsFromLibrary(LibraryMirror lib) {
   var names = [];
   extractSymbols(lib).addTo(names);
   names.sort();

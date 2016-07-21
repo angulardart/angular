@@ -4,7 +4,6 @@
  * The tracing API hooks up to either [WTF](http://google.github.io/tracing-framework/) or
  * [Dart Observatory](https://www.dartlang.org/tools/observatory/).
  */
-library angular2.src.core.wtf_impl;
 
 typedef dynamic WtfScopeFn([arg0, arg1]);
 

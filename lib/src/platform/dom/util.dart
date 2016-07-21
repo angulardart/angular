@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.util;
-
 import "package:angular2/src/facade/lang.dart" show StringWrapper;
 
 var CAMEL_CASE_REGEXP = new RegExp(r'([A-Z])');

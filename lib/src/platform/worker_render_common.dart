@@ -1,5 +1,3 @@
-library angular2.src.platform.worker_render_common;
-
 import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "package:angular2/src/web_workers/shared/message_bus.dart"
     show MessageBus;

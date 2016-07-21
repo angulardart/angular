@@ -1,5 +1,3 @@
-library angular2.src.compiler.output.js_emitter;
-
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "abstract_emitter.dart" show OutputEmitter, EmitterVisitorContext;

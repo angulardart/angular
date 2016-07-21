@@ -1,5 +1,3 @@
-library angular2.src.core.compiler.directive_lifecycle_reflector;
-
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular2/src/core/reflection/reflection.dart';
 

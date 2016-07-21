@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.ng_control_status;
-
 import "package:angular2/core.dart" show Directive, Self;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 

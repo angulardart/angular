@@ -1,5 +1,3 @@
-library angular2.transform.reflection_remover.remove_reflection_capabilities;
-
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';

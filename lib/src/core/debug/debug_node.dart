@@ -1,5 +1,3 @@
-library angular2.src.core.debug.debug_node;
-
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 import "package:angular2/src/facade/collection.dart" show Predicate;

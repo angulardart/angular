@@ -1,5 +1,3 @@
-library angular2.src.core.metadata.lifecycle_hooks;
-
 import "package:angular2/src/core/change_detection/change_detection_util.dart"
     show SimpleChange;
 

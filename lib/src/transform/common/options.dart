@@ -1,5 +1,3 @@
-library angular2.transform.common.options;
-
 import 'package:barback/src/asset/asset_id.dart';
 import 'package:glob/glob.dart';
 

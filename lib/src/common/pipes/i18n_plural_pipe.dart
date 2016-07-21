@@ -1,5 +1,3 @@
-library angular2.src.common.pipes.i18n_plural_pipe;
-
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/lang.dart"
     show isStringMap, StringWrapper, isPresent, RegExpWrapper;

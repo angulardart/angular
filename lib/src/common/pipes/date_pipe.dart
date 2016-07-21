@@ -1,5 +1,3 @@
-library angular2.src.common.pipes.date_pipe;
-
 import "package:angular2/core.dart" show PipeTransform, Pipe, Injectable;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/intl.dart" show DateFormatter;

@@ -1,5 +1,3 @@
-library angular2.src.core.application_common_providers;
-
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/facade/lang.dart" show Type;
 

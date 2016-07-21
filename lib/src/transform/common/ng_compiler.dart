@@ -1,5 +1,3 @@
-library angular2.transform.template_compiler.ng_compiler;
-
 import 'package:angular2/i18n.dart';
 import 'package:angular2/router/router_link_dsl.dart';
 import 'package:angular2/src/compiler/config.dart';

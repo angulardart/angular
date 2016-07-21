@@ -1,5 +1,3 @@
-library angular2.transform.deferred_rewriter.transformer;
-
 import 'dart:async';
 
 import 'package:angular2/src/transform/common/asset_reader.dart';

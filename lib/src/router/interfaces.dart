@@ -1,5 +1,3 @@
-library angular2.src.router.interfaces;
-
 import "dart:async";
 
 import "package:angular2/src/facade/lang.dart" show global;

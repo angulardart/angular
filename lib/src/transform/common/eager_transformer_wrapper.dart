@@ -1,5 +1,3 @@
-library angular2.src.transform.common.eager_transformer_wrapper;
-
 import 'package:barback/barback.dart';
 
 abstract class EagerTransformerWrapper {

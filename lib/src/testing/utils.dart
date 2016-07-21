@@ -1,5 +1,3 @@
-library angular2.src.testing.utils;
-
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isString, RegExpWrapper, StringWrapper, RegExp;

@@ -1,5 +1,3 @@
-library angular2.src.tools.tools;
-
 import 'dart:js';
 
 import 'package:angular2/src/core/linker/component_factory.dart'

@@ -1,5 +1,3 @@
-library angular2.src.common.forms.validators;
-
 import "package:angular2/core.dart" show OpaqueToken;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;

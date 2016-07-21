@@ -1,48 +1,43 @@
 library angular2.test.symbol_inspector.symbol_inspector_test;
 
-import "package:angular2/src/facade/lang.dart" show IS_DART;
-import "symbol_inspector.dart" show getSymbolsFromLibrary;
+import 'dart:mirrors';
+
+import 'symbol_inspector.dart';
+import 'simple_library.dart';
+
 import 'package:test/test.dart';
 
 main() {
-  group("symbol inspector", () {
-    if (IS_DART) {
-      test("should extract symbols (dart)", () {
-        var symbols = getSymbolsFromLibrary("simple_library");
-        expect(symbols, [
-          "A",
-          "ClosureParam",
-          "ClosureReturn",
-          "ConsParamType",
-          "FieldType",
-          "Generic",
-          "GetterType",
-          "MethodReturnType",
-          "ParamType",
-          "SomeInterface",
-          "StaticFieldType",
-          "TypedefParam",
-          "TypedefReturnType"
-        ]);
-      });
-    } else {
-      test("should extract symbols (js)", () {
-        var symbols = getSymbolsFromLibrary("simple_library");
-        expect(symbols, [
-          "A",
-          "ClosureParam",
-          "ClosureReturn",
-          "ConsParamType",
-          "FieldType",
-          "Generic",
-          "GetterType",
-          "MethodReturnType",
-          "ParamType",
-          "StaticFieldType",
-          "TypedefParam",
-          "TypedefReturnType"
-        ]);
-      });
-    }
+  group('getSymbolsFromLibrary', () {
+    test('should extract symbols', () {
+      var simpleLib = reflectClass(A).owner as LibraryMirror;
+      var symbols = getSymbolsFromLibrary(simpleLib);
+      expect(symbols, [
+        'A',
+        'ClosureParam',
+        'ClosureReturn',
+        'ConsParamType',
+        'FieldType',
+        'Generic',
+        'GetterType',
+        'MethodReturnType',
+        'ParamType',
+        'SomeInterface',
+        'StaticFieldType',
+        'TypedefParam',
+        'TypedefReturnType'
+      ]);
+    });
+
+  });
+  group('ng2libs', () {
+    test('should be available via mirrors', () {
+      expect(commonLib.uri.toString(), 'package:angular2/common.dart');
+      expect(compilerLib.uri.toString(), 'package:angular2/compiler.dart');
+      expect(coreLib.uri.toString(), 'package:angular2/core.dart');
+      expect(instrumentationLib.uri.toString(), 'package:angular2/instrumentation.dart');
+      expect(platformBrowserLib.uri.toString(), 'package:angular2/platform/browser.dart');
+      expect(platformCommonLib.uri.toString(), 'package:angular2/platform/common.dart');
+    });
   });
 }

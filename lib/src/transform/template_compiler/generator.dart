@@ -1,5 +1,3 @@
-library angular2.transform.template_compiler.generator;
-
 import 'dart:async';
 
 import 'package:angular2/i18n.dart';

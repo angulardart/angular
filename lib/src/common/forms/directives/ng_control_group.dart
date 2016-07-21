@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.ng_control_group;
-
 import "package:angular2/core.dart"
     show
         OnInit,

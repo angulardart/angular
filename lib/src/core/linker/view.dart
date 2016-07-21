@@ -1,5 +1,3 @@
-library angular2.src.core.linker.view;
-
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import "package:angular2/src/core/di.dart" show Injector;

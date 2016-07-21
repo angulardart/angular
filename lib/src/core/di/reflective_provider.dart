@@ -1,5 +1,3 @@
-library angular2.src.core.di.reflective_provider;
-
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/collection.dart"
     show MapWrapper, ListWrapper, StringMapWrapper;

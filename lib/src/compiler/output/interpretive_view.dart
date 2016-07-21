@@ -1,5 +1,3 @@
-library angular2.src.compiler.output.interpretive_view;
-
 import "package:angular2/src/core/linker/debug_context.dart"
     show StaticNodeDebugInfo;
 import "package:angular2/src/core/linker/element.dart" show AppElement;

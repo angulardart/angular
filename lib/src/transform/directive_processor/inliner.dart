@@ -1,5 +1,3 @@
-library angular2.transform.directive_processor.inliner;
-
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';

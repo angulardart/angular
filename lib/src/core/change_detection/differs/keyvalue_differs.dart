@@ -1,5 +1,3 @@
-library angular2.src.core.change_detection.differs.keyvalue_differs;
-
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;

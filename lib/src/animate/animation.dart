@@ -1,5 +1,3 @@
-library angular2.src.animate.animation;
-
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
     show DateWrapper, StringWrapper, RegExpWrapper, NumberWrapper, isPresent;

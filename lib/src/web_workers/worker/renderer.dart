@@ -1,5 +1,3 @@
-library angular2.src.web_workers.worker.renderer;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart"

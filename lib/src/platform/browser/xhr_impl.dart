@@ -1,5 +1,3 @@
-library angular2.src.services.xhr_impl;
-
 import 'dart:async' show Future;
 import 'dart:html' show HttpRequest;
 

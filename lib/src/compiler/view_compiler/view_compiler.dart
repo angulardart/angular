@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.view_compiler;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 
 import "../compile_metadata.dart"

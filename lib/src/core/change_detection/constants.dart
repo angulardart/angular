@@ -1,5 +1,3 @@
-library angular2.src.core.change_detection.constants;
-
 /// Describes the current state of the change detector.
 enum ChangeDetectorState {
   /// [NeverChecked] means that the change detector has not been checked yet,

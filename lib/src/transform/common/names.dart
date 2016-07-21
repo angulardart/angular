@@ -1,5 +1,3 @@
-library angular2.transform.common.names;
-
 const BOOTSTRAP_NAME = 'bootstrap';
 const BOOTSTRAP_STATIC_NAME = 'bootstrapStatic';
 const SETUP_METHOD_NAME = 'initReflector';

@@ -1,5 +1,3 @@
-library angular2.transform.common.code.source_module;
-
 import 'package:analyzer/src/generated/scanner.dart' show Keyword;
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/transform/common/model/ng_deps_model.pb.dart';

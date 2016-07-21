@@ -1,5 +1,3 @@
-library angular2.transform.common.annotation_matcher;
-
 import 'package:analyzer/src/generated/ast.dart';
 import 'package:barback/barback.dart' show AssetId;
 

@@ -1,5 +1,3 @@
-library angular2.src.core.linker.view_ref;
-
 import "package:angular2/src/core/change_detection/constants.dart"
     show ChangeDetectionStrategy;
 

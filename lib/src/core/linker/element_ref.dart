@@ -10,7 +10,6 @@
 // i.e. users have to ask for what they need. With that, we can build better analysis tools
 
 // and could do better codegen in the future.
-library angular2.src.core.linker.element_ref;
 
 class ElementRef {
   /**

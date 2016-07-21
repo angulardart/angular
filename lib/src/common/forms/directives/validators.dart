@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.validators;
-
 import "package:angular2/core.dart" show Provider, Attribute, Directive;
 import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 

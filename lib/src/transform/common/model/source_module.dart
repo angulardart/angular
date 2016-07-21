@@ -1,5 +1,3 @@
-library angular2.transform.common.model.source_module;
-
 import 'package:angular2/src/transform/common/url_resolver.dart';
 import 'package:path/path.dart' as path;
 

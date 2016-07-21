@@ -1,8 +1,8 @@
 library angular2.test.public_api_test;
 
 import "package:angular2/src/facade/lang.dart"
-    show IS_DART, RegExpWrapper, StringWrapper;
-import "symbol_inspector/symbol_inspector.dart" show getSymbolsFromLibrary;
+    show RegExpWrapper, StringWrapper;
+import "symbol_inspector/symbol_inspector.dart";
 import "package:test/test.dart";
 
 // =============================================================================
@@ -28,7 +28,7 @@ var NG_COMMON = [
   "ControlArray",
   "ControlContainer",
   "ControlGroup",
-  "ControlValueAccessor:dart",
+  "ControlValueAccessor",
   "CurrencyPipe",
   "DatePipe",
   "DecimalPipe",
@@ -36,7 +36,7 @@ var NG_COMMON = [
   "FORM_BINDINGS",
   "FORM_DIRECTIVES",
   "FORM_PROVIDERS",
-  "Form:dart",
+  "Form",
   "FormBuilder",
   "I18nPluralPipe",
   "I18nSelectPipe",
@@ -65,8 +65,8 @@ var NG_COMMON = [
   "NgSwitchWhen",
   "NgSwitchDefault",
   "NumberPipe",
-  "ObservableListDiff:dart",
-  "ObservableListDiffFactory:dart",
+  "ObservableListDiff",
+  "ObservableListDiffFactory",
   "PatternValidator",
   "PercentPipe",
   "ReplacePipe",
@@ -74,7 +74,7 @@ var NG_COMMON = [
   "SelectControlValueAccessor",
   "SlicePipe",
   "UpperCasePipe",
-  "Validator:dart",
+  "Validator",
   "Validators",
   "RadioButtonState",
   "NgLocalization",
@@ -82,8 +82,8 @@ var NG_COMMON = [
   "NgPluralCase"
 ];
 var NG_COMPILER = [
-  "TemplateAst:dart",
-  "TemplateAstVisitor:dart",
+  "TemplateAst",
+  "TemplateAstVisitor",
   "DEFAULT_PACKAGE_URL_PROVIDER",
   "UrlResolver",
   "AttrAst",
@@ -133,7 +133,7 @@ var NG_COMPILER = [
 var NG_CORE = [
   "APP_INITIALIZER",
   "APP_ID",
-  "AngularEntrypoint:dart",
+  "AngularEntrypoint",
   "AbstractProviderError",
   "ApplicationRef",
   "APPLICATION_COMMON_PROVIDERS",
@@ -146,7 +146,6 @@ var NG_CORE = [
   "CollectionChangeRecord",
   "ChangeDetectionStrategy",
   "ChangeDetectorRef",
-  "Class:js",
   "ComponentResolver",
   "Component",
   "ComponentMetadata",
@@ -216,8 +215,8 @@ var NG_CORE = [
   "Renderer",
   "RootRenderer",
   "RenderComponentType",
-  "ResolvedReflectiveBinding:dart",
-  "ResolvedReflectiveProvider:dart",
+  "ResolvedReflectiveBinding",
+  "ResolvedReflectiveProvider",
   "ResolvedReflectiveFactory",
   "Self",
   "SelfMetadata",
@@ -227,19 +226,10 @@ var NG_CORE = [
   "TemplateRef",
   "Testability",
   "TestabilityRegistry",
-  "GetTestability:dart",
+  "GetTestability",
   "Type",
   "PACKAGE_ROOT_URL",
-  "View:dart",
-  /*
-  'View.directives:dart',
-  'View.encapsulation:dart',
-  'View.pipes:dart',
-  'View.styleUrls:dart',
-  'View.styles:dart',
-  'View.template:dart',
-  'View.templateUrl:dart',
-  */
+  "View",
   "ViewChild",
   "ViewChildMetadata",
   "ViewChildren",
@@ -255,50 +245,49 @@ var NG_CORE = [
   "bind",
   "provide",
   "createNgZone",
-  "forwardRef:js",
   "coreBootstrap",
   "coreLoadAndBootstrap",
   "createPlatform",
   "disposePlatform",
   "getPlatform",
   "assertPlatform",
-  "resolveForwardRef:js",
   "PLATFORM_COMMON_PROVIDERS",
   "PLATFORM_INITIALIZER",
-  "AfterContentChecked:dart",
-  "AfterContentInit:dart",
-  "AfterViewChecked:dart",
-  "AfterViewInit:dart",
-  "DoCheck:dart",
-  "IterableDifferFactory:dart",
-  "IterableDiffer:dart",
-  "KeyValueDifferFactory:dart",
-  "KeyValueDiffer:dart",
-  "OnChanges:dart",
-  "OnDestroy:dart",
-  "OnInit:dart",
-  "PipeTransform:dart",
+  "AfterContentChecked",
+  "AfterContentInit",
+  "AfterViewChecked",
+  "AfterViewInit",
+  "DoCheck",
+  "IterableDifferFactory",
+  "IterableDiffer",
+  "KeyValueDifferFactory",
+  "KeyValueDiffer",
+  "OnChanges",
+  "OnDestroy",
+  "OnInit",
+  "PipeTransform",
   "reflector",
-  "Stream:dart",
-  "GetterFn:dart",
-  "MethodFn:dart",
-  "NoReflectionCapabilities:dart",
-  "PlatformReflectionCapabilities:dart",
+  "Stream",
+  "GetterFn",
+  "MethodFn",
+  "NoReflectionCapabilities",
+  "PlatformReflectionCapabilities",
   "ReflectionInfo",
   "Reflector",
-  "SetterFn:dart",
+  "SetterFn",
   "ViewRef",
-  "TrackByFn:dart"
+  "TrackByFn",
+  "noValueProvided",
 ];
 var NG_INSTRUMENTATION = [
   "wtfCreateScope",
   "wtfEndTimeRange",
   "wtfLeave",
-  "WtfScopeFn:dart",
+  "WtfScopeFn",
   "wtfStartTimeRange"
 ];
 var NG_PLATFORM_BROWSER = [
-  "AngularEntrypoint:dart",
+  "AngularEntrypoint",
   "BROWSER_APP_PROVIDERS",
   "BROWSER_PROVIDERS",
   "BROWSER_SANITIZATION_PROVIDERS",
@@ -324,85 +313,45 @@ var NG_PLATFORM_COMMON = [
   "LocationStrategy",
   "PathLocationStrategy",
   "PlatformLocation",
-  "UrlChangeEvent:dart",
-  "UrlChangeListener:dart"
+  "UrlChangeEvent",
+  "UrlChangeListener"
 ];
-var NG_UPGRADE = ["UpgradeAdapter", "UpgradeAdapterRef"];
 var NG_API = {
-  "ngCommon": NG_COMMON,
-  "ngCompiler": NG_COMPILER,
-  "ngCore": NG_CORE,
-  "ngInstrumentation": NG_INSTRUMENTATION,
-  "ngPlatformBrowser": NG_PLATFORM_BROWSER,
-  "ngPlatformCommon": NG_PLATFORM_COMMON,
-  "ngUpgrade": NG_UPGRADE
+  commonLib: NG_COMMON,
+  compilerLib: NG_COMPILER,
+  coreLib: NG_CORE,
+  instrumentationLib: NG_INSTRUMENTATION,
+  platformBrowserLib: NG_PLATFORM_BROWSER,
+  platformCommonLib: NG_PLATFORM_COMMON,
 };
 
 main() {
-  /**
-   var x = getSymbolsFromLibrary('ng');
-   x.sort();
-   var parts = [];
-   x.forEach((i) => parts.push(`'${i'`));
-  print(`[ ${parts.join(',
-  ')} ]`);
-   */
-  group("public API", () {
-    var barrelList = [
-      "ngCommon",
-      "ngCompiler",
-      "ngCore",
-      "ngInstrumentation",
-      "ngPlatformBrowser",
-      "ngPlatformCommon",
-      "ngUpgrade"
+  group('Public API check', () {
+    var publicLibraries = [
+      commonLib,
+      compilerLib,
+      coreLib,
+      instrumentationLib,
+      platformBrowserLib,
+      platformCommonLib,
     ];
-    if (IS_DART) {
-      barrelList = barrelList.where((b) => !identical(b, "ngUpgrade")).toList();
-    }
-    barrelList.forEach((mod) {
-      // Dom Events are merged into DomAdapter in Dart
-      if (IS_DART && identical(mod, "ngPlatformDomEvent")) return;
-      test('''should fail if public API for ${ mod} has changed''', () {
-        var symbols = getSymbolsFromLibrary(mod);
-        expect(diff(symbols, NG_API[mod]), []);
+    for (var lib in publicLibraries) {
+      test('for ${lib} should fail when it changes unexpectedly', () {
+        var symbols = getSymbolsFromLibrary(lib);
+        expect(diff(symbols, NG_API[lib]), []);
       });
-    });
+    }
   });
 }
 
 List<String> diff(List<String> actual, List<String> expected) {
-  actual.sort(compareIgnoreLang);
-  expected.sort(compareIgnoreLang);
-  var mode = IS_DART ? "dart" : "js";
+  actual.sort(StringWrapper.compare);
+  expected.sort(StringWrapper.compare);
   var missing = actual
-      .where((i) =>
-          expected.indexOf(i) < 0 && expected.indexOf('''${ i}:${ mode}''') < 0)
-      .toList()
-      .map((s) => '''+${ s}''')
-      .toList();
+      .where((i) => expected.indexOf(i) < 0)
+      .map((s) => '''+${ s}''');
   var extra = expected
-      .where(
-          (i) => shouldIgnore(i) ? false : (actual.indexOf(stripLang(i)) < 0))
-      .toList()
-      .map((s) => '''-${ s}''')
-      .toList();
+      .where((i) => actual.indexOf(i) < 0)
+      .map((s) => '''-${ s}''');
   return <String>[]..addAll(missing)..addAll(extra);
-}
-
-bool shouldIgnore(String expected) {
-  var isDart = RegExpWrapper.create("\\:dart\$");
-  var isJs = RegExpWrapper.create("\\:js\$");
-  return IS_DART
-      ? RegExpWrapper.test(isJs, expected)
-      : RegExpWrapper.test(isDart, expected);
-}
-
-int compareIgnoreLang(String a, String b) {
-  return StringWrapper.compare(stripLang(a), stripLang(b));
-}
-
-String stripLang(String text) {
-  var index = text.indexOf(":");
-  return (index >= 0) ? text.substring(0, index) : text;
 }

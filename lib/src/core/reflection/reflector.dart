@@ -1,5 +1,3 @@
-library angular2.src.core.reflection.reflector;
-
 import "package:angular2/src/facade/collection.dart"
     show Map, MapWrapper, Set, SetWrapper, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;

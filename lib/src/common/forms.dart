@@ -11,7 +11,6 @@
  * explicitly.
  *
  */
-library angular2.src.common.forms;
 
 import "package:angular2/src/facade/lang.dart" show Type;
 

@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.control_value_accessor;
-
 import "package:angular2/core.dart" show OpaqueToken;
 
 /**

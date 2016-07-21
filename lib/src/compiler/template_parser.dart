@@ -1,5 +1,3 @@
-library angular2.src.compiler.template_parser;
-
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, Optional;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"

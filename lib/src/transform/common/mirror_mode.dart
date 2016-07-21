@@ -1,5 +1,3 @@
-library angular2.transform.common.mirror_mode;
-
 /// Modes for mirror use.
 /// `none` is the default value and signifies that mirror use should be
 /// removed.

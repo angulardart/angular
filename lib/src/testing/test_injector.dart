@@ -1,5 +1,3 @@
-library angular2.src.testing.test_injector;
-
 import "package:angular2/core.dart"
     show ReflectiveInjector, PLATFORM_INITIALIZER;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;

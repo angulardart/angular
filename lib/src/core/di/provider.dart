@@ -1,5 +1,3 @@
-library angular2.src.core.di.provider;
-
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show normalizeBool, Type, isType, isBlank, isFunction, stringify;

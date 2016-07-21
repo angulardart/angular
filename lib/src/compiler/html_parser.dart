@@ -1,5 +1,3 @@
-library angular2.src.compiler.html_parser;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;

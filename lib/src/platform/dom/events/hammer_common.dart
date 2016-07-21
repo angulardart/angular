@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.events.hammer_common;
-
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 
 import "event_manager.dart" show EventManagerPlugin;

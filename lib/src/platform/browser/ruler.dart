@@ -1,5 +1,3 @@
-library angular2.src.platform.browser.ruler;
-
 import "dart:async";
 
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;

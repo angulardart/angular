@@ -1,5 +1,3 @@
-library angular2.src.compiler.static_reflector;
-
 import "package:angular2/src/core/metadata.dart"
     show
         AttributeMetadata,

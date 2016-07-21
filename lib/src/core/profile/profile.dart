@@ -1,5 +1,3 @@
-library angular2.src.core.profile.profile;
-
 import "wtf_impl.dart" as impl;
 
 export "wtf_impl.dart" show WtfScopeFn;

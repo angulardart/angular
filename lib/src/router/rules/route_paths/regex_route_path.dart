@@ -1,5 +1,3 @@
-library angular2.src.router.rules.route_paths.regex_route_path;
-
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, RegExpMatcherWrapper, isBlank;
 

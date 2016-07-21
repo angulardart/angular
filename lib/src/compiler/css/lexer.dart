@@ -1,5 +1,3 @@
-library angular2.src.compiler.css.lexer;
-
 import "package:angular2/src/compiler/chars.dart"
     show
         isWhitespace,

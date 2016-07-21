@@ -1,5 +1,3 @@
-library angular2.src.router.lifecycle.lifecycle_annotations_impl;
-
 class RouteLifecycleHook {
   final String name;
   const RouteLifecycleHook(this.name);

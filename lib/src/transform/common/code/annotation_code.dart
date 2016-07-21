@@ -1,5 +1,3 @@
-library angular2.transform.common.code.annotation_code;
-
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/src/generated/ast.dart';
 import 'package:angular2/src/transform/common/model/annotation_model.pb.dart';

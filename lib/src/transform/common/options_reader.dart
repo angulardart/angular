@@ -1,5 +1,3 @@
-library angular2.transform.common.options_reader;
-
 import 'dart:io';
 
 import 'package:barback/barback.dart';

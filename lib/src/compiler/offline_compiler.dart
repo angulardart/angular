@@ -1,5 +1,3 @@
-library angular2.src.compiler.offline_compiler;
-
 import "dart:async";
 
 import "package:angular2/src/core/linker/component_factory.dart"

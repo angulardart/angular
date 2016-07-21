@@ -1,5 +1,3 @@
-library angular2.src.core.linker.injector_factory;
-
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank;
 

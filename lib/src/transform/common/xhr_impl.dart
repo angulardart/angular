@@ -1,5 +1,3 @@
-library angular2.transform.template_compiler.xhr_impl;
-
 import 'dart:async';
 
 import 'package:angular2/src/compiler/xhr.dart' show XHR;

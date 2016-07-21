@@ -1,5 +1,3 @@
-library angular2.src.common.pipes.number_pipe;
-
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/intl.dart"

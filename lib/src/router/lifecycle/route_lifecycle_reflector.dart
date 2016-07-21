@@ -1,5 +1,3 @@
-library angular.router.route_lifecycle_reflector;
-
 import 'package:angular2/src/router/interfaces.dart';
 import 'package:angular2/src/router/lifecycle/lifecycle_annotations_impl.dart';
 

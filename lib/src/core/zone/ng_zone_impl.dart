@@ -1,5 +1,3 @@
-library angular.zone;
-
 import 'dart:async';
 
 import 'package:stack_trace/stack_trace.dart' show Chain;

@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.debug.by;
-
 import "package:angular2/core.dart" show DebugElement;
 import "package:angular2/src/facade/collection.dart" show Predicate;
 import "package:angular2/src/facade/lang.dart" show Type, isPresent;

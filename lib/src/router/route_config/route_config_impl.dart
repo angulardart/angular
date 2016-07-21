@@ -1,5 +1,3 @@
-library angular2.src.router.route_config.route_config_impl;
-
 import "dart:async";
 
 import "../route_definition.dart" show RouteDefinition;

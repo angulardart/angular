@@ -1,5 +1,3 @@
-library angular2.src.core.linker.view_container_ref;
-
 import "package:angular2/src/core/di/injector.dart" show Injector;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;

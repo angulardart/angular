@@ -1,5 +1,3 @@
-library angular2.src.core.console;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart" show print, warn;
 // Note: Need to rename warn as in Dart

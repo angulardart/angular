@@ -1,5 +1,3 @@
-library angular2.src.web_workers.debug_tools.single_client_server_message_bus;
-
 import 'dart:convert' show JSON;
 import 'dart:io';
 

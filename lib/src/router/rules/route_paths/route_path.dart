@@ -1,5 +1,3 @@
-library angular2.src.router.rules.route_paths.route_path;
-
 import "../../url_parser.dart" show Url;
 
 class MatchedUrl {

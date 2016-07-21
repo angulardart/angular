@@ -1,5 +1,3 @@
-library angular2.src.web_workers.shared.client_message_broker;
-
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable;

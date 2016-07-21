@@ -1,5 +1,3 @@
-library angular2.src.core.linker.exceptions;
-
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, WrappedException;
 

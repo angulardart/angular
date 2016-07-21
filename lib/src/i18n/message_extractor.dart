@@ -1,5 +1,3 @@
-library angular2.src.i18n.message_extractor;
-
 import "package:angular2/src/compiler/expression_parser/parser.dart"
     show Parser;
 import "package:angular2/src/compiler/html_ast.dart"

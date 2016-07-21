@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives;
-
 import "package:angular2/src/facade/lang.dart" show Type;
 
 import "directives/checkbox_value_accessor.dart"

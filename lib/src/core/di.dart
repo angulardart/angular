@@ -1,5 +1,4 @@
 /// A dependency injection container.
-library angular2.src.core.di;
 
 export "di/metadata.dart"
     show

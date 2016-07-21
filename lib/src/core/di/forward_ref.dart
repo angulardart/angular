@@ -1,5 +1,3 @@
-library angular2.di.forward_ref;
-
 typedef dynamic ForwardRefFn();
 
 /**

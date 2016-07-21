@@ -1,5 +1,3 @@
-library angular2.src.compiler.style_compiler;
-
 import "package:angular2/src/compiler/shadow_css.dart" show ShadowCss;
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/core/di.dart" show Injectable;

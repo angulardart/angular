@@ -1,5 +1,3 @@
-library angular.core.facade.lang;
-
 import 'dart:async' show Future, Zone;
 import 'dart:convert' as convert;
 import 'dart:math' as math;

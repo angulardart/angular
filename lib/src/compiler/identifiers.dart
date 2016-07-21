@@ -1,5 +1,3 @@
-library angular2.src.compiler.identifiers;
-
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show
         uninitialized,

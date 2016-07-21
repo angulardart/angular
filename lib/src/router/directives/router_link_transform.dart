@@ -1,5 +1,3 @@
-library angular2.src.router.directives.router_link_transform;
-
 import "package:angular2/compiler.dart"
     show
         TemplateAstVisitor,

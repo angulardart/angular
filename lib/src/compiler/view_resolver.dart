@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_resolver;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/directives.dart"
     show ComponentMetadata;

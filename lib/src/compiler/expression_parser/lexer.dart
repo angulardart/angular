@@ -1,5 +1,3 @@
-library angular2.src.compiler.expression_parser.lexer;
-
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;

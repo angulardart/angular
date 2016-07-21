@@ -1,5 +1,3 @@
-library angular2.src.router.instruction;
-
 import "dart:async";
 
 /// Immutable map of parameters for the given route

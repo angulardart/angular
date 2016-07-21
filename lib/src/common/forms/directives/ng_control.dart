@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.ng_control;
-
 import "abstract_control_directive.dart" show AbstractControlDirective;
 import "control_value_accessor.dart" show ControlValueAccessor;
 import "validators.dart" show AsyncValidatorFn, ValidatorFn;

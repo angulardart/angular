@@ -1,5 +1,3 @@
-library testing.fake_async;
-
 import 'dart:async' show runZoned, ZoneSpecification;
 
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;

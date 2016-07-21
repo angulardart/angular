@@ -1,5 +1,3 @@
-library angular2.src.compiler.output.output_jit;
-
 import "package:angular2/src/facade/lang.dart" show isPresent, evalExpression;
 
 import "../util.dart" show sanitizeIdentifier;

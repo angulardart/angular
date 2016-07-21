@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.events.event_manager;
-
 import "package:angular2/src/core/di.dart" show Injectable, Inject, OpaqueToken;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;

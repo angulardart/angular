@@ -1,5 +1,3 @@
-library angular2.core.facade.promise;
-
 import 'dart:async';
 import 'dart:async' as async;
 

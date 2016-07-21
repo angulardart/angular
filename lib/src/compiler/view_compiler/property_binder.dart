@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.property_binder;
-
 import "package:angular2/src/core/change_detection/constants.dart"
     show isDefaultChangeDetectionStrategy;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"

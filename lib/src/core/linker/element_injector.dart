@@ -1,5 +1,3 @@
-library angular2.src.core.linker.element_injector;
-
 import "package:angular2/src/core/di/injector.dart"
     show Injector, THROW_IF_NOT_FOUND;
 

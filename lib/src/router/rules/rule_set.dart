@@ -1,5 +1,3 @@
-library angular2.src.router.rules.rule_set;
-
 import "dart:async";
 
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;

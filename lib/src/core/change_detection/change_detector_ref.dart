@@ -1,5 +1,3 @@
-library angular2.src.core.change_detection.change_detector_ref;
-
 abstract class ChangeDetectorRef {
   /**
    * Marks all [ChangeDetectionStrategy#OnPush] ancestors as to be checked.

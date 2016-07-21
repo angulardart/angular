@@ -1,5 +1,3 @@
-library angular2.transform.directive_metadata_linker.transformer;
-
 import 'dart:async';
 import 'dart:convert';
 

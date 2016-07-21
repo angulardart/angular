@@ -1,5 +1,3 @@
-library angular2.src.web_workers.ui.event_dispatcher;
-
 import "package:angular2/src/facade/async.dart"
     show EventEmitter, ObservableWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;

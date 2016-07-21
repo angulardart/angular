@@ -1,5 +1,3 @@
-library angular2.src.core.linker.view_type;
-
 enum ViewType {
   // A view that contains the host element with bound component directive.
 

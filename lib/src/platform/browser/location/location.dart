@@ -1,5 +1,3 @@
-library angular2.src.platform.browser.location.location;
-
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/src/facade/async.dart"
     show EventEmitter, ObservableWrapper;

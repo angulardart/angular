@@ -1,5 +1,3 @@
-library angular2.src.platform.worker_render;
-
 import 'dart:async';
 import 'dart:isolate';
 

@@ -1,5 +1,3 @@
-library angular2.src.core.linker.view_utils;
-
 import "package:angular2/src/core/application_tokens.dart" show APP_ID;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show devModeEqual, uninitialized;

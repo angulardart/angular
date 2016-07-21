@@ -3,7 +3,6 @@
  * 
  * This module provides a set of common Pipes.
  */
-library angular2.src.common.pipes.common_pipes;
 
 import "async_pipe.dart" show AsyncPipe;
 import "date_pipe.dart" show DatePipe;

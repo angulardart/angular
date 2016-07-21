@@ -1,5 +1,3 @@
-library angular2.transform.deferred_rewriter.rewriter;
-
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';

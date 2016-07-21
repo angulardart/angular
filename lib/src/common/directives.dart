@@ -3,7 +3,6 @@
  * 
  * Common directives shipped with Angular.
  */
-library angular2.src.common.directives;
 
 export "directives/core_directives.dart" show CORE_DIRECTIVES;
 export "directives/ng_class.dart" show NgClass;

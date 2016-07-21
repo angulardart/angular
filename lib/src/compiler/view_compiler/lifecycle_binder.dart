@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.lifecycle_binder;
-
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
 

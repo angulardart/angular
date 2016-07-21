@@ -1,5 +1,3 @@
-library angular2.src.core.angular_entrypoint;
-
 /**
  * Marks a function or method as an Angular 2 entrypoint. Only necessary in Dart code.
  *

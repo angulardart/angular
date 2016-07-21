@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.dom_renderer;
-
 import "package:angular2/src/animate/animation_builder.dart"
     show AnimationBuilder;
 import "package:angular2/src/core/di.dart" show Inject, Injectable;

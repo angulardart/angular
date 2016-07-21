@@ -1,5 +1,3 @@
-library angular2.src.i18n.message;
-
 import "package:angular2/src/facade/lang.dart" show isPresent, escape;
 
 /**

@@ -1,5 +1,3 @@
-library angular2.src.common.directives.core_directives;
-
 import "package:angular2/src/facade/lang.dart" show Type;
 
 import "ng_class.dart" show NgClass;

@@ -1,5 +1,3 @@
-library angular2.transform.stylesheet_compiler.processor;
-
 import 'dart:async';
 
 import 'package:angular2/src/compiler/offline_compiler.dart';

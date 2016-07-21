@@ -1,5 +1,3 @@
-library facade.collection;
-
 import 'dart:collection' show IterableBase;
 import 'dart:convert' show JsonEncoder;
 import 'dart:math' show max, min;

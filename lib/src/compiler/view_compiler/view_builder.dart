@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.view_builder;
-
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;

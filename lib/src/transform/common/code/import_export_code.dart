@@ -1,5 +1,3 @@
-library angular2.transform.common.code.import_export_code;
-
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/transform/common/mirror_matcher.dart';
 import 'package:angular2/src/transform/common/model/import_export_model.pb.dart';

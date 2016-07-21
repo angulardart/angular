@@ -1,5 +1,3 @@
-library angular2.src.core.linker.component_factory;
-
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;

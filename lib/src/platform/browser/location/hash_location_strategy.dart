@@ -1,5 +1,3 @@
-library angular2.src.platform.browser.location.hash_location_strategy;
-
 import "package:angular2/core.dart" show Injectable, Inject, Optional;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 

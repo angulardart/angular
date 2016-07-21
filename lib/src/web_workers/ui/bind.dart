@@ -1,5 +1,3 @@
-library angular2.src.web_workers.ui.bind;
-
 /**
  * Binding is not necessary in dart.
  * This method just returns the passed function regardless of scope.

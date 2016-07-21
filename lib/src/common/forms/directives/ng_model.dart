@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.ng_model;
-
 import "package:angular2/core.dart"
     show OnChanges, SimpleChange, Directive, Provider, Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart"

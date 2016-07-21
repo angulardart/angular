@@ -1,5 +1,3 @@
-library angular2.src.core.compiler.query_list;
-
 import 'dart:collection';
 
 import 'package:angular2/src/facade/async.dart';

@@ -1,5 +1,3 @@
-library angular2.src.compiler.output.output_interpreter;
-
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;

@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.default_value_accessor;
-
 import "package:angular2/core.dart"
     show Directive, ElementRef, Renderer, Provider;
 import "package:angular2/src/facade/lang.dart" show isBlank;

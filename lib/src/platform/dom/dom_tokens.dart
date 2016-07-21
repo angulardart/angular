@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.dom_tokens;
-
 import "package:angular2/src/core/di.dart" show OpaqueToken;
 
 /**

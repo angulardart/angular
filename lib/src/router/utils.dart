@@ -1,5 +1,3 @@
-library angular2.src.router.utils;
-
 import "package:angular2/core.dart" show ComponentFactory;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;

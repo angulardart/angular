@@ -1,5 +1,3 @@
-library angular2.src.testing.internal;
-
 import 'dart:async';
 
 import 'package:angular2/core.dart' show PLATFORM_INITIALIZER;

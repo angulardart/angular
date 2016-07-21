@@ -1,5 +1,3 @@
-library angular2.src.core.linker.debug_context;
-
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 import "package:angular2/src/facade/collection.dart"

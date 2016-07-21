@@ -1,5 +1,3 @@
-library angular.core.facade.dom;
-
 import 'dart:html';
 import 'package:angular2/platform/common_dom.dart' show setRootDomAdapter;
 import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;

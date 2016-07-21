@@ -1,5 +1,3 @@
-library angular2.src.compiler.css.parser;
-
 import "package:angular2/src/compiler/css/lexer.dart"
     show
         CssLexerMode,

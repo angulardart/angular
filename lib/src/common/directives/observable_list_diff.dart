@@ -1,5 +1,3 @@
-library angular2.directives.observable_list_iterable_diff;
-
 import 'dart:async';
 
 import 'package:angular2/core.dart';

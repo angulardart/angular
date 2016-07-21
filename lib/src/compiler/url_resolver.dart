@@ -1,5 +1,3 @@
-library angular2.src.services.url_resolver;
-
 import 'package:angular2/src/core/application_tokens.dart'
     show PACKAGE_ROOT_URL;
 import 'package:angular2/src/core/di.dart' show Injectable, Inject, Provider;

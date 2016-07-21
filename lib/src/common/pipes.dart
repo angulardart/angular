@@ -3,7 +3,6 @@
  * 
  * This module provides a set of common Pipes.
  */
-library angular2.src.common.pipes;
 
 export "pipes/async_pipe.dart" show AsyncPipe;
 export "pipes/common_pipes.dart" show COMMON_PIPES;

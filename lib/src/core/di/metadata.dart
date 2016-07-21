@@ -1,5 +1,3 @@
-library angular2.src.core.di.metadata;
-
 import "package:angular2/src/facade/lang.dart" show stringify;
 
 /**

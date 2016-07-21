@@ -1,5 +1,4 @@
 // Public API for compiler
-library angular2.src.core.linker;
 
 export "linker/component_factory.dart" show ComponentRef, ComponentFactory;
 export "linker/component_resolver.dart" show ComponentResolver;

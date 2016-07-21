@@ -1,5 +1,3 @@
-library angular2.src.core.application_ref;
-
 import "dart:async";
 
 import "package:angular2/src/core/change_detection/change_detector_ref.dart"

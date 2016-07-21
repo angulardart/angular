@@ -1,5 +1,3 @@
-library angular2.src.platform.browser.location.location_strategy;
-
 import "package:angular2/core.dart" show OpaqueToken;
 
 import "platform_location.dart" show UrlChangeListener;

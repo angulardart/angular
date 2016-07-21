@@ -1,5 +1,3 @@
-library angular2.transform.directive_processor.transformer;
-
 import 'dart:async';
 import 'dart:convert';
 

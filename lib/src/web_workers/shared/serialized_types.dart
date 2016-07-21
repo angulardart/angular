@@ -1,7 +1,6 @@
 // This file contains interface versions of browser types that can be serialized to Plain Old
 
 // JavaScript Objects
-library angular2.src.web_workers.shared.serialized_types;
 
 class LocationType {
   String href;

@@ -1,5 +1,3 @@
-library angular2.src.compiler.schema.dom_element_schema_registry;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/security.dart";
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;

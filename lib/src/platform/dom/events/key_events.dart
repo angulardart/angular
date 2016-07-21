@@ -1,5 +1,3 @@
-library angular2.src.platform.dom.events.key_events;
-
 import "dart:html";
 
 import "package:angular2/src/core/di.dart" show Injectable;

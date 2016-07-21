@@ -4,7 +4,6 @@
  * An interface for retrieving documents by URL that the compiler uses
  * to load templates.
  */
-library angular2.src.compiler.xhr;
 
 import "dart:async";
 

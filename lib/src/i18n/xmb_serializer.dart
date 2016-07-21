@@ -1,5 +1,3 @@
-library angular2.src.i18n.xmb_serializer;
-
 import "package:angular2/src/compiler/html_ast.dart"
     show HtmlAst, HtmlElementAst;
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;

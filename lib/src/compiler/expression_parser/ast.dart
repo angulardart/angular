@@ -1,5 +1,3 @@
-library angular2.src.compiler.expression_parser.ast;
-
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 
 class AST {

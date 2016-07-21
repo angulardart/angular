@@ -1,5 +1,3 @@
-library angular2.src.compiler.runtime_metadata;
-
 import "package:angular2/src/compiler/url_resolver.dart" show getUrlScheme;
 import "package:angular2/src/core/di.dart" show resolveForwardRef;
 import "package:angular2/src/core/di.dart" show Injectable, Inject, Optional;

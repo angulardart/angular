@@ -1,5 +1,3 @@
-library angular2.src.compiler.template_preparser;
-
 import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "html_ast.dart" show HtmlElementAst;

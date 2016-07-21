@@ -1,5 +1,3 @@
-library angular2.src.animate.css_animation_options;
-
 class CssAnimationOptions {
   /** initial styles for the element */
   Map<String, dynamic> fromStyles;

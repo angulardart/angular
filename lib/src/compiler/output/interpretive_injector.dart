@@ -1,5 +1,3 @@
-library angular2.src.compiler.output.interpretive_injector;
-
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;

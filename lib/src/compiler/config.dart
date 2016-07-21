@@ -1,5 +1,3 @@
-library angular2.src.compiler.config;
-
 import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "compile_metadata.dart" show CompileIdentifierMetadata;

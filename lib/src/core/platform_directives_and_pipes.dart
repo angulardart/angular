@@ -1,5 +1,3 @@
-library angular2.src.core.platform_directives_and_pipes;
-
 import "package:angular2/src/core/di.dart" show OpaqueToken;
 
 /**

@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.shared;
-
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;

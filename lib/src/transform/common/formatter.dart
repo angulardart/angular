@@ -1,5 +1,3 @@
-library angular2.transform.common.formatter;
-
 import 'package:dart_style/dart_style.dart';
 
 AngularDartFormatter _formatter = null;

@@ -1,5 +1,3 @@
-library angular2.src.compiler.directive_resolver;
-
 import "package:angular2/src/core/di.dart" show resolveForwardRef, Injectable;
 import "package:angular2/src/core/metadata.dart"
     show

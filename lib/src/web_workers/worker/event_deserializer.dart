@@ -1,5 +1,3 @@
-library angular2.src.web_workers.worker.event_deserializer;
-
 class GenericEvent {
   Map<String, dynamic> properties;
   EventTarget _target = null;

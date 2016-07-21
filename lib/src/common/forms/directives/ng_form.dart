@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.ng_form;
-
 import "package:angular2/core.dart"
     show Directive, Provider, Optional, Inject, Self;
 import "package:angular2/src/facade/async.dart"

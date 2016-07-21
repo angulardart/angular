@@ -1,5 +1,3 @@
-library angular2.transform.common.code.reflection_info_code;
-
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/logging.dart';

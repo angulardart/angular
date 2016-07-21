@@ -1,5 +1,3 @@
-library angular2.transform.common.code.constify;
-
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/src/generated/java_core.dart';
 

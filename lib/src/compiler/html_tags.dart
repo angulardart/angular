@@ -1,5 +1,3 @@
-library angular2.src.compiler.html_tags;
-
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, normalizeBool, RegExpWrapper;
 // see http://www.w3.org/TR/html51/syntax.html#named-character-references

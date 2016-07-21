@@ -1,5 +1,3 @@
-library angular2.src.web_workers.worker.router_providers;
-
 import "dart:async";
 
 import "package:angular2/core.dart" show Provider, NgZone, APP_INITIALIZER;

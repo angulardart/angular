@@ -1,5 +1,3 @@
-library angular2.src.compiler.schema.element_schema_registry;
-
 import "package:angular2/src/core/security.dart";
 
 abstract class ElementSchemaRegistry {

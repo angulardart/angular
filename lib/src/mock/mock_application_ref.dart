@@ -1,5 +1,3 @@
-library angular2.src.mock.mock_application_ref;
-
 import "dart:async";
 
 import "package:angular2/src/core/application_ref.dart" show ApplicationRef;

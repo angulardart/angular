@@ -1,5 +1,3 @@
-library angular2.src.common.forms.directives.control_container;
-
 import "abstract_control_directive.dart" show AbstractControlDirective;
 import "form_interface.dart" show Form;
 

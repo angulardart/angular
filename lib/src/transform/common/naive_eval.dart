@@ -1,5 +1,3 @@
-library angular2.transform.common.naive_eval;
-
 import 'package:analyzer/analyzer.dart';
 
 final _constantEvaluator = new ConstantEvaluator();

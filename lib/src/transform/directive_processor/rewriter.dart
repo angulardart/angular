@@ -1,5 +1,3 @@
-library angular2.transform.directive_processor.rewriter;
-
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';

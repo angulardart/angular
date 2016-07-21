@@ -1,5 +1,3 @@
-library angular2.src.compiler.directive_normalizer;
-
 import "dart:async";
 
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;

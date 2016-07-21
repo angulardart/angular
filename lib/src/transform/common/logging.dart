@@ -1,5 +1,3 @@
-library angular2.src.transform.common.logging;
-
 import 'dart:async';
 import 'dart:io' show stderr;
 

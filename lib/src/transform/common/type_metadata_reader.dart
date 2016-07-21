@@ -1,5 +1,3 @@
-library angular2.transform.common.type_metadata_reader;
-
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';

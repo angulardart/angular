@@ -1,5 +1,3 @@
-library angular2.transform.common.async_string_writer;
-
 import 'dart:async';
 
 import 'package:analyzer/src/generated/java_core.dart';

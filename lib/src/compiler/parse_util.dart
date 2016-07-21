@@ -1,5 +1,3 @@
-library angular2.src.compiler.parse_util;
-
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 class ParseLocation {

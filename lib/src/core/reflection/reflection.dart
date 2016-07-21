@@ -1,5 +1,3 @@
-library reflection.reflection;
-
 import 'package:angular2/src/facade/lang.dart';
 
 import 'platform_reflection_capabilities.dart';

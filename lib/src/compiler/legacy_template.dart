@@ -1,5 +1,3 @@
-library angular2.src.compiler.legacy_template;
-
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
     show StringWrapper, RegExpWrapper, isPresent;

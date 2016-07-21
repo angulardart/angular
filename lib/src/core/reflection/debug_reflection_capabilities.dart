@@ -1,5 +1,3 @@
-library reflection.debug_reflection_capabilities;
-
 import 'dart:mirrors';
 
 import 'package:logging/logging.dart' as log;

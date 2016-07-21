@@ -1,5 +1,3 @@
-library angular2.src.router.router_providers;
-
 import "package:angular2/core.dart" show Provider;
 import "package:angular2/platform/common.dart" show PlatformLocation;
 import "package:angular2/src/platform/browser/location/browser_platform_location.dart"

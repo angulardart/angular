@@ -1,5 +1,3 @@
-library angular2.src.transform.inliner_for_test.transformer;
-
 import 'dart:async';
 import 'dart:convert' show LineSplitter;
 

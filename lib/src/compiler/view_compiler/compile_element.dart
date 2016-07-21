@@ -1,5 +1,3 @@
-library angular2.src.compiler.view_compiler.compile_element;
-
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;

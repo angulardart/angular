@@ -1,5 +1,3 @@
-library angular2.src.web_workers.worker.web_socket_message_bus;
-
 import 'dart:convert' show JSON;
 import 'dart:html';
 

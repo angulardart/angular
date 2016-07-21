@@ -1,5 +1,3 @@
-library angular2.src.core.render.api;
-
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 

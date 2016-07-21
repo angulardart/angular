@@ -1,5 +1,3 @@
-library angular2.src.services.xhr_cache;
-
 import 'dart:async' show Future;
 import 'dart:html';
 import 'dart:js' as js;

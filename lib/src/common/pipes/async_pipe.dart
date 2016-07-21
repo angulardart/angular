@@ -1,5 +1,3 @@
-library angular2.src.common.pipes.async_pipe;
-
 import "dart:async";
 
 import "package:angular2/core.dart"

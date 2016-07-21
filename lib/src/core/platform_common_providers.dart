@@ -1,5 +1,3 @@
-library angular2.src.core.platform_common_providers;
-
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/testability/testability.dart"

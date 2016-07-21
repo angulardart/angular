@@ -1,5 +1,3 @@
-library angular2.src.common.directives.ng_template_outlet;
-
 import "package:angular2/core.dart"
     show Directive, Input, ViewContainerRef, ViewRef, TemplateRef;
 import "package:angular2/src/facade/lang.dart" show isPresent;

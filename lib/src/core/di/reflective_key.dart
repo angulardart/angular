@@ -1,5 +1,3 @@
-library angular2.src.core.di.reflective_key;
-
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
 

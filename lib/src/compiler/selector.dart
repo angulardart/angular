@@ -1,5 +1,3 @@
-library angular2.src.compiler.selector;
-
 import "package:angular2/src/facade/collection.dart" show Map, ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"

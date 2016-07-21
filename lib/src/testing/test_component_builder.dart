@@ -1,5 +1,3 @@
-library angular2.src.testing.test_component_builder;
-
 import "dart:async";
 
 import "package:angular2/compiler.dart" show DirectiveResolver, ViewResolver;
