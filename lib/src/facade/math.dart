@@ -1,3 +1,6 @@
+@deprecated('Use dart:math instead.')
+library angular.core.facade.math;
+
 import 'dart:core' show double, num;
 import 'dart:math' as math;
 

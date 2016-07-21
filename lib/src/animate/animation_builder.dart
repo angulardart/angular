@@ -6,16 +6,10 @@ import "css_animation_builder.dart" show CssAnimationBuilder;
 @Injectable()
 class AnimationBuilder {
   BrowserDetails browserDetails;
-  /**
-   * Used for DI
-   * 
-   */
-  AnimationBuilder(this.browserDetails) {}
-  /**
-   * Creates a new CSS Animation
-   * 
-   */
-  CssAnimationBuilder css() {
-    return new CssAnimationBuilder(this.browserDetails);
-  }
+
+  /// Used for DI
+  AnimationBuilder(this.browserDetails);
+
+  /// Creates a new CSS Animation
+  CssAnimationBuilder css() => new CssAnimationBuilder(browserDetails);
 }
