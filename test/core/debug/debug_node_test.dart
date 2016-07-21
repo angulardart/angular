@@ -66,6 +66,24 @@ class ParentComp {
   }
 }
 
+@Component(
+    selector: "parent-comp2",
+    viewProviders: const [Logger],
+    template: '''<div class="parent" message="parent">
+               <span class="parentnested" message="nestedparent">Parent</span>
+             </div>
+             <span class="parent" [innerHtml]="parentBinding"></span>
+             <child-comp class="child-comp-class"></child-comp>''',
+    directives: const [ChildComp, MessageDir],
+    preserveWhitespace: true)
+@Injectable()
+class ParentComp2 {
+  String parentBinding;
+  ParentComp2() {
+    this.parentBinding = "OriginalParent";
+  }
+}
+
 @Directive(selector: "custom-emitter", outputs: const ["myevent"])
 @Injectable()
 class CustomEmitter {
@@ -180,7 +198,18 @@ main() {
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb.createAsync(ParentComp).then((fixture) {
           fixture.detectChanges();
-          // The root component has 3 elements and 2 text node children.
+          // The root component has 3 elements and no text node children.
+          expect(fixture.debugElement.childNodes.length, 3);
+          completer.done();
+        });
+      });
+    });
+    test("should list all child nodes including whitespace", () async {
+      return inject([TestComponentBuilder, AsyncTestCompleter],
+          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
+        tcb.createAsync(ParentComp2).then((fixture) {
+          fixture.detectChanges();
+          // The root component has 3 elements and no text node children.
           expect(fixture.debugElement.childNodes.length, 5);
           completer.done();
         });

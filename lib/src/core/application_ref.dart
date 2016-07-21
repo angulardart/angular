@@ -4,13 +4,13 @@ import "package:angular2/src/core/change_detection/change_detector_ref.dart"
     show ChangeDetectorRef;
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/di.dart" show Provider, Injector, Injectable;
+import "package:angular2/src/core/linker/view_utils.dart" show ViewUtils;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
-import "package:angular2/src/core/linker/view_utils.dart" show ViewUtils;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry, Testability;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
@@ -53,7 +53,7 @@ PlatformRef_ createPlatform(Injector injector) {
   } finally {
     _inPlatformCreate = false;
   }
-  return _platform as PlatformRef_;
+  return _platform;
 }
 
 /**

@@ -162,9 +162,7 @@ class StaticReflector {
     conversionMap[this.getStaticType(core_metadata, "Component")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0);
-      if (!isPresent(p0)) {
-        p0 = {};
-      }
+      p0 ??= {};
       return new ComponentMetadata(
           selector: p0["selector"],
           inputs: p0["inputs"] as List<String>,
@@ -182,6 +180,7 @@ class StaticReflector {
           queries: p0["queries"] as Map<String, dynamic>,
           templateUrl: p0["templateUrl"],
           template: p0["template"],
+          preserveWhitespace: p0["preserveWhitespace"] ?? false,
           styleUrls: p0["styleUrls"] as List<String>,
           styles: p0["styles"] as List<String>,
           directives: p0["directives"],

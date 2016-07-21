@@ -36,6 +36,7 @@ class MockDirectiveResolver extends DirectiveResolver {
           moduleId: dm.moduleId,
           queries: dm.queries,
           changeDetection: dm.changeDetection,
+          preserveWhitespace: dm.preserveWhitespace,
           providers: providers,
           viewProviders: viewProviders);
     }

@@ -173,7 +173,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: viewEncapsulation, styles: [], styleUrls: []),
             "",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.encapsulation, viewEncapsulation);
       });
     });
@@ -184,7 +185,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "a",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.template, "a");
       });
     });
@@ -195,7 +197,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<ng-content select=\"a\"></ng-content>",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.ngContentSelectors, ["a"]);
       });
     });
@@ -207,7 +210,8 @@ main() {
                 encapsulation: null, styles: [], styleUrls: []),
             '<ng-content></ng-content><ng-content select></ng-content>'
             '<ng-content select="*"></ng-content>',
-            'package:some/module/');
+            'package:some/module/',
+            true);
         expect(template.ngContentSelectors, ["*", "*", "*"]);
       });
     });
@@ -218,7 +222,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<style>a</style>",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.styles, ["a"]);
       });
     });
@@ -229,7 +234,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<div><style>a</style></div>",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.styles, ["a"]);
       });
     });
@@ -240,7 +246,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<link rel=\"stylesheet\" href=\"aUrl\">",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.styleUrls, ["package:some/module/aUrl"]);
       });
     });
@@ -251,7 +258,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<div><link rel=\"stylesheet\" href=\"aUrl\"></div>",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.styleUrls, ["package:some/module/aUrl"]);
       });
     });
@@ -263,7 +271,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<link href=\"b\" rel=\"a\">",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.styleUrls, []);
       });
     });
@@ -276,7 +285,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<link href=\"http://some/external.css\" rel=\"stylesheet\">",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.styleUrls, []);
       });
     });
@@ -289,7 +299,8 @@ main() {
                 styles: ["@import \"test.css\";"],
                 styleUrls: []),
             "",
-            "package:some/module/id");
+            "package:some/module/id",
+            true);
         expect(template.styles, [""]);
         expect(template.styleUrls, ["package:some/module/test.css"]);
       });
@@ -303,7 +314,8 @@ main() {
                 styles: [".foo{background-image: url('double.jpg');"],
                 styleUrls: []),
             "",
-            "package:some/module/id");
+            "package:some/module/id",
+            true);
         expect(template.styles, [".foo{background-image: url('double.jpg');"]);
       });
     });
@@ -314,7 +326,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: ["test.css"]),
             "",
-            "package:some/module/id");
+            "package:some/module/id",
+            true);
         expect(template.styles, []);
         expect(template.styleUrls, ["package:some/module/test.css"]);
       });
@@ -328,7 +341,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: ["test.css"]),
             "",
-            "http://some/module/id");
+            "http://some/module/id",
+            true);
         expect(template.styles, []);
         expect(template.styleUrls, ["http://some/module/test.css"]);
       });
@@ -344,7 +358,8 @@ main() {
                 styles: [],
                 styleUrls: []),
             "",
-            "package:some/module/id");
+            "package:some/module/id",
+            true);
         expect(template.encapsulation, ViewEncapsulation.None);
       });
     });
@@ -355,7 +370,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<div ngNonBindable><ng-content select=\"a\"></ng-content></div>",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.ngContentSelectors, []);
       });
     });
@@ -367,7 +383,8 @@ main() {
             new CompileTemplateMetadata(
                 encapsulation: null, styles: [], styleUrls: []),
             "<div ngNonBindable><style>div {color:red}</style></div>",
-            "package:some/module/");
+            "package:some/module/",
+            true);
         expect(template.styles, ["div {color:red}"]);
       });
     });

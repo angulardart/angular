@@ -753,6 +753,7 @@ class _CompileTemplateMetadataVisitor
   ViewEncapsulation _encapsulation;
   String _template;
   String _templateUrl;
+  bool _preserveWhitespace;
   List<String> _styles;
   List<String> _styleUrls;
 
@@ -763,6 +764,7 @@ class _CompileTemplateMetadataVisitor
     if (_encapsulation == null &&
         _template == null &&
         _templateUrl == null &&
+        _preserveWhitespace == null &&
         _styles == null &&
         _styleUrls == null) {
       return null;
@@ -772,6 +774,7 @@ class _CompileTemplateMetadataVisitor
         encapsulation: _encapsulation,
         template: _template,
         templateUrl: _templateUrl,
+        preserveWhitespace: _preserveWhitespace,
         styles: _styles,
         styleUrls: _styleUrls);
   }
@@ -801,12 +804,20 @@ class _CompileTemplateMetadataVisitor
       case 'styleUrls':
         _populateStyleUrls(node.expression);
         break;
+      case 'preserveWhitespace':
+        _populatePreserveWhitespace(node.expression);
+        break;
     }
     return null;
   }
 
   void _populateTemplate(Expression value) {
     _template = _expressionToString(value, 'View#template');
+  }
+
+  void _populatePreserveWhitespace(Expression value) {
+    _preserveWhitespace =
+        _expressionToString(value, 'View#preserveWhitespace') == "true";
   }
 
   void _populateTemplateUrl(Expression value) {

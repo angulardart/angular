@@ -60,14 +60,18 @@ class DirectiveNormalizer {
       CompileTypeMetadata directiveType, CompileTemplateMetadata template) {
     if (template.template != null) {
       return PromiseWrapper.resolve(this.normalizeLoadedTemplate(
-          directiveType, template, template.template, directiveType.moduleUrl));
+          directiveType,
+          template,
+          template.template,
+          directiveType.moduleUrl,
+          template.preserveWhitespace));
     } else if (template.templateUrl != null) {
       var sourceAbsUrl = this
           ._urlResolver
           .resolve(directiveType.moduleUrl, template.templateUrl);
       return this._xhr.get(sourceAbsUrl).then((templateContent) => this
-          .normalizeLoadedTemplate(
-              directiveType, template, templateContent, sourceAbsUrl));
+          .normalizeLoadedTemplate(directiveType, template, templateContent,
+              sourceAbsUrl, template.preserveWhitespace));
     } else {
       throw new BaseException(
           '''No template specified for component ${ directiveType . name}''');
@@ -78,7 +82,8 @@ class DirectiveNormalizer {
       CompileTypeMetadata directiveType,
       CompileTemplateMetadata templateMeta,
       String template,
-      String templateAbsUrl) {
+      String templateAbsUrl,
+      bool preserveWhitespace) {
     var rootNodesAndErrors =
         this._htmlParser.parse(template, directiveType.name);
     if (rootNodesAndErrors.errors.length > 0) {
@@ -119,7 +124,8 @@ class DirectiveNormalizer {
         templateUrl: templateAbsUrl,
         styles: allResolvedStyles,
         styleUrls: allStyleAbsUrls,
-        ngContentSelectors: visitor.ngContentSelectors);
+        ngContentSelectors: visitor.ngContentSelectors,
+        preserveWhitespace: preserveWhitespace);
   }
 }
 

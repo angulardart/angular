@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 import "parse_util.dart" show ParseSourceSpan;
 
 abstract class HtmlAst {
@@ -89,7 +87,7 @@ List<dynamic> htmlVisitAll(HtmlAstVisitor visitor, List<HtmlAst> asts,
   var result = [];
   asts.forEach((ast) {
     var astResult = ast.visit(visitor, context);
-    if (isPresent(astResult)) {
+    if (astResult != null) {
       result.add(astResult);
     }
   });

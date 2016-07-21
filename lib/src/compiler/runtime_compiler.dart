@@ -41,9 +41,9 @@ import "xhr.dart" show XHR;
 class RuntimeCompiler implements ComponentResolver {
   RuntimeMetadataResolver _runtimeMetadataResolver;
   DirectiveNormalizer _templateNormalizer;
-  TemplateParser _templateParser;
-  StyleCompiler _styleCompiler;
-  ViewCompiler _viewCompiler;
+  final TemplateParser _templateParser;
+  final StyleCompiler _styleCompiler;
+  final ViewCompiler _viewCompiler;
   XHR _xhr;
   InjectorCompiler _injectorCompiler;
   Map<String, Future<String>> _styleCache = new Map<String, Future<String>>();
@@ -81,8 +81,8 @@ class RuntimeCompiler implements ComponentResolver {
       hostCacheKey = new Object();
       this._hostCacheKeys[componentType] = hostCacheKey;
       assertComponent(compMeta);
-      CompileDirectiveMetadata hostMeta =
-          createHostComponentMeta(compMeta.type, compMeta.selector);
+      CompileDirectiveMetadata hostMeta = createHostComponentMeta(compMeta.type,
+          compMeta.selector, compMeta.template.preserveWhitespace);
       this._loadAndCompileComponent(hostCacheKey, hostMeta, [compMeta], [], []);
     }
     return this._compiledTemplateDone[hostCacheKey].then(

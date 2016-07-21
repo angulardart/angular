@@ -80,7 +80,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   CompileView view;
   List<ViewCompileDependency> targetDependencies;
   num nestedViewCount = 0;
-  ViewBuilderVisitor(this.view, this.targetDependencies) {}
+  ViewBuilderVisitor(this.view, this.targetDependencies);
+
   bool _isRootNode(CompileElement parent) {
     return !identical(parent.view, this.view);
   }

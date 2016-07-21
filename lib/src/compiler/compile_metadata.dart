@@ -484,32 +484,30 @@ class CompileQueryMetadata {
   }
 }
 
-/**
- * Metadata regarding compilation of a template.
- */
+/// Metadata regarding compilation of a template.
 class CompileTemplateMetadata {
   ViewEncapsulation encapsulation;
   String template;
   String templateUrl;
+  bool preserveWhitespace;
   List<String> styles;
   List<String> styleUrls;
   List<String> ngContentSelectors;
   CompileTemplateMetadata(
       {ViewEncapsulation encapsulation,
-      String template,
-      String templateUrl,
+      this.template,
+      this.templateUrl,
+      bool preserveWhitespace,
       List<String> styles,
       List<String> styleUrls,
       List<String> ngContentSelectors}) {
-    this.encapsulation =
-        isPresent(encapsulation) ? encapsulation : ViewEncapsulation.Emulated;
-    this.template = template;
-    this.templateUrl = templateUrl;
-    this.styles = isPresent(styles) ? styles : [];
-    this.styleUrls = isPresent(styleUrls) ? styleUrls : [];
-    this.ngContentSelectors =
-        isPresent(ngContentSelectors) ? ngContentSelectors : [];
+    this.encapsulation = encapsulation ?? ViewEncapsulation.Emulated;
+    this.styles = styles ?? <String>[];
+    this.styleUrls = styleUrls ?? <String>[];
+    this.ngContentSelectors = ngContentSelectors ?? <String>[];
+    this.preserveWhitespace = preserveWhitespace ?? false;
   }
+
   static CompileTemplateMetadata fromJson(Map<String, dynamic> data) {
     return new CompileTemplateMetadata(
         encapsulation: isPresent(data["encapsulation"])
@@ -517,14 +515,15 @@ class CompileTemplateMetadata {
             : data["encapsulation"],
         template: data["template"],
         templateUrl: data["templateUrl"],
+        preserveWhitespace: data["preserveWhitespace"] ?? false,
         styles: data["styles"] as List<String>,
         styleUrls: data["styleUrls"] as List<String>,
         ngContentSelectors: data["ngContentSelectors"] as List<String>);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      "encapsulation": isPresent(this.encapsulation)
+    Map<String, dynamic> res = {
+      "encapsulation": this.encapsulation != null
           ? serializeEnum(this.encapsulation)
           : this.encapsulation,
       "template": this.template,
@@ -533,12 +532,12 @@ class CompileTemplateMetadata {
       "styleUrls": this.styleUrls,
       "ngContentSelectors": this.ngContentSelectors
     };
+    if (preserveWhitespace) res["preserveWhitespace"] = true;
+    return res;
   }
 }
 
-/**
- * Metadata regarding compilation of a directive.
- */
+/// Metadata regarding compilation of a directive.
 class CompileDirectiveMetadata implements CompileMetadataWithType {
   static CompileDirectiveMetadata create(
       {CompileTypeMetadata type,
@@ -550,48 +549,45 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       List<String> outputs,
       Map<String, String> host,
       List<LifecycleHooks> lifecycleHooks,
-      List<
-          dynamic /* CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata | List < dynamic > */ > providers,
-      List<
-          dynamic /* CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata | List < dynamic > */ > viewProviders,
+      // CompileProviderMetadata | CompileTypeMetadata |
+      // CompileIdentifierMetadata | List
+      List providers,
+      // CompileProviderMetadata | CompileTypeMetadata |
+      // CompileIdentifierMetadata | List
+      List viewProviders,
       List<CompileQueryMetadata> queries,
       List<CompileQueryMetadata> viewQueries,
       CompileTemplateMetadata template}) {
-    Map<String, String> hostListeners = {};
-    Map<String, String> hostProperties = {};
-    Map<String, String> hostAttributes = {};
-    if (isPresent(host)) {
-      host.forEach((String key, String value) {
-        var matches = RegExpWrapper.firstMatch(HOST_REG_EXP, key);
-        if (isBlank(matches)) {
-          hostAttributes[key] = value;
-        } else if (isPresent(matches[1])) {
-          hostProperties[matches[1]] = value;
-        } else if (isPresent(matches[2])) {
-          hostListeners[matches[2]] = value;
-        }
-      });
-    }
+    var hostListeners = <String, String>{};
+    var hostProperties = <String, String>{};
+    var hostAttributes = <String, String>{};
+    host?.forEach((String key, String value) {
+      var matches = RegExpWrapper.firstMatch(HOST_REG_EXP, key);
+      if (isBlank(matches)) {
+        hostAttributes[key] = value;
+      } else if (matches[1] != null) {
+        hostProperties[matches[1]] = value;
+      } else if (matches[2] != null) {
+        hostListeners[matches[2]] = value;
+      }
+    });
+
     Map<String, String> inputsMap = {};
-    if (isPresent(inputs)) {
-      inputs.forEach((String bindConfig) {
-        // canonical syntax: `dirProp: elProp`
+    inputs?.forEach((String bindConfig) {
+      // canonical syntax: [dirProp: elProp]
+      // if there is no [:], use dirProp = elProp
+      var parts = splitAtColon(bindConfig, [bindConfig, bindConfig]);
+      inputsMap[parts[0]] = parts[1];
+    });
 
-        // if there is no `:`, use dirProp = elProp
-        var parts = splitAtColon(bindConfig, [bindConfig, bindConfig]);
-        inputsMap[parts[0]] = parts[1];
-      });
-    }
     Map<String, String> outputsMap = {};
-    if (isPresent(outputs)) {
-      outputs.forEach((String bindConfig) {
-        // canonical syntax: `dirProp: elProp`
+    outputs?.forEach((String bindConfig) {
+      // canonical syntax: [dirProp: elProp]
+      // if there is no [:], use dirProp = elProp
+      var parts = splitAtColon(bindConfig, [bindConfig, bindConfig]);
+      outputsMap[parts[0]] = parts[1];
+    });
 
-        // if there is no `:`, use dirProp = elProp
-        var parts = splitAtColon(bindConfig, [bindConfig, bindConfig]);
-        outputsMap[parts[0]] = parts[1];
-      });
-    }
     return new CompileDirectiveMetadata(
         type: type,
         isComponent: normalizeBool(isComponent),
@@ -639,10 +635,12 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       Map<String, String> hostProperties,
       Map<String, String> hostAttributes,
       List<LifecycleHooks> lifecycleHooks,
-      List<
-          dynamic /* CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata | List < dynamic > */ > providers,
-      List<
-          dynamic /* CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata | List < dynamic > */ > viewProviders,
+      // CompileProviderMetadata | CompileTypeMetadata |
+      // CompileIdentifierMetadata | List
+      List providers,
+      // CompileProviderMetadata | CompileTypeMetadata |
+      // CompileIdentifierMetadata | List
+      List viewProviders,
       List<CompileQueryMetadata> queries,
       List<CompileQueryMetadata> viewQueries,
       CompileTemplateMetadata template}) {
@@ -663,9 +661,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.viewQueries = viewQueries ?? [];
     this.template = template;
   }
-  CompileIdentifierMetadata get identifier {
-    return this.type;
-  }
+
+  CompileIdentifierMetadata get identifier => type;
 
   static CompileDirectiveMetadata fromJson(Map<String, dynamic> data) {
     return new CompileDirectiveMetadata(
@@ -726,11 +723,12 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   }
 }
 
-/**
- * Construct [CompileDirectiveMetadata] from [ComponentTypeMetadata] and a selector.
- */
+/// Construct [CompileDirectiveMetadata] from [ComponentTypeMetadata] and a
+/// selector.
 CompileDirectiveMetadata createHostComponentMeta(
-    CompileTypeMetadata componentType, String componentSelector) {
+    CompileTypeMetadata componentType,
+    String componentSelector,
+    bool preserveWhitespace) {
   var template =
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
   return CompileDirectiveMetadata.create(
@@ -742,6 +740,7 @@ CompileDirectiveMetadata createHostComponentMeta(
       template: new CompileTemplateMetadata(
           template: template,
           templateUrl: "",
+          preserveWhitespace: preserveWhitespace,
           styles: [],
           styleUrls: [],
           ngContentSelectors: []),
@@ -796,9 +795,7 @@ class CompilePipeMetadata implements CompileMetadataWithType {
   }
 }
 
-/**
- * Metadata regarding compilation of an InjectorModule.
- */
+/// Metadata regarding compilation of an InjectorModule.
 class CompileInjectorModuleMetadata
     implements CompileMetadataWithType, CompileTypeMetadata {
   Type runtime;
@@ -810,8 +807,9 @@ class CompileInjectorModuleMetadata
   dynamic value;
   List<CompileDiDependencyMetadata> diDeps;
   bool injectable;
-  List<dynamic /* CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata | List < dynamic > */ >
-      providers;
+  // CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata
+  // | List
+  List<dynamic /*  < dynamic > */ > providers;
   CompileInjectorModuleMetadata(
       {Type runtime,
       String name,
@@ -819,8 +817,9 @@ class CompileInjectorModuleMetadata
       String prefix,
       dynamic value,
       List<CompileDiDependencyMetadata> diDeps,
-      List<
-          dynamic /* CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata | List < dynamic > */ > providers,
+      // CompileProviderMetadata | CompileTypeMetadata |
+      // CompileIdentifierMetadata | List
+      List providers,
       bool injectable}) {
     this.runtime = runtime;
     this.name = name;
@@ -828,7 +827,7 @@ class CompileInjectorModuleMetadata
     this.prefix = prefix;
     this.value = value;
     this.diDeps = diDeps ?? [];
-    this.providers = _normalizeArray(providers);
+    this.providers = providers ?? [];
     this.injectable = normalizeBool(injectable);
   }
   static CompileInjectorModuleMetadata fromJson(Map<String, dynamic> data) {
@@ -877,6 +876,7 @@ var _COMPILE_METADATA_FROM_JSON = {
   "Factory": CompileFactoryMetadata.fromJson,
   "InjectorModule": CompileInjectorModuleMetadata.fromJson
 };
+
 dynamic _arrayFromJson(List<dynamic> obj, dynamic fn(Map<String, dynamic> a)) {
   return isBlank(obj) ? null : obj.map((o) => _objFromJson(o, fn)).toList();
 }
@@ -899,6 +899,3 @@ dynamic /* String | Map < String , dynamic > */ _objToJson(dynamic obj) {
     return obj;
   return obj.toJson();
 }
-
-List<dynamic/*=T*/ > _normalizeArray/*<T>*/(List<dynamic/*=T*/ > obj) =>
-    obj ?? [];

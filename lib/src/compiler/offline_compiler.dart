@@ -1,11 +1,10 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:angular2/src/core/linker/component_factory.dart"
+import 'package:angular2/src/core/linker/component_factory.dart'
     show ComponentFactory;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "compile_metadata.dart"
+import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompileIdentifierMetadata,
@@ -13,20 +12,20 @@ import "compile_metadata.dart"
         createHostComponentMeta,
         CompileInjectorModuleMetadata,
         CompileTypeMetadata;
-import "directive_normalizer.dart" show DirectiveNormalizer;
-import "output/abstract_emitter.dart" show OutputEmitter;
-import "output/output_ast.dart" as o;
-import "style_compiler.dart" show StyleCompiler, StylesCompileResult;
-import "template_parser.dart" show TemplateParser;
-import "util.dart" show MODULE_SUFFIX;
-import "view_compiler/injector_compiler.dart" show InjectorCompiler;
-import "view_compiler/view_compiler.dart" show ViewCompiler, ViewCompileResult;
+import 'directive_normalizer.dart' show DirectiveNormalizer;
+import 'output/abstract_emitter.dart' show OutputEmitter;
+import 'output/output_ast.dart' as o;
+import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
+import 'template_parser.dart' show TemplateParser;
+import 'util.dart' show MODULE_SUFFIX;
+import 'view_compiler/injector_compiler.dart' show InjectorCompiler;
+import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
 
 var _COMPONENT_FACTORY_IDENTIFIER = new CompileIdentifierMetadata(
-    name: "ComponentFactory",
+    name: 'ComponentFactory',
     runtime: ComponentFactory,
     moduleUrl:
-        '''asset:angular2/lib/src/core/linker/component_factory${ MODULE_SUFFIX}''');
+        'asset:angular2/lib/src/core/linker/component_factory${MODULE_SUFFIX}');
 
 class SourceModule {
   String moduleUrl;
@@ -42,11 +41,12 @@ class NormalizedComponentWithViewDirectives {
       this.component, this.directives, this.pipes) {}
 }
 
+/// Compiles a view template.
 class OfflineCompiler {
   DirectiveNormalizer _directiveNormalizer;
-  TemplateParser _templateParser;
-  StyleCompiler _styleCompiler;
-  ViewCompiler _viewCompiler;
+  final TemplateParser _templateParser;
+  final StyleCompiler _styleCompiler;
+  final ViewCompiler _viewCompiler;
   InjectorCompiler _injectorCompiler;
   OutputEmitter _outputEmitter;
   OfflineCompiler(
@@ -58,31 +58,32 @@ class OfflineCompiler {
       this._outputEmitter) {}
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
-    return this._directiveNormalizer.normalizeDirective(directive);
+    return _directiveNormalizer.normalizeDirective(directive);
   }
 
   SourceModule compile(List<NormalizedComponentWithViewDirectives> components,
       List<CompileInjectorModuleMetadata> injectorModules) {
     String moduleUrl;
-    if (components.length > 0) {
+    if (components.isNotEmpty) {
       moduleUrl = _templateModuleUrl(components[0].component.type);
-    } else if (injectorModules.length > 0) {
+    } else if (injectorModules.isNotEmpty) {
       moduleUrl = _templateModuleUrl(injectorModules[0].type);
     } else {
-      throw new BaseException("No components nor injectorModules given");
+      throw new BaseException('No components nor injectorModules given');
     }
     var statements = <o.Statement>[];
     var exportedVars = <String>[];
     components.forEach((componentWithDirs) {
       CompileDirectiveMetadata compMeta = componentWithDirs.component;
       _assertComponent(compMeta);
-      var compViewFactoryVar = this._compileComponent(compMeta,
+      var compViewFactoryVar = _compileComponent(compMeta,
           componentWithDirs.directives, componentWithDirs.pipes, statements);
       exportedVars.add(compViewFactoryVar);
-      var hostMeta = createHostComponentMeta(compMeta.type, compMeta.selector);
+      var hostMeta = createHostComponentMeta(compMeta.type, compMeta.selector,
+          compMeta.template.preserveWhitespace);
       var hostViewFactoryVar =
-          this._compileComponent(hostMeta, [compMeta], [], statements);
-      var compFactoryVar = '''${ compMeta . type . name}NgFactory''';
+          _compileComponent(hostMeta, [compMeta], [], statements);
+      var compFactoryVar = '${compMeta.type.name}NgFactory';
       statements.add(o
           .variable(compFactoryVar)
           .set(o.importExpr(_COMPONENT_FACTORY_IDENTIFIER).instantiate(
@@ -98,23 +99,22 @@ class OfflineCompiler {
       exportedVars.add(compFactoryVar);
     });
     injectorModules.forEach((injectorModuleMeta) {
-      var compileResult =
-          this._injectorCompiler.compileInjector(injectorModuleMeta);
+      var compileResult = _injectorCompiler.compileInjector(injectorModuleMeta);
       compileResult.statements.forEach((stmt) => statements.add(stmt));
       exportedVars.add(compileResult.injectorFactoryVar);
     });
-    return this._codegenSourceModule(moduleUrl, statements, exportedVars);
+    return _codegenSourceModule(moduleUrl, statements, exportedVars);
   }
 
   List<SourceModule> compileStylesheet(String stylesheetUrl, String cssText) {
     var plainStyles =
-        this._styleCompiler.compileStylesheet(stylesheetUrl, cssText, false);
+        _styleCompiler.compileStylesheet(stylesheetUrl, cssText, false);
     var shimStyles =
-        this._styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
+        _styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
     return [
-      this._codegenSourceModule(_stylesModuleUrl(stylesheetUrl, false),
+      _codegenSourceModule(_stylesModuleUrl(stylesheetUrl, false),
           _resolveStyleStatements(plainStyles), [plainStyles.stylesVar]),
-      this._codegenSourceModule(_stylesModuleUrl(stylesheetUrl, true),
+      _codegenSourceModule(_stylesModuleUrl(stylesheetUrl, true),
           _resolveStyleStatements(shimStyles), [shimStyles.stylesVar])
     ];
   }
@@ -124,13 +124,13 @@ class OfflineCompiler {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       List<o.Statement> targetStatements) {
-    var styleResult = this._styleCompiler.compileComponent(compMeta);
-    var parsedTemplate = this._templateParser.parse(compMeta,
+    var styleResult = _styleCompiler.compileComponent(compMeta);
+    var parsedTemplate = _templateParser.parse(compMeta,
         compMeta.template.template, directives, pipes, compMeta.type.name);
-    var viewResult = this._viewCompiler.compileComponent(
+    var viewResult = _viewCompiler.compileComponent(
         compMeta, parsedTemplate, o.variable(styleResult.stylesVar), pipes);
-    ListWrapper.addAll(targetStatements, _resolveStyleStatements(styleResult));
-    ListWrapper.addAll(targetStatements, _resolveViewStatements(viewResult));
+    targetStatements.addAll(_resolveStyleStatements(styleResult));
+    targetStatements.addAll(_resolveViewStatements(viewResult));
     return viewResult.viewFactoryVar;
   }
 
@@ -163,18 +163,18 @@ String _templateModuleUrl(CompileTypeMetadata type) {
   var moduleUrl = type.moduleUrl;
   var urlWithoutSuffix =
       moduleUrl.substring(0, moduleUrl.length - MODULE_SUFFIX.length);
-  return '''${ urlWithoutSuffix}.template${ MODULE_SUFFIX}''';
+  return '${urlWithoutSuffix}.template${MODULE_SUFFIX}';
 }
 
 String _stylesModuleUrl(String stylesheetUrl, bool shim) {
   return shim
-      ? '''${ stylesheetUrl}.shim${ MODULE_SUFFIX}'''
-      : '''${ stylesheetUrl}${ MODULE_SUFFIX}''';
+      ? '${stylesheetUrl}.shim${MODULE_SUFFIX}'
+      : '${stylesheetUrl}${MODULE_SUFFIX}';
 }
 
-_assertComponent(CompileDirectiveMetadata meta) {
+void _assertComponent(CompileDirectiveMetadata meta) {
   if (!meta.isComponent) {
     throw new BaseException(
-        '''Could not compile \'${ meta . type . name}\' because it is not a component.''');
+        "Could not compile '${meta.type.name}' because it is not a component.");
   }
 }

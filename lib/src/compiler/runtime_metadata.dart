@@ -76,6 +76,7 @@ class RuntimeMetadataResolver {
             encapsulation: viewMeta.encapsulation,
             template: viewMeta.template,
             templateUrl: viewMeta.templateUrl,
+            preserveWhitespace: cmpMeta.preserveWhitespace,
             styles: viewMeta.styles,
             styleUrls: viewMeta.styleUrls);
         changeDetectionStrategy = cmpMeta.changeDetection;
