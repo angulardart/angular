@@ -159,7 +159,7 @@ class RouteRegistry {
         _aux ? rules.recognizeAuxiliary(parsedUrl) : rules.recognize(parsedUrl);
     List<Future<Instruction>> matchPromises = possibleMatches
         .map((Future<RouteMatch> candidate) =>
-            candidate.then((RouteMatch candidate) {
+            candidate.then((RouteMatch candidate) async {
               if (candidate is PathMatch) {
                 List<Instruction> auxParentInstructions =
                     ancestorInstructions.length > 0
@@ -179,19 +179,17 @@ class RouteRegistry {
                 List<Instruction> newAncestorInstructions =
                     (new List.from(ancestorInstructions)
                       ..addAll([instruction]));
-                return this
-                    ._recognize(candidate.remaining, newAncestorInstructions)
-                    .then((childInstruction) {
-                  if (childInstruction == null) {
-                    return null;
-                  }
-                  // redirect instructions are already absolute
-                  if (childInstruction is RedirectInstruction) {
-                    return childInstruction;
-                  }
-                  instruction.child = childInstruction;
-                  return instruction;
-                });
+                var childInstruction = await this
+                    ._recognize(candidate.remaining, newAncestorInstructions);
+                if (childInstruction == null) {
+                  return null;
+                }
+                // redirect instructions are already absolute
+                if (childInstruction is RedirectInstruction) {
+                  return childInstruction;
+                }
+                instruction.child = childInstruction;
+                return instruction;
               }
               if (candidate is RedirectMatch) {
                 var instruction = this.generate(candidate.redirectTo,
@@ -202,6 +200,7 @@ class RouteRegistry {
                     instruction.auxInstruction,
                     candidate.specificity);
               }
+              return null;
             }))
         .toList();
     if ((parsedUrl == null || parsedUrl.path == "") &&
