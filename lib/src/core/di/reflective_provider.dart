@@ -1,12 +1,7 @@
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/collection.dart"
-    show MapWrapper, ListWrapper, StringMapWrapper;
-import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isPresent, isArray, isType;
 
 import "../metadata/di.dart"
     show InjectorModuleMetadata, ProviderPropertyMetadata;
-import "forward_ref.dart" show resolveForwardRef;
 import "metadata.dart"
     show
         InjectMetadata,
@@ -21,9 +16,9 @@ import "reflective_exceptions.dart"
         NoAnnotationError,
         MixingMultiProvidersWithRegularProvidersError,
         InvalidProviderError;
-import "reflective_key.dart" show ReflectiveKey;
+import "reflective_key.dart";
 
-/// `Dependency` is used by the framework to extend DI.
+/// [Dependency] is used by the framework to extend DI.
 /// This is internal to Angular and should not be used directly.
 class ReflectiveDependency {
   ReflectiveKey key;
@@ -112,14 +107,14 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
     resolvedDeps =
         constructDependencies(provider.useFactory, provider.dependencies);
   } else if (provider.useClass != null) {
-    var useClass = resolveForwardRef(provider.useClass);
+    var useClass = provider.useClass;
     factoryFn = reflector.factory(useClass);
     resolvedDeps = _dependenciesFor(useClass);
   } else if (provider.useValue != noValueProvided) {
     factoryFn = () => provider.useValue;
     resolvedDeps = const <ReflectiveDependency>[];
   } else if (provider.token is Type) {
-    var useClass = resolveForwardRef(provider.token);
+    var useClass = provider.token;
     factoryFn = reflector.factory(useClass);
     resolvedDeps = _dependenciesFor(useClass);
   } else {
@@ -127,7 +122,7 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
         provider, 'token is not a Type and no factory was specified');
   }
 
-  var postProcess = isPresent(provider.useProperty)
+  var postProcess = provider.useProperty != null
       ? reflector.getter(provider.useProperty)
       : _identityPostProcess;
   return new ResolvedReflectiveFactory(factoryFn, resolvedDeps, postProcess);
@@ -147,8 +142,10 @@ List<ResolvedReflectiveProvider> resolveReflectiveProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
   var normalized = _normalizeProviders(providers, []);
   var resolved = normalized.map(resolveReflectiveProvider).toList();
-  return MapWrapper.values(mergeResolvedReflectiveProviders(
-      resolved, new Map<num, ResolvedReflectiveProvider>()));
+  return mergeResolvedReflectiveProviders(
+          resolved, new Map<num, ResolvedReflectiveProvider>())
+      .values
+      .toList();
 }
 
 /// Merges a list of ResolvedProviders into a list where
@@ -160,7 +157,7 @@ Map<num, ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
   for (var i = 0; i < providers.length; i++) {
     var provider = providers[i];
     var existing = normalizedProvidersMap[provider.key.id];
-    if (isPresent(existing)) {
+    if (existing != null) {
       if (!identical(provider.multiProvider, existing.multiProvider)) {
         throw new MixingMultiProvidersWithRegularProvidersError(
             existing, provider);
@@ -175,10 +172,8 @@ Map<num, ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
     } else {
       var resolvedProvider;
       if (provider.multiProvider) {
-        resolvedProvider = new ResolvedReflectiveProvider_(
-            provider.key,
-            ListWrapper.clone(provider.resolvedFactories),
-            provider.multiProvider);
+        resolvedProvider = new ResolvedReflectiveProvider_(provider.key,
+            new List.from(provider.resolvedFactories), provider.multiProvider);
       } else {
         resolvedProvider = provider;
       }
@@ -212,7 +207,7 @@ List<Provider> _normalizeProviders(
 
 List<ReflectiveDependency> constructDependencies(
     dynamic typeOrFunc, List<dynamic> dependencies) {
-  if (isBlank(dependencies)) {
+  if (dependencies == null) {
     return _dependenciesFor(typeOrFunc);
   } else {
     List<List<dynamic>> params = dependencies.map((t) => [t]).toList();
@@ -224,13 +219,17 @@ List<ReflectiveDependency> constructDependencies(
 
 List<ReflectiveDependency> _dependenciesFor(dynamic typeOrFunc) {
   var params = reflector.parameters(typeOrFunc);
-  if (isBlank(params)) return [];
-  if (params.any(isBlank)) {
-    throw new NoAnnotationError(typeOrFunc, params);
+  var deps = <ReflectiveDependency>[];
+  if (params != null) {
+    int paramCount = params.length;
+    for (int p = 0; p < paramCount; p++) {
+      var param = params[p];
+      if (param == null) throw new NoAnnotationError(typeOrFunc, params);
+      ReflectiveDependency dep = _extractToken(typeOrFunc, param, params);
+      deps.add(dep);
+    }
   }
-  return params
-      .map((List<dynamic> p) => _extractToken(typeOrFunc, p, params))
-      .toList();
+  return deps;
 }
 
 ReflectiveDependency _extractToken(
@@ -238,7 +237,7 @@ ReflectiveDependency _extractToken(
   var depProps = [];
   var token = null;
   var optional = false;
-  if (!isArray(metadata)) {
+  if (metadata is! List) {
     if (metadata is InjectMetadata) {
       return _createDependency(metadata.token, optional, null, null, depProps);
     } else {
@@ -262,19 +261,15 @@ ReflectiveDependency _extractToken(
     } else if (paramMetadata is SkipSelfMetadata) {
       lowerBoundVisibility = paramMetadata;
     } else if (paramMetadata is DependencyMetadata) {
-      if (isPresent(paramMetadata.token)) {
+      if (paramMetadata.token != null) {
         token = paramMetadata.token;
       }
       depProps.add(paramMetadata);
     }
   }
-  token = resolveForwardRef(token);
-  if (isPresent(token)) {
-    return _createDependency(
-        token, optional, lowerBoundVisibility, upperBoundVisibility, depProps);
-  } else {
-    throw new NoAnnotationError(typeOrFunc, params);
-  }
+  if (token == null) throw new NoAnnotationError(typeOrFunc, params);
+  return _createDependency(
+      token, optional, lowerBoundVisibility, upperBoundVisibility, depProps);
 }
 
 ReflectiveDependency _createDependency(
@@ -283,24 +278,23 @@ ReflectiveDependency _createDependency(
       lowerBoundVisibility, upperBoundVisibility, depProps);
 }
 
-/// Retruns [InjectorModuleMetadata] providers for a given token if possible.
+/// Returns [InjectorModuleMetadata] providers for a given token if possible.
 List<dynamic> getInjectorModuleProviders(dynamic token) {
   var providers = [];
   List<dynamic> annotations = null;
   try {
-    if (isType(token)) {
-      annotations = reflector.annotations(resolveForwardRef(token));
+    if (token is Type) {
+      annotations = reflector.annotations(token);
     }
   } catch (e) {}
-  InjectorModuleMetadata metadata = isPresent(annotations)
+  InjectorModuleMetadata metadata = annotations != null
       ? annotations.firstWhere((type) => type is InjectorModuleMetadata,
           orElse: () => null)
       : null;
-  if (isPresent(metadata)) {
+  if (metadata != null) {
     var propertyMetadata = reflector.propMetadata(token);
-    ListWrapper.addAll(providers, metadata.providers);
-    StringMapWrapper.forEach(propertyMetadata,
-        (List<dynamic> metadata, String propName) {
+    providers.addAll(metadata.providers);
+    propertyMetadata.forEach((String propName, List<dynamic> metadata) {
       metadata.forEach((a) {
         if (a is ProviderPropertyMetadata) {
           providers.add(new Provider(a.token,

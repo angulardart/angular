@@ -1,91 +1,64 @@
 import "package:angular2/src/compiler/view_resolver.dart" show ViewResolver;
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show Type, isPresent, stringify, isBlank;
 
 import "../core/metadata.dart" show ViewMetadata;
 
 @Injectable()
 class MockViewResolver extends ViewResolver {
-  /** @internal */
   var _views = new Map<Type, ViewMetadata>();
-  /** @internal */
   var _inlineTemplates = new Map<Type, String>();
-  /** @internal */
   var _viewCache = new Map<Type, ViewMetadata>();
-  /** @internal */
   var _directiveOverrides = new Map<Type, Map<Type, Type>>();
-  MockViewResolver() : super() {
-    /* super call moved to initializer */;
-  }
-  /**
-   * Overrides the [ViewMetadata] for a component.
-   *
-   * 
-   * 
-   */
+
+  MockViewResolver();
+
+  /// Overrides the [ViewMetadata] for a component.
   void setView(Type component, ViewMetadata view) {
     this._checkOverrideable(component);
     this._views[component] = view;
   }
 
-  /**
-   * Overrides the inline template for a component - other configuration remains unchanged.
-   *
-   * 
-   * 
-   */
+  /// Overrides the inline template for a component - other configuration
+  /// remains unchanged.
   void setInlineTemplate(Type component, String template) {
     this._checkOverrideable(component);
     this._inlineTemplates[component] = template;
   }
 
-  /**
-   * Overrides a directive from the component [ViewMetadata].
-   *
-   * 
-   * 
-   * 
-   */
+  /// Overrides a directive from the component [ViewMetadata].
   void overrideViewDirective(Type component, Type from, Type to) {
     this._checkOverrideable(component);
     var overrides = this._directiveOverrides[component];
-    if (isBlank(overrides)) {
+    if (overrides == null) {
       overrides = new Map<Type, Type>();
       this._directiveOverrides[component] = overrides;
     }
     overrides[from] = to;
   }
 
-  /**
-   * Returns the [ViewMetadata] for a component:
-   * - Set the [ViewMetadata] to the overridden view when it exists or fallback to the default
-   * `ViewResolver`,
-   *   see `setView`.
-   * - Override the directives, see `overrideViewDirective`.
-   * - Override the @View definition, see `setInlineTemplate`.
-   *
-   * 
-   * 
-   */
+  /// Returns the [ViewMetadata] for a component.
+  ///
+  /// Set the [ViewMetadata] to the overridden view when it exists or fallback
+  /// to the default [ViewResolver],
+  ///   see [setView].
+  /// - Override the directives, see `overrideViewDirective`.
+  /// - Override the @View definition, see `setInlineTemplate`.
+  ///
   ViewMetadata resolve(Type component) {
-    var view = this._viewCache[component];
-    if (isPresent(view)) return view;
-    view = this._views[component];
-    if (isBlank(view)) {
-      view = super.resolve(component);
-    }
+    var view = _viewCache[component];
+    if (view != null) return view;
+    view = _views[component] ?? super.resolve(component);
     var directives = view.directives;
     var overrides = this._directiveOverrides[component];
-    if (isPresent(overrides) && isPresent(directives)) {
-      directives = ListWrapper.clone(view.directives);
+    if (overrides != null && directives != null) {
+      directives = new List.from(view.directives);
       overrides.forEach((from, to) {
         var srcIndex = directives.indexOf(from);
         if (srcIndex == -1) {
           throw new BaseException(
-              '''Overriden directive ${ stringify ( from )} not found in the template of ${ stringify ( component )}''');
+              'Overriden directive $from not found in the template '
+              'of $component');
         }
         directives[srcIndex] = to;
       });
@@ -95,31 +68,25 @@ class MockViewResolver extends ViewResolver {
           directives: directives);
     }
     var inlineTemplate = this._inlineTemplates[component];
-    if (isPresent(inlineTemplate)) {
+    if (inlineTemplate != null) {
       view = new ViewMetadata(
           template: inlineTemplate,
           templateUrl: null,
           directives: view.directives);
     }
-    this._viewCache[component] = view;
+    _viewCache[component] = view;
     return view;
   }
 
-  /**
-   * @internal
-   *
-   * Once a component has been compiled, the AppProtoView is stored in the compiler cache.
-   *
-   * Then it should not be possible to override the component configuration after the component
-   * has been compiled.
-   *
-   * 
-   */
+  /// Once a component has been compiled, the AppProtoView is stored in the
+  /// compiler cache.
+  ///
+  /// Then it should not be possible to override the component configuration
+  /// after the component has been compiled.
   void _checkOverrideable(Type component) {
-    var cached = this._viewCache[component];
-    if (isPresent(cached)) {
-      throw new BaseException(
-          '''The component ${ stringify ( component )} has already been compiled, its configuration can not be changed''');
+    if (_viewCache[component] != null) {
+      throw new BaseException('The component $component has already '
+          'been compiled, its configuration can not be changed');
     }
   }
 }

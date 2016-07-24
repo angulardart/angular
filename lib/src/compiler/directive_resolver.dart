@@ -1,4 +1,4 @@
-import "package:angular2/src/core/di.dart" show resolveForwardRef, Injectable;
+import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata.dart"
     show
         DirectiveMetadata,
@@ -17,7 +17,7 @@ import "package:angular2/src/core/reflection/reflector_reader.dart"
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, stringify;
+import "package:angular2/src/facade/lang.dart" show isPresent, stringify;
 
 bool _isDirectiveMetadata(dynamic type) {
   return type is DirectiveMetadata;
@@ -50,7 +50,7 @@ class DirectiveResolver {
    * Return [DirectiveMetadata] for a given `Type`.
    */
   DirectiveMetadata resolve(Type type) {
-    var typeMetadata = this._reflector.annotations(resolveForwardRef(type));
+    var typeMetadata = this._reflector.annotations(type);
     if (isPresent(typeMetadata)) {
       var metadata =
           typeMetadata.firstWhere(_isDirectiveMetadata, orElse: () => null);

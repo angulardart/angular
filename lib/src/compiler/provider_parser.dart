@@ -358,7 +358,7 @@ ${ errorString}''');
     }
     if (isPresent(this._seenProviders.get(token))) {
       this._errors.add(new ProviderError(
-          '''Cannot instantiate cyclic dependency! ${ token . name}''',
+          'Cannot instantiate cyclic dependency! ${token.name}',
           this._sourceSpan));
       return null;
     }

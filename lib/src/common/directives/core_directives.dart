@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show Type;
-
 import "ng_class.dart" show NgClass;
 import "ng_for.dart" show NgFor;
 import "ng_if.dart" show NgIf;

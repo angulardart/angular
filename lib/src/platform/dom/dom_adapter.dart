@@ -1,10 +1,6 @@
-import "package:angular2/src/facade/lang.dart" show isBlank, Type;
-
 DomAdapter DOM = null;
 setRootDomAdapter(DomAdapter adapter) {
-  if (isBlank(DOM)) {
-    DOM = adapter;
-  }
+  DOM ??= adapter;
 }
 /* tslint:disable:requireParameterType */
 

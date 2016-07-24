@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show Type;
-
 import "directives/checkbox_value_accessor.dart"
     show CheckboxControlValueAccessor;
 import "directives/default_value_accessor.dart" show DefaultValueAccessor;

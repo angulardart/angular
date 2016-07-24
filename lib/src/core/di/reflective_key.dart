@@ -1,74 +1,48 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
+import "metadata.dart";
 
-import "forward_ref.dart" show resolveForwardRef;
-
-/**
- * A unique object used for retrieving items from the [ReflectiveInjector].
- *
- * Keys have:
- * - a system-wide unique `id`.
- * - a `token`.
- *
- * `Key` is used internally by [ReflectiveInjector] because its system-wide unique `id` allows
- * the
- * injector to store created objects in a more efficient way.
- *
- * `Key` should not be created directly. [ReflectiveInjector] creates keys automatically when
- * resolving
- * providers.
- */
+/// A unique object used for retrieving items from the [ReflectiveInjector].
+///
+/// Keys have:
+/// - a system-wide unique [id].
+/// - a [token].
+///
+/// [Key] is used internally by [ReflectiveInjector] because its system-wide
+/// unique [id] allows the injector to store created objects in a more efficient
+/// way.
+///
+/// [Key] should not be created directly. [ReflectiveInjector] creates keys
+/// automatically when resolving providers.
+///
 class ReflectiveKey {
-  Object token;
-  num id;
-  /**
-   * Private
-   */
+  final Object token;
+  final num id;
+
   ReflectiveKey(this.token, this.id) {
-    if (isBlank(token)) {
-      throw new BaseException("Token must be defined!");
-    }
-  }
-  /**
-   * Returns a stringified token.
-   */
-  String get displayName {
-    return stringify(this.token);
+    assert(token != null);
   }
 
-  /**
-   * Retrieves a `Key` for a token.
-   */
-  static ReflectiveKey get(Object token) {
-    return _globalKeyRegistry.get(resolveForwardRef(token));
-  }
+  /// Returns a stringified token.
+  String get displayName => InjectMetadata.tokenToString(token);
 
-  /**
-   * 
-   */
-  static num get numberOfKeys {
-    return _globalKeyRegistry.numberOfKeys;
-  }
+  /// Retrieves a [Key] for a token.
+  static ReflectiveKey get(Object token) => _globalKeyRegistry.get(token);
+
+  static num get numberOfKeys => _globalKeyRegistry.numberOfKeys;
 }
 
-/**
- * @internal
- */
 class KeyRegistry {
-  var _allKeys = new Map<Object, ReflectiveKey>();
+  var _allKeys = <Object, ReflectiveKey>{};
   ReflectiveKey get(Object token) {
     if (token is ReflectiveKey) return token;
-    if (this._allKeys.containsKey(token)) {
-      return this._allKeys[token];
+    if (_allKeys.containsKey(token)) {
+      return _allKeys[token];
     }
     var newKey = new ReflectiveKey(token, ReflectiveKey.numberOfKeys);
-    this._allKeys[token] = newKey;
+    _allKeys[token] = newKey;
     return newKey;
   }
 
-  num get numberOfKeys {
-    return this._allKeys.length;
-  }
+  num get numberOfKeys => _allKeys.length;
 }
 
 var _globalKeyRegistry = new KeyRegistry();

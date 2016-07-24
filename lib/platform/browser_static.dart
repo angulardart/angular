@@ -21,7 +21,7 @@ import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/platform/browser_common.dart"
     show
         BROWSER_APP_COMMON_PROVIDERS,

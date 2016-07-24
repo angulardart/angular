@@ -8,7 +8,7 @@ import "package:angular2/src/core/reflection/reflector_reader.dart"
 import "package:angular2/src/facade/collection.dart" show Map;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show Type, stringify, isBlank, isPresent;
+    show stringify, isBlank, isPresent;
 
 /**
  * Resolves types to [ViewMetadata].

@@ -227,7 +227,6 @@ var NG_CORE = [
   "Testability",
   "TestabilityRegistry",
   "GetTestability",
-  "Type",
   "PACKAGE_ROOT_URL",
   "View",
   "ViewChild",
@@ -347,11 +346,9 @@ main() {
 List<String> diff(List<String> actual, List<String> expected) {
   actual.sort(StringWrapper.compare);
   expected.sort(StringWrapper.compare);
-  var missing = actual
-      .where((i) => expected.indexOf(i) < 0)
-      .map((s) => '''+${ s}''');
-  var extra = expected
-      .where((i) => actual.indexOf(i) < 0)
-      .map((s) => '''-${ s}''');
+  var missing =
+      actual.where((i) => expected.indexOf(i) < 0).map((s) => '''+${ s}''');
+  var extra =
+      expected.where((i) => actual.indexOf(i) < 0).map((s) => '''-${ s}''');
   return <String>[]..addAll(missing)..addAll(extra);
 }

@@ -1,10 +1,8 @@
 import "package:angular2/src/facade/base_wrapped_exception.dart"
     show BaseWrappedException;
-import "package:angular2/src/facade/collection.dart" show isListLikeIterable;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 class _ArrayLogger {
-  List<dynamic> res = [];
+  List res = [];
   void log(dynamic s) {
     this.res.add(s);
   }
@@ -61,22 +59,22 @@ class ExceptionHandler {
     this
         ._logger
         .logGroup('''EXCEPTION: ${ this . _extractMessage ( exception )}''');
-    if (isPresent(stackTrace) && isBlank(originalStack)) {
+    if (stackTrace != null && originalStack == null) {
       this._logger.logError("STACKTRACE:");
       this._logger.logError(this._longStackTrace(stackTrace));
     }
-    if (isPresent(reason)) {
+    if (reason != null) {
       this._logger.logError('''REASON: ${ reason}''');
     }
-    if (isPresent(originalException)) {
+    if (originalException != null) {
       this._logger.logError(
           '''ORIGINAL EXCEPTION: ${ this . _extractMessage ( originalException )}''');
     }
-    if (isPresent(originalStack)) {
+    if (originalStack != null) {
       this._logger.logError("ORIGINAL STACKTRACE:");
       this._logger.logError(this._longStackTrace(originalStack));
     }
-    if (isPresent(context)) {
+    if (context != null) {
       this._logger.logError("ERROR CONTEXT:");
       this._logger.logError(context);
     }
@@ -87,51 +85,45 @@ class ExceptionHandler {
     if (this._rethrowException) throw exception;
   }
 
-  /** @internal */
   String _extractMessage(dynamic exception) {
     return exception is BaseWrappedException
         ? exception.wrapperMessage
         : exception.toString();
   }
 
-  /** @internal */
   dynamic _longStackTrace(dynamic stackTrace) {
-    return isListLikeIterable(stackTrace)
+    return stackTrace is Iterable
         ? ((stackTrace as List<dynamic>)).join("\n\n-----async gap-----\n")
         : stackTrace.toString();
   }
 
-  /** @internal */
   dynamic _findContext(dynamic exception) {
     try {
       if (!(exception is BaseWrappedException)) return null;
-      return isPresent(exception.context)
-          ? exception.context
-          : this._findContext(exception.originalException);
+      return exception.context ??
+          this._findContext(exception.originalException);
     } catch (e) {
       // exception.context can throw an exception. if it happens, we ignore the context.
       return null;
     }
   }
 
-  /** @internal */
   dynamic _findOriginalException(dynamic exception) {
     if (!(exception is BaseWrappedException)) return null;
     var e = exception.originalException;
-    while (e is BaseWrappedException && isPresent(e.originalException)) {
+    while (e is BaseWrappedException && e.originalException != null) {
       e = e.originalException;
     }
     return e;
   }
 
-  /** @internal */
   dynamic _findOriginalStack(dynamic exception) {
     if (!(exception is BaseWrappedException)) return null;
     var e = exception;
     var stack = exception.originalStack;
-    while (e is BaseWrappedException && isPresent(e.originalException)) {
+    while (e is BaseWrappedException && e.originalException != null) {
       e = e.originalException;
-      if (e is BaseWrappedException && isPresent(e.originalException)) {
+      if (e is BaseWrappedException && e.originalException != null) {
         stack = e.originalStack;
       }
     }

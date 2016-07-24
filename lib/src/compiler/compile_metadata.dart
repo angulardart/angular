@@ -14,7 +14,6 @@ import "package:angular2/src/facade/lang.dart"
         isBoolean,
         normalizeBool,
         serializeEnum,
-        Type,
         isString,
         RegExpWrapper,
         isArray;
@@ -590,7 +589,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         hostListeners: hostListeners,
         hostProperties: hostProperties,
         hostAttributes: hostAttributes,
-        lifecycleHooks: isPresent(lifecycleHooks) ? lifecycleHooks : [],
+        lifecycleHooks: lifecycleHooks ?? <LifecycleHooks>[],
         providers: providers,
         viewProviders: viewProviders,
         queries: queries,

@@ -10,7 +10,6 @@ import "package:angular2/src/core/linker/injector_factory.dart"
 import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show IS_DART, Type, isBlank;
 
 import "compile_metadata.dart"
     show
@@ -18,14 +17,12 @@ import "compile_metadata.dart"
         CompileDirectiveMetadata,
         CompilePipeMetadata,
         CompileIdentifierMetadata;
-import "config.dart" show CompilerConfig;
 import "directive_normalizer.dart" show DirectiveNormalizer;
 import "output/interpretive_injector.dart"
     show InterpretiveInjectorInstanceFactory;
 import "output/interpretive_view.dart" show InterpretiveAppViewInstanceFactory;
 import "output/output_ast.dart" as ir;
 import "output/output_interpreter.dart" show interpretStatements;
-import "output/output_jit.dart" show jitStatements;
 import "runtime_metadata.dart" show RuntimeMetadataResolver;
 import "style_compiler.dart"
     show StyleCompiler, StylesCompileDependency, StylesCompileResult;
@@ -49,11 +46,11 @@ class RuntimeCompiler implements ComponentResolver {
   ViewCompiler _viewCompiler;
   XHR _xhr;
   InjectorCompiler _injectorCompiler;
-  CompilerConfig _genConfig;
   Map<String, Future<String>> _styleCache = new Map<String, Future<String>>();
   var _hostCacheKeys = new Map<Type, dynamic>();
   var _compiledTemplateCache = new Map<dynamic, CompiledTemplate>();
   var _compiledTemplateDone = new Map<dynamic, Future<CompiledTemplate>>();
+
   RuntimeCompiler(
       this._runtimeMetadataResolver,
       this._templateNormalizer,
@@ -61,8 +58,8 @@ class RuntimeCompiler implements ComponentResolver {
       this._styleCompiler,
       this._viewCompiler,
       this._xhr,
-      this._injectorCompiler,
-      this._genConfig) {}
+      this._injectorCompiler);
+
   CodegenInjectorFactory<dynamic> createInjectorFactory(Type moduleClass,
       [List<dynamic> extraProviders = const []]) {
     var injectorModuleMeta = this
@@ -70,26 +67,17 @@ class RuntimeCompiler implements ComponentResolver {
         .getInjectorModuleMetadata(moduleClass, extraProviders);
     var compileResult =
         this._injectorCompiler.compileInjector(injectorModuleMeta);
-    dynamic factory;
-    if (IS_DART || !this._genConfig.useJit) {
-      factory = interpretStatements(
-          compileResult.statements,
-          compileResult.injectorFactoryVar,
-          new InterpretiveInjectorInstanceFactory());
-    } else {
-      factory = jitStatements(
-          '''${ injectorModuleMeta . type . name}.ngfactory.js''',
-          compileResult.statements,
-          compileResult.injectorFactoryVar);
-    }
-    return factory;
+    return interpretStatements(
+        compileResult.statements,
+        compileResult.injectorFactoryVar,
+        new InterpretiveInjectorInstanceFactory());
   }
 
   Future<ComponentFactory> resolveComponent(Type componentType) {
     CompileDirectiveMetadata compMeta =
         this._runtimeMetadataResolver.getDirectiveMetadata(componentType);
     var hostCacheKey = this._hostCacheKeys[componentType];
-    if (isBlank(hostCacheKey)) {
+    if (hostCacheKey == null) {
       hostCacheKey = new Object();
       this._hostCacheKeys[componentType] = hostCacheKey;
       assertComponent(compMeta);
@@ -117,7 +105,7 @@ class RuntimeCompiler implements ComponentResolver {
       List<dynamic> compilingComponentsPath) {
     var compiledTemplate = this._compiledTemplateCache[cacheKey];
     var done = this._compiledTemplateDone[cacheKey];
-    if (isBlank(compiledTemplate)) {
+    if (compiledTemplate == null) {
       compiledTemplate = new CompiledTemplate();
       this._compiledTemplateCache[cacheKey] = compiledTemplate;
       List<Future> futures =
@@ -189,17 +177,8 @@ class RuntimeCompiler implements ComponentResolver {
         childPromises.add(this._compiledTemplateDone[childCacheKey]);
       }
     });
-    var factory;
-    if (IS_DART || !this._genConfig.useJit) {
-      factory = interpretStatements(
-          compileResult.statements,
-          compileResult.viewFactoryVar,
-          new InterpretiveAppViewInstanceFactory());
-    } else {
-      factory = jitStatements('''${ compMeta . type . name}.template.js''',
-          compileResult.statements, compileResult.viewFactoryVar);
-    }
-    return factory;
+    return interpretStatements(compileResult.statements,
+        compileResult.viewFactoryVar, new InterpretiveAppViewInstanceFactory());
   }
 
   Future<List<String>> _compileComponentStyles(
@@ -230,20 +209,15 @@ class RuntimeCompiler implements ComponentResolver {
         dep.valuePlaceholder.runtime = nestedStylesArr[i];
         dep.valuePlaceholder.name = '''importedStyles${ i}''';
       }
-      if (IS_DART || !this._genConfig.useJit) {
-        return interpretStatements(result.statements, result.stylesVar,
-            new InterpretiveAppViewInstanceFactory()) as List<String>;
-      } else {
-        return jitStatements(
-            '''${ sourceUrl}.css.js''', result.statements, result.stylesVar);
-      }
+      return interpretStatements(result.statements, result.stylesVar,
+          new InterpretiveAppViewInstanceFactory()) as List<String>;
     });
   }
 
   Future<String> _loadStylesheetDep(StylesCompileDependency dep) {
     var cacheKey = '''${ dep . sourceUrl}${ dep . isShimmed ? ".shim" : ""}''';
     var cssTextPromise = this._styleCache[cacheKey];
-    if (isBlank(cssTextPromise)) {
+    if (cssTextPromise == null) {
       cssTextPromise = this._xhr.get(dep.sourceUrl);
       this._styleCache[cacheKey] = cssTextPromise;
     }

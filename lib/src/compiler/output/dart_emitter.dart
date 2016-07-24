@@ -30,7 +30,7 @@ String debugOutputAstAsDart(
       ast.visitStatement(converter, ctx);
     } else if (ast is o.Expression) {
       ast.visitExpression(converter, ctx);
-    } else if (ast is o.Type) {
+    } else if (ast is o.OutputType) {
       ast.visitType(converter, ctx);
     } else {
       throw new BaseException(
@@ -388,7 +388,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   void _visitIdentifier(CompileIdentifierMetadata value,
-      List<o.Type> typeParams, dynamic context) {
+      List<o.OutputType> typeParams, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (isPresent(value.moduleUrl) && value.moduleUrl != this._moduleUrl) {
       var prefix = this.importsWithPrefixes[value.moduleUrl];
@@ -423,6 +423,6 @@ o.Expression getSuperConstructorCallExpr(o.Statement stmt) {
   return null;
 }
 
-bool isConstType(o.Type type) {
+bool isConstType(o.OutputType type) {
   return isPresent(type) && type.hasModifier(o.TypeModifier.Const);
 }

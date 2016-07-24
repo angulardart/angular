@@ -19,7 +19,7 @@ import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, ExceptionHandler;
 import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isPresent, assertionsEnabled, isPromise;
+    show isBlank, isPresent, assertionsEnabled, isPromise;
 
 import "application_tokens.dart" show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "profile/profile.dart" show wtfLeave, wtfCreateScope, WtfScopeFn;

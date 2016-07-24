@@ -671,7 +671,7 @@ List<o.Statement> addReturnValuefNotEmpty(
   }
 }
 
-o.Type getContextType(CompileView view) {
+o.OutputType getContextType(CompileView view) {
   var typeMeta = view.component.type;
   return typeMeta.isHost ? o.DYNAMIC_TYPE : o.importType(typeMeta);
 }

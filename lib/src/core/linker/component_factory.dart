@@ -1,6 +1,5 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
 
 import "../change_detection/change_detection.dart" show ChangeDetectorRef;
 import "element.dart" show AppElement;
@@ -8,96 +7,62 @@ import "element_ref.dart" show ElementRef;
 import "view_ref.dart" show ViewRef;
 import "view_utils.dart" show ViewUtils;
 
-/**
- * Represents an instance of a Component created via a [ComponentFactory].
- *
- * `ComponentRef` provides access to the Component Instance as well other objects related to this
- * Component Instance and allows you to destroy the Component Instance via the [#destroy]
- * method.
- */
+/// Represents an instance of a Component created via a [ComponentFactory].
+///
+/// [ComponentRef] provides access to the Component Instance as well other
+/// objects related to this Component Instance and allows you to destroy the
+/// Component Instance via the [#destroy] method.
 abstract class ComponentRef {
-  /**
-   * Location of the Host Element of this Component Instance.
-   */
+  /// Location of the Host Element of this Component Instance.
   ElementRef get location;
 
-  /**
-   * The injector on which the component instance exists.
-   */
+  /// The injector on which the component instance exists.
   Injector get injector;
 
-  /**
-   * The instance of the Component.
-   */
+  /// The instance of the Component.
   dynamic get instance;
 
-  /**
-   * The [ViewRef] of the Host View of this Component instance.
-   */
+  /// The [ViewRef] of the Host View of this Component instance.
   ViewRef get hostView;
 
-  /**
-   * The [ChangeDetectorRef] of the Component instance.
-   */
+  /// The [ChangeDetectorRef] of the Component instance.
   ChangeDetectorRef get changeDetectorRef;
 
-  /**
-   * The component type.
-   */
+  /// The component type.
   Type get componentType;
 
-  /**
-   * Destroys the component instance and all of the data structures associated with it.
-   */
+  /// Destroys the component instance and all of the data structures associated
+  /// with it.
   void destroy();
-  /**
-   * Allows to register a callback that will be called when the component is destroyed.
-   */
+
+  /// Allows to register a callback that will be called when the component is
+  /// destroyed.
   void onDestroy(Function callback);
 }
 
 class ComponentRef_ extends ComponentRef {
-  AppElement _hostElement;
-  Type _componentType;
-  List<dynamic> _metadata;
-  ComponentRef_(this._hostElement, this._componentType, this._metadata)
-      : super() {
-    /* super call moved to initializer */;
-  }
-  ElementRef get location {
-    return this._hostElement.elementRef;
-  }
+  final AppElement hostElement;
+  final Type componentType;
+  final List<dynamic> metadata;
 
-  Injector get injector {
-    return this._hostElement.injector;
-  }
+  ComponentRef_(this.hostElement, this.componentType, this.metadata);
 
-  dynamic get instance {
-    return this._hostElement.component;
-  }
+  ElementRef get location => hostElement.elementRef;
 
-  ViewRef get hostView {
-    return this._hostElement.parentView.ref;
-  }
+  Injector get injector => hostElement.injector;
 
-  ChangeDetectorRef get changeDetectorRef {
-    return this._hostElement.parentView.ref;
-  }
+  dynamic get instance => hostElement.component;
 
-  Type get componentType {
-    return this._componentType;
-  }
+  ViewRef get hostView => hostElement.parentView.ref;
 
-  List<dynamic> get metadata {
-    return this._metadata;
-  }
+  ChangeDetectorRef get changeDetectorRef => hostElement.parentView.ref;
 
   void destroy() {
-    this._hostElement.parentView.destroy();
+    hostElement.parentView.destroy();
   }
 
   void onDestroy(Function callback) {
-    this.hostView.onDestroy(callback);
+    hostView.onDestroy(callback);
   }
 }
 
@@ -116,33 +81,28 @@ class ComponentFactory {
   // https://github.com/dart-lang/sdk/issues/21553
   const ComponentFactory(this.selector, this._viewFactory, this._componentType,
       [this._metadataPairs = null]);
-  Type get componentType {
-    return this._componentType;
-  }
 
-  List<dynamic> get metadata {
-    if (isPresent(this._metadataPairs)) {
-      for (var i = 0; i < this._metadataPairs.length; i += 2) {
-        if (identical(this._metadataPairs[i], this._componentType)) {
-          return (this._metadataPairs[i + 1] as List<dynamic>);
-        }
-      }
-      return [];
-    } else {
-      return reflector.annotations(this._componentType);
+  Type get componentType => _componentType;
+
+  List get metadata {
+    if (_metadataPairs == null) {
+      return reflector.annotations(_componentType);
     }
+    for (var i = 0; i < this._metadataPairs.length; i += 2) {
+      if (identical(this._metadataPairs[i], this._componentType)) {
+        return (this._metadataPairs[i + 1] as List);
+      }
+    }
+    return [];
   }
 
-  /**
-   * Creates a new component.
-   */
+  /// Creates a new component.
   ComponentRef create(Injector injector,
       [List<List<dynamic>> projectableNodes = null,
       dynamic /* String | dynamic */ rootSelectorOrNode = null]) {
     ViewUtils vu = injector.get(ViewUtils);
-    if (isBlank(projectableNodes)) {
-      projectableNodes = [];
-    }
+    projectableNodes ??= [];
+
     // Note: Host views don't need a declarationAppElement!
     var hostView = this._viewFactory(vu, injector, null);
     var hostElement = hostView.create(projectableNodes, rootSelectorOrNode);

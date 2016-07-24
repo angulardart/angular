@@ -1,14 +1,12 @@
-import "package:angular2/src/facade/lang.dart" show Type;
-
-import "types.dart" show GetterFn, SetterFn, MethodFn;
+import "types.dart";
 
 abstract class PlatformReflectionCapabilities {
   bool isReflectionEnabled();
   Function factory(Type type);
   List interfaces(Type type);
-  List<List> parameters(dynamic type);
-  List annotations(dynamic type);
-  Map<String, List> propMetadata(dynamic typeOrFunc);
+  List<List> parameters(type);
+  List annotations(typeOrFunc);
+  Map<String, List> propMetadata(typeOrFunc);
   GetterFn getter(String name);
   SetterFn setter(String name);
   MethodFn method(String name);

@@ -1,6 +1,4 @@
-import "package:angular2/src/core/di/forward_ref.dart" show resolveForwardRef;
 import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
-import "package:angular2/src/facade/lang.dart" show stringify;
 
 /**
  * Specifies that a constant attribute value should be injected.
@@ -36,7 +34,7 @@ class AttributeMetadata extends DependencyMetadata {
   }
 
   String toString() {
-    return '''@Attribute(${ stringify ( this . attributeName )})''';
+    return '@Attribute($attributeName)';
   }
 }
 
@@ -172,12 +170,8 @@ class QueryMetadata extends DependencyMetadata {
     return false;
   }
 
-  /**
-   * what this is querying for.
-   */
-  get selector {
-    return resolveForwardRef(this._selector);
-  }
+  /// what this is querying for.
+  get selector => _selector;
 
   /**
    * whether this is querying for a variable binding or a directive.
@@ -192,9 +186,7 @@ class QueryMetadata extends DependencyMetadata {
     return selector.split(",");
   }
 
-  String toString() {
-    return '''@Query(${ stringify ( this . selector )})''';
-  }
+  String toString() => '@Query($selector)';
 }
 // TODO: add an example after ContentChildren and ViewChildren are in master
 
@@ -297,9 +289,7 @@ class ViewQueryMetadata extends QueryMetadata {
     return true;
   }
 
-  String toString() {
-    return '''@ViewQuery(${ stringify(selector)})''';
-  }
+  String toString() => '@ViewQuery($selector)';
 }
 
 /**

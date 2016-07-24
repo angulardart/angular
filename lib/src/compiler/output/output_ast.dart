@@ -3,12 +3,12 @@ import "package:angular2/src/facade/lang.dart"
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 
-//// Types
+/// Supported modifiers for [OutputType].
 enum TypeModifier { Const }
 
-abstract class Type {
+abstract class OutputType {
   List<TypeModifier> modifiers;
-  Type([this.modifiers = null]) {
+  OutputType([this.modifiers = null]) {
     if (isBlank(modifiers)) {
       this.modifiers = [];
     }
@@ -21,20 +21,20 @@ abstract class Type {
 
 enum BuiltinTypeName { Dynamic, Bool, String, Int, Number, Function }
 
-class BuiltinType extends Type {
+class BuiltinType extends OutputType {
   BuiltinTypeName name;
+
   BuiltinType(this.name, [List<TypeModifier> modifiers = null])
-      : super(modifiers) {
-    /* super call moved to initializer */;
-  }
+      : super(modifiers);
+
   dynamic visitType(TypeVisitor visitor, dynamic context) {
     return visitor.visitBuiltintType(this, context);
   }
 }
 
-class ExternalType extends Type {
+class ExternalType extends OutputType {
   CompileIdentifierMetadata value;
-  List<Type> typeParams;
+  List<OutputType> typeParams;
   ExternalType(this.value,
       [this.typeParams = null, List<TypeModifier> modifiers = null])
       : super(modifiers) {
@@ -45,8 +45,8 @@ class ExternalType extends Type {
   }
 }
 
-class ArrayType extends Type {
-  Type of;
+class ArrayType extends OutputType {
+  OutputType of;
   ArrayType(this.of, [List<TypeModifier> modifiers = null]) : super(modifiers) {
     /* super call moved to initializer */;
   }
@@ -55,8 +55,8 @@ class ArrayType extends Type {
   }
 }
 
-class MapType extends Type {
-  Type valueType;
+class MapType extends OutputType {
+  OutputType valueType;
   MapType(this.valueType, [List<TypeModifier> modifiers = null])
       : super(modifiers) {
     /* super call moved to initializer */;
@@ -100,14 +100,14 @@ enum BinaryOperator {
 }
 
 abstract class Expression {
-  Type type;
+  OutputType type;
   Expression(this.type) {}
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context);
   ReadPropExpr prop(String name) {
     return new ReadPropExpr(this, name);
   }
 
-  ReadKeyExpr key(Expression index, [Type type = null]) {
+  ReadKeyExpr key(Expression index, [OutputType type = null]) {
     return new ReadKeyExpr(this, index, type);
   }
 
@@ -120,7 +120,8 @@ abstract class Expression {
     return new InvokeFunctionExpr(this, params);
   }
 
-  InstantiateExpr instantiate(List<Expression> params, [Type type = null]) {
+  InstantiateExpr instantiate(List<Expression> params,
+      [OutputType type = null]) {
     return new InstantiateExpr(this, params, type);
   }
 
@@ -194,7 +195,7 @@ abstract class Expression {
     return this.equals(NULL_EXPR);
   }
 
-  Expression cast(Type type) {
+  Expression cast(OutputType type) {
     return new CastExpr(this, type);
   }
 
@@ -208,7 +209,7 @@ enum BuiltinVar { This, Super, CatchError, CatchStack, MetadataMap }
 class ReadVarExpr extends Expression {
   String name;
   BuiltinVar builtin;
-  ReadVarExpr(dynamic /* String | BuiltinVar */ name, [Type type = null])
+  ReadVarExpr(dynamic /* String | BuiltinVar */ name, [OutputType type = null])
       : super(type) {
     /* super call moved to initializer */;
     if (isString(name)) {
@@ -231,7 +232,7 @@ class ReadVarExpr extends Expression {
 class WriteVarExpr extends Expression {
   String name;
   Expression value;
-  WriteVarExpr(this.name, Expression value, [Type type = null])
+  WriteVarExpr(this.name, Expression value, [OutputType type = null])
       : super(isPresent(type) ? type : value.type) {
     /* super call moved to initializer */;
     this.value = value;
@@ -241,7 +242,7 @@ class WriteVarExpr extends Expression {
   }
 
   DeclareVarStmt toDeclStmt(
-      [Type type = null, List<StmtModifier> modifiers = null]) {
+      [OutputType type = null, List<StmtModifier> modifiers = null]) {
     return new DeclareVarStmt(this.name, this.value, type, modifiers);
   }
 }
@@ -250,7 +251,8 @@ class WriteKeyExpr extends Expression {
   Expression receiver;
   Expression index;
   Expression value;
-  WriteKeyExpr(this.receiver, this.index, Expression value, [Type type = null])
+  WriteKeyExpr(this.receiver, this.index, Expression value,
+      [OutputType type = null])
       : super(isPresent(type) ? type : value.type) {
     /* super call moved to initializer */;
     this.value = value;
@@ -264,7 +266,8 @@ class WritePropExpr extends Expression {
   Expression receiver;
   String name;
   Expression value;
-  WritePropExpr(this.receiver, this.name, Expression value, [Type type = null])
+  WritePropExpr(this.receiver, this.name, Expression value,
+      [OutputType type = null])
       : super(isPresent(type) ? type : value.type) {
     /* super call moved to initializer */;
     this.value = value;
@@ -283,7 +286,7 @@ class InvokeMethodExpr extends Expression {
   BuiltinMethod builtin;
   InvokeMethodExpr(
       this.receiver, dynamic /* String | BuiltinMethod */ method, this.args,
-      [Type type = null])
+      [OutputType type = null])
       : super(type) {
     /* super call moved to initializer */;
     if (isString(method)) {
@@ -302,7 +305,8 @@ class InvokeMethodExpr extends Expression {
 class InvokeFunctionExpr extends Expression {
   Expression fn;
   List<Expression> args;
-  InvokeFunctionExpr(this.fn, this.args, [Type type = null]) : super(type);
+  InvokeFunctionExpr(this.fn, this.args, [OutputType type = null])
+      : super(type);
 
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitInvokeFunctionExpr(this, context);
@@ -312,7 +316,7 @@ class InvokeFunctionExpr extends Expression {
 class InstantiateExpr extends Expression {
   Expression classExpr;
   List<Expression> args;
-  InstantiateExpr(this.classExpr, this.args, [Type type]) : super(type) {
+  InstantiateExpr(this.classExpr, this.args, [OutputType type]) : super(type) {
     /* super call moved to initializer */;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -322,7 +326,7 @@ class InstantiateExpr extends Expression {
 
 class LiteralExpr extends Expression {
   dynamic value;
-  LiteralExpr(this.value, [Type type = null]) : super(type) {
+  LiteralExpr(this.value, [OutputType type = null]) : super(type) {
     /* super call moved to initializer */;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -332,8 +336,8 @@ class LiteralExpr extends Expression {
 
 class ExternalExpr extends Expression {
   CompileIdentifierMetadata value;
-  List<Type> typeParams;
-  ExternalExpr(this.value, [Type type = null, this.typeParams = null])
+  List<OutputType> typeParams;
+  ExternalExpr(this.value, [OutputType type = null, this.typeParams = null])
       : super(type) {
     /* super call moved to initializer */;
   }
@@ -347,7 +351,7 @@ class ConditionalExpr extends Expression {
   Expression falseCase;
   Expression trueCase;
   ConditionalExpr(this.condition, Expression trueCase,
-      [this.falseCase = null, Type type = null])
+      [this.falseCase = null, OutputType type = null])
       : super(isPresent(type) ? type : trueCase.type) {
     /* super call moved to initializer */;
     this.trueCase = trueCase;
@@ -369,7 +373,7 @@ class NotExpr extends Expression {
 
 class CastExpr extends Expression {
   Expression value;
-  CastExpr(this.value, Type type) : super(type) {
+  CastExpr(this.value, OutputType type) : super(type) {
     /* super call moved to initializer */;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -379,14 +383,15 @@ class CastExpr extends Expression {
 
 class FnParam {
   String name;
-  Type type;
+  OutputType type;
   FnParam(this.name, [this.type = null]) {}
 }
 
 class FunctionExpr extends Expression {
   List<FnParam> params;
   List<Statement> statements;
-  FunctionExpr(this.params, this.statements, [Type type = null]) : super(type) {
+  FunctionExpr(this.params, this.statements, [OutputType type = null])
+      : super(type) {
     /* super call moved to initializer */;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -405,7 +410,7 @@ class BinaryOperatorExpr extends Expression {
   Expression rhs;
   Expression lhs;
   BinaryOperatorExpr(this.operator, Expression lhs, this.rhs,
-      [Type type = null])
+      [OutputType type = null])
       : super(isPresent(type) ? type : lhs.type) {
     /* super call moved to initializer */;
     this.lhs = lhs;
@@ -418,7 +423,8 @@ class BinaryOperatorExpr extends Expression {
 class ReadPropExpr extends Expression {
   Expression receiver;
   String name;
-  ReadPropExpr(this.receiver, this.name, [Type type = null]) : super(type) {
+  ReadPropExpr(this.receiver, this.name, [OutputType type = null])
+      : super(type) {
     /* super call moved to initializer */;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -433,7 +439,8 @@ class ReadPropExpr extends Expression {
 class ReadKeyExpr extends Expression {
   Expression receiver;
   Expression index;
-  ReadKeyExpr(this.receiver, this.index, [Type type = null]) : super(type) {
+  ReadKeyExpr(this.receiver, this.index, [OutputType type = null])
+      : super(type) {
     /* super call moved to initializer */;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -447,7 +454,8 @@ class ReadKeyExpr extends Expression {
 
 class LiteralArrayExpr extends Expression {
   List<Expression> entries;
-  LiteralArrayExpr(List<Expression> entries, [Type type = null]) : super(type) {
+  LiteralArrayExpr(List<Expression> entries, [OutputType type = null])
+      : super(type) {
     /* super call moved to initializer */;
     this.entries = entries;
   }
@@ -458,7 +466,7 @@ class LiteralArrayExpr extends Expression {
 
 class LiteralMapExpr extends Expression {
   List<List<dynamic /* String | Expression */ >> entries;
-  Type valueType = null;
+  OutputType valueType = null;
   LiteralMapExpr(this.entries, [MapType type = null]) : super(type) {
     /* super call moved to initializer */;
     if (isPresent(type)) {
@@ -516,9 +524,9 @@ abstract class Statement {
 class DeclareVarStmt extends Statement {
   String name;
   Expression value;
-  Type type;
+  OutputType type;
   DeclareVarStmt(this.name, this.value,
-      [Type type = null, List<StmtModifier> modifiers = null])
+      [OutputType type = null, List<StmtModifier> modifiers = null])
       : super(modifiers) {
     /* super call moved to initializer */;
     this.type = isPresent(type) ? type : value.type;
@@ -532,7 +540,7 @@ class DeclareFunctionStmt extends Statement {
   String name;
   List<FnParam> params;
   List<Statement> statements;
-  Type type;
+  OutputType type;
   DeclareFunctionStmt(this.name, this.params, this.statements,
       [this.type = null, List<StmtModifier> modifiers = null])
       : super(modifiers) {
@@ -564,7 +572,7 @@ class ReturnStatement extends Statement {
 }
 
 class AbstractClassPart {
-  Type type;
+  OutputType type;
   List<StmtModifier> modifiers;
   AbstractClassPart([this.type = null, this.modifiers]) {
     if (isBlank(modifiers)) {
@@ -578,7 +586,8 @@ class AbstractClassPart {
 
 class ClassField extends AbstractClassPart {
   String name;
-  ClassField(this.name, [Type type = null, List<StmtModifier> modifiers = null])
+  ClassField(this.name,
+      [OutputType type = null, List<StmtModifier> modifiers = null])
       : super(type, modifiers) {
     /* super call moved to initializer */;
   }
@@ -589,7 +598,7 @@ class ClassMethod extends AbstractClassPart {
   List<FnParam> params;
   List<Statement> body;
   ClassMethod(this.name, this.params, this.body,
-      [Type type = null, List<StmtModifier> modifiers = null])
+      [OutputType type = null, List<StmtModifier> modifiers = null])
       : super(type, modifiers) {
     /* super call moved to initializer */;
   }
@@ -599,7 +608,7 @@ class ClassGetter extends AbstractClassPart {
   String name;
   List<Statement> body;
   ClassGetter(this.name, this.body,
-      [Type type = null, List<StmtModifier> modifiers = null])
+      [OutputType type = null, List<StmtModifier> modifiers = null])
       : super(type, modifiers) {
     /* super call moved to initializer */;
   }
@@ -1018,25 +1027,26 @@ class _VariableFinder extends RecursiveExpressionVisitor {
   }
 }
 
-ReadVarExpr variable(String name, [Type type = null]) {
+ReadVarExpr variable(String name, [OutputType type = null]) {
   return new ReadVarExpr(name, type);
 }
 
 ExternalExpr importExpr(CompileIdentifierMetadata id,
-    [List<Type> typeParams = null]) {
+    [List<OutputType> typeParams = null]) {
   return new ExternalExpr(id, null, typeParams);
 }
 
 ExternalType importType(CompileIdentifierMetadata id,
-    [List<Type> typeParams = null, List<TypeModifier> typeModifiers = null]) {
+    [List<OutputType> typeParams = null,
+    List<TypeModifier> typeModifiers = null]) {
   return isPresent(id) ? new ExternalType(id, typeParams, typeModifiers) : null;
 }
 
-LiteralExpr literal(dynamic value, [Type type = null]) {
+LiteralExpr literal(dynamic value, [OutputType type = null]) {
   return new LiteralExpr(value, type);
 }
 
-LiteralArrayExpr literalArr(List<Expression> values, [Type type = null]) {
+LiteralArrayExpr literalArr(List<Expression> values, [OutputType type = null]) {
   return new LiteralArrayExpr(values, type);
 }
 
@@ -1050,6 +1060,6 @@ NotExpr not(Expression expr) {
 }
 
 FunctionExpr fn(List<FnParam> params, List<Statement> body,
-    [Type type = null]) {
+    [OutputType type = null]) {
   return new FunctionExpr(params, body, type);
 }

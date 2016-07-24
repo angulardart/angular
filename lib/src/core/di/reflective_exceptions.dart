@@ -1,16 +1,27 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, WrappedException;
-import "package:angular2/src/facade/lang.dart" show stringify, isBlank;
-
 import "reflective_injector.dart" show ReflectiveInjector;
 import "reflective_key.dart" show ReflectiveKey;
 import "provider.dart";
+import "metadata.dart";
 
-List<dynamic> findFirstClosedCycle(List<dynamic> keys) {
+List<dynamic> findFirstClosedCycle(List keys) {
   var res = [];
   for (var i = 0; i < keys.length; ++i) {
-    if (ListWrapper.contains(res, keys[i])) {
+    if (res.contains(keys[i])) {
+      res.add(keys[i]);
+      return res;
+    } else {
+      res.add(keys[i]);
+    }
+  }
+  return res;
+}
+
+List<dynamic> findFirstClosedCycleReversed(List keys) {
+  var res = [];
+  for (var i = keys.length - 1; i >= 0; i--) {
+    if (res.contains(keys[i])) {
       res.add(keys[i]);
       return res;
     } else {
@@ -22,25 +33,21 @@ List<dynamic> findFirstClosedCycle(List<dynamic> keys) {
 
 String constructResolvingPath(List<dynamic> keys) {
   if (keys.length > 1) {
-    var reversed = findFirstClosedCycle(ListWrapper.reversed(keys));
-    var tokenStrs = reversed.map((k) => stringify(k.token)).toList();
+    var reversed = findFirstClosedCycleReversed(keys);
+    var tokenStrs = reversed
+        .map((k) => '${InjectMetadata.tokenToString(k.token)}')
+        .toList();
     return " (" + tokenStrs.join(" -> ") + ")";
   } else {
     return "";
   }
 }
 
-/**
- * Base class for all errors arising from misconfigured providers.
- */
+/// Base class for all errors arising from misconfigured providers.
 class AbstractProviderError extends BaseException {
-  /** @internal */
   String message;
-  /** @internal */
   List<ReflectiveKey> keys;
-  /** @internal */
   List<ReflectiveInjector> injectors;
-  /** @internal */
   Function constructResolvingMessage;
   AbstractProviderError(ReflectiveInjector injector, ReflectiveKey key,
       Function constructResolvingMessage)
@@ -58,90 +65,76 @@ class AbstractProviderError extends BaseException {
   }
 
   get context {
-    return this.injectors[this.injectors.length - 1].debugContext();
+    return injectors.last.debugContext();
   }
 }
 
-/**
- * Thrown when trying to retrieve a dependency by `Key` from [Injector], but the
- * [Injector] does not have a [Provider] for [Key].
- *
- * ### Example ([live demo](http://plnkr.co/edit/vq8D3FRB9aGbnWJqtEPE?p=preview))
- *
- * ```typescript
- * class A {
- *   constructor(b:B) {}
- * }
- *
- * expect(() => Injector.resolveAndCreate([A])).toThrowError();
- * ```
- */
+/// Thrown when trying to retrieve a dependency by `Key` from [Injector], but
+/// the [Injector] does not have a [Provider] for [Key].
+///
+/// class A {
+///   A(B b);
+/// }
+///
+/// expect(() => Injector.resolveAndCreate([A]), throws);
+///
 class NoProviderError extends AbstractProviderError {
   NoProviderError(ReflectiveInjector injector, ReflectiveKey key)
       : super(injector, key, (List<dynamic> keys) {
-          var first = stringify(ListWrapper.first(keys).token);
+          var first = '${InjectMetadata.tokenToString(keys.first.token)}';
           return '''No provider for ${ first}!${ constructResolvingPath ( keys )}''';
-        }) {
-    /* super call moved to initializer */;
-  }
+        });
 }
 
-/**
- * Thrown when dependencies form a cycle.
- *
- * ### Example ([live demo](http://plnkr.co/edit/wYQdNos0Tzql3ei1EV9j?p=info))
- *
- * ```typescript
- * var injector = Injector.resolveAndCreate([
- *   provide("one", {useFactory: (two) => "two", deps: [[new Inject("two")]]}),
- *   provide("two", {useFactory: (one) => "one", deps: [[new Inject("one")]]})
- * ]);
- *
- * expect(() => injector.get("one")).toThrowError();
- * ```
- *
- * Retrieving `A` or `B` throws a `CyclicDependencyError` as the graph above cannot be constructed.
- */
+/// Thrown when dependencies form a cycle.
+///
+/// Example:
+///
+/// var injector = Injector.resolveAndCreate([
+///   provide("one", useFactory: (two) => "two", deps: [[new Inject("two")]]),
+///   provide("two", useFactory: (one) => "one", deps: [[new Inject("one")]])
+/// ]);
+///
+/// expect(() => injector.get("one"), throws);
+///
+/// Retrieving [A] or [B] throws a [CyclicDependencyError] as the graph above
+/// cannot be constructed.
 class CyclicDependencyError extends AbstractProviderError {
   CyclicDependencyError(ReflectiveInjector injector, ReflectiveKey key)
       : super(injector, key, (List<dynamic> keys) {
-          return '''Cannot instantiate cyclic dependency!${ constructResolvingPath ( keys )}''';
-        }) {
-    /* super call moved to initializer */;
-  }
+          return 'Cannot instantiate cyclic '
+              'dependency!${constructResolvingPath(keys)}';
+        });
 }
 
-/**
- * Thrown when a constructing type returns with an Error.
- *
- * The `InstantiationError` class contains the original error plus the dependency graph which caused
- * this object to be instantiated.
- *
- * ### Example ([live demo](http://plnkr.co/edit/7aWYdcqTQsP0eNqEdUAf?p=preview))
- *
- * ```typescript
- * class A {
- *   constructor() {
- *     throw new Error('message');
- *   }
- * }
- *
- * var injector = Injector.resolveAndCreate([A]);
-
- * try {
- *   injector.get(A);
- * } catch (e) {
- *   expect(e instanceof InstantiationError).toBe(true);
- *   expect(e.originalException.message).toEqual("message");
- *   expect(e.originalStack).toBeDefined();
- * }
- * ```
- */
+/// Thrown when a constructing type returns with an Error.
+///
+/// The [InstantiationError] class contains the original error plus the
+/// dependency graph which caused this object to be instantiated.
+///
+/// ### Example ([live demo](http://plnkr.co/edit/7aWYdcqTQsP0eNqEdUAf?p=preview))
+///
+/// ```typescript
+/// class A {
+///   constructor() {
+///     throw new Error('message');
+///   }
+/// }
+///
+/// var injector = Injector.resolveAndCreate([A]);
+///
+/// try {
+///   injector.get(A);
+/// } catch (e) {
+///   expect(e instanceof InstantiationError).toBe(true);
+///   expect(e.originalException.message).toEqual("message");
+///   expect(e.originalStack).toBeDefined();
+/// }
+///
 class InstantiationError extends WrappedException {
-  /** @internal */
   List<ReflectiveKey> keys;
-  /** @internal */
   List<ReflectiveInjector> injectors;
+
   InstantiationError(ReflectiveInjector injector, originalException,
       originalStack, ReflectiveKey key)
       : super("DI Exception", originalException, originalStack, null) {
@@ -154,10 +147,9 @@ class InstantiationError extends WrappedException {
     this.keys.add(key);
   }
 
-  String get wrapperMessage {
-    var first = stringify(ListWrapper.first(this.keys).token);
-    return '''Error during instantiation of ${ first}!${ constructResolvingPath ( this . keys )}.''';
-  }
+  String get wrapperMessage => 'Error during instantiation of '
+      '${InjectMetadata.tokenToString(keys.first.token)}!'
+      '${constructResolvingPath(keys)}.';
 
   ReflectiveKey get causeKey {
     return this.keys[0];
@@ -188,73 +180,65 @@ class InvalidProviderError extends BaseException {
             'Invalid provider (${provider is Provider ? provider.token : provider}): $message');
 }
 
-/**
- * Thrown when the class has no annotation information.
- *
- * Lack of annotation information prevents the [Injector] from determining which dependencies
- * need to be injected into the constructor.
- *
- * ### Example ([live demo](http://plnkr.co/edit/rHnZtlNS7vJOPQ6pcVkm?p=preview))
- *
- * ```typescript
- * class A {
- *   constructor(b) {}
- * }
- *
- * expect(() => Injector.resolveAndCreate([A])).toThrowError();
- * ```
- *
- * This error is also thrown when the class not marked with [Injectable] has parameter types.
- *
- * ```typescript
- * class B {}
- *
- * class A {
- *   constructor(b:B) {} // no information about the parameter types of A is available at runtime.
- * }
- *
- * expect(() => Injector.resolveAndCreate([A,B])).toThrowError();
- * ```
- */
+/// Thrown when the class has no annotation information.
+///
+/// Lack of annotation information prevents the [Injector] from determining
+/// which dependencies need to be injected into the constructor.
+///
+/// class A {
+///   A(b);
+/// }
+///
+/// expect(() => Injector.resolveAndCreate([A]), throws);
+///
+/// This error is also thrown when the class not marked with [Injectable] has
+/// parameter types.
+///
+/// class B {}
+///
+/// class A {
+///   A(B b) {} // no information about the parameter types of A is available.
+/// }
+///
+/// expect(() => Injector.resolveAndCreate([A,B]), throws);
+///
 class NoAnnotationError extends BaseException {
   NoAnnotationError(typeOrFunc, List<List<dynamic>> params)
-      : super(NoAnnotationError._genMessage(typeOrFunc, params)) {
-    /* super call moved to initializer */;
-  }
+      : super(NoAnnotationError._genMessage(typeOrFunc, params));
+
   static _genMessage(typeOrFunc, List<List<dynamic>> params) {
     var signature = [];
     for (var i = 0, ii = params.length; i < ii; i++) {
       var parameter = params[i];
-      if (isBlank(parameter) || parameter.length == 0) {
+      if (parameter == null || parameter.length == 0) {
         signature.add("?");
       } else {
-        signature.add(parameter.map(stringify).toList().join(" "));
+        signature.add(parameter
+            .map((x) => InjectMetadata.tokenToString(x))
+            .toList()
+            .join(" "));
       }
     }
-    return "Cannot resolve all parameters for '" +
-        stringify(typeOrFunc) +
-        "'(" +
+    String typeStr = InjectMetadata.tokenToString(typeOrFunc);
+    return "Cannot resolve all parameters for '$typeStr'(" +
         signature.join(", ") +
         "). " +
-        "Make sure that all the parameters are decorated with Inject or have valid type annotations and that '" +
-        stringify(typeOrFunc) +
+        "Make sure that all the parameters are decorated with Inject "
+        "or have valid type annotations and that '$typeStr" +
         "' is decorated with Injectable.";
   }
 }
 
-/**
- * Thrown when getting an object by index.
- *
- * ### Example ([live demo](http://plnkr.co/edit/bRs0SX2OTQiJzqvjgl8P?p=preview))
- *
- * ```typescript
- * class A {}
- *
- * var injector = Injector.resolveAndCreate([A]);
- *
- * expect(() => injector.getAt(100)).toThrowError();
- * ```
- */
+/// Thrown when getting an object by index.
+///
+/// ### Example ([live demo](http://plnkr.co/edit/bRs0SX2OTQiJzqvjgl8P?p=preview))
+///
+/// class A {}
+///
+/// var injector = Injector.resolveAndCreate([A]);
+///
+/// expect(() => injector.getAt(100), throws);
+///
 class OutOfBoundsError extends BaseException {
   OutOfBoundsError(index) : super('''Index ${ index} is out-of-bounds.''') {
     /* super call moved to initializer */;
@@ -262,24 +246,17 @@ class OutOfBoundsError extends BaseException {
 }
 // TODO: add a working example after alpha38 is released
 
-/**
- * Thrown when a multi provider and a regular provider are bound to the same token.
- *
- * ### Example
- *
- * ```typescript
- * expect(() => Injector.resolveAndCreate([
- *   new Provider("Strings", {useValue: "string1", multi: true}),
- *   new Provider("Strings", {useValue: "string2", multi: false})
- * ])).toThrowError();
- * ```
- */
+/// Thrown when a multi provider and a regular provider are bound to the same token.
+///
+/// expect(() => Injector.resolveAndCreate([
+///   new Provider("Strings", useValue: "string1", multi: true),
+///   new Provider("Strings", useValue: "string2", multi: false)
+/// ]), throws);
+///
 class MixingMultiProvidersWithRegularProvidersError extends BaseException {
   MixingMultiProvidersWithRegularProvidersError(provider1, provider2)
       : super("Cannot mix multi providers and regular providers, got: " +
             provider1.toString() +
             " " +
-            provider2.toString()) {
-    /* super call moved to initializer */;
-  }
+            provider2.toString());
 }

@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di.dart" show Provider;
-import "package:angular2/src/facade/lang.dart" show Type;
 
 import "application_ref.dart" show APPLICATION_CORE_PROVIDERS;
 import "application_tokens.dart" show APP_ID_RANDOM_PROVIDER;

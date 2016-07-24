@@ -16,7 +16,7 @@ import "package:angular2/core.dart"
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/reflection/reflection_capabilities.dart"
     show ReflectionCapabilities;
-import "package:angular2/src/facade/lang.dart" show Type, isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
 export "package:angular2/src/core/security.dart"
     show SanitizationService, TemplateSecurityContext;

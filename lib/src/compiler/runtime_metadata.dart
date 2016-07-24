@@ -1,5 +1,4 @@
 import "package:angular2/src/compiler/url_resolver.dart" show getUrlScheme;
-import "package:angular2/src/core/di.dart" show resolveForwardRef;
 import "package:angular2/src/core/di.dart" show Injectable, Inject, Optional;
 import "package:angular2/src/core/di/metadata.dart"
     show SelfMetadata, HostMetadata, SkipSelfMetadata;
@@ -21,7 +20,7 @@ import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show Type, isBlank, isPresent, isArray, stringify, isString;
+    show isBlank, isPresent, isArray, stringify, isString;
 
 import "assertions.dart" show assertArrayOfStrings;
 import "compile_metadata.dart" as cpl;
@@ -123,7 +122,6 @@ class RuntimeMetadataResolver {
 
   cpl.CompileTypeMetadata getTypeMetadata(Type type, String moduleUrl,
       [List<dynamic> deps = null]) {
-    type = resolveForwardRef(type);
     return new cpl.CompileTypeMetadata(
         name: this.sanitizeTokenName(type),
         moduleUrl: moduleUrl,
@@ -215,7 +213,6 @@ class RuntimeMetadataResolver {
   }
 
   cpl.CompileTokenMetadata getTokenMetadata(dynamic token) {
-    token = resolveForwardRef(token);
     var compileToken;
     if (isString(token)) {
       compileToken = new cpl.CompileTokenMetadata(value: token);
@@ -230,7 +227,6 @@ class RuntimeMetadataResolver {
   List<dynamic /* cpl . CompileProviderMetadata | cpl . CompileTypeMetadata | List < dynamic > */ >
       getProvidersMetadata(List<dynamic> providers) {
     return providers.map((provider) {
-      provider = resolveForwardRef(provider);
       if (isArray(provider)) {
         return this.getProvidersMetadata(provider);
       } else if (provider is Provider) {
@@ -351,7 +347,7 @@ List<Type> flattenPipes(ViewMetadata view, List<dynamic> platformPipes) {
 void flattenArray(
     List<dynamic> tree, List<dynamic /* Type | List < dynamic > */ > out) {
   for (var i = 0; i < tree.length; i++) {
-    var item = resolveForwardRef(tree[i]);
+    var item = tree[i];
     if (isArray(item)) {
       flattenArray(item, out);
     } else {

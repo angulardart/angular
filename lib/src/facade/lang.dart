@@ -2,7 +2,7 @@ import 'dart:async' show Future, Zone;
 import 'dart:convert' as convert;
 import 'dart:math' as math;
 
-export 'dart:core' show Type, RegExp, print, DateTime, Uri;
+export 'dart:core' show RegExp, print, DateTime, Uri;
 
 String getTypeNameForDebugging(Object type) => type.toString();
 

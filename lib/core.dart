@@ -18,7 +18,7 @@ export 'src/core/application_tokens.dart'
 export 'src/core/change_detection.dart';
 export 'src/core/debug/debug_node.dart'
     show DebugElement, DebugNode, asNativeElements;
-export 'src/core/di.dart' hide ForwardRefFn, resolveForwardRef, forwardRef;
+export 'src/core/di.dart';
 export 'src/core/linker.dart';
 export 'src/core/metadata.dart';
 export 'src/core/platform_common_providers.dart' show PLATFORM_COMMON_PROVIDERS;

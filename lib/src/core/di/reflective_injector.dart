@@ -1,6 +1,4 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show Type;
 
 import "injector.dart" show Injector, THROW_IF_NOT_FOUND;
 import "metadata.dart" show SelfMetadata, SkipSelfMetadata;
@@ -20,7 +18,6 @@ import "reflective_provider.dart"
         ResolvedReflectiveFactory,
         resolveReflectiveProviders;
 
-Type ___unused;
 // Threshold for the dynamic version
 const _MAX_CONSTRUCTION_COUNTER = 10;
 const UNDEFINED = const Object();
@@ -119,21 +116,15 @@ class ReflectiveProtoInjectorInlineStrategy
 class ReflectiveProtoInjectorDynamicStrategy
     implements ReflectiveProtoInjectorStrategy {
   List<ResolvedReflectiveProvider> providers;
-  List<num> keyIds;
+  final List<num> keyIds = <num>[];
   ReflectiveProtoInjectorDynamicStrategy(
       ReflectiveProtoInjector protoInj, this.providers) {
     var len = providers.length;
-    this.keyIds = ListWrapper.createFixedSize(len);
     for (var i = 0; i < len; i++) {
-      this.keyIds[i] = providers[i].key.id;
+      keyIds.add(providers[i].key.id);
     }
   }
-  ResolvedReflectiveProvider getProviderAtIndex(num index) {
-    if (index < 0 || index >= this.providers.length) {
-      throw new OutOfBoundsError(index);
-    }
-    return this.providers[index];
-  }
+  ResolvedReflectiveProvider getProviderAtIndex(num index) => providers[index];
 
   ReflectiveInjectorStrategy createInjectorStrategy(ReflectiveInjector_ ei) {
     return new ReflectiveInjectorDynamicStrategy(this, ei);
@@ -146,7 +137,6 @@ class ReflectiveProtoInjector {
     return new ReflectiveProtoInjector(providers);
   }
 
-  /** @internal */
   ReflectiveProtoInjectorStrategy _strategy;
   num numberOfProviders;
   ReflectiveProtoInjector(List<ResolvedReflectiveProvider> providers) {
@@ -280,8 +270,8 @@ class ReflectiveInjectorDynamicStrategy implements ReflectiveInjectorStrategy {
   ReflectiveInjector_ injector;
   List<dynamic> objs;
   ReflectiveInjectorDynamicStrategy(this.protoStrategy, this.injector) {
-    this.objs = ListWrapper.createFixedSize(protoStrategy.providers.length);
-    ListWrapper.fill(this.objs, UNDEFINED);
+    this.objs = new List.filled(protoStrategy.providers.length, UNDEFINED,
+        growable: true);
   }
   void resetConstructionCounter() {
     this.injector._constructionCounter = 0;
@@ -304,116 +294,98 @@ class ReflectiveInjectorDynamicStrategy implements ReflectiveInjectorStrategy {
     return UNDEFINED;
   }
 
-  dynamic getObjAtIndex(num index) {
-    if (index < 0 || index >= this.objs.length) {
-      throw new OutOfBoundsError(index);
-    }
-    return this.objs[index];
-  }
+  dynamic getObjAtIndex(num index) => objs[index];
 
-  num getMaxNumberOfObjects() {
-    return this.objs.length;
-  }
+  num getMaxNumberOfObjects() => objs.length;
 }
 
-/**
- * A ReflectiveDependency injection container used for instantiating objects and resolving
- * dependencies.
- *
- * An `Injector` is a replacement for a `new` operator, which can automatically resolve the
- * constructor dependencies.
- *
- * In typical use, application code asks for the dependencies in the constructor and they are
- * resolved by the `Injector`.
- *
- * ### Example ([live demo](http://plnkr.co/edit/jzjec0?p=preview))
- *
- * The following example creates an `Injector` configured to create `Engine` and `Car`.
- *
- * ```typescript
- * @Injectable()
- * class Engine {
- * }
- *
- * @Injectable()
- * class Car {
- *   constructor(public engine:Engine) {}
- * }
- *
- * var injector = ReflectiveInjector.resolveAndCreate([Car, Engine]);
- * var car = injector.get(Car);
- * expect(car instanceof Car).toBe(true);
- * expect(car.engine instanceof Engine).toBe(true);
- * ```
- *
- * Notice, we don't use the `new` operator because we explicitly want to have the `Injector`
- * resolve all of the object's dependencies automatically.
- */
+/// A ReflectiveDependency injection container used for instantiating objects
+/// and resolving dependencies.
+///
+/// An [Injector] is a replacement for a [new] operator, which can automatically
+/// resolve the constructor dependencies.
+///
+/// In typical use, application code asks for the dependencies in the
+/// constructor and they are resolved by the [Injector].
+///
+/// The following example creates an `Injector` configured to create [Engine]
+/// and [Car].
+///
+///     @Injectable()
+///     class Engine {
+///     }
+///
+///     @Injectable()
+///     class Car {
+///       Car(Engine engine);
+///     }
+///
+///     var injector = ReflectiveInjector.resolveAndCreate([Car, Engine]);
+///     var car = injector.get(Car);
+///     expect(car is Car, true);
+///     expect(car.engine is Engine, true);
+///
+/// Notice, we don't use the [new] operator because we explicitly want to have
+/// the [Injector] resolve all of the object's dependencies automatically.
+///
 abstract class ReflectiveInjector implements Injector {
-  /**
-   * Turns an array of provider definitions into an array of resolved providers.
-   *
-   * A resolution is a process of flattening multiple nested arrays and converting individual
-   * providers into an array of [ResolvedReflectiveProvider]s.
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/AiXTHi?p=preview))
-   *
-   * ```typescript
-   * @Injectable()
-   * class Engine {
-   * }
-   *
-   * @Injectable()
-   * class Car {
-   *   constructor(public engine:Engine) {}
-   * }
-   *
-   * var providers = ReflectiveInjector.resolve([Car, [[Engine]]]);
-   *
-   * expect(providers.length).toEqual(2);
-   *
-   * expect(providers[0] instanceof ResolvedReflectiveProvider).toBe(true);
-   * expect(providers[0].key.displayName).toBe("Car");
-   * expect(providers[0].dependencies.length).toEqual(1);
-   * expect(providers[0].factory).toBeDefined();
-   *
-   * expect(providers[1].key.displayName).toBe("Engine");
-   * });
-   * ```
-   *
-   * See [ReflectiveInjector#fromResolvedProviders] for more info.
-   */
+  /// Turns an array of provider definitions into an array of resolved
+  /// providers.
+  ///
+  /// A resolution is a process of flattening multiple nested arrays and
+  /// converting individual providers into an array of
+  /// [ResolvedReflectiveProvider]s.
+  ///
+  ///     @Injectable()
+  ///     class Engine {
+  ///     }
+  ///
+  ///     @Injectable()
+  ///     class Car {
+  ///       Car(Engine engine);
+  ///     }
+  ///
+  ///     var providers = ReflectiveInjector.resolve([Car, [[Engine]]]);
+  ///
+  ///     expect(providers, hasLength(2));
+  ///
+  ///     expect(providers[0] is ResolvedReflectiveProvider, true);
+  ///     expect(providers[0].key.displayName, "Car");
+  ///     expect(providers[0].dependencies, hasLength(1));
+  ///     expect(providers[0].factory, isNotNull);
+  ///
+  ///     expect(providers[1].key.displayName, "Engine");
+  ///
+  /// See [ReflectiveInjector#fromResolvedProviders] for more info.
+  ///
   static List<ResolvedReflectiveProvider> resolve(
       List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
     return resolveReflectiveProviders(providers);
   }
 
-  /**
-   * Resolves an array of providers and creates an injector from those providers.
-   *
-   * The passed-in providers can be an array of `Type`, [Provider],
-   * or a recursive array of more providers.
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/ePOccA?p=preview))
-   *
-   * ```typescript
-   * @Injectable()
-   * class Engine {
-   * }
-   *
-   * @Injectable()
-   * class Car {
-   *   constructor(public engine:Engine) {}
-   * }
-   *
-   * var injector = ReflectiveInjector.resolveAndCreate([Car, Engine]);
-   * expect(injector.get(Car) instanceof Car).toBe(true);
-   * ```
-   *
-   * This function is slower than the corresponding `fromResolvedProviders`
-   * because it needs to resolve the passed-in providers first.
-   * See [Injector#resolve] and [Injector#fromResolvedProviders].
-   */
+  /// Resolves an array of providers and creates an injector from those
+  /// providers.
+  ///
+  /// The passed-in providers can be an array of [Type] | [Provider],
+  /// or a recursive array of more providers.
+  ///
+  ///     @Injectable()
+  ///     class Engine {
+  ///     }
+  ///
+  ///     @Injectable()
+  ///     class Car {
+  ///       Car(Engine engine);
+  ///     }
+  ///
+  ///     var injector = ReflectiveInjector.resolveAndCreate([Car, Engine]);
+  ///     expect(injector.get(Car) is Car, true);
+  ///
+  ///
+  /// This function is slower than the corresponding [fromResolvedProviders]
+  /// because it needs to resolve the passed-in providers first.
+  /// See [Injector#resolve] and [Injector#fromResolvedProviders].
+  ///
   static ReflectiveInjector resolveAndCreate(
       List<dynamic /* Type | Provider | List < dynamic > */ > providers,
       [Injector parent = null]) {
@@ -422,28 +394,24 @@ abstract class ReflectiveInjector implements Injector {
         ResolvedReflectiveProviders, parent);
   }
 
-  /**
-   * Creates an injector from previously resolved providers.
-   *
-   * This API is the recommended way to construct injectors in performance-sensitive parts.
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/KrSMci?p=preview))
-   *
-   * ```typescript
-   * @Injectable()
-   * class Engine {
-   * }
-   *
-   * @Injectable()
-   * class Car {
-   *   constructor(public engine:Engine) {}
-   * }
-   *
-   * var providers = ReflectiveInjector.resolve([Car, Engine]);
-   * var injector = ReflectiveInjector.fromResolvedProviders(providers);
-   * expect(injector.get(Car) instanceof Car).toBe(true);
-   * ```
-   */
+  /// Creates an injector from previously resolved providers.
+  ///
+  /// This API is the recommended way to construct injectors in
+  /// performance-sensitive parts.
+  ///
+  ///     @Injectable()
+  ///     class Engine {
+  ///     }
+  ///
+  ///     @Injectable()
+  ///     class Car {
+  ///       Car(Engine engine);
+  ///     }
+  ///
+  ///     var providers = ReflectiveInjector.resolve([Car, Engine]);
+  ///     var injector = ReflectiveInjector.fromResolvedProviders(providers);
+  ///     expect(injector.get(Car) is Car, true);
+  ///
   static ReflectiveInjector fromResolvedProviders(
       List<ResolvedReflectiveProvider> providers,
       [Injector parent = null]) {
@@ -451,174 +419,110 @@ abstract class ReflectiveInjector implements Injector {
         ReflectiveProtoInjector.fromResolvedProviders(providers), parent);
   }
 
-  /**
-   * 
-   */
   static ReflectiveInjector fromResolvedBindings(
       List<ResolvedReflectiveProvider> providers) {
     return ReflectiveInjector.fromResolvedProviders(providers);
   }
 
-  /**
-   * Parent of this injector.
-   *
-   * <!-- TODO: Add a link to the section of the user guide talking about hierarchical injection.
-   * -->
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/eosMGo?p=preview))
-   *
-   * ```typescript
-   * var parent = ReflectiveInjector.resolveAndCreate([]);
-   * var child = parent.resolveAndCreateChild([]);
-   * expect(child.parent).toBe(parent);
-   * ```
-   */
+  /// Parent of this injector.
+  ///
+  /// <!-- TODO: Add a link to the section of the user guide talking about
+  /// hierarchical injection.
+  ///
+  ///     var parent = ReflectiveInjector.resolveAndCreate([]);
+  ///     var child = parent.resolveAndCreateChild([]);
+  ///     expect(child.parent, parent);
+  ///
   Injector get parent;
 
-  /**
-   * @internal
-   */
-  dynamic debugContext() {
-    return null;
-  }
+  dynamic debugContext() => null;
 
-  /**
-   * Resolves an array of providers and creates a child injector from those providers.
-   *
-   * <!-- TODO: Add a link to the section of the user guide talking about hierarchical injection.
-   * -->
-   *
-   * The passed-in providers can be an array of `Type`, [Provider],
-   * or a recursive array of more providers.
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/opB3T4?p=preview))
-   *
-   * ```typescript
-   * class ParentProvider {}
-   * class ChildProvider {}
-   *
-   * var parent = ReflectiveInjector.resolveAndCreate([ParentProvider]);
-   * var child = parent.resolveAndCreateChild([ChildProvider]);
-   *
-   * expect(child.get(ParentProvider) instanceof ParentProvider).toBe(true);
-   * expect(child.get(ChildProvider) instanceof ChildProvider).toBe(true);
-   * expect(child.get(ParentProvider)).toBe(parent.get(ParentProvider));
-   * ```
-   *
-   * This function is slower than the corresponding `createChildFromResolved`
-   * because it needs to resolve the passed-in providers first.
-   * See [Injector#resolve] and [Injector#createChildFromResolved].
-   */
+  /// Resolves an array of providers and creates a child injector from those providers.
+  ///
+  /// The passed-in providers can be an array of `Type`, [Provider],
+  /// or a recursive array of more providers.
+  ///
+  ///     class ParentProvider {}
+  ///     class ChildProvider {}
+  ///
+  ///     var parent = ReflectiveInjector.resolveAndCreate([ParentProvider]);
+  ///     var child = parent.resolveAndCreateChild([ChildProvider]);
+  ///
+  ///     expect(child.get(ParentProvider) is ParentProvider, true);
+  ///     expect(child.get(ChildProvider) is ChildProvider, true);
+  ///     expect(child.get(ParentProvider), parent.get(ParentProvider));
+  ///
+  /// This function is slower than the corresponding [createChildFromResolved]
+  /// because it needs to resolve the passed-in providers first.
+  /// See [Injector#resolve] and [Injector#createChildFromResolved].
+  ///
   ReflectiveInjector resolveAndCreateChild(
       List<dynamic /* Type | Provider | List < dynamic > */ > providers);
 
-  /**
-   * Creates a child injector from previously resolved providers.
-   *
-   * <!-- TODO: Add a link to the section of the user guide talking about hierarchical injection.
-   * -->
-   *
-   * This API is the recommended way to construct injectors in performance-sensitive parts.
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/VhyfjN?p=preview))
-   *
-   * ```typescript
-   * class ParentProvider {}
-   * class ChildProvider {}
-   *
-   * var parentProviders = ReflectiveInjector.resolve([ParentProvider]);
-   * var childProviders = ReflectiveInjector.resolve([ChildProvider]);
-   *
-   * var parent = ReflectiveInjector.fromResolvedProviders(parentProviders);
-   * var child = parent.createChildFromResolved(childProviders);
-   *
-   * expect(child.get(ParentProvider) instanceof ParentProvider).toBe(true);
-   * expect(child.get(ChildProvider) instanceof ChildProvider).toBe(true);
-   * expect(child.get(ParentProvider)).toBe(parent.get(ParentProvider));
-   * ```
-   */
+  /// Creates a child injector from previously resolved providers.
+  ///
+  /// This API is the recommended way to construct injectors in
+  /// performance-sensitive parts.
+  ///
+  ///     class ParentProvider {}
+  ///     class ChildProvider {}
+  ///
+  ///     var parentProviders = ReflectiveInjector.resolve([ParentProvider]);
+  ///     var childProviders = ReflectiveInjector.resolve([ChildProvider]);
+  ///
+  ///     var parent = ReflectiveInjector.fromResolvedProviders(parentProviders);
+  ///     var child = parent.createChildFromResolved(childProviders);
+  ///
+  ///     expect(child.get(ParentProvider) is ParentProvider, true);
+  ///     expect(child.get(ChildProvider) is ChildProvider, true);
+  ///     expect(child.get(ParentProvider), parent.get(ParentProvider));
+  ///
   ReflectiveInjector createChildFromResolved(
       List<ResolvedReflectiveProvider> providers);
 
-  /**
-   * Resolves a provider and instantiates an object in the context of the injector.
-   *
-   * The created object does not get cached by the injector.
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/yvVXoB?p=preview))
-   *
-   * ```typescript
-   * @Injectable()
-   * class Engine {
-   * }
-   *
-   * @Injectable()
-   * class Car {
-   *   constructor(public engine:Engine) {}
-   * }
-   *
-   * var injector = ReflectiveInjector.resolveAndCreate([Engine]);
-   *
-   * var car = injector.resolveAndInstantiate(Car);
-   * expect(car.engine).toBe(injector.get(Engine));
-   * expect(car).not.toBe(injector.resolveAndInstantiate(Car));
-   * ```
-   */
+  /// Resolves a provider and instantiates an object in the context of the
+  /// injector.
   dynamic resolveAndInstantiate(dynamic /* Type | Provider */ provider);
 
-  /**
-   * Instantiates an object using a resolved provider in the context of the injector.
-   *
-   * The created object does not get cached by the injector.
-   *
-   * ### Example ([live demo](http://plnkr.co/edit/ptCImQ?p=preview))
-   *
-   * ```typescript
-   * @Injectable()
-   * class Engine {
-   * }
-   *
-   * @Injectable()
-   * class Car {
-   *   constructor(public engine:Engine) {}
-   * }
-   *
-   * var injector = ReflectiveInjector.resolveAndCreate([Engine]);
-   * var carProvider = ReflectiveInjector.resolve([Car])[0];
-   * var car = injector.instantiateResolved(carProvider);
-   * expect(car.engine).toBe(injector.get(Engine));
-   * expect(car).not.toBe(injector.instantiateResolved(carProvider));
-   * ```
-   */
+  /// Instantiates an object using a resolved provider in the context of the
+  /// injector.
+  ///
+  /// The created object does not get cached by the injector.
+  ///
+  ///     @Injectable()
+  ///     class Engine {
+  ///     }
+  ///
+  ///     @Injectable()
+  ///     class Car {
+  ///       Car(Engine engine);
+  ///     }
+  ///
+  ///     var injector = ReflectiveInjector.resolveAndCreate([Engine]);
+  ///     var carProvider = ReflectiveInjector.resolve([Car])[0];
+  ///     var car = injector.instantiateResolved(carProvider);
+  ///     expect(car.engine, injector.get(Engine));
+  ///     expect(car != injector.instantiateResolved(carProvider), true);
+  ///
   dynamic instantiateResolved(ResolvedReflectiveProvider provider);
 
   dynamic get(dynamic token, [dynamic notFoundValue]);
 }
 
 class ReflectiveInjector_ implements ReflectiveInjector {
-  Function _debugContext;
-  ReflectiveInjectorStrategy _strategy;
-  /** @internal */
-  num _constructionCounter = 0;
-  /** @internal */
-  dynamic _proto;
-  /** @internal */
+  final _proto;
   Injector _parent;
-  /**
-   * Private
-   */
-  ReflectiveInjector_(dynamic _proto,
-      [Injector _parent = null, this._debugContext = null]) {
-    this._proto = _proto;
-    this._parent = _parent;
-    this._strategy = _proto._strategy.createInjectorStrategy(this);
+  final Function _debugContext;
+
+  ReflectiveInjectorStrategy _strategy;
+  num _constructionCounter = 0;
+
+  ReflectiveInjector_(this._proto,
+      [Injector this._parent = null, this._debugContext = null]) {
+    _strategy = _proto._strategy.createInjectorStrategy(this);
   }
-  /**
-   * @internal
-   */
-  dynamic debugContext() {
-    return this._debugContext();
-  }
+
+  dynamic debugContext() => _debugContext();
 
   dynamic get(dynamic token, [dynamic notFoundValue = THROW_IF_NOT_FOUND]) {
     return this._getByKey(ReflectiveKey.get(token), null, null, notFoundValue);
@@ -628,58 +532,48 @@ class ReflectiveInjector_ implements ReflectiveInjector {
     return this._strategy.getObjAtIndex(index);
   }
 
-  Injector get parent {
-    return this._parent;
-  }
+  Injector get parent => _parent;
 
-  /**
-   * @internal
-   * Internal. Do not use.
-   * We return `any` not to export the InjectorStrategy type.
-   */
-  dynamic get internalStrategy {
-    return this._strategy;
-  }
+  /// Internal. Do not use.
+  ///
+  /// We return [any] not to export the InjectorStrategy type.
+  dynamic get internalStrategy => _strategy;
 
   ReflectiveInjector resolveAndCreateChild(
-      List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
-    var ResolvedReflectiveProviders = ReflectiveInjector.resolve(providers);
-    return this.createChildFromResolved(ResolvedReflectiveProviders);
-  }
+          List<dynamic /* Type | Provider | List < dynamic > */ > providers) =>
+      this.createChildFromResolved(ReflectiveInjector.resolve(providers));
 
   ReflectiveInjector createChildFromResolved(
-      List<ResolvedReflectiveProvider> providers) {
-    var proto = new ReflectiveProtoInjector(providers);
-    var inj = new ReflectiveInjector_(proto);
-    inj._parent = this;
-    return inj;
-  }
+          List<ResolvedReflectiveProvider> providers) =>
+      new ReflectiveInjector_(new ReflectiveProtoInjector(providers))
+        .._parent = this;
 
-  dynamic resolveAndInstantiate(dynamic /* Type | Provider */ provider) {
-    return this.instantiateResolved(ReflectiveInjector.resolve([provider])[0]);
-  }
+  dynamic resolveAndInstantiate(dynamic /* Type | Provider */ provider) =>
+      instantiateResolved(ReflectiveInjector.resolve([provider])[0]);
 
-  dynamic instantiateResolved(ResolvedReflectiveProvider provider) {
-    return this._instantiateProvider(provider);
-  }
+  dynamic instantiateResolved(ResolvedReflectiveProvider provider) =>
+      _instantiateProvider(provider);
 
-  /** @internal */
   dynamic _new(ResolvedReflectiveProvider provider) {
-    if (this._constructionCounter++ > this._strategy.getMaxNumberOfObjects()) {
+    // Although tempting do not place this in an assert since it will cause
+    // StackOverflow and fail test suite with StackOverflow.
+    if (_constructionCounter++ > _strategy.getMaxNumberOfObjects()) {
       throw new CyclicDependencyError(this, provider.key);
     }
-    return this._instantiateProvider(provider);
+    return _instantiateProvider(provider);
   }
 
   dynamic _instantiateProvider(ResolvedReflectiveProvider provider) {
+    var factories = provider.resolvedFactories;
     if (provider.multiProvider) {
-      var res = ListWrapper.createFixedSize(provider.resolvedFactories.length);
-      for (var i = 0; i < provider.resolvedFactories.length; ++i) {
-        res[i] = this._instantiate(provider, provider.resolvedFactories[i]);
+      int len = factories.length;
+      var res = new List(len);
+      for (var i = 0; i < len; ++i) {
+        res[i] = _instantiate(provider, factories[i]);
       }
       return res;
     } else {
-      return this._instantiate(provider, provider.resolvedFactories[0]);
+      return _instantiate(provider, factories[0]);
     }
   }
 
@@ -850,7 +744,8 @@ class ReflectiveInjector_ implements ReflectiveInjector {
           break;
         default:
           throw new BaseException(
-              '''Cannot instantiate \'${ provider . key . displayName}\' because it has more than 20 dependencies''');
+              "Cannot instantiate '${provider.key.displayName}' "
+              "because it has more than 20 dependencies");
       }
     } catch (e, e_stack) {
       throw new InstantiationError(this, e, e_stack, provider.key);
@@ -860,7 +755,7 @@ class ReflectiveInjector_ implements ReflectiveInjector {
 
   dynamic _getByReflectiveDependency(
       ResolvedReflectiveProvider provider, ReflectiveDependency dep) {
-    return this._getByKey(dep.key, dep.lowerBoundVisibility,
+    return _getByKey(dep.key, dep.lowerBoundVisibility,
         dep.upperBoundVisibility, dep.optional ? null : THROW_IF_NOT_FOUND);
   }
 
@@ -870,13 +765,12 @@ class ReflectiveInjector_ implements ReflectiveInjector {
       return this;
     }
     if (upperBoundVisibility is SelfMetadata) {
-      return this._getByKeySelf(key, notFoundValue);
+      return _getByKeySelf(key, notFoundValue);
     } else {
-      return this._getByKeyDefault(key, notFoundValue, lowerBoundVisibility);
+      return _getByKeyDefault(key, notFoundValue, lowerBoundVisibility);
     }
   }
 
-  /** @internal */
   dynamic _throwOrNull(ReflectiveKey key, dynamic notFoundValue) {
     if (!identical(notFoundValue, THROW_IF_NOT_FOUND)) {
       return notFoundValue;
@@ -885,7 +779,6 @@ class ReflectiveInjector_ implements ReflectiveInjector {
     }
   }
 
-  /** @internal */
   dynamic _getByKeySelf(ReflectiveKey key, dynamic notFoundValue) {
     var obj = this._strategy.getObjByKeyId(key.id);
     return (!identical(obj, UNDEFINED))
@@ -893,7 +786,6 @@ class ReflectiveInjector_ implements ReflectiveInjector {
         : this._throwOrNull(key, notFoundValue);
   }
 
-  /** @internal */
   dynamic _getByKeyDefault(
       ReflectiveKey key, dynamic notFoundValue, Object lowerBoundVisibility) {
     Injector inj;
@@ -916,12 +808,13 @@ class ReflectiveInjector_ implements ReflectiveInjector {
   }
 
   String get displayName {
-    return '''ReflectiveInjector(providers: [${ _mapProviders ( this , ( ResolvedReflectiveProvider b ) => ''' "${ b . key . displayName}" ''' ) . join ( ", " )}])''';
+    String providers = _mapProviders(
+            this, (ResolvedReflectiveProvider b) => ' "${b.key.displayName}" ')
+        .join(", ");
+    return 'ReflectiveInjector(providers: [$providers])';
   }
 
-  String toString() {
-    return this.displayName;
-  }
+  String toString() => displayName;
 }
 
 var INJECTOR_KEY = ReflectiveKey.get(Injector);

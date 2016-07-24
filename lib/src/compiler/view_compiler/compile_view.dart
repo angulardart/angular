@@ -56,7 +56,7 @@ class CompileView implements NameResolver {
   List<CompilePipe> pipes = [];
   var locals = new Map<String, o.Expression>();
   String className;
-  o.Type classType;
+  o.OutputType classType;
   o.ReadVarExpr viewFactory;
   var literalArrayCount = 0;
   var literalMapCount = 0;

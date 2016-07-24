@@ -1,16 +1,12 @@
 import "dart:async";
 
 import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
-import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/core/di.dart" show Injector;
+import "package:angular2/src/core/di.dart" show Injectable, Injector;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef, ComponentFactory;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/lang.dart" show Type;
 
-/**
- * A no-op implementation of [ApplicationRef], useful for testing.
- */
+/// A no-op implementation of [ApplicationRef], useful for testing.
 @Injectable()
 class MockApplicationRef extends ApplicationRef {
   void registerBootstrapListener(void listener(ComponentRef ref)) {}

@@ -1,10 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show Type, stringify;
 
 class InvalidPipeArgumentException extends BaseException {
   InvalidPipeArgumentException(Type type, Object value)
-      : super(
-            '''Invalid argument \'${ value}\' for pipe \'${ stringify ( type )}\'''') {
-    /* super call moved to initializer */;
-  }
+      : super("Invalid argument '${value}' for pipe '$type'");
 }
