@@ -246,7 +246,7 @@ abstract class ReflectionWriterMixin
   void writeLocalMetadataMap(List<ReflectionInfoModel> models) {
     buffer.write('const _METADATA = const ');
     _writeListWithSeparator(models, _writeLocalMetadataEntry,
-        prefix: '[', suffix: ']', separator: ',\n');
+        prefix: '<dynamic>[', suffix: ']', separator: ',\n');
     buffer.writeln(';');
   }
 
@@ -257,7 +257,7 @@ abstract class ReflectionWriterMixin
             .where((am) => !am.name.endsWith('NgFactory'))
             .toList(),
         writeAnnotationModel,
-        prefix: 'const [',
+        prefix: 'const <dynamic>[',
         suffix: ']');
   }
 
@@ -272,7 +272,7 @@ abstract class ReflectionWriterMixin
 
     // Annotations
     _writeListWithSeparator(model.annotations, writeAnnotationModel,
-        prefix: 'const [', suffix: ']');
+        prefix: 'const <dynamic>[', suffix: ']');
     // Parameters
     _writeListWithSeparator(model.parameters, writeParameterModelForList,
         prefix: ',\nconst [', suffix: ']');
@@ -290,7 +290,7 @@ abstract class ReflectionWriterMixin
       // Interfaces
       if (model.interfaces != null && model.interfaces.isNotEmpty) {
         _writeListWithSeparator(model.interfaces, buffer.write,
-            prefix: ',\nconst [', suffix: ']');
+            prefix: ',\nconst <dynamic>[', suffix: ']');
       }
     }
     buffer.writeln(')\n)');

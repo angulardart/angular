@@ -99,7 +99,7 @@ abstract class ParameterWriterMixin {
   StringBuffer get buffer;
 
   void writeParameterModelForList(ParameterModel model) {
-    buffer.write('const [');
+    buffer.write('const <dynamic>[');
     var first = true;
     if (model.typeName != null && model.typeName.isNotEmpty) {
       if (!first) {
