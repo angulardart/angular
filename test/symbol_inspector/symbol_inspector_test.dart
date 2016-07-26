@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.symbol_inspector.symbol_inspector_test;
 
 import 'dart:mirrors';
@@ -28,16 +29,18 @@ main() {
         'TypedefReturnType'
       ]);
     });
-
   });
   group('ng2libs', () {
     test('should be available via mirrors', () {
       expect(commonLib.uri.toString(), 'package:angular2/common.dart');
       expect(compilerLib.uri.toString(), 'package:angular2/compiler.dart');
       expect(coreLib.uri.toString(), 'package:angular2/core.dart');
-      expect(instrumentationLib.uri.toString(), 'package:angular2/instrumentation.dart');
-      expect(platformBrowserLib.uri.toString(), 'package:angular2/platform/browser.dart');
-      expect(platformCommonLib.uri.toString(), 'package:angular2/platform/common.dart');
+      expect(instrumentationLib.uri.toString(),
+          'package:angular2/instrumentation.dart');
+      expect(platformBrowserLib.uri.toString(),
+          'package:angular2/platform/browser.dart');
+      expect(platformCommonLib.uri.toString(),
+          'package:angular2/platform/common.dart');
     });
   });
 }
