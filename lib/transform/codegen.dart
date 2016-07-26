@@ -1,5 +1,6 @@
 library angular2.transform.codegen.dart;
 
+import 'package:angular2/src/transform/asset_consumer/transformer.dart';
 import 'package:angular2/src/transform/common/eager_transformer_wrapper.dart';
 import 'package:angular2/src/transform/common/formatter.dart' as formatter;
 import 'package:angular2/src/transform/common/options.dart';
@@ -38,6 +39,7 @@ class CodegenTransformer extends TransformerGroup {
       ];
     } else {
       phases = [
+        [new AssetConsumer()],
         [new DirectiveProcessor(options)],
         [new DirectiveMetadataLinker(options)],
         [new StylesheetCompiler(), new TemplateCompiler(options),],
