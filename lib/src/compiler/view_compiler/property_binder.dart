@@ -23,11 +23,11 @@ import "compile_view.dart" show CompileView;
 import "constants.dart" show DetectChangesVars, ViewProperties;
 
 o.ReadPropExpr createBindFieldExpr(num exprIndex) {
-  return o.THIS_EXPR.prop('''_expr_${ exprIndex}''');
+  return o.THIS_EXPR.prop('_expr_${ exprIndex}');
 }
 
 o.ReadVarExpr createCurrValueExpr(num exprIndex) {
-  return o.variable('''currVal_${ exprIndex}''');
+  return o.variable('currVal_${ exprIndex}');
 }
 
 void bind(
@@ -58,9 +58,8 @@ void bind(
   method.addStmt(currValExpr
       .set(checkExpression.expression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
-  o.Expression condition = o
-      .importExpr(Identifiers.checkBinding)
-      .callFn([DetectChangesVars.throwOnChange, fieldExpr, currValExpr]);
+  o.Expression condition =
+      o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
   if (checkExpression.needsValueUnwrapper) {
     condition =
         DetectChangesVars.valUnwrapper.prop("hasWrappedValue").or(condition);
@@ -251,7 +250,7 @@ o.Statement logBindingUpdateStmt(
     o.Expression renderNode, String propName, o.Expression value) {
   return o.THIS_EXPR.prop("renderer").callMethod("setBindingDebugInfo", [
     renderNode,
-    o.literal('''ng-reflect-${ camelCaseToDashCase ( propName )}'''),
+    o.literal('ng-reflect-${ camelCaseToDashCase ( propName )}'),
     value.isBlank().conditional(o.NULL_EXPR, value.callMethod("toString", []))
   ]).toStmt();
 }

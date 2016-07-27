@@ -44,23 +44,33 @@ dynamic metadataFromJson(Map<String, dynamic> data) {
 }
 
 class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
-  dynamic runtime;
   String name;
   String prefix;
   String moduleUrl;
   dynamic value;
+  // [runtime] and [runtimeCallback] are used for Identifiers based access.
+  //
+  // Angular creates code from output ast(s) and at the same time provides
+  // a dynamic interpreter. The Interpreter is used for tests that need to
+  // override templates at runtime.
+  //
+  // To allow the interpreter to access values that are not
+  // available through reflection, [runtime] is used as a way to provide this
+  // value for the output interpreter.
+  //
+  // Not marked final since tests modify value.
+  dynamic runtime;
+  // Same as runtime but evaluates function before using value.
+  final Function runtimeCallback;
+
   CompileIdentifierMetadata(
-      {dynamic runtime,
-      String name,
-      String moduleUrl,
-      String prefix,
-      dynamic value}) {
-    this.runtime = runtime;
-    this.name = name;
-    this.prefix = prefix;
-    this.moduleUrl = moduleUrl;
-    this.value = value;
-  }
+      {this.runtime,
+      this.runtimeCallback,
+      this.name,
+      this.moduleUrl,
+      this.prefix,
+      this.value});
+
   static CompileIdentifierMetadata fromJson(Map<String, dynamic> data) {
     var value = isArray(data["value"])
         ? _arrayFromJson(data["value"], metadataFromJson)
@@ -213,6 +223,7 @@ class CompileProviderMetadata {
 class CompileFactoryMetadata
     implements CompileIdentifierMetadata, CompileMetadataWithIdentifier {
   Function runtime;
+  Function runtimeCallback;
   String name;
   String prefix;
   String moduleUrl;
@@ -374,6 +385,7 @@ class CompileTokenMap<VALUE> {
 class CompileTypeMetadata
     implements CompileIdentifierMetadata, CompileMetadataWithType {
   Type runtime;
+  Function runtimeCallback;
   String name;
   String prefix;
   String moduleUrl;
@@ -788,6 +800,7 @@ class CompilePipeMetadata implements CompileMetadataWithType {
 class CompileInjectorModuleMetadata
     implements CompileMetadataWithType, CompileTypeMetadata {
   Type runtime;
+  Function runtimeCallback;
   String name;
   String prefix;
   String moduleUrl;

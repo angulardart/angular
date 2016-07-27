@@ -46,16 +46,16 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
     return null;
   }
 
-  void detectChangesInternal(bool throwOnChange) {
-    this.detectContentChildrenChanges(throwOnChange);
+  void detectChangesInternal() {
+    this.detectContentChildrenChanges();
     this.debug(0, 0, 0);
     final currVal_0 =
         import5.interpolate(1, 'Hello World ', this.context.user, '!');
-    if (import5.checkBinding(throwOnChange, this._expr_0, currVal_0)) {
+    if (import5.checkBinding(this._expr_0, currVal_0)) {
       this.renderer.setText(this._text_0, currVal_0);
       this._expr_0 = currVal_0;
     }
-    this.detectViewChildrenChanges(throwOnChange);
+    this.detectViewChildrenChanges();
   }
 }
 

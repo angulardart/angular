@@ -363,7 +363,9 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   }
 
   dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
-    return ast.value.runtime;
+    return ast.value.runtimeCallback != null
+        ? ast.value.runtimeCallback()
+        : ast.value.runtime;
   }
 
   dynamic visitConditionalExpr(o.ConditionalExpr ast, dynamic context) {

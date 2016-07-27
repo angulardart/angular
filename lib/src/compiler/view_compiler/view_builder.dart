@@ -46,6 +46,7 @@ const CLASS_ATTR = "class";
 const STYLE_ATTR = "style";
 var parentRenderNodeVar = o.variable("parentRenderNode");
 var rootSelectorVar = o.variable("rootSelector");
+var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
 class ViewCompileDependency {
   CompileDirectiveMetadata comp;
@@ -414,8 +415,21 @@ List<List<String>> mapToKeyValueArray(Map<String, String> data) {
 createViewTopLevelStmts(CompileView view, List<o.Statement> targetStatements) {
   o.Expression nodeDebugInfosVar = o.NULL_EXPR;
   if (view.genConfig.genDebugInfo) {
+    // Create top level node debug info.
+    // Example:
+    // const List<StaticNodeDebugInfo> nodeDebugInfos_MyAppComponent0 = const [
+    //     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
+    //     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
+    //     const StaticNodeDebugInfo(const [
+    //       import1.AcxDarkTheme,
+    //       import2.MaterialButtonComponent,
+    //       import3.ButtonDirective
+    //     ]
+    //     ,import2.MaterialButtonComponent,const <String, dynamic>{}),
+    // const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
+    // ...
     nodeDebugInfosVar = o.variable(
-        '''nodeDebugInfos_${ view . component . type . name}${ view . viewIndex}''');
+        'nodeDebugInfos_${view.component.type.name}${view.viewIndex}');
     targetStatements.add(((nodeDebugInfosVar as o.ReadVarExpr))
         .set(o.literalArr(
             view.nodes.map(createStaticNodeDebugInfo).toList(),
@@ -511,9 +525,7 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
             view.injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
         o.DYNAMIC_TYPE),
     new o.ClassMethod(
-        "detectChangesInternal",
-        [new o.FnParam(DetectChangesVars.throwOnChange.name, o.BOOL_TYPE)],
-        generateDetectChangesMethod(view)),
+        "detectChangesInternal", [], generateDetectChangesMethod(view)),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish()),
     new o.ClassMethod("destroyInternal", [], view.destroyMethod.finish())
@@ -624,24 +636,21 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     return stmts;
   }
   ListWrapper.addAll(stmts, view.detectChangesInInputsMethod.finish());
-  stmts.add(o.THIS_EXPR.callMethod("detectContentChildrenChanges",
-      [DetectChangesVars.throwOnChange]).toStmt());
+  stmts
+      .add(o.THIS_EXPR.callMethod("detectContentChildrenChanges", []).toStmt());
   List<o.Statement> afterContentStmts =
       (new List.from(view.updateContentQueriesMethod.finish())
         ..addAll(view.afterContentLifecycleCallbacksMethod.finish()));
   if (afterContentStmts.length > 0) {
-    stmts.add(new o.IfStmt(
-        o.not(DetectChangesVars.throwOnChange), afterContentStmts));
+    stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
   }
   ListWrapper.addAll(stmts, view.detectChangesRenderPropertiesMethod.finish());
-  stmts.add(o.THIS_EXPR.callMethod(
-      "detectViewChildrenChanges", [DetectChangesVars.throwOnChange]).toStmt());
+  stmts.add(o.THIS_EXPR.callMethod("detectViewChildrenChanges", []).toStmt());
   List<o.Statement> afterViewStmts =
       (new List.from(view.updateViewQueriesMethod.finish())
         ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
   if (afterViewStmts.length > 0) {
-    stmts.add(
-        new o.IfStmt(o.not(DetectChangesVars.throwOnChange), afterViewStmts));
+    stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterViewStmts));
   }
   var varStmts = [];
   var readVars = o.findReadVarNames(stmts);

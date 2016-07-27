@@ -12,6 +12,7 @@ import "package:angular2/core.dart"
         ChangeDetectorRef;
 import "package:angular2/src/core/debug/debug_node.dart"
     show DebugElement, getDebugNode;
+import "package:angular2/src/core/linker/view_utils.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
@@ -51,6 +52,7 @@ class ComponentFixture {
 
   /// Trigger a change detection cycle for the component.
   void detectChanges([bool checkForNoChanges = true]) {
+    ViewUtils.resetChangeDetection();
     changeDetectorRef.detectChanges();
     if (checkForNoChanges) {
       checkNoChanges();
@@ -158,6 +160,7 @@ class TestComponentBuilder {
 
   /// Builds and returns a ComponentFixture.
   Future<ComponentFixture> createAsync(Type rootComponentType) {
+    ViewUtils.resetChangeDetection();
     var mockDirectiveResolver = _injector.get(DirectiveResolver);
     var mockViewResolver = _injector.get(ViewResolver);
     _viewOverrides

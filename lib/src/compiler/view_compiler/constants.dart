@@ -13,7 +13,7 @@ o.Expression _enumExpression(
   if (value == null) return o.NULL_EXPR;
   var name = resolveEnumToken(classIdentifier.runtime, value);
   return o.importExpr(new CompileIdentifierMetadata(
-      name: '''${ classIdentifier . name}.${ name}''',
+      name: '${classIdentifier.name}.${name}',
       moduleUrl: classIdentifier.moduleUrl,
       runtime: value));
 }
@@ -72,30 +72,29 @@ class ChangeDetectionStrategyEnum {
 }
 
 class ViewConstructorVars {
-  static var viewUtils = o.variable("viewUtils");
-  static var parentInjector = o.variable("parentInjector");
-  static var declarationEl = o.variable("declarationEl");
+  static var viewUtils = o.variable('viewUtils');
+  static var parentInjector = o.variable('parentInjector');
+  static var declarationEl = o.variable('declarationEl');
 }
 
 class ViewProperties {
-  static var renderer = o.THIS_EXPR.prop("renderer");
-  static var projectableNodes = o.THIS_EXPR.prop("projectableNodes");
-  static var viewUtils = o.THIS_EXPR.prop("viewUtils");
+  static var renderer = o.THIS_EXPR.prop('renderer');
+  static var projectableNodes = o.THIS_EXPR.prop('projectableNodes');
+  static var viewUtils = o.THIS_EXPR.prop('viewUtils');
 }
 
 class EventHandlerVars {
-  static var event = o.variable("\$event");
+  static var event = o.variable('\$event');
 }
 
 class InjectMethodVars {
-  static var token = o.variable("token");
-  static var requestNodeIndex = o.variable("requestNodeIndex");
-  static var notFoundResult = o.variable("notFoundResult");
+  static var token = o.variable('token');
+  static var requestNodeIndex = o.variable('requestNodeIndex');
+  static var notFoundResult = o.variable('notFoundResult');
 }
 
 class DetectChangesVars {
-  static var throwOnChange = o.variable('''throwOnChange''');
-  static var changes = o.variable('''changes''');
-  static var changed = o.variable('''changed''');
-  static var valUnwrapper = o.variable('''valUnwrapper''');
+  static var changes = o.variable('changes');
+  static var changed = o.variable('changed');
+  static var valUnwrapper = o.variable('valUnwrapper');
 }
