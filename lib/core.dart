@@ -26,6 +26,5 @@ export 'src/core/platform_directives_and_pipes.dart';
 export 'src/core/reflection/reflection.dart';
 export 'src/core/render.dart';
 export 'src/core/testability/testability.dart';
-export 'src/core/util.dart';
 export 'src/core/zone.dart';
 export 'src/facade/facade.dart';
