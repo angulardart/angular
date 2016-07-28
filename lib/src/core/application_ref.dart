@@ -10,6 +10,7 @@ import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
+import "package:angular2/src/core/linker/view_utils.dart" show ViewUtils;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry, Testability;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
@@ -432,6 +433,7 @@ class ApplicationRef_ extends ApplicationRef {
   }
 
   void tick() {
+    ViewUtils.resetChangeDetection();
     if (this._runningTick) {
       throw new BaseException("ApplicationRef.tick is called recursively");
     }
