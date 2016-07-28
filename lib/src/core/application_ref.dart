@@ -37,13 +37,13 @@ bool _inPlatformCreate = false;
  * Creates a platform.
  * Platforms have to be eagerly created via this function.
  */
-PlatformRef createPlatform(Injector injector) {
+PlatformRef_ createPlatform(Injector injector) {
   if (_inPlatformCreate) {
     throw new BaseException("Already creating a platform...");
   }
-  if (isPresent(_platform) && !_platform.disposed) {
-    throw new BaseException(
-        "There can be only one platform. Destroy the previous one to create a new one.");
+  if (_platform != null && !_platform.disposed) {
+    throw new BaseException('There can be only one platform. Destroy the '
+        'previous one to create a new one.');
   }
   _inPlatformCreate = true;
   try {
@@ -52,7 +52,7 @@ PlatformRef createPlatform(Injector injector) {
   } finally {
     _inPlatformCreate = false;
   }
-  return _platform;
+  return _platform as PlatformRef_;
 }
 
 /**
@@ -149,7 +149,7 @@ class PlatformRef_ extends PlatformRef {
   List<Function> _disposeListeners = [];
   bool _disposed = false;
   Injector _injector;
-  init(Injector injector) {
+  void init(Injector injector) {
     if (!_inPlatformCreate) {
       throw new BaseException(
           "Platforms have to be initialized via `createPlatform`!");
@@ -157,7 +157,7 @@ class PlatformRef_ extends PlatformRef {
     this._injector = injector;
     List<Function> inits =
         (injector.get(PLATFORM_INITIALIZER, null) as List<Function>);
-    if (isPresent(inits)) inits.forEach((init) => init());
+    inits?.forEach((init) => init());
   }
 
   void registerDisposeListener(void dispose()) {

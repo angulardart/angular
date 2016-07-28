@@ -21,7 +21,6 @@ import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "package:angular2/src/platform/browser_common.dart"
     show
         BROWSER_APP_COMMON_PROVIDERS,
@@ -41,16 +40,14 @@ export "package:angular2/src/platform/browser_common.dart"
         enableDebugTools,
         disableDebugTools;
 
-/**
- * An array of providers that should be passed into `application()` when bootstrapping a component
- * when all templates
- * have been precompiled offline.
- */
+/// An array of providers that should be passed into [application()] when
+/// bootstrapping a component when all templates have been precompiled offline.
 const List<dynamic> BROWSER_APP_PROVIDERS = const [
   BROWSER_APP_COMMON_PROVIDERS,
 ];
+
 PlatformRef browserStaticPlatform() {
-  if (isBlank(getPlatform())) {
+  if (getPlatform() == null) {
     var tokens = new Map<dynamic, dynamic>();
     var platform = new PlatformRef_();
     tokens[PlatformRef] = platform;
@@ -67,18 +64,15 @@ PlatformRef browserStaticPlatform() {
   return assertPlatform(BROWSER_PLATFORM_MARKER);
 }
 
-/**
- * See [bootstrap] for more information.
- */
+/// See [bootstrap] for more information.
 Future<ComponentRef> bootstrapStatic(Type appComponentType,
     [List<dynamic> customProviders, Function initReflector]) {
-  if (isPresent(initReflector)) {
-    initReflector();
-  }
-  var appProviders = isPresent(customProviders)
+  if (initReflector != null) initReflector();
+  var appProviders = customProviders != null
       ? [BROWSER_APP_PROVIDERS, customProviders]
       : BROWSER_APP_PROVIDERS;
-  var appInjector = ReflectiveInjector.resolveAndCreate(
-      appProviders, browserStaticPlatform().injector);
+  PlatformRef platformRef = browserStaticPlatform();
+  var appInjector =
+      ReflectiveInjector.resolveAndCreate(appProviders, platformRef.injector);
   return coreLoadAndBootstrap(appInjector, appComponentType);
 }

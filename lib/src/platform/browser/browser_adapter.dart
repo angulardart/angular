@@ -1,8 +1,11 @@
+@JS()
+library browser_adapter;
+
 import 'dart:html';
 import 'package:angular2/platform/common_dom.dart' show setRootDomAdapter;
 import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;
 import 'package:angular2/src/facade/browser.dart';
-import 'dart:js' as js;
+import 'package:js/js.dart';
 
 // WARNING: Do not expose outside this class. Parsing HTML using this
 // sanitizer is a security risk.
@@ -101,22 +104,60 @@ final bool _supportsTemplateElement = () {
   }
 }();
 
+@JS()
+external void ngSetProperty(element, property, value);
+
+@JS()
+external dynamic ngGetProperty(element, property);
+
+@JS()
+external bool ngHasProperty(element, property);
+
+@JS()
+external void ngSetGlobalVar(String path, value);
+
+@JS('document.implementation.createHTMLDocument')
+external ngCreateDocument(value);
+
 class BrowserDomAdapter
     extends GenericBrowserDomAdapter<Element, Node, EventTarget> {
-  js.JsFunction _setProperty;
-  js.JsFunction _getProperty;
-  js.JsFunction _hasProperty;
   Map<String, bool> _hasPropertyCache;
+
+  static final String _bootScript =
+      '''window['ngSetProperty'] = function(el, prop, value) {
+          el[prop] = value;
+        }
+        window['ngGetProperty'] = function(el, prop) {
+          return el[prop];
+        };
+        window['ngHasProperty'] = function(el, prop) {
+          return prop in el;
+        };
+        window['ngSetGlobalVar'] = function(path, value) {
+          var parts = path.split('.');
+          var obj = window;
+          var i;
+          for (i = 0; i < (parts.length - 1); i++) {
+            var name = parts[0];
+            if (obj.hasOwnProperty(name)) {
+              obj = obj[name];
+            } else {
+              obj = obj[name] = {};
+            }
+          }
+          obj[parts[parts.length - 1]] = value;
+        }
+  ''';
+
   BrowserDomAdapter() {
     _hasPropertyCache = new Map();
-    _setProperty = js.context.callMethod(
-        'eval', ['(function(el, prop, value) { el[prop] = value; })']);
-    _getProperty = js.context
-        .callMethod('eval', ['(function(el, prop) { return el[prop]; })']);
-    _hasProperty = js.context
-        .callMethod('eval', ['(function(el, prop) { return prop in el; })']);
   }
+
   static void makeCurrent() {
+    var script = document.createElement("script");
+    script.setAttribute('type', 'text/javascript');
+    script.text = _bootScript;
+    document.body.append(script);
     setRootDomAdapter(new BrowserDomAdapter());
   }
 
@@ -129,21 +170,18 @@ class BrowserDomAdapter
 
   void setProperty(Element element, String name, Object value) {
     var cacheKey = "${element.tagName}.${name}";
-    var hasProperty = this._hasPropertyCache[cacheKey];
+    var hasProperty = _hasPropertyCache[cacheKey];
     if (hasProperty == null) {
-      hasProperty = this._hasProperty.apply([element, name]);
+      hasProperty = ngHasProperty(element, name);
       this._hasPropertyCache[cacheKey] = hasProperty;
     }
     if (hasProperty) {
-      _setProperty.apply([element, name, value]);
+      //_setProperty.apply([element, name, value]);
+      ngSetProperty(element, name, value);
     }
   }
 
-  getProperty(Element element, String name) =>
-      _getProperty.apply([element, name]);
-
-  invoke(Element element, String methodName, List args) =>
-      this.getProperty(element, methodName).apply(args, thisArg: element);
+  getProperty(Element element, String name) => ngGetProperty(element, name);
 
   // TODO(tbosch): move this into a separate environment class once we have it
   logError(error) {
@@ -396,8 +434,7 @@ class BrowserDomAdapter
 
   Node templateAwareRoot(Element el) => el is TemplateElement ? el.content : el;
 
-  HtmlDocument createHtmlDocument() => js.context
-      .callMethod('eval', ['document.implementation.createHTMLDocument("")']);
+  HtmlDocument createHtmlDocument() => ngCreateDocument('');
 
   HtmlDocument defaultDoc() => document;
   Rectangle getBoundingClientRect(el) => el.getBoundingClientRect();
@@ -484,19 +521,12 @@ class BrowserDomAdapter
 
   getComputedStyle(elem) => elem.getComputedStyle();
 
-  // TODO(tbosch): move this into a separate environment class once we have it
   setGlobalVar(String path, value) {
-    var parts = path.split('.');
-    var obj = js.context;
-    while (parts.length > 1) {
-      var name = parts.removeAt(0);
-      if (obj.hasProperty(name)) {
-        obj = obj[name];
-      } else {
-        obj = obj[name] = new js.JsObject(js.context['Object']);
-      }
+    if (value is Function) {
+      ngSetGlobalVar(path, allowInterop(value));
+    } else {
+      ngSetGlobalVar(path, value);
     }
-    obj[parts.removeAt(0)] = value;
   }
 
   requestAnimationFrame(callback) {

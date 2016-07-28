@@ -151,11 +151,6 @@ class DebugDomRenderer implements Renderer {
     this._delegate.setElementStyle(renderElement, styleName, styleValue);
   }
 
-  invokeElementMethod(
-      dynamic renderElement, String methodName, List<dynamic> args) {
-    this._delegate.invokeElementMethod(renderElement, methodName, args);
-  }
-
   setText(dynamic renderNode, String text) {
     this._delegate.setText(renderNode, text);
   }

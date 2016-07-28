@@ -20,7 +20,11 @@ class ViewUtils {
   RootRenderer _renderer;
   String _appId;
   num _nextCompTypeId = 0;
-  // Latency sensitive! Used by checkBinding during echange det ction.
+
+  /// Whether change detection should throw an exception when a change is
+  /// detected.
+  ///
+  /// Latency sensitive! Used by checkBinding during change detection.
   static bool throwOnChanges = false;
   static int _throwOnChangesCounter = 0;
   SanitizationService sanitizer;

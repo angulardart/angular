@@ -20,8 +20,8 @@ import "package:angular2/src/facade/lang.dart"
 
 import "url_resolver.dart" show getUrlScheme;
 import "util.dart" show splitAtColon, sanitizeIdentifier;
-// group 1: "property" from "[property]"
 
+// group 1: "property" from "[property]"
 // group 2: "event" from "(event)"
 var HOST_REG_EXP = new RegExp(r'^(?:(?:\[([^\]]+)\])|(?:\(([^\)]+)\)))$');
 
@@ -48,19 +48,21 @@ class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
   String prefix;
   String moduleUrl;
   dynamic value;
-  // [runtime] and [runtimeCallback] are used for Identifiers based access.
-  //
-  // Angular creates code from output ast(s) and at the same time provides
-  // a dynamic interpreter. The Interpreter is used for tests that need to
-  // override templates at runtime.
-  //
-  // To allow the interpreter to access values that are not
-  // available through reflection, [runtime] is used as a way to provide this
-  // value for the output interpreter.
-  //
-  // Not marked final since tests modify value.
+
+  /// [runtime] and [runtimeCallback] are used for Identifiers based access.
+  ///
+  /// Angular creates code from output ast(s) and at the same time provides
+  /// a dynamic interpreter. The Interpreter is used for tests that need to
+  /// override templates at runtime.
+  ///
+  /// To allow the interpreter to access values that are not
+  /// available through reflection, [runtime] is used as a way to provide this
+  /// value for the output interpreter.
+  ///
+  /// Not marked final since tests modify value.
   dynamic runtime;
-  // Same as runtime but evaluates function before using value.
+
+  /// Same as runtime but evaluates function before using value.
   final Function runtimeCallback;
 
   CompileIdentifierMetadata(

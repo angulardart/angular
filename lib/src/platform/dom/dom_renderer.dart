@@ -254,11 +254,6 @@ class DomRenderer implements Renderer {
     }
   }
 
-  void invokeElementMethod(
-      dynamic renderElement, String methodName, List<dynamic> args) {
-    DOM.invoke(renderElement, methodName, args);
-  }
-
   void setText(dynamic renderNode, String text) {
     DOM.setText(renderNode, text);
   }

@@ -50,8 +50,6 @@ abstract class Renderer {
       dynamic renderElement, String propertyName, String propertyValue);
   setElementClass(dynamic renderElement, String className, bool isAdd);
   setElementStyle(dynamic renderElement, String styleName, String styleValue);
-  invokeElementMethod(
-      dynamic renderElement, String methodName, List<dynamic> args);
   setText(dynamic renderNode, String text);
 }
 

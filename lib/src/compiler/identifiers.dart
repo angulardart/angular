@@ -60,7 +60,6 @@ var CD_MODULE_URL =
 
 // Reassign the imports to different variables so we can
 // define static variables with the name of the import.
-// (only needed for Dart).
 
 var impViewUtils = ViewUtils;
 var impAppView = AppView;

@@ -22,8 +22,6 @@ abstract class AbstractHtml5LibAdapter
 
   getProperty(Element element, String name);
 
-  invoke(Element element, String methodName, List args);
-
   @override
   get attrToPropMap => _attrToPropMap;
 

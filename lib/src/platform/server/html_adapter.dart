@@ -35,11 +35,6 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  invoke(Element element, String methodName, List args) {
-    throw new UnimplementedError();
-  }
-
-  @override
   getTemplateContent(Element el) {
     throw new UnimplementedError();
   }
