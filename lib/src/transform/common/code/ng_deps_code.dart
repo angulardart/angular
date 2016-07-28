@@ -114,7 +114,43 @@ class NgDepsWriter extends Object
       : this.buffer = buffer != null ? buffer : new StringBuffer();
 }
 
-const _ignoredProblems = const <String>['UNUSED_IMPORT', 'UNUSED_SHOWN_NAME'];
+const _ignoredProblems = const <String>[
+  'always_declare_return_types',
+  'annotate_overrides',
+  'avoid_init_to_null',
+  'camel_case_types',
+  'constant_identifier_names',
+  'non_constant_identifier_names',
+  'empty_constructor_bodies',
+  'implementation_imports',
+  'library_prefixes',
+  'prefer_is_not_empty',
+  'type_annotate_public_apis',
+  'DEPRECATED_MEMBER_USE',
+  'STRONG_MODE_DOWN_CAST_COMPOSITE',
+  'UNUSED_IMPORT',
+  'UNUSED_SHOWN_NAME',
+  'UNUSED_LOCAL_VARIABLE',
+  // TODO(jakemac): Remove these once we fix all projects....
+  'cancel_subscriptions',
+  'AMBIGUOUS_EXPORT',
+  'CONFLICTING_DART_IMPORT',
+  'CONST_INITIALIZED_WITH_NON_CONSTANT_VALUE',
+  'EXTRA_POSITIONAL_ARGUMENTS',
+  'IMPORT_DUPLICATED_LIBRARY_NAMED',
+  'IMPORT_OF_NON_LIBRARY',
+  'INVALID_ASSIGNMENT',
+  'NEW_WITH_ABSTRACT_CLASS',
+  'NEW_WITH_UNDEFINED_CONSTRUCTOR',
+  'NON_CONSTANT_LIST_ELEMENT',
+  'NOT_ENOUGH_REQUIRED_ARGUMENTS',
+  'UNDEFINED_GETTER',
+  'UNDEFINED_SETTER',
+  'UNDEFINED_HIDDEN_NAME',
+  'UNDEFINED_IDENTIFIER',
+  'UNDEFINED_METHOD',
+  'URI_DOES_NOT_EXIST',
+];
 
 abstract class NgDepsWriterMixin
     implements

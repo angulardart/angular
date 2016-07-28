@@ -82,4 +82,4 @@ class TemplateCompiler extends Transformer implements LazyTransformer {
   }
 }
 
-const _emptyNgDepsContents = 'initReflector() {}\n';
+const _emptyNgDepsContents = 'void initReflector() {}\n';
