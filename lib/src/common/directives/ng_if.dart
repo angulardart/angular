@@ -1,44 +1,39 @@
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show Directive, ViewContainerRef, TemplateRef;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
-/**
- * Removes or recreates a portion of the DOM tree based on an {expression}.
- *
- * If the expression assigned to `ngIf` evaluates to a false value then the element
- * is removed from the DOM, otherwise a clone of the element is reinserted into the DOM.
- *
- * ### Example ([live demo](http://plnkr.co/edit/fe0kgemFBtmQOY31b4tw?p=preview)):
- *
- * ```
- * <div *ngIf="errorCount > 0" class="error">
- *   <!-- Error message displayed when the errorCount property on the current context is greater
- * than 0. -->
- *   {{errorCount}} errors detected
- * </div>
- * ```
- *
- * ### Syntax
- *
- * - `<div *ngIf="condition">...</div>`
- * - `<div template="ngIf condition">...</div>`
- * - `<template [ngIf]="condition"><div>...</div></template>`
- */
+/// Causes the element and its contents to appear in the DOM conditionally.
+///
+/// The condition is supplied as a boolean template expression. When the
+/// condition changes, the UI is updated automatically.
+///
+/// **Example**:
+///
+///   <!-- Place directly on a DOM element -->
+///   <div *ngIf="shouldShowError">An occur occurred</div>
+///
+///   <!-- Or use the template tag -->
+///   <template [ngIf]="shouldShowError">
+///     <div>An error ocurred</div>
+///   </template>
 @Directive(selector: "[ngIf]", inputs: const ["ngIf"])
 class NgIf {
-  ViewContainerRef _viewContainer;
-  TemplateRef _templateRef;
-  bool _prevCondition = null;
-  NgIf(this._viewContainer, this._templateRef) {}
-  set ngIf(dynamic newCondition) {
-    if (newCondition &&
-        (isBlank(this._prevCondition) || !this._prevCondition)) {
-      this._prevCondition = true;
-      this._viewContainer.createEmbeddedView(this._templateRef);
-    } else if (!newCondition &&
-        (isBlank(this._prevCondition) || this._prevCondition)) {
-      this._prevCondition = false;
-      this._viewContainer.clear();
+  final TemplateRef _templateRef;
+  final ViewContainerRef _viewContainer;
+
+  bool _prevCondition = false;
+
+  NgIf(this._viewContainer, this._templateRef);
+
+  /// Whether the content of the directive should be visible.
+  set ngIf(bool newCondition) {
+    // Legacy support for cases where `null` is still passed to NgIf.
+    newCondition = newCondition == true;
+    if (identical(newCondition, _prevCondition)) return;
+    if (newCondition) {
+      _viewContainer.createEmbeddedView(_templateRef);
+    } else {
+      _viewContainer.clear();
     }
+    _prevCondition = newCondition;
   }
 }
