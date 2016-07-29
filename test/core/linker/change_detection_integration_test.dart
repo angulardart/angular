@@ -8,7 +8,7 @@ import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show PipeTransform, ChangeDetectionStrategy, WrappedValue;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart" show OnDestroy;
-import "package:angular2/src/facade/lang.dart" show IS_DART, Type;
+import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/core.dart"
     show

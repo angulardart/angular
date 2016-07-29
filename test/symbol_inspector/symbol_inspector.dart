@@ -30,7 +30,7 @@ final _ng2libSymbols = [
 
 LibraryMirror getLibrary(String uri) {
   // HACK: this is here only to make _ng2libSymbols used.
-  _ng2libSymbols.forEach((_) { });
+  _ng2libSymbols.forEach((_) {});
   var lib = currentMirrorSystem().libraries[Uri.parse(uri)];
   if (lib == null) {
     throw 'Failed to load library ${uri}';

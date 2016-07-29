@@ -1,8 +1,7 @@
 @TestOn('browser')
 library angular2.test.public_api_test;
 
-import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show StringWrapper;
 import "symbol_inspector/symbol_inspector.dart";
 import "package:test/test.dart";
 

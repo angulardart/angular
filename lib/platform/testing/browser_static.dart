@@ -1,7 +1,5 @@
 library angular2.platform.testing.browser_static;
 
-import 'dart:async';
-
 import 'package:angular2/compiler.dart' show DirectiveResolver, ViewResolver;
 import 'package:angular2/compiler.dart' show XHR;
 import 'package:angular2/core.dart'
