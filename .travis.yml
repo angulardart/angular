@@ -1,0 +1,17 @@
+language: dart
+sudo: false
+dart:
+  - stable
+  - dev
+  - 1.17.1
+  - 1.16.0
+  - 1.15.0
+  - 1.14.2
+cache:
+  directories:
+    - $HOME/.pub-cache
+with_content_shell: true
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+script: ./tool/travis.sh
