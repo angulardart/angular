@@ -22,7 +22,6 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isArray, stringify, isString;
 
-import "assertions.dart" show assertArrayOfStrings;
 import "compile_metadata.dart" as cpl;
 import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
 import "directive_resolver.dart" show DirectiveResolver;
@@ -70,11 +69,9 @@ class RuntimeMetadataResolver {
       var changeDetectionStrategy = null;
       var viewProviders = [];
       if (dirMeta is md.ComponentMetadata) {
-        assertArrayOfStrings("styles", dirMeta.styles);
         md.ComponentMetadata cmpMeta = dirMeta;
         moduleUrl = calcModuleUrl(directiveType, cmpMeta);
         var viewMeta = this._viewResolver.resolve(directiveType);
-        assertArrayOfStrings("styles", viewMeta.styles);
         templateMeta = new cpl.CompileTemplateMetadata(
             encapsulation: viewMeta.encapsulation,
             template: viewMeta.template,
