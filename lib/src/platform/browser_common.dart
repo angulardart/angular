@@ -25,7 +25,7 @@ import "package:angular2/src/platform/browser/testability.dart"
 import "package:angular2/src/platform/browser/xhr_cache.dart" show CachedXHR;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/dom_renderer.dart"
-    show DomRootRenderer, DomRootRenderer_;
+    show DomRootRenderer;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 import "package:angular2/src/platform/dom/events/dom_events.dart"
     show DomEventsPlugin;
@@ -106,7 +106,7 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   const Provider(EVENT_MANAGER_PLUGINS,
       useClass: HammerGesturesPlugin, multi: true),
   const Provider(HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig),
-  const Provider(DomRootRenderer, useClass: DomRootRenderer_),
+  DomRootRenderer,
   const Provider(RootRenderer, useExisting: DomRootRenderer),
   const Provider(SharedStylesHost, useExisting: DomSharedStylesHost),
   DomSharedStylesHost,
