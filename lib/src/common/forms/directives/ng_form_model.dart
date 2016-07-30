@@ -23,78 +23,72 @@ import "shared.dart"
 const formDirectiveProvider =
     const Provider(ControlContainer, useExisting: NgFormModel);
 
-/**
- * Binds an existing control group to a DOM element.
- *
- * ### Example ([live demo](http://plnkr.co/edit/jqrVirudY8anJxTMUjTP?p=preview))
- *
- * In this example, we bind the control group to the form element, and we bind the login and
- * password controls to the login and password elements.
- *
- *  ```typescript
- * @Component({
- *   selector: 'my-app',
- *   template: `
- *     <div>
- *       <h2>NgFormModel Example</h2>
- *       <form [ngFormModel]="loginForm">
- *         <p>Login: <input type="text" ngControl="login"></p>
- *         <p>Password: <input type="password" ngControl="password"></p>
- *       </form>
- *       <p>Value:</p>
- *       <pre>{{value}}</pre>
- *     </div>
- *   `,
- *   directives: [FORM_DIRECTIVES]
- * })
- * export class App {
- *   loginForm: ControlGroup;
- *
- *   constructor() {
- *     this.loginForm = new ControlGroup({
- *       login: new Control(""),
- *       password: new Control("")
- *     });
- *   }
- *
- *   get value(): string {
- *     return JSON.stringify(this.loginForm.value, null, 2);
- *   }
- * }
- *  ```
- *
- * We can also use ngModel to bind a domain model to the form.
- *
- *  ```typescript
- * @Component({
- *      selector: "login-comp",
- *      directives: [FORM_DIRECTIVES],
- *      template: `
- *        <form [ngFormModel]='loginForm'>
- *          Login <input type='text' ngControl='login' [(ngModel)]='credentials.login'>
- *          Password <input type='password' ngControl='password'
- *                          [(ngModel)]='credentials.password'>
- *          <button (click)="onLogin()">Login</button>
- *        </form>`
- *      })
- * class LoginComp {
- *  credentials: {login: string, password: string};
- *  loginForm: ControlGroup;
- *
- *  constructor() {
- *    this.loginForm = new ControlGroup({
- *      login: new Control(""),
- *      password: new Control("")
- *    });
- *  }
- *
- *  onLogin(): void {
- *    // this.credentials.login === 'some login'
- *    // this.credentials.password === 'some password'
- *  }
- * }
- *  ```
- */
+/// Binds an existing control group to a DOM element.
+///
+/// ### Example
+///
+/// In this example, we bind the control group to the form element, and we bind
+/// the login and password controls to the login and password elements.
+///
+///     @Component(
+///       selector: 'my-app',
+///       template: '''
+///         <div>
+///           <h2>NgFormModel Example</h2>
+///           <form [ngFormModel]="loginForm">
+///             <p>Login: <input type="text" ngControl="login"></p>
+///             <p>Password: <input type="password" ngControl="password"></p>
+///           </form>
+///           <p>Value:</p>
+///           <pre>{{value}}</pre>
+///         </div>
+///       ''',
+///       directives: const [FORM_DIRECTIVES]
+///     })
+///     class App {
+///       ControlGroup loginForm;
+///
+///       App() {
+///         loginForm = new ControlGroup({
+///           login: new Control(""),
+///           password: new Control("")
+///         });
+///       }
+///
+///       String get value {
+///         return JSON.encode(loginForm.value);
+///       }
+///     }
+///
+/// We can also use ngModel to bind a domain model to the form.
+///
+///     @Component(
+///          selector: "login-comp",
+///          directives: const [FORM_DIRECTIVES],
+///          template: '''
+///            <form [ngFormModel]='loginForm'>
+///              Login <input type='text' ngControl='login' [(ngModel)]='credentials.login'>
+///              Password <input type='password' ngControl='password'
+///                              [(ngModel)]='credentials.password'>
+///              <button (click)="onLogin()">Login</button>
+///            </form>'''
+///          )
+///     class LoginComp {
+///      credentials: {login: string, password: string};
+///      ControlGroup loginForm;
+///
+///      LoginComp() {
+///        loginForm = new ControlGroup({
+///          login: new Control(""),
+///          password: new Control("")
+///        });
+///      }
+///
+///      void onLogin() {
+///        // credentials.login === 'some login'
+///        // credentials.password === 'some password'
+///      }
+///     }
 @Directive(
     selector: "[ngFormModel]",
     providers: const [formDirectiveProvider],
@@ -174,7 +168,6 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     return false;
   }
 
-  /** @internal */
   _updateDomValue() {
     this.directives.forEach((dir) {
       dynamic ctrl = this.form.find(dir.path);

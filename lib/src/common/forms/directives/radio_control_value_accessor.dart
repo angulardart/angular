@@ -55,24 +55,21 @@ class RadioButtonState {
   RadioButtonState(this.checked, this.value) {}
 }
 
-/**
- * The accessor for writing a radio control value and listening to changes that is used by the
- * [NgModel], [NgFormControl], and [NgControlName] directives.
- *
- *  ### Example
- *  ```
- *  @Component({
- *    template: `
- *      <input type="radio" name="food" [(ngModel)]="foodChicken">
- *      <input type="radio" name="food" [(ngModel)]="foodFish">
- *    `
- *  })
- *  class FoodCmp {
- *    foodChicken = new RadioButtonState(true, "chicken");
- *    foodFish = new RadioButtonState(false, "fish");
- *  }
- *  ```
- */
+/// The accessor for writing a radio control value and listening to changes that
+/// is used by the [NgModel], [NgFormControl], and [NgControlName] directives.
+///
+/// ### Example
+///
+///     @Component(
+///       template: '''
+///         <input type="radio" name="food" [(ngModel)]="foodChicken">
+///         <input type="radio" name="food" [(ngModel)]="foodFish">
+///       '''
+///     )
+///     class FoodCmp {
+///       RadioButtonState foodChicken = new RadioButtonState(true, "chicken");
+///       RadioButtonState foodFish = new RadioButtonState(false, "fish");
+///     }
 @Directive(
     selector:
         "input[type=radio][ngControl],input[type=radio][ngFormControl],input[type=radio][ngModel]",
@@ -84,13 +81,10 @@ class RadioControlValueAccessor
   ElementRef _elementRef;
   RadioControlRegistry _registry;
   Injector _injector;
-  /** @internal */
   RadioButtonState _state;
-  /** @internal */
   NgControl _control;
   @Input()
   String name;
-  /** @internal */
   Function _fn;
   var onChange = () {};
   var onTouched = () {};

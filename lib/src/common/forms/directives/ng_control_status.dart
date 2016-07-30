@@ -3,10 +3,8 @@ import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "ng_control.dart" show NgControl;
 
-/**
- * Directive automatically applied to Angular forms that sets CSS classes
- * based on control status (valid/invalid/dirty/etc).
- */
+/// Directive automatically applied to Angular forms that sets CSS classes
+/// based on control status (valid/invalid/dirty/etc).
 @Directive(selector: "[ngControl],[ngModel],[ngFormControl]", host: const {
   "[class.ng-untouched]": "ngClassUntouched",
   "[class.ng-touched]": "ngClassTouched",

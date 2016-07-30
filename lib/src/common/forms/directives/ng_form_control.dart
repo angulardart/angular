@@ -21,53 +21,48 @@ import "validators.dart" show ValidatorFn, AsyncValidatorFn;
 const formControlBinding =
     const Provider(NgControl, useExisting: NgFormControl);
 
-/**
- * Binds an existing [Control] to a DOM element.
- *
- * ### Example ([live demo](http://plnkr.co/edit/jcQlZ2tTh22BZZ2ucNAT?p=preview))
- *
- * In this example, we bind the control to an input element. When the value of the input element
- * changes, the value of the control will reflect that change. Likewise, if the value of the
- * control changes, the input element reflects that change.
- *
- *  ```typescript
- * @Component({
- *   selector: 'my-app',
- *   template: `
- *     <div>
- *       <h2>NgFormControl Example</h2>
- *       <form>
- *         <p>Element with existing control: <input type="text"
- * [ngFormControl]="loginControl"></p>
- *         <p>Value of existing control: {{loginControl.value}}</p>
- *       </form>
- *     </div>
- *   `,
- *   directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
- * })
- * export class App {
- *   loginControl: Control = new Control('');
- * }
- *  ```
- *
- * ### ngModel
- *
- * We can also use `ngModel` to bind a domain model to the form.
- *
- * ### Example ([live demo](http://plnkr.co/edit/yHMLuHO7DNgT8XvtjTDH?p=preview))
- *
- *  ```typescript
- * @Component({
- *      selector: "login-comp",
- *      directives: [FORM_DIRECTIVES],
- *      template: "<input type='text' [ngFormControl]='loginControl' [(ngModel)]='login'>"
- *      })
- * class LoginComp {
- *  loginControl: Control = new Control('');
- *  login:string;
- * }
- *  ```
- */
+/// Binds an existing [Control] to a DOM element.
+///
+/// ### Example
+///
+/// In this example, we bind the control to an input element. When the value of the input element
+/// changes, the value of the control will reflect that change. Likewise, if the value of the
+/// control changes, the input element reflects that change.
+///
+///     @Component(
+///       selector: 'my-app',
+///       template: '''
+///         <div>
+///           <h2>NgFormControl Example</h2>
+///           <form>
+///             <p>Element with existing control:
+///               <input type="text" [ngFormControl]="loginControl">
+///             </p>
+///             <p>Value of existing control: {{loginControl.value}}</p>
+///           </form>
+///         </div>
+///       ''',
+///       directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES]
+///     )
+///     class App {
+///       Control loginControl = new Control('');
+///     }
+///
+/// ### ngModel
+///
+/// We can also use `ngModel` to bind a domain model to the form.
+///
+/// ### Example
+///
+///     @Component(
+///          selector: "login-comp",
+///          directives: const [FORM_DIRECTIVES],
+///          template: "<input type='text' [ngFormControl]='loginControl' [(ngModel)]='login'>"
+///          )
+///     class LoginComp {
+///      Control loginControl = new Control('');
+///      String login;
+///     }
 @Directive(
     selector: "[ngFormControl]",
     providers: const [formControlBinding],

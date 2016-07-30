@@ -22,65 +22,59 @@ import "shared.dart"
 const formDirectiveProvider =
     const Provider(ControlContainer, useExisting: NgForm);
 
-/**
- * If `NgForm` is bound in a component, `<form>` elements in that component will be
- * upgraded to use the Angular form system.
- *
- * ### Typical Use
- *
- * Include `FORM_DIRECTIVES` in the `directives` section of a [View] annotation
- * to use `NgForm` and its associated controls.
- *
- * ### Structure
- *
- * An Angular form is a collection of `Control`s in some hierarchy.
- * `Control`s can be at the top level or can be organized in `ControlGroup`s
- * or `ControlArray`s. This hierarchy is reflected in the form's `value`, a
- * JSON object that mirrors the form structure.
- *
- * ### Submission
- *
- * The `ngSubmit` event signals when the user triggers a form submission.
- *
- * ### Example ([live demo](http://plnkr.co/edit/ltdgYj4P0iY64AR71EpL?p=preview))
- *
- *  ```typescript
- * @Component({
- *   selector: 'my-app',
- *   template: `
- *     <div>
- *       <p>Submit the form to see the data object Angular builds</p>
- *       <h2>NgForm demo</h2>
- *       <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
- *         <h3>Control group: credentials</h3>
- *         <div ngControlGroup="credentials">
- *           <p>Login: <input type="text" ngControl="login"></p>
- *           <p>Password: <input type="password" ngControl="password"></p>
- *         </div>
- *         <h3>Control group: person</h3>
- *         <div ngControlGroup="person">
- *           <p>First name: <input type="text" ngControl="firstName"></p>
- *           <p>Last name: <input type="text" ngControl="lastName"></p>
- *         </div>
- *         <button type="submit">Submit Form</button>
- *       <p>Form data submitted:</p>
- *       </form>
- *       <pre>{{data}}</pre>
- *     </div>
- * `,
- *   directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
- * })
- * export class App {
- *   constructor() {}
- *
- *   data: string;
- *
- *   onSubmit(data) {
- *     this.data = JSON.stringify(data, null, 2);
- *   }
- * }
- *  ```
- */
+/// If `NgForm` is bound in a component, `<form>` elements in that component
+/// will be upgraded to use the Angular form system.
+///
+/// ### Typical Use
+///
+/// Include `FORM_DIRECTIVES` in the `directives` section of a [View] annotation
+/// to use `NgForm` and its associated controls.
+///
+/// ### Structure
+///
+/// An Angular form is a collection of `Control`s in some hierarchy.
+/// `Control`s can be at the top level or can be organized in `ControlGroup`s
+/// or `ControlArray`s. This hierarchy is reflected in the form's `value`, a
+/// JSON object that mirrors the form structure.
+///
+/// ### Submission
+///
+/// The `ngSubmit` event signals when the user triggers a form submission.
+///
+/// ### Example
+///
+///     @Component(
+///       selector: 'my-app',
+///       template: '''
+///         <div>
+///           <p>Submit the form to see the data object Angular builds</p>
+///           <h2>NgForm demo</h2>
+///           <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+///             <h3>Control group: credentials</h3>
+///             <div ngControlGroup="credentials">
+///               <p>Login: <input type="text" ngControl="login"></p>
+///               <p>Password: <input type="password" ngControl="password"></p>
+///             </div>
+///             <h3>Control group: person</h3>
+///             <div ngControlGroup="person">
+///               <p>First name: <input type="text" ngControl="firstName"></p>
+///               <p>Last name: <input type="text" ngControl="lastName"></p>
+///             </div>
+///             <button type="submit">Submit Form</button>
+///           <p>Form data submitted:</p>
+///           </form>
+///           <pre>{{data}}</pre>
+///         </div>''',
+///       directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES]
+///     })
+///     class App {
+///
+///       String data;
+///
+///       void onSubmit(data) {
+///         this.data = JSON.encode(data);
+///       }
+///     }
 @Directive(
     selector: "form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]",
     providers: const [formDirectiveProvider],
@@ -180,7 +174,6 @@ class NgForm extends ControlContainer implements Form {
     return false;
   }
 
-  /** @internal */
   ControlGroup _findContainer(List<String> path) {
     path.removeLast();
     return ListWrapper.isEmpty(path)

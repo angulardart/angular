@@ -8,42 +8,30 @@ import "package:angular2/src/facade/lang.dart"
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 import "model.dart" as modelModule;
 
-/**
- * Providers for validators to be used for [Control]s in a form.
- *
- * Provide this using `multi: true` to add validators.
- *
- * ### Example
- *
- * {@example core/forms/ts/ng_validators/ng_validators.ts region='ng_validators'}
- */
+///  Providers for validators to be used for [Control]s in a form.
+///
+///  Provide this using `multi: true` to add validators.
 const OpaqueToken NG_VALIDATORS = const OpaqueToken("NgValidators");
-/**
- * Providers for asynchronous validators to be used for [Control]s
- * in a form.
- *
- * Provide this using `multi: true` to add validators.
- *
- * See [NG_VALIDATORS] for more details.
- */
+
+///  Providers for asynchronous validators to be used for [Control]s
+///  in a form.
+///
+///  Provide this using `multi: true` to add validators.
+///
+///  See [NG_VALIDATORS] for more details.
 const OpaqueToken NG_ASYNC_VALIDATORS = const OpaqueToken("NgAsyncValidators");
 
-/**
- * Provides a set of validators used by form controls.
- *
- * A validator is a function that processes a [Control] or collection of
- * controls and returns a map of errors. A null map means that validation has passed.
- *
- * ### Example
- *
- * ```typescript
- * var loginControl = new Control("", Validators.required)
- * ```
- */
+
+///  Provides a set of validators used by form controls.
+///
+///  A validator is a function that processes a [Control] or collection of
+///  controls and returns a map of errors. A null map means that validation has passed.
+///
+///  ### Example
+///
+///     Control loginControl = new Control("", Validators.required)
 class Validators {
-  /**
-   * Validator that requires controls to have a non-empty value.
-   */
+  ///  Validator that requires controls to have a non-empty value.
   static Map<String, bool> required(modelModule.AbstractControl control) {
     return isBlank(control.value) ||
             (isString(control.value) && control.value == "")
@@ -51,9 +39,7 @@ class Validators {
         : null;
   }
 
-  /**
-   * Validator that requires controls to have a value of a minimum length.
-   */
+  ///  Validator that requires controls to have a value of a minimum length.
   static ValidatorFn minLength(num minLength) {
     return /* Map < String , dynamic > */ (modelModule
         .AbstractControl control) {
@@ -70,9 +56,7 @@ class Validators {
     };
   }
 
-  /**
-   * Validator that requires controls to have a value of a maximum length.
-   */
+  ///  Validator that requires controls to have a value of a maximum length.
   static ValidatorFn maxLength(num maxLength) {
     return /* Map < String , dynamic > */ (modelModule
         .AbstractControl control) {
@@ -89,9 +73,7 @@ class Validators {
     };
   }
 
-  /**
-   * Validator that requires a control to match a regex to its value.
-   */
+  ///  Validator that requires a control to match a regex to its value.
   static ValidatorFn pattern(String pattern) {
     return /* Map < String , dynamic > */ (modelModule
         .AbstractControl control) {
@@ -109,17 +91,13 @@ class Validators {
     };
   }
 
-  /**
-   * No-op validator.
-   */
+  ///  No-op validator.
   static Map<String, bool> nullValidator(modelModule.AbstractControl c) {
     return null;
   }
 
-  /**
-   * Compose multiple validators into a single function that returns the union
-   * of the individual error maps.
-   */
+  ///  Compose multiple validators into a single function that returns the union
+  ///  of the individual error maps.
   static ValidatorFn compose(List<ValidatorFn> validators) {
     if (isBlank(validators)) return null;
     var presentValidators = validators.where(isPresent).toList();

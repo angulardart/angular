@@ -3,13 +3,7 @@ import "package:angular2/src/facade/lang.dart" show isString, isBlank;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
-/**
- * Implements uppercase transforms to text.
- *
- * ### Example
- *
- * {@example core/pipes/ts/lowerupper_pipe/lowerupper_pipe_example.ts region='LowerUpperPipe'}
- */
+/// Implements uppercase transforms to text.
 @Pipe(name: "uppercase")
 @Injectable()
 class UpperCasePipe implements PipeTransform {
