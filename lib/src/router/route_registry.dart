@@ -2,7 +2,6 @@ import "dart:async";
 
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, Map, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -35,7 +34,7 @@ import "rules/rules.dart" show PathMatch, RedirectMatch, RouteMatch;
 import "url_parser.dart" show parser, Url, convertUrlParamsToArray;
 import "utils.dart" show getComponentAnnotations, getComponentType;
 
-var _resolveToNull = PromiseWrapper.resolve/*< Instruction >*/(null);
+var _resolveToNull = new Future.value();
 // A LinkItemArray is an array, which describes a set of routes
 
 // The items in the array are found in groups:
@@ -165,7 +164,7 @@ class RouteRegistry {
         : this._rootComponent;
     var rules = this._rules[parentComponent];
     if (isBlank(rules)) {
-      return _resolveToNull;
+      return new Future<Instruction>.value();
     }
     // Matches some beginning part of the given URL
     List<Future<RouteMatch>> possibleMatches =
@@ -216,11 +215,9 @@ class RouteRegistry {
         .toList();
     if ((isBlank(parsedUrl) || parsedUrl.path == "") &&
         possibleMatches.length == 0) {
-      return PromiseWrapper.resolve(this.generateDefault(parentComponent));
+      return new Future.value(this.generateDefault(parentComponent));
     }
-    return PromiseWrapper
-        .all/*< Instruction >*/(matchPromises)
-        .then(mostSpecific);
+    return Future.wait/*< Instruction >*/(matchPromises).then(mostSpecific);
   }
 
   Map<String, Instruction> _auxRoutesToUnresolved(

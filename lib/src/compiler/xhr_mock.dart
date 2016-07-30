@@ -1,8 +1,6 @@
 import "dart:async";
 
 import "package:angular2/src/compiler/xhr.dart" show XHR;
-import "package:angular2/src/facade/async.dart"
-    show PromiseCompleter, PromiseWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper, Map;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank;
@@ -92,21 +90,21 @@ class MockXHR extends XHR {
 
 class _PendingRequest {
   String url;
-  PromiseCompleter<String> completer;
+  Completer<String> completer;
   _PendingRequest(url) {
     this.url = url;
-    this.completer = PromiseWrapper.completer();
+    this.completer = new Completer<String>();
   }
   complete(String response) {
     if (isBlank(response)) {
-      this.completer.reject('''Failed to load ${ this . url}''', null);
+      this.completer.completeError('''Failed to load ${ this . url}''');
     } else {
-      this.completer.resolve(response);
+      this.completer.complete(response);
     }
   }
 
   Future<String> getPromise() {
-    return this.completer.promise;
+    return this.completer.future;
   }
 }
 

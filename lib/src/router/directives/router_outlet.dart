@@ -11,8 +11,7 @@ import "package:angular2/core.dart"
         OnDestroy,
         Output,
         MapInjector;
-import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, EventEmitter;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
@@ -23,7 +22,7 @@ import "../lifecycle/lifecycle_annotations.dart" as hookMod;
 import "../lifecycle/route_lifecycle_reflector.dart" show hasLifecycleHook;
 import "../router.dart" as routerMod;
 
-var _resolveToTrue = PromiseWrapper.resolve(true);
+var _resolveToTrue = new Future.value(true);
 
 /// A router outlet is a placeholder that Angular dynamically fills based on the application's route.
 ///
@@ -68,7 +67,7 @@ class RouterOutlet implements OnDestroy {
         new MapInjector(this._viewContainerRef.parentInjector, providers);
     Future<ComponentFactory> componentFactoryPromise;
     if (componentType is ComponentFactory) {
-      componentFactoryPromise = PromiseWrapper.resolve(componentType);
+      componentFactoryPromise = new Future.value(componentType);
     } else {
       componentFactoryPromise = this._loader.resolveComponent(componentType);
     }
@@ -142,7 +141,7 @@ class RouterOutlet implements OnDestroy {
    */
   Future<bool> routerCanDeactivate(ComponentInstruction nextInstruction) {
     if (isBlank(this._currentInstruction)) {
-      return _resolveToTrue;
+      return new Future.value(true);
     }
     return this._componentRef.then((ComponentRef ref) =>
         hasLifecycleHook(hookMod.routerCanDeactivate, ref.instance)
@@ -166,7 +165,7 @@ class RouterOutlet implements OnDestroy {
     if (isBlank(this._currentInstruction) ||
         this._currentInstruction.componentType !=
             nextInstruction.componentType) {
-      result = PromiseWrapper.resolve(false);
+      result = new Future.value(false);
     } else {
       result = this._componentRef.then((ComponentRef ref) {
         if (hasLifecycleHook(hookMod.routerCanReuse, ref.instance)) {

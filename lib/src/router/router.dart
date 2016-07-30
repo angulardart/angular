@@ -3,8 +3,7 @@ import "dart:async";
 import "package:angular2/core.dart" show Inject, Injectable;
 import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
-import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
@@ -15,8 +14,8 @@ import "route_config/route_config_impl.dart" show RouteDefinition;
 import "route_registry.dart" show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
 import "utils.dart" show getCanActivateHook;
 
-var _resolveToTrue = PromiseWrapper.resolve(true);
-var _resolveToFalse = PromiseWrapper.resolve(false);
+var _resolveToTrue = new Future.value(true);
+var _resolveToFalse = new Future.value(false);
 
 /**
  * The `Router` is responsible for mapping URLs to components.
@@ -244,7 +243,7 @@ class Router {
           (Instruction instruction, _) {
         unsettledInstructions.add(this._settleInstruction(instruction));
       });
-      return PromiseWrapper.all(unsettledInstructions);
+      return Future.wait(unsettledInstructions);
     });
   }
 
@@ -270,18 +269,17 @@ class Router {
   }
 
   void _emitNavigationFinish(url) {
-    ObservableWrapper.callEmit(this._subject, url);
+    _subject.add(url);
   }
 
   /** @internal */
   void _emitNavigationFail(url) {
-    ObservableWrapper.callError(this._subject, url);
+    _subject.addError(url);
   }
 
   Future<dynamic> _afterPromiseFinishNavigating(Future<dynamic> promise) {
-    return PromiseWrapper
-        .catchError(promise.then((_) => this._finishNavigating()), (err) {
-      this._finishNavigating();
+    return promise.then((_) => _finishNavigating()).catchError((err) {
+      _finishNavigating();
       throw err;
     });
   }
@@ -313,7 +311,7 @@ class Router {
 
   Future<bool> _routerCanDeactivate(Instruction instruction) {
     if (isBlank(this._outlet)) {
-      return _resolveToTrue;
+      return new Future.value(true);
     }
     Future<bool> next;
     Instruction childInstruction = null;
@@ -325,7 +323,7 @@ class Router {
       reuse = isBlank(instruction.component) || instruction.component.reuse;
     }
     if (reuse) {
-      next = _resolveToTrue;
+      next = new Future.value(true);
     } else {
       next = this._outlet.routerCanDeactivate(componentInstruction);
     }
@@ -376,7 +374,7 @@ class Router {
         promises.add(router.commit(instruction.auxInstruction[name]));
       }
     });
-    return next.then((_) => PromiseWrapper.all(promises));
+    return next.then((_) => Future.wait(promises));
   }
 
   /** @internal */
@@ -393,7 +391,7 @@ class Router {
    * Subscribe to URL updates from the router
    */
   Object subscribe(void onNext(dynamic value), [void onError(dynamic value)]) {
-    return ObservableWrapper.subscribe(this._subject, onNext, onError);
+    return _subject.listen(onNext, onError: onError);
   }
 
   /**
@@ -461,7 +459,7 @@ class RootRouter extends Router {
   /** @internal */
   Location _location;
   /** @internal */
-  Object _locationSub;
+  var _locationSub;
   RootRouter(RouteRegistry registry, Location location,
       @Inject(ROUTER_PRIMARY_COMPONENT) dynamic primaryComponent)
       : super(registry, null, primaryComponent) {
@@ -537,10 +535,8 @@ class RootRouter extends Router {
   }
 
   void dispose() {
-    if (isPresent(this._locationSub)) {
-      ObservableWrapper.dispose(this._locationSub);
-      this._locationSub = null;
-    }
+    _locationSub?.cancel();
+    _locationSub = null;
   }
 }
 
@@ -565,7 +561,7 @@ class ChildRouter extends Router {
 
 Future<bool> canActivateOne(
     Instruction nextInstruction, Instruction prevInstruction) {
-  var next = _resolveToTrue;
+  var next = new Future<bool>.value(true);
   if (isBlank(nextInstruction.component)) {
     return next;
   }

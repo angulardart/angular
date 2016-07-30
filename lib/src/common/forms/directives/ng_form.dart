@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import "package:angular2/core.dart"
     show Directive, Provider, Optional, Inject, Self;
-import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, ObservableWrapper, EventEmitter;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
@@ -120,7 +121,7 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void addControl(NgControl dir) {
-    PromiseWrapper.scheduleMicrotask(() {
+    scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
       var ctrl = new Control();
       setUpControl(ctrl, dir);
@@ -134,7 +135,7 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void removeControl(NgControl dir) {
-    PromiseWrapper.scheduleMicrotask(() {
+    scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
       if (isPresent(container)) {
         container.removeControl(dir.name);
@@ -144,7 +145,7 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void addControlGroup(NgControlGroup dir) {
-    PromiseWrapper.scheduleMicrotask(() {
+    scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
       var group = new ControlGroup({});
       setUpControlGroup(group, dir);
@@ -154,7 +155,7 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void removeControlGroup(NgControlGroup dir) {
-    PromiseWrapper.scheduleMicrotask(() {
+    scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
       if (isPresent(container)) {
         container.removeControl(dir.name);
@@ -168,14 +169,14 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void updateModel(NgControl dir, dynamic value) {
-    PromiseWrapper.scheduleMicrotask(() {
+    scheduleMicrotask(() {
       var ctrl = (this.form.find(dir.path) as Control);
       ctrl.updateValue(value);
     });
   }
 
   bool onSubmit() {
-    ObservableWrapper.callEmit(this.ngSubmit, null);
+    this.ngSubmit.add(null);
     return false;
   }
 

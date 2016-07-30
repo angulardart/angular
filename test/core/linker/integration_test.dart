@@ -10,7 +10,7 @@ import "package:angular2/src/facade/lang.dart"
     show isPresent, stringify, isBlank;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, EventEmitter, ObservableWrapper, PromiseCompleter;
+    show EventEmitter, ObservableWrapper;
 import "package:angular2/core.dart"
     show
         Injector,
@@ -1512,7 +1512,7 @@ main() {
                 new ViewMetadata(
                     template: "",
                     directives: [SomeDirectiveMissingAnnotation]));
-            PromiseWrapper.catchError(tcb.createAsync(MyComp), (e) {
+            tcb.createAsync(MyComp).catchError((e) {
               expect(
                   e.message,
                   '''No Directive annotation found on ${ stringify(
@@ -1546,7 +1546,7 @@ main() {
                 new ViewMetadata(directives: [
                   [null]
                 ], template: ""));
-            PromiseWrapper.catchError(tcb.createAsync(MyComp), (e) {
+            tcb.createAsync(MyComp).catchError((e) {
               expect(
                   e.message,
                   '''Unexpected directive value \'null\' on the View of component \'${ stringify(
@@ -1566,7 +1566,7 @@ main() {
                     directives: [DirectiveThrowingAnError],
                     template:
                         '''<directive-throwing-error></directive-throwing-error>'''));
-            PromiseWrapper.catchError(tcb.createAsync(MyComp), (e) {
+            tcb.createAsync(MyComp).catchError((e) {
               var c = e.context;
               expect(
                   DOM.nodeName(c.componentRenderElement).toUpperCase(), "DIV");
@@ -1665,7 +1665,7 @@ main() {
             var undefinedValue;
             tcb = tcb.overrideView(MyComp,
                 new ViewMetadata(directives: [undefinedValue], template: ""));
-            PromiseWrapper.catchError(tcb.createAsync(MyComp), (e) {
+            tcb.createAsync(MyComp).catchError((e) {
               expect(
                   e.message,
                   '''Unexpected directive value \'null\' on the View of component \'${ stringify(
@@ -1775,7 +1775,7 @@ main() {
                   MyComp,
                   new ViewMetadata(
                       template: "<div unknown=\"{{ctxProp}}\"></div>"));
-              PromiseWrapper.catchError(tcb.createAsync(MyComp), (e) {
+              tcb.createAsync(MyComp).catchError((e) {
                 expect(
                     e.message,
                     '''Template parse errors:
@@ -1900,10 +1900,10 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property ("<div [ERROR
           expectCompileError(tcb, inlineTpl, errMessage, done) {
             tcb =
                 tcb.overrideView(MyComp, new ViewMetadata(template: inlineTpl));
-            PromiseWrapper.then(tcb.createAsync(MyComp), (value) {
+            tcb.createAsync(MyComp).then((value) {
               throw new BaseException(
                   "Test failure: should not have come here as an exception was expected");
-            }, (err) {
+            }, onError: (err) {
               expect(err.message, contains(errMessage));
               done();
             });
@@ -2273,19 +2273,19 @@ class PushCmpWithHostEvent {
 @Injectable()
 class PushCmpWithAsyncPipe {
   num numberOfChecks = 0;
-  Future<dynamic> promise;
-  PromiseCompleter<dynamic> completer;
+  Future<dynamic> future;
+  Completer completer;
   PushCmpWithAsyncPipe() {
-    this.completer = PromiseWrapper.completer();
-    this.promise = this.completer.promise;
+    this.completer = new Completer();
+    this.future = this.completer.future;
   }
   get field {
     this.numberOfChecks++;
-    return this.promise;
+    return this.future;
   }
 
   resolve(value) {
-    this.completer.resolve(value);
+    this.completer.complete(value);
   }
 }
 

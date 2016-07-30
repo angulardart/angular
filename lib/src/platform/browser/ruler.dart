@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DomAdapter;
 
 class Rectangle {
@@ -32,7 +31,7 @@ class Ruler {
     // even if getBoundingClientRect is synchronous we use async API in preparation for further
 
     // changes
-    return PromiseWrapper.resolve(new Rectangle(
+    return new Future.value(new Rectangle(
         clntRect.left, clntRect.top, clntRect.width, clntRect.height));
   }
 }

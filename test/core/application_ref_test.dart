@@ -26,8 +26,7 @@ import "package:angular2/core.dart"
         ChangeDetectorRef;
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, PromiseCompleter, TimerWrapper;
+import "package:angular2/src/facade/async.dart" show TimerWrapper;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, ComponentRef_, ComponentRef;
 import "package:angular2/src/core/linker/injector_factory.dart"
@@ -98,8 +97,8 @@ main() {
           return inject([AsyncTestCompleter, Injector],
               (AsyncTestCompleter completer, injector) {
             var ref = createApplication([]);
-            var promise = ref.run(() => PromiseWrapper.reject("Test", null));
-            PromiseWrapper.catchError(promise, (e) {
+            var promise = ref.run(() => new Future.error("Test"));
+            promise.catchError((e) {
               expect(e, "Test");
               completer.done();
             });
@@ -111,17 +110,17 @@ main() {
       test("should wait for asynchronous app initializers", () async {
         return inject([AsyncTestCompleter, Injector],
             (AsyncTestCompleter testCompleter, Injector injector) {
-          PromiseCompleter<dynamic> completer = PromiseWrapper.completer();
+          var completer = new Completer();
           var initializerDone = false;
           TimerWrapper.setTimeout(() {
-            completer.resolve(true);
+            completer.complete(true);
             initializerDone = true;
           }, 1);
           var app = createApplication([
             new Provider(APP_INITIALIZER,
-                useValue: () => completer.promise, multi: true)
+                useValue: () => completer.future, multi: true)
           ]);
-          completer.promise.then((_) {
+          completer.future.then((_) {
             coreLoadAndBootstrap(app.injector, MyComp).then((compRef) {
               expect(initializerDone, isTrue);
               testCompleter.done();
@@ -135,7 +134,7 @@ main() {
         return inject([Injector], (injector) {
           var app = createApplication([
             new Provider(APP_INITIALIZER,
-                useValue: () => PromiseWrapper.completer().promise, multi: true)
+                useValue: () => new Completer().future, multi: true)
           ]);
           expect(
               () => app.bootstrap(someCompFactory),
@@ -182,7 +181,7 @@ class _MockComponentResolver implements ComponentResolver {
   ComponentFactory _compFactory;
   _MockComponentResolver(this._compFactory) {}
   Future<ComponentFactory> resolveComponent(Type type) {
-    return PromiseWrapper.resolve(this._compFactory);
+    return new Future.value(this._compFactory);
   }
 
   CodegenInjectorFactory<dynamic> createInjectorFactory(Type injectorModule,

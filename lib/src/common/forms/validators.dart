@@ -1,9 +1,9 @@
+import 'dart:async';
+
 import "package:angular2/core.dart" show OpaqueToken;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isString;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 import "model.dart" as modelModule;
@@ -134,16 +134,18 @@ class Validators {
     var presentValidators = validators.where(isPresent).toList();
     if (presentValidators.length == 0) return null;
     return (modelModule.AbstractControl control) {
-      var promises = _executeAsyncValidators(control, presentValidators)
-          .map(_convertToPromise)
-          .toList();
-      return PromiseWrapper.all(promises).then(_mergeErrors);
+      var promises =
+          _executeAsyncValidators(control, presentValidators).map(_toFuture);
+      return Future.wait(promises).then(_mergeErrors);
     };
   }
 }
 
-dynamic _convertToPromise(dynamic obj) {
-  return PromiseWrapper.isPromise(obj) ? obj : ObservableWrapper.toPromise(obj);
+Future _toFuture(futureOrStream) {
+  if (futureOrStream is Stream) {
+    return futureOrStream.single;
+  }
+  return futureOrStream;
 }
 
 List<dynamic> _executeValidators(

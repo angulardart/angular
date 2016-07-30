@@ -1,16 +1,15 @@
 library angular2.test.common.forms.form_builder_test;
 
+import 'dart:async';
+
 import "package:angular2/common.dart" show FormBuilder, AbstractControl;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import 'package:test/test.dart';
 
 Map<String, dynamic> _syncValidator(AbstractControl c) {
   return null;
 }
 
-dynamic _asyncValidator(AbstractControl c) {
-  return PromiseWrapper.resolve(null);
-}
+dynamic _asyncValidator(AbstractControl c) => new Future.value(null);
 
 main() {
   var syncValidator = _syncValidator;

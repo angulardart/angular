@@ -2,8 +2,6 @@ import 'dart:async';
 
 export 'dart:async' show Stream, StreamController, StreamSubscription;
 
-export 'promise.dart';
-
 class TimerWrapper {
   static Timer setTimeout(fn(), int millis) =>
       new Timer(new Duration(milliseconds: millis), fn);

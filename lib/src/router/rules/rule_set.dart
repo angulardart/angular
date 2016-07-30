@@ -1,6 +1,5 @@
 import "dart:async";
 
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isFunction;
@@ -105,9 +104,7 @@ class RuleSet {
     if (solutions.length == 0 &&
         isPresent(urlParse) &&
         urlParse.auxiliary.length > 0) {
-      return [
-        PromiseWrapper.resolve(new PathMatch(null, null, urlParse.auxiliary))
-      ];
+      return [new Future.value(new PathMatch(null, null, urlParse.auxiliary))];
     }
     return solutions;
   }
@@ -117,7 +114,7 @@ class RuleSet {
     if (isPresent(routeRecognizer)) {
       return [routeRecognizer.recognize(urlParse)];
     }
-    return [PromiseWrapper.resolve(null)];
+    return [new Future.value(null)];
   }
 
   bool hasRoute(String name) {

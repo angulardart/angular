@@ -7,7 +7,6 @@ import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
@@ -191,8 +190,8 @@ class RuntimeCompiler implements ComponentResolver {
       String sourceUrl, StylesCompileResult result) {
     var promises =
         result.dependencies.map((dep) => this._loadStylesheetDep(dep)).toList();
-    return PromiseWrapper.all(promises).then((cssTexts) {
-      var nestedCompileResultPromises = [];
+    return Future.wait(promises).then((cssTexts) {
+      var nestedCompileResultPromises = <Future>[];
       for (var i = 0; i < result.dependencies.length; i++) {
         var dep = result.dependencies[i];
         var cssText = cssTexts[i];
@@ -202,7 +201,7 @@ class RuntimeCompiler implements ComponentResolver {
         nestedCompileResultPromises.add(this
             ._resolveStylesCompileResult(dep.sourceUrl, nestedCompileResult));
       }
-      return PromiseWrapper.all(nestedCompileResultPromises);
+      return Future.wait(nestedCompileResultPromises);
     }).then((nestedStylesArr) {
       for (var i = 0; i < result.dependencies.length; i++) {
         var dep = result.dependencies[i];

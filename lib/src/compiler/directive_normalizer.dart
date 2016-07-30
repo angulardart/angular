@@ -4,7 +4,6 @@ import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/async.dart" show PromiseWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
@@ -33,7 +32,7 @@ class DirectiveNormalizer {
       CompileDirectiveMetadata directive) {
     if (!directive.isComponent) {
       // For non components there is nothing to be normalized yet.
-      return PromiseWrapper.resolve(directive);
+      return new Future.value(directive);
     }
     return this.normalizeTemplate(directive.type, directive.template).then(
         (CompileTemplateMetadata normalizedTemplate) =>
@@ -59,7 +58,7 @@ class DirectiveNormalizer {
   Future<CompileTemplateMetadata> normalizeTemplate(
       CompileTypeMetadata directiveType, CompileTemplateMetadata template) {
     if (template.template != null) {
-      return PromiseWrapper.resolve(this.normalizeLoadedTemplate(
+      return new Future.value(this.normalizeLoadedTemplate(
           directiveType,
           template,
           template.template,

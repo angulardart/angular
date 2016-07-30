@@ -4,7 +4,7 @@ library angular2.test.core.zone.ng_zone_test;
 import "dart:async";
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/async.dart"
-    show PromiseCompleter, PromiseWrapper, TimerWrapper, ObservableWrapper;
+    show TimerWrapper, ObservableWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show scheduleMicroTask, isPresent;
@@ -78,16 +78,16 @@ main() {
       test("should produce long stack traces", () async {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           macroTask(() {
-            PromiseCompleter<dynamic> c = PromiseWrapper.completer();
+            var c = new Completer();
             _zone.run(() {
               TimerWrapper.setTimeout(() {
                 TimerWrapper.setTimeout(() {
-                  c.resolve(null);
+                  c.complete(null);
                   throw new BaseException("ccc");
                 }, 0);
               }, 0);
             });
-            c.promise.then((_) {
+            c.future.then((_) {
               expect(_traces, hasLength(1));
               expect(_traces[0].length > 1, isTrue);
               completer.done();
@@ -99,16 +99,16 @@ main() {
           () async {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           macroTask(() {
-            PromiseCompleter<dynamic> c = PromiseWrapper.completer();
+            var c = new Completer();
             _zone.run(() {
               scheduleMicroTask(() {
                 scheduleMicroTask(() {
-                  c.resolve(null);
+                  c.complete(null);
                   throw new BaseException("ddd");
                 });
               });
             });
-            c.promise.then((_) {
+            c.future.then((_) {
               expect(_traces, hasLength(1));
               expect(_traces[0].length > 1, isTrue);
               completer.done();
@@ -129,16 +129,16 @@ main() {
       test("should disable long stack traces", () async {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           macroTask(() {
-            PromiseCompleter<dynamic> c = PromiseWrapper.completer();
+            var c = new Completer();
             _zone.run(() {
               TimerWrapper.setTimeout(() {
                 TimerWrapper.setTimeout(() {
-                  c.resolve(null);
+                  c.complete(null);
                   throw new BaseException("ccc");
                 }, 0);
               }, 0);
             });
-            c.promise.then((_) {
+            c.future.then((_) {
               expect(_traces, hasLength(1));
               if (isPresent(_traces[0])) {
                 // some browsers don't have stack traces.
@@ -409,21 +409,21 @@ commonTests() {
         "should call onUnstable and onMicrotaskEmpty before and after each turn",
         () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-        PromiseCompleter<String> a;
-        PromiseCompleter<String> b;
+        Completer<String> a;
+        Completer<String> b;
         runNgZoneNoLog(() {
           macroTask(() {
-            a = PromiseWrapper.completer();
-            b = PromiseWrapper.completer();
+            a = new Completer();
+            b = new Completer();
             _log.add("run start");
-            a.promise.then(_log.fn("a then"));
-            b.promise.then(_log.fn("b then"));
+            a.future.then(_log.fn("a then"));
+            b.future.then(_log.fn("b then"));
           });
         });
         runNgZoneNoLog(() {
           macroTask(() {
-            a.resolve("a");
-            b.resolve("b");
+            a.complete("a");
+            b.complete("b");
           });
         });
         macroTask(() {
@@ -448,21 +448,21 @@ commonTests() {
         "should call onUnstable and onMicrotaskEmpty when an inner microtask is scheduled from outside angular",
         () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter testCompleter) {
-        PromiseCompleter<dynamic> completer;
+        Completer<dynamic> completer;
         macroTask(() {
           NgZone.assertNotInAngularZone();
-          completer = PromiseWrapper.completer();
+          completer = new Completer();
         });
         runNgZoneNoLog(() {
           macroTask(() {
             NgZone.assertInAngularZone();
-            completer.promise.then(_log.fn("executedMicrotask"));
+            completer.future.then(_log.fn("executedMicrotask"));
           });
         });
         macroTask(() {
           NgZone.assertNotInAngularZone();
           _log.add("scheduling a microtask");
-          completer.resolve(null);
+          completer.complete(null);
         });
         macroTask(() {
           expect(
@@ -550,10 +550,10 @@ commonTests() {
         runNgZoneNoLog(() {
           macroTask(() {
             _log.add("run start");
-            PromiseWrapper.resolve(null).then((_) {
+            new Future.value(null).then((_) {
               _log.add("promise then");
-              PromiseWrapper.resolve(null).then(_log.fn("promise foo"));
-              return PromiseWrapper.resolve(null);
+              new Future.value(null).then(_log.fn("promise foo"));
+              return new Future.value(null);
             }).then(_log.fn("promise bar"));
             _log.add("run end");
           });
@@ -603,25 +603,25 @@ commonTests() {
         "should call onUnstable and onMicrotaskEmpty before and after each turn, respectively",
         () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-        PromiseCompleter<dynamic> completerA;
-        PromiseCompleter<dynamic> completerB;
+        Completer<dynamic> completerA;
+        Completer<dynamic> completerB;
         runNgZoneNoLog(() {
           macroTask(() {
-            completerA = PromiseWrapper.completer();
-            completerB = PromiseWrapper.completer();
-            completerA.promise.then(_log.fn("a then"));
-            completerB.promise.then(_log.fn("b then"));
+            completerA = new Completer();
+            completerB = new Completer();
+            completerA.future.then(_log.fn("a then"));
+            completerB.future.then(_log.fn("b then"));
             _log.add("run start");
           });
         });
         runNgZoneNoLog(() {
           macroTask(() {
-            completerA.resolve(null);
+            completerA.complete(null);
           }, 10);
         });
         runNgZoneNoLog(() {
           macroTask(() {
-            completerB.resolve(null);
+            completerB.complete(null);
           }, 20);
         });
         macroTask(() {
@@ -666,9 +666,7 @@ commonTests() {
         runNgZoneNoLog(() {
           macroTask(() {
             _zone.runOutsideAngular(() {
-              promise = PromiseWrapper
-                  .resolve(4)
-                  .then((x) => PromiseWrapper.resolve(x));
+              promise = new Future.value(4).then((x) => new Future.value(x));
             });
             promise.then(_log.fn("promise then"));
             _log.add("zone run");

@@ -1,6 +1,8 @@
 @TestOn('browser')
 library angular2.test.core.linker.dynamic_component_loader_test;
 
+import 'dart:async';
+
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/collection.dart" show Predicate;
 import "package:angular2/core.dart"
@@ -12,7 +14,6 @@ import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import 'package:test/test.dart';
 
 main() {
@@ -92,9 +93,10 @@ main() {
                 AsyncTestCompleter completer) {
           tcb.createAsync(MyComp).then((ComponentFixture tc) {
             tc.detectChanges();
-            PromiseWrapper.catchError(
-                loader.loadNextToLocation(DynamicallyLoadedThrows,
-                    tc.componentInstance.viewContainerRef), (error) {
+            loader
+                .loadNextToLocation(DynamicallyLoadedThrows,
+                    tc.componentInstance.viewContainerRef)
+                .catchError((error) {
               expect(error.message, contains("ThrownInConstructor"));
               // should not throw.
               tc.detectChanges();

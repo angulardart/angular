@@ -1,6 +1,8 @@
 @TestOn('browser')
 library angular2.test.common.forms.integration_test;
 
+import 'dart:async';
+
 import "package:angular2/core.dart"
     show Component, Directive, Output, EventEmitter;
 import "package:angular2/testing_internal.dart";
@@ -11,7 +13,6 @@ import "package:angular2/platform/browser.dart" show By;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/async.dart"
     show ObservableWrapper, TimerWrapper;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import 'package:test/test.dart';
 
 main() {
@@ -1254,10 +1255,10 @@ class MyInput implements ControlValueAccessor {
 
 uniqLoginAsyncValidator(String expectedValue) {
   return (c) {
-    var completer = PromiseWrapper.completer();
+    var completer = new Completer();
     var res = (c.value == expectedValue) ? null : {"uniqLogin": true};
-    completer.resolve(res);
-    return completer.promise;
+    completer.complete(res);
+    return completer.future;
   };
 }
 

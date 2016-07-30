@@ -1,3 +1,5 @@
+import 'dart:async';
+
 @TestOn('browser')
 import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
@@ -22,7 +24,6 @@ import 'package:angular2/common.dart'
 import 'package:angular2/src/common/forms/directives/shared.dart'
     show selectValueAccessor, composeValidators;
 import 'package:angular2/src/facade/async.dart' show TimerWrapper;
-import 'package:angular2/src/facade/promise.dart' show PromiseWrapper;
 import 'package:angular2/src/core/change_detection.dart' show SimpleChange;
 import 'package:test/test.dart';
 import '../control_mocks.dart';
@@ -44,16 +45,16 @@ class CustomValidatorDirective implements Validator {
 
 asyncValidator(expected, [timeout = 0]) {
   return (c) {
-    var completer = PromiseWrapper.completer();
+    var completer = new Completer();
     var res = c.value != expected ? {"async": true} : null;
     if (timeout == 0) {
-      completer.resolve(res);
+      completer.complete(res);
     } else {
       TimerWrapper.setTimeout(() {
-        completer.resolve(res);
+        completer.complete(res);
       }, timeout);
     }
-    return completer.promise;
+    return completer.future;
   };
 }
 

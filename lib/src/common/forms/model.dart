@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import "package:angular2/src/facade/async.dart"
     show Stream, EventEmitter, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart"
     show StringMapWrapper, ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, normalizeBool;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 
@@ -44,8 +45,8 @@ _find(AbstractControl control,
   });
 }
 
-Stream<dynamic> toObservable(dynamic r) {
-  return PromiseWrapper.isPromise(r) ? ObservableWrapper.fromPromise(r) : r;
+Stream<dynamic> _toStream(futureOrStream) {
+  return futureOrStream is Future ? futureOrStream.asStream() : futureOrStream;
 }
 
 /**
@@ -164,7 +165,7 @@ abstract class AbstractControl {
     if (isPresent(this.asyncValidator)) {
       this._status = PENDING;
       this._cancelExistingSubscription();
-      var obs = toObservable(this.asyncValidator(this));
+      var obs = _toStream(this.asyncValidator(this));
       this._asyncValidationSubscription = ObservableWrapper.subscribe(
           obs,
           (Map<String, dynamic> res) =>

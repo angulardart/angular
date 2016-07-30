@@ -1,11 +1,12 @@
 @TestOn('browser')
 library angular2.test.common.forms.model_spec;
 
+import 'dart:async';
+
 import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart"
     show ControlGroup, Control, ControlArray, Validators;
 import "package:angular2/src/facade/lang.dart" show IS_DART, isPresent;
-import "package:angular2/src/facade/promise.dart" show PromiseWrapper;
 import "package:angular2/src/facade/async.dart"
     show TimerWrapper, ObservableWrapper, EventEmitter;
 import 'package:test/test.dart';
@@ -13,24 +14,23 @@ import 'package:test/test.dart';
 main() {
   var asyncValidator = (expected, [timeouts = const {}]) {
     return (c) {
-      var completer = PromiseWrapper.completer();
+      var completer = new Completer();
       var t = isPresent(timeouts[c.value]) ? timeouts[c.value] : 0;
       var res = c.value != expected ? {"async": true} : null;
       if (t == 0) {
-        completer.resolve(res);
+        completer.complete(res);
       } else {
         TimerWrapper.setTimeout(() {
-          completer.resolve(res);
+          completer.complete(res);
         }, t);
       }
-      return completer.promise;
+      return completer.future;
     };
   };
 
   var asyncValidatorReturningObservable = (c) {
     var e = new EventEmitter();
-    PromiseWrapper.scheduleMicrotask(
-        () => ObservableWrapper.callEmit(e, {"async": true}));
+    scheduleMicrotask(() => ObservableWrapper.callEmit(e, {"async": true}));
     return e;
   };
 

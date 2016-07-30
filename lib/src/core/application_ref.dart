@@ -14,13 +14,11 @@ import "package:angular2/src/core/linker/component_resolver.dart"
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry, Testability;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
-import "package:angular2/src/facade/async.dart"
-    show PromiseWrapper, ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, ExceptionHandler;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, assertionsEnabled, isPromise;
+    show isBlank, isPresent, assertionsEnabled;
 
 import "application_tokens.dart" show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "profile/profile.dart" show wtfLeave, wtfCreateScope, WtfScopeFn;
@@ -297,33 +295,33 @@ class ApplicationRef_ extends ApplicationRef {
     this._asyncInitDonePromise = this.run(() {
       List<Function> inits =
           _injector.get(APP_INITIALIZER, null) as List<Function>;
-      var asyncInitResults = [];
+      var asyncInitResults = <Future>[];
       var asyncInitDonePromise;
       if (isPresent(inits)) {
         for (var i = 0; i < inits.length; i++) {
           var initResult = inits[i]();
-          if (isPromise(initResult)) {
+          if (initResult is Future) {
             asyncInitResults.add(initResult);
           }
         }
       }
       if (asyncInitResults.length > 0) {
-        asyncInitDonePromise = PromiseWrapper
-            .all(asyncInitResults)
+        asyncInitDonePromise = Future
+            .wait(asyncInitResults)
             .then((_) => this._asyncInitDone = true);
         this._asyncInitDone = false;
       } else {
         this._asyncInitDone = true;
-        asyncInitDonePromise = PromiseWrapper.resolve(true);
+        asyncInitDonePromise = new Future.value(true);
       }
       return asyncInitDonePromise;
     });
-    ObservableWrapper.subscribe(zone.onError, (NgZoneError error) {
-      this._exceptionHandler.call(error.error, error.stackTrace);
+    _zone.onError.listen((NgZoneError error) {
+      _exceptionHandler.call(error.error, error.stackTrace);
     });
-    ObservableWrapper.subscribe(this._zone.onMicrotaskEmpty, (_) {
-      this._zone.run(() {
-        this.tick();
+    _zone.onMicrotaskEmpty.listen((_) {
+      _zone.run(() {
+        tick();
       });
     });
   }
@@ -351,23 +349,20 @@ class ApplicationRef_ extends ApplicationRef {
     var zone = this.injector.get(NgZone);
     var result;
     // Note: Don't use zone.runGuarded as we want to know about
-
     // the thrown exception!
 
     // Note: the completer needs to be created outside
-
     // of `zone.run` as Dart swallows rejected promises
-
     // via the onError callback of the promise.
-    var completer = PromiseWrapper.completer();
+    var completer = new Completer();
     zone.run(() {
       try {
         result = callback();
-        if (isPromise(result)) {
-          PromiseWrapper.then(result, (ref) {
-            completer.resolve(ref);
-          }, (err, stackTrace) {
-            completer.reject(err, stackTrace);
+        if (result is Future) {
+          result.then((ref) {
+            completer.complete(ref);
+          }, onError: (err, stackTrace) {
+            completer.completeError(err, stackTrace);
             this._exceptionHandler.call(err, stackTrace);
           });
         }
@@ -376,7 +371,7 @@ class ApplicationRef_ extends ApplicationRef {
         rethrow;
       }
     });
-    return isPromise(result) ? completer.promise : result;
+    return result is Future ? completer.future : result;
   }
 
   ComponentRef bootstrap(ComponentFactory componentFactory) {
