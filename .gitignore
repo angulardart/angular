@@ -1,4 +1,7 @@
+# Files and directories created by pub
 .packages
 .pub/
 packages
 pubspec.lock
+# Directory created by dartdoc
+docs/api/
