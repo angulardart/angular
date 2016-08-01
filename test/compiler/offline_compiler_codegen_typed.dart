@@ -74,7 +74,8 @@ import3.AppView<import4.CompA> viewFactory_CompA0(import5.ViewUtils viewUtils,
 const List<dynamic> styles_CompA_Host = const [];
 const List<import1.StaticNodeDebugInfo> nodeDebugInfos_CompA_Host0 = const [
   const import1.StaticNodeDebugInfo(
-      const [import4.CompA], import4.CompA, const <String, dynamic>{})
+      const [import4.CompA], import4.CompA, const <String, dynamic>{}),
+  null // Testing null default case.
 ];
 import2.RenderComponentType renderType_CompA_Host = null;
 

@@ -23,6 +23,8 @@ class _EmittedLine {
 class EmitterVisitorContext {
   List<String> _exportedVars;
   num _indent;
+  int _outputPos;
+
   static EmitterVisitorContext createRoot(List<String> exportedVars) {
     return new EmitterVisitorContext(exportedVars, 0);
   }
@@ -30,11 +32,14 @@ class EmitterVisitorContext {
   List<_EmittedLine> _lines;
   List<o.ClassStmt> _classes = [];
   EmitterVisitorContext(this._exportedVars, this._indent) {
+    _outputPos = 0;
     this._lines = [new _EmittedLine(_indent)];
   }
   _EmittedLine get _currentLine {
     return this._lines[this._lines.length - 1];
   }
+
+  int get currentLineLength => _currentLine.indent + _outputPos;
 
   bool isExportedVar(String varName) {
     return !identical(this._exportedVars.indexOf(varName), -1);
@@ -42,6 +47,7 @@ class EmitterVisitorContext {
 
   void println([String lastPart = ""]) {
     this.print(lastPart, true);
+    _outputPos += lastPart.length;
   }
 
   bool lineIsEmpty() {
@@ -54,6 +60,9 @@ class EmitterVisitorContext {
     }
     if (newLine) {
       this._lines.add(new _EmittedLine(this._indent));
+      _outputPos = 0;
+    } else {
+      _outputPos += part.length;
     }
   }
 
@@ -401,11 +410,12 @@ abstract class AbstractEmitterVisitor
   dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var useNewLine = ast.entries.length > 1;
-    ctx.print('''[''', useNewLine);
+    ctx.print('[', useNewLine);
     ctx.incIndent();
-    this.visitAllExpressions(ast.entries, ctx, ",", useNewLine);
+    this.visitAllExpressions(ast.entries, ctx, ',',
+        newLine: useNewLine, keepOnSameLine: true);
     ctx.decIndent();
-    ctx.print(''']''', useNewLine);
+    ctx.print(']', useNewLine);
     return null;
   }
 
@@ -418,7 +428,7 @@ abstract class AbstractEmitterVisitor
       ctx.print(
           '''${ escapeSingleQuoteString ( entry [ 0 ] , this . _escapeDollarInStrings )}: ''');
       entry[1].visitExpression(this, ctx);
-    }, ast.entries, ctx, ",", useNewLine);
+    }, ast.entries, ctx, ",", newLine: useNewLine, keepOnSameLine: false);
     ctx.decIndent();
     ctx.print('''}''', useNewLine);
     return null;
@@ -426,19 +436,27 @@ abstract class AbstractEmitterVisitor
 
   void visitAllExpressions(List<o.Expression> expressions,
       EmitterVisitorContext ctx, String separator,
-      [bool newLine = false]) {
-    this.visitAllObjects((expr) => expr.visitExpression(this, ctx), expressions,
-        ctx, separator, newLine);
+      {bool newLine: false, bool keepOnSameLine: false}) {
+    visitAllObjects(
+        (expr) => expr.visitExpression(this, ctx), expressions, ctx, separator,
+        newLine: newLine, keepOnSameLine: keepOnSameLine);
   }
 
   void visitAllObjects(Function handler, dynamic expressions,
       EmitterVisitorContext ctx, String separator,
-      [bool newLine = false]) {
-    for (var i = 0; i < expressions.length; i++) {
-      if (i > 0) {
-        ctx.print(separator, newLine);
-      }
+      {bool newLine: false, bool keepOnSameLine: false}) {
+    const int _MAX_OUTPUT_LENGTH = 80;
+    int length = expressions.length;
+    for (var i = 0; i < length; i++) {
       handler(expressions[i]);
+      if (i != (length - 1)) {
+        // Place separator.
+        ctx.print(
+            separator,
+            keepOnSameLine
+                ? ctx.currentLineLength > _MAX_OUTPUT_LENGTH
+                : newLine);
+      }
     }
     if (newLine) {
       ctx.println();

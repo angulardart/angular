@@ -288,7 +288,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (isConstType(ast.type)) {
-      ctx.print('''const ''');
+      ctx.print('const ');
     }
     return super.visitLiteralArrayExpr(ast, ctx);
   }

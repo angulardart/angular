@@ -454,19 +454,26 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
   var compileElement = node is CompileElement ? node : null;
   List<o.Expression> providerTokens = [];
   o.Expression componentToken = o.NULL_EXPR;
-  var varTokenEntries = <List<dynamic>>[];
-  if (isPresent(compileElement)) {
+  var varTokenEntries = <List>[];
+  if (compileElement != null) {
     providerTokens = compileElement.getProviderTokens();
-    if (isPresent(compileElement.component)) {
+    if (compileElement.component != null) {
       componentToken = createDiTokenExpression(
           identifierToken(compileElement.component.type));
     }
-    StringMapWrapper.forEach(compileElement.referenceTokens, (token, varName) {
+    compileElement.referenceTokens.forEach((String varName, token) {
       varTokenEntries.add([
         varName,
         token != null ? createDiTokenExpression(token) : o.NULL_EXPR
       ]);
     });
+  }
+  // Optimize StaticNodeDebugInfo(const [],null,const <String, dynamic>{}), case
+  // by writing out null.
+  if (providerTokens.isEmpty &&
+      componentToken == o.NULL_EXPR &&
+      varTokenEntries.isEmpty) {
+    return o.NULL_EXPR;
   }
   return o.importExpr(Identifiers.StaticNodeDebugInfo).instantiate(
       [

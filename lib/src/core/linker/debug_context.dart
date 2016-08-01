@@ -1,71 +1,68 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "view.dart" show DebugAppView;
 import "view_type.dart" show ViewType;
 
 class StaticNodeDebugInfo {
-  final List<dynamic> providerTokens;
+  final List providerTokens;
   final dynamic componentToken;
   final Map<String, dynamic> refTokens;
   const StaticNodeDebugInfo(
       this.providerTokens, this.componentToken, this.refTokens);
 }
 
+var _EMPTY_DEBUG_PROVIDERS = const [];
+var _EMPTY_REF_TOKENS = <String, dynamic>{};
+
 class DebugContext implements RenderDebugInfo {
   DebugAppView<dynamic> _view;
   num _nodeIndex;
   num _tplRow;
   num _tplCol;
+
   DebugContext(this._view, this._nodeIndex, this._tplRow, this._tplCol) {}
-  StaticNodeDebugInfo get _staticNodeInfo {
-    return isPresent(this._nodeIndex)
-        ? this._view.staticNodeDebugInfos[this._nodeIndex]
-        : null;
-  }
+
+  StaticNodeDebugInfo get _staticNodeInfo => _nodeIndex != null
+      ? this._view.staticNodeDebugInfos[this._nodeIndex]
+      : null;
 
   get context {
     return this._view.context;
   }
 
   get component {
-    var staticNodeInfo = this._staticNodeInfo;
-    if (isPresent(staticNodeInfo) && isPresent(staticNodeInfo.componentToken)) {
-      return this.injector.get(staticNodeInfo.componentToken);
+    var staticNodeInfo = _staticNodeInfo;
+    if (staticNodeInfo?.componentToken != null) {
+      return injector.get(staticNodeInfo.componentToken);
     }
     return null;
   }
 
   get componentRenderElement {
     var componentView = this._view;
-    while (isPresent(componentView.declarationAppElement) &&
+    while (componentView.declarationAppElement != null &&
         !identical(componentView.type, ViewType.COMPONENT)) {
       componentView = (componentView.declarationAppElement.parentView
           as DebugAppView<dynamic>);
     }
-    return isPresent(componentView.declarationAppElement)
-        ? componentView.declarationAppElement.nativeElement
-        : null;
+    return componentView.declarationAppElement?.nativeElement;
   }
 
-  Injector get injector {
-    return this._view.injector(this._nodeIndex);
-  }
+  Injector get injector => _view.injector(this._nodeIndex);
 
   dynamic get renderNode {
-    if (isPresent(this._nodeIndex) && isPresent(this._view.allNodes)) {
-      return this._view.allNodes[this._nodeIndex];
-    } else {
-      return null;
+    if (_nodeIndex != null && _view.allNodes != null) {
+      return _view.allNodes[this._nodeIndex];
     }
+    return null;
   }
 
   List<dynamic> get providerTokens {
-    var staticNodeInfo = this._staticNodeInfo;
-    return isPresent(staticNodeInfo) ? staticNodeInfo.providerTokens : null;
+    var staticNodeInfo = _staticNodeInfo;
+    return staticNodeInfo == null
+        ? _EMPTY_DEBUG_PROVIDERS
+        : staticNodeInfo.providerTokens;
   }
 
   String get source {
@@ -74,26 +71,33 @@ class DebugContext implements RenderDebugInfo {
 
   Map<String, String> get locals {
     Map<String, String> varValues = {};
+
+    // There are many instances of:
+    // StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
+    // When these are compiled, they are written out as null inside
+    // nodeDebugInfos array to preserve order, so we skip null values.
+
     // TODO(tbosch): right now, the semantics of debugNode.locals are
     // that it contains the variables of all elements, not just
     // the given one. We preserve this for now to not have a breaking
     // change, but should change this later!
-    ListWrapper.forEachWithIndex(this._view.staticNodeDebugInfos,
-        (StaticNodeDebugInfo staticNodeInfo, num nodeIndex) {
+    var debugInfos = _view.staticNodeDebugInfos;
+    int infoCount = debugInfos.length;
+    for (int nodeIndex = 0; nodeIndex < infoCount; nodeIndex++) {
+      StaticNodeDebugInfo staticNodeInfo = debugInfos[nodeIndex];
+      if (staticNodeInfo == null) continue;
       var refs = staticNodeInfo.refTokens;
-      StringMapWrapper.forEach(refs, (refToken, refName) {
+      refs.forEach((String refName, refToken) {
         var varValue;
-        if (isBlank(refToken)) {
-          varValue = isPresent(this._view.allNodes)
-              ? this._view.allNodes[nodeIndex]
-              : null;
+        if (refToken == null) {
+          varValue = _view.allNodes != null ? _view.allNodes[nodeIndex] : null;
         } else {
-          varValue = this._view.injectorGet(refToken, nodeIndex, null);
+          varValue = _view.injectorGet(refToken, nodeIndex, null);
         }
         varValues[refName] = varValue;
       });
-    });
-    StringMapWrapper.forEach(this._view.locals, (localValue, localName) {
+    }
+    _view.locals?.forEach((String localName, localValue) {
       varValues[localName] = localValue;
     });
     return varValues;

@@ -311,7 +311,7 @@ abstract class AppView<T> {
 }
 
 class DebugAppView<T> extends AppView<T> {
-  List<StaticNodeDebugInfo> staticNodeDebugInfos;
+  final List<StaticNodeDebugInfo> staticNodeDebugInfos;
   DebugContext _currentDebugContext = null;
   DebugAppView(
       dynamic clazz,
@@ -324,9 +324,8 @@ class DebugAppView<T> extends AppView<T> {
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
       : super(clazz, componentType, type, locals, viewUtils, parentInjector,
-            declarationAppElement, cdMode) {
-    /* super call moved to initializer */;
-  }
+            declarationAppElement, cdMode);
+
   AppElement create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       selector) {

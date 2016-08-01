@@ -199,13 +199,22 @@ abstract class NgDepsWriterMixin
       writeLocalMetadataMap(model.reflectables);
     }
 
-    buffer
-      ..writeln('var _visited = false;')
-      ..writeln('void ${SETUP_METHOD_NAME}() {')
-      ..writeln('if (_visited) return; _visited = true;');
-
     final needsReceiver =
         (model.reflectables != null && model.reflectables.isNotEmpty);
+
+    bool hasInitializationCode = needsReceiver || model.depImports.isNotEmpty;
+
+    // Create global variable _visited to prevent initializing dependencies
+    // multiple times.
+    if (hasInitializationCode) buffer.writeln('var _visited = false;');
+
+    // Write void initReflector() function start.
+    buffer.writeln('void ${SETUP_METHOD_NAME}() {');
+
+    // Write code to prevent reentry.
+    if (hasInitializationCode) {
+      buffer.writeln('if (_visited) return; _visited = true;');
+    }
 
     if (needsReceiver) {
       buffer.writeln('$REFLECTOR_PREFIX.$REFLECTOR_VAR_NAME');
@@ -224,6 +233,7 @@ abstract class NgDepsWriterMixin
       buffer.writeln('${importModel.prefix}.${SETUP_METHOD_NAME}();');
     }
 
+    // Write void initReflector() function end.
     buffer.writeln('}');
   }
 }
