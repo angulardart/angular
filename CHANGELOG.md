@@ -2,18 +2,18 @@
 
 ### API changes
 
-* Remove existing implementation of web workers to be replaced in the
+* Remove existing implementation of web workers, to be replaced in the
   future with Dart import override for dart:html.
 
-### Bug Fixes and other changes
+### Bug fixes and other changes
 * Remove throwOnChanges parameter from all change detection calls in
   generated template.dart.
 * Unused and empty assertArrayOfStrings API removed.
 * Update BrowserDomAdapter from dart:js to package:js.
 * Reset change detection to guard against template exception.
 * Delete unused files.
-* Cleanup the NgIf directive and remove facades.
-* Enabled Travis-CI
+* Clean up the NgIf directive and remove facades.
+* Enabled Travis-CI.
 * Update tests that should only run in the browser.
 * Add angular transformer which deletes any pre-existing generated files
   from Bazel.
