@@ -30,29 +30,28 @@
 This is the first release of Angular 2 for Dart that is written directly in
 Dart, instead of generated from TypeScript.
 
-<!-- ### Breaking changes -->
 
 ### API changes
 
-* The `Provider` constructor and `provide()` function are now more intuitive
-  when they have a single argument.
+The `Provider` constructor and `provide()` function are now more intuitive
+when they have a single argument.
 
-  Before, `const Provider(Foo)` or `provide(Foo)`
-  would provide a `null` object.
-  To provide a `Foo` object, you had to use `const Provider(Foo, useClass:Foo)`
-  or `provide(Foo, useClass:Foo)`.
-  Now you can omit the `useClass:Foo`.
-  Either of the following provides a `Foo` instance:
+Before, `const Provider(Foo)` or `provide(Foo)`
+would provide a `null` object.
+To provide a `Foo` object, you had to use `const Provider(Foo, useClass:Foo)`
+or `provide(Foo, useClass:Foo)`.
+Now you can omit the `useClass:Foo`.
+Either of the following provides a `Foo` instance:
 
-  ```
+```
 const Provider(Foo)
 // or
 provide(Foo)
 ```
 
-  If you want the old behavior, change your code to specify `useValue`:
+If you want the old behavior, change your code to specify `useValue`:
 
-   ```
+```
 const Provider(Foo, useValue: null)
 // or
 provide(Foo, useValue: null)
