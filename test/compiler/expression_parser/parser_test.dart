@@ -181,6 +181,18 @@ main() {
                   "Parser Error: Conditional expression true\\?1 requires all 3 expressions")));
         });
       });
+      group("ifNull", () {
+        test("should parse if null expressions", () {
+          checkAction("null ?? 0");
+          checkAction("fn() ?? 0");
+        });
+        test("should throw on missing null case", () {
+          expectActionError(
+              "null ??",
+              throwsWith(new RegExp(
+                  "Parser Error: Unexpected end of expression: null \\?\\?")));
+        });
+      });
       group("assignment", () {
         test("should support field assignments", () {
           checkAction("a = 12");

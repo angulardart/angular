@@ -248,7 +248,7 @@ class _Scanner {
       case $CARET:
         return this.scanOperator(start, StringWrapper.fromCharCode(peek));
       case $QUESTION:
-        return this.scanComplexOperator(start, "?", $PERIOD, ".");
+        return this.scanComplexOperator(start, "?", $PERIOD, ".", $QUESTION, "?");
       case $LT:
       case $GT:
         return this.scanComplexOperator(
@@ -484,7 +484,8 @@ var OPERATORS = SetWrapper.createFromList([
   "!",
   "?",
   "#",
-  "?."
+  "?.",
+  "??"
 ]);
 var KEYWORDS = SetWrapper.createFromList(
     ["var", "let", "null", "undefined", "true", "false", "if", "else"]);

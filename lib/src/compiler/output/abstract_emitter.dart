@@ -321,6 +321,16 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  dynamic visitIfNullExpr(o.IfNullExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    ctx.print("(");
+    ast.condition.visitExpression(this, ctx);
+    ctx.print("?? ");
+    ast.nullCase.visitExpression(this, ctx);
+    ctx.print(")");
+    return null;
+  }
+
   dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print("!");

@@ -74,6 +74,19 @@ class Conditional extends AST {
   }
 }
 
+/// Represents the ?? expression in Dart
+class IfNull extends AST {
+  /// Condition for the null check and result if it is not null.
+  final AST condition;
+  /// Result if the `condition` operand is null.
+  final AST nullExp;
+
+  IfNull(this.condition, this.nullExp);
+  dynamic visit(AstVisitor visitor, [dynamic context = null]) {
+    return visitor.visitIfNull(this, context);
+  }
+}
+
 class PropertyRead extends AST {
   AST receiver;
   String name;
@@ -271,6 +284,7 @@ abstract class AstVisitor {
   dynamic visitChain(Chain ast, dynamic context);
   dynamic visitConditional(Conditional ast, dynamic context);
   dynamic visitFunctionCall(FunctionCall ast, dynamic context);
+  dynamic visitIfNull(IfNull ast, dynamic context);
   dynamic visitImplicitReceiver(ImplicitReceiver ast, dynamic context);
   dynamic visitInterpolation(Interpolation ast, dynamic context);
   dynamic visitKeyedRead(KeyedRead ast, dynamic context);
@@ -315,6 +329,13 @@ class RecursiveAstVisitor implements AstVisitor {
   dynamic visitFunctionCall(FunctionCall ast, dynamic context) {
     ast.target.visit(this);
     this.visitAll(ast.args as List<AST>, context);
+    return null;
+  }
+
+
+  dynamic visitIfNull(IfNull ast, dynamic context) {
+    ast.condition.visit(this);
+    ast.nullExp.visit(this);
     return null;
   }
 
@@ -451,6 +472,10 @@ class AstTransformer implements AstVisitor {
   AST visitConditional(Conditional ast, dynamic context) {
     return new Conditional(ast.condition.visit(this), ast.trueExp.visit(this),
         ast.falseExp.visit(this));
+  }
+
+  AST visitIfNull(IfNull ast, dynamic context) {
+    return new IfNull(ast.condition.visit(this), ast.nullExp.visit(this));
   }
 
   AST visitPipe(BindingPipe ast, dynamic context) {
