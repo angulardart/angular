@@ -10,7 +10,7 @@ import "package:angular2/core.dart"
         ViewMetadata,
         ElementRef,
         ChangeDetectorRef;
-import "package:angular2/src/core/debug/debug_node.dart"
+import "package:angular2/src/testing/debug_node.dart"
     show DebugElement, getDebugNode;
 import "package:angular2/src/core/linker/view_utils.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;

@@ -1,9 +1,10 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
+import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
+import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/collection.dart" show Predicate;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, MapWrapper;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 class EventListener {
   String name;
@@ -18,40 +19,32 @@ class DebugNode {
   DebugElement parent;
   DebugNode(dynamic nativeNode, DebugNode parent, this._debugInfo) {
     this.nativeNode = nativeNode;
-    if (isPresent(parent) && parent is DebugElement) {
+    if (parent != null && parent is DebugElement) {
       parent.addChild(this);
     } else {
       this.parent = null;
     }
     this.listeners = [];
   }
-  Injector get injector {
-    return isPresent(this._debugInfo) ? this._debugInfo.injector : null;
-  }
+  Injector get injector => _debugInfo?.injector;
 
-  dynamic get componentInstance {
-    return isPresent(this._debugInfo) ? this._debugInfo.component : null;
-  }
+  dynamic get componentInstance => _debugInfo?.component;
 
-  Map<String, dynamic> get locals {
-    return isPresent(this._debugInfo) ? this._debugInfo.locals : null;
-  }
+  Map<String, dynamic> get locals => _debugInfo?.locals;
 
-  List<dynamic> get providerTokens {
-    return isPresent(this._debugInfo) ? this._debugInfo.providerTokens : null;
-  }
+  List<dynamic> get providerTokens => _debugInfo?.providerTokens;
 
-  String get source {
-    return isPresent(this._debugInfo) ? this._debugInfo.source : null;
-  }
+  String get source => _debugInfo?.source;
 
-  dynamic inject(dynamic token) {
-    return this.injector.get(token);
-  }
+  dynamic inject(dynamic token) => injector.get(token);
 
-  dynamic getLocal(String name) {
-    return this.locals[name];
-  }
+  // Provide [ApplicationRef] for browser extensions.
+  dynamic get applicationRef => injector.get(ApplicationRef);
+
+  // Provide [NgZone] for browser extensions.
+  dynamic get zone => injector.get(NgZone);
+
+  dynamic getLocal(String name) => locals[name];
 }
 
 class DebugElement extends DebugNode {
@@ -60,6 +53,7 @@ class DebugElement extends DebugNode {
   Map<String, String> attributes;
   List<DebugNode> childNodes;
   dynamic nativeElement;
+
   DebugElement(dynamic nativeNode, dynamic parent, RenderDebugInfo _debugInfo)
       : super(nativeNode, parent, _debugInfo) {
     /* super call moved to initializer */;
@@ -68,16 +62,16 @@ class DebugElement extends DebugNode {
     this.childNodes = [];
     this.nativeElement = nativeNode;
   }
-  addChild(DebugNode child) {
-    if (isPresent(child)) {
-      this.childNodes.add(child);
-      child.parent = this;
-    }
+
+  void addChild(DebugNode child) {
+    if (child == null) return;
+    this.childNodes.add(child);
+    child.parent = this;
   }
 
-  removeChild(DebugNode child) {
-    var childIndex = this.childNodes.indexOf(child);
-    if (!identical(childIndex, -1)) {
+  void removeChild(DebugNode child) {
+    int childIndex = childNodes.indexOf(child);
+    if (childIndex != -1) {
       child.parent = null;
       ListWrapper.splice(this.childNodes, childIndex, 1);
     }
@@ -93,16 +87,14 @@ class DebugElement extends DebugNode {
           ListWrapper.concat(previousChildren, newChildren), nextChildren);
       for (var i = 0; i < newChildren.length; ++i) {
         var newChild = newChildren[i];
-        if (isPresent(newChild.parent)) {
-          newChild.parent.removeChild(newChild);
-        }
+        newChild.parent?.removeChild(newChild);
         newChild.parent = this;
       }
     }
   }
 
   DebugElement query(Predicate<DebugElement> predicate) {
-    var results = this.queryAll(predicate);
+    var results = queryAll(predicate);
     return results.length > 0 ? results[0] : null;
   }
 
@@ -120,7 +112,7 @@ class DebugElement extends DebugNode {
 
   List<DebugElement> get children {
     List<DebugElement> children = [];
-    this.childNodes.forEach((node) {
+    childNodes.forEach((node) {
       if (node is DebugElement) {
         children.add(node);
       }
@@ -129,7 +121,7 @@ class DebugElement extends DebugNode {
   }
 
   triggerEventHandler(String eventName, dynamic eventObj) {
-    this.listeners.forEach((listener) {
+    listeners.forEach((listener) {
       if (listener.name == eventName) {
         listener.callback(eventObj);
       }
@@ -184,4 +176,8 @@ indexDebugNode(DebugNode node) {
 removeDebugNodeFromIndex(DebugNode node) {
   (_nativeNodeToDebugNode.containsKey(node.nativeNode) &&
       (_nativeNodeToDebugNode.remove(node.nativeNode) != null || true));
+}
+
+DebugNode inspectNativeElement(element) {
+  return getDebugNode(element);
 }

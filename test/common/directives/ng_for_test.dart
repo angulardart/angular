@@ -6,7 +6,6 @@ import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/core.dart" show Component, TemplateRef, ContentChild;
 import "package:angular2/src/common/directives/ng_for.dart" show NgFor;
 import "package:angular2/src/common/directives/ng_if.dart" show NgIf;
-import "package:angular2/platform/common_dom.dart" show By;
 import 'package:test/test.dart';
 
 main() {

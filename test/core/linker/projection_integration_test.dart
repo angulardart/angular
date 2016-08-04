@@ -1,9 +1,9 @@
 @TestOn('browser')
 library angular2.test.core.linker.projection_integration_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/core.dart"
+import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
+import 'package:angular2/core.dart'
     show
         Component,
         Directive,
@@ -12,31 +12,31 @@ import "package:angular2/core.dart"
         ViewContainerRef,
         ViewEncapsulation,
         ViewMetadata;
-import "package:angular2/platform/common_dom.dart" show By;
-import "package:angular2/src/core/debug/debug_node.dart" show getAllDebugNodes;
+import 'package:angular2/src/testing/debug_node.dart' show getAllDebugNodes;
+import 'package:angular2/src/testing/by.dart';
 import 'package:test/test.dart';
 
 main() {
-  group("projection", () {
-    test("should support simple components", () async {
+  group('projection', () {
+    test('should support simple components', () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb
             .overrideView(
                 MainComp,
                 new ViewMetadata(
-                    template: "<simple>" + "<div>A</div>" + "</simple>",
+                    template: '<simple>' + '<div>A</div>' + '</simple>',
                     directives: [Simple]))
             .createAsync(MainComp)
             .then((main) {
-          expect(main.debugElement.nativeElement, hasTextContent("SIMPLE(A)"));
+          expect(main.debugElement.nativeElement, hasTextContent('SIMPLE(A)'));
           completer.done();
         });
       });
     });
     test(
-        "should support simple components with text interpolation as direct children",
-        () async {
+        'should support simple components with text interpolation as '
+        'direct children', () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb
@@ -242,8 +242,8 @@ main() {
       });
     });
     test(
-        "should support nesting with content being direct child of a nested component",
-        () async {
+        "should support nesting with content being direct child of a nested "
+        "component", () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb

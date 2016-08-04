@@ -1,12 +1,9 @@
 @TestOn('browser')
 library angular2.test.core.linker.dynamic_component_loader_test;
 
-import 'dart:async';
-
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/collection.dart" show Predicate;
-import "package:angular2/core.dart"
-    show Injector, DebugElement, ViewContainerRef, ViewChild;
+import "package:angular2/core.dart" show Injector, ViewContainerRef, ViewChild;
 import "package:angular2/src/core/metadata.dart" show Component;
 import "package:angular2/src/core/linker/dynamic_component_loader.dart"
     show DynamicComponentLoader;

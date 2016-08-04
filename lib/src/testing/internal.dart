@@ -15,6 +15,8 @@ export "fake_async.dart";
 export "internal_injector.dart";
 export "test_component_builder.dart";
 export "utils.dart";
+export "by.dart";
+export "debug_node.dart";
 
 /// Allows injecting dependencies in [setUp()] and [test()].
 ///
@@ -87,13 +89,13 @@ void _bootstrapInternalTests() {
   if (_bootstrap_initialized) return;
   _bootstrap_initialized = true;
   reflector.reflectionCapabilities = new ReflectionCapabilities();
-  _setBaseTestProviders(_platformProviders, _applicationProviders);
+  setBaseTestProviders(_platformProviders, _applicationProviders);
 }
 
 /// Set the providers that the test injector should use.
 ///
 /// These should be providers common to every test in the suite.
-void _setBaseTestProviders(
+void setBaseTestProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > platformProviders,
     List<
         dynamic /* Type | Provider | List < dynamic > */ > applicationProviders) {
@@ -194,3 +196,5 @@ String _elementText(n) {
 
   return DOM.getText(n);
 }
+
+TestInjector getTestInjector() => _testInjector;

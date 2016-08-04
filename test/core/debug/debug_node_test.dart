@@ -6,7 +6,6 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/common.dart" show NgFor, NgIf;
-import "package:angular2/platform/common_dom.dart" show By;
 import "package:angular2/src/core/metadata.dart"
     show Directive, Component, Input;
 import 'package:test/test.dart';

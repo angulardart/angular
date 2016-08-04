@@ -1,29 +1,62 @@
-import "package:angular2/src/core/debug/debug_node.dart"
+import "package:angular2/src/testing/debug_node.dart"
     show
         DebugNode,
         DebugElement,
         EventListener,
         getDebugNode,
         indexDebugNode,
+        inspectNativeElement,
         removeDebugNodeFromIndex;
+
+import 'package:angular2/src/animate/animation_builder.dart'
+    show AnimationBuilder;
+import 'package:angular2/src/core/di.dart' show Inject, Injectable;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
-import "package:angular2/src/facade/lang.dart" show isPresent;
+import '../platform/dom/dom_tokens.dart' show DOCUMENT;
+import '../platform/dom/dom_renderer.dart' show DomRenderer, DomRootRenderer;
+import '../platform/dom/events/event_manager.dart' show EventManager;
+import '../platform/dom/shared_styles_host.dart' show DomSharedStylesHost;
+import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
-class DebugDomRootRenderer implements RootRenderer {
-  RootRenderer _delegate;
-  DebugDomRootRenderer(this._delegate) {}
+const INSPECT_GLOBAL_NAME = "ng.probe";
+
+/// Returns a [DebugElement] for the given native DOM element, or
+/// null if the given native element does not have an Angular view associated
+/// with it.
+
+@Injectable()
+class DebugDomRootRenderer implements DomRootRenderer {
+  static bool isDirty = false;
+  dynamic document;
+  EventManager eventManager;
+  DomSharedStylesHost sharedStylesHost;
+  AnimationBuilder animate;
+  var _registeredComponents = <String, DomRenderer>{};
+
+  DebugDomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager,
+      this.sharedStylesHost, this.animate) {
+    DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
+  }
+
   Renderer renderComponent(RenderComponentType componentProto) {
-    return new DebugDomRenderer(this._delegate.renderComponent(componentProto));
+    var renderer = this._registeredComponents[componentProto.id];
+    if (renderer == null) {
+      renderer = new DebugDomRenderer(this, componentProto);
+      this._registeredComponents[componentProto.id] = renderer;
+    }
+    return renderer;
   }
 }
 
-class DebugDomRenderer implements Renderer {
-  Renderer _delegate;
-  DebugDomRenderer(this._delegate) {}
+class DebugDomRenderer extends DomRenderer {
+  DebugDomRenderer(
+      RootRenderer rootRenderer, RenderComponentType componentProto)
+      : super(rootRenderer, componentProto);
+
   dynamic selectRootElement(dynamic /* String | dynamic */ selectorOrNode,
       RenderDebugInfo debugInfo) {
-    var nativeEl = this._delegate.selectRootElement(selectorOrNode, debugInfo);
+    var nativeEl = super.selectRootElement(selectorOrNode, debugInfo);
     var debugEl = new DebugElement(nativeEl, null, debugInfo);
     indexDebugNode(debugEl);
     return nativeEl;
@@ -31,7 +64,7 @@ class DebugDomRenderer implements Renderer {
 
   dynamic createElement(
       dynamic parentElement, String name, RenderDebugInfo debugInfo) {
-    var nativeEl = this._delegate.createElement(parentElement, name, debugInfo);
+    var nativeEl = super.createElement(parentElement, name, debugInfo);
     var debugEl =
         new DebugElement(nativeEl, getDebugNode(parentElement), debugInfo);
     debugEl.name = name;
@@ -39,13 +72,9 @@ class DebugDomRenderer implements Renderer {
     return nativeEl;
   }
 
-  dynamic createViewRoot(dynamic hostElement) {
-    return this._delegate.createViewRoot(hostElement);
-  }
-
   dynamic createTemplateAnchor(
       dynamic parentElement, RenderDebugInfo debugInfo) {
-    var comment = this._delegate.createTemplateAnchor(parentElement, debugInfo);
+    var comment = super.createTemplateAnchor(parentElement, debugInfo);
     var debugEl =
         new DebugNode(comment, getDebugNode(parentElement), debugInfo);
     indexDebugNode(debugEl);
@@ -54,7 +83,7 @@ class DebugDomRenderer implements Renderer {
 
   dynamic createText(
       dynamic parentElement, String value, RenderDebugInfo debugInfo) {
-    var text = this._delegate.createText(parentElement, value, debugInfo);
+    var text = super.createText(parentElement, value, debugInfo);
     var debugEl = new DebugNode(text, getDebugNode(parentElement), debugInfo);
     indexDebugNode(debugEl);
     return text;
@@ -62,96 +91,69 @@ class DebugDomRenderer implements Renderer {
 
   projectNodes(dynamic parentElement, List<dynamic> nodes) {
     var debugParent = getDebugNode(parentElement);
-    if (isPresent(debugParent) && debugParent is DebugElement) {
+    if (debugParent != null && debugParent is DebugElement) {
       var debugElement = debugParent;
       nodes.forEach((node) {
         debugElement.addChild(getDebugNode(node));
       });
     }
-    this._delegate.projectNodes(parentElement, nodes);
+    super.projectNodes(parentElement, nodes);
   }
 
   attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
     var debugNode = getDebugNode(node);
-    if (isPresent(debugNode)) {
+    if (debugNode != null) {
       var debugParent = debugNode.parent;
-      if (viewRootNodes.length > 0 && isPresent(debugParent)) {
+      if (viewRootNodes.length > 0 && debugParent != null) {
         List<DebugNode> debugViewRootNodes = [];
         viewRootNodes.forEach(
             (rootNode) => debugViewRootNodes.add(getDebugNode(rootNode)));
         debugParent.insertChildrenAfter(debugNode, debugViewRootNodes);
       }
     }
-    this._delegate.attachViewAfter(node, viewRootNodes);
+    super.attachViewAfter(node, viewRootNodes);
   }
 
   detachView(List<dynamic> viewRootNodes) {
     viewRootNodes.forEach((node) {
       var debugNode = getDebugNode(node);
-      if (isPresent(debugNode) && isPresent(debugNode.parent)) {
+      if (debugNode != null && debugNode.parent != null) {
         debugNode.parent.removeChild(debugNode);
       }
     });
-    this._delegate.detachView(viewRootNodes);
+    super.detachView(viewRootNodes);
   }
 
   destroyView(dynamic hostElement, List<dynamic> viewAllNodes) {
     viewAllNodes.forEach((node) {
       removeDebugNodeFromIndex(getDebugNode(node));
     });
-    this._delegate.destroyView(hostElement, viewAllNodes);
+    super.destroyView(hostElement, viewAllNodes);
   }
 
   Function listen(dynamic renderElement, String name, Function callback) {
     var debugEl = getDebugNode(renderElement);
-    if (isPresent(debugEl)) {
+    if (debugEl != null) {
       debugEl.listeners.add(new EventListener(name, callback));
     }
-    return this._delegate.listen(renderElement, name, callback);
-  }
-
-  Function listenGlobal(String target, String name, Function callback) {
-    return this._delegate.listenGlobal(target, name, callback);
+    return super.listen(renderElement, name, callback);
   }
 
   setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue) {
     var debugEl = getDebugNode(renderElement);
-    if (isPresent(debugEl) && debugEl is DebugElement) {
+    if (debugEl != null && debugEl is DebugElement) {
       debugEl.properties[propertyName] = propertyValue;
     }
-    this
-        ._delegate
-        .setElementProperty(renderElement, propertyName, propertyValue);
+    super.setElementProperty(renderElement, propertyName, propertyValue);
   }
 
   setElementAttribute(
       dynamic renderElement, String attributeName, String attributeValue) {
     var debugEl = getDebugNode(renderElement);
-    if (isPresent(debugEl) && debugEl is DebugElement) {
+    if (debugEl != null && debugEl is DebugElement) {
       debugEl.attributes[attributeName] = attributeValue;
     }
-    this
-        ._delegate
-        .setElementAttribute(renderElement, attributeName, attributeValue);
-  }
-
-  setBindingDebugInfo(
-      dynamic renderElement, String propertyName, String propertyValue) {
-    this
-        ._delegate
-        .setBindingDebugInfo(renderElement, propertyName, propertyValue);
-  }
-
-  setElementClass(dynamic renderElement, String className, bool isAdd) {
-    this._delegate.setElementClass(renderElement, className, isAdd);
-  }
-
-  setElementStyle(dynamic renderElement, String styleName, String styleValue) {
-    this._delegate.setElementStyle(renderElement, styleName, styleValue);
-  }
-
-  setText(dynamic renderNode, String text) {
-    this._delegate.setText(renderNode, text);
+    super.setElementAttribute(renderElement, attributeName, attributeValue);
   }
 }

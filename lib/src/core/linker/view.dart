@@ -118,12 +118,11 @@ abstract class AppView<T> {
     this.allNodes = allNodes;
     this.disposables = disposables;
     this.subscriptions = subscriptions;
-    if (identical(this.type, ViewType.COMPONENT)) {
+    if (type == ViewType.COMPONENT) {
       // Note: the render nodes have been attached to their host element
-
       // in the ViewFactory already.
-      this.declarationAppElement.parentView.viewChildren.add(this);
-      this.dirtyParentQueriesInternal();
+      declarationAppElement.parentView.viewChildren.add(this);
+      dirtyParentQueriesInternal();
     }
   }
 

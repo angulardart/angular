@@ -4,7 +4,7 @@ library angular2.test.compiler.offline_compiler_test;
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "package:angular2/core.dart" show Injector;
-import "package:angular2/src/core/debug/debug_node.dart"
+import "package:angular2/src/testing/debug_node.dart"
     show DebugElement, getDebugNode;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory;

@@ -49,7 +49,7 @@ class DomRenderer implements Renderer {
   String _hostAttr;
   List<String> _styles;
 
-  DomRenderer(this._rootRenderer, this.componentProto) {
+  DomRenderer(@Inject(RootRenderer) this._rootRenderer, this.componentProto) {
     this._styles = _flattenStyles(componentProto.id, componentProto.styles, []);
     if (!identical(componentProto.encapsulation, ViewEncapsulation.Native)) {
       this._rootRenderer.sharedStylesHost.addStyles(this._styles);

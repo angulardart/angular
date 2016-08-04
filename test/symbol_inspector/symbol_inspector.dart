@@ -6,7 +6,18 @@ import 'package:angular2/compiler.dart' as ng2compiler;
 import 'package:angular2/core.dart' as ng2core;
 import 'package:angular2/instrumentation.dart' as ng2instrumentation;
 import 'package:angular2/platform/browser.dart' as ng2platform_browser;
+import 'package:angular2/platform/testing/browser.dart'
+    as ng2platform_browser_testing;
 import 'package:angular2/platform/common.dart' as ng2platform_common;
+
+final commonLib = getLibrary('package:angular2/common.dart');
+final compilerLib = getLibrary('package:angular2/compiler.dart');
+final coreLib = getLibrary('package:angular2/core.dart');
+final instrumentationLib = getLibrary('package:angular2/instrumentation.dart');
+final platformBrowserLib = getLibrary('package:angular2/platform/browser.dart');
+final platformBrowserTestingLib =
+    getLibrary('package:angular2/platform/testing/browser.dart');
+final platformCommonLib = getLibrary('package:angular2/platform/common.dart');
 
 const IGNORE = const {
   'runtimeType': true,
@@ -25,6 +36,7 @@ final _ng2libSymbols = [
   ng2common.NgIf,
   ng2instrumentation.wtfCreateScope,
   ng2platform_browser.Title,
+  ng2platform_browser_testing.TEST_BROWSER_PLATFORM_PROVIDERS,
   ng2platform_common.Location,
 ];
 
@@ -37,13 +49,6 @@ LibraryMirror getLibrary(String uri) {
   }
   return lib;
 }
-
-final commonLib = getLibrary('package:angular2/common.dart');
-final compilerLib = getLibrary('package:angular2/compiler.dart');
-final coreLib = getLibrary('package:angular2/core.dart');
-final instrumentationLib = getLibrary('package:angular2/instrumentation.dart');
-final platformBrowserLib = getLibrary('package:angular2/platform/browser.dart');
-final platformCommonLib = getLibrary('package:angular2/platform/common.dart');
 
 List<String> getSymbolsFromLibrary(LibraryMirror lib) {
   var names = [];

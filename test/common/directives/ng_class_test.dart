@@ -2,11 +2,9 @@
 library angular2.test.common.directives.ng_class_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
 import "package:angular2/core.dart" show Component;
 import "package:angular2/common.dart" show NgFor;
-import "package:angular2/src/common/directives/ng_class.dart" show NgClass;
+import "package:angular2/src/common/directives/ng_class.dart";
 import 'package:test/test.dart';
 
 detectChangesAndCheckClasses(ComponentFixture fixture, String classes) {
@@ -98,14 +96,11 @@ main() {
             .createAsync(TestComponent)
             .then((fixture) {
           detectChangesAndCheckClasses(fixture, "foo");
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "bar", true);
+          fixture.debugElement.componentInstance.objExpr['bar'] = true;
           detectChangesAndCheckClasses(fixture, "foo bar");
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "baz", true);
+          fixture.debugElement.componentInstance.objExpr['baz'] = true;
           detectChangesAndCheckClasses(fixture, "foo bar baz");
-          StringMapWrapper.delete(
-              fixture.debugElement.componentInstance.objExpr, "bar");
+          fixture.debugElement.componentInstance.objExpr.remove('bar');
           detectChangesAndCheckClasses(fixture, "foo baz");
           completer.done();
         });
@@ -217,14 +212,14 @@ main() {
             .overrideTemplate(TestComponent, template)
             .createAsync(TestComponent)
             .then((fixture) {
-          List<String> arrExpr = fixture.debugElement.componentInstance.arrExpr;
+          List<String> arrExpr =
+              fixture.debugElement.componentInstance.arrExpr as List<String>;
           detectChangesAndCheckClasses(fixture, "foo");
           arrExpr.add("bar");
           detectChangesAndCheckClasses(fixture, "foo bar");
           arrExpr[1] = "baz";
           detectChangesAndCheckClasses(fixture, "foo baz");
-          ListWrapper.remove(
-              fixture.debugElement.componentInstance.arrExpr, "baz");
+          fixture.debugElement.componentInstance.arrExpr.remove('baz');
           detectChangesAndCheckClasses(fixture, "foo");
           completer.done();
         });
@@ -422,11 +417,9 @@ main() {
             .overrideTemplate(TestComponent, template)
             .createAsync(TestComponent)
             .then((fixture) {
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "bar", true);
+          fixture.debugElement.componentInstance.objExpr['bar'] = true;
           detectChangesAndCheckClasses(fixture, "init foo bar");
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "foo", false);
+          fixture.debugElement.componentInstance.objExpr['foo'] = false;
           detectChangesAndCheckClasses(fixture, "init bar");
           fixture.debugElement.componentInstance.objExpr = null;
           detectChangesAndCheckClasses(fixture, "init foo");
@@ -443,11 +436,9 @@ main() {
             .overrideTemplate(TestComponent, template)
             .createAsync(TestComponent)
             .then((fixture) {
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "bar", true);
+          fixture.debugElement.componentInstance.objExpr['bar'] = true;
           detectChangesAndCheckClasses(fixture, '''init foo bar''');
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "foo", false);
+          fixture.debugElement.componentInstance.objExpr['foo'] = false;
           detectChangesAndCheckClasses(fixture, '''init bar''');
           fixture.debugElement.componentInstance.objExpr = null;
           detectChangesAndCheckClasses(fixture, '''init foo''');
@@ -465,11 +456,9 @@ main() {
             .overrideTemplate(TestComponent, template)
             .createAsync(TestComponent)
             .then((fixture) {
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "bar", true);
+          fixture.debugElement.componentInstance.objExpr['bar'] = true;
           detectChangesAndCheckClasses(fixture, '''init foo bar''');
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "foo", false);
+          fixture.debugElement.componentInstance.objExpr['foo'] = false;
           detectChangesAndCheckClasses(fixture, '''init bar''');
           fixture.debugElement.componentInstance.objExpr = null;
           detectChangesAndCheckClasses(fixture, '''init foo''');
@@ -488,11 +477,9 @@ main() {
             .createAsync(TestComponent)
             .then((fixture) {
           detectChangesAndCheckClasses(fixture, "init foo baz");
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "bar", true);
+          fixture.debugElement.componentInstance.objExpr['bar'] = true;
           detectChangesAndCheckClasses(fixture, "init foo baz bar");
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "foo", false);
+          fixture.debugElement.componentInstance.objExpr['foo'] = false;
           detectChangesAndCheckClasses(fixture, "init baz bar");
           fixture.debugElement.componentInstance.condition = false;
           detectChangesAndCheckClasses(fixture, "init bar");
@@ -512,8 +499,7 @@ main() {
             .createAsync(TestComponent)
             .then((fixture) {
           detectChangesAndCheckClasses(fixture, "init foo");
-          StringMapWrapper.set(
-              fixture.debugElement.componentInstance.objExpr, "bar", true);
+          fixture.debugElement.componentInstance.objExpr['bar'] = true;
           detectChangesAndCheckClasses(fixture, "init foo bar");
           fixture.debugElement.componentInstance.strExpr = "baz";
           detectChangesAndCheckClasses(fixture, "init bar baz foo");

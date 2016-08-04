@@ -1,6 +1,6 @@
-import "package:angular2/core.dart" show DebugElement;
 import "package:angular2/src/facade/collection.dart" show Predicate;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import "package:angular2/src/testing/debug_node.dart" show DebugElement;
 
 /// Predicates for use with [DebugElement]'s query functions.
 class By {

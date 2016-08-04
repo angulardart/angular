@@ -1,11 +1,7 @@
-/**
- * This is a set of DOM related classes and objects that can be used both in the browser and on the
- * server.
- */
+/// This is a set of DOM related classes and objects that can be used both in
+/// the browser and on the server.
 library angular2.platform.common_dom;
 
-export "package:angular2/src/platform/dom/debug/by.dart";
-export "package:angular2/src/platform/dom/debug/ng_probe.dart";
 export "package:angular2/src/platform/dom/dom_adapter.dart"
     show DOM, setRootDomAdapter, DomAdapter;
 export "package:angular2/src/platform/dom/dom_renderer.dart" show DomRenderer;

@@ -10,6 +10,9 @@ import "package:angular2/platform/browser.dart" show BROWSER_APP_PROVIDERS;
  * Re-exported here so that tests import from a single place.
  */
 export "package:angular2/platform/browser.dart" show CACHED_TEMPLATE_PROVIDER;
+export "package:angular2/src/testing/debug_node.dart"
+    show inspectNativeElement, DebugNode, DebugElement;
+export "package:angular2/src/testing/by.dart";
 
 /**
  * Default platform providers for testing.

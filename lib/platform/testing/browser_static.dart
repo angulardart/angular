@@ -10,9 +10,11 @@ import 'package:angular2/core.dart'
         PLATFORM_COMMON_PROVIDERS,
         PLATFORM_INITIALIZER;
 import 'package:angular2/platform/common.dart' show LocationStrategy;
-import 'package:angular2/platform/common_dom.dart' show ELEMENT_PROBE_PROVIDERS;
 import 'package:angular2/src/animate/animation_builder.dart'
     show AnimationBuilder;
+import 'package:angular2/src/core/render/api.dart' show RootRenderer;
+import 'package:angular2/src/testing/debug_renderer.dart'
+    show DebugDomRootRenderer;
 import 'package:angular2/src/mock/animation_builder_mock.dart'
     show MockAnimationBuilder;
 import 'package:angular2/src/mock/directive_resolver_mock.dart'
@@ -44,7 +46,7 @@ const List<dynamic> TEST_BROWSER_STATIC_PLATFORM_PROVIDERS = const [
 ];
 const List<dynamic> ADDITIONAL_TEST_BROWSER_PROVIDERS = const [
   const Provider(APP_ID, useValue: 'a'),
-  ELEMENT_PROBE_PROVIDERS,
+  const Provider(RootRenderer, useClass: DebugDomRootRenderer),
   const Provider(DirectiveResolver, useClass: MockDirectiveResolver),
   const Provider(ViewResolver, useClass: MockViewResolver),
   Log,

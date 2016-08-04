@@ -12,7 +12,6 @@ import "package:angular2/core.dart"
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;
-import "package:angular2/platform/common_dom.dart" show ELEMENT_PROBE_PROVIDERS;
 import "package:angular2/src/animate/animation_builder.dart"
     show AnimationBuilder;
 import "package:angular2/src/animate/browser_details.dart" show BrowserDetails;
@@ -44,12 +43,6 @@ import "package:angular2/src/platform/dom/shared_styles_host.dart"
 
 import "browser/browser_adapter.dart" show BrowserDomAdapter;
 
-export "package:angular2/platform/common_dom.dart"
-    show
-        ELEMENT_PROBE_PROVIDERS,
-        ELEMENT_PROBE_PROVIDERS_PROD_MODE,
-        inspectNativeElement,
-        By;
 export "package:angular2/src/platform/browser/title.dart" show Title;
 export "package:angular2/src/platform/browser/tools/tools.dart"
     show enableDebugTools, disableDebugTools;
@@ -87,11 +80,10 @@ const List BROWSER_SANITIZATION_PROVIDERS = const [
   const Provider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
 ];
 
-/**
- * A set of providers to initialize an Angular application in a web browser.
- *
- * Used automatically by `bootstrap`, or can be passed to [PlatformRef.application].
- */
+/// A set of providers to initialize an Angular application in a web browser.
+///
+/// Used automatically by `bootstrap`, or can be passed to
+/// [PlatformRef.application].
 const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   APPLICATION_COMMON_PROVIDERS,
   BROWSER_SANITIZATION_PROVIDERS,
@@ -114,11 +106,12 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   BrowserDetails,
   AnimationBuilder,
   EventManager,
-  ELEMENT_PROBE_PROVIDERS
 ];
+
 const List<dynamic> CACHED_TEMPLATE_PROVIDER = const [
   const Provider(XHR, useClass: CachedXHR)
 ];
+
 Function createInitDomAdapter(TestabilityRegistry testabilityRegistry) {
   return () {
     BrowserDomAdapter.makeCurrent();

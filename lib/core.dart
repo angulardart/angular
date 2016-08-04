@@ -16,8 +16,6 @@ export 'src/core/application_ref.dart'
 export 'src/core/application_tokens.dart'
     show APP_ID, APP_INITIALIZER, PACKAGE_ROOT_URL, PLATFORM_INITIALIZER;
 export 'src/core/change_detection.dart';
-export 'src/core/debug/debug_node.dart'
-    show DebugElement, DebugNode, asNativeElements;
 export 'src/core/di.dart';
 export 'src/core/linker.dart';
 export 'src/core/metadata.dart';
