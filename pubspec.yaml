@@ -11,7 +11,7 @@ dependencies:
   build: ^0.3.0
   dart_style: '>=0.1.8 <0.3.0'
   glob: ^1.0.0
-  html: ^0.12.0
+  html: '>=0.12.0 <0.14.0'
   intl: ^0.13.0
   logging: '>=0.9.0 <0.12.0'
   observe: ^0.13.1
