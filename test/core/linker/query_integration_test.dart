@@ -22,7 +22,7 @@ import "package:angular2/core.dart"
         AfterContentChecked,
         AfterViewChecked;
 import "package:angular2/common.dart" show NgIf, NgFor;
-import "package:angular2/core.dart" show asNativeElements, ViewContainerRef;
+import "package:angular2/core.dart" show ViewContainerRef;
 import 'package:test/test.dart';
 
 main() {

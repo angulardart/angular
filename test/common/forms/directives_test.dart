@@ -1,6 +1,6 @@
+@TestOn('browser')
 import 'dart:async';
 
-@TestOn('browser')
 import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
 import 'package:angular2/common.dart'
