@@ -1,4 +1,4 @@
-import "dart:async";
+	import "dart:async";
 
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
