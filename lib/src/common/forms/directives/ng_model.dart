@@ -53,7 +53,7 @@ class NgModel extends NgControl implements OnChanges {
   var _control = new Control();
   /** @internal */
   var _added = false;
-  var update = new EventEmitter();
+  var update = new EventEmitter(false);
   dynamic model;
   dynamic viewModel;
   NgModel(
