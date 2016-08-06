@@ -1,7 +1,3 @@
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
-
 import "../compile_metadata.dart"
     show
         CompileTokenMap,
@@ -26,33 +22,36 @@ import "util.dart"
         injectFromViewParentInjector,
         convertValueToOutputAst;
 
+/// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
-  CompileElement parent;
-  CompileView view;
-  num nodeIndex;
-  o.Expression renderNode;
-  TemplateAst sourceAst;
-  CompileNode(this.parent, this.view, this.nodeIndex, this.renderNode,
-      this.sourceAst) {}
-  bool isNull() {
-    return isBlank(this.renderNode);
-  }
+  /// Parent of node.
+  final CompileElement parent;
+  final CompileView view;
+  final num nodeIndex;
 
-  bool isRootElement() {
-    return this.view != this.parent.view;
-  }
+  /// Expression that resolves to reference to instance of of node.
+  final o.Expression renderNode;
+
+  /// Source location in template.
+  final TemplateAst sourceAst;
+
+  CompileNode(
+      this.parent, this.view, this.nodeIndex, this.renderNode, this.sourceAst);
+
+  /// Returns true if there is a reference to this node in the view.
+  bool get hasRenderNode => renderNode != null;
+
+  /// Whether node is the root of the view.
+  bool get isRootElement => view != parent.view;
 }
 
+/// Compiled element in the view.
 class CompileElement extends CompileNode {
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> _directives;
   List<ProviderAst> _resolvedProvidersArray;
   bool hasViewContainer;
   bool hasEmbeddedView;
-  static CompileElement createNull() {
-    return new CompileElement(
-        null, null, null, null, null, null, [], [], false, false, []);
-  }
 
   o.Expression _compViewExpr = null;
   o.ReadPropExpr appElement;
@@ -67,6 +66,7 @@ class CompileElement extends CompileNode {
   CompileView embeddedView;
   List<o.Expression> directiveInstances;
   Map<String, CompileTokenMetadata> referenceTokens;
+
   CompileElement(
       CompileElement parent,
       CompileView view,
@@ -80,107 +80,110 @@ class CompileElement extends CompileNode {
       this.hasEmbeddedView,
       List<ReferenceAst> references)
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
-    /* super call moved to initializer */;
-    this.referenceTokens = {};
-    references.forEach((ref) => this.referenceTokens[ref.name] = ref.value);
-    this.elementRef =
+    if (references.isNotEmpty) {
+      referenceTokens = <String, CompileTokenMetadata>{};
+      int referenceCount = references.length;
+      for (int r = 0; r < referenceCount; r++) {
+        var ref = references[r];
+        referenceTokens[ref.name] = ref.value;
+      }
+    }
+
+    elementRef =
         o.importExpr(Identifiers.ElementRef).instantiate([this.renderNode]);
-    this
-        ._instances
-        .add(identifierToken(Identifiers.ElementRef), this.elementRef);
-    this.injector =
-        o.THIS_EXPR.callMethod("injector", [o.literal(this.nodeIndex)]);
-    this._instances.add(identifierToken(Identifiers.Injector), this.injector);
-    this._instances.add(
+    _instances.add(identifierToken(Identifiers.ElementRef), this.elementRef);
+    injector = o.THIS_EXPR.callMethod("injector", [o.literal(this.nodeIndex)]);
+    _instances.add(identifierToken(Identifiers.Injector), this.injector);
+    _instances.add(
         identifierToken(Identifiers.Renderer), o.THIS_EXPR.prop("renderer"));
-    if (this.hasViewContainer ||
-        this.hasEmbeddedView ||
-        isPresent(this.component)) {
+    if (hasViewContainer || hasEmbeddedView || component != null) {
       this._createAppElement();
     }
   }
-  _createAppElement() {
-    var fieldName = '''_appEl_${ this . nodeIndex}''';
-    var parentNodeIndex = this.isRootElement() ? null : this.parent.nodeIndex;
-    this.view.fields.add(new o.ClassField(fieldName,
+
+  CompileElement.root()
+      : this(null, null, null, null, null, null, [], [], false, false, []);
+
+  void _createAppElement() {
+    var fieldName = '_appEl_${nodeIndex}';
+    var parentNodeIndex = isRootElement ? null : parent.nodeIndex;
+
+    // Create instance field for app element.
+    view.fields.add(new o.ClassField(fieldName,
         o.importType(Identifiers.AppElement), [o.StmtModifier.Private]));
+
+    // Write code to create an instance of AppElement.
+    // Example: this._appEl_2 = new import7.AppElement(2,0,this,this._anchor_2);
     var statement = o.THIS_EXPR
         .prop(fieldName)
         .set(o.importExpr(Identifiers.AppElement).instantiate([
-          o.literal(this.nodeIndex),
+          o.literal(nodeIndex),
           o.literal(parentNodeIndex),
           o.THIS_EXPR,
-          this.renderNode
+          renderNode
         ]))
         .toStmt();
-    this.view.createMethod.addStmt(statement);
-    this.appElement = o.THIS_EXPR.prop(fieldName);
-    this
-        ._instances
-        .add(identifierToken(Identifiers.AppElement), this.appElement);
+    view.createMethod.addStmt(statement);
+    appElement = o.THIS_EXPR.prop(fieldName);
+    _instances.add(identifierToken(Identifiers.AppElement), appElement);
   }
 
-  setComponentView(o.Expression compViewExpr) {
-    this._compViewExpr = compViewExpr;
-    this.contentNodesByNgContentIndex = ListWrapper
-        .createFixedSize(this.component.template.ngContentSelectors.length);
-    for (var i = 0; i < this.contentNodesByNgContentIndex.length; i++) {
-      this.contentNodesByNgContentIndex[i] = [];
+  void setComponentView(o.Expression compViewExpr) {
+    _compViewExpr = compViewExpr;
+    int indexCount = component.template.ngContentSelectors.length;
+    contentNodesByNgContentIndex = new List<List<o.Expression>>(indexCount);
+    for (var i = 0; i < indexCount; i++) {
+      this.contentNodesByNgContentIndex[i] = <o.Expression>[];
     }
   }
 
-  setEmbeddedView(CompileView embeddedView) {
-    this.embeddedView = embeddedView;
-    if (isPresent(embeddedView)) {
+  void setEmbeddedView(CompileView view) {
+    embeddedView = view;
+    if (view != null) {
       var createTemplateRefExpr = o
           .importExpr(Identifiers.TemplateRef_)
-          .instantiate([this.appElement, this.embeddedView.viewFactory]);
+          .instantiate([this.appElement, view.viewFactory]);
       var provider = new CompileProviderMetadata(
           token: identifierToken(Identifiers.TemplateRef),
           useValue: createTemplateRefExpr);
-      // Add TemplateRef as first provider as it does not have deps on other providers
-      (this._resolvedProvidersArray
-            ..insert(
-                0,
-                new ProviderAst(provider.token, false, true, [provider],
-                    ProviderAstType.Builtin, this.sourceAst.sourceSpan)))
-          .length;
+      // Add TemplateRef as first provider as it does not have deps on other
+      // providers
+      _resolvedProvidersArray
+        ..insert(
+            0,
+            new ProviderAst(provider.token, false, true, [provider],
+                ProviderAstType.Builtin, this.sourceAst.sourceSpan));
     }
   }
 
   void beforeChildren() {
-    if (this.hasViewContainer) {
-      this._instances.add(identifierToken(Identifiers.ViewContainerRef),
+    if (hasViewContainer) {
+      _instances.add(identifierToken(Identifiers.ViewContainerRef),
           this.appElement.prop("vcRef"));
     }
-    this._resolvedProviders = new CompileTokenMap<ProviderAst>();
-    this._resolvedProvidersArray.forEach(
-        (provider) => this._resolvedProviders.add(provider.token, provider));
-    // create all the provider instances, some in the view constructor,
+    _resolvedProviders = new CompileTokenMap<ProviderAst>();
+    _resolvedProvidersArray.forEach(
+        (provider) => _resolvedProviders.add(provider.token, provider));
 
-    // some as getters. We rely on the fact that they are already sorted topologically.
-    this._resolvedProviders.values().forEach((resolvedProvider) {
+    // create all the provider instances, some in the view constructor,
+    // some as getters. We rely on the fact that they are already sorted
+    // topologically.
+    _resolvedProviders.values().forEach((resolvedProvider) {
       var providerValueExpressions = resolvedProvider.providers.map((provider) {
         o.Expression providerValue;
-        if (isPresent(provider.useExisting)) {
-          providerValue = this._getDependency(resolvedProvider.providerType,
+        if (provider.useExisting != null) {
+          providerValue = _getDependency(resolvedProvider.providerType,
               new CompileDiDependencyMetadata(token: provider.useExisting));
-        } else if (isPresent(provider.useFactory)) {
-          var deps = isPresent(provider.deps)
-              ? provider.deps
-              : provider.useFactory.diDeps;
+        } else if (provider.useFactory != null) {
+          var deps = provider.deps ?? provider.useFactory.diDeps;
           var depsExpr = deps
-              .map((dep) =>
-                  this._getDependency(resolvedProvider.providerType, dep))
+              .map((dep) => _getDependency(resolvedProvider.providerType, dep))
               .toList();
           providerValue = o.importExpr(provider.useFactory).callFn(depsExpr);
-        } else if (isPresent(provider.useClass)) {
-          var deps = isPresent(provider.deps)
-              ? provider.deps
-              : provider.useClass.diDeps;
+        } else if (provider.useClass != null) {
+          var deps = provider.deps ?? provider.useClass.diDeps;
           var depsExpr = deps
-              .map((dep) =>
-                  this._getDependency(resolvedProvider.providerType, dep))
+              .map((dep) => _getDependency(resolvedProvider.providerType, dep))
               .toList();
           providerValue = o
               .importExpr(provider.useClass)
@@ -188,13 +191,13 @@ class CompileElement extends CompileNode {
         } else {
           providerValue = convertValueToOutputAst(provider.useValue);
         }
-        if (isPresent(provider.useProperty)) {
+        if (provider.useProperty != null) {
           providerValue = providerValue.prop(provider.useProperty);
         }
         return providerValue;
       }).toList();
       var propName =
-          '''_${ resolvedProvider . token . name}_${ this . nodeIndex}_${ this . _instances . size}''';
+          '_${resolvedProvider.token.name}_${nodeIndex}_${_instances.size}';
       var instance = createProviderProperty(
           propName,
           resolvedProvider,
@@ -204,120 +207,93 @@ class CompileElement extends CompileNode {
           this);
       this._instances.add(resolvedProvider.token, instance);
     });
-    this.directiveInstances = this
-        ._directives
-        .map(
-            (directive) => this._instances.get(identifierToken(directive.type)))
-        .toList();
-    for (var i = 0; i < this.directiveInstances.length; i++) {
-      var directiveInstance = this.directiveInstances[i];
-      var directive = this._directives[i];
+
+    directiveInstances = <o.Expression>[];
+    for (var directive in _directives) {
+      var directiveInstance = _instances.get(identifierToken(directive.type));
+      directiveInstances.add(directiveInstance);
       directive.queries.forEach((queryMeta) {
-        this._addQuery(queryMeta, directiveInstance);
+        _addQuery(queryMeta, directiveInstance);
       });
     }
+
     List<_QueryWithRead> queriesWithReads = [];
-    this._resolvedProviders.values().forEach((resolvedProvider) {
+    _resolvedProviders.values().forEach((resolvedProvider) {
       var queriesForProvider = this._getQueriesFor(resolvedProvider.token);
-      ListWrapper.addAll(
-          queriesWithReads,
-          queriesForProvider
-              .map((query) => new _QueryWithRead(query, resolvedProvider.token))
-              .toList());
+      queriesWithReads.addAll(queriesForProvider
+          .map((query) => new _QueryWithRead(query, resolvedProvider.token)));
     });
-    StringMapWrapper.forEach(this.referenceTokens, (_, varName) {
-      var token = this.referenceTokens[varName];
-      var varValue;
-      if (isPresent(token)) {
-        varValue = this._instances.get(token);
-      } else {
-        varValue = this.renderNode;
-      }
-      this.view.locals[varName] = varValue;
-      var varToken = new CompileTokenMetadata(value: varName);
-      ListWrapper.addAll(
-          queriesWithReads,
-          this
-              ._getQueriesFor(varToken)
-              .map((query) => new _QueryWithRead(query, varToken))
-              .toList());
-    });
+
+    if (referenceTokens != null) {
+      referenceTokens.forEach((String varName, token) {
+        var varValue = token != null ? _instances.get(token) : renderNode;
+        view.locals[varName] = varValue;
+        var varToken = new CompileTokenMetadata(value: varName);
+        queriesWithReads.addAll(_getQueriesFor(varToken)
+            .map((query) => new _QueryWithRead(query, varToken)));
+      });
+    }
+
     queriesWithReads.forEach((queryWithRead) {
       o.Expression value;
-      if (isPresent(queryWithRead.read.identifier)) {
+      if (queryWithRead.read.identifier != null) {
         // query for an identifier
-        value = this._instances.get(queryWithRead.read);
+        value = _instances.get(queryWithRead.read);
       } else {
         // query for a reference
-        var token = this.referenceTokens[queryWithRead.read.value];
-        if (isPresent(token)) {
-          value = this._instances.get(token);
-        } else {
-          value = this.elementRef;
-        }
+        var token = (referenceTokens != null)
+            ? referenceTokens[queryWithRead.read.value]
+            : null;
+        value = token != null ? _instances.get(token) : elementRef;
       }
-      if (isPresent(value)) {
+      if (value != null) {
         queryWithRead.query.addValue(value, this.view);
       }
     });
-    if (isPresent(this.component)) {
-      var componentConstructorViewQueryList = isPresent(this.component)
-          ? o.literalArr(this._componentConstructorViewQueryLists)
-          : o.NULL_EXPR;
-      var compExpr =
-          isPresent(this.getComponent()) ? this.getComponent() : o.NULL_EXPR;
-      this.view.createMethod.addStmt(this.appElement.callMethod(
-              "initComponent", [
-            compExpr,
-            componentConstructorViewQueryList,
-            this._compViewExpr
-          ]).toStmt());
+
+    if (component != null) {
+      var componentConstructorViewQueryList =
+          o.literalArr(_componentConstructorViewQueryLists);
+      var compExpr = getComponent() ?? o.NULL_EXPR;
+      view.createMethod.addStmt(this.appElement.callMethod("initComponent", [
+        compExpr,
+        componentConstructorViewQueryList,
+        _compViewExpr
+      ]).toStmt());
     }
   }
 
-  afterChildren(num childNodeCount) {
-    this._resolvedProviders.values().forEach((resolvedProvider) {
+  void afterChildren(num childNodeCount) {
+    _resolvedProviders.values().forEach((resolvedProvider) {
       // Note: afterChildren is called after recursing into children.
+      // This is good so that an injector match in an element that is closer to
+      // a requesting element matches first.
+      var providerExpr = _instances.get(resolvedProvider.token);
 
-      // This is good so that an injector match in an element that is closer to a requesting element
-
-      // matches first.
-      var providerExpr = this._instances.get(resolvedProvider.token);
       // Note: view providers are only visible on the injector of that element.
-
-      // This is not fully correct as the rules during codegen don't allow a directive
-
-      // to get hold of a view provdier on the same element. We still do this semantic
-
-      // as it simplifies our model to having only one runtime injector per element.
-      var providerChildNodeCount = identical(
-              resolvedProvider.providerType, ProviderAstType.PrivateService)
-          ? 0
-          : childNodeCount;
-      this.view.injectorGetMethod.addStmt(createInjectInternalCondition(
-          this.nodeIndex,
-          providerChildNodeCount,
-          resolvedProvider,
-          providerExpr));
+      // This is not fully correct as the rules during codegen don't allow a
+      // directive to get hold of a view provdier on the same element. We still
+      // do this semantic as it simplifies our model to having only one runtime
+      // injector per element.
+      var providerChildNodeCount = resolvedProvider.providerType ==
+          ProviderAstType.PrivateService ? 0 : childNodeCount;
+      view.injectorGetMethod.addStmt(createInjectInternalCondition(
+          nodeIndex, providerChildNodeCount, resolvedProvider, providerExpr));
     });
-    this._queries.values().forEach((queries) => queries.forEach((query) =>
-        query.afterChildren(
-            this.view.createMethod, this.view.updateContentQueriesMethod)));
+    _queries.values().forEach((queries) => queries.forEach((query) => query
+        .afterChildren(view.createMethod, view.updateContentQueriesMethod)));
   }
 
-  addContentNode(num ngContentIndex, o.Expression nodeExpr) {
-    this.contentNodesByNgContentIndex[ngContentIndex].add(nodeExpr);
+  void addContentNode(num ngContentIndex, o.Expression nodeExpr) {
+    contentNodesByNgContentIndex[ngContentIndex].add(nodeExpr);
   }
 
-  o.Expression getComponent() {
-    return isPresent(this.component)
-        ? this._instances.get(identifierToken(this.component.type))
-        : null;
-  }
+  o.Expression getComponent() => component != null
+      ? _instances.get(identifierToken(component.type))
+      : null;
 
   List<o.Expression> getProviderTokens() {
-    return this
-        ._resolvedProviders
+    return _resolvedProviders
         .values()
         .map((resolvedProvider) =>
             createDiTokenExpression(resolvedProvider.token))
@@ -329,14 +305,11 @@ class CompileElement extends CompileNode {
     CompileElement currentEl = this;
     var distance = 0;
     List<CompileQuery> queries;
-    while (!currentEl.isNull()) {
+    while (currentEl.hasRenderNode) {
       queries = currentEl._queries.get(token);
-      if (isPresent(queries)) {
-        ListWrapper.addAll(
-            result,
-            queries
-                .where((query) => query.meta.descendants || distance <= 1)
-                .toList());
+      if (queries != null) {
+        result.addAll(
+            queries.where((query) => query.meta.descendants || distance <= 1));
       }
       if (currentEl._directives.length > 0) {
         distance++;
@@ -344,20 +317,17 @@ class CompileElement extends CompileNode {
       currentEl = currentEl.parent;
     }
     queries = this.view.componentView.viewQueries.get(token);
-    if (isPresent(queries)) {
-      ListWrapper.addAll(result, queries);
-    }
+    if (queries != null) result.addAll(queries);
     return result;
   }
 
   CompileQuery _addQuery(
       CompileQueryMetadata queryMeta, o.Expression directiveInstance) {
     var propName =
-        '''_query_${ queryMeta . selectors [ 0 ] . name}_${ this . nodeIndex}_${ this . _queryCount ++}''';
+        '_query_${queryMeta.selectors[0].name}_${nodeIndex}_${_queryCount++}';
     var queryList =
-        createQueryList(queryMeta, directiveInstance, propName, this.view);
-    var query =
-        new CompileQuery(queryMeta, queryList, directiveInstance, this.view);
+        createQueryList(queryMeta, directiveInstance, propName, view);
+    var query = new CompileQuery(queryMeta, queryList, directiveInstance, view);
     addQueryToTokenMap(this._queries, query);
     return query;
   }
@@ -366,34 +336,34 @@ class CompileElement extends CompileNode {
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep) {
     var result = null;
     // constructor content query
-    if (isBlank(result) && isPresent(dep.query)) {
-      result = this._addQuery(dep.query, null).queryList;
+    if (result == null && dep.query != null) {
+      result = _addQuery(dep.query, null).queryList;
     }
     // constructor view query
-    if (isBlank(result) && isPresent(dep.viewQuery)) {
+    if (result == null && dep.viewQuery != null) {
       result = createQueryList(
           dep.viewQuery,
           null,
-          '''_viewQuery_${ dep . viewQuery . selectors [ 0 ] . name}_${ this . nodeIndex}_${ this . _componentConstructorViewQueryLists . length}''',
-          this.view);
-      this._componentConstructorViewQueryLists.add(result);
+          '_viewQuery_${dep.viewQuery.selectors[0].name}_'
+          '${nodeIndex}_${_componentConstructorViewQueryLists.length}',
+          view);
+      _componentConstructorViewQueryLists.add(result);
     }
-    if (isPresent(dep.token)) {
+
+    if (dep.token != null) {
       // access builtins with special visibility
-      if (isBlank(result)) {
+      if (result == null) {
         if (dep.token
             .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
           if (identical(requestingProviderType, ProviderAstType.Component)) {
-            return this._compViewExpr.prop("ref");
+            return _compViewExpr.prop("ref");
           } else {
             return o.THIS_EXPR.prop("ref");
           }
         }
       }
       // access regular providers on the element
-      if (isBlank(result)) {
-        result = this._instances.get(dep.token);
-      }
+      result ??= _instances.get(dep.token);
     }
     return result;
   }
@@ -405,22 +375,19 @@ class CompileElement extends CompileNode {
     if (dep.isValue) {
       result = o.literal(dep.value);
     }
-    if (isBlank(result) && !dep.isSkipSelf) {
-      result = this._getLocalDependency(requestingProviderType, dep);
+    if (result == null && !dep.isSkipSelf) {
+      result = _getLocalDependency(requestingProviderType, dep);
     }
+
     // check parent elements
-    while (isBlank(result) && !currElement.parent.isNull()) {
+    while (result == null && currElement.parent.hasRenderNode) {
       currElement = currElement.parent;
       result = currElement._getLocalDependency(ProviderAstType.PublicService,
           new CompileDiDependencyMetadata(token: dep.token));
     }
-    if (isBlank(result)) {
-      result = injectFromViewParentInjector(dep.token, dep.isOptional);
-    }
-    if (isBlank(result)) {
-      result = o.NULL_EXPR;
-    }
-    return getPropertyInView(result, this.view, currElement.view);
+    result ??= injectFromViewParentInjector(dep.token, dep.isOptional);
+    result ??= o.NULL_EXPR;
+    return getPropertyInView(result, view, currElement.view);
   }
 }
 
@@ -461,9 +428,9 @@ o.Expression createProviderProperty(
     resolvedProviderValueExpr = providerValueExpressions[0];
     type = providerValueExpressions[0].type;
   }
-  if (isBlank(type)) {
-    type = o.DYNAMIC_TYPE;
-  }
+
+  type ??= o.DYNAMIC_TYPE;
+
   if (isEager) {
     view.fields.add(new o.ClassField(propName, type, [o.StmtModifier.Private]));
     view.createMethod.addStmt(
@@ -488,6 +455,6 @@ class _QueryWithRead {
   CompileQuery query;
   CompileTokenMetadata read;
   _QueryWithRead(this.query, CompileTokenMetadata match) {
-    this.read = isPresent(query.meta.read) ? query.meta.read : match;
+    read = query.meta.read ?? match;
   }
 }

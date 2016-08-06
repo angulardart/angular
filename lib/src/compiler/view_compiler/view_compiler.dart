@@ -29,7 +29,7 @@ class ViewCompiler {
     var statements = <o.Statement>[];
     var dependencies = <ViewCompileDependency>[];
     var view = new CompileView(component, this._genConfig, pipes, styles, 0,
-        CompileElement.createNull(), []);
+        new CompileElement.root(), []);
     buildView(view, template, dependencies);
 
     // Need to separate binding from creation to be able to refer to

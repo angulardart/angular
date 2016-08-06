@@ -60,9 +60,9 @@ num buildView(CompileView view, List<TemplateAst> template,
   templateVisitAll(
       builderVisitor,
       template,
-      view.declarationElement.isNull()
-          ? view.declarationElement
-          : view.declarationElement.parent);
+      view.declarationElement.hasRenderNode
+          ? view.declarationElement.parent
+          : view.declarationElement);
   return builderVisitor.nestedViewCount;
 }
 
@@ -70,7 +70,7 @@ finishView(CompileView view, List<o.Statement> targetStatements) {
   view.afterNodes();
   createViewTopLevelStmts(view, targetStatements);
   view.nodes.forEach((node) {
-    if (node is CompileElement && isPresent(node.embeddedView)) {
+    if (node is CompileElement && node.embeddedView != null) {
       finishView(node.embeddedView, targetStatements);
     }
   });
@@ -461,7 +461,8 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
       componentToken = createDiTokenExpression(
           identifierToken(compileElement.component.type));
     }
-    compileElement.referenceTokens.forEach((String varName, token) {
+
+    compileElement.referenceTokens?.forEach((String varName, token) {
       varTokenEntries.add([
         varName,
         token != null ? createDiTokenExpression(token) : o.NULL_EXPR

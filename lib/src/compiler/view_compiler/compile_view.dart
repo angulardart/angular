@@ -114,7 +114,7 @@ class CompileView implements NameResolver {
       this.locals[entry[1]] =
           o.THIS_EXPR.prop("locals").key(o.literal(entry[0]));
     });
-    if (!this.declarationElement.isNull()) {
+    if (this.declarationElement.hasRenderNode) {
       this.declarationElement.setEmbeddedView(this);
     }
   }
