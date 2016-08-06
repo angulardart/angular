@@ -1,16 +1,13 @@
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show stringify, looseIdentical, isJsObject;
+import "package:angular2/src/facade/lang.dart" show stringify, looseIdentical;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/keyvalue_differs.dart"
     show KeyValueDiffer, KeyValueDifferFactory;
 
 class DefaultKeyValueDifferFactory implements KeyValueDifferFactory {
-  bool supports(dynamic obj) {
-    return obj is Map || isJsObject(obj);
-  }
+  bool supports(dynamic obj) => obj is Map;
 
   KeyValueDiffer create(ChangeDetectorRef cdRef) {
     return new DefaultKeyValueDiffer();
@@ -82,7 +79,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
 
   dynamic diff(Map map) {
     map ??= {};
-    if (!(map is Map || isJsObject(map))) {
+    if (map is! Map) {
       throw new BaseException('''Error trying to diff \'${ map}\'''');
     }
     if (this.check(map)) {

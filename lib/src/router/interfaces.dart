@@ -1,15 +1,4 @@
-import "dart:async";
-
-import "package:angular2/src/facade/lang.dart" show global;
-
-import "instruction.dart" show ComponentInstruction;
-// This is here only so that after TS transpilation the file is not empty.
-
-// TODO(rado): find a better way to fix this, or remove if likely culprit
-
-// https://github.com/systemjs/systemjs/issues/487 gets closed.
-var ___ignore_me = global;
-Future<dynamic> ___make_dart_analyzer_happy = null;
+import 'instruction.dart' show ComponentInstruction;
 
 /**
  * Defines route lifecycle method `routerOnActivate`, which is called by the router at the end of a

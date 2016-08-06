@@ -156,16 +156,6 @@ class StringWrapper {
   }
 }
 
-class StringJoiner {
-  final List<String> _parts = <String>[];
-
-  void add(String part) {
-    _parts.add(part);
-  }
-
-  String toString() => _parts.join("");
-}
-
 class NumberWrapper {
   static String toFixed(num n, int fractionDigits) {
     return n.toStringAsFixed(fractionDigits);
@@ -248,12 +238,6 @@ class _JSLikeMatch {
   int get length => _m.groupCount + 1;
 }
 
-class FunctionWrapper {
-  static apply(Function fn, posArgs) {
-    return Function.apply(fn, posArgs);
-  }
-}
-
 const _NAN_KEY = const Object();
 
 // Dart VM implements `identical` as true reference identity. JavaScript does
@@ -283,19 +267,8 @@ dynamic getMapKey(value) {
   return value.isNaN ? _NAN_KEY : value;
 }
 
-// TODO: remove with https://github.com/angular/angular/issues/3055
-dynamic normalizeBlank(obj) => obj;
-
 bool normalizeBool(bool obj) {
   return isBlank(obj) ? false : obj;
-}
-
-bool isJsObject(o) {
-  return false;
-}
-
-warn(o) {
-  print(o);
 }
 
 /// Use this function to guard debugging code. When Dart is compiled in
@@ -363,14 +336,6 @@ class DateWrapper {
 bool isPrimitive(Object obj) =>
     obj is num || obj is bool || obj == null || obj is String;
 
-// needed to match the exports from lang.js
-var global = null;
-
-List<String> evalExpression(String sourceUrl, String expr, String declarations,
-    Map<String, String> vars) {
-  throw "Dart does not support evaluating expression during runtime!";
-}
-
 bool hasConstructor(Object value, Type type) {
   return value.runtimeType == type;
 }
@@ -383,8 +348,4 @@ num bitWiseOr(List values) {
 num bitWiseAnd(List values) {
   var val = values.reduce((num a, num b) => (a as int) & (b as int));
   return val as num;
-}
-
-String escape(String s) {
-  return Uri.encodeComponent(s);
 }

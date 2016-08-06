@@ -2,8 +2,7 @@ import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, IS_DART, FunctionWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, IS_DART;
 
 import "dart_emitter.dart" show debugOutputAstAsDart;
 import "output_ast.dart" as o;
@@ -272,7 +271,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     } else if (isDynamicInstance(receiver)) {
       var di = (receiver as DynamicInstance);
       if (di.methods.containsKey(expr.name)) {
-        result = FunctionWrapper.apply(di.methods[expr.name], args);
+        result = Function.apply(di.methods[expr.name], args);
       } else {
         result = reflector.method(expr.name)(receiver, args);
       }
@@ -294,7 +293,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
       return null;
     } else {
       var fn = stmt.fn.visitExpression(this, ctx);
-      return FunctionWrapper.apply(fn, args);
+      return Function.apply(fn, args);
     }
   }
 
@@ -354,7 +353,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     if (clazz is _DynamicClass) {
       return clazz.instantiate(args);
     } else {
-      return FunctionWrapper.apply(reflector.factory(clazz), args);
+      return Function.apply(reflector.factory(clazz), args);
     }
   }
 

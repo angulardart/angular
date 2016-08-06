@@ -2,7 +2,7 @@ import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show NumberWrapper, StringJoiner, StringWrapper, isPresent;
+    show NumberWrapper, StringWrapper, isPresent;
 
 enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
@@ -347,12 +347,12 @@ class _Scanner {
     num start = this.index;
     num quote = this.peek;
     this.advance();
-    StringJoiner buffer;
+    List<String> buffer;
     num marker = this.index;
     String input = this.input;
     while (this.peek != quote) {
       if (this.peek == $BACKSLASH) {
-        if (buffer == null) buffer = new StringJoiner();
+        if (buffer == null) buffer = <String>[];
         buffer.add(input.substring(marker, this.index));
         this.advance();
         num unescapedCode;
@@ -385,7 +385,7 @@ class _Scanner {
     String unescaped = last;
     if (buffer != null) {
       buffer.add(last);
-      unescaped = buffer.toString();
+      unescaped = buffer.join('');
     }
     return newStringToken(start, unescaped);
   }

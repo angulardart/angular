@@ -1,18 +1,16 @@
-import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart" show print, warn;
-// Note: Need to rename warn as in Dart
+import 'package:angular2/src/core/di.dart' show Injectable;
 
-// class members and imports can't use the same name.
-var _warnImpl = warn;
-
+// Used internally to log messages in both online and offline mode.
+//
+// Both [warn] and [log] delegate to `print`, and this class can be removed in
+// the future as it has no value.
 @Injectable()
 class Console {
   void log(String message) {
     print(message);
   }
 
-  // Note: for reporting errors use `DOM.logError()` as it is platform specific
   void warn(String message) {
-    _warnImpl(message);
+    print(message);
   }
 }
