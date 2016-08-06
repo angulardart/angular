@@ -45,7 +45,7 @@ or `provide(Foo, useClass:Foo)`.
 Now you can omit the `useClass:Foo`.
 Either of the following provides a `Foo` instance:
 
-```
+```dart
 const Provider(Foo)
 // or
 provide(Foo)
@@ -53,7 +53,7 @@ provide(Foo)
 
 If you want the old behavior, change your code to specify `useValue`:
 
-```
+```dart
 const Provider(Foo, useValue: null)
 // or
 provide(Foo, useValue: null)
