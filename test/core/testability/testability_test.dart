@@ -1,12 +1,13 @@
 @TestOn('browser')
 library angular2.test.core.testability.testability_test;
 
+import "dart:async";
+
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/core/testability/testability.dart"
     show Testability;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/lang.dart" show scheduleMicroTask;
 import "package:angular2/src/facade/async.dart"
     show EventEmitter, ObservableWrapper;
 import 'package:mockito/mockito.dart';
@@ -14,10 +15,10 @@ import 'package:test/test.dart';
 
 // Schedules a microtasks (using a resolved promise .then())
 void microTask(Function fn) {
-  scheduleMicroTask(() {
+  scheduleMicrotask(() {
     // We do double dispatch so that we  can wait for scheduleMicrotasks in
     // the Testability when NgZone becomes stable.
-    scheduleMicroTask(fn);
+    scheduleMicrotask(fn);
   });
 }
 

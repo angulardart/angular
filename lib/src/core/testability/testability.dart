@@ -1,8 +1,9 @@
+import "dart:async";
+
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show MapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show scheduleMicroTask;
 
 import "../zone/ng_zone.dart" show NgZone;
 
@@ -39,7 +40,7 @@ class Testability {
     this._ngZone.runOutsideAngular(() {
       ObservableWrapper.subscribe(this._ngZone.onStable, (_) {
         NgZone.assertNotInAngularZone();
-        scheduleMicroTask(() {
+        scheduleMicrotask(() {
           this._isZoneStable = true;
           this._runCallbacksIfReady();
         });
@@ -72,7 +73,7 @@ class Testability {
   void _runCallbacksIfReady() {
     if (this.isStable()) {
       // Schedules the call backs in a new frame so that it is always async.
-      scheduleMicroTask(() {
+      scheduleMicrotask(() {
         while (!identical(this._callbacks.length, 0)) {
           (this._callbacks.removeLast())(this._didWork);
         }
