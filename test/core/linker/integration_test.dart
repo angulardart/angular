@@ -51,7 +51,6 @@ import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
 import "package:angular2/src/core/linker/template_ref.dart"
     show TemplateRef_, TemplateRef;
 import "package:angular2/src/core/render.dart" show Renderer;
-import "package:angular2/src/facade/lang.dart" show IS_DART;
 import 'package:test/test.dart';
 
 const ANCHOR_ELEMENT = const OpaqueToken("AnchorElement");
@@ -2081,16 +2080,8 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property ("<div [ERROR
                     "http://www.w3.org/2000/svg");
                 expect(DOM.getProperty((use as dynamic), "namespaceURI"),
                     "http://www.w3.org/2000/svg");
-                if (!IS_DART) {
-                  var firstAttribute =
-                      DOM.getProperty((use as dynamic), "attributes")[0];
-                  expect(firstAttribute.name, "xlink:href");
-                  expect(firstAttribute.namespaceURI,
-                      "http://www.w3.org/1999/xlink");
-                } else {
-                  // For Dart where '_Attr' has no instance getter 'namespaceURI'
-                  expect(DOM.getOuterHTML(use), contains("xmlns:xlink"));
-                }
+                // For Dart where '_Attr' has no instance getter 'namespaceURI'
+                expect(DOM.getOuterHTML(use), contains("xmlns:xlink"));
                 completer.done();
               });
             });

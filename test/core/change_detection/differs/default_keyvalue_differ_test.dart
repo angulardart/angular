@@ -1,8 +1,8 @@
 library angular2.test.core.change_detection.differs.default_keyvalue_differ_test;
 
 import "package:angular2/src/core/change_detection/differs/default_keyvalue_differ.dart"
-    show DefaultKeyValueDiffer, DefaultKeyValueDifferFactory;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper, isJsObject;
+    show DefaultKeyValueDiffer;
+import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 import 'package:test/test.dart';
 
 // todo(vicb): Update the code & tests for object equality

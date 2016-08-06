@@ -1,6 +1,6 @@
-import "package:angular2/src/facade/lang.dart" show IS_DART, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show StringWrapper;
 
-var MODULE_SUFFIX = IS_DART ? ".dart" : "";
+const MODULE_SUFFIX = ".dart";
 var CAMEL_CASE_REGEXP = new RegExp(r'([A-Z])');
 var DASH_CASE_REGEXP = new RegExp(r'-([a-z])');
 String camelCaseToDashCase(String input) {

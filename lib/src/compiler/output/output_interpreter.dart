@@ -2,11 +2,10 @@ import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, IS_DART;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "dart_emitter.dart" show debugOutputAstAsDart;
 import "output_ast.dart" as o;
-import "ts_emitter.dart" show debugOutputAstAsTypeScript;
 
 dynamic interpretStatements(List<o.Statement> statements, String resultVar,
     InstanceFactory instanceFactory) {
@@ -48,14 +47,7 @@ abstract class DynamicInstance {
 }
 
 dynamic isDynamicInstance(dynamic instance) {
-  if (IS_DART) {
-    return instance is DynamicInstance;
-  } else {
-    return isPresent(instance) &&
-        isPresent(instance.props) &&
-        isPresent(instance.getters) &&
-        isPresent(instance.methods);
-  }
+  return instance is DynamicInstance;
 }
 
 dynamic _executeFunctionStatements(
@@ -162,9 +154,7 @@ class _DynamicClass {
 
 class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   String debugAst(dynamic /* o . Expression | o . Statement | o . Type */ ast) {
-    return IS_DART
-        ? debugOutputAstAsDart(ast)
-        : debugOutputAstAsTypeScript(ast);
+    return debugOutputAstAsDart(ast);
   }
 
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
@@ -258,11 +248,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
           result = ObservableWrapper.subscribe(receiver, args[0]);
           break;
         case o.BuiltinMethod.bind:
-          if (IS_DART) {
-            result = receiver;
-          } else {
-            result = receiver.bind(args[0]);
-          }
+          result = receiver;
           break;
         default:
           throw new BaseException(

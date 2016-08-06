@@ -13,8 +13,6 @@ class Math {
   static num min(num a, num b) => math.min(a, b);
 }
 
-const IS_DART = true;
-
 void scheduleMicroTask(void fn()) {
   Zone.current.scheduleMicrotask(fn);
 }

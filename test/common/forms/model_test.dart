@@ -6,7 +6,7 @@ import 'dart:async';
 import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart"
     show ControlGroup, Control, ControlArray, Validators;
-import "package:angular2/src/facade/lang.dart" show IS_DART, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/async.dart"
     show TimerWrapper, ObservableWrapper, EventEmitter;
 import 'package:test/test.dart';
@@ -212,19 +212,6 @@ main() {
           ]);
         }));
         // TODO: remove the if statement after making observable delivery sync
-        if (!IS_DART) {
-          test("should update set errors and status before emitting an event",
-              () async {
-            return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-              c.valueChanges.subscribe((value) {
-                expect(c.valid, isFalse);
-                expect(c.errors, {"required": true});
-                completer.done();
-              });
-              c.updateValue("");
-            });
-          });
-        }
         test("should return a cold observable", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
             c.updateValue("will be ignored");

@@ -2,7 +2,6 @@
 library angular2.test.compiler.output.output_emitter_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show IS_DART;
 import "output_emitter_codegen_typed.dart" as typed;
 import "package:angular2/src/compiler/output/output_interpreter.dart"
     show interpretStatements;
@@ -95,7 +94,7 @@ main() {
           expect(expressions["dynamicInstance"] is ExternalClass, isTrue);
         });
         test("should support reading metadataMap", () {
-          if (IS_DART && outputDef["name"] == "typed") {
+          if (outputDef["name"] == "typed") {
             expect(expressions["metadataMap"], ["someKey", "someValue"]);
           } else {
             expect(expressions["metadataMap"], isNull);
