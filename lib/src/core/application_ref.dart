@@ -119,8 +119,8 @@ Future<ComponentRef> coreLoadAndBootstrap(
  * has exactly one platform, and services (such as reflection) which are common
  * to every Angular application running on the page are bound in its scope.
  *
- * A page's platform is initialized implicitly when [bootstrap]() is called, or
- * explicitly by calling [createPlatform]().
+ * A page's platform is initialized implicitly when `bootstrap()` is called, or
+ * explicitly by calling `createPlatform()`.
  */
 abstract class PlatformRef {
   /**
