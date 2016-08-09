@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
-    show DateWrapper, StringWrapper, RegExpWrapper, NumberWrapper, isPresent;
+    show StringWrapper, RegExpWrapper, NumberWrapper, isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/util.dart" show camelCaseToDashCase;
 
@@ -42,7 +42,7 @@ class Animation {
 
   /// Stores the start time and starts the animation
   Animation(this.element, this.data, this.browserDetails) {
-    startTime = DateWrapper.toMillis(DateWrapper.now());
+    startTime = new DateTime.now().millisecondsSinceEpoch;
     _stringPrefix = DOM.getAnimationPrefix();
     setup();
     wait((timestamp) => start());

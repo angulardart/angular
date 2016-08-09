@@ -41,10 +41,6 @@ String stringify(obj) {
   }
 }
 
-int serializeEnum(val) {
-  return val.index;
-}
-
 /**
  * Deserializes an enum
  * val should be the indexed value of the enum (sa returned from @Link{serializeEnum})
@@ -322,10 +318,6 @@ class DateWrapper {
     return date.millisecondsSinceEpoch;
   }
 
-  static DateTime now() {
-    return new DateTime.now();
-  }
-
   static String toJson(DateTime date) {
     return date.toUtc().toIso8601String();
   }
@@ -333,10 +325,6 @@ class DateWrapper {
 
 bool isPrimitive(Object obj) =>
     obj is num || obj is bool || obj == null || obj is String;
-
-bool hasConstructor(Object value, Type type) {
-  return value.runtimeType == type;
-}
 
 num bitWiseOr(List values) {
   var val = values.reduce((num a, num b) => (a as int) | (b as int));

@@ -2,7 +2,7 @@ import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, looseIdentical, hasConstructor;
+    show isBlank, isPresent, looseIdentical;
 
 import "../model.dart" show Control, ControlGroup;
 import "../validators.dart" show Validators;
@@ -86,12 +86,12 @@ ControlValueAccessor selectValueAccessor(
   ControlValueAccessor builtinAccessor;
   ControlValueAccessor customAccessor;
   valueAccessors.forEach((ControlValueAccessor v) {
-    if (hasConstructor(v, DefaultValueAccessor)) {
+    if (v.runtimeType == DefaultValueAccessor) {
       defaultAccessor = v;
-    } else if (hasConstructor(v, CheckboxControlValueAccessor) ||
-        hasConstructor(v, NumberValueAccessor) ||
-        hasConstructor(v, SelectControlValueAccessor) ||
-        hasConstructor(v, RadioControlValueAccessor)) {
+    } else if (v.runtimeType == CheckboxControlValueAccessor ||
+        v.runtimeType == NumberValueAccessor ||
+        v.runtimeType == SelectControlValueAccessor ||
+        v.runtimeType == RadioControlValueAccessor) {
       if (isPresent(builtinAccessor))
         _throwError(dir, "More than one built-in value accessor matches");
       builtinAccessor = v;

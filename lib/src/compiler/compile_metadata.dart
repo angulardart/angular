@@ -13,7 +13,6 @@ import "package:angular2/src/facade/lang.dart"
         isNumber,
         isBoolean,
         normalizeBool,
-        serializeEnum,
         isString,
         RegExpWrapper,
         isArray;
@@ -523,9 +522,7 @@ class CompileTemplateMetadata {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> res = {
-      "encapsulation": this.encapsulation != null
-          ? serializeEnum(this.encapsulation)
-          : this.encapsulation,
+      "encapsulation": encapsulation?.index,
       "template": this.template,
       "templateUrl": this.templateUrl,
       "styles": this.styles,
@@ -703,16 +700,13 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       "selector": this.selector,
       "exportAs": this.exportAs,
       "type": isPresent(this.type) ? this.type.toJson() : this.type,
-      "changeDetection": isPresent(this.changeDetection)
-          ? serializeEnum(this.changeDetection)
-          : this.changeDetection,
+      "changeDetection": changeDetection?.index,
       "inputs": this.inputs,
       "outputs": this.outputs,
       "hostListeners": this.hostListeners,
       "hostProperties": this.hostProperties,
       "hostAttributes": this.hostAttributes,
-      "lifecycleHooks":
-          this.lifecycleHooks.map((hook) => serializeEnum(hook)).toList(),
+      "lifecycleHooks": lifecycleHooks.map((hook) => hook.index).toList(),
       "template":
           isPresent(this.template) ? this.template.toJson() : this.template,
       "providers": _arrayToJson(this.providers),
