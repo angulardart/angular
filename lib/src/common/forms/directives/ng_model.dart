@@ -19,27 +19,25 @@ import "validators.dart" show ValidatorFn, AsyncValidatorFn;
 
 const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 
-/**
- * Binds a domain model to a form control.
- *
- * ### Usage
- *
- * `ngModel` binds an existing domain model to a form control. For a
- * two-way binding, use `[(ngModel)]` to ensure the model updates in
- * both directions.
- *
- * ### Example ([live demo](http://plnkr.co/edit/R3UX5qDaUqFO2VYR0UzH?p=preview))
- *  ```typescript
- * @Component({
- *      selector: "search-comp",
- *      directives: [FORM_DIRECTIVES],
- *      template: `<input type='text' [(ngModel)]="searchQuery">`
- *      })
- * class SearchComp {
- *  searchQuery: string;
- * }
- *  ```
- */
+/// Binds a domain model to a form control.
+///
+/// ### Usage
+///
+/// `ngModel` binds an existing domain model to a form control. For a two-way
+/// binding, use `[(ngModel)]` to ensure the model updates in both directions.
+///
+/// ### Example:
+///
+/// ```dart
+/// @Component(
+///      selector: "search-comp",
+///      directives: const [FORM_DIRECTIVES],
+///      template: '<input type="text" [(ngModel)]="searchQuery">'
+///      )
+/// class SearchComp {
+///  String searchQuery;
+/// }
+/// ```
 @Directive(
     selector: "[ngModel]:not([ngControl]):not([ngFormControl])",
     providers: const [formControlBinding],
@@ -49,9 +47,7 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 class NgModel extends NgControl implements OnChanges {
   List<dynamic> _validators;
   List<dynamic> _asyncValidators;
-  /** @internal */
   var _control = new Control();
-  /** @internal */
   var _added = false;
   var update = new EventEmitter(false);
   dynamic model;

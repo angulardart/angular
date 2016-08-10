@@ -1,8 +1,4 @@
-/**
- * 
- * 
- * Common directives shipped with Angular.
- */
+// Common directives shipped with Angular.
 
 export "directives/core_directives.dart" show CORE_DIRECTIVES;
 export "directives/ng_class.dart" show NgClass;

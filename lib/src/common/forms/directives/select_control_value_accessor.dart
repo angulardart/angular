@@ -27,15 +27,13 @@ String _extractId(String valueString) {
   return valueString.split(":")[0];
 }
 
-/**
- * The accessor for writing a value and listening to changes on a select element.
- *
- * Note: We have to listen to the 'change' event because 'input' events aren't fired
- * for selects in Firefox and IE:
- * https://bugzilla.mozilla.org/show_bug.cgi?id=1024350
- * https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4660045/
- *
- */
+/// The accessor for writing a value and listening to changes on a select
+/// element.
+///
+/// Note: We have to listen to the 'change' event because 'input' events aren't
+/// fired for selects in Firefox and IE:
+/// https://bugzilla.mozilla.org/show_bug.cgi?id=1024350
+/// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4660045
 @Directive(
     selector: "select[ngControl],select[ngFormControl],select[ngModel]",
     host: const {
@@ -49,9 +47,7 @@ class SelectControlValueAccessor implements ControlValueAccessor {
   Renderer _renderer;
   ElementRef _elementRef;
   dynamic value;
-  /** @internal */
   Map<String, dynamic> _optionMap = new Map<String, dynamic>();
-  /** @internal */
   num _idCounter = 0;
   var onChange = (dynamic _) {};
   var onTouched = () {};
@@ -73,12 +69,10 @@ class SelectControlValueAccessor implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  /** @internal */
   String _registerOption() {
     return (this._idCounter++).toString();
   }
 
-  /** @internal */
   String _getOptionId(dynamic value) {
     for (var id in MapWrapper.keys(this._optionMap)) {
       if (looseIdentical(this._optionMap[id], value)) return id;
@@ -86,24 +80,19 @@ class SelectControlValueAccessor implements ControlValueAccessor {
     return null;
   }
 
-  /** @internal */
   dynamic _getOptionValue(String valueString) {
     var value = this._optionMap[_extractId(valueString)];
     return isPresent(value) ? value : valueString;
   }
 }
 
-/**
- * Marks `<option>` as dynamic, so Angular can be notified when options change.
- *
- * ### Example
- *
- * ```
- * <select ngControl="city">
- *   <option *ngFor="let c of cities" [value]="c"></option>
- * </select>
- * ```
- */
+/// Marks `<option>` as dynamic, so Angular can be notified when options change.
+///
+/// ### Example
+///
+///     <select ngControl="city">
+///       <option *ngFor="let c of cities" [value]="c"></option>
+///     </select>
 @Directive(selector: "option")
 class NgSelectOption implements OnDestroy {
   ElementRef _element;
@@ -128,7 +117,6 @@ class NgSelectOption implements OnDestroy {
     if (isPresent(this._select)) this._select.writeValue(this._select.value);
   }
 
-  /** @internal */
   void _setElementValue(String value) {
     this
         ._renderer

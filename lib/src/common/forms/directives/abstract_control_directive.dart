@@ -2,11 +2,9 @@ import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../model.dart" show AbstractControl;
 
-/**
- * Base class for control directives.
- *
- * Only used internally in the forms module.
- */
+/// Base class for control directives.
+///
+/// Only used internally in the forms module.
 abstract class AbstractControlDirective {
   AbstractControl get control;
 

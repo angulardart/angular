@@ -1,8 +1,4 @@
-/**
- * 
- * 
- * This module provides a set of common Pipes.
- */
+// This module provides a set of common Pipes.
 
 export "pipes/async_pipe.dart" show AsyncPipe;
 export "pipes/common_pipes.dart" show COMMON_PIPES;
