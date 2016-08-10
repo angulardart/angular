@@ -16,44 +16,48 @@ import "ng_template_outlet.dart" show NgTemplateOutlet;
 ///
 /// Instead of writing:
 ///
-///     import 'package:angular2/common.dart'
-///         show
-///             NgClass,
-///             NgIf,
-///             NgFor,
-///             NgSwitch,
-///             NgSwitchWhen,
-///             NgSwitchDefault;
-///     import 'my_directives.dart' show OtherDirective;
+/// ```dart
+/// import 'package:angular2/common.dart'
+///     show
+///         NgClass,
+///         NgIf,
+///         NgFor,
+///         NgSwitch,
+///         NgSwitchWhen,
+///         NgSwitchDefault;
+/// import 'my_directives.dart' show OtherDirective;
 ///
-///     @Component(
-///         selector: 'my-component',
-///         templateUrl: 'my_component.html',
-///         directives: const [
-///           NgClass,
-///           NgIf,
-///           NgFor,
-///           NgSwitch,
-///           NgSwitchWhen,
-///           NgSwitchDefault,
-///           OtherDirective
-///         ])
-///     class MyComponent {
-///       ...
-///     }
+/// @Component(
+///     selector: 'my-component',
+///     templateUrl: 'my_component.html',
+///     directives: const [
+///       NgClass,
+///       NgIf,
+///       NgFor,
+///       NgSwitch,
+///       NgSwitchWhen,
+///       NgSwitchDefault,
+///       OtherDirective
+///     ])
+/// class MyComponent {
+///   ...
+/// }
+/// ```
 ///
 /// One could import all the core directives at once:
 ///
-///     import 'angular2/common.dart' show CORE_DIRECTIVES;
-///     import 'my_directives.dart' show OtherDirective;
+/// ```dart
+/// import 'angular2/common.dart' show CORE_DIRECTIVES;
+/// import 'my_directives.dart' show OtherDirective;
 ///
-///     @Component(
-///         selector: 'my-component',
-///         templateUrl: 'my_component.html',
-///         directives: const [CORE_DIRECTIVES, OtherDirective])
-///     class MyComponent {
-///       ...
-///     }
+/// @Component(
+///     selector: 'my-component',
+///     templateUrl: 'my_component.html',
+///     directives: const [CORE_DIRECTIVES, OtherDirective])
+/// class MyComponent {
+///   ...
+/// }
+/// ```
 const List<Type> CORE_DIRECTIVES = const [
   NgClass,
   NgFor,

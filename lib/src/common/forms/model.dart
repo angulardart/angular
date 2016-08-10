@@ -183,17 +183,19 @@ abstract class AbstractControl {
   ///
   /// ## Usage
   ///
-  ///     Control login = new Control("someLogin");
-  ///     login.setErrors({
-  ///       "notUnique": true
-  ///     });
+  /// ```dart
+  /// Control login = new Control("someLogin");
+  /// login.setErrors({
+  ///   "notUnique": true
+  /// });
   ///
-  ///     expect(login.valid).toEqual(false);
-  ///     expect(login.errors).toEqual({"notUnique": true});
+  /// expect(login.valid).toEqual(false);
+  /// expect(login.errors).toEqual({"notUnique": true});
   ///
-  ///     login.updateValue("someOtherLogin");
+  /// login.updateValue("someOtherLogin");
   ///
-  ///     expect(login.valid).toEqual(true);
+  /// expect(login.valid).toEqual(true);
+  /// ```
   void setErrors(Map<String, dynamic> errors, {bool emitEvent}) {
     emitEvent = isPresent(emitEvent) ? emitEvent : true;
     this._errors = errors;

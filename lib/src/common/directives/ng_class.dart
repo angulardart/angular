@@ -35,44 +35,46 @@ import "package:angular2/src/facade/lang.dart"
 ///
 /// ### Example:
 ///
-///     import 'angular2/core.dart' show Component;
-///     import 'angular2/common.dart' show NgClass;
+/// ```dart
+/// import 'angular2/core.dart' show Component;
+/// import 'angular2/common.dart' show NgClass;
 ///
-///     @Component(
-///       selector: 'toggle-button',
-///       inputs: const ['isDisabled'],
-///       template: '''
-///          <div class="button" [ngClass]="{active: isOn, disabled: isDisabled}"
-///              (click)="toggle(!isOn)">
-///              Click me!
-///          </div>''',
-///       styles: const ['''
-///         .button {
-///           width: 120px;
-///           border: medium solid black;
-///         }
-///
-///         .active {
-///           background-color: red;
-///        }
-///
-///         .disabled {
-///           color: gray;
-///           border: medium solid gray;
-///         }
-///       ''']
-///       directives: const [NgClass]
-///     )
-///     class ToggleButton {
-///       bool isOn = false;
-///       bool isDisabled = false;
-///
-///       void toggle(bool newState) {
-///         if (!isDisabled) {
-///           isOn = newState;
-///         }
-///       }
+/// @Component(
+///   selector: 'toggle-button',
+///   inputs: const ['isDisabled'],
+///   template: '''
+///      <div class="button" [ngClass]="{active: isOn, disabled: isDisabled}"
+///          (click)="toggle(!isOn)">
+///          Click me!
+///      </div>''',
+///   styles: const ['''
+///     .button {
+///       width: 120px;
+///       border: medium solid black;
 ///     }
+///
+///     .active {
+///       background-color: red;
+///    }
+///
+///     .disabled {
+///       color: gray;
+///       border: medium solid gray;
+///     }
+///   ''']
+///   directives: const [NgClass]
+/// )
+/// class ToggleButton {
+///   bool isOn = false;
+///   bool isDisabled = false;
+///
+///   void toggle(bool newState) {
+///     if (!isDisabled) {
+///       isOn = newState;
+///     }
+///   }
+/// }
+/// ```
 @Directive(
     selector: "[ngClass]",
     inputs: const ["rawClass: ngClass", "initialClasses: class"])

@@ -37,39 +37,41 @@ abstract class NgLocalization {
 /// If no matching views are found for a switch expression, inner elements
 /// marked `[ngPluralCase]="other"` will be displayed.
 ///
-///     class MyLocalization extends NgLocalization {
-///        getPluralCategory(value: any) {
-///           if(value < 5) {
-///              return 'few';
-///           }
-///        }
-///     }
-///
-///     @Component(
-///        selector: 'app',
-///        providers: const [provide(NgLocalization, {useClass: MyLocalization})]
-///     )
-///     @View(
-///       template: '''
-///         <p>Value = {{value}}</p>
-///         <button (click)="inc()">Increment</button>
-///
-///         <div [ngPlural]="value">
-///           <template ngPluralCase="=0">there is nothing</template>
-///           <template ngPluralCase="=1">there is one</template>
-///           <template ngPluralCase="few">there are a few</template>
-///           <template ngPluralCase="other">there is some number</template>
-///         </div>
-///       ''',
-///       directives: const [NgPlural, NgPluralCase]
-///     )
-///     class App {
-///       dynamic value = 'init';
-///
-///       void inc() {
-///         value = value === 'init' ? 0 : value + 1;
+/// ```dart
+/// class MyLocalization extends NgLocalization {
+///    getPluralCategory(value: any) {
+///       if(value < 5) {
+///          return 'few';
 ///       }
-///     }
+///    }
+/// }
+///
+/// @Component(
+///    selector: 'app',
+///    providers: const [provide(NgLocalization, {useClass: MyLocalization})]
+/// )
+/// @View(
+///   template: '''
+///     <p>Value = {{value}}</p>
+///     <button (click)="inc()">Increment</button>
+///
+///     <div [ngPlural]="value">
+///       <template ngPluralCase="=0">there is nothing</template>
+///       <template ngPluralCase="=1">there is one</template>
+///       <template ngPluralCase="few">there are a few</template>
+///       <template ngPluralCase="other">there is some number</template>
+///     </div>
+///   ''',
+///   directives: const [NgPlural, NgPluralCase]
+/// )
+/// class App {
+///   dynamic value = 'init';
+///
+///   void inc() {
+///     value = value === 'init' ? 0 : value + 1;
+///   }
+/// }
+/// ```
 @Directive(selector: "[ngPluralCase]")
 class NgPluralCase {
   String value;

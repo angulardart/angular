@@ -51,11 +51,13 @@ export "directives/validators.dart"
 ///
 /// ### Example
 ///
-///     @Component(
-///       selector: 'my-app',
-///       directives: const [FORM_DIRECTIVES]
-///     )
-///     class MyApp {}
+/// ```dart
+/// @Component(
+///   selector: 'my-app',
+///   directives: const [FORM_DIRECTIVES]
+/// )
+/// class MyApp {}
+/// ```
 const List<Type> FORM_DIRECTIVES = const [
   NgControlName,
   NgControlGroup,

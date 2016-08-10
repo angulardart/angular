@@ -5,40 +5,42 @@ import "model.dart" as modelModule;
 
 /// Creates a form object from a user-specified configuration.
 ///
-///      @Component(
-///        selector: 'my-app',
-///        viewBindings: const [FORM_BINDINGS]
-///        template: '''
-///          <form [ngFormModel]="loginForm">
-///            <p>Login <input ngControl="login"></p>
-///            <div ngControlGroup="passwordRetry">
-///              <p>Password <input type="password" ngControl="password"></p>
-///              <p>Confirm password <input type="password"
-///                 ngControl="passwordConfirmation"></p>
-///            </div>
-///          </form>
-///          <h3>Form value:</h3>
-///          <pre>{{value}}</pre>
-///        ''',
-///        directives: const [FORM_DIRECTIVES]
-///      )
-///      class App {
-///        ControlGroup loginForm;
+/// ```dart
+/// @Component(
+///   selector: 'my-app',
+///   viewBindings: const [FORM_BINDINGS]
+///   template: '''
+///     <form [ngFormModel]="loginForm">
+///       <p>Login <input ngControl="login"></p>
+///       <div ngControlGroup="passwordRetry">
+///         <p>Password <input type="password" ngControl="password"></p>
+///         <p>Confirm password <input type="password"
+///            ngControl="passwordConfirmation"></p>
+///       </div>
+///     </form>
+///     <h3>Form value:</h3>
+///     <pre>{{value}}</pre>
+///   ''',
+///   directives: const [FORM_DIRECTIVES]
+/// )
+/// class App {
+///   ControlGroup loginForm;
 ///
-///        App(FormBuilder builder) {
-///          this.loginForm = builder.group({
-///            login: ["", Validators.required],
-///            passwordRetry: builder.group({
-///              password: ["", Validators.required],
-///              passwordConfirmation: ["", Validators.required, asyncValidator]
-///            })
-///          });
-///        }
+///   App(FormBuilder builder) {
+///     this.loginForm = builder.group({
+///       login: ["", Validators.required],
+///       passwordRetry: builder.group({
+///         password: ["", Validators.required],
+///         passwordConfirmation: ["", Validators.required, asyncValidator]
+///       })
+///     });
+///   }
 ///
-///        String get value {
-///          return JSON.encode(this.loginForm.value);
-///        }
-///      }
+///   String get value {
+///     return JSON.encode(this.loginForm.value);
+///   }
+/// }
+/// ```
 @Injectable()
 class FormBuilder {
   /// Construct a new [ControlGroup] with the given map of configuration.

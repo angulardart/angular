@@ -28,14 +28,16 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 ///
 /// ### Example:
 ///
-///     @Component(
-///          selector: "search-comp",
-///          directives: const [FORM_DIRECTIVES],
-///          template: '<input type="text" [(ngModel)]="searchQuery">'
-///          )
-///     class SearchComp {
-///      String searchQuery;
-///     }
+/// ```dart
+/// @Component(
+///      selector: "search-comp",
+///      directives: const [FORM_DIRECTIVES],
+///      template: '<input type="text" [(ngModel)]="searchQuery">'
+///      )
+/// class SearchComp {
+///  String searchQuery;
+/// }
+/// ```
 @Directive(
     selector: "[ngModel]:not([ngControl]):not([ngFormControl])",
     providers: const [formControlBinding],

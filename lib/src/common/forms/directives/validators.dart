@@ -9,15 +9,17 @@ import "../validators.dart" show Validators, NG_VALIDATORS;
 ///
 /// ## Usage
 ///
-///     @Directive(
-///       selector: '[custom-validator]',
-///       providers: const [provide(NG_VALIDATORS, {useExisting: CustomValidatorDirective, multi: true})]
-///     )
-///     class CustomValidatorDirective implements Validator {
-///       Map<String, dynamic> validate(Control c) {
-///         return {"custom": true};
-///       }
-///     }
+/// ```dart
+/// @Directive(
+///   selector: '[custom-validator]',
+///   providers: const [provide(NG_VALIDATORS, {useExisting: CustomValidatorDirective, multi: true})]
+/// )
+/// class CustomValidatorDirective implements Validator {
+///   Map<String, dynamic> validate(Control c) {
+///     return {"custom": true};
+///   }
+/// }
+/// ```
 abstract class Validator {
   Map<String, dynamic> validate(modelModule.AbstractControl c);
 }

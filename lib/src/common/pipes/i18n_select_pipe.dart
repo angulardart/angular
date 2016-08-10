@@ -16,19 +16,21 @@ import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 ///
 /// ## Example
 ///
-///     <div>
-///       {{ gender | i18nSelect: inviteMap }}
-///     </div>
+/// ```dart
+/// <div>
+///   {{ gender | i18nSelect: inviteMap }}
+/// </div>
 ///
-///     class MyApp {
-///       String gender = 'male';
-///       dynamic inviteMap = {
-///         'male': 'Invite her.',
-///         'female': 'Invite him.',
-///         'other': 'Invite them.'
-///       }
-///       ...
-///     }
+/// class MyApp {
+///   String gender = 'male';
+///   dynamic inviteMap = {
+///     'male': 'Invite her.',
+///     'female': 'Invite him.',
+///     'other': 'Invite them.'
+///   }
+///   ...
+/// }
+/// ```
 @Pipe(name: "i18nSelect", pure: true)
 @Injectable()
 class I18nSelectPipe implements PipeTransform {

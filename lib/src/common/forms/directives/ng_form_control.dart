@@ -29,24 +29,26 @@ const formControlBinding =
 /// changes, the value of the control will reflect that change. Likewise, if the value of the
 /// control changes, the input element reflects that change.
 ///
-///     @Component(
-///       selector: 'my-app',
-///       template: '''
-///         <div>
-///           <h2>NgFormControl Example</h2>
-///           <form>
-///             <p>Element with existing control:
-///               <input type="text" [ngFormControl]="loginControl">
-///             </p>
-///             <p>Value of existing control: {{loginControl.value}}</p>
-///           </form>
-///         </div>
-///       ''',
-///       directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES]
-///     )
-///     class App {
-///       Control loginControl = new Control('');
-///     }
+/// ```dart
+/// @Component(
+///   selector: 'my-app',
+///   template: '''
+///     <div>
+///       <h2>NgFormControl Example</h2>
+///       <form>
+///         <p>Element with existing control:
+///           <input type="text" [ngFormControl]="loginControl">
+///         </p>
+///         <p>Value of existing control: {{loginControl.value}}</p>
+///       </form>
+///     </div>
+///   ''',
+///   directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES]
+/// )
+/// class App {
+///   Control loginControl = new Control('');
+/// }
+/// ```
 ///
 /// ### ngModel
 ///
@@ -54,15 +56,17 @@ const formControlBinding =
 ///
 /// ### Example
 ///
-///     @Component(
-///          selector: "login-comp",
-///          directives: const [FORM_DIRECTIVES],
-///          template: "<input type='text' [ngFormControl]='loginControl' [(ngModel)]='login'>"
-///          )
-///     class LoginComp {
-///      Control loginControl = new Control('');
-///      String login;
-///     }
+/// ```dart
+/// @Component(
+///      selector: "login-comp",
+///      directives: const [FORM_DIRECTIVES],
+///      template: "<input type='text' [ngFormControl]='loginControl' [(ngModel)]='login'>"
+///      )
+/// class LoginComp {
+///  Control loginControl = new Control('');
+///  String login;
+/// }
+/// ```
 @Directive(
     selector: "[ngFormControl]",
     providers: const [formControlBinding],

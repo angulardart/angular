@@ -38,41 +38,43 @@ class SwitchView {
 ///
 /// ### Example:
 ///
-///     @Component(
-///       selector: 'app',
-///       template: '''
-///         <p>Value = {{value}}</p>
-///         <button (click)="inc()">Increment</button>
+/// ```dart
+/// @Component(
+///   selector: 'app',
+///   template: '''
+///     <p>Value = {{value}}</p>
+///     <button (click)="inc()">Increment</button>
 ///
-///         <div [ngSwitch]="value">
-///           <p *ngSwitchWhen="'init'">increment to start</p>
-///           <p *ngSwitchWhen="0">0, increment again</p>
-///           <p *ngSwitchWhen="1">1, increment again</p>
-///           <p *ngSwitchWhen="2">2, stop incrementing</p>
-///           <p *ngSwitchDefault>&gt; 2, STOP!</p>
-///         </div>
+///     <div [ngSwitch]="value">
+///       <p *ngSwitchWhen="'init'">increment to start</p>
+///       <p *ngSwitchWhen="0">0, increment again</p>
+///       <p *ngSwitchWhen="1">1, increment again</p>
+///       <p *ngSwitchWhen="2">2, stop incrementing</p>
+///       <p *ngSwitchDefault>&gt; 2, STOP!</p>
+///     </div>
 ///
-///         <!-- alternate syntax -->
+///     <!-- alternate syntax -->
 ///
-///         <p [ngSwitch]="value">
-///           <template ngSwitchWhen="init">increment to start</template>
-///           <template [ngSwitchWhen]="0">0, increment again</template>
-///           <template [ngSwitchWhen]="1">1, increment again</template>
-///           <template [ngSwitchWhen]="2">2, stop incrementing</template>
-///           <template ngSwitchDefault>&gt; 2, STOP!</template>
-///         </p>
-///       ''',
-///       directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault]
-///     )
-///     class App {
-///       dynamic value = 'init';
+///     <p [ngSwitch]="value">
+///       <template ngSwitchWhen="init">increment to start</template>
+///       <template [ngSwitchWhen]="0">0, increment again</template>
+///       <template [ngSwitchWhen]="1">1, increment again</template>
+///       <template [ngSwitchWhen]="2">2, stop incrementing</template>
+///       <template ngSwitchDefault>&gt; 2, STOP!</template>
+///     </p>
+///   ''',
+///   directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault]
+/// )
+/// class App {
+///   dynamic value = 'init';
 ///
-///       void inc() {
-///         value = value === 'init' ? 0 : value + 1;
-///       }
-///     }
+///   void inc() {
+///     value = value === 'init' ? 0 : value + 1;
+///   }
+/// }
 ///
-///     bootstrap(App).catch((err) => print(err));
+/// bootstrap(App).catch((err) => print(err));
+/// ```
 @Directive(selector: "[ngSwitch]", inputs: const ["ngSwitch"])
 class NgSwitch {
   dynamic _switchValue;

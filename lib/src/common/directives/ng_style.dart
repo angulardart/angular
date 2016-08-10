@@ -27,37 +27,39 @@ import "../../core/change_detection/differs/default_keyvalue_differ.dart"
 ///
 /// ### Example:
 ///
-///     import 'angular2/core.dart' Component;
-///     import 'angular2/common.dart' NgStyle;
+/// ```dart
+/// import 'angular2/core.dart' Component;
+/// import 'angular2/common.dart' NgStyle;
 ///
-///     @Component(
-///      selector: 'ngStyle-example',
-///      template: '''
-///        <h1 [ngStyle]="{'font-style': style, 'font-size': size, 'font-weight': weight}">
-///          Change style of this text!
-///        </h1>
+/// @Component(
+///  selector: 'ngStyle-example',
+///  template: '''
+///    <h1 [ngStyle]="{'font-style': style, 'font-size': size, 'font-weight': weight}">
+///      Change style of this text!
+///    </h1>
 ///
-///        <hr>
+///    <hr>
 ///
-///        <label>Italic: <input type="checkbox" (change)="changeStyle($event)"></label>
-///        <label>Bold: <input type="checkbox" (change)="changeWeight($event)"></label>
-///        <label>Size: <input type="text" [value]="size" (change)="size = $event.target.value"></label>
-///      ''',
-///      directives: const [NgStyle]
-///     )
-///     class NgStyleExample {
-///        String style = 'normal';
-///        String weight = 'normal';
-///        String size = '20px';
+///    <label>Italic: <input type="checkbox" (change)="changeStyle($event)"></label>
+///    <label>Bold: <input type="checkbox" (change)="changeWeight($event)"></label>
+///    <label>Size: <input type="text" [value]="size" (change)="size = $event.target.value"></label>
+///  ''',
+///  directives: const [NgStyle]
+/// )
+/// class NgStyleExample {
+///    String style = 'normal';
+///    String weight = 'normal';
+///    String size = '20px';
 ///
-///        void changeStyle(dynamic event) {
-///          style = event.target.checked ? 'italic' : 'normal';
-///        }
+///    void changeStyle(dynamic event) {
+///      style = event.target.checked ? 'italic' : 'normal';
+///    }
 ///
-///        void changeWeight(dynamic event) {
-///          weight = event.target.checked ? 'bold' : 'normal';
-///        }
-///     }
+///    void changeWeight(dynamic event) {
+///      weight = event.target.checked ? 'bold' : 'normal';
+///    }
+/// }
+/// ```
 ///
 /// In this example the `font-style`, `font-size` and `font-weight` styles will
 /// be updated based on the `style` property's value changes.

@@ -29,7 +29,9 @@ const OpaqueToken NG_ASYNC_VALIDATORS = const OpaqueToken("NgAsyncValidators");
 ///
 ///  ### Example
 ///
-///     Control loginControl = new Control("", Validators.required)
+/// ```dart
+/// Control loginControl = new Control("", Validators.required)
+/// ```
 class Validators {
   ///  Validator that requires controls to have a non-empty value.
   static Map<String, bool> required(modelModule.AbstractControl control) {

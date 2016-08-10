@@ -60,16 +60,18 @@ class RadioButtonState {
 ///
 /// ### Example
 ///
-///     @Component(
-///       template: '''
-///         <input type="radio" name="food" [(ngModel)]="foodChicken">
-///         <input type="radio" name="food" [(ngModel)]="foodFish">
-///       '''
-///     )
-///     class FoodCmp {
-///       RadioButtonState foodChicken = new RadioButtonState(true, "chicken");
-///       RadioButtonState foodFish = new RadioButtonState(false, "fish");
-///     }
+/// ```dart
+/// @Component(
+///   template: '''
+///     <input type="radio" name="food" [(ngModel)]="foodChicken">
+///     <input type="radio" name="food" [(ngModel)]="foodFish">
+///   '''
+/// )
+/// class FoodCmp {
+///   RadioButtonState foodChicken = new RadioButtonState(true, "chicken");
+///   RadioButtonState foodFish = new RadioButtonState(false, "fish");
+/// }
+/// ```
 @Directive(
     selector:
         "input[type=radio][ngControl],input[type=radio][ngFormControl],input[type=radio][ngModel]",

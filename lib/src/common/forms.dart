@@ -46,7 +46,10 @@ export "forms/validators.dart"
 /// Shorthand set of providers used for building Angular forms.
 ///
 /// ### Example
-///     bootstrap(MyApp, [FORM_PROVIDERS]);
+///
+/// ```dart
+/// bootstrap(MyApp, [FORM_PROVIDERS]);
+/// ````
 const List<Type> FORM_PROVIDERS = const [FormBuilder, RadioControlRegistry];
 
 /// See [FORM_PROVIDERS] instead.

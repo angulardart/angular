@@ -19,19 +19,21 @@ RegExp interpolationExp = RegExpWrapper.create("#");
 ///
 /// ## Example
 ///
-///     <div>
-///       {{ messages.length | i18nPlural: messageMapping }}
-///     </div>
+/// ```dart
+/// <div>
+///   {{ messages.length | i18nPlural: messageMapping }}
+/// </div>
 ///
-///     class MyApp {
-///       List messages;
-///       dynamic messageMapping = {
-///         '=0': 'No messages.',
-///         '=1': 'One message.',
-///         'other': '# messages.'
-///       }
-///       ...
-///     }
+/// class MyApp {
+///   List messages;
+///   dynamic messageMapping = {
+///     '=0': 'No messages.',
+///     '=1': 'One message.',
+///     'other': '# messages.'
+///   }
+///   ...
+/// }
+/// ```
 @Pipe(name: "i18nPlural", pure: true)
 @Injectable()
 class I18nPluralPipe implements PipeTransform {

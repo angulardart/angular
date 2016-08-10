@@ -27,38 +27,40 @@ const controlGroupProvider =
 ///
 /// ### Example:
 ///
-///     @Component(
-///       selector: 'my-app',
-///       directives: const [FORM_DIRECTIVES],
-///       template: '''
-///         <div>
-///           <h2>Angular2 Control &amp; ControlGroup Example</h2>
-///           <form #f="ngForm">
-///             <div ngControlGroup="name" #cg-name="form">
-///               <h3>Enter your name:</h3>
-///               <p>First: <input ngControl="first" required></p>
-///               <p>Middle: <input ngControl="middle"></p>
-///               <p>Last: <input ngControl="last" required></p>
-///             </div>
-///             <h3>Name value:</h3>
-///             <pre>{{valueOf(cgName)}}</pre>
-///             <p>Name is {{cgName?.control?.valid ? "valid" : "invalid"}}</p>
-///             <h3>What's your favorite food?</h3>
-///             <p><input ngControl="food"></p>
-///             <h3>Form value</h3>
-///             <pre>{{valueOf(f)}}</pre>
-///           </form>
+/// ```dart
+/// @Component(
+///   selector: 'my-app',
+///   directives: const [FORM_DIRECTIVES],
+///   template: '''
+///     <div>
+///       <h2>Angular2 Control &amp; ControlGroup Example</h2>
+///       <form #f="ngForm">
+///         <div ngControlGroup="name" #cg-name="form">
+///           <h3>Enter your name:</h3>
+///           <p>First: <input ngControl="first" required></p>
+///           <p>Middle: <input ngControl="middle"></p>
+///           <p>Last: <input ngControl="last" required></p>
 ///         </div>
-///       '''
-///     })
-///     class App {
-///       String valueOf(NgControlGroup cg) {
-///         if (cg.control == null) {
-///           return null;
-///         }
-///         return JSON.encode(cg.control.value, null, 2);
-///       }
+///         <h3>Name value:</h3>
+///         <pre>{{valueOf(cgName)}}</pre>
+///         <p>Name is {{cgName?.control?.valid ? "valid" : "invalid"}}</p>
+///         <h3>What's your favorite food?</h3>
+///         <p><input ngControl="food"></p>
+///         <h3>Form value</h3>
+///         <pre>{{valueOf(f)}}</pre>
+///       </form>
+///     </div>
+///   '''
+/// })
+/// class App {
+///   String valueOf(NgControlGroup cg) {
+///     if (cg.control == null) {
+///       return null;
 ///     }
+///     return JSON.encode(cg.control.value, null, 2);
+///   }
+/// }
+/// ```
 ///
 /// This example declares a control group for a user's name. The value and
 /// validation state of this group can be accessed separately from the overall
