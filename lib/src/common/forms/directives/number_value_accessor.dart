@@ -8,15 +8,12 @@ import "control_value_accessor.dart"
 const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: NumberValueAccessor, multi: true);
 
-/**
- * The accessor for writing a number value and listening to changes that is used by the
- * [NgModel], [NgFormControl], and [NgControlName] directives.
- *
- *  ### Example
- *  ```
- *  <input type="number" [(ngModel)]="age">
- *  ```
- */
+/// The accessor for writing a number value and listening to changes that is used by the
+/// [NgModel], [NgFormControl], and [NgControlName] directives.
+///
+///  ### Example
+///
+///  <input type="number" [(ngModel)]="age">
 @Directive(
     selector:
         "input[type=number][ngControl],input[type=number][ngFormControl],input[type=number][ngModel]",

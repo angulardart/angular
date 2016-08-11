@@ -8,15 +8,11 @@ import "control_value_accessor.dart"
 const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: DefaultValueAccessor, multi: true);
 
-/**
- * The default accessor for writing a value and listening to changes that is used by the
- * [NgModel], [NgFormControl], and [NgControlName] directives.
- *
- *  ### Example
- *  ```
- *  <input type="text" ngControl="searchQuery">
- *  ```
- */
+/// The default accessor for writing a value and listening to changes that is used by the
+/// [NgModel], [NgFormControl], and [NgControlName] directives.
+///
+/// ### Example
+///     <input type="text" ngControl="searchQuery">
 @Directive(
     selector:
         "input:not([type=checkbox])[ngControl],textarea[ngControl],input:not([type=checkbox])[ngFormControl],textarea[ngFormControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]",

@@ -5,23 +5,21 @@ import "../model.dart" show AbstractControl;
 import "../model.dart" as modelModule;
 import "../validators.dart" show Validators, NG_VALIDATORS;
 
-/**
- * An interface that can be implemented by classes that can act as validators.
- *
- * ## Usage
- *
- * ```typescript
- * @Directive({
- *   selector: '[custom-validator]',
- *   providers: [provide(NG_VALIDATORS, {useExisting: CustomValidatorDirective, multi: true})]
- * })
- * class CustomValidatorDirective implements Validator {
- *   validate(c: Control): {[key: string]: any} {
- *     return {"custom": true};
- *   }
- * }
- * ```
- */
+/// An interface that can be implemented by classes that can act as validators.
+///
+/// ## Usage
+///
+/// ```dart
+/// @Directive(
+///   selector: '[custom-validator]',
+///   providers: const [provide(NG_VALIDATORS, {useExisting: CustomValidatorDirective, multi: true})]
+/// )
+/// class CustomValidatorDirective implements Validator {
+///   Map<String, dynamic> validate(Control c) {
+///     return {"custom": true};
+///   }
+/// }
+/// ```
 abstract class Validator {
   Map<String, dynamic> validate(modelModule.AbstractControl c);
 }
@@ -30,16 +28,12 @@ const REQUIRED = Validators.required;
 const REQUIRED_VALIDATOR =
     const Provider(NG_VALIDATORS, useValue: REQUIRED, multi: true);
 
-/**
- * A Directive that adds the `required` validator to any controls marked with the
- * `required` attribute, via the [NG_VALIDATORS] binding.
- *
- * ### Example
- *
- * ```
- * <input ngControl="fullName" required>
- * ```
- */
+/// A Directive that adds the `required` validator to any controls marked with
+/// the `required` attribute, via the [NG_VALIDATORS] binding.
+///
+/// ### Example
+///
+///     <input ngControl="fullName" required>
 @Directive(
     selector:
         "[required][ngControl],[required][ngFormControl],[required][ngModel]",
@@ -48,20 +42,14 @@ class RequiredValidator {}
 
 typedef Map<String, dynamic> ValidatorFn(AbstractControl c);
 typedef dynamic AsyncValidatorFn(AbstractControl c);
-/**
- * Provivder which adds [MinLengthValidator] to [NG_VALIDATORS].
- *
- * ## Example:
- *
- * {@example common/forms/ts/validators/validators.ts region='min'}
- */
+
+/// Provider which adds [MinLengthValidator] to [NG_VALIDATORS].
 const MIN_LENGTH_VALIDATOR =
     const Provider(NG_VALIDATORS, useExisting: MinLengthValidator, multi: true);
 
-/**
- * A directive which installs the [MinLengthValidator] for any `ngControl`,
- * `ngFormControl`, or control with `ngModel` that also has a `minlength` attribute.
- */
+/// A directive which installs the [MinLengthValidator] for any `ngControl`,
+/// `ngFormControl`, or control with `ngModel` that also has a `minlength`
+/// attribute.
 @Directive(
     selector:
         "[minlength][ngControl],[minlength][ngFormControl],[minlength][ngModel]",
@@ -77,20 +65,13 @@ class MinLengthValidator implements Validator {
   }
 }
 
-/**
- * Provider which adds [MaxLengthValidator] to [NG_VALIDATORS].
- *
- * ## Example:
- *
- * {@example common/forms/ts/validators/validators.ts region='max'}
- */
+/// Provider which adds [MaxLengthValidator] to [NG_VALIDATORS].
 const MAX_LENGTH_VALIDATOR =
     const Provider(NG_VALIDATORS, useExisting: MaxLengthValidator, multi: true);
 
-/**
- * A directive which installs the [MaxLengthValidator] for any `ngControl, `ngFormControl`,
- * or control with `ngModel` that also has a `maxlength` attribute.
- */
+/// A directive which installs the [MaxLengthValidator] for any `ngControl,
+/// `ngFormControl`, or control with `ngModel` that also has a `maxlength`
+/// attribute.
 @Directive(
     selector:
         "[maxlength][ngControl],[maxlength][ngFormControl],[maxlength][ngModel]",
@@ -106,18 +87,14 @@ class MaxLengthValidator implements Validator {
   }
 }
 
-/**
- * A Directive that adds the `pattern` validator to any controls marked with the
- * `pattern` attribute, via the [NG_VALIDATORS] binding. Uses attribute value
- * as the regex to validate Control value against.  Follows pattern attribute
- * semantics; i.e. regex must match entire Control value.
- *
- * ### Example
- *
- * ```
- * <input [ngControl]="fullName" pattern="[a-zA-Z ]*">
- * ```
- */
+/// A Directive that adds the `pattern` validator to any controls marked with
+/// the `pattern` attribute, via the [NG_VALIDATORS] binding. Uses attribute
+/// value as the regex to validate Control value against.  Follows pattern
+/// attribute semantics; i.e. regex must match entire Control value.
+///
+/// ### Example
+///
+///     <input [ngControl]="fullName" pattern="[a-zA-Z ]*">
 const PATTERN_VALIDATOR =
     const Provider(NG_VALIDATORS, useExisting: PatternValidator, multi: true);
 

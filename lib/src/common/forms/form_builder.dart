@@ -5,9 +5,10 @@ import "model.dart" as modelModule;
 
 /// Creates a form object from a user-specified configuration.
 ///
+/// ```dart
 /// @Component(
 ///   selector: 'my-app',
-///   viewBindings: [FORM_BINDINGS]
+///   viewBindings: const [FORM_BINDINGS]
 ///   template: '''
 ///     <form [ngFormModel]="loginForm">
 ///       <p>Login <input ngControl="login"></p>
@@ -39,6 +40,7 @@ import "model.dart" as modelModule;
 ///     return JSON.encode(this.loginForm.value);
 ///   }
 /// }
+/// ```
 @Injectable()
 class FormBuilder {
   /// Construct a new [ControlGroup] with the given map of configuration.

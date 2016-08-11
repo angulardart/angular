@@ -44,22 +44,20 @@ export "directives/validators.dart"
         MaxLengthValidator,
         PatternValidator;
 
-/**
- *
- * A list of all the form directives used as part of a `@Component` annotation.
- *
- *  This is a shorthand for importing them each individually.
- *
- * ### Example
- *
- * ```typescript
- * @Component({
- *   selector: 'my-app',
- *   directives: [FORM_DIRECTIVES]
- * })
- * class MyApp {}
- * ```
- */
+///
+/// A list of all the form directives used as part of a `@Component` annotation.
+///
+///  This is a shorthand for importing them each individually.
+///
+/// ### Example
+///
+/// ```dart
+/// @Component(
+///   selector: 'my-app',
+///   directives: const [FORM_DIRECTIVES]
+/// )
+/// class MyApp {}
+/// ```
 const List<Type> FORM_DIRECTIVES = const [
   NgControlName,
   NgControlGroup,

@@ -31,61 +31,59 @@ import "validators.dart" show ValidatorFn, AsyncValidatorFn;
 const controlNameBinding =
     const Provider(NgControl, useExisting: NgControlName);
 
-/**
- * Creates and binds a control with a specified name to a DOM element.
- *
- * This directive can only be used as a child of [NgForm] or [NgFormModel].
+/// Creates and binds a control with a specified name to a DOM element.
+///
+/// This directive can only be used as a child of [NgForm] or [NgFormModel].
 
- * ### Example
- *
- * In this example, we create the login and password controls.
- * We can work with each control separately: check its validity, get its value, listen to its
- * changes.
- *
- *  ```
- * @Component({
- *      selector: "login-comp",
- *      directives: [FORM_DIRECTIVES],
- *      template: `
- *        <form #f="ngForm" (submit)='onLogIn(f.value)'>
- *          Login <input type='text' ngControl='login' #l="form">
- *          <div *ngIf="!l.valid">Login is invalid</div>
- *
- *          Password <input type='password' ngControl='password'>
- *          <button type='submit'>Log in!</button>
- *        </form>
- *      `})
- * class LoginComp {
- *  onLogIn(value): void {
- *    // value === {login: 'some login', password: 'some password'}
- *  }
- * }
- *  ```
- *
- * We can also use ngModel to bind a domain model to the form.
- *
- *  ```
- * @Component({
- *      selector: "login-comp",
- *      directives: [FORM_DIRECTIVES],
- *      template: `
- *        <form (submit)='onLogIn()'>
- *          Login <input type='text' ngControl='login' [(ngModel)]="credentials.login">
- *          Password <input type='password' ngControl='password'
- *                          [(ngModel)]="credentials.password">
- *          <button type='submit'>Log in!</button>
- *        </form>
- *      `})
- * class LoginComp {
- *  credentials: {login:string, password:string};
- *
- *  onLogIn(): void {
- *    // this.credentials.login === "some login"
- *    // this.credentials.password === "some password"
- *  }
- * }
- *  ```
- */
+/// ### Example
+///
+/// In this example, we create the login and password controls.
+/// We can work with each control separately: check its validity, get its value, listen to its
+/// changes.
+///
+/// ```dart
+/// @Component(
+///      selector: "login-comp",
+///      directives: const [FORM_DIRECTIVES],
+///      template: '''
+///        <form #f="ngForm" (submit)='onLogIn(f.value)'>
+///          Login <input type='text' ngControl='login' #l="form">
+///          <div *ngIf="!l.valid">Login is invalid</div>
+///
+///          Password <input type='password' ngControl='password'>
+///          <button type='submit'>Log in!</button>
+///        </form>
+///      ''')
+/// class LoginComp {
+///  void onLogIn(value) {
+///    // value === {'login': 'some login', 'password': 'some password'}
+///  }
+/// }
+/// ```
+///
+/// We can also use ngModel to bind a domain model to the form.
+///
+/// ```dart
+/// @Component(
+///      selector: "login-comp",
+///      directives: [FORM_DIRECTIVES],
+///      template: '''
+///        <form (submit)='onLogIn()'>
+///          Login <input type='text' ngControl='login' [(ngModel)]="credentials.login">
+///          Password <input type='password' ngControl='password'
+///                          [(ngModel)]="credentials.password">
+///          <button type='submit'>Log in!</button>
+///        </form>
+///      ''')
+/// class LoginComp {
+///  credentials: {login:string, password:string};
+///
+///  onLogIn(): void {
+///    // this.credentials.login === "some login"
+///    // this.credentials.password === "some password"
+///  }
+/// }
+/// ```
 @Directive(
     selector: "[ngControl]",
     providers: const [controlNameBinding],

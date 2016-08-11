@@ -59,17 +59,12 @@ Future<dynamic> ___unused;
 @Pipe(name: "async", pure: false)
 @Injectable()
 class AsyncPipe implements OnDestroy {
-  /** @internal */
   Object _latestValue = null;
-  /** @internal */
   Object _latestReturnedValue = null;
-  /** @internal */
   Object _subscription = null;
-  /** @internal */
   dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ _obj =
       null;
   dynamic _strategy = null;
-  /** @internal */
   ChangeDetectorRef _ref;
   AsyncPipe(ChangeDetectorRef _ref) {
     this._ref = _ref;
@@ -101,7 +96,6 @@ class AsyncPipe implements OnDestroy {
     }
   }
 
-  /** @internal */
   void _subscribe(
       dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ obj) {
     this._obj = obj;
@@ -110,7 +104,6 @@ class AsyncPipe implements OnDestroy {
         obj, (Object value) => this._updateLatestValue(obj, value));
   }
 
-  /** @internal */
   dynamic _selectStrategy(
       dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ obj) {
     if (isPromise(obj)) {
@@ -122,7 +115,6 @@ class AsyncPipe implements OnDestroy {
     }
   }
 
-  /** @internal */
   void _dispose() {
     this._strategy.dispose(this._subscription);
     this._latestValue = null;
@@ -131,7 +123,6 @@ class AsyncPipe implements OnDestroy {
     this._obj = null;
   }
 
-  /** @internal */
   _updateLatestValue(dynamic async, Object value) {
     if (identical(async, this._obj)) {
       this._latestValue = value;

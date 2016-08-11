@@ -9,18 +9,16 @@ import "package:angular2/src/facade/lang.dart"
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 
-/**
- * Indicates that a Control is valid, i.e. that no errors exist in the input value.
- */
+/// Indicates that a Control is valid, i.e. that no errors exist in the input
+/// value.
 const VALID = "VALID";
-/**
- * Indicates that a Control is invalid, i.e. that an error exists in the input value.
- */
+
+/// Indicates that a Control is invalid, i.e. that an error exists in the input
+/// value.
 const INVALID = "INVALID";
-/**
- * Indicates that a Control is pending, i.e. that async validation is occurring and
- * errors are not yet available for the input value.
- */
+
+/// Indicates that a Control is pending, i.e. that async validation is occurring
+/// and errors are not yet available for the input value.
 const PENDING = "PENDING";
 bool isControl(Object control) {
   return control is AbstractControl;
@@ -49,9 +47,6 @@ Stream<dynamic> _toStream(futureOrStream) {
   return futureOrStream is Future ? futureOrStream.asStream() : futureOrStream;
 }
 
-/**
- *
- */
 abstract class AbstractControl {
   ValidatorFn validator;
   AsyncValidatorFn asyncValidator;
@@ -179,29 +174,28 @@ abstract class AbstractControl {
     }
   }
 
-  /**
-   * Sets errors on a control.
-   *
-   * This is used when validations are run not automatically, but manually by the user.
-   *
-   * Calling `setErrors` will also update the validity of the parent control.
-   *
-   * ## Usage
-   *
-   * ```
-   * var login = new Control("someLogin");
-   * login.setErrors({
-   *   "notUnique": true
-   * });
-   *
-   * expect(login.valid).toEqual(false);
-   * expect(login.errors).toEqual({"notUnique": true});
-   *
-   * login.updateValue("someOtherLogin");
-   *
-   * expect(login.valid).toEqual(true);
-   * ```
-   */
+  /// Sets errors on a control.
+  ///
+  /// This is used when validations are run not automatically, but manually by
+  /// the user.
+  ///
+  /// Calling `setErrors` will also update the validity of the parent control.
+  ///
+  /// ## Usage
+  ///
+  /// ```dart
+  /// Control login = new Control("someLogin");
+  /// login.setErrors({
+  ///   "notUnique": true
+  /// });
+  ///
+  /// expect(login.valid).toEqual(false);
+  /// expect(login.errors).toEqual({"notUnique": true});
+  ///
+  /// login.updateValue("someOtherLogin");
+  ///
+  /// expect(login.valid).toEqual(true);
+  /// ```
   void setErrors(Map<String, dynamic> errors, {bool emitEvent}) {
     emitEvent = isPresent(emitEvent) ? emitEvent : true;
     this._errors = errors;
@@ -241,7 +235,6 @@ abstract class AbstractControl {
     return x;
   }
 
-  /** @internal */
   void _updateControlsErrors() {
     this._status = this._calculateStatus();
     if (isPresent(this._parent)) {
@@ -249,7 +242,6 @@ abstract class AbstractControl {
     }
   }
 
-  /** @internal */
   _initObservables() {
     this._valueChanges = new EventEmitter();
     this._statusChanges = new EventEmitter();
@@ -262,53 +254,47 @@ abstract class AbstractControl {
     return VALID;
   }
 
-  /** @internal */
   void _updateValue();
-  /** @internal */
   bool _anyControlsHaveStatus(String status);
 }
 
-/**
- * Defines a part of a form that cannot be divided into other controls. `Control`s have values and
- * validation state, which is determined by an optional validation function.
- *
- * `Control` is one of the three fundamental building blocks used to define forms in Angular, along
- * with [ControlGroup] and [ControlArray].
- *
- * ## Usage
- *
- * By default, a `Control` is created for every `<input>` or other form component.
- * With [NgFormControl] or [NgFormModel] an existing [Control] can be
- * bound to a DOM element instead. This `Control` can be configured with a custom
- * validation function.
- *
- * ### Example ([live demo](http://plnkr.co/edit/23DESOpbNnBpBHZt1BR4?p=preview))
- */
+/// Defines a part of a form that cannot be divided into other controls.
+/// `Control`s have values and validation state, which is determined by an
+/// optional validation function.
+///
+/// `Control` is one of the three fundamental building blocks used to define
+/// forms in Angular, along with [ControlGroup] and [ControlArray].
+///
+/// ## Usage
+///
+/// By default, a `Control` is created for every `<input>` or other form
+/// component.
+/// With [NgFormControl] or [NgFormModel] an existing [Control] can be
+/// bound to a DOM element instead. This `Control` can be configured with a
+/// custom validation function.
 class Control extends AbstractControl {
-  /** @internal */
   Function _onChange;
   Control(
       [dynamic value = null,
       ValidatorFn validator = null,
       AsyncValidatorFn asyncValidator = null])
       : super(validator, asyncValidator) {
-    /* super call moved to initializer */;
+    //// super call moved to initializer */;
     this._value = value;
     this.updateValueAndValidity(onlySelf: true, emitEvent: false);
     this._initObservables();
   }
-  /**
-   * Set the value of the control to `value`.
-   *
-   * If `onlySelf` is `true`, this change will only affect the validation of this `Control`
-   * and not its parent component. If `emitEvent` is `true`, this change will cause a
-   * `valueChanges` event on the `Control` to be emitted. Both of these options default to
-   * `false`.
-   *
-   * If `emitModelToViewChange` is `true`, the view will be notified about the new value
-   * via an `onChange` event. This is the default behavior if `emitModelToViewChange` is not
-   * specified.
-   */
+
+  /// Set the value of the control to `value`.
+  ///
+  /// If `onlySelf` is `true`, this change will only affect the validation of
+  /// this `Control` and not its parent component. If `emitEvent` is `true`,
+  /// this change will cause a `valueChanges` event on the `Control` to be
+  /// emitted. Both of these options default to `false`.
+  ///
+  /// If `emitModelToViewChange` is `true`, the view will be notified about the
+  /// new value via an `onChange` event. This is the default behavior if
+  /// `emitModelToViewChange` is not specified.
   void updateValue(dynamic value,
       {bool onlySelf, bool emitEvent, bool emitModelToViewChange}) {
     emitModelToViewChange =
@@ -319,39 +305,28 @@ class Control extends AbstractControl {
     this.updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
   }
 
-  /**
-   * @internal
-   */
   _updateValue() {}
-  /**
-   * @internal
-   */
+
   bool _anyControlsHaveStatus(String status) {
     return false;
   }
 
-  /**
-   * Register a listener for change events.
-   */
+  /// Register a listener for change events.
   void registerOnChange(Function fn) {
     this._onChange = fn;
   }
 }
 
-/**
- * Defines a part of a form, of fixed length, that can contain other controls.
- *
- * A `ControlGroup` aggregates the values of each [Control] in the group.
- * The status of a `ControlGroup` depends on the status of its children.
- * If one of the controls in a group is invalid, the entire group is invalid.
- * Similarly, if a control changes its value, the entire group changes as well.
- *
- * `ControlGroup` is one of the three fundamental building blocks used to define forms in Angular,
- * along with [Control] and [ControlArray]. [ControlArray] can also contain other
- * controls, but is of variable length.
- *
- * ### Example ([live demo](http://plnkr.co/edit/23DESOpbNnBpBHZt1BR4?p=preview))
- */
+/// Defines a part of a form, of fixed length, that can contain other controls.
+///
+/// A `ControlGroup` aggregates the values of each [Control] in the group.
+/// The status of a `ControlGroup` depends on the status of its children.
+/// If one of the controls in a group is invalid, the entire group is invalid.
+/// Similarly, if a control changes its value, the entire group changes as well.
+///
+/// `ControlGroup` is one of the three fundamental building blocks used to
+/// define forms in Angular, along with [Control] and [ControlArray].
+/// [ControlArray] can also contain other controls, but is of variable length.
 class ControlGroup extends AbstractControl {
   Map<String, AbstractControl> controls;
   Map<String, bool> _optionals;
@@ -366,46 +341,36 @@ class ControlGroup extends AbstractControl {
     this._setParentForControls();
     this.updateValueAndValidity(onlySelf: true, emitEvent: false);
   }
-  /**
-   * Add a control to this group.
-   */
+
+  /// Add a control to this group.
   void addControl(String name, AbstractControl control) {
     this.controls[name] = control;
     control.setParent(this);
   }
 
-  /**
-   * Remove a control from this group.
-   */
+  /// Remove a control from this group.
   void removeControl(String name) {
     StringMapWrapper.delete(this.controls, name);
   }
 
-  /**
-   * Mark the named control as non-optional.
-   */
+  /// Mark the named control as non-optional.
   void include(String controlName) {
     StringMapWrapper.set(this._optionals, controlName, true);
     this.updateValueAndValidity();
   }
 
-  /**
-   * Mark the named control as optional.
-   */
+  /// Mark the named control as optional.
   void exclude(String controlName) {
     StringMapWrapper.set(this._optionals, controlName, false);
     this.updateValueAndValidity();
   }
 
-  /**
-   * Check whether there is a control with the given name in the group.
-   */
+  /// Check whether there is a control with the given name in the group.
   bool contains(String controlName) {
     var c = StringMapWrapper.contains(this.controls, controlName);
     return c && this._included(controlName);
   }
 
-  /** @internal */
   _setParentForControls() {
     StringMapWrapper.forEach(this.controls,
         (AbstractControl control, String name) {
@@ -413,12 +378,10 @@ class ControlGroup extends AbstractControl {
     });
   }
 
-  /** @internal */
   _updateValue() {
     this._value = this._reduceValue();
   }
 
-  /** @internal */
   bool _anyControlsHaveStatus(String status) {
     var res = false;
     StringMapWrapper.forEach(this.controls,
@@ -428,7 +391,6 @@ class ControlGroup extends AbstractControl {
     return res;
   }
 
-  /** @internal */
   _reduceValue() {
     return this._reduceChildren({}, (Map<String, AbstractControl> acc,
         AbstractControl control, String name) {
@@ -437,7 +399,6 @@ class ControlGroup extends AbstractControl {
     });
   }
 
-  /** @internal */
   _reduceChildren(dynamic initValue, Function fn) {
     var res = initValue;
     StringMapWrapper.forEach(this.controls,
@@ -449,35 +410,32 @@ class ControlGroup extends AbstractControl {
     return res;
   }
 
-  /** @internal */
   bool _included(String controlName) {
     var isOptional = StringMapWrapper.contains(this._optionals, controlName);
     return !isOptional || StringMapWrapper.get(this._optionals, controlName);
   }
 }
 
-/**
- * Defines a part of a form, of variable length, that can contain other controls.
- *
- * A `ControlArray` aggregates the values of each [Control] in the group.
- * The status of a `ControlArray` depends on the status of its children.
- * If one of the controls in a group is invalid, the entire array is invalid.
- * Similarly, if a control changes its value, the entire array changes as well.
- *
- * `ControlArray` is one of the three fundamental building blocks used to define forms in Angular,
- * along with [Control] and [ControlGroup]. [ControlGroup] can also contain
- * other controls, but is of fixed length.
- *
- * ## Adding or removing controls
- *
- * To change the controls in the array, use the `push`, `insert`, or `removeAt` methods
- * in `ControlArray` itself. These methods ensure the controls are properly tracked in the
- * form's hierarchy. Do not modify the array of `AbstractControl`s used to instantiate
- * the `ControlArray` directly, as that will result in strange and unexpected behavior such
- * as broken change detection.
- *
- * ### Example ([live demo](http://plnkr.co/edit/23DESOpbNnBpBHZt1BR4?p=preview))
- */
+/// Defines a part of a form, of variable length, that can contain other
+/// controls.
+///
+/// A `ControlArray` aggregates the values of each [Control] in the group.
+/// The status of a `ControlArray` depends on the status of its children.
+/// If one of the controls in a group is invalid, the entire array is invalid.
+/// Similarly, if a control changes its value, the entire array changes as well.
+///
+/// `ControlArray` is one of the three fundamental building blocks used to
+/// define forms in Angular, along with [Control] and [ControlGroup].
+/// [ControlGroup] can also contain other controls, but is of fixed length.
+///
+/// ## Adding or removing controls
+///
+/// To change the controls in the array, use the `push`, `insert`, or `removeAt`
+/// methods in `ControlArray` itself. These methods ensure the controls are
+/// properly tracked in the form's hierarchy. Do not modify the array of
+/// `AbstractControl`s used to instantiate the `ControlArray` directly, as that
+/// will result in strange and unexpected behavior such as broken change
+/// detection.
 class ControlArray extends AbstractControl {
   List<AbstractControl> controls;
   ControlArray(this.controls,
@@ -488,57 +446,45 @@ class ControlArray extends AbstractControl {
     this._setParentForControls();
     this.updateValueAndValidity(onlySelf: true, emitEvent: false);
   }
-  /**
-   * Get the [AbstractControl] at the given `index` in the array.
-   */
+
+  /// Get the [AbstractControl] at the given `index` in the list.
   AbstractControl at(num index) {
     return this.controls[index];
   }
 
-  /**
-   * Insert a new [AbstractControl] at the end of the array.
-   */
+  /// Insert a new [AbstractControl] at the end of the array.
   void push(AbstractControl control) {
     this.controls.add(control);
     control.setParent(this);
     this.updateValueAndValidity();
   }
 
-  /**
-   * Insert a new [AbstractControl] at the given `index` in the array.
-   */
+  /// Insert a new [AbstractControl] at the given `index` in the array.
   void insert(num index, AbstractControl control) {
     ListWrapper.insert(this.controls, index, control);
     control.setParent(this);
     this.updateValueAndValidity();
   }
 
-  /**
-   * Remove the control at the given `index` in the array.
-   */
+  /// Remove the control at the given `index` in the array.
   void removeAt(num index) {
     ListWrapper.removeAt(this.controls, index);
     this.updateValueAndValidity();
   }
 
-  /**
-   * Length of the control array.
-   */
+  /// Length of the control array.
   num get length {
     return this.controls.length;
   }
 
-  /** @internal */
   void _updateValue() {
     this._value = this.controls.map((control) => control.value).toList();
   }
 
-  /** @internal */
   bool _anyControlsHaveStatus(String status) {
     return this.controls.any((c) => c.status == status);
   }
 
-  /** @internal */
   void _setParentForControls() {
     this.controls.forEach((control) {
       control.setParent(this);
