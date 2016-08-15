@@ -98,14 +98,15 @@ const formDirectiveProvider =
     providers: const [formDirectiveProvider],
     inputs: const ["form: ngFormModel"],
     host: const {"(submit)": "onSubmit()"},
-    outputs: const ["ngSubmit"],
+    outputs: const ["ngSubmit", "ngBeforeSubmit"],
     exportAs: "ngForm")
 class NgFormModel extends ControlContainer implements Form, OnChanges {
   List<dynamic> _validators;
   List<dynamic> _asyncValidators;
   ControlGroup form = null;
   List<NgControl> directives = [];
-  var ngSubmit = new EventEmitter();
+  var ngSubmit = new EventEmitter<ControlGroup>(false);
+  var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);
   NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
       @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators)
       : super() {
@@ -168,7 +169,8 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   bool onSubmit() {
-    ObservableWrapper.callEmit(this.ngSubmit, null);
+    ngBeforeSubmit.add(form);
+    ngSubmit.add(form);
     return false;
   }
 

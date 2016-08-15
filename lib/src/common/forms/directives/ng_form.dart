@@ -81,11 +81,12 @@ const formDirectiveProvider =
     selector: "form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]",
     providers: const [formDirectiveProvider],
     host: const {"(submit)": "onSubmit()"},
-    outputs: const ["ngSubmit"],
+    outputs: const ["ngSubmit", "ngBeforeSubmit"],
     exportAs: "ngForm")
 class NgForm extends ControlContainer implements Form {
   ControlGroup form;
-  var ngSubmit = new EventEmitter();
+  var ngSubmit = new EventEmitter<ControlGroup>(false);
+  var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);
   NgForm(
       @Optional()
       @Self()
@@ -172,7 +173,8 @@ class NgForm extends ControlContainer implements Form {
   }
 
   bool onSubmit() {
-    this.ngSubmit.add(null);
+    ngBeforeSubmit.add(form);
+    ngSubmit.add(form);
     return false;
   }
 
