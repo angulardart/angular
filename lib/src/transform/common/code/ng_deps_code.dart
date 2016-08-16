@@ -119,6 +119,7 @@ const _ignoredProblems = const <String>[
   'annotate_overrides',
   'avoid_init_to_null',
   'camel_case_types',
+  'cancel_subscriptions',
   'constant_identifier_names',
   'non_constant_identifier_names',
   'empty_constructor_bodies',
@@ -131,8 +132,11 @@ const _ignoredProblems = const <String>[
   'UNUSED_IMPORT',
   'UNUSED_SHOWN_NAME',
   'UNUSED_LOCAL_VARIABLE',
-  // TODO(jakemac): Remove these once we fix all projects....
-  'cancel_subscriptions',
+];
+
+// These are only enabled if `ignore_real_template_issues` is set to true.
+// TODO(jakemac): Remove this once it is no longer necessary
+const _ignoredRealTemplateIssues = const <String>[
   'AMBIGUOUS_EXPORT',
   'CONFLICTING_DART_IMPORT',
   'CONST_INITIALIZED_WITH_NON_CONSTANT_VALUE',
@@ -161,10 +165,21 @@ abstract class NgDepsWriterMixin
         ReflectionWriterMixin {
   StringBuffer get buffer;
 
-  void writeNgDepsModel(NgDepsModel model, String templateCode) {
+  void writeNgDepsModel(
+      NgDepsModel model, String templateCode,
+      bool ignoreRealTemplateIssues) {
     // Avoid strong-mode warnings about unused imports.
     for (var problem in _ignoredProblems) {
       buffer.writeln('// @ignoreProblemForFile $problem');
+    }
+
+    // Avoid other common errors that result from bad templates. This option
+    // should only be used to fix failing builds while a proper fix is put in
+    // place.
+    if (ignoreRealTemplateIssues) {
+      for (var problem in _ignoredRealTemplateIssues) {
+        buffer.writeln('// @ignoreProblemForFile $problem');
+      }
     }
 
     if (model.libraryUri.isNotEmpty) {

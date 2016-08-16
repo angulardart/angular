@@ -61,7 +61,8 @@ class TemplateCompiler extends Transformer implements LazyTransformer {
           final templatesSrc =
               options.genCompiledTemplates ? outputs.templatesSource : null;
           writeTemplateFile(
-              new NgDepsWriter(buf), outputs.ngDeps, templatesSrc);
+              new NgDepsWriter(buf), outputs.ngDeps, templatesSrc,
+              options.ignoreRealTemplateIssues);
           ngDepsCode = formatter.format(buf.toString());
         }
       }

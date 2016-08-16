@@ -20,13 +20,14 @@ String writeSourceModule(SourceModule sourceModule, {String libraryName}) {
 /// Uses `writer` to write a Dart library representing `model` and
 /// `sourceModule`.
 void writeTemplateFile(
-    NgDepsWriterMixin writer, NgDepsModel model, SourceModule sourceModule) {
+    NgDepsWriterMixin writer, NgDepsModel model, SourceModule sourceModule,
+    bool ignoreRealTemplateIssues) {
   if (model == null) return null;
   var sourceModuleCode = '';
   if (sourceModule != null) {
     sourceModuleCode = sourceModule.source;
   }
-  writer.writeNgDepsModel(model, sourceModuleCode);
+  writer.writeNgDepsModel(model, sourceModuleCode, ignoreRealTemplateIssues);
 }
 
 final _unsafeCharsPattern = new RegExp(r'[^a-zA-Z0-9_\.]');
