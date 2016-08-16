@@ -61,9 +61,13 @@ Future<Map<String, String>> _processNgImports(NgDepsModel model,
         ..addAll(model.exports);
   final retVal = <String, String>{};
   final assetUri = toAssetUri(assetId);
+
   return Future
-      .wait(
-          importsAndExports.where(_isNotDartDirective).map((dynamic directive) {
+      .wait(importsAndExports.where(_isNotDartDirective)
+          // TODO(jakemac): throwing synchronously causes weird errors, see
+          // https://github.com/dart-lang/sdk/issues/23656. We get around this
+          // for now by making this an async function.
+          .map((dynamic directive) async {
         // Check whether the import or export generated summary NgMeta information.
         final summaryJsonUri =
             resolver.resolve(assetUri, toSummaryExtension(directive.uri));
