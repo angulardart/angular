@@ -882,8 +882,6 @@ main() {
           fixture.debugElement.componentInstance.name = null;
           fixture.detectChanges();
           var form = fixture.debugElement.children[0].inject(NgForm);
-          expect(form.controls["user"], isNull);
-          tick();
           expect(form.controls["user"], isNotNull);
           expect(form.controls["user"].controls["login"], isNotNull);
         });

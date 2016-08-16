@@ -118,11 +118,11 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void addControl(NgControl dir) {
+    var container = _findContainer(dir.path);
+    var ctrl = new Control();
+    container.addControl(dir.name, ctrl);
     scheduleMicrotask(() {
-      var container = this._findContainer(dir.path);
-      var ctrl = new Control();
       setUpControl(ctrl, dir);
-      container.addControl(dir.name, ctrl);
       ctrl.updateValueAndValidity(emitEvent: false);
     });
   }
@@ -142,11 +142,11 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void addControlGroup(NgControlGroup dir) {
+    var container = _findContainer(dir.path);
+    var group = new ControlGroup({});
+    container.addControl(dir.name, group);
     scheduleMicrotask(() {
-      var container = this._findContainer(dir.path);
-      var group = new ControlGroup({});
       setUpControlGroup(group, dir);
-      container.addControl(dir.name, group);
       group.updateValueAndValidity(emitEvent: false);
     });
   }
