@@ -18,7 +18,11 @@ import "exceptions.dart"
 import "view_ref.dart" show ViewRef_;
 import "view_type.dart" show ViewType;
 import "view_utils.dart"
-    show ViewUtils, flattenNestedViewRenderNodes, ensureSlotCount;
+    show
+        ViewUtils,
+        flattenNestedViewRenderNodes,
+        ensureSlotCount,
+        OnDestroyCallback;
 
 const EMPTY_CONTEXT = const Object();
 WtfScopeFn _scope_check = wtfCreateScope('''AppView#check(ascii id)''');
@@ -39,7 +43,7 @@ abstract class AppView<T> {
   ViewRef_ ref;
   List<dynamic> rootNodesOrAppElements;
   List<dynamic> allNodes;
-  List<Function> disposables;
+  final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
   List<dynamic> subscriptions;
   List<AppView<dynamic>> contentChildren = [];
   List<AppView<dynamic>> viewChildren = [];
@@ -113,10 +117,9 @@ abstract class AppView<T> {
   }
 
   init(List<dynamic> rootNodesOrAppElements, List<dynamic> allNodes,
-      List<Function> disposables, List<dynamic> subscriptions) {
+      List<dynamic> subscriptions) {
     this.rootNodesOrAppElements = rootNodesOrAppElements;
     this.allNodes = allNodes;
-    this.disposables = disposables;
     this.subscriptions = subscriptions;
     if (type == ViewType.COMPONENT) {
       // Note: the render nodes have been attached to their host element
@@ -189,8 +192,8 @@ abstract class AppView<T> {
     var hostElement = identical(this.type, ViewType.COMPONENT)
         ? this.declarationAppElement.nativeElement
         : null;
-    for (var i = 0; i < this.disposables.length; i++) {
-      this.disposables[i]();
+    for (int i = 0; i < _onDestroyCallbacks.length; i++) {
+      _onDestroyCallbacks[i]();
     }
     for (var i = 0; i < this.subscriptions.length; i++) {
       ObservableWrapper.dispose(this.subscriptions[i]);
@@ -198,6 +201,10 @@ abstract class AppView<T> {
     this.destroyInternal();
     this.dirtyParentQueriesInternal();
     this.renderer.destroyView(hostElement, this.allNodes);
+  }
+
+  void addOnDestroyCallback(OnDestroyCallback callback) {
+    _onDestroyCallbacks.add(callback);
   }
 
   /**

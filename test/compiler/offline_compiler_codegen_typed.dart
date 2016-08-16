@@ -42,7 +42,7 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
     this._text_0 =
         this.renderer.createText(parentRenderNode, '', this.debug(0, 0, 0));
     this._expr_0 = import9.uninitialized;
-    this.init([], [this._text_0], [], []);
+    this.init([], [this._text_0], []);
     return null;
   }
 
@@ -104,7 +104,7 @@ class _View_CompA_Host0 extends import3.DebugAppView<dynamic> {
     this._CompA_0_4 = new import4.CompA();
     this._appEl_0.initComponent(this._CompA_0_4, [], compView_0);
     compView_0.create(this.projectableNodes, null);
-    this.init([]..addAll([this._el_0]), [this._el_0], [], []);
+    this.init([]..addAll([this._el_0]), [this._el_0], []);
     return this._appEl_0;
   }
 

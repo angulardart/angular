@@ -1,6 +1,6 @@
-import "package:angular2/core.dart" show OpaqueToken;
+import 'dart:html';
 
-import "platform_location.dart" show UrlChangeListener;
+import "package:angular2/core.dart" show OpaqueToken;
 
 /**
  * `LocationStrategy` is responsible for representing and reading route state
@@ -27,7 +27,7 @@ abstract class LocationStrategy {
       dynamic state, String title, String url, String queryParams);
   void forward();
   void back();
-  void onPopState(UrlChangeListener fn);
+  void onPopState(EventListener fn);
   String getBaseHref();
 }
 

@@ -31,9 +31,6 @@ abstract class AbstractHtml5LibAdapter
   }
 
   @override
-  getGlobalEventTarget(String target);
-
-  @override
   getTitle();
 
   @override

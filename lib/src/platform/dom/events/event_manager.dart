@@ -21,12 +21,6 @@ class EventManager {
     return plugin.addEventListener(element, eventName, handler);
   }
 
-  Function addGlobalEventListener(
-      String target, String eventName, Function handler) {
-    var plugin = this._findPluginFor(eventName);
-    return plugin.addGlobalEventListener(target, eventName, handler);
-  }
-
   NgZone getZone() {
     return this._zone;
   }

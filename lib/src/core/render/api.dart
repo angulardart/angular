@@ -38,7 +38,6 @@ abstract class Renderer {
   void detachView(List<dynamic> viewRootNodes);
   void destroyView(dynamic hostElement, List<dynamic> viewAllNodes);
   Function listen(dynamic renderElement, String name, Function callback);
-  Function listenGlobal(String target, String name, Function callback);
   void setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue);
   void setElementAttribute(

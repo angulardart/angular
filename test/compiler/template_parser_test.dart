@@ -278,10 +278,11 @@ main() {
       });
       group("events", () {
         test("should parse bound events with a target", () {
-          expect(humanizeTplAst(parse("<div (window:event)=\"v\">", [])), [
-            [ElementAst, "div"],
-            [BoundEventAst, "event", "window", "v"]
-          ]);
+          expect(
+              () => parse('<div (window:event)="v">', []),
+              throwsWith('Template parse errors:\n'
+                  '":" is not allowed in event names: window:event '
+                  '("<div [ERROR ->](window:event)="v">"): TestComp@0:5'));
         });
         test(
             'should parse bound events via (...) and not report them '
@@ -1638,14 +1639,6 @@ main() {
               [VariableAst, "a", "b", "let-a=\"b\""]
             ]);
       });
-      test("should support events", () {
-        expect(
-            humanizeTplAstSourceSpans(parse("<div (window:event)=\"v\">", [])),
-            [
-              [ElementAst, "div", "<div (window:event)=\"v\">"],
-              [BoundEventAst, "event", "window", "v", "(window:event)=\"v\""]
-            ]);
-      });
       test("should support element property", () {
         expect(humanizeTplAstSourceSpans(parse("<div [someProp]=\"v\">", [])), [
           [ElementAst, "div", "<div [someProp]=\"v\">"],
@@ -1809,7 +1802,7 @@ class TemplateHumanizer implements TemplateAstVisitor {
     var res = [
       BoundEventAst,
       ast.name,
-      ast.target,
+      null, // TODO: remove
       expressionUnparser.unparse(ast.handler)
     ];
     this.result.add(this._appendContext(ast, res));

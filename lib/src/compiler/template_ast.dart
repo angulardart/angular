@@ -67,15 +67,12 @@ class BoundElementPropertyAst implements TemplateAst {
 /// A binding for an element event (e.g. (event)='handler()').
 class BoundEventAst implements TemplateAst {
   String name;
-  String target;
   AST handler;
   ParseSourceSpan sourceSpan;
-  BoundEventAst(this.name, this.target, this.handler, this.sourceSpan) {}
+  BoundEventAst(this.name, this.handler, this.sourceSpan) {}
   dynamic visit(TemplateAstVisitor visitor, dynamic context) {
     return visitor.visitEvent(this, context);
   }
-
-  get fullName => target == null ? name : '${target}:${name}';
 }
 
 /// A reference declaration on an element (e.g. let someName='expression').

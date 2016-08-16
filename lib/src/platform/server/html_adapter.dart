@@ -40,11 +40,6 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  getGlobalEventTarget(String target) {
-    throw new UnimplementedError();
-  }
-
-  @override
   getTitle() {
     throw new UnimplementedError();
   }

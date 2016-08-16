@@ -627,7 +627,6 @@ List<o.Statement> generateCreateMethod(CompileView view) {
       o.THIS_EXPR.callMethod("init", [
         createFlatArray(view.rootNodesOrAppElements),
         o.literalArr(view.nodes.map((node) => node.renderNode).toList()),
-        o.literalArr(view.disposables),
         o.literalArr(view.subscriptions)
       ]).toStmt(),
       new o.ReturnStatement(resultExpr)

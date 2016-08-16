@@ -1,3 +1,5 @@
+import 'dart:html';
+
 /**
  * This class should not be used directly by an application developer. Instead, use
  * [Location].
@@ -22,34 +24,15 @@
  * class
  * they are all platform independent.
  */
-
 abstract class PlatformLocation {
   String getBaseHrefFromDOM();
-  void onPopState(UrlChangeListener fn);
-  void onHashChange(UrlChangeListener fn);
-  /* abstract */ String get pathname {
-    return null;
-  }
-
-  /* abstract */ String get search {
-    return null;
-  }
-
-  /* abstract */ String get hash {
-    return null;
-  }
-
+  void onPopState(EventListener fn);
+  void onHashChange(EventListener fn);
+  String get pathname;
+  String get search;
+  String get hash;
   void replaceState(dynamic state, String title, String url);
   void pushState(dynamic state, String title, String url);
   void forward();
   void back();
 }
-
-/**
- * A serializable version of the event from onPopState or onHashChange
- */
-abstract class UrlChangeEvent {
-  String type;
-}
-
-typedef dynamic UrlChangeListener(UrlChangeEvent e);

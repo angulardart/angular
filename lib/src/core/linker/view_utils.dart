@@ -15,6 +15,9 @@ import "package:angular2/src/facade/lang.dart" show isPresent, looseIdentical;
 import "element.dart" show AppElement;
 import "exceptions.dart" show ExpressionChangedAfterItHasBeenCheckedException;
 
+/// Function called when a view is destroyed.
+typedef void OnDestroyCallback();
+
 @Injectable()
 class ViewUtils {
   RootRenderer _renderer;

@@ -5,6 +5,7 @@ import "package:angular2/src/core/di.dart" show Injector, Injectable;
 import "component_factory.dart" show ComponentRef;
 import "component_resolver.dart" show ComponentResolver;
 import "view_container_ref.dart" show ViewContainerRef;
+import "view_utils.dart" show OnDestroyCallback;
 
 /**
  * Service for instantiating a Component and attaching it to a View at a specified location.
@@ -114,12 +115,12 @@ class DynamicComponentLoader_ extends DynamicComponentLoader {
   }
   Future<ComponentRef> loadAsRoot(Type type,
       dynamic /* String | dynamic */ overrideSelectorOrNode, Injector injector,
-      [void onDispose(), List<List<dynamic>> projectableNodes]) {
+      [OnDestroyCallback onDestroy, List<List<dynamic>> projectableNodes]) {
     return this._compiler.resolveComponent(type).then((componentFactory) {
       var componentRef = componentFactory.create(injector, projectableNodes,
           overrideSelectorOrNode ?? componentFactory.selector);
-      if (onDispose != null) {
-        componentRef.onDestroy(onDispose);
+      if (onDestroy != null) {
+        componentRef.onDestroy(onDestroy);
       }
       return componentRef;
     });

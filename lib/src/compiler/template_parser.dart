@@ -59,7 +59,6 @@ import "template_ast.dart"
         BoundDirectivePropertyAst,
         VariableAst;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
-import "util.dart" show splitAtColon;
 import "../core/security.dart";
 
 // Group 1 = "bind-"
@@ -686,13 +685,13 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       ParseSourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundEventAst> targetEvents) {
-    // long format: 'target: eventName'
-    var parts = splitAtColon(name, [null, name]);
-    var target = parts[0];
-    var eventName = parts[1];
+    if (name.contains(':')) {
+      this._reportError(
+          '":" is not allowed in event names: ${name}', sourceSpan);
+    }
     var ast = this._parseAction(expression, sourceSpan);
     targetMatchableAttrs.add([name, ast.source]);
-    targetEvents.add(new BoundEventAst(eventName, target, ast, sourceSpan));
+    targetEvents.add(new BoundEventAst(name, ast, sourceSpan));
   }
 
   _parseLiteralAttr(String name, String value, ParseSourceSpan sourceSpan,
@@ -945,10 +944,9 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       });
     });
     events.forEach((event) {
-      if (event.target != null ||
-          !SetWrapper.has(allDirectiveEvents, event.name)) {
+      if (!SetWrapper.has(allDirectiveEvents, event.name)) {
         this._reportError(
-            '''Event binding ${ event . fullName} not emitted by any directive on an embedded template''',
+            'Event binding ${event.name} not emitted by any directive on an embedded template',
             event.sourceSpan);
       }
     });

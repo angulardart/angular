@@ -14,33 +14,26 @@ import "expression_converter.dart" show convertCdStatementToIr;
 
 class CompileEventListener {
   CompileElement compileElement;
-  String eventTarget;
   String eventName;
   CompileMethod _method;
   bool _hasComponentHostListener = false;
   String _methodName;
   o.FnParam _eventParam;
   List<o.Expression> _actionResultExprs = [];
-  static CompileEventListener getOrCreate(
-      CompileElement compileElement,
-      String eventTarget,
-      String eventName,
-      List<CompileEventListener> targetEventListeners) {
+  static CompileEventListener getOrCreate(CompileElement compileElement,
+      String eventName, List<CompileEventListener> targetEventListeners) {
     var listener = targetEventListeners.firstWhere(
-        (listener) =>
-            listener.eventTarget == eventTarget &&
-            listener.eventName == eventName,
+        (listener) => listener.eventName == eventName,
         orElse: () => null);
     if (isBlank(listener)) {
       listener = new CompileEventListener(
-          compileElement, eventTarget, eventName, targetEventListeners.length);
+          compileElement, eventName, targetEventListeners.length);
       targetEventListeners.add(listener);
     }
     return listener;
   }
 
-  CompileEventListener(this.compileElement, this.eventTarget, this.eventName,
-      num listenerIndex) {
+  CompileEventListener(this.compileElement, this.eventName, num listenerIndex) {
     this._method = new CompileMethod(compileElement.view);
     this._methodName =
         '''_handle_${ santitizeEventName ( eventName )}_${ compileElement . nodeIndex}_${ listenerIndex}''';
@@ -100,31 +93,21 @@ class CompileEventListener {
   }
 
   listenToRenderer() {
-    var listenExpr;
     var eventListener = o.THIS_EXPR.callMethod("eventHandler", [
       o.THIS_EXPR
           .prop(this._methodName)
           .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
     ]);
-    if (isPresent(this.eventTarget)) {
-      listenExpr = ViewProperties.renderer.callMethod("listenGlobal", [
-        o.literal(this.eventTarget),
-        o.literal(this.eventName),
-        eventListener
-      ]);
-    } else {
-      listenExpr = ViewProperties.renderer.callMethod("listen", [
-        this.compileElement.renderNode,
-        o.literal(this.eventName),
-        eventListener
-      ]);
-    }
-    var disposable = o.variable(
-        '''disposable_${ this . compileElement . view . disposables . length}''');
-    this.compileElement.view.disposables.add(disposable);
-    this.compileElement.view.createMethod.addStmt(disposable
-        .set(listenExpr)
-        .toDeclStmt(o.FUNCTION_TYPE, [o.StmtModifier.Private]));
+    o.Expression listenExpr = ViewProperties.renderer.callMethod("listen", [
+      this.compileElement.renderNode,
+      o.literal(this.eventName),
+      eventListener
+    ]);
+    this
+        .compileElement
+        .view
+        .createMethod
+        .addStmt(new o.ExpressionStatement(listenExpr));
   }
 
   listenToDirective(o.Expression directiveInstance, String observablePropName) {
@@ -151,7 +134,7 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
     compileElement.view.bindings
         .add(new CompileBinding(compileElement, hostEvent));
     var listener = CompileEventListener.getOrCreate(
-        compileElement, hostEvent.target, hostEvent.name, eventListeners);
+        compileElement, hostEvent.name, eventListeners);
     listener.addAction(hostEvent, null, null);
   });
   ListWrapper.forEachWithIndex(dirs, (directiveAst, i) {
@@ -160,7 +143,7 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
       compileElement.view.bindings
           .add(new CompileBinding(compileElement, hostEvent));
       var listener = CompileEventListener.getOrCreate(
-          compileElement, hostEvent.target, hostEvent.name, eventListeners);
+          compileElement, hostEvent.name, eventListeners);
       listener.addAction(hostEvent, directiveAst.directive, directiveInstance);
     });
   });

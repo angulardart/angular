@@ -477,16 +477,6 @@ class BrowserDomAdapter
         : 'Unidentified';
   }
 
-  getGlobalEventTarget(String target) {
-    if (target == "window") {
-      return window;
-    } else if (target == "document") {
-      return document;
-    } else if (target == "body") {
-      return document.body;
-    }
-  }
-
   getHistory() {
     return window.history;
   }

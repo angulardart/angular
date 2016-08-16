@@ -1123,43 +1123,8 @@ main() {
               var tc = fixture.debugElement.children[0];
               var listener = tc.inject(DirectiveListeningDomEvent);
               dispatchEvent(tc.nativeElement, "domEvent");
-              expect(listener.eventTypes, [
-                "domEvent",
-                "body_domEvent",
-                "document_domEvent",
-                "window_domEvent"
-              ]);
+              expect(listener.eventTypes, ["domEvent"]);
               fixture.destroy();
-              listener.eventTypes = [];
-              dispatchEvent(tc.nativeElement, "domEvent");
-              expect(listener.eventTypes, []);
-              completer.done();
-            });
-          });
-        });
-        test("should support render global events", () async {
-          return inject([TestComponentBuilder, AsyncTestCompleter],
-              (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-            tcb
-                .overrideView(
-                    MyComp,
-                    new ViewMetadata(
-                        template: "<div listener></div>",
-                        directives: [DirectiveListeningDomEvent]))
-                .createAsync(MyComp)
-                .then((fixture) {
-              var tc = fixture.debugElement.children[0];
-              var listener = tc.inject(DirectiveListeningDomEvent);
-              dispatchEvent(DOM.getGlobalEventTarget("window"), "domEvent");
-              expect(listener.eventTypes, ["window_domEvent"]);
-              listener.eventTypes = [];
-              dispatchEvent(DOM.getGlobalEventTarget("document"), "domEvent");
-              expect(listener.eventTypes,
-                  ["document_domEvent", "window_domEvent"]);
-              fixture.destroy();
-              listener.eventTypes = [];
-              dispatchEvent(DOM.getGlobalEventTarget("body"), "domEvent");
-              expect(listener.eventTypes, []);
               completer.done();
             });
           });
@@ -1238,47 +1203,6 @@ main() {
                   DOM.getChecked(
                       fixture.debugElement.children[1].nativeElement),
                   isTrue);
-              completer.done();
-            });
-          });
-        });
-        test("should support render global events from multiple directives",
-            () async {
-          return inject([TestComponentBuilder, AsyncTestCompleter],
-              (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-            tcb
-                .overrideView(
-                    MyComp,
-                    new ViewMetadata(
-                        template:
-                            "<div *ngIf=\"ctxBoolProp\" listener listenerother></div>",
-                        directives: [
-                          NgIf,
-                          DirectiveListeningDomEvent,
-                          DirectiveListeningDomEventOther
-                        ]))
-                .createAsync(MyComp)
-                .then((fixture) {
-              globalCounter = 0;
-              fixture.debugElement.componentInstance.ctxBoolProp = true;
-              fixture.detectChanges();
-              var tc = fixture.debugElement.children[0];
-              var listener = tc.inject(DirectiveListeningDomEvent);
-              var otherListener = tc.inject(DirectiveListeningDomEventOther);
-              dispatchEvent(DOM.getGlobalEventTarget("window"), "domEvent");
-              expect(listener.eventTypes, ["window_domEvent"]);
-              expect(otherListener.eventType, "other_domEvent");
-              expect(globalCounter, 1);
-              fixture.debugElement.componentInstance.ctxBoolProp = false;
-              fixture.detectChanges();
-              dispatchEvent(DOM.getGlobalEventTarget("window"), "domEvent");
-              expect(globalCounter, 1);
-              fixture.debugElement.componentInstance.ctxBoolProp = true;
-              fixture.detectChanges();
-              dispatchEvent(DOM.getGlobalEventTarget("window"), "domEvent");
-              expect(globalCounter, 2);
-              // need to destroy to release all remaining global event listeners
-              fixture.destroy();
               completer.done();
             });
           });
@@ -2414,46 +2338,14 @@ class DirectiveListeningEvent {
   }
 }
 
-@Directive(selector: "[listener]", host: const {
-  "(domEvent)": "onEvent(\$event.type)",
-  "(window:domEvent)": "onWindowEvent(\$event.type)",
-  "(document:domEvent)": "onDocumentEvent(\$event.type)",
-  "(body:domEvent)": "onBodyEvent(\$event.type)"
-})
+@Directive(
+    selector: "[listener]",
+    host: const {"(domEvent)": "onEvent(\$event.type)",})
 @Injectable()
 class DirectiveListeningDomEvent {
   List<String> eventTypes = [];
   onEvent(String eventType) {
     this.eventTypes.add(eventType);
-  }
-
-  onWindowEvent(String eventType) {
-    this.eventTypes.add("window_" + eventType);
-  }
-
-  onDocumentEvent(String eventType) {
-    this.eventTypes.add("document_" + eventType);
-  }
-
-  onBodyEvent(String eventType) {
-    this.eventTypes.add("body_" + eventType);
-  }
-}
-
-var globalCounter = 0;
-
-@Directive(
-    selector: "[listenerother]",
-    host: const {"(window:domEvent)": "onEvent(\$event.type)"})
-@Injectable()
-class DirectiveListeningDomEventOther {
-  String eventType;
-  DirectiveListeningDomEventOther() {
-    this.eventType = "";
-  }
-  onEvent(String eventType) {
-    globalCounter++;
-    this.eventType = "other_" + eventType;
   }
 }
 

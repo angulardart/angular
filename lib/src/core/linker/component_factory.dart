@@ -5,7 +5,7 @@ import "../change_detection/change_detection.dart" show ChangeDetectorRef;
 import "element.dart" show AppElement;
 import "element_ref.dart" show ElementRef;
 import "view_ref.dart" show ViewRef;
-import "view_utils.dart" show ViewUtils;
+import "view_utils.dart" show OnDestroyCallback, ViewUtils;
 
 /// Represents an instance of a Component created via a [ComponentFactory].
 ///
@@ -37,7 +37,7 @@ abstract class ComponentRef {
 
   /// Allows to register a callback that will be called when the component is
   /// destroyed.
-  void onDestroy(Function callback);
+  void onDestroy(OnDestroyCallback callback);
 }
 
 class ComponentRef_ extends ComponentRef {
@@ -61,7 +61,7 @@ class ComponentRef_ extends ComponentRef {
     hostElement.parentView.destroy();
   }
 
-  void onDestroy(Function callback) {
+  void onDestroy(OnDestroyCallback callback) {
     hostView.onDestroy(callback);
   }
 }

@@ -117,7 +117,6 @@ abstract class DomAdapter<T, N, ET> {
   resolveAndSetHref(T element, String baseUrl, String href);
   bool supportsDOMEvents();
   bool supportsNativeShadowDOM();
-  dynamic getGlobalEventTarget(String target);
   dynamic getHistory();
   dynamic getLocation();
   String getBaseHref();

@@ -313,8 +313,6 @@ var NG_PLATFORM_COMMON = [
   'LocationStrategy',
   'PathLocationStrategy',
   'PlatformLocation',
-  'UrlChangeEvent',
-  'UrlChangeListener'
 ];
 
 var NG_API = {

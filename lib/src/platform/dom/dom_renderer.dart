@@ -172,11 +172,6 @@ class DomRenderer implements Renderer {
         renderElement, name, decoratePreventDefault(callback));
   }
 
-  Function listenGlobal(String target, String name, Function callback) {
-    return _rootRenderer.eventManager
-        .addGlobalEventListener(target, name, decoratePreventDefault(callback));
-  }
-
   void setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue) {
     DOM.setProperty(renderElement, propertyName, propertyValue);

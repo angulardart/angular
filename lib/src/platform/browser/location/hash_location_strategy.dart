@@ -1,13 +1,15 @@
+import 'dart:html' as html;
+
 import "package:angular2/core.dart" show Injectable, Inject, Optional;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "location.dart" show Location;
 import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
-import "platform_location.dart" show UrlChangeListener, PlatformLocation;
+import "platform_location.dart" show PlatformLocation;
 
 /**
  * `HashLocationStrategy` is a [LocationStrategy] used to configure the
- * [Location] service to represent its state in the
+ * [PlatformLocation] service to represent its state in the
  * [hash fragment](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax)
  * of the browser's URL.
  *
@@ -57,7 +59,9 @@ class HashLocationStrategy extends LocationStrategy {
       this._baseHref = _baseHref;
     }
   }
-  void onPopState(UrlChangeListener fn) {
+
+  @override
+  void onPopState(html.EventListener fn) {
     this._platformLocation.onPopState(fn);
     this._platformLocation.onHashChange(fn);
   }

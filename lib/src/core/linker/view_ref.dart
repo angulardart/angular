@@ -8,7 +8,7 @@ import "view.dart" show AppView;
 abstract class ViewRef {
   bool get destroyed;
 
-  onDestroy(Function callback);
+  void onDestroy(OnDestroyCallback callback);
 }
 
 /// Represents an Angular View.
@@ -110,8 +110,9 @@ class ViewRef_ implements EmbeddedViewRef, ChangeDetectorRef {
     markForCheck();
   }
 
-  onDestroy(Function callback) {
-    _view.disposables.add(callback);
+  @override
+  void onDestroy(OnDestroyCallback callback) {
+    _view.addOnDestroyCallback(callback);
   }
 
   destroy() {
