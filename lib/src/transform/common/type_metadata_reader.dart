@@ -599,7 +599,6 @@ class _DirectiveMetadataVisitor extends Object
     if (this._hasMetadata) {
       _lifecycleHooks = node.implementsClause != null
           ? node.implementsClause.accept(_lifecycleVisitor)
-              as List<LifecycleHooks>
           : const <LifecycleHooks>[];
 
       node.members.accept(this);
@@ -917,7 +916,6 @@ class _PipeMetadataVisitor extends Object with RecursiveAstVisitor<Object> {
     if (this._hasMetadata) {
       _lifecycleHooks = node.implementsClause != null
           ? node.implementsClause.accept(_lifecycleVisitor)
-              as List<LifecycleHooks>
           : const <LifecycleHooks>[];
 
       node.members.accept(this);
