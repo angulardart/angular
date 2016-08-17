@@ -1,5 +1,20 @@
 # Changelog: Angular 2 for Dart
 
+## 2.0.0-beta.20
+
+### API changes
+
+* Added ngBeforeSubmit event to ngForm API to allow better validation.
+* Global events removed from event binding syntax (dart:html APIs provide
+  better alternative).
+
+### Bug fixes and other changes
+* Reduced template code size.
+* Cleanup of facades.
+* Class Documentation updates.
+* ngForm submit changed to sync.
+* Removed disposables in generated template code.
+
 ## 2.0.0-beta.19
 
 ### API changes
