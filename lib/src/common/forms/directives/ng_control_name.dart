@@ -99,7 +99,6 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
   dynamic viewModel;
   var _added = false;
   NgControlName(
-      @Host()
       @SkipSelf()
           this._parent,
       @Optional()
