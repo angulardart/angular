@@ -234,6 +234,10 @@ main() {
         List<Token> tokens = lex("?.");
         expectOperatorToken(tokens[0], 0, "?.");
       });
+      test("should tokenize ?? as operator", () {
+        List<Token> tokens = lex("??");
+        expectOperatorToken(tokens[0], 0, "??");
+      });
     });
   });
 }

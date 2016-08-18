@@ -363,6 +363,11 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
+  dynamic visitIfNullExpr(o.IfNullExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
+    return ast.condition.visitExpression(this, ctx) ?? ast.nullCase.visitExpression(this, ctx);
+  }
+
   dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     return !ast.condition.visitExpression(this, ctx);

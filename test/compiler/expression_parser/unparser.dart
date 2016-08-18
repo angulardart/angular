@@ -49,6 +49,12 @@ class Unparser implements AstVisitor {
     this._visit(ast.falseExp);
   }
 
+  visitIfNull(IfNull ast, dynamic context) {
+    this._visit(ast.condition);
+    this._expression += " ?? ";
+    this._visit(ast.nullExp);
+  }
+
   visitPipe(BindingPipe ast, dynamic context) {
     this._expression += "(";
     this._visit(ast.exp);
