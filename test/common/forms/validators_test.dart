@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 main() {
   var validator = (String key, dynamic error) {
     return (AbstractControl c) {
-      var r = {};
+      var r = <String, dynamic>{};
       r[key] = error;
       return r;
     };
@@ -131,7 +131,7 @@ main() {
           asyncValidator("expected", {"two": true})
         ]);
         var value = null;
-        ((c(new Control("invalid")) as Future<dynamic>)).then((v) => value = v);
+        ((c(new Control("invalid")))).then((v) => value = v);
         tick(1);
         expect(value, {"one": true, "two": true});
       }));
@@ -140,8 +140,7 @@ main() {
           asyncValidator("expected", {"one": true})
         ]);
         var value = null;
-        ((c(new Control("expected")) as Future<dynamic>))
-            .then((v) => value = v);
+        c(new Control("expected")).then((v) => value = v);
         tick(1);
         expect(value, null);
       }));
@@ -151,7 +150,7 @@ main() {
           null
         ]);
         var value = null;
-        ((c(new Control("invalid")) as Future<dynamic>)).then((v) => value = v);
+        c(new Control("invalid")).then((v) => value = v);
         tick(1);
         expect(value, {"one": true});
       }));

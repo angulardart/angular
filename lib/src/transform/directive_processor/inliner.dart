@@ -55,7 +55,8 @@ Future<String> _getAllDeclarations(AssetReader reader, AssetId assetId,
     var uri = stringLiteralToString(partDirective.uri);
     var partAssetId =
         fromUri(createOfflineCompileUrlResolver().resolve(assetUri, uri));
-    asyncWriter.asyncPrint(reader.readAsString(partAssetId).then((partCode) {
+    asyncWriter.asyncPrint(
+        reader.readAsString(partAssetId).then/*<String>*/((partCode) {
       if (partCode == null || partCode.isEmpty) {
         log.warning('Empty part at "${partDirective.uri}. Ignoring.',
             asset: partAssetId);

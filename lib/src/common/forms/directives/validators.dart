@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import "package:angular2/core.dart" show Provider, Attribute, Directive;
 import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 
@@ -41,7 +43,7 @@ const REQUIRED_VALIDATOR =
 class RequiredValidator {}
 
 typedef Map<String, dynamic> ValidatorFn(AbstractControl c);
-typedef dynamic AsyncValidatorFn(AbstractControl c);
+typedef Future AsyncValidatorFn(AbstractControl c);
 
 /// Provider which adds [MinLengthValidator] to [NG_VALIDATORS].
 const MIN_LENGTH_VALIDATOR =

@@ -41,8 +41,7 @@ main() {
       expect(block.entries.length, 1);
       var definition = (block.entries[0] as CssDefinitionAST);
       expect(definition.property.strValue, "prop");
-      var value = (definition.value as CssStyleValueAST);
-      expect(value.tokens[0].strValue, "value123");
+      expect(definition.value.tokens[0].strValue, "value123");
     });
     test("should parse mutliple CSS selectors sharing the same set of styles",
         () {
@@ -86,25 +85,21 @@ main() {
       expect(ast.rules.length, 1);
       var rule = (ast.rules[0] as CssKeyframeRuleAST);
       expect(rule.name.strValue, "rotateMe");
-      var block = (rule.block as CssBlockAST);
-      var fromRule = (block.entries[0] as CssKeyframeDefinitionAST);
+      var fromRule = (rule.block.entries[0] as CssKeyframeDefinitionAST);
       expect(fromRule.name.strValue, "from");
-      var fromStyle =
-          (((fromRule.block as CssBlockAST)).entries[0] as CssDefinitionAST);
+      var fromStyle = fromRule.block.entries[0] as CssDefinitionAST;
       expect(fromStyle.property.strValue, "transform");
       expect(tokensToStringList(fromStyle.value.tokens),
           ["rotate", "(", "-360deg", ")"]);
-      var midRule = (block.entries[1] as CssKeyframeDefinitionAST);
+      var midRule = (rule.block.entries[1] as CssKeyframeDefinitionAST);
       expect(midRule.name.strValue, "50%");
-      var midStyle =
-          (((midRule.block as CssBlockAST)).entries[0] as CssDefinitionAST);
+      var midStyle = (midRule.block.entries[0] as CssDefinitionAST);
       expect(midStyle.property.strValue, "transform");
       expect(tokensToStringList(midStyle.value.tokens),
           ["rotate", "(", "0deg", ")"]);
-      var toRule = (block.entries[2] as CssKeyframeDefinitionAST);
+      var toRule = (rule.block.entries[2] as CssKeyframeDefinitionAST);
       expect(toRule.name.strValue, "to");
-      var toStyle =
-          (((toRule.block as CssBlockAST)).entries[0] as CssDefinitionAST);
+      var toStyle = toRule.block.entries[0] as CssDefinitionAST;
       expect(toStyle.property.strValue, "transform");
       expect(tokensToStringList(toStyle.value.tokens),
           ["rotate", "(", "360deg", ")"]);
@@ -122,12 +117,10 @@ main() {
       var rule = (ast.rules[0] as CssMediaQueryRuleAST);
       expect(tokensToStringList(rule.query),
           ["all", "and", "(", "max-width", ":", "100", "px", ")"]);
-      var block = (rule.block as CssBlockAST);
-      expect(block.entries.length, 1);
-      var rule2 = (block.entries[0] as CssSelectorRuleAST);
+      expect(rule.block.entries.length, 1);
+      var rule2 = rule.block.entries[0] as CssSelectorRuleAST;
       expect(rule2.selectors[0].strValue, ".selector");
-      var block2 = (rule2.block as CssBlockAST);
-      expect(block2.entries.length, 1);
+      expect(rule2.block.entries.length, 1);
     });
     test("should parse inline CSS values", () {
       var styles = '''

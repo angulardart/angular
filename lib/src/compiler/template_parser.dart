@@ -1109,17 +1109,15 @@ List<dynamic/*=T*/ > removeDuplicates/*<T>*/(List<dynamic/*=T*/ > items) {
   items.forEach((item) {
     var hasMatch = res.where((r) {
       if (r is CompilePipeMetadata) {
-        CompilePipeMetadata rMeta = r as CompilePipeMetadata;
         CompilePipeMetadata itemMeta = item as CompilePipeMetadata;
-        return rMeta.type.name == itemMeta.type.name &&
-            rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
-            rMeta.type.runtime == itemMeta.type.runtime;
+        return r.type.name == itemMeta.type.name &&
+            r.type.moduleUrl == itemMeta.type.moduleUrl &&
+            r.type.runtime == itemMeta.type.runtime;
       } else if (r is CompileDirectiveMetadata) {
-        CompileDirectiveMetadata rMeta = r as CompileDirectiveMetadata;
         CompileDirectiveMetadata itemMeta = item as CompileDirectiveMetadata;
-        return rMeta.type.name == itemMeta.type.name &&
-            rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
-            rMeta.type.runtime == itemMeta.type.runtime;
+        return r.type.name == itemMeta.type.name &&
+            r.type.moduleUrl == itemMeta.type.moduleUrl &&
+            r.type.runtime == itemMeta.type.runtime;
       } else
         throw new ArgumentError();
     }).isNotEmpty;

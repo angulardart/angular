@@ -1,7 +1,6 @@
 import "package:angular2/core.dart"
     show SimpleChange, OnChanges, Directive, Provider, Inject, Optional, Self;
-import "package:angular2/src/facade/async.dart"
-    show ObservableWrapper, EventEmitter;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/collection.dart"
     show ListWrapper, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
