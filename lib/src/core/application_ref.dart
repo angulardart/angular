@@ -109,7 +109,7 @@ Future<ComponentRef> coreLoadAndBootstrap(
     ComponentResolver componentResolver = injector.get(ComponentResolver);
     ComponentFactory factory =
         await componentResolver.resolveComponent(componentType);
-    appRef.waitForAsyncInitializers();
+    await appRef.waitForAsyncInitializers();
     return appRef.bootstrap(factory);
   });
 }
