@@ -163,6 +163,13 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
             this.visitAll(ast.args as List<cdAst.AST>, _Mode.Expression)));
   }
 
+  dynamic visitIfNull(cdAst.IfNull ast, dynamic context) {
+    _Mode mode = context;
+    o.Expression value = ast.condition.visit(this, _Mode.Expression);
+    return convertToStatementIfNeeded(
+        mode, value.ifNull(ast.nullExp.visit(this, _Mode.Expression)));
+  }
+
   dynamic visitImplicitReceiver(cdAst.ImplicitReceiver ast, dynamic context) {
     _Mode mode = context;
     ensureExpressionMode(mode, ast);

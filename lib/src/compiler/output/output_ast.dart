@@ -130,6 +130,10 @@ abstract class Expression {
     return new ConditionalExpr(this, trueCase, falseCase);
   }
 
+  IfNullExpr ifNull(Expression nullCase) {
+    return new IfNullExpr(this, nullCase);
+  }
+
   BinaryOperatorExpr equals(Expression rhs) {
     return new BinaryOperatorExpr(BinaryOperator.Equals, this, rhs);
   }
@@ -361,6 +365,22 @@ class ConditionalExpr extends Expression {
   }
 }
 
+/// Represents the ?? expression in Dart
+class IfNullExpr extends Expression {
+  /// Condition for the null check and result if it is not null.
+  final Expression condition;
+
+  /// Result if the `condition` operand is null.
+  final Expression nullCase;
+
+  IfNullExpr(this.condition, Expression nullCase, [OutputType type = null])
+      : nullCase = nullCase,
+        super(isPresent(type) ? type : nullCase.type);
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitIfNullExpr(this, context);
+  }
+}
+
 class NotExpr extends Expression {
   Expression condition;
   NotExpr(this.condition) : super(BOOL_TYPE) {
@@ -489,6 +509,7 @@ abstract class ExpressionVisitor {
   dynamic visitLiteralExpr(LiteralExpr ast, dynamic context);
   dynamic visitExternalExpr(ExternalExpr ast, dynamic context);
   dynamic visitConditionalExpr(ConditionalExpr ast, dynamic context);
+  dynamic visitIfNullExpr(IfNullExpr ast, dynamic context);
   dynamic visitNotExpr(NotExpr ast, dynamic context);
   dynamic visitCastExpr(CastExpr ast, dynamic context);
   dynamic visitFunctionExpr(FunctionExpr ast, dynamic context);
@@ -740,6 +761,11 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
         ast.falseCase.visitExpression(this, context));
   }
 
+  dynamic visitIfNullExpr(IfNullExpr ast, dynamic context) {
+    return new ConditionalExpr(ast.condition.visitExpression(this, context),
+        ast.nullCase.visitExpression(this, context));
+  }
+
   dynamic visitNotExpr(NotExpr ast, dynamic context) {
     return new NotExpr(ast.condition.visitExpression(this, context));
   }
@@ -895,6 +921,12 @@ class RecursiveExpressionVisitor
     ast.condition.visitExpression(this, context);
     ast.trueCase.visitExpression(this, context);
     ast.falseCase.visitExpression(this, context);
+    return ast;
+  }
+
+  dynamic visitIfNullExpr(IfNullExpr ast, dynamic context) {
+    ast.condition.visitExpression(this, context);
+    ast.nullCase.visitExpression(this, context);
     return ast;
   }
 

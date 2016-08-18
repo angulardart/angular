@@ -16,6 +16,7 @@ import "ast.dart"
         Binary,
         PrefixNot,
         Conditional,
+        IfNull,
         BindingPipe,
         Chain,
         KeyedRead,
@@ -345,7 +346,10 @@ class _ParseAST {
   AST parseConditional() {
     var start = this.inputIndex;
     var result = this.parseLogicalOr();
-    if (this.optionalOperator("?")) {
+    if (this.optionalOperator("??")) {
+      var nullExp = this.parsePipe();
+      return new IfNull(result, nullExp);
+    } else if (this.optionalOperator("?")) {
       var yes = this.parsePipe();
       if (!this.optionalCharacter($COLON)) {
         var end = this.inputIndex;
@@ -733,6 +737,10 @@ class SimpleExpressionChecker implements AstVisitor {
   }
 
   visitConditional(Conditional ast, dynamic context) {
+    this.simple = false;
+  }
+
+  visitIfNull(IfNull ast, dynamic context) {
     this.simple = false;
   }
 
