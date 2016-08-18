@@ -112,7 +112,7 @@ Iterable<Symbol> _getUsedSymbols(
 
   path = "$path -> $decl";
 
-  var used = [];
+  var used = <Symbol>[];
 
   if (decl is TypedefMirror) {
     TypedefMirror tddecl = decl;

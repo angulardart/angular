@@ -5,7 +5,7 @@ import 'dart:async';
 
 import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart"
-    show ControlGroup, Control, ControlArray, Validators;
+    show AbstractControl, ControlGroup, Control, ControlArray, Validators;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/async.dart"
     show TimerWrapper, ObservableWrapper, EventEmitter;
@@ -13,7 +13,7 @@ import 'package:test/test.dart';
 
 main() {
   var asyncValidator = (expected, [timeouts = const {}]) {
-    return (c) {
+    return (AbstractControl c) {
       var completer = new Completer();
       var t = isPresent(timeouts[c.value]) ? timeouts[c.value] : 0;
       var res = c.value != expected ? {"async": true} : null;

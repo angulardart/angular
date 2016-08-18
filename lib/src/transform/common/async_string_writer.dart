@@ -33,7 +33,7 @@ class AsyncStringWriter extends PrintWriter {
     _curr = new StringBuffer();
     _bufs.add(_curr);
 
-    var toAwait = futureText.then((val) {
+    var toAwait = futureText.then/*<String>*/((val) {
       myBuf.write(val);
       return val;
     });
@@ -49,7 +49,7 @@ class AsyncStringWriter extends PrintWriter {
   Future<String> asyncToString() {
     _semaphoreIncrement();
     var bufLen = _bufs.length;
-    return Future.wait(_toAwait).then((_) {
+    return Future.wait(_toAwait).then/*<String>*/((_) {
       return _bufs.sublist(0, bufLen).join('');
     }).whenComplete(_semaphoreDecrementAndCleanup);
   }
