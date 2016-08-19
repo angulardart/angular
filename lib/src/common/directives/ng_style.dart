@@ -24,21 +24,23 @@ import "../../core/change_detection/differs/default_keyvalue_differ.dart"
 ///
 /// ### Examples
 ///
-/// A [Map] literal can be used as a style expression
-///
-///     <div [ngStyle]="{'font-style': 'italic'}"></div>
-///
-/// though it is better practice to bind to a component field or method. Try the
-/// [live example][ex] from the [Template Syntax][guide] chapter. Here are the
-/// relevant excerpts from the example's template and component class:
+/// Try the [live example][ex] from the [Template Syntax][guide] page. Here are
+/// the relevant excerpts from the example's template and the corresponding
+/// component class:
 ///
 /// {@example docs/template-syntax/lib/app_component.html region=NgStyle}
 ///
 /// {@example docs/template-syntax/lib/app_component.dart region=NgStyle}
 ///
-/// In this example, the first paragraph's `font-style`, `font-weight` and
-/// `font-size` style properties will be updated as the user changes the
-/// `<input>` elements.
+/// In this example, user changes to the `<input>` elements result in updates
+/// to the corresponding style properties of the first paragraph.
+///
+/// A [Map] literal can be used as a style expression:
+///
+///     <div [ngStyle]="{'font-style': 'italic'}"></div>
+///
+/// A better practice, however, is to bind to a component field or method, as
+/// in the binding to `setStyle()` above.
 ///
 /// [guide]: docs/guide/template-syntax.html#!#ngStyle
 /// [ex]: examples/template-syntax/#ngStyle
