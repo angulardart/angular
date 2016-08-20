@@ -7,7 +7,7 @@ import 'package:angular2/src/facade/lang.dart' show isBlank;
 import 'package:angular2/common.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
 import 'package:angular2/src/facade/async.dart'
-    show EventEmitter, ObservableWrapper, TimerWrapper;
+    show EventEmitter, ObservableWrapper;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -32,11 +32,11 @@ main() {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           pipe.transform(emitter);
           ObservableWrapper.callEmit(emitter, message);
-          TimerWrapper.setTimeout(() {
+          Timer.run(() {
             WrappedValue res = pipe.transform(emitter);
             expect(res.wrapped, message);
             completer.done();
-          }, 0);
+          });
         });
       });
       test(
@@ -45,11 +45,11 @@ main() {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           pipe.transform(emitter);
           ObservableWrapper.callEmit(emitter, message);
-          TimerWrapper.setTimeout(() {
+          Timer.run(() {
             pipe.transform(emitter);
             expect(pipe.transform(emitter), message);
             completer.done();
-          }, 0);
+          });
         });
       });
       test(
@@ -61,10 +61,10 @@ main() {
           expect(pipe.transform(newEmitter), isNull);
           // this should not affect the pipe
           ObservableWrapper.callEmit(emitter, message);
-          TimerWrapper.setTimeout(() {
+          Timer.run(() {
             expect(pipe.transform(newEmitter), isNull);
             completer.done();
-          }, 0);
+          });
         });
       });
       test('should request a change detection check upon receiving a new value',
@@ -72,10 +72,10 @@ main() {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           pipe.transform(emitter);
           ObservableWrapper.callEmit(emitter, message);
-          TimerWrapper.setTimeout(() {
+          new Timer(const Duration(milliseconds: 10), () {
             verify(ref.markForCheck()).called(1);
             completer.done();
-          }, 10);
+          });
         });
       });
     });
@@ -89,10 +89,10 @@ main() {
           pipe.transform(emitter);
           pipe.ngOnDestroy();
           ObservableWrapper.callEmit(emitter, message);
-          TimerWrapper.setTimeout(() {
+          Timer.run(() {
             expect(pipe.transform(emitter), isNull);
             completer.done();
-          }, 0);
+          });
         });
       });
     });
@@ -117,11 +117,11 @@ main() {
         return inject([AsyncTestCompleter], (AsyncTestCompleter testCompleter) {
           pipe.transform(completer.future);
           completer.complete(message);
-          TimerWrapper.setTimeout(() {
+          new Timer(new Duration(milliseconds: timer), () {
             WrappedValue res = pipe.transform(completer.future);
             expect(res.wrapped, message);
             testCompleter.done();
-          }, timer);
+          });
         });
       });
       test(
@@ -130,11 +130,11 @@ main() {
         return inject([AsyncTestCompleter], (AsyncTestCompleter testCompleter) {
           pipe.transform(completer.future);
           completer.complete(message);
-          TimerWrapper.setTimeout(() {
+          new Timer(new Duration(milliseconds: timer), () {
             pipe.transform(completer.future);
             expect(pipe.transform(completer.future), message);
             testCompleter.done();
-          }, timer);
+          });
         });
       });
       test(
@@ -146,10 +146,10 @@ main() {
           expect(pipe.transform(newCompleter.future), isNull);
           // this should not affect the pipe, so it should return WrappedValue
           completer.complete(message);
-          TimerWrapper.setTimeout(() {
+          new Timer(new Duration(milliseconds: timer), () {
             expect(pipe.transform(newCompleter.future), isNull);
             testCompleter.done();
-          }, timer);
+          });
         });
       });
       test('should request a change detection check upon receiving a new value',
@@ -157,10 +157,10 @@ main() {
         return inject([AsyncTestCompleter], (AsyncTestCompleter testCompleter) {
           pipe.transform(completer.future);
           completer.complete(message);
-          TimerWrapper.setTimeout(() {
+          new Timer(new Duration(milliseconds: timer), () {
             verify(ref.markForCheck()).called(1);
             testCompleter.done();
-          }, timer);
+          });
         });
       });
       group('ngOnDestroy', () {
@@ -173,13 +173,13 @@ main() {
             pipe.transform(completer.future);
             expect(pipe.transform(completer.future), isNull);
             completer.complete(message);
-            TimerWrapper.setTimeout(() {
+            new Timer(new Duration(milliseconds: timer), () {
               WrappedValue res = pipe.transform(completer.future);
               expect(res.wrapped, message);
               pipe.ngOnDestroy();
               expect(pipe.transform(completer.future), isNull);
               testCompleter.done();
-            }, timer);
+            });
           });
         });
       });

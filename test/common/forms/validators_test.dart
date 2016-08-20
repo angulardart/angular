@@ -5,7 +5,7 @@ import "dart:async";
 import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart" show Control, Validators, AbstractControl;
 import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper, TimerWrapper;
+    show EventEmitter, ObservableWrapper;
 import 'package:test/test.dart';
 
 main() {
@@ -115,9 +115,9 @@ main() {
             // where callComplete can fire before callEmit
 
             // remove this one the bug is fixed
-            TimerWrapper.setTimeout(() {
+            Timer.run(() {
               ObservableWrapper.callComplete(emitter);
-            }, 0);
+            });
           });
           return emitter;
         };

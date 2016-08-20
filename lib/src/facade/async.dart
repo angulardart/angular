@@ -2,25 +2,6 @@ import 'dart:async';
 
 export 'dart:async' show Stream, StreamController, StreamSubscription;
 
-class TimerWrapper {
-  static Timer setTimeout(fn(), int millis) =>
-      new Timer(new Duration(milliseconds: millis), fn);
-  static void clearTimeout(Timer timer) {
-    timer.cancel();
-  }
-
-  static Timer setInterval(fn(), int millis) {
-    var interval = new Duration(milliseconds: millis);
-    return new Timer.periodic(interval, (Timer timer) {
-      fn();
-    });
-  }
-
-  static void clearInterval(Timer timer) {
-    timer.cancel();
-  }
-}
-
 class ObservableWrapper {
   static StreamSubscription subscribe/*<T>*/(Stream s, onNext(/*=T*/ value),
       [onError, void onComplete()]) {

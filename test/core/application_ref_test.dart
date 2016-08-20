@@ -26,7 +26,6 @@ import "package:angular2/core.dart"
         ChangeDetectorRef;
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/async.dart" show TimerWrapper;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, ComponentRef_, ComponentRef;
 import "package:angular2/src/core/linker/injector_factory.dart"
@@ -112,10 +111,10 @@ main() {
             (AsyncTestCompleter testCompleter, Injector injector) {
           var completer = new Completer();
           var initializerDone = false;
-          TimerWrapper.setTimeout(() {
+          new Timer(const Duration(milliseconds: 1), () {
             completer.complete(true);
             initializerDone = true;
-          }, 1);
+          });
           var app = createApplication([
             new Provider(APP_INITIALIZER,
                 useValue: () => completer.future, multi: true)

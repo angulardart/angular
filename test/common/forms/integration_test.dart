@@ -11,8 +11,7 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/common.dart";
 import "package:angular2/core.dart" show Provider, Input;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/async.dart"
-    show ObservableWrapper, TimerWrapper;
+import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import 'package:test/test.dart';
 
 main() {
@@ -472,10 +471,10 @@ main() {
               select.nativeElement.value = "2: Object";
               dispatchEvent(select.nativeElement, "change");
               fixture.detectChanges();
-              TimerWrapper.setTimeout(() {
+              Timer.run(() {
                 expect(testComp.selectedCity["name"], "Buffalo");
                 completer.done();
-              }, 0);
+              });
             });
           });
         });

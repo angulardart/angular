@@ -3,8 +3,7 @@ library angular2.test.core.zone.ng_zone_test;
 
 import "dart:async";
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/async.dart"
-    show TimerWrapper, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
@@ -16,7 +15,7 @@ var resultTimer = 1000;
 
 void macroTask(Function fn, [timer = 1]) {
   // adds longer timers for passing tests in IE and Edge
-  TimerWrapper.setTimeout(fn, needsLongerTimers ? timer : 1);
+  new Timer(new Duration(milliseconds: needsLongerTimers ? timer : 1), fn);
 }
 
 Log _log;
@@ -79,12 +78,12 @@ main() {
           macroTask(() {
             var c = new Completer();
             _zone.run(() {
-              TimerWrapper.setTimeout(() {
-                TimerWrapper.setTimeout(() {
+              Timer.run(() {
+                Timer.run(() {
                   c.complete(null);
                   throw new BaseException("ccc");
-                }, 0);
-              }, 0);
+                });
+              });
             });
             c.future.then((_) {
               expect(_traces, hasLength(1));
@@ -130,12 +129,12 @@ main() {
           macroTask(() {
             var c = new Completer();
             _zone.run(() {
-              TimerWrapper.setTimeout(() {
-                TimerWrapper.setTimeout(() {
+              Timer.run(() {
+                Timer.run(() {
                   c.complete(null);
                   throw new BaseException("ccc");
-                }, 0);
-              }, 0);
+                });
+              });
             });
             c.future.then((_) {
               expect(_traces, hasLength(1));
@@ -170,7 +169,7 @@ commonTests() {
     });
     test("should be true", () {
       runNgZoneNoLog(() {
-        TimerWrapper.setTimeout(() {}, 0);
+        Timer.run(() {});
       });
       expect(_zone.hasPendingMacrotasks, isTrue);
     });
@@ -187,7 +186,7 @@ commonTests() {
     });
     test("should be true when timer is scheduled", () {
       runNgZoneNoLog(() {
-        TimerWrapper.setTimeout(() {}, 0);
+        Timer.run(() {});
       });
       expect(_zone.hasPendingMacrotasks, isTrue);
     });

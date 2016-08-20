@@ -23,7 +23,6 @@ import 'package:angular2/common.dart'
         Validator;
 import 'package:angular2/src/common/forms/directives/shared.dart'
     show selectValueAccessor, composeValidators;
-import 'package:angular2/src/facade/async.dart' show TimerWrapper;
 import 'package:angular2/src/core/change_detection.dart' show SimpleChange;
 import 'package:test/test.dart';
 import '../control_mocks.dart';
@@ -50,9 +49,9 @@ asyncValidator(expected, [timeout = 0]) {
     if (timeout == 0) {
       completer.complete(res);
     } else {
-      TimerWrapper.setTimeout(() {
+      new Timer(new Duration(milliseconds: 0), () {
         completer.complete(res);
-      }, timeout);
+      });
     }
     return completer.future;
   };

@@ -8,7 +8,7 @@ import "package:angular2/common.dart"
     show AbstractControl, ControlGroup, Control, ControlArray, Validators;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/facade/async.dart"
-    show TimerWrapper, ObservableWrapper, EventEmitter;
+    show ObservableWrapper, EventEmitter;
 import 'package:test/test.dart';
 
 main() {
@@ -20,9 +20,9 @@ main() {
       if (t == 0) {
         completer.complete(res);
       } else {
-        TimerWrapper.setTimeout(() {
+        new Timer(new Duration(milliseconds: t), () {
           completer.complete(res);
-        }, t);
+        });
       }
       return completer.future;
     };
