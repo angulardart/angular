@@ -10,8 +10,7 @@ import "package:angular2/core.dart"
         Inject,
         Optional,
         Self;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show Control;
 import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
@@ -134,7 +133,7 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
 
   void viewToModelUpdate(dynamic newValue) {
     this.viewModel = newValue;
-    ObservableWrapper.callEmit(this.update, newValue);
+    this.update.add(newValue);
   }
 
   List<String> get path {

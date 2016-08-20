@@ -3,7 +3,6 @@ library angular2.test.core.linker.query_list_spec;
 
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/collection.dart" show iterateListLike;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/core/linker/query_list.dart" show QueryList;
 import 'package:test/test.dart';
 
@@ -52,7 +51,7 @@ main() {
     group("simple observable interface", () {
       test("should fire callbacks on change", fakeAsync(() {
         var fires = 0;
-        ObservableWrapper.subscribe(queryList.changes, (_) {
+        queryList.changes.listen((_) {
           fires += 1;
         });
         queryList.notifyOnChanges();
@@ -64,7 +63,7 @@ main() {
       }));
       test("should provides query list as an argument", fakeAsync(() {
         var recorded;
-        ObservableWrapper.subscribe(queryList.changes, (dynamic v) {
+        queryList.changes.listen((dynamic v) {
           recorded = v;
         });
         queryList.reset(["one"]);

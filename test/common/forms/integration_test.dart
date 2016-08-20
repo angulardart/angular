@@ -11,7 +11,6 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/common.dart";
 import "package:angular2/core.dart" show Provider, Input;
 import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import 'package:test/test.dart';
 
 main() {
@@ -79,7 +78,7 @@ main() {
           fixture.detectChanges();
           var input = fixture.debugElement.query(By.css("input"));
           input.nativeElement.value = "updatedValue";
-          ObservableWrapper.subscribe(form.valueChanges, (value) {
+          form.valueChanges.listen((value) {
             throw "Should not happen";
           });
           dispatchEvent(input.nativeElement, "change");
@@ -651,8 +650,7 @@ main() {
             var input = fixture.debugElement.query(By.css("my-input"));
             expect(input.componentInstance.value, "!aa!");
             input.componentInstance.value = "!bb!";
-            ObservableWrapper.subscribe(input.componentInstance.onInput,
-                (value) {
+            input.componentInstance.onInput.listen((value) {
               expect(fixture.debugElement.componentInstance.form.value,
                   {"name": "bb"});
               completer.done();
@@ -1240,13 +1238,12 @@ class MyInput implements ControlValueAccessor {
   }
 
   registerOnChange(fn) {
-    ObservableWrapper.subscribe(this.onInput, fn);
+    this.onInput.listen(fn);
   }
 
   registerOnTouched(fn) {}
   dispatchChangeEvent() {
-    ObservableWrapper.callEmit(
-        this.onInput, this.value.substring(1, this.value.length - 1));
+    this.onInput.add(this.value.substring(1, this.value.length - 1));
   }
 }
 

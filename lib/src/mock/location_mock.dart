@@ -1,7 +1,6 @@
 import "package:angular2/platform/common.dart";
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 /**
  * A spy for [Location] that allows tests to fire simulated location events.
@@ -40,15 +39,14 @@ class SpyLocation implements Location {
   }
 
   simulateUrlPop(String pathname) {
-    ObservableWrapper.callEmit(this._subject, {"url": pathname, "pop": true});
+    this._subject.add({"url": pathname, "pop": true});
   }
 
   simulateHashChange(String pathname) {
     // Because we don't prevent the native event, the browser will independently update the path
     this.setInitialPath(pathname);
     this.urlChanges.add("hash: " + pathname);
-    ObservableWrapper.callEmit(
-        this._subject, {"url": pathname, "pop": true, "type": "hashchange"});
+    this._subject.add({"url": pathname, "pop": true, "type": "hashchange"});
   }
 
   String prepareExternalUrl(String url) {
@@ -81,8 +79,7 @@ class SpyLocation implements Location {
   back() {}
   Object subscribe(void onNext(dynamic value),
       [void onThrow(dynamic error) = null, void onReturn() = null]) {
-    return ObservableWrapper.subscribe(
-        this._subject, onNext, onThrow, onReturn);
+    return this._subject.listen(onNext, onError: onThrow, onDone: onReturn);
   }
 
   // TODO: remove these once Location is an interface, and can be implemented cleanly

@@ -3,7 +3,6 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RenderComponentType;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
 
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
@@ -196,7 +195,7 @@ abstract class AppView<T> {
       _onDestroyCallbacks[i]();
     }
     for (var i = 0; i < this.subscriptions.length; i++) {
-      ObservableWrapper.dispose(this.subscriptions[i]);
+      this.subscriptions[i].cancel();
     }
     this.destroyInternal();
     this.dirtyParentQueriesInternal();

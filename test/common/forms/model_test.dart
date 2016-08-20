@@ -7,8 +7,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart"
     show AbstractControl, ControlGroup, Control, ControlArray, Validators;
 import "package:angular2/src/facade/lang.dart" show isPresent;
-import "package:angular2/src/facade/async.dart"
-    show ObservableWrapper, EventEmitter;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import 'package:test/test.dart';
 
 main() {
@@ -30,7 +29,7 @@ main() {
 
   var asyncValidatorReturningObservable = (c) {
     var e = new EventEmitter();
-    scheduleMicrotask(() => ObservableWrapper.callEmit(e, {"async": true}));
+    scheduleMicrotask(() => e.emit({"async": true}));
     return e;
   };
 
@@ -144,7 +143,7 @@ main() {
           expect(g.value, {"one": "oldValue"});
         });
         test("should fire an event", fakeAsync(() {
-          ObservableWrapper.subscribe(c.valueChanges, (value) {
+          c.valueChanges.listen((value) {
             expect(value, "newValue");
           });
           c.updateValue("newValue");
@@ -152,7 +151,7 @@ main() {
         }));
         test("should not fire an event when explicitly specified",
             fakeAsync(() {
-          ObservableWrapper.subscribe(c.valueChanges, (value) {
+          c.valueChanges.listen((value) {
             throw "Should not happen";
           });
           c.updateValue("newValue", emitEvent: false);
@@ -166,7 +165,7 @@ main() {
         });
         test("should fire an event after the value has been updated", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-            ObservableWrapper.subscribe(c.valueChanges, (value) {
+            c.valueChanges.listen((value) {
               expect(c.value, "new");
               expect(value, "new");
               completer.done();
@@ -177,7 +176,7 @@ main() {
         test(
             "should fire an event after the status has been updated to invalid",
             fakeAsync(() {
-          ObservableWrapper.subscribe(c.statusChanges, (status) {
+          c.statusChanges.listen((status) {
             expect(c.status, "INVALID");
             expect(status, "INVALID");
           });
@@ -190,10 +189,9 @@ main() {
           var c = new Control(
               "old", Validators.required, asyncValidator("expected"));
           var log = [];
-          ObservableWrapper.subscribe(
-              c.valueChanges, (value) => log.add('''value: \'${ value}\''''));
-          ObservableWrapper.subscribe(c.statusChanges,
-              (status) => log.add('''status: \'${ status}\''''));
+          c.valueChanges.listen((value) => log.add('''value: \'${ value}\''''));
+          c.statusChanges
+              .listen((status) => log.add('''status: \'${ status}\''''));
           c.updateValue("");
           tick();
           c.updateValue("nonEmpty");
@@ -215,7 +213,7 @@ main() {
         test("should return a cold observable", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
             c.updateValue("will be ignored");
-            ObservableWrapper.subscribe(c.valueChanges, (value) {
+            c.valueChanges.listen((value) {
               expect(value, "new");
               completer.done();
             });
@@ -376,7 +374,7 @@ main() {
         });
         test("should fire an event after the value has been updated", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-            ObservableWrapper.subscribe(g.valueChanges, (value) {
+            g.valueChanges.listen((value) {
               expect(g.value, {"one": "new1", "two": "old2"});
               expect(value, {"one": "new1", "two": "old2"});
               completer.done();
@@ -389,10 +387,10 @@ main() {
             () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
             var controlCallbackIsCalled = false;
-            ObservableWrapper.subscribe(c1.valueChanges, (value) {
+            c1.valueChanges.listen((value) {
               controlCallbackIsCalled = true;
             });
-            ObservableWrapper.subscribe(g.valueChanges, (value) {
+            g.valueChanges.listen((value) {
               expect(controlCallbackIsCalled, isTrue);
               completer.done();
             });
@@ -401,7 +399,7 @@ main() {
         });
         test("should fire an event when a control is excluded", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-            ObservableWrapper.subscribe(g.valueChanges, (value) {
+            g.valueChanges.listen((value) {
               expect(value, {"one": "old1"});
               completer.done();
             });
@@ -411,7 +409,7 @@ main() {
         test("should fire an event when a control is included", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
             g.exclude("two");
-            ObservableWrapper.subscribe(g.valueChanges, (value) {
+            g.valueChanges.listen((value) {
               expect(value, {"one": "old1", "two": "old2"});
               completer.done();
             });
@@ -421,7 +419,7 @@ main() {
         test("should fire an event every time a control is updated", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
             var loggedValues = [];
-            ObservableWrapper.subscribe(g.valueChanges, (value) {
+            g.valueChanges.listen((value) {
               loggedValues.add(value);
               if (loggedValues.length == 2) {
                 expect(loggedValues, [
@@ -580,7 +578,7 @@ main() {
         });
         test("should fire an event after the value has been updated", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-            ObservableWrapper.subscribe(a.valueChanges, (value) {
+            a.valueChanges.listen((value) {
               expect(a.value, ["new1", "old2"]);
               expect(value, ["new1", "old2"]);
               completer.done();
@@ -593,10 +591,10 @@ main() {
             () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
             var controlCallbackIsCalled = false;
-            ObservableWrapper.subscribe(c1.valueChanges, (value) {
+            c1.valueChanges.listen((value) {
               controlCallbackIsCalled = true;
             });
-            ObservableWrapper.subscribe(a.valueChanges, (value) {
+            a.valueChanges.listen((value) {
               expect(controlCallbackIsCalled, isTrue);
               completer.done();
             });
@@ -605,7 +603,7 @@ main() {
         });
         test("should fire an event when a control is removed", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-            ObservableWrapper.subscribe(a.valueChanges, (value) {
+            a.valueChanges.listen((value) {
               expect(value, ["old1"]);
               completer.done();
             });
@@ -615,7 +613,7 @@ main() {
         test("should fire an event when a control is added", () async {
           return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
             a.removeAt(1);
-            ObservableWrapper.subscribe(a.valueChanges, (value) {
+            a.valueChanges.listen((value) {
               expect(value, ["old1", "old2"]);
               completer.done();
             });

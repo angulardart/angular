@@ -8,8 +8,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/core/testability/testability.dart"
     show Testability;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -45,11 +44,11 @@ class TestZone extends NgZone {
     _onStableStream = new EventEmitter(false);
   }
   void unstable() {
-    ObservableWrapper.callEmit(this._onUnstableStream, null);
+    this._onUnstableStream.add(null);
   }
 
   void stable() {
-    ObservableWrapper.callEmit(this._onStableStream, null);
+    this._onStableStream.add(null);
   }
 }
 

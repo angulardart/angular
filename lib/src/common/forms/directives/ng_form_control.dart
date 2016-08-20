@@ -1,7 +1,6 @@
 import "package:angular2/core.dart"
     show OnChanges, SimpleChange, Directive, Provider, Inject, Optional, Self;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 
 import "../model.dart" show Control;
@@ -126,7 +125,7 @@ class NgFormControl extends NgControl implements OnChanges {
 
   void viewToModelUpdate(dynamic newValue) {
     this.viewModel = newValue;
-    ObservableWrapper.callEmit(this.update, newValue);
+    this.update.add(newValue);
   }
 
   bool _isControlChanged(Map<String, dynamic> changes) {

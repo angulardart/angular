@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/collection.dart" show MapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
@@ -33,12 +32,12 @@ class Testability {
   }
   /** @internal */
   void _watchAngularEvents() {
-    ObservableWrapper.subscribe(this._ngZone.onUnstable, (_) {
+    this._ngZone.onUnstable.listen((_) {
       this._didWork = true;
       this._isZoneStable = false;
     });
     this._ngZone.runOutsideAngular(() {
-      ObservableWrapper.subscribe(this._ngZone.onStable, (_) {
+      this._ngZone.onStable.listen((_) {
         NgZone.assertNotInAngularZone();
         scheduleMicrotask(() {
           this._isZoneStable = true;

@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import "package:angular2/src/facade/async.dart"
-    show Stream, EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/collection.dart"
     show StringMapWrapper, ListWrapper;
 import "package:angular2/src/facade/lang.dart"
@@ -142,8 +141,8 @@ abstract class AbstractControl {
       this._runAsyncValidator(emitEvent);
     }
     if (emitEvent) {
-      ObservableWrapper.callEmit(this._valueChanges, this._value);
-      ObservableWrapper.callEmit(this._statusChanges, this._status);
+      this._valueChanges.add(this._value);
+      this._statusChanges.add(this._status);
     }
     if (isPresent(this._parent) && !onlySelf) {
       this
@@ -161,8 +160,7 @@ abstract class AbstractControl {
       this._status = PENDING;
       this._cancelExistingSubscription();
       var obs = _toStream(this.asyncValidator(this));
-      this._asyncValidationSubscription = ObservableWrapper.subscribe(
-          obs,
+      this._asyncValidationSubscription = obs.listen(
           (Map<String, dynamic> res) =>
               this.setErrors(res, emitEvent: emitEvent));
     }
@@ -170,7 +168,7 @@ abstract class AbstractControl {
 
   void _cancelExistingSubscription() {
     if (isPresent(this._asyncValidationSubscription)) {
-      ObservableWrapper.dispose(this._asyncValidationSubscription);
+      this._asyncValidationSubscription.cancel();
     }
   }
 
@@ -201,7 +199,7 @@ abstract class AbstractControl {
     this._errors = errors;
     this._status = this._calculateStatus();
     if (emitEvent) {
-      ObservableWrapper.callEmit(this._statusChanges, this._status);
+      this._statusChanges.add(this._status);
     }
     if (isPresent(this._parent)) {
       this._parent._updateControlsErrors();

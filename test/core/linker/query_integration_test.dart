@@ -3,7 +3,6 @@ library angular2.test.core.linker.query_integration_test;
 
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/lang.dart" show isPresent;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/core.dart"
     show
         Component,
@@ -444,7 +443,7 @@ main() {
               .then((view) {
             var q = view.debugElement.children[0].getLocal("q");
             view.detectChanges();
-            ObservableWrapper.subscribe(q.query.changes, (_) {
+            q.query.changes.listen((_) {
               expect(q.query.first.text, "1");
               expect(q.query.last.text, "2");
               completer.done();
@@ -470,10 +469,10 @@ main() {
             var q1 = view.debugElement.children[0].getLocal("q1");
             var q2 = view.debugElement.children[0].getLocal("q2");
             var firedQ2 = false;
-            ObservableWrapper.subscribe(q2.query.changes, (_) {
+            q2.query.changes.listen((_) {
               firedQ2 = true;
             });
-            ObservableWrapper.subscribe(q1.query.changes, (_) {
+            q1.query.changes.listen((_) {
               expect(firedQ2, isTrue);
               completer.done();
             });

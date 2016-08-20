@@ -3,7 +3,6 @@ library angular2.test.core.zone.ng_zone_test;
 
 import "dart:async";
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
@@ -24,23 +23,22 @@ List _traces;
 NgZone _zone;
 
 logOnError() {
-  ObservableWrapper.subscribe(_zone.onError, (NgZoneError ngErr) {
+  _zone.onError.listen((NgZoneError ngErr) {
     _errors.add(ngErr.error);
     _traces.add(ngErr.stackTrace);
   });
 }
 
 logOnUnstable() {
-  ObservableWrapper.subscribe(_zone.onUnstable, _log.fn("onUnstable"));
+  _zone.onUnstable.listen(_log.fn("onUnstable"));
 }
 
 logOnMicrotaskEmpty() {
-  ObservableWrapper.subscribe(
-      _zone.onMicrotaskEmpty, _log.fn("onMicrotaskEmpty"));
+  _zone.onMicrotaskEmpty.listen(_log.fn("onMicrotaskEmpty"));
 }
 
 logOnStable() {
-  ObservableWrapper.subscribe(_zone.onStable, _log.fn("onStable"));
+  _zone.onStable.listen(_log.fn("onStable"));
 }
 
 runNgZoneNoLog(dynamic fn()) {
@@ -228,7 +226,7 @@ commonTests() {
         // then verified that onStable is only called once at the end
         runNgZoneNoLog(() => macroTask(_log.fn("run")));
         var times = 0;
-        ObservableWrapper.subscribe(_zone.onMicrotaskEmpty, (_) {
+        _zone.onMicrotaskEmpty.listen((_) {
           times++;
           _log.add('''onMicrotaskEmpty ${ times}''');
           if (times < 2) {
@@ -263,21 +261,21 @@ commonTests() {
 //
 //          // then verifies that those microtasks do not cause additional digests.
 //          var turnStart = false;
-//          ObservableWrapper.subscribe(_zone.onUnstable, (_) {
+//          _zone.onUnstable.listen((_) {
 //            if (turnStart) throw "Should not call this more than once";
 //            _log.add("onUnstable");
 //            scheduleMicrotask(() {});
 //            turnStart = true;
 //          });
 //          var turnDone = false;
-//          ObservableWrapper.subscribe(_zone.onMicrotaskEmpty, (_) {
+//          _zone.onMicrotaskEmpty.listen((_) {
 //            if (turnDone) throw "Should not call this more than once";
 //            _log.add("onMicrotaskEmpty");
 //            scheduleMicrotask(() {});
 //            turnDone = true;
 //          });
 //          var eventDone = false;
-//          ObservableWrapper.subscribe(_zone.onStable, (_) {
+//          _zone.onStable.listen((_) {
 //            if (eventDone) throw "Should not call this more than once";
 //            _log.add("onStable");
 //            scheduleMicrotask(() {});
@@ -301,7 +299,7 @@ commonTests() {
 
         // change detection after "onMicrotaskEmpty". That's the only case tested.
         var turnDone = false;
-        ObservableWrapper.subscribe(_zone.onMicrotaskEmpty, (_) {
+        _zone.onMicrotaskEmpty.listen((_) {
           _log.add("onMyMicrotaskEmpty");
           if (turnDone) return;
           _zone.run(() {
@@ -323,7 +321,7 @@ commonTests() {
         () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
         runNgZoneNoLog(() => macroTask(_log.fn("run")));
-        ObservableWrapper.subscribe(_zone.onStable, (_) {
+        _zone.onStable.listen((_) {
           NgZone.assertNotInAngularZone();
           _log.add("onMyTaskDone");
         });
@@ -378,7 +376,7 @@ commonTests() {
         () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
         runNgZoneNoLog(() => macroTask(_log.fn("start run")));
-        ObservableWrapper.subscribe(_zone.onMicrotaskEmpty, (_) {
+        _zone.onMicrotaskEmpty.listen((_) {
           _log.add("onMicrotaskEmpty:started");
           _zone.run(() => _log.add("nested run"));
           _log.add("onMicrotaskEmpty:finished");
@@ -483,7 +481,7 @@ commonTests() {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
         runNgZoneNoLog(() => macroTask(_log.fn("run")));
         var ran = false;
-        ObservableWrapper.subscribe(_zone.onMicrotaskEmpty, (_) {
+        _zone.onMicrotaskEmpty.listen((_) {
           _log.add("onMicrotaskEmpty(begin)");
           if (!ran) {
             _zone.run(() {
@@ -517,7 +515,7 @@ commonTests() {
           });
         });
         var ran = false;
-        ObservableWrapper.subscribe(_zone.onMicrotaskEmpty, (_) {
+        _zone.onMicrotaskEmpty.listen((_) {
           _log.add("onMicrotaskEmpty(begin)");
           if (!ran) {
             _log.add("onMicrotaskEmpty(scheduleMicrotask)");
@@ -558,7 +556,7 @@ commonTests() {
         });
         var donePromiseRan = false;
         var startPromiseRan = false;
-        ObservableWrapper.subscribe(_zone.onUnstable, (_) {
+        _zone.onUnstable.listen((_) {
           _log.add("onUnstable(begin)");
           if (!startPromiseRan) {
             _log.add("onUnstable(schedulePromise)");
@@ -569,7 +567,7 @@ commonTests() {
           }
           _log.add("onUnstable(end)");
         });
-        ObservableWrapper.subscribe(_zone.onMicrotaskEmpty, (_) {
+        _zone.onMicrotaskEmpty.listen((_) {
           _log.add("onMicrotaskEmpty(begin)");
           if (!donePromiseRan) {
             _log.add("onMicrotaskEmpty(schedulePromise)");

@@ -6,8 +6,7 @@ import 'package:angular2/testing_internal.dart';
 import 'package:angular2/src/facade/lang.dart' show isBlank;
 import 'package:angular2/common.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
-import 'package:angular2/src/facade/async.dart'
-    show EventEmitter, ObservableWrapper;
+import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -31,7 +30,7 @@ main() {
       test('should return the latest available value wrapped', () async {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           pipe.transform(emitter);
-          ObservableWrapper.callEmit(emitter, message);
+          emitter.add(message);
           Timer.run(() {
             WrappedValue res = pipe.transform(emitter);
             expect(res.wrapped, message);
@@ -44,7 +43,7 @@ main() {
           () async {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           pipe.transform(emitter);
-          ObservableWrapper.callEmit(emitter, message);
+          emitter.add(message);
           Timer.run(() {
             pipe.transform(emitter);
             expect(pipe.transform(emitter), message);
@@ -60,7 +59,7 @@ main() {
           var newEmitter = new EventEmitter();
           expect(pipe.transform(newEmitter), isNull);
           // this should not affect the pipe
-          ObservableWrapper.callEmit(emitter, message);
+          emitter.add(message);
           Timer.run(() {
             expect(pipe.transform(newEmitter), isNull);
             completer.done();
@@ -71,7 +70,7 @@ main() {
           () async {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           pipe.transform(emitter);
-          ObservableWrapper.callEmit(emitter, message);
+          emitter.add(message);
           new Timer(const Duration(milliseconds: 10), () {
             verify(ref.markForCheck()).called(1);
             completer.done();
@@ -88,7 +87,7 @@ main() {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
           pipe.transform(emitter);
           pipe.ngOnDestroy();
-          ObservableWrapper.callEmit(emitter, message);
+          emitter.add(message);
           Timer.run(() {
             expect(pipe.transform(emitter), isNull);
             completer.done();

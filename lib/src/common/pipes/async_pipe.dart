@@ -2,25 +2,22 @@ import "dart:async";
 
 import "package:angular2/core.dart"
     show Pipe, Injectable, ChangeDetectorRef, OnDestroy, WrappedValue;
-import "package:angular2/src/facade/async.dart" show ObservableWrapper;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, isPromise;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 class ObservableStrategy {
-  dynamic createSubscription(dynamic async, dynamic updateLatestValue) {
-    return ObservableWrapper.subscribe(async, updateLatestValue, (e) {
-      throw e;
-    });
+  StreamSubscription createSubscription(
+      Stream stream, void updateLatestValue(value)) {
+    return stream.listen(updateLatestValue, onError: (e) => throw e);
   }
 
-  void dispose(dynamic subscription) {
-    ObservableWrapper.dispose(subscription);
+  void dispose(StreamSubscription subscription) {
+    subscription.cancel();
   }
 
-  void onDestroy(dynamic subscription) {
-    ObservableWrapper.dispose(subscription);
+  void onDestroy(StreamSubscription subscription) {
+    dispose(subscription);
   }
 }
 
@@ -106,9 +103,9 @@ class AsyncPipe implements OnDestroy {
 
   dynamic _selectStrategy(
       dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ obj) {
-    if (isPromise(obj)) {
+    if (obj is Future) {
       return _promiseStrategy;
-    } else if (ObservableWrapper.isObservable(obj)) {
+    } else if (obj is Stream) {
       return _observableStrategy;
     } else {
       throw new InvalidPipeArgumentException(AsyncPipe, obj);

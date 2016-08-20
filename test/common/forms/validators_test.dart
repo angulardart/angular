@@ -4,8 +4,7 @@ library angular2.test.common.forms.validators_spec;
 import "dart:async";
 import "package:angular2/testing_internal.dart";
 import "package:angular2/common.dart" show Control, Validators, AbstractControl;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import 'package:test/test.dart';
 
 main() {
@@ -109,14 +108,12 @@ main() {
           var emitter = new EventEmitter();
           var res = c.value != expected ? response : null;
           scheduleMicrotask(() {
-            ObservableWrapper.callEmit(emitter, res);
-            // this is required because of a bug in ObservableWrapper
-
+            emitter.add(res);
+            // this _was_ required because of a bug in ObservableWrapper
             // where callComplete can fire before callEmit
-
             // remove this one the bug is fixed
             Timer.run(() {
-              ObservableWrapper.callComplete(emitter);
+              emitter.close();
             });
           });
           return emitter;

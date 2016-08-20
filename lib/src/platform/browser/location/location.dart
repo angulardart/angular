@@ -1,6 +1,5 @@
 import "package:angular2/core.dart" show Injectable;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "location_strategy.dart" show LocationStrategy;
 
@@ -56,8 +55,7 @@ class Location {
     this._baseHref =
         Location.stripTrailingSlash(_stripIndexHtml(browserBaseHref));
     this.platformStrategy.onPopState((ev) {
-      ObservableWrapper.callEmit(
-          this._subject, {"url": this.path(), "pop": true, "type": ev.type});
+      this._subject.add({"url": this.path(), "pop": true, "type": ev.type});
     });
   }
   /**
@@ -129,8 +127,7 @@ class Location {
    */
   Object subscribe(void onNext(dynamic value),
       [void onThrow(dynamic exception) = null, void onReturn() = null]) {
-    return ObservableWrapper.subscribe(
-        this._subject, onNext, onThrow, onReturn);
+    return this._subject.listen(onNext, onError: onThrow, onDone: onReturn);
   }
 
   /**

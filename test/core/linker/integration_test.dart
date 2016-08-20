@@ -9,8 +9,7 @@ import "package:angular2/src/platform/browser/browser_adapter.dart"
 import "package:angular2/src/facade/lang.dart"
     show isPresent, stringify, isBlank;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/async.dart"
-    show EventEmitter, ObservableWrapper;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/core.dart"
     show
         Injector,
@@ -1039,7 +1038,7 @@ main() {
               var listener = tc.inject(DirectiveListeningEvent);
               expect(listener.msg, "");
               var eventCount = 0;
-              ObservableWrapper.subscribe(emitter.event, (_) {
+              emitter.event.listen((_) {
                 eventCount++;
                 if (identical(eventCount, 1)) {
                   expect(listener.msg, "fired !");
@@ -1076,7 +1075,7 @@ main() {
               var listener = tc.inject(DirectiveListeningEvent);
               myComp.ctxProp = "";
               expect(listener.msg, "");
-              ObservableWrapper.subscribe(emitter.event, (_) {
+              emitter.event.listen((_) {
                 expect(listener.msg, "fired !");
                 expect(myComp.ctxProp, "fired !");
                 completer.done();
@@ -1101,7 +1100,7 @@ main() {
               fixture.debugElement.componentInstance.ctxProp = "one";
               fixture.detectChanges();
               expect(dir.control, "one");
-              ObservableWrapper.subscribe(dir.controlChange, (_) {
+              dir.controlChange.listen((_) {
                 expect(fixture.debugElement.componentInstance.ctxProp, "two");
                 completer.done();
               });
@@ -2309,7 +2308,7 @@ class DirectiveEmittingEvent {
     this.event = new EventEmitter();
   }
   fireEvent(String msg) {
-    ObservableWrapper.callEmit(this.event, msg);
+    this.event.add(msg);
   }
 }
 
@@ -2461,7 +2460,7 @@ class DirectiveWithTwoWayBinding {
   var controlChange = new EventEmitter();
   var control = null;
   triggerChange(value) {
-    ObservableWrapper.callEmit(this.controlChange, value);
+    this.controlChange.add(value);
   }
 }
 
@@ -2664,7 +2663,7 @@ class DirectiveWithPropDecorators {
   }
 
   fireEvent(msg) {
-    ObservableWrapper.callEmit(this.event, msg);
+    this.event.add(msg);
   }
 }
 
