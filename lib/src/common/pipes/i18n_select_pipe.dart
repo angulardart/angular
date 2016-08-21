@@ -1,5 +1,4 @@
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart" show isStringMap;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
@@ -38,9 +37,7 @@ class I18nSelectPipe implements PipeTransform {
     if (!isStringMap(mapping)) {
       throw new InvalidPipeArgumentException(I18nSelectPipe, mapping);
     }
-    return StringMapWrapper.contains(mapping, value)
-        ? mapping[value]
-        : mapping["other"];
+    return mapping[value] ?? mapping['other'];
   }
 
   const I18nSelectPipe();

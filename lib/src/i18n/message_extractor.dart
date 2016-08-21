@@ -4,7 +4,6 @@ import "package:angular2/src/compiler/html_ast.dart"
     show HtmlAst, HtmlElementAst;
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/parse_util.dart" show ParseError;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "expander.dart" show expandNodes;
@@ -35,7 +34,7 @@ class ExtractionResult {
 List<Message> removeDuplicates(List<Message> messages) {
   var uniq = <String, Message>{};
   messages.forEach((m) {
-    if (!StringMapWrapper.contains(uniq, id(m))) {
+    if (!uniq.containsKey(id(m))) {
       uniq[id(m)] = m;
     }
   });

@@ -1,7 +1,6 @@
 import "package:angular2/core.dart"
     show OnChanges, SimpleChange, Directive, Provider, Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 
 import "../model.dart" show Control;
 import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
@@ -128,7 +127,6 @@ class NgFormControl extends NgControl implements OnChanges {
     this.update.add(newValue);
   }
 
-  bool _isControlChanged(Map<String, dynamic> changes) {
-    return StringMapWrapper.contains(changes, "form");
-  }
+  bool _isControlChanged(Map<String, dynamic> changes) =>
+      changes.containsKey('form');
 }

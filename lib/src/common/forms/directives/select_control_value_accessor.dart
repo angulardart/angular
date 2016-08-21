@@ -8,7 +8,6 @@ import "package:angular2/core.dart"
         Host,
         OnDestroy,
         Optional;
-import "package:angular2/src/facade/collection.dart" show MapWrapper;
 import "package:angular2/src/facade/lang.dart"
     show StringWrapper, isPrimitive, isPresent, isBlank, looseIdentical;
 
@@ -74,7 +73,7 @@ class SelectControlValueAccessor implements ControlValueAccessor {
   }
 
   String _getOptionId(dynamic value) {
-    for (var id in MapWrapper.keys(this._optionMap)) {
+    for (var id in _optionMap.keys) {
       if (looseIdentical(this._optionMap[id], value)) return id;
     }
     return null;

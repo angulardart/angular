@@ -17,7 +17,6 @@ import "package:angular2/src/core/metadata/view.dart" show ViewMetadata;
 import "package:angular2/src/core/platform_directives_and_pipes.dart"
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isArray, stringify, isString;
@@ -278,7 +277,7 @@ class RuntimeMetadataResolver {
   List<cpl.CompileQueryMetadata> getQueriesMetadata(
       Map<String, dimd.QueryMetadata> queries, bool isViewQuery) {
     var compileQueries = <cpl.CompileQueryMetadata>[];
-    StringMapWrapper.forEach(queries, (query, propertyName) {
+    queries.forEach((propertyName, query) {
       if (identical(query.isViewQuery, isViewQuery)) {
         compileQueries.add(this.getQueryMetadata(query, propertyName));
       }

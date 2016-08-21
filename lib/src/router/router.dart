@@ -4,7 +4,6 @@ import "package:angular2/core.dart" show Inject, Injectable;
 import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
@@ -146,7 +145,7 @@ class Router {
     }
     var paramEquals = true;
     if (isPresent(this.currentInstruction.component.params)) {
-      StringMapWrapper.forEach(instruction.component.params, (value, key) {
+      instruction.component.params.forEach((key, value) {
         if (!identical(this.currentInstruction.component.params[key], value)) {
           paramEquals = false;
         }
@@ -239,8 +238,7 @@ class Router {
       if (isPresent(instruction.child)) {
         unsettledInstructions.add(this._settleInstruction(instruction.child));
       }
-      StringMapWrapper.forEach(instruction.auxInstruction,
-          (Instruction instruction, _) {
+      instruction.auxInstruction.forEach((_, Instruction instruction) {
         unsettledInstructions.add(this._settleInstruction(instruction));
       });
       return Future.wait(unsettledInstructions);

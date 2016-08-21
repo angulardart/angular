@@ -1,5 +1,4 @@
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, StringWrapper;
 
@@ -153,8 +152,7 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
 
 bindDirectiveOutputs(DirectiveAst directiveAst, o.Expression directiveInstance,
     List<CompileEventListener> eventListeners) {
-  StringMapWrapper.forEach(directiveAst.directive.outputs,
-      (eventName, observablePropName) {
+  directiveAst.directive.outputs.forEach((observablePropName, eventName) {
     eventListeners
         .where((listener) => listener.eventName == eventName)
         .toList()

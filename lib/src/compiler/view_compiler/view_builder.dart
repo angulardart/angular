@@ -3,7 +3,7 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper, SetWrapper;
+    show ListWrapper, SetWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
 
 import "../compile_metadata.dart"
@@ -365,11 +365,9 @@ List<List<String>> _mergeHtmlAndDirectiveAttrs(
     Map<String, String> declaredHtmlAttrs,
     List<CompileDirectiveMetadata> directives) {
   Map<String, String> result = {};
-  StringMapWrapper.forEach(declaredHtmlAttrs, (value, key) {
-    result[key] = value;
-  });
+  declaredHtmlAttrs.forEach((key, value) => result[key] = value);
   directives.forEach((directiveMeta) {
-    StringMapWrapper.forEach(directiveMeta.hostAttributes, (value, name) {
+    directiveMeta.hostAttributes.forEach((name, value) {
       var prevValue = result[name];
       result[name] = isPresent(prevValue)
           ? mergeAttributeValue(name, prevValue, value)
@@ -398,7 +396,7 @@ String mergeAttributeValue(
 
 List<List<String>> mapToKeyValueArray(Map<String, String> data) {
   var entryArray = [];
-  StringMapWrapper.forEach(data, (value, name) {
+  data.forEach((name, value) {
     entryArray.add([name, value]);
   });
   // We need to sort to get a defined output order

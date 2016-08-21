@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, StringWrapper, isPresent, isBlank;
@@ -74,11 +73,11 @@ class DynamicPathSegment implements PathSegment {
   }
 
   String generate(TouchMap params) {
-    if (!StringMapWrapper.contains(params.map, this.name)) {
+    if (!params.map.containsKey(name)) {
       throw new BaseException(
-          '''Route generator for \'${ this . name}\' was not included in parameters passed.''');
+          '''Route generator for \'${name}\' was not included in parameters passed.''');
     }
-    return encodeDynamicSegment(normalizeString(params.get(this.name)));
+    return encodeDynamicSegment(normalizeString(params.get(name)));
   }
 }
 
@@ -164,8 +163,8 @@ class ParamRoutePath implements RoutePath {
       // If this is the root component, read query params. Otherwise, read matrix params.
       var paramsSegment = url is RootUrl ? url : currentUrlSegment;
       if (isPresent(paramsSegment.params)) {
-        allParams =
-            StringMapWrapper.merge(paramsSegment.params, positionalParams);
+        allParams = new Map<String, dynamic>.from(paramsSegment.params)
+          ..addAll(positionalParams);
         urlParams = convertUrlParamsToArray(paramsSegment.params);
       } else {
         allParams = positionalParams;

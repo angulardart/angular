@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show stringify, looseIdentical;
 
@@ -405,7 +404,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
       obj.forEach((k, v) => fn(v, k));
     } else {
       var handler = fn as _MapHandler;
-      StringMapWrapper.forEach(obj as Map<String, dynamic>, handler);
+      (obj as Map<dynamic, String>).forEach(handler);
     }
   }
 }

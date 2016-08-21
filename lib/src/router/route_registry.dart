@@ -2,8 +2,7 @@ import "dart:async";
 
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, Map, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show
@@ -353,8 +352,9 @@ class RouteRegistry {
 
     // and only override routes for which the given link DSL provides
     if (isPresent(prevInstruction) && !_aux) {
-      auxInstructions = StringMapWrapper.merge(
-          prevInstruction.auxInstruction, auxInstructions);
+      auxInstructions =
+          new Map<String, Instruction>.from(prevInstruction.auxInstruction)
+            ..addAll(auxInstructions);
       componentInstruction = prevInstruction.component;
     }
     var rules = this._rules[parentComponentType];

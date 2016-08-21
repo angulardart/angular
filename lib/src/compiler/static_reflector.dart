@@ -15,8 +15,7 @@ import "package:angular2/src/core/metadata.dart"
         ViewChildrenMetadata,
         ViewQueryMetadata,
         QueryMetadata;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isArray, isPresent, isPrimitive;
 
@@ -304,9 +303,9 @@ class StaticReflector {
       String moduleContext, Map<String, dynamic> value) {
     if (isPresent(value)) {
       var result = <String, List>{};
-      StringMapWrapper.forEach(value, (List<Map<String, dynamic>> value, name) {
+      value.forEach((name, List<Map<String, dynamic>> value) {
         var data = this.getMemberData(moduleContext, value);
-        if (isPresent(data)) {
+        if (data != null) {
           var propertyData = data
               .where((d) => d["kind"] == "property")
               .toList()
@@ -315,7 +314,7 @@ class StaticReflector {
               .fold([],
                   (p, c) => (new List.from(p)..addAll((c as List<dynamic>))));
           if (propertyData.length != 0) {
-            StringMapWrapper.set(result, name, propertyData);
+            result[name] = propertyData;
           }
         }
       });

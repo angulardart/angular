@@ -2,7 +2,6 @@
 library angular2.test.common.directives.ng_style_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/core.dart" show Component;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/common/directives/ng_style.dart" show NgStyle;
@@ -69,8 +68,7 @@ main() {
               DOM.getStyle(
                   fixture.debugElement.children[0].nativeElement, "max-width"),
               "40px");
-          StringMapWrapper.delete(
-              fixture.debugElement.componentInstance.expr, "max-width");
+          fixture.debugElement.componentInstance.expr.remove('max-width');
           fixture.detectChanges();
           expect(
               DOM.getStyle(
@@ -99,8 +97,7 @@ main() {
               DOM.getStyle(
                   fixture.debugElement.children[0].nativeElement, "font-size"),
               "12px");
-          StringMapWrapper.delete(
-              fixture.debugElement.componentInstance.expr, "max-width");
+          fixture.debugElement.componentInstance.expr.remove('max-width');
           fixture.detectChanges();
           expect(
               DOM.getStyle(
@@ -135,8 +132,7 @@ main() {
               DOM.getStyle(
                   fixture.debugElement.children[0].nativeElement, "font-size"),
               "12px");
-          StringMapWrapper.delete(
-              fixture.debugElement.componentInstance.expr, "max-width");
+          fixture.debugElement.componentInstance.expr.remove('max-width');
           expect(
               DOM.getStyle(
                   fixture.debugElement.children[0].nativeElement, "font-size"),

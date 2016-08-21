@@ -1,5 +1,4 @@
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, looseIdentical;
@@ -72,7 +71,7 @@ AsyncValidatorFn composeAsyncValidators(List<dynamic> validators) {
 }
 
 bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
-  if (!StringMapWrapper.contains(changes, "model")) return false;
+  if (!changes.containsKey('model')) return false;
   var change = changes["model"];
   if (change.isFirstChange()) return true;
   return !looseIdentical(viewModel, change.currentValue);

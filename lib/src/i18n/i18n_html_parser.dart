@@ -15,8 +15,7 @@ import "package:angular2/src/compiler/html_parser.dart"
     show HtmlParser, HtmlParseTreeResult;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, NumberWrapper, isPresent;
@@ -159,7 +158,7 @@ class I18nHtmlParser implements HtmlParser {
   List<HtmlAst> _mergeI18Part(Part p) {
     var message = p.createMessage(this._parser);
     var messageId = id(message);
-    if (!StringMapWrapper.contains(this._messages, messageId)) {
+    if (!_messages.containsKey(messageId)) {
       throw new I18nError(p.sourceSpan,
           '''Cannot find message for id \'${ messageId}\', content \'${ message . content}\'.''');
     }
@@ -299,7 +298,7 @@ class I18nHtmlParser implements HtmlParser {
       var i18n = i18ns[0];
       var message = messageFromAttribute(this._parser, el, i18n);
       var messageId = id(message);
-      if (StringMapWrapper.contains(this._messages, messageId)) {
+      if (_messages.containsKey(messageId)) {
         var updatedMessage =
             this._replaceInterpolationInAttr(attr, this._messages[messageId]);
         res.add(new HtmlAttrAst(attr.name, updatedMessage, attr.sourceSpan));

@@ -1,5 +1,4 @@
 import "package:angular2/core.dart" show PipeTransform, Pipe, Injectable;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/intl.dart" show DateFormatter;
 import "package:angular2/src/facade/lang.dart"
     show isDate, isNumber, DateWrapper, isBlank;
@@ -93,8 +92,8 @@ class DatePipe implements PipeTransform {
     if (isNumber(value)) {
       value = DateWrapper.fromMillis(value);
     }
-    if (StringMapWrapper.contains(DatePipe._ALIASES, pattern)) {
-      pattern = (StringMapWrapper.get(DatePipe._ALIASES, pattern) as String);
+    if (DatePipe._ALIASES.containsKey(pattern)) {
+      pattern = DatePipe._ALIASES[pattern];
     }
     return DateFormatter.format(value, defaultLocale, pattern);
   }

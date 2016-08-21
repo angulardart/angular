@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import "package:angular2/core.dart" show OpaqueToken;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, isString;
 
@@ -140,7 +139,8 @@ List<dynamic> _executeAsyncValidators(
 Map<String, dynamic> _mergeErrors(List<dynamic> arrayOfErrors) {
   Map<String, dynamic> res = arrayOfErrors.fold({},
       (Map<String, dynamic> res, Map<String, dynamic> errors) {
-    return isPresent(errors) ? StringMapWrapper.merge(res, errors) : res;
+    res.addAll(errors ?? const {});
+    return res;
   });
-  return StringMapWrapper.isEmpty(res) ? null : res;
+  return res.isEmpty ? null : res;
 }

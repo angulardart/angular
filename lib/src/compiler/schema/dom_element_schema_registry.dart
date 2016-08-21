@@ -1,6 +1,5 @@
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/security.dart";
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "element_schema_registry.dart" show ElementSchemaRegistry;
@@ -216,9 +215,7 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
       var type = <String, String>{};
       typeName.split(",").forEach((tag) => this.schema[tag] = type);
       var superType = this.schema[typeParts[1]];
-      if (isPresent(superType)) {
-        StringMapWrapper.forEach(superType, (v, k) => type[k] = v);
-      }
+      superType?.forEach((k, v) => type[k] = v);
       properties.forEach((String property) {
         if (property == "") {} else if (property
             .startsWith("*")) {} else if (property.startsWith("!")) {
@@ -328,7 +325,7 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
 
   @override
   String getMappedPropName(String propName) {
-    var mappedPropName = StringMapWrapper.get(attrToPropMap, propName);
+    var mappedPropName = attrToPropMap[propName];
     return isPresent(mappedPropName) ? mappedPropName : propName;
   }
 }

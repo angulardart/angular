@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart" show MapWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "../zone/ng_zone.dart" show NgZone;
@@ -128,13 +127,9 @@ class TestabilityRegistry {
     return this._applications[elem];
   }
 
-  List<Testability> getAllTestabilities() {
-    return MapWrapper.values(this._applications);
-  }
+  List<Testability> getAllTestabilities() => _applications.values.toList();
 
-  List<dynamic> getAllRootElements() {
-    return MapWrapper.keys(this._applications);
-  }
+  List<dynamic> getAllRootElements() => _applications.keys.toList();
 
   Testability findTestabilityInTree(dynamic elem,
       [bool findInAncestors = true]) {

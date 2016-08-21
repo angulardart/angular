@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart"
     show StringWrapper, RegExpWrapper, NumberWrapper, isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
@@ -88,7 +87,7 @@ class Animation {
 
   /// Applies the provided styles to the element
   void applyStyles(Map<String, dynamic> styles) {
-    StringMapWrapper.forEach(styles, (dynamic value, String key) {
+    styles.forEach((String key, value) {
       var dashCaseKey = camelCaseToDashCase(key);
       if (isPresent(DOM.getStyle(element, dashCaseKey))) {
         DOM.setStyle(element, dashCaseKey, value.toString());

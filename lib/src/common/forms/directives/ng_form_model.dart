@@ -1,8 +1,7 @@
 import "package:angular2/core.dart"
     show SimpleChange, OnChanges, Directive, Provider, Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank;
 
@@ -113,7 +112,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
   void ngOnChanges(Map<String, SimpleChange> changes) {
     this._checkFormPresent();
-    if (StringMapWrapper.contains(changes, "form")) {
+    if (changes.containsKey('form')) {
       var sync = composeValidators(this._validators);
       this.form.validator = Validators.compose([this.form.validator, sync]);
       var async = composeAsyncValidators(this._asyncValidators);

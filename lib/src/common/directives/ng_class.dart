@@ -11,8 +11,7 @@ import "package:angular2/core.dart"
         KeyValueDiffer,
         CollectionChangeRecord,
         KeyValueChangeRecord;
-import "package:angular2/src/facade/collection.dart"
-    show StringMapWrapper, isListLikeIterable;
+import "package:angular2/src/facade/collection.dart" show isListLikeIterable;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isString, isArray;
 
@@ -179,9 +178,10 @@ class NgClass implements DoCheck, OnDestroy {
         ((rawClassVal as Set<String>))
             .forEach((className) => this._toggleClass(className, !isCleanup));
       } else {
-        StringMapWrapper.forEach((rawClassVal as Map<String, dynamic>),
-            (dynamic expVal, String className) {
-          if (isPresent(expVal)) this._toggleClass(className, !isCleanup);
+        (rawClassVal as Map<String, dynamic>).forEach((className, expVal) {
+          if (expVal != null) {
+            this._toggleClass(className, !isCleanup);
+          }
         });
       }
     }

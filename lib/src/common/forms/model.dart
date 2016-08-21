@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart"
-    show StringMapWrapper, ListWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, normalizeBool;
 
@@ -211,14 +210,15 @@ abstract class AbstractControl {
     return _find(this, path);
   }
 
-  dynamic getError(String errorCode, [List<String> path = null]) {
-    var control =
-        isPresent(path) && !ListWrapper.isEmpty(path) ? this.find(path) : this;
-    if (isPresent(control) && isPresent(control._errors)) {
-      return StringMapWrapper.get(control._errors, errorCode);
-    } else {
+  getError(String errorCode, [List<String> path]) {
+    AbstractControl control = this;
+    if (path != null && path.isNotEmpty) {
+      control = find(path);
+    }
+    if (control == null || control._errors == null) {
       return null;
     }
+    return control._errors[errorCode];
   }
 
   bool hasError(String errorCode, [List<String> path = null]) {
@@ -348,32 +348,29 @@ class ControlGroup extends AbstractControl {
 
   /// Remove a control from this group.
   void removeControl(String name) {
-    StringMapWrapper.delete(this.controls, name);
+    controls.remove(name);
   }
 
   /// Mark the named control as non-optional.
   void include(String controlName) {
-    StringMapWrapper.set(this._optionals, controlName, true);
-    this.updateValueAndValidity();
+    _optionals[controlName] = true;
+    updateValueAndValidity();
   }
 
   /// Mark the named control as optional.
   void exclude(String controlName) {
-    StringMapWrapper.set(this._optionals, controlName, false);
-    this.updateValueAndValidity();
+    _optionals[controlName] = false;
+    updateValueAndValidity();
   }
 
   /// Check whether there is a control with the given name in the group.
-  bool contains(String controlName) {
-    var c = StringMapWrapper.contains(this.controls, controlName);
-    return c && this._included(controlName);
-  }
+  bool contains(String controlName) =>
+      controls.containsKey(controlName) && _included(controlName);
 
-  _setParentForControls() {
-    StringMapWrapper.forEach(this.controls,
-        (AbstractControl control, String name) {
+  void _setParentForControls() {
+    for (var control in controls.values) {
       control.setParent(this);
-    });
+    }
   }
 
   _updateValue() {
@@ -381,12 +378,9 @@ class ControlGroup extends AbstractControl {
   }
 
   bool _anyControlsHaveStatus(String status) {
-    var res = false;
-    StringMapWrapper.forEach(this.controls,
-        (AbstractControl control, String name) {
-      res = res || (this.contains(name) && control.status == status);
+    return controls.keys.any((name) {
+      return contains(name) && controls[name].status == status;
     });
-    return res;
   }
 
   _reduceValue() {
@@ -399,19 +393,15 @@ class ControlGroup extends AbstractControl {
 
   _reduceChildren(dynamic initValue, Function fn) {
     var res = initValue;
-    StringMapWrapper.forEach(this.controls,
-        (AbstractControl control, String name) {
-      if (this._included(name)) {
+    controls.forEach((name, control) {
+      if (_included(name)) {
         res = fn(res, control, name);
       }
     });
     return res;
   }
 
-  bool _included(String controlName) {
-    var isOptional = StringMapWrapper.contains(this._optionals, controlName);
-    return !isOptional || StringMapWrapper.get(this._optionals, controlName);
-  }
+  bool _included(String controlName) => _optionals[controlName] != false;
 }
 
 /// Defines a part of a form, of variable length, that can contain other

@@ -7,8 +7,7 @@ import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart"
     show RootRenderer, RenderComponentType, Renderer;
 import 'package:angular2/src/core/security.dart';
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent, looseIdentical;
 
@@ -274,16 +273,17 @@ bool arrayLooseIdentical(List<dynamic> a, List<dynamic> b) {
   return true;
 }
 
+// TODO(matanl): Consider implementing using package:collection#MapEquality.
+// Purposefully did not attempt to optimize when refactoring, as it could have
+// bad perf impact if not properly tested. This is a 1:1 from the original
+// version for now (see _looseIdentical for dart vm/dart2js bugs).
 bool mapLooseIdentical/*< V >*/(
     Map<String, dynamic/*= V */ > m1, Map<String, dynamic/*= V */ > m2) {
-  var k1 = StringMapWrapper.keys(m1);
-  var k2 = StringMapWrapper.keys(m2);
-  if (k1.length != k2.length) {
+  // Tiny optimization: Maps of different length, avoid allocating arrays.
+  if (m1.length != m2.length) {
     return false;
   }
-  var key;
-  for (var i = 0; i < k1.length; i++) {
-    key = k1[i];
+  for (var key in m1.keys) {
     if (!looseIdentical(m1[key], m2[key])) {
       return false;
     }

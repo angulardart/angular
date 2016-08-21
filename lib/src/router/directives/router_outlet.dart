@@ -12,9 +12,8 @@ import "package:angular2/core.dart"
         Output,
         MapInjector;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart" show StringMapWrapper;
 import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
-
+import "package:collection/collection.dart" show MapEquality;
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
 import "../interfaces.dart"
     show OnActivate, CanReuse, OnReuse, OnDeactivate, CanDeactivate;
@@ -175,7 +174,7 @@ class RouterOutlet implements OnDestroy {
           return nextInstruction == this._currentInstruction ||
               (isPresent(nextInstruction.params) &&
                   isPresent(this._currentInstruction.params) &&
-                  StringMapWrapper.equals(
+                  const MapEquality().equals(
                       nextInstruction.params, this._currentInstruction.params));
         }
       });

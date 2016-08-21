@@ -14,8 +14,7 @@ import "package:angular2/src/core/metadata.dart"
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, StringMapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 bool _isDirectiveMetadata(dynamic type) {
@@ -127,11 +126,10 @@ class DirectiveResolver {
     } else {
       mergedOutputs = outputs;
     }
-    var mergedHost =
-        dm.host != null ? StringMapWrapper.merge(dm.host, host) : host;
-    var mergedQueries = dm.queries != null
-        ? StringMapWrapper.merge(dm.queries, queries)
-        : queries;
+    var mergedHost = new Map<String, String>.from(dm.host ?? const {});
+    mergedHost.addAll(host);
+    var mergedQueries = new Map<String, dynamic>.from(dm.queries ?? const {});
+    mergedQueries.addAll(queries);
     if (dm is ComponentMetadata) {
       return new ComponentMetadata(
           selector: dm.selector,

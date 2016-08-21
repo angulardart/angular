@@ -2,8 +2,7 @@ import "dart:html";
 
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/collection.dart"
-    show StringMapWrapper, ListWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
@@ -31,13 +30,10 @@ class KeyEventsPlugin extends EventManagerPlugin {
       dynamic element, String eventName, Function handler) {
     var parsedEvent = KeyEventsPlugin.parseEventName(eventName);
     var outsideHandler = KeyEventsPlugin.eventCallback(
-        element,
-        StringMapWrapper.get(parsedEvent, "fullKey"),
-        handler,
-        this.manager.getZone());
+        element, parsedEvent['fullKey'], handler, this.manager.getZone());
     return this.manager.getZone().runOutsideAngular(() {
-      return DOM.onAndCancel(element,
-          StringMapWrapper.get(parsedEvent, "domEventName"), outsideHandler);
+      return DOM.onAndCancel(
+          element, parsedEvent['domEventName'], outsideHandler);
     });
   }
 
@@ -62,10 +58,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
       // returning null instead of throwing to let another plugin process the event
       return null;
     }
-    var result = <String, String>{};
-    StringMapWrapper.set(result, "domEventName", domEventName);
-    StringMapWrapper.set(result, "fullKey", fullKey);
-    return result;
+    return <String, String>{'domEventName': domEventName, 'fullKey': fullKey};
   }
 
   static String getEventFullKey(KeyboardEvent event) {
@@ -79,8 +72,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
     }
     modifierKeys.forEach((modifierName) {
       if (modifierName != key) {
-        var modifierGetter =
-            StringMapWrapper.get(modifierKeyGetters, modifierName);
+        var modifierGetter = modifierKeyGetters[modifierName];
         if (modifierGetter(event)) {
           fullKey += modifierName + ".";
         }

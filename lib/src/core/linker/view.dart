@@ -3,7 +3,6 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RenderComponentType;
-import "package:angular2/src/facade/collection.dart" show Map, StringMapWrapper;
 
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
 import "debug_context.dart" show StaticNodeDebugInfo, DebugContext;
@@ -227,9 +226,7 @@ abstract class AppView<T> {
     return _findLastRenderNode(lastNode);
   }
 
-  bool hasLocal(String contextName) {
-    return StringMapWrapper.contains(this.locals, contextName);
-  }
+  bool hasLocal(String contextName) => locals.containsKey(contextName);
 
   void setLocal(String contextName, dynamic value) {
     this.locals[contextName] = value;

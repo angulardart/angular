@@ -3,8 +3,7 @@ import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/collection.dart" show Predicate;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, MapWrapper;
+import "package:angular2/src/facade/collection.dart" show ListWrapper;
 
 class EventListener {
   String name;
@@ -165,9 +164,7 @@ DebugNode getDebugNode(dynamic nativeNode) {
   return _nativeNodeToDebugNode[nativeNode];
 }
 
-List<DebugNode> getAllDebugNodes() {
-  return MapWrapper.values(_nativeNodeToDebugNode);
-}
+List<DebugNode> getAllDebugNodes() => _nativeNodeToDebugNode.values.toList();
 
 indexDebugNode(DebugNode node) {
   _nativeNodeToDebugNode[node.nativeNode] = node;
