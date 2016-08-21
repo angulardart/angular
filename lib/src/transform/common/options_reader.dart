@@ -40,7 +40,7 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
       mirrorMode = MirrorMode.none;
       break;
   }
-  return new TransformerOptions(entryPoints,
+  var transformerOptions = new TransformerOptions(entryPoints,
       modeName: settings.mode.name,
       mirrorMode: mirrorMode,
       initReflector: initReflector,
@@ -56,6 +56,22 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
           _readBool(config, LAZY_TRANSFORMERS, defaultValue: false),
       translations: _readAssetId(config, TRANSLATIONS),
       formatCode: formatCode);
+
+  _checkEntryPointsExist(transformerOptions);
+  return transformerOptions;
+}
+
+/// Print an error message when an `entryPointsGlobs` value doesn't resolve to
+/// at least one file.
+void _checkEntryPointsExist(TransformerOptions transformerOptions) {
+  if (transformerOptions.entryPointGlobs != null) {
+    for (var entryPointGlob in transformerOptions.entryPointGlobs) {
+      if (entryPointGlob.listSync().isEmpty) {
+        stderr.writeln('The value "$entryPointGlob" in "entry_points" of the '
+            'Angular 2 transformer configuration does not point to any file.');
+      }
+    }
+  }
 }
 
 bool _readBool(Map config, String paramName, {bool defaultValue}) {
