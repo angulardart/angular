@@ -2,7 +2,6 @@
 library angular2.test.core.linker.query_list_spec;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/collection.dart" show iterateListLike;
 import "package:angular2/src/core/linker/query_list.dart" show QueryList;
 import 'package:test/test.dart';
 
@@ -20,7 +19,7 @@ main() {
     test("should support resetting and iterating over the new objects", () {
       queryList.reset(["one"]);
       queryList.reset(["two"]);
-      iterateListLike(queryList, logAppend);
+      queryList.forEach(logAppend);
       expect(log, "two");
     });
     test("should support length", () {

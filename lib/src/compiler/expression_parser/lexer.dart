@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show NumberWrapper, StringWrapper, isPresent;
@@ -313,7 +312,7 @@ class _Scanner {
     this.advance();
     while (isIdentifierPart(this.peek)) this.advance();
     String str = this.input.substring(start, this.index);
-    if (SetWrapper.has(KEYWORDS, str)) {
+    if (KEYWORDS.contains(str)) {
       return newKeywordToken(start, str);
     } else {
       return newIdentifierToken(start, str);
@@ -462,7 +461,7 @@ num unescape(num code) {
   }
 }
 
-var OPERATORS = SetWrapper.createFromList([
+var OPERATORS = new Set.from([
   "+",
   "-",
   "*",
@@ -488,5 +487,5 @@ var OPERATORS = SetWrapper.createFromList([
   "?.",
   "??"
 ]);
-var KEYWORDS = SetWrapper.createFromList(
+var KEYWORDS = new Set.from(
     ["var", "let", "null", "undefined", "true", "false", "if", "else"]);

@@ -1,22 +1,29 @@
-import "package:angular2/src/facade/collection.dart"
-    show isListLikeIterable, areIterablesEqual;
-import "package:angular2/src/facade/lang.dart" show looseIdentical, isPrimitive;
+import 'package:angular2/src/facade/lang.dart' show looseIdentical, isPrimitive;
+export 'package:angular2/src/facade/lang.dart' show looseIdentical;
+import 'package:collection/collection.dart';
 
-export "package:angular2/src/facade/lang.dart" show looseIdentical;
+class _DevModeEquality extends DefaultEquality<Object> {
+  const _DevModeEquality();
 
-Object uninitialized = const Object();
-bool devModeEqual(dynamic a, dynamic b) {
-  if (isListLikeIterable(a) && isListLikeIterable(b)) {
-    return areIterablesEqual(a, b, devModeEqual);
-  } else if (!isListLikeIterable(a) &&
-      !isPrimitive(a) &&
-      !isListLikeIterable(b) &&
-      !isPrimitive(b)) {
-    return true;
-  } else {
-    return looseIdentical(a, b);
+  @override
+  bool equals(Object a, Object b) {
+    if (a is Iterable && b is Iterable) {
+      return const IterableEquality(const _DevModeEquality()).equals(a, b);
+    } else if (a is! Iterable &&
+        !isPrimitive(a) &&
+        b is! Iterable &&
+        !isPrimitive(b)) {
+      // Code inlined from TS facade.
+      return true;
+    } else {
+      return looseIdentical(a, b);
+    }
   }
 }
+
+bool devModeEqual(Object a, Object b) => const _DevModeEquality().equals(a, b);
+
+Object uninitialized = const Object();
 
 /**
  * Indicates that the result of a [PipeMetadata] transformation has changed even though the

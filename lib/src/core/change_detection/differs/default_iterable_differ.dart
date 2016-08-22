@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/collection.dart"
-    show isListLikeIterable, iterateListLike;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, stringify, getMapKey, looseIdentical, isArray;
@@ -9,9 +7,7 @@ import "../differs/iterable_differs.dart"
     show IterableDiffer, IterableDifferFactory, TrackByFn;
 
 class DefaultIterableDifferFactory implements IterableDifferFactory {
-  bool supports(Object obj) {
-    return isListLikeIterable(obj);
-  }
+  bool supports(Object obj) => obj is Iterable;
 
   DefaultIterableDiffer create(ChangeDetectorRef cdRef, [TrackByFn trackByFn]) {
     return new DefaultIterableDiffer(trackByFn);
@@ -110,7 +106,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
 
   DefaultIterableDiffer diff(Iterable collection) {
     if (isBlank(collection)) collection = [];
-    if (!isListLikeIterable(collection)) {
+    if (collection is! Iterable) {
       throw new BaseException('''Error trying to diff \'${ collection}\'''');
     }
     if (this.check(collection)) {
@@ -151,7 +147,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
       }
     } else {
       index = 0;
-      iterateListLike(collection, (item) {
+      collection.forEach((item) {
         itemTrackBy = this._trackByFn(index, item);
         if (identical(record, null) ||
             !looseIdentical(record.trackById, itemTrackBy)) {

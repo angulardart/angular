@@ -2,7 +2,6 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
 
 import "../compile_metadata.dart"
@@ -655,16 +654,16 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   }
   var varStmts = [];
   var readVars = o.findReadVarNames(stmts);
-  if (SetWrapper.has(readVars, DetectChangesVars.changed.name)) {
+  if (readVars.contains(DetectChangesVars.changed.name)) {
     varStmts.add(
         DetectChangesVars.changed.set(o.literal(true)).toDeclStmt(o.BOOL_TYPE));
   }
-  if (SetWrapper.has(readVars, DetectChangesVars.changes.name)) {
+  if (readVars.contains(DetectChangesVars.changes.name)) {
     varStmts.add(DetectChangesVars.changes
         .set(o.NULL_EXPR)
         .toDeclStmt(new o.MapType(o.importType(Identifiers.SimpleChange))));
   }
-  if (SetWrapper.has(readVars, DetectChangesVars.valUnwrapper.name)) {
+  if (readVars.contains(DetectChangesVars.valUnwrapper.name)) {
     varStmts.add(DetectChangesVars.valUnwrapper
         .set(o.importExpr(Identifiers.ValueUnwrapper).instantiate([]))
         .toDeclStmt(null, [o.StmtModifier.Final]));

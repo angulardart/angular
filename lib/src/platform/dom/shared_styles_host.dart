@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di.dart" show Inject, Injectable;
-import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 import "dom_tokens.dart" show DOCUMENT;
@@ -14,7 +13,7 @@ class SharedStylesHost {
   addStyles(List<String> styles) {
     var additions = <String>[];
     styles.forEach((style) {
-      if (!SetWrapper.has(this._stylesSet, style)) {
+      if (!this._stylesSet.contains(style)) {
         this._stylesSet.add(style);
         this._styles.add(style);
         additions.add(style);
@@ -50,7 +49,7 @@ class DomSharedStylesHost extends SharedStylesHost {
   }
 
   removeHost(dynamic hostNode) {
-    SetWrapper.delete(this._hostNodes, hostNode);
+    _hostNodes.remove(hostNode);
   }
 
   onStylesAdded(List<String> additions) {

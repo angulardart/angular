@@ -7,7 +7,6 @@ import "package:angular2/src/compiler/selector.dart"
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/linker/view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
-import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, StringWrapper;
@@ -752,7 +751,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }).toList();
     elementOrDirectiveRefs.forEach((elOrDirRef) {
       if (elOrDirRef.value.length > 0) {
-        if (!SetWrapper.has(matchedReferences, elOrDirRef.name)) {
+        if (!matchedReferences.contains(elOrDirRef.name)) {
           this._reportError(
               '''There is no directive with "exportAs" set to "${ elOrDirRef . value}"''',
               elOrDirRef.sourceSpan);
@@ -939,7 +938,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       });
     });
     events.forEach((event) {
-      if (!SetWrapper.has(allDirectiveEvents, event.name)) {
+      if (!allDirectiveEvents.contains(event.name)) {
         this._reportError(
             'Event binding ${event.name} not emitted by any directive on an embedded template',
             event.sourceSpan);

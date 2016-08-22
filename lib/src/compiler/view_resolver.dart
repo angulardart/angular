@@ -5,7 +5,6 @@ import "package:angular2/src/core/metadata/view.dart" show ViewMetadata;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
-import "package:angular2/src/facade/collection.dart" show Map;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show stringify, isBlank, isPresent;

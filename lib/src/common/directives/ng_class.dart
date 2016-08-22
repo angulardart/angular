@@ -11,7 +11,6 @@ import "package:angular2/core.dart"
         KeyValueDiffer,
         CollectionChangeRecord,
         KeyValueChangeRecord;
-import "package:angular2/src/facade/collection.dart" show isListLikeIterable;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isString, isArray;
 
@@ -105,7 +104,7 @@ class NgClass implements DoCheck, OnDestroy {
     this._iterableDiffer = null;
     this._keyValueDiffer = null;
     if (isPresent(v)) {
-      if (isListLikeIterable(v)) {
+      if (v is Iterable) {
         this._iterableDiffer = this._iterableDiffers.find(v).create(null);
       } else {
         this._keyValueDiffer = this._keyValueDiffers.find(v).create(null);

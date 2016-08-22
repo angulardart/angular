@@ -2,7 +2,6 @@
 library angular2.test.core.linker.dynamic_component_loader_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/collection.dart" show Predicate;
 import "package:angular2/core.dart" show Injector, ViewContainerRef, ViewChild;
 import "package:angular2/src/core/metadata.dart" show Component;
 import "package:angular2/src/core/linker/dynamic_component_loader.dart"
@@ -191,7 +190,9 @@ dynamic createRootElement(dynamic doc, String name) {
   return rootEl;
 }
 
-Predicate<DebugElement> filterByDirective(Type type) {
+typedef bool _Predicate<T>(T item);
+
+_Predicate<DebugElement> filterByDirective(Type type) {
   return (debugElement) {
     return !identical(debugElement.providerTokens.indexOf(type), -1);
   };

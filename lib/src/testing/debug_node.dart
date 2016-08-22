@@ -2,7 +2,8 @@ import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/collection.dart" show Predicate;
+
+typedef bool Predicate<T>(T item);
 
 class EventListener {
   String name;
