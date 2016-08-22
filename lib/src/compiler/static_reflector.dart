@@ -15,8 +15,7 @@ import "package:angular2/src/core/metadata.dart"
         ViewChildrenMetadata,
         ViewQueryMetadata,
         QueryMetadata;
-import "package:angular2/src/facade/lang.dart"
-    show isArray, isPresent, isPrimitive;
+import "package:angular2/src/facade/lang.dart" show isPresent, isPrimitive;
 
 /**
  * The host of the static resolver is expected to be able to provide module metadata in the form of
@@ -495,19 +494,19 @@ class StaticReflector {
 
 bool isMetadataSymbolicCallExpression(dynamic expression) {
   return !isPrimitive(expression) &&
-      !isArray(expression) &&
+      expression is! List &&
       expression["___symbolic"] == "call";
 }
 
 bool isMetadataSymbolicReferenceExpression(dynamic expression) {
   return !isPrimitive(expression) &&
-      !isArray(expression) &&
+      expression is! List &&
       expression["___symbolic"] == "reference";
 }
 
 bool isClassMetadata(dynamic expression) {
   return !isPrimitive(expression) &&
-      !isArray(expression) &&
+      expression is! List &&
       expression["___symbolic"] == "class";
 }
 

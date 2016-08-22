@@ -1,6 +1,5 @@
 import "package:angular2/core.dart" show Directive;
 import "package:angular2/platform/common.dart" show Location;
-import "package:angular2/src/facade/lang.dart" show isString;
 
 import "../instruction.dart" show Instruction;
 import "../router.dart" show Router;
@@ -75,7 +74,7 @@ class RouterLink {
 
   bool onClick() {
     // If no target, or if target is _self, prevent default browser behavior
-    if (!isString(this.target) || this.target == "_self") {
+    if (this.target is! String || this.target == "_self") {
       this._router.navigateByInstruction(this._navigationInstruction);
       return false;
     }

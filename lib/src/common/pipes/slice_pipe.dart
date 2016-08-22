@@ -1,8 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:angular2/core.dart' show Injectable, PipeTransform, Pipe;
-import 'package:angular2/src/facade/lang.dart'
-    show isBlank, isString, isArray, StringWrapper;
+import 'package:angular2/src/facade/lang.dart' show isBlank, StringWrapper;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
@@ -61,8 +60,8 @@ class SlicePipe implements PipeTransform {
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(SlicePipe, value);
     }
-    if (isBlank(value)) return value;
-    if (isString(value)) {
+    if (value == null) return value;
+    if (value is String) {
       return StringWrapper.slice(value, start, end);
     }
     // This used to have JS behavior with TS-transpiled facades. To avoid a
@@ -77,7 +76,5 @@ class SlicePipe implements PipeTransform {
     return value.sublist(start, end);
   }
 
-  bool supports(dynamic obj) {
-    return isString(obj) || isArray(obj);
-  }
+  bool supports(dynamic obj) => obj is String || obj is List;
 }

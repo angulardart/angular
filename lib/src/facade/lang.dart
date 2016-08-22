@@ -1,33 +1,10 @@
-import 'dart:async' show Future, Zone;
 import 'dart:convert' as convert;
 import 'dart:math' as math;
 
 export 'dart:core' show RegExp, print, DateTime, Uri;
 
-String getTypeNameForDebugging(Object type) => type.toString();
-
-class Math {
-  static final _random = new math.Random();
-  static int floor(num n) => n.floor();
-  static double random() => _random.nextDouble();
-  static num min(num a, num b) => math.min(a, b);
-}
-
-void scheduleMicroTask(void fn()) {
-  Zone.current.scheduleMicrotask(fn);
-}
-
 bool isPresent(Object obj) => obj != null;
 bool isBlank(Object obj) => obj == null;
-bool isString(Object obj) => obj is String;
-bool isFunction(Object obj) => obj is Function;
-bool isType(Object obj) => obj is Type;
-bool isStringMap(Object obj) => obj is Map;
-bool isArray(Object obj) => obj is List;
-bool isPromise(Object obj) => obj is Future;
-bool isNumber(Object obj) => obj is num;
-bool isBoolean(Object obj) => obj is bool;
-bool isDate(Object obj) => obj is DateTime;
 
 RegExp _fromFuncExp;
 

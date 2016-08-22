@@ -7,15 +7,7 @@ import "package:angular2/src/core/metadata/view.dart"
     show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show
-        isPresent,
-        isBlank,
-        isNumber,
-        isBoolean,
-        normalizeBool,
-        isString,
-        RegExpWrapper,
-        isArray;
+    show isPresent, isBlank, normalizeBool, RegExpWrapper;
 
 import "url_resolver.dart" show getUrlScheme;
 import "util.dart" show splitAtColon, sanitizeIdentifier;
@@ -73,7 +65,7 @@ class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
       this.value});
 
   static CompileIdentifierMetadata fromJson(Map<String, dynamic> data) {
-    var value = isArray(data["value"])
+    var value = data["value"] is List
         ? _arrayFromJson(data["value"], metadataFromJson)
         : _objFromJson(data["value"], metadataFromJson);
     return new CompileIdentifierMetadata(
@@ -85,7 +77,7 @@ class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
 
   Map<String, dynamic> toJson() {
     var value =
-        isArray(this.value) ? _arrayToJson(this.value) : _objToJson(this.value);
+        this.value is List ? _arrayToJson(this.value) : _objToJson(this.value);
     return {
       // Note: Runtime type can't be serialized...
       "class": "Identifier", "name": this.name, "moduleUrl": this.moduleUrl,
@@ -881,15 +873,13 @@ dynamic /* String | Map < String , dynamic > */ _arrayToJson(
 }
 
 dynamic _objFromJson(dynamic obj, dynamic fn(Map<String, dynamic> a)) {
-  if (isArray(obj)) return _arrayFromJson(obj, fn);
-  if (isString(obj) || isBlank(obj) || isBoolean(obj) || isNumber(obj))
-    return obj;
+  if (obj is List) return _arrayFromJson(obj, fn);
+  if (obj is String || obj == null || obj is bool || obj is num) return obj;
   return fn(obj as Map<String, dynamic>);
 }
 
 dynamic /* String | Map < String , dynamic > */ _objToJson(dynamic obj) {
-  if (isArray(obj)) return _arrayToJson(obj);
-  if (isString(obj) || isBlank(obj) || isBoolean(obj) || isNumber(obj))
-    return obj;
+  if (obj is List) return _arrayToJson(obj);
+  if (obj is String || obj == null || obj is bool || obj is num) return obj;
   return obj.toJson();
 }

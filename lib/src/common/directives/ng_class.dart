@@ -11,8 +11,6 @@ import "package:angular2/core.dart"
         KeyValueDiffer,
         CollectionChangeRecord,
         KeyValueChangeRecord;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isString, isArray;
 
 /// The `NgClass` directive conditionally adds and removes CSS classes on an
 /// HTML element based on an expression's evaluation result.
@@ -89,7 +87,7 @@ class NgClass implements DoCheck, OnDestroy {
       this._renderer) {}
   set initialClasses(String v) {
     this._applyInitialClasses(true);
-    this._initialClasses = isPresent(v) && isString(v) ? v.split(" ") : [];
+    this._initialClasses = v is String ? v.split(" ") : [];
     this._applyInitialClasses(false);
     this._applyClasses(this._rawClass, false);
   }
@@ -97,13 +95,13 @@ class NgClass implements DoCheck, OnDestroy {
   set rawClass(
       dynamic /* String | List < String > | Set< String > | Map < String , dynamic > */ v) {
     this._cleanupClasses(this._rawClass);
-    if (isString(v)) {
+    if (v is String) {
       v = ((v as String)).split(" ");
     }
     this._rawClass = (v as dynamic /* List < String > | Set< String > */);
     this._iterableDiffer = null;
     this._keyValueDiffer = null;
-    if (isPresent(v)) {
+    if (v != null) {
       if (v is Iterable) {
         this._iterableDiffer = this._iterableDiffers.find(v).create(null);
       } else {
@@ -113,15 +111,15 @@ class NgClass implements DoCheck, OnDestroy {
   }
 
   void ngDoCheck() {
-    if (isPresent(this._iterableDiffer)) {
+    if (this._iterableDiffer != null) {
       var changes = this._iterableDiffer.diff(this._rawClass);
-      if (isPresent(changes)) {
+      if (changes != null) {
         this._applyIterableChanges(changes);
       }
     }
-    if (isPresent(this._keyValueDiffer)) {
+    if (this._keyValueDiffer != null) {
       var changes = this._keyValueDiffer.diff(this._rawClass);
-      if (isPresent(changes)) {
+      if (changes != null) {
         this._applyKeyValueChanges(changes);
       }
     }
@@ -169,12 +167,9 @@ class NgClass implements DoCheck, OnDestroy {
   _applyClasses(
       dynamic /* List < String > | Set< String > | Map < String , dynamic > */ rawClassVal,
       bool isCleanup) {
-    if (isPresent(rawClassVal)) {
-      if (isArray(rawClassVal)) {
-        ((rawClassVal as List<String>))
-            .forEach((className) => this._toggleClass(className, !isCleanup));
-      } else if (rawClassVal is Set) {
-        ((rawClassVal as Set<String>))
+    if (rawClassVal != null) {
+      if (rawClassVal is Iterable) {
+        ((rawClassVal as Iterable<String>))
             .forEach((className) => this._toggleClass(className, !isCleanup));
       } else {
         (rawClassVal as Map<String, dynamic>).forEach((className, expVal) {

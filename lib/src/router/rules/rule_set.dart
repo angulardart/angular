@@ -1,8 +1,7 @@
 import "dart:async";
 
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, isFunction;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
 import "../instruction.dart" show ComponentInstruction;
 import "../route_config/route_config_impl.dart"
@@ -154,8 +153,8 @@ class RuleSet {
   }
 
   RoutePath _getRoutePath(RouteDefinition config) {
-    if (isPresent(config.regex)) {
-      if (isFunction(config.serializer)) {
+    if (config.regex != null) {
+      if (config.serializer is Function) {
         return new RegexRoutePath(
             config.regex, config.serializer as RegexSerializer);
       } else {

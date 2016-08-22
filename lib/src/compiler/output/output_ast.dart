@@ -1,5 +1,4 @@
-import "package:angular2/src/facade/lang.dart"
-    show isString, isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 
@@ -216,8 +215,8 @@ class ReadVarExpr extends Expression {
   ReadVarExpr(dynamic /* String | BuiltinVar */ name, [OutputType type = null])
       : super(type) {
     /* super call moved to initializer */;
-    if (isString(name)) {
-      this.name = (name as String);
+    if (name is String) {
+      this.name = name;
       this.builtin = null;
     } else {
       this.name = null;
@@ -293,8 +292,8 @@ class InvokeMethodExpr extends Expression {
       [OutputType type = null])
       : super(type) {
     /* super call moved to initializer */;
-    if (isString(method)) {
-      this.name = (method as String);
+    if (method is String) {
+      this.name = method;
       this.builtin = null;
     } else {
       this.name = null;

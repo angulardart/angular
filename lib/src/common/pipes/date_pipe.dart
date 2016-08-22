@@ -1,7 +1,6 @@
 import "package:angular2/core.dart" show PipeTransform, Pipe, Injectable;
 import "package:angular2/src/facade/intl.dart" show DateFormatter;
-import "package:angular2/src/facade/lang.dart"
-    show isDate, isNumber, DateWrapper, isBlank;
+import "package:angular2/src/facade/lang.dart" show DateWrapper, isBlank;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -89,7 +88,7 @@ class DatePipe implements PipeTransform {
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(DatePipe, value);
     }
-    if (isNumber(value)) {
+    if (value is num) {
       value = DateWrapper.fromMillis(value);
     }
     if (DatePipe._ALIASES.containsKey(pattern)) {
@@ -99,7 +98,7 @@ class DatePipe implements PipeTransform {
   }
 
   bool supports(dynamic obj) {
-    return isDate(obj) || isNumber(obj);
+    return obj is DateTime || obj is num;
   }
 
   const DatePipe();

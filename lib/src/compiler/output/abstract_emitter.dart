@@ -1,6 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, isString, StringWrapper;
+    show isPresent, isBlank, StringWrapper;
 
 import "output_ast.dart" as o;
 
@@ -297,9 +297,9 @@ abstract class AbstractEmitterVisitor
   dynamic visitLiteralExpr(o.LiteralExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var value = ast.value;
-    if (isString(value)) {
+    if (value is String) {
       ctx.print(escapeSingleQuoteString(value, this._escapeDollarInStrings));
-    } else if (isBlank(value)) {
+    } else if (value == null) {
       ctx.print("null");
     } else {
       ctx.print('''${ value}''');

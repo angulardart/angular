@@ -1,6 +1,6 @@
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isString, isNumber, isFunction, RegExpWrapper, StringWrapper;
+    show RegExpWrapper, StringWrapper;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -33,7 +33,7 @@ import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 class ReplacePipe implements PipeTransform {
   dynamic transform(dynamic value, dynamic /* String | RegExp */ pattern,
       dynamic /* Function | String */ replacement) {
-    if (isBlank(value)) {
+    if (value == null) {
       return value;
     }
     if (!this._supportedInput(value)) {
@@ -50,8 +50,8 @@ class ReplacePipe implements PipeTransform {
 
     // var rgx = pattern instanceof RegExp ? pattern : RegExpWrapper.create(pattern);
     if (replacement is _Matcher) {
-      var rgxPattern = isString(pattern)
-          ? RegExpWrapper.create((pattern as String))
+      var rgxPattern = pattern is String
+          ? RegExpWrapper.create(pattern)
           : (pattern as RegExp);
       return StringWrapper.replaceAllMapped(input, rgxPattern, replacement);
     }
@@ -63,16 +63,14 @@ class ReplacePipe implements PipeTransform {
         input, (pattern as String), (replacement as String));
   }
 
-  bool _supportedInput(dynamic input) {
-    return isString(input) || isNumber(input);
-  }
+  bool _supportedInput(dynamic input) => input is String || input is num;
 
   bool _supportedPattern(dynamic pattern) {
-    return isString(pattern) || pattern is RegExp;
+    return pattern is String || pattern is RegExp;
   }
 
   bool _supportedReplacement(dynamic replacement) {
-    return isString(replacement) || isFunction(replacement);
+    return replacement is String || replacement is Function;
   }
 }
 

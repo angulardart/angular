@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent, isArray;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
 import "../expression_parser/ast.dart" as cdAst;
 import "../identifiers.dart" show Identifiers;
@@ -325,9 +325,8 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
 }
 
 flattenStatements(dynamic arg, List<o.Statement> output) {
-  if (isArray(arg)) {
-    ((arg as List<dynamic>))
-        .forEach((entry) => flattenStatements(entry, output));
+  if (arg is List) {
+    arg.forEach((entry) => flattenStatements(entry, output));
   } else {
     output.add(arg);
   }

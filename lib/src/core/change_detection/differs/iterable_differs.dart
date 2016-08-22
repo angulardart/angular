@@ -1,8 +1,7 @@
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, getTypeNameForDebugging;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 
@@ -90,7 +89,7 @@ class IterableDiffers {
       return factory;
     } else {
       throw new BaseException(
-          '''Cannot find a differ supporting object \'${ iterable}\' of type \'${ getTypeNameForDebugging ( iterable )}\'''');
+          '''Cannot find a differ supporting object \'${iterable}\' of type \'${iterable.runtimeType}\'''');
     }
   }
 }

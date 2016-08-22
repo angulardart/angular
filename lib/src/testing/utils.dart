@@ -1,6 +1,6 @@
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isString, RegExpWrapper, StringWrapper, RegExp;
+    show isPresent, RegExpWrapper, StringWrapper, RegExp;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 @Injectable()
@@ -146,7 +146,7 @@ String stringifyElement(el) {
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
       var attValue = attributeMap[key];
-      if (!isString(attValue)) {
+      if (attValue is! String) {
         result += ''' ${ key}''';
       } else {
         result += ''' ${ key}="${ attValue}"''';

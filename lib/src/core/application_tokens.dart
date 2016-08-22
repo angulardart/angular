@@ -1,5 +1,5 @@
-import "package:angular2/src/core/di.dart" show OpaqueToken, Provider;
-import "package:angular2/src/facade/lang.dart" show Math, StringWrapper;
+import 'dart:math' as math;
+import 'package:angular2/src/core/di.dart' show OpaqueToken, Provider;
 
 /**
  * A DI Token representing a unique string id assigned to the application by Angular and used
@@ -20,8 +20,10 @@ String appIdRandomProviderFactory() {
  */
 const Provider APP_ID_RANDOM_PROVIDER = const Provider(APP_ID,
     useFactory: appIdRandomProviderFactory, deps: const []);
+
+final _random = new math.Random();
 String _randomChar() {
-  return StringWrapper.fromCharCode(97 + Math.floor(Math.random() * 25));
+  return new String.fromCharCode(97 + _random.nextInt(25));
 }
 
 /**

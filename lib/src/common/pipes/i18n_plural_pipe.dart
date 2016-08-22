@@ -1,6 +1,6 @@
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/lang.dart"
-    show isStringMap, StringWrapper, isPresent, RegExpWrapper;
+    show StringWrapper, isPresent, RegExpWrapper;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -40,7 +40,7 @@ class I18nPluralPipe implements PipeTransform {
   String transform(num value, Map<String, String> pluralMap) {
     String key;
     String valueStr;
-    if (!isStringMap(pluralMap)) {
+    if (pluralMap is! Map) {
       throw new InvalidPipeArgumentException(I18nPluralPipe, pluralMap);
     }
     key =

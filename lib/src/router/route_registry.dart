@@ -1,20 +1,11 @@
-import "dart:async";
+import 'dart:async';
+import 'dart:math' as math;
 
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show
-        isPresent,
-        isArray,
-        isBlank,
-        isType,
-        isString,
-        isStringMap,
-        StringWrapper,
-        Math,
-        getTypeNameForDebugging;
-
+    show isPresent, isBlank, StringWrapper;
 import "instruction.dart"
     show
         Instruction,
@@ -119,7 +110,7 @@ class RouteRegistry {
    * Reads the annotations of a component and configures the registry based on them
    */
   void configFromComponent(dynamic component) {
-    if (!isType(component) && !(component is ComponentFactory)) {
+    if (component is! Type && !(component is ComponentFactory)) {
       return;
     }
     // Don't read the annotations from a type more than once –
@@ -174,7 +165,11 @@ class RouteRegistry {
               if (candidate is PathMatch) {
                 List<Instruction> auxParentInstructions =
                     ancestorInstructions.length > 0
-                        ? [ancestorInstructions.last]
+                        ? [
+                            ancestorInstructions.isNotEmpty
+                                ? ancestorInstructions.last
+                                : null
+                          ]
                         : [];
                 var auxInstructions = this._auxRoutesToUnresolved(
                     candidate.remainingAux, auxParentInstructions);
@@ -358,13 +353,13 @@ class RouteRegistry {
     var rules = this._rules[parentComponentType];
     if (isBlank(rules)) {
       throw new BaseException(
-          '''Component "${ getTypeNameForDebugging ( getComponentType ( parentComponentType ) )}" has no route config.''');
+          '''Component "${getComponentType(parentComponentType)}" has no route config.''');
     }
     var linkParamIndex = 0;
     Map<String, dynamic> routeParams = {};
     // first, recognize the primary route if one is provided
     if (linkParamIndex < linkParams.length &&
-        isString(linkParams[linkParamIndex])) {
+        linkParams[linkParamIndex] is String) {
       var routeName = linkParams[linkParamIndex];
       if (routeName == "" || routeName == "." || routeName == "..") {
         throw new BaseException(
@@ -373,7 +368,7 @@ class RouteRegistry {
       linkParamIndex += 1;
       if (linkParamIndex < linkParams.length) {
         var linkParam = linkParams[linkParamIndex];
-        if (isStringMap(linkParam) && !isArray(linkParam)) {
+        if (linkParam is Map) {
           routeParams = linkParam as Map<String, dynamic>;
           linkParamIndex += 1;
         }
@@ -382,7 +377,7 @@ class RouteRegistry {
           (_aux ? rules.auxRulesByName : rules.rulesByName)[routeName];
       if (isBlank(routeRecognizer)) {
         throw new BaseException(
-            '''Component "${ getTypeNameForDebugging ( getComponentType ( parentComponentType ) )}" has no route named "${ routeName}".''');
+            '''Component "${getComponentType(parentComponentType)}" has no route named "${ routeName}".''');
       }
       // Create an "unresolved instruction" for async routes
 
@@ -408,7 +403,7 @@ class RouteRegistry {
 
     // If we have an ancestor instruction, we preserve whatever aux routes are active from it.
     while (linkParamIndex < linkParams.length &&
-        isArray(linkParams[linkParamIndex])) {
+        linkParams[linkParamIndex] is List) {
       List<Instruction> auxParentInstruction = [parentInstruction];
       var auxInstruction = this._generate(linkParams[linkParamIndex],
           auxParentInstruction, null, true, _originalLink);
@@ -479,9 +474,8 @@ class RouteRegistry {
 List<dynamic> splitAndFlattenLinkParams(List<dynamic> linkParams) {
   var accumulation = [];
   linkParams.forEach((dynamic item) {
-    if (isString(item)) {
-      String strItem = (item as String);
-      accumulation = (new List.from(accumulation)..addAll(strItem.split("/")));
+    if (item is String) {
+      accumulation = (new List.from(accumulation)..addAll(item.split("/")));
     } else {
       accumulation.add(item);
     }
@@ -519,7 +513,7 @@ Instruction mostSpecific(List<Instruction> instructions) {
  * or 0 if they are the same.
  */
 num compareSpecificityStrings(String a, String b) {
-  var l = Math.min(a.length, b.length);
+  var l = math.min(a.length, b.length);
   for (var i = 0; i < l; i += 1) {
     var ai = StringWrapper.charCodeAt(a, i);
     var bi = StringWrapper.charCodeAt(b, i);
@@ -532,7 +526,7 @@ num compareSpecificityStrings(String a, String b) {
 }
 
 assertTerminalComponent(component, path) {
-  if (!isType(component) && !(component is ComponentFactory)) {
+  if (component is! Type && !(component is ComponentFactory)) {
     return;
   }
   var annotations = getComponentAnnotations(component);

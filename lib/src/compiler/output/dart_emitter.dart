@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "abstract_emitter.dart"
@@ -19,9 +19,7 @@ String debugOutputAstAsDart(
   var converter = new _DartEmitterVisitor(_debugModuleUrl);
   var ctx = EmitterVisitorContext.createRoot([]);
   List<dynamic> asts;
-  if (isArray(ast)) {
-    asts = (ast as List<dynamic>);
-  } else {
+  if (ast is! List) {
     asts = [ast];
   }
   asts.forEach((ast) {

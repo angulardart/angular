@@ -1,6 +1,7 @@
+import 'dart:math' as math;
+
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, RegExpWrapper, Math;
+import "package:angular2/src/facade/lang.dart" show isPresent, RegExpWrapper;
 
 // asset:<package-name>/<realm>/<path-to-module>
 var _ASSET_URL_RE = new RegExp(r'asset:([^\/]+)\/([^\/]+)\/(.+)');
@@ -16,7 +17,7 @@ String getImportModulePath(
       identical(importEnv, ImportEnv.Dart) ? '''package:''' : "";
   var moduleUrl = _AssetUrl.parse(moduleUrlStr, false);
   var importedUrl = _AssetUrl.parse(importedUrlStr, true);
-  if (isBlank(importedUrl)) {
+  if (importedUrl == null) {
     return importedUrlStr;
   }
   // Try to create a relative path first
@@ -37,7 +38,7 @@ class _AssetUrl {
   String modulePath;
   static _AssetUrl parse(String url, bool allowNonMatching) {
     var match = RegExpWrapper.firstMatch(_ASSET_URL_RE, url);
-    if (isPresent(match)) {
+    if (match != null) {
       return new _AssetUrl(match[1], match[2], match[3]);
     }
     if (allowNonMatching) {
@@ -70,7 +71,7 @@ String getRelativePath(
 
 num getLongestPathSegmentPrefix(List<String> arr1, List<String> arr2) {
   var prefixSize = 0;
-  var minLen = Math.min(arr1.length, arr2.length);
+  var minLen = math.min(arr1.length, arr2.length);
   while (prefixSize < minLen && arr1[prefixSize] == arr2[prefixSize]) {
     prefixSize++;
   }

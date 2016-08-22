@@ -3,7 +3,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/intl.dart"
     show NumberFormatter, NumberFormatStyle;
 import "package:angular2/src/facade/lang.dart"
-    show isNumber, isPresent, isBlank, NumberWrapper, RegExpWrapper;
+    show isPresent, NumberWrapper, RegExpWrapper;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -15,14 +15,14 @@ var _re = RegExpWrapper.create("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 class NumberPipe {
   static String _format(num value, NumberFormatStyle style, String digits,
       [String currency = null, bool currencyAsSymbol = false]) {
-    if (isBlank(value)) return null;
-    if (!isNumber(value)) {
+    if (value == null) return null;
+    if (value is! num) {
       throw new InvalidPipeArgumentException(NumberPipe, value);
     }
     var minInt = 1, minFraction = 0, maxFraction = 3;
     if (isPresent(digits)) {
       var parts = RegExpWrapper.firstMatch(_re, digits);
-      if (isBlank(parts)) {
+      if (parts == null) {
         throw new BaseException(
             '''${ digits} is not a valid digit info for number pipes''');
       }

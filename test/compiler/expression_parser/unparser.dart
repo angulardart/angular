@@ -1,7 +1,7 @@
 library angular2.test.compiler.expression_parser.unparser;
 
 import "package:angular2/src/compiler/expression_parser/ast.dart";
-import "package:angular2/src/facade/lang.dart" show StringWrapper, isString;
+import "package:angular2/src/facade/lang.dart" show StringWrapper;
 
 class Unparser implements AstVisitor {
   static var _quoteRegExp = new RegExp(r'"');
@@ -129,7 +129,7 @@ class Unparser implements AstVisitor {
   }
 
   visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {
-    if (isString(ast.value)) {
+    if (ast.value is String) {
       this._expression +=
           '''"${ StringWrapper . replaceAll ( ast . value , Unparser . _quoteRegExp , "\"" )}"''';
     } else {

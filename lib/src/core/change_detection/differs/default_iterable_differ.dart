@@ -1,6 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, stringify, getMapKey, looseIdentical, isArray;
+    show isBlank, isPresent, stringify, getMapKey, looseIdentical;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/iterable_differs.dart"
@@ -125,7 +125,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     num index;
     var item;
     var itemTrackBy;
-    if (isArray(collection)) {
+    if (collection is List) {
       var list = collection;
       this._length = collection.length;
       for (index = 0; index < this._length; index++) {

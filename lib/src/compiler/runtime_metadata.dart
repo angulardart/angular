@@ -19,7 +19,7 @@ import "package:angular2/src/core/platform_directives_and_pipes.dart"
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, isArray, stringify, isString;
+    show isBlank, isPresent, stringify;
 
 import "compile_metadata.dart" as cpl;
 import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
@@ -211,7 +211,7 @@ class RuntimeMetadataResolver {
 
   cpl.CompileTokenMetadata getTokenMetadata(dynamic token) {
     var compileToken;
-    if (isString(token)) {
+    if (token is String) {
       compileToken = new cpl.CompileTokenMetadata(value: token);
     } else {
       compileToken = new cpl.CompileTokenMetadata(
@@ -224,7 +224,7 @@ class RuntimeMetadataResolver {
   List<dynamic /* cpl . CompileProviderMetadata | cpl . CompileTypeMetadata | List < dynamic > */ >
       getProvidersMetadata(List<dynamic> providers) {
     return providers.map((provider) {
-      if (isArray(provider)) {
+      if (provider is List) {
         return this.getProvidersMetadata(provider);
       } else if (provider is Provider) {
         return [
@@ -345,7 +345,7 @@ void flattenArray(
     List<dynamic> tree, List<dynamic /* Type | List < dynamic > */ > out) {
   for (var i = 0; i < tree.length; i++) {
     var item = tree[i];
-    if (isArray(item)) {
+    if (item is List) {
       flattenArray(item, out);
     } else {
       out.add(item);

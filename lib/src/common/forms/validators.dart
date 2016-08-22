@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import "package:angular2/core.dart" show OpaqueToken;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, isString;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 import "model.dart" as modelModule;
@@ -33,8 +32,7 @@ const OpaqueToken NG_ASYNC_VALIDATORS = const OpaqueToken("NgAsyncValidators");
 class Validators {
   ///  Validator that requires controls to have a non-empty value.
   static Map<String, bool> required(modelModule.AbstractControl control) {
-    return isBlank(control.value) ||
-            (isString(control.value) && control.value == "")
+    return control.value == null || control.value == ''
         ? {"required": true}
         : null;
   }

@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "compile_metadata.dart"
     show
@@ -457,9 +457,9 @@ List<CompileProviderMetadata> _normalizeProviders(
   }
   if (isPresent(providers)) {
     providers.forEach((provider) {
-      if (isArray(provider)) {
-        _normalizeProviders((provider as List<dynamic>), sourceSpan,
-            targetErrors, targetProviders);
+      if (provider is List) {
+        _normalizeProviders(
+            provider, sourceSpan, targetErrors, targetProviders);
       } else {
         CompileProviderMetadata normalizeProvider;
         if (provider is CompileProviderMetadata) {
