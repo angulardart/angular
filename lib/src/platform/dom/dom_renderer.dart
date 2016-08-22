@@ -15,7 +15,8 @@ import 'util.dart' show camelCaseToDashCase;
 
 const NAMESPACE_URIS = const {
   'xlink': 'http://www.w3.org/1999/xlink',
-  'svg': 'http://www.w3.org/2000/svg'
+  'svg': 'http://www.w3.org/2000/svg',
+  'xhtml': 'http://www.w3.org/1999/xhtml'
 };
 const TEMPLATE_COMMENT_TEXT = 'template bindings={}';
 var TEMPLATE_BINDINGS_EXP = new RegExp(r'^template bindings=(.*)$');

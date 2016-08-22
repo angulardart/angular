@@ -2009,6 +2009,35 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property ("<div [ERROR
               });
             });
           });
+          test("should support svg elements", () async {
+            return inject([TestComponentBuilder, AsyncTestCompleter],
+                (TestComponentBuilder tcb, AsyncTestCompleter completer) {
+              tcb
+                  .overrideView(
+                      MyComp,
+                      new ViewMetadata(
+                          template: "<svg><foreignObject><xhtml:div>"
+                              "<p>Test</p></xhtml:div></foreignObject></svg>"))
+                  .createAsync(MyComp)
+                  .then((fixture) {
+                var el = fixture.debugElement.nativeElement;
+                var svg = DOM.childNodes(el)[0];
+                var foreignObject = DOM.childNodes(svg)[0];
+                var div = DOM.childNodes(foreignObject)[0];
+                var p = DOM.childNodes(div)[0];
+                expect(DOM.getProperty((svg as dynamic), "namespaceURI"),
+                    "http://www.w3.org/2000/svg");
+                expect(
+                    DOM.getProperty((foreignObject as dynamic), "namespaceURI"),
+                    "http://www.w3.org/2000/svg");
+                expect(DOM.getProperty((div as dynamic), "namespaceURI"),
+                    "http://www.w3.org/1999/xhtml");
+                expect(DOM.getProperty((p as dynamic), "namespaceURI"),
+                    "http://www.w3.org/1999/xhtml");
+                completer.done();
+              });
+            });
+          });
         });
         group("attributes", () {
           test("should support attributes with namespace", () async {
