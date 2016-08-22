@@ -4,7 +4,7 @@
 
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/facade/lang.dart"
-    show RegExp, RegExpWrapper, StringWrapper, isPresent, isBlank;
+    show RegExp, RegExpWrapper, isPresent, isBlank;
 
 class StyleWithImports {
   String style;
@@ -27,8 +27,7 @@ bool isStyleUrlResolvable(String url) {
 StyleWithImports extractStyleUrls(
     UrlResolver resolver, String baseUrl, String cssText) {
   var foundUrls = <String>[];
-  var modifiedCssText =
-      StringWrapper.replaceAllMapped(cssText, _cssImportRe, (m) {
+  var modifiedCssText = cssText.replaceAllMapped(_cssImportRe, (m) {
     var url = isPresent(m[1]) ? m[1] : m[2];
     if (!isStyleUrlResolvable(url)) {
       // Do not attempt to resolve non-package absolute URLs with URI scheme

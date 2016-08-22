@@ -1,6 +1,4 @@
 import 'dart:convert' as convert;
-import 'dart:math' as math;
-
 export 'dart:core' show RegExp, print, DateTime, Uri;
 
 bool isPresent(Object obj) => obj != null;
@@ -18,141 +16,26 @@ String stringify(obj) {
   }
 }
 
-/**
- * Deserializes an enum
- * val should be the indexed value of the enum (sa returned from @Link{serializeEnum})
- * values should be a map from indexes to values for the enum that you want to deserialize.
- */
-dynamic deserializeEnum(num val, Map<num, dynamic> values) {
-  return values[val];
-}
-
 String resolveEnumToken(enumValue, val) {
   // turn Enum.Token -> Token
   return val.toString().replaceFirst(new RegExp('^.+\\.'), '');
 }
 
-class StringWrapper {
-  static String fromCharCode(int code) {
-    return new String.fromCharCode(code);
-  }
-
-  static int charCodeAt(String s, int index) {
-    return s.codeUnitAt(index);
-  }
-
-  static List<String> split(String s, RegExp regExp) {
-    var parts = <String>[];
-    var lastEnd = 0;
-    regExp.allMatches(s).forEach((match) {
-      parts.add(s.substring(lastEnd, match.start));
-      lastEnd = match.end;
-      for (var i = 0; i < match.groupCount; i++) {
-        parts.add(match.group(i + 1));
-      }
-    });
-    parts.add(s.substring(lastEnd));
-    return parts;
-  }
-
-  static bool equals(String s, String s2) {
-    return s == s2;
-  }
-
-  static String stripLeft(String s, String charVal) {
-    if (isPresent(s) && s.length > 0) {
-      var pos = 0;
-      for (var i = 0; i < s.length; i++) {
-        if (s[i] != charVal) break;
-        pos++;
-      }
-      s = s.substring(pos);
+/// A [String.split] implementation that is like JS' implementation.
+///
+/// See https://dartpad.dartlang.org/37a53b0d5d4cced6c7312b2b965ed7fd.
+List<String> jsSplit(String s, RegExp regExp) {
+  var parts = <String>[];
+  var lastEnd = 0;
+  regExp.allMatches(s).forEach((match) {
+    parts.add(s.substring(lastEnd, match.start));
+    lastEnd = match.end;
+    for (var i = 0; i < match.groupCount; i++) {
+      parts.add(match.group(i + 1));
     }
-    return s;
-  }
-
-  static String stripRight(String s, String charVal) {
-    if (isPresent(s) && s.length > 0) {
-      var pos = s.length;
-      for (var i = s.length - 1; i >= 0; i--) {
-        if (s[i] != charVal) break;
-        pos--;
-      }
-      s = s.substring(0, pos);
-    }
-    return s;
-  }
-
-  static String replace(String s, Pattern from, String replace) {
-    return s.replaceFirst(from, replace);
-  }
-
-  static String replaceAll(String s, RegExp from, String replace) {
-    return s.replaceAll(from, replace);
-  }
-
-  static String slice(String s, [int start = 0, int end]) {
-    start = _startOffset(s, start);
-    end = _endOffset(s, end);
-    //in JS if start > end an empty string is returned
-    if (end != null && start > end) {
-      return "";
-    }
-    return s.substring(start, end);
-  }
-
-  static String replaceAllMapped(String s, RegExp from, String cb(Match _)) {
-    return s.replaceAllMapped(from, cb);
-  }
-
-  static bool contains(String s, String substr) {
-    return s.contains(substr);
-  }
-
-  static int compare(String a, String b) => a.compareTo(b);
-
-  // JS slice function can take start < 0 which indicates a position relative to
-  // the end of the string
-  static int _startOffset(String s, int start) {
-    int len = s.length;
-    return start < 0 ? math.max(len + start, 0) : math.min(start, len);
-  }
-
-  // JS slice function can take end < 0 which indicates a position relative to
-  // the end of the string
-  static int _endOffset(String s, int end) {
-    int len = s.length;
-    if (end == null) return len;
-    return end < 0 ? math.max(len + end, 0) : math.min(end, len);
-  }
-}
-
-class NumberWrapper {
-  static String toFixed(num n, int fractionDigits) {
-    return n.toStringAsFixed(fractionDigits);
-  }
-
-  static bool equal(num a, num b) {
-    return a == b;
-  }
-
-  static int parseIntAutoRadix(String text) {
-    return int.parse(text);
-  }
-
-  static int parseInt(String text, int radix) {
-    return int.parse(text, radix: radix);
-  }
-
-  static double parseFloat(String text) {
-    return double.parse(text);
-  }
-
-  static double get NaN => double.NAN;
-
-  static bool isNaN(num value) => value.isNaN;
-
-  static bool isInteger(value) => value is int;
+  });
+  parts.add(s.substring(lastEnd));
+  return parts;
 }
 
 class RegExpWrapper {

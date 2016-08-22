@@ -13,8 +13,7 @@ import "package:angular2/src/compiler/html_ast.dart"
         htmlVisitAll;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, jsSplit;
 
 import "message.dart" show Message;
 
@@ -149,7 +148,7 @@ String removeInterpolation(
 }
 
 String getPhNameFromBinding(String input, num index) {
-  var customPhMatch = StringWrapper.split(input, CUSTOM_PH_EXP);
+  var customPhMatch = jsSplit(input, CUSTOM_PH_EXP);
   return customPhMatch.length > 1 ? customPhMatch[1] : '''${ index}''';
 }
 

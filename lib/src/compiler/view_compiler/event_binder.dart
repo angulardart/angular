@@ -1,5 +1,4 @@
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
 import "../compile_metadata.dart" show CompileDirectiveMetadata;
 import "../output/output_ast.dart" as o;
@@ -177,5 +176,5 @@ o.Expression convertStmtIntoExpression(o.Statement stmt) {
 }
 
 String santitizeEventName(String name) {
-  return StringWrapper.replaceAll(name, new RegExp(r'[^a-zA-Z_]'), "_");
+  return name.replaceAll(new RegExp(r'[^a-zA-Z_]'), "_");
 }

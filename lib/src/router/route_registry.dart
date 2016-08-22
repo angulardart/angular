@@ -4,8 +4,7 @@ import 'dart:math' as math;
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 import "instruction.dart"
     show
         Instruction,
@@ -515,8 +514,8 @@ Instruction mostSpecific(List<Instruction> instructions) {
 num compareSpecificityStrings(String a, String b) {
   var l = math.min(a.length, b.length);
   for (var i = 0; i < l; i += 1) {
-    var ai = StringWrapper.charCodeAt(a, i);
-    var bi = StringWrapper.charCodeAt(b, i);
+    var ai = a.codeUnitAt(i);
+    var bi = b.codeUnitAt(i);
     var difference = bi - ai;
     if (difference != 0) {
       return difference;

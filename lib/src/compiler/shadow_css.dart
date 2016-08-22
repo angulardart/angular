@@ -1,11 +1,11 @@
 import "package:angular2/src/facade/lang.dart"
     show
-        StringWrapper,
         RegExp,
         RegExpWrapper,
         RegExpMatcherWrapper,
         isPresent,
-        isBlank;
+        isBlank,
+        jsSplit;
 /**
  * This file is a port of shadowCSS from webcomponents.js to TypeScript.
  *
@@ -170,9 +170,8 @@ class ShadowCss {
   **/
   String _insertPolyfillDirectivesInCssText(String cssText) {
     // Difference with webcomponents.js: does not handle comments
-    return StringWrapper.replaceAllMapped(cssText, _cssContentNextSelectorRe,
-        (m) {
-      return m[1] + "{";
+    return cssText.replaceAllMapped(_cssContentNextSelectorRe, (m) {
+      return m[1] + '{';
     });
   }
 
@@ -193,10 +192,10 @@ class ShadowCss {
   **/
   String _insertPolyfillRulesInCssText(String cssText) {
     // Difference with webcomponents.js: does not handle comments
-    return StringWrapper.replaceAllMapped(cssText, _cssContentRuleRe, (m) {
+    return cssText.replaceAllMapped(_cssContentRuleRe, (m) {
       var rule = m[0];
-      rule = StringWrapper.replace(rule, m[1], "");
-      rule = StringWrapper.replace(rule, m[2], "");
+      rule = rule.replaceFirst(m[1], "");
+      rule = rule.replaceFirst(m[2], "");
       return m[3] + rule;
     });
   }
@@ -244,8 +243,8 @@ class ShadowCss {
     var matcher = RegExpWrapper.matcher(_cssContentUnscopedRuleRe, cssText);
     while (isPresent(m = RegExpMatcherWrapper.next(matcher))) {
       var rule = m[0];
-      rule = StringWrapper.replace(rule, m[2], "");
-      rule = StringWrapper.replace(rule, m[1], m[3]);
+      rule = rule.replaceFirst(m[2], "");
+      rule = rule.replaceFirst(m[1], m[3]);
       r += rule + "\n\n";
     }
     return r;
@@ -286,8 +285,8 @@ class ShadowCss {
   String _convertColonRule(
       String cssText, RegExp regExp, Function partReplacer) {
     // p1 = :host, p2 = contents of (), p3 rest of rule
-    return StringWrapper.replaceAllMapped(cssText, regExp, (m) {
-      if (isPresent(m[2])) {
+    return cssText.replaceAllMapped(regExp, (m) {
+      if (m[2] != null) {
         var parts = m[2].split(","), r = [];
         for (var i = 0; i < parts.length; i++) {
           var p = parts[i];
@@ -304,7 +303,7 @@ class ShadowCss {
 
   String _colonHostContextPartReplacer(
       String host, String part, String suffix) {
-    if (StringWrapper.contains(part, _polyfillHost)) {
+    if (part.contains(_polyfillHost)) {
       return this._colonHostPartReplacer(host, part, suffix);
     } else {
       return host + part + suffix + ", " + part + " " + host + suffix;
@@ -312,7 +311,7 @@ class ShadowCss {
   }
 
   String _colonHostPartReplacer(String host, String part, String suffix) {
-    return host + StringWrapper.replace(part, _polyfillHost, "") + suffix;
+    return host + part.replaceFirst(_polyfillHost, "") + suffix;
   }
 
   /*
@@ -321,8 +320,7 @@ class ShadowCss {
   */
   String _convertShadowDOMSelectors(String cssText) {
     for (var i = 0; i < _shadowDOMSelectorsRe.length; i++) {
-      cssText =
-          StringWrapper.replaceAll(cssText, _shadowDOMSelectorsRe[i], " ");
+      cssText = cssText.replaceAll(_shadowDOMSelectorsRe[i], " ");
     }
     return cssText;
   }
@@ -349,11 +347,11 @@ class ShadowCss {
     var r = [], parts = selector.split(",");
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i].trim();
-      var deepParts = StringWrapper.split(p, _shadowDeepSelectors);
+      var deepParts = jsSplit(p, _shadowDeepSelectors);
       var shallowPart = deepParts[0];
       if (this._selectorNeedsScoping(shallowPart, scopeSelector)) {
         deepParts[0] = strict &&
-                !StringWrapper.contains(shallowPart, _polyfillHostNoCombinator)
+                !shallowPart.contains(_polyfillHostNoCombinator)
             ? this._applyStrictSelectorScope(shallowPart, scopeSelector)
             : this
                 ._applySelectorScope(shallowPart, scopeSelector, hostSelector);
@@ -372,8 +370,8 @@ class ShadowCss {
   RegExp _makeScopeMatcher(String scopeSelector) {
     var lre = new RegExp(r'\[');
     var rre = new RegExp(r'\]');
-    scopeSelector = StringWrapper.replaceAll(scopeSelector, lre, "\\[");
-    scopeSelector = StringWrapper.replaceAll(scopeSelector, rre, "\\]");
+    scopeSelector = scopeSelector.replaceAll(lre, "\\[");
+    scopeSelector = scopeSelector.replaceAll(rre, "\\]");
     return RegExpWrapper.create(
         "^(" + scopeSelector + ")" + _selectorReSuffix, "m");
   }
@@ -391,10 +389,8 @@ class ShadowCss {
     if (isPresent(RegExpWrapper.firstMatch(_polyfillHostRe, selector))) {
       var replaceBy =
           this.strictStyling ? '''[${ hostSelector}]''' : scopeSelector;
-      selector =
-          StringWrapper.replace(selector, _polyfillHostNoCombinator, replaceBy);
-      return StringWrapper.replaceAll(
-          selector, _polyfillHostRe, replaceBy + " ");
+      selector = selector.replaceFirst(_polyfillHostNoCombinator, replaceBy);
+      return selector.replaceAll(_polyfillHostRe, replaceBy + " ");
     } else {
       return scopeSelector + " " + selector;
     }
@@ -404,8 +400,7 @@ class ShadowCss {
   // e.g. .foo.bar > .zot becomes .foo[name].bar[name] > .zot[name]  /** @internal */
   String _applyStrictSelectorScope(String selector, String scopeSelector) {
     var isRe = new RegExp(r'\[is=([^\]]*)\]');
-    scopeSelector =
-        StringWrapper.replaceAllMapped(scopeSelector, isRe, (m) => m[1]);
+    scopeSelector = scopeSelector.replaceAllMapped(isRe, (m) => m[1]);
     var splits = [" ", ">", "+", "~"],
         scoped = selector,
         attrName = "[" + scopeSelector + "]";
@@ -415,10 +410,8 @@ class ShadowCss {
       scoped = parts
           .map((p) {
             // remove :host since it should be unnecessary
-            var t = StringWrapper.replaceAll(p.trim(), _polyfillHostRe, "");
-            if (t.length > 0 &&
-                !splits.contains(t) &&
-                !StringWrapper.contains(t, attrName)) {
+            var t = p.trim().replaceAll(_polyfillHostRe, "");
+            if (t.length > 0 && !splits.contains(t) && !t.contains(attrName)) {
               var re = new RegExp(r'([^:]*)(:*)(.*)');
               var m = RegExpWrapper.firstMatch(re, t);
               if (isPresent(m)) {
@@ -434,9 +427,8 @@ class ShadowCss {
   }
 
   String _insertPolyfillHostInCssText(String selector) {
-    selector = StringWrapper.replaceAll(
-        selector, _colonHostContextRe, _polyfillHostContext);
-    selector = StringWrapper.replaceAll(selector, _colonHostRe, _polyfillHost);
+    selector = selector.replaceAll(_colonHostContextRe, _polyfillHostContext);
+    selector = selector.replaceAll(_colonHostRe, _polyfillHost);
     return selector;
   }
 }
@@ -491,7 +483,7 @@ var _colonHostContextRe =
     new RegExp(r':host-context', multiLine: true, caseSensitive: false);
 var _commentRe = new RegExp(r'\/\*[\s\S]*?\*\/');
 String stripComments(String input) {
-  return StringWrapper.replaceAllMapped(input, _commentRe, (_) => "");
+  return input.replaceAllMapped(_commentRe, (_) => "");
 }
 
 var _ruleRe =
@@ -510,8 +502,7 @@ class CssRule {
 String processRules(String input, Function ruleCallback) {
   var inputWithEscapedBlocks = escapeBlocks(input);
   var nextBlockIndex = 0;
-  return StringWrapper
-      .replaceAllMapped(inputWithEscapedBlocks.escapedString, _ruleRe, (m) {
+  return inputWithEscapedBlocks.escapedString.replaceAllMapped(_ruleRe, (m) {
     var selector = m[2];
     var content = "";
     var suffix = m[4];
@@ -533,7 +524,7 @@ class StringWithEscapedBlocks {
 }
 
 StringWithEscapedBlocks escapeBlocks(String input) {
-  var inputParts = StringWrapper.split(input, _curlyRe);
+  var inputParts = jsSplit(input, _curlyRe);
   var resultParts = [];
   var escapedBlocks = <String>[];
   var bracketCount = 0;

@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
-import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, RegExpWrapper, NumberWrapper, isPresent;
+import "package:angular2/src/facade/lang.dart" show RegExpWrapper, isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/util.dart" show camelCaseToDashCase;
 
@@ -149,10 +148,10 @@ class Animation {
     if (duration == null || duration.length < 2) {
       return maxValue;
     } else if (duration.substring(duration.length - 2) == "ms") {
-      var value = NumberWrapper.parseInt(stripLetters(duration), 10);
+      var value = int.parse(stripLetters(duration), radix: 10);
       if (value > maxValue) maxValue = value;
     } else if (duration.substring(duration.length - 1) == "s") {
-      var ms = NumberWrapper.parseFloat(stripLetters(duration)) * 1000;
+      var ms = double.parse(stripLetters(duration)) * 1000;
       var value = ms.floor();
       if (value > maxValue) maxValue = value;
     }
@@ -161,7 +160,6 @@ class Animation {
 
   /// Strips the letters from the duration string
   String stripLetters(String str) {
-    return StringWrapper.replaceAll(
-        str, RegExpWrapper.create("[^0-9]+\$", ""), "");
+    return str.replaceAll(RegExpWrapper.create("[^0-9]+\$", ""), "");
   }
 }

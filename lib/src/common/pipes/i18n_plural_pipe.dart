@@ -1,6 +1,5 @@
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
-import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, isPresent, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, RegExpWrapper;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -46,7 +45,7 @@ class I18nPluralPipe implements PipeTransform {
     key =
         identical(value, 0) || identical(value, 1) ? '''=${ value}''' : "other";
     valueStr = isPresent(value) ? value.toString() : "";
-    return StringWrapper.replaceAll(pluralMap[key], interpolationExp, valueStr);
+    return pluralMap[key].replaceAll(interpolationExp, valueStr);
   }
 
   const I18nPluralPipe();

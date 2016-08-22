@@ -2,7 +2,7 @@ import "dart:html";
 
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 import "event_manager.dart" show EventManagerPlugin;
@@ -40,8 +40,8 @@ class KeyEventsPlugin extends EventManagerPlugin {
     List<String> parts = eventName.toLowerCase().split(".");
     var domEventName = parts.removeAt(0);
     if ((identical(parts.length, 0)) ||
-        !(StringWrapper.equals(domEventName, "keydown") ||
-            StringWrapper.equals(domEventName, "keyup"))) {
+        domEventName == "keydown" ||
+        domEventName == "keyup") {
       return null;
     }
     var key = KeyEventsPlugin._normalizeKey(parts.removeLast());
@@ -63,9 +63,9 @@ class KeyEventsPlugin extends EventManagerPlugin {
     var fullKey = "";
     var key = DOM.getEventKey(event);
     key = key.toLowerCase();
-    if (StringWrapper.equals(key, " ")) {
+    if (key == " ") {
       key = "space";
-    } else if (StringWrapper.equals(key, ".")) {
+    } else if (key == ".") {
       key = "dot";
     }
     modifierKeys.forEach((modifierName) {
@@ -83,8 +83,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
   static Function eventCallback(
       dynamic element, dynamic fullKey, Function handler, NgZone zone) {
     return (event) {
-      if (StringWrapper.equals(
-          KeyEventsPlugin.getEventFullKey(event), fullKey)) {
+      if (KeyEventsPlugin.getEventFullKey(event) == fullKey) {
         zone.runGuarded(() => handler(event));
       }
     };

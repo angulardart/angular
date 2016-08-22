@@ -1,7 +1,6 @@
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show NumberWrapper, StringWrapper, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
@@ -96,7 +95,7 @@ class Token {
 
 Token newCharacterToken(num index, num code) {
   return new Token(
-      index, TokenType.Character, code, StringWrapper.fromCharCode(code));
+      index, TokenType.Character, code, new String.fromCharCode(code));
 }
 
 Token newIdentifierToken(num index, String text) {
@@ -191,9 +190,8 @@ class _Scanner {
     this.advance();
   }
   advance() {
-    this.peek = ++this.index >= this.length
-        ? $EOF
-        : StringWrapper.charCodeAt(this.input, this.index);
+    this.peek =
+        ++this.index >= this.length ? $EOF : this.input.codeUnitAt(this.index);
   }
 
   Token scanToken() {
@@ -207,7 +205,7 @@ class _Scanner {
         peek = $EOF;
         break;
       } else {
-        peek = StringWrapper.charCodeAt(input, index);
+        peek = input.codeUnitAt(index);
       }
     }
     this.peek = peek;
@@ -245,18 +243,18 @@ class _Scanner {
       case $SLASH:
       case $PERCENT:
       case $CARET:
-        return this.scanOperator(start, StringWrapper.fromCharCode(peek));
+        return this.scanOperator(start, new String.fromCharCode(peek));
       case $QUESTION:
         return this
             .scanComplexOperator(start, "?", $PERIOD, ".", $QUESTION, "?");
       case $LT:
       case $GT:
         return this.scanComplexOperator(
-            start, StringWrapper.fromCharCode(peek), $EQ, "=");
+            start, new String.fromCharCode(peek), $EQ, "=");
       case $BANG:
       case $EQ:
         return this.scanComplexOperator(
-            start, StringWrapper.fromCharCode(peek), $EQ, "=", $EQ, "=");
+            start, new String.fromCharCode(peek), $EQ, "=", $EQ, "=");
       case $AMPERSAND:
         return this.scanComplexOperator(start, "&", $AMPERSAND, "&");
       case $BAR:
@@ -266,8 +264,7 @@ class _Scanner {
         return this.scanToken();
     }
     this.error(
-        '''Unexpected character [${ StringWrapper . fromCharCode ( peek )}]''',
-        0);
+        '''Unexpected character [${ new String . fromCharCode ( peek )}]''', 0);
     return null;
   }
 
@@ -337,9 +334,7 @@ class _Scanner {
     }
     String str = this.input.substring(start, this.index);
     // TODO
-    num value = simple
-        ? NumberWrapper.parseIntAutoRadix(str)
-        : NumberWrapper.parseFloat(str);
+    num value = simple ? int.parse(str) : double.parse(str);
     return newNumberToken(start, value);
   }
 
@@ -360,7 +355,7 @@ class _Scanner {
           // 4 character hex code for unicode character.
           String hex = input.substring(this.index + 1, this.index + 5);
           try {
-            unescapedCode = NumberWrapper.parseInt(hex, 16);
+            unescapedCode = int.parse(hex, radix: 16);
           } catch (e) {
             this.error('''Invalid unicode escape [\\u${ hex}]''', 0);
           }
@@ -371,7 +366,7 @@ class _Scanner {
           unescapedCode = unescape(this.peek);
           this.advance();
         }
-        buffer.add(StringWrapper.fromCharCode(unescapedCode));
+        buffer.add(new String.fromCharCode(unescapedCode));
         marker = this.index;
       } else if (this.peek == $EOF) {
         this.error("Unterminated quote", 0);

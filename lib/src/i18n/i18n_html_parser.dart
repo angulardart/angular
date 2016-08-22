@@ -16,8 +16,7 @@ import "package:angular2/src/compiler/html_parser.dart"
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, NumberWrapper, isPresent;
+import "package:angular2/src/facade/lang.dart" show RegExpWrapper, isPresent;
 
 import "expander.dart" show expandNodes;
 import "message.dart" show id;
@@ -233,7 +232,7 @@ class I18nHtmlParser implements HtmlParser {
       HtmlElementAst t, List<HtmlAst> translated, List<HtmlAst> mapping) {
     var name = this._getName(t);
     var type = name[0];
-    var index = NumberWrapper.parseInt(name.substring(1), 10);
+    var index = int.parse(name.substring(1), radix: 10);
     var originalNode = mapping[index];
     if (type == "t") {
       return this._mergeTextInterpolation(t, (originalNode as HtmlTextAst));

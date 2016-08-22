@@ -1,6 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, RegExpWrapper, RegExpMatcherWrapper, StringWrapper;
+    show isPresent, isBlank, RegExpWrapper, RegExpMatcherWrapper;
 
 const _EMPTY_ATTR_VALUE = "";
 // TODO: Can't use `const` here as
@@ -290,7 +290,7 @@ class SelectorMatcher {
         var attrName = attrs[index++];
         var attrValue = attrs[index++];
         var terminalValuesMap = this._attrValueMap[attrName];
-        if (!StringWrapper.equals(attrValue, _EMPTY_ATTR_VALUE)) {
+        if (attrValue != _EMPTY_ATTR_VALUE) {
           result = this._matchTerminal(terminalValuesMap, _EMPTY_ATTR_VALUE,
                   cssSelector, matchedCallback) ||
               result;
@@ -299,7 +299,7 @@ class SelectorMatcher {
                 terminalValuesMap, attrValue, cssSelector, matchedCallback) ||
             result;
         var partialValuesMap = this._attrValuePartialMap[attrName];
-        if (!StringWrapper.equals(attrValue, _EMPTY_ATTR_VALUE)) {
+        if (attrValue != _EMPTY_ATTR_VALUE) {
           result = this._matchPartial(partialValuesMap, _EMPTY_ATTR_VALUE,
                   cssSelector, matchedCallback) ||
               result;

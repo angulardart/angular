@@ -4,7 +4,6 @@ library angular2.test.core.change_detection.differs.default_iterable_differ_test
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, DefaultIterableDifferFactory;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 import 'dart:collection';
 import 'package:test/test.dart';
 
@@ -183,17 +182,16 @@ main() {
                 collection: ["a", "boo"], previous: ["a", "boo"]));
       });
       test("should ignore [NaN] != [NaN] (JS)", () {
-        var l = [NumberWrapper.NaN];
+        var l = [double.NAN];
         differ.check(l);
         differ.check(l);
         expect(
             differ.toString(),
             iterableChangesAsString(
-                collection: [NumberWrapper.NaN],
-                previous: [NumberWrapper.NaN]));
+                collection: [double.NAN], previous: [double.NAN]));
       });
       test("should detect [NaN] moves", () {
-        var l = [NumberWrapper.NaN, NumberWrapper.NaN];
+        var l = [double.NAN, double.NAN];
         differ.check(l);
         l.insert(0, 'foo');
         differ.check(l);

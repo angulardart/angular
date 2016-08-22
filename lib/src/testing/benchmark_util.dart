@@ -1,12 +1,12 @@
 import "package:angular2/src/facade/browser.dart" show document, window;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper, isBlank;
+import "package:angular2/src/facade/lang.dart" show isBlank;
 import "package:angular2/src/platform/browser/browser_adapter.dart"
     show BrowserDomAdapter;
 
 var DOM = new BrowserDomAdapter();
-getIntParameter(String name) {
-  return NumberWrapper.parseInt(getStringParameter(name), 10);
+int getIntParameter(String name) {
+  return int.parse(getStringParameter(name), radix: 10);
 }
 
 getStringParameter(String name) {

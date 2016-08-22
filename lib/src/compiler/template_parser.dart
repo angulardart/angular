@@ -8,8 +8,7 @@ import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/linker/view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show jsSplit, RegExpWrapper;
 
 import "compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
@@ -1021,7 +1020,7 @@ class ElementOrDirectiveRef {
 }
 
 List<String> splitClasses(String classAttrValue) {
-  return StringWrapper.split(classAttrValue.trim(), new RegExp(r'\s+'));
+  return jsSplit(classAttrValue.trim(), (new RegExp(r'\s+')));
 }
 
 class ElementContext {
@@ -1040,7 +1039,7 @@ class ElementContext {
       var ngContentSelectors = component.directive.template.ngContentSelectors;
       for (var i = 0; i < ngContentSelectors.length; i++) {
         var selector = ngContentSelectors[i];
-        if (StringWrapper.equals(selector, "*")) {
+        if (selector == "*") {
           wildcardNgContentIndex = i;
         } else {
           matcher.addSelectables(CssSelector.parse(ngContentSelectors[i]), i);

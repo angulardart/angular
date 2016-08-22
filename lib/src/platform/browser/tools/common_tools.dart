@@ -2,7 +2,7 @@ import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef;
 import "package:angular2/src/facade/browser.dart" show window;
-import "package:angular2/src/facade/lang.dart" show isPresent, NumberWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 class ChangeDetectionPerfRecord {
@@ -74,7 +74,7 @@ class AngularProfiler {
     }
     var msPerTick = (end - start) / numTicks;
     print('''ran ${ numTicks} change detection cycles''');
-    print('''${ NumberWrapper . toFixed ( msPerTick , 2 )} ms per check''');
+    print('''${msPerTick.toStringAsFixed(2)} ms per check''');
     return new ChangeDetectionPerfRecord(msPerTick, numTicks);
   }
 }

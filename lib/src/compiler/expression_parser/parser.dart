@@ -1,7 +1,6 @@
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show isBlank, isPresent, jsSplit;
 
 import "ast.dart"
     show
@@ -146,7 +145,7 @@ class Parser {
   }
 
   SplitInterpolation splitInterpolation(String input, String location) {
-    var parts = StringWrapper.split(input, INTERPOLATION_REGEXP);
+    var parts = jsSplit(input, INTERPOLATION_REGEXP);
     if (parts.length <= 1) {
       return null;
     }
@@ -182,8 +181,8 @@ class Parser {
   num _commentStart(String input) {
     var outerQuote = null;
     for (var i = 0; i < input.length - 1; i++) {
-      var char = StringWrapper.charCodeAt(input, i);
-      var nextChar = StringWrapper.charCodeAt(input, i + 1);
+      var char = input.codeUnitAt(i);
+      var nextChar = input.codeUnitAt(i + 1);
       if (identical(char, $SLASH) && nextChar == $SLASH && isBlank(outerQuote))
         return i;
       if (identical(outerQuote, char)) {
@@ -196,7 +195,7 @@ class Parser {
   }
 
   void _checkNoInterpolation(String input, dynamic location) {
-    var parts = StringWrapper.split(input, INTERPOLATION_REGEXP);
+    var parts = jsSplit(input, INTERPOLATION_REGEXP);
     if (parts.length > 1) {
       throw new ParseException(
           "Got interpolation ({{}}) where expression was expected",
@@ -264,8 +263,7 @@ class _ParseAST {
 
   expectCharacter(num code) {
     if (this.optionalCharacter(code)) return;
-    this.error(
-        '''Missing expected ${ StringWrapper . fromCharCode ( code )}''');
+    this.error('''Missing expected ${new String.fromCharCode(code)}''');
   }
 
   bool optionalOperator(String op) {

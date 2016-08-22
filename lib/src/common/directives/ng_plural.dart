@@ -8,7 +8,7 @@ import "package:angular2/core.dart"
         Attribute,
         AfterContentInit,
         Input;
-import "package:angular2/src/facade/lang.dart" show isPresent, NumberWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "ng_switch.dart" show SwitchView;
 
@@ -139,6 +139,6 @@ class NgPlural implements AfterContentInit {
   }
 
   num _stripValue(String value) {
-    return NumberWrapper.parseInt(value.substring(1), 10);
+    return int.parse(value.substring(1), radix: 10);
   }
 }

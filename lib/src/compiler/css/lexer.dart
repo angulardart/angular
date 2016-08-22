@@ -39,8 +39,7 @@ import "package:angular2/src/compiler/chars.dart"
         $LF,
         $VTAB;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, isPresent, resolveEnumToken;
+import "package:angular2/src/facade/lang.dart" show isPresent, resolveEnumToken;
 
 export "package:angular2/src/compiler/chars.dart"
     show
@@ -202,9 +201,7 @@ class CssScanner {
   }
 
   num peekAt(num index) {
-    return index >= this.length
-        ? $EOF
-        : StringWrapper.charCodeAt(this.input, index);
+    return index >= this.length ? $EOF : this.input.codeUnitAt(index);
   }
 
   void consumeEmptyStatements() {
@@ -340,7 +337,7 @@ class CssScanner {
       return this.scanCharacter();
     }
     return this.error(
-        '''Unexpected character [${ StringWrapper . fromCharCode ( peek )}]''');
+        '''Unexpected character [${ new String.fromCharCode ( peek )}]''');
   }
 
   CssToken scanComment() {
@@ -497,7 +494,7 @@ class CssScanner {
     num line = this.line;
     errorTokenValue = isPresent(errorTokenValue)
         ? errorTokenValue
-        : StringWrapper.fromCharCode(this.peek);
+        : new String.fromCharCode(this.peek);
     var invalidToken = new CssToken(
         index, column, line, CssTokenType.Invalid, errorTokenValue);
     var errorMessage = generateErrorMessage(
@@ -724,11 +721,11 @@ bool isValidCssCharacter(num code, CssLexerMode mode) {
 }
 
 num charCode(input, index) {
-  return index >= input.length ? $EOF : StringWrapper.charCodeAt(input, index);
+  return index >= input.length ? $EOF : input.codeUnitAt(index);
 }
 
 String charStr(num code) {
-  return StringWrapper.fromCharCode(code);
+  return new String.fromCharCode(code);
 }
 
 bool isNewline(code) {

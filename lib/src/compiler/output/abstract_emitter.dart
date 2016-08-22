@@ -1,6 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "output_ast.dart" as o;
 
@@ -484,8 +483,7 @@ dynamic escapeSingleQuoteString(String input, bool escapeDollar) {
   if (input == null) {
     return null;
   }
-  var body = StringWrapper
-      .replaceAllMapped(input, _SINGLE_QUOTE_ESCAPE_STRING_RE, (match) {
+  var body = input.replaceAllMapped(_SINGLE_QUOTE_ESCAPE_STRING_RE, (match) {
     if (match[0] == "\$") {
       return escapeDollar ? "\\\$" : "\$";
     } else if (match[0] == "\n") {

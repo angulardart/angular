@@ -2,8 +2,7 @@ import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/intl.dart"
     show NumberFormatter, NumberFormatStyle;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, NumberWrapper, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, RegExpWrapper;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -26,14 +25,14 @@ class NumberPipe {
         throw new BaseException(
             '''${ digits} is not a valid digit info for number pipes''');
       }
-      if (isPresent(parts[1])) {
-        minInt = NumberWrapper.parseIntAutoRadix(parts[1]);
+      if (parts[1] != null) {
+        minInt = int.parse(parts[1]);
       }
-      if (isPresent(parts[3])) {
-        minFraction = NumberWrapper.parseIntAutoRadix(parts[3]);
+      if (parts[3] != null) {
+        minFraction = int.parse(parts[3]);
       }
-      if (isPresent(parts[5])) {
-        maxFraction = NumberWrapper.parseIntAutoRadix(parts[5]);
+      if (parts[5] != null) {
+        maxFraction = int.parse(parts[5]);
       }
     }
     return NumberFormatter.format(value, defaultLocale, style,

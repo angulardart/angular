@@ -1,6 +1,5 @@
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
-import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, StringWrapper;
+import "package:angular2/src/facade/lang.dart" show RegExpWrapper;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -53,14 +52,13 @@ class ReplacePipe implements PipeTransform {
       var rgxPattern = pattern is String
           ? RegExpWrapper.create(pattern)
           : (pattern as RegExp);
-      return StringWrapper.replaceAllMapped(input, rgxPattern, replacement);
+      return input.replaceAllMapped(rgxPattern, replacement);
     }
     if (pattern is RegExp) {
       // use the replaceAll variant
-      return StringWrapper.replaceAll(input, pattern, (replacement as String));
+      return input.replaceAll(pattern, (replacement as String));
     }
-    return StringWrapper.replace(
-        input, (pattern as String), (replacement as String));
+    return input.replaceFirst((pattern as String), (replacement as String));
   }
 
   bool _supportedInput(dynamic input) => input is String || input is num;

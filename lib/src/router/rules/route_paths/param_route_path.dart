@@ -1,6 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, StringWrapper, isPresent, isBlank;
+    show RegExpWrapper, isPresent, isBlank;
 
 import "../../url_parser.dart" show Url, RootUrl, convertUrlParamsToArray;
 import "../../utils.dart" show TouchMap, normalizeString;
@@ -275,7 +275,7 @@ class ParamRoutePath implements RoutePath {
   }
 
   _assertValidPath(String path) {
-    if (StringWrapper.contains(path, "#")) {
+    if (path.contains("#")) {
       throw new BaseException(
           '''Path "${ path}" should not include "#". Use "HashLocationStrategy" instead.''');
     }
@@ -299,11 +299,11 @@ String encodeDynamicSegment(String value) {
   if (isBlank(value)) {
     return null;
   }
-  value = StringWrapper.replaceAll(value, REGEXP_PERCENT, "%25");
-  value = StringWrapper.replaceAll(value, REGEXP_SLASH, "%2F");
-  value = StringWrapper.replaceAll(value, REGEXP_OPEN_PARENT, "%28");
-  value = StringWrapper.replaceAll(value, REGEXP_CLOSE_PARENT, "%29");
-  value = StringWrapper.replaceAll(value, REGEXP_SEMICOLON, "%3B");
+  value = value.replaceAll(REGEXP_PERCENT, "%25");
+  value = value.replaceAll(REGEXP_SLASH, "%2F");
+  value = value.replaceAll(REGEXP_OPEN_PARENT, "%28");
+  value = value.replaceAll(REGEXP_CLOSE_PARENT, "%29");
+  value = value.replaceAll(REGEXP_SEMICOLON, "%3B");
   return value;
 }
 
@@ -316,10 +316,10 @@ String decodeDynamicSegment(String value) {
   if (isBlank(value)) {
     return null;
   }
-  value = StringWrapper.replaceAll(value, REGEXP_ENC_SEMICOLON, ";");
-  value = StringWrapper.replaceAll(value, REGEXP_ENC_CLOSE_PARENT, ")");
-  value = StringWrapper.replaceAll(value, REGEXP_ENC_OPEN_PARENT, "(");
-  value = StringWrapper.replaceAll(value, REGEXP_ENC_SLASH, "/");
-  value = StringWrapper.replaceAll(value, REGEXP_ENC_PERCENT, "%");
+  value = value.replaceAll(REGEXP_ENC_SEMICOLON, ";");
+  value = value.replaceAll(REGEXP_ENC_CLOSE_PARENT, ")");
+  value = value.replaceAll(REGEXP_ENC_OPEN_PARENT, "(");
+  value = value.replaceAll(REGEXP_ENC_SLASH, "/");
+  value = value.replaceAll(REGEXP_ENC_PERCENT, "%");
   return value;
 }

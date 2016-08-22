@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import "package:angular2/core.dart" show Provider, Attribute, Directive;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 
 import "../model.dart" show AbstractControl;
 import "../model.dart" as modelModule;
@@ -59,8 +58,7 @@ const MIN_LENGTH_VALIDATOR =
 class MinLengthValidator implements Validator {
   ValidatorFn _validator;
   MinLengthValidator(@Attribute("minlength") String minLength) {
-    this._validator =
-        Validators.minLength(NumberWrapper.parseInt(minLength, 10));
+    this._validator = Validators.minLength(int.parse(minLength, radix: 10));
   }
   Map<String, dynamic> validate(AbstractControl c) {
     return this._validator(c);
@@ -81,8 +79,7 @@ const MAX_LENGTH_VALIDATOR =
 class MaxLengthValidator implements Validator {
   ValidatorFn _validator;
   MaxLengthValidator(@Attribute("maxlength") String maxLength) {
-    this._validator =
-        Validators.maxLength(NumberWrapper.parseInt(maxLength, 10));
+    this._validator = Validators.maxLength(int.parse(maxLength, radix: 10));
   }
   Map<String, dynamic> validate(AbstractControl c) {
     return this._validator(c);

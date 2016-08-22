@@ -1,6 +1,5 @@
 import "package:angular2/core.dart"
     show Directive, ElementRef, Renderer, Provider;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -39,7 +38,7 @@ class NumberValueAccessor implements ControlValueAccessor {
 
   void registerOnChange(dynamic fn) {
     this.onChange = (value) {
-      fn(value == "" ? null : NumberWrapper.parseFloat(value));
+      fn(value == "" ? null : double.parse(value));
     };
   }
 

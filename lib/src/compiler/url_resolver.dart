@@ -1,7 +1,7 @@
 import 'package:angular2/src/core/application_tokens.dart'
     show PACKAGE_ROOT_URL;
 import 'package:angular2/src/core/di.dart' show Injectable, Inject, Provider;
-import 'package:angular2/src/facade/lang.dart' show isPresent, StringWrapper;
+import 'package:angular2/src/facade/lang.dart' show isPresent;
 
 const _ASSET_SCHEME = 'asset:';
 
@@ -54,14 +54,41 @@ class UrlResolver {
         var pathSegments = uri.pathSegments.toList()..insert(1, 'lib');
         return new Uri(scheme: 'asset', pathSegments: pathSegments).toString();
       } else {
-        prefix = StringWrapper.stripRight(prefix, '/');
-        var path = StringWrapper.stripLeft(uri.path, '/');
+        prefix = _removeTrailingSlash(prefix);
+        var path = _removeLeadingChars(uri.path);
         return '$prefix/$path';
       }
     } else {
       return uri.toString();
     }
   }
+}
+
+// Inline two functions originally in TS facades due to them not being simple
+// enough to inline in the function above.
+
+String _removeLeadingChars(String s) {
+  if (s?.isNotEmpty == true) {
+    var pos = 0;
+    for (var i = 0; i < s.length; i++) {
+      if (s[i] != '/') break;
+      pos++;
+    }
+    s = s.substring(pos);
+  }
+  return s;
+}
+
+String _removeTrailingSlash(String s) {
+  if (s?.isNotEmpty == true) {
+    var pos = s.length;
+    for (var i = s.length - 1; i >= 0; i--) {
+      if (s[i] != '/') break;
+      pos--;
+    }
+    s = s.substring(0, pos);
+  }
+  return s;
 }
 
 String getUrlScheme(String url) {

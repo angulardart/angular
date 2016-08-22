@@ -1,5 +1,4 @@
-import "package:angular2/src/facade/lang.dart"
-    show StringWrapper, NumberWrapper, isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "html_tags.dart"
     show getHtmlTagDefinition, HtmlTagContentType, NAMED_ENTITIES;
@@ -96,7 +95,7 @@ const $NBSP = 160;
 var CR_OR_CRLF_REGEXP = new RegExp(r'\r\n?');
 String unexpectedCharacterErrorMsg(num charCode) {
   var char =
-      identical(charCode, $EOF) ? "EOF" : StringWrapper.fromCharCode(charCode);
+      identical(charCode, $EOF) ? "EOF" : new String.fromCharCode(charCode);
   return '''Unexpected character "${ char}"''';
 }
 
@@ -133,13 +132,10 @@ class _HtmlTokenizer {
   }
   String _processCarriageReturns(String content) {
     // http://www.w3.org/TR/html5/syntax.html#preprocessing-the-input-stream
-
     // In order to keep the original position in the source, we can not
-
     // pre-process it.
-
     // Instead CRs are processed right before instantiating the tokens.
-    return StringWrapper.replaceAll(content, CR_OR_CRLF_REGEXP, "\n");
+    return content.replaceAll(CR_OR_CRLF_REGEXP, "\n");
   }
 
   HtmlTokenizeResult tokenize() {
@@ -242,12 +238,11 @@ class _HtmlTokenizer {
       this.column++;
     }
     this.index++;
-    this.peek = this.index >= this.length
-        ? $EOF
-        : StringWrapper.charCodeAt(this.input, this.index);
+    this.peek =
+        this.index >= this.length ? $EOF : this.input.codeUnitAt(this.index);
     this.nextPeek = this.index + 1 >= this.length
         ? $EOF
-        : StringWrapper.charCodeAt(this.input, this.index + 1);
+        : this.input.codeUnitAt(this.index + 1);
   }
 
   bool _attemptCharCode(num charCode) {
@@ -276,7 +271,7 @@ class _HtmlTokenizer {
 
   bool _attemptStr(String chars) {
     for (var i = 0; i < chars.length; i++) {
-      if (!this._attemptCharCode(StringWrapper.charCodeAt(chars, i))) {
+      if (!this._attemptCharCode(chars.codeUnitAt(i))) {
         return false;
       }
     }
@@ -285,8 +280,7 @@ class _HtmlTokenizer {
 
   bool _attemptStrCaseInsensitive(String chars) {
     for (var i = 0; i < chars.length; i++) {
-      if (!this._attemptCharCodeCaseInsensitive(
-          StringWrapper.charCodeAt(chars, i))) {
+      if (!this._attemptCharCodeCaseInsensitive(chars.codeUnitAt(i))) {
         return false;
       }
     }
@@ -346,8 +340,8 @@ class _HtmlTokenizer {
       this._advance();
       var strNum = this.input.substring(numberStart, this.index - 1);
       try {
-        var charCode = NumberWrapper.parseInt(strNum, isHex ? 16 : 10);
-        return StringWrapper.fromCharCode(charCode);
+        var charCode = int.parse(strNum, radix: isHex ? 16 : 10);
+        return new String.fromCharCode(charCode);
       } catch (e) {
         var entity = this.input.substring(start.offset + 1, this.index - 1);
         throw this

@@ -2,7 +2,6 @@ library angular2.test.core.change_detection.differs.default_keyvalue_differ_test
 
 import "package:angular2/src/core/change_detection/differs/default_keyvalue_differ.dart"
     show DefaultKeyValueDiffer;
-import "package:angular2/src/facade/lang.dart" show NumberWrapper;
 import 'package:test/test.dart';
 
 // todo(vicb): Update the code & tests for object equality
@@ -113,7 +112,7 @@ main() {
             kvChangesAsString(map: ["foo"], previous: ["foo"]));
       });
       test("should not see a NaN value as a change (JS)", () {
-        m["foo"] = NumberWrapper.NaN;
+        m["foo"] = double.NAN;
         differ.check(m);
         differ.check(m);
         expect(differ.toString(),

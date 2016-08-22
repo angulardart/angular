@@ -1,6 +1,6 @@
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, RegExpWrapper, StringWrapper, RegExp;
+    show isPresent, RegExpWrapper, RegExp;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 @Injectable()
@@ -102,8 +102,8 @@ var _RE_SPECIAL_CHARS = [
 var _ESCAPE_RE =
     RegExpWrapper.create('''[\\${ _RE_SPECIAL_CHARS . join ( "\\" )}]''');
 RegExp containsRegexp(String input) {
-  return RegExpWrapper.create(StringWrapper.replaceAllMapped(
-      input, _ESCAPE_RE, (match) => '''\\${ match [ 0 ]}'''));
+  return RegExpWrapper.create(
+      input.replaceAllMapped(_ESCAPE_RE, (match) => '''\\${ match [ 0 ]}'''));
 }
 
 RegExp _normalizerExp1,
@@ -120,14 +120,14 @@ String normalizeCSS(String css) {
   _normalizerExp4 ??= new RegExp(' }');
   _normalizerExp5 ??= new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
   _normalizerExp6 ??= new RegExp(r'\[(.+)=([^"\]]+)\]');
-  css = StringWrapper.replaceAll(css, _normalizerExp1, " ");
-  css = StringWrapper.replaceAll(css, _normalizerExp2, ":");
-  css = StringWrapper.replaceAll(css, _normalizerExp3, "\"");
-  css = StringWrapper.replaceAll(css, _normalizerExp4, "}");
-  css = StringWrapper.replaceAllMapped(
-      css, _normalizerExp5, (match) => '''url("${ match [ 2 ]}")''');
-  css = StringWrapper.replaceAllMapped(css, _normalizerExp6,
-      (match) => '''[${ match [ 1 ]}="${ match [ 2 ]}"]''');
+  css = css.replaceAll(_normalizerExp1, " ");
+  css = css.replaceAll(_normalizerExp2, ":");
+  css = css.replaceAll(_normalizerExp3, "\"");
+  css = css.replaceAll(_normalizerExp4, "}");
+  css = css.replaceAllMapped(
+      _normalizerExp5, (match) => '''url("${ match [ 2 ]}")''');
+  css = css.replaceAllMapped(
+      _normalizerExp6, (match) => '''[${ match [ 1 ]}="${ match [ 2 ]}"]''');
   return css;
 }
 
