@@ -1,6 +1,5 @@
 import "package:angular2/core.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, RegExpWrapper, RegExp;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 @Injectable()
@@ -99,10 +98,9 @@ var _RE_SPECIAL_CHARS = [
   "\$",
   "|"
 ];
-var _ESCAPE_RE =
-    RegExpWrapper.create('''[\\${ _RE_SPECIAL_CHARS . join ( "\\" )}]''');
+final _ESCAPE_RE = new RegExp('''[\\${ _RE_SPECIAL_CHARS . join ( "\\" )}]''');
 RegExp containsRegexp(String input) {
-  return RegExpWrapper.create(
+  return new RegExp(
       input.replaceAllMapped(_ESCAPE_RE, (match) => '''\\${ match [ 0 ]}'''));
 }
 

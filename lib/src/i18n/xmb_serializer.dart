@@ -3,13 +3,11 @@ import "package:angular2/src/compiler/html_ast.dart"
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "message.dart" show Message, id;
 
-var _PLACEHOLDER_REGEXP =
-    RegExpWrapper.create('''\\<ph(\\s)+name=("(\\w)+")\\/\\>''');
+var _PLACEHOLDER_REGEXP = new RegExp('''\\<ph(\\s)+name=("(\\w)+")\\/\\>''');
 const _ID_ATTR = "id";
 const _MSG_ELEMENT = "msg";
 const _BUNDLE_ELEMENT = "message-bundle";
@@ -92,7 +90,7 @@ String _serializeMessage(Message m) {
 }
 
 String _expandPlaceholder(String input) {
-  return RegExpWrapper.replaceAll(_PLACEHOLDER_REGEXP, input, (match) {
+  return input.replaceAllMapped(_PLACEHOLDER_REGEXP, (match) {
     var nameWithQuotes = match[2];
     return '''<ph name=${ nameWithQuotes}></ph>''';
   });

@@ -1,12 +1,9 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, RegExpWrapper, RegExpMatcherWrapper;
+    show isPresent, isBlank, RegExpMatcherWrapper;
 
 const _EMPTY_ATTR_VALUE = "";
-// TODO: Can't use `const` here as
-
-// in Dart this is not transpiled into `final` yet...
-var _SELECTOR_REGEXP = RegExpWrapper.create("(\\:not\\()|" +
+final _SELECTOR_REGEXP = new RegExp("(\\:not\\()|" +
     "([-\\w]+)|" +
     "(?:\\.([-\\w]+))|" +
     "(?:\\[([-\\w*]+)(?:=([^\\]]*))?\\])|" +
@@ -35,12 +32,12 @@ class CssSelector {
       res.add(cssSel);
     };
     var cssSelector = new CssSelector();
-    var matcher = RegExpWrapper.matcher(_SELECTOR_REGEXP, selector);
-    var match;
+    var matcher = _SELECTOR_REGEXP.allMatches(selector);
     var current = cssSelector;
     var inNot = false;
-    while (isPresent(match = RegExpMatcherWrapper.next(matcher))) {
-      if (isPresent(match[1])) {
+    for (var match in matcher) {
+      if (match == null) break;
+      if (match[1] != null) {
         if (inNot) {
           throw new BaseException("Nesting :not is not allowed in a selector");
         }

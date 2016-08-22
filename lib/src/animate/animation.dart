@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import "package:angular2/src/facade/lang.dart" show RegExpWrapper, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/util.dart" show camelCaseToDashCase;
 
@@ -160,6 +160,6 @@ class Animation {
 
   /// Strips the letters from the duration string
   String stripLetters(String str) {
-    return str.replaceAll(RegExpWrapper.create("[^0-9]+\$", ""), "");
+    return str.replaceAll(new RegExp("[^0-9]+\$"), "");
   }
 }

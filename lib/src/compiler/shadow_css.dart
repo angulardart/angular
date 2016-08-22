@@ -1,11 +1,4 @@
-import "package:angular2/src/facade/lang.dart"
-    show
-        RegExp,
-        RegExpWrapper,
-        RegExpMatcherWrapper,
-        isPresent,
-        isBlank,
-        jsSplit;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, jsSplit;
 /**
  * This file is a port of shadowCSS from webcomponents.js to TypeScript.
  *
@@ -239,9 +232,10 @@ class ShadowCss {
   **/
   String _extractUnscopedRulesFromCssText(String cssText) {
     // Difference with webcomponents.js: does not handle comments
-    var r = "", m;
-    var matcher = RegExpWrapper.matcher(_cssContentUnscopedRuleRe, cssText);
-    while (isPresent(m = RegExpMatcherWrapper.next(matcher))) {
+    var r = "";
+    var matches = _cssContentUnscopedRuleRe.allMatches(cssText);
+    for (var m in matches) {
+      if (m == null) break;
       var rule = m[0];
       rule = rule.replaceFirst(m[2], "");
       rule = rule.replaceFirst(m[1], m[3]);
@@ -364,7 +358,7 @@ class ShadowCss {
 
   bool _selectorNeedsScoping(String selector, String scopeSelector) {
     var re = this._makeScopeMatcher(scopeSelector);
-    return !isPresent(RegExpWrapper.firstMatch(re, selector));
+    return re.firstMatch(selector) == null;
   }
 
   RegExp _makeScopeMatcher(String scopeSelector) {
@@ -372,8 +366,8 @@ class ShadowCss {
     var rre = new RegExp(r'\]');
     scopeSelector = scopeSelector.replaceAll(lre, "\\[");
     scopeSelector = scopeSelector.replaceAll(rre, "\\]");
-    return RegExpWrapper.create(
-        "^(" + scopeSelector + ")" + _selectorReSuffix, "m");
+    return new RegExp("^(" + scopeSelector + ")" + _selectorReSuffix,
+        multiLine: true);
   }
 
   String _applySelectorScope(
@@ -386,7 +380,7 @@ class ShadowCss {
   // scope via name and [is=name]
   String _applySimpleSelectorScope(
       String selector, String scopeSelector, String hostSelector) {
-    if (isPresent(RegExpWrapper.firstMatch(_polyfillHostRe, selector))) {
+    if (_polyfillHostRe.firstMatch(selector) != null) {
       var replaceBy =
           this.strictStyling ? '''[${ hostSelector}]''' : scopeSelector;
       selector = selector.replaceFirst(_polyfillHostNoCombinator, replaceBy);
@@ -413,8 +407,8 @@ class ShadowCss {
             var t = p.trim().replaceAll(_polyfillHostRe, "");
             if (t.length > 0 && !splits.contains(t) && !t.contains(attrName)) {
               var re = new RegExp(r'([^:]*)(:*)(.*)');
-              var m = RegExpWrapper.firstMatch(re, t);
-              if (isPresent(m)) {
+              var m = re.firstMatch(t);
+              if (m != null) {
                 p = m[1] + attrName + m[2] + m[3];
               }
             }
@@ -433,7 +427,7 @@ class ShadowCss {
   }
 }
 
-var _cssContentNextSelectorRe = new RegExp(
+final RegExp _cssContentNextSelectorRe = new RegExp(
     r'polyfill-next-selector[^}]*content:[\s]*?[' +
         "'" +
         r'"](.*?)[' +
@@ -441,7 +435,7 @@ var _cssContentNextSelectorRe = new RegExp(
         r'"][;\s]*}([^{]*?){',
     multiLine: true,
     caseSensitive: false);
-var _cssContentRuleRe = new RegExp(
+final RegExp _cssContentRuleRe = new RegExp(
     r'(polyfill-rule)[^}]*(content:[\s]*[' +
         "'" +
         r'"](.*?)[' +
@@ -449,7 +443,7 @@ var _cssContentRuleRe = new RegExp(
         r'"])[;\s]*[^}]*}',
     multiLine: true,
     caseSensitive: false);
-var _cssContentUnscopedRuleRe = new RegExp(
+final RegExp _cssContentUnscopedRuleRe = new RegExp(
     r'(polyfill-unscoped-rule)[^}]*(content:[\s]*[' +
         "'" +
         r'"](.*?)[' +
@@ -457,41 +451,43 @@ var _cssContentUnscopedRuleRe = new RegExp(
         r'"])[;\s]*[^}]*}',
     multiLine: true,
     caseSensitive: false);
-var _polyfillHost = "-shadowcsshost";
+const String _polyfillHost = "-shadowcsshost";
 // note: :host-context pre-processed to -shadowcsshostcontext.
-var _polyfillHostContext = "-shadowcsscontext";
-var _parenSuffix = ")(?:\\((" + "(?:\\([^)(]*\\)|[^)(]*)+?" + ")\\))?([^,{]*)";
-var _cssColonHostRe =
-    RegExpWrapper.create("(" + _polyfillHost + _parenSuffix, "im");
-var _cssColonHostContextRe =
-    RegExpWrapper.create("(" + _polyfillHostContext + _parenSuffix, "im");
-var _polyfillHostNoCombinator = _polyfillHost + "-no-combinator";
-var _shadowDOMSelectorsRe = [
+const String _polyfillHostContext = "-shadowcsscontext";
+const String _parenSuffix =
+    ")(?:\\((" + "(?:\\([^)(]*\\)|[^)(]*)+?" + ")\\))?([^,{]*)";
+final RegExp _cssColonHostRe = new RegExp("(" + _polyfillHost + _parenSuffix,
+    caseSensitive: false, multiLine: true);
+final RegExp _cssColonHostContextRe = new RegExp(
+    "(" + _polyfillHostContext + _parenSuffix,
+    caseSensitive: false,
+    multiLine: true);
+const String _polyfillHostNoCombinator = _polyfillHost + "-no-combinator";
+final List<RegExp> _shadowDOMSelectorsRe = [
   new RegExp(r'::shadow'), new RegExp(r'::content'),
   // Deprecated selectors
-
   // TODO(vicb): see https://github.com/angular/clang-format/issues/16
-
-  // clang-format off
   new RegExp(r'\/shadow-deep\/'), new RegExp(r'\/shadow\/')
 ];
-var _shadowDeepSelectors = new RegExp(r'(?:>>>)|(?:\/deep\/)');
-var _selectorReSuffix = "([>\\s~+[.,{:][\\s\\S]*)?\$";
-var _polyfillHostRe = RegExpWrapper.create(_polyfillHost, "im");
-var _colonHostRe = new RegExp(r':host', multiLine: true, caseSensitive: false);
-var _colonHostContextRe =
+final RegExp _shadowDeepSelectors = new RegExp(r'(?:>>>)|(?:\/deep\/)');
+const String _selectorReSuffix = "([>\\s~+[.,{:][\\s\\S]*)?\$";
+final RegExp _polyfillHostRe =
+    new RegExp(_polyfillHost, multiLine: true, caseSensitive: false);
+final RegExp _colonHostRe =
+    new RegExp(r':host', multiLine: true, caseSensitive: false);
+final RegExp _colonHostContextRe =
     new RegExp(r':host-context', multiLine: true, caseSensitive: false);
-var _commentRe = new RegExp(r'\/\*[\s\S]*?\*\/');
+final RegExp _commentRe = new RegExp(r'\/\*[\s\S]*?\*\/');
 String stripComments(String input) {
   return input.replaceAllMapped(_commentRe, (_) => "");
 }
 
-var _ruleRe =
+final RegExp _ruleRe =
     new RegExp(r'(\s*)([^;\{\}]+?)(\s*)((?:{%BLOCK%}?\s*;?)|(?:\s*;))');
-var _curlyRe = new RegExp(r'([{}])');
-const OPEN_CURLY = "{";
-const CLOSE_CURLY = "}";
-const BLOCK_PLACEHOLDER = "%BLOCK%";
+final RegExp _curlyRe = new RegExp(r'([{}])');
+const String OPEN_CURLY = "{";
+const String CLOSE_CURLY = "}";
+const String BLOCK_PLACEHOLDER = "%BLOCK%";
 
 class CssRule {
   String selector;

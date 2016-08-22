@@ -190,19 +190,6 @@ main() {
             iterableChangesAsString(
                 collection: [double.NAN], previous: [double.NAN]));
       });
-      test("should detect [NaN] moves", () {
-        var l = [double.NAN, double.NAN];
-        differ.check(l);
-        l.insert(0, 'foo');
-        differ.check(l);
-        expect(
-            differ.toString(),
-            iterableChangesAsString(
-                collection: ["foo[null->0]", "NaN[0->1]", "NaN[1->2]"],
-                previous: ["NaN[0->1]", "NaN[1->2]"],
-                additions: ["foo[null->0]"],
-                moves: ["NaN[0->1]", "NaN[1->2]"]));
-      });
       test("should remove and add same item", () {
         var l = ["a", "b", "c"];
         differ.check(l);

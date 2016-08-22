@@ -8,7 +8,7 @@ import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/linker/view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show jsSplit, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show jsSplit;
 
 import "compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
@@ -542,7 +542,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<VariableAst> targetVars) {
     var attrName = this._normalizeAttributeName(attr.name);
     var attrValue = attr.value;
-    var bindParts = RegExpWrapper.firstMatch(BIND_NAME_REGEXP, attrName);
+    var bindParts = BIND_NAME_REGEXP.firstMatch(attrName);
     var hasBinding = false;
     if (bindParts != null) {
       hasBinding = true;

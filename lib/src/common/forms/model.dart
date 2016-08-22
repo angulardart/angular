@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/lang.dart" show isPresent, normalizeBool;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 
@@ -109,7 +109,7 @@ abstract class AbstractControl {
   }
 
   void markAsDirty({bool onlySelf}) {
-    onlySelf = normalizeBool(onlySelf);
+    onlySelf = onlySelf == true;
     this._pristine = false;
     if (isPresent(this._parent) && !onlySelf) {
       this._parent.markAsDirty(onlySelf: onlySelf);
@@ -117,7 +117,7 @@ abstract class AbstractControl {
   }
 
   void markAsPending({bool onlySelf}) {
-    onlySelf = normalizeBool(onlySelf);
+    onlySelf = onlySelf == true;
     this._status = PENDING;
     if (isPresent(this._parent) && !onlySelf) {
       this._parent.markAsPending(onlySelf: onlySelf);
@@ -129,7 +129,7 @@ abstract class AbstractControl {
   }
 
   void updateValueAndValidity({bool onlySelf, bool emitEvent}) {
-    onlySelf = normalizeBool(onlySelf);
+    onlySelf = onlySelf == true;
     emitEvent = isPresent(emitEvent) ? emitEvent : true;
     this._updateValue();
     this._errors = this._runValidator();

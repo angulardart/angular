@@ -1,6 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 List<String> convertUrlParamsToArray(Map<String, dynamic> urlParams) {
   var paramsArray = <String>[];
@@ -101,15 +100,15 @@ Url pathSegmentsToUrl(List<String> pathSegments) {
   return url;
 }
 
-var SEGMENT_RE = RegExpWrapper.create("^[^\\/\\(\\)\\?;=&#]+");
+final RegExp SEGMENT_RE = new RegExp("^[^\\/\\(\\)\\?;=&#]+");
 String matchUrlSegment(String str) {
-  var match = RegExpWrapper.firstMatch(SEGMENT_RE, str);
-  return isPresent(match) ? match[0] : "";
+  var match = SEGMENT_RE.firstMatch(str);
+  return match != null ? match[0] : "";
 }
 
-var QUERY_PARAM_VALUE_RE = RegExpWrapper.create("^[^\\(\\)\\?;&#]+");
+final RegExp QUERY_PARAM_VALUE_RE = new RegExp("^[^\\(\\)\\?;&#]+");
 String matchUrlQueryParamValue(String str) {
-  var match = RegExpWrapper.firstMatch(QUERY_PARAM_VALUE_RE, str);
+  var match = QUERY_PARAM_VALUE_RE.firstMatch(str);
   return isPresent(match) ? match[0] : "";
 }
 

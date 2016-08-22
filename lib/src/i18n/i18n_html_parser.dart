@@ -16,7 +16,7 @@ import "package:angular2/src/compiler/html_parser.dart"
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show RegExpWrapper, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "expander.dart" show expandNodes;
 import "message.dart" show id;
@@ -36,7 +36,7 @@ const _PLACEHOLDER_ELEMENT = "ph";
 const _NAME_ATTR = "name";
 const _I18N_ATTR_PREFIX = "i18n-";
 var _PLACEHOLDER_EXPANDED_REGEXP =
-    RegExpWrapper.create('''\\<ph(\\s)+name=("(\\w)+")\\>\\<\\/ph\\>''');
+    new RegExp('''\\<ph(\\s)+name=("(\\w)+")\\>\\<\\/ph\\>''');
 
 /**
  * Creates an i18n-ed version of the parsed template.
@@ -325,8 +325,7 @@ class I18nHtmlParser implements HtmlParser {
   String _replacePlaceholdersWithExpressions(
       String message, List<String> exps, ParseSourceSpan sourceSpan) {
     var expMap = this._buildExprMap(exps);
-    return RegExpWrapper.replaceAll(_PLACEHOLDER_EXPANDED_REGEXP, message,
-        (match) {
+    return message.replaceAllMapped(_PLACEHOLDER_EXPANDED_REGEXP, (match) {
       var nameWithQuotes = match[2];
       var name = nameWithQuotes.substring(1, nameWithQuotes.length - 1);
       return this._convertIntoExpression(name, expMap, sourceSpan);

@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 // asset:<package-name>/<realm>/<path-to-module>
 var _ASSET_URL_RE = new RegExp(r'asset:([^\/]+)\/([^\/]+)\/(.+)');
@@ -37,7 +37,7 @@ class _AssetUrl {
   String firstLevelDir;
   String modulePath;
   static _AssetUrl parse(String url, bool allowNonMatching) {
-    var match = RegExpWrapper.firstMatch(_ASSET_URL_RE, url);
+    var match = _ASSET_URL_RE.firstMatch(url);
     if (match != null) {
       return new _AssetUrl(match[1], match[2], match[3]);
     }

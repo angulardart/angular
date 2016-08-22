@@ -6,8 +6,7 @@ import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
 import "package:angular2/src/core/metadata/view.dart"
     show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, normalizeBool, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "url_resolver.dart" show getUrlScheme;
 import "util.dart" show splitAtColon, sanitizeIdentifier;
@@ -112,12 +111,14 @@ class CompileDiDependencyMetadata {
       CompileQueryMetadata viewQuery,
       CompileTokenMetadata token,
       dynamic value}) {
-    this.isAttribute = normalizeBool(isAttribute);
-    this.isSelf = normalizeBool(isSelf);
-    this.isHost = normalizeBool(isHost);
-    this.isSkipSelf = normalizeBool(isSkipSelf);
-    this.isOptional = normalizeBool(isOptional);
-    this.isValue = normalizeBool(isValue);
+    // TODO: Make the defaults of the constructor 'false' instead of doing this.
+    // This is to prevent any breaking changes while cleaing up TS facades.
+    this.isAttribute = isAttribute == true;
+    this.isSelf = isSelf == true;
+    this.isHost = isHost == true;
+    this.isSkipSelf = isSkipSelf == true;
+    this.isOptional = isOptional == true;
+    this.isValue = isValue == true;
     this.query = query;
     this.viewQuery = viewQuery;
     this.token = token;
@@ -179,7 +180,7 @@ class CompileProviderMetadata {
     this.useFactory = useFactory;
     this.useProperty = useProperty;
     this.deps = deps;
-    this.multi = normalizeBool(multi);
+    this.multi = multi == true;
   }
   static CompileProviderMetadata fromJson(Map<String, dynamic> data) {
     return new CompileProviderMetadata(
@@ -273,7 +274,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
       bool identifierIsInstance}) {
     this.value = value;
     this.identifier = identifier;
-    this.identifierIsInstance = normalizeBool(identifierIsInstance);
+    this.identifierIsInstance = identifierIsInstance == true;
   }
   static CompileTokenMetadata fromJson(Map<String, dynamic> data) {
     return new CompileTokenMetadata(
@@ -397,7 +398,7 @@ class CompileTypeMetadata
     this.name = name;
     this.moduleUrl = moduleUrl;
     this.prefix = prefix;
-    this.isHost = normalizeBool(isHost);
+    this.isHost = isHost == true;
     this.value = value;
     this.diDeps = diDeps ?? [];
   }
@@ -448,8 +449,8 @@ class CompileQueryMetadata {
       String propertyName,
       CompileTokenMetadata read}) {
     this.selectors = selectors;
-    this.descendants = normalizeBool(descendants);
-    this.first = normalizeBool(first);
+    this.descendants = descendants == true;
+    this.first = first == true;
     this.propertyName = propertyName;
     this.read = read;
   }
@@ -551,7 +552,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     var hostProperties = <String, String>{};
     var hostAttributes = <String, String>{};
     host?.forEach((String key, String value) {
-      var matches = RegExpWrapper.firstMatch(HOST_REG_EXP, key);
+      var matches = HOST_REG_EXP.firstMatch(key);
       if (isBlank(matches)) {
         hostAttributes[key] = value;
       } else if (matches[1] != null) {
@@ -579,7 +580,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
     return new CompileDirectiveMetadata(
         type: type,
-        isComponent: normalizeBool(isComponent),
+        isComponent: isComponent == true,
         selector: selector,
         exportAs: exportAs,
         changeDetection: changeDetection,
@@ -755,7 +756,7 @@ class CompilePipeMetadata implements CompileMetadataWithType {
       List<LifecycleHooks> lifecycleHooks}) {
     this.type = type;
     this.name = name;
-    this.pure = normalizeBool(pure);
+    this.pure = pure == true;
     this.lifecycleHooks = lifecycleHooks ?? [];
   }
   CompileIdentifierMetadata get identifier {
@@ -814,7 +815,7 @@ class CompileInjectorModuleMetadata
     this.value = value;
     this.diDeps = diDeps ?? [];
     this.providers = providers ?? [];
-    this.injectable = normalizeBool(injectable);
+    this.injectable = injectable == true;
   }
   static CompileInjectorModuleMetadata fromJson(Map<String, dynamic> data) {
     return new CompileInjectorModuleMetadata(

@@ -38,62 +38,6 @@ List<String> jsSplit(String s, RegExp regExp) {
   return parts;
 }
 
-class RegExpWrapper {
-  static RegExp create(regExpStr, [String flags = '']) {
-    bool multiLine = flags.contains('m');
-    bool caseSensitive = !flags.contains('i');
-    return new RegExp(regExpStr,
-        multiLine: multiLine, caseSensitive: caseSensitive);
-  }
-
-  static Match firstMatch(RegExp regExp, String input) {
-    return regExp.firstMatch(input);
-  }
-
-  static bool test(RegExp regExp, String input) {
-    return regExp.hasMatch(input);
-  }
-
-  static Iterator<Match> matcher(RegExp regExp, String input) {
-    return regExp.allMatches(input).iterator;
-  }
-
-  static String replaceAll(RegExp regExp, String input, Function replace) {
-    final m = RegExpWrapper.matcher(regExp, input);
-    var res = "";
-    var prev = 0;
-    while (m.moveNext()) {
-      var c = m.current;
-      res += input.substring(prev, c.start);
-      res += replace(c);
-      prev = c.start + c[0].length;
-    }
-    res += input.substring(prev);
-    return res;
-  }
-}
-
-class RegExpMatcherWrapper {
-  static _JSLikeMatch next(Iterator<Match> matcher) {
-    if (matcher.moveNext()) {
-      return new _JSLikeMatch(matcher.current);
-    }
-    return null;
-  }
-}
-
-class _JSLikeMatch {
-  Match _m;
-
-  _JSLikeMatch(this._m);
-
-  String operator [](index) => _m[index];
-  int get index => _m.start;
-  int get length => _m.groupCount + 1;
-}
-
-const _NAN_KEY = const Object();
-
 // Dart VM implements `identical` as true reference identity. JavaScript does
 // not have this. The closest we have in JS is `===`. However, for strings JS
 // would actually compare the contents rather than references. `dart2js`
@@ -114,16 +58,6 @@ bool looseIdentical(a, b) =>
 // number of AST nodes low enough for `dart2js` to inline the code.
 bool _looseIdentical(a, b) =>
     a is String && b is String ? a == b : identical(a, b);
-
-// Dart compare map keys by equality and we can have NaN != NaN
-dynamic getMapKey(value) {
-  if (value is! num) return value;
-  return value.isNaN ? _NAN_KEY : value;
-}
-
-bool normalizeBool(bool obj) {
-  return isBlank(obj) ? false : obj;
-}
 
 /// Use this function to guard debugging code. When Dart is compiled in
 /// production mode, the code guarded using this function will be tree
@@ -152,34 +86,6 @@ class Json {
   static String stringify(data) {
     var encoder = new convert.JsonEncoder.withIndent("  ");
     return encoder.convert(data);
-  }
-}
-
-class DateWrapper {
-  static DateTime create(int year,
-      [int month = 1,
-      int day = 1,
-      int hour = 0,
-      int minutes = 0,
-      int seconds = 0,
-      int milliseconds = 0]) {
-    return new DateTime(year, month, day, hour, minutes, seconds, milliseconds);
-  }
-
-  static DateTime fromISOString(String str) {
-    return DateTime.parse(str);
-  }
-
-  static DateTime fromMillis(int ms) {
-    return new DateTime.fromMillisecondsSinceEpoch(ms, isUtc: true);
-  }
-
-  static int toMillis(DateTime date) {
-    return date.millisecondsSinceEpoch;
-  }
-
-  static String toJson(DateTime date) {
-    return date.toUtc().toIso8601String();
   }
 }
 

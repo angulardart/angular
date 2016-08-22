@@ -2,12 +2,12 @@ import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/intl.dart"
     show NumberFormatter, NumberFormatStyle;
-import "package:angular2/src/facade/lang.dart" show isPresent, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 String defaultLocale = "en-US";
-var _re = RegExpWrapper.create("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
+final RegExp _re = new RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 
 /// Internal base class for numeric pipes.
 @Injectable()
@@ -20,7 +20,7 @@ class NumberPipe {
     }
     var minInt = 1, minFraction = 0, maxFraction = 3;
     if (isPresent(digits)) {
-      var parts = RegExpWrapper.firstMatch(_re, digits);
+      var parts = _re.firstMatch(digits);
       if (parts == null) {
         throw new BaseException(
             '''${ digits} is not a valid digit info for number pipes''');

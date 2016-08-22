@@ -1,9 +1,9 @@
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
-import "package:angular2/src/facade/lang.dart" show isPresent, RegExpWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
-RegExp interpolationExp = RegExpWrapper.create("#");
+final RegExp interpolationExp = new RegExp("#");
 
 /// Maps a value to a string that pluralizes the value properly.
 ///

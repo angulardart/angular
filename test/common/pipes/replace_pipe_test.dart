@@ -1,7 +1,6 @@
 library angular2.test.common.pipes.replace_pipe_test;
 
 import "package:angular2/common.dart" show ReplacePipe;
-import "package:angular2/src/facade/lang.dart" show RegExpWrapper;
 import 'package:test/test.dart';
 
 main() {
@@ -34,8 +33,9 @@ main() {
       });
       test("should return a new string with the pattern replaced", () {
         var result1 = pipe.transform(str, "Douglas", "Hugh");
-        var result2 = pipe.transform(str, RegExpWrapper.create("a"), "_");
-        var result3 = pipe.transform(str, RegExpWrapper.create("a", "i"), "_");
+        var result2 = pipe.transform(str, new RegExp("a"), "_");
+        var result3 =
+            pipe.transform(str, new RegExp("a", caseSensitive: false), "_");
         var f = ((x) {
           return "Adams!";
         });

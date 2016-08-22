@@ -1,6 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, stringify, getMapKey, looseIdentical;
+    show isBlank, isPresent, stringify, looseIdentical;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/iterable_differs.dart"
@@ -682,7 +682,7 @@ class _DuplicateMap {
   var map = new Map<dynamic, _DuplicateItemRecordList>();
   put(CollectionChangeRecord record) {
     // todo(vicb) handle corner cases
-    var key = getMapKey(record.trackById);
+    var key = record.trackById;
     var duplicates = this.map[key];
     if (!isPresent(duplicates)) {
       duplicates = new _DuplicateItemRecordList();
@@ -699,7 +699,7 @@ class _DuplicateMap {
    * have any more `a`s needs to return the last `a` not the first or second.
    */
   CollectionChangeRecord get(dynamic trackById, [num afterIndex = null]) {
-    var key = getMapKey(trackById);
+    var key = trackById;
     var recordList = this.map[key];
     return isBlank(recordList) ? null : recordList.get(trackById, afterIndex);
   }
@@ -710,9 +710,8 @@ class _DuplicateMap {
    * The list of duplicates also is removed from the map if it gets empty.
    */
   CollectionChangeRecord remove(CollectionChangeRecord record) {
-    var key = getMapKey(record.trackById);
+    var key = record.trackById;
     // todo(vicb)
-
     // assert(this.map.containsKey(key));
     _DuplicateItemRecordList recordList = this.map[key];
     // Remove the list of duplicates when it gets empty

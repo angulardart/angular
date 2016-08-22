@@ -1,5 +1,4 @@
 import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
-import "package:angular2/src/facade/lang.dart" show RegExpWrapper;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -46,12 +45,9 @@ class ReplacePipe implements PipeTransform {
       throw new InvalidPipeArgumentException(ReplacePipe, replacement);
     }
     // template fails with literal RegExp e.g /pattern/igm
-
-    // var rgx = pattern instanceof RegExp ? pattern : RegExpWrapper.create(pattern);
     if (replacement is _Matcher) {
-      var rgxPattern = pattern is String
-          ? RegExpWrapper.create(pattern)
-          : (pattern as RegExp);
+      var rgxPattern =
+          pattern is String ? new RegExp(pattern) : (pattern as RegExp);
       return input.replaceAllMapped(rgxPattern, replacement);
     }
     if (pattern is RegExp) {

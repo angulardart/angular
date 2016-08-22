@@ -1,6 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "../../url_parser.dart" show Url, RootUrl, convertUrlParamsToArray;
 import "../../utils.dart" show TouchMap, normalizeString;
@@ -209,11 +208,12 @@ class ParamRoutePath implements RoutePath {
     var limit = segmentStrings.length - 1;
     for (var i = 0; i <= limit; i++) {
       var segment = segmentStrings[i], match;
-      if (isPresent(match =
-          RegExpWrapper.firstMatch(DynamicPathSegment.paramMatcher, segment))) {
+      if ((match = DynamicPathSegment.paramMatcher.firstMatch(segment)) !=
+          null) {
         this._segments.add(new DynamicPathSegment(match[1]));
-      } else if (isPresent(match =
-          RegExpWrapper.firstMatch(StarPathSegment.wildcardMatcher, segment))) {
+      } else if ((match =
+              StarPathSegment.wildcardMatcher.firstMatch(segment)) !=
+          null) {
         this._segments.add(new StarPathSegment(match[1]));
       } else if (segment == "...") {
         if (i < limit) {
@@ -279,22 +279,21 @@ class ParamRoutePath implements RoutePath {
       throw new BaseException(
           '''Path "${ path}" should not include "#". Use "HashLocationStrategy" instead.''');
     }
-    var illegalCharacter =
-        RegExpWrapper.firstMatch(ParamRoutePath.RESERVED_CHARS, path);
+    var illegalCharacter = ParamRoutePath.RESERVED_CHARS.firstMatch(path);
     if (isPresent(illegalCharacter)) {
       throw new BaseException(
           '''Path "${ path}" contains "${ illegalCharacter [ 0 ]}" which is not allowed in a route config.''');
     }
   }
 
-  static var RESERVED_CHARS = RegExpWrapper.create("//|\\(|\\)|;|\\?|=");
+  static final RESERVED_CHARS = new RegExp("//|\\(|\\)|;|\\?|=");
 }
 
-var REGEXP_PERCENT = new RegExp(r'%');
-var REGEXP_SLASH = new RegExp(r'\/');
-var REGEXP_OPEN_PARENT = new RegExp(r'\(');
-var REGEXP_CLOSE_PARENT = new RegExp(r'\)');
-var REGEXP_SEMICOLON = new RegExp(r';');
+final RegExp REGEXP_PERCENT = new RegExp(r'%');
+final RegExp REGEXP_SLASH = new RegExp(r'\/');
+final RegExp REGEXP_OPEN_PARENT = new RegExp(r'\(');
+final RegExp REGEXP_CLOSE_PARENT = new RegExp(r'\)');
+final RegExp REGEXP_SEMICOLON = new RegExp(r';');
 String encodeDynamicSegment(String value) {
   if (isBlank(value)) {
     return null;

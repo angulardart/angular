@@ -1,6 +1,6 @@
 import "package:angular2/core.dart" show PipeTransform, Pipe, Injectable;
 import "package:angular2/src/facade/intl.dart" show DateFormatter;
-import "package:angular2/src/facade/lang.dart" show DateWrapper, isBlank;
+import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -89,7 +89,7 @@ class DatePipe implements PipeTransform {
       throw new InvalidPipeArgumentException(DatePipe, value);
     }
     if (value is num) {
-      value = DateWrapper.fromMillis(value);
+      value = new DateTime.fromMillisecondsSinceEpoch(value, isUtc: true);
     }
     if (DatePipe._ALIASES.containsKey(pattern)) {
       pattern = DatePipe._ALIASES[pattern];

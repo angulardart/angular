@@ -3,7 +3,6 @@ library angular2.test.common.pipes.date_pipe_test;
 
 import 'package:angular2/testing_internal.dart';
 import 'package:angular2/common.dart' show DatePipe;
-import 'package:angular2/src/facade/lang.dart' show DateWrapper;
 import 'package:angular2/src/compiler/pipe_resolver.dart' show PipeResolver;
 import 'package:test/test.dart';
 
@@ -12,7 +11,7 @@ main() {
     var date;
     var pipe;
     setUp(() {
-      date = DateWrapper.create(2015, 6, 15, 21, 43, 11);
+      date = new DateTime(2015, 6, 15, 21, 43, 11);
       pipe = new DatePipe();
     });
     test('should be marked as pure', () async {

@@ -1,6 +1,3 @@
-import "package:angular2/src/facade/lang.dart"
-    show RegExpWrapper, RegExpMatcherWrapper, isBlank;
-
 import "../../url_parser.dart" show Url;
 import "route_path.dart" show RoutePath, GeneratedUrl, MatchedUrl;
 
@@ -15,18 +12,19 @@ class RegexRoutePath implements RoutePath {
   RegExp _regex;
   RegexRoutePath(this._reString, this._serializer) {
     this.hash = this._reString;
-    this._regex = RegExpWrapper.create(this._reString);
+    this._regex = new RegExp(this._reString);
   }
   MatchedUrl matchUrl(Url url) {
     var urlPath = url.toString();
     Map<String, String> params = {};
-    var matcher = RegExpWrapper.matcher(this._regex, urlPath);
-    var match = RegExpMatcherWrapper.next(matcher);
-    if (isBlank(match)) {
+    var matcher = this._regex.allMatches(urlPath);
+    if (matcher.isEmpty) {
       return null;
     }
-    for (var i = 0; i < match.length; i += 1) {
+    var i = 0;
+    for (var match in matcher) {
       params[i.toString()] = match[i];
+      i++;
     }
     return new MatchedUrl(urlPath, [], params, [], null);
   }
