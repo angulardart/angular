@@ -12,7 +12,7 @@ const noValueProvided = '__noValueProvided__';
 ///       new Provider("message", useValue: 'Hello')
 ///     ]);
 ///
-///     expect(injector.get("message"), 'Hello');
+///     expect(injector.get('message'), 'Hello');
 ///
 class Provider {
   /// Token used when retrieving this provider. Usually, it is a type [Type].
@@ -47,10 +47,10 @@ class Provider {
   /// Binds a DI token to a value.
   ///
   ///     var injector = Injector.resolveAndCreate([
-  ///       new Provider("message", useValue: 'Hello')
+  ///       new Provider('message', useValue: 'Hello')
   ///     ]);
   ///
-  ///     expect(injector.get("message"), 'Hello');
+  ///     expect(injector.get('message'), 'Hello');
   ///
   final useValue;
 
@@ -89,7 +89,7 @@ class Provider {
   ///     var injector = Injector.resolveAndCreate([
   ///       new Provider(Number, useFactory: () => return 1+2;),
   ///       new Provider(String, useFactory: (value) => "Value: " + value;,
-  ///            deps: [Number])
+  ///            deps: const [Number])
   ///     ]);
   ///
   ///     expect(injector.get(Number) , 3);
@@ -162,139 +162,10 @@ class Provider {
   bool get multi => _multi ?? false;
 }
 
-/// See [Provider] instead.
-@Deprecated('Use Provider instead')
-class Binding extends Provider {
-  const Binding(token,
-      {Type toClass,
-      dynamic toValue: noValueProvided,
-      dynamic toAlias,
-      Function toFactory,
-      List<Object> deps,
-      bool multi})
-      : super(token,
-            useClass: toClass,
-            useValue: toValue,
-            useExisting: toAlias,
-            useFactory: toFactory,
-            deps: deps,
-            multi: multi);
-
-  get toClass => useClass;
-
-  get toAlias => useExisting;
-
-  get toFactory => useFactory;
-
-  get toValue => useValue;
-}
-
-/// Deprecated Use provide instead.
-@Deprecated('Use provide instead')
-ProviderBuilder bind(token) {
-  return new ProviderBuilder(token);
-}
-
-/// Helper class for the [provide] function.
-class ProviderBuilder {
-  final token;
-  ProviderBuilder(this.token);
-
-  /// Binds a DI token to a class.
-  ///
-  /// Because [toAlias] and [toClass] are often confused, the example contains
-  /// both use cases for easy comparison.
-  ///
-  ///     class Vehicle {}
-  ///
-  ///     class Car extends Vehicle {}
-  ///
-  ///     var injectorClass = Injector.resolveAndCreate([
-  ///       Car,
-  ///       provide(Vehicle, {useClass: Car})
-  ///     ]);
-  ///     var injectorAlias = Injector.resolveAndCreate([
-  ///       Car,
-  ///       provide(Vehicle, {useExisting: Car})
-  ///     ]);
-  ///
-  ///     expect(injectorClass.get(Vehicle)).not.toBe(injectorClass.get(Car));
-  ///     expect(injectorClass.get(Vehicle) is Car, true);
-  ///
-  ///     expect(injectorAlias.get(Vehicle), injectorAlias.get(Car));
-  ///     expect(injectorAlias.get(Vehicle) is Car, true);
-  ///
-  Provider toClass(Type type) => new Provider(this.token, useClass: type);
-
-  /// Binds a DI token to a value.
-  ///
-  ///     var injector = Injector.resolveAndCreate([
-  ///       provide('message', {useValue: 'Hello'})
-  ///     ]);
-  ///
-  ///     expect(injector.get('message'), 'Hello');
-  ///
-  Provider toValue(dynamic value) {
-    return new Provider(this.token, useValue: value);
-  }
-
-  /// Binds a DI token to an existing token.
-  ///
-  /// Angular will return the same instance as if the provided token was used.
-  /// (This is in contrast to [useClass] where a separate instance of [useClass]
-  /// will be returned.)
-  ///
-  ///
-  /// Because [toAlias] and [toClass] are often confused, the example contains
-  /// both use cases for easy comparison.
-  ///
-  ///     class Vehicle {}
-  ///
-  ///     class Car extends Vehicle {}
-  ///
-  ///     var injectorAlias = Injector.resolveAndCreate([
-  ///       Car,
-  ///       provide(Vehicle, {useExisting: Car})
-  ///     ]);
-  ///     var injectorClass = Injector.resolveAndCreate([
-  ///       Car,
-  ///       provide(Vehicle, {useClass: Car})
-  ///     ]);
-  ///
-  ///     expect(injectorAlias.get(Vehicle), injectorAlias.get(Car));
-  ///     expect(injectorAlias.get(Vehicle) is Car, true);
-  ///
-  ///     expect(injectorClass.get(Vehicle) != injectorClass.get(Car), true);
-  ///     expect(injectorClass.get(Vehicle) is Car, true);
-  ///
-  Provider toAlias(dynamic aliasToken) {
-    if (aliasToken == null) {
-      throw new Exception('Can not alias $token to a blank value!');
-    }
-    return new Provider(this.token, useExisting: aliasToken);
-  }
-
-  /// Binds a DI token to a function which computes the value.
-  ///
-  ///     var injector = Injector.resolveAndCreate([
-  ///       provide(Number, useFactory: () => { return 1+2; }),
-  ///       provide(String, useFactory: (v) =>
-  ///           { return "Value: " + v; }, deps: [Number])
-  ///     ]);
-  ///
-  ///     expect(injector.get(Number), 3);
-  ///     expect(injector.get(String), 'Value: 3');
-  ///
-  Provider toFactory(Function factory, [List<dynamic> dependencies]) =>
-      new Provider(this.token, useFactory: factory, deps: dependencies);
-}
-
 /// Creates a [Provider].
 ///
 /// To construct a [Provider], bind a `token` to either a class, a value, a
 /// factory function, or to an existing [token].
-///
-/// See [ProviderBuilder] for more details.
 ///
 /// The `token` is most commonly a class or [OpaqueToken-class.html].
 Provider provide(token,

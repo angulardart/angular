@@ -4,7 +4,6 @@ import "package:angular2/core.dart"
         OnDestroy,
         SimpleChange,
         Directive,
-        Host,
         SkipSelf,
         Provider,
         Inject,

@@ -10,7 +10,7 @@ import "metadata.dart"
         HostMetadata,
         SkipSelfMetadata,
         DependencyMetadata;
-import "provider.dart" show Provider, ProviderBuilder, provide, noValueProvided;
+import "provider.dart" show Provider, provide, noValueProvided;
 import "reflective_exceptions.dart"
     show
         NoAnnotationError,
@@ -184,8 +184,7 @@ Map<num, ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
 }
 
 List<Provider> _normalizeProviders(
-    List<
-        dynamic /* Type | Provider | ProviderBuilder | List < dynamic > */ > providers,
+    List<dynamic /* Type | Provider | List < dynamic > */ > providers,
     List<Provider> res) {
   providers.forEach((b) {
     if (b is Type) {
@@ -196,8 +195,6 @@ List<Provider> _normalizeProviders(
       _normalizeProviders(getInjectorModuleProviders(b.token), res);
     } else if (b is List) {
       _normalizeProviders(b, res);
-    } else if (b is ProviderBuilder) {
-      throw new InvalidProviderError(b.token);
     } else {
       throw new InvalidProviderError(b);
     }

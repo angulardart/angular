@@ -27,9 +27,9 @@ abstract class StaticReflectorHost {
   /**
    *  Return a ModuleMetadata for the give module.
    *
-   * 
+   *
    *                 module import of an import statement.
-   * 
+   *
    */
   Map<String, dynamic> getMetadataFor(String moduleId);
 }
@@ -63,8 +63,8 @@ class StaticReflector {
    * getStatictype produces a Type whose metadata is known but whose implementation is not loaded.
    * All types passed to the StaticResolver should be pseudo-types returned by this method.
    *
-   * 
-   * 
+   *
+   *
    */
   StaticType getStaticType(String moduleId, String name) {
     var key = '''"${ moduleId}".${ name}''';
@@ -149,9 +149,7 @@ class StaticReflector {
           selector: p0["selector"],
           inputs: p0["inputs"] as List<String>,
           outputs: p0["outputs"] as List<String>,
-          events: p0["events"] as List<String>,
           host: p0["host"] as Map<String, String>,
-          bindings: p0["bindings"],
           providers: p0["providers"],
           exportAs: p0["exportAs"],
           queries: p0["queries"] as Map<String, dynamic>);
@@ -164,12 +162,9 @@ class StaticReflector {
           selector: p0["selector"],
           inputs: p0["inputs"] as List<String>,
           outputs: p0["outputs"] as List<String>,
-          properties: p0["properties"] as List<String>,
-          events: p0["events"] as List<String>,
           host: p0["host"] as Map<String, String>,
           exportAs: p0["exportAs"],
           moduleId: p0["moduleId"],
-          bindings: p0["bindings"],
           providers: p0["providers"],
           viewBindings: p0["viewBindings"],
           viewProviders: p0["viewProviders"],

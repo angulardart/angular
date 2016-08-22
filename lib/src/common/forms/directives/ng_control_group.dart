@@ -5,7 +5,6 @@ import "package:angular2/core.dart"
         Directive,
         Optional,
         Inject,
-        Host,
         SkipSelf,
         Provider,
         Self;

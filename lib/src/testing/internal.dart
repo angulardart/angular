@@ -66,8 +66,8 @@ Future<dynamic> inject(List<dynamic> tokens, Function fn) async {
 ///  Example:
 ///
 ///    beforeEachProviders(() => [
-///        provide(Compiler).toClass(MockCompiler),
-///        provide(SomeToken).toValue(myValue),
+///        provide(Compiler, useClass: MockCompiler),
+///        provide(SomeToken, useValue: myValue),
 ///    ]);
 ///
 void beforeEachProviders(Function fn) {

@@ -4,7 +4,7 @@ export "package:angular2/src/core/di/injector.dart"
 export "package:angular2/src/core/di/reflective_injector.dart"
     show ReflectiveInjector;
 export "package:angular2/src/core/di/provider.dart"
-    show ProviderBuilder, Provider, provide, noValueProvided;
+    show Provider, provide, noValueProvided;
 export "package:angular2/src/core/di/reflective_provider.dart"
     show
         ResolvedReflectiveBinding,

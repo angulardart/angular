@@ -2,7 +2,6 @@ import "package:angular2/src/core/change_detection.dart"
     show ChangeDetectionStrategy;
 import "package:angular2/src/core/di/metadata.dart" show InjectableMetadata;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 /// Directives allow you to attach behavior to elements in the DOM.
 ///
@@ -426,18 +425,7 @@ class DirectiveMetadata extends InjectableMetadata {
   ///
   ///     bootstrap(App);
   ///
-  List<String> get inputs {
-    return isPresent(this._properties) && this._properties.length > 0
-        ? this._properties
-        : this._inputs;
-  }
-
-  List<String> get properties {
-    return this.inputs;
-  }
-
-  final List<String> _inputs;
-  final List<String> _properties;
+  final List<String> inputs;
 
   /// Enumerates the set of event-bound output properties.
   ///
@@ -479,13 +467,8 @@ class DirectiveMetadata extends InjectableMetadata {
   ///     }
   ///     bootstrap(App);
   ///
-  List<String> get outputs =>
-      (_events != null && _events.isNotEmpty) ? _events : _outputs;
 
-  List<String> get events => outputs;
-
-  final List<String> _outputs;
-  final List<String> _events;
+  final List<String> outputs;
 
   /// Specify the events, actions, properties and attributes related to the host
   /// element.
@@ -614,14 +597,7 @@ class DirectiveMetadata extends InjectableMetadata {
   ///       HelloWorld(this.greeter);
   ///     }
   ///
-  List get providers => (_bindings != null && _bindings.isNotEmpty)
-      ? this._bindings
-      : this._providers;
-
-  List get bindings => providers;
-
-  final List _providers;
-  final List _bindings;
+  final List providers;
 
   /// Defines the name that can be used in the template to assign this directive
   /// to a variable.
@@ -681,25 +657,16 @@ class DirectiveMetadata extends InjectableMetadata {
 
   const DirectiveMetadata(
       {String selector,
-      List<String> inputs,
-      List<String> outputs,
-      List<String> properties,
-      List<String> events,
+      this.inputs,
+      this.outputs,
       Map<String, String> host,
-      List bindings,
-      List providers,
+      this.providers,
       String exportAs,
       Map<String, dynamic> queries})
       : selector = selector,
-        _inputs = inputs,
-        _properties = properties,
-        _outputs = outputs,
-        _events = events,
         host = host,
         exportAs = exportAs,
         queries = queries,
-        _providers = providers,
-        _bindings = bindings,
         super();
 }
 
@@ -805,12 +772,9 @@ class ComponentMetadata extends DirectiveMetadata {
       {String selector,
       List<String> inputs,
       List<String> outputs,
-      List<String> properties,
-      List<String> events,
       Map<String, String> host,
       String exportAs,
       this.moduleId,
-      List bindings,
       List providers,
       List viewBindings,
       List viewProviders,
@@ -830,11 +794,8 @@ class ComponentMetadata extends DirectiveMetadata {
             selector: selector,
             inputs: inputs,
             outputs: outputs,
-            properties: properties,
-            events: events,
             host: host,
             exportAs: exportAs,
-            bindings: bindings,
             providers: providers,
             queries: queries);
 }

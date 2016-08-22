@@ -13,8 +13,7 @@ export "di/metadata.dart"
 export "di/decorators.dart";
 export "di/injector.dart" show Injector, InjectorFactory;
 export "di/reflective_injector.dart" show ReflectiveInjector;
-export "di/provider.dart"
-    show Binding, ProviderBuilder, bind, Provider, provide, noValueProvided;
+export "di/provider.dart" show Provider, provide, noValueProvided;
 export "di/reflective_provider.dart"
     show
         ResolvedReflectiveBinding,
