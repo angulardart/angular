@@ -2,8 +2,7 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, SetWrapper;
+import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
 
 import "../compile_metadata.dart"
@@ -399,11 +398,7 @@ List<List<String>> mapToKeyValueArray(Map<String, String> data) {
   data.forEach((name, value) {
     entryArray.add([name, value]);
   });
-  // We need to sort to get a defined output order
-
-  // for tests and for caching generated artifacts...
-  ListWrapper.sort(entryArray,
-      (entry1, entry2) => StringWrapper.compare(entry1[0], entry2[0]));
+  entryArray.sort((e1, e2) => e1.first.compareTo(e2.first));
   var keyValueArray = <List<String>>[];
   entryArray.forEach((entry) {
     keyValueArray.add([entry[0], entry[1]]);
@@ -641,7 +636,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       view.afterViewLifecycleCallbacksMethod.isEmpty()) {
     return stmts;
   }
-  ListWrapper.addAll(stmts, view.detectChangesInInputsMethod.finish());
+  stmts.addAll(view.detectChangesInInputsMethod.finish());
   stmts
       .add(o.THIS_EXPR.callMethod("detectContentChildrenChanges", []).toStmt());
   List<o.Statement> afterContentStmts =
@@ -650,7 +645,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   if (afterContentStmts.length > 0) {
     stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
   }
-  ListWrapper.addAll(stmts, view.detectChangesRenderPropertiesMethod.finish());
+  stmts.addAll(view.detectChangesRenderPropertiesMethod.finish());
   stmts.add(o.THIS_EXPR.callMethod("detectViewChildrenChanges", []).toStmt());
   List<o.Statement> afterViewStmts =
       (new List.from(view.updateViewQueriesMethod.finish())

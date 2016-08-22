@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:angular2/src/compiler/xhr.dart" show XHR;
-import "package:angular2/src/facade/collection.dart" show ListWrapper, Map;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank;
 
@@ -74,7 +73,7 @@ class MockXHR extends XHR {
     if (this._expectations.length > 0) {
       var expectation = this._expectations[0];
       if (expectation.url == url) {
-        ListWrapper.remove(this._expectations, expectation);
+        this._expectations.remove(expectation);
         request.complete(expectation.response);
         return;
       }

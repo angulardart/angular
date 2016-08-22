@@ -3,7 +3,6 @@ import 'dart:async';
 import "package:angular2/core.dart"
     show Directive, Provider, Optional, Inject, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../model.dart" show AbstractControl, ControlGroup, Control;
@@ -180,8 +179,6 @@ class NgForm extends ControlContainer implements Form {
 
   ControlGroup _findContainer(List<String> path) {
     path.removeLast();
-    return ListWrapper.isEmpty(path)
-        ? this.form
-        : (this.form.find(path) as ControlGroup);
+    return path.isEmpty ? this.form : (this.form.find(path) as ControlGroup);
   }
 }

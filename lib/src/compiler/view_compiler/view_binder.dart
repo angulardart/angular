@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-
 import "../template_ast.dart"
     show
         TemplateAst,
@@ -68,7 +66,9 @@ class ViewBinderVisitor implements TemplateAstVisitor {
         collectEventListeners(ast.outputs, ast.directives, compileElement);
     bindRenderInputs(ast.inputs, compileElement);
     bindRenderOutputs(eventListeners);
-    ListWrapper.forEachWithIndex(ast.directives, (directiveAst, index) {
+    var index = -1;
+    ast.directives.forEach((directiveAst) {
+      index++;
       var directiveInstance = compileElement.directiveInstances[index];
       bindDirectiveInputs(directiveAst, directiveInstance, compileElement);
       bindDirectiveDetectChangesLifecycleCallbacks(
@@ -80,7 +80,9 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     // afterContent and afterView lifecycles need to be called bottom up
 
     // so that children are notified before parents
-    ListWrapper.forEachWithIndex(ast.directives, (directiveAst, index) {
+    index = -1;
+    ast.directives.forEach((directiveAst) {
+      index++;
       var directiveInstance = compileElement.directiveInstances[index];
       bindDirectiveAfterContentLifecycleCallbacks(
           directiveAst.directive, directiveInstance, compileElement);
@@ -96,7 +98,9 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     var compileElement = (this.view.nodes[this._nodeIndex++] as CompileElement);
     var eventListeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
-    ListWrapper.forEachWithIndex(ast.directives, (directiveAst, index) {
+    var index = -1;
+    ast.directives.forEach((directiveAst) {
+      index++;
       var directiveInstance = compileElement.directiveInstances[index];
       bindDirectiveInputs(directiveAst, directiveInstance, compileElement);
       bindDirectiveDetectChangesLifecycleCallbacks(

@@ -1,6 +1,5 @@
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
@@ -31,8 +30,9 @@ class KeyValueDiffers {
   static KeyValueDiffers create(List<KeyValueDifferFactory> factories,
       [KeyValueDiffers parent]) {
     if (isPresent(parent)) {
-      var copied = ListWrapper.clone(parent.factories);
-      factories = (new List.from(factories)..addAll(copied));
+      var copied = new List<KeyValueDifferFactory>.from(parent.factories);
+      factories =
+          (new List<KeyValueDifferFactory>.from(factories)..addAll(copied));
       return new KeyValueDiffers(factories);
     } else {
       return new KeyValueDiffers(factories);

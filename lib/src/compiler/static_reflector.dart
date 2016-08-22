@@ -15,7 +15,6 @@ import "package:angular2/src/core/metadata.dart"
         ViewChildrenMetadata,
         ViewQueryMetadata,
         QueryMetadata;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isArray, isPresent, isPrimitive;
 
@@ -518,7 +517,9 @@ List<String> splitPath(String path) {
 
 String resolvePath(List<String> pathParts) {
   var result = [];
-  ListWrapper.forEachWithIndex(pathParts, (part, index) {
+  var index = -1;
+  pathParts.forEach((part) {
+    index++;
     switch (part) {
       case "":
       case ".":

@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, normalizeBool;
+import "package:angular2/src/facade/lang.dart" show isPresent, normalizeBool;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 
@@ -24,11 +22,11 @@ bool isControl(Object control) {
 
 _find(AbstractControl control,
     dynamic /* List< dynamic /* String | num */ > | String */ path) {
-  if (isBlank(path)) return null;
+  if (path == null) return null;
   if (!(path is List)) {
     path = ((path as String)).split("/");
   }
-  if (path is List && ListWrapper.isEmpty(path)) return null;
+  if (path is List && path.isEmpty) return null;
   return ((path as List<dynamic /* String | num */ >)).fold(control, (v, name) {
     if (v is ControlGroup) {
       return isPresent(v.controls[name]) ? v.controls[name] : null;
@@ -449,14 +447,14 @@ class ControlArray extends AbstractControl {
 
   /// Insert a new [AbstractControl] at the given `index` in the array.
   void insert(num index, AbstractControl control) {
-    ListWrapper.insert(this.controls, index, control);
+    controls.insert(index, control);
     control.setParent(this);
     this.updateValueAndValidity();
   }
 
   /// Remove the control at the given `index` in the array.
   void removeAt(num index) {
-    ListWrapper.removeAt(this.controls, index);
+    controls.removeAt(index);
     this.updateValueAndValidity();
   }
 

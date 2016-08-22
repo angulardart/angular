@@ -14,7 +14,6 @@ import "package:angular2/src/core/metadata.dart"
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 bool _isDirectiveMetadata(dynamic type) {
@@ -112,7 +111,7 @@ class DirectiveResolver {
       Map<String, dynamic> queries,
       Type directiveType) {
     List<String> mergedInputs =
-        dm.inputs != null ? ListWrapper.concat(dm.inputs, inputs) : inputs;
+        dm.inputs != null ? (new List.from(dm.inputs)..addAll(inputs)) : inputs;
     List<String> mergedOutputs;
     if (dm.outputs != null) {
       dm.outputs.forEach((String propName) {
@@ -122,7 +121,7 @@ class DirectiveResolver {
               "in '${directiveType}'");
         }
       });
-      mergedOutputs = ListWrapper.concat(dm.outputs, outputs);
+      mergedOutputs = new List.from(dm.outputs)..addAll(outputs);
     } else {
       mergedOutputs = outputs;
     }

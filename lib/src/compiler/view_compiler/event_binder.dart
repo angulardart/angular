@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, StringWrapper;
 
@@ -136,7 +135,9 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
         compileElement, hostEvent.name, eventListeners);
     listener.addAction(hostEvent, null, null);
   });
-  ListWrapper.forEachWithIndex(dirs, (directiveAst, i) {
+  var i = -1;
+  dirs.forEach((directiveAst) {
+    i++;
     var directiveInstance = compileElement.directiveInstances[i];
     directiveAst.hostEvents.forEach((hostEvent) {
       compileElement.view.bindings

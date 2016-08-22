@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, isString, StringWrapper;
@@ -99,7 +98,7 @@ class EmitterVisitorContext {
   dynamic toSource() {
     var lines = this._lines;
     if (identical(lines[lines.length - 1].parts.length, 0)) {
-      lines = ListWrapper.slice(lines, 0, lines.length - 1);
+      lines = lines.sublist(0, lines.length - 1);
     }
     return lines
         .map((line) {
@@ -482,7 +481,7 @@ abstract class AbstractEmitterVisitor
 }
 
 dynamic escapeSingleQuoteString(String input, bool escapeDollar) {
-  if (isBlank(input)) {
+  if (input == null) {
     return null;
   }
   var body = StringWrapper

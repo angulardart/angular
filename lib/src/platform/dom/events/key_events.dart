@@ -2,7 +2,6 @@ import "dart:html";
 
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, StringWrapper;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
@@ -48,8 +47,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
     var key = KeyEventsPlugin._normalizeKey(parts.removeLast());
     var fullKey = "";
     modifierKeys.forEach((modifierName) {
-      if (ListWrapper.contains(parts, modifierName)) {
-        ListWrapper.remove(parts, modifierName);
+      if (parts.remove(modifierName)) {
         fullKey += modifierName + ".";
       }
     });

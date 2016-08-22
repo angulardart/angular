@@ -1,5 +1,4 @@
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "../compile_metadata.dart"
@@ -86,8 +85,9 @@ class CompileView implements NameResolver {
     var viewQueries = new CompileTokenMap<List<CompileQuery>>();
     if (identical(this.viewType, ViewType.COMPONENT)) {
       var directiveInstance = o.THIS_EXPR.prop("context");
-      ListWrapper.forEachWithIndex(this.component.viewQueries,
-          (queryMeta, queryIndex) {
+      var queryIndex = -1;
+      this.component.viewQueries.forEach((queryMeta) {
+        queryIndex++;
         var propName =
             '''_viewQuery_${ queryMeta . selectors [ 0 ] . name}_${ queryIndex}''';
         var queryList =

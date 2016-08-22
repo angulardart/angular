@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "html_ast.dart"
@@ -222,7 +221,7 @@ class TreeBuilder {
 
   void _closeVoidElement() {
     if (this.elementStack.length > 0) {
-      var el = ListWrapper.last(this.elementStack);
+      var el = elementStack.isNotEmpty ? elementStack.last : null;
       if (getHtmlTagDefinition(el.name).isVoid) {
         this.elementStack.removeLast();
       }
@@ -265,7 +264,7 @@ class TreeBuilder {
 
   _pushElement(HtmlElementAst el) {
     if (this.elementStack.length > 0) {
-      var parentEl = ListWrapper.last(this.elementStack);
+      var parentEl = elementStack.isNotEmpty ? elementStack.last : null;
       if (getHtmlTagDefinition(parentEl.name).isClosedByChild(el.name)) {
         this.elementStack.removeLast();
       }
@@ -303,8 +302,7 @@ class TreeBuilder {
         stackIndex--) {
       var el = this.elementStack[stackIndex];
       if (el.name == fullName) {
-        ListWrapper.splice(this.elementStack, stackIndex,
-            this.elementStack.length - stackIndex);
+        elementStack.removeRange(stackIndex, elementStack.length);
         return true;
       }
       if (!getHtmlTagDefinition(el.name).closedByParent) {
@@ -328,9 +326,7 @@ class TreeBuilder {
   }
 
   HtmlElementAst _getParentElement() {
-    return this.elementStack.length > 0
-        ? ListWrapper.last(this.elementStack)
-        : null;
+    return this.elementStack.length > 0 ? elementStack.last : null;
   }
 
   _addToParent(HtmlAst node) {

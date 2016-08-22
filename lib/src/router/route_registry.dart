@@ -2,7 +2,6 @@ import "dart:async";
 
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show
@@ -157,7 +156,8 @@ class RouteRegistry {
   Future<Instruction> _recognize(
       Url parsedUrl, List<Instruction> ancestorInstructions,
       [_aux = false]) {
-    var parentInstruction = ListWrapper.last(ancestorInstructions);
+    var parentInstruction =
+        ancestorInstructions.isNotEmpty ? ancestorInstructions.last : null;
     var parentComponent = isPresent(parentInstruction)
         ? parentInstruction.component.componentType
         : this._rootComponent;
@@ -174,7 +174,7 @@ class RouteRegistry {
               if (candidate is PathMatch) {
                 List<Instruction> auxParentInstructions =
                     ancestorInstructions.length > 0
-                        ? [ListWrapper.last(ancestorInstructions)]
+                        ? [ancestorInstructions.last]
                         : [];
                 var auxInstructions = this._auxRoutesToUnresolved(
                     candidate.remainingAux, auxParentInstructions);
@@ -243,30 +243,29 @@ class RouteRegistry {
     var params = splitAndFlattenLinkParams(linkParams);
     var prevInstruction;
     // The first segment should be either '.' (generate from parent) or '' (generate from root).
-
     // When we normalize above, we strip all the slashes, './' becomes '.' and '/' becomes ''.
-    if (ListWrapper.first(params) == "") {
+    if (params.first == "") {
       params.removeAt(0);
-      prevInstruction = ListWrapper.first(ancestorInstructions);
+      prevInstruction = ancestorInstructions.first;
       ancestorInstructions = [];
     } else {
       prevInstruction = ancestorInstructions.length > 0
           ? ancestorInstructions.removeLast()
           : null;
-      if (ListWrapper.first(params) == ".") {
+      if (params.first == ".") {
         params.removeAt(0);
-      } else if (ListWrapper.first(params) == "..") {
-        while (ListWrapper.first(params) == "..") {
+      } else if (params.first == "..") {
+        while (params.first == "..") {
           if (ancestorInstructions.length <= 0) {
             throw new BaseException(
-                '''Link "${ ListWrapper . toJSON ( linkParams )}" has too many "../" segments.''');
+                '''Link "$linkParams" has too many "../" segments.''');
           }
           prevInstruction = ancestorInstructions.removeLast();
-          params = ListWrapper.slice(params, 1);
+          params = params.sublist(1);
         }
       } else {
         // we must only peak at the link param, and not consume it
-        var routeName = ListWrapper.first(params);
+        var routeName = params.first;
         var parentComponentType = this._rootComponent;
         var grandparentComponentType = null;
         if (ancestorInstructions.length > 1) {
@@ -290,7 +289,7 @@ class RouteRegistry {
             this.hasRoute(routeName, grandparentComponentType);
         if (parentRouteExists && childRouteExists) {
           var msg =
-              '''Link "${ ListWrapper . toJSON ( linkParams )}" is ambiguous, use "./" or "../" to disambiguate.''';
+              '''Link "$linkParams" is ambiguous, use "./" or "../" to disambiguate.''';
           throw new BaseException(msg);
         }
         if (parentRouteExists) {
@@ -305,8 +304,7 @@ class RouteRegistry {
       params.removeAt(0);
     }
     if (params.length < 1) {
-      var msg =
-          '''Link "${ ListWrapper . toJSON ( linkParams )}" must include a route name.''';
+      var msg = '''Link "$linkParams" must include a route name.''';
       throw new BaseException(msg);
     }
     var generatedInstruction = this._generate(
@@ -335,16 +333,16 @@ class RouteRegistry {
     var parentComponentType = this._rootComponent;
     var componentInstruction = null;
     Map<String, Instruction> auxInstructions = {};
-    Instruction parentInstruction = ListWrapper.last(ancestorInstructions);
-    if (isPresent(parentInstruction) &&
-        isPresent(parentInstruction.component)) {
+    Instruction parentInstruction =
+        ancestorInstructions.isNotEmpty ? ancestorInstructions.last : null;
+    if (parentInstruction?.component != null) {
       parentComponentType = parentInstruction.component.componentType;
     }
     if (linkParams.length == 0) {
       var defaultInstruction = this.generateDefault(parentComponentType);
       if (isBlank(defaultInstruction)) {
         throw new BaseException(
-            '''Link "${ ListWrapper . toJSON ( _originalLink )}" does not resolve to a terminal instruction.''');
+            '''Link "$_originalLink" does not resolve to a terminal instruction.''');
       }
       return defaultInstruction;
     }
@@ -431,7 +429,7 @@ class RouteRegistry {
       } else {
         List<Instruction> childAncestorComponents =
             (new List.from(ancestorInstructions)..addAll([instruction]));
-        var remainingLinkParams = ListWrapper.slice(linkParams, linkParamIndex);
+        var remainingLinkParams = linkParams.sublist(linkParamIndex);
         childInstruction = this._generate(remainingLinkParams,
             childAncestorComponents, null, false, _originalLink);
       }
@@ -504,7 +502,7 @@ Instruction mostSpecific(List<Instruction> instructions) {
     return instructions[0];
   }
   var first = instructions[0];
-  var rest = ListWrapper.slice(instructions, 1);
+  var rest = instructions.sublist(1);
   return rest.fold(first, (Instruction instruction, Instruction contender) {
     if (compareSpecificityStrings(
             contender.specificity, instruction.specificity) ==

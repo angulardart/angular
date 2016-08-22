@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../output/output_ast.dart" as o;
@@ -66,7 +65,7 @@ class CompileMethod {
 
   addStmts(List<o.Statement> stmts) {
     this._updateDebugContextIfNeeded();
-    ListWrapper.addAll(this._bodyStatements, stmts);
+    this._bodyStatements.addAll(stmts);
   }
 
   List<o.Statement> finish() {

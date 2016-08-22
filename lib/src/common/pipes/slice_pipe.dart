@@ -1,9 +1,10 @@
-import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-import "package:angular2/src/facade/lang.dart"
+import 'dart:math' as math;
+
+import 'package:angular2/core.dart' show Injectable, PipeTransform, Pipe;
+import 'package:angular2/src/facade/lang.dart'
     show isBlank, isString, isArray, StringWrapper;
 
-import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
+import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
 /// Creates a new List or String containing only a subset (slice) of the
 /// elements.
@@ -64,7 +65,16 @@ class SlicePipe implements PipeTransform {
     if (isString(value)) {
       return StringWrapper.slice(value, start, end);
     }
-    return ListWrapper.slice(value, start, end);
+    // This used to have JS behavior with TS-transpiled facades. To avoid a
+    // breaking change, we inline the behavior here and will cleanup after all
+    // facades are removed.
+    var length = value.length;
+    start = start < 0 ? math.max(0, length + start) : math.min(start, length);
+    if (end != null) {
+      end = end < 0 ? math.max(0, length + end) : math.min(end, length);
+      if (end < start) return [];
+    }
+    return value.sublist(start, end);
   }
 
   bool supports(dynamic obj) {

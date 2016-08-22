@@ -1,6 +1,5 @@
 import "package:angular2/core.dart"
     show ReflectiveInjector, PLATFORM_INITIALIZER;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 class TestInjector {
@@ -23,14 +22,14 @@ class TestInjector {
       throw new StateError(
           "Cannot add providers after test injector is instantiated");
     }
-    this._providers = ListWrapper.concat(this._providers, providers);
+    this._providers = new List.from(this._providers)..addAll(providers);
   }
 
   createInjector() {
     var rootInjector =
         ReflectiveInjector.resolveAndCreate(this.platformProviders);
     this._injector = rootInjector.resolveAndCreateChild(
-        ListWrapper.concat(this.applicationProviders, this._providers));
+        new List.from(applicationProviders)..addAll(_providers));
     this._instantiated = true;
     return this._injector;
   }

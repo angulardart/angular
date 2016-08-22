@@ -7,8 +7,7 @@ import "package:angular2/src/compiler/selector.dart"
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/linker/view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
-import "package:angular2/src/facade/collection.dart"
-    show ListWrapper, SetWrapper;
+import "package:angular2/src/facade/collection.dart" show SetWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, StringWrapper;
@@ -197,8 +196,9 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       this._schemaRegistry,
       this.preserveWhitespace) {
     this.selectorMatcher = new SelectorMatcher();
-    ListWrapper.forEachWithIndex(directives,
-        (CompileDirectiveMetadata directive, num index) {
+    var index = -1;
+    directives.forEach((CompileDirectiveMetadata directive) {
+      index++;
       var selector = CssSelector.parse(directive.selector);
       this.selectorMatcher.addSelectables(selector, directive);
       this.directivesIndex[directive] = index;
@@ -703,11 +703,9 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   List<CompileDirectiveMetadata> _parseDirectives(
       SelectorMatcher selectorMatcher, CssSelector elementCssSelector) {
     // Need to sort the directives so that we get consistent results throughout,
-
     // as selectorMatcher uses Maps inside.
-
     // Also dedupe directives as they might match more than one time!
-    var directives = ListWrapper.createFixedSize(this.directivesIndex.length);
+    var directives = new List(this.directivesIndex.length);
     selectorMatcher.match(elementCssSelector, (selector, directive) {
       directives[this.directivesIndex[directive]] = directive;
     });
@@ -1061,7 +1059,7 @@ class ElementContext {
     this._ngContentIndexMatcher.match(selector, (selector, ngContentIndex) {
       ngContentIndices.add(ngContentIndex);
     });
-    ListWrapper.sort(ngContentIndices);
+    ngContentIndices.sort();
     if (_wildcardNgContentIndex != null) {
       ngContentIndices.add(_wildcardNgContentIndex);
     }

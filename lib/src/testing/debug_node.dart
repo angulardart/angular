@@ -3,7 +3,6 @@ import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/collection.dart" show Predicate;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 
 class EventListener {
   String name;
@@ -72,18 +71,18 @@ class DebugElement extends DebugNode {
     int childIndex = childNodes.indexOf(child);
     if (childIndex != -1) {
       child.parent = null;
-      ListWrapper.splice(this.childNodes, childIndex, 1);
+      childNodes.removeAt(childIndex);
     }
   }
 
   insertChildrenAfter(DebugNode child, List<DebugNode> newChildren) {
     var siblingIndex = this.childNodes.indexOf(child);
     if (!identical(siblingIndex, -1)) {
-      var previousChildren =
-          ListWrapper.slice(this.childNodes, 0, siblingIndex + 1);
-      var nextChildren = ListWrapper.slice(this.childNodes, siblingIndex + 1);
-      this.childNodes = ListWrapper.concat(
-          ListWrapper.concat(previousChildren, newChildren), nextChildren);
+      var previousChildren = childNodes.sublist(0, siblingIndex + 1);
+      var nextChildren = childNodes.sublist(siblingIndex + 1);
+      this.childNodes = new List.from(previousChildren)
+        ..addAll(newChildren)
+        ..addAll(nextChildren);
       for (var i = 0; i < newChildren.length; ++i) {
         var newChild = newChildren[i];
         newChild.parent?.removeChild(newChild);

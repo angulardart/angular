@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show Map, ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isPresent, isBlank, RegExpWrapper, RegExpMatcherWrapper, StringWrapper;
@@ -29,8 +28,8 @@ class CssSelector {
     var _addResult = (List<CssSelector> res, cssSel) {
       if (cssSel.notSelectors.length > 0 &&
           isBlank(cssSel.element) &&
-          ListWrapper.isEmpty(cssSel.classNames) &&
-          ListWrapper.isEmpty(cssSel.attrs)) {
+          cssSel.classNames.isEmpty &&
+          cssSel.attrs.isEmpty) {
         cssSel.element = "*";
       }
       res.add(cssSel);
@@ -77,8 +76,8 @@ class CssSelector {
 
   bool isElementSelector() {
     return isPresent(this.element) &&
-        ListWrapper.isEmpty(this.classNames) &&
-        ListWrapper.isEmpty(this.attrs) &&
+        this.classNames.isEmpty &&
+        this.attrs.isEmpty &&
         identical(this.notSelectors.length, 0);
   }
 

@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
-
 class AST {
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return null;
@@ -493,7 +491,7 @@ class AstTransformer implements AstVisitor {
   }
 
   List<dynamic> visitAll(List<dynamic> asts) {
-    var res = ListWrapper.createFixedSize(asts.length);
+    var res = new List(asts.length);
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }

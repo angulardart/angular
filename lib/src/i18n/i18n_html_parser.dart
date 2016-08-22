@@ -15,7 +15,6 @@ import "package:angular2/src/compiler/html_parser.dart"
     show HtmlParser, HtmlParseTreeResult;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show RegExpWrapper, NumberWrapper, isPresent;
@@ -189,8 +188,7 @@ class I18nHtmlParser implements HtmlParser {
 
   List<HtmlAst> _recurse(List<HtmlAst> nodes) {
     var ps = partition(nodes, this.errors);
-    return ListWrapper.flatten(ps.map((p) => this._processI18nPart(p)).toList())
-        as List<HtmlAst>;
+    return ps.map(_processI18nPart).expand((i) => i).toList();
   }
 
   List<HtmlAst> _mergeTrees(

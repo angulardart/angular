@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
@@ -102,14 +101,14 @@ class CompileQuery {
 }
 
 List<o.Expression> createQueryValues(ViewQueryValues viewValues) {
-  return ListWrapper.flatten(viewValues.values.map((entry) {
+  return viewValues.values.map/*<o.Expression>*/((entry) {
     if (entry is ViewQueryValues) {
       return mapNestedViews(entry.view.declarationElement.appElement,
           entry.view, createQueryValues(entry));
     } else {
       return (entry as o.Expression);
     }
-  }).toList()) as List<o.Expression>;
+  }).toList();
 }
 
 o.Expression mapNestedViews(o.Expression declarationAppElement,

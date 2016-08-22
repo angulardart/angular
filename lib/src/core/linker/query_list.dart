@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:angular2/src/facade/async.dart';
-import 'package:angular2/src/facade/collection.dart';
 
 /**
  * See query_list.ts
@@ -23,8 +22,11 @@ class QueryList<T> extends Object with IterableMixin<T> {
   }
 
   /** @internal */
-  void reset(List<T> newList) {
-    _results = ListWrapper.flatten(newList) as List<T>;
+  void reset(List newList) {
+    // This used to call ListWrapper.flatten(newList). Let's inline it for now.
+    var results = <T>[];
+    _flattenList(results, newList);
+    _results = results;
     _dirty = false;
   }
 
@@ -39,5 +41,15 @@ class QueryList<T> extends Object with IterableMixin<T> {
   /** @internal **/
   void setDirty() {
     _dirty = true;
+  }
+}
+
+void _flattenList(List results, Iterable items) {
+  for (var item in items) {
+    if (item is Iterable) {
+      _flattenList(results, item);
+    } else {
+      results.add(item);
+    }
   }
 }

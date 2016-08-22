@@ -1,6 +1,5 @@
 import "package:angular2/core.dart"
     show Directive, Host, ViewContainerRef, TemplateRef;
-import "package:angular2/src/facade/collection.dart" show ListWrapper, Map;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
 
 const _WHEN_DEFAULT = const Object();
@@ -100,7 +99,7 @@ class NgSwitch {
     this._registerView(newWhen, view);
     if (identical(oldWhen, this._switchValue)) {
       view.destroy();
-      ListWrapper.remove(this._activeViews, view);
+      _activeViews.remove(view);
     } else if (identical(newWhen, this._switchValue)) {
       if (this._useDefault) {
         this._useDefault = false;
@@ -151,7 +150,7 @@ class NgSwitch {
       (this._valueViews.containsKey(value) &&
           (this._valueViews.remove(value) != null || true));
     } else {
-      ListWrapper.remove(views, view);
+      views.remove(view);
     }
   }
 }

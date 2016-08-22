@@ -7,7 +7,6 @@ import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart"
     show RootRenderer, RenderComponentType, Renderer;
 import 'package:angular2/src/core/security.dart';
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent, looseIdentical;
 
@@ -108,7 +107,7 @@ List ensureSlotCount(List projectableNodes, num expectedSlotCount) {
   }
   if (projectableNodes.length < expectedSlotCount) {
     var givenSlotCount = projectableNodes.length;
-    res = ListWrapper.createFixedSize(expectedSlotCount);
+    res = new List(expectedSlotCount);
     for (var i = 0; i < expectedSlotCount; i++) {
       res[i] = (i < givenSlotCount) ? projectableNodes[i] : const [];
     }

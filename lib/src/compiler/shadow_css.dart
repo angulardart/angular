@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show
         StringWrapper,
@@ -418,7 +417,7 @@ class ShadowCss {
             // remove :host since it should be unnecessary
             var t = StringWrapper.replaceAll(p.trim(), _polyfillHostRe, "");
             if (t.length > 0 &&
-                !ListWrapper.contains(splits, t) &&
+                !splits.contains(t) &&
                 !StringWrapper.contains(t, attrName)) {
               var re = new RegExp(r'([^:]*)(:*)(.*)');
               var m = RegExpWrapper.firstMatch(re, t);

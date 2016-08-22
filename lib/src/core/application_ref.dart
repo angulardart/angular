@@ -14,7 +14,6 @@ import "package:angular2/src/core/linker/component_resolver.dart"
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry, Testability;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, ExceptionHandler;
 import "package:angular2/src/facade/lang.dart"
@@ -176,14 +175,14 @@ class PlatformRef_ extends PlatformRef {
   }
 
   void dispose() {
-    ListWrapper.clone(this._applications).forEach((app) => app.dispose());
+    this._applications.toList().forEach((app) => app.dispose());
     this._disposeListeners.forEach((dispose) => dispose());
     this._disposed = true;
   }
 
   /** @internal */
   void _applicationDisposed(ApplicationRef app) {
-    ListWrapper.remove(this._applications, app);
+    _applications.remove(app);
   }
 }
 
@@ -338,7 +337,7 @@ class ApplicationRef_ extends ApplicationRef {
   }
 
   void unregisterChangeDetector(ChangeDetectorRef changeDetector) {
-    ListWrapper.remove(this._changeDetectorRefs, changeDetector);
+    _changeDetectorRefs.remove(changeDetector);
   }
 
   Future<dynamic> waitForAsyncInitializers() {
@@ -412,11 +411,11 @@ class ApplicationRef_ extends ApplicationRef {
 
   /** @internal */
   void _unloadComponent(ComponentRef componentRef) {
-    if (!ListWrapper.contains(this._rootComponents, componentRef)) {
+    if (!_rootComponents.contains(componentRef)) {
       return;
     }
-    this.unregisterChangeDetector(componentRef.changeDetectorRef);
-    ListWrapper.remove(this._rootComponents, componentRef);
+    unregisterChangeDetector(componentRef.changeDetectorRef);
+    _rootComponents.remove(componentRef);
   }
 
   Injector get injector {
@@ -449,7 +448,7 @@ class ApplicationRef_ extends ApplicationRef {
 
   void dispose() {
     // TODO(alxhub): Dispose of the NgZone.
-    ListWrapper.clone(this._rootComponents).forEach((ref) => ref.destroy());
+    this._rootComponents.toList().forEach((ref) => ref.destroy());
     this._disposeListeners.forEach((dispose) => dispose());
     this._platform._applicationDisposed(this);
   }

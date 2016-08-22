@@ -1,6 +1,5 @@
 import "package:angular2/src/core/di.dart" show Injectable, Inject, OpaqueToken;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 const OpaqueToken EVENT_MANAGER_PLUGINS =
@@ -13,7 +12,7 @@ class EventManager {
   EventManager(@Inject(EVENT_MANAGER_PLUGINS) List<EventManagerPlugin> plugins,
       this._zone) {
     plugins.forEach((p) => p.manager = this);
-    this._plugins = ListWrapper.reversed(plugins);
+    this._plugins = plugins.reversed.toList();
   }
   Function addEventListener(
       dynamic element, String eventName, Function handler) {

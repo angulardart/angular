@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, StringWrapper;
@@ -757,7 +756,7 @@ class SimpleExpressionChecker implements AstVisitor {
   }
 
   List<dynamic> visitAll(List<dynamic> asts) {
-    var res = ListWrapper.createFixedSize(asts.length);
+    var res = new List(asts.length);
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }

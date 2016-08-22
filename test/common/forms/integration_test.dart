@@ -10,7 +10,6 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/common.dart";
 import "package:angular2/core.dart" show Provider, Input;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import 'package:test/test.dart';
 
 main() {
@@ -1298,8 +1297,4 @@ class MyComp {
   }
 }
 
-sortedClassList(el) {
-  var l = DOM.classList(el);
-  ListWrapper.sort(l);
-  return l;
-}
+sortedClassList(el) => DOM.classList(el)..sort();

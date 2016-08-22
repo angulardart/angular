@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
 
@@ -113,12 +112,10 @@ class ProviderElementContext {
         .values()
         .map((provider) => provider.token.identifier)
         .toList();
-    var sortedDirectives = ListWrapper.clone(this._directiveAsts);
-    ListWrapper.sort(
-        sortedDirectives,
-        (dir1, dir2) =>
-            sortedProviderTypes.indexOf(dir1.directive.type) -
-            sortedProviderTypes.indexOf(dir2.directive.type));
+    var sortedDirectives = new List<DirectiveAst>.from(this._directiveAsts);
+    sortedDirectives.sort((dir1, dir2) =>
+        sortedProviderTypes.indexOf(dir1.directive.type) -
+        sortedProviderTypes.indexOf(dir2.directive.type));
     return sortedDirectives;
   }
 
@@ -144,11 +141,9 @@ class ProviderElementContext {
     while (!identical(currentEl, null)) {
       queries = currentEl._contentQueries.get(token);
       if (isPresent(queries)) {
-        ListWrapper.addAll(
-            result,
-            queries
-                .where((query) => query.descendants || distance <= 1)
-                .toList());
+        result.addAll(queries
+            .where((query) => query.descendants || distance <= 1)
+            .toList());
       }
       if (currentEl._directiveAsts.length > 0) {
         distance++;
@@ -157,7 +152,7 @@ class ProviderElementContext {
     }
     queries = this._viewContext.viewQueries.get(token);
     if (isPresent(queries)) {
-      ListWrapper.addAll(result, queries);
+      result.addAll(queries);
     }
     return result;
   }
@@ -549,7 +544,7 @@ _resolveProviders(
       targetProvidersByToken.add(provider.token, resolvedProvider);
     } else {
       if (!provider.multi) {
-        ListWrapper.clear(resolvedProvider.providers);
+        resolvedProvider.providers.clear();
       }
       resolvedProvider.providers.add(provider);
     }

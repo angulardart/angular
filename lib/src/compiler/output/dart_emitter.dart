@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, isArray;
 
@@ -164,7 +163,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (isPresent(superCtorExpr)) {
       ctx.print(''': ''');
       superCtorExpr.visitExpression(this, ctx);
-      ctorStmts = ListWrapper.slice(ctorStmts, 1);
+      ctorStmts = ctorStmts.sublist(1);
     }
     ctx.println(''' {''');
     ctx.incIndent();

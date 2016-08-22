@@ -7,7 +7,6 @@ import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
@@ -154,8 +153,7 @@ class RuntimeCompiler implements ComponentResolver {
         new ir.ExternalExpr(new CompileIdentifierMetadata(runtime: styles)),
         pipes);
     compileResult.dependencies.forEach((dep) {
-      var childCompilingComponentsPath =
-          ListWrapper.clone(compilingComponentsPath);
+      var childCompilingComponentsPath = new List.from(compilingComponentsPath);
       var childCacheKey = dep.comp.type.runtime;
       List<CompileDirectiveMetadata> childViewDirectives = this
           ._runtimeMetadataResolver

@@ -1,5 +1,4 @@
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
@@ -241,7 +240,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     if (isPresent(expr.builtin)) {
       switch (expr.builtin) {
         case o.BuiltinMethod.ConcatArray:
-          result = ListWrapper.concat(receiver, args[0]);
+          result = new List.from(receiver)..addAll(args[0]);
           break;
         case o.BuiltinMethod.SubscribeObservable:
           result = receiver.listen(args[0]);

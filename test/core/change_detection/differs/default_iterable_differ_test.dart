@@ -5,7 +5,6 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, DefaultIterableDifferFactory;
 import "package:angular2/src/facade/lang.dart" show NumberWrapper;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import 'dart:collection';
 import 'package:test/test.dart';
 
@@ -88,7 +87,7 @@ main() {
       test("should handle swapping element", () {
         var l = [1, 2];
         differ.check(l);
-        ListWrapper.clear(l);
+        l.clear();
         l.add(2);
         l.add(1);
         differ.check(l);
@@ -102,8 +101,9 @@ main() {
       test("should handle incremental swapping element", () {
         var l = ["a", "b", "c"];
         differ.check(l);
-        ListWrapper.removeAt(l, 1);
-        ListWrapper.insert(l, 0, "b");
+        l
+          ..removeAt(1)
+          ..insert(0, 'b');
         differ.check(l);
         expect(
             differ.toString(),
@@ -111,7 +111,7 @@ main() {
                 collection: ["b[1->0]", "a[0->1]", "c"],
                 previous: ["a[0->1]", "b[1->0]", "c"],
                 moves: ["b[1->0]", "a[0->1]"]));
-        ListWrapper.removeAt(l, 1);
+        l.removeAt(1);
         l.add("a");
         differ.check(l);
         expect(
@@ -147,7 +147,7 @@ main() {
                 collection: ["a", "b", "c[null->2]", "d[null->3]"],
                 previous: ["a", "b"],
                 additions: ["c[null->2]", "d[null->3]"]));
-        ListWrapper.removeAt(l, 2);
+        l.removeAt(2);
         differ.check(l);
         expect(
             differ.toString(),
@@ -156,7 +156,7 @@ main() {
                 previous: ["a", "b", "c[2->null]", "d[3->2]"],
                 moves: ["d[3->2]"],
                 removals: ["c[2->null]"]));
-        ListWrapper.clear(l);
+        l.clear();
         l.add("d");
         l.add("c");
         l.add("b");
@@ -195,7 +195,7 @@ main() {
       test("should detect [NaN] moves", () {
         var l = [NumberWrapper.NaN, NumberWrapper.NaN];
         differ.check(l);
-        ListWrapper.insert/*< dynamic >*/(l, 0, "foo");
+        l.insert(0, 'foo');
         differ.check(l);
         expect(
             differ.toString(),
@@ -208,7 +208,7 @@ main() {
       test("should remove and add same item", () {
         var l = ["a", "b", "c"];
         differ.check(l);
-        ListWrapper.removeAt(l, 1);
+        l.removeAt(1);
         differ.check(l);
         expect(
             differ.toString(),
@@ -217,7 +217,7 @@ main() {
                 previous: ["a", "b[1->null]", "c[2->1]"],
                 moves: ["c[2->1]"],
                 removals: ["b[1->null]"]));
-        ListWrapper.insert(l, 1, "b");
+        l.insert(1, 'b');
         differ.check(l);
         expect(
             differ.toString(),
@@ -230,7 +230,7 @@ main() {
       test("should support duplicates", () {
         var l = ["a", "a", "a", "b", "b"];
         differ.check(l);
-        ListWrapper.removeAt(l, 0);
+        l.removeAt(0);
         differ.check(l);
         expect(
             differ.toString(),
@@ -243,7 +243,7 @@ main() {
       test("should support insertions/moves", () {
         var l = ["a", "a", "b", "b"];
         differ.check(l);
-        ListWrapper.insert(l, 0, "b");
+        l.insert(0, 'b');
         differ.check(l);
         expect(
             differ.toString(),
@@ -269,7 +269,7 @@ main() {
       test("should not report unnecessary moves", () {
         var l = ["a", "b", "c"];
         differ.check(l);
-        ListWrapper.clear(l);
+        l.clear();
         l.add("b");
         l.add("a");
         l.add("c");
@@ -399,7 +399,7 @@ main() {
       test("should track removals normally", () {
         var l = buildItemList(["a", "b", "c"]);
         differ.check(l);
-        ListWrapper.removeAt(l, 2);
+        l.removeAt(2);
         differ.check(l);
         expect(
             differ.toString(),

@@ -1,7 +1,6 @@
 import "package:angular2/core.dart"
     show SimpleChange, OnChanges, Directive, Provider, Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isBlank;
 
@@ -147,7 +146,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   void removeControl(NgControl dir) {
-    ListWrapper.remove(this.directives, dir);
+    directives.remove(dir);
   }
 
   addControlGroup(NgControlGroup dir) {

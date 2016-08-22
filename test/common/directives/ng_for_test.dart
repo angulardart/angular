@@ -2,7 +2,6 @@
 library angular2.test.common.directives.ng_for_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/core.dart" show Component, TemplateRef, ContentChild;
 import "package:angular2/src/common/directives/ng_for.dart" show NgFor;
 import "package:angular2/src/common/directives/ng_if.dart" show NgIf;
@@ -48,7 +47,7 @@ main() {
             .createAsync(TestComponent)
             .then((fixture) {
           fixture.detectChanges();
-          ListWrapper.removeAt(fixture.debugElement.componentInstance.items, 1);
+          fixture.debugElement.componentInstance.items.removeAt(1);
           fixture.detectChanges();
           expect(fixture.debugElement.nativeElement, hasTextContent("1;"));
           completer.done();
@@ -63,7 +62,7 @@ main() {
             .createAsync(TestComponent)
             .then((fixture) {
           fixture.detectChanges();
-          ListWrapper.removeAt(fixture.debugElement.componentInstance.items, 0);
+          fixture.debugElement.componentInstance.items.removeAt(0);
           ((fixture.debugElement.componentInstance.items as List<num>)).add(1);
           fixture.detectChanges();
           expect(fixture.debugElement.nativeElement, hasTextContent("2;1;"));

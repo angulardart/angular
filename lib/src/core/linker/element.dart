@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di.dart" show Injector;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
@@ -71,7 +70,7 @@ class AppElement {
       nestedViews = [];
       this.nestedViews = nestedViews;
     }
-    ListWrapper.insert(nestedViews, viewIndex, view);
+    nestedViews.insert(viewIndex, view);
     var refRenderNode;
     if (viewIndex > 0) {
       var prevView = nestedViews[viewIndex - 1];
@@ -86,7 +85,7 @@ class AppElement {
   }
 
   AppView<dynamic> detachView(num viewIndex) {
-    var view = ListWrapper.removeAt(this.nestedViews, viewIndex);
+    var view = this.nestedViews.removeAt(viewIndex);
     if (identical(view.type, ViewType.COMPONENT)) {
       throw new BaseException('''Component views can\'t be moved!''');
     }

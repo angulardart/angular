@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
     show isBlank, isPresent, looseIdentical;
@@ -20,9 +19,7 @@ import "select_control_value_accessor.dart" show SelectControlValueAccessor;
 import "validators.dart" show ValidatorFn, AsyncValidatorFn;
 
 List<String> controlPath(String name, ControlContainer parent) {
-  var p = ListWrapper.clone(parent.path);
-  p.add(name);
-  return p;
+  return parent.path.toList()..add(name);
 }
 
 void setUpControl(Control control, NgControl dir) {

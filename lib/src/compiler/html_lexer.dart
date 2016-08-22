@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart"
     show StringWrapper, NumberWrapper, isPresent, isBlank;
 
@@ -657,7 +656,7 @@ class _HtmlTokenizer {
     var nbTokens = position[4];
     if (nbTokens < this.tokens.length) {
       // remove any extra tokens
-      this.tokens = ListWrapper.slice(this.tokens, 0, nbTokens);
+      this.tokens = tokens.sublist(0, nbTokens);
     }
   }
 

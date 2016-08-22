@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di/injector.dart" show Injector;
-import "package:angular2/src/facade/collection.dart" show ListWrapper;
 import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
@@ -152,10 +151,8 @@ class ViewContainerRef_ implements ViewContainerRef {
     return wtfLeave(s, viewRef_);
   }
 
-  num indexOf(ViewRef viewRef) {
-    return ListWrapper.indexOf(
-        this._element.nestedViews, ((viewRef as ViewRef_)).internalView);
-  }
+  num indexOf(ViewRef viewRef) =>
+      _element.nestedViews.indexOf((viewRef as ViewRef_).internalView);
 
   var _removeScope = wtfCreateScope("ViewContainerRef#remove()");
   // TODO(i): rename to destroy
