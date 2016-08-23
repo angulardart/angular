@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 List<String> convertUrlParamsToArray(Map<String, dynamic> urlParams) {
   var paramsArray = <String>[];
@@ -61,7 +60,7 @@ class Url {
 
   /** @internal */
   String _childString() {
-    return isPresent(this.child) ? ("/" + this.child.toString()) : "";
+    return this.child != null ? ("/" + this.child.toString()) : "";
   }
 }
 
@@ -105,7 +104,7 @@ String matchUrlSegment(String str) {
 final RegExp QUERY_PARAM_VALUE_RE = new RegExp("^[^\\(\\)\\?;&#]+");
 String matchUrlQueryParamValue(String str) {
   var match = QUERY_PARAM_VALUE_RE.firstMatch(str);
-  return isPresent(match) ? match[0] : "";
+  return match != null ? match[0] : "";
 }
 
 class UrlParser {
@@ -212,7 +211,7 @@ class UrlParser {
     if (this.peekStartsWith("=")) {
       this.capture("=");
       var valueMatch = matchUrlSegment(this._remaining);
-      if (isPresent(valueMatch)) {
+      if (valueMatch != null) {
         value = valueMatch;
         this.capture(value);
       }
@@ -230,7 +229,7 @@ class UrlParser {
     if (this.peekStartsWith("=")) {
       this.capture("=");
       var valueMatch = matchUrlQueryParamValue(this._remaining);
-      if (isPresent(valueMatch)) {
+      if (valueMatch != null) {
         value = valueMatch;
         this.capture(value);
       }

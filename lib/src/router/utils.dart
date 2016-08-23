@@ -1,6 +1,5 @@
 import "package:angular2/core.dart" show ComponentFactory;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "lifecycle/lifecycle_annotations_impl.dart" show CanActivate;
 
@@ -10,7 +9,7 @@ class TouchMap {
   TouchMap(Map<String, dynamic> map) {
     if (map != null) {
       map.forEach((key, value) {
-        this.map[key] = isPresent(value) ? value.toString() : null;
+        this.map[key] = value?.toString();
         this.keys[key] = true;
       });
     }

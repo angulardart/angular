@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../../url_parser.dart" show Url, RootUrl, convertUrlParamsToArray;
 import "../../utils.dart" show TouchMap, normalizeString;
@@ -131,7 +130,7 @@ class ParamRoutePath implements RoutePath {
       if (pathSegment is ContinuationPathSegment) {
         break;
       }
-      if (isPresent(currentUrlSegment)) {
+      if (currentUrlSegment != null) {
         // the star segment consumes all of the remaining URL, including matrix params
         if (pathSegment is StarPathSegment) {
           positionalParams[pathSegment.name] = currentUrlSegment.toString();
@@ -151,17 +150,17 @@ class ParamRoutePath implements RoutePath {
         return null;
       }
     }
-    if (this.terminal && isPresent(nextUrlSegment)) {
+    if (this.terminal && nextUrlSegment != null) {
       return null;
     }
     var urlPath = captured.join("/");
     var auxiliary = <Url>[];
     var urlParams = <String>[];
     var allParams = positionalParams;
-    if (isPresent(currentUrlSegment)) {
+    if (currentUrlSegment != null) {
       // If this is the root component, read query params. Otherwise, read matrix params.
       var paramsSegment = url is RootUrl ? url : currentUrlSegment;
-      if (isPresent(paramsSegment.params)) {
+      if (paramsSegment.params != null) {
         allParams = new Map<String, dynamic>.from(paramsSegment.params)
           ..addAll(positionalParams);
         urlParams = convertUrlParamsToArray(paramsSegment.params);
@@ -181,7 +180,7 @@ class ParamRoutePath implements RoutePath {
       var segment = this._segments[i];
       if (!(segment is ContinuationPathSegment)) {
         var generated = segment.generate(paramTokens);
-        if (isPresent(generated) || !(segment is StarPathSegment)) {
+        if (generated != null || !(segment is StarPathSegment)) {
           path.add(generated);
         }
       }
@@ -280,7 +279,7 @@ class ParamRoutePath implements RoutePath {
           '''Path "${ path}" should not include "#". Use "HashLocationStrategy" instead.''');
     }
     var illegalCharacter = ParamRoutePath.RESERVED_CHARS.firstMatch(path);
-    if (isPresent(illegalCharacter)) {
+    if (illegalCharacter != null) {
       throw new BaseException(
           '''Path "${ path}" contains "${ illegalCharacter [ 0 ]}" which is not allowed in a route config.''');
     }

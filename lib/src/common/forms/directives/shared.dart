@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, looseIdentical;
+import "package:angular2/src/facade/lang.dart" show looseIdentical;
 
 import "../model.dart" show Control, ControlGroup;
 import "../validators.dart" show Validators;
@@ -54,13 +54,13 @@ void _throwError(AbstractControlDirective dir, String message) {
 }
 
 ValidatorFn composeValidators(List<dynamic> validators) {
-  return isPresent(validators)
+  return validators != null
       ? Validators.compose(validators.map(normalizeValidator).toList())
       : null;
 }
 
 AsyncValidatorFn composeAsyncValidators(List<dynamic> validators) {
-  return isPresent(validators)
+  return validators != null
       ? Validators
           .composeAsync(validators.map(normalizeAsyncValidator).toList())
       : null;
@@ -87,18 +87,18 @@ ControlValueAccessor selectValueAccessor(
         v.runtimeType == NumberValueAccessor ||
         v.runtimeType == SelectControlValueAccessor ||
         v.runtimeType == RadioControlValueAccessor) {
-      if (isPresent(builtinAccessor))
+      if (builtinAccessor != null)
         _throwError(dir, "More than one built-in value accessor matches");
       builtinAccessor = v;
     } else {
-      if (isPresent(customAccessor))
+      if (customAccessor != null)
         _throwError(dir, "More than one custom value accessor matches");
       customAccessor = v;
     }
   });
-  if (isPresent(customAccessor)) return customAccessor;
-  if (isPresent(builtinAccessor)) return builtinAccessor;
-  if (isPresent(defaultAccessor)) return defaultAccessor;
+  if (customAccessor != null) return customAccessor;
+  if (builtinAccessor != null) return builtinAccessor;
+  if (defaultAccessor != null) return defaultAccessor;
   _throwError(dir, "No valid value accessor for");
   return null;
 }

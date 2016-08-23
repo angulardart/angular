@@ -1,7 +1,6 @@
 import 'dart:html' as html;
 
 import "package:angular2/core.dart" show Injectable, Inject, Optional;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "location.dart" show Location;
 import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
@@ -55,7 +54,7 @@ class HashLocationStrategy extends LocationStrategy {
       [@Optional() @Inject(APP_BASE_HREF) String _baseHref])
       : super() {
     /* super call moved to initializer */;
-    if (isPresent(_baseHref)) {
+    if (_baseHref != null) {
       this._baseHref = _baseHref;
     }
   }
@@ -76,14 +75,10 @@ class HashLocationStrategy extends LocationStrategy {
 
   String path() {
     // the hash value is always prefixed with a `#`
-
     // and if it is empty then it will stay empty
-    var path = this._platformLocation.hash;
-    if (!isPresent(path)) path = "#";
+    var path = this._platformLocation.hash ?? '#';
     // Dart will complain if a call to substring is
-
     // executed with a position value that extends the
-
     // length of string.
     return (path.length > 0 ? path.substring(1) : path);
   }

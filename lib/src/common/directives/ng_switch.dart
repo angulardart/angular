@@ -1,6 +1,5 @@
 import "package:angular2/core.dart"
     show Directive, Host, ViewContainerRef, TemplateRef;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 const _WHEN_DEFAULT = const Object();
 
@@ -125,7 +124,7 @@ class NgSwitch {
 
   void _activateViews(List<SwitchView> views) {
     // TODO(vicb): assert(this._activeViews.length === 0);
-    if (isPresent(views)) {
+    if (views != null) {
       for (var i = 0; i < views.length; i++) {
         views[i].create();
       }

@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show TemplateAst;
 import "compile_view.dart" show CompileView;
@@ -25,7 +23,7 @@ class CompileMethod {
     if (!identical(this._newState.nodeIndex, this._currState.nodeIndex) ||
         !identical(this._newState.sourceAst, this._currState.sourceAst)) {
       var expr = this._updateDebugContext(this._newState);
-      if (isPresent(expr)) {
+      if (expr != null) {
         this._bodyStatements.add(expr.toStmt());
       }
     }
@@ -34,15 +32,13 @@ class CompileMethod {
   o.Expression _updateDebugContext(_DebugState newState) {
     this._currState = this._newState = newState;
     if (this._debugEnabled) {
-      var sourceLocation = isPresent(newState.sourceAst)
+      var sourceLocation = newState.sourceAst != null
           ? newState.sourceAst.sourceSpan.start
           : null;
       return o.THIS_EXPR.callMethod("debug", [
         o.literal(newState.nodeIndex),
-        isPresent(sourceLocation)
-            ? o.literal(sourceLocation.line)
-            : o.NULL_EXPR,
-        isPresent(sourceLocation) ? o.literal(sourceLocation.col) : o.NULL_EXPR
+        sourceLocation != null ? o.literal(sourceLocation.line) : o.NULL_EXPR,
+        sourceLocation != null ? o.literal(sourceLocation.col) : o.NULL_EXPR
       ]);
     } else {
       return null;
@@ -51,7 +47,7 @@ class CompileMethod {
 
   o.Expression resetDebugInfoExpr(num nodeIndex, TemplateAst templateAst) {
     var res = this._updateDebugContext(new _DebugState(nodeIndex, templateAst));
-    return isPresent(res) ? res : o.NULL_EXPR;
+    return res ?? o.NULL_EXPR;
   }
 
   resetDebugInfo(num nodeIndex, TemplateAst templateAst) {

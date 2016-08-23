@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import "package:angular2/core.dart" show OpaqueToken;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 import "model.dart" as modelModule;
@@ -41,7 +40,7 @@ class Validators {
   static ValidatorFn minLength(num minLength) {
     return /* Map < String , dynamic > */ (modelModule
         .AbstractControl control) {
-      if (isPresent(Validators.required(control))) return null;
+      if (Validators.required(control) != null) return null;
       String v = control.value;
       return v.length < minLength
           ? {
@@ -58,7 +57,7 @@ class Validators {
   static ValidatorFn maxLength(num maxLength) {
     return /* Map < String , dynamic > */ (modelModule
         .AbstractControl control) {
-      if (isPresent(Validators.required(control))) return null;
+      if (Validators.required(control) != null) return null;
       String v = control.value;
       return v.length > maxLength
           ? {
@@ -75,7 +74,7 @@ class Validators {
   static ValidatorFn pattern(String pattern) {
     return /* Map < String , dynamic > */ (modelModule
         .AbstractControl control) {
-      if (isPresent(Validators.required(control))) return null;
+      if (Validators.required(control) != null) return null;
       var regex = new RegExp('''^${ pattern}\$''');
       String v = control.value;
       return regex.hasMatch(v)
@@ -98,7 +97,7 @@ class Validators {
   ///  of the individual error maps.
   static ValidatorFn compose(List<ValidatorFn> validators) {
     if (validators == null) return null;
-    var presentValidators = validators.where(isPresent).toList();
+    var presentValidators = validators.where((v) => v != null).toList();
     if (presentValidators.length == 0) return null;
     return (modelModule.AbstractControl control) {
       return _mergeErrors(_executeValidators(control, presentValidators));
@@ -107,7 +106,7 @@ class Validators {
 
   static AsyncValidatorFn composeAsync(List<AsyncValidatorFn> validators) {
     if (validators == null) return null;
-    var presentValidators = validators.where(isPresent).toList();
+    var presentValidators = validators.where((v) => v != null).toList();
     if (presentValidators.length == 0) return null;
     return (modelModule.AbstractControl control) {
       var promises =

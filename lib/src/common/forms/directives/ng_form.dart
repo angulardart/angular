@@ -3,7 +3,6 @@ import 'dart:async';
 import "package:angular2/core.dart"
     show Directive, Provider, Optional, Inject, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../model.dart" show AbstractControl, ControlGroup, Control;
 import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
@@ -133,7 +132,7 @@ class NgForm extends ControlContainer implements Form {
   void removeControl(NgControl dir) {
     scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
-      if (isPresent(container)) {
+      if (container != null) {
         container.removeControl(dir.name);
         container.updateValueAndValidity(emitEvent: false);
       }
@@ -153,7 +152,7 @@ class NgForm extends ControlContainer implements Form {
   void removeControlGroup(NgControlGroup dir) {
     scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
-      if (isPresent(container)) {
+      if (container != null) {
         container.removeControl(dir.name);
         container.updateValueAndValidity(emitEvent: false);
       }

@@ -1,6 +1,5 @@
 library angular2.test.compiler.css.lexer_test;
 
-import 'package:angular2/src/facade/lang.dart' show isPresent;
 import 'package:angular2/src/compiler/css/lexer.dart'
     show CssToken, CssScannerError, CssLexer, CssLexerMode, CssTokenType;
 import 'package:test/test.dart';
@@ -14,7 +13,7 @@ main() {
     var output = scanner.scan();
     while (output != null) {
       var error = output.error;
-      if (isPresent(error)) {
+      if (error != null) {
         throw new CssScannerError(error.token, error.rawMessage);
       }
       tokens.add(output.token);

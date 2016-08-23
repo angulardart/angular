@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 /**
  * A message extracted from a template.
  *
@@ -18,7 +16,7 @@ class Message {
  * Computes the id of a message
  */
 String id(Message m) {
-  var meaning = isPresent(m.meaning) ? m.meaning : "";
-  var content = isPresent(m.content) ? m.content : "";
+  var meaning = m.meaning ?? "";
+  var content = m.content ?? "";
   return Uri.encodeComponent('''\$ng|${ meaning}|${ content}''');
 }

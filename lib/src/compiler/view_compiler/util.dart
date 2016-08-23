@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart"
     show
@@ -18,7 +17,7 @@ o.Expression getPropertyInView(
     o.Expression viewProp = o.THIS_EXPR;
     CompileView currView = callingView;
     while (!identical(currView, definedView) &&
-        isPresent(currView.declarationElement.view)) {
+        currView.declarationElement.view != null) {
       currView = currView.declarationElement.view;
       viewProp = viewProp.prop("parent");
     }
@@ -53,7 +52,7 @@ String getViewFactoryName(
 }
 
 o.Expression createDiTokenExpression(CompileTokenMetadata token) {
-  if (isPresent(token.value)) {
+  if (token.value != null) {
     return o.literal(token.value);
   } else if (token.identifierIsInstance) {
     return o.importExpr(token.identifier).instantiate(

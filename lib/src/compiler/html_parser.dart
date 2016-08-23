@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "html_ast.dart"
     show
@@ -110,7 +109,7 @@ class TreeBuilder {
   _consumeComment(HtmlToken token) {
     var text = this._advanceIf(HtmlTokenType.RAW_TEXT);
     this._advanceIf(HtmlTokenType.COMMENT_END);
-    var value = isPresent(text) ? text.parts[0].trim() : null;
+    var value = text != null ? text.parts[0].trim() : null;
     this._addToParent(new HtmlCommentAst(value, token.sourceSpan));
   }
 
@@ -208,7 +207,7 @@ class TreeBuilder {
     var text = token.parts[0];
     if (text.length > 0 && text[0] == "\n") {
       var parent = this._getParentElement();
-      if (isPresent(parent) &&
+      if (parent != null &&
           parent.children.length == 0 &&
           getHtmlTagDefinition(parent.name).ignoreFirstLf) {
         text = text.substring(1);
@@ -271,7 +270,7 @@ class TreeBuilder {
     }
     var tagDef = getHtmlTagDefinition(el.name);
     var parentEl = this._getParentElement();
-    if (tagDef.requireExtraParent(isPresent(parentEl) ? parentEl.name : null)) {
+    if (tagDef.requireExtraParent(parentEl != null ? parentEl.name : null)) {
       var newParent = new HtmlElementAst(tagDef.parentToAdd, [], [el],
           el.sourceSpan, el.startSourceSpan, el.endSourceSpan);
       this._addToParent(newParent);
@@ -331,7 +330,7 @@ class TreeBuilder {
 
   _addToParent(HtmlAst node) {
     var parent = this._getParentElement();
-    if (isPresent(parent)) {
+    if (parent != null) {
       parent.children.add(node);
     } else {
       this.rootNodes.add(node);
@@ -343,7 +342,7 @@ String getElementFullName(
     String prefix, String localName, HtmlElementAst parentElement) {
   if (prefix == null) {
     prefix = getHtmlTagDefinition(localName).implicitNamespacePrefix;
-    if (prefix == null && isPresent(parentElement)) {
+    if (prefix == null && parentElement != null) {
       prefix = getNsPrefix(parentElement.name);
     }
   }

@@ -8,7 +8,6 @@ import "package:angular2/core.dart"
         Attribute,
         AfterContentInit,
         Input;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "ng_switch.dart" show SwitchView;
 
@@ -104,18 +103,18 @@ class NgPlural implements AfterContentInit {
   }
 
   void _updateView() {
-    this._clearViews();
-    SwitchView view = this._caseViews[this._switchValue];
-    if (!isPresent(view)) view = this._getCategoryView(this._switchValue);
-    this._activateView(view);
+    _clearViews();
+    SwitchView view =
+        _caseViews[_switchValue] ?? _getCategoryView(_switchValue);
+    _activateView(view);
   }
 
   _clearViews() {
-    if (isPresent(this._activeView)) this._activeView.destroy();
+    _activeView?.destroy();
   }
 
   _activateView(SwitchView view) {
-    if (!isPresent(view)) return;
+    if (view == null) return;
     this._activeView = view;
     this._activeView.create();
   }
@@ -123,9 +122,7 @@ class NgPlural implements AfterContentInit {
   SwitchView _getCategoryView(num value) {
     String category = this._localization.getPluralCategory(value);
     SwitchView categoryView = this._caseViews[category];
-    return isPresent(categoryView)
-        ? categoryView
-        : this._caseViews[_CATEGORY_DEFAULT];
+    return categoryView ?? _caseViews[_CATEGORY_DEFAULT];
   }
 
   bool _isValueView(NgPluralCase pluralCase) {

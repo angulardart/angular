@@ -13,7 +13,7 @@ import "package:angular2/src/compiler/html_ast.dart"
         htmlVisitAll;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/lang.dart" show isPresent, jsSplit;
+import "package:angular2/src/facade/lang.dart" show jsSplit;
 
 import "message.dart" show Message;
 
@@ -51,8 +51,8 @@ List<Part> partition(List<HtmlAst> nodes, List<ParseError> errors) {
       res.add(new Part(null, null, temp, i18n, true));
     } else if (n is HtmlElementAst) {
       var i18n = _findI18nAttr(n);
-      res.add(new Part(n, null, n.children, isPresent(i18n) ? i18n.value : null,
-          isPresent(i18n)));
+      res.add(new Part(
+          n, null, n.children, i18n != null ? i18n.value : null, i18n != null));
     } else if (n is HtmlTextAst) {
       res.add(new Part(null, n, null, null, false));
     }
@@ -69,9 +69,9 @@ class Part {
   Part(this.rootElement, this.rootTextNode, this.children, this.i18n,
       this.hasI18n) {}
   ParseSourceSpan get sourceSpan {
-    if (isPresent(this.rootElement))
+    if (this.rootElement != null)
       return this.rootElement.sourceSpan;
-    else if (isPresent(this.rootTextNode))
+    else if (this.rootTextNode != null)
       return this.rootTextNode.sourceSpan;
     else
       return this.children[0].sourceSpan;
@@ -84,13 +84,11 @@ class Part {
 }
 
 bool _isOpeningComment(HtmlAst n) {
-  return n is HtmlCommentAst &&
-      isPresent(n.value) &&
-      n.value.startsWith("i18n:");
+  return n is HtmlCommentAst && n.value != null && n.value.startsWith("i18n:");
 }
 
 bool _isClosingComment(HtmlAst n) {
-  return n is HtmlCommentAst && isPresent(n.value) && n.value == "/i18n";
+  return n is HtmlCommentAst && n.value != null && n.value == "/i18n";
 }
 
 HtmlAttrAst _findI18nAttr(HtmlElementAst p) {
@@ -128,7 +126,7 @@ String removeInterpolation(
   try {
     var parsed = parser.splitInterpolation(value, source.toString());
     var usedNames = new Map<String, num>();
-    if (isPresent(parsed)) {
+    if (parsed != null) {
       var res = "";
       for (var i = 0; i < parsed.strings.length; ++i) {
         res += parsed.strings[i];
@@ -154,7 +152,7 @@ String getPhNameFromBinding(String input, num index) {
 
 String dedupePhName(Map<String, num> usedNames, String name) {
   var duplicateNameCount = usedNames[name];
-  if (isPresent(duplicateNameCount)) {
+  if (duplicateNameCount != null) {
     usedNames[name] = duplicateNameCount + 1;
     return '''${ name}_${ duplicateNameCount}''';
   } else {

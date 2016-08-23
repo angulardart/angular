@@ -3,7 +3,6 @@ import "package:angular2/src/core/change_detection/constants.dart"
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
 import "package:angular2/src/core/security.dart";
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../expression_parser/ast.dart" as cdAst;
 import "../identifiers.dart" show Identifiers;
@@ -126,7 +125,7 @@ bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
       case PropertyBindingType.Style:
         renderMethod = "setElementStyle";
         o.Expression strValue = renderValue.callMethod("toString", []);
-        if (isPresent(boundProp.unit)) {
+        if (boundProp.unit != null) {
           strValue = strValue.plus(o.literal(boundProp.unit));
         }
         renderValue = renderValue.isBlank().conditional(o.NULL_EXPR, strValue);

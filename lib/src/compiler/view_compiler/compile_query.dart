@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
 import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
@@ -27,7 +25,7 @@ class CompileQuery {
   addValue(o.Expression value, CompileView view) {
     var currentView = view;
     List<CompileElement> elPath = [];
-    while (isPresent(currentView) && !identical(currentView, this.view)) {
+    while (currentView != null && !identical(currentView, this.view)) {
       var parentEl = currentView.declarationElement;
       (elPath..insert(0, parentEl)).length;
       currentView = parentEl.view;
@@ -71,7 +69,7 @@ class CompileQuery {
     var updateStmts = [
       this.queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
     ];
-    if (isPresent(this.ownerDirectiveExpression)) {
+    if (this.ownerDirectiveExpression != null) {
       var valueExpr =
           this.meta.first ? this.queryList.prop("first") : this.queryList;
       updateStmts.add(this

@@ -12,7 +12,6 @@ import "package:angular2/core.dart"
         Output,
         MapInjector;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:collection/collection.dart" show MapEquality;
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
 import "../interfaces.dart"
@@ -42,7 +41,7 @@ class RouterOutlet implements OnDestroy {
   var activateEvents = new EventEmitter<dynamic>();
   RouterOutlet(this._viewContainerRef, this._loader, this._parentRouter,
       @Attribute("name") String nameAttr) {
-    if (isPresent(nameAttr)) {
+    if (nameAttr != null) {
       this.name = nameAttr;
       this._parentRouter.registerAuxOutlet(this);
     } else {
@@ -113,7 +112,7 @@ class RouterOutlet implements OnDestroy {
    */
   Future<dynamic> deactivate(ComponentInstruction nextInstruction) {
     var next = _resolveToTrue;
-    if (isPresent(this._componentRef)) {
+    if (_componentRef != null) {
       next = this._componentRef.then((ComponentRef ref) =>
           hasLifecycleHook(hookMod.routerOnDeactivate, ref.instance)
               ? ((ref.instance as OnDeactivate))
@@ -121,7 +120,7 @@ class RouterOutlet implements OnDestroy {
               : true);
     }
     return next.then((_) {
-      if (isPresent(this._componentRef)) {
+      if (_componentRef != null) {
         var onDispose =
             this._componentRef.then((ComponentRef ref) => ref.destroy());
         this._componentRef = null;
@@ -172,10 +171,10 @@ class RouterOutlet implements OnDestroy {
               .routerCanReuse(nextInstruction, this._currentInstruction);
         } else {
           return nextInstruction == this._currentInstruction ||
-              (isPresent(nextInstruction.params) &&
-                  isPresent(this._currentInstruction.params) &&
+              (nextInstruction.params != null) &&
+                  (_currentInstruction.params != null) &&
                   const MapEquality().equals(
-                      nextInstruction.params, this._currentInstruction.params));
+                      nextInstruction.params, this._currentInstruction.params);
         }
       });
     }

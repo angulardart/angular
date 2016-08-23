@@ -4,7 +4,6 @@ import "package:angular2/src/compiler/html_ast.dart"
     show HtmlAst, HtmlElementAst;
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/parse_util.dart" show ParseError;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "expander.dart" show expandNodes;
 import "message.dart" show Message, id;
@@ -132,7 +131,7 @@ class MessageExtractor {
   }
 
   void _recurse(List<HtmlAst> nodes) {
-    if (isPresent(nodes)) {
+    if (nodes != null) {
       var ps = partition(nodes, this.errors);
       ps.forEach((p) => this._extractMessagesFromPart(p));
     }

@@ -1,5 +1,4 @@
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart"
     show
@@ -98,7 +97,7 @@ class CompileView implements NameResolver {
       });
       var constructorViewQueryCount = 0;
       this.component.type.diDeps.forEach((dep) {
-        if (isPresent(dep.viewQuery)) {
+        if (dep.viewQuery != null) {
           var queryList = o.THIS_EXPR
               .prop("declarationAppElement")
               .prop("componentConstructorViewQueries")
@@ -128,11 +127,11 @@ class CompileView implements NameResolver {
     }
     CompileView currView = this;
     var result = currView.locals[name];
-    while (result == null && isPresent(currView.declarationElement.view)) {
+    while (result == null && currView.declarationElement.view != null) {
       currView = currView.declarationElement.view;
       result = currView.locals[name];
     }
-    if (isPresent(result)) {
+    if (result != null) {
       return getPropertyInView(result, this, currView);
     } else {
       return null;

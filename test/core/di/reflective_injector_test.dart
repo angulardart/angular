@@ -1,7 +1,7 @@
 @TestOn('browser')
 library angular2.test.core.di.reflective_injector_test;
 
-import "package:angular2/src/facade/lang.dart" show stringify, isPresent;
+import "package:angular2/src/facade/lang.dart" show stringify;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart"
@@ -151,7 +151,7 @@ main() {
             (List<dynamic> providers, [ReflectiveInjector parent = null]) {
           var resolvedProviders = ReflectiveInjector.resolve(
               (new List.from(providers)..addAll(context["providers"])));
-          if (isPresent(parent)) {
+          if (parent != null) {
             return (parent.createChildFromResolved(resolvedProviders)
                 as ReflectiveInjector_);
           } else {
@@ -691,7 +691,7 @@ main() {
           (List<dynamic> providers, [ReflectiveInjector parent = null]) {
         var resolvedProviders = ReflectiveInjector
             .resolve((new List.from(providers)..addAll(context["providers"])));
-        if (isPresent(parent)) {
+        if (parent != null) {
           return (parent.createChildFromResolved(resolvedProviders)
               as ReflectiveInjector_);
         } else {

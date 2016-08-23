@@ -1,6 +1,5 @@
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
@@ -297,7 +296,7 @@ class _Scanner {
       this.advance();
       str += two;
     }
-    if (isPresent(threeCode) && this.peek == threeCode) {
+    if (threeCode != null && this.peek == threeCode) {
       this.advance();
       str += three;
     }

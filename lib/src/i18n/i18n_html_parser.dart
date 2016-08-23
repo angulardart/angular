@@ -16,7 +16,6 @@ import "package:angular2/src/compiler/html_parser.dart"
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "expander.dart" show expandNodes;
 import "message.dart" show id;
@@ -170,7 +169,7 @@ class I18nHtmlParser implements HtmlParser {
     // we need to recurse in cause its children may have i18n set
 
     // we also need to translate its attributes
-    if (isPresent(p.rootElement)) {
+    if (p.rootElement != null) {
       var root = p.rootElement;
       var children = this._recurse(p.children);
       var attrs = this._i18nAttributes(root);
@@ -178,7 +177,7 @@ class I18nHtmlParser implements HtmlParser {
         new HtmlElementAst(root.name, attrs, children, root.sourceSpan,
             root.startSourceSpan, root.endSourceSpan)
       ];
-    } else if (isPresent(p.rootTextNode)) {
+    } else if (p.rootTextNode != null) {
       return [p.rootTextNode];
     } else {
       return this._recurse(p.children);
@@ -201,14 +200,14 @@ class I18nHtmlParser implements HtmlParser {
     // if the root element is present, we need to create a new root element with its attributes
 
     // translated
-    if (isPresent(p.rootElement)) {
+    if (p.rootElement != null) {
       var root = p.rootElement;
       var attrs = this._i18nAttributes(root);
       return [
         new HtmlElementAst(root.name, attrs, merged, root.sourceSpan,
             root.startSourceSpan, root.endSourceSpan)
       ];
-    } else if (isPresent(p.rootTextNode)) {
+    } else if (p.rootTextNode != null) {
       throw new BaseException("should not be reached");
     } else {
       return merged;

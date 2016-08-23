@@ -2,7 +2,6 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
@@ -92,14 +91,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     if (this._isRootNode(parent)) {
       // store appElement as root node only for ViewContainers
       if (!identical(this.view.viewType, ViewType.COMPONENT)) {
-        this
-            .view
-            .rootNodesOrAppElements
-            .add(isPresent(vcAppEl) ? vcAppEl : node.renderNode);
+        this.view.rootNodesOrAppElements.add(vcAppEl ?? node.renderNode);
       }
-    } else if (isPresent(parent.component) && isPresent(ngContentIndex)) {
-      parent.addContentNode(
-          ngContentIndex, isPresent(vcAppEl) ? vcAppEl : node.renderNode);
+    } else if (parent.component != null && ngContentIndex != null) {
+      parent.addContentNode(ngContentIndex, vcAppEl ?? node.renderNode);
     }
   }
 
@@ -112,7 +107,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         return o.NULL_EXPR;
       }
     } else {
-      return isPresent(parent.component) &&
+      return parent.component != null &&
           !identical(parent.component.template.encapsulation,
               ViewEncapsulation.Native) ? o.NULL_EXPR : parent.renderNode;
     }
@@ -179,7 +174,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         this.view.rootNodesOrAppElements.add(nodesExpression);
       }
     } else {
-      if (isPresent(parent.component) && isPresent(ast.ngContentIndex)) {
+      if (parent.component != null && ast.ngContentIndex != null) {
         parent.addContentNode(ast.ngContentIndex, nodesExpression);
       }
     }
@@ -239,7 +234,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.references);
     this.view.nodes.add(compileElement);
     o.ReadVarExpr compViewExpr = null;
-    if (isPresent(component)) {
+    if (component != null) {
       var nestedComponentIdentifier =
           new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));
       this
@@ -259,7 +254,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(this.view.nodes.length - nodeIndex - 1);
-    if (isPresent(compViewExpr)) {
+    if (compViewExpr != null) {
       var codeGenContentNodes;
       if (this.view.component.type.isHost) {
         codeGenContentNodes = ViewProperties.projectableNodes;
@@ -367,7 +362,7 @@ List<List<String>> _mergeHtmlAndDirectiveAttrs(
   directives.forEach((directiveMeta) {
     directiveMeta.hostAttributes.forEach((name, value) {
       var prevValue = result[name];
-      result[name] = isPresent(prevValue)
+      result[name] = prevValue != null
           ? mergeAttributeValue(name, prevValue, value)
           : value;
     });

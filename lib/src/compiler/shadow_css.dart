@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/lang.dart" show isPresent, jsSplit;
+import "package:angular2/src/facade/lang.dart" show jsSplit;
 /**
  * This file is a port of shadowCSS from webcomponents.js to TypeScript.
  *
@@ -208,7 +208,7 @@ class ShadowCss {
     cssText = this._convertColonHost(cssText);
     cssText = this._convertColonHostContext(cssText);
     cssText = this._convertShadowDOMSelectors(cssText);
-    if (isPresent(scopeSelector)) {
+    if (scopeSelector != null) {
       cssText = this._scopeSelectors(cssText, scopeSelector, hostSelector);
     }
     cssText = cssText + "\n" + unscoped;
@@ -503,7 +503,7 @@ String processRules(String input, Function ruleCallback) {
     var content = "";
     var suffix = m[4];
     var contentPrefix = "";
-    if (isPresent(m[4]) && m[4].startsWith("{" + BLOCK_PLACEHOLDER)) {
+    if (m[4] != null && m[4].startsWith("{" + BLOCK_PLACEHOLDER)) {
       content = inputWithEscapedBlocks.blocks[nextBlockIndex++];
       suffix = m[4].substring(BLOCK_PLACEHOLDER.length + 1);
       contentPrefix = "{";

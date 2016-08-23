@@ -2,7 +2,6 @@ import "package:angular2/src/compiler/shadow_css.dart" show ShadowCss;
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
@@ -83,7 +82,7 @@ class StyleCompiler {
 
 String getStylesVarName(CompileDirectiveMetadata component) {
   var result = '''styles''';
-  if (isPresent(component)) {
+  if (component != null) {
     result += '''_${ component . type . name}''';
   }
   return result;

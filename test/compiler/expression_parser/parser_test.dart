@@ -2,7 +2,6 @@
 library angular2.test.compiler.expression_parser.parser_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/compiler/expression_parser/parser.dart"
     show Parser;
 import "unparser.dart" show Unparser;
@@ -331,9 +330,8 @@ main() {
       }
       exprSources(List<dynamic> templateBindings) {
         return templateBindings
-            .map((binding) => isPresent(binding.expression)
-                ? binding.expression.source
-                : null)
+            .map((binding) =>
+                binding.expression != null ? binding.expression.source : null)
             .toList();
       }
       test("should parse an empty string", () {

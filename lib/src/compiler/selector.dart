@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 const _EMPTY_ATTR_VALUE = "";
 final _SELECTOR_REGEXP = new RegExp("(\\:not\\()|" +
@@ -44,20 +43,20 @@ class CssSelector {
         current = new CssSelector();
         cssSelector.notSelectors.add(current);
       }
-      if (isPresent(match[2])) {
+      if (match[2] != null) {
         current.setElement(match[2]);
       }
-      if (isPresent(match[3])) {
+      if (match[3] != null) {
         current.addClassName(match[3]);
       }
-      if (isPresent(match[4])) {
+      if (match[4] != null) {
         current.addAttribute(match[4], match[5]);
       }
-      if (isPresent(match[6])) {
+      if (match[6] != null) {
         inNot = false;
         current = cssSelector;
       }
-      if (isPresent(match[7])) {
+      if (match[7] != null) {
         if (inNot) {
           throw new BaseException(
               "Multiple selectors in :not are not supported");
@@ -71,10 +70,10 @@ class CssSelector {
   }
 
   bool isElementSelector() {
-    return isPresent(this.element) &&
-        this.classNames.isEmpty &&
-        this.attrs.isEmpty &&
-        identical(this.notSelectors.length, 0);
+    return element != null &&
+        classNames.isEmpty &&
+        attrs.isEmpty &&
+        notSelectors.isEmpty;
   }
 
   setElement([String element = null]) {
@@ -83,7 +82,7 @@ class CssSelector {
 
   /** Gets a template string for an element that matches the selector. */
   String getMatchingElementTemplate() {
-    var tagName = isPresent(this.element) ? this.element : "div";
+    var tagName = element ?? "div";
     var classAttr = this.classNames.length > 0
         ? ''' class="${ this . classNames . join ( " " )}"'''
         : "";
@@ -100,7 +99,7 @@ class CssSelector {
 
   addAttribute(String name, [String value = _EMPTY_ATTR_VALUE]) {
     this.attrs.add(name);
-    if (isPresent(value)) {
+    if (value != null) {
       value = value.toLowerCase();
     } else {
       value = _EMPTY_ATTR_VALUE;
@@ -114,15 +113,15 @@ class CssSelector {
 
   String toString() {
     var res = "";
-    if (isPresent(this.element)) {
-      res += this.element;
+    if (element != null) {
+      res += element;
     }
-    if (isPresent(this.classNames)) {
+    if (classNames != null) {
       for (var i = 0; i < this.classNames.length; i++) {
         res += "." + this.classNames[i];
       }
     }
-    if (isPresent(this.attrs)) {
+    if (attrs != null) {
       for (var i = 0; i < this.attrs.length;) {
         var attrName = this.attrs[i++];
         var attrValue = this.attrs[i++];
@@ -182,7 +181,7 @@ class SelectorMatcher {
     var attrs = cssSelector.attrs;
     var selectable =
         new SelectorContext(cssSelector, callbackCtxt, listContext);
-    if (isPresent(element)) {
+    if (element != null) {
       var isTerminal =
           identical(attrs.length, 0) && identical(classNames.length, 0);
       if (isTerminal) {
@@ -191,7 +190,7 @@ class SelectorMatcher {
         matcher = this._addPartial(matcher._elementPartialMap, element);
       }
     }
-    if (isPresent(classNames)) {
+    if (classNames != null) {
       for (var index = 0; index < classNames.length; index++) {
         var isTerminal = identical(attrs.length, 0) &&
             identical(index, classNames.length - 1);
@@ -203,7 +202,7 @@ class SelectorMatcher {
         }
       }
     }
-    if (isPresent(attrs)) {
+    if (attrs != null) {
       for (var index = 0; index < attrs.length;) {
         var isTerminal = identical(index, attrs.length - 2);
         var attrName = attrs[index++];
@@ -270,7 +269,7 @@ class SelectorMatcher {
     result = this._matchPartial(
             this._elementPartialMap, element, cssSelector, matchedCallback) ||
         result;
-    if (isPresent(classNames)) {
+    if (classNames != null) {
       for (var index = 0; index < classNames.length; index++) {
         var className = classNames[index];
         result = this._matchTerminal(
@@ -281,7 +280,7 @@ class SelectorMatcher {
             result;
       }
     }
-    if (isPresent(attrs)) {
+    if (attrs != null) {
       for (var index = 0; index < attrs.length;) {
         var attrName = attrs[index++];
         var attrValue = attrs[index++];
@@ -316,7 +315,7 @@ class SelectorMatcher {
     }
     var selectables = map[name];
     var starSelectables = map["*"];
-    if (isPresent(starSelectables)) {
+    if (starSelectables != null) {
       selectables = (new List.from(selectables)..addAll(starSelectables));
     }
     if (selectables == null) {
@@ -376,10 +375,10 @@ class SelectorContext {
       result = !notMatcher.match(cssSelector, null);
     }
     if (result &&
-        isPresent(callback) &&
+        callback != null &&
         (this.listContext == null || !this.listContext.alreadyMatched)) {
-      if (isPresent(this.listContext)) {
-        this.listContext.alreadyMatched = true;
+      if (listContext != null) {
+        listContext.alreadyMatched = true;
       }
       callback(this.selector, this.cbContext);
     }

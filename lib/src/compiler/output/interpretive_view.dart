@@ -3,7 +3,6 @@ import "package:angular2/src/core/linker/debug_context.dart"
 import "package:angular2/src/core/linker/element.dart" show AppElement;
 import "package:angular2/src/core/linker/view.dart" show AppView, DebugAppView;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "output_interpreter.dart" show InstanceFactory, DynamicInstance;
 
@@ -51,7 +50,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
 
   AppElement createInternal(dynamic /* String | dynamic */ rootSelector) {
     var m = this.methods["createInternal"];
-    if (isPresent(m)) {
+    if (m != null) {
       return m(rootSelector);
     } else {
       return super.createInternal(rootSelector);
@@ -61,7 +60,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   dynamic injectorGetInternal(
       dynamic token, num nodeIndex, dynamic notFoundResult) {
     var m = this.methods["injectorGetInternal"];
-    if (isPresent(m)) {
+    if (m != null) {
       return m(token, nodeIndex, notFoundResult);
     } else {
       return super.injectorGet(token, nodeIndex, notFoundResult);
@@ -70,7 +69,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
 
   void destroyInternal() {
     var m = this.methods["destroyInternal"];
-    if (isPresent(m)) {
+    if (m != null) {
       return m();
     } else {
       return super.destroyInternal();
@@ -79,7 +78,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
 
   void dirtyParentQueriesInternal() {
     var m = this.methods["dirtyParentQueriesInternal"];
-    if (isPresent(m)) {
+    if (m != null) {
       return m();
     } else {
       return super.dirtyParentQueriesInternal();

@@ -4,7 +4,6 @@ import 'dart:math' as math;
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "instruction.dart"
     show
         Instruction,
@@ -119,7 +118,7 @@ class RouteRegistry {
       return;
     }
     var annotations = getComponentAnnotations(component);
-    if (isPresent(annotations)) {
+    if (annotations != null) {
       for (var i = 0; i < annotations.length; i++) {
         var annotation = annotations[i];
         if (annotation is RouteConfig) {
@@ -148,7 +147,7 @@ class RouteRegistry {
       [_aux = false]) {
     var parentInstruction =
         ancestorInstructions.isNotEmpty ? ancestorInstructions.last : null;
-    var parentComponent = isPresent(parentInstruction)
+    var parentComponent = parentInstruction != null
         ? parentInstruction.component.componentType
         : this._rootComponent;
     var rules = this._rules[parentComponent];
@@ -278,7 +277,7 @@ class RouteRegistry {
 
         // If both exist, we throw. Otherwise, we prefer whichever exists.
         var childRouteExists = this.hasRoute(routeName, parentComponentType);
-        var parentRouteExists = isPresent(grandparentComponentType) &&
+        var parentRouteExists = grandparentComponentType != null &&
             this.hasRoute(routeName, grandparentComponentType);
         if (parentRouteExists && childRouteExists) {
           var msg =
@@ -342,7 +341,7 @@ class RouteRegistry {
     // for non-aux routes, we want to reuse the predecessor's existing primary and aux routes
 
     // and only override routes for which the given link DSL provides
-    if (isPresent(prevInstruction) && !_aux) {
+    if (prevInstruction != null && !_aux) {
       auxInstructions =
           new Map<String, Instruction>.from(prevInstruction.auxInstruction)
             ..addAll(auxInstructions);
@@ -414,8 +413,7 @@ class RouteRegistry {
     // If the component is sync, we can generate resolved child route instructions
 
     // If not, we'll resolve the instructions at navigation time
-    if (isPresent(componentInstruction) &&
-        isPresent(componentInstruction.componentType)) {
+    if (componentInstruction?.componentType != null) {
       Instruction childInstruction = null;
       if (componentInstruction.terminal) {
         if (linkParamIndex >= linkParams.length) {}
@@ -449,7 +447,7 @@ class RouteRegistry {
       return null;
     }
     var defaultChild = null;
-    if (isPresent(rules.defaultRule.handler.componentType)) {
+    if (rules.defaultRule.handler.componentType != null) {
       var componentInstruction = rules.defaultRule.generate({});
       if (!rules.defaultRule.terminal) {
         defaultChild =
@@ -486,7 +484,7 @@ List<dynamic> splitAndFlattenLinkParams(List<dynamic> linkParams) {
  */
 Instruction mostSpecific(List<Instruction> instructions) {
   instructions =
-      instructions.where((instruction) => isPresent(instruction)).toList();
+      instructions.where((instruction) => instruction != null).toList();
   if (instructions.length == 0) {
     return null;
   }
@@ -528,7 +526,7 @@ assertTerminalComponent(component, path) {
     return;
   }
   var annotations = getComponentAnnotations(component);
-  if (isPresent(annotations)) {
+  if (annotations != null) {
     for (var i = 0; i < annotations.length; i++) {
       var annotation = annotations[i];
       if (annotation is RouteConfig) {

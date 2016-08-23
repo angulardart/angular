@@ -1,6 +1,5 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "element_ref.dart" show ElementRef;
 import "query_list.dart" show QueryList;
@@ -78,7 +77,7 @@ class AppElement {
     } else {
       refRenderNode = this.nativeElement;
     }
-    if (isPresent(refRenderNode)) {
+    if (refRenderNode != null) {
       view.renderer.attachViewAfter(refRenderNode, view.flatRootNodes);
     }
     view.addToContentChildren(this);

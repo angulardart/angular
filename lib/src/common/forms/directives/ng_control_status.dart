@@ -1,5 +1,4 @@
 import "package:angular2/core.dart" show Directive, Self;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "ng_control.dart" show NgControl;
 
@@ -19,26 +18,26 @@ class NgControlStatus {
     this._cd = cd;
   }
   bool get ngClassUntouched {
-    return isPresent(this._cd.control) ? this._cd.control.untouched : false;
+    return _cd.control != null ? _cd.control.untouched : false;
   }
 
   bool get ngClassTouched {
-    return isPresent(this._cd.control) ? this._cd.control.touched : false;
+    return _cd.control != null ? _cd.control.touched : false;
   }
 
   bool get ngClassPristine {
-    return isPresent(this._cd.control) ? this._cd.control.pristine : false;
+    return _cd.control != null ? _cd.control.pristine : false;
   }
 
   bool get ngClassDirty {
-    return isPresent(this._cd.control) ? this._cd.control.dirty : false;
+    return _cd.control != null ? _cd.control.dirty : false;
   }
 
   bool get ngClassValid {
-    return isPresent(this._cd.control) ? this._cd.control.valid : false;
+    return _cd.control != null ? _cd.control.valid : false;
   }
 
   bool get ngClassInvalid {
-    return isPresent(this._cd.control) ? !this._cd.control.valid : false;
+    return _cd.control != null ? !_cd.control.valid : false;
   }
 }

@@ -2,7 +2,6 @@ import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/intl.dart"
     show NumberFormatter, NumberFormatStyle;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -19,7 +18,7 @@ class NumberPipe {
       throw new InvalidPipeArgumentException(NumberPipe, value);
     }
     var minInt = 1, minFraction = 0, maxFraction = 3;
-    if (isPresent(digits)) {
+    if (digits != null) {
       var parts = _re.firstMatch(digits);
       if (parts == null) {
         throw new BaseException(

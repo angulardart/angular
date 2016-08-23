@@ -6,7 +6,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/browser/browser_adapter.dart"
     show BrowserDomAdapter;
-import "package:angular2/src/facade/lang.dart" show isPresent, stringify;
+import "package:angular2/src/facade/lang.dart" show stringify;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/core.dart"
@@ -2624,7 +2624,7 @@ class SomeImperativeViewport {
     this.anchor = anchor;
   }
   set someImpvp(bool value) {
-    if (isPresent(this.view)) {
+    if (view != null) {
       this.vc.clear();
       this.view = null;
     }

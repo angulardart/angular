@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "output_ast.dart" as o;
 
@@ -138,7 +137,7 @@ abstract class AbstractEmitterVisitor
     ctx.print('''if (''');
     stmt.condition.visitExpression(this, ctx);
     ctx.print(''') {''');
-    var hasElseCase = isPresent(stmt.falseCase) && stmt.falseCase.length > 0;
+    var hasElseCase = stmt.falseCase != null && stmt.falseCase.length > 0;
     if (stmt.trueCase.length <= 1 && !hasElseCase) {
       ctx.print(''' ''');
       this.visitAllStatements(stmt.trueCase, ctx);
@@ -229,7 +228,7 @@ abstract class AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     expr.receiver.visitExpression(this, ctx);
     var name = expr.name;
-    if (isPresent(expr.builtin)) {
+    if (expr.builtin != null) {
       name = this.getBuiltinMethodName(expr.builtin);
       if (name == null) {
         // some builtins just mean to skip the call.
@@ -257,7 +256,7 @@ abstract class AbstractEmitterVisitor
   dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var varName = ast.name;
-    if (isPresent(ast.builtin)) {
+    if (ast.builtin != null) {
       switch (ast.builtin) {
         case o.BuiltinVar.Super:
           varName = "super";

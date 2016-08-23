@@ -6,7 +6,6 @@ import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
 import "package:angular2/src/core/metadata/view.dart"
     show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "url_resolver.dart" show getUrlScheme;
 import "util.dart" show splitAtColon, sanitizeIdentifier;
@@ -292,19 +291,14 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
     };
   }
 
-  dynamic get runtimeCacheKey {
-    if (isPresent(this.identifier)) {
-      return this.identifier.runtime;
-    } else {
-      return this.value;
-    }
-  }
+  dynamic get runtimeCacheKey =>
+      identifier != null ? identifier.runtime : value;
 
   dynamic get assetCacheKey {
-    if (isPresent(this.identifier)) {
-      return isPresent(this.identifier.moduleUrl) &&
-              isPresent(getUrlScheme(this.identifier.moduleUrl))
-          ? '''${ this . identifier . name}|${ this . identifier . moduleUrl}|${ this . identifierIsInstance}'''
+    if (identifier != null) {
+      return identifier.moduleUrl != null &&
+              getUrlScheme(identifier.moduleUrl) != null
+          ? '${identifier.name}|${identifier.moduleUrl}|${identifierIsInstance}'
           : null;
     } else {
       return this.value;
@@ -314,14 +308,12 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   bool equalsTo(CompileTokenMetadata token2) {
     var rk = this.runtimeCacheKey;
     var ak = this.assetCacheKey;
-    return (isPresent(rk) && rk == token2.runtimeCacheKey) ||
-        (isPresent(ak) && ak == token2.assetCacheKey);
+    return (rk != null && rk == token2.runtimeCacheKey) ||
+        (ak != null && ak == token2.assetCacheKey);
   }
 
   String get name {
-    return isPresent(this.value)
-        ? sanitizeIdentifier(this.value)
-        : this.identifier.name;
+    return value != null ? sanitizeIdentifier(value) : identifier.name;
   }
 }
 
@@ -331,18 +323,18 @@ class CompileTokenMap<VALUE> {
   List<CompileTokenMetadata> _tokens = [];
   add(CompileTokenMetadata token, VALUE value) {
     var existing = this.get(token);
-    if (isPresent(existing)) {
+    if (existing != null) {
       throw new BaseException(
           '''Can only add to a TokenMap! Token: ${ token . name}''');
     }
     this._tokens.add(token);
     this._values.add(value);
     var rk = token.runtimeCacheKey;
-    if (isPresent(rk)) {
+    if (rk != null) {
       this._valueMap[rk] = value;
     }
     var ak = token.assetCacheKey;
-    if (isPresent(ak)) {
+    if (ak != null) {
       this._valueMap[ak] = value;
     }
   }
@@ -351,7 +343,7 @@ class CompileTokenMap<VALUE> {
     var rk = token.runtimeCacheKey;
     var ak = token.assetCacheKey;
     VALUE result;
-    if (isPresent(rk)) {
+    if (rk != null) {
       result = this._valueMap[rk];
     }
     if (result == null && ak != null) {
@@ -502,7 +494,7 @@ class CompileTemplateMetadata {
 
   static CompileTemplateMetadata fromJson(Map<String, dynamic> data) {
     return new CompileTemplateMetadata(
-        encapsulation: isPresent(data["encapsulation"])
+        encapsulation: data["encapsulation"] != null
             ? VIEW_ENCAPSULATION_VALUES[data["encapsulation"]]
             : data["encapsulation"],
         template: data["template"],
@@ -659,10 +651,10 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         isComponent: data["isComponent"],
         selector: data["selector"],
         exportAs: data["exportAs"],
-        type: isPresent(data["type"])
+        type: data["type"] != null
             ? CompileTypeMetadata.fromJson(data["type"] as Map<String, dynamic>)
             : data["type"],
-        changeDetection: isPresent(data["changeDetection"])
+        changeDetection: data["changeDetection"] != null
             ? CHANGE_DETECTION_STRATEGY_VALUES[data["changeDetection"]]
             : data["changeDetection"],
         inputs: data["inputs"] as Map<String, String>,
@@ -673,7 +665,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         lifecycleHooks: ((data["lifecycleHooks"] as List<dynamic>))
             .map((hookValue) => LIFECYCLE_HOOKS_VALUES[hookValue])
             .toList(),
-        template: isPresent(data["template"])
+        template: data["template"] != null
             ? CompileTemplateMetadata
                 .fromJson(data["template"] as Map<String, dynamic>)
             : data["template"],
@@ -689,23 +681,22 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   Map<String, dynamic> toJson() {
     return {
       "class": "Directive",
-      "isComponent": this.isComponent,
-      "selector": this.selector,
-      "exportAs": this.exportAs,
-      "type": isPresent(this.type) ? this.type.toJson() : this.type,
+      "isComponent": isComponent,
+      "selector": selector,
+      "exportAs": exportAs,
+      "type": type?.toJson(),
       "changeDetection": changeDetection?.index,
-      "inputs": this.inputs,
-      "outputs": this.outputs,
-      "hostListeners": this.hostListeners,
-      "hostProperties": this.hostProperties,
-      "hostAttributes": this.hostAttributes,
+      "inputs": inputs,
+      "outputs": outputs,
+      "hostListeners": hostListeners,
+      "hostProperties": hostProperties,
+      "hostAttributes": hostAttributes,
       "lifecycleHooks": lifecycleHooks.map((hook) => hook.index).toList(),
-      "template":
-          isPresent(this.template) ? this.template.toJson() : this.template,
-      "providers": _arrayToJson(this.providers),
-      "viewProviders": _arrayToJson(this.viewProviders),
-      "queries": _arrayToJson(this.queries),
-      "viewQueries": _arrayToJson(this.viewQueries)
+      "template": template?.toJson(),
+      "providers": _arrayToJson(providers),
+      "viewProviders": _arrayToJson(viewProviders),
+      "queries": _arrayToJson(queries),
+      "viewQueries": _arrayToJson(viewQueries)
     };
   }
 }
@@ -765,7 +756,7 @@ class CompilePipeMetadata implements CompileMetadataWithType {
 
   static CompilePipeMetadata fromJson(Map<String, dynamic> data) {
     return new CompilePipeMetadata(
-        type: isPresent(data["type"])
+        type: data["type"] != null
             ? CompileTypeMetadata.fromJson(data["type"] as Map<String, dynamic>)
             : data["type"],
         name: data["name"],
@@ -775,9 +766,9 @@ class CompilePipeMetadata implements CompileMetadataWithType {
   Map<String, dynamic> toJson() {
     return {
       "class": "Pipe",
-      "type": isPresent(this.type) ? this.type.toJson() : null,
-      "name": this.name,
-      "pure": this.pure
+      "type": type?.toJson(),
+      "name": name,
+      "pure": pure
     };
   }
 }

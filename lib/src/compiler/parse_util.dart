@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 class ParseLocation {
   ParseSourceFile file;
   num offset;
@@ -7,7 +5,7 @@ class ParseLocation {
   num col;
   ParseLocation(this.file, this.offset, this.line, this.col) {}
   String toString() {
-    return isPresent(this.offset)
+    return offset != null
         ? '''${ this . file . url}@${ this . line}:${ this . col}'''
         : this.file.url;
   }
@@ -43,7 +41,7 @@ abstract class ParseError {
     var source = this.span.start.file.content;
     var ctxStart = this.span.start.offset;
     var contextStr = "";
-    if (isPresent(ctxStart)) {
+    if (ctxStart != null) {
       if (ctxStart > source.length - 1) {
         ctxStart = source.length - 1;
       }

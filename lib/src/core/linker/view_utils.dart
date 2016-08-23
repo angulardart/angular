@@ -8,7 +8,7 @@ import "package:angular2/src/core/render/api.dart"
     show RootRenderer, RenderComponentType, Renderer;
 import 'package:angular2/src/core/security.dart';
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, looseIdentical;
+import "package:angular2/src/facade/lang.dart" show looseIdentical;
 
 import "element.dart" show AppElement;
 import "exceptions.dart" show ExpressionChangedAfterItHasBeenCheckedException;
@@ -87,7 +87,7 @@ List _flattenNestedViewRenderNodes(List nodes, List renderNodes) {
     if (node is AppElement) {
       AppElement appEl = node;
       renderNodes.add(appEl.nativeElement);
-      if (isPresent(appEl.nestedViews)) {
+      if (appEl.nestedViews != null) {
         for (var k = 0; k < appEl.nestedViews.length; k++) {
           _flattenNestedViewRenderNodes(
               appEl.nestedViews[k].rootNodesOrAppElements, renderNodes);

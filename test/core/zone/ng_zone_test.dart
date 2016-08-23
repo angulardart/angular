@@ -4,7 +4,6 @@ library angular2.test.core.zone.ng_zone_test;
 import "dart:async";
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
 import 'package:test/test.dart';
 
@@ -136,7 +135,7 @@ main() {
             });
             c.future.then((_) {
               expect(_traces, hasLength(1));
-              if (isPresent(_traces[0])) {
+              if (_traces[0] != null) {
                 // some browsers don't have stack traces.
                 expect(_traces[0].indexOf("---"), -1);
               }

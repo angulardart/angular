@@ -19,8 +19,7 @@ import "package:angular2/src/compiler/css/lexer.dart"
         isNewline;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseSourceFile, ParseLocation, ParseError;
-import "package:angular2/src/facade/lang.dart"
-    show bitWiseOr, bitWiseAnd, isPresent;
+import "package:angular2/src/facade/lang.dart" show bitWiseOr, bitWiseAnd;
 
 export "package:angular2/src/compiler/css/lexer.dart" show CssToken;
 
@@ -282,7 +281,7 @@ class CssParser {
     var output = this._scanner.scan();
     var token = output.token;
     var error = output.error;
-    if (isPresent(error)) {
+    if (error != null) {
       this._error(error.rawMessage, token);
     }
     return token;
@@ -293,7 +292,7 @@ class CssParser {
     var output = this._scanner.consume(type, value);
     var token = output.token;
     var error = output.error;
-    if (isPresent(error)) {
+    if (error != null) {
       this._error(error.rawMessage, token);
     }
     return token;
@@ -381,7 +380,7 @@ class CssParser {
 
       // in isolation
       if (this._scanner.getMode() == CssLexerMode.PSEUDO_SELECTOR &&
-          isPresent(previousToken) &&
+          previousToken != null &&
           previousToken.numValue == $COLON &&
           token.strValue == "not" &&
           this._scanner.peek == $LPAREN) {
@@ -405,7 +404,7 @@ class CssParser {
       if (token.type == CssTokenType.Whitespace) {
         wsCssToken = token;
       } else {
-        if (isPresent(wsCssToken)) {
+        if (wsCssToken != null) {
           selectorCssTokens.add(wsCssToken);
           wsCssToken = null;
           isComplex = true;
@@ -435,7 +434,7 @@ class CssParser {
     CssToken previous;
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
       var token;
-      if (isPresent(previous) &&
+      if (previous != null &&
           previous.type == CssTokenType.Identifier &&
           this._scanner.peek == $LPAREN) {
         token = this._consume(CssTokenType.Character, "(");
@@ -481,8 +480,7 @@ class CssParser {
       [CssTokenType assertType = null]) {
     var tokens = <CssToken>[];
     while (!characterContainsDelimiter(this._scanner.peek, delimiters)) {
-      var val =
-          isPresent(assertType) ? this._consume(assertType) : this._scan();
+      var val = assertType != null ? this._consume(assertType) : this._scan();
       tokens.add(val);
     }
     return tokens;

@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/util.dart" show camelCaseToDashCase;
 
@@ -88,7 +87,7 @@ class Animation {
   void applyStyles(Map<String, dynamic> styles) {
     styles.forEach((String key, value) {
       var dashCaseKey = camelCaseToDashCase(key);
-      if (isPresent(DOM.getStyle(element, dashCaseKey))) {
+      if (DOM.getStyle(element, dashCaseKey) != null) {
         DOM.setStyle(element, dashCaseKey, value.toString());
       } else {
         DOM.setStyle(element, _stringPrefix + dashCaseKey, value.toString());

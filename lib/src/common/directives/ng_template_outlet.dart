@@ -1,6 +1,5 @@
 import "package:angular2/core.dart"
     show Directive, Input, ViewContainerRef, ViewRef, TemplateRef;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 /// Creates and inserts an embedded view based on a prepared `TemplateRef`.
 ///
@@ -13,12 +12,11 @@ class NgTemplateOutlet {
   NgTemplateOutlet(this._viewContainerRef) {}
   @Input()
   set ngTemplateOutlet(TemplateRef templateRef) {
-    if (isPresent(this._insertedViewRef)) {
-      this
-          ._viewContainerRef
+    if (_insertedViewRef != null) {
+      _viewContainerRef
           .remove(this._viewContainerRef.indexOf(this._insertedViewRef));
     }
-    if (isPresent(templateRef)) {
+    if (templateRef != null) {
       this._insertedViewRef =
           this._viewContainerRef.createEmbeddedView(templateRef);
     }

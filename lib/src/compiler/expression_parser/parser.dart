@@ -1,6 +1,6 @@
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, jsSplit;
+import "package:angular2/src/facade/lang.dart" show jsSplit;
 
 import "ast.dart"
     show
@@ -105,7 +105,7 @@ class Parser {
 
     // our lexer or parser for that, so we check for that ahead of time.
     var quote = this._parseQuote(input, location);
-    if (isPresent(quote)) {
+    if (quote != null) {
       return quote;
     }
     this._checkNoInterpolation(input, location);
@@ -175,7 +175,7 @@ class Parser {
 
   String _stripComments(String input) {
     var i = this._commentStart(input);
-    return isPresent(i) ? input.substring(0, i).trim() : input;
+    return i != null ? input.substring(0, i).trim() : input;
   }
 
   num _commentStart(String input) {

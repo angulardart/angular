@@ -1,6 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, stringify, looseIdentical;
+import "package:angular2/src/facade/lang.dart" show stringify, looseIdentical;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/iterable_differs.dart"
@@ -39,8 +38,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
   CollectionChangeRecord _identityChangesHead = null;
   CollectionChangeRecord _identityChangesTail = null;
   DefaultIterableDiffer([this._trackByFn]) {
-    this._trackByFn =
-        isPresent(this._trackByFn) ? this._trackByFn : trackByIdentity;
+    _trackByFn = _trackByFn ?? trackByIdentity;
   }
   get collection {
     return this._collection;
@@ -684,7 +682,7 @@ class _DuplicateMap {
     // todo(vicb) handle corner cases
     var key = record.trackById;
     var duplicates = this.map[key];
-    if (!isPresent(duplicates)) {
+    if (duplicates == null) {
       duplicates = new _DuplicateItemRecordList();
       this.map[key] = duplicates;
     }

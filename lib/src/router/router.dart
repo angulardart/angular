@@ -5,7 +5,6 @@ import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "directives/router_outlet.dart" show RouterOutlet;
 import "instruction.dart" show ComponentInstruction, Instruction;
@@ -73,15 +72,15 @@ class Router {
    * You probably don't need to use this unless you're writing a reusable component.
    */
   Future<dynamic> registerPrimaryOutlet(RouterOutlet outlet) {
-    if (isPresent(outlet.name)) {
+    if (outlet.name != null) {
       throw new BaseException(
           '''registerPrimaryOutlet expects to be called with an unnamed outlet.''');
     }
-    if (isPresent(this._outlet)) {
+    if (_outlet != null) {
       throw new BaseException('''Primary outlet is already registered.''');
     }
     this._outlet = outlet;
-    if (isPresent(this.currentInstruction)) {
+    if (currentInstruction != null) {
       return this.commit(this.currentInstruction, false);
     }
     return _resolveToTrue;
@@ -93,7 +92,7 @@ class Router {
    * You probably don't need to use this unless you're writing a custom outlet implementation.
    */
   void unregisterPrimaryOutlet(RouterOutlet outlet) {
-    if (isPresent(outlet.name)) {
+    if (outlet.name != null) {
       throw new BaseException(
           '''registerPrimaryOutlet expects to be called with an unnamed outlet.''');
     }
@@ -115,9 +114,9 @@ class Router {
     this._auxRouters[outletName] = router;
     router._outlet = outlet;
     var auxInstruction;
-    if (isPresent(this.currentInstruction) &&
-        isPresent(auxInstruction =
-            this.currentInstruction.auxInstruction[outletName])) {
+    if (currentInstruction != null &&
+        (auxInstruction = this.currentInstruction.auxInstruction[outletName]) !=
+            null) {
       return router.commit(auxInstruction);
     }
     return _resolveToTrue;
@@ -133,7 +132,7 @@ class Router {
       return false;
     }
     // `instruction` corresponds to the root router
-    while (isPresent(router.parent) && isPresent(instruction.child)) {
+    while (router.parent != null && instruction.child != null) {
       router = router.parent;
       instruction = instruction.child;
     }
@@ -144,7 +143,7 @@ class Router {
       return false;
     }
     var paramEquals = true;
-    if (isPresent(this.currentInstruction.component.params)) {
+    if (this.currentInstruction.component.params != null) {
       instruction.component.params.forEach((key, value) {
         if (!identical(this.currentInstruction.component.params[key], value)) {
           paramEquals = false;
@@ -232,10 +231,10 @@ class Router {
   Future<dynamic> _settleInstruction(Instruction instruction) {
     return instruction.resolveComponent().then((_) {
       List<Future<dynamic>> unsettledInstructions = [];
-      if (isPresent(instruction.component)) {
+      if (instruction.component != null) {
         instruction.component.reuse = false;
       }
-      if (isPresent(instruction.child)) {
+      if (instruction.child != null) {
         unsettledInstructions.add(this._settleInstruction(instruction.child));
       }
       instruction.auxInstruction.forEach((_, Instruction instruction) {
@@ -295,9 +294,7 @@ class Router {
     }
     return this._outlet.routerCanReuse(instruction.component).then((result) {
       instruction.component.reuse = result;
-      if (result &&
-          isPresent(this._childRouter) &&
-          isPresent(instruction.child)) {
+      if (result && _childRouter != null && instruction.child != null) {
         return this._childRouter._routerCanReuse(instruction.child);
       }
     });
@@ -330,7 +327,7 @@ class Router {
       if (result == false) {
         return false;
       }
-      if (isPresent(this._childRouter)) {
+      if (_childRouter != null) {
         // TODO: ideally, this closure would map to async-await in Dart.
 
         // For now, casting to any to suppress an error.
@@ -348,7 +345,7 @@ class Router {
       [bool _skipLocationChange = false]) {
     this.currentInstruction = instruction;
     Future<dynamic> next = _resolveToTrue;
-    if (isPresent(this._outlet) && isPresent(instruction.component)) {
+    if (_outlet != null && instruction.component != null) {
       var componentInstruction = instruction.component;
       if (componentInstruction.reuse) {
         next = this._outlet.reuse(componentInstruction);
@@ -358,9 +355,9 @@ class Router {
             .deactivate(instruction)
             .then((_) => outlet.activate(componentInstruction));
       }
-      if (isPresent(instruction.child)) {
+      if (instruction.child != null) {
         next = next.then((_) {
-          if (isPresent(this._childRouter)) {
+          if (_childRouter != null) {
             return this._childRouter.commit(instruction.child);
           }
         });
@@ -368,7 +365,7 @@ class Router {
     }
     List<Future<dynamic>> promises = [];
     this._auxRouters.forEach((name, router) {
-      if (isPresent(instruction.auxInstruction[name])) {
+      if (instruction.auxInstruction[name] != null) {
         promises.add(router.commit(instruction.auxInstruction[name]));
       }
     });
@@ -398,15 +395,15 @@ class Router {
   Future<dynamic> deactivate(Instruction instruction) {
     Instruction childInstruction = null;
     ComponentInstruction componentInstruction = null;
-    if (isPresent(instruction)) {
+    if (instruction != null) {
       childInstruction = instruction.child;
       componentInstruction = instruction.component;
     }
     Future<dynamic> next = _resolveToTrue;
-    if (isPresent(this._childRouter)) {
+    if (_childRouter != null) {
       next = this._childRouter.deactivate(childInstruction);
     }
-    if (isPresent(this._outlet)) {
+    if (_outlet != null) {
       var outlet = this._outlet;
       next = next.then((_) => outlet.deactivate(componentInstruction));
     }
@@ -425,7 +422,7 @@ class Router {
   List<Instruction> _getAncestorInstructions() {
     List<Instruction> ancestorInstructions = [this.currentInstruction];
     Router ancestorRouter = this;
-    while (isPresent(ancestorRouter = ancestorRouter.parent)) {
+    while ((ancestorRouter = ancestorRouter.parent) != null) {
       (ancestorInstructions..insert(0, ancestorRouter.currentInstruction))
           .length;
     }
@@ -467,12 +464,12 @@ class RootRouter extends Router {
     this._locationSub = this._location.subscribe((change) {
       // we call recognize ourselves
       this.recognize(change["url"]).then((instruction) {
-        if (isPresent(instruction)) {
+        if (instruction != null) {
           this
-              .navigateByInstruction(instruction, isPresent(change["pop"]))
+              .navigateByInstruction(instruction, change["pop"] != null)
               .then((_) {
             // this is a popstate event; no need to change the URL
-            if (isPresent(change["pop"]) && change["type"] != "hashchange") {
+            if (change["pop"] != null && change["type"] != "hashchange") {
               return;
             }
             var emitPath = instruction.path;
@@ -516,8 +513,7 @@ class RootRouter extends Router {
     if (emitPath.length > 0 && emitPath[0] != "/") {
       emitPath = "/" + emitPath;
     }
-    if (this._location.platformStrategy is PathLocationStrategy &&
-        isPresent(this._location.platformStrategy)) {
+    if (_location.platformStrategy is PathLocationStrategy) {
       var hash = this._location.hash();
       if (hash.isNotEmpty) {
         emitQuery = (emitQuery ?? '') + "#" + hash;
@@ -563,9 +559,9 @@ Future<bool> canActivateOne(
   if (nextInstruction.component == null) {
     return next;
   }
-  if (isPresent(nextInstruction.child)) {
+  if (nextInstruction.child != null) {
     next = canActivateOne(nextInstruction.child,
-        isPresent(prevInstruction) ? prevInstruction.child : null);
+        prevInstruction != null ? prevInstruction.child : null);
   }
   return next.then(/* bool */ (bool result) {
     if (result == false) {
@@ -575,9 +571,9 @@ Future<bool> canActivateOne(
       return true;
     }
     var hook = getCanActivateHook(nextInstruction.component.componentType);
-    if (isPresent(hook)) {
+    if (hook != null) {
       return hook(nextInstruction.component,
-          isPresent(prevInstruction) ? prevInstruction.component : null);
+          prevInstruction != null ? prevInstruction.component : null);
     }
     return true;
   });

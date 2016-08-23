@@ -4,7 +4,6 @@ library angular2.test.compiler.xhr_mock_test;
 import "dart:async";
 import "package:angular2/testing_internal.dart";
 import "package:angular2/src/compiler/xhr_mock.dart" show MockXHR;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import 'package:test/test.dart';
 
 main() {
@@ -20,7 +19,7 @@ main() {
           throw '''Unexpected response ${ url} -> ${ text}''';
         } else {
           expect(text, response);
-          if (isPresent(done)) done();
+          if (done != null) done();
         }
         return text;
       }
@@ -29,7 +28,7 @@ main() {
           throw '''Unexpected error ${ url}''';
         } else {
           expect(error, '''Failed to load ${ url}''');
-          if (isPresent(done)) done();
+          if (done != null) done();
         }
         return error;
       }

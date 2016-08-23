@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 
@@ -29,10 +28,10 @@ _find(AbstractControl control,
   if (path is List && path.isEmpty) return null;
   return ((path as List<dynamic /* String | num */ >)).fold(control, (v, name) {
     if (v is ControlGroup) {
-      return isPresent(v.controls[name]) ? v.controls[name] : null;
+      return v.controls[name];
     } else if (v is ControlArray) {
       var index = (name as num);
-      return isPresent(v.at(index)) ? v.at(index) : null;
+      return v.at(index);
     } else {
       return null;
     }
@@ -111,7 +110,7 @@ abstract class AbstractControl {
   void markAsDirty({bool onlySelf}) {
     onlySelf = onlySelf == true;
     this._pristine = false;
-    if (isPresent(this._parent) && !onlySelf) {
+    if (_parent != null && !onlySelf) {
       this._parent.markAsDirty(onlySelf: onlySelf);
     }
   }
@@ -119,7 +118,7 @@ abstract class AbstractControl {
   void markAsPending({bool onlySelf}) {
     onlySelf = onlySelf == true;
     this._status = PENDING;
-    if (isPresent(this._parent) && !onlySelf) {
+    if (_parent != null && !onlySelf) {
       this._parent.markAsPending(onlySelf: onlySelf);
     }
   }
@@ -130,7 +129,7 @@ abstract class AbstractControl {
 
   void updateValueAndValidity({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
-    emitEvent = isPresent(emitEvent) ? emitEvent : true;
+    emitEvent = emitEvent ?? true;
     this._updateValue();
     this._errors = this._runValidator();
     this._status = this._calculateStatus();
@@ -141,7 +140,7 @@ abstract class AbstractControl {
       this._valueChanges.add(this._value);
       this._statusChanges.add(this._status);
     }
-    if (isPresent(this._parent) && !onlySelf) {
+    if (_parent != null && !onlySelf) {
       this
           ._parent
           .updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
@@ -149,11 +148,11 @@ abstract class AbstractControl {
   }
 
   Map<String, dynamic> _runValidator() {
-    return isPresent(this.validator) ? this.validator(this) : null;
+    return validator != null ? validator(this) : null;
   }
 
   void _runAsyncValidator(bool emitEvent) {
-    if (isPresent(this.asyncValidator)) {
+    if (asyncValidator != null) {
       this._status = PENDING;
       this._cancelExistingSubscription();
       var obs = _toStream(this.asyncValidator(this));
@@ -164,9 +163,7 @@ abstract class AbstractControl {
   }
 
   void _cancelExistingSubscription() {
-    if (isPresent(this._asyncValidationSubscription)) {
-      this._asyncValidationSubscription.cancel();
-    }
+    _asyncValidationSubscription?.cancel();
   }
 
   /// Sets errors on a control.
@@ -192,15 +189,13 @@ abstract class AbstractControl {
   /// expect(login.valid).toEqual(true);
   /// ```
   void setErrors(Map<String, dynamic> errors, {bool emitEvent}) {
-    emitEvent = isPresent(emitEvent) ? emitEvent : true;
+    emitEvent = emitEvent ?? true;
     this._errors = errors;
     this._status = this._calculateStatus();
     if (emitEvent) {
       this._statusChanges.add(this._status);
     }
-    if (isPresent(this._parent)) {
-      this._parent._updateControlsErrors();
-    }
+    _parent?._updateControlsErrors();
   }
 
   AbstractControl find(
@@ -220,22 +215,20 @@ abstract class AbstractControl {
   }
 
   bool hasError(String errorCode, [List<String> path = null]) {
-    return isPresent(this.getError(errorCode, path));
+    return this.getError(errorCode, path) != null;
   }
 
   AbstractControl get root {
     AbstractControl x = this;
-    while (isPresent(x._parent)) {
+    while (x._parent != null) {
       x = x._parent;
     }
     return x;
   }
 
   void _updateControlsErrors() {
-    this._status = this._calculateStatus();
-    if (isPresent(this._parent)) {
-      this._parent._updateControlsErrors();
-    }
+    _status = this._calculateStatus();
+    _parent?._updateControlsErrors();
   }
 
   _initObservables() {
@@ -244,7 +237,7 @@ abstract class AbstractControl {
   }
 
   String _calculateStatus() {
-    if (isPresent(this._errors)) return INVALID;
+    if (_errors != null) return INVALID;
     if (this._anyControlsHaveStatus(PENDING)) return PENDING;
     if (this._anyControlsHaveStatus(INVALID)) return INVALID;
     return VALID;
@@ -293,11 +286,9 @@ class Control extends AbstractControl {
   /// `emitModelToViewChange` is not specified.
   void updateValue(dynamic value,
       {bool onlySelf, bool emitEvent, bool emitModelToViewChange}) {
-    emitModelToViewChange =
-        isPresent(emitModelToViewChange) ? emitModelToViewChange : true;
+    emitModelToViewChange = emitModelToViewChange ?? true;
     this._value = value;
-    if (isPresent(this._onChange) && emitModelToViewChange)
-      this._onChange(this._value);
+    if (_onChange != null && emitModelToViewChange) this._onChange(this._value);
     this.updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
   }
 
@@ -332,7 +323,7 @@ class ControlGroup extends AbstractControl {
       AsyncValidatorFn asyncValidator = null])
       : super(validator, asyncValidator) {
     /* super call moved to initializer */;
-    this._optionals = isPresent(optionals) ? optionals : {};
+    this._optionals = optionals ?? {};
     this._initObservables();
     this._setParentForControls();
     this.updateValueAndValidity(onlySelf: true, emitEvent: false);

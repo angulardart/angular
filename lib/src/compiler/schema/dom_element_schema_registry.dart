@@ -1,6 +1,5 @@
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/security.dart";
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "element_schema_registry.dart" show ElementSchemaRegistry;
 
@@ -239,11 +238,9 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
       // once it is instantiated
       return true;
     } else {
-      var elementProperties = this.schema[tagName.toLowerCase()];
-      if (!isPresent(elementProperties)) {
-        elementProperties = this.schema["unknown"];
-      }
-      return isPresent(elementProperties[propName]);
+      var elementProperties =
+          schema[tagName.toLowerCase()] ?? schema["unknown"];
+      return elementProperties[propName] != null;
     }
   }
 
@@ -326,6 +323,6 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
   @override
   String getMappedPropName(String propName) {
     var mappedPropName = attrToPropMap[propName];
-    return isPresent(mappedPropName) ? mappedPropName : propName;
+    return mappedPropName ?? propName;
   }
 }

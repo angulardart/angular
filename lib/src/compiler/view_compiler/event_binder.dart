@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 import "../compile_metadata.dart" show CompileDirectiveMetadata;
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show BoundEventAst, DirectiveAst;
@@ -41,11 +39,11 @@ class CompileEventListener {
   }
   addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
       o.Expression directiveInstance) {
-    if (isPresent(directive) && directive.isComponent) {
+    if (directive != null && directive.isComponent) {
       this._hasComponentHostListener = true;
     }
     this._method.resetDebugInfo(this.compileElement.nodeIndex, hostEvent);
-    var context = isPresent(directiveInstance)
+    var context = directiveInstance != null
         ? directiveInstance
         : o.THIS_EXPR.prop("context");
     var actionStmts = convertCdStatementToIr(
@@ -57,7 +55,7 @@ class CompileEventListener {
       var preventDefaultVar =
           o.variable('''pd_${ this . _actionResultExprs . length}''');
       this._actionResultExprs.add(preventDefaultVar);
-      if (isPresent(returnExpr)) {
+      if (returnExpr != null) {
         // Note: We need to cast the result of the method call to dynamic,
 
         // as it might be a void method!

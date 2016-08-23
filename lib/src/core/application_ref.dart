@@ -16,8 +16,7 @@ import "package:angular2/src/core/testability/testability.dart"
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, ExceptionHandler;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, assertionsEnabled;
+import "package:angular2/src/facade/lang.dart" show assertionsEnabled;
 
 import "application_tokens.dart" show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "profile/profile.dart" show wtfLeave, wtfCreateScope, WtfScopeFn;
@@ -73,7 +72,7 @@ PlatformRef assertPlatform(dynamic requiredToken) {
  * Dispose the existing platform.
  */
 void disposePlatform() {
-  if (isPresent(_platform) && !_platform.disposed) {
+  if (_platform != null && !_platform.disposed) {
     _platform.dispose();
   }
 }
@@ -82,7 +81,7 @@ void disposePlatform() {
  * Returns the current platform.
  */
 PlatformRef getPlatform() {
-  return isPresent(_platform) && !_platform.disposed ? _platform : null;
+  return _platform != null && !_platform.disposed ? _platform : null;
 }
 
 /**
@@ -295,7 +294,7 @@ class ApplicationRef_ extends ApplicationRef {
           _injector.get(APP_INITIALIZER, null) as List<Function>;
       var asyncInitResults = <Future>[];
       var asyncInitDonePromise;
-      if (isPresent(inits)) {
+      if (inits != null) {
         for (var i = 0; i < inits.length; i++) {
           var initResult = inits[i]();
           if (initResult is Future) {
@@ -385,7 +384,7 @@ class ApplicationRef_ extends ApplicationRef {
         this._unloadComponent(compRef);
       });
       var testability = compRef.injector.get(Testability, null);
-      if (isPresent(testability)) {
+      if (testability != null) {
         compRef.injector
             .get(TestabilityRegistry)
             .registerApplication(compRef.location.nativeElement, testability);

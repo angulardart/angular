@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../expression_parser/ast.dart" as cdAst;
 import "../identifiers.dart" show Identifiers;
@@ -287,7 +286,7 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     o.Expression receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
       var varExpr = this._nameResolver.getLocal(ast.name);
-      if (isPresent(varExpr)) {
+      if (varExpr != null) {
         throw new BaseException("Cannot assign to a reference or variable!");
       }
       receiver = this._implicitReceiver;

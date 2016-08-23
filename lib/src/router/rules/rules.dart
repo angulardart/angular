@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../instruction.dart" show ComponentInstruction;
 import "../url_parser.dart" show Url, convertUrlParamsToArray;
@@ -58,7 +57,7 @@ class RedirectRule implements AbstractRule {
    */
   Future<RouteMatch> recognize(Url beginningSegment) {
     var match = null;
-    if (isPresent(this._pathRecognizer.matchUrl(beginningSegment))) {
+    if (_pathRecognizer.matchUrl(beginningSegment) != null) {
       match =
           new RedirectMatch(this.redirectTo, this._pathRecognizer.specificity);
     }

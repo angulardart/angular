@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../instruction.dart" show ComponentInstruction;
 import "../route_config/route_config_impl.dart"
@@ -37,8 +36,7 @@ class RuleSet {
    */
   bool config(RouteDefinition config) {
     var handler;
-    if (isPresent(config.name) &&
-        config.name[0].toUpperCase() != config.name[0]) {
+    if (config.name != null && config.name[0].toUpperCase() != config.name[0]) {
       var suggestedName =
           config.name[0].toUpperCase() + config.name.substring(1);
       throw new BaseException(
@@ -50,7 +48,7 @@ class RuleSet {
       var routePath = this._getRoutePath(config);
       var auxRule = new RouteRule(routePath, handler, config.name);
       this.auxRulesByPath[routePath.toString()] = auxRule;
-      if (isPresent(config.name)) {
+      if (config.name != null) {
         this.auxRulesByName[config.name] = auxRule;
       }
       return auxRule.terminal;
@@ -66,23 +64,23 @@ class RuleSet {
     if (config is Route) {
       handler = new SyncRouteHandler(
           config.component, config.data as Map<String, dynamic>);
-      useAsDefault = isPresent(config.useAsDefault) && config.useAsDefault;
+      useAsDefault = config.useAsDefault != null && config.useAsDefault;
     } else if (config is AsyncRoute) {
       handler = new AsyncRouteHandler(
           config.loader, config.data as Map<String, dynamic>);
-      useAsDefault = isPresent(config.useAsDefault) && config.useAsDefault;
+      useAsDefault = config.useAsDefault != null && config.useAsDefault;
     }
     var routePath = this._getRoutePath(config);
     var newRule = new RouteRule(routePath, handler, config.name);
     this._assertNoHashCollision(newRule.hash, config.path);
     if (useAsDefault) {
-      if (isPresent(this.defaultRule)) {
+      if (defaultRule != null) {
         throw new BaseException('''Only one route can be default''');
       }
       this.defaultRule = newRule;
     }
     this.rules.add(newRule);
-    if (isPresent(config.name)) {
+    if (config.name != null) {
       this.rulesByName[config.name] = newRule;
     }
     return newRule.terminal;
@@ -95,13 +93,13 @@ class RuleSet {
     var solutions = <Future<RouteMatch>>[];
     this.rules.forEach((AbstractRule routeRecognizer) {
       var pathMatch = routeRecognizer.recognize(urlParse);
-      if (isPresent(pathMatch)) {
+      if (pathMatch != null) {
         solutions.add(pathMatch);
       }
     });
     // handle cases where we are routing just to an aux route
     if (solutions.length == 0 &&
-        isPresent(urlParse) &&
+        urlParse != null &&
         urlParse.auxiliary.length > 0) {
       return [new Future.value(new PathMatch(null, null, urlParse.auxiliary))];
     }
@@ -110,7 +108,7 @@ class RuleSet {
 
   List<Future<RouteMatch>> recognizeAuxiliary(Url urlParse) {
     RouteRule routeRecognizer = this.auxRulesByPath[urlParse.path];
-    if (isPresent(routeRecognizer)) {
+    if (routeRecognizer != null) {
       return [routeRecognizer.recognize(urlParse)];
     }
     return [new Future.value(null)];
@@ -121,8 +119,7 @@ class RuleSet {
   }
 
   bool componentLoaded(String name) {
-    return this.hasRoute(name) &&
-        isPresent(this.rulesByName[name].handler.componentType);
+    return hasRoute(name) && rulesByName[name].handler.componentType != null;
   }
 
   Future<dynamic> loadComponent(String name) {
@@ -159,7 +156,7 @@ class RuleSet {
             '''Route provides a regex property, \'${ config . regex}\', but no serializer property''');
       }
     }
-    if (isPresent(config.path)) {
+    if (config.path != null) {
       // Auxiliary routes do not have a slash at the start
       var path = (config is AuxRoute && config.path.startsWith("/"))
           ? config.path.substring(1)

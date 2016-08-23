@@ -2,7 +2,6 @@ import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef;
 import "package:angular2/src/facade/browser.dart" show window;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 class ChangeDetectionPerfRecord {
@@ -48,10 +47,10 @@ class AngularProfiler {
    * ```
    */
   ChangeDetectionPerfRecord timeChangeDetection(dynamic config) {
-    var record = isPresent(config) && config["record"];
+    var record = config != null && config["record"];
     var profileName = "Change Detection";
     // Profiler is not available in Android browsers, nor in IE 9 without dev tools opened
-    var isProfilerAvailable = isPresent(window.console.profile);
+    var isProfilerAvailable = window.console.profile != null;
     if (record && isProfilerAvailable) {
       window.console.profile(profileName);
     }

@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 
 /// Supported modifiers for [OutputType].
@@ -234,7 +232,7 @@ class WriteVarExpr extends Expression {
   String name;
   Expression value;
   WriteVarExpr(this.name, Expression value, [OutputType type = null])
-      : super(isPresent(type) ? type : value.type) {
+      : super(type ?? value.type) {
     /* super call moved to initializer */;
     this.value = value;
   }
@@ -254,7 +252,7 @@ class WriteKeyExpr extends Expression {
   Expression value;
   WriteKeyExpr(this.receiver, this.index, Expression value,
       [OutputType type = null])
-      : super(isPresent(type) ? type : value.type) {
+      : super(type ?? value.type) {
     /* super call moved to initializer */;
     this.value = value;
   }
@@ -269,7 +267,7 @@ class WritePropExpr extends Expression {
   Expression value;
   WritePropExpr(this.receiver, this.name, Expression value,
       [OutputType type = null])
-      : super(isPresent(type) ? type : value.type) {
+      : super(type ?? value.type) {
     /* super call moved to initializer */;
     this.value = value;
   }
@@ -353,7 +351,7 @@ class ConditionalExpr extends Expression {
   Expression trueCase;
   ConditionalExpr(this.condition, Expression trueCase,
       [this.falseCase = null, OutputType type = null])
-      : super(isPresent(type) ? type : trueCase.type) {
+      : super(type ?? trueCase.type) {
     /* super call moved to initializer */;
     this.trueCase = trueCase;
   }
@@ -372,7 +370,7 @@ class IfNullExpr extends Expression {
 
   IfNullExpr(this.condition, Expression nullCase, [OutputType type = null])
       : nullCase = nullCase,
-        super(isPresent(type) ? type : nullCase.type);
+        super(type ?? nullCase.type);
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitIfNullExpr(this, context);
   }
@@ -428,7 +426,7 @@ class BinaryOperatorExpr extends Expression {
   Expression lhs;
   BinaryOperatorExpr(this.operator, Expression lhs, this.rhs,
       [OutputType type = null])
-      : super(isPresent(type) ? type : lhs.type) {
+      : super(type ?? lhs.type) {
     /* super call moved to initializer */;
     this.lhs = lhs;
   }
@@ -486,7 +484,7 @@ class LiteralMapExpr extends Expression {
   OutputType valueType = null;
   LiteralMapExpr(this.entries, [MapType type = null]) : super(type) {
     /* super call moved to initializer */;
-    if (isPresent(type)) {
+    if (type != null) {
       this.valueType = type.valueType;
     }
   }
@@ -545,7 +543,7 @@ class DeclareVarStmt extends Statement {
       [OutputType type = null, List<StmtModifier> modifiers = null])
       : super(modifiers) {
     /* super call moved to initializer */;
-    this.type = isPresent(type) ? type : value.type;
+    this.type = type ?? value.type;
   }
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitDeclareVarStmt(this, context);
@@ -724,7 +722,7 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
   }
 
   dynamic visitInvokeMethodExpr(InvokeMethodExpr ast, dynamic context) {
-    var method = isPresent(ast.builtin) ? ast.builtin : ast.name;
+    var method = ast.builtin ?? ast.name;
     return new InvokeMethodExpr(ast.receiver.visitExpression(this, context),
         method, this.visitAllExpressions(ast.args, context), ast.type);
   }
@@ -1064,7 +1062,7 @@ ExternalExpr importExpr(CompileIdentifierMetadata id,
 ExternalType importType(CompileIdentifierMetadata id,
     [List<OutputType> typeParams = null,
     List<TypeModifier> typeModifiers = null]) {
-  return isPresent(id) ? new ExternalType(id, typeParams, typeModifiers) : null;
+  return id != null ? new ExternalType(id, typeParams, typeModifiers) : null;
 }
 
 LiteralExpr literal(dynamic value, [OutputType type = null]) {

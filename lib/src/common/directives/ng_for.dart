@@ -9,7 +9,6 @@ import "package:angular2/core.dart"
         TemplateRef,
         EmbeddedViewRef,
         TrackByFn;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../../core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, CollectionChangeRecord;
@@ -104,7 +103,7 @@ class NgFor implements DoCheck {
   }
 
   set ngForTemplate(TemplateRef value) {
-    if (isPresent(value)) {
+    if (value != null) {
       this._templateRef = value;
     }
   }
@@ -114,9 +113,9 @@ class NgFor implements DoCheck {
   }
 
   ngDoCheck() {
-    if (isPresent(this._differ)) {
+    if (_differ != null) {
       var changes = this._differ.diff(this._ngForOf);
-      if (isPresent(changes)) this._applyChanges(changes);
+      if (changes != null) this._applyChanges(changes);
     }
   }
 
@@ -162,7 +161,7 @@ class NgFor implements DoCheck {
     for (var i = tuples.length - 1; i >= 0; i--) {
       var tuple = tuples[i];
       // separate moved views from removed views.
-      if (isPresent(tuple.record.currentIndex)) {
+      if (tuple.record.currentIndex != null) {
         tuple.view = (this._viewContainer.detach(tuple.record.previousIndex)
             as EmbeddedViewRef);
         movedTuples.add(tuple);
@@ -177,7 +176,7 @@ class NgFor implements DoCheck {
     tuples.sort((a, b) => a.record.currentIndex - b.record.currentIndex);
     for (var i = 0; i < tuples.length; i++) {
       var tuple = tuples[i];
-      if (isPresent(tuple.view)) {
+      if (tuple.view != null) {
         this._viewContainer.insert(tuple.view, tuple.record.currentIndex);
       } else {
         tuple.view = this

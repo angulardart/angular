@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di/injector.dart" show Injector;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
 import "component_factory.dart" show ComponentFactory, ComponentRef;
@@ -134,7 +133,7 @@ class ViewContainerRef_ implements ViewContainerRef {
       List<List<dynamic>> projectableNodes = null]) {
     var s = this._createComponentInContainerScope();
     var contextInjector =
-        isPresent(injector) ? injector : this._element.parentInjector;
+        injector != null ? injector : this._element.parentInjector;
     var componentRef =
         componentFactory.create(contextInjector, projectableNodes);
     this.insert(componentRef.hostView, index);

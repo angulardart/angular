@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 import "html_tags.dart"
     show getHtmlTagDefinition, HtmlTagContentType, NAMED_ENTITIES;
 import "parse_util.dart"
@@ -717,7 +715,7 @@ List<HtmlToken> mergeTextTokens(List<HtmlToken> srcTokens) {
   HtmlToken lastDstToken;
   for (var i = 0; i < srcTokens.length; i++) {
     var token = srcTokens[i];
-    if (isPresent(lastDstToken) &&
+    if (lastDstToken != null &&
         lastDstToken.type == HtmlTokenType.TEXT &&
         token.type == HtmlTokenType.TEXT) {
       lastDstToken.parts[0] += token.parts[0];

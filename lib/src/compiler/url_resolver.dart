@@ -1,7 +1,6 @@
 import 'package:angular2/src/core/application_tokens.dart'
     show PACKAGE_ROOT_URL;
 import 'package:angular2/src/core/di.dart' show Injectable, Inject, Provider;
-import 'package:angular2/src/facade/lang.dart' show isPresent;
 
 const _ASSET_SCHEME = 'asset:';
 
@@ -43,7 +42,7 @@ class UrlResolver {
   String resolve(String baseUrl, String url) {
     Uri uri = Uri.parse(url);
 
-    if (isPresent(baseUrl) && baseUrl.length > 0) {
+    if (baseUrl != null && baseUrl.length > 0) {
       Uri baseUri = Uri.parse(baseUrl);
       uri = baseUri.resolveUri(uri);
     }

@@ -8,8 +8,7 @@ import "package:angular2/core.dart"
         Host,
         OnDestroy,
         Optional;
-import "package:angular2/src/facade/lang.dart"
-    show isPrimitive, isPresent, looseIdentical;
+import "package:angular2/src/facade/lang.dart" show isPrimitive, looseIdentical;
 
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -86,7 +85,7 @@ class SelectControlValueAccessor implements ControlValueAccessor {
 
   dynamic _getOptionValue(String valueString) {
     var value = this._optionMap[_extractId(valueString)];
-    return isPresent(value) ? value : valueString;
+    return value ?? valueString;
   }
 }
 
@@ -105,7 +104,7 @@ class NgSelectOption implements OnDestroy {
   String id;
   NgSelectOption(
       this._element, this._renderer, @Optional() @Host() this._select) {
-    if (isPresent(this._select)) this.id = this._select._registerOption();
+    if (_select != null) this.id = this._select._registerOption();
   }
   @Input("ngValue")
   set ngValue(dynamic value) {
@@ -118,7 +117,7 @@ class NgSelectOption implements OnDestroy {
   @Input("value")
   set value(dynamic value) {
     this._setElementValue(value);
-    if (isPresent(this._select)) this._select.writeValue(this._select.value);
+    if (_select != null) this._select.writeValue(this._select.value);
   }
 
   void _setElementValue(String value) {
@@ -128,7 +127,7 @@ class NgSelectOption implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (isPresent(this._select)) {
+    if (_select != null) {
       (this._select._optionMap.containsKey(this.id) &&
           (this._select._optionMap.remove(this.id) != null || true));
       this._select.writeValue(this._select.value);

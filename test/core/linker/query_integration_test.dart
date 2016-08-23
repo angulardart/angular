@@ -2,7 +2,6 @@
 library angular2.test.core.linker.query_integration_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/core.dart"
     show
         Component,
@@ -850,7 +849,7 @@ class NeedsContentChild implements AfterContentInit, AfterContentChecked {
   @ContentChild(TextDirective)
   set child(value) {
     this._child = value;
-    this.log.add(["setter", isPresent(value) ? value.text : null]);
+    this.log.add(["setter", value != null ? value.text : null]);
   }
 
   get child {
@@ -859,11 +858,11 @@ class NeedsContentChild implements AfterContentInit, AfterContentChecked {
 
   var log = [];
   ngAfterContentInit() {
-    this.log.add(["init", isPresent(this.child) ? this.child.text : null]);
+    this.log.add(["init", child != null ? child.text : null]);
   }
 
   ngAfterContentChecked() {
-    this.log.add(["check", isPresent(this.child) ? this.child.text : null]);
+    this.log.add(["check", child != null ? child.text : null]);
   }
 }
 
@@ -880,7 +879,7 @@ class NeedsViewChild implements AfterViewInit, AfterViewChecked {
   @ViewChild(TextDirective)
   set child(value) {
     this._child = value;
-    this.log.add(["setter", isPresent(value) ? value.text : null]);
+    this.log.add(["setter", value != null ? value.text : null]);
   }
 
   get child {
@@ -889,11 +888,11 @@ class NeedsViewChild implements AfterViewInit, AfterViewChecked {
 
   var log = [];
   ngAfterViewInit() {
-    this.log.add(["init", isPresent(this.child) ? this.child.text : null]);
+    this.log.add(["init", child != null ? child.text : null]);
   }
 
   ngAfterViewChecked() {
-    this.log.add(["check", isPresent(this.child) ? this.child.text : null]);
+    this.log.add(["check", child != null ? child.text : null]);
   }
 }
 

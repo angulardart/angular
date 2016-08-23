@@ -2,7 +2,6 @@
 // https://github.com/webcomponents/webcomponentsjs/blob/master/src/HTMLImports/path.js
 
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 class StyleWithImports {
   String style;
@@ -26,7 +25,7 @@ StyleWithImports extractStyleUrls(
     UrlResolver resolver, String baseUrl, String cssText) {
   var foundUrls = <String>[];
   var modifiedCssText = cssText.replaceAllMapped(_cssImportRe, (m) {
-    var url = isPresent(m[1]) ? m[1] : m[2];
+    var url = m[1] ?? m[2];
     if (!isStyleUrlResolvable(url)) {
       // Do not attempt to resolve non-package absolute URLs with URI scheme
       return m[0];

@@ -1,7 +1,6 @@
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 
@@ -35,7 +34,7 @@ class IterableDiffers {
   const IterableDiffers(this.factories);
   static IterableDiffers create(List<IterableDifferFactory> factories,
       [IterableDiffers parent]) {
-    if (isPresent(parent)) {
+    if (parent != null) {
       var copied = new List<IterableDifferFactory>.from(parent.factories);
       factories =
           (new List<IterableDifferFactory>.from(factories)..addAll(copied));
@@ -83,7 +82,7 @@ class IterableDiffers {
     var factory = this
         .factories
         .firstWhere((f) => f.supports(iterable), orElse: () => null);
-    if (isPresent(factory)) {
+    if (factory != null) {
       return factory;
     } else {
       throw new BaseException(

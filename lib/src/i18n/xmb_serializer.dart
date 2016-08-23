@@ -3,7 +3,6 @@ import "package:angular2/src/compiler/html_ast.dart"
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "message.dart" show Message, id;
 
@@ -84,8 +83,7 @@ String _id(HtmlElementAst el) {
 }
 
 String _serializeMessage(Message m) {
-  var desc =
-      isPresent(m.description) ? ''' desc=\'${ m . description}\'''' : "";
+  var desc = m.description != null ? ''' desc=\'${ m . description}\'''' : "";
   return '''<msg id=\'${ id ( m )}\'${ desc}>${ m . content}</msg>''';
 }
 

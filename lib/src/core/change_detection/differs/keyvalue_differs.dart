@@ -1,7 +1,6 @@
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 
@@ -29,7 +28,7 @@ class KeyValueDiffers {
   const KeyValueDiffers(this.factories);
   static KeyValueDiffers create(List<KeyValueDifferFactory> factories,
       [KeyValueDiffers parent]) {
-    if (isPresent(parent)) {
+    if (parent != null) {
       var copied = new List<KeyValueDifferFactory>.from(parent.factories);
       factories =
           (new List<KeyValueDifferFactory>.from(factories)..addAll(copied));
@@ -74,9 +73,16 @@ class KeyValueDiffers {
   }
 
   KeyValueDifferFactory find(Object kv) {
-    var factory =
-        this.factories.firstWhere((f) => f.supports(kv), orElse: () => null);
-    if (isPresent(factory)) {
+    var factory;
+    var factoryCount = factories.length;
+    for (var i = 0; i < factoryCount; i++) {
+      var f = factories[i];
+      if (f.supports(kv)) {
+        factory = f;
+        break;
+      }
+    }
+    if (factory != null) {
       return factory;
     } else {
       throw new BaseException(

@@ -2,7 +2,6 @@ import "dart:html";
 
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 import "event_manager.dart" show EventManagerPlugin;
@@ -22,7 +21,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
     /* super call moved to initializer */;
   }
   bool supports(String eventName) {
-    return isPresent(KeyEventsPlugin.parseEventName(eventName));
+    return KeyEventsPlugin.parseEventName(eventName) != null;
   }
 
   Function addEventListener(

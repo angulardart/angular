@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "abstract_emitter.dart"
@@ -81,7 +80,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     } else if (stmt.type == null) {
       ctx.print('''var ''');
     }
-    if (isPresent(stmt.type)) {
+    if (stmt.type != null) {
       stmt.type.visitType(this, ctx);
       ctx.print(''' ''');
     }
@@ -105,14 +104,14 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     ctx.pushClass(stmt);
     ctx.print('''class ${ stmt . name}''');
-    if (isPresent(stmt.parent)) {
+    if (stmt.parent != null) {
       ctx.print(''' extends ''');
       stmt.parent.visitExpression(this, ctx);
     }
     ctx.println(''' {''');
     ctx.incIndent();
     stmt.fields.forEach((field) => this._visitClassField(field, ctx));
-    if (isPresent(stmt.constructorMethod)) {
+    if (stmt.constructorMethod != null) {
       this._visitClassConstructor(stmt, ctx);
     }
     stmt.getters.forEach((getter) => this._visitClassGetter(getter, ctx));
@@ -130,7 +129,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     } else if (field.type == null) {
       ctx.print('''var ''');
     }
-    if (isPresent(field.type)) {
+    if (field.type != null) {
       field.type.visitType(this, ctx);
       ctx.print(''' ''');
     }
@@ -139,7 +138,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   _visitClassGetter(o.ClassGetter getter, dynamic context) {
     EmitterVisitorContext ctx = context;
-    if (isPresent(getter.type)) {
+    if (getter.type != null) {
       getter.type.visitType(this, ctx);
       ctx.print(''' ''');
     }
@@ -158,7 +157,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     var ctorStmts = stmt.constructorMethod.body;
     var superCtorExpr =
         ctorStmts.length > 0 ? getSuperConstructorCallExpr(ctorStmts[0]) : null;
-    if (isPresent(superCtorExpr)) {
+    if (superCtorExpr != null) {
       ctx.print(''': ''');
       superCtorExpr.visitExpression(this, ctx);
       ctorStmts = ctorStmts.sublist(1);
@@ -172,7 +171,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   _visitClassMethod(o.ClassMethod method, dynamic context) {
     EmitterVisitorContext ctx = context;
-    if (isPresent(method.type)) {
+    if (method.type != null) {
       method.type.visitType(this, ctx);
     } else {
       ctx.print('''void''');
@@ -201,7 +200,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   dynamic visitDeclareFunctionStmt(
       o.DeclareFunctionStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    if (isPresent(stmt.type)) {
+    if (stmt.type != null) {
       stmt.type.visitType(this, ctx);
     } else {
       ctx.print('''void''');
@@ -295,7 +294,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (isConstType(ast.type)) {
       ctx.print('''const ''');
     }
-    if (isPresent(ast.valueType)) {
+    if (ast.valueType != null) {
       ctx.print('''<String, ''');
       ast.valueType.visitType(this, ctx);
       ctx.print('''>''');
@@ -352,7 +351,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   dynamic visitArrayType(o.ArrayType type, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('''List<''');
-    if (isPresent(type.of)) {
+    if (type.of != null) {
       type.of.visitType(this, ctx);
     } else {
       ctx.print('''dynamic''');
@@ -364,7 +363,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   dynamic visitMapType(o.MapType type, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('''Map<String, ''');
-    if (isPresent(type.valueType)) {
+    if (type.valueType != null) {
       type.valueType.visitType(this, ctx);
     } else {
       ctx.print('''dynamic''');
@@ -376,7 +375,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void _visitParams(List<o.FnParam> params, dynamic context) {
     EmitterVisitorContext ctx = context;
     this.visitAllObjects((param) {
-      if (isPresent(param.type)) {
+      if (param.type != null) {
         param.type.visitType(this, ctx);
         ctx.print(" ");
       }
@@ -387,7 +386,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void _visitIdentifier(CompileIdentifierMetadata value,
       List<o.OutputType> typeParams, dynamic context) {
     EmitterVisitorContext ctx = context;
-    if (isPresent(value.moduleUrl) && value.moduleUrl != this._moduleUrl) {
+    if (value.moduleUrl != null && value.moduleUrl != this._moduleUrl) {
       var prefix = this.importsWithPrefixes[value.moduleUrl];
       if (prefix == null) {
         prefix = '''import${ this . importsWithPrefixes . length}''';
@@ -396,7 +395,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       ctx.print('''${ prefix}.''');
     }
     ctx.print(value.name);
-    if (isPresent(typeParams) && typeParams.length > 0) {
+    if (typeParams != null && typeParams.length > 0) {
       ctx.print('''<''');
       this.visitAllObjects(
           (type) => type.visitType(this, ctx), typeParams, ctx, ",");
@@ -421,5 +420,5 @@ o.Expression getSuperConstructorCallExpr(o.Statement stmt) {
 }
 
 bool isConstType(o.OutputType type) {
-  return isPresent(type) && type.hasModifier(o.TypeModifier.Const);
+  return type != null && type.hasModifier(o.TypeModifier.Const);
 }

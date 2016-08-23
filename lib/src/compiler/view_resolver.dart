@@ -6,7 +6,7 @@ import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show stringify, isPresent;
+import "package:angular2/src/facade/lang.dart" show stringify;
 
 /**
  * Resolves types to [ViewMetadata].
@@ -17,7 +17,7 @@ class ViewResolver {
   /** @internal */
   var _cache = new Map<Type, ViewMetadata>();
   ViewResolver([ReflectorReader _reflector]) {
-    if (isPresent(_reflector)) {
+    if (_reflector != null) {
       this._reflector = _reflector;
     } else {
       this._reflector = reflector;
@@ -44,27 +44,27 @@ class ViewResolver {
         compMeta = m;
       }
     });
-    if (isPresent(compMeta)) {
+    if (compMeta != null) {
       if (compMeta.template == null &&
           compMeta.templateUrl == null &&
           viewMeta == null) {
         throw new BaseException(
             '''Component \'${ stringify ( component )}\' must have either \'template\' or \'templateUrl\' set.''');
-      } else if (isPresent(compMeta.template) && isPresent(viewMeta)) {
+      } else if (compMeta.template != null && viewMeta != null) {
         this._throwMixingViewAndComponent("template", component);
-      } else if (isPresent(compMeta.templateUrl) && isPresent(viewMeta)) {
+      } else if (compMeta.templateUrl != null && viewMeta != null) {
         this._throwMixingViewAndComponent("templateUrl", component);
-      } else if (isPresent(compMeta.directives) && isPresent(viewMeta)) {
+      } else if (compMeta.directives != null && viewMeta != null) {
         this._throwMixingViewAndComponent("directives", component);
-      } else if (isPresent(compMeta.pipes) && isPresent(viewMeta)) {
+      } else if (compMeta.pipes != null && viewMeta != null) {
         this._throwMixingViewAndComponent("pipes", component);
-      } else if (isPresent(compMeta.encapsulation) && isPresent(viewMeta)) {
+      } else if (compMeta.encapsulation != null && viewMeta != null) {
         this._throwMixingViewAndComponent("encapsulation", component);
-      } else if (isPresent(compMeta.styles) && isPresent(viewMeta)) {
+      } else if (compMeta.styles != null && viewMeta != null) {
         this._throwMixingViewAndComponent("styles", component);
-      } else if (isPresent(compMeta.styleUrls) && isPresent(viewMeta)) {
+      } else if (compMeta.styleUrls != null && viewMeta != null) {
         this._throwMixingViewAndComponent("styleUrls", component);
-      } else if (isPresent(viewMeta)) {
+      } else if (viewMeta != null) {
         return viewMeta;
       } else {
         return new ViewMetadata(

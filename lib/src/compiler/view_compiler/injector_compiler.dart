@@ -1,5 +1,4 @@
 import "package:angular2/core.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart"
     show
@@ -30,7 +29,7 @@ class InjectorCompiler {
   InjectorCompileResult compileInjector(
       CompileInjectorModuleMetadata injectorModuleMeta) {
     var builder = new _InjectorBuilder(injectorModuleMeta);
-    var sourceFileName = isPresent(injectorModuleMeta.moduleUrl)
+    var sourceFileName = injectorModuleMeta.moduleUrl != null
         ? '''in InjectorModule ${ injectorModuleMeta . name} in ${ injectorModuleMeta . moduleUrl}'''
         : '''in InjectorModule ${ injectorModuleMeta . name}''';
     var sourceFile = new ParseSourceFile("", sourceFileName);
@@ -143,17 +142,15 @@ class _InjectorBuilder {
 
   o.Expression _getProviderValue(CompileProviderMetadata provider) {
     o.Expression result;
-    if (isPresent(provider.useExisting)) {
+    if (provider.useExisting != null) {
       result = this._getDependency(
           new CompileDiDependencyMetadata(token: provider.useExisting));
-    } else if (isPresent(provider.useFactory)) {
-      var deps =
-          isPresent(provider.deps) ? provider.deps : provider.useFactory.diDeps;
+    } else if (provider.useFactory != null) {
+      var deps = provider.deps ?? provider.useFactory.diDeps;
       var depsExpr = deps.map((dep) => this._getDependency(dep)).toList();
       result = o.importExpr(provider.useFactory).callFn(depsExpr);
-    } else if (isPresent(provider.useClass)) {
-      var deps =
-          isPresent(provider.deps) ? provider.deps : provider.useClass.diDeps;
+    } else if (provider.useClass != null) {
+      var deps = provider.deps ?? provider.useClass.diDeps;
       var depsExpr = deps.map((dep) => this._getDependency(dep)).toList();
       result = o
           .importExpr(provider.useClass)
@@ -161,7 +158,7 @@ class _InjectorBuilder {
     } else {
       result = convertValueToOutputAst(provider.useValue);
     }
-    if (isPresent(provider.useProperty)) {
+    if (provider.useProperty != null) {
       result = result.prop(provider.useProperty);
     }
     return result;

@@ -1,5 +1,4 @@
 import "package:angular2/core.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 @Injectable()
@@ -41,7 +40,7 @@ class BrowserDetection {
   }
 
   BrowserDetection(String ua) {
-    _ua = ua ?? (isPresent(DOM) ? DOM.getUserAgent() : '');
+    _ua = ua ?? (DOM != null ? DOM.getUserAgent() : '');
   }
   bool get isFirefox => _ua.indexOf("Firefox") > -1;
 
@@ -153,7 +152,7 @@ String stringifyElement(el) {
     result += ">";
     // Children
     var childrenRoot = DOM.templateAwareRoot(el);
-    var children = isPresent(childrenRoot) ? DOM.childNodes(childrenRoot) : [];
+    var children = childrenRoot != null ? DOM.childNodes(childrenRoot) : [];
     for (var j = 0; j < children.length; j++) {
       result += stringifyElement(children[j]);
     }

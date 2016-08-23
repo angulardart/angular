@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isPresent;
-
 // see http://www.w3.org/TR/html51/syntax.html#named-character-references
 // see https://html.spec.whatwg.org/multipage/entities.json
 // This list is not exhaustive to keep the compiler footprint low.
@@ -277,21 +275,20 @@ class HtmlTagDefinition {
       bool closedByParent,
       bool isVoid,
       bool ignoreFirstLf}) {
-    if (isPresent(closedByChildren) && closedByChildren.length > 0) {
+    if (closedByChildren != null && closedByChildren.length > 0) {
       closedByChildren
           .forEach((tagName) => this.closedByChildren[tagName] = true);
     }
     this.isVoid = isVoid == true;
     this.closedByParent = closedByParent == true || this.isVoid;
-    if (isPresent(requiredParents) && requiredParents.length > 0) {
+    if (requiredParents != null && requiredParents.length > 0) {
       this.requiredParents = {};
       this.parentToAdd = requiredParents[0];
       requiredParents
           .forEach((tagName) => this.requiredParents[tagName] = true);
     }
     this.implicitNamespacePrefix = implicitNamespacePrefix;
-    this.contentType =
-        isPresent(contentType) ? contentType : HtmlTagContentType.PARSABLE_DATA;
+    this.contentType = contentType ?? HtmlTagContentType.PARSABLE_DATA;
     this.ignoreFirstLf = ignoreFirstLf == true;
   }
   bool requireExtraParent(String currentParent) {
@@ -398,7 +395,7 @@ Map<String, HtmlTagDefinition> TAG_DEFINITIONS = {
 final HtmlTagDefinition DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
 HtmlTagDefinition getHtmlTagDefinition(String tagName) {
   var result = TAG_DEFINITIONS[tagName.toLowerCase()];
-  return isPresent(result) ? result : DEFAULT_TAG_DEFINITION;
+  return result ?? DEFAULT_TAG_DEFINITION;
 }
 
 final RegExp NS_PREFIX_RE = new RegExp(r'^@([^:]+):(.+)');
@@ -415,5 +412,5 @@ String getNsPrefix(String elementName) {
 }
 
 String mergeNsAndName(String prefix, String localName) {
-  return isPresent(prefix) ? '''@${ prefix}:${ localName}''' : localName;
+  return prefix != null ? '''@${ prefix}:${ localName}''' : localName;
 }
