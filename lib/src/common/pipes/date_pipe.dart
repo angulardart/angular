@@ -1,6 +1,5 @@
 import "package:angular2/core.dart" show PipeTransform, Pipe, Injectable;
 import "package:angular2/src/facade/intl.dart" show DateFormatter;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -84,7 +83,7 @@ class DatePipe implements PipeTransform {
     "shortTime": "jm"
   };
   String transform(dynamic value, [String pattern = "mediumDate"]) {
-    if (isBlank(value)) return null;
+    if (value == null) return null;
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(DatePipe, value);
     }

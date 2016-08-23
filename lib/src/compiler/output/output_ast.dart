@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 
@@ -8,9 +8,7 @@ enum TypeModifier { Const }
 abstract class OutputType {
   List<TypeModifier> modifiers;
   OutputType([this.modifiers = null]) {
-    if (isBlank(modifiers)) {
-      this.modifiers = [];
-    }
+    this.modifiers ??= [];
   }
   dynamic visitType(TypeVisitor visitor, dynamic context);
   bool hasModifier(TypeModifier modifier) {
@@ -531,9 +529,7 @@ enum StmtModifier { Final, Private }
 abstract class Statement {
   List<StmtModifier> modifiers;
   Statement([this.modifiers = null]) {
-    if (isBlank(modifiers)) {
-      this.modifiers = [];
-    }
+    this.modifiers ??= [];
   }
   dynamic visitStatement(StatementVisitor visitor, dynamic context);
   bool hasModifier(StmtModifier modifier) {
@@ -595,9 +591,7 @@ class AbstractClassPart {
   OutputType type;
   List<StmtModifier> modifiers;
   AbstractClassPart([this.type = null, this.modifiers]) {
-    if (isBlank(modifiers)) {
-      this.modifiers = [];
-    }
+    modifiers ??= [];
   }
   bool hasModifier(StmtModifier modifier) {
     return !identical(this.modifiers.indexOf(modifier), -1);

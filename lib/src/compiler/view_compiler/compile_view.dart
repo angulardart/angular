@@ -1,5 +1,5 @@
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart"
     show
@@ -128,7 +128,7 @@ class CompileView implements NameResolver {
     }
     CompileView currView = this;
     var result = currView.locals[name];
-    while (isBlank(result) && isPresent(currView.declarationElement.view)) {
+    while (result == null && isPresent(currView.declarationElement.view)) {
       currView = currView.declarationElement.view;
       result = currView.locals[name];
     }

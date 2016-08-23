@@ -3,7 +3,6 @@ library angular2.test.common.pipes.async_pipe_test;
 
 import 'dart:async';
 import 'package:angular2/testing_internal.dart';
-import 'package:angular2/src/facade/lang.dart' show isBlank;
 import 'package:angular2/common.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
@@ -102,7 +101,7 @@ main() {
     Completer completer;
     MockChangeDetectorRef ref;
     // adds longer timers for passing tests in IE
-    var timer = (!isBlank(DOM) && browserDetection.isIE) ? 50 : 10;
+    var timer = (DOM != null && browserDetection.isIE) ? 50 : 10;
     setUp(() {
       completer = new Completer();
       ref = new MockChangeDetectorRef();

@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "compile_metadata.dart"
     show
@@ -38,7 +38,7 @@ class ProviderViewContext {
     this.viewProviders = new CompileTokenMap<bool>();
     _normalizeProviders(component.viewProviders, sourceSpan, this.errors)
         .forEach((provider) {
-      if (isBlank(this.viewProviders.get(provider.token))) {
+      if (this.viewProviders.get(provider.token) == null) {
         this.viewProviders.add(provider.token, true);
       }
     });
@@ -127,7 +127,7 @@ class ProviderElementContext {
       CompileTokenMetadata token, CompileTokenMap<bool> queryReadTokens) {
     this._getQueriesFor(token).forEach((query) {
       var queryReadToken = isPresent(query.read) ? query.read : token;
-      if (isBlank(queryReadTokens.get(queryReadToken))) {
+      if (queryReadTokens.get(queryReadToken) == null) {
         queryReadTokens.add(queryReadToken, true);
       }
     });
@@ -160,7 +160,7 @@ class ProviderElementContext {
   ProviderAst _getOrCreateLocalProvider(ProviderAstType requestingProviderType,
       CompileTokenMetadata token, bool eager) {
     var resolvedProvider = this._allProviders.get(token);
-    if (isBlank(resolvedProvider) ||
+    if (resolvedProvider == null ||
         ((identical(requestingProviderType, ProviderAstType.Directive) ||
                 identical(
                     requestingProviderType, ProviderAstType.PublicService)) &&
@@ -275,12 +275,12 @@ class ProviderElementContext {
       result = this._getLocalDependency(requestingProviderType, dep, eager);
     }
     if (dep.isSelf) {
-      if (isBlank(result) && dep.isOptional) {
+      if (result == null && dep.isOptional) {
         result = new CompileDiDependencyMetadata(isValue: true, value: null);
       }
     } else {
       // check parent elements
-      while (isBlank(result) && isPresent(currElement._parent)) {
+      while (result == null && isPresent(currElement._parent)) {
         var prevElement = currElement;
         currElement = currElement._parent;
         if (prevElement._isViewRoot) {
@@ -290,7 +290,7 @@ class ProviderElementContext {
             ProviderAstType.PublicService, dep, currEager);
       }
       // check @Host restriction
-      if (isBlank(result)) {
+      if (result == null) {
         if (!dep.isHost ||
             this._viewContext.component.type.isHost ||
             identifierToken(this._viewContext.component.type)
@@ -305,7 +305,7 @@ class ProviderElementContext {
         }
       }
     }
-    if (isBlank(result)) {
+    if (result == null) {
       this._viewContext.errors.add(new ProviderError(
           '''No provider for ${ dep . token . name}''', this._sourceSpan));
     }
@@ -344,7 +344,7 @@ ${ errorString}''');
   ProviderAst _getOrCreateLocalProvider(
       CompileTokenMetadata token, bool eager) {
     var resolvedProvider = this._allProviders.get(token);
-    if (isBlank(resolvedProvider)) {
+    if (resolvedProvider == null) {
       return null;
     }
     var transformedProviderAst = this._transformedProviders.get(token);
@@ -452,7 +452,7 @@ List<CompileProviderMetadata> _normalizeProviders(
     ParseSourceSpan sourceSpan,
     List<ParseError> targetErrors,
     [List<CompileProviderMetadata> targetProviders = null]) {
-  if (isBlank(targetProviders)) {
+  if (targetProviders == null) {
     targetProviders = [];
   }
   if (isPresent(providers)) {
@@ -538,7 +538,7 @@ _resolveProviders(
           '''Mixing multi and non multi provider is not possible for token ${ resolvedProvider . token . name}''',
           sourceSpan));
     }
-    if (isBlank(resolvedProvider)) {
+    if (resolvedProvider == null) {
       resolvedProvider = new ProviderAst(provider.token, provider.multi, eager,
           [provider], providerType, sourceSpan);
       targetProvidersByToken.add(provider.token, resolvedProvider);
@@ -587,7 +587,7 @@ _addQueryToTokenMap(CompileTokenMap<List<CompileQueryMetadata>> map,
     CompileQueryMetadata query) {
   query.selectors.forEach((CompileTokenMetadata token) {
     var entry = map.get(token);
-    if (isBlank(entry)) {
+    if (entry == null) {
       entry = [];
       map.add(token, entry);
     }

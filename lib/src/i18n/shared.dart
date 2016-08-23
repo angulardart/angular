@@ -13,7 +13,7 @@ import "package:angular2/src/compiler/html_ast.dart"
         htmlVisitAll;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, jsSplit;
+import "package:angular2/src/facade/lang.dart" show isPresent, jsSplit;
 
 import "message.dart" show Message;
 
@@ -99,12 +99,12 @@ HtmlAttrAst _findI18nAttr(HtmlElementAst p) {
 }
 
 String meaning(String i18n) {
-  if (isBlank(i18n) || i18n == "") return null;
+  if (i18n == null || i18n == "") return null;
   return i18n.split("|")[0];
 }
 
 String description(String i18n) {
-  if (isBlank(i18n) || i18n == "") return null;
+  if (i18n == null || i18n == "") return null;
   var parts = i18n.split("|");
   return parts.length > 1 ? parts[1] : null;
 }

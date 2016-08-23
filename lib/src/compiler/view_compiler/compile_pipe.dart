@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "../compile_metadata.dart" show CompilePipeMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
@@ -106,7 +105,7 @@ CompilePipeMetadata _findPipeMeta(CompileView view, String name) {
       break;
     }
   }
-  if (isBlank(pipeMeta)) {
+  if (pipeMeta == null) {
     throw new BaseException(
         '''Illegal state: Could not find pipe ${ name} although the parser should have detected this error!''');
   }

@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "output_ast.dart" as o;
 
@@ -231,7 +231,7 @@ abstract class AbstractEmitterVisitor
     var name = expr.name;
     if (isPresent(expr.builtin)) {
       name = this.getBuiltinMethodName(expr.builtin);
-      if (isBlank(name)) {
+      if (name == null) {
         // some builtins just mean to skip the call.
 
         // e.g. `bind` in Dart.

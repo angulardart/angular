@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "abstract_emitter.dart"
@@ -78,7 +78,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       } else {
         ctx.print('''final ''');
       }
-    } else if (isBlank(stmt.type)) {
+    } else if (stmt.type == null) {
       ctx.print('''var ''');
     }
     if (isPresent(stmt.type)) {
@@ -127,7 +127,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     if (field.hasModifier(o.StmtModifier.Final)) {
       ctx.print('''final ''');
-    } else if (isBlank(field.type)) {
+    } else if (field.type == null) {
       ctx.print('''var ''');
     }
     if (isPresent(field.type)) {
@@ -389,7 +389,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     if (isPresent(value.moduleUrl) && value.moduleUrl != this._moduleUrl) {
       var prefix = this.importsWithPrefixes[value.moduleUrl];
-      if (isBlank(prefix)) {
+      if (prefix == null) {
         prefix = '''import${ this . importsWithPrefixes . length}''';
         this.importsWithPrefixes[value.moduleUrl] = prefix;
       }

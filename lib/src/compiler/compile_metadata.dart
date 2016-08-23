@@ -6,7 +6,7 @@ import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
 import "package:angular2/src/core/metadata/view.dart"
     show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "url_resolver.dart" show getUrlScheme;
 import "util.dart" show splitAtColon, sanitizeIdentifier;
@@ -354,7 +354,7 @@ class CompileTokenMap<VALUE> {
     if (isPresent(rk)) {
       result = this._valueMap[rk];
     }
-    if (isBlank(result) && isPresent(ak)) {
+    if (result == null && ak != null) {
       result = this._valueMap[ak];
     }
     return result;
@@ -553,7 +553,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     var hostAttributes = <String, String>{};
     host?.forEach((String key, String value) {
       var matches = HOST_REG_EXP.firstMatch(key);
-      if (isBlank(matches)) {
+      if (matches == null) {
         hostAttributes[key] = value;
       } else if (matches[1] != null) {
         hostProperties[matches[1]] = value;
@@ -865,12 +865,12 @@ var _COMPILE_METADATA_FROM_JSON = {
 };
 
 dynamic _arrayFromJson(List<dynamic> obj, dynamic fn(Map<String, dynamic> a)) {
-  return isBlank(obj) ? null : obj.map((o) => _objFromJson(o, fn)).toList();
+  return obj == null ? null : obj.map((o) => _objFromJson(o, fn)).toList();
 }
 
 dynamic /* String | Map < String , dynamic > */ _arrayToJson(
     List<dynamic> obj) {
-  return isBlank(obj) ? null : obj.map(_objToJson).toList();
+  return obj == null ? null : obj.map(_objToJson).toList();
 }
 
 dynamic _objFromJson(dynamic obj, dynamic fn(Map<String, dynamic> a)) {

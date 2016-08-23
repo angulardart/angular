@@ -1,6 +1,6 @@
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent, jsSplit;
+import "package:angular2/src/facade/lang.dart" show isPresent, jsSplit;
 
 import "ast.dart"
     show
@@ -114,7 +114,7 @@ class Parser {
   }
 
   AST _parseQuote(String input, dynamic location) {
-    if (isBlank(input)) return null;
+    if (input == null) return null;
     var prefixSeparatorIndex = input.indexOf(":");
     if (prefixSeparatorIndex == -1) return null;
     var prefix = input.substring(0, prefixSeparatorIndex).trim();
@@ -183,11 +183,11 @@ class Parser {
     for (var i = 0; i < input.length - 1; i++) {
       var char = input.codeUnitAt(i);
       var nextChar = input.codeUnitAt(i + 1);
-      if (identical(char, $SLASH) && nextChar == $SLASH && isBlank(outerQuote))
+      if (identical(char, $SLASH) && nextChar == $SLASH && outerQuote == null)
         return i;
       if (identical(outerQuote, char)) {
         outerQuote = null;
-      } else if (isBlank(outerQuote) && isQuote(char)) {
+      } else if (outerQuote == null && isQuote(char)) {
         outerQuote = char;
       }
     }
@@ -674,7 +674,7 @@ class _ParseAST {
   }
 
   error(String message, [num index = null]) {
-    if (isBlank(index)) index = this.index;
+    if (index == null) index = this.index;
     var location = (index < this.tokens.length)
         ? '''at column ${ this . tokens [ index ] . index + 1} in'''
         : '''at the end of the expression''';

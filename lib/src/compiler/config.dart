@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isBlank;
-
 import "compile_metadata.dart" show CompileIdentifierMetadata;
 import "identifiers.dart" show Identifiers;
 
@@ -10,7 +8,7 @@ class CompilerConfig {
   RenderTypes renderTypes;
   CompilerConfig(this.genDebugInfo, this.logBindingUpdate, this.useJit,
       [RenderTypes renderTypes = null]) {
-    if (isBlank(renderTypes)) {
+    if (renderTypes == null) {
       renderTypes = new DefaultRenderTypes();
     }
     this.renderTypes = renderTypes;

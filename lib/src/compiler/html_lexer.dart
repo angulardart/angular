@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "html_tags.dart"
     show getHtmlTagDefinition, HtmlTagContentType, NAMED_ENTITIES;
@@ -190,27 +190,19 @@ class _HtmlTokenizer {
   }
 
   ParseSourceSpan _getSpan([ParseLocation start, ParseLocation end]) {
-    if (isBlank(start)) {
-      start = this._getLocation();
-    }
-    if (isBlank(end)) {
-      end = this._getLocation();
-    }
+    start ??= this._getLocation();
+    end ??= this._getLocation();
     return new ParseSourceSpan(start, end);
   }
 
   _beginToken(HtmlTokenType type, [ParseLocation start = null]) {
-    if (isBlank(start)) {
-      start = this._getLocation();
-    }
+    start ??= this._getLocation();
     this.currentTokenStart = start;
     this.currentTokenType = type;
   }
 
   HtmlToken _endToken(List<String> parts, [ParseLocation end = null]) {
-    if (isBlank(end)) {
-      end = this._getLocation();
-    }
+    end ??= this._getLocation();
     var token = new HtmlToken(this.currentTokenType, parts,
         new ParseSourceSpan(this.currentTokenStart, end));
     this.tokens.add(token);
@@ -357,7 +349,7 @@ class _HtmlTokenizer {
       this._advance();
       var name = this.input.substring(start.offset + 1, this.index - 1);
       var char = NAMED_ENTITIES[name];
-      if (isBlank(char)) {
+      if (char == null) {
         throw this
             ._createError(unknownEntityErrorMsg(name), this._getSpan(start));
       }

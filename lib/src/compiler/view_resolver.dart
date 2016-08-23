@@ -6,8 +6,7 @@ import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show stringify, isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show stringify, isPresent;
 
 /**
  * Resolves types to [ViewMetadata].
@@ -26,7 +25,7 @@ class ViewResolver {
   }
   ViewMetadata resolve(Type component) {
     var view = this._cache[component];
-    if (isBlank(view)) {
+    if (view == null) {
       view = this._resolve(component);
       this._cache[component] = view;
     }
@@ -46,9 +45,9 @@ class ViewResolver {
       }
     });
     if (isPresent(compMeta)) {
-      if (isBlank(compMeta.template) &&
-          isBlank(compMeta.templateUrl) &&
-          isBlank(viewMeta)) {
+      if (compMeta.template == null &&
+          compMeta.templateUrl == null &&
+          viewMeta == null) {
         throw new BaseException(
             '''Component \'${ stringify ( component )}\' must have either \'template\' or \'templateUrl\' set.''');
       } else if (isPresent(compMeta.template) && isPresent(viewMeta)) {
@@ -78,7 +77,7 @@ class ViewResolver {
             styleUrls: compMeta.styleUrls);
       }
     } else {
-      if (isBlank(viewMeta)) {
+      if (viewMeta == null) {
         throw new BaseException(
             '''Could not compile \'${ stringify ( component )}\' because it is not a component.''');
       } else {

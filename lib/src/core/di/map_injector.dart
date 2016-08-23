@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isBlank;
-
 import "injector.dart" show Injector, InjectorFactory, THROW_IF_NOT_FOUND;
 
 /**
@@ -14,11 +12,11 @@ class MapInjector implements Injector {
 
   Map<dynamic, dynamic> _values;
   MapInjector([this._parent = null, Map<dynamic, dynamic> values = null]) {
-    if (isBlank(values)) {
+    if (values == null) {
       values = new Map<dynamic, dynamic>();
     }
     this._values = values;
-    if (isBlank(this._parent)) {
+    if (_parent == null) {
       this._parent = Injector.NULL;
     }
   }

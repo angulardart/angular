@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../expression_parser/ast.dart" as cdAst;
 import "../identifiers.dart" show Identifiers;
@@ -248,13 +248,13 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
       var varExpr = this._nameResolver.getLocal(ast.name);
-      if (isPresent(varExpr)) {
+      if (varExpr != null) {
         result = varExpr.callFn(args);
       } else {
         receiver = this._implicitReceiver;
       }
     }
-    if (isBlank(result)) {
+    if (result == null) {
       result = receiver.callMethod(ast.name, args);
     }
     return convertToStatementIfNeeded(mode, result);
@@ -272,11 +272,11 @@ class _AstToIrVisitor implements cdAst.AstVisitor {
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
       result = this._nameResolver.getLocal(ast.name);
-      if (isBlank(result)) {
+      if (result == null) {
         receiver = this._implicitReceiver;
       }
     }
-    if (isBlank(result)) {
+    if (result == null) {
       result = receiver.prop(ast.name);
     }
     return convertToStatementIfNeeded(mode, result);

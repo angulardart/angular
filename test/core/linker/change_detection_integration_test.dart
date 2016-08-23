@@ -3,7 +3,6 @@ library angular2.test.core.linker.change_detection_integration_test;
 
 import 'dart:html';
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show isBlank;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show PipeTransform, WrappedValue;
@@ -814,14 +813,12 @@ class Address {
   }
 
   set city(v) {
-    this._city = v;
+    _city = v;
   }
 
   set zipcode(v) {
-    this._zipcode = v;
+    _zipcode = v;
   }
 
-  String toString() {
-    return isBlank(this.city) ? "-" : this.city;
-  }
+  String toString() => city ?? '-';
 }

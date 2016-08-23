@@ -2,7 +2,6 @@ import "dart:async";
 
 import "package:angular2/core.dart"
     show Pipe, Injectable, ChangeDetectorRef, OnDestroy, WrappedValue;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -67,15 +66,15 @@ class AsyncPipe implements OnDestroy {
     this._ref = _ref;
   }
   void ngOnDestroy() {
-    if (isPresent(this._subscription)) {
+    if (this._subscription != null) {
       this._dispose();
     }
   }
 
   dynamic transform(
       dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ obj) {
-    if (isBlank(this._obj)) {
-      if (isPresent(obj)) {
+    if (_obj == null) {
+      if (obj != null) {
         this._subscribe(obj);
       }
       this._latestReturnedValue = this._latestValue;

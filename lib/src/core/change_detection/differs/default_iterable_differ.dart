@@ -1,6 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, stringify, looseIdentical;
+    show isPresent, stringify, looseIdentical;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/iterable_differs.dart"
@@ -105,7 +105,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
   }
 
   DefaultIterableDiffer diff(Iterable collection) {
-    if (isBlank(collection)) collection = [];
+    if (collection == null) collection ??= [];
     if (collection is! Iterable) {
       throw new BaseException('''Error trying to diff \'${ collection}\'''');
     }
@@ -701,7 +701,7 @@ class _DuplicateMap {
   CollectionChangeRecord get(dynamic trackById, [num afterIndex = null]) {
     var key = trackById;
     var recordList = this.map[key];
-    return isBlank(recordList) ? null : recordList.get(trackById, afterIndex);
+    return recordList == null ? null : recordList.get(trackById, afterIndex);
   }
 
   /**

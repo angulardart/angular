@@ -5,7 +5,7 @@ import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "directives/router_outlet.dart" show RouterOutlet;
 import "instruction.dart" show ComponentInstruction, Instruction;
@@ -107,7 +107,7 @@ class Router {
    */
   Future<dynamic> registerAuxOutlet(RouterOutlet outlet) {
     var outletName = outlet.name;
-    if (isBlank(outletName)) {
+    if (outletName == null) {
       throw new BaseException(
           '''registerAuxOutlet expects to be called with an outlet with a name.''');
     }
@@ -129,7 +129,7 @@ class Router {
    */
   bool isRouteActive(Instruction instruction) {
     Router router = this;
-    if (isBlank(this.currentInstruction)) {
+    if (currentInstruction == null) {
       return false;
     }
     // `instruction` corresponds to the root router
@@ -137,9 +137,9 @@ class Router {
       router = router.parent;
       instruction = instruction.child;
     }
-    if (isBlank(instruction.component) ||
-        isBlank(this.currentInstruction.component) ||
-        this.currentInstruction.component.routeName !=
+    if (instruction.component == null ||
+        currentInstruction.component == null ||
+        currentInstruction.component.routeName !=
             instruction.component.routeName) {
       return false;
     }
@@ -204,7 +204,7 @@ class Router {
       this._startNavigating();
       return this._afterPromiseFinishNavigating(
           this.recognize(url).then((instruction) {
-        if (isBlank(instruction)) {
+        if (instruction == null) {
           return false;
         }
         return this._navigate(instruction, _skipLocationChange);
@@ -218,7 +218,7 @@ class Router {
    */
   Future<dynamic> navigateByInstruction(Instruction instruction,
       [bool _skipLocationChange = false]) {
-    if (isBlank(instruction)) {
+    if (instruction == null) {
       return _resolveToFalse;
     }
     return this._currentNavigation = this._currentNavigation.then((_) {
@@ -287,10 +287,10 @@ class Router {
 
   /** @internal */
   Future<dynamic> _routerCanReuse(Instruction instruction) {
-    if (isBlank(this._outlet)) {
+    if (_outlet == null) {
       return _resolveToFalse;
     }
-    if (isBlank(instruction.component)) {
+    if (instruction.component == null) {
       return _resolveToTrue;
     }
     return this._outlet.routerCanReuse(instruction.component).then((result) {
@@ -308,17 +308,17 @@ class Router {
   }
 
   Future<bool> _routerCanDeactivate(Instruction instruction) {
-    if (isBlank(this._outlet)) {
+    if (_outlet == null) {
       return new Future.value(true);
     }
     Future<bool> next;
     Instruction childInstruction = null;
     bool reuse = false;
     ComponentInstruction componentInstruction = null;
-    if (isPresent(instruction)) {
+    if (instruction != null) {
       childInstruction = instruction.child;
       componentInstruction = instruction.component;
-      reuse = isBlank(instruction.component) || instruction.component.reuse;
+      reuse = instruction.component?.reuse != false;
     }
     if (reuse) {
       next = new Future.value(true);
@@ -437,10 +437,10 @@ class Router {
    * router has yet to successfully navigate.
    */
   Future<dynamic> renavigate() {
-    if (isBlank(this.lastNavigationAttempt)) {
-      return this._currentNavigation;
+    if (lastNavigationAttempt == null) {
+      return _currentNavigation;
     }
-    return this.navigateByUrl(this.lastNavigationAttempt);
+    return navigateByUrl(lastNavigationAttempt);
   }
 
   /**
@@ -560,7 +560,7 @@ class ChildRouter extends Router {
 Future<bool> canActivateOne(
     Instruction nextInstruction, Instruction prevInstruction) {
   var next = new Future<bool>.value(true);
-  if (isBlank(nextInstruction.component)) {
+  if (nextInstruction.component == null) {
     return next;
   }
   if (isPresent(nextInstruction.child)) {

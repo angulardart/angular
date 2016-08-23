@@ -1,5 +1,3 @@
-import "package:angular2/src/facade/lang.dart" show isBlank;
-
 import "html_ast.dart" show HtmlElementAst;
 import "html_tags.dart" show splitNsName;
 
@@ -64,7 +62,7 @@ class PreparsedElement {
 }
 
 String normalizeNgContentSelect(String selectAttr) {
-  if (isBlank(selectAttr) || identical(selectAttr.length, 0)) {
+  if (selectAttr == null || selectAttr.isEmpty) {
     return "*";
   }
   return selectAttr;

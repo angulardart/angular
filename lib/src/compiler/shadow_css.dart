@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank, jsSplit;
+import "package:angular2/src/facade/lang.dart" show isPresent, jsSplit;
 /**
  * This file is a port of shadowCSS from webcomponents.js to TypeScript.
  *
@@ -284,7 +284,7 @@ class ShadowCss {
         var parts = m[2].split(","), r = [];
         for (var i = 0; i < parts.length; i++) {
           var p = parts[i];
-          if (isBlank(p)) break;
+          if (p == null) break;
           p = p.trim();
           r.add(partReplacer(_polyfillHostNoCombinator, p, m[3]));
         }

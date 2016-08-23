@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import "package:angular2/core.dart" show OpaqueToken;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 import "model.dart" as modelModule;
@@ -97,7 +97,7 @@ class Validators {
   ///  Compose multiple validators into a single function that returns the union
   ///  of the individual error maps.
   static ValidatorFn compose(List<ValidatorFn> validators) {
-    if (isBlank(validators)) return null;
+    if (validators == null) return null;
     var presentValidators = validators.where(isPresent).toList();
     if (presentValidators.length == 0) return null;
     return (modelModule.AbstractControl control) {
@@ -106,7 +106,7 @@ class Validators {
   }
 
   static AsyncValidatorFn composeAsync(List<AsyncValidatorFn> validators) {
-    if (isBlank(validators)) return null;
+    if (validators == null) return null;
     var presentValidators = validators.where(isPresent).toList();
     if (presentValidators.length == 0) return null;
     return (modelModule.AbstractControl control) {

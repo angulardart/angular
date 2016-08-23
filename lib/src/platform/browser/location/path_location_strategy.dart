@@ -2,7 +2,6 @@ import 'dart:html' as html;
 
 import "package:angular2/core.dart" show Injectable, Inject, Optional;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "location.dart" show Location;
 import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
@@ -64,10 +63,8 @@ class PathLocationStrategy extends LocationStrategy {
       [@Optional() @Inject(APP_BASE_HREF) String href])
       : super() {
     /* super call moved to initializer */;
-    if (isBlank(href)) {
-      href = this._platformLocation.getBaseHrefFromDOM();
-    }
-    if (isBlank(href)) {
+    href ??= this._platformLocation.getBaseHrefFromDOM();
+    if (href == null) {
       throw new BaseException(
           '''No base href set. Please provide a value for the APP_BASE_HREF token or add a base element to the document.''');
     }

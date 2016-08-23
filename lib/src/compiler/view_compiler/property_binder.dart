@@ -3,7 +3,7 @@ import "package:angular2/src/core/change_detection/constants.dart"
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
 import "package:angular2/src/core/security.dart";
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../expression_parser/ast.dart" as cdAst;
 import "../identifiers.dart" show Identifiers;
@@ -40,7 +40,7 @@ void bind(
     CompileMethod method) {
   var checkExpression = convertCdExpressionToIr(
       view, context, parsedExpression, DetectChangesVars.valUnwrapper);
-  if (isBlank(checkExpression.expression)) {
+  if (checkExpression.expression == null) {
     // e.g. an empty expression was given
     return;
   }

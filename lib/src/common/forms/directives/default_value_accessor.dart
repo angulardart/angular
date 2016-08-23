@@ -1,6 +1,5 @@
 import "package:angular2/core.dart"
     show Directive, ElementRef, Renderer, Provider;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -30,7 +29,7 @@ class DefaultValueAccessor implements ControlValueAccessor {
   var onTouched = () {};
   DefaultValueAccessor(this._renderer, this._elementRef) {}
   void writeValue(dynamic value) {
-    var normalizedValue = isBlank(value) ? "" : value;
+    var normalizedValue = value ?? '';
     this._renderer.setElementProperty(
         this._elementRef.nativeElement, "value", normalizedValue);
   }

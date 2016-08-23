@@ -2,7 +2,7 @@
 library angular2.test.compiler.expression_parser.parser_test;
 
 import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:angular2/src/compiler/expression_parser/parser.dart"
     show Parser;
 import "unparser.dart" show Unparser;
@@ -37,17 +37,17 @@ main() {
   }
   checkInterpolation(String exp, [String expected]) {
     var ast = parseInterpolation(exp);
-    if (isBlank(expected)) expected = exp;
+    expected ??= exp;
     expect(unparse(ast), expected);
   }
   checkBinding(String exp, [String expected]) {
     var ast = parseBinding(exp);
-    if (isBlank(expected)) expected = exp;
+    expected ??= exp;
     expect(unparse(ast), expected);
   }
   checkAction(String exp, [String expected]) {
     var ast = parseAction(exp);
-    if (isBlank(expected)) expected = exp;
+    expected ??= exp;
     expect(unparse(ast), expected);
   }
   expectActionError(text, matcher) {
@@ -320,10 +320,10 @@ main() {
           if (binding.keyIsVar) {
             return "let " +
                 binding.key +
-                (isBlank(binding.name) ? "=null" : "=" + binding.name);
+                (binding.name == null ? "=null" : "=" + binding.name);
           } else {
             return binding.key +
-                (isBlank(binding.expression)
+                (binding.expression == null
                     ? ""
                     : '''=${ binding . expression}''');
           }

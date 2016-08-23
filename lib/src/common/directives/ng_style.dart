@@ -6,7 +6,7 @@ import "package:angular2/core.dart"
         ElementRef,
         Directive,
         Renderer;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../../core/change_detection/differs/default_keyvalue_differ.dart"
     show KeyValueChangeRecord;
@@ -73,7 +73,7 @@ class NgStyle implements DoCheck {
   NgStyle(this._differs, this._ngEl, this._renderer) {}
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;
-    if (isBlank(this._differ) && isPresent(v)) {
+    if (_differ == null && v != null) {
       this._differ = this._differs.find(this._rawStyle).create(null);
     }
   }

@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart" show CompileDirectiveMetadata;
 import "../output/output_ast.dart" as o;
@@ -22,7 +22,7 @@ class CompileEventListener {
     var listener = targetEventListeners.firstWhere(
         (listener) => listener.eventName == eventName,
         orElse: () => null);
-    if (isBlank(listener)) {
+    if (listener == null) {
       listener = new CompileEventListener(
           compileElement, eventName, targetEventListeners.length);
       targetEventListeners.add(listener);

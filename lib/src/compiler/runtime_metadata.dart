@@ -18,8 +18,7 @@ import "package:angular2/src/core/platform_directives_and_pipes.dart"
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, stringify;
+import "package:angular2/src/facade/lang.dart" show isPresent, stringify;
 
 import "compile_metadata.dart" as cpl;
 import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
@@ -50,7 +49,7 @@ class RuntimeMetadataResolver {
     if (identifier.indexOf("(") >= 0) {
       // case: anonymous functions!
       var found = this._anonymousTypes[token];
-      if (isBlank(found)) {
+      if (found == null) {
         this._anonymousTypes[token] = this._anonymousTypeIndex++;
         found = this._anonymousTypes[token];
       }
@@ -61,7 +60,7 @@ class RuntimeMetadataResolver {
 
   cpl.CompileDirectiveMetadata getDirectiveMetadata(Type directiveType) {
     var meta = this._directiveCache[directiveType];
-    if (isBlank(meta)) {
+    if (meta == null) {
       var dirMeta = this._directiveResolver.resolve(directiveType);
       var moduleUrl = null;
       var templateMeta = null;
@@ -137,7 +136,7 @@ class RuntimeMetadataResolver {
 
   cpl.CompilePipeMetadata getPipeMetadata(Type pipeType) {
     var meta = this._pipeCache[pipeType];
-    if (isBlank(meta)) {
+    if (meta == null) {
       var pipeMeta = this._pipeResolver.resolve(pipeType);
       var moduleUrl = reflector.importUri(pipeType);
       meta = new cpl.CompilePipeMetadata(

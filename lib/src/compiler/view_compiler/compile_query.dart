@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
 import "../identifiers.dart" show Identifiers;
@@ -143,7 +143,7 @@ addQueryToTokenMap(
     CompileTokenMap<List<CompileQuery>> map, CompileQuery query) {
   query.meta.selectors.forEach((selector) {
     var entry = map.get(selector);
-    if (isBlank(entry)) {
+    if (entry == null) {
       entry = [];
       map.add(selector, entry);
     }

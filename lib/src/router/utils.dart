@@ -1,6 +1,6 @@
 import "package:angular2/core.dart" show ComponentFactory;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "lifecycle/lifecycle_annotations_impl.dart" show CanActivate;
 
@@ -27,13 +27,7 @@ class TouchMap {
   }
 }
 
-String normalizeString(dynamic obj) {
-  if (isBlank(obj)) {
-    return null;
-  } else {
-    return obj.toString();
-  }
-}
+String normalizeString(Object obj) => obj?.toString();
 
 List<dynamic> getComponentAnnotations(
     dynamic /* Type | ComponentFactory */ comp) {

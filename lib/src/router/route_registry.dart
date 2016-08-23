@@ -4,7 +4,7 @@ import 'dart:math' as math;
 import "package:angular2/core.dart"
     show Injectable, Inject, OpaqueToken, ComponentFactory;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "instruction.dart"
     show
         Instruction,
@@ -91,7 +91,7 @@ class RouteRegistry {
       assertComponentExists(config.component, config.path);
     }
     var rules = this._rules[parentComponent];
-    if (isBlank(rules)) {
+    if (rules == null) {
       rules = new RuleSet();
       this._rules[parentComponent] = rules;
     }
@@ -152,7 +152,7 @@ class RouteRegistry {
         ? parentInstruction.component.componentType
         : this._rootComponent;
     var rules = this._rules[parentComponent];
-    if (isBlank(rules)) {
+    if (rules == null) {
       return new Future<Instruction>.value();
     }
     // Matches some beginning part of the given URL
@@ -174,8 +174,7 @@ class RouteRegistry {
                     candidate.remainingAux, auxParentInstructions);
                 var instruction = new ResolvedInstruction(
                     candidate.instruction, null, auxInstructions);
-                if (isBlank(candidate.instruction) ||
-                    candidate.instruction.terminal) {
+                if (candidate.instruction?.terminal != false) {
                   return instruction;
                 }
                 List<Instruction> newAncestorInstructions =
@@ -184,7 +183,7 @@ class RouteRegistry {
                 return this
                     ._recognize(candidate.remaining, newAncestorInstructions)
                     .then((childInstruction) {
-                  if (isBlank(childInstruction)) {
+                  if (childInstruction == null) {
                     return null;
                   }
                   // redirect instructions are already absolute
@@ -206,7 +205,7 @@ class RouteRegistry {
               }
             }))
         .toList();
-    if ((isBlank(parsedUrl) || parsedUrl.path == "") &&
+    if ((parsedUrl == null || parsedUrl.path == "") &&
         possibleMatches.length == 0) {
       return new Future.value(this.generateDefault(parentComponent));
     }
@@ -306,7 +305,7 @@ class RouteRegistry {
     // we don't clone the first (root) element
     for (var i = ancestorInstructions.length - 1; i >= 0; i--) {
       var ancestorInstruction = ancestorInstructions[i];
-      if (isBlank(ancestorInstruction)) {
+      if (ancestorInstruction == null) {
         break;
       }
       generatedInstruction =
@@ -334,7 +333,7 @@ class RouteRegistry {
     }
     if (linkParams.length == 0) {
       var defaultInstruction = this.generateDefault(parentComponentType);
-      if (isBlank(defaultInstruction)) {
+      if (defaultInstruction == null) {
         throw new BaseException(
             '''Link "$_originalLink" does not resolve to a terminal instruction.''');
       }
@@ -350,7 +349,7 @@ class RouteRegistry {
       componentInstruction = prevInstruction.component;
     }
     var rules = this._rules[parentComponentType];
-    if (isBlank(rules)) {
+    if (rules == null) {
       throw new BaseException(
           '''Component "${getComponentType(parentComponentType)}" has no route config.''');
     }
@@ -374,7 +373,7 @@ class RouteRegistry {
       }
       var routeRecognizer =
           (_aux ? rules.auxRulesByName : rules.rulesByName)[routeName];
-      if (isBlank(routeRecognizer)) {
+      if (routeRecognizer == null) {
         throw new BaseException(
             '''Component "${getComponentType(parentComponentType)}" has no route named "${ routeName}".''');
       }
@@ -383,7 +382,7 @@ class RouteRegistry {
       // we'll figure out the rest of the route when we resolve the instruction and
 
       // perform a navigation
-      if (isBlank(routeRecognizer.handler.componentType)) {
+      if (routeRecognizer.handler.componentType == null) {
         GeneratedUrl generatedUrl =
             routeRecognizer.generateComponentPathValues(routeParams);
         return new UnresolvedInstruction(() {
@@ -434,7 +433,7 @@ class RouteRegistry {
 
   bool hasRoute(String name, dynamic parentComponent) {
     var rules = this._rules[parentComponent];
-    if (isBlank(rules)) {
+    if (rules == null) {
       return false;
     }
     return rules.hasRoute(name);
@@ -442,11 +441,11 @@ class RouteRegistry {
 
   Instruction generateDefault(
       dynamic /* Type | ComponentFactory */ componentCursor) {
-    if (isBlank(componentCursor)) {
+    if (componentCursor == null) {
       return null;
     }
     var rules = this._rules[componentCursor];
-    if (isBlank(rules) || isBlank(rules.defaultRule)) {
+    if (rules?.defaultRule == null) {
       return null;
     }
     var defaultChild = null;

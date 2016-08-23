@@ -2,7 +2,7 @@
 // https://github.com/webcomponents/webcomponentsjs/blob/master/src/HTMLImports/path.js
 
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 class StyleWithImports {
   String style;
@@ -11,9 +11,9 @@ class StyleWithImports {
 }
 
 bool isStyleUrlResolvable(String url) {
-  if (isBlank(url) || identical(url.length, 0) || url[0] == "/") return false;
+  if (url == null || url.isEmpty || url[0] == "/") return false;
   var schemeMatch = _urlWithSchemaRe.firstMatch(url);
-  return isBlank(schemeMatch) ||
+  return schemeMatch == null ||
       schemeMatch[1] == "package" ||
       schemeMatch[1] == "asset";
 }

@@ -1,5 +1,4 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "../di/injector.dart" show Injector, THROW_IF_NOT_FOUND;
 
@@ -9,7 +8,7 @@ abstract class CodegenInjector<MODULE> implements Injector {
   Injector parent;
   MODULE mainModule;
   CodegenInjector(this.parent, _needsMainModule, this.mainModule) {
-    if (_needsMainModule && isBlank(mainModule)) {
+    if (_needsMainModule && mainModule == null) {
       throw new BaseException("This injector needs a main module instance!");
     }
   }
@@ -27,9 +26,7 @@ class CodegenInjectorFactory<MODULE> {
   final dynamic /* (parent: Injector, mainModule: MODULE) => Injector */ _injectorFactory;
   const CodegenInjectorFactory(this._injectorFactory);
   Injector create([Injector parent = null, MODULE mainModule = null]) {
-    if (isBlank(parent)) {
-      parent = Injector.NULL;
-    }
+    parent ??= Injector.NULL;
     return this._injectorFactory(parent, mainModule);
   }
 }

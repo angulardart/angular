@@ -1,5 +1,5 @@
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "html_ast.dart"
     show
@@ -121,7 +121,7 @@ class TreeBuilder {
     // read =
     while (identical(this.peek.type, HtmlTokenType.EXPANSION_CASE_VALUE)) {
       var expCase = this._parseExpansionCase();
-      if (isBlank(expCase)) return;
+      if (expCase == null) return;
       cases.add(expCase);
     }
     // read the final }
@@ -148,7 +148,7 @@ class TreeBuilder {
     // read until }
     var start = this._advance();
     var exp = this._collectExpansionExpTokens(start);
-    if (isBlank(exp)) return null;
+    if (exp == null) return null;
     var end = this._advance();
     exp.add(new HtmlToken(HtmlTokenType.EOF, [], end.sourceSpan));
     // parse everything in between { and }
@@ -341,9 +341,9 @@ class TreeBuilder {
 
 String getElementFullName(
     String prefix, String localName, HtmlElementAst parentElement) {
-  if (isBlank(prefix)) {
+  if (prefix == null) {
     prefix = getHtmlTagDefinition(localName).implicitNamespacePrefix;
-    if (isBlank(prefix) && isPresent(parentElement)) {
+    if (prefix == null && isPresent(parentElement)) {
       prefix = getNsPrefix(parentElement.name);
     }
   }

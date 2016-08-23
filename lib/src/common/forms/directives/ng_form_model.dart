@@ -2,7 +2,6 @@ import "package:angular2/core.dart"
     show SimpleChange, OnChanges, Directive, Provider, Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 import "../model.dart" show Control, ControlGroup;
 import "../validators.dart" show Validators, NG_VALIDATORS, NG_ASYNC_VALIDATORS;
@@ -179,7 +178,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   _checkFormPresent() {
-    if (isBlank(this.form)) {
+    if (form == null) {
       throw new BaseException(
           '''ngFormModel expects a form. Please pass one in. Example: <form [ngFormModel]="myCoolForm">''');
     }

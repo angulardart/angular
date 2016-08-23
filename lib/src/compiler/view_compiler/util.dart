@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart"
     show
@@ -103,7 +103,7 @@ createPureProxy(o.Expression fn, num argCount, o.ReadPropExpr pureProxyProp,
   var pureProxyId = argCount < Identifiers.pureProxies.length
       ? Identifiers.pureProxies[argCount]
       : null;
-  if (isBlank(pureProxyId)) {
+  if (pureProxyId == null) {
     throw new BaseException(
         '''Unsupported number of argument for pure functions: ${ argCount}''');
   }

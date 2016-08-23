@@ -1,7 +1,7 @@
 import "dart:async";
 
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../instruction.dart" show ComponentInstruction;
 import "../route_config/route_config_impl.dart"
@@ -137,10 +137,7 @@ class RuleSet {
   ComponentInstruction generateAuxiliary(
       String name, Map<String, dynamic> params) {
     RouteRule rule = this.auxRulesByName[name];
-    if (isBlank(rule)) {
-      return null;
-    }
-    return rule.generate(params);
+    return rule?.generate(params);
   }
 
   _assertNoHashCollision(String hash, path) {

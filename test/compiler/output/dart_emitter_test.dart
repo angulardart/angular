@@ -1,6 +1,5 @@
 library angular2.test.compiler.output.dart_emitter_test;
 
-import "package:angular2/src/facade/lang.dart" show isBlank;
 import "package:angular2/src/compiler/output/dart_emitter.dart"
     show DartEmitter;
 import "package:angular2/src/compiler/compile_metadata.dart"
@@ -30,9 +29,7 @@ main() {
       someVar = o.variable("someVar");
     });
     String emitStmt(o.Statement stmt, [List<String> exportedVars = null]) {
-      if (isBlank(exportedVars)) {
-        exportedVars = [];
-      }
+      exportedVars ??= [];
       return emitter.emitStatements(someModuleUrl, [stmt], exportedVars);
     }
     test("should declare variables", () {

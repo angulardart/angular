@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 // see http://www.w3.org/TR/html51/syntax.html#named-character-references
 // see https://html.spec.whatwg.org/multipage/entities.json
@@ -295,10 +295,10 @@ class HtmlTagDefinition {
     this.ignoreFirstLf = ignoreFirstLf == true;
   }
   bool requireExtraParent(String currentParent) {
-    if (isBlank(this.requiredParents)) {
+    if (this.requiredParents == null) {
       return false;
     }
-    if (isBlank(currentParent)) {
+    if (currentParent == null) {
       return true;
     }
     var lcParent = currentParent.toLowerCase();

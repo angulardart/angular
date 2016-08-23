@@ -1,6 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, looseIdentical;
+import "package:angular2/src/facade/lang.dart" show isPresent, looseIdentical;
 
 import "../model.dart" show Control, ControlGroup;
 import "../validators.dart" show Validators;
@@ -23,8 +22,8 @@ List<String> controlPath(String name, ControlContainer parent) {
 }
 
 void setUpControl(Control control, NgControl dir) {
-  if (isBlank(control)) _throwError(dir, "Cannot find control");
-  if (isBlank(dir.valueAccessor)) _throwError(dir, "No value accessor for");
+  if (control == null) _throwError(dir, "Cannot find control");
+  if (dir.valueAccessor == null) _throwError(dir, "No value accessor for");
   control.validator = Validators.compose([control.validator, dir.validator]);
   control.asyncValidator =
       Validators.composeAsync([control.asyncValidator, dir.asyncValidator]);
@@ -43,7 +42,7 @@ void setUpControl(Control control, NgControl dir) {
 }
 
 setUpControlGroup(ControlGroup control, NgControlGroup dir) {
-  if (isBlank(control)) _throwError(dir, "Cannot find control");
+  if (control == null) _throwError(dir, "Cannot find control");
   control.validator = Validators.compose([control.validator, dir.validator]);
   control.asyncValidator =
       Validators.composeAsync([control.asyncValidator, dir.asyncValidator]);
@@ -77,7 +76,7 @@ bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
 // TODO: vsavkin remove it once https://github.com/angular/angular/issues/3011 is implemented
 ControlValueAccessor selectValueAccessor(
     NgControl dir, List<ControlValueAccessor> valueAccessors) {
-  if (isBlank(valueAccessors)) return null;
+  if (valueAccessors == null) return null;
   ControlValueAccessor defaultAccessor;
   ControlValueAccessor builtinAccessor;
   ControlValueAccessor customAccessor;

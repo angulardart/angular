@@ -1,8 +1,7 @@
 @TestOn('browser')
 library angular2.test.core.di.reflective_injector_test;
 
-import "package:angular2/src/facade/lang.dart"
-    show isBlank, stringify, isPresent;
+import "package:angular2/src/facade/lang.dart" show stringify, isPresent;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart"
@@ -547,7 +546,7 @@ main() {
           [BrokenEngine]
         ]);
         providers.forEach((b) {
-          if (isBlank(b)) return;
+          if (b == null) return;
           expect(b is ResolvedReflectiveProvider_, isTrue);
         });
       });
@@ -1070,7 +1069,7 @@ main() {
           [BrokenEngine]
         ]);
         providers.forEach((b) {
-          if (isBlank(b)) return;
+          if (b == null) return;
           expect(b is ResolvedReflectiveProvider_, isTrue);
         });
       });

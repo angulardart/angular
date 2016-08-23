@@ -1,9 +1,9 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 List<String> convertUrlParamsToArray(Map<String, dynamic> urlParams) {
   var paramsArray = <String>[];
-  if (isBlank(urlParams)) {
+  if (urlParams == null) {
     return [];
   }
   urlParams.forEach((key, value) {
@@ -84,12 +84,8 @@ class RootUrl extends Url {
     return this.path + this._queryParamsToString();
   }
 
-  String _queryParamsToString() {
-    if (isBlank(this.params)) {
-      return "";
-    }
-    return "?" + serializeParams(this.params);
-  }
+  String _queryParamsToString() =>
+      params == null ? '' : '?${serializeParams(params)}';
 }
 
 Url pathSegmentsToUrl(List<String> pathSegments) {
@@ -208,7 +204,7 @@ class UrlParser {
 
   void parseParam(Map<String, dynamic> params) {
     var key = matchUrlSegment(this._remaining);
-    if (isBlank(key)) {
+    if (key == null) {
       return;
     }
     this.capture(key);
@@ -226,7 +222,7 @@ class UrlParser {
 
   void parseQueryParam(Map<String, dynamic> params) {
     var key = matchUrlSegment(this._remaining);
-    if (isBlank(key)) {
+    if (key == null) {
       return;
     }
     this.capture(key);

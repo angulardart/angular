@@ -1,6 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, isBlank, RegExpMatcherWrapper;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 const _EMPTY_ATTR_VALUE = "";
 final _SELECTOR_REGEXP = new RegExp("(\\:not\\()|" +
@@ -24,7 +23,7 @@ class CssSelector {
     List<CssSelector> results = [];
     var _addResult = (List<CssSelector> res, cssSel) {
       if (cssSel.notSelectors.length > 0 &&
-          isBlank(cssSel.element) &&
+          cssSel.element == null &&
           cssSel.classNames.isEmpty &&
           cssSel.attrs.isEmpty) {
         cssSel.element = "*";
@@ -212,7 +211,7 @@ class SelectorMatcher {
         if (isTerminal) {
           var terminalMap = matcher._attrValueMap;
           var terminalValuesMap = terminalMap[attrName];
-          if (isBlank(terminalValuesMap)) {
+          if (terminalValuesMap == null) {
             terminalValuesMap = new Map<String, List<SelectorContext>>();
             terminalMap[attrName] = terminalValuesMap;
           }
@@ -220,7 +219,7 @@ class SelectorMatcher {
         } else {
           var parttialMap = matcher._attrValuePartialMap;
           var partialValuesMap = parttialMap[attrName];
-          if (isBlank(partialValuesMap)) {
+          if (partialValuesMap == null) {
             partialValuesMap = new Map<String, SelectorMatcher>();
             parttialMap[attrName] = partialValuesMap;
           }
@@ -233,7 +232,7 @@ class SelectorMatcher {
   _addTerminal(Map<String, List<SelectorContext>> map, String name,
       SelectorContext selectable) {
     var terminalList = map[name];
-    if (isBlank(terminalList)) {
+    if (terminalList == null) {
       terminalList = [];
       map[name] = terminalList;
     }
@@ -242,7 +241,7 @@ class SelectorMatcher {
 
   SelectorMatcher _addPartial(Map<String, SelectorMatcher> map, String name) {
     var matcher = map[name];
-    if (isBlank(matcher)) {
+    if (matcher == null) {
       matcher = new SelectorMatcher();
       map[name] = matcher;
     }
@@ -312,7 +311,7 @@ class SelectorMatcher {
   /** @internal */
   bool _matchTerminal(Map<String, List<SelectorContext>> map, name,
       CssSelector cssSelector, void matchedCallback(CssSelector c, dynamic a)) {
-    if (isBlank(map) || isBlank(name)) {
+    if (map == null || name == null) {
       return false;
     }
     var selectables = map[name];
@@ -320,7 +319,7 @@ class SelectorMatcher {
     if (isPresent(starSelectables)) {
       selectables = (new List.from(selectables)..addAll(starSelectables));
     }
-    if (isBlank(selectables)) {
+    if (selectables == null) {
       return false;
     }
     var selectable;
@@ -372,13 +371,13 @@ class SelectorContext {
       CssSelector cssSelector, void callback(CssSelector c, dynamic a)) {
     var result = true;
     if (this.notSelectors.length > 0 &&
-        (isBlank(this.listContext) || !this.listContext.alreadyMatched)) {
+        (this.listContext == null || !this.listContext.alreadyMatched)) {
       var notMatcher = SelectorMatcher.createNotMatcher(this.notSelectors);
       result = !notMatcher.match(cssSelector, null);
     }
     if (result &&
         isPresent(callback) &&
-        (isBlank(this.listContext) || !this.listContext.alreadyMatched)) {
+        (this.listContext == null || !this.listContext.alreadyMatched)) {
       if (isPresent(this.listContext)) {
         this.listContext.alreadyMatched = true;
       }

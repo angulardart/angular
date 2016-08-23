@@ -17,7 +17,7 @@ import "package:angular2/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, ExceptionHandler;
 import "package:angular2/src/facade/lang.dart"
-    show isBlank, isPresent, assertionsEnabled;
+    show isPresent, assertionsEnabled;
 
 import "application_tokens.dart" show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import "profile/profile.dart" show wtfLeave, wtfCreateScope, WtfScopeFn;
@@ -59,11 +59,10 @@ PlatformRef_ createPlatform(Injector injector) {
  */
 PlatformRef assertPlatform(dynamic requiredToken) {
   var platform = getPlatform();
-  if (isBlank(platform)) {
-    throw new BaseException("Not platform exists!");
+  if (platform == null) {
+    throw new BaseException("No platform exists.");
   }
-  if (isPresent(platform) &&
-      isBlank(platform.injector.get(requiredToken, null))) {
+  if (platform != null && platform.injector.get(requiredToken, null) == null) {
     throw new BaseException(
         "A platform with a different configuration has been created. Please destroy it first.");
   }

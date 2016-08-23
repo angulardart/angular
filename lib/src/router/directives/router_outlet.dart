@@ -12,7 +12,7 @@ import "package:angular2/core.dart"
         Output,
         MapInjector;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 import "package:collection/collection.dart" show MapEquality;
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
 import "../interfaces.dart"
@@ -96,7 +96,7 @@ class RouterOutlet implements OnDestroy {
     // another dynamically loaded component, for instance). In that case, we simply activate
 
     // a new one.
-    if (isBlank(this._componentRef)) {
+    if (_componentRef == null) {
       return this.activate(nextInstruction);
     } else {
       return this._componentRef.then((ComponentRef ref) =>
@@ -139,7 +139,7 @@ class RouterOutlet implements OnDestroy {
    * and otherwise resolves to true.
    */
   Future<bool> routerCanDeactivate(ComponentInstruction nextInstruction) {
-    if (isBlank(this._currentInstruction)) {
+    if (_currentInstruction == null) {
       return new Future.value(true);
     }
     return this._componentRef.then((ComponentRef ref) =>
@@ -161,7 +161,7 @@ class RouterOutlet implements OnDestroy {
    */
   Future<bool> routerCanReuse(ComponentInstruction nextInstruction) {
     Future<bool> result;
-    if (isBlank(this._currentInstruction) ||
+    if (this._currentInstruction == null ||
         this._currentInstruction.componentType !=
             nextInstruction.componentType) {
       result = new Future.value(false);

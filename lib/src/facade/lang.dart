@@ -2,7 +2,6 @@ import 'dart:convert' as convert;
 export 'dart:core' show RegExp, print, DateTime, Uri;
 
 bool isPresent(Object obj) => obj != null;
-bool isBlank(Object obj) => obj == null;
 
 RegExp _fromFuncExp;
 

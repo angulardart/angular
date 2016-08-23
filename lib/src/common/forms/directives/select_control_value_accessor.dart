@@ -9,7 +9,7 @@ import "package:angular2/core.dart"
         OnDestroy,
         Optional;
 import "package:angular2/src/facade/lang.dart"
-    show isPrimitive, isPresent, isBlank, looseIdentical;
+    show isPrimitive, isPresent, looseIdentical;
 
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -17,7 +17,7 @@ import "control_value_accessor.dart"
 const SELECT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: SelectControlValueAccessor, multi: true);
 String _buildValueString(String id, dynamic value) {
-  if (isBlank(id)) return '''${ value}''';
+  if (id == null) return '${value}';
   if (!isPrimitive(value)) value = "Object";
   var s = '${id}: ${value}';
   // TODO: Fix this magic maximum 50 characters (from TS-transpile).

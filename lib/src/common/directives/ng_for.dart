@@ -9,7 +9,7 @@ import "package:angular2/core.dart"
         TemplateRef,
         EmbeddedViewRef,
         TrackByFn;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../../core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, CollectionChangeRecord;
@@ -84,7 +84,7 @@ class NgFor implements DoCheck {
       this._cdr) {}
   set ngForOf(dynamic value) {
     this._ngForOf = value;
-    if (isBlank(this._differ) && isPresent(value)) {
+    if (_differ == null && value != null) {
       try {
         this._differ = this
             ._iterableDiffers

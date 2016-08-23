@@ -3,7 +3,7 @@ import "package:angular2/src/compiler/html_ast.dart"
 import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
 import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseError;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "message.dart" show Message, id;
 
@@ -68,7 +68,7 @@ void _createMessages(List<HtmlAst> nodes, Map<String, List<HtmlAst>> messages,
         return;
       }
       var id = _id(msg);
-      if (isBlank(id)) {
+      if (id == null) {
         errors.add(new XmbDeserializationError(
             item.sourceSpan, '''"${ _ID_ATTR}" attribute is missing'''));
         return;

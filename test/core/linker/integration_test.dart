@@ -6,8 +6,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/browser/browser_adapter.dart"
     show BrowserDomAdapter;
-import "package:angular2/src/facade/lang.dart"
-    show isPresent, stringify, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent, stringify;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/core.dart"
@@ -1742,7 +1741,7 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property ("<div [ERROR
                 fixture.detectChanges();
                 var el = DOM.querySelector(
                     fixture.debugElement.nativeElement, "span");
-                expect(isBlank(el.title) || el.title == "", isTrue);
+                expect(el.title == null || el.title == "", isTrue);
                 completer.done();
               });
             });

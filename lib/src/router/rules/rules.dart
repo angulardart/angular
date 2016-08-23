@@ -1,7 +1,7 @@
 import "dart:async";
 
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../instruction.dart" show ComponentInstruction;
 import "../url_parser.dart" show Url, convertUrlParamsToArray;
@@ -96,7 +96,7 @@ class RouteRule implements AbstractRule {
 
   Future<RouteMatch> recognize(Url beginningSegment) {
     var res = this._routePath.matchUrl(beginningSegment);
-    if (isBlank(res)) {
+    if (res == null) {
       return null;
     }
     return this.handler.resolveComponentType().then((_) {
@@ -120,7 +120,7 @@ class RouteRule implements AbstractRule {
 
   ComponentInstruction _getInstruction(
       String urlPath, List<String> urlParams, Map<String, String> params) {
-    if (isBlank(this.handler.componentType)) {
+    if (handler.componentType == null) {
       throw new BaseException(
           '''Tried to get instruction before the type was loaded.''');
     }

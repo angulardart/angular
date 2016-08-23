@@ -1,7 +1,7 @@
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 
@@ -60,11 +60,9 @@ class KeyValueDiffers {
    */
   static Provider extend(List<KeyValueDifferFactory> factories) {
     return new Provider(KeyValueDiffers, useFactory: (KeyValueDiffers parent) {
-      if (isBlank(parent)) {
+      if (parent == null) {
         // Typically would occur when calling KeyValueDiffers.extend inside of dependencies passed
-
         // to
-
         // bootstrap(), which would override default pipes instead of extending them.
         throw new BaseException(
             "Cannot extend KeyValueDiffers without a parent injector");

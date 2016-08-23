@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../../url_parser.dart" show Url, RootUrl, convertUrlParamsToArray;
 import "../../utils.dart" show TouchMap, normalizeString;
@@ -295,7 +295,7 @@ final RegExp REGEXP_OPEN_PARENT = new RegExp(r'\(');
 final RegExp REGEXP_CLOSE_PARENT = new RegExp(r'\)');
 final RegExp REGEXP_SEMICOLON = new RegExp(r';');
 String encodeDynamicSegment(String value) {
-  if (isBlank(value)) {
+  if (value == null) {
     return null;
   }
   value = value.replaceAll(REGEXP_PERCENT, "%25");
@@ -312,7 +312,7 @@ var REGEXP_ENC_OPEN_PARENT = new RegExp(r'%28', caseSensitive: false);
 var REGEXP_ENC_SLASH = new RegExp(r'%2F', caseSensitive: false);
 var REGEXP_ENC_PERCENT = new RegExp(r'%25', caseSensitive: false);
 String decodeDynamicSegment(String value) {
-  if (isBlank(value)) {
+  if (value == null) {
     return null;
   }
   value = value.replaceAll(REGEXP_ENC_SEMICOLON, ";");

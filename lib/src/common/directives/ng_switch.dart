@@ -1,6 +1,6 @@
 import "package:angular2/core.dart"
     show Directive, Host, ViewContainerRef, TemplateRef;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 const _WHEN_DEFAULT = const Object();
 
@@ -86,7 +86,7 @@ class NgSwitch {
     // Add the ViewContainers matching the value (with a fallback to default)
     this._useDefault = false;
     var views = this._valueViews[value];
-    if (isBlank(views)) {
+    if (views == null) {
       this._useDefault = true;
       views = this._valueViews[_WHEN_DEFAULT];
     }
@@ -135,7 +135,7 @@ class NgSwitch {
 
   void _registerView(dynamic value, SwitchView view) {
     var views = this._valueViews[value];
-    if (isBlank(views)) {
+    if (views == null) {
       views = [];
       this._valueViews[value] = views;
     }

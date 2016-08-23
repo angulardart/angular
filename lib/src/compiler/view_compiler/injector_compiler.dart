@@ -1,5 +1,5 @@
 import "package:angular2/core.dart" show Injectable;
-import "package:angular2/src/facade/lang.dart" show isPresent, isBlank;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../compile_metadata.dart"
     show
@@ -178,9 +178,7 @@ class _InjectorBuilder {
       resolvedProviderValueExpr = providerValueExpressions[0];
       type = providerValueExpressions[0].type;
     }
-    if (isBlank(type)) {
-      type = o.DYNAMIC_TYPE;
-    }
+    type ??= o.DYNAMIC_TYPE;
     if (isEager) {
       this._fields.add(new o.ClassField(propName, type));
       this._ctorStmts.add(
@@ -209,16 +207,14 @@ class _InjectorBuilder {
       result = o.literal(dep.value);
     }
     if (!dep.isSkipSelf) {
-      if (isBlank(result)) {
-        result = this._instances.get(dep.token);
-      }
-      if (isBlank(result) &&
+      result ??= this._instances.get(dep.token);
+      if (result == null &&
           dep.token.equalsTo(identifierToken(this._mainModuleType))) {
         this._needsMainModule = true;
         result = mainModuleProp;
       }
     }
-    if (isBlank(result)) {
+    if (result == null) {
       var args = [createDiTokenExpression(dep.token)];
       if (dep.isOptional) {
         args.add(o.NULL_EXPR);

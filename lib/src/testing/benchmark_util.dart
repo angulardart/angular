@@ -1,6 +1,5 @@
 import "package:angular2/src/facade/browser.dart" show document, window;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 import "package:angular2/src/platform/browser/browser_adapter.dart"
     show BrowserDomAdapter;
 
@@ -21,7 +20,7 @@ getStringParameter(String name) {
       break;
     }
   }
-  if (isBlank(value)) {
+  if (value == null) {
     throw new BaseException(
         '''Could not find and input field with name ${ name}''');
   }

@@ -2,7 +2,6 @@ import "dart:async";
 
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank;
 
 /**
  * A mock implementation of [XHR] that allows outgoing requests to be mocked
@@ -95,7 +94,7 @@ class _PendingRequest {
     this.completer = new Completer<String>();
   }
   complete(String response) {
-    if (isBlank(response)) {
+    if (response == null) {
       this.completer.completeError('''Failed to load ${ this . url}''');
     } else {
       this.completer.complete(response);

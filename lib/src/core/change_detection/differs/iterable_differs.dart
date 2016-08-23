@@ -1,7 +1,7 @@
 import "package:angular2/src/core/di.dart"
     show Provider, SkipSelfMetadata, OptionalMetadata;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show isBlank, isPresent;
+import "package:angular2/src/facade/lang.dart" show isPresent;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 
@@ -66,11 +66,9 @@ class IterableDiffers {
    */
   static Provider extend(List<IterableDifferFactory> factories) {
     return new Provider(IterableDiffers, useFactory: (IterableDiffers parent) {
-      if (isBlank(parent)) {
+      if (parent == null) {
         // Typically would occur when calling IterableDiffers.extend inside of dependencies passed
-
         // to
-
         // bootstrap(), which would override default pipes instead of extending them.
         throw new BaseException(
             "Cannot extend IterableDiffers without a parent injector");
