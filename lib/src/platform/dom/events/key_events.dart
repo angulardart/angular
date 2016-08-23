@@ -40,8 +40,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
     List<String> parts = eventName.toLowerCase().split(".");
     var domEventName = parts.removeAt(0);
     if ((identical(parts.length, 0)) ||
-        domEventName == "keydown" ||
-        domEventName == "keyup") {
+        !(domEventName == "keydown" || domEventName == "keyup")) {
       return null;
     }
     var key = KeyEventsPlugin._normalizeKey(parts.removeLast());
