@@ -8,9 +8,7 @@ import "package:angular2/core.dart"
         Directive,
         Injectable,
         TemplateRef,
-        Query,
         QueryList,
-        ViewQuery,
         ContentChildren,
         ViewChildren,
         ContentChild,
@@ -923,7 +921,7 @@ class InertDirective {
 @Injectable()
 class NeedsQuery {
   QueryList<TextDirective> query;
-  NeedsQuery(@Query(TextDirective) QueryList<TextDirective> query) {
+  NeedsQuery(@ContentChildren(TextDirective) QueryList<TextDirective> query) {
     this.query = query;
   }
 }
@@ -948,7 +946,8 @@ class NeedsFourQueries {
 class NeedsQueryDesc {
   QueryList<TextDirective> query;
   NeedsQueryDesc(
-      @Query(TextDirective, descendants: true) QueryList<TextDirective> query) {
+      @ContentChildren(TextDirective, descendants: true)
+          QueryList<TextDirective> query) {
     this.query = query;
   }
 }
@@ -961,7 +960,8 @@ class NeedsQueryDesc {
 class NeedsQueryByLabel {
   QueryList<dynamic> query;
   NeedsQueryByLabel(
-      @Query("textLabel", descendants: true) QueryList<dynamic> query) {
+      @ContentChildren("textLabel", descendants: true)
+          QueryList<dynamic> query) {
     this.query = query;
   }
 }
@@ -973,7 +973,7 @@ class NeedsQueryByLabel {
 @Injectable()
 class NeedsViewQueryByLabel {
   QueryList<dynamic> query;
-  NeedsViewQueryByLabel(@ViewQuery("textLabel") QueryList<dynamic> query) {
+  NeedsViewQueryByLabel(@ViewChildren("textLabel") QueryList<dynamic> query) {
     this.query = query;
   }
 }
@@ -986,7 +986,7 @@ class NeedsViewQueryByLabel {
 class NeedsQueryByTwoLabels {
   QueryList<dynamic> query;
   NeedsQueryByTwoLabels(
-      @Query("textLabel1,textLabel2", descendants: true)
+      @ContentChildren("textLabel1,textLabel2", descendants: true)
           QueryList<dynamic> query) {
     this.query = query;
   }
@@ -1000,7 +1000,8 @@ class NeedsQueryByTwoLabels {
 @Injectable()
 class NeedsQueryAndProject {
   QueryList<TextDirective> query;
-  NeedsQueryAndProject(@Query(TextDirective) QueryList<TextDirective> query) {
+  NeedsQueryAndProject(
+      @ContentChildren(TextDirective) QueryList<TextDirective> query) {
     this.query = query;
   }
 }
@@ -1013,7 +1014,7 @@ class NeedsQueryAndProject {
 @Injectable()
 class NeedsViewQuery {
   QueryList<TextDirective> query;
-  NeedsViewQuery(@ViewQuery(TextDirective) QueryList<TextDirective> query) {
+  NeedsViewQuery(@ViewChildren(TextDirective) QueryList<TextDirective> query) {
     this.query = query;
   }
 }
@@ -1026,7 +1027,8 @@ class NeedsViewQuery {
 class NeedsViewQueryIf {
   bool show;
   QueryList<TextDirective> query;
-  NeedsViewQueryIf(@ViewQuery(TextDirective) QueryList<TextDirective> query) {
+  NeedsViewQueryIf(
+      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
     this.query = query;
     this.show = false;
   }
@@ -1041,7 +1043,7 @@ class NeedsViewQueryNestedIf {
   bool show;
   QueryList<TextDirective> query;
   NeedsViewQueryNestedIf(
-      @ViewQuery(TextDirective) QueryList<TextDirective> query) {
+      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
     this.query = query;
     this.show = true;
   }
@@ -1058,7 +1060,7 @@ class NeedsViewQueryOrder {
   QueryList<TextDirective> query;
   List<String> list;
   NeedsViewQueryOrder(
-      @ViewQuery(TextDirective) QueryList<TextDirective> query) {
+      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
     this.query = query;
     this.list = ["2", "3"];
   }
@@ -1075,7 +1077,7 @@ class NeedsViewQueryOrderWithParent {
   QueryList<TextDirective> query;
   List<String> list;
   NeedsViewQueryOrderWithParent(
-      @ViewQuery(TextDirective) QueryList<TextDirective> query) {
+      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
     this.query = query;
     this.list = ["2", "3"];
   }
@@ -1087,8 +1089,8 @@ class NeedsTpl {
   ViewContainerRef vc;
   QueryList<TemplateRef> viewQuery;
   QueryList<TemplateRef> query;
-  NeedsTpl(@ViewQuery(TemplateRef) QueryList<TemplateRef> viewQuery,
-      @Query(TemplateRef) QueryList<TemplateRef> query, this.vc) {
+  NeedsTpl(@ViewChildren(TemplateRef) QueryList<TemplateRef> viewQuery,
+      @ContentChildren(TemplateRef) QueryList<TemplateRef> query, this.vc) {
     this.viewQuery = viewQuery;
     this.query = query;
   }

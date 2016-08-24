@@ -33,7 +33,7 @@ import "package:angular2/src/core/metadata.dart"
         Component,
         ViewMetadata,
         Attribute,
-        Query,
+        ContentChildren,
         Pipe,
         Input,
         Output,
@@ -1408,7 +1408,10 @@ main() {
           return inject([TestComponentBuilder, AsyncTestCompleter],
               (TestComponentBuilder tcb, AsyncTestCompleter completer) {
             tcb
-                .overrideView(MyComp, new ViewMetadata(template: '''
+                .overrideView(
+                    MyComp,
+                    new ViewMetadata(
+                        template: '''
             <script>alert("Ooops");</script>
             <div>before<script>alert("Ooops");</script><span>inside</span>after</div>'''))
                 .createAsync(MyComp)
@@ -1829,6 +1832,7 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property ("<div [ERROR
               done();
             });
           }
+
 // TODO: future errors to surface.
           test(
               'should raise an error if no directive is registered for '
@@ -2365,9 +2369,9 @@ class DirectiveListeningEvent {
   }
 }
 
-@Directive(
-    selector: "[listener]",
-    host: const {"(domEvent)": "onEvent(\$event.type)",})
+@Directive(selector: "[listener]", host: const {
+  "(domEvent)": "onEvent(\$event.type)",
+})
 @Injectable()
 class DirectiveListeningDomEvent {
   List<String> eventTypes = [];
@@ -2473,7 +2477,7 @@ class ToolbarViewContainer {
 class ToolbarComponent {
   QueryList<ToolbarPart> query;
   String ctxProp;
-  ToolbarComponent(@Query(ToolbarPart) QueryList<ToolbarPart> query) {
+  ToolbarComponent(@ContentChildren(ToolbarPart) QueryList<ToolbarPart> query) {
     this.ctxProp = "hello world";
     this.query = query;
   }
