@@ -323,16 +323,12 @@ class Router {
       next = this._outlet.routerCanDeactivate(componentInstruction);
     }
     // TODO: aux route lifecycle hooks
-    return next.then(/* dynamic /* bool | Future< bool > */ */ (result) {
+    return next.then(/* dynamic /* bool | Future< bool > */ */ (result) async {
       if (result == false) {
         return false;
       }
       if (_childRouter != null) {
-        // TODO: ideally, this closure would map to async-await in Dart.
-
-        // For now, casting to any to suppress an error.
-        return (this._childRouter._routerCanDeactivate(childInstruction)
-            as dynamic);
+        return await this._childRouter._routerCanDeactivate(childInstruction);
       }
       return true;
     });
