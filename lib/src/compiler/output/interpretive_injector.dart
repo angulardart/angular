@@ -2,7 +2,7 @@ import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-import "output_interpreter.dart" show InstanceFactory, DynamicInstance;
+import "dynamic_instance.dart";
 
 class InterpretiveInjectorInstanceFactory implements InstanceFactory {
   DynamicInstance createInstance(

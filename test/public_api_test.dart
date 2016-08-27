@@ -293,6 +293,7 @@ var NG_PLATFORM_BROWSER = [
   'browserPlatform',
   'disableDebugTools',
   'enableDebugTools',
+  'RUNTIME_COMPILER_PROVIDERS'
 ];
 var NG_PLATFORM_BROWSER_TESTING = [
   'inspectNativeElement',

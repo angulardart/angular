@@ -1,7 +1,7 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 
-import "view.dart" show DebugAppView;
+import "app_view.dart" show DebugAppView;
 import "view_type.dart" show ViewType;
 
 class StaticNodeDebugInfo {

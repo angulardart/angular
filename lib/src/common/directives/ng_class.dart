@@ -12,69 +12,69 @@ import "package:angular2/core.dart"
         CollectionChangeRecord,
         KeyValueChangeRecord;
 
-/// The `NgClass` directive conditionally adds and removes CSS classes on an
+/// The [NgClass] directive conditionally adds and removes CSS classes on an
 /// HTML element based on an expression's evaluation result.
 ///
 /// The result of an expression evaluation is interpreted differently depending
 /// on type of the expression evaluation result:
-/// - `String` - all the CSS classes listed in a string (space delimited) are
-/// added
-/// - `List` - all the CSS classes (List elements) are added
-/// - `Map` - each key corresponds to a CSS class name while values are
-/// interpreted as expressions evaluating to `Boolean`. If a given expression
-/// evaluates to `true` a corresponding CSS class is added - otherwise it is
+/// - [String] - all the CSS classes listed in a string (space delimited) are
+///              added
+/// - [List]   - all the CSS classes (Array elements) are added
+/// - [Object] - each key corresponds to a CSS class name while values are
+/// interpreted as expressions evaluating to [bool]. If a given expression
+/// evaluates to [true] a corresponding CSS class is added - otherwise it is
 /// removed.
 ///
-/// While the `NgClass` directive can interpret expressions evaluating to
-/// `String`, `List` or `Map`, the `Map`-based version is the most often used
-/// and has an advantage of keeping all the CSS class names in a template.
+/// While the [NgClass] directive can interpret expressions evaluating to
+/// [String], [Array] or [Object], the [Object]-based version is the most often
+/// used and has an advantage of keeping all the CSS class names in a template.
 ///
-/// ### Example:
+///     import 'package:angular2/angular2.dart';
 ///
-/// ```dart
-/// import 'angular2/core.dart' show Component;
-/// import 'angular2/common.dart' show NgClass;
+///     @Component(
+///       selector: 'toggle-button',
+///       inputs: ['isDisabled'],
+///       template: '''
+///          <div class="button"
+///              [ngClass]="{active: isOn, disabled: isDisabled}"
+///              (click)="toggle(!isOn)">
+///              Click me!
+///          </div>''',
+///       styles: ['''
+///         .button {
+///           width: 120px;
+///           border: medium solid black;
+///         }
 ///
-/// @Component(
-///   selector: 'toggle-button',
-///   inputs: const ['isDisabled'],
-///   template: '''
-///      <div class="button" [ngClass]="{active: isOn, disabled: isDisabled}"
-///          (click)="toggle(!isOn)">
-///          Click me!
-///      </div>''',
-///   styles: const ['''
-///     .button {
-///       width: 120px;
-///       border: medium solid black;
+///         .active {
+///           background-color: red;
+///        }
+///
+///         .disabled {
+///           color: gray;
+///           border: medium solid gray;
+///         }
+///       ''']
+///       directives: [NgClass]
+///     })
+///     class ToggleButton {
+///       bool isOn = false;
+///       bool isDisabled = false;
+///
+///       toggle(newState) {
+///         if (!isDisabled) {
+///           isOn = newState;
+///         }
+///       }
 ///     }
 ///
-///     .active {
-///       background-color: red;
-///    }
-///
-///     .disabled {
-///       color: gray;
-///       border: medium solid gray;
-///     }
-///   ''']
-///   directives: const [NgClass]
-/// )
-/// class ToggleButton {
-///   bool isOn = false;
-///   bool isDisabled = false;
-///
-///   void toggle(bool newState) {
-///     if (!isDisabled) {
-///       isOn = newState;
-///     }
-///   }
-/// }
-/// ```
 @Directive(
     selector: "[ngClass]",
     inputs: const ["rawClass: ngClass", "initialClasses: class"])
 class NgClass implements DoCheck, OnDestroy {
+  // Separator used to split string to parts - can be any number of
+  // whitespaces, new lines or tabs.
+  static RegExp _separator;
   IterableDiffers _iterableDiffers;
   KeyValueDiffers _keyValueDiffers;
   ElementRef _ngEl;
@@ -83,8 +83,9 @@ class NgClass implements DoCheck, OnDestroy {
   KeyValueDiffer _keyValueDiffer;
   List<String> _initialClasses = [];
   dynamic /* List < String > | Set< String > */ _rawClass;
-  NgClass(this._iterableDiffers, this._keyValueDiffers, this._ngEl,
-      this._renderer) {}
+  NgClass(
+      this._iterableDiffers, this._keyValueDiffers, this._ngEl, this._renderer);
+
   set initialClasses(String v) {
     this._applyInitialClasses(true);
     this._initialClasses = v is String ? v.split(" ") : [];
@@ -96,72 +97,70 @@ class NgClass implements DoCheck, OnDestroy {
       dynamic /* String | List < String > | Set< String > | Map < String , dynamic > */ v) {
     this._cleanupClasses(this._rawClass);
     if (v is String) {
-      v = ((v as String)).split(" ");
+      v = v.split(' ');
     }
     this._rawClass = (v as dynamic /* List < String > | Set< String > */);
     this._iterableDiffer = null;
     this._keyValueDiffer = null;
     if (v != null) {
       if (v is Iterable) {
-        this._iterableDiffer = this._iterableDiffers.find(v).create(null);
+        _iterableDiffer = _iterableDiffers.find(v).create(null);
       } else {
-        this._keyValueDiffer = this._keyValueDiffers.find(v).create(null);
+        _keyValueDiffer = _keyValueDiffers.find(v).create(null);
       }
     }
   }
 
   void ngDoCheck() {
-    if (this._iterableDiffer != null) {
-      var changes = this._iterableDiffer.diff(this._rawClass);
+    if (_iterableDiffer != null) {
+      var changes = _iterableDiffer.diff(_rawClass);
       if (changes != null) {
-        this._applyIterableChanges(changes);
+        _applyIterableChanges(changes);
       }
     }
-    if (this._keyValueDiffer != null) {
-      var changes = this._keyValueDiffer.diff(this._rawClass);
+    if (_keyValueDiffer != null) {
+      var changes = _keyValueDiffer.diff(_rawClass);
       if (changes != null) {
-        this._applyKeyValueChanges(changes);
+        _applyKeyValueChanges(changes);
       }
     }
   }
 
   void ngOnDestroy() {
-    this._cleanupClasses(this._rawClass);
+    _cleanupClasses(_rawClass);
   }
 
   void _cleanupClasses(
       dynamic /* List < String > | Set< String > | Map < String , dynamic > */ rawClassVal) {
-    this._applyClasses(rawClassVal, true);
-    this._applyInitialClasses(false);
+    _applyClasses(rawClassVal, true);
+    _applyInitialClasses(false);
   }
 
   void _applyKeyValueChanges(dynamic changes) {
     changes.forEachAddedItem((KeyValueChangeRecord record) {
-      this._toggleClass(record.key, record.currentValue);
+      _toggleClass(record.key, record.currentValue);
     });
     changes.forEachChangedItem((KeyValueChangeRecord record) {
-      this._toggleClass(record.key, record.currentValue);
+      _toggleClass(record.key, record.currentValue);
     });
     changes.forEachRemovedItem((KeyValueChangeRecord record) {
       if (record.previousValue) {
-        this._toggleClass(record.key, false);
+        _toggleClass(record.key, false);
       }
     });
   }
 
   void _applyIterableChanges(dynamic changes) {
     changes.forEachAddedItem((CollectionChangeRecord record) {
-      this._toggleClass(record.item, true);
+      _toggleClass(record.item, true);
     });
     changes.forEachRemovedItem((CollectionChangeRecord record) {
-      this._toggleClass(record.item, false);
+      _toggleClass(record.item, false);
     });
   }
 
   _applyInitialClasses(bool isCleanup) {
-    this
-        ._initialClasses
-        .forEach((className) => this._toggleClass(className, !isCleanup));
+    _initialClasses.forEach((className) => _toggleClass(className, !isCleanup));
   }
 
   _applyClasses(
@@ -170,11 +169,11 @@ class NgClass implements DoCheck, OnDestroy {
     if (rawClassVal != null) {
       if (rawClassVal is Iterable) {
         ((rawClassVal as Iterable<String>))
-            .forEach((className) => this._toggleClass(className, !isCleanup));
+            .forEach((className) => _toggleClass(className, !isCleanup));
       } else {
         (rawClassVal as Map<String, dynamic>).forEach((className, expVal) {
           if (expVal != null) {
-            this._toggleClass(className, !isCleanup);
+            _toggleClass(className, !isCleanup);
           }
         });
       }
@@ -185,16 +184,13 @@ class NgClass implements DoCheck, OnDestroy {
     className = className.trim();
     if (className.length > 0) {
       if (className.indexOf(" ") > -1) {
-        var classes = className.split(new RegExp(r'\s+'));
+        _separator ??= new RegExp(r'\s+');
+        var classes = className.split(_separator);
         for (var i = 0, len = classes.length; i < len; i++) {
-          this
-              ._renderer
-              .setElementClass(this._ngEl.nativeElement, classes[i], enabled);
+          _renderer.setElementClass(_ngEl.nativeElement, classes[i], enabled);
         }
       } else {
-        this
-            ._renderer
-            .setElementClass(this._ngEl.nativeElement, className, enabled);
+        _renderer.setElementClass(_ngEl.nativeElement, className, enabled);
       }
     }
   }

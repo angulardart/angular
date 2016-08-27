@@ -1,4 +1,4 @@
-import "package:angular2/core.dart"
+import "package:angular2/di.dart"
     show Injectable, Inject, OpaqueToken, Optional;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
@@ -143,23 +143,33 @@ class TemplateParser {
     List<ParseError> errors = htmlAstWithErrors.errors;
     List<TemplateAst> result;
     if (htmlAstWithErrors.rootNodes.length > 0) {
-      var uniqDirectives = removeDuplicates(directives);
+      List<CompileDirectiveMetadata> uniqDirectives;
+      try {
+        uniqDirectives = removeDuplicates(directives);
+      } catch (_) {
+        // Continue since we are trying to report errors.
+        uniqDirectives = directives;
+      }
       var uniqPipes = removeDuplicates(pipes);
       var providerViewContext = new ProviderViewContext(
           component, htmlAstWithErrors.rootNodes[0].sourceSpan);
-      var parseVisitor = new TemplateParseVisitor(
-          providerViewContext,
-          uniqDirectives,
-          uniqPipes,
-          this._exprParser,
-          this._schemaRegistry,
-          component.template?.preserveWhitespace ?? false);
-      result = htmlVisitAll(
-              parseVisitor, htmlAstWithErrors.rootNodes, EMPTY_ELEMENT_CONTEXT)
-          as List<TemplateAst>;
-      errors =
-          (new List.from((new List.from(errors)..addAll(parseVisitor.errors)))
-            ..addAll(providerViewContext.errors));
+      try {
+        var parseVisitor = new TemplateParseVisitor(
+            providerViewContext,
+            uniqDirectives,
+            uniqPipes,
+            this._exprParser,
+            this._schemaRegistry,
+            component.template?.preserveWhitespace ?? false);
+        result = htmlVisitAll(parseVisitor, htmlAstWithErrors.rootNodes,
+            EMPTY_ELEMENT_CONTEXT) as List<TemplateAst>;
+        errors =
+            (new List.from((new List.from(errors)..addAll(parseVisitor.errors)))
+              ..addAll(providerViewContext.errors));
+      } catch (_) {
+        errors = new List.from(errors)..addAll(providerViewContext.errors);
+        result = <TemplateAst>[];
+      }
     } else {
       result = <TemplateAst>[];
     }

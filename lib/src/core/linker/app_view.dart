@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import "package:angular2/src/core/di.dart" show Injector;
@@ -15,12 +17,7 @@ import "exceptions.dart"
         ViewWrappedException;
 import "view_ref.dart" show ViewRef_;
 import "view_type.dart" show ViewType;
-import "view_utils.dart"
-    show
-        ViewUtils,
-        flattenNestedViewRenderNodes,
-        ensureSlotCount,
-        OnDestroyCallback;
+import "view_utils.dart" show ViewUtils, ensureSlotCount, OnDestroyCallback;
 
 const EMPTY_CONTEXT = const Object();
 WtfScopeFn _scope_check = wtfCreateScope('''AppView#check(ascii id)''');
@@ -46,7 +43,7 @@ abstract class AppView<T> {
   List<AppView<dynamic>> contentChildren = [];
   List<AppView<dynamic>> viewChildren = [];
   AppView<dynamic> renderParent;
-  AppElement viewContainerElement = null;
+  AppElement viewContainerElement;
   // The names of the below fields must be kept in sync with codegen_name_util.ts or
 
   // change detection will fail.
@@ -425,3 +422,31 @@ dynamic _findLastRenderNode(dynamic node) {
   }
   return lastNode;
 }
+
+List flattenNestedViewRenderNodes(List nodes) {
+  return _flattenNestedViewRenderNodes(nodes, []);
+}
+
+List _flattenNestedViewRenderNodes(List nodes, List renderNodes) {
+  int nodeCount = nodes.length;
+  for (var i = 0; i < nodeCount; i++) {
+    var node = nodes[i];
+    if (node is AppElement) {
+      AppElement appEl = node;
+      renderNodes.add(appEl.nativeElement);
+      if (appEl.nestedViews != null) {
+        for (var k = 0; k < appEl.nestedViews.length; k++) {
+          _flattenNestedViewRenderNodes(
+              appEl.nestedViews[k].rootNodesOrAppElements, renderNodes);
+        }
+      }
+    } else {
+      renderNodes.add(node);
+    }
+  }
+  return renderNodes;
+}
+
+/// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
+/// This prevents unused import error in dart_analyzed_library build.
+Element _temporaryTodo = null;

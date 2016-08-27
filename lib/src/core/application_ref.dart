@@ -151,6 +151,7 @@ class PlatformRef_ extends PlatformRef {
           "Platforms have to be initialized via `createPlatform`!");
     }
     this._injector = injector;
+
     List<Function> inits =
         (injector.get(PLATFORM_INITIALIZER, null) as List<Function>);
     inits?.forEach((init) => init());

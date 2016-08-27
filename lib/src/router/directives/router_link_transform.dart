@@ -6,7 +6,7 @@ import "package:angular2/compiler.dart"
         BoundElementPropertyAst,
         DirectiveAst,
         TemplateAst;
-import "package:angular2/core.dart" show Injectable;
+import "package:angular2/di.dart" show Injectable;
 import "package:angular2/src/compiler/expression_parser/ast.dart"
     show AstTransformer, Quote, AST, LiteralArray, LiteralPrimitive;
 import "package:angular2/src/compiler/expression_parser/parser.dart"

@@ -1,4 +1,4 @@
-import "package:angular2/core.dart" show Injectable;
+import "package:angular2/di.dart" show Injectable;
 
 import "../compile_metadata.dart"
     show

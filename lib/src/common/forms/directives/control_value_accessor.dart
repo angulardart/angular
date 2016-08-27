@@ -1,4 +1,4 @@
-import "package:angular2/core.dart" show OpaqueToken;
+import "package:angular2/di.dart" show OpaqueToken;
 
 /// A bridge between a control and a native element.
 ///

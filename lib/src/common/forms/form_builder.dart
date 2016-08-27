@@ -1,4 +1,4 @@
-import "package:angular2/core.dart" show Injectable;
+import "package:angular2/di.dart" show Injectable;
 
 import "directives/validators.dart";
 import "model.dart" as modelModule;

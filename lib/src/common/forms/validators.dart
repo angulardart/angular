@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import "package:angular2/core.dart" show OpaqueToken;
+import "package:angular2/di.dart" show OpaqueToken;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 import "model.dart" as modelModule;

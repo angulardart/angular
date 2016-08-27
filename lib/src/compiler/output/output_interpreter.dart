@@ -1,11 +1,28 @@
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-
+import "package:angular2/src/compiler/identifiers.dart";
+import "package:angular2/src/core/reflection/reflection.dart" show reflector;
+import "package:angular2/src/core/linker/debug_context.dart"
+    show StaticNodeDebugInfo, DebugContext;
+import "package:angular2/src/core/linker.dart" show QueryList;
+import "package:angular2/src/core/linker/app_view.dart";
+import "package:angular2/src/core/linker/component_factory.dart";
+import "package:angular2/src/core/linker/element.dart";
+import "package:angular2/src/core/linker/template_ref.dart"
+    show TemplateRef, TemplateRef_;
+import "package:angular2/src/core/linker/view_container_ref.dart"
+    show ViewContainerRef;
 import "dart_emitter.dart" show debugOutputAstAsDart;
 import "output_ast.dart" as o;
+import "dynamic_instance.dart";
+
+bool _interpreterInitialized = false;
 
 dynamic interpretStatements(List<o.Statement> statements, String resultVar,
     InstanceFactory instanceFactory) {
+  if (!_interpreterInitialized) {
+    _initializeInterpreter();
+    _interpreterInitialized = true;
+  }
   List<o.Statement> stmtsWithReturn = (new List.from(statements)
     ..addAll([new o.ReturnStatement(o.variable(resultVar))]));
   var ctx = new _ExecutionContext(
@@ -21,30 +38,6 @@ dynamic interpretStatements(List<o.Statement> statements, String resultVar,
   var visitor = new StatementInterpreter();
   var result = visitor.visitAllStatements(stmtsWithReturn, ctx);
   return result?.value;
-}
-
-abstract class InstanceFactory {
-  DynamicInstance createInstance(
-      dynamic superClass,
-      dynamic clazz,
-      List<dynamic> constructorArgs,
-      Map<String, dynamic> props,
-      Map<String, Function> getters,
-      Map<String, Function> methods);
-}
-
-abstract class DynamicInstance {
-  Map<String, dynamic> get props;
-
-  Map<String, Function> get getters;
-
-  Map<String, dynamic> get methods;
-
-  dynamic get clazz;
-}
-
-dynamic isDynamicInstance(dynamic instance) {
-  return instance is DynamicInstance;
 }
 
 dynamic _executeFunctionStatements(
@@ -543,3 +536,25 @@ Function _declareFn(List<String> varNames, List<o.Statement> statements,
 
 var CATCH_ERROR_VAR = "error";
 var CATCH_STACK_VAR = "stack";
+
+/// Initialize external identifiers that need to be interpreted.
+///
+/// Since Identifiers is used by compiler, runtime classes for dart:html
+/// need to be initialized before interpreting code such as new Text();
+///
+/// These classes cannot be imported into ngcodegen itself so we are linking
+/// them dynamically.
+void _initializeInterpreter() {
+  Identifiers.DebugAppView.runtime = DebugAppView;
+  Identifiers.AppView.runtime = AppView;
+  Identifiers.AppElement.runtime = AppElement;
+  Identifiers.StaticNodeDebugInfo.runtime = StaticNodeDebugInfo;
+  Identifiers.DebugContext.runtime = DebugContext;
+  Identifiers.TemplateRef.runtime = TemplateRef;
+  Identifiers.TemplateRef_.runtime = TemplateRef_;
+  Identifiers.ViewContainerRef.runtime = ViewContainerRef;
+  Identifiers.flattenNestedViewRenderNodes.runtime =
+      flattenNestedViewRenderNodes;
+  Identifiers.ComponentFactory.runtime = ComponentFactory;
+  Identifiers.QueryList.runtime = QueryList;
+}

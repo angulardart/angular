@@ -62,8 +62,10 @@ PlatformRef browserStaticPlatform() {
 
 /// See [bootstrap] for more information.
 Future<ComponentRef> bootstrapStatic(Type appComponentType,
-    [List<dynamic> customProviders, Function initReflector]) {
-  if (initReflector != null) initReflector();
+    [List customProviders, Function initReflector]) {
+  if (initReflector != null) {
+    initReflector();
+  }
   var appProviders = customProviders != null
       ? [BROWSER_APP_PROVIDERS, customProviders]
       : BROWSER_APP_PROVIDERS;

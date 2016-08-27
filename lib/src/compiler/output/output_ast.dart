@@ -405,10 +405,10 @@ class FnParam {
 class FunctionExpr extends Expression {
   List<FnParam> params;
   List<Statement> statements;
+
   FunctionExpr(this.params, this.statements, [OutputType type = null])
-      : super(type) {
-    /* super call moved to initializer */;
-  }
+      : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitFunctionExpr(this, context);
   }
@@ -438,10 +438,10 @@ class BinaryOperatorExpr extends Expression {
 class ReadPropExpr extends Expression {
   Expression receiver;
   String name;
+
   ReadPropExpr(this.receiver, this.name, [OutputType type = null])
-      : super(type) {
-    /* super call moved to initializer */;
-  }
+      : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitReadPropExpr(this, context);
   }
@@ -454,10 +454,10 @@ class ReadPropExpr extends Expression {
 class ReadKeyExpr extends Expression {
   Expression receiver;
   Expression index;
+
   ReadKeyExpr(this.receiver, this.index, [OutputType type = null])
-      : super(type) {
-    /* super call moved to initializer */;
-  }
+      : super(type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitReadKeyExpr(this, context);
   }
@@ -469,9 +469,9 @@ class ReadKeyExpr extends Expression {
 
 class LiteralArrayExpr extends Expression {
   List<Expression> entries;
+
   LiteralArrayExpr(List<Expression> entries, [OutputType type = null])
       : super(type) {
-    /* super call moved to initializer */;
     this.entries = entries;
   }
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -600,9 +600,7 @@ class ClassField extends AbstractClassPart {
   String name;
   ClassField(this.name,
       [OutputType type = null, List<StmtModifier> modifiers = null])
-      : super(type, modifiers) {
-    /* super call moved to initializer */;
-  }
+      : super(type, modifiers);
 }
 
 class ClassMethod extends AbstractClassPart {

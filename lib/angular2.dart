@@ -1,10 +1,10 @@
+/// An all-in-one place to import Angular 2 stuff.
+///
+/// This library does not include `bootstrap`. Import `bootstrap.dart` instead.
 library angular2;
 
-/**
- * An all-in-one place to import Angular 2 stuff.
- *
- * This library does not include `bootstrap`. Import `bootstrap.dart` instead.
- */
+import 'dart:html';
+
 export 'package:angular2/core.dart';
 export 'package:angular2/common.dart';
 export 'package:angular2/instrumentation.dart';
@@ -24,3 +24,7 @@ export 'package:angular2/src/platform/dom/events/event_manager.dart';
 export 'package:angular2/src/compiler/url_resolver.dart';
 export 'package:angular2/src/compiler/directive_resolver.dart';
 export 'package:angular2/src/compiler/view_resolver.dart';
+
+/// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
+/// This prevents unused import error in dart_analyzed_library build.
+Element __tempElement;

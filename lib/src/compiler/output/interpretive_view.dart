@@ -1,10 +1,11 @@
 import "package:angular2/src/core/linker/debug_context.dart"
     show StaticNodeDebugInfo;
 import "package:angular2/src/core/linker/element.dart" show AppElement;
-import "package:angular2/src/core/linker/view.dart" show AppView, DebugAppView;
+import "package:angular2/src/core/linker/app_view.dart"
+    show AppView, DebugAppView;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-import "output_interpreter.dart" show InstanceFactory, DynamicInstance;
+import "dynamic_instance.dart";
 
 class InterpretiveAppViewInstanceFactory implements InstanceFactory {
   DynamicInstance createInstance(

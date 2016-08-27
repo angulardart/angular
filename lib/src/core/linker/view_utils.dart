@@ -10,7 +10,6 @@ import 'package:angular2/src/core/security.dart';
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show looseIdentical;
 
-import "element.dart" show AppElement;
 import "exceptions.dart" show ExpressionChangedAfterItHasBeenCheckedException;
 
 /// Function called when a view is destroyed.
@@ -74,30 +73,6 @@ class ViewUtils {
     _throwOnChangesCounter = 0;
     throwOnChanges = false;
   }
-}
-
-List flattenNestedViewRenderNodes(List nodes) {
-  return _flattenNestedViewRenderNodes(nodes, []);
-}
-
-List _flattenNestedViewRenderNodes(List nodes, List renderNodes) {
-  int nodeCount = nodes.length;
-  for (var i = 0; i < nodeCount; i++) {
-    var node = nodes[i];
-    if (node is AppElement) {
-      AppElement appEl = node;
-      renderNodes.add(appEl.nativeElement);
-      if (appEl.nestedViews != null) {
-        for (var k = 0; k < appEl.nestedViews.length; k++) {
-          _flattenNestedViewRenderNodes(
-              appEl.nestedViews[k].rootNodesOrAppElements, renderNodes);
-        }
-      }
-    } else {
-      renderNodes.add(node);
-    }
-  }
-  return renderNodes;
 }
 
 List ensureSlotCount(List projectableNodes, num expectedSlotCount) {

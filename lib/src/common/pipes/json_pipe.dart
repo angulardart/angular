@@ -1,4 +1,4 @@
-import "package:angular2/core.dart" show Injectable, PipeTransform, Pipe;
+import "package:angular2/di.dart" show Injectable, PipeTransform, Pipe;
 import "package:angular2/src/facade/lang.dart" show Json;
 
 /// Transforms any input value using `JSON.encode`. Useful for debugging.

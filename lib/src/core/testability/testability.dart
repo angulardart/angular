@@ -1,95 +1,83 @@
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "../zone/ng_zone.dart";
 
-import "../zone/ng_zone.dart" show NgZone;
-
-/**
- * The Testability service provides testing hooks that can be accessed from
- * the browser and by services such as Protractor. Each bootstrapped Angular
- * application on the page will have an instance of Testability.
- */
+/// The Testability service provides testing hooks that can be accessed from
+/// the browser and by services such as Protractor. Each bootstrapped Angular
+/// application on the page will have an instance of Testability.
 @Injectable()
 class Testability {
   NgZone _ngZone;
-  /** @internal */
   num _pendingCount = 0;
-  /** @internal */
   bool _isZoneStable = true;
-  /**
-   * Whether any work was done since the last 'whenStable' callback. This is
-   * useful to detect if this could have potentially destabilized another
-   * component while it is stabilizing.
-   * @internal
-   */
+
+  /// Whether any work was done since the last 'whenStable' callback. This is
+  /// useful to detect if this could have potentially destabilized another
+  /// component while it is stabilizing.
   bool _didWork = false;
-  /** @internal */
+
   List<Function> _callbacks = [];
   Testability(this._ngZone) {
-    this._watchAngularEvents();
+    _watchAngularEvents();
   }
-  /** @internal */
+
   void _watchAngularEvents() {
-    this._ngZone.onUnstable.listen((_) {
-      this._didWork = true;
-      this._isZoneStable = false;
+    _ngZone.onUnstable.listen((_) {
+      _didWork = true;
+      _isZoneStable = false;
     });
-    this._ngZone.runOutsideAngular(() {
-      this._ngZone.onStable.listen((_) {
+    _ngZone.runOutsideAngular(() {
+      _ngZone.onStable.listen((_) {
         NgZone.assertNotInAngularZone();
         scheduleMicrotask(() {
-          this._isZoneStable = true;
-          this._runCallbacksIfReady();
+          _isZoneStable = true;
+          _runCallbacksIfReady();
         });
       });
     });
   }
 
   num increasePendingRequestCount() {
-    this._pendingCount += 1;
-    this._didWork = true;
-    return this._pendingCount;
+    _pendingCount += 1;
+    _didWork = true;
+    return _pendingCount;
   }
 
   num decreasePendingRequestCount() {
-    this._pendingCount -= 1;
-    if (this._pendingCount < 0) {
-      throw new BaseException("pending async requests below zero");
-    }
-    this._runCallbacksIfReady();
-    return this._pendingCount;
+    _pendingCount -= 1;
+    // Check for pending async requests dropping below zero.
+    assert(_pendingCount >= 0);
+    _runCallbacksIfReady();
+    return _pendingCount;
   }
 
   bool isStable() {
-    return this._isZoneStable &&
-        this._pendingCount == 0 &&
-        !this._ngZone.hasPendingMacrotasks;
+    return _isZoneStable && _pendingCount == 0 && !_ngZone.hasPendingMacrotasks;
   }
 
-  /** @internal */
   void _runCallbacksIfReady() {
-    if (this.isStable()) {
+    if (isStable()) {
       // Schedules the call backs in a new frame so that it is always async.
       scheduleMicrotask(() {
-        while (!identical(this._callbacks.length, 0)) {
-          (this._callbacks.removeLast())(this._didWork);
+        while (_callbacks.isNotEmpty) {
+          (_callbacks.removeLast())(_didWork);
         }
-        this._didWork = false;
+        _didWork = false;
       });
     } else {
       // Not Ready
-      this._didWork = true;
+      _didWork = true;
     }
   }
 
   void whenStable(Function callback) {
-    this._callbacks.add(callback);
-    this._runCallbacksIfReady();
+    _callbacks.add(callback);
+    _runCallbacksIfReady();
   }
 
   num getPendingRequestCount() {
-    return this._pendingCount;
+    return _pendingCount;
   }
 
   List<dynamic> findBindings(dynamic using, String provider, bool exactMatch) {
@@ -103,28 +91,25 @@ class Testability {
   }
 }
 
-/**
- * A global registry of [Testability] instances for specific elements.
- */
+/// A global registry of [Testability] instances for specific elements.
 @Injectable()
 class TestabilityRegistry {
-  /** @internal */
   var _applications = new Map<dynamic, Testability>();
   GetTestability _testabilityGetter = new _NoopGetTestability();
-  /**
-   * Set the [GetTestability] implementation used by the Angular testing framework.
-   */
+
+  /// Set the [GetTestability] implementation used by the Angular testing
+  /// framework.
   void setTestabilityGetter(GetTestability getter) {
     this._testabilityGetter = getter;
     getter.addToWindow(this);
   }
 
   registerApplication(dynamic token, Testability testability) {
-    this._applications[token] = testability;
+    _applications[token] = testability;
   }
 
   Testability getTestability(dynamic elem) {
-    return this._applications[elem];
+    return _applications[elem];
   }
 
   List<Testability> getAllTestabilities() => _applications.values.toList();
@@ -133,16 +118,13 @@ class TestabilityRegistry {
 
   Testability findTestabilityInTree(dynamic elem,
       [bool findInAncestors = true]) {
-    return this
-        ._testabilityGetter
-        .findTestabilityInTree(this, elem, findInAncestors);
+    return _testabilityGetter.findTestabilityInTree(
+        this, elem, findInAncestors);
   }
 }
 
-/**
- * Adapter interface for retrieving the `Testability` service associated for a
- * particular context.
- */
+/// Adapter interface for retrieving the `Testability` service associated for a
+/// particular context.
 abstract class GetTestability {
   void addToWindow(TestabilityRegistry registry);
   Testability findTestabilityInTree(

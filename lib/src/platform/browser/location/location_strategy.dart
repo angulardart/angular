@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import "package:angular2/core.dart" show OpaqueToken;
+import "package:angular2/di.dart" show OpaqueToken;
 
 /**
  * `LocationStrategy` is responsible for representing and reading route state

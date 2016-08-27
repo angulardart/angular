@@ -1,6 +1,6 @@
 import 'dart:html' as html;
 
-import "package:angular2/core.dart" show Injectable, Inject, Optional;
+import "package:angular2/di.dart" show Injectable, Inject, Optional;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "location.dart" show Location;

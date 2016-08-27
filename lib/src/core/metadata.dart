@@ -1,12 +1,12 @@
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 
-import './metadata/di.dart';
-import './metadata/directives.dart';
-import './metadata/view.dart';
+import 'metadata/di.dart';
+import 'metadata/directives.dart';
+import 'metadata/view.dart';
 
-export './metadata/di.dart';
-export './metadata/directives.dart';
-export './metadata/lifecycle_hooks.dart'
+export 'metadata/di.dart';
+export 'metadata/directives.dart';
+export 'metadata/lifecycle_hooks.dart'
     show
         AfterContentInit,
         AfterContentChecked,

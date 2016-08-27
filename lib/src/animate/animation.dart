@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+import 'dart:math';
 
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/util.dart" show camelCaseToDashCase;
@@ -10,6 +10,7 @@ class Animation {
   dynamic element;
   CssAnimationOptions data;
   BrowserDetails browserDetails;
+  static RegExp _durationRegExp;
 
   /// functions to be called upon completion
   List<Function> callbacks = [];
@@ -66,14 +67,14 @@ class Animation {
     removeClasses(data.classesToRemove);
     if (data.toStyles != null) applyStyles(data.toStyles);
     var computedStyles = DOM.getComputedStyle(element);
-    computedDelay = math.max(
+    computedDelay = max(
         parseDurationString(computedStyles
             .getPropertyValue(_stringPrefix + "transition-delay")),
         parseDurationString(this
             .element
             .style
             .getPropertyValue(_stringPrefix + "transition-delay")));
-    computedDuration = math.max(
+    computedDuration = max(
         parseDurationString(computedStyles
             .getPropertyValue(_stringPrefix + "transition-duration")),
         parseDurationString(this
@@ -147,7 +148,7 @@ class Animation {
     if (duration == null || duration.length < 2) {
       return maxValue;
     } else if (duration.substring(duration.length - 2) == "ms") {
-      var value = int.parse(stripLetters(duration), radix: 10);
+      var value = int.parse(stripLetters(duration));
       if (value > maxValue) maxValue = value;
     } else if (duration.substring(duration.length - 1) == "s") {
       var ms = double.parse(stripLetters(duration)) * 1000;
@@ -159,6 +160,7 @@ class Animation {
 
   /// Strips the letters from the duration string
   String stripLetters(String str) {
-    return str.replaceAll(new RegExp("[^0-9]+\$"), "");
+    _durationRegExp ??= new RegExp('[^0-9]+\$', caseSensitive: false);
+    return str.replaceAll(_durationRegExp, '');
   }
 }

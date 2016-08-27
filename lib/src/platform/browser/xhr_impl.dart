@@ -1,7 +1,7 @@
 import 'dart:async' show Future;
 import 'dart:html' show HttpRequest;
 
-import 'package:angular2/core.dart';
+import 'package:angular2/di.dart';
 import 'package:angular2/src/compiler/xhr.dart';
 
 @Injectable()

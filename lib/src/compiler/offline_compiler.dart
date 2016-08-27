@@ -1,13 +1,10 @@
 import 'dart:async';
 
-import 'package:angular2/src/core/linker/component_factory.dart'
-    show ComponentFactory;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
-        CompileIdentifierMetadata,
         CompilePipeMetadata,
         createHostComponentMeta,
         CompileInjectorModuleMetadata,
@@ -20,12 +17,7 @@ import 'template_parser.dart' show TemplateParser;
 import 'util.dart' show MODULE_SUFFIX;
 import 'view_compiler/injector_compiler.dart' show InjectorCompiler;
 import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
-
-var _COMPONENT_FACTORY_IDENTIFIER = new CompileIdentifierMetadata(
-    name: 'ComponentFactory',
-    runtime: ComponentFactory,
-    moduleUrl:
-        'asset:angular2/lib/src/core/linker/component_factory${MODULE_SUFFIX}');
+import 'identifiers.dart';
 
 class SourceModule {
   String moduleUrl;
@@ -86,7 +78,7 @@ class OfflineCompiler {
       var compFactoryVar = '${compMeta.type.name}NgFactory';
       statements.add(o
           .variable(compFactoryVar)
-          .set(o.importExpr(_COMPONENT_FACTORY_IDENTIFIER).instantiate(
+          .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
               [
                 o.literal(compMeta.selector),
                 o.variable(hostViewFactoryVar),
@@ -94,7 +86,7 @@ class OfflineCompiler {
                 o.METADATA_MAP
               ],
               o.importType(
-                  _COMPONENT_FACTORY_IDENTIFIER, null, [o.TypeModifier.Const])))
+                  Identifiers.ComponentFactory, null, [o.TypeModifier.Const])))
           .toDeclStmt(null, [o.StmtModifier.Final]));
       exportedVars.add(compFactoryVar);
     });

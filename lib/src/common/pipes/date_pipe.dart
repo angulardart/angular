@@ -1,4 +1,4 @@
-import "package:angular2/core.dart" show PipeTransform, Pipe, Injectable;
+import "package:angular2/di.dart" show PipeTransform, Pipe, Injectable;
 import "package:angular2/src/facade/intl.dart" show DateFormatter;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;

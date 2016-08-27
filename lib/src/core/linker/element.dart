@@ -3,7 +3,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "element_ref.dart" show ElementRef;
 import "query_list.dart" show QueryList;
-import "view.dart" show AppView;
+import "app_view.dart" show AppView;
 import "view_container_ref.dart" show ViewContainerRef_;
 import "view_type.dart" show ViewType;
 

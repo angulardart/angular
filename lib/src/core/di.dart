@@ -1,5 +1,4 @@
-/// A dependency injection container.
-
+/// A dependency Injection container.
 export "di/metadata.dart"
     show
         InjectMetadata,

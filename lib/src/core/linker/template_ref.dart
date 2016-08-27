@@ -1,6 +1,6 @@
 import "element.dart" show AppElement;
 import "element_ref.dart" show ElementRef;
-import "view.dart" show AppView;
+import "app_view.dart";
 import "view_ref.dart" show EmbeddedViewRef;
 
 /**

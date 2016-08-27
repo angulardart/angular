@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:angular2/core.dart' show ReflectiveInjector;
+import 'package:angular2/di.dart' show ReflectiveInjector;
 
 /// Provides reflective injector for executing a test.
 class TestInjector {

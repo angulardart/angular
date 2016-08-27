@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'dart:js' as js;
 
-import 'package:angular2/core.dart';
+import 'package:angular2/di.dart';
 import 'package:angular2/platform/common_dom.dart';
 
 // Work around http://dartbug.com/17752, copied from
