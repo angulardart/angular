@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.common.pipes.uppercase_pipe_test;
 
 import "package:angular2/common.dart" show UpperCasePipe;

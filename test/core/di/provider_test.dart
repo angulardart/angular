@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.di.provider_test;
 
 import 'dart:mirrors';

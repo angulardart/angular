@@ -1,3 +1,4 @@
+@TestOn('browser')
 library angular2.test.common.forms.form_builder_test;
 
 import 'dart:async';

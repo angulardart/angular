@@ -3,6 +3,7 @@ sudo: false
 dart:
   - stable
   - dev
+  - 1.19.0
   - 1.18.1
   - 1.17.1
 cache:
