@@ -21,15 +21,11 @@ class AttributeMetadata extends DependencyMetadata {
   final String attributeName;
   const AttributeMetadata(this.attributeName) : super();
   AttributeMetadata get token {
-    // Normally one would default a token to a type of an injected value but here
-
-    // the type of a variable is "string" and we can't use primitive type as a return value
-
-    // so we use instance of Attribute instead. This doesn't matter much in practice as arguments
-
-    // with @Attribute annotation are injected by ElementInjector that doesn't take tokens into
-
-    // account.
+    // Normally one would default a token to a type of an injected value but
+    // here the type of a variable is "string" and we can't use primitive type
+    // as a return value so we use instance of Attribute instead. This doesn't
+    // matter much in practice as arguments with @Attribute annotation are
+    // injected by ElementInjector that doesn't take tokens into account.
     return this;
   }
 
@@ -77,8 +73,8 @@ class AttributeMetadata extends DependencyMetadata {
  * class Tabs {
  *   panes: QueryList<Pane>;
  *   constructor(@Query(Pane) panes:QueryList<Pane>) {
-  *    this.panes = panes;
-  *  }
+ *    this.panes = panes;
+ *  }
  * }
  * ```
  *
