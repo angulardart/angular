@@ -69,7 +69,7 @@ class MinLengthValidator implements Validator {
 const MAX_LENGTH_VALIDATOR =
     const Provider(NG_VALIDATORS, useExisting: MaxLengthValidator, multi: true);
 
-/// A directive which installs the [MaxLengthValidator] for any `ngControl,
+/// A directive which installs the [MaxLengthValidator] for any `ngControl`,
 /// `ngFormControl`, or control with `ngModel` that also has a `maxlength`
 /// attribute.
 @Directive(
