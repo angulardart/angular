@@ -9,6 +9,7 @@ import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/code/ng_deps_code.dart';
 import 'package:angular2/src/transform/common/interface_matcher.dart';
 import 'package:angular2/src/transform/common/logging.dart';
+import 'package:angular2/src/transform/common/options.dart';
 import 'package:angular2/src/transform/common/ng_compiler.dart';
 import 'package:angular2/src/transform/common/ng_meta.dart';
 import 'package:angular2/src/transform/common/type_metadata_reader.dart';
@@ -16,11 +17,12 @@ import 'package:angular2/src/transform/common/url_resolver.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:barback/barback.dart' show AssetId;
 
+import 'deferred_import_validator.dart';
 import 'inliner.dart';
 
 /// Generates an instance of [NgMeta] describing the file at `assetId`.
-Future<NgMeta> createNgMeta(AssetReader reader, AssetId assetId,
-    AnnotationMatcher annotationMatcher) async {
+Future<NgMeta> createNgMeta(
+    AssetReader reader, AssetId assetId, TransformerOptions options) async {
   // TODO(kegluneq): Shortcut if we can determine that there are no
   // [Directive]s present, taking into account `export`s.
   var codeWithParts = await inlineParts(reader, assetId);
@@ -28,8 +30,12 @@ Future<NgMeta> createNgMeta(AssetReader reader, AssetId assetId,
   var parsedCode =
       parseCompilationUnit(codeWithParts, name: '${assetId.path} and parts');
 
+  if (options.checkDeferredImportInitialization) {
+    checkDeferredImportInitialization(codeWithParts, parsedCode);
+  }
+
   final ngDepsVisitor = await logElapsedAsync(() async {
-    var ngDepsVisitor = new NgDepsVisitor(assetId, annotationMatcher);
+    var ngDepsVisitor = new NgDepsVisitor(assetId, options.annotationMatcher);
     parsedCode.accept(ngDepsVisitor);
     return ngDepsVisitor;
   }, operationName: 'createNgDeps', assetId: assetId);
@@ -41,8 +47,8 @@ Future<NgMeta> createNgMeta(AssetReader reader, AssetId assetId,
     if (templateCompiler == null) {
       templateCompiler = createTemplateCompiler(reader);
     }
-    var ngMetaVisitor = new _NgMetaVisitor(ngMeta, assetId, annotationMatcher,
-        _interfaceMatcher, templateCompiler);
+    var ngMetaVisitor = new _NgMetaVisitor(ngMeta, assetId,
+        options.annotationMatcher, _interfaceMatcher, templateCompiler);
     parsedCode.accept(ngMetaVisitor);
     await ngMetaVisitor.whenDone();
     return ngMeta;
@@ -112,7 +118,8 @@ class _NgMetaVisitor extends Object with SimpleAstVisitor<Object> {
     // help us filter out only what's needed, but unfortunately TypeScript
     // doesn't support decorators on variable declarations (see
     // angular/angular#1747 and angular/ts2dart#249 for context).
-    outer: for (var variable in node.variables.variables) {
+    outer:
+    for (var variable in node.variables.variables) {
       if (variable.isConst) {
         final id = _reader.readIdentifierMetadata(variable, assetId);
         ngMeta.identifiers[variable.name.name] = id;

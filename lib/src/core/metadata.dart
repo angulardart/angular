@@ -182,3 +182,8 @@ class Provides extends ProviderPropertyMetadata {
   const Provides(dynamic token, {bool multi: false})
       : super(token, multi: multi);
 }
+
+/// Marks a deferred import as not needing explicit angular initialization.
+class SkipAngularInitCheck {
+  const SkipAngularInitCheck();
+}

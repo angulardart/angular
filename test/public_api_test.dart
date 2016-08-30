@@ -161,6 +161,7 @@ var NG_CORE = [
   'InjectorModuleMetadata',
   'Provides',
   'ProviderPropertyMetadata',
+  'SkipAngularInitCheck',
   'DynamicComponentLoader',
   'ElementRef',
   'Output',

@@ -40,8 +40,7 @@ class DirectiveProcessor extends Transformer implements LazyTransformer {
     return zone.exec(() async {
       var primaryId = transform.primaryInput.id;
       var reader = new AssetReader.fromTransform(transform);
-      var ngMeta =
-          await createNgMeta(reader, primaryId, options.annotationMatcher);
+      var ngMeta = await createNgMeta(reader, primaryId, options);
       if (ngMeta == null || ngMeta.isEmpty) {
         return;
       }

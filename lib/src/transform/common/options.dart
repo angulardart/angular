@@ -103,6 +103,10 @@ class TransformerOptions {
   /// are the result of an invalid template.
   final bool ignoreRealTemplateIssues;
 
+  /// Whether to warn about hand-coding the deferred import initialization
+  /// logic, instead of relying on the angular2/transform/deferred_rewriter.
+  final bool checkDeferredImportInitialization;
+
   TransformerOptions._internal(
       this.entryPoints,
       this.entryPointGlobs,
@@ -121,7 +125,8 @@ class TransformerOptions {
       this.errorOnMissingIdentifiers,
       this.translations,
       this.reflectPropertiesAsAttributes,
-      this.ignoreRealTemplateIssues});
+      this.ignoreRealTemplateIssues,
+      this.checkDeferredImportInitialization});
 
   factory TransformerOptions(List<String> entryPoints,
       {String modeName: 'release',
@@ -139,7 +144,8 @@ class TransformerOptions {
       bool lazyTransformers: false,
       AssetId translations: null,
       bool formatCode: false,
-      bool ignoreRealTemplateIssues: false}) {
+      bool ignoreRealTemplateIssues: false,
+      bool checkDeferredImportInitialization: false}) {
     var annotationMatcher = new AnnotationMatcher()
       ..addAll(customAnnotationDescriptors);
     var entryPointGlobs = entryPoints != null
@@ -159,6 +165,7 @@ class TransformerOptions {
         lazyTransformers: lazyTransformers,
         translations: translations,
         formatCode: formatCode,
-        ignoreRealTemplateIssues: ignoreRealTemplateIssues);
+        ignoreRealTemplateIssues: ignoreRealTemplateIssues,
+        checkDeferredImportInitialization: checkDeferredImportInitialization);
   }
 }
