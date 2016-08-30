@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('browser && !js')
 library angular2.test.core.linker.projection_integration_test;
 
 import 'package:angular2/testing_internal.dart';

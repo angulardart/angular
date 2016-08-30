@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('browser && !js')
 library angular2.test.common.directives.ng_class_test;
 
 import "package:angular2/testing_internal.dart";
