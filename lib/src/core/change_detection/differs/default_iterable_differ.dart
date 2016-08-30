@@ -103,15 +103,14 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
   }
 
   DefaultIterableDiffer diff(Iterable collection) {
-    if (collection == null) collection ??= [];
-    if (collection is! Iterable) {
-      throw new BaseException('''Error trying to diff \'${ collection}\'''');
-    }
-    if (this.check(collection)) {
-      return this;
+    if (collection != null) {
+      if (collection is! Iterable) {
+        throw new BaseException('''Error trying to diff \'${collection}\'''');
+      }
     } else {
-      return null;
+      collection = const [];
     }
+    return this.check(collection) ? this : null;
   }
 
   onDestroy() {}
@@ -697,8 +696,7 @@ class _DuplicateMap {
    * have any more `a`s needs to return the last `a` not the first or second.
    */
   CollectionChangeRecord get(dynamic trackById, [num afterIndex = null]) {
-    var key = trackById;
-    var recordList = this.map[key];
+    var recordList = this.map[trackById];
     return recordList == null ? null : recordList.get(trackById, afterIndex);
   }
 
