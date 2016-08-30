@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('browser && !js')
 library angular2.test.public_api_test;
 
 import 'symbol_inspector/symbol_inspector.dart';

@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('browser && !js')
 library angular2.test.core.reflection.reflector_test;
 
 import "package:angular2/testing_internal.dart";

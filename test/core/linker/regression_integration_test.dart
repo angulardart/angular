@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('browser && !js')
 library angular2.test.core.linker.regression_integration_test;
 
 import "dart:async";

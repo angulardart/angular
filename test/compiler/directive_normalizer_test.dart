@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('browser && !js')
 library angular2.test.compiler.directive_normalizer_test;
 
 import 'package:angular2/testing_internal.dart';
