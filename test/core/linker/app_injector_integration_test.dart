@@ -137,6 +137,7 @@ main() {
           .createInjectorFactory(SomeModule, providers)
           .create(parent);
     }
+
     test("should instantiate a class without dependencies", () {
       var injector = createInjector([Engine]);
       var engine = injector.get(Engine);
@@ -183,6 +184,7 @@ main() {
       sportsCarFactory(e) {
         return new SportsCar(e);
       }
+
       var injector = createInjector([
         Engine,
         provide(Car, useFactory: sportsCarFactory, deps: [Engine])
@@ -420,6 +422,7 @@ main() {
             .createInjectorFactory(mainModuleType, providers)
             .create(null, mainModule);
       }
+
       test("should support multi providers", () {
         var inj = createInjector(
             SomeModuleWithProp,

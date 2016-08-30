@@ -17,6 +17,7 @@ main() {
       var parser = new CssParser(scanner, "some-fake-file-name.css");
       return parser.parse();
     }
+
     CssStyleSheetAST makeAST(css) {
       var output = parse(css);
       var errors = output.errors;
@@ -26,6 +27,7 @@ main() {
       }
       return output.ast;
     }
+
     test("should parse CSS into a stylesheet AST", () {
       var styles = '''
         .selector {

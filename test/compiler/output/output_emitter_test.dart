@@ -183,6 +183,7 @@ main() {
           someOperation() {
             throw new BaseException("Boom!");
           }
+
           var errorAndStack = expressions["catchError"](someOperation);
           expect(errorAndStack[0].message, "Boom!");
           // Somehow we don't get stacktraces on ios7...

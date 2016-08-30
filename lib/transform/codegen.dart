@@ -42,7 +42,10 @@ class CodegenTransformer extends TransformerGroup {
         [new AssetConsumer()],
         [new DirectiveProcessor(options)],
         [new DirectiveMetadataLinker(options)],
-        [new StylesheetCompiler(), new TemplateCompiler(options),],
+        [
+          new StylesheetCompiler(),
+          new TemplateCompiler(options),
+        ],
       ];
     }
     if (options.modeName == BarbackMode.RELEASE || !options.lazyTransformers) {

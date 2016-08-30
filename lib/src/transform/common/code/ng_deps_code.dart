@@ -166,8 +166,7 @@ abstract class NgDepsWriterMixin
   StringBuffer get buffer;
 
   void writeNgDepsModel(
-      NgDepsModel model, String templateCode,
-      bool ignoreRealTemplateIssues) {
+      NgDepsModel model, String templateCode, bool ignoreRealTemplateIssues) {
     // Avoid strong-mode warnings about unused imports.
     for (var problem in _ignoredProblems) {
       buffer.writeln('// @ignoreProblemForFile $problem');

@@ -14,6 +14,7 @@ main() {
       var nlRegexp = new RegExp(r'\n');
       return normalizeCSS(shim.replaceAll(nlRegexp, ""));
     }
+
     test("should handle empty string", () {
       expect(s("", "a"), "");
     });
@@ -171,6 +172,7 @@ main() {
         });
         return result;
       }
+
       test("should work with empty css", () {
         expect(captureRules(""), []);
       });

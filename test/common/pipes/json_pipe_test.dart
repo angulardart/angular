@@ -16,6 +16,7 @@ main() {
     String normalize(String obj) {
       return obj.replaceFirst(regNewLine, '');
     }
+
     setUp(() {
       inceptionObj = {
         'dream': {

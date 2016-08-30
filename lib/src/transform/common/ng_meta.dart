@@ -157,6 +157,7 @@ class NgMeta {
             'Unknown alias: ${newPath.join(' -> ')}. Make sure you export ${name} from the file where ${path.last} is defined.');
       }
     }
+
     helper(alias, []);
     return result;
   }

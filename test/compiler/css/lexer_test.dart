@@ -21,6 +21,7 @@ main() {
     }
     return tokens;
   }
+
   group('CssLexer', () {
     test(
         'should lex newline characters as whitespace when '
@@ -241,6 +242,7 @@ main() {
           var cssCode = 'value' + modifier + '=\'something\'';
           return tokenize(cssCode, false, CssLexerMode.ATTRIBUTE_SELECTOR);
         }
+
         expect(tokenizeAttr('*').length, 4);
         expect(tokenizeAttr('|').length, 4);
         expect(tokenizeAttr('^').length, 4);
@@ -285,6 +287,7 @@ main() {
         tokenizePseudo(code) {
           return tokenize(code, false, CssLexerMode.PSEUDO_SELECTOR);
         }
+
         expect(tokenizePseudo('lang(en-us)').length, 4);
         expect(tokenizePseudo('hover').length, 1);
         expect(tokenizePseudo('focus').length, 1);
@@ -303,6 +306,7 @@ main() {
         tokenizePseudo(code) {
           return tokenize(code, false, CssLexerMode.PSEUDO_SELECTOR);
         }
+
         expect(tokenizePseudo('lang(en-us)').length, 4);
         expect(tokenizePseudo('hover').length, 1);
         expect(tokenizePseudo('focus').length, 1);
@@ -319,6 +323,7 @@ main() {
         tokenizeStyles(code) {
           return tokenize(code, false, CssLexerMode.STYLE_BLOCK);
         }
+
         expect(tokenizeStyles('''
           key: value;
           prop: 100;

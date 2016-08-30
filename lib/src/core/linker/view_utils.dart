@@ -303,7 +303,9 @@ dynamic /* (p0: P0, p1: P1) => R */ pureProxy2/*< P0, P1, R >*/(
 dynamic
     /* (p0: P0, p1: P1,
                                                                                p2: P2) => R */
-    pureProxy3/*< P0, P1, P2, R >*/(dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2)) {
+    pureProxy3/*< P0, P1, P2, R >*/(
+        dynamic/*= R */ fn(
+            dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2)) {
   dynamic/*= R */ result;
   var v0, v1, v2;
   v0 = v1 = v2 = uninitialized;
@@ -322,7 +324,9 @@ dynamic
 
 dynamic /* (
     p0: P0, p1: P1, p2: P2, p3: P3) => R */
-    pureProxy4/*< P0, P1, P2, P3, R >*/(dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2, dynamic /* P3 */ p3)) {
+    pureProxy4/*< P0, P1, P2, P3, R >*/(
+        dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1,
+            dynamic /* P2 */ p2, dynamic /* P3 */ p3)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3;
   v0 = v1 = v2 = v3 = uninitialized;
@@ -344,9 +348,9 @@ dynamic /* (
 dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) =>
     R */
     pureProxy5/*< P0, P1, P2, P3, P4, R >*/(
-    dynamic/*= R */
-    fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
-        dynamic /* P3 */ p3, dynamic /* P4 */ p4)) {
+        dynamic/*= R */
+        fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
+            dynamic /* P3 */ p3, dynamic /* P4 */ p4)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4;
   v0 = v1 = v2 = v3 = v4 = uninitialized;
@@ -371,9 +375,9 @@ dynamic
     /* (p0: P0, p1: P1, p2: P2, p3: P3,
                                                                  p4: P4, p5: P5) => R */
     pureProxy6/*< P0, P1, P2, P3, P4, P5, R >*/(
-    dynamic/*= R */
-    fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
-        dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5)) {
+        dynamic/*= R */
+        fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
+            dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5;
   v0 = v1 = v2 = v3 = v4 = v5 = uninitialized;
@@ -397,7 +401,15 @@ dynamic
 }
 
 dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */
-    pureProxy7/*< P0, P1, P2, P3, P4, P5, P6, R >*/(dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2, dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5, dynamic /* P6 */ p6)) {
+    pureProxy7/*< P0, P1, P2, P3, P4, P5, P6, R >*/(
+        dynamic/*= R */ fn(
+            dynamic /* P0 */ p0,
+            dynamic /* P1 */ p1,
+            dynamic /* P2 */ p2,
+            dynamic /* P3 */ p3,
+            dynamic /* P4 */ p4,
+            dynamic /* P5 */ p5,
+            dynamic /* P6 */ p6)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5, v6;
   v0 = v1 = v2 = v3 = v4 = v5 = v6 = uninitialized;
@@ -424,7 +436,16 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */
 
 dynamic
     /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) => R */
-    pureProxy8/*< P0, P1, P2, P3, P4, P5, P6, P7, R >*/(dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2, dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5, dynamic /* P6 */ p6, dynamic /* P7 */ p7)) {
+    pureProxy8/*< P0, P1, P2, P3, P4, P5, P6, P7, R >*/(
+        dynamic/*= R */ fn(
+            dynamic /* P0 */ p0,
+            dynamic /* P1 */ p1,
+            dynamic /* P2 */ p2,
+            dynamic /* P3 */ p3,
+            dynamic /* P4 */ p4,
+            dynamic /* P5 */ p5,
+            dynamic /* P6 */ p6,
+            dynamic /* P7 */ p7)) {
   dynamic/*= R */ result;
   var v0, v1, v2, v3, v4, v5, v6, v7;
   v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = uninitialized;

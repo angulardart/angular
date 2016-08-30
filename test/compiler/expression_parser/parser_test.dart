@@ -14,47 +14,59 @@ main() {
   createParser() {
     return new Parser(new Lexer());
   }
+
   dynamic parseAction(text, [location = null]) {
     return createParser().parseAction(text, location);
   }
+
   dynamic parseBinding(text, [location = null]) {
     return createParser().parseBinding(text, location);
   }
+
   dynamic parseTemplateBindings(text, [location = null]) {
     return createParser()
         .parseTemplateBindings(text, location)
         .templateBindings;
   }
+
   dynamic parseInterpolation(text, [location = null]) {
     return createParser().parseInterpolation(text, location);
   }
+
   dynamic parseSimpleBinding(text, [location = null]) {
     return createParser().parseSimpleBinding(text, location);
   }
+
   String unparse(AST ast) {
     return new Unparser().unparse(ast);
   }
+
   checkInterpolation(String exp, [String expected]) {
     var ast = parseInterpolation(exp);
     expected ??= exp;
     expect(unparse(ast), expected);
   }
+
   checkBinding(String exp, [String expected]) {
     var ast = parseBinding(exp);
     expected ??= exp;
     expect(unparse(ast), expected);
   }
+
   checkAction(String exp, [String expected]) {
     var ast = parseAction(exp);
     expected ??= exp;
     expect(unparse(ast), expected);
   }
+
   expectActionError(text, matcher) {
     return expect(() => parseAction(text), matcher);
   }
+
   expectBindingError(text, matcher) {
     return expect(() => parseBinding(text), matcher);
   }
+
   group("parser", () {
     group("parseAction", () {
       test("should parse numbers", () {
@@ -314,6 +326,7 @@ main() {
       keys(List<dynamic> templateBindings) {
         return templateBindings.map((binding) => binding.key).toList();
       }
+
       keyValues(List<dynamic> templateBindings) {
         return templateBindings.map((binding) {
           if (binding.keyIsVar) {
@@ -328,12 +341,14 @@ main() {
           }
         }).toList();
       }
+
       exprSources(List<dynamic> templateBindings) {
         return templateBindings
             .map((binding) =>
                 binding.expression != null ? binding.expression.source : null)
             .toList();
       }
+
       test("should parse an empty string", () {
         expect(parseTemplateBindings(""), []);
       });

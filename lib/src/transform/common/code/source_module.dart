@@ -19,9 +19,8 @@ String writeSourceModule(SourceModule sourceModule, {String libraryName}) {
 
 /// Uses `writer` to write a Dart library representing `model` and
 /// `sourceModule`.
-void writeTemplateFile(
-    NgDepsWriterMixin writer, NgDepsModel model, SourceModule sourceModule,
-    bool ignoreRealTemplateIssues) {
+void writeTemplateFile(NgDepsWriterMixin writer, NgDepsModel model,
+    SourceModule sourceModule, bool ignoreRealTemplateIssues) {
   if (model == null) return null;
   var sourceModuleCode = '';
   if (sourceModule != null) {

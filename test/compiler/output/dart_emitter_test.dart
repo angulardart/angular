@@ -32,6 +32,7 @@ main() {
       exportedVars ??= [];
       return emitter.emitStatements(someModuleUrl, [stmt], exportedVars);
     }
+
     test("should declare variables", () {
       expect(
           emitStmt(someVar.set(o.literal(1)).toDeclStmt()), 'var someVar = 1;');

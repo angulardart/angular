@@ -33,6 +33,7 @@ main() {
       var compRef = cf.create(injector);
       return (getDebugNode(compRef.location.nativeElement) as DebugElement);
     }
+
     outputDefs.forEach((outputDef) {
       group('''${ outputDef [ "name" ]}''', () {
         test("should compile components", () {

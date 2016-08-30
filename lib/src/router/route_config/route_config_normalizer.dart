@@ -16,6 +16,7 @@ RouteDefinition normalizeRouteConfig(
     loader() {
       return config.loader().then(configRegistryAndReturnType);
     }
+
     return new AsyncRoute(
         path: config.path,
         loader: loader,

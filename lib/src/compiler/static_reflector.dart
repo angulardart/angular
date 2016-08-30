@@ -438,6 +438,7 @@ class StaticReflector {
       }
       return null;
     }
+
     return simplify(value);
   }
 

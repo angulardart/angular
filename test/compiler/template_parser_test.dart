@@ -529,6 +529,7 @@ main() {
           }
           return token;
         }
+
         CompileDiDependencyMetadata createDep(String value) {
           var isOptional = false;
           if (value.startsWith("optional:")) {
@@ -551,6 +552,7 @@ main() {
               isSelf: isSelf,
               isHost: isHost);
         }
+
         CompileProviderMetadata createProvider(String token,
             {bool multi: false, List<String> deps: const []}) {
           return new CompileProviderMetadata(
@@ -560,6 +562,7 @@ main() {
                   name: '''provider${ nextProviderId ++}'''),
               deps: deps.map(createDep).toList());
         }
+
         CompileDirectiveMetadata createDir(String selector,
             {List<CompileProviderMetadata> providers: null,
             List<CompileProviderMetadata> viewProviders: null,
@@ -581,6 +584,7 @@ main() {
                       new CompileQueryMetadata(selectors: [createToken(value)]))
                   .toList());
         }
+
         setUp(() {
           nextProviderId = 0;
         });
@@ -1139,6 +1143,7 @@ main() {
             template: new CompileTemplateMetadata(
                 ngContentSelectors: ngContentSelectors));
       }
+
       CompileDirectiveMetadata createDir(String selector) {
         return CompileDirectiveMetadata.create(
             selector: selector,
@@ -1146,6 +1151,7 @@ main() {
                 moduleUrl: someModuleUrl,
                 name: '''SomeDir${ compCounter ++}'''));
       }
+
       group("project text nodes", () {
         test("should project text nodes with wildcard selector", () {
           expect(

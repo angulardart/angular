@@ -28,8 +28,8 @@ export "package:angular2/src/facade/exception_handler.dart"
     show ExceptionHandler;
 export 'package:angular2/src/core/zone/ng_zone.dart';
 export "package:angular2/src/core/change_detection/pipe_transform.dart";
-export 'package:angular2/src/core/metadata.dart' show Component, Directive,
-    Input, Output;
+export 'package:angular2/src/core/metadata.dart'
+    show Component, Directive, Input, Output;
 // TODO: move pipes into separate library target.
 export "package:angular2/src/core/metadata.dart" show Pipe;
 // TODO: Remove after usage is deprecated.

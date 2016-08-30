@@ -23,6 +23,7 @@ main() {
         }
         return text;
       }
+
       String onError(String error) {
         if (!identical(response, null)) {
           throw '''Unexpected error ${ url}''';
@@ -32,8 +33,10 @@ main() {
         }
         return error;
       }
+
       request.then(onResponse, onError: onError);
     }
+
     test("should return a response from the definitions", () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
         var url = "/foo";

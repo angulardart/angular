@@ -16,6 +16,7 @@ main() {
     logAppend(item) {
       log += (log.length == 0 ? "" : ", ") + item;
     }
+
     test("should support resetting and iterating over the new objects", () {
       queryList.reset(["one"]);
       queryList.reset(["two"]);

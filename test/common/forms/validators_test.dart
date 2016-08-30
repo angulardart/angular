@@ -119,6 +119,7 @@ main() {
           return emitter;
         };
       }
+
       test("should return null when given null", () {
         expect(Validators.composeAsync(null), null);
       });

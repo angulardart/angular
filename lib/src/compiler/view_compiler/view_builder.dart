@@ -108,8 +108,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       }
     } else {
       return parent.component != null &&
-          !identical(parent.component.template.encapsulation,
-              ViewEncapsulation.Native) ? o.NULL_EXPR : parent.renderNode;
+              !identical(parent.component.template.encapsulation,
+                  ViewEncapsulation.Native)
+          ? o.NULL_EXPR
+          : parent.renderNode;
     }
   }
 

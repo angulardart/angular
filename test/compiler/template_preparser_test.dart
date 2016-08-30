@@ -18,6 +18,7 @@ main() {
     PreparsedElement preparse(String html) {
       return preparseElement(htmlParser.parse(html, "TestComp").rootNodes[0]);
     }
+
     test("should detect script elements", () async {
       return inject([HtmlParser], (HtmlParser htmlParser) {
         expect(preparse("<script>").type, PreparsedElementType.SCRIPT);

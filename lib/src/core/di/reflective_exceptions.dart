@@ -172,12 +172,12 @@ class InvalidProviderError extends BaseException {
   /// provider list to the [Injector].
   InvalidProviderError(provider)
       : this.withCustomMessage(provider,
-      'only instances of Provider and Type are allowed, got ${provider.runtimeType}');
+            'only instances of Provider and Type are allowed, got ${provider.runtimeType}');
 
   /// Constructs a error with a custom message.
   InvalidProviderError.withCustomMessage(provider, String message)
       : super(
-      'Invalid provider (${provider is Provider ? provider.token : provider}): $message');
+            'Invalid provider (${provider is Provider ? provider.token : provider}): $message');
 }
 
 /// Thrown when the class has no annotation information.

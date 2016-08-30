@@ -69,6 +69,7 @@ main() {
             .createAsync(MyComp)
             .then((fixture) => fixture.componentInstance.injector);
       }
+
       test(
           "should support providers with an OpaqueToken that contains a `.` in the name",
           () async {

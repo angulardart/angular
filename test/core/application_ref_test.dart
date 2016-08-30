@@ -63,6 +63,7 @@ main() {
       ], platform.injector);
       return appInjector.get(ApplicationRef);
     }
+
     group("ApplicationRef", () {
       test("should throw when reentering tick", () async {
         return inject([], () {

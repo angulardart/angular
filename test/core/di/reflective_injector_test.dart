@@ -216,6 +216,7 @@ main() {
       sportsCarFactory(e) {
         return new SportsCar(e);
       }
+
       var injector = createInjector([
         Engine,
         provide(Car, useFactory: sportsCarFactory, deps: [Engine])
@@ -229,6 +230,7 @@ main() {
       factoryWithTooManyArgs() {
         return new Car(null);
       }
+
       var injector = createInjector([
         Engine,
         provide(Car, useFactory: factoryWithTooManyArgs, deps: [
@@ -755,6 +757,7 @@ main() {
       sportsCarFactory(e) {
         return new SportsCar(e);
       }
+
       var injector = createInjector([
         Engine,
         provide(Car, useFactory: sportsCarFactory, deps: [Engine])
@@ -768,6 +771,7 @@ main() {
       factoryWithTooManyArgs() {
         return new Car(null);
       }
+
       var injector = createInjector([
         Engine,
         provide(Car, useFactory: factoryWithTooManyArgs, deps: [

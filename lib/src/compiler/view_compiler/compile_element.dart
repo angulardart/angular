@@ -275,8 +275,10 @@ class CompileElement extends CompileNode {
       // directive to get hold of a view provdier on the same element. We still
       // do this semantic as it simplifies our model to having only one runtime
       // injector per element.
-      var providerChildNodeCount = resolvedProvider.providerType ==
-          ProviderAstType.PrivateService ? 0 : childNodeCount;
+      var providerChildNodeCount =
+          resolvedProvider.providerType == ProviderAstType.PrivateService
+              ? 0
+              : childNodeCount;
       view.injectorGetMethod.addStmt(createInjectInternalCondition(
           nodeIndex, providerChildNodeCount, resolvedProvider, providerExpr));
     });
