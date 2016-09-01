@@ -766,6 +766,9 @@ class Component extends Directive {
   final String moduleId;
   final String templateUrl;
   final String template;
+
+  /// Removes all whitespace except `&ngsp;` and `&nbsp;` from template if set
+  /// to false.
   final bool preserveWhitespace;
   final List<String> styleUrls;
   final List<String> styles;
