@@ -10,58 +10,39 @@ import "package:angular2/core.dart"
 import "../../core/change_detection/differs/default_keyvalue_differ.dart"
     show KeyValueChangeRecord;
 
-/// The `NgStyle` directive changes styles based on a result of expression
-/// evaluation.
+/// The `NgStyle` directive changes an element's style based on the bound style
+/// expression:
 ///
-/// An expression assigned to the `ngStyle` property must evaluate to an object
-/// and the corresponding element styles are updated based on changes to this
-/// object. Style names to update are taken from the object's keys, and values
-/// - from the corresponding object's values.
+///     <div [ngStyle]="styleExp"></div>
 ///
-/// ### Syntax
+/// _styleExp_ must evaluate to a `Map<String, String>`. Element style properties
+/// are set based on the map entries: each _key_:_value_ pair identifies a
+/// style property _name_ and its _value_.
 ///
-/// - `<div [ngStyle]="{'font-style': style}"></div>`
-/// - `<div [ngStyle]="styleExp"></div>` - here the `styleExp` must evaluate to
-/// an object
+/// See the [Template Syntax section on `NgStyle`][guide] for more details.
 ///
-/// ### Example:
+/// ### Examples
 ///
-/// ```dart
-/// import 'angular2/core.dart' Component;
-/// import 'angular2/common.dart' NgStyle;
+/// Try the [live example][ex] from the [Template Syntax][guide] page. Here are
+/// the relevant excerpts from the example's template and the corresponding
+/// component class:
 ///
-/// @Component(
-///  selector: 'ngStyle-example',
-///  template: '''
-///    <h1 [ngStyle]="{'font-style': style, 'font-size': size, 'font-weight': weight}">
-///      Change style of this text!
-///    </h1>
+/// {@example docs/template-syntax/lib/app_component.html region=NgStyle}
 ///
-///    <hr>
+/// {@example docs/template-syntax/lib/app_component.dart region=NgStyle}
 ///
-///    <label>Italic: <input type="checkbox" (change)="changeStyle($event)"></label>
-///    <label>Bold: <input type="checkbox" (change)="changeWeight($event)"></label>
-///    <label>Size: <input type="text" [value]="size" (change)="size = $event.target.value"></label>
-///  ''',
-///  directives: const [NgStyle]
-/// )
-/// class NgStyleExample {
-///    String style = 'normal';
-///    String weight = 'normal';
-///    String size = '20px';
+/// In this example, user changes to the `<input>` elements result in updates
+/// to the corresponding style properties of the first paragraph.
 ///
-///    void changeStyle(dynamic event) {
-///      style = event.target.checked ? 'italic' : 'normal';
-///    }
+/// A [Map] literal can be used as a style expression:
 ///
-///    void changeWeight(dynamic event) {
-///      weight = event.target.checked ? 'bold' : 'normal';
-///    }
-/// }
-/// ```
+///     <div [ngStyle]="{'font-style': 'italic'}"></div>
 ///
-/// In this example the `font-style`, `font-size` and `font-weight` styles will
-/// be updated based on the `style` property's value changes.
+/// A better practice, however, is to bind to a component field or method, as
+/// in the binding to `setStyle()` above.
+///
+/// [guide]: docs/guide/template-syntax.html#!#ngStyle
+/// [ex]: examples/template-syntax/#ngStyle
 @Directive(selector: "[ngStyle]", inputs: const ["rawStyle: ngStyle"])
 class NgStyle implements DoCheck {
   KeyValueDiffers _differs;
