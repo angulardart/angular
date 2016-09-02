@@ -49,7 +49,7 @@ asyncValidator(expected, [timeout = 0]) {
     if (timeout == 0) {
       completer.complete(res);
     } else {
-      new Timer(new Duration(milliseconds: 0), () {
+      new Timer(new Duration(milliseconds: timeout), () {
         completer.complete(res);
       });
     }
