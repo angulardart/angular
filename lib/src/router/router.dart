@@ -512,7 +512,8 @@ class RootRouter extends Router {
     if (_location.platformStrategy is PathLocationStrategy) {
       var hash = this._location.hash();
       if (hash.isNotEmpty) {
-        emitQuery = (emitQuery ?? '') + "#" + hash;
+        var normalizedHash = hash.startsWith("#") ? hash : "#" + hash;
+        emitQuery = (emitQuery ?? '') + normalizedHash;
       }
     }
     var promise = super.commit(instruction);
