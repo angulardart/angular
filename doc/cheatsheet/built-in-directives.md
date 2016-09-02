@@ -2,15 +2,13 @@
 Built-in directives
 @cheatsheetIndex 2
 @description
-{@target ts}`import {NgIf, ...} from 'angular2/common';`{@endtarget}
-{@target js}Available from the `ng.common` namespace{@endtarget}
-{@target dart}Available using `platform_directives` in pubspec{@endtarget}
+Available using `platform_directives` in pubspec
 
 @cheatsheetItem
 syntax:
 `<section *ngIf="showSection">`|`*ngIf`
 description:
-Removes or recreates a portion of the DOM tree based on the showSection expression.
+Removes or recreates a portion of the DOM tree based on the `showSection` expression.
 
 @cheatsheetItem
 syntax:
@@ -32,4 +30,4 @@ Conditionally swaps the contents of the div by selecting one of the embedded tem
 syntax:
 `<div [ngClass]="{active: isActive, disabled: isDisabled}">`|`[ngClass]`
 description:
-Binds the presence of CSS classes on the element to the truthiness of the associated map values. The right-hand side expression should return {class-name: true/false} map.
+Binds the presence of CSS classes on the element to the truthiness of the associated map values. The right-hand expression should return {class-name: true/false} map.

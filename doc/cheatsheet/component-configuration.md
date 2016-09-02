@@ -2,18 +2,14 @@
 Component configuration
 @cheatsheetIndex 6
 @description
-{@target js}`ng.core.Component` extends `ng.core.Directive`,
-so the `ng.core.Directive` configuration applies to components as well{@endtarget}
-{@target ts dart}`@Component` extends `@Directive`,
-so the `@Directive` configuration applies to components as well{@endtarget}
+`@Component` extends `@Directive`,
+so the `@Directive` configuration applies to components as well
 
 @cheatsheetItem
-syntax(ts dart):
+syntax:
 `viewProviders: [MyService, provide(...)]`|`viewProviders:`
-syntax(js):
-`viewProviders: [MyService, ng.core.provide(...)]`|`viewProviders:`
 description:
-Array of dependency injection providers scoped to this component's view.
+List of dependency injection providers scoped to this component's view.
 
 
 @cheatsheetItem
@@ -21,7 +17,7 @@ syntax:
 `template: 'Hello {{name}}'
 templateUrl: 'my-component.html'`|`template:`|`templateUrl:`
 description:
-Inline template / external template URL of the component's view.
+Inline template or external template URL of the component's view.
 
 
 @cheatsheetItem
@@ -29,14 +25,14 @@ syntax:
 `styles: ['.primary {color: red}']
 styleUrls: ['my-component.css']`|`styles:`|`styleUrls:`
 description:
-List of inline CSS styles / external stylesheet URLs for styling component’s view.
+List of inline CSS styles or external stylesheet URLs for styling the component’s view.
 
 
 @cheatsheetItem
 syntax:
 `directives: [MyDirective, MyComponent]`|`directives:`
 description:
-List of directives used in the the component’s template.
+List of directives used in the component's template.
 
 
 @cheatsheetItem

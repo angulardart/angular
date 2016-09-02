@@ -37,14 +37,14 @@ Calls method `readRainbow` when a click event is triggered on this button elemen
 syntax:
 `<div title="Hello {{ponyName}}">`|`{{ponyName}}`
 description:
-Binds a property to an interpolated string, e.g. "Hello Seabiscuit". Equivalent to:
+Binds a property to an interpolated string, for example, "Hello Seabiscuit". Equivalent to:
 `<div [title]="'Hello' + ponyName">`
 
 @cheatsheetItem
 syntax:
 `<p>Hello {{ponyName}}</p>`|`{{ponyName}}`
 description:
-Binds text content to an interpolated string, e.g. "Hello Seabiscuit".
+Binds text content to an interpolated string, for example, "Hello Seabiscuit".
 
 @cheatsheetItem
 syntax:
@@ -64,14 +64,14 @@ Creates a local variable `movieplayer` that provides access to the `video` eleme
 syntax:
 `<p *myUnless="myExpression">...</p>`|`*myUnless`
 description:
-The `*` symbol means that the current element will be turned into an embedded template. Equivalent to:
+The `*` symbol turns the current element into an embedded template. Equivalent to:
 `<template [myUnless]="myExpression"><p>...</p></template>`
 
 @cheatsheetItem
 syntax:
-`<p>Card No.: {{cardNumber | myCreditCardNumberFormatter}}</p>`|`{{cardNumber | myCreditCardNumberFormatter}}`
+`<p>Card No.: {{cardNumber | myCardNumberFormatter}}</p>`|`{{cardNumber | myCardNumberFormatter}}`
 description:
-Transforms the current value of expression `cardNumber` via the pipe called `myCreditCardNumberFormatter`.
+Transforms the current value of expression `cardNumber` via the pipe called `myCardNumberFormatter`.
 
 @cheatsheetItem
 syntax:
