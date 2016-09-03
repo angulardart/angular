@@ -125,7 +125,8 @@ abstract class AbstractEmitterVisitor
   dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('''return ''');
-    stmt.value.visitExpression(this, ctx);
+
+    if (stmt.value != null) stmt.value.visitExpression(this, ctx);
     ctx.println(";");
     return null;
   }
