@@ -2,6 +2,7 @@
 library browser_adapter;
 
 import 'dart:html';
+import 'dart:js_util' as js_util;
 import 'package:angular2/platform/common_dom.dart' show setRootDomAdapter;
 import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;
 import 'package:angular2/src/facade/browser.dart';
@@ -104,84 +105,24 @@ final bool _supportsTemplateElement = () {
   }
 }();
 
-@JS()
-external void ngSetProperty(element, property, value);
-
-@JS()
-external dynamic ngGetProperty(element, property);
-
-@JS()
-external bool ngHasProperty(element, property);
-
-@JS()
-external void ngSetGlobalVar(String path, value);
-
 @JS('document.implementation.createHTMLDocument')
 external ngCreateDocument(value);
 
 class BrowserDomAdapter
     extends GenericBrowserDomAdapter<Element, Node, EventTarget> {
-  Map<String, bool> _hasPropertyCache;
-
-  static final String _bootScript =
-      '''window['ngSetProperty'] = function(el, prop, value) {
-          el[prop] = value;
-        }
-        window['ngGetProperty'] = function(el, prop) {
-          return el[prop];
-        };
-        window['ngHasProperty'] = function(el, prop) {
-          return prop in el;
-        };
-        window['ngSetGlobalVar'] = function(path, value) {
-          var parts = path.split('.');
-          var obj = window;
-          var i;
-          for (i = 0; i < (parts.length - 1); i++) {
-            var name = parts[0];
-            if (obj.hasOwnProperty(name)) {
-              obj = obj[name];
-            } else {
-              obj = obj[name] = {};
-            }
-          }
-          obj[parts[parts.length - 1]] = value;
-        }
-  ''';
-
-  BrowserDomAdapter() {
-    _hasPropertyCache = new Map();
-  }
-
   static void makeCurrent() {
-    var script = document.createElement("script");
-    script.setAttribute('type', 'text/javascript');
-    script.text = _bootScript;
-    document.body.append(script);
     setRootDomAdapter(new BrowserDomAdapter());
   }
 
-  bool hasProperty(Element element, String name) {
-    // Always return true as the serverside version html_adapter.dart does so.
-    // TODO: change this once we have schema support.
-    // Note: This nees to kept in sync with html_adapter.dart!
-    return true;
-  }
+  bool hasProperty(Element element, String name) =>
+      js_util.hasProperty(element, name);
 
   void setProperty(Element element, String name, Object value) {
-    var cacheKey = "${element.tagName}.${name}";
-    var hasProperty = _hasPropertyCache[cacheKey];
-    if (hasProperty == null) {
-      hasProperty = ngHasProperty(element, name);
-      this._hasPropertyCache[cacheKey] = hasProperty;
-    }
-    if (hasProperty) {
-      //_setProperty.apply([element, name, value]);
-      ngSetProperty(element, name, value);
-    }
+    js_util.setProperty(element, name, value);
   }
 
-  getProperty(Element element, String name) => ngGetProperty(element, name);
+  getProperty(Element element, String name) =>
+      js_util.getProperty(element, name);
 
   // TODO(tbosch): move this into a separate environment class once we have it
   logError(error) {
@@ -512,11 +453,19 @@ class BrowserDomAdapter
   getComputedStyle(elem) => elem.getComputedStyle();
 
   setGlobalVar(String path, value) {
-    if (value is Function) {
-      ngSetGlobalVar(path, allowInterop(value));
-    } else {
-      ngSetGlobalVar(path, value);
+    var parts = path.split('.');
+    Object obj = window;
+    for (var i = 0; i < parts.length - 1; i++) {
+      var name = parts[i];
+      if (js_util.callMethod(obj, 'hasOwnProperty', [name])) {
+        obj = js_util.getProperty(obj, name);
+      } else {
+        js_util.setProperty(obj, name, js_util.newObject());
+        obj = js_util.getProperty(obj, name);
+      }
     }
+    js_util.setProperty(obj, parts[parts.length - 1],
+        (value is Function) ? allowInterop(value) : value);
   }
 
   requestAnimationFrame(callback) {
