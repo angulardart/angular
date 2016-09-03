@@ -1,6 +1,4 @@
 @TestOn('browser')
-import 'dart:async';
-
 import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
 import 'package:angular2/common.dart'
@@ -42,19 +40,9 @@ class CustomValidatorDirective implements Validator {
   }
 }
 
-asyncValidator(expected, [timeout = 0]) {
-  return (c) {
-    var completer = new Completer();
-    var res = c.value != expected ? {"async": true} : null;
-    if (timeout == 0) {
-      completer.complete(res);
-    } else {
-      new Timer(new Duration(milliseconds: timeout), () {
-        completer.complete(res);
-      });
-    }
-    return completer.future;
-  };
+asyncValidator(expected) {
+  return (AbstractControl c) async =>
+      c.value != expected ? {"async": true} : null;
 }
 
 class MockNgControl extends Mock implements NgControl {}
