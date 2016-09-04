@@ -1,4 +1,4 @@
-@TestOn('browser')
+@Skip('see TODO to enable codegen')
 library angular2.test.testing.ng_test_bed_test;
 
 import 'dart:html';

@@ -1,3 +1,4 @@
+@TestOn('vm')
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/transform/directive_processor/deferred_import_validator.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
