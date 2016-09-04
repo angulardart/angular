@@ -36,13 +36,7 @@ class RenderComponentType {
   List<String> _styles;
 
   RenderComponentType(this.id, this.templateUrl, this.slotCount,
-      this.encapsulation, this.templateStyles) {
-    if (templateStyles != null &&
-        templateStyles.length > 0 &&
-        templateStyles[0] == null) {
-      print('null style');
-    }
-  }
+      this.encapsulation, this.templateStyles);
 
   void shimStyles(SharedStylesHost stylesHost) {
     _styles = _flattenStyles(id, templateStyles, []);

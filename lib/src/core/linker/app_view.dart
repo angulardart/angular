@@ -3,9 +3,9 @@ import 'dart:html';
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import "package:angular2/src/core/di.dart" show Injector;
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RenderComponentType;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/platform/dom/shared_styles_host.dart";
 
 import "element.dart" show AppElement;
@@ -26,7 +26,11 @@ abstract class AppView<T> {
   ViewUtils viewUtils;
   Injector parentInjector;
   AppElement declarationAppElement;
-  ChangeDetectionStrategy cdMode;
+  ChangeDetectionStrategy _cdMode;
+  // Improves change detection tree traversal by caching change detection mode
+  // and change detection state checks. When set to true, this view doesn't need
+  // to be change detected.
+  bool _skipChangeDetection = false;
   ViewRef_ ref;
   List<dynamic> rootNodesOrAppElements;
   List<dynamic> allNodes;
@@ -35,11 +39,11 @@ abstract class AppView<T> {
   List<AppView<dynamic>> contentChildren = [];
   List<AppView<dynamic>> viewChildren = [];
   AppView<dynamic> renderParent;
-  AppElement viewContainerElement = null;
+  AppElement viewContainerElement;
 
   // The names of the below fields must be kept in sync with codegen_name_util.ts or
   // change detection will fail.
-  ChangeDetectorState cdState = ChangeDetectorState.NeverChecked;
+  ChangeDetectorState _cdState = ChangeDetectorState.NeverChecked;
 
   /// The context against which data-binding expressions in this view are
   /// evaluated against.
@@ -58,13 +62,47 @@ abstract class AppView<T> {
       this.viewUtils,
       this.parentInjector,
       this.declarationAppElement,
-      this.cdMode) {
+      this._cdMode) {
     this.ref = new ViewRef_(this);
     if (identical(type, ViewType.COMPONENT) || identical(type, ViewType.HOST)) {
       this.renderer = viewUtils.renderComponent(componentType);
     } else {
       this.renderer = declarationAppElement.parentView.renderer;
     }
+  }
+
+  /// Sets change detection mode for this view and caches flag to skip
+  /// change detection if mode and state don't require one.
+  ///
+  /// Nodes don't require CD if they are Detached or already Checked or
+  /// if error state has been set due a prior exception.
+  ///
+  /// Typically a view alternates between CheckOnce and Checked modes.
+  set cdMode(ChangeDetectionStrategy value) {
+    if (_cdMode != value) {
+      _cdMode = value;
+      _updateSkipChangeDetectionFlag();
+    }
+  }
+
+  ChangeDetectionStrategy get cdMode => _cdMode;
+
+  /// Sets change detection state and caches flag to skip change detection
+  /// if mode and state don't require one.
+  set cdState(ChangeDetectorState value) {
+    if (_cdState != value) {
+      _cdState = value;
+      _updateSkipChangeDetectionFlag();
+    }
+  }
+
+  ChangeDetectorState get cdState => _cdState;
+
+  void _updateSkipChangeDetectionFlag() {
+    _skipChangeDetection =
+        identical(_cdMode, ChangeDetectionStrategy.Detached) ||
+            identical(_cdMode, ChangeDetectionStrategy.Checked) ||
+            identical(_cdState, ChangeDetectorState.Errored);
   }
 
   AppElement create(
@@ -224,16 +262,16 @@ abstract class AppView<T> {
   void dirtyParentQueriesInternal() {}
 
   void detectChanges() {
-    if (identical(this.cdMode, ChangeDetectionStrategy.Detached) ||
-        identical(this.cdMode, ChangeDetectionStrategy.Checked) ||
-        identical(this.cdState, ChangeDetectorState.Errored)) return;
+    if (_skipChangeDetection) return;
     if (this.destroyed) {
       this.throwDestroyedError("detectChanges");
     }
     this.detectChangesInternal();
-    if (identical(this.cdMode, ChangeDetectionStrategy.CheckOnce))
-      this.cdMode = ChangeDetectionStrategy.Checked;
-    this.cdState = ChangeDetectorState.CheckedBefore;
+    if (identical(_cdMode, ChangeDetectionStrategy.CheckOnce)) {
+      _cdMode = ChangeDetectionStrategy.Checked;
+      _skipChangeDetection = true;
+    }
+    cdState = ChangeDetectorState.CheckedBefore;
   }
 
   /// Overwritten by implementations
