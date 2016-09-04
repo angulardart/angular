@@ -37,8 +37,6 @@ var NG_COMMON = [
   'FORM_PROVIDERS',
   'Form',
   'FormBuilder',
-  'I18nPluralPipe',
-  'I18nSelectPipe',
   'JsonPipe',
   'LowerCasePipe',
   'MaxLengthValidator',

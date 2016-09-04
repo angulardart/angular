@@ -1,4 +1,3 @@
-import 'package:angular2/i18n.dart';
 import 'package:angular2/router/router_link_dsl.dart';
 import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/directive_normalizer.dart';
@@ -33,36 +32,26 @@ class _LoggerConsole implements Console {
 }
 
 OfflineCompiler createTemplateCompiler(AssetReader reader,
-    {CompilerConfig compilerConfig, XmbDeserializationResult translations}) {
-  var _xhr = new XhrImpl(reader);
-  var _urlResolver = createOfflineCompileUrlResolver();
+    {CompilerConfig compilerConfig}) {
+  var xhr = new XhrImpl(reader);
+  var urlResolver = createOfflineCompileUrlResolver();
 
   // TODO(yjbanov): add router AST transformer when ready
   var parser = new ng.Parser(new ng.Lexer());
-  var _htmlParser = _createHtmlParser(translations, parser);
+  var htmlParser = new HtmlParser();
 
   var templateParser = new TemplateParser(
       parser,
       new DomElementSchemaRegistry(),
-      _htmlParser,
+      htmlParser,
       new _LoggerConsole(),
       [new RouterLinkTransform(parser)]);
 
   return new OfflineCompiler(
-      new DirectiveNormalizer(_xhr, _urlResolver, _htmlParser),
+      new DirectiveNormalizer(xhr, urlResolver, htmlParser),
       templateParser,
-      new StyleCompiler(_urlResolver),
+      new StyleCompiler(urlResolver),
       new ViewCompiler(compilerConfig),
       new InjectorCompiler(),
       new DartEmitter());
-}
-
-HtmlParser _createHtmlParser(
-    XmbDeserializationResult translations, ng.Parser parser) {
-  if (translations != null) {
-    return new I18nHtmlParser(
-        new HtmlParser(), parser, translations.content, translations.messages);
-  } else {
-    return new HtmlParser();
-  }
 }

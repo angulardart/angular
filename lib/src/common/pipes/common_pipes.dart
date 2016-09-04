@@ -2,8 +2,6 @@
 
 import "async_pipe.dart" show AsyncPipe;
 import "date_pipe.dart" show DatePipe;
-import "i18n_plural_pipe.dart" show I18nPluralPipe;
-import "i18n_select_pipe.dart" show I18nSelectPipe;
 import "json_pipe.dart" show JsonPipe;
 import "lowercase_pipe.dart" show LowerCasePipe;
 import "number_pipe.dart" show DecimalPipe, PercentPipe, CurrencyPipe;
@@ -26,7 +24,5 @@ const COMMON_PIPES = const [
   PercentPipe,
   CurrencyPipe,
   DatePipe,
-  ReplacePipe,
-  I18nPluralPipe,
-  I18nSelectPipe
+  ReplacePipe
 ];

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:angular2/i18n.dart';
 import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/facade/lang.dart';
@@ -33,7 +32,6 @@ Future<Outputs> processTemplates(AssetReader reader, AssetId assetId,
     bool reflectPropertiesAsAttributes: false,
     List<String> platformDirectives,
     List<String> platformPipes,
-    XmbDeserializationResult translations,
     Map<String, String> resolvedIdentifiers}) async {
   var compileDefs = await createCompileData(
       reader, assetId, platformDirectives, platformPipes);
@@ -42,8 +40,7 @@ Future<Outputs> processTemplates(AssetReader reader, AssetId assetId,
   if (templateCompiler == null) {
     templateCompiler = createTemplateCompiler(reader,
         compilerConfig: new CompilerConfig(codegenMode == CODEGEN_DEBUG_MODE,
-            reflectPropertiesAsAttributes, false),
-        translations: translations);
+            reflectPropertiesAsAttributes, false));
   }
 
   final compileComponentsData =

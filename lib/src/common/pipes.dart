@@ -3,8 +3,6 @@
 export "pipes/async_pipe.dart" show AsyncPipe;
 export "pipes/common_pipes.dart" show COMMON_PIPES;
 export "pipes/date_pipe.dart" show DatePipe;
-export "pipes/i18n_plural_pipe.dart" show I18nPluralPipe;
-export "pipes/i18n_select_pipe.dart" show I18nSelectPipe;
 export "pipes/json_pipe.dart" show JsonPipe;
 export "pipes/lowercase_pipe.dart" show LowerCasePipe;
 export "pipes/number_pipe.dart"
