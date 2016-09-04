@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('browser && !js')
 library angular2.test.symbol_inspector.symbol_inspector_test;
 
 import 'dart:mirrors';
