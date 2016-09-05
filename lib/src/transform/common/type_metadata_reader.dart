@@ -437,19 +437,43 @@ class _DirectiveMetadataVisitor extends Object
     return null;
   }
 
+  /// Verifies that annotation has parantheses.
+  ///
+  /// Throws error for input such as `@Input String value`.
+  void _verifyHasZeroOrMoreArgs(
+      String name, FieldDeclaration node, Annotation meta) {
+    if (meta.arguments == null || meta.arguments.arguments == null) {
+      throw new FormatException(
+          'Expecting parentheses after @${name}() annotation.',
+          '$node' /* source */);
+    }
+  }
+
+  void _verifyMethodHasZeroOrMoreArgs(
+      String name, MethodDeclaration node, Annotation meta) {
+    if (meta.arguments == null || meta.arguments.arguments == null) {
+      throw new FormatException(
+          'Expecting parentheses after @${name}() annotation.',
+          '$node' /* source */);
+    }
+  }
+
   @override
   Object visitFieldDeclaration(FieldDeclaration node) {
     for (var variable in node.fields.variables) {
       for (var meta in node.metadata) {
         if (_isAnnotation(meta, 'Output')) {
+          _verifyHasZeroOrMoreArgs('Output', node, meta);
           _addPropertyToType(_outputs, variable.name.toString(), meta);
         }
 
         if (_isAnnotation(meta, 'Input')) {
+          _verifyHasZeroOrMoreArgs('Input', node, meta);
           _addPropertyToType(_inputs, variable.name.toString(), meta);
         }
 
         if (_isAnnotation(meta, 'HostBinding')) {
+          _verifyHasZeroOrMoreArgs('HostBinding', node, meta);
           final renamed = _getRenamedValue(meta);
           if (renamed != null) {
             _host['[${renamed}]'] = '${variable.name}';
@@ -459,19 +483,23 @@ class _DirectiveMetadataVisitor extends Object
         }
 
         if (_isAnnotation(meta, 'ContentChild')) {
-          this._queries.add(_createQueryMetadata(
+          _verifyHasZeroOrMoreArgs('ContentChild', node, meta);
+          _queries.add(_createQueryMetadata(
               meta, false, true, variable.name.toString()));
         }
         if (_isAnnotation(meta, 'ContentChildren')) {
-          this._queries.add(_createQueryMetadata(
+          _verifyHasZeroOrMoreArgs('ContentChildren', node, meta);
+          _queries.add(_createQueryMetadata(
               meta, false, false, variable.name.toString()));
         }
         if (_isAnnotation(meta, 'ViewChild')) {
-          this._viewQueries.add(
+          _verifyHasZeroOrMoreArgs('ViewChild', node, meta);
+          _viewQueries.add(
               _createQueryMetadata(meta, true, true, variable.name.toString()));
         }
         if (_isAnnotation(meta, 'ViewChildren')) {
-          this._viewQueries.add(_createQueryMetadata(
+          _verifyHasZeroOrMoreArgs('ViewChildren', node, meta);
+          _viewQueries.add(_createQueryMetadata(
               meta, false, false, variable.name.toString()));
         }
       }
@@ -483,34 +511,39 @@ class _DirectiveMetadataVisitor extends Object
   Object visitMethodDeclaration(MethodDeclaration node) {
     for (var meta in node.metadata) {
       if (_isAnnotation(meta, 'Output') && node.isGetter) {
+        _verifyMethodHasZeroOrMoreArgs('Output', node, meta);
         _addPropertyToType(_outputs, node.name.toString(), meta);
       }
 
       if (_isAnnotation(meta, 'Input') && node.isSetter) {
+        _verifyMethodHasZeroOrMoreArgs('Input', node, meta);
         _addPropertyToType(_inputs, node.name.toString(), meta);
       }
 
       if (_isAnnotation(meta, 'ContentChild') && node.isSetter) {
-        this
-            ._queries
+        _verifyMethodHasZeroOrMoreArgs('ContentChild', node, meta);
+        _queries
             .add(_createQueryMetadata(meta, false, true, node.name.toString()));
       }
       if (_isAnnotation(meta, 'ContentChildren') && node.isSetter) {
-        this._queries.add(
+        _verifyMethodHasZeroOrMoreArgs('ContentChildren', node, meta);
+        _queries.add(
             _createQueryMetadata(meta, false, false, node.name.toString()));
       }
       if (_isAnnotation(meta, 'ViewChild') && node.isSetter) {
-        this
-            ._viewQueries
+        _verifyMethodHasZeroOrMoreArgs('ViewChild', node, meta);
+        _viewQueries
             .add(_createQueryMetadata(meta, true, true, node.name.toString()));
       }
       if (_isAnnotation(meta, 'ViewChildren') && node.isSetter) {
-        this._viewQueries.add(
+        _verifyMethodHasZeroOrMoreArgs('ViewChildren', node, meta);
+        _viewQueries.add(
             _createQueryMetadata(meta, false, false, node.name.toString()));
       }
 
       if (_isAnnotation(meta, 'HostListener')) {
-        if (meta.arguments.arguments.length == 0 ||
+        if (meta.arguments?.arguments == null ||
+            meta.arguments.arguments.length == 0 ||
             meta.arguments.arguments.length > 2) {
           throw new ArgumentError(
               'Incorrect value passed to HostListener. Expected 1 or 2.');
@@ -522,6 +555,7 @@ class _DirectiveMetadataVisitor extends Object
       }
 
       if (_isAnnotation(meta, 'HostBinding') && node.isGetter) {
+        _verifyMethodHasZeroOrMoreArgs('HostBinding', node, meta);
         final renamed = _getRenamedValue(meta);
         if (renamed != null) {
           _host['[${renamed}]'] = '${node.name}';
