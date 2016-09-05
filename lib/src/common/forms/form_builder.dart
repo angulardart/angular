@@ -1,7 +1,7 @@
 import "package:angular2/di.dart" show Injectable;
 
 import "directives/validators.dart";
-import "model.dart" as modelModule;
+import "model.dart" as model_module;
 
 /// Creates a form object from a user-specified configuration.
 ///
@@ -47,7 +47,7 @@ class FormBuilder {
   /// Valid keys for the `extra` parameter map are [optionals] and [validator].
   ///
   /// See the [ControlGroup] constructor for more details.
-  modelModule.ControlGroup group(Map<String, dynamic> controlsConfig,
+  model_module.ControlGroup group(Map<String, dynamic> controlsConfig,
       [Map<String, dynamic> extra = null]) {
     var controls = this._reduceControls(controlsConfig);
     var optionals =
@@ -56,38 +56,38 @@ class FormBuilder {
         extra != null ? extra['validator'] as ValidatorFn : null;
     AsyncValidatorFn asyncValidator =
         extra != null ? extra['asyncValidator'] as AsyncValidatorFn : null;
-    return new modelModule.ControlGroup(
+    return new model_module.ControlGroup(
         controls, optionals, validator, asyncValidator);
   }
 
   /// Construct a new [Control] with the given [value], [validator], and
   /// [asyncValidator].
-  modelModule.Control control(Object value,
+  model_module.Control control(Object value,
       [ValidatorFn validator = null, AsyncValidatorFn asyncValidator = null]) {
-    return new modelModule.Control(value, validator, asyncValidator);
+    return new model_module.Control(value, validator, asyncValidator);
   }
 
   /// Construct an array of [Control]s from the given [controlsConfig] array of
   /// configuration, with the given optional [validator] and [asyncValidator].
-  modelModule.ControlArray array(List<dynamic> controlsConfig,
+  model_module.ControlArray array(List<dynamic> controlsConfig,
       [ValidatorFn validator = null, AsyncValidatorFn asyncValidator = null]) {
     var controls = controlsConfig.map((c) => this._createControl(c)).toList();
-    return new modelModule.ControlArray(controls, validator, asyncValidator);
+    return new model_module.ControlArray(controls, validator, asyncValidator);
   }
 
-  Map<String, modelModule.AbstractControl> _reduceControls(
+  Map<String, model_module.AbstractControl> _reduceControls(
       Map<String, dynamic> controlsConfig) {
-    Map<String, modelModule.AbstractControl> controls = {};
+    Map<String, model_module.AbstractControl> controls = {};
     controlsConfig.forEach((String controlName, dynamic controlConfig) {
       controls[controlName] = this._createControl(controlConfig);
     });
     return controls;
   }
 
-  modelModule.AbstractControl _createControl(dynamic controlConfig) {
-    if (controlConfig is modelModule.Control ||
-        controlConfig is modelModule.ControlGroup ||
-        controlConfig is modelModule.ControlArray) {
+  model_module.AbstractControl _createControl(dynamic controlConfig) {
+    if (controlConfig is model_module.Control ||
+        controlConfig is model_module.ControlGroup ||
+        controlConfig is model_module.ControlArray) {
       return controlConfig;
     } else if (controlConfig is List) {
       var value = controlConfig[0];

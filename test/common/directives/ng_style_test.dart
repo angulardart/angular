@@ -34,7 +34,7 @@ main() {
         tcb
             .overrideTemplate(TestComponent, template)
             .createAsync(TestComponent)
-            .then((fixture) {
+            .then((ComponentFixture fixture) {
           Map<String, dynamic> expr;
           fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
           fixture.detectChanges();

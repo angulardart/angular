@@ -55,7 +55,7 @@ abstract class AbstractControl {
   bool _touched = false;
   dynamic /* ControlGroup | ControlArray */ _parent;
   dynamic _asyncValidationSubscription;
-  AbstractControl(this.validator, this.asyncValidator) {}
+  AbstractControl(this.validator, this.asyncValidator);
   dynamic get value {
     return this._value;
   }
@@ -322,7 +322,6 @@ class ControlGroup extends AbstractControl {
       ValidatorFn validator = null,
       AsyncValidatorFn asyncValidator = null])
       : super(validator, asyncValidator) {
-    /* super call moved to initializer */;
     this._optionals = optionals ?? {};
     this._initObservables();
     this._setParentForControls();
@@ -418,7 +417,6 @@ class ControlArray extends AbstractControl {
   ControlArray(this.controls,
       [ValidatorFn validator = null, AsyncValidatorFn asyncValidator = null])
       : super(validator, asyncValidator) {
-    /* super call moved to initializer */;
     this._initObservables();
     this._setParentForControls();
     this.updateValueAndValidity(onlySelf: true, emitEvent: false);

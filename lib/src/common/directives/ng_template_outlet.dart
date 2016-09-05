@@ -7,9 +7,9 @@ import "package:angular2/core.dart"
 /// - `<template [ngTemplateOutlet]="templateRefExpression"></template>`
 @Directive(selector: "[ngTemplateOutlet]")
 class NgTemplateOutlet {
-  ViewContainerRef _viewContainerRef;
+  final ViewContainerRef _viewContainerRef;
   ViewRef _insertedViewRef;
-  NgTemplateOutlet(this._viewContainerRef) {}
+  NgTemplateOutlet(this._viewContainerRef);
   @Input()
   set ngTemplateOutlet(TemplateRef templateRef) {
     if (_insertedViewRef != null) {

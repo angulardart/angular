@@ -28,9 +28,7 @@ class _InterpretiveInjector extends CodegenInjector<dynamic>
   Map<String, Function> methods;
   _InterpretiveInjector(
       List<dynamic> args, this.clazz, this.props, this.getters, this.methods)
-      : super(args[0], args[1], args[2]) {
-    /* super call moved to initializer */;
-  }
+      : super(args[0], args[1], args[2]);
   dynamic getInternal(dynamic token, dynamic notFoundResult) {
     var m = this.methods["getInternal"];
     return m(token, notFoundResult);

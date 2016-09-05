@@ -5,9 +5,9 @@ enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
 @Injectable()
 class Lexer {
-  List<dynamic> tokenize(String text) {
+  List<Token> tokenize(String text) {
     var scanner = new _Scanner(text);
-    var tokens = [];
+    var tokens = <Token>[];
     var token = scanner.scanToken();
     while (token != null) {
       tokens.add(token);
@@ -22,7 +22,7 @@ class Token {
   TokenType type;
   num numValue;
   String strValue;
-  Token(this.index, this.type, this.numValue, this.strValue) {}
+  Token(this.index, this.type, this.numValue, this.strValue);
   bool isCharacter(num code) {
     return (this.type == TokenType.Character && this.numValue == code);
   }
@@ -170,10 +170,8 @@ const $RBRACE = 125;
 const $NBSP = 160;
 
 class ScannerError extends BaseException {
-  var message;
-  ScannerError(this.message) : super() {
-    /* super call moved to initializer */;
-  }
+  final String message;
+  ScannerError(this.message);
   String toString() {
     return this.message;
   }

@@ -3,7 +3,7 @@ import 'dart:async';
 import "package:angular2/di.dart" show OpaqueToken;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
-import "model.dart" as modelModule;
+import "model.dart" as model_module;
 
 ///  Providers for validators to be used for [Control]s in a form.
 ///
@@ -30,7 +30,7 @@ const OpaqueToken NG_ASYNC_VALIDATORS = const OpaqueToken("NgAsyncValidators");
 /// ```
 class Validators {
   ///  Validator that requires controls to have a non-empty value.
-  static Map<String, bool> required(modelModule.AbstractControl control) {
+  static Map<String, bool> required(model_module.AbstractControl control) {
     return control.value == null || control.value == ''
         ? {"required": true}
         : null;
@@ -38,7 +38,7 @@ class Validators {
 
   ///  Validator that requires controls to have a value of a minimum length.
   static ValidatorFn minLength(num minLength) {
-    return /* Map < String , dynamic > */ (modelModule
+    return /* Map < String , dynamic > */ (model_module
         .AbstractControl control) {
       if (Validators.required(control) != null) return null;
       String v = control.value;
@@ -55,7 +55,7 @@ class Validators {
 
   ///  Validator that requires controls to have a value of a maximum length.
   static ValidatorFn maxLength(num maxLength) {
-    return /* Map < String , dynamic > */ (modelModule
+    return /* Map < String , dynamic > */ (model_module
         .AbstractControl control) {
       if (Validators.required(control) != null) return null;
       String v = control.value;
@@ -72,7 +72,7 @@ class Validators {
 
   ///  Validator that requires a control to match a regex to its value.
   static ValidatorFn pattern(String pattern) {
-    return /* Map < String , dynamic > */ (modelModule
+    return /* Map < String , dynamic > */ (model_module
         .AbstractControl control) {
       if (Validators.required(control) != null) return null;
       var regex = new RegExp('''^${ pattern}\$''');
@@ -89,7 +89,7 @@ class Validators {
   }
 
   ///  No-op validator.
-  static Map<String, bool> nullValidator(modelModule.AbstractControl c) {
+  static Map<String, bool> nullValidator(model_module.AbstractControl c) {
     return null;
   }
 
@@ -99,7 +99,7 @@ class Validators {
     if (validators == null) return null;
     var presentValidators = validators.where((v) => v != null).toList();
     if (presentValidators.length == 0) return null;
-    return (modelModule.AbstractControl control) {
+    return (model_module.AbstractControl control) {
       return _mergeErrors(_executeValidators(control, presentValidators));
     };
   }
@@ -108,7 +108,7 @@ class Validators {
     if (validators == null) return null;
     var presentValidators = validators.where((v) => v != null).toList();
     if (presentValidators.length == 0) return null;
-    return (modelModule.AbstractControl control) {
+    return (model_module.AbstractControl control) {
       var promises =
           _executeAsyncValidators(control, presentValidators).map(_toFuture);
       return Future.wait(promises).then(_mergeErrors);
@@ -124,12 +124,12 @@ Future _toFuture(futureOrStream) {
 }
 
 List<dynamic> _executeValidators(
-    modelModule.AbstractControl control, List<ValidatorFn> validators) {
+    model_module.AbstractControl control, List<ValidatorFn> validators) {
   return validators.map((v) => v(control)).toList();
 }
 
 List<dynamic> _executeAsyncValidators(
-    modelModule.AbstractControl control, List<AsyncValidatorFn> validators) {
+    model_module.AbstractControl control, List<AsyncValidatorFn> validators) {
   return validators.map((v) => v(control)).toList();
 }
 

@@ -17,6 +17,8 @@ import "schema_registry_mock.dart" show MockSchemaRegistry;
 import "expression_parser/unparser.dart" show Unparser;
 import 'package:test/test.dart';
 
+import 'package:func/func.dart';
+
 var expressionUnparser = new Unparser();
 var someModuleUrl = "package:someModule";
 var MOCK_SCHEMA_REGISTRY = [
@@ -26,11 +28,12 @@ var MOCK_SCHEMA_REGISTRY = [
 ];
 main() {
   var ngIf;
-  var parse;
+  Func3Opt1<String, List<CompileDirectiveMetadata>, List<CompilePipeMetadata>,
+      List<TemplateAst>> parse;
   ArrayConsole console = new ArrayConsole();
 
   var commonSetup = () async {
-    await inject([TemplateParser], (parser) {
+    await inject([TemplateParser], (TemplateParser parser) {
       var component = CompileDirectiveMetadata.create(
           selector: "root",
           type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "Root"),
@@ -1761,7 +1764,7 @@ List<dynamic> humanizeTplAstSourceSpans(List<TemplateAst> templateAsts) {
 class TemplateHumanizer implements TemplateAstVisitor {
   bool includeSourceSpan;
   List<dynamic> result = [];
-  TemplateHumanizer(this.includeSourceSpan) {}
+  TemplateHumanizer(this.includeSourceSpan);
   dynamic visitNgContent(NgContentAst ast, dynamic context) {
     var res = [NgContentAst];
     this.result.add(this._appendContext(ast, res));

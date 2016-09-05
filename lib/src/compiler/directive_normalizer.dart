@@ -27,7 +27,7 @@ class DirectiveNormalizer {
   XHR _xhr;
   UrlResolver _urlResolver;
   HtmlParser _htmlParser;
-  DirectiveNormalizer(this._xhr, this._urlResolver, this._htmlParser) {}
+  DirectiveNormalizer(this._xhr, this._urlResolver, this._htmlParser);
   Future<CompileDirectiveMetadata> normalizeDirective(
       CompileDirectiveMetadata directive) {
     if (!directive.isComponent) {

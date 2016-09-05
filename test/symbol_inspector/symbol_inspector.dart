@@ -51,7 +51,7 @@ LibraryMirror getLibrary(String uri) {
 }
 
 List<String> getSymbolsFromLibrary(LibraryMirror lib) {
-  var names = [];
+  var names = <String>[];
   extractSymbols(lib).addTo(names);
   names.sort();
   // remove duplicates;

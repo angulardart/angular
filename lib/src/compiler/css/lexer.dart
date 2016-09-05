@@ -87,7 +87,7 @@ enum CssLexerMode {
 class LexedCssResult {
   CssScannerError error;
   CssToken token;
-  LexedCssResult(this.error, this.token) {}
+  LexedCssResult(this.error, this.token);
 }
 
 String generateErrorMessage(String input, String message, String errorValue,
@@ -137,8 +137,7 @@ class CssScannerError extends BaseException {
   CssToken token;
   String rawMessage;
   String message;
-  CssScannerError(this.token, message) : super("Css Parse Error: " + message) {
-    /* super call moved to initializer */;
+  CssScannerError(this.token, message) : super("Css Parse Error: $message") {
     this.rawMessage = message;
   }
   String toString() {
@@ -169,7 +168,7 @@ class CssScanner {
   /** @internal */
   CssLexerMode _currentMode = CssLexerMode.BLOCK;
   /** @internal */
-  CssScannerError _currentError = null;
+  CssScannerError _currentError;
   CssScanner(this.input, [this._trackComments = false]) {
     this.length = this.input.length;
     this.peekPeek = this.peekAt(0);
@@ -256,7 +255,7 @@ class CssScanner {
 
     // mode so that the parser can recover...
     this.setMode(mode);
-    var error = null;
+    var error;
     if (!isMatchingType || (value != null && value != next.strValue)) {
       var errorMessage = resolveEnumToken(CssTokenType, next.type) +
           " does not match expected " +

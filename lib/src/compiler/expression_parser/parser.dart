@@ -56,27 +56,25 @@ class ParseException extends BaseException {
   ParseException(String message, String input, String errLocation,
       [dynamic ctxLocation])
       : super(
-            '''Parser Error: ${ message} ${ errLocation} [${ input}] in ${ ctxLocation}''') {
-    /* super call moved to initializer */;
-  }
+            '''Parser Error: ${ message} ${ errLocation} [${ input}] in ${ ctxLocation}''');
 }
 
 class SplitInterpolation {
   List<String> strings;
   List<String> expressions;
-  SplitInterpolation(this.strings, this.expressions) {}
+  SplitInterpolation(this.strings, this.expressions);
 }
 
 class TemplateBindingParseResult {
   List<TemplateBinding> templateBindings;
   List<String> warnings;
-  TemplateBindingParseResult(this.templateBindings, this.warnings) {}
+  TemplateBindingParseResult(this.templateBindings, this.warnings);
 }
 
 @Injectable()
 class Parser {
   Lexer _lexer;
-  Parser(this._lexer) {}
+  Parser(this._lexer);
   ASTWithSource parseAction(String input, dynamic location) {
     this._checkNoInterpolation(input, location);
     var tokens = this._lexer.tokenize(this._stripComments(input));
@@ -179,7 +177,7 @@ class Parser {
   }
 
   num _commentStart(String input) {
-    var outerQuote = null;
+    var outerQuote;
     for (var i = 0; i < input.length - 1; i++) {
       var char = input.codeUnitAt(i);
       var nextChar = input.codeUnitAt(i + 1);
@@ -622,7 +620,7 @@ class _ParseAST {
 
   TemplateBindingParseResult parseTemplateBindings() {
     List<TemplateBinding> bindings = [];
-    var prefix = null;
+    var prefix;
     List<String> warnings = [];
     while (this.index < this.tokens.length) {
       bool keyIsVar = this.peekKeywordLet();
@@ -648,8 +646,8 @@ class _ParseAST {
         }
       }
       this.optionalCharacter($COLON);
-      var name = null;
-      var expression = null;
+      var name;
+      var expression;
       if (keyIsVar) {
         if (this.optionalOperator("=")) {
           name = this.expectTemplateBindingKey();

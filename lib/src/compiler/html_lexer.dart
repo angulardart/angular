@@ -27,24 +27,22 @@ enum HtmlTokenType {
 }
 
 class HtmlToken {
-  HtmlTokenType type;
-  List<String> parts;
-  ParseSourceSpan sourceSpan;
-  HtmlToken(this.type, this.parts, this.sourceSpan) {}
+  final HtmlTokenType type;
+  final List<String> parts;
+  final ParseSourceSpan sourceSpan;
+  HtmlToken(this.type, this.parts, this.sourceSpan);
 }
 
 class HtmlTokenError extends ParseError {
-  HtmlTokenType tokenType;
+  final HtmlTokenType tokenType;
   HtmlTokenError(String errorMsg, this.tokenType, ParseSourceSpan span)
-      : super(span, errorMsg) {
-    /* super call moved to initializer */;
-  }
+      : super(span, errorMsg);
 }
 
 class HtmlTokenizeResult {
-  List<HtmlToken> tokens;
-  List<HtmlTokenError> errors;
-  HtmlTokenizeResult(this.tokens, this.errors) {}
+  final List<HtmlToken> tokens;
+  final List<HtmlTokenError> errors;
+  HtmlTokenizeResult(this.tokens, this.errors);
 }
 
 HtmlTokenizeResult tokenizeHtml(String sourceContent, String sourceUrl,
@@ -94,16 +92,16 @@ var CR_OR_CRLF_REGEXP = new RegExp(r'\r\n?');
 String unexpectedCharacterErrorMsg(num charCode) {
   var char =
       identical(charCode, $EOF) ? "EOF" : new String.fromCharCode(charCode);
-  return '''Unexpected character "${ char}"''';
+  return '''Unexpected character "$char"''';
 }
 
 String unknownEntityErrorMsg(String entitySrc) {
-  return '''Unknown entity "${ entitySrc}" - use the "&#<decimal>;" or  "&#x<hex>;" syntax''';
+  return '''Unknown entity "$entitySrc" - use the "&#<decimal>;" or  "&#x<hex>;" syntax''';
 }
 
-class ControlFlowError {
-  HtmlTokenError error;
-  ControlFlowError(this.error) {}
+class ControlFlowError extends Error {
+  final HtmlTokenError error;
+  ControlFlowError(this.error);
 }
 
 // See http://www.w3.org/TR/html51/syntax.html#writing
@@ -410,7 +408,7 @@ class _HtmlTokenizer {
 
   List<String> _consumePrefixAndName() {
     var nameOrPrefixStart = this.index;
-    var prefix = null;
+    var prefix;
     while (!identical(this.peek, $COLON) && !isPrefixEnd(this.peek)) {
       this._advance();
     }

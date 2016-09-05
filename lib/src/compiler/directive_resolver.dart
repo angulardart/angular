@@ -22,7 +22,7 @@ bool _isDirectiveMetadata(dynamic type) {
 
 class NoDirectiveAnnotationError extends BaseException {
   NoDirectiveAnnotationError(Type type)
-      : super('No Directive annotation found on $type') {}
+      : super('No Directive annotation found on $type');
 }
 
 /// Resolve a [Type] for [DirectiveMetadata].

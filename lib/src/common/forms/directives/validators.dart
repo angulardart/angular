@@ -3,7 +3,6 @@ import 'dart:async';
 import "package:angular2/core.dart" show Provider, Attribute, Directive;
 
 import "../model.dart" show AbstractControl;
-import "../model.dart" as modelModule;
 import "../validators.dart" show Validators, NG_VALIDATORS;
 
 /// An interface that can be implemented by classes that can act as validators.
@@ -22,7 +21,7 @@ import "../validators.dart" show Validators, NG_VALIDATORS;
 /// }
 /// ```
 abstract class Validator {
-  Map<String, dynamic> validate(modelModule.AbstractControl c);
+  Map<String, dynamic> validate(AbstractControl c);
 }
 
 const REQUIRED = Validators.required;
@@ -42,7 +41,7 @@ const REQUIRED_VALIDATOR =
 class RequiredValidator {}
 
 typedef Map<String, dynamic> ValidatorFn(AbstractControl c);
-typedef Future AsyncValidatorFn(AbstractControl c);
+typedef Future AsyncValidatorFn<T extends AbstractControl>(T c);
 
 /// Provider which adds [MinLengthValidator] to [NG_VALIDATORS].
 const MIN_LENGTH_VALIDATOR =

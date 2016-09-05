@@ -7,8 +7,8 @@ import "validators.dart" show AsyncValidatorFn, ValidatorFn;
 ///
 /// Used internally by Angular forms.
 abstract class NgControl extends AbstractControlDirective {
-  String name = null;
-  ControlValueAccessor valueAccessor = null;
+  String name;
+  ControlValueAccessor valueAccessor;
   ValidatorFn get validator;
 
   AsyncValidatorFn get asyncValidator;

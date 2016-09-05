@@ -25,9 +25,7 @@ class Quote extends AST {
   String prefix;
   String uninterpretedExpression;
   dynamic location;
-  Quote(this.prefix, this.uninterpretedExpression, this.location) : super() {
-    /* super call moved to initializer */;
-  }
+  Quote(this.prefix, this.uninterpretedExpression, this.location);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitQuote(this, context);
   }
@@ -52,9 +50,7 @@ class ImplicitReceiver extends AST {
  */
 class Chain extends AST {
   List<dynamic> expressions;
-  Chain(this.expressions) : super() {
-    /* super call moved to initializer */;
-  }
+  Chain(this.expressions);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitChain(this, context);
   }
@@ -64,9 +60,7 @@ class Conditional extends AST {
   AST condition;
   AST trueExp;
   AST falseExp;
-  Conditional(this.condition, this.trueExp, this.falseExp) : super() {
-    /* super call moved to initializer */;
-  }
+  Conditional(this.condition, this.trueExp, this.falseExp);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitConditional(this, context);
   }
@@ -89,9 +83,7 @@ class IfNull extends AST {
 class PropertyRead extends AST {
   AST receiver;
   String name;
-  PropertyRead(this.receiver, this.name) : super() {
-    /* super call moved to initializer */;
-  }
+  PropertyRead(this.receiver, this.name);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitPropertyRead(this, context);
   }
@@ -101,9 +93,7 @@ class PropertyWrite extends AST {
   AST receiver;
   String name;
   AST value;
-  PropertyWrite(this.receiver, this.name, this.value) : super() {
-    /* super call moved to initializer */;
-  }
+  PropertyWrite(this.receiver, this.name, this.value);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitPropertyWrite(this, context);
   }
@@ -112,9 +102,7 @@ class PropertyWrite extends AST {
 class SafePropertyRead extends AST {
   AST receiver;
   String name;
-  SafePropertyRead(this.receiver, this.name) : super() {
-    /* super call moved to initializer */;
-  }
+  SafePropertyRead(this.receiver, this.name);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitSafePropertyRead(this, context);
   }
@@ -123,9 +111,7 @@ class SafePropertyRead extends AST {
 class KeyedRead extends AST {
   AST obj;
   AST key;
-  KeyedRead(this.obj, this.key) : super() {
-    /* super call moved to initializer */;
-  }
+  KeyedRead(this.obj, this.key);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitKeyedRead(this, context);
   }
@@ -135,9 +121,7 @@ class KeyedWrite extends AST {
   AST obj;
   AST key;
   AST value;
-  KeyedWrite(this.obj, this.key, this.value) : super() {
-    /* super call moved to initializer */;
-  }
+  KeyedWrite(this.obj, this.key, this.value);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitKeyedWrite(this, context);
   }
@@ -147,9 +131,7 @@ class BindingPipe extends AST {
   AST exp;
   String name;
   List<dynamic> args;
-  BindingPipe(this.exp, this.name, this.args) : super() {
-    /* super call moved to initializer */;
-  }
+  BindingPipe(this.exp, this.name, this.args);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitPipe(this, context);
   }
@@ -157,9 +139,7 @@ class BindingPipe extends AST {
 
 class LiteralPrimitive extends AST {
   var value;
-  LiteralPrimitive(this.value) : super() {
-    /* super call moved to initializer */;
-  }
+  LiteralPrimitive(this.value);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitLiteralPrimitive(this, context);
   }
@@ -167,9 +147,7 @@ class LiteralPrimitive extends AST {
 
 class LiteralArray extends AST {
   List<dynamic> expressions;
-  LiteralArray(this.expressions) : super() {
-    /* super call moved to initializer */;
-  }
+  LiteralArray(this.expressions);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitLiteralArray(this, context);
   }
@@ -178,9 +156,7 @@ class LiteralArray extends AST {
 class LiteralMap extends AST {
   List<dynamic> keys;
   List<dynamic> values;
-  LiteralMap(this.keys, this.values) : super() {
-    /* super call moved to initializer */;
-  }
+  LiteralMap(this.keys, this.values);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitLiteralMap(this, context);
   }
@@ -189,9 +165,7 @@ class LiteralMap extends AST {
 class Interpolation extends AST {
   List<dynamic> strings;
   List<dynamic> expressions;
-  Interpolation(this.strings, this.expressions) : super() {
-    /* super call moved to initializer */;
-  }
+  Interpolation(this.strings, this.expressions);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitInterpolation(this, context);
   }
@@ -201,9 +175,7 @@ class Binary extends AST {
   String operation;
   AST left;
   AST right;
-  Binary(this.operation, this.left, this.right) : super() {
-    /* super call moved to initializer */;
-  }
+  Binary(this.operation, this.left, this.right);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitBinary(this, context);
   }
@@ -211,9 +183,7 @@ class Binary extends AST {
 
 class PrefixNot extends AST {
   AST expression;
-  PrefixNot(this.expression) : super() {
-    /* super call moved to initializer */;
-  }
+  PrefixNot(this.expression);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitPrefixNot(this, context);
   }
@@ -223,9 +193,7 @@ class MethodCall extends AST {
   AST receiver;
   String name;
   List<dynamic> args;
-  MethodCall(this.receiver, this.name, this.args) : super() {
-    /* super call moved to initializer */;
-  }
+  MethodCall(this.receiver, this.name, this.args);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitMethodCall(this, context);
   }
@@ -235,9 +203,7 @@ class SafeMethodCall extends AST {
   AST receiver;
   String name;
   List<dynamic> args;
-  SafeMethodCall(this.receiver, this.name, this.args) : super() {
-    /* super call moved to initializer */;
-  }
+  SafeMethodCall(this.receiver, this.name, this.args);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitSafeMethodCall(this, context);
   }
@@ -246,9 +212,7 @@ class SafeMethodCall extends AST {
 class FunctionCall extends AST {
   AST target;
   List<dynamic> args;
-  FunctionCall(this.target, this.args) : super() {
-    /* super call moved to initializer */;
-  }
+  FunctionCall(this.target, this.args);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return visitor.visitFunctionCall(this, context);
   }
@@ -258,9 +222,7 @@ class ASTWithSource extends AST {
   AST ast;
   String source;
   String location;
-  ASTWithSource(this.ast, this.source, this.location) : super() {
-    /* super call moved to initializer */;
-  }
+  ASTWithSource(this.ast, this.source, this.location);
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return this.ast.visit(visitor, context);
   }
@@ -275,7 +237,7 @@ class TemplateBinding {
   bool keyIsVar;
   String name;
   ASTWithSource expression;
-  TemplateBinding(this.key, this.keyIsVar, this.name, this.expression) {}
+  TemplateBinding(this.key, this.keyIsVar, this.name, this.expression);
 }
 
 abstract class AstVisitor {

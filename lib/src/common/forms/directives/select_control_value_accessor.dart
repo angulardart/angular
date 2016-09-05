@@ -54,7 +54,7 @@ class SelectControlValueAccessor implements ControlValueAccessor {
   num _idCounter = 0;
   var onChange = (dynamic _) {};
   var onTouched = () {};
-  SelectControlValueAccessor(this._renderer, this._elementRef) {}
+  SelectControlValueAccessor(this._renderer, this._elementRef);
   void writeValue(dynamic value) {
     this.value = value;
     var valueString = _buildValueString(this._getOptionId(value), value);

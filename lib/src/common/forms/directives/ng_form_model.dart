@@ -98,7 +98,7 @@ const formDirectiveProvider =
 class NgFormModel extends ControlContainer implements Form, OnChanges {
   List<dynamic> _validators;
   List<dynamic> _asyncValidators;
-  ControlGroup form = null;
+  ControlGroup form;
   List<NgControl> directives = [];
   var ngSubmit = new EventEmitter<ControlGroup>(false);
   var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);

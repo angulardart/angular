@@ -52,7 +52,7 @@ class RadioControlRegistry {
 class RadioButtonState {
   bool checked;
   String value;
-  RadioButtonState(this.checked, this.value) {}
+  RadioButtonState(this.checked, this.value);
 }
 
 /// The accessor for writing a radio control value and listening to changes that
@@ -91,7 +91,7 @@ class RadioControlValueAccessor
   var onChange = () {};
   var onTouched = () {};
   RadioControlValueAccessor(
-      this._renderer, this._elementRef, this._registry, this._injector) {}
+      this._renderer, this._elementRef, this._registry, this._injector);
   void ngOnInit() {
     this._control = this._injector.get(NgControl);
     this._registry.add(this._control, this);

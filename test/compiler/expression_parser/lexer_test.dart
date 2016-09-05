@@ -6,7 +6,7 @@ import "package:angular2/src/compiler/expression_parser/lexer.dart"
     show Lexer, Token;
 import "package:test/test.dart";
 
-List<dynamic> lex(String text) {
+List<Token> lex(String text) {
   return new Lexer().tokenize(text);
 }
 
@@ -38,7 +38,7 @@ expectStringToken(token, index, str) {
   expect(token.toString(), str);
 }
 
-expectIdentifierToken(token, index, identifier) {
+expectIdentifierToken(Token token, int index, identifier) {
   expectToken(token, index);
   expect(token.isIdentifier(), isTrue);
   expect(token.toString(), identifier);
@@ -54,30 +54,30 @@ main() {
   group("lexer", () {
     group("token", () {
       test("should tokenize a simple identifier", () {
-        List<num> tokens = lex("j");
+        var tokens = lex("j");
         expect(tokens.length, 1);
         expectIdentifierToken(tokens[0], 0, "j");
       });
       test("should tokenize a dotted identifier", () {
-        List<num> tokens = lex("j.k");
+        var tokens = lex("j.k");
         expect(tokens.length, 3);
         expectIdentifierToken(tokens[0], 0, "j");
         expectCharacterToken(tokens[1], 1, ".");
         expectIdentifierToken(tokens[2], 2, "k");
       });
       test("should tokenize an operator", () {
-        List<num> tokens = lex("j-k");
+        var tokens = lex("j-k");
         expect(tokens.length, 3);
         expectOperatorToken(tokens[1], 1, "-");
       });
       test("should tokenize an indexed operator", () {
-        List<num> tokens = lex("j[k]");
+        var tokens = lex("j[k]");
         expect(tokens.length, 4);
         expectCharacterToken(tokens[1], 1, "[");
         expectCharacterToken(tokens[3], 3, "]");
       });
       test("should tokenize numbers", () {
-        List<num> tokens = lex("88");
+        var tokens = lex("88");
         expect(tokens.length, 1);
         expectNumberToken(tokens[0], 0, 88);
       });

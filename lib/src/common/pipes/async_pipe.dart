@@ -44,12 +44,11 @@ Future<dynamic> ___unused;
 @Pipe(name: "async", pure: false)
 @Injectable()
 class AsyncPipe implements OnDestroy {
-  Object _latestValue = null;
-  Object _latestReturnedValue = null;
-  Object _subscription = null;
-  dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ _obj =
-      null;
-  dynamic _strategy = null;
+  Object _latestValue;
+  Object _latestReturnedValue;
+  Object _subscription;
+  dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ _obj;
+  dynamic _strategy;
   ChangeDetectorRef _ref;
   AsyncPipe(ChangeDetectorRef _ref) {
     this._ref = _ref;

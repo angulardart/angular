@@ -27,7 +27,7 @@ class DefaultValueAccessor implements ControlValueAccessor {
   ElementRef _elementRef;
   var onChange = (dynamic _) {};
   var onTouched = () {};
-  DefaultValueAccessor(this._renderer, this._elementRef) {}
+  DefaultValueAccessor(this._renderer, this._elementRef);
   void writeValue(dynamic value) {
     var normalizedValue = value ?? '';
     this._renderer.setElementProperty(

@@ -128,7 +128,7 @@ main() {
           asyncValidator("expected", {"one": true}),
           asyncValidator("expected", {"two": true})
         ]);
-        var value = null;
+        var value;
         ((c(new Control("invalid")))).then((v) => value = v);
         tick(1);
         expect(value, {"one": true, "two": true});
@@ -137,7 +137,7 @@ main() {
         var c = Validators.composeAsync([
           asyncValidator("expected", {"one": true})
         ]);
-        var value = null;
+        var value;
         c(new Control("expected")).then((v) => value = v);
         tick(1);
         expect(value, null);
@@ -147,7 +147,7 @@ main() {
           asyncValidator("expected", {"one": true}),
           null
         ]);
-        var value = null;
+        var value;
         c(new Control("invalid")).then((v) => value = v);
         tick(1);
         expect(value, {"one": true});

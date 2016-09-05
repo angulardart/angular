@@ -26,11 +26,11 @@ main() {
     };
   };
 
-  var asyncValidatorReturningObservable = (c) {
+  asyncValidatorReturningObservable(c) {
     var e = new EventEmitter();
     scheduleMicrotask(() => e.emit({"async": true}));
     return e;
-  };
+  }
 
   group("Form Model", () {
     group("Control", () {
@@ -128,7 +128,7 @@ main() {
           expect(ngOnChanges, ["invoked", "newValue"]);
         });
         test("should not invoke on change when explicitly specified", () {
-          var onChange = null;
+          var onChange;
           c.registerOnChange((v) => onChange = ["invoked", v]);
           c.updateValue("newValue", emitModelToViewChange: false);
           expect(onChange, isNull);
@@ -287,7 +287,7 @@ main() {
       });
       group("errors", () {
         test("should run the validator when the value changes", () {
-          var simpleValidator = (c) =>
+          Function simpleValidator = (c) =>
               c.controls["one"].value != "correct" ? {"broken": true} : null;
           var c = new Control(null);
           var g = new ControlGroup({"one": c}, null, simpleValidator);
@@ -518,8 +518,8 @@ main() {
       });
       group("errors", () {
         test("should run the validator when the value changes", () {
-          var simpleValidator =
-              (c) => c.controls[0].value != "correct" ? {"broken": true} : null;
+          simpleValidator(c) =>
+              c.controls[0].value != "correct" ? {"broken": true} : null;
           var c = new Control(null);
           var g = new ControlArray([c], simpleValidator);
           c.updateValue("correct");

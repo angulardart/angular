@@ -21,15 +21,13 @@ class HtmlTreeError extends ParseError {
   }
 
   HtmlTreeError(this.elementName, ParseSourceSpan span, String msg)
-      : super(span, msg) {
-    /* super call moved to initializer */;
-  }
+      : super(span, msg);
 }
 
 class HtmlParseTreeResult {
   List<HtmlAst> rootNodes;
   List<ParseError> errors;
-  HtmlParseTreeResult(this.rootNodes, this.errors) {}
+  HtmlParseTreeResult(this.rootNodes, this.errors);
 }
 
 @Injectable()

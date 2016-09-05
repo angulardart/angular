@@ -36,9 +36,9 @@ abstract class RenderTypes {
 
 class DefaultRenderTypes implements RenderTypes {
   var renderer = Identifiers.Renderer;
-  var renderText = null;
-  var renderElement = null;
-  var renderComment = null;
-  var renderNode = null;
-  var renderEvent = null;
+  var renderText;
+  var renderElement;
+  var renderComment;
+  var renderNode;
+  var renderEvent;
 }

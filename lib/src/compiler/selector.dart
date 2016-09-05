@@ -14,7 +14,7 @@ final _SELECTOR_REGEXP = new RegExp("(\\:not\\()|" +
  * of selecting subsets out of them.
  */
 class CssSelector {
-  String element = null;
+  String element;
   List<String> classNames = [];
   List<String> attrs = [];
   List<CssSelector> notSelectors = [];

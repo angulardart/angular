@@ -29,7 +29,7 @@ class NumberValueAccessor implements ControlValueAccessor {
   ElementRef _elementRef;
   var onChange = (_) {};
   var onTouched = () {};
-  NumberValueAccessor(this._renderer, this._elementRef) {}
+  NumberValueAccessor(this._renderer, this._elementRef);
   void writeValue(value) {
     this
         ._renderer

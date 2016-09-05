@@ -31,7 +31,7 @@ class Log {
   }
 }
 
-BrowserDetection browserDetection = null;
+BrowserDetection browserDetection;
 
 class BrowserDetection {
   String _ua;

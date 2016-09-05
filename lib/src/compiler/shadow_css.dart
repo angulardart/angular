@@ -124,7 +124,6 @@ import "package:angular2/src/facade/lang.dart" show jsSplit;
 */
 class ShadowCss {
   bool strictStyling = true;
-  ShadowCss() {}
   /*
   * Shim some cssText with the given selector. Returns cssText that can
   * be included in the document via WebComponents.ShadowCSS.addCssToDocument(css).
@@ -488,9 +487,9 @@ const String CLOSE_CURLY = "}";
 const String BLOCK_PLACEHOLDER = "%BLOCK%";
 
 class CssRule {
-  String selector;
-  String content;
-  CssRule(this.selector, this.content) {}
+  final String selector;
+  final String content;
+  CssRule(this.selector, this.content);
 }
 
 String processRules(String input, Function ruleCallback) {
