@@ -1,5 +1,4 @@
-import "package:angular2/di.dart"
-    show Injectable, Inject, OpaqueToken, Optional;
+import "package:angular2/di.dart" show Injectable;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
 import "package:angular2/src/compiler/selector.dart"
@@ -44,8 +43,6 @@ import "template_ast.dart"
         BoundEventAst,
         ReferenceAst,
         TemplateAst,
-        TemplateAstVisitor,
-        templateVisitAll,
         TextAst,
         BoundTextAst,
         EmbeddedTemplateAst,
@@ -80,13 +77,6 @@ const CLASS_PREFIX = "class";
 const STYLE_PREFIX = "style";
 final TEXT_CSS_SELECTOR = CssSelector.parse("*")[0];
 
-/// Provides an array of [TemplateAstVisitor]s which will be used to transform
-/// parsed templates before compilation is invoked, allowing custom expression syntax
-/// and other advanced transformations.
-///
-/// This is currently an internal-only feature and not meant for general use.
-const TEMPLATE_TRANSFORMS = const OpaqueToken("TemplateTransforms");
-
 class TemplateParseError extends ParseError {
   TemplateParseError(
       String message, ParseSourceSpan span, ParseErrorLevel level)
@@ -105,10 +95,9 @@ class TemplateParser {
   ElementSchemaRegistry _schemaRegistry;
   HtmlParser _htmlParser;
   Console _console;
-  List<TemplateAstVisitor> transforms;
 
-  TemplateParser(this._exprParser, this._schemaRegistry, this._htmlParser,
-      this._console, @Optional() @Inject(TEMPLATE_TRANSFORMS) this.transforms);
+  TemplateParser(
+      this._exprParser, this._schemaRegistry, this._htmlParser, this._console);
 
   List<TemplateAst> parse(
       CompileDirectiveMetadata component,
@@ -175,11 +164,6 @@ class TemplateParser {
     }
     if (errors.length > 0) {
       return new TemplateParseResult(result, errors);
-    }
-    if (this.transforms != null) {
-      this.transforms.forEach((TemplateAstVisitor transform) {
-        result = templateVisitAll(transform, result) as List<TemplateAst>;
-      });
     }
     return new TemplateParseResult(result, errors);
   }

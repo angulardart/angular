@@ -25,8 +25,6 @@ import "pipe_resolver.dart" show PipeResolver;
 import "view_resolver.dart" show ViewResolver;
 
 export "package:angular2/src/compiler/template_ast.dart";
-export "package:angular2/src/compiler/template_parser.dart"
-    show TEMPLATE_TRANSFORMS;
 export "package:angular2/src/compiler/url_resolver.dart";
 export "package:angular2/src/compiler/xhr.dart";
 export "package:angular2/src/core/platform_directives_and_pipes.dart"

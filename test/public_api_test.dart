@@ -101,7 +101,6 @@ var NG_COMPILER = [
   'PLATFORM_PIPES',
   'PropertyBindingType',
   'SourceModule',
-  'TEMPLATE_TRANSFORMS',
   'TextAst',
   'VariableAst',
   'ReferenceAst',

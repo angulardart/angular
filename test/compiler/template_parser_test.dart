@@ -6,7 +6,7 @@ import "package:angular2/src/core/di.dart" show provide;
 import "package:angular2/src/core/console.dart" show Console;
 import "test_bindings.dart" show TEST_PROVIDERS;
 import "package:angular2/src/compiler/template_parser.dart"
-    show TemplateParser, splitClasses, TEMPLATE_TRANSFORMS;
+    show TemplateParser, splitClasses;
 import "package:angular2/src/compiler/compile_metadata.dart";
 import "package:angular2/src/compiler/template_ast.dart";
 import "package:angular2/src/compiler/identifiers.dart"
@@ -52,39 +52,6 @@ main() {
       };
     });
   };
-  group("TemplateParser template transform", () {
-    group("single", () {
-      test("should transform TemplateAST", () async {
-        beforeEachProviders(() => [
-              TEST_PROVIDERS,
-              MOCK_SCHEMA_REGISTRY,
-              provide(TEMPLATE_TRANSFORMS,
-                  useValue: new FooAstTransformer(), multi: true)
-            ]);
-        await commonSetup();
-        expect(humanizeTplAst(parse("<div>", [])), [
-          [ElementAst, "foo"]
-        ]);
-      });
-    });
-
-    group("multiple", () {
-      test("should compose transformers", () async {
-        beforeEachProviders(() => [
-              TEST_PROVIDERS,
-              MOCK_SCHEMA_REGISTRY,
-              provide(TEMPLATE_TRANSFORMS,
-                  useValue: new FooAstTransformer(), multi: true),
-              provide(TEMPLATE_TRANSFORMS,
-                  useValue: new BarAstTransformer(), multi: true)
-            ]);
-        await commonSetup();
-        expect(humanizeTplAst(parse("<div>", [])), [
-          [ElementAst, "bar"]
-        ]);
-      });
-    });
-  });
   group("TemplateParser", () {
     setUp(() async {
       beforeEachProviders(() => [

@@ -1,4 +1,3 @@
-import 'package:angular2/router/router_link_dsl.dart';
 import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/directive_normalizer.dart';
 import 'package:angular2/src/compiler/expression_parser/lexer.dart' as ng;
@@ -41,11 +40,7 @@ OfflineCompiler createTemplateCompiler(AssetReader reader,
   var htmlParser = new HtmlParser();
 
   var templateParser = new TemplateParser(
-      parser,
-      new DomElementSchemaRegistry(),
-      htmlParser,
-      new _LoggerConsole(),
-      [new RouterLinkTransform(parser)]);
+      parser, new DomElementSchemaRegistry(), htmlParser, new _LoggerConsole());
 
   return new OfflineCompiler(
       new DirectiveNormalizer(xhr, urlResolver, htmlParser),

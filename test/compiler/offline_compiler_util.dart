@@ -52,7 +52,7 @@ OfflineCompiler _createOfflineCompiler(MockXHR xhr, OutputEmitter emitter) {
   return new OfflineCompiler(
       normalizer,
       new TemplateParser(new Parser(new Lexer()),
-          new MockSchemaRegistry({}, {}), htmlParser, new Console(), []),
+          new MockSchemaRegistry({}, {}), htmlParser, new Console()),
       new StyleCompiler(urlResolver),
       new ViewCompiler(new CompilerConfig(true, true, true)),
       new InjectorCompiler(),

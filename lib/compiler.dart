@@ -10,7 +10,6 @@ export "package:angular2/src/compiler/compiler.dart"
         PLATFORM_DIRECTIVES,
         PLATFORM_PIPES,
         COMPILER_PROVIDERS,
-        TEMPLATE_TRANSFORMS,
         CompilerConfig,
         RenderTypes,
         UrlResolver,
