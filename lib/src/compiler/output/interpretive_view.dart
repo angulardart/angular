@@ -1,10 +1,10 @@
-import "package:angular2/src/debug/debug_context.dart" show StaticNodeDebugInfo;
-import "package:angular2/src/core/linker/element.dart" show AppElement;
-import "package:angular2/src/core/linker/app_view.dart";
-import "package:angular2/src/debug/debug_app_view.dart";
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/debug/debug_context.dart' show StaticNodeDebugInfo;
+import 'package:angular2/src/core/linker/app_element.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/debug/debug_app_view.dart';
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "dynamic_instance.dart";
+import 'dynamic_instance.dart';
 
 class InterpretiveAppViewInstanceFactory implements InstanceFactory {
   DynamicInstance createInstance(
@@ -49,7 +49,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
             args[8] as List<StaticNodeDebugInfo>);
 
   AppElement createInternal(dynamic /* String | dynamic */ rootSelector) {
-    var m = this.methods["createInternal"];
+    var m = this.methods['createInternal'];
     if (m != null) {
       return m(rootSelector);
     } else {
@@ -59,7 +59,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
 
   dynamic injectorGetInternal(
       dynamic token, num nodeIndex, dynamic notFoundResult) {
-    var m = this.methods["injectorGetInternal"];
+    var m = this.methods['injectorGetInternal'];
     if (m != null) {
       return m(token, nodeIndex, notFoundResult);
     } else {
@@ -68,7 +68,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   }
 
   void destroyInternal() {
-    var m = this.methods["destroyInternal"];
+    var m = this.methods['destroyInternal'];
     if (m != null) {
       return m();
     } else {
@@ -77,7 +77,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   }
 
   void dirtyParentQueriesInternal() {
-    var m = this.methods["dirtyParentQueriesInternal"];
+    var m = this.methods['dirtyParentQueriesInternal'];
     if (m != null) {
       return m();
     } else {
@@ -86,7 +86,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   }
 
   void detectChangesInternal() {
-    var m = methods["detectChangesInternal"];
+    var m = methods['detectChangesInternal'];
     if (m != null) {
       return m();
     } else {

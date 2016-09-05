@@ -9,7 +9,7 @@ import "package:angular2/src/core/linker.dart" show QueryList;
 import "package:angular2/src/core/linker/app_view.dart";
 import "package:angular2/src/debug/debug_app_view.dart";
 import "package:angular2/src/core/linker/component_factory.dart";
-import "package:angular2/src/core/linker/element.dart";
+import "package:angular2/src/core/linker/app_element.dart";
 import "package:angular2/src/core/linker/template_ref.dart";
 import "package:angular2/src/core/linker/view_container_ref.dart"
     show ViewContainerRef;

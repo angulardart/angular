@@ -1,19 +1,19 @@
 import 'dart:html';
 
-import "package:angular2/src/core/change_detection/change_detection.dart"
+import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
-import "package:angular2/src/core/di.dart" show Injector;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/core/render/api.dart"
+import 'package:angular2/src/core/di.dart' show Injector;
+import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular2/src/core/render/api.dart'
     show Renderer, RenderComponentType;
-import "package:angular2/src/platform/dom/shared_styles_host.dart";
+import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
-import "element.dart" show AppElement;
-import "element_injector.dart" show ElementInjector;
-import "exceptions.dart" show ViewDestroyedException;
-import "view_ref.dart" show ViewRef_;
-import "view_type.dart" show ViewType;
-import "view_utils.dart" show ViewUtils, ensureSlotCount, OnDestroyCallback;
+import 'app_element.dart';
+import 'element_injector.dart' show ElementInjector;
+import 'exceptions.dart' show ViewDestroyedException;
+import 'view_ref.dart' show ViewRef_;
+import 'view_type.dart' show ViewType;
+import 'view_utils.dart' show ViewUtils, ensureSlotCount, OnDestroyCallback;
 
 const EMPTY_CONTEXT = const Object();
 
@@ -264,7 +264,7 @@ abstract class AppView<T> {
   void detectChanges() {
     if (_skipChangeDetection) return;
     if (this.destroyed) {
-      this.throwDestroyedError("detectChanges");
+      this.throwDestroyedError('detectChanges');
     }
     this.detectChangesInternal();
     if (identical(_cdMode, ChangeDetectionStrategy.CheckOnce)) {

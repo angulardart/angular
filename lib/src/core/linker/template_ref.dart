@@ -1,7 +1,7 @@
-import "element.dart" show AppElement;
-import "element_ref.dart" show ElementRef;
-import "app_view.dart";
-import "view_ref.dart" show EmbeddedViewRef;
+import 'app_element.dart';
+import 'element_ref.dart';
+import 'app_view.dart';
+import 'view_ref.dart' show EmbeddedViewRef;
 
 /// Represents an Embedded Template that can be used to instantiate Embedded
 /// Views.

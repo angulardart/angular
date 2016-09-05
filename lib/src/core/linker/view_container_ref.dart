@@ -1,11 +1,11 @@
-import "package:angular2/src/core/di/injector.dart" show Injector;
+import 'package:angular2/src/core/di/injector.dart' show Injector;
 
-import "../profile/profile.dart" show wtfCreateScope, wtfLeave, WtfScopeFn;
-import "component_factory.dart" show ComponentFactory, ComponentRef;
-import "element.dart" show AppElement;
-import "element_ref.dart" show ElementRef;
-import "template_ref.dart" show TemplateRef;
-import "view_ref.dart" show EmbeddedViewRef, ViewRef, ViewRef_;
+import '../profile/profile.dart' show wtfCreateScope, wtfLeave, WtfScopeFn;
+import 'component_factory.dart' show ComponentFactory, ComponentRef;
+import 'app_element.dart';
+import 'element_ref.dart';
+import 'template_ref.dart';
+import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRef_;
 
 /// Represents a container where one or more Views can be attached.
 ///
@@ -61,7 +61,7 @@ class ViewContainerRef {
   }
 
   WtfScopeFn _createComponentInContainerScope =
-      wtfCreateScope("ViewContainerRef#createComponent()");
+      wtfCreateScope('ViewContainerRef#createComponent()');
 
   /// Instantiates a single [Component] and inserts its Host View into this
   /// container at the specified `index`.
@@ -90,7 +90,7 @@ class ViewContainerRef {
     return wtfLeave(s, componentRef);
   }
 
-  var _insertScope = wtfCreateScope("ViewContainerRef#insert()");
+  var _insertScope = wtfCreateScope('ViewContainerRef#insert()');
 
   /// Inserts a View identified by a [ViewRef] into the container.
   ///
@@ -112,7 +112,7 @@ class ViewContainerRef {
   num indexOf(ViewRef viewRef) =>
       _element.nestedViews.indexOf((viewRef as ViewRef_).internalView);
 
-  var _removeScope = wtfCreateScope("ViewContainerRef#remove()");
+  var _removeScope = wtfCreateScope('ViewContainerRef#remove()');
 
   /// Destroys a View attached to this container at the specified `index`.
   ///
@@ -128,7 +128,7 @@ class ViewContainerRef {
     wtfLeave(s);
   }
 
-  var _detachScope = wtfCreateScope("ViewContainerRef#detach()");
+  var _detachScope = wtfCreateScope('ViewContainerRef#detach()');
 
   /// Use along with [#insert] to move a View within the current container.
   ///

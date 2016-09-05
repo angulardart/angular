@@ -1,11 +1,11 @@
-import "package:angular2/src/core/di.dart" show Injector;
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
+import 'package:angular2/src/core/di.dart' show Injector;
+import 'package:angular2/src/core/reflection/reflection.dart' show reflector;
 
-import "../change_detection/change_detection.dart" show ChangeDetectorRef;
-import "element.dart" show AppElement;
-import "element_ref.dart" show ElementRef;
-import "view_ref.dart" show ViewRef;
-import "view_utils.dart" show OnDestroyCallback, ViewUtils;
+import '../change_detection/change_detection.dart' show ChangeDetectorRef;
+import 'app_element.dart';
+import 'element_ref.dart' show ElementRef;
+import 'view_ref.dart' show ViewRef;
+import 'view_utils.dart' show OnDestroyCallback, ViewUtils;
 
 /// Represents an instance of a Component created via a [ComponentFactory].
 ///
