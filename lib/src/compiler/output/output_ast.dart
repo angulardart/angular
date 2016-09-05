@@ -878,7 +878,7 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
   @override
   dynamic visitDeclareVarStmt(DeclareVarStmt stmt, dynamic context) {
     return new DeclareVarStmt(stmt.name,
-        stmt.value.visitExpression(this, context), stmt.type, stmt.modifiers);
+        stmt.value?.visitExpression(this, context), stmt.type, stmt.modifiers);
   }
 
   @override
@@ -1084,7 +1084,7 @@ class RecursiveExpressionVisitor
 
   @override
   dynamic visitDeclareVarStmt(DeclareVarStmt stmt, dynamic context) {
-    stmt.value.visitExpression(this, context);
+    stmt.value?.visitExpression(this, context);
     return stmt;
   }
 

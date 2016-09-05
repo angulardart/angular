@@ -152,7 +152,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   @override
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     _ExecutionContext ctx = context;
-    ctx.vars[stmt.name] = stmt.value.visitExpression(this, ctx);
+    ctx.vars[stmt.name] = stmt.value?.visitExpression(this, ctx);
     return null;
   }
 

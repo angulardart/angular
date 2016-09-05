@@ -205,6 +205,7 @@ abstract class AbstractEmitterVisitor
   }
 
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context);
+
   dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();

@@ -156,30 +156,48 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
   dynamic visitBoundText(BoundTextAst ast, dynamic context) {
     CompileElement parent = context;
-    return this._visitText(ast, "", ast.ngContentIndex, parent);
+    return this._visitText(ast, "", ast.ngContentIndex, parent, isBound: true);
   }
 
   dynamic visitText(TextAst ast, dynamic context) {
     CompileElement parent = context;
-    return this._visitText(ast, ast.value, ast.ngContentIndex, parent);
+    return this
+        ._visitText(ast, ast.value, ast.ngContentIndex, parent, isBound: false);
   }
 
-  o.Expression _visitText(TemplateAst ast, String value, num ngContentIndex,
-      CompileElement parent) {
+  o.Expression _visitText(
+      TemplateAst ast, String value, num ngContentIndex, CompileElement parent,
+      {bool isBound}) {
     var fieldName = '_text_${this.view.nodes.length}';
-    view.fields.add(new o.ClassField(
-        fieldName,
-        o.importType(view.genConfig.renderTypes.renderText),
-        [o.StmtModifier.Private]));
-    var renderNode = new o.ReadClassMemberExpr(fieldName);
+    var renderNode;
+    // If Text field is bound, we need access to the renderNode beyond
+    // createInternal method and write reference to class member.
+    // Otherwise we can create a local variable and not baloon class prototype.
+    if (isBound) {
+      view.fields.add(new o.ClassField(fieldName,
+          o.importType(Identifiers.HTML_TEXT_NODE), [o.StmtModifier.Private]));
+      renderNode = new o.ReadClassMemberExpr(fieldName);
+    } else {
+      view.createMethod.addStmt(new o.DeclareVarStmt(
+          fieldName,
+          o
+              .importExpr(Identifiers.HTML_TEXT_NODE)
+              .instantiate([o.literal(value)]),
+          o.importType(Identifiers.HTML_TEXT_NODE)));
+      renderNode = new o.ReadVarExpr(fieldName);
+    }
     var compileNode =
         new CompileNode(parent, view, this.view.nodes.length, renderNode, ast);
     var parentRenderNodeExpr = _getParentRenderNode(parent);
-    var createRenderNodeExpr = new o.ReadClassMemberExpr(fieldName).set(o
-        .importExpr(Identifiers.HTML_TEXT_NODE)
-        .instantiate([o.literal(value)]));
-    view.nodes.add(compileNode);
-    view.createMethod.addStmt(createRenderNodeExpr.toStmt());
+    if (isBound) {
+      var createRenderNodeExpr = new o.ReadClassMemberExpr(fieldName).set(o
+          .importExpr(Identifiers.HTML_TEXT_NODE)
+          .instantiate([o.literal(value)]));
+      view.nodes.add(compileNode);
+      view.createMethod.addStmt(createRenderNodeExpr.toStmt());
+    } else {
+      view.nodes.add(compileNode);
+    }
     if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
       // Write append code.
       view.createMethod.addStmt(

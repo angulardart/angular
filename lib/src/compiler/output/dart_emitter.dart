@@ -119,9 +119,14 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       stmt.type.visitType(this, ctx);
       ctx.print(' ');
     }
-    ctx.print('${stmt.name} = ');
-    stmt.value.visitExpression(this, ctx);
-    ctx.println(';');
+    if (stmt.value == null) {
+      // No initializer.
+      ctx.print('${stmt.name};');
+    } else {
+      ctx.print('${stmt.name} = ');
+      stmt.value.visitExpression(this, ctx);
+      ctx.println(';');
+    }
     return null;
   }
 
