@@ -13,9 +13,6 @@ import "package:angular2/core.dart"
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;
-import "package:angular2/src/animate/animation_builder.dart"
-    show AnimationBuilder;
-import "package:angular2/src/animate/browser_details.dart" show BrowserDetails;
 import "package:angular2/src/core/di.dart" show Provider, OpaqueToken;
 import "package:angular2/src/core/profile/wtf_init.dart" show wtfInit;
 import "package:angular2/src/core/testability/testability.dart"
@@ -97,8 +94,6 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   DomRootRenderer,
   const Provider(RootRenderer, useExisting: DomRootRenderer),
   Testability,
-  BrowserDetails,
-  AnimationBuilder,
   EventManager,
 ];
 

@@ -1,5 +1,3 @@
-import 'package:angular2/src/animate/animation_builder.dart'
-    show AnimationBuilder;
 import 'package:angular2/src/core/di.dart' show Inject, Injectable;
 import 'package:angular2/src/core/metadata.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart'
@@ -26,11 +24,9 @@ class DomRootRenderer implements RootRenderer {
   static bool isDirty = false;
   dynamic document;
   EventManager eventManager;
-  AnimationBuilder animate;
   var _registeredComponents = <String, DomRenderer>{};
 
-  DomRootRenderer(
-      @Inject(DOCUMENT) this.document, this.eventManager, this.animate) {
+  DomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager) {
     sharedStylesHost ??= new DomSharedStylesHost(document);
   }
 
@@ -131,10 +127,6 @@ class DomRenderer implements Renderer {
 
   attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
     moveNodesAfterSibling(node, viewRootNodes);
-    int len = viewRootNodes.length;
-    for (var i = 0; i < len; i++) {
-      this.animateNodeEnter(viewRootNodes[i]);
-    }
     DomRootRenderer.isDirty = true;
   }
 
@@ -143,7 +135,6 @@ class DomRenderer implements Renderer {
     for (var i = 0; i < len; i++) {
       var node = viewRootNodes[i];
       DOM.remove(node);
-      this.animateNodeLeave(node);
       DomRootRenderer.isDirty = true;
     }
   }
@@ -231,47 +222,6 @@ class DomRenderer implements Renderer {
   void setText(dynamic renderNode, String text) {
     DOM.setText(renderNode, text);
     DomRootRenderer.isDirty = true;
-  }
-
-  /// Performs animations if necessary.
-  animateNodeEnter(dynamic node) {
-    if (DOM.isElementNode(node) && DOM.hasClass(node, 'ng-animate')) {
-      DOM.addClass(node, 'ng-enter');
-      DomRootRenderer.isDirty = true;
-      this
-          ._rootRenderer
-          .animate
-          .css()
-          .addAnimationClass('ng-enter-active')
-          .start((node as dynamic))
-          .onComplete(() {
-        DOM.removeClass(node, 'ng-enter');
-        DomRootRenderer.isDirty = true;
-      });
-    }
-  }
-
-  /// If animations are necessary, performs animations then removes the element;
-  /// otherwise, it just removes the element.
-  animateNodeLeave(dynamic node) {
-    if (DOM.isElementNode(node) && DOM.hasClass(node, 'ng-animate')) {
-      DOM.addClass(node, 'ng-leave');
-      DomRootRenderer.isDirty = true;
-      this
-          ._rootRenderer
-          .animate
-          .css()
-          .addAnimationClass('ng-leave-active')
-          .start((node as dynamic))
-          .onComplete(() {
-        DOM.removeClass(node, 'ng-leave');
-        DOM.remove(node);
-        DomRootRenderer.isDirty = true;
-      });
-    } else {
-      DOM.remove(node);
-      DomRootRenderer.isDirty = true;
-    }
   }
 }
 

@@ -10,13 +10,9 @@ import 'package:angular2/core.dart'
         PLATFORM_COMMON_PROVIDERS,
         PLATFORM_INITIALIZER;
 import 'package:angular2/platform/common.dart' show LocationStrategy;
-import 'package:angular2/src/animate/animation_builder.dart'
-    show AnimationBuilder;
 import 'package:angular2/src/core/render/api.dart' show RootRenderer;
 import 'package:angular2/src/debug/debug_renderer.dart'
     show DebugDomRootRenderer;
-import 'package:angular2/src/mock/animation_builder_mock.dart'
-    show MockAnimationBuilder;
 import 'package:angular2/src/mock/directive_resolver_mock.dart'
     show MockDirectiveResolver;
 import 'package:angular2/src/mock/mock_location_strategy.dart'
@@ -53,7 +49,6 @@ const List<dynamic> ADDITIONAL_TEST_BROWSER_PROVIDERS = const [
   TestComponentBuilder,
   const Provider(NgZone, useClass: MockNgZone),
   const Provider(LocationStrategy, useClass: MockLocationStrategy),
-  const Provider(AnimationBuilder, useClass: MockAnimationBuilder)
 ];
 
 /// Default application providers for testing without a compiler.

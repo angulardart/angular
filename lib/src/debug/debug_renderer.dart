@@ -8,8 +8,6 @@ import "package:angular2/src/debug/debug_node.dart"
         inspectNativeElement,
         removeDebugNodeFromIndex;
 
-import 'package:angular2/src/animate/animation_builder.dart'
-    show AnimationBuilder;
 import 'package:angular2/src/core/di.dart' show Inject, Injectable;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
@@ -30,11 +28,9 @@ class DebugDomRootRenderer implements DomRootRenderer {
   static bool isDirty = false;
   dynamic document;
   EventManager eventManager;
-  AnimationBuilder animate;
   var _registeredComponents = <String, DomRenderer>{};
 
-  DebugDomRootRenderer(
-      @Inject(DOCUMENT) this.document, this.eventManager, this.animate) {
+  DebugDomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager) {
     DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
     sharedStylesHost ??= new DomSharedStylesHost(document);
   }
