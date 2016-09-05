@@ -6,7 +6,7 @@ import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 class StyleWithImports {
   String style;
   List<String> styleUrls;
-  StyleWithImports(this.style, this.styleUrls) {}
+  StyleWithImports(this.style, this.styleUrls);
 }
 
 bool isStyleUrlResolvable(String url) {

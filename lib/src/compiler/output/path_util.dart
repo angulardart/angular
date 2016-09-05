@@ -46,7 +46,7 @@ class _AssetUrl {
     throw new BaseException('''Url ${ url} is not a valid asset: url''');
   }
 
-  _AssetUrl(this.packageName, this.firstLevelDir, this.modulePath) {}
+  _AssetUrl(this.packageName, this.firstLevelDir, this.modulePath);
 }
 
 String getRelativePath(

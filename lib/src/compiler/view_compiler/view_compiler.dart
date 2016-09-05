@@ -15,13 +15,13 @@ class ViewCompileResult {
   List<o.Statement> statements;
   String viewFactoryVar;
   List<ViewCompileDependency> dependencies;
-  ViewCompileResult(this.statements, this.viewFactoryVar, this.dependencies) {}
+  ViewCompileResult(this.statements, this.viewFactoryVar, this.dependencies);
 }
 
 @Injectable()
 class ViewCompiler {
   CompilerConfig _genConfig;
-  ViewCompiler(this._genConfig) {}
+  ViewCompiler(this._genConfig);
   ViewCompileResult compileComponent(
       CompileDirectiveMetadata component,
       List<TemplateAst> template,

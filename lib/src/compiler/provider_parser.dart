@@ -15,9 +15,7 @@ import "template_ast.dart"
     show ReferenceAst, AttrAst, DirectiveAst, ProviderAst, ProviderAstType;
 
 class ProviderError extends ParseError {
-  ProviderError(String message, ParseSourceSpan span) : super(span, message) {
-    /* super call moved to initializer */;
-  }
+  ProviderError(String message, ParseSourceSpan span) : super(span, message);
 }
 
 class ProviderViewContext {
@@ -265,7 +263,7 @@ class ProviderElementContext {
       [bool eager = null]) {
     ProviderElementContext currElement = this;
     bool currEager = eager;
-    CompileDiDependencyMetadata result = null;
+    CompileDiDependencyMetadata result;
     if (!dep.isSkipSelf) {
       result = this._getLocalDependency(requestingProviderType, dep, eager);
     }

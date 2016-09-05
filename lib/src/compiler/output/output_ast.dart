@@ -92,8 +92,8 @@ enum BinaryOperator {
 }
 
 abstract class Expression {
-  OutputType type;
-  Expression(this.type) {}
+  final OutputType type;
+  Expression(this.type);
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context);
   ReadPropExpr prop(String name) {
     return new ReadPropExpr(this, name);
@@ -425,9 +425,9 @@ class CastExpr extends Expression {
 }
 
 class FnParam {
-  String name;
-  OutputType type;
-  FnParam(this.name, [this.type = null]) {}
+  final String name;
+  final OutputType type;
+  FnParam(this.name, [this.type = null]);
 }
 
 class FunctionExpr extends Expression {
@@ -505,8 +505,8 @@ class LiteralArrayExpr extends Expression {
 }
 
 class LiteralMapExpr extends Expression {
-  List<List<dynamic /* String | Expression */ >> entries;
-  OutputType valueType = null;
+  final List<List<dynamic /* String | Expression */ >> entries;
+  OutputType valueType;
   LiteralMapExpr(this.entries, [MapType type = null]) : super(type) {
     if (type != null) {
       this.valueType = type.valueType;

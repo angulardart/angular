@@ -158,7 +158,7 @@ class SelectorMatcher {
   var _attrValuePartialMap = new Map<String, Map<String, SelectorMatcher>>();
   List<SelectorListContext> _listContexts = [];
   addSelectables(List<CssSelector> cssSelectors, [dynamic callbackCtxt]) {
-    var listContext = null;
+    var listContext;
     if (cssSelectors.length > 1) {
       listContext = new SelectorListContext(cssSelectors);
       this._listContexts.add(listContext);
@@ -354,7 +354,7 @@ typedef void MatchCallbackHandler(CssSelector, dynamic);
 class SelectorListContext {
   List<CssSelector> selectors;
   bool alreadyMatched = false;
-  SelectorListContext(this.selectors) {}
+  SelectorListContext(this.selectors);
 }
 
 // Store context to pass back selector and context when a selector is matched

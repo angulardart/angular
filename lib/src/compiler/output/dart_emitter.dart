@@ -37,7 +37,6 @@ String debugOutputAstAsDart(
 }
 
 class DartEmitter implements OutputEmitter {
-  DartEmitter() {}
   String emitStatements(
       String moduleUrl, List<o.Statement> stmts, List<String> exportedVars) {
     var srcParts = [];

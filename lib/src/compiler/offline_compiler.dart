@@ -20,9 +20,9 @@ import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
 import 'identifiers.dart';
 
 class SourceModule {
-  String moduleUrl;
-  String source;
-  SourceModule(this.moduleUrl, this.source) {}
+  final String moduleUrl;
+  final String source;
+  SourceModule(this.moduleUrl, this.source);
 }
 
 class NormalizedComponentWithViewDirectives {
@@ -30,7 +30,7 @@ class NormalizedComponentWithViewDirectives {
   List<CompileDirectiveMetadata> directives;
   List<CompilePipeMetadata> pipes;
   NormalizedComponentWithViewDirectives(
-      this.component, this.directives, this.pipes) {}
+      this.component, this.directives, this.pipes);
 }
 
 /// Compiles a view template.
@@ -47,7 +47,7 @@ class OfflineCompiler {
       this._styleCompiler,
       this._viewCompiler,
       this._injectorCompiler,
-      this._outputEmitter) {}
+      this._outputEmitter);
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
     return _directiveNormalizer.normalizeDirective(directive);

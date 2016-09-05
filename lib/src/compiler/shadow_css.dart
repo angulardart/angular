@@ -513,7 +513,7 @@ String processRules(String input, Function ruleCallback) {
 class StringWithEscapedBlocks {
   String escapedString;
   List<String> blocks;
-  StringWithEscapedBlocks(this.escapedString, this.blocks) {}
+  StringWithEscapedBlocks(this.escapedString, this.blocks);
 }
 
 StringWithEscapedBlocks escapeBlocks(String input) {

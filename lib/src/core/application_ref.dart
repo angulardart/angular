@@ -19,12 +19,12 @@ import 'profile/profile.dart' show wtfLeave, wtfCreateScope, WtfScopeFn;
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: assertionsEnabled());
 
-PlatformRef_ _platform;
+PlatformRefImpl _platform;
 bool _inPlatformCreate = false;
 
 /// Creates a platform.
 /// Platforms have to be eagerly created via this function.
-PlatformRef_ createPlatform(Injector injector) {
+PlatformRefImpl createPlatform(Injector injector) {
   assert(() {
     if (_inPlatformCreate) {
       throw new BaseException('Already creating a platform...');
@@ -121,7 +121,7 @@ abstract class PlatformRef {
 }
 
 @Injectable()
-class PlatformRef_ extends PlatformRef {
+class PlatformRefImpl extends PlatformRef {
   final List<ApplicationRef> _applications = [];
   final List<Function> _disposeListeners = [];
   bool _disposed = false;
@@ -232,7 +232,7 @@ abstract class ApplicationRef {
 
 @Injectable()
 class ApplicationRef_ extends ApplicationRef {
-  final PlatformRef_ _platform;
+  final PlatformRefImpl _platform;
   final NgZone _zone;
   final Injector _injector;
   static WtfScopeFn _tickScope = wtfCreateScope('ApplicationRef#tick()');
@@ -430,8 +430,8 @@ class ApplicationRef_ extends ApplicationRef {
 }
 
 const PLATFORM_CORE_PROVIDERS = const [
-  PlatformRef_,
-  const Provider(PlatformRef, useExisting: PlatformRef_)
+  PlatformRefImpl,
+  const Provider(PlatformRef, useExisting: PlatformRefImpl)
 ];
 
 const APPLICATION_CORE_PROVIDERS = const [

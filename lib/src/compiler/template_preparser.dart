@@ -12,11 +12,11 @@ const SCRIPT_ELEMENT = "script";
 const NG_NON_BINDABLE_ATTR = "ngNonBindable";
 const NG_PROJECT_AS = "ngProjectAs";
 PreparsedElement preparseElement(HtmlElementAst ast) {
-  var selectAttr = null;
-  var hrefAttr = null;
-  var relAttr = null;
+  var selectAttr;
+  var hrefAttr;
+  var relAttr;
   var nonBindable = false;
-  String projectAs = null;
+  String projectAs;
   ast.attrs.forEach((attr) {
     var lcAttrName = attr.name.toLowerCase();
     if (lcAttrName == NG_CONTENT_SELECT_ATTR) {
@@ -58,7 +58,7 @@ class PreparsedElement {
   bool nonBindable;
   String projectAs;
   PreparsedElement(this.type, this.selectAttr, this.hrefAttr, this.nonBindable,
-      this.projectAs) {}
+      this.projectAs);
 }
 
 String normalizeNgContentSelect(String selectAttr) {

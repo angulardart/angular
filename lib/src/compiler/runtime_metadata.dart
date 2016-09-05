@@ -43,7 +43,7 @@ class RuntimeMetadataResolver {
       this._pipeResolver,
       this._viewResolver,
       @Optional() @Inject(PLATFORM_DIRECTIVES) this._platformDirectives,
-      @Optional() @Inject(PLATFORM_PIPES) this._platformPipes) {}
+      @Optional() @Inject(PLATFORM_PIPES) this._platformPipes);
   String sanitizeTokenName(dynamic token) {
     var identifier = stringify(token);
     if (identifier.indexOf("(") >= 0) {
@@ -62,9 +62,9 @@ class RuntimeMetadataResolver {
     var meta = this._directiveCache[directiveType];
     if (meta == null) {
       var dirMeta = this._directiveResolver.resolve(directiveType);
-      var moduleUrl = null;
-      var templateMeta = null;
-      var changeDetectionStrategy = null;
+      var moduleUrl;
+      var templateMeta;
+      var changeDetectionStrategy;
       var viewProviders = [];
       if (dirMeta is md.ComponentMetadata) {
         md.ComponentMetadata cmpMeta = dirMeta;
@@ -190,7 +190,7 @@ class RuntimeMetadataResolver {
       } else {
         compileToken = this.getTokenMetadata(dep.key.token);
       }
-      var compileQuery = null;
+      var compileQuery;
       var q = (dep.properties.firstWhere((p) => p is dimd.QueryMetadata,
           orElse: () => null) as dimd.QueryMetadata);
       if (q != null) {

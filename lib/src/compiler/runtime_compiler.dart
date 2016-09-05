@@ -231,7 +231,7 @@ class RuntimeCompiler implements ComponentResolver {
 }
 
 class CompiledTemplate {
-  Function viewFactory = null;
+  Function viewFactory;
   Function proxyViewFactory;
   CompiledTemplate() {
     this.proxyViewFactory = (viewUtils, childInjector, contextEl) =>

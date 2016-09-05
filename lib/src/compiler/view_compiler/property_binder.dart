@@ -4,7 +4,7 @@ import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
 import "package:angular2/src/core/security.dart";
 
-import "../expression_parser/ast.dart" as cdAst;
+import "../expression_parser/ast.dart" as ast;
 import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart"
@@ -33,7 +33,7 @@ void bind(
     CompileView view,
     o.ReadVarExpr currValExpr,
     o.ReadPropExpr fieldExpr,
-    cdAst.AST parsedExpression,
+    ast.AST parsedExpression,
     o.Expression context,
     List<o.Statement> actions,
     CompileMethod method) {

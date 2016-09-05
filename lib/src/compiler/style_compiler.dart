@@ -19,7 +19,7 @@ class StylesCompileDependency {
   bool isShimmed;
   CompileIdentifierMetadata valuePlaceholder;
   StylesCompileDependency(
-      this.sourceUrl, this.isShimmed, this.valuePlaceholder) {}
+      this.sourceUrl, this.isShimmed, this.valuePlaceholder);
 }
 
 class StylesCompileResult {

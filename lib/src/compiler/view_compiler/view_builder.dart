@@ -56,7 +56,7 @@ const _NAMESPACE_URIS = const {
 class ViewCompileDependency {
   CompileDirectiveMetadata comp;
   CompileIdentifierMetadata factoryPlaceholder;
-  ViewCompileDependency(this.comp, this.factoryPlaceholder) {}
+  ViewCompileDependency(this.comp, this.factoryPlaceholder);
 }
 
 num buildView(
@@ -345,7 +345,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         false,
         ast.references);
     this.view.nodes.add(compileElement);
-    o.ReadVarExpr compViewExpr = null;
+    o.ReadVarExpr compViewExpr;
     if (component != null) {
       var nestedComponentIdentifier =
           new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));

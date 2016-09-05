@@ -13,7 +13,7 @@ import "package:angular2/core.dart"
         assertPlatform,
         PLATFORM_INITIALIZER,
         MapInjector;
-import "package:angular2/src/core/application_ref.dart" show PlatformRef_;
+import "package:angular2/src/core/application_ref.dart" show PlatformRefImpl;
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/core/reflection/reflection.dart"
     show Reflector, reflector;
@@ -45,9 +45,9 @@ const List<dynamic> BROWSER_APP_PROVIDERS = const [
 PlatformRef browserStaticPlatform() {
   if (getPlatform() == null) {
     var tokens = new Map<dynamic, dynamic>();
-    var platform = new PlatformRef_();
+    var platform = new PlatformRefImpl();
     tokens[PlatformRef] = platform;
-    tokens[PlatformRef_] = platform;
+    tokens[PlatformRefImpl] = platform;
     tokens[Reflector] = reflector;
     tokens[ReflectorReader] = reflector;
     var testabilityRegistry = new TestabilityRegistry();

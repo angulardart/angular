@@ -8,7 +8,7 @@ abstract class HtmlAst {
 class HtmlTextAst implements HtmlAst {
   String value;
   ParseSourceSpan sourceSpan;
-  HtmlTextAst(this.value, this.sourceSpan) {}
+  HtmlTextAst(this.value, this.sourceSpan);
   dynamic visit(HtmlAstVisitor visitor, dynamic context) {
     return visitor.visitText(this, context);
   }
@@ -21,7 +21,7 @@ class HtmlExpansionAst implements HtmlAst {
   ParseSourceSpan sourceSpan;
   ParseSourceSpan switchValueSourceSpan;
   HtmlExpansionAst(this.switchValue, this.type, this.cases, this.sourceSpan,
-      this.switchValueSourceSpan) {}
+      this.switchValueSourceSpan);
   dynamic visit(HtmlAstVisitor visitor, dynamic context) {
     return visitor.visitExpansion(this, context);
   }
@@ -34,7 +34,7 @@ class HtmlExpansionCaseAst implements HtmlAst {
   ParseSourceSpan valueSourceSpan;
   ParseSourceSpan expSourceSpan;
   HtmlExpansionCaseAst(this.value, this.expression, this.sourceSpan,
-      this.valueSourceSpan, this.expSourceSpan) {}
+      this.valueSourceSpan, this.expSourceSpan);
   dynamic visit(HtmlAstVisitor visitor, dynamic context) {
     return visitor.visitExpansionCase(this, context);
   }
@@ -44,7 +44,7 @@ class HtmlAttrAst implements HtmlAst {
   String name;
   String value;
   ParseSourceSpan sourceSpan;
-  HtmlAttrAst(this.name, this.value, this.sourceSpan) {}
+  HtmlAttrAst(this.name, this.value, this.sourceSpan);
   dynamic visit(HtmlAstVisitor visitor, dynamic context) {
     return visitor.visitAttr(this, context);
   }
@@ -58,7 +58,7 @@ class HtmlElementAst implements HtmlAst {
   ParseSourceSpan startSourceSpan;
   ParseSourceSpan endSourceSpan;
   HtmlElementAst(this.name, this.attrs, this.children, this.sourceSpan,
-      this.startSourceSpan, this.endSourceSpan) {}
+      this.startSourceSpan, this.endSourceSpan);
   dynamic visit(HtmlAstVisitor visitor, dynamic context) {
     return visitor.visitElement(this, context);
   }
@@ -67,7 +67,7 @@ class HtmlElementAst implements HtmlAst {
 class HtmlCommentAst implements HtmlAst {
   String value;
   ParseSourceSpan sourceSpan;
-  HtmlCommentAst(this.value, this.sourceSpan) {}
+  HtmlCommentAst(this.value, this.sourceSpan);
   dynamic visit(HtmlAstVisitor visitor, dynamic context) {
     return visitor.visitComment(this, context);
   }

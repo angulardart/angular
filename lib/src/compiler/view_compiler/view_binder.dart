@@ -42,9 +42,9 @@ void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
 }
 
 class ViewBinderVisitor implements TemplateAstVisitor {
-  CompileView view;
+  final CompileView view;
   num _nodeIndex = 0;
-  ViewBinderVisitor(this.view) {}
+  ViewBinderVisitor(this.view);
   dynamic visitBoundText(BoundTextAst ast, dynamic context) {
     var node = this.view.nodes[this._nodeIndex++];
     bindRenderText(ast, node, this.view);

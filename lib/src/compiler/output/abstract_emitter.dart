@@ -12,9 +12,9 @@ abstract class OutputEmitter {
 }
 
 class _EmittedLine {
-  num indent;
+  int indent;
   List<String> parts = [];
-  _EmittedLine(this.indent) {}
+  _EmittedLine(this.indent);
 }
 
 class EmitterVisitorContext {
@@ -140,8 +140,8 @@ class EmitterVisitorContext {
 
 abstract class AbstractEmitterVisitor
     implements o.StatementVisitor, o.ExpressionVisitor {
-  bool _escapeDollarInStrings;
-  AbstractEmitterVisitor(this._escapeDollarInStrings) {}
+  final bool _escapeDollarInStrings;
+  AbstractEmitterVisitor(this._escapeDollarInStrings);
   dynamic visitExpressionStmt(o.ExpressionStatement stmt, context) {
     EmitterVisitorContext ctx = context;
     stmt.expr.visitExpression(this, ctx);

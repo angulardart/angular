@@ -45,7 +45,7 @@ Object uninitialized = const Object();
  */
 class WrappedValue {
   dynamic wrapped;
-  WrappedValue(this.wrapped) {}
+  WrappedValue(this.wrapped);
   static WrappedValue wrap(dynamic value) {
     return new WrappedValue(value);
   }
@@ -75,7 +75,7 @@ class ValueUnwrapper {
 class SimpleChange {
   dynamic previousValue;
   dynamic currentValue;
-  SimpleChange(this.previousValue, this.currentValue) {}
+  SimpleChange(this.previousValue, this.currentValue);
   /**
    * Check whether the new value is the first value assigned.
    */

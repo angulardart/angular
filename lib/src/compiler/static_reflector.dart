@@ -42,7 +42,7 @@ abstract class StaticReflectorHost {
 class StaticType {
   String moduleId;
   String name;
-  StaticType(this.moduleId, this.name) {}
+  StaticType(this.moduleId, this.name);
 }
 
 /**

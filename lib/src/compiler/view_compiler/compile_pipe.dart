@@ -11,7 +11,7 @@ class _PurePipeProxy {
   CompileView view;
   o.ReadPropExpr instance;
   num argCount;
-  _PurePipeProxy(this.view, this.instance, this.argCount) {}
+  _PurePipeProxy(this.view, this.instance, this.argCount);
 }
 
 class CompilePipe {
@@ -97,7 +97,7 @@ class CompilePipe {
 }
 
 CompilePipeMetadata _findPipeMeta(CompileView view, String name) {
-  CompilePipeMetadata pipeMeta = null;
+  CompilePipeMetadata pipeMeta;
   for (var i = view.pipeMetas.length - 1; i >= 0; i--) {
     var localPipeMeta = view.pipeMetas[i];
     if (localPipeMeta.name == name) {

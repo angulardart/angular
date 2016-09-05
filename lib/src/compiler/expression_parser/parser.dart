@@ -218,7 +218,7 @@ class _ParseAST {
   List<dynamic> tokens;
   bool parseAction;
   num index = 0;
-  _ParseAST(this.input, this.location, this.tokens, this.parseAction) {}
+  _ParseAST(this.input, this.location, this.tokens, this.parseAction);
   Token peek(num offset) {
     var i = this.index + offset;
     return i < this.tokens.length ? this.tokens[i] : EOF;

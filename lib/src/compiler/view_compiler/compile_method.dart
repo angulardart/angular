@@ -5,7 +5,7 @@ import "compile_view.dart" show CompileView;
 class _DebugState {
   num nodeIndex;
   TemplateAst sourceAst;
-  _DebugState(this.nodeIndex, this.sourceAst) {}
+  _DebugState(this.nodeIndex, this.sourceAst);
 }
 
 var NULL_DEBUG_STATE = new _DebugState(null, null);

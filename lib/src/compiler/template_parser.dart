@@ -515,7 +515,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<List<String>> targetMatchableAttrs,
       List<BoundElementOrDirectiveProperty> targetProps,
       List<VariableAst> targetVars) {
-    var templateBindingsSource = null;
+    var templateBindingsSource;
     if (attr.name == TEMPLATE_ATTR) {
       templateBindingsSource = attr.value;
     } else if (attr.name.startsWith(TEMPLATE_ATTR_PREFIX)) {
@@ -733,7 +733,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       ParseSourceSpan sourceSpan,
       List<ReferenceAst> targetReferences) {
     var matchedReferences = new Set<String>();
-    CompileDirectiveMetadata component = null;
+    CompileDirectiveMetadata component;
     var directiveAsts = directives.map((CompileDirectiveMetadata directive) {
       if (directive.isComponent) {
         component = directive;
@@ -765,9 +765,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
               '''There is no directive with "exportAs" set to "${ elOrDirRef . value}"''',
               elOrDirRef.sourceSpan);
         }
-        ;
       } else if (component == null) {
-        var refToken = null;
+        var refToken;
         if (isTemplateElement) {
           refToken = identifierToken(Identifiers.TemplateRef);
         }
@@ -845,7 +844,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
 
   BoundElementPropertyAst _createElementPropertyAst(
       String elementName, String name, AST ast, ParseSourceSpan sourceSpan) {
-    var unit = null;
+    var unit;
     var bindingType;
     String boundPropertyName;
     TemplateSecurityContext securityContext;
@@ -1019,14 +1018,14 @@ class BoundElementOrDirectiveProperty {
   bool isLiteral;
   ParseSourceSpan sourceSpan;
   BoundElementOrDirectiveProperty(
-      this.name, this.expression, this.isLiteral, this.sourceSpan) {}
+      this.name, this.expression, this.isLiteral, this.sourceSpan);
 }
 
 class ElementOrDirectiveRef {
   String name;
   String value;
   ParseSourceSpan sourceSpan;
-  ElementOrDirectiveRef(this.name, this.value, this.sourceSpan) {}
+  ElementOrDirectiveRef(this.name, this.value, this.sourceSpan);
 }
 
 List<String> splitClasses(String classAttrValue) {
@@ -1041,7 +1040,7 @@ class ElementContext {
   static ElementContext create(bool isTemplateElement,
       List<DirectiveAst> directives, ProviderElementContext providerContext) {
     var matcher = new SelectorMatcher();
-    var wildcardNgContentIndex = null;
+    int wildcardNgContentIndex;
     var component = directives.firstWhere(
         (directive) => directive.directive.isComponent,
         orElse: () => null);
@@ -1061,7 +1060,7 @@ class ElementContext {
   }
 
   ElementContext(this.isTemplateElement, this._ngContentIndexMatcher,
-      this._wildcardNgContentIndex, this.providerContext) {}
+      this._wildcardNgContentIndex, this.providerContext);
   num findNgContentIndex(CssSelector selector) {
     var ngContentIndices = [];
     this._ngContentIndexMatcher.match(selector, (selector, ngContentIndex) {

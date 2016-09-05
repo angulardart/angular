@@ -21,7 +21,7 @@ var parentInjectorProp = o.THIS_EXPR.prop("parent");
 class InjectorCompileResult {
   List<o.Statement> statements;
   String injectorFactoryVar;
-  InjectorCompileResult(this.statements, this.injectorFactoryVar) {}
+  InjectorCompileResult(this.statements, this.injectorFactoryVar);
 }
 
 @Injectable()
@@ -199,7 +199,7 @@ class _InjectorBuilder {
   }
 
   o.Expression _getDependency(CompileDiDependencyMetadata dep) {
-    var result = null;
+    var result;
     if (dep.isValue) {
       result = o.literal(dep.value);
     }

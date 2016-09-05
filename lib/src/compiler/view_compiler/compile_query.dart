@@ -9,7 +9,7 @@ import "util.dart" show getPropertyInView;
 class ViewQueryValues {
   CompileView view;
   List<dynamic /* o . Expression | ViewQueryValues */ > values;
-  ViewQueryValues(this.view, this.values) {}
+  ViewQueryValues(this.view, this.values);
 }
 
 class CompileQuery {

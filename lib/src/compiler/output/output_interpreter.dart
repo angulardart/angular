@@ -75,7 +75,7 @@ class _ExecutionContext {
       this.props,
       this.getters,
       this.methods,
-      this.instanceFactory) {}
+      this.instanceFactory);
   _ExecutionContext createChildWihtLocalVars() {
     return new _ExecutionContext(
         this,
@@ -99,7 +99,7 @@ class _DynamicClass {
   o.ClassStmt _classStmt;
   _ExecutionContext _ctx;
   StatementInterpreter _visitor;
-  _DynamicClass(this._classStmt, this._ctx, this._visitor) {}
+  _DynamicClass(this._classStmt, this._ctx, this._visitor);
   DynamicInstance instantiate(List<dynamic> args) {
     var props = new Map<String, dynamic>();
     var getters = new Map<String, Function>();

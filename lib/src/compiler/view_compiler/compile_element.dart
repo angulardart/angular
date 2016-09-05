@@ -53,7 +53,7 @@ class CompileElement extends CompileNode {
   bool hasViewContainer;
   bool hasEmbeddedView;
 
-  o.Expression _compViewExpr = null;
+  o.Expression _compViewExpr;
   o.ReadPropExpr appElement;
   o.Expression elementRef;
   o.Expression injector;
@@ -62,7 +62,7 @@ class CompileElement extends CompileNode {
   var _queryCount = 0;
   var _queries = new CompileTokenMap<List<CompileQuery>>();
   List<o.Expression> _componentConstructorViewQueryLists = [];
-  List<List<o.Expression>> contentNodesByNgContentIndex = null;
+  List<List<o.Expression>> contentNodesByNgContentIndex;
   CompileView embeddedView;
   List<o.Expression> directiveInstances;
   Map<String, CompileTokenMetadata> referenceTokens;
@@ -336,7 +336,7 @@ class CompileElement extends CompileNode {
 
   o.Expression _getLocalDependency(
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep) {
-    var result = null;
+    o.Expression result;
     // constructor content query
     if (result == null && dep.query != null) {
       result = _addQuery(dep.query, null).queryList;
@@ -373,7 +373,7 @@ class CompileElement extends CompileNode {
   o.Expression _getDependency(
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep) {
     CompileElement currElement = this;
-    var result = null;
+    var result;
     if (dep.isValue) {
       result = o.literal(dep.value);
     }
