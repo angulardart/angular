@@ -1399,7 +1399,8 @@ main() {
             () => parse("<div [invalidProp]></div>", []),
             throwsWith('Template parse errors:\n'
                 'Can\'t bind to \'invalidProp\' since it isn\'t a known '
-                'native property ("<div [ERROR ->][invalidProp]></div>"): '
+                'native property or known directive. Please fix typo or add '
+                'to directives list. ("<div [ERROR ->][invalidProp]></div>"): '
                 'TestComp@0:5'));
       });
       test("should report errors in expressions", () {

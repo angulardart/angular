@@ -855,10 +855,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           this._schemaRegistry.securityContext(elementName, boundPropertyName);
       bindingType = PropertyBindingType.Property;
       if (!this._schemaRegistry.hasProperty(elementName, boundPropertyName)) {
-        this._reportError(
-            'Can\'t bind to \'${ boundPropertyName}\' since it isn\'t a known '
-            'native property',
-            sourceSpan);
+        _reportUnknownPropertyOrDirective(
+            elementName, boundPropertyName, sourceSpan);
       }
     } else {
       if (parts[0] == ATTRIBUTE_PREFIX) {
@@ -898,6 +896,22 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }
     return new BoundElementPropertyAst(
         boundPropertyName, bindingType, securityContext, ast, unit, sourceSpan);
+  }
+
+  void _reportUnknownPropertyOrDirective(String elementName,
+      String boundPropertyName, ParseSourceSpan sourceSpan) {
+    // Very common mistake is to type [ngClass] as [ngclass]
+    if (boundPropertyName == 'ngclass') {
+      _reportError(
+          "Please use camel-case ngClass instead of ngclass in your template",
+          sourceSpan);
+      return;
+    }
+    _reportError(
+        "Can't bind to '${boundPropertyName}' since it isn't a known "
+        "native property or known directive. Please fix typo or add to "
+        "directives list.",
+        sourceSpan);
   }
 
   List<String> _findComponentDirectiveNames(List<DirectiveAst> directives) {

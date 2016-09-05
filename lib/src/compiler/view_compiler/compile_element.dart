@@ -47,6 +47,10 @@ class CompileNode {
 
 /// Compiled element in the view.
 class CompileElement extends CompileNode {
+  final String renderNodeFieldName;
+  // If true, we know for sure it is html and not svg or other type
+  // so we can create code for more exact type HtmlElement.
+  final bool isHtmlElement;
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> _directives;
   List<ProviderAst> _resolvedProvidersArray;
@@ -72,13 +76,15 @@ class CompileElement extends CompileNode {
       CompileView view,
       num nodeIndex,
       o.Expression renderNode,
+      this.renderNodeFieldName,
       TemplateAst sourceAst,
       this.component,
       this._directives,
       this._resolvedProvidersArray,
       this.hasViewContainer,
       this.hasEmbeddedView,
-      List<ReferenceAst> references)
+      List<ReferenceAst> references,
+      {this.isHtmlElement: false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
@@ -102,7 +108,8 @@ class CompileElement extends CompileNode {
   }
 
   CompileElement.root()
-      : this(null, null, null, null, null, null, [], [], false, false, []);
+      : this(
+            null, null, null, null, null, null, null, [], [], false, false, []);
 
   void _createAppElement() {
     var fieldName = '_appEl_${nodeIndex}';

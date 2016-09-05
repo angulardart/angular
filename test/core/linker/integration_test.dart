@@ -1689,7 +1689,7 @@ main() {
                 expect(
                     e.message,
                     '''Template parse errors:
-Can\'t bind to \'unknown\' since it isn\'t a known native property ("<div [ERROR ->]unknown="{{ctxProp}}"></div>"): MyComp@0:5''');
+Can\'t bind to \'unknown\' since it isn\'t a known native property or known directive. Please fix typo or add to directives list. ("<div [ERROR ->]unknown="{{ctxProp}}"></div>"): MyComp@0:5''');
                 completer.done();
                 return null;
               });
@@ -1830,7 +1830,8 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property ("<div [ERROR
                   "<div><div template=\"if: foo\"></div></div>",
                   'Template parse errors:\n'
                   'Can\'t bind to \'if\' since it isn\'t a known native '
-                  'property ("<div><div [ERROR ->]template="if: foo">'
+                  'property or known directive. Please fix typo or add to '
+                  'directives list. ("<div><div [ERROR ->]template="if: foo">'
                   '</div></div>"): MyComp@0:10\n'
                   'Property binding if not used by any directive on an '
                   'embedded template ("<div>[ERROR ->]<div template="if: '

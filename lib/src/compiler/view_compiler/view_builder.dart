@@ -268,14 +268,16 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var createRenderNodeExpr;
 
     o.Expression tagNameExpr = o.literal(ast.name);
-
+    bool isHtmlElement;
     if (isHostRootView) {
       createRenderNodeExpr = new o.InvokeMemberMethodExpr(
           'selectOrCreateHostElement',
           [tagNameExpr, rootSelectorVar, debugContextExpr]);
       view.createMethod.addStmt(
           new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr).toStmt());
+      isHtmlElement = false;
     } else {
+      isHtmlElement = detectHtmlElementFromTagName(ast.name);
       var parentRenderNodeExpr = _getParentRenderNode(parent);
       // Create element or elementNS. AST encodes svg path element as @svg:path.
       if (ast.name.startsWith('@') && ast.name.contains(':')) {
@@ -337,13 +339,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         this.view,
         nodeIndex,
         renderNode,
+        fieldName,
         ast,
         component,
         directives,
         ast.providers,
         ast.hasViewContainer,
         false,
-        ast.references);
+        ast.references,
+        isHtmlElement: isHtmlElement);
     this.view.nodes.add(compileElement);
     o.ReadVarExpr compViewExpr;
     if (component != null) {
@@ -396,7 +400,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
     CompileElement parent = context;
     var nodeIndex = this.view.nodes.length;
-    var fieldName = '''_anchor_${ nodeIndex}''';
+    var fieldName = '_anchor_${ nodeIndex}' '';
     this.view.fields.add(new o.ClassField(
         fieldName,
         o.importType(view.genConfig.renderTypes.renderComment),
@@ -421,6 +425,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         this.view,
         nodeIndex,
         renderNode,
+        fieldName,
         ast,
         null,
         directives,
@@ -820,4 +825,145 @@ ChangeDetectionStrategy getChangeDetectionMode(CompileView view) {
     mode = ChangeDetectionStrategy.CheckAlways;
   }
   return mode;
+}
+
+Set<String> tagNameSet;
+
+/// Returns true if tag name is HtmlElement.
+///
+/// Returns false if tag name is svg element or other. Used for optimizations.
+/// Should not generate false positives but returning false when unknown is
+/// fine since code will fallback to general Element case.
+bool detectHtmlElementFromTagName(String tagName) {
+  const htmlTagNames = const <String>[
+    'a',
+    'abbr',
+    'acronym',
+    'address',
+    'applet',
+    'area',
+    'article',
+    'aside',
+    'audio',
+    'b',
+    'base',
+    'basefont',
+    'bdi',
+    'bdo',
+    'bgsound',
+    'big',
+    'blockquote',
+    'body',
+    'br',
+    'button',
+    'canvas',
+    'caption',
+    'center',
+    'cite',
+    'code',
+    'col',
+    'colgroup',
+    'command',
+    'data',
+    'datalist',
+    'dd',
+    'del',
+    'details',
+    'dfn',
+    'dialog',
+    'dir',
+    'div',
+    'dl',
+    'dt',
+    'element',
+    'em',
+    'embed',
+    'fieldset',
+    'figcaption',
+    'figure',
+    'font',
+    'footer',
+    'form',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'head',
+    'header',
+    'hr',
+    'i',
+    'iframe',
+    'img',
+    'input',
+    'ins',
+    'kbd',
+    'keygen',
+    'label',
+    'legend',
+    'li',
+    'link',
+    'listing',
+    'main',
+    'map',
+    'mark',
+    'menu',
+    'menuitem',
+    'meta',
+    'meter',
+    'nav',
+    'object',
+    'ol',
+    'optgroup',
+    'option',
+    'output',
+    'p',
+    'param',
+    'picture',
+    'pre',
+    'progress',
+    'q',
+    'rp',
+    'rt',
+    'rtc',
+    'ruby',
+    's',
+    'samp',
+    'script',
+    'section',
+    'select',
+    'shadow',
+    'small',
+    'source',
+    'span',
+    'strong',
+    'style',
+    'sub',
+    'summary',
+    'sup',
+    'table',
+    'tbody',
+    'td',
+    'template',
+    'textarea',
+    'tfoot',
+    'th',
+    'thead',
+    'time',
+    'title',
+    'tr',
+    'track',
+    'tt',
+    'u',
+    'ul',
+    'var',
+    'video',
+    'wbr'
+  ];
+  if (tagNameSet == null) {
+    tagNameSet = new Set<String>();
+    for (String name in htmlTagNames) tagNameSet.add(name);
+  }
+  return tagNameSet.contains(tagName);
 }

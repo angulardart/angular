@@ -372,6 +372,24 @@ abstract class AppView<T> {
     el.text = css;
     return el;
   }
+
+  // Called by template.dart code to updates [class.X] style bindings.
+  void updateClass(HtmlElement element, String className, bool isAdd) {
+    if (isAdd) {
+      element.classes.add(className);
+    } else {
+      element.classes.remove(className);
+    }
+  }
+
+  // Updates classes for non html nodes such as svg.
+  void updateElemClass(Element element, String className, bool isAdd) {
+    if (isAdd) {
+      element.classes.add(className);
+    } else {
+      element.classes.remove(className);
+    }
+  }
 }
 
 dynamic _findLastRenderNode(dynamic node) {

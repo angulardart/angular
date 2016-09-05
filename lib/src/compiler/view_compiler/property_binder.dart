@@ -74,7 +74,9 @@ bindRenderText(
     BoundTextAst boundText, CompileNode compileNode, CompileView view) {
   var bindingIndex = view.bindings.length;
   view.bindings.add(new CompileBinding(compileNode, boundText));
+  // Expression for current value of expression when value is re-read.
   var currValExpr = createCurrValueExpr(bindingIndex);
+  // Expression that points to _expr_## stored value.
   var valueField = createBindFieldExpr(bindingIndex);
   view.detectChangesRenderPropertiesMethod
       .resetDebugInfo(compileNode.nodeIndex, boundText);
@@ -91,36 +93,72 @@ bindRenderText(
       view.detectChangesRenderPropertiesMethod);
 }
 
-bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
+/// For each bound property, creates code to update the binding.
+///
+/// Example:
+///     this.debug(4,2,5);
+///     final currVal_1 = this.context.someBoolValue;
+///     if (import6.checkBinding(this._expr_1,currVal_1)) {
+///       this.renderer.setElementClass(this._el_4,'disabled',currVal_1);
+///       this._expr_1 = currVal_1;
+///     }
+void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
     o.Expression context, CompileElement compileElement) {
   var view = compileElement.view;
   var renderNode = compileElement.renderNode;
   boundProps.forEach((boundProp) {
     var bindingIndex = view.bindings.length;
+
+    // Add to view bindings collection.
     view.bindings.add(new CompileBinding(compileElement, boundProp));
+
+    // Generate call to this.debug(index, column, row);
     view.detectChangesRenderPropertiesMethod
         .resetDebugInfo(compileElement.nodeIndex, boundProp);
+
+    // Expression that points to _expr_## stored value.
     var fieldExpr = createBindFieldExpr(bindingIndex);
+
+    // Expression for current value of expression when value is re-read.
     var currValExpr = createCurrValueExpr(bindingIndex);
+
     String renderMethod;
+    // Wraps current value with sanitization call if neccessary.
     o.Expression renderValue = sanitizedValue(boundProp, currValExpr);
+
     var updateStmts = <o.Statement>[];
     switch (boundProp.type) {
       case PropertyBindingType.Property:
         renderMethod = "setElementProperty";
+        // If user asked for logging bindings, generate code to log them.
         if (view.genConfig.logBindingUpdate) {
           updateStmts.add(
               logBindingUpdateStmt(renderNode, boundProp.name, currValExpr));
         }
+        updateStmts.add(new o.ReadClassMemberExpr("renderer").callMethod(
+            renderMethod,
+            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
       case PropertyBindingType.Attribute:
         renderMethod = "setElementAttribute";
+        // For attributes convert value to a string.
+        // TODO: Once we have analyzer summaries and know the type is already
+        // String short-circuit
         renderValue = renderValue
             .isBlank()
             .conditional(o.NULL_EXPR, renderValue.callMethod("toString", []));
+        updateStmts.add(new o.ReadClassMemberExpr("renderer").callMethod(
+            renderMethod,
+            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
       case PropertyBindingType.Class:
-        renderMethod = "setElementClass";
+        renderMethod =
+            compileElement.isHtmlElement ? 'updateClass' : 'updateElemClass';
+        updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod, [
+          new o.ReadClassMemberExpr(compileElement.renderNodeFieldName),
+          o.literal(boundProp.name),
+          renderValue
+        ]).toStmt());
         break;
       case PropertyBindingType.Style:
         renderMethod = "setElementStyle";
@@ -129,10 +167,11 @@ bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
           strValue = strValue.plus(o.literal(boundProp.unit));
         }
         renderValue = renderValue.isBlank().conditional(o.NULL_EXPR, strValue);
+        updateStmts.add(new o.ReadClassMemberExpr("renderer").callMethod(
+            renderMethod,
+            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
     }
-    updateStmts.add(o.THIS_EXPR.prop("renderer").callMethod(renderMethod,
-        [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
     bind(view, currValExpr, fieldExpr, boundProp.value, context, updateStmts,
         view.detectChangesRenderPropertiesMethod);
   });
