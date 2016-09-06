@@ -725,7 +725,7 @@ class MultipleContentTagsComponent {}
 class ManualViewportDirective {
   ViewContainerRef vc;
   TemplateRef templateRef;
-  ManualViewportDirective(this.vc, this.templateRef) {}
+  ManualViewportDirective(this.vc, this.templateRef);
   show() {
     this.vc.createEmbeddedView(this.templateRef, 0);
   }
@@ -738,7 +738,7 @@ class ManualViewportDirective {
 @Directive(selector: "[project]")
 class ProjectDirective {
   ViewContainerRef vc;
-  ProjectDirective(this.vc) {}
+  ProjectDirective(this.vc);
   show(TemplateRef templateRef) {
     this.vc.createEmbeddedView(templateRef, 0);
   }

@@ -49,9 +49,8 @@ main() {
     test("should return an error from the definitions", () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
         var url = "/foo";
-        var response = null;
-        xhr.when(url, response);
-        expectResponse(xhr.get(url), url, response, () => completer.done());
+        xhr.when(url, null);
+        expectResponse(xhr.get(url), url, null, () => completer.done());
         xhr.flush();
       });
     });
@@ -67,9 +66,8 @@ main() {
     test("should return an error from the expectations", () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
         var url = "/foo";
-        var response = null;
-        xhr.expect(url, response);
-        expectResponse(xhr.get(url), url, response, () => completer.done());
+        xhr.expect(url, null);
+        expectResponse(xhr.get(url), url, null, () => completer.done());
         xhr.flush();
       });
     });

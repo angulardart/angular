@@ -38,9 +38,7 @@ class ExpressionChangedAfterItHasBeenCheckedException extends BaseException {
   ExpressionChangedAfterItHasBeenCheckedException(
       dynamic oldValue, dynamic currValue, dynamic context)
       : super('''Expression has changed after it was checked. ''' +
-            '''Previous value: \'${ oldValue}\'. Current value: \'${ currValue}\'''') {
-    /* super call moved to initializer */;
-  }
+            '''Previous value: \'${ oldValue}\'. Current value: \'${ currValue}\'''');
 }
 
 /**
@@ -53,9 +51,7 @@ class ViewWrappedException extends WrappedException {
   ViewWrappedException(
       dynamic originalException, dynamic originalStack, dynamic context)
       : super('''Error in ${ context . source}''', originalException,
-            originalStack, context) {
-    /* super call moved to initializer */;
-  }
+            originalStack, context);
 }
 
 /**
@@ -67,7 +63,5 @@ class ViewWrappedException extends WrappedException {
  */
 class ViewDestroyedException extends BaseException {
   ViewDestroyedException(String details)
-      : super('''Attempt to use a destroyed view: ${ details}''') {
-    /* super call moved to initializer */;
-  }
+      : super('''Attempt to use a destroyed view: ${ details}''');
 }

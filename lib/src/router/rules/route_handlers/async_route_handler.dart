@@ -6,7 +6,7 @@ import "route_handler.dart" show RouteHandler;
 class AsyncRouteHandler implements RouteHandler {
   dynamic /* () => Promise<any /*Type | ComponentFactory*/> */ _loader;
   /** @internal */
-  Future<dynamic> _resolvedComponent = null;
+  Future<dynamic> _resolvedComponent;
   dynamic componentType;
   RouteData data;
   AsyncRouteHandler(this._loader, [Map<String, dynamic> data = null]) {

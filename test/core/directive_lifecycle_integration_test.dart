@@ -52,7 +52,7 @@ main() {
 @Directive(selector: "[lifecycle-dir]")
 class LifecycleDir implements DoCheck {
   Log _log;
-  LifecycleDir(this._log) {}
+  LifecycleDir(this._log);
   ngDoCheck() {
     this._log.add("child_ngDoCheck");
   }
@@ -74,7 +74,7 @@ class LifecycleCmp
         AfterViewChecked {
   Log _log;
   var field;
-  LifecycleCmp(this._log) {}
+  LifecycleCmp(this._log);
   ngOnChanges(_) {
     this._log.add("ngOnChanges");
   }

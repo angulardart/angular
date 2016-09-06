@@ -29,26 +29,26 @@ abstract class ReflectiveProtoInjectorStrategy {
 
 class ReflectiveProtoInjectorInlineStrategy
     implements ReflectiveProtoInjectorStrategy {
-  ResolvedReflectiveProvider provider0 = null;
-  ResolvedReflectiveProvider provider1 = null;
-  ResolvedReflectiveProvider provider2 = null;
-  ResolvedReflectiveProvider provider3 = null;
-  ResolvedReflectiveProvider provider4 = null;
-  ResolvedReflectiveProvider provider5 = null;
-  ResolvedReflectiveProvider provider6 = null;
-  ResolvedReflectiveProvider provider7 = null;
-  ResolvedReflectiveProvider provider8 = null;
-  ResolvedReflectiveProvider provider9 = null;
-  num keyId0 = null;
-  num keyId1 = null;
-  num keyId2 = null;
-  num keyId3 = null;
-  num keyId4 = null;
-  num keyId5 = null;
-  num keyId6 = null;
-  num keyId7 = null;
-  num keyId8 = null;
-  num keyId9 = null;
+  ResolvedReflectiveProvider provider0;
+  ResolvedReflectiveProvider provider1;
+  ResolvedReflectiveProvider provider2;
+  ResolvedReflectiveProvider provider3;
+  ResolvedReflectiveProvider provider4;
+  ResolvedReflectiveProvider provider5;
+  ResolvedReflectiveProvider provider6;
+  ResolvedReflectiveProvider provider7;
+  ResolvedReflectiveProvider provider8;
+  ResolvedReflectiveProvider provider9;
+  num keyId0;
+  num keyId1;
+  num keyId2;
+  num keyId3;
+  num keyId4;
+  num keyId5;
+  num keyId6;
+  num keyId7;
+  num keyId8;
+  num keyId9;
   ReflectiveProtoInjectorInlineStrategy(ReflectiveProtoInjector protoEI,
       List<ResolvedReflectiveProvider> providers) {
     var length = providers.length;
@@ -171,7 +171,7 @@ class ReflectiveInjectorInlineStrategy implements ReflectiveInjectorStrategy {
   dynamic obj7 = UNDEFINED;
   dynamic obj8 = UNDEFINED;
   dynamic obj9 = UNDEFINED;
-  ReflectiveInjectorInlineStrategy(this.injector, this.protoStrategy) {}
+  ReflectiveInjectorInlineStrategy(this.injector, this.protoStrategy);
   void resetConstructionCounter() {
     this.injector._constructionCounter = 0;
   }
@@ -518,7 +518,7 @@ class ReflectiveInjector_ implements ReflectiveInjector {
   num _constructionCounter = 0;
 
   ReflectiveInjector_(this._proto,
-      [Injector this._parent = null, this._debugContext = null]) {
+      [this._parent = null, this._debugContext = null]) {
     _strategy = _proto._strategy.createInjectorStrategy(this);
   }
 

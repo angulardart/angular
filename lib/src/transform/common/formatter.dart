@@ -1,6 +1,6 @@
 import 'package:dart_style/dart_style.dart';
 
-AngularDartFormatter _formatter = null;
+AngularDartFormatter _formatter;
 
 void init(DartFormatter formatter) {
   _formatter = new _RealFormatter(formatter);

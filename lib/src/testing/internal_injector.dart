@@ -4,11 +4,11 @@ import 'package:angular2/di.dart' show ReflectiveInjector;
 
 /// Provides reflective injector for executing a test.
 class TestInjector {
-  static TestInjector _testInjector = null;
+  static TestInjector _testInjector;
   static TestInjector singleton() => (_testInjector ??= new TestInjector());
 
   bool _instantiated = false;
-  ReflectiveInjector _injector = null;
+  ReflectiveInjector _injector;
   List<dynamic /* Type | Provider | List < dynamic > */ > _providers = [];
   void reset() {
     _injector = null;

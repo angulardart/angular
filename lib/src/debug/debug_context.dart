@@ -21,8 +21,7 @@ class DebugContext<T> implements RenderDebugInfo {
   num _tplRow;
   num _tplCol;
 
-  DebugContext(
-      DebugAppView<T> this._view, this._nodeIndex, this._tplRow, this._tplCol);
+  DebugContext(this._view, this._nodeIndex, this._tplRow, this._tplCol);
 
   StaticNodeDebugInfo get _staticNodeInfo => _nodeIndex != null
       ? this._view.staticNodeDebugInfos[this._nodeIndex]

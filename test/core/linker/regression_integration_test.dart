@@ -171,7 +171,7 @@ main() {
 @Component(selector: "my-comp", template: "")
 class MyComp {
   final Injector injector;
-  MyComp(this.injector) {}
+  MyComp(this.injector);
 }
 
 @Pipe(name: "somePipe", pure: true)

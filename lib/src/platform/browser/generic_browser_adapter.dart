@@ -3,8 +3,8 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DomAdapter;
 
 /// Provides DOM operations in any browser environment.
 abstract class GenericBrowserDomAdapter<T, N, ET> extends DomAdapter<T, N, ET> {
-  String _animationPrefix = null;
-  String _transitionEnd = null;
+  String _animationPrefix;
+  String _transitionEnd;
   GenericBrowserDomAdapter() : super() {
     // Detect animationFrame and end of transition function names.
     try {

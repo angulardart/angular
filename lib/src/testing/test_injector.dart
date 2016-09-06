@@ -4,7 +4,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 class TestInjector {
   bool _instantiated = false;
-  ReflectiveInjector _injector = null;
+  ReflectiveInjector _injector;
   List<dynamic /* Type | Provider | List < dynamic > */ > _providers = [];
   reset() {
     this._injector = null;
@@ -46,8 +46,8 @@ class TestInjector {
   }
 }
 
-TestInjector _testInjector = null;
-getTestInjector() {
+TestInjector _testInjector;
+TestInjector getTestInjector() {
   if (_testInjector == null) {
     _testInjector = new TestInjector();
   }
@@ -126,7 +126,7 @@ FunctionWithParamTokens inject(List<dynamic> tokens, Function fn) {
 
 class InjectSetupWrapper {
   dynamic /* () => any */ _providers;
-  InjectSetupWrapper(this._providers) {}
+  InjectSetupWrapper(this._providers);
   FunctionWithParamTokens inject(List<dynamic> tokens, Function fn) {
     return new FunctionWithParamTokens(tokens, fn, false, this._providers);
   }
@@ -203,7 +203,7 @@ class FunctionWithParamTokens {
   bool isAsync;
   dynamic /* () => any */ additionalProviders;
   FunctionWithParamTokens(this._tokens, this.fn, this.isAsync,
-      [this.additionalProviders = emptyArray]) {}
+      [this.additionalProviders = emptyArray]);
 
   /// Returns the value of the executed function.
   dynamic execute(ReflectiveInjector injector) {

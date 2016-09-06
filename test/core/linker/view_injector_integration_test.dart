@@ -53,7 +53,7 @@ const ALL_PIPES = const [
 @Directive(selector: "[simpleDirective]")
 class SimpleDirective {
   @Input("simpleDirective")
-  dynamic value = null;
+  dynamic value;
 }
 
 @Component(
@@ -67,7 +67,7 @@ class SomeOtherDirective {}
 
 @Directive(selector: "[cycleDirective]")
 class CycleDirective {
-  CycleDirective(CycleDirective self) {}
+  CycleDirective(CycleDirective self);
 }
 
 @Directive(selector: "[needsDirectiveFromSelf]")
@@ -209,7 +209,7 @@ class OptionallyNeedsTemplateRef {
 @Directive(selector: "[directiveNeedsChangeDetectorRef]")
 class DirectiveNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
-  DirectiveNeedsChangeDetectorRef(this.changeDetectorRef) {}
+  DirectiveNeedsChangeDetectorRef(this.changeDetectorRef);
 }
 
 @Component(
@@ -220,12 +220,12 @@ class DirectiveNeedsChangeDetectorRef {
 class PushComponentNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
   num counter = 0;
-  PushComponentNeedsChangeDetectorRef(this.changeDetectorRef) {}
+  PushComponentNeedsChangeDetectorRef(this.changeDetectorRef);
 }
 
 @Pipe(name: "purePipe", pure: true)
 class PurePipe implements PipeTransform {
-  PurePipe() {}
+  PurePipe();
   dynamic transform(dynamic value) {
     return this;
   }
@@ -233,7 +233,6 @@ class PurePipe implements PipeTransform {
 
 @Pipe(name: "impurePipe", pure: false)
 class ImpurePipe implements PipeTransform {
-  ImpurePipe() {}
   dynamic transform(dynamic value) {
     return this;
   }
@@ -242,7 +241,7 @@ class ImpurePipe implements PipeTransform {
 @Pipe(name: "pipeNeedsChangeDetectorRef")
 class PipeNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
-  PipeNeedsChangeDetectorRef(this.changeDetectorRef) {}
+  PipeNeedsChangeDetectorRef(this.changeDetectorRef);
   dynamic transform(dynamic value) {
     return this;
   }
@@ -290,14 +289,12 @@ class Car {
 class SomeService {}
 
 @InjectorModule(providers: const [Car])
-class SomeModuleWithProvider {
-  SomeModuleWithProvider() {}
-}
+class SomeModuleWithProvider {}
 
 @InjectorModule()
 class SomeModuleWithDeps {
   SomeService someService;
-  SomeModuleWithDeps(this.someService) {}
+  SomeModuleWithDeps(this.someService);
 }
 
 @InjectorModule()

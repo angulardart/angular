@@ -31,9 +31,9 @@ class HammerGestureConfig {
 
 @Injectable()
 class HammerGesturesPlugin extends HammerGesturesPluginCommon {
-  HammerGestureConfig _config;
+  final HammerGestureConfig _config;
 
-  HammerGesturesPlugin(@Inject(HAMMER_GESTURE_CONFIG) this._config) {}
+  HammerGesturesPlugin(@Inject(HAMMER_GESTURE_CONFIG) this._config);
 
   bool supports(String eventName) {
     if (!super.supports(eventName) && !this.isCustomEvent(eventName))

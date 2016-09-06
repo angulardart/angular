@@ -19,7 +19,7 @@ const List<dynamic> styles_CompA = const [
 const List<import1.StaticNodeDebugInfo> nodeDebugInfos_CompA0 = const [
   const import1.StaticNodeDebugInfo(const [], null, const <String, dynamic>{})
 ];
-import2.RenderComponentType renderType_CompA = null;
+import2.RenderComponentType renderType_CompA;
 
 class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
   var _text_0;
@@ -35,7 +35,7 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
             parentInjector,
             declarationEl,
             import9.ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_CompA0) {}
+            nodeDebugInfos_CompA0);
   import7.AppElement createInternal(dynamic rootSelector) {
     final parentRenderNode =
         this.initViewRoot(this.declarationAppElement.nativeElement);
@@ -77,7 +77,7 @@ const List<import1.StaticNodeDebugInfo> nodeDebugInfos_CompA_Host0 = const [
       const [import4.CompA], import4.CompA, const <String, dynamic>{}),
   null // Testing null default case.
 ];
-import2.RenderComponentType renderType_CompA_Host = null;
+import2.RenderComponentType renderType_CompA_Host;
 
 class _View_CompA_Host0 extends import3.DebugAppView<dynamic> {
   var _el_0;
@@ -94,7 +94,7 @@ class _View_CompA_Host0 extends import3.DebugAppView<dynamic> {
             parentInjector,
             declarationEl,
             import9.ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_CompA_Host0) {}
+            nodeDebugInfos_CompA_Host0);
   import7.AppElement createInternal(dynamic rootSelector) {
     this._el_0 = this
         .selectOrCreateHostElement('comp-a', rootSelector, this.debug(0, 0, 0));

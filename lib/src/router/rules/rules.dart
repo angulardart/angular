@@ -15,17 +15,13 @@ class PathMatch extends RouteMatch {
   ComponentInstruction instruction;
   Url remaining;
   List<Url> remainingAux;
-  PathMatch(this.instruction, this.remaining, this.remainingAux) : super() {
-    /* super call moved to initializer */;
-  }
+  PathMatch(this.instruction, this.remaining, this.remainingAux);
 }
 
 class RedirectMatch extends RouteMatch {
   List<dynamic> redirectTo;
   var specificity;
-  RedirectMatch(this.redirectTo, this.specificity) : super() {
-    /* super call moved to initializer */;
-  }
+  RedirectMatch(this.redirectTo, this.specificity);
 }
 
 // Rules are responsible for recognizing URL segments and generating instructions
@@ -56,7 +52,7 @@ class RedirectRule implements AbstractRule {
    * Returns `null` or a `ParsedUrl` representing the new path to match
    */
   Future<RouteMatch> recognize(Url beginningSegment) {
-    var match = null;
+    RouteMatch match;
     if (_pathRecognizer.matchUrl(beginningSegment) != null) {
       match =
           new RedirectMatch(this.redirectTo, this._pathRecognizer.specificity);

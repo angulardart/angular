@@ -27,7 +27,7 @@ class ReflectiveDependency {
   dynamic upperBoundVisibility;
   List<dynamic> properties;
   ReflectiveDependency(this.key, this.optional, this.lowerBoundVisibility,
-      this.upperBoundVisibility, this.properties) {}
+      this.upperBoundVisibility, this.properties);
   static ReflectiveDependency fromKey(ReflectiveKey key) {
     return new ReflectiveDependency(key, false, null, null, []);
   }
@@ -69,7 +69,7 @@ class ResolvedReflectiveProvider_ implements ResolvedReflectiveBinding {
   List<ResolvedReflectiveFactory> resolvedFactories;
   bool multiProvider;
   ResolvedReflectiveProvider_(
-      this.key, this.resolvedFactories, this.multiProvider) {}
+      this.key, this.resolvedFactories, this.multiProvider);
   ResolvedReflectiveFactory get resolvedFactory {
     return this.resolvedFactories[0];
   }
@@ -232,7 +232,7 @@ List<ReflectiveDependency> _dependenciesFor(dynamic typeOrFunc) {
 ReflectiveDependency _extractToken(
     typeOrFunc, metadata, List<List<dynamic>> params) {
   var depProps = [];
-  var token = null;
+  var token;
   var optional = false;
   if (metadata is! List) {
     if (metadata is InjectMetadata) {
@@ -241,8 +241,8 @@ ReflectiveDependency _extractToken(
       return _createDependency(metadata, optional, null, null, depProps);
     }
   }
-  var lowerBoundVisibility = null;
-  var upperBoundVisibility = null;
+  var lowerBoundVisibility;
+  var upperBoundVisibility;
   for (var i = 0; i < metadata.length; ++i) {
     var paramMetadata = metadata[i];
     if (paramMetadata is Type) {
@@ -278,7 +278,7 @@ ReflectiveDependency _createDependency(
 /// Returns [InjectorModuleMetadata] providers for a given token if possible.
 List<dynamic> getInjectorModuleProviders(dynamic token) {
   var providers = [];
-  List<dynamic> annotations = null;
+  List<dynamic> annotations;
   try {
     if (token is Type) {
       annotations = reflector.annotations(token);

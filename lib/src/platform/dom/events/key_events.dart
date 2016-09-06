@@ -17,9 +17,6 @@ Map<String, dynamic /* (event: KeyboardEvent) => boolean */ >
 
 @Injectable()
 class KeyEventsPlugin extends EventManagerPlugin {
-  KeyEventsPlugin() : super() {
-    /* super call moved to initializer */;
-  }
   bool supports(String eventName) {
     return KeyEventsPlugin.parseEventName(eventName) != null;
   }

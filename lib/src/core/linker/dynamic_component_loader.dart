@@ -110,9 +110,7 @@ abstract class DynamicComponentLoader {
 @Injectable()
 class DynamicComponentLoader_ extends DynamicComponentLoader {
   ComponentResolver _compiler;
-  DynamicComponentLoader_(this._compiler) : super() {
-    /* super call moved to initializer */;
-  }
+  DynamicComponentLoader_(this._compiler);
   Future<ComponentRef> loadAsRoot(Type type,
       dynamic /* String | dynamic */ overrideSelectorOrNode, Injector injector,
       [OnDestroyCallback onDestroy, List<List<dynamic>> projectableNodes]) {

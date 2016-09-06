@@ -6,8 +6,8 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 class ChangeDetectionPerfRecord {
   num msPerTick;
-  num numTicks;
-  ChangeDetectionPerfRecord(this.msPerTick, this.numTicks) {}
+  final int numTicks;
+  ChangeDetectionPerfRecord(this.msPerTick, this.numTicks);
 }
 
 /**

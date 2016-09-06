@@ -7,7 +7,7 @@ class SyncRouteHandler implements RouteHandler {
   dynamic componentType;
   RouteData data;
   /** @internal */
-  Future<dynamic> _resolvedComponent = null;
+  Future<dynamic> _resolvedComponent;
   SyncRouteHandler(this.componentType, [Map<String, dynamic> data]) {
     this._resolvedComponent = new Future.value(componentType);
     this.data = data != null ? new RouteData(data) : BLANK_ROUTE_DATA;

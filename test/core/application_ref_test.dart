@@ -6,7 +6,7 @@ import "package:angular2/testing_internal.dart";
 import "core_mocks.dart";
 import "package:angular2/src/core/application_ref.dart"
     show
-        ApplicationRef_,
+        ApplicationRefImpl,
         ApplicationRef,
         PlatformRef,
         PLATFORM_CORE_PROVIDERS,
@@ -47,7 +47,7 @@ main() {
     tearDown(() {
       disposePlatform();
     });
-    ApplicationRef_ createApplication(List<dynamic> providers) {
+    ApplicationRefImpl createApplication(List<dynamic> providers) {
       platform = createPlatform(
           ReflectiveInjector.resolveAndCreate(PLATFORM_CORE_PROVIDERS));
       someCompFactory = new _MockComponentFactory(
@@ -179,7 +179,7 @@ class _MockComponentFactory extends ComponentFactory {
 
 class _MockComponentResolver implements ComponentResolver {
   ComponentFactory _compFactory;
-  _MockComponentResolver(this._compFactory) {}
+  _MockComponentResolver(this._compFactory);
   Future<ComponentFactory> resolveComponent(Type type) {
     return new Future.value(this._compFactory);
   }

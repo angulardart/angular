@@ -15,8 +15,7 @@ import "platform_location.dart" show PlatformLocation;
 class BrowserPlatformLocation extends PlatformLocation {
   Location _location;
   History _history;
-  BrowserPlatformLocation() : super() {
-    /* super call moved to initializer */;
+  BrowserPlatformLocation() {
     this._init();
   }
   // This is moved to its own method so that `MockPlatformLocationStrategy` can overwrite it

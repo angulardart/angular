@@ -68,7 +68,7 @@ abstract class InjectorFactory<CONTEXT> {
 class _BoundInjectorFactory implements InjectorFactory<dynamic> {
   InjectorFactory<dynamic> _delegate;
   dynamic _context;
-  _BoundInjectorFactory(this._delegate, this._context) {}
+  _BoundInjectorFactory(this._delegate, this._context);
   Injector create([Injector parent = null, dynamic context = null]) {
     return this._delegate.create(parent, this._context);
   }

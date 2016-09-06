@@ -231,7 +231,7 @@ abstract class ApplicationRef {
 }
 
 @Injectable()
-class ApplicationRef_ extends ApplicationRef {
+class ApplicationRefImpl extends ApplicationRef {
   final PlatformRefImpl _platform;
   final NgZone _zone;
   final Injector _injector;
@@ -247,7 +247,7 @@ class ApplicationRef_ extends ApplicationRef {
   Future<dynamic> _asyncInitDonePromise;
   bool _asyncInitDone;
 
-  ApplicationRef_(this._platform, this._zone, this._injector) {
+  ApplicationRefImpl(this._platform, this._zone, this._injector) {
     NgZone zone = _injector.get(NgZone);
     _enforceNoNewChanges = assertionsEnabled();
     zone.run(() {
@@ -395,7 +395,7 @@ class ApplicationRef_ extends ApplicationRef {
     if (_runningTick) {
       throw new BaseException('ApplicationRef.tick is called recursively');
     }
-    var s = ApplicationRef_._tickScope();
+    var s = ApplicationRefImpl._tickScope();
     try {
       _runningTick = true;
       int changeDetectorCount = _changeDetectorRefs.length;
@@ -436,6 +436,6 @@ const PLATFORM_CORE_PROVIDERS = const [
 
 const APPLICATION_CORE_PROVIDERS = const [
   const Provider(NgZone, useFactory: createNgZone, deps: const []),
-  ApplicationRef_,
-  const Provider(ApplicationRef, useExisting: ApplicationRef_)
+  ApplicationRefImpl,
+  const Provider(ApplicationRef, useExisting: ApplicationRefImpl)
 ];

@@ -77,7 +77,7 @@ const OpaqueToken ROUTER_PRIMARY_COMPONENT =
 class RouteRegistry {
   dynamic /* Type | ComponentFactory */ _rootComponent;
   var _rules = new Map<dynamic, RuleSet>();
-  RouteRegistry(@Inject(ROUTER_PRIMARY_COMPONENT) this._rootComponent) {}
+  RouteRegistry(@Inject(ROUTER_PRIMARY_COMPONENT) this._rootComponent);
   /**
    * Given a component and a configuration object, add the route to this registry
    */
@@ -258,7 +258,7 @@ class RouteRegistry {
         // we must only peak at the link param, and not consume it
         var routeName = params.first;
         var parentComponentType = this._rootComponent;
-        var grandparentComponentType = null;
+        var grandparentComponentType;
         if (ancestorInstructions.length > 1) {
           var parentComponentInstruction =
               ancestorInstructions[ancestorInstructions.length - 1];
@@ -322,7 +322,7 @@ class RouteRegistry {
       List<Instruction> ancestorInstructions, Instruction prevInstruction,
       [_aux = false, List<dynamic> _originalLink]) {
     var parentComponentType = this._rootComponent;
-    var componentInstruction = null;
+    var componentInstruction;
     Map<String, Instruction> auxInstructions = {};
     Instruction parentInstruction =
         ancestorInstructions.isNotEmpty ? ancestorInstructions.last : null;
@@ -413,7 +413,7 @@ class RouteRegistry {
 
     // If not, we'll resolve the instructions at navigation time
     if (componentInstruction?.componentType != null) {
-      Instruction childInstruction = null;
+      Instruction childInstruction;
       if (componentInstruction.terminal) {
         if (linkParamIndex >= linkParams.length) {}
       } else {
@@ -445,7 +445,7 @@ class RouteRegistry {
     if (rules?.defaultRule == null) {
       return null;
     }
-    var defaultChild = null;
+    var defaultChild;
     if (rules.defaultRule.handler.componentType != null) {
       var componentInstruction = rules.defaultRule.generate({});
       if (!rules.defaultRule.terminal) {

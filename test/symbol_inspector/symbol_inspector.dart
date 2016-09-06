@@ -189,12 +189,12 @@ LibraryInfo extractSymbols(LibraryMirror lib, [String printPrefix = ""]) {
 
     // I don't think you can show and hide from the same library
     assert(showSymbols.isEmpty || hideSymbols.isEmpty);
-    if (!showSymbols.isEmpty) {
+    if (showSymbols.isNotEmpty) {
       childNames = childNames.where((symAndLib) {
         return showSymbols.contains(symAndLib.symbol);
       });
     }
-    if (!hideSymbols.isEmpty) {
+    if (hideSymbols.isNotEmpty) {
       childNames = childNames.where((symAndLib) {
         return !hideSymbols.contains(symAndLib.symbol);
       });

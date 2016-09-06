@@ -19,24 +19,24 @@ var trackByIdentity = (num index, dynamic item) => item;
 
 class DefaultIterableDiffer implements IterableDiffer<Iterable> {
   TrackByFn _trackByFn;
-  num _length = null;
-  var _collection = null;
+  int _length;
+  Iterable _collection;
   // Keeps track of the used records at any point in time (during & across `_check()` calls)
-  _DuplicateMap _linkedRecords = null;
+  _DuplicateMap _linkedRecords;
   // Keeps track of the removed records at any point in time during `_check()` calls.
-  _DuplicateMap _unlinkedRecords = null;
-  CollectionChangeRecord _previousItHead = null;
-  CollectionChangeRecord _itHead = null;
-  CollectionChangeRecord _itTail = null;
-  CollectionChangeRecord _additionsHead = null;
-  CollectionChangeRecord _additionsTail = null;
-  CollectionChangeRecord _movesHead = null;
-  CollectionChangeRecord _movesTail = null;
-  CollectionChangeRecord _removalsHead = null;
-  CollectionChangeRecord _removalsTail = null;
+  _DuplicateMap _unlinkedRecords;
+  CollectionChangeRecord _previousItHead;
+  CollectionChangeRecord _itHead;
+  CollectionChangeRecord _itTail;
+  CollectionChangeRecord _additionsHead;
+  CollectionChangeRecord _additionsTail;
+  CollectionChangeRecord _movesHead;
+  CollectionChangeRecord _movesTail;
+  CollectionChangeRecord _removalsHead;
+  CollectionChangeRecord _removalsTail;
   // Keeps track of records where custom track by is the same, but item identity has changed
-  CollectionChangeRecord _identityChangesHead = null;
-  CollectionChangeRecord _identityChangesTail = null;
+  CollectionChangeRecord _identityChangesHead;
+  CollectionChangeRecord _identityChangesTail;
   DefaultIterableDiffer([this._trackByFn]) {
     _trackByFn = _trackByFn ?? trackByIdentity;
   }
@@ -342,7 +342,6 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     }
   }
 
-  /** @internal */
   CollectionChangeRecord _reinsertAfter(CollectionChangeRecord record,
       CollectionChangeRecord prevRecord, num index) {
     if (!identical(this._unlinkedRecords, null)) {
@@ -365,7 +364,6 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /** @internal */
   CollectionChangeRecord _moveAfter(CollectionChangeRecord record,
       CollectionChangeRecord prevRecord, num index) {
     this._unlink(record);
@@ -374,7 +372,6 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /** @internal */
   CollectionChangeRecord _addAfter(CollectionChangeRecord record,
       CollectionChangeRecord prevRecord, num index) {
     this._insertAfter(record, prevRecord, index);
@@ -394,7 +391,6 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /** @internal */
   CollectionChangeRecord _insertAfter(CollectionChangeRecord record,
       CollectionChangeRecord prevRecord, num index) {
     // todo(vicb)
@@ -431,12 +427,10 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /** @internal */
   CollectionChangeRecord _remove(CollectionChangeRecord record) {
     return this._addToRemovals(this._unlink(record));
   }
 
-  /** @internal */
   CollectionChangeRecord _unlink(CollectionChangeRecord record) {
     if (!identical(this._linkedRecords, null)) {
       this._linkedRecords.remove(record);
@@ -461,7 +455,6 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /** @internal */
   CollectionChangeRecord _addToMoves(
       CollectionChangeRecord record, num toIndex) {
     // todo(vicb)
@@ -484,7 +477,6 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /** @internal */
   CollectionChangeRecord _addToRemovals(CollectionChangeRecord record) {
     if (identical(this._unlinkedRecords, null)) {
       this._unlinkedRecords = new _DuplicateMap();
@@ -510,7 +502,6 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /** @internal */
   _addIdentityChange(CollectionChangeRecord record, dynamic item) {
     record.item = item;
     if (identical(this._identityChangesTail, null)) {
@@ -559,29 +550,29 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
 class CollectionChangeRecord {
   dynamic item;
   dynamic trackById;
-  num currentIndex = null;
-  num previousIndex = null;
-  /** @internal */
-  CollectionChangeRecord _nextPrevious = null;
-  /** @internal */
-  CollectionChangeRecord _prev = null;
-  /** @internal */
-  CollectionChangeRecord _next = null;
-  /** @internal */
-  CollectionChangeRecord _prevDup = null;
-  /** @internal */
-  CollectionChangeRecord _nextDup = null;
-  /** @internal */
-  CollectionChangeRecord _prevRemoved = null;
-  /** @internal */
-  CollectionChangeRecord _nextRemoved = null;
-  /** @internal */
-  CollectionChangeRecord _nextAdded = null;
-  /** @internal */
-  CollectionChangeRecord _nextMoved = null;
-  /** @internal */
-  CollectionChangeRecord _nextIdentityChange = null;
-  CollectionChangeRecord(this.item, this.trackById) {}
+  int currentIndex;
+  int previousIndex;
+
+  CollectionChangeRecord _nextPrevious;
+
+  CollectionChangeRecord _prev;
+
+  CollectionChangeRecord _next;
+
+  CollectionChangeRecord _prevDup;
+
+  CollectionChangeRecord _nextDup;
+
+  CollectionChangeRecord _prevRemoved;
+
+  CollectionChangeRecord _nextRemoved;
+
+  CollectionChangeRecord _nextAdded;
+
+  CollectionChangeRecord _nextMoved;
+
+  CollectionChangeRecord _nextIdentityChange;
+  CollectionChangeRecord(this.item, this.trackById);
   String toString() {
     return identical(this.previousIndex, this.currentIndex)
         ? stringify(this.item)
@@ -596,10 +587,9 @@ class CollectionChangeRecord {
 
 // A linked list of CollectionChangeRecords with the same CollectionChangeRecord.item
 class _DuplicateItemRecordList {
-  /** @internal */
-  CollectionChangeRecord _head = null;
-  /** @internal */
-  CollectionChangeRecord _tail = null;
+  CollectionChangeRecord _head;
+
+  CollectionChangeRecord _tail;
   /**
    * Append the record to the list of duplicates.
    *

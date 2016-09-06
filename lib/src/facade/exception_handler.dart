@@ -42,7 +42,7 @@ class _ArrayLogger {
 class ExceptionHandler {
   dynamic _logger;
   bool _rethrowException;
-  ExceptionHandler(this._logger, [this._rethrowException = true]) {}
+  ExceptionHandler(this._logger, [this._rethrowException = true]);
   static String exceptionToString(dynamic exception,
       [dynamic stackTrace = null, String reason = null]) {
     var l = new _ArrayLogger();

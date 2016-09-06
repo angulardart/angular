@@ -82,7 +82,7 @@ class TestComponentBuilder {
   var _viewBindingsOverrides = new Map<Type, List<dynamic>>();
   var _viewOverrides = new Map<Type, ViewMetadata>();
 
-  TestComponentBuilder(this._injector) {}
+  TestComponentBuilder(this._injector);
   TestComponentBuilder _clone() {
     var clone = new TestComponentBuilder(_injector);
     clone._viewOverrides = new Map.from(_viewOverrides);

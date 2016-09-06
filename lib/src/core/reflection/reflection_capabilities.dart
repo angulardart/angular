@@ -9,7 +9,7 @@ import 'types.dart';
 var DOT_REGEX = new RegExp('\\.');
 
 class ReflectionCapabilities implements PlatformReflectionCapabilities {
-  ReflectionCapabilities([metadataReader]) {}
+  ReflectionCapabilities([metadataReader]);
 
   bool isReflectionEnabled() {
     return true;

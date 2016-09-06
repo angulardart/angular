@@ -1,19 +1,19 @@
 import "../../url_parser.dart" show Url;
 
 class MatchedUrl {
-  String urlPath;
-  List<String> urlParams;
-  Map<String, dynamic> allParams;
-  List<Url> auxiliary;
-  Url rest;
-  MatchedUrl(this.urlPath, this.urlParams, this.allParams, this.auxiliary,
-      this.rest) {}
+  final String urlPath;
+  final List<String> urlParams;
+  final Map<String, dynamic> allParams;
+  final List<Url> auxiliary;
+  final Url rest;
+  MatchedUrl(
+      this.urlPath, this.urlParams, this.allParams, this.auxiliary, this.rest);
 }
 
 class GeneratedUrl {
-  String urlPath;
-  Map<String, dynamic> urlParams;
-  GeneratedUrl(this.urlPath, this.urlParams) {}
+  final String urlPath;
+  final Map<String, dynamic> urlParams;
+  GeneratedUrl(this.urlPath, this.urlParams);
 }
 
 abstract class RoutePath {

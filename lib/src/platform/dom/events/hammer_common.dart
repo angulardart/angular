@@ -27,9 +27,7 @@ var _eventNames = {
 };
 
 class HammerGesturesPluginCommon extends EventManagerPlugin {
-  HammerGesturesPluginCommon() : super() {
-    /* super call moved to initializer */;
-  }
+  HammerGesturesPluginCommon();
   bool supports(String eventName) {
     eventName = eventName.toLowerCase();
     return _eventNames.containsKey(eventName);

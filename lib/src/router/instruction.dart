@@ -191,7 +191,7 @@ abstract class Instruction {
 class ResolvedInstruction extends Instruction {
   ResolvedInstruction(ComponentInstruction component, Instruction child,
       Map<String, Instruction> auxInstruction)
-      : super(component, child, auxInstruction) {}
+      : super(component, child, auxInstruction);
 
   Future<ComponentInstruction> resolveComponent() =>
       new Future.value(component);
@@ -244,7 +244,7 @@ class RedirectInstruction extends ResolvedInstruction {
   String _specificity;
   RedirectInstruction(ComponentInstruction component, Instruction child,
       Map<String, Instruction> auxInstruction, this._specificity)
-      : super(component, child, auxInstruction) {}
+      : super(component, child, auxInstruction);
   String get specificity {
     return this._specificity;
   }

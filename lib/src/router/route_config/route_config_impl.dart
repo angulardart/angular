@@ -5,7 +5,7 @@ import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
 
 export "../route_definition.dart" show RouteDefinition;
 
-Future<dynamic> ___make_dart_analyzer_happy = null;
+Future<dynamic> ___make_dart_analyzer_happy;
 
 /**
  * The `RouteConfig` decorator defines routes for a given component.

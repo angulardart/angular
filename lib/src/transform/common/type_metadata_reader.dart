@@ -1264,7 +1264,7 @@ _createQueryMetadata(Annotation a, bool defaultDescendantsValue, bool first,
     String propertyName) {
   final selector = _readToken(a.arguments.arguments.first);
   var descendants = defaultDescendantsValue;
-  var read = null;
+  var read;
   a.arguments.arguments.skip(0).forEach((arg) {
     if (arg is NamedExpression) {
       var name = arg.name.toString();
@@ -1306,7 +1306,7 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
       token =
           _readToken(_getAnnotation(p, "Attribute").arguments.arguments.first);
     } else {
-      var type = null;
+      var type;
       if (p is SimpleFormalParameter) {
         type = p.type;
       } else if (p is FieldFormalParameter) {

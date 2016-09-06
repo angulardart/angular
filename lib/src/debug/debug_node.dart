@@ -8,7 +8,7 @@ typedef bool Predicate<T>(T item);
 class EventListener {
   String name;
   Function callback;
-  EventListener(this.name, this.callback) {}
+  EventListener(this.name, this.callback);
 }
 
 class DebugNode {

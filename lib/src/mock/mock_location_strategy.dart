@@ -15,9 +15,7 @@ class MockLocationStrategy extends LocationStrategy {
   List<String> urlChanges = [];
   /** @internal */
   EventEmitter<dynamic> _subject = new EventEmitter();
-  MockLocationStrategy() : super() {
-    /* super call moved to initializer */;
-  }
+  MockLocationStrategy();
   void simulatePopState(String url) {
     this.internalPath = url;
     this._subject.add(new _MockPopStateEvent(this.path()));
@@ -81,5 +79,5 @@ class _MockPopStateEvent {
   String newUrl;
   bool pop = true;
   String type = "popstate";
-  _MockPopStateEvent(this.newUrl) {}
+  _MockPopStateEvent(this.newUrl);
 }

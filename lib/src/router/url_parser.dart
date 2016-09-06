@@ -25,7 +25,7 @@ class Url {
   List<Url> auxiliary;
   Map<String, dynamic> params;
   Url(this.path,
-      [this.child = null, this.auxiliary = const [], this.params = const {}]) {}
+      [this.child = null, this.auxiliary = const [], this.params = const {}]);
   String toString() {
     return this.path +
         this._matrixParamsToString() +
@@ -69,9 +69,7 @@ class RootUrl extends Url {
       [Url child = null,
       List<Url> auxiliary = const [],
       Map<String, dynamic> params = null])
-      : super(path, child, auxiliary, params) {
-    /* super call moved to initializer */;
-  }
+      : super(path, child, auxiliary, params);
   String toString() {
     return this.path +
         this._auxToString() +
@@ -143,12 +141,12 @@ class UrlParser {
       // TODO: should these params just be dropped?
       this.parseMatrixParams();
     }
-    var child = null;
+    var child;
     if (this.peekStartsWith("/") && !this.peekStartsWith("//")) {
       this.capture("/");
       child = this.parseSegment();
     }
-    Map<String, dynamic> queryParams = null;
+    Map<String, dynamic> queryParams;
     if (this.peekStartsWith("?")) {
       queryParams = this.parseQueryParams();
     }
@@ -165,7 +163,7 @@ class UrlParser {
     }
     var path = matchUrlSegment(this._remaining);
     this.capture(path);
-    Map<String, dynamic> matrixParams = null;
+    Map<String, dynamic> matrixParams;
     if (this.peekStartsWith(";")) {
       matrixParams = this.parseMatrixParams();
     }
@@ -173,7 +171,7 @@ class UrlParser {
     if (this.peekStartsWith("(")) {
       aux = this.parseAuxiliaryRoutes();
     }
-    Url child = null;
+    Url child;
     if (this.peekStartsWith("/") && !this.peekStartsWith("//")) {
       this.capture("/");
       child = this.parseSegment();

@@ -19,7 +19,7 @@ class NgDepsVisitor extends RecursiveAstVisitor<Object> {
   final ReflectionInfoVisitor _reflectableVisitor;
 
   bool _isPart = false;
-  NgDepsModel _model = null;
+  NgDepsModel _model;
 
   NgDepsVisitor(AssetId processedFile, AnnotationMatcher annotationMatcher)
       : this.processedFile = processedFile,

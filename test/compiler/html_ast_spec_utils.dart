@@ -46,7 +46,7 @@ class _Humanizer implements HtmlAstVisitor {
   bool includeSourceSpan;
   List<dynamic> result = [];
   num elDepth = 0;
-  _Humanizer(this.includeSourceSpan) {}
+  _Humanizer(this.includeSourceSpan);
   dynamic visitElement(HtmlElementAst ast, dynamic context) {
     var res =
         this._appendContext(ast, [HtmlElementAst, ast.name, this.elDepth++]);

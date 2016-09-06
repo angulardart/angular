@@ -485,7 +485,7 @@ class BrowserDomAdapter
   }
 }
 
-var baseElement = null;
+var baseElement;
 String getBaseElementHref() {
   if (baseElement == null) {
     baseElement = document.querySelector('base');
@@ -497,7 +497,7 @@ String getBaseElementHref() {
 }
 
 // based on urlUtils.js in AngularJS 1
-AnchorElement _urlParsingNode = null;
+AnchorElement _urlParsingNode;
 String _relativePath(String url) {
   if (_urlParsingNode == null) {
     _urlParsingNode = new AnchorElement();

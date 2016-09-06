@@ -10,7 +10,7 @@ import "route_path.dart" show RoutePath, GeneratedUrl, MatchedUrl;
  * URL segments in different ways...
  */
 abstract class PathSegment {
-  String name;
+  String get name;
   String generate(TouchMap params);
   bool match(String path);
   String specificity;
@@ -61,11 +61,11 @@ class StaticPathSegment implements PathSegment {
  * a matching `Instruction`.
  */
 class DynamicPathSegment implements PathSegment {
-  String name;
+  final String name;
   static var paramMatcher = new RegExp(r'^:([^\/]+)$');
   var specificity = "1";
   var hash = ":";
-  DynamicPathSegment(this.name) {}
+  DynamicPathSegment(this.name);
   bool match(String path) {
     return path.length > 0;
   }
@@ -85,11 +85,11 @@ class DynamicPathSegment implements PathSegment {
  * be provided to a matching `Instruction`.
  */
 class StarPathSegment implements PathSegment {
-  String name;
+  final String name;
   static var wildcardMatcher = new RegExp(r'^\*([^\/]+)$');
   var specificity = "0";
   var hash = "*";
-  StarPathSegment(this.name) {}
+  StarPathSegment(this.name);
   bool match(String path) {
     return true;
   }

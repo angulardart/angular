@@ -815,7 +815,7 @@ main() {
 @Injectable()
 class TextDirective {
   String text;
-  TextDirective() {}
+  TextDirective();
 }
 
 @Component(selector: "needs-content-children", template: "")
@@ -910,7 +910,7 @@ class NeedsStaticContentAndViewChild {
 @Directive(selector: "[dir]")
 @Injectable()
 class InertDirective {
-  InertDirective() {}
+  InertDirective();
 }
 
 @Component(
@@ -1105,7 +1105,7 @@ class NeedsNamedTpl {
   TemplateRef viewTpl;
   @ContentChild("tpl")
   TemplateRef contentTpl;
-  NeedsNamedTpl(this.vc) {}
+  NeedsNamedTpl(this.vc);
 }
 
 @Component(selector: "needs-content-children-read", template: "")

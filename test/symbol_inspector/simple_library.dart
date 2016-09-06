@@ -2,7 +2,7 @@
 library angular2.test.symbol_inspector.simple_library;
 
 class A {
-  A(ConsParamType b) {}
+  A(ConsParamType b);
   FieldType field;
   GetterType get getter {
     return null;
@@ -13,7 +13,7 @@ class A {
   }
 
   methodWithFunc(ClosureReturn closure) {}
-  static StaticFieldType staticField = null;
+  static StaticFieldType staticField;
   static staticMethod() {}
 }
 

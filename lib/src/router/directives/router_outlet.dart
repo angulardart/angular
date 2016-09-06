@@ -16,9 +16,9 @@ import "package:collection/collection.dart" show MapEquality;
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
 import "../interfaces.dart"
     show OnActivate, CanReuse, OnReuse, OnDeactivate, CanDeactivate;
-import "../lifecycle/lifecycle_annotations.dart" as hookMod;
+import "../lifecycle/lifecycle_annotations.dart" as hook_mod;
 import "../lifecycle/route_lifecycle_reflector.dart" show hasLifecycleHook;
-import "../router.dart" as routerMod;
+import "../router.dart" as router_mod;
 
 var _resolveToTrue = new Future.value(true);
 
@@ -33,10 +33,10 @@ var _resolveToTrue = new Future.value(true);
 class RouterOutlet implements OnDestroy {
   ViewContainerRef _viewContainerRef;
   ComponentResolver _loader;
-  routerMod.Router _parentRouter;
-  String name = null;
-  Future<ComponentRef> _componentRef = null;
-  ComponentInstruction _currentInstruction = null;
+  router_mod.Router _parentRouter;
+  String name;
+  Future<ComponentRef> _componentRef;
+  ComponentInstruction _currentInstruction;
   @Output("activate")
   var activateEvents = new EventEmitter<dynamic>();
   RouterOutlet(this._viewContainerRef, this._loader, this._parentRouter,
@@ -60,7 +60,7 @@ class RouterOutlet implements OnDestroy {
     var providers = new Map<dynamic, dynamic>();
     providers[RouteData] = nextInstruction.routeData;
     providers[RouteParams] = new RouteParams(nextInstruction.params);
-    providers[routerMod.Router] = childRouter;
+    providers[router_mod.Router] = childRouter;
     var injector =
         new MapInjector(this._viewContainerRef.parentInjector, providers);
     Future<ComponentFactory> componentFactoryPromise;
@@ -73,7 +73,7 @@ class RouterOutlet implements OnDestroy {
         this._viewContainerRef.createComponent(componentFactory, 0, injector));
     return this._componentRef.then((componentRef) {
       this.activateEvents.emit(componentRef.instance);
-      if (hasLifecycleHook(hookMod.routerOnActivate, componentRef.instance)) {
+      if (hasLifecycleHook(hook_mod.routerOnActivate, componentRef.instance)) {
         return ((componentRef.instance as OnActivate))
             .routerOnActivate(nextInstruction, previousInstruction);
       } else {
@@ -99,7 +99,7 @@ class RouterOutlet implements OnDestroy {
       return this.activate(nextInstruction);
     } else {
       return this._componentRef.then((ComponentRef ref) =>
-          hasLifecycleHook(hookMod.routerOnReuse, ref.instance)
+          hasLifecycleHook(hook_mod.routerOnReuse, ref.instance)
               ? ((ref.instance as OnReuse))
                   .routerOnReuse(nextInstruction, previousInstruction)
               : true);
@@ -114,7 +114,7 @@ class RouterOutlet implements OnDestroy {
     var next = _resolveToTrue;
     if (_componentRef != null) {
       next = this._componentRef.then((ComponentRef ref) =>
-          hasLifecycleHook(hookMod.routerOnDeactivate, ref.instance)
+          hasLifecycleHook(hook_mod.routerOnDeactivate, ref.instance)
               ? ((ref.instance as OnDeactivate))
                   .routerOnDeactivate(nextInstruction, this._currentInstruction)
               : true);
@@ -142,7 +142,7 @@ class RouterOutlet implements OnDestroy {
       return new Future.value(true);
     }
     return this._componentRef.then((ComponentRef ref) =>
-        hasLifecycleHook(hookMod.routerCanDeactivate, ref.instance)
+        hasLifecycleHook(hook_mod.routerCanDeactivate, ref.instance)
             ? ((ref.instance as CanDeactivate))
                 .routerCanDeactivate(nextInstruction, this._currentInstruction)
             : true);
@@ -166,7 +166,7 @@ class RouterOutlet implements OnDestroy {
       result = new Future.value(false);
     } else {
       result = this._componentRef.then((ComponentRef ref) {
-        if (hasLifecycleHook(hookMod.routerCanReuse, ref.instance)) {
+        if (hasLifecycleHook(hook_mod.routerCanReuse, ref.instance)) {
           return ((ref.instance as CanReuse))
               .routerCanReuse(nextInstruction, this._currentInstruction);
         } else {

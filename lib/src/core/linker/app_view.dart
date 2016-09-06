@@ -49,7 +49,7 @@ abstract class AppView<T> {
   /// evaluated against.
   ///
   /// This is always a component instance.
-  T context = null;
+  T context;
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
   Renderer renderer;
@@ -439,4 +439,4 @@ List _flattenNestedViewRenderNodes(List nodes, List renderNodes) {
 
 /// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
 /// This prevents unused import error in dart_analyzed_library build.
-Element _temporaryTodo = null;
+Element _temporaryTodo;

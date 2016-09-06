@@ -38,7 +38,7 @@ class ClassWithDecorators {
 }
 
 class ClassWithoutDecorators {
-  ClassWithoutDecorators(a, b) {}
+  ClassWithoutDecorators(a, b);
 }
 
 class TestObj {

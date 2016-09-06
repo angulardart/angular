@@ -100,9 +100,7 @@ main() {
 
 /// The real thing behaves differently between Dart and JS for package URIs.
 class FakeUrlResolver extends UrlResolver {
-  FakeUrlResolver() : super() {
-    /* super call moved to initializer */;
-  }
+  FakeUrlResolver();
   String resolve(String baseUrl, String url) {
     return "fake_resolved_url";
   }

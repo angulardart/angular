@@ -60,9 +60,7 @@ class PathLocationStrategy extends LocationStrategy {
   PlatformLocation _platformLocation;
   String _baseHref;
   PathLocationStrategy(this._platformLocation,
-      [@Optional() @Inject(APP_BASE_HREF) String href])
-      : super() {
-    /* super call moved to initializer */;
+      [@Optional() @Inject(APP_BASE_HREF) String href]) {
     href ??= this._platformLocation.getBaseHrefFromDOM();
     if (href == null) {
       throw new BaseException(

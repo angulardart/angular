@@ -51,9 +51,7 @@ class HashLocationStrategy extends LocationStrategy {
   PlatformLocation _platformLocation;
   String _baseHref = "";
   HashLocationStrategy(this._platformLocation,
-      [@Optional() @Inject(APP_BASE_HREF) String _baseHref])
-      : super() {
-    /* super call moved to initializer */;
+      [@Optional() @Inject(APP_BASE_HREF) String _baseHref]) {
     if (_baseHref != null) {
       this._baseHref = _baseHref;
     }

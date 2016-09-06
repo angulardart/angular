@@ -2477,7 +2477,7 @@ class ToolbarComponent {
 @Injectable()
 class DirectiveWithTwoWayBinding {
   var controlChange = new EventEmitter();
-  var control = null;
+  var control;
   triggerChange(value) {
     this.controlChange.add(value);
   }

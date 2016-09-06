@@ -323,9 +323,7 @@ class _InterpretiveDynamicClass extends ExternalClass
   Map<String, Function> methods;
   _InterpretiveDynamicClass(
       List<dynamic> args, this.clazz, this.props, this.getters, this.methods)
-      : super(args[0]) {
-    /* super call moved to initializer */;
-  }
+      : super(args[0]);
   childMethod(a) {
     return this.methods["childMethod"](a);
   }

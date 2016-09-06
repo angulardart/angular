@@ -328,8 +328,6 @@ class _NgMetaIdentifierResolver {
     if (provider.deps != null) {
       _resolveDiDependencyMetadata(ngMetaMap, neededBy, provider.deps);
     }
-    ;
-    ;
   }
 
   void _resolveDiDependencyMetadata(Map<String, NgMeta> ngMetaMap,

@@ -44,7 +44,7 @@ class DashboardSoftware {}
 
 @Injectable()
 class Dashboard {
-  Dashboard(DashboardSoftware software) {}
+  Dashboard(DashboardSoftware software);
 }
 
 class TurboEngine extends Engine {}
@@ -77,9 +77,7 @@ class CarWithDashboard {
 
 @Injectable()
 class SportsCar extends Car {
-  SportsCar(Engine engine) : super(engine) {
-    /* super call moved to initializer */;
-  }
+  SportsCar(Engine engine) : super(engine);
 }
 
 @Injectable()
@@ -92,11 +90,11 @@ class CarWithInject {
 
 @Injectable()
 class CyclicEngine {
-  CyclicEngine(Car car) {}
+  CyclicEngine(Car car);
 }
 
 class NoAnnotations {
-  NoAnnotations(secretDependency) {}
+  NoAnnotations(secretDependency);
 }
 
 factoryFn(a) {}
@@ -106,13 +104,13 @@ class SomeService {}
 
 @InjectorModule(providers: const [Car])
 class SomeModuleWithProvider {
-  SomeModuleWithProvider() {}
+  SomeModuleWithProvider();
 }
 
 @InjectorModule()
 class SomeModuleWithDeps {
   SomeService someService;
-  SomeModuleWithDeps(this.someService) {}
+  SomeModuleWithDeps(this.someService);
 }
 
 @InjectorModule()

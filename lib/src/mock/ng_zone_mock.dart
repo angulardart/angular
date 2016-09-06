@@ -7,9 +7,7 @@ import "package:angular2/src/facade/async.dart" show EventEmitter;
 class MockNgZone extends NgZone {
   /** @internal */
   EventEmitter<dynamic> _mockOnStable = new EventEmitter(false);
-  MockNgZone() : super(enableLongStackTrace: false) {
-    /* super call moved to initializer */;
-  }
+  MockNgZone() : super(enableLongStackTrace: false);
   get onStable {
     return this._mockOnStable;
   }

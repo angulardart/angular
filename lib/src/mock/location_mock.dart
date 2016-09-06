@@ -83,7 +83,7 @@ class SpyLocation implements Location {
   }
 
   // TODO: remove these once Location is an interface, and can be implemented cleanly
-  LocationStrategy platformStrategy = null;
+  LocationStrategy platformStrategy;
   String normalize(String url) {
     return null;
   }

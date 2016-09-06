@@ -33,7 +33,7 @@ class ReflectionInfoVisitor extends RecursiveAstVisitor<ReflectionInfoModel> {
 
   ConstructorDeclaration _getCtor(ClassDeclaration node) {
     int numCtorsFound = 0;
-    var ctor = null;
+    var ctor;
 
     for (ClassMember classMember in node.members) {
       if (classMember is ConstructorDeclaration) {

@@ -29,7 +29,7 @@ class ViewUtils {
   static int _throwOnChangesCounter = 0;
   SanitizationService sanitizer;
 
-  ViewUtils(this._renderer, @Inject(APP_ID) this._appId, this.sanitizer) {}
+  ViewUtils(this._renderer, @Inject(APP_ID) this._appId, this.sanitizer);
 
   /// Used by the generated code.
   RenderComponentType createRenderComponentType(

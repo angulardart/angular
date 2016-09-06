@@ -772,7 +772,7 @@ class TestChild {
     directives: ALL_DIRECTIVES,
     pipes: ALL_PIPES)
 class TestUninitialized {
-  dynamic value = null;
+  dynamic value;
 }
 
 @Component(selector: "test-uninitialized-child", template: "")
@@ -801,7 +801,7 @@ class Address {
   var _zipcode;
   num cityGetterCalls = 0;
   num zipCodeGetterCalls = 0;
-  Address(this._city, [this._zipcode = null]) {}
+  Address(this._city, [this._zipcode = null]);
   get city {
     this.cityGetterCalls++;
     return this._city;

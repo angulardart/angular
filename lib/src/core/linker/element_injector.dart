@@ -8,9 +8,7 @@ const _UNDEFINED = const Object();
 class ElementInjector extends Injector {
   AppView<dynamic> _view;
   num _nodeIndex;
-  ElementInjector(this._view, this._nodeIndex) : super() {
-    /* super call moved to initializer */;
-  }
+  ElementInjector(this._view, this._nodeIndex);
   dynamic get(dynamic token, [dynamic notFoundValue = THROW_IF_NOT_FOUND]) {
     var result = _UNDEFINED;
     if (identical(result, _UNDEFINED)) {

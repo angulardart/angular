@@ -7,7 +7,7 @@
 
 typedef dynamic WtfScopeFn([arg0, arg1]);
 
-var context = null;
+var context;
 var _trace;
 var _events;
 var _createScope;

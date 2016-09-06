@@ -105,7 +105,7 @@ dynamic _runInjectableFunction(Function fn) {
   var params = reflector.parameters(fn);
   List<dynamic> tokens = <dynamic>[];
   for (var param in params) {
-    var token = null;
+    var token;
     for (var paramMetadata in param) {
       if (paramMetadata is Type) {
         token = paramMetadata;

@@ -15,8 +15,8 @@ class AppElement {
   num parentIndex;
   AppView<dynamic> parentView;
   dynamic nativeElement;
-  List<AppView<dynamic>> nestedViews = null;
-  AppView<dynamic> componentView = null;
+  List<AppView<dynamic>> nestedViews;
+  AppView<dynamic> componentView;
   dynamic component;
   List<QueryList<dynamic>> componentConstructorViewQueries;
 

@@ -28,7 +28,7 @@ class DeferredRewriter extends AggregateTransformer implements LazyTransformer {
   dynamic classifyPrimary(AssetId id) {
     // Map <name>.dart and <name>.dart.deferredCount => <name>.
     // Anything else to `null`.
-    var extension = null;
+    var extension;
     if (id.path.endsWith(DEFERRED_EXTENSION)) {
       extension = DEFERRED_EXTENSION;
     } else if (id.path.endsWith('.dart') && !isGenerated(id.path)) {

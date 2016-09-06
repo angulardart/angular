@@ -81,7 +81,7 @@ class NgMeta {
 
   /// Parse from the serialized form produced by [toJson].
   factory NgMeta.fromJson(Map json) {
-    var ngDeps = null;
+    var ngDeps;
 
     if (json.containsKey(_NG_DEPS_KEY)) {
       var ngDepsJsonMap = json[_NG_DEPS_KEY];

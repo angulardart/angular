@@ -36,7 +36,7 @@ class MapInjector implements Injector {
  */
 class MapInjectorFactory implements InjectorFactory<dynamic> {
   Map<dynamic, dynamic> _values;
-  MapInjectorFactory([this._values = null]) {}
+  MapInjectorFactory([this._values = null]);
   Injector create([Injector parent = null, dynamic context = null]) {
     return new MapInjector(parent, this._values);
   }

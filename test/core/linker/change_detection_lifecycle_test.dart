@@ -517,7 +517,7 @@ class CompWithRef {
   dynamic value;
   @Input()
   var testValue;
-  CompWithRef(this.changeDetectorRef) {}
+  CompWithRef(this.changeDetectorRef);
   noop() {}
 }
 

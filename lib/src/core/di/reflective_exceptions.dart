@@ -52,7 +52,6 @@ class AbstractProviderError extends BaseException {
   AbstractProviderError(ReflectiveInjector injector, ReflectiveKey key,
       Function constructResolvingMessage)
       : super("DI Exception") {
-    /* super call moved to initializer */;
     this.keys = [key];
     this.injectors = [injector];
     this.constructResolvingMessage = constructResolvingMessage;
@@ -138,7 +137,6 @@ class InstantiationError extends WrappedException {
   InstantiationError(ReflectiveInjector injector, originalException,
       originalStack, ReflectiveKey key)
       : super("DI Exception", originalException, originalStack, null) {
-    /* super call moved to initializer */;
     this.keys = [key];
     this.injectors = [injector];
   }
@@ -240,9 +238,7 @@ class NoAnnotationError extends BaseException {
 /// expect(() => injector.getAt(100), throws);
 ///
 class OutOfBoundsError extends BaseException {
-  OutOfBoundsError(index) : super('''Index ${ index} is out-of-bounds.''') {
-    /* super call moved to initializer */;
-  }
+  OutOfBoundsError(index) : super('''Index ${ index} is out-of-bounds.''');
 }
 // TODO: add a working example after alpha38 is released
 

@@ -88,11 +88,11 @@ class NgZoneImpl {
    */
   NgZoneImpl(
       {bool trace,
-      Function this.onEnter,
-      Function this.onLeave,
-      Function this.setMicrotask,
-      Function this.setMacrotask,
-      Function this.onError}) {
+      this.onEnter,
+      this.onLeave,
+      this.setMicrotask,
+      this.setMacrotask,
+      this.onError}) {
     _outerZone = Zone.current;
 
     if (trace) {

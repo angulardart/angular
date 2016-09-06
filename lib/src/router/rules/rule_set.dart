@@ -29,7 +29,7 @@ class RuleSet {
   // TODO: optimize this into a trie
   List<AbstractRule> rules = [];
   // the rule to use automatically when recognizing or generating from this rule set
-  RouteRule defaultRule = null;
+  RouteRule defaultRule;
   /**
    * Configure additional rules in this rule set from a route definition
    * 

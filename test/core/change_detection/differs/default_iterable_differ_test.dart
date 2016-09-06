@@ -417,17 +417,17 @@ main() {
 }
 
 class ItemWithId {
-  String id;
-  ItemWithId(this.id) {}
+  final String id;
+  ItemWithId(this.id);
   toString() {
     return '''{id: ${ this . id}}''';
   }
 }
 
 class ComplexItem {
-  String id;
-  String color;
-  ComplexItem(this.id, this.color) {}
+  final String id;
+  final String color;
+  ComplexItem(this.id, this.color);
   toString() {
     return '''{id: ${ this . id}, color: ${ this . color}}''';
   }

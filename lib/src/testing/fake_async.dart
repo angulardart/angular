@@ -7,7 +7,7 @@ import 'test_injector.dart' show getTestInjector, FunctionWithParamTokens;
 
 const _u = const Object();
 
-quiver.FakeAsync _fakeAsync = null;
+quiver.FakeAsync _fakeAsync;
 
 /**
  * Wraps the [fn] to be executed in the fakeAsync zone:
@@ -26,7 +26,7 @@ Function fakeAsync(dynamic /* Function | FunctionWithParamTokens */ fn) {
     throw 'fakeAsync() calls can not be nested';
   }
 
-  Function innerFn = null;
+  Function innerFn;
   if (fn is FunctionWithParamTokens) {
     if (fn.isAsync) {
       throw 'Cannot wrap async test with fakeAsync';

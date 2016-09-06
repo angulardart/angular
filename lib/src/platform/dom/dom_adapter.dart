@@ -1,5 +1,5 @@
 /// Singleton adapter used by renderer layer.
-DomAdapter DOM = null;
+DomAdapter DOM;
 setRootDomAdapter(DomAdapter adapter) {
   DOM ??= adapter;
 }

@@ -43,13 +43,13 @@ class Router {
   /**
    * The current `Instruction` for the router
    */
-  Instruction currentInstruction = null;
+  Instruction currentInstruction;
   Future<dynamic> _currentNavigation = _resolveToTrue;
-  RouterOutlet _outlet = null;
+  RouterOutlet _outlet;
   var _auxRouters = new Map<String, Router>();
   Router _childRouter;
   EventEmitter<dynamic> _subject = new EventEmitter();
-  Router(this.registry, this.parent, this.hostComponent, [this.root]) {}
+  Router(this.registry, this.parent, this.hostComponent, [this.root]);
   /**
    * Constructs a child router. You probably don't need to use this unless you're writing a reusable
    * component.
@@ -309,9 +309,9 @@ class Router {
       return new Future.value(true);
     }
     Future<bool> next;
-    Instruction childInstruction = null;
+    Instruction childInstruction;
     bool reuse = false;
-    ComponentInstruction componentInstruction = null;
+    ComponentInstruction componentInstruction;
     if (instruction != null) {
       childInstruction = instruction.child;
       componentInstruction = instruction.component;
@@ -389,8 +389,8 @@ class Router {
    * Removes the contents of this router's outlet and all descendant outlets
    */
   Future<dynamic> deactivate(Instruction instruction) {
-    Instruction childInstruction = null;
-    ComponentInstruction componentInstruction = null;
+    Instruction childInstruction;
+    ComponentInstruction componentInstruction;
     if (instruction != null) {
       childInstruction = instruction.child;
       componentInstruction = instruction.component;
@@ -454,7 +454,6 @@ class RootRouter extends Router {
   RootRouter(RouteRegistry registry, Location location,
       @Inject(ROUTER_PRIMARY_COMPONENT) dynamic primaryComponent)
       : super(registry, null, primaryComponent) {
-    /* super call moved to initializer */;
     this.root = this;
     this._location = location;
     this._locationSub = this._location.subscribe((change) {
@@ -534,7 +533,6 @@ class RootRouter extends Router {
 class ChildRouter extends Router {
   ChildRouter(Router parent, hostComponent)
       : super(parent.registry, parent, hostComponent, parent.root) {
-    /* super call moved to initializer */;
     this.parent = parent;
   }
   Future<dynamic> navigateByUrl(String url,
