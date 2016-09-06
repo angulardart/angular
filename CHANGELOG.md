@@ -1,5 +1,36 @@
 # Changelog: Angular 2 for Dart
 
+## 2.0.0-beta.21
+
+Our push towards better performance has started showing results in
+this release. This update provides 5-10% speedup in components. >20% reduction
+in Dart code size emitted from compiler.
+
+### API changes
+
+* Added support for '??' operator in template compiler.
+* Removed unused animation directives to create more Darty/compile time version.
+* Removed unused i18n pipes to prepare for dart:intl based solution.
+* Language facades removed (isPresent, isBlank, getMapKey, normalizeBool,
+  DateWrapper, RegExpWrapper, StringWrapper, NumberWrapper, Math facades,
+  SetWrapper, ListWrapper, MapWrapper, StringMapWrapper, ObservableWrapper,
+  TimerWrapper).
+* Deprecated unused ROUTER_LINK_DSL_TRANSFORM.
+* Refactor(element.dart) is now app_element.dart.
+* AppView moved to app_view. DebugAppView moved to debug/debug_app_view.dart.
+* The deprecated injection Binding and bind have been removed.
+* Remove global events and disposables (instead of :window type targets,
+  use dart APIs).
+
+### Bug fixes and other changes
+* Improved change detection performance.
+* Improved error messages reported by template compiler.
+* Optimized [class.x]="y" type bindings.
+* Switched to js_util for browser_adapter to make angular CSP compliant.
+* Started strongly typing element members in compiled template code.
+* Cheatsheet and code docs updated.
+* Router fixes
+
 ## 2.0.0-beta.20
 
 ### API changes
