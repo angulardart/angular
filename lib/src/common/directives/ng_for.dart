@@ -79,8 +79,8 @@ class NgFor implements DoCheck {
   dynamic _ngForOf;
   TrackByFn _ngForTrackBy;
   IterableDiffer _differ;
-  NgFor(this._viewContainer, this._templateRef, this._iterableDiffers,
-      this._cdr) {}
+  NgFor(
+      this._viewContainer, this._templateRef, this._iterableDiffers, this._cdr);
   set ngForOf(dynamic value) {
     this._ngForOf = value;
     if (_differ == null && value != null) {

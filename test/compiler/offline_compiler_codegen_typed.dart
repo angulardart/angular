@@ -39,8 +39,7 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
   import7.AppElement createInternal(dynamic rootSelector) {
     final parentRenderNode =
         this.initViewRoot(this.declarationAppElement.nativeElement);
-    this._text_0 =
-        this.renderer.createText(parentRenderNode, '', this.debug(0, 0, 0));
+    this._text_0 = this.renderer.createText(parentRenderNode, '', dbg(0, 0, 0));
     this._expr_0 = import9.uninitialized;
     this.init([], [this._text_0], []);
     return null;
@@ -48,7 +47,7 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
 
   void detectChangesInternal() {
     this.detectContentChildrenChanges();
-    this.debug(0, 0, 0);
+    dbg(0, 0, 0);
     final currVal_0 =
         import5.interpolate(1, 'Hello World ', this.context.user, '!');
     if (import5.checkBinding(this._expr_0, currVal_0)) {
@@ -96,8 +95,8 @@ class _View_CompA_Host0 extends import3.DebugAppView<dynamic> {
             import9.ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CompA_Host0);
   import7.AppElement createInternal(dynamic rootSelector) {
-    this._el_0 = this
-        .selectOrCreateHostElement('comp-a', rootSelector, this.debug(0, 0, 0));
+    this._el_0 =
+        this.selectOrCreateHostElement('comp-a', rootSelector, dbg(0, 0, 0));
     this._appEl_0 = new import7.AppElement(0, null, this, this._el_0);
     var compView_0 =
         viewFactory_CompA0(this.viewUtils, this.injector(0), this._appEl_0);

@@ -35,7 +35,7 @@ class CompileMethod {
       var sourceLocation = newState.sourceAst != null
           ? newState.sourceAst.sourceSpan.start
           : null;
-      return o.THIS_EXPR.callMethod("debug", [
+      return new o.InvokeMemberMethodExpr('dbg', [
         o.literal(newState.nodeIndex),
         sourceLocation != null ? o.literal(sourceLocation.line) : o.NULL_EXPR,
         sourceLocation != null ? o.literal(sourceLocation.col) : o.NULL_EXPR

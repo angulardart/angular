@@ -120,7 +120,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     if (stmt.value == null) {
       // No initializer.
-      ctx.print('${stmt.name};');
+      ctx.println('${stmt.name};');
     } else {
       ctx.print('${stmt.name} = ');
       stmt.value.visitExpression(this, ctx);
@@ -203,11 +203,16 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       ctx.exitSuperCall();
       ctorStmts = ctorStmts.sublist(1);
     }
-    ctx.println(' {');
-    ctx.incIndent();
-    this.visitAllStatements(ctorStmts, ctx);
-    ctx.decIndent();
-    ctx.println('}');
+    if (ctorStmts.isEmpty) {
+      // Empty constructor body.
+      ctx.println(';');
+    } else {
+      ctx.println(' {');
+      ctx.incIndent();
+      this.visitAllStatements(ctorStmts, ctx);
+      ctx.decIndent();
+      ctx.println('}');
+    }
   }
 
   _visitClassMethod(o.ClassMethod method, dynamic context) {

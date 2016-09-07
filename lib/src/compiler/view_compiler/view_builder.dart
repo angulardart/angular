@@ -554,12 +554,13 @@ createViewTopLevelStmts(CompileView view, List<o.Statement> targetStatements) {
                 [o.TypeModifier.Const])))
         .toDeclStmt(null, [o.StmtModifier.Final]));
   }
-  o.ReadVarExpr renderCompTypeVar =
-      o.variable('renderType_${view.component.type.name}' '');
+  String renderTypeVarName = 'renderType_${view.component.type.name}';
+  o.ReadVarExpr renderCompTypeVar = o.variable(renderTypeVarName);
+  // If we are compiling root view, create a render type for the component.
+  // Example: RenderComponentType renderType_MaterialButtonComponent;
   if (identical(view.viewIndex, 0)) {
-    targetStatements.add(renderCompTypeVar
-        .set(o.NULL_EXPR)
-        .toDeclStmt(o.importType(Identifiers.RenderComponentType)));
+    targetStatements.add(new o.DeclareVarStmt(renderTypeVarName, null,
+        o.importType(Identifiers.RenderComponentType)));
   }
   var viewClass = createViewClass(view, renderCompTypeVar, nodeDebugInfosVar);
   targetStatements.add(viewClass);
@@ -789,9 +790,8 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
         DetectChangesVars.changed.set(o.literal(true)).toDeclStmt(o.BOOL_TYPE));
   }
   if (readVars.contains(DetectChangesVars.changes.name)) {
-    varStmts.add(DetectChangesVars.changes
-        .set(o.NULL_EXPR)
-        .toDeclStmt(new o.MapType(o.importType(Identifiers.SimpleChange))));
+    varStmts.add(new o.DeclareVarStmt(DetectChangesVars.changes.name, null,
+        new o.MapType(o.importType(Identifiers.SimpleChange))));
   }
   if (readVars.contains(DetectChangesVars.valUnwrapper.name)) {
     varStmts.add(DetectChangesVars.valUnwrapper

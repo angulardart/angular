@@ -95,7 +95,6 @@ class NgForm extends ControlContainer implements Form {
       @Inject(NG_ASYNC_VALIDATORS)
           List<dynamic> asyncValidators)
       : super() {
-    /* super call moved to initializer */;
     this.form = new ControlGroup({}, null, composeValidators(validators),
         composeAsyncValidators(asyncValidators));
   }

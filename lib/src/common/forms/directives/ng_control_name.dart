@@ -112,7 +112,6 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors)
       : super() {
-    /* super call moved to initializer */;
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
   ngOnChanges(Map<String, SimpleChange> changes) {

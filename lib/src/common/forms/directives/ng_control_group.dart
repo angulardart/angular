@@ -78,7 +78,6 @@ class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
       @Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
       @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators)
       : super() {
-    /* super call moved to initializer */;
     this._parent = parent;
   }
   void ngOnInit() {

@@ -115,7 +115,9 @@ class DebugAppView<T> extends AppView<T> {
     };
   }
 
-  DebugContext debug(num nodeIndex, num rowNum, num colNum) =>
+  /// Sets up current debug context to node so that failures can be associated
+  /// with template source location and DebugElement.
+  DebugContext dbg(num nodeIndex, num rowNum, num colNum) =>
       _currentDebugContext = new DebugContext(this, nodeIndex, rowNum, colNum);
 
   /// Registers dom node in global debug index.

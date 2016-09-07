@@ -233,7 +233,7 @@ main() {
         expect(
             emitStmt(new o.ClassStmt("SomeClass", null, [], [],
                 new o.ClassMethod(null, [], []), [])),
-            ["class SomeClass {", "  SomeClass() {", "  }", "}"].join("\n"));
+            ["class SomeClass {", "  SomeClass();", "}"].join("\n"));
         expect(
             emitStmt(new o.ClassStmt(
                 "SomeClass",
@@ -243,17 +243,13 @@ main() {
                 new o.ClassMethod(
                     null, [new o.FnParam("someParam", o.INT_TYPE)], []),
                 [])),
-            ["class SomeClass {", "  SomeClass(int someParam) {", "  }", "}"]
+            ["class SomeClass {", "  SomeClass(int someParam);", "}"]
                 .join("\n"));
         expect(
             emitStmt(new o.ClassStmt("SomeClass", null, [], [],
                 new o.ClassMethod(null, [], [superCall]), [])),
-            [
-              "class SomeClass {",
-              "  SomeClass(): super(someParam) {",
-              "  }",
-              "}"
-            ].join("\n"));
+            ["class SomeClass {", "  SomeClass(): super(someParam);", "}"]
+                .join("\n"));
         expect(
             emitStmt(new o.ClassStmt("SomeClass", null, [], [],
                 new o.ClassMethod(null, [], [callSomeMethod]), [])),

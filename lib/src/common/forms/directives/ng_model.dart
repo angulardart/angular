@@ -65,7 +65,6 @@ class NgModel extends NgControl implements OnChanges {
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors)
       : super() {
-    /* super call moved to initializer */;
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
   ngOnChanges(Map<String, SimpleChange> changes) {

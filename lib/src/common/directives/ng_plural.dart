@@ -87,8 +87,8 @@ class NgPlural implements AfterContentInit {
   SwitchView _activeView;
   var _caseViews = new Map<dynamic, SwitchView>();
   @ContentChildren(NgPluralCase)
-  QueryList<NgPluralCase> cases = null;
-  NgPlural(this._localization) {}
+  QueryList<NgPluralCase> cases;
+  NgPlural(this._localization);
   @Input()
   set ngPlural(num value) {
     this._switchValue = value;

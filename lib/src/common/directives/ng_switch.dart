@@ -6,7 +6,9 @@ const _WHEN_DEFAULT = const Object();
 class SwitchView {
   ViewContainerRef _viewContainerRef;
   TemplateRef _templateRef;
-  SwitchView(this._viewContainerRef, this._templateRef) {}
+
+  SwitchView(this._viewContainerRef, this._templateRef);
+
   void create() {
     this._viewContainerRef.createEmbeddedView(this._templateRef);
   }

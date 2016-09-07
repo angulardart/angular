@@ -50,7 +50,9 @@ class NgStyle implements DoCheck {
   Renderer _renderer;
   Map<String, String> _rawStyle;
   KeyValueDiffer _differ;
-  NgStyle(this._differs, this._ngEl, this._renderer) {}
+
+  NgStyle(this._differs, this._ngEl, this._renderer);
+
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;
     if (_differ == null && v != null) {
