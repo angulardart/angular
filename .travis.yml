@@ -4,7 +4,6 @@ dart:
   - stable
   - dev
   - 1.19.0
-  - 1.18.1
 env:
   - TEST_PLATFORM=vm
   - TEST_PLATFORM=content-shell
