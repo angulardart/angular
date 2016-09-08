@@ -37,7 +37,12 @@ import "constants.dart"
         ChangeDetectionStrategyEnum,
         ViewProperties;
 import "util.dart"
-    show getViewFactoryName, createFlatArray, createDiTokenExpression;
+    show
+        getViewFactoryName,
+        createFlatArray,
+        createDiTokenExpression,
+        NAMESPACE_URIS,
+        createSetAttributeParams;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";
@@ -45,13 +50,6 @@ const STYLE_ATTR = "style";
 var parentRenderNodeVar = o.variable("parentRenderNode");
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
-
-// List of supported namespaces.
-const _NAMESPACE_URIS = const {
-  'xlink': 'http://www.w3.org/1999/xlink',
-  'svg': 'http://www.w3.org/2000/svg',
-  'xhtml': 'http://www.w3.org/1999/xhtml'
-};
 
 class ViewCompileDependency {
   CompileDirectiveMetadata comp;
@@ -282,7 +280,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       // Create element or elementNS. AST encodes svg path element as @svg:path.
       if (ast.name.startsWith('@') && ast.name.contains(':')) {
         var nameParts = ast.name.substring(1).split(':');
-        String ns = _NAMESPACE_URIS[nameParts[0]];
+        String ns = NAMESPACE_URIS[nameParts[0]];
         createRenderNodeExpr = o
             .importExpr(Identifiers.HTML_DOCUMENT)
             .callMethod(
@@ -326,9 +324,19 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     for (var i = 0; i < attrNameAndValues.length; i++) {
       var attrName = attrNameAndValues[i][0];
       var attrValue = attrNameAndValues[i][1];
-      this.view.createMethod.addStmt(ViewProperties.renderer.callMethod(
-          "setElementAttribute",
-          [renderNode, o.literal(attrName), o.literal(attrValue)]).toStmt());
+
+      var attrNs;
+      if (attrName.startsWith('@') && attrName.contains(':')) {
+        var nameParts = attrName.substring(1).split(':');
+        attrNs = NAMESPACE_URIS[nameParts[0]];
+        attrName = nameParts[1];
+      }
+      var params = createSetAttributeParams(
+          fieldName, attrNs, attrName, o.literal(attrValue));
+
+      this.view.createMethod.addStmt(new o.InvokeMemberMethodExpr(
+              attrNs == null ? "setAttr" : "setAttrNS", params)
+          .toStmt());
     }
     var compileElement = new CompileElement(
         parent,
@@ -409,7 +417,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         .toStmt());
     var renderNode = o.THIS_EXPR.prop(fieldName);
     var templateVariableBindings = ast.variables
-        .map((varAst) => [
+        .map((VariableAst varAst) => [
               varAst.value.length > 0 ? varAst.value : IMPLICIT_TEMPLATE_VAR,
               varAst.name
             ])
@@ -604,7 +612,7 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
 o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
     o.Expression nodeDebugInfosVar) {
   var emptyTemplateVariableBindings = view.templateVariableBindings
-      .map((entry) => [entry[0], o.NULL_EXPR])
+      .map((List entry) => [entry[0], o.NULL_EXPR])
       .toList();
   var viewConstructorArgs = [
     new o.FnParam(ViewConstructorVars.viewUtils.name,
@@ -708,7 +716,7 @@ o.Statement createViewFactory(
             ..addAll([
               new o.ReturnStatement(o.variable(viewClass.name).instantiate(
                   viewClass.constructorMethod.params
-                      .map((param) => o.variable(param.name))
+                      .map((o.FnParam param) => o.variable(param.name))
                       .toList()))
             ])),
           o.importType(Identifiers.AppView, [getContextType(view)]))

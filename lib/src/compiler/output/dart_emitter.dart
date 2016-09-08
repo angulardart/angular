@@ -303,6 +303,22 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  dynamic visitWriteClassMemberExpr(
+      o.WriteClassMemberExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    var lineWasEmpty = ctx.lineIsEmpty();
+    if (!lineWasEmpty) {
+      ctx.print('(');
+    }
+    o.THIS_EXPR.visitExpression(this, ctx);
+    ctx.print('.${expr.name} = ');
+    expr.value.visitExpression(this, ctx);
+    if (!lineWasEmpty) {
+      ctx.print(')');
+    }
+    return null;
+  }
+
   dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.println('try {');

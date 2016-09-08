@@ -1,25 +1,26 @@
-import "package:angular2/src/core/change_detection/constants.dart"
+import 'package:angular2/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy;
-import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
+import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
-import "package:angular2/src/core/security.dart";
+import 'package:angular2/src/core/security.dart';
 
-import "../expression_parser/ast.dart" as ast;
-import "../identifiers.dart" show Identifiers;
-import "../output/output_ast.dart" as o;
-import "../template_ast.dart"
+import '../expression_parser/ast.dart' as ast;
+import '../identifiers.dart' show Identifiers;
+import '../output/output_ast.dart' as o;
+import '../template_ast.dart'
     show
         BoundTextAst,
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
-import "../util.dart" show camelCaseToDashCase;
-import "expression_converter.dart" show convertCdExpressionToIr;
-import "compile_binding.dart" show CompileBinding;
-import "compile_element.dart" show CompileElement, CompileNode;
-import "compile_method.dart" show CompileMethod;
-import "compile_view.dart" show CompileView;
-import "constants.dart" show DetectChangesVars, ViewProperties;
+import '../util.dart' show camelCaseToDashCase;
+import 'util.dart' show NAMESPACE_URIS, createSetAttributeParams;
+import 'expression_converter.dart' show convertCdExpressionToIr;
+import 'compile_binding.dart' show CompileBinding;
+import 'compile_element.dart' show CompileElement, CompileNode;
+import 'compile_method.dart' show CompileMethod;
+import 'compile_view.dart' show CompileView;
+import 'constants.dart' show DetectChangesVars, ViewProperties;
 
 o.ReadPropExpr createBindFieldExpr(num exprIndex) {
   return o.THIS_EXPR.prop('_expr_${ exprIndex}');
@@ -50,7 +51,7 @@ void bind(
       .toStmt());
   if (checkExpression.needsValueUnwrapper) {
     var initValueUnwrapperStmt =
-        DetectChangesVars.valUnwrapper.callMethod("reset", []).toStmt();
+        DetectChangesVars.valUnwrapper.callMethod('reset', []).toStmt();
     method.addStmt(initValueUnwrapperStmt);
   }
   method.addStmt(currValExpr
@@ -60,7 +61,7 @@ void bind(
       o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
   if (checkExpression.needsValueUnwrapper) {
     condition =
-        DetectChangesVars.valUnwrapper.prop("hasWrappedValue").or(condition);
+        DetectChangesVars.valUnwrapper.prop('hasWrappedValue').or(condition);
   }
   method.addStmt(new o.IfStmt(
       condition,
@@ -85,7 +86,7 @@ bindRenderText(
       currValExpr,
       valueField,
       boundText.value,
-      o.THIS_EXPR.prop("context"),
+      o.THIS_EXPR.prop('context'),
       [
         (compileNode is CompileElement
                 ? new o.ReadClassMemberExpr(compileNode.renderNodeFieldName)
@@ -133,27 +134,37 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
     var updateStmts = <o.Statement>[];
     switch (boundProp.type) {
       case PropertyBindingType.Property:
-        renderMethod = "setElementProperty";
+        renderMethod = 'setElementProperty';
         // If user asked for logging bindings, generate code to log them.
         if (view.genConfig.logBindingUpdate) {
           updateStmts.add(
               logBindingUpdateStmt(renderNode, boundProp.name, currValExpr));
         }
-        updateStmts.add(new o.ReadClassMemberExpr("renderer").callMethod(
+        updateStmts.add(new o.ReadClassMemberExpr('renderer').callMethod(
             renderMethod,
             [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
       case PropertyBindingType.Attribute:
-        renderMethod = "setElementAttribute";
         // For attributes convert value to a string.
         // TODO: Once we have analyzer summaries and know the type is already
         // String short-circuit
         renderValue = renderValue
             .isBlank()
-            .conditional(o.NULL_EXPR, renderValue.callMethod("toString", []));
-        updateStmts.add(new o.ReadClassMemberExpr("renderer").callMethod(
-            renderMethod,
-            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
+            .conditional(o.NULL_EXPR, renderValue.callMethod('toString', []));
+
+        var attrNs;
+        String attrName = boundProp.name;
+        if (attrName.startsWith('@') && attrName.contains(':')) {
+          var nameParts = attrName.substring(1).split(':');
+          attrNs = NAMESPACE_URIS[nameParts[0]];
+          attrName = nameParts[1];
+        }
+        var params = createSetAttributeParams(
+            compileElement.renderNodeFieldName, attrNs, attrName, renderValue);
+
+        updateStmts.add(new o.InvokeMemberMethodExpr(
+                attrNs == null ? 'setAttr' : 'setAttrNS', params)
+            .toStmt());
         break;
       case PropertyBindingType.Class:
         renderMethod =
@@ -219,7 +230,7 @@ o.Expression sanitizedValue(
 void bindRenderInputs(
     List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {
   bindAndWriteToRenderer(
-      boundProps, o.THIS_EXPR.prop("context"), compileElement);
+      boundProps, o.THIS_EXPR.prop('context'), compileElement);
 }
 
 void bindDirectiveHostProps(DirectiveAst directiveAst,
@@ -281,24 +292,24 @@ bindDirectiveInputs(DirectiveAst directiveAst, o.Expression directiveInstance,
       statements.add(logBindingUpdateStmt(
           compileElement.renderNode, input.directiveName, currValExpr));
     }
-    bind(view, currValExpr, fieldExpr, input.value, o.THIS_EXPR.prop("context"),
+    bind(view, currValExpr, fieldExpr, input.value, o.THIS_EXPR.prop('context'),
         statements, detectChangesInInputsMethod);
   });
   if (isOnPushComp) {
     detectChangesInInputsMethod
         .addStmt(new o.IfStmt(DetectChangesVars.changed, [
       compileElement.appElement
-          .prop("componentView")
-          .callMethod("markAsCheckOnce", []).toStmt()
+          .prop('componentView')
+          .callMethod('markAsCheckOnce', []).toStmt()
     ]));
   }
 }
 
 o.Statement logBindingUpdateStmt(
     o.Expression renderNode, String propName, o.Expression value) {
-  return o.THIS_EXPR.prop("renderer").callMethod("setBindingDebugInfo", [
+  return o.THIS_EXPR.prop('renderer').callMethod('setBindingDebugInfo', [
     renderNode,
     o.literal('ng-reflect-${ camelCaseToDashCase ( propName )}'),
-    value.isBlank().conditional(o.NULL_EXPR, value.callMethod("toString", []))
+    value.isBlank().conditional(o.NULL_EXPR, value.callMethod('toString', []))
   ]).toStmt();
 }

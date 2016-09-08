@@ -158,7 +158,31 @@ class DomRenderer implements Renderer {
     DomRootRenderer.isDirty = true;
   }
 
+  @Deprecated("Use dart:html Element attributes and setAttribute.")
   void setElementAttribute(
+      dynamic renderElement, String attributeName, String attributeValue) {
+    _setAttr(renderElement, attributeName, attributeValue);
+  }
+
+  void setBindingDebugInfo(
+      dynamic renderElement, String propertyName, String propertyValue) {
+    var dashCasedPropertyName = camelCaseToDashCase(propertyName);
+    if (DOM.isCommentNode(renderElement)) {
+      var existingBindings = TEMPLATE_BINDINGS_EXP.firstMatch(
+          DOM.getText(renderElement).replaceAll(new RegExp(r'\n'), ''));
+      var parsedBindings = Json.parse(existingBindings[1]);
+      parsedBindings[dashCasedPropertyName] = propertyValue;
+      DOM.setText(
+          renderElement,
+          TEMPLATE_COMMENT_TEXT.replaceFirst(
+              '{}', Json.stringify(parsedBindings)));
+    } else {
+      _setAttr(renderElement, propertyName, propertyValue);
+    }
+  }
+
+  // TODO: deprecate after setBindingInfo is refactored.
+  void _setAttr(
       dynamic renderElement, String attributeName, String attributeValue) {
     var attrNs;
     var nsAndName = splitNamespace(attributeName);
@@ -181,23 +205,6 @@ class DomRenderer implements Renderer {
       }
     }
     DomRootRenderer.isDirty = true;
-  }
-
-  void setBindingDebugInfo(
-      dynamic renderElement, String propertyName, String propertyValue) {
-    var dashCasedPropertyName = camelCaseToDashCase(propertyName);
-    if (DOM.isCommentNode(renderElement)) {
-      var existingBindings = TEMPLATE_BINDINGS_EXP.firstMatch(
-          DOM.getText(renderElement).replaceAll(new RegExp(r'\n'), ''));
-      var parsedBindings = Json.parse(existingBindings[1]);
-      parsedBindings[dashCasedPropertyName] = propertyValue;
-      DOM.setText(
-          renderElement,
-          TEMPLATE_COMMENT_TEXT.replaceFirst(
-              '{}', Json.stringify(parsedBindings)));
-    } else {
-      this.setElementAttribute(renderElement, propertyName, propertyValue);
-    }
   }
 
   void setElementClass(dynamic renderElement, String className, bool isAdd) {

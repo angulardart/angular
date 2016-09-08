@@ -109,11 +109,12 @@ abstract class Renderer {
   Function listen(dynamic renderElement, String name, Function callback);
   void setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue);
+  @Deprecated("Use dart:html Element attributes and setAttribute.")
   void setElementAttribute(
       dynamic renderElement, String attributeName, String attributeValue);
-  /**
-   * Used only in debug mode to serialize property changes to dom nodes as attributes.
-   */
+
+  /// Used only in debug mode to serialize property changes to dom nodes as
+  /// attributes.
   void setBindingDebugInfo(
       dynamic renderElement, String propertyName, String propertyValue);
   setElementClass(dynamic renderElement, String className, bool isAdd);
@@ -123,18 +124,18 @@ abstract class Renderer {
   setText(dynamic renderNode, String text);
 }
 
-/**
- * Injectable service that provides a low-level interface for modifying the UI.
- *
- * Use this service to bypass Angular's templating and make custom UI changes that can't be
- * expressed declaratively. For example if you need to set a property or an attribute whose name is
- * not statically known, use [#setElementProperty] or [#setElementAttribute]
- * respectively.
- *
- * If you are implementing a custom renderer, you must implement this interface.
- *
- * The default Renderer implementation is `DomRenderer`. Also available is `WebWorkerRenderer`.
- */
+/// Injectable service that provides a low-level interface for modifying the UI.
+///
+/// Use this service to bypass Angular's templating and make custom UI changes
+/// that can't be expressed declaratively. For example if you need to set a
+/// property or an attribute whose name is not statically known, use
+/// [#setElementProperty] or [#setElementAttribute] respectively.
+///
+/// If you are implementing a custom renderer, you must implement this
+/// interface.
+///
+/// The default Renderer implementation is `DomRenderer`. Also available is
+/// `WebWorkerRenderer`.
 abstract class RootRenderer {
   Renderer renderComponent(RenderComponentType componentType);
 }

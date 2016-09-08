@@ -9,6 +9,32 @@ import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "compile_view.dart" show CompileView;
 
+// List of supported namespaces.
+const NAMESPACE_URIS = const {
+  'xlink': 'http://www.w3.org/1999/xlink',
+  'svg': 'http://www.w3.org/2000/svg',
+  'xhtml': 'http://www.w3.org/1999/xhtml'
+};
+
+// Creates method parameters list for AppView set attribute calls.
+List<o.Expression> createSetAttributeParams(
+    String fieldName, String attrNs, String attrName, o.Expression valueExpr) {
+  if (attrNs != null) {
+    return [
+      new o.ReadClassMemberExpr(fieldName),
+      o.literal(attrNs),
+      o.literal(attrName),
+      valueExpr
+    ];
+  } else {
+    return [
+      new o.ReadClassMemberExpr(fieldName),
+      o.literal(attrName),
+      valueExpr
+    ];
+  }
+}
+
 o.Expression getPropertyInView(
     o.Expression property, CompileView callingView, CompileView definedView) {
   if (identical(callingView, definedView)) {

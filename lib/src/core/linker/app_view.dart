@@ -393,6 +393,26 @@ abstract class AppView<T> {
     }
   }
 
+  void setAttr(
+      Element renderElement, String attributeName, String attributeValue) {
+    if (attributeValue != null) {
+      renderElement.setAttribute(attributeName, attributeValue);
+    } else {
+      renderElement.attributes.remove(attributeName);
+    }
+    DomRootRenderer.isDirty = true;
+  }
+
+  void setAttrNS(Element renderElement, String attrNS, String attributeName,
+      String attributeValue) {
+    if (attributeValue != null) {
+      renderElement.setAttributeNS(attrNS, attributeName, attributeValue);
+    } else {
+      renderElement.getNamespacedAttributes(attrNS).remove(attributeName);
+    }
+    DomRootRenderer.isDirty = true;
+  }
+
   // Marks DOM dirty so that end of zone turn we can detect if DOM was updated
   // for sharded apps support.
   void setDomDirty() {
