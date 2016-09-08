@@ -90,8 +90,7 @@ class NgFormControl extends NgControl implements OnChanges {
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
-          List<ControlValueAccessor> valueAccessors)
-      : super() {
+          List<ControlValueAccessor> valueAccessors) {
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
   void ngOnChanges(Map<String, SimpleChange> changes) {

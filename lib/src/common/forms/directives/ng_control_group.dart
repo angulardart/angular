@@ -74,12 +74,10 @@ class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
   List<dynamic> _asyncValidators;
   ControlContainer _parent;
   NgControlGroup(
-      @SkipSelf() ControlContainer parent,
+      @SkipSelf() ControlContainer this._parent,
       @Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
-      @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators)
-      : super() {
-    this._parent = parent;
-  }
+      @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators);
+
   void ngOnInit() {
     this.formDirective.addControlGroup(this);
   }
