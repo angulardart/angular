@@ -4,7 +4,8 @@ import 'package:barback/barback.dart';
 void main() {
   var settings = new BarbackSettings({
     'entry_points': [
-      'non_existing',
+      'non_existing1',
+      'non_existing2/with_sub_directory',
       './test/transform/common/print_invalid_entry_points.dart'
     ]
   }, BarbackMode.DEBUG);
