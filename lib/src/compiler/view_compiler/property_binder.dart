@@ -45,9 +45,8 @@ void bind(
   }
   view.fields
       .add(new o.ClassField(fieldExpr.name, null, [o.StmtModifier.Private]));
-  view.createMethod.addStmt(o.THIS_EXPR
-      .prop(fieldExpr.name)
-      .set(o.importExpr(Identifiers.uninitialized))
+  view.createMethod.addStmt(new o.WriteClassMemberExpr(
+          fieldExpr.name, o.importExpr(Identifiers.uninitialized))
       .toStmt());
   if (checkExpression.needsValueUnwrapper) {
     var initValueUnwrapperStmt =
@@ -66,8 +65,9 @@ void bind(
   method.addStmt(new o.IfStmt(
       condition,
       new List.from(actions)
-        ..addAll(
-            [o.THIS_EXPR.prop(fieldExpr.name).set(currValExpr).toStmt()])));
+        ..addAll([
+          new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()
+        ])));
 }
 
 bindRenderText(
@@ -87,8 +87,12 @@ bindRenderText(
       boundText.value,
       o.THIS_EXPR.prop("context"),
       [
-        o.THIS_EXPR.prop("renderer").callMethod(
-            "setText", [compileNode.renderNode, currValExpr]).toStmt()
+        (compileNode is CompileElement
+                ? new o.ReadClassMemberExpr(compileNode.renderNodeFieldName)
+                    .prop('text')
+                    .set(currValExpr)
+                : compileNode.renderNode.prop('text').set(currValExpr))
+            .toStmt()
       ],
       view.detectChangesRenderPropertiesMethod);
 }
@@ -161,15 +165,21 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
         ]).toStmt());
         break;
       case PropertyBindingType.Style:
-        renderMethod = "setElementStyle";
-        o.Expression strValue = renderValue.callMethod("toString", []);
+        // value = value?.toString().
+        o.Expression styleValueExpr =
+            currValExpr.callMethod('toString', [], checked: true);
+        // Add units for style value if defined in template.
         if (boundProp.unit != null) {
-          strValue = strValue.plus(o.literal(boundProp.unit));
+          styleValueExpr = styleValueExpr.isBlank().conditional(
+              o.NULL_EXPR, styleValueExpr.plus(o.literal(boundProp.unit)));
         }
-        renderValue = renderValue.isBlank().conditional(o.NULL_EXPR, strValue);
-        updateStmts.add(new o.ReadClassMemberExpr("renderer").callMethod(
-            renderMethod,
-            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
+        // Call Element.style.setProperty(propName, value);
+        o.Expression updateStyleExpr =
+            new o.ReadClassMemberExpr(compileElement.renderNodeFieldName)
+                .prop('style')
+                .callMethod(
+                    'setProperty', [o.literal(boundProp.name), styleValueExpr]);
+        updateStmts.add(updateStyleExpr.toStmt());
         break;
     }
     bind(view, currValExpr, fieldExpr, boundProp.value, context, updateStmts,

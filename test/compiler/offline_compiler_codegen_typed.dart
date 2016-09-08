@@ -51,8 +51,8 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
     final currVal_0 =
         import5.interpolate(1, 'Hello World ', this.context.user, '!');
     if (import5.checkBinding(this._expr_0, currVal_0)) {
-      this.renderer.setText(this._text_0, currVal_0);
-      this._expr_0 = currVal_0;
+      _text_0.text = currVal_0;
+      _expr_0 = currVal_0;
     }
     this.detectViewChildrenChanges();
   }

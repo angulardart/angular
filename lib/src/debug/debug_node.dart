@@ -49,14 +49,12 @@ class DebugNode {
 class DebugElement extends DebugNode {
   String name;
   Map<String, dynamic> properties;
-  Map<String, String> attributes;
   List<DebugNode> childNodes;
   dynamic nativeElement;
 
   DebugElement(dynamic nativeNode, dynamic parent, RenderDebugInfo _debugInfo)
       : super(nativeNode, parent, _debugInfo) {
     this.properties = {};
-    this.attributes = {};
     this.childNodes = [];
     this.nativeElement = nativeNode;
   }
@@ -74,6 +72,8 @@ class DebugElement extends DebugNode {
       childNodes.removeAt(childIndex);
     }
   }
+
+  Map get attributes => nativeElement.attributes;
 
   insertChildrenAfter(DebugNode child, List<DebugNode> newChildren) {
     var siblingIndex = this.childNodes.indexOf(child);

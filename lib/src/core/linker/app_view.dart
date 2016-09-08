@@ -7,6 +7,8 @@ import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart'
     show Renderer, RenderComponentType;
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
+import 'package:angular2/src/platform/dom/dom_renderer.dart'
+    show DomRootRenderer;
 
 import 'app_element.dart';
 import 'element_injector.dart' show ElementInjector;
@@ -389,6 +391,12 @@ abstract class AppView<T> {
     } else {
       element.classes.remove(className);
     }
+  }
+
+  // Marks DOM dirty so that end of zone turn we can detect if DOM was updated
+  // for sharded apps support.
+  void setDomDirty() {
+    DomRootRenderer.isDirty = true;
   }
 }
 

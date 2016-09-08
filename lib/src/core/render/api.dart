@@ -117,7 +117,9 @@ abstract class Renderer {
   void setBindingDebugInfo(
       dynamic renderElement, String propertyName, String propertyValue);
   setElementClass(dynamic renderElement, String className, bool isAdd);
+  @Deprecated("Use dart:html Element.style instead")
   setElementStyle(dynamic renderElement, String styleName, String styleValue);
+  @Deprecated("Use dart:html Text.text instead")
   setText(dynamic renderNode, String text);
 }
 

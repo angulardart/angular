@@ -1,11 +1,6 @@
+import 'dart:html';
 import "package:angular2/core.dart"
-    show
-        DoCheck,
-        KeyValueDiffer,
-        KeyValueDiffers,
-        ElementRef,
-        Directive,
-        Renderer;
+    show DoCheck, KeyValueDiffer, KeyValueDiffers, ElementRef, Directive;
 
 import "../../core/change_detection/differs/default_keyvalue_differ.dart"
     show KeyValueChangeRecord;
@@ -46,12 +41,13 @@ import "../../core/change_detection/differs/default_keyvalue_differ.dart"
 @Directive(selector: "[ngStyle]", inputs: const ["rawStyle: ngStyle"])
 class NgStyle implements DoCheck {
   KeyValueDiffers _differs;
-  ElementRef _ngEl;
-  Renderer _renderer;
+  Element _ngElement;
   Map<String, String> _rawStyle;
   KeyValueDiffer _differ;
 
-  NgStyle(this._differs, this._ngEl, this._renderer);
+  NgStyle(this._differs, ElementRef elementRef) {
+    _ngElement = elementRef.nativeElement;
+  }
 
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;
@@ -63,24 +59,15 @@ class NgStyle implements DoCheck {
   ngDoCheck() {
     if (_differ == null) return;
     var changes = _differ.diff(_rawStyle);
-    if (changes != null) {
-      _applyChanges(changes);
-    }
-  }
-
-  void _applyChanges(dynamic changes) {
+    if (changes == null) return;
     changes.forEachAddedItem((KeyValueChangeRecord record) {
-      this._setStyle(record.key, record.currentValue);
+      _ngElement.style.setProperty(record.key, record.currentValue);
     });
     changes.forEachChangedItem((KeyValueChangeRecord record) {
-      this._setStyle(record.key, record.currentValue);
+      _ngElement.style.setProperty(record.key, record.currentValue);
     });
     changes.forEachRemovedItem((KeyValueChangeRecord record) {
-      this._setStyle(record.key, null);
+      _ngElement.style.setProperty(record.key, record.currentValue);
     });
-  }
-
-  void _setStyle(String name, String val) {
-    this._renderer.setElementStyle(this._ngEl.nativeElement, name, val);
   }
 }

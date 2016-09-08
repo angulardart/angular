@@ -150,13 +150,4 @@ class DebugDomRenderer extends DomRenderer {
     }
     super.setElementProperty(renderElement, propertyName, propertyValue);
   }
-
-  setElementAttribute(
-      dynamic renderElement, String attributeName, String attributeValue) {
-    var debugEl = getDebugNode(renderElement);
-    if (debugEl != null && debugEl is DebugElement) {
-      debugEl.attributes[attributeName] = attributeValue;
-    }
-    super.setElementAttribute(renderElement, attributeName, attributeValue);
-  }
 }

@@ -209,6 +209,7 @@ class DomRenderer implements Renderer {
     DomRootRenderer.isDirty = true;
   }
 
+  @Deprecated("Use dart:html .style instead")
   void setElementStyle(
       dynamic renderElement, String styleName, String styleValue) {
     if (styleValue != null) {

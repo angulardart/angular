@@ -298,14 +298,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
       if (view.component.template.encapsulation == ViewEncapsulation.Emulated) {
         // Set ng_content attribute for CSS shim.
-        this
-            .view
-            .createMethod
-            .addStmt(ViewProperties.renderer.callMethod("setElementAttribute", [
-              new o.ReadClassMemberExpr(fieldName),
-              new o.ReadClassMemberExpr('shimCAttr'),
-              o.literal('')
-            ]).toStmt());
+        o.Expression shimAttributeExpr = new o.ReadClassMemberExpr(fieldName)
+            .callMethod('setAttribute',
+                [new o.ReadClassMemberExpr('shimCAttr'), o.literal('')]);
+        view.createMethod.addStmt(shimAttributeExpr.toStmt());
       }
 
       if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
@@ -380,7 +376,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             .map((nodes) => createFlatArray(nodes))
             .toList());
       }
-      this.view.createMethod.addStmt(compViewExpr
+      view.createMethod.addStmt(compViewExpr
           .callMethod("create", [codeGenContentNodes, o.NULL_EXPR]).toStmt());
     }
     return null;
@@ -725,8 +721,9 @@ List<o.Statement> generateCreateMethod(CompileView view) {
   if (identical(view.viewType, ViewType.COMPONENT)) {
     if (view.component.template.encapsulation == ViewEncapsulation.Native) {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
-          "createViewShadowRoot",
-          [o.THIS_EXPR.prop("declarationAppElement").prop("nativeElement")]);
+          "createViewShadowRoot", [
+        new o.ReadClassMemberExpr("declarationAppElement").prop("nativeElement")
+      ]);
     } else {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr("initViewRoot",
           [o.THIS_EXPR.prop("declarationAppElement").prop("nativeElement")]);
@@ -749,7 +746,12 @@ List<o.Statement> generateCreateMethod(CompileView view) {
     ..addAll([
       o.THIS_EXPR.callMethod("init", [
         createFlatArray(view.rootNodesOrAppElements),
-        o.literalArr(view.nodes.map((node) => node.renderNode).toList()),
+        o.literalArr(view.nodes.map((node) {
+          if (node is CompileElement) {
+            return new o.ReadClassMemberExpr(node.renderNodeFieldName);
+          } else
+            return node.renderNode;
+        }).toList()),
         o.literalArr(view.subscriptions)
       ]).toStmt(),
       new o.ReturnStatement(resultExpr)
