@@ -1,11 +1,11 @@
 import 'package:angular2/src/common/forms/directives/validators.dart'
-    show Validator;
+    show Validator, ValidatorFn;
 
-Function normalizeValidator(dynamic validator) {
+ValidatorFn normalizeValidator(dynamic validator) {
   if (validator is Validator) {
     return (c) => validator.validate(c);
   } else {
-    return validator;
+    return validator as ValidatorFn;
   }
 }
 

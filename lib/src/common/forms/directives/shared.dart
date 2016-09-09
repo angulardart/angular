@@ -55,7 +55,8 @@ void _throwError(AbstractControlDirective dir, String message) {
 
 ValidatorFn composeValidators(List<dynamic> validators) {
   return validators != null
-      ? Validators.compose(validators.map(normalizeValidator).toList())
+      ? Validators
+          .compose(validators.map/*<ValidatorFn>*/(normalizeValidator).toList())
       : null;
 }
 
