@@ -36,7 +36,7 @@ import "constants.dart"
         ViewEncapsulationEnum,
         ChangeDetectionStrategyEnum,
         ViewProperties;
-import "util.dart"
+import "view_compiler_utils.dart"
     show
         getViewFactoryName,
         createFlatArray,

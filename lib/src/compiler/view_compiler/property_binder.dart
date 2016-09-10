@@ -13,8 +13,8 @@ import '../template_ast.dart'
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
-import '../util.dart' show camelCaseToDashCase;
-import 'util.dart' show NAMESPACE_URIS, createSetAttributeParams;
+import "../compiler_utils.dart" show camelCaseToDashCase;
+import 'view_compiler_utils.dart' show NAMESPACE_URIS, createSetAttributeParams;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;

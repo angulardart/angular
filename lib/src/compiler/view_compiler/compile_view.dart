@@ -17,7 +17,8 @@ import "compile_query.dart"
     show CompileQuery, createQueryList, addQueryToTokenMap;
 import "constants.dart" show EventHandlerVars;
 import "expression_converter.dart" show NameResolver;
-import "util.dart" show getViewFactoryName, getPropertyInView, createPureProxy;
+import "view_compiler_utils.dart"
+    show getViewFactoryName, getPropertyInView, createPureProxy;
 
 class CompileView implements NameResolver {
   CompileDirectiveMetadata component;

@@ -4,7 +4,7 @@ import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
 import "compile_view.dart" show CompileView;
-import "util.dart" show getPropertyInView;
+import "view_compiler_utils.dart" show getPropertyInView;
 
 class ViewQueryValues {
   CompileView view;

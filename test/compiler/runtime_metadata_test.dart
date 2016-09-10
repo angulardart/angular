@@ -24,7 +24,7 @@ import 'package:angular2/core.dart'
         SimpleChange,
         provide;
 import 'test_bindings.dart' show TEST_PROVIDERS;
-import 'package:angular2/src/compiler/util.dart' show MODULE_SUFFIX;
+import 'package:angular2/src/compiler/compiler_utils.dart' show MODULE_SUFFIX;
 import 'package:angular2/src/core/platform_directives_and_pipes.dart'
     show PLATFORM_DIRECTIVES;
 import 'package:test/test.dart';

@@ -8,7 +8,7 @@ import "package:angular2/src/core/metadata/view.dart"
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "url_resolver.dart" show getUrlScheme;
-import "util.dart" show splitAtColon, sanitizeIdentifier;
+import "compiler_utils.dart";
 
 // group 1: "property" from "[property]"
 // group 2: "event" from "(event)"

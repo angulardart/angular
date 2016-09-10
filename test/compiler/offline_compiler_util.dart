@@ -22,7 +22,7 @@ import "package:angular2/src/compiler/config.dart" show CompilerConfig;
 import "package:angular2/src/compiler/url_resolver.dart"
     show createOfflineCompileUrlResolver;
 import "schema_registry_mock.dart" show MockSchemaRegistry;
-import "package:angular2/src/compiler/util.dart" show MODULE_SUFFIX;
+import "package:angular2/src/compiler/compiler_utils.dart" show MODULE_SUFFIX;
 import "package:angular2/src/compiler/xhr_mock.dart" show MockXHR;
 import "package:angular2/src/compiler/compile_metadata.dart"
     show CompileDirectiveMetadata, CompileTypeMetadata, CompileTemplateMetadata;

@@ -4,7 +4,7 @@ import "../compile_metadata.dart" show CompilePipeMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
 import "compile_view.dart" show CompileView;
-import "util.dart"
+import "view_compiler_utils.dart"
     show injectFromViewParentInjector, createPureProxy, getPropertyInView;
 
 class _PurePipeProxy {

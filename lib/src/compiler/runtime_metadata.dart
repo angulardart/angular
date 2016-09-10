@@ -24,7 +24,7 @@ import "compile_metadata.dart" as cpl;
 import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
 import "directive_resolver.dart" show DirectiveResolver;
 import "pipe_resolver.dart" show PipeResolver;
-import "util.dart" show MODULE_SUFFIX, sanitizeIdentifier;
+import "compiler_utils.dart" show MODULE_SUFFIX, sanitizeIdentifier;
 import "view_resolver.dart" show ViewResolver;
 
 @Injectable()

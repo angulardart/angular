@@ -15,7 +15,7 @@ import "compile_query.dart"
     show CompileQuery, createQueryList, addQueryToTokenMap;
 import "compile_view.dart" show CompileView;
 import "constants.dart" show InjectMethodVars;
-import "util.dart"
+import "view_compiler_utils.dart"
     show
         getPropertyInView,
         createDiTokenExpression,

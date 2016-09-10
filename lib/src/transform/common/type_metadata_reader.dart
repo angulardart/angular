@@ -1338,7 +1338,10 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
       viewQuery = _createQueryMetadata(
           _getAnnotation(p, "ViewChildren"), true, false, null);
     }
-
+    if (token == null) {
+      throw new ArgumentError(
+          'Missing class member or type for constructor parameter $p');
+    }
     return new CompileDiDependencyMetadata(
         token: token,
         isAttribute: _hasAnnotation(p, "Attribute"),

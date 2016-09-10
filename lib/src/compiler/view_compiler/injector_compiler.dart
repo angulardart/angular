@@ -13,7 +13,8 @@ import "../parse_util.dart"
 import "../provider_parser.dart" show AppProviderParser;
 import "../template_ast.dart" show ProviderAst;
 import "constants.dart" show InjectMethodVars;
-import "util.dart" show createDiTokenExpression, convertValueToOutputAst;
+import "view_compiler_utils.dart"
+    show createDiTokenExpression, convertValueToOutputAst;
 
 var mainModuleProp = o.THIS_EXPR.prop("mainModule");
 var parentInjectorProp = o.THIS_EXPR.prop("parent");
