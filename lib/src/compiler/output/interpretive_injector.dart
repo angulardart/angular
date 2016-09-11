@@ -16,7 +16,7 @@ class InterpretiveInjectorInstanceFactory implements InstanceFactory {
       return new _InterpretiveInjector(args, clazz, props, getters, methods);
     }
     throw new BaseException(
-        '''Can\'t instantiate class ${ superClass} in interpretative mode''');
+        "Can't instantiate class ${superClass} in interpretative mode");
   }
 }
 

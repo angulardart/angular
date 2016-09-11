@@ -9,10 +9,10 @@ import "abstract_emitter.dart"
         CATCH_ERROR_VAR,
         CATCH_STACK_VAR;
 import "output_ast.dart" as o;
-import "path_util.dart" show getImportModulePath, ImportEnv;
+import "path_util.dart" show getImportModulePath;
 
 var _debugModuleUrl = "asset://debug/lib";
-var _METADATA_MAP_VAR = '''_METADATA''';
+var _METADATA_MAP_VAR = '_METADATA';
 String debugOutputAstAsDart(
     dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
   var converter = new _DartEmitterVisitor(_debugModuleUrl);
@@ -29,8 +29,7 @@ String debugOutputAstAsDart(
     } else if (ast is o.OutputType) {
       ast.visitType(converter, ctx);
     } else {
-      throw new BaseException(
-          '''Don\'t know how to print debug info for ${ ast}''');
+      throw new BaseException("Don't know how to print debug info for ${ast}");
     }
   });
   return ctx.toSource();
@@ -46,8 +45,7 @@ class DartEmitter implements OutputEmitter {
     var ctx = EmitterVisitorContext.createRoot(exportedVars);
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
-      String importPath =
-          getImportModulePath(moduleUrl, importedModuleUrl, ImportEnv.Dart);
+      String importPath = getImportModulePath(moduleUrl, importedModuleUrl);
       srcParts.add(prefix.isEmpty
           ? "import '$importPath';"
           : "import '$importPath' as ${prefix};");

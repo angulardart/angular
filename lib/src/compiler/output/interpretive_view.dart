@@ -16,9 +16,7 @@ class InterpretiveAppViewInstanceFactory implements InstanceFactory {
       Map<String, Function> methods) {
     if (identical(superClass, AppView)) {
       // We are always using DebugAppView as parent.
-
       // However, in prod mode we generate a constructor call that does
-
       // not have the argument for the debugNodeInfos.
       args = (new List.from(args)..addAll([null]));
       return new _InterpretiveAppView(args, props, getters, methods);
@@ -26,15 +24,15 @@ class InterpretiveAppViewInstanceFactory implements InstanceFactory {
       return new _InterpretiveAppView(args, props, getters, methods);
     }
     throw new BaseException(
-        '''Can\'t instantiate class ${ superClass} in interpretative mode''');
+        "Can't instantiate class ${superClass} in interpretative mode");
   }
 }
 
 class _InterpretiveAppView extends DebugAppView<dynamic>
     implements DynamicInstance {
-  Map<String, dynamic> props;
-  Map<String, Function> getters;
-  Map<String, Function> methods;
+  final Map<String, dynamic> props;
+  final Map<String, Function> getters;
+  final Map<String, Function> methods;
   _InterpretiveAppView(
       List<dynamic> args, this.props, this.getters, this.methods)
       : super(
@@ -49,7 +47,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
             args[8] as List<StaticNodeDebugInfo>);
 
   AppElement createInternal(dynamic /* String | dynamic */ rootSelector) {
-    var m = this.methods['createInternal'];
+    var m = methods['createInternal'];
     if (m != null) {
       return m(rootSelector);
     } else {
@@ -59,7 +57,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
 
   dynamic injectorGetInternal(
       dynamic token, num nodeIndex, dynamic notFoundResult) {
-    var m = this.methods['injectorGetInternal'];
+    var m = methods['injectorGetInternal'];
     if (m != null) {
       return m(token, nodeIndex, notFoundResult);
     } else {
@@ -68,7 +66,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   }
 
   void destroyInternal() {
-    var m = this.methods['destroyInternal'];
+    var m = methods['destroyInternal'];
     if (m != null) {
       return m();
     } else {
@@ -77,7 +75,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   }
 
   void dirtyParentQueriesInternal() {
-    var m = this.methods['dirtyParentQueriesInternal'];
+    var m = methods['dirtyParentQueriesInternal'];
     if (m != null) {
       return m();
     } else {

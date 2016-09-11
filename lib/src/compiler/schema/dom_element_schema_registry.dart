@@ -42,8 +42,9 @@ const OBJECT = "object";
  *
  * ## Query
  *
- * The class creates an internal squas representaino which allows to easily answer the query of
- * if a given property exist on a given element.
+ * The class creates an internal representation of html elements and attributes
+ * which allows to easily answer the query of if a given property exist on a
+ * given element.
  *
  * NOTE: We don't yet support querying for types or events.
  * NOTE: This schema is auto extracted from `schema_extractor.ts` located in the test folder.

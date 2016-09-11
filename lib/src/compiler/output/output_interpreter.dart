@@ -168,7 +168,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
       }
       currCtx = currCtx.parent;
     }
-    throw new BaseException('''Not declared variable ${ expr . name}''');
+    throw new BaseException('Not declared variable ${expr.name}');
   }
 
   @override
@@ -189,8 +189,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
         case o.BuiltinVar.MetadataMap:
           return null;
         default:
-          throw new BaseException(
-              '''Unknown builtin variable ${ ast . builtin}''');
+          throw new BaseException('Unknown builtin variable ${ ast . builtin}');
       }
     }
     var currCtx = ctx;
@@ -200,7 +199,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
       }
       currCtx = currCtx.parent;
     }
-    throw new BaseException('''Not declared variable ${ varName}''');
+    throw new BaseException('Not declared variable ${varName}');
   }
 
   @override
@@ -225,10 +224,9 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     _ExecutionContext ctx = context;
     var receiver = expr.receiver.visitExpression(this, ctx);
     var value = expr.value.visitExpression(this, ctx);
-    if (isDynamicInstance(receiver)) {
-      var di = (receiver as DynamicInstance);
-      if (di.props.containsKey(expr.name)) {
-        di.props[expr.name] = value;
+    if (receiver is DynamicInstance) {
+      if (receiver.props.containsKey(expr.name)) {
+        receiver.props[expr.name] = value;
       } else {
         reflector.setter(expr.name)(receiver, value);
       }
@@ -244,10 +242,9 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     _ExecutionContext ctx = context;
     var receiver = o.THIS_EXPR.visitExpression(this, ctx);
     var value = expr.value.visitExpression(this, ctx);
-    if (isDynamicInstance(receiver)) {
-      var di = (receiver as DynamicInstance);
-      if (di.props.containsKey(expr.name)) {
-        di.props[expr.name] = value;
+    if (receiver is DynamicInstance) {
+      if (receiver.props.containsKey(expr.name)) {
+        receiver.props[expr.name] = value;
       } else {
         reflector.setter(expr.name)(receiver, value);
       }
@@ -275,16 +272,14 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
           result = receiver;
           break;
         default:
-          throw new BaseException(
-              '''Unknown builtin method ${ expr . builtin}''');
+          throw new BaseException('Unknown builtin method ${expr.builtin}');
       }
-    } else if (isDynamicInstance(receiver)) {
+    } else if (receiver is DynamicInstance) {
       // Don't call if it's a check-for-null safe method call.
       if (expr.checked && (receiver == null || receiver == o.NULL_EXPR))
         return null;
-      var di = (receiver as DynamicInstance);
-      if (di.methods.containsKey(expr.name)) {
-        result = Function.apply(di.methods[expr.name], args);
+      if (receiver.methods.containsKey(expr.name)) {
+        result = Function.apply(receiver.methods[expr.name], args);
       } else {
         result = reflector.method(expr.name)(receiver, args);
       }
@@ -304,11 +299,10 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     var receiver = ctx.superInstance;
     var methodName = expr.methodName;
     var args = visitAllExpressions(expr.args, ctx);
-    if (isDynamicInstance(receiver)) {
+    if (receiver is DynamicInstance) {
       // Don't call if it's a check-for-null safe method call.
-      var di = (receiver as DynamicInstance);
-      if (di.methods.containsKey(methodName)) {
-        result = Function.apply(di.methods[methodName], args);
+      if (receiver.methods.containsKey(methodName)) {
+        result = Function.apply(receiver.methods[methodName], args);
       } else {
         result = reflector.method(methodName)(receiver, args);
       }
@@ -480,7 +474,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
       case o.BinaryOperator.BiggerEquals:
         return lhs() >= rhs();
       default:
-        throw new BaseException('''Unknown operator ${ ast . operator}''');
+        throw new BaseException('Unknown operator ${ast.operator}');
     }
   }
 
@@ -492,14 +486,13 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
 
   dynamic _readPropertyValue(receiver, String name) {
     var result;
-    if (isDynamicInstance(receiver)) {
-      var di = (receiver as DynamicInstance);
-      if (di.props.containsKey(name)) {
-        result = di.props[name];
-      } else if (di.getters.containsKey(name)) {
-        result = di.getters[name]();
-      } else if (di.methods.containsKey(name)) {
-        result = di.methods[name];
+    if (receiver is DynamicInstance) {
+      if (receiver.props.containsKey(name)) {
+        result = receiver.props[name];
+      } else if (receiver.getters.containsKey(name)) {
+        result = receiver.getters[name]();
+      } else if (receiver.methods.containsKey(name)) {
+        result = receiver.methods[name];
       } else {
         result = reflector.getter(name)(receiver);
       }

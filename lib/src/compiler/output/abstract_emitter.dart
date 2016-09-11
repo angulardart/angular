@@ -1,10 +1,10 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "output_ast.dart" as o;
+import 'output_ast.dart' as o;
 
 var _SINGLE_QUOTE_ESCAPE_STRING_RE = new RegExp(r'' + "'" + r'|\\|\n|\r|\$');
-var CATCH_ERROR_VAR = o.variable("error");
-var CATCH_STACK_VAR = o.variable("stack");
+var CATCH_ERROR_VAR = o.variable('error');
+var CATCH_STACK_VAR = o.variable('stack');
 
 abstract class OutputEmitter {
   String emitStatements(
@@ -46,7 +46,7 @@ class EmitterVisitorContext {
     return !identical(this._exportedVars.indexOf(varName), -1);
   }
 
-  void println([String lastPart = ""]) {
+  void println([String lastPart = '']) {
     this.print(lastPart, true);
     _outputPos += lastPart.length;
   }
@@ -105,13 +105,13 @@ class EmitterVisitorContext {
     return lines
         .map((line) {
           if (line.parts.length > 0) {
-            return _createIndent(line.indent) + line.parts.join("");
+            return _createIndent(line.indent) + line.parts.join('');
           } else {
-            return "";
+            return '';
           }
         })
         .toList()
-        .join("\n");
+        .join('\n');
   }
 
   /// Creates method context for expressions.
@@ -145,15 +145,15 @@ abstract class AbstractEmitterVisitor
   dynamic visitExpressionStmt(o.ExpressionStatement stmt, context) {
     EmitterVisitorContext ctx = context;
     stmt.expr.visitExpression(this, ctx);
-    ctx.println(";");
+    ctx.println(';');
     return null;
   }
 
   dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''return ''');
+    ctx.print('return ');
     stmt.value.visitExpression(this, ctx);
-    ctx.println(";");
+    ctx.println(';');
     return null;
   }
 
@@ -161,45 +161,45 @@ abstract class AbstractEmitterVisitor
   dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context);
   dynamic visitIfStmt(o.IfStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''if (''');
+    ctx.print('if (');
     stmt.condition.visitExpression(this, ctx);
-    ctx.print(''') {''');
+    ctx.print(') {');
     var hasElseCase = stmt.falseCase != null && stmt.falseCase.length > 0;
     if (stmt.trueCase.length <= 1 && !hasElseCase) {
-      ctx.print(''' ''');
+      ctx.print(' ');
       this.visitAllStatements(stmt.trueCase, ctx);
       ctx.removeEmptyLastLine();
-      ctx.print(''' ''');
+      ctx.print(' ');
     } else {
       ctx.println();
       ctx.incIndent();
       this.visitAllStatements(stmt.trueCase, ctx);
       ctx.decIndent();
       if (hasElseCase) {
-        ctx.println('''} else {''');
+        ctx.println('} else {');
         ctx.incIndent();
         this.visitAllStatements(stmt.falseCase, ctx);
         ctx.decIndent();
       }
     }
-    ctx.println('''}''');
+    ctx.println('}');
     return null;
   }
 
   dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context);
   dynamic visitThrowStmt(o.ThrowStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''throw ''');
+    ctx.print('throw ');
     stmt.error.visitExpression(this, ctx);
-    ctx.println(''';''');
+    ctx.println(';');
     return null;
   }
 
   dynamic visitCommentStmt(o.CommentStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    var lines = stmt.comment.split("\n");
+    var lines = stmt.comment.split('\n');
     lines.forEach((line) {
-      ctx.println('''// ${ line}''');
+      ctx.println('// ${line}');
     });
     return null;
   }
@@ -210,12 +210,12 @@ abstract class AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print("(");
+      ctx.print('(');
     }
-    ctx.print('''${ expr . name} = ''');
+    ctx.print('${expr.name} = ');
     expr.value.visitExpression(this, ctx);
     if (!lineWasEmpty) {
-      ctx.print(")");
+      ctx.print(')');
     }
     return null;
   }
@@ -224,15 +224,15 @@ abstract class AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print("(");
+      ctx.print('(');
     }
     expr.receiver.visitExpression(this, ctx);
-    ctx.print('''[''');
+    ctx.print('[');
     expr.index.visitExpression(this, ctx);
-    ctx.print('''] = ''');
+    ctx.print('] = ');
     expr.value.visitExpression(this, ctx);
     if (!lineWasEmpty) {
-      ctx.print(")");
+      ctx.print(')');
     }
     return null;
   }
@@ -241,13 +241,13 @@ abstract class AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print("(");
+      ctx.print('(');
     }
     expr.receiver.visitExpression(this, ctx);
-    ctx.print('''.${ expr . name} = ''');
+    ctx.print('.${expr.name} = ');
     expr.value.visitExpression(this, ctx);
     if (!lineWasEmpty) {
-      ctx.print(")");
+      ctx.print(')');
     }
     return null;
   }
@@ -257,13 +257,13 @@ abstract class AbstractEmitterVisitor
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print("(");
+      ctx.print('(');
     }
     o.THIS_EXPR.visitExpression(this, ctx);
     ctx.print('.${ expr . name} = ');
     expr.value.visitExpression(this, ctx);
     if (!lineWasEmpty) {
-      ctx.print(")");
+      ctx.print(')');
     }
     return null;
   }
@@ -303,9 +303,9 @@ abstract class AbstractEmitterVisitor
   dynamic visitInvokeFunctionExpr(o.InvokeFunctionExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     expr.fn.visitExpression(this, ctx);
-    ctx.print('''(''');
-    this.visitAllExpressions(expr.args, ctx, ",");
-    ctx.print(''')''');
+    ctx.print('(');
+    this.visitAllExpressions(expr.args, ctx, ',');
+    ctx.print(')');
     return null;
   }
 
@@ -315,10 +315,10 @@ abstract class AbstractEmitterVisitor
     if (ast.builtin != null) {
       switch (ast.builtin) {
         case o.BuiltinVar.Super:
-          varName = "super";
+          varName = 'super';
           break;
         case o.BuiltinVar.This:
-          varName = "this";
+          varName = 'this';
           break;
         case o.BuiltinVar.CatchError:
           varName = CATCH_ERROR_VAR.name;
@@ -327,11 +327,10 @@ abstract class AbstractEmitterVisitor
           varName = CATCH_STACK_VAR.name;
           break;
         case o.BuiltinVar.MetadataMap:
-          varName = "null";
+          varName = 'null';
           break;
         default:
-          throw new BaseException(
-              '''Unknown builtin variable ${ ast . builtin}''');
+          throw new BaseException('Unknown builtin variable ${ast.builtin}');
       }
     }
     ctx.print(varName);
@@ -346,11 +345,11 @@ abstract class AbstractEmitterVisitor
 
   dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''new ''');
+    ctx.print('new ');
     ast.classExpr.visitExpression(this, ctx);
-    ctx.print('''(''');
-    this.visitAllExpressions(ast.args, ctx, ",");
-    ctx.print(''')''');
+    ctx.print('(');
+    this.visitAllExpressions(ast.args, ctx, ',');
+    ctx.print(')');
     return null;
   }
 
@@ -360,9 +359,9 @@ abstract class AbstractEmitterVisitor
     if (value is String) {
       ctx.print(escapeSingleQuoteString(value, this._escapeDollarInStrings));
     } else if (value == null) {
-      ctx.print("null");
+      ctx.print('null');
     } else {
-      ctx.print('''${ value}''');
+      ctx.print('${value}');
     }
     return null;
   }
@@ -370,29 +369,29 @@ abstract class AbstractEmitterVisitor
   dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context);
   dynamic visitConditionalExpr(o.ConditionalExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('''(''');
+    ctx.print('(');
     ast.condition.visitExpression(this, ctx);
-    ctx.print("? ");
+    ctx.print('? ');
     ast.trueCase.visitExpression(this, ctx);
-    ctx.print(": ");
+    ctx.print(': ');
     ast.falseCase.visitExpression(this, ctx);
-    ctx.print(''')''');
+    ctx.print(')');
     return null;
   }
 
   dynamic visitIfNullExpr(o.IfNullExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print("(");
+    ctx.print('(');
     ast.condition.visitExpression(this, ctx);
-    ctx.print("?? ");
+    ctx.print('?? ');
     ast.nullCase.visitExpression(this, ctx);
-    ctx.print(")");
+    ctx.print(')');
     return null;
   }
 
   dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print("!");
+    ctx.print('!');
     ast.condition.visitExpression(this, ctx);
     return null;
   }
@@ -404,65 +403,65 @@ abstract class AbstractEmitterVisitor
     var opStr;
     switch (ast.operator) {
       case o.BinaryOperator.Equals:
-        opStr = "==";
+        opStr = '==';
         break;
       case o.BinaryOperator.Identical:
-        opStr = "===";
+        opStr = '===';
         break;
       case o.BinaryOperator.NotEquals:
-        opStr = "!=";
+        opStr = '!=';
         break;
       case o.BinaryOperator.NotIdentical:
-        opStr = "!==";
+        opStr = '!==';
         break;
       case o.BinaryOperator.And:
-        opStr = "&&";
+        opStr = '&&';
         break;
       case o.BinaryOperator.Or:
-        opStr = "||";
+        opStr = '||';
         break;
       case o.BinaryOperator.Plus:
-        opStr = "+";
+        opStr = '+';
         break;
       case o.BinaryOperator.Minus:
-        opStr = "-";
+        opStr = '-';
         break;
       case o.BinaryOperator.Divide:
-        opStr = "/";
+        opStr = '/';
         break;
       case o.BinaryOperator.Multiply:
-        opStr = "*";
+        opStr = '*';
         break;
       case o.BinaryOperator.Modulo:
-        opStr = "%";
+        opStr = '%';
         break;
       case o.BinaryOperator.Lower:
-        opStr = "<";
+        opStr = '<';
         break;
       case o.BinaryOperator.LowerEquals:
-        opStr = "<=";
+        opStr = '<=';
         break;
       case o.BinaryOperator.Bigger:
-        opStr = ">";
+        opStr = '>';
         break;
       case o.BinaryOperator.BiggerEquals:
-        opStr = ">=";
+        opStr = '>=';
         break;
       default:
-        throw new BaseException('''Unknown operator ${ ast . operator}''');
+        throw new BaseException('Unknown operator ${ast.operator}');
     }
-    ctx.print('''(''');
+    ctx.print('(');
     ast.lhs.visitExpression(this, ctx);
-    ctx.print(''' ${ opStr} ''');
+    ctx.print(' ${opStr} ');
     ast.rhs.visitExpression(this, ctx);
-    ctx.print(''')''');
+    ctx.print(')');
     return null;
   }
 
   dynamic visitReadPropExpr(o.ReadPropExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ast.receiver.visitExpression(this, ctx);
-    ctx.print('''.''');
+    ctx.print('.');
     ctx.print(ast.name);
     return null;
   }
@@ -470,9 +469,9 @@ abstract class AbstractEmitterVisitor
   dynamic visitReadKeyExpr(o.ReadKeyExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ast.receiver.visitExpression(this, ctx);
-    ctx.print('''[''');
+    ctx.print('[');
     ast.index.visitExpression(this, ctx);
-    ctx.print(''']''');
+    ctx.print(']');
     return null;
   }
 
@@ -491,15 +490,15 @@ abstract class AbstractEmitterVisitor
   dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var useNewLine = ast.entries.length > 1;
-    ctx.print('''{''', useNewLine);
+    ctx.print('{', useNewLine);
     ctx.incIndent();
     this.visitAllObjects((entry) {
-      ctx.print(
-          '''${ escapeSingleQuoteString ( entry [ 0 ] , this . _escapeDollarInStrings )}: ''');
+      ctx.print(escapeSingleQuoteString(entry[0], _escapeDollarInStrings));
+      ctx.print(': ');
       entry[1].visitExpression(this, ctx);
-    }, ast.entries, ctx, ",", newLine: useNewLine, keepOnSameLine: false);
+    }, ast.entries, ctx, ',', newLine: useNewLine, keepOnSameLine: false);
     ctx.decIndent();
-    ctx.print('''}''', useNewLine);
+    ctx.print('}', useNewLine);
     return null;
   }
 
@@ -545,23 +544,17 @@ dynamic escapeSingleQuoteString(String input, bool escapeDollar) {
     return null;
   }
   var body = input.replaceAllMapped(_SINGLE_QUOTE_ESCAPE_STRING_RE, (match) {
-    if (match[0] == "\$") {
-      return escapeDollar ? "\\\$" : "\$";
-    } else if (match[0] == "\n") {
-      return "\\n";
-    } else if (match[0] == "\r") {
-      return "\\r";
+    if (match[0] == '\$') {
+      return escapeDollar ? '\\\$' : '\$';
+    } else if (match[0] == '\n') {
+      return '\\n';
+    } else if (match[0] == '\r') {
+      return '\\r';
     } else {
-      return '''\\${ match [ 0 ]}''';
+      return '\\${match[0]}';
     }
   });
-  return '''\'${ body}\'''';
+  return "'${body}'";
 }
 
-String _createIndent(num count) {
-  var res = "";
-  for (var i = 0; i < count; i++) {
-    res += "  ";
-  }
-  return res;
-}
+String _createIndent(num count) => '  ' * count;
