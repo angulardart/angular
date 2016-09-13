@@ -70,11 +70,11 @@ const controlGroupProvider =
     inputs: const ["name: ngControlGroup"],
     exportAs: "ngForm")
 class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
-  List<dynamic> _validators;
-  List<dynamic> _asyncValidators;
-  ControlContainer _parent;
+  final List<dynamic> _validators;
+  final List<dynamic> _asyncValidators;
+  final ControlContainer _parent;
   NgControlGroup(
-      @SkipSelf() ControlContainer this._parent,
+      @SkipSelf() this._parent,
       @Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
       @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators);
 
