@@ -68,23 +68,6 @@ class DebugDomRenderer extends DomRenderer {
     return nativeEl;
   }
 
-  dynamic createTemplateAnchor(
-      dynamic parentElement, RenderDebugInfo debugInfo) {
-    var comment = super.createTemplateAnchor(parentElement, debugInfo);
-    var debugEl =
-        new DebugNode(comment, getDebugNode(parentElement), debugInfo);
-    indexDebugNode(debugEl);
-    return comment;
-  }
-
-  dynamic createText(
-      dynamic parentElement, String value, RenderDebugInfo debugInfo) {
-    var text = super.createText(parentElement, value, debugInfo);
-    var debugEl = new DebugNode(text, getDebugNode(parentElement), debugInfo);
-    indexDebugNode(debugEl);
-    return text;
-  }
-
   projectNodes(dynamic parentElement, List<dynamic> nodes) {
     var debugParent = getDebugNode(parentElement);
     if (debugParent != null && debugParent is DebugElement) {

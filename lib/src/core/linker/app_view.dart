@@ -119,22 +119,49 @@ abstract class AppView<T> {
             givenProjectableNodes, this.componentType.slotCount);
         break;
       case ViewType.EMBEDDED:
-        context = this.declarationAppElement.parentView.context as T;
-        projectableNodes =
-            this.declarationAppElement.parentView.projectableNodes;
-        break;
+        return createEmbedded(givenProjectableNodes, rootSelectorOrNode);
       case ViewType.HOST:
-        context = null;
-        // Note: Don't ensure the slot count for the projectableNodes as
-        // we store them only for the contained component view (which will
-        // later check the slot count...)
-        projectableNodes = givenProjectableNodes;
-        break;
+        return createHost(givenProjectableNodes, rootSelectorOrNode);
     }
     this._hasExternalHostElement = rootSelectorOrNode != null;
     this.context = context;
     this.projectableNodes = projectableNodes;
     return this.createInternal(rootSelectorOrNode);
+  }
+
+  /// Builds a host view.
+  AppElement createHost(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      dynamic /* String | dynamic */ rootSelectorOrNode) {
+    assert(this.type == ViewType.HOST);
+    context = null;
+    // Note: Don't ensure the slot count for the projectableNodes as
+    // we store them only for the contained component view (which will
+    // later check the slot count...)
+    projectableNodes = givenProjectableNodes;
+    _hasExternalHostElement = rootSelectorOrNode != null;
+    return createInternal(rootSelectorOrNode);
+  }
+
+  /// Builds a nested embedded view.
+  AppElement createEmbedded(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      dynamic /* String | dynamic */ rootSelectorOrNode) {
+    projectableNodes = declarationAppElement.parentView.projectableNodes;
+    _hasExternalHostElement = rootSelectorOrNode != null;
+    context = declarationAppElement.parentView.context as T;
+    return createInternal(rootSelectorOrNode);
+  }
+
+  /// Builds a component view.
+  AppElement createComp(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      dynamic /* String | dynamic */ rootSelectorOrNode) {
+    projectableNodes =
+        ensureSlotCount(givenProjectableNodes, componentType.slotCount);
+    _hasExternalHostElement = rootSelectorOrNode != null;
+    context = declarationAppElement.component as T;
+    return createInternal(rootSelectorOrNode);
   }
 
   /// Returns the AppElement for the host element for ViewType.HOST.

@@ -42,7 +42,8 @@ import "view_compiler_utils.dart"
         createFlatArray,
         createDiTokenExpression,
         NAMESPACE_URIS,
-        createSetAttributeParams;
+        createSetAttributeParams,
+        TEMPLATE_COMMENT_TEXT;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";
@@ -55,32 +56,6 @@ class ViewCompileDependency {
   CompileDirectiveMetadata comp;
   CompileIdentifierMetadata factoryPlaceholder;
   ViewCompileDependency(this.comp, this.factoryPlaceholder);
-}
-
-num buildView(
-    CompileView view,
-    List<TemplateAst> template,
-    StylesCompileResult stylesCompileResult,
-    List<ViewCompileDependency> targetDependencies) {
-  var builderVisitor =
-      new ViewBuilderVisitor(view, targetDependencies, stylesCompileResult);
-  templateVisitAll(
-      builderVisitor,
-      template,
-      view.declarationElement.hasRenderNode
-          ? view.declarationElement.parent
-          : view.declarationElement);
-  return builderVisitor.nestedViewCount;
-}
-
-finishView(CompileView view, List<o.Statement> targetStatements) {
-  view.afterNodes();
-  createViewTopLevelStmts(view, targetStatements);
-  view.nodes.forEach((node) {
-    if (node is CompileElement && node.embeddedView != null) {
-      finishView(node.embeddedView, targetStatements);
-    }
-  });
 }
 
 class ViewBuilderVisitor implements TemplateAstVisitor {
@@ -384,8 +359,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             .map((nodes) => createFlatArray(nodes))
             .toList());
       }
-      view.createMethod.addStmt(compViewExpr
-          .callMethod("create", [codeGenContentNodes, o.NULL_EXPR]).toStmt());
+
+      String createMethod;
+      if (component == null) {
+        createMethod = 'createHost';
+      } else {
+        createMethod = 'createComp';
+      }
+      view.createMethod.addStmt(compViewExpr.callMethod(
+          createMethod, [codeGenContentNodes, o.NULL_EXPR]).toStmt());
     }
     return null;
   }
@@ -404,17 +386,28 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
     CompileElement parent = context;
     var nodeIndex = this.view.nodes.length;
-    var fieldName = '_anchor_${ nodeIndex}' '';
+    var fieldName = '_anchor_${nodeIndex}';
     this.view.fields.add(new o.ClassField(
         fieldName,
         o.importType(view.genConfig.renderTypes.renderComment),
         [o.StmtModifier.Private]));
-    var debugContextExpr = view.createMethod.resetDebugInfoExpr(nodeIndex, ast);
-    this.view.createMethod.addStmt(o.THIS_EXPR
-        .prop(fieldName)
-        .set(ViewProperties.renderer.callMethod("createTemplateAnchor",
-            [this._getParentRenderNode(parent), debugContextExpr]))
-        .toStmt());
+    // Create a comment to serve as anchor for template.
+    var anchorFieldExpr = new o.ReadClassMemberExpr(fieldName);
+    var createAnchorNodeExpr = new o.WriteClassMemberExpr(
+        fieldName,
+        o
+            .importExpr(Identifiers.HTML_COMMENT_NODE)
+            .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
+    view.createMethod.addStmt(createAnchorNodeExpr.toStmt());
+    var addCommentStmt = _getParentRenderNode(parent)
+        .callMethod('append', [anchorFieldExpr], checked: true)
+        .toStmt();
+
+    view.createMethod.addStmt(addCommentStmt);
+
+    view.createMethod
+        .addStmt(createDbgElementCall(anchorFieldExpr, nodeIndex, ast));
+
     var renderNode = o.THIS_EXPR.prop(fieldName);
     var templateVariableBindings = ast.variables
         .map((VariableAst varAst) => [
@@ -447,8 +440,18 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         this.view.viewIndex + this.nestedViewCount,
         compileElement,
         templateVariableBindings);
-    this.nestedViewCount += buildView(embeddedView, ast.children,
-        stylesCompileResult, this.targetDependencies);
+
+    // Create a visitor for embedded view and visit all nodes.
+    var embeddedViewVisitor = new ViewBuilderVisitor(
+        embeddedView, targetDependencies, stylesCompileResult);
+    templateVisitAll(
+        embeddedViewVisitor,
+        ast.children,
+        embeddedView.declarationElement.hasRenderNode
+            ? embeddedView.declarationElement.parent
+            : embeddedView.declarationElement);
+    nestedViewCount += embeddedViewVisitor.nestedViewCount;
+
     compileElement.beforeChildren();
     this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     compileElement.afterChildren(0);
@@ -531,44 +534,6 @@ List<List<String>> mapToKeyValueArray(Map<String, String> data) {
     keyValueArray.add([entry[0], entry[1]]);
   });
   return keyValueArray;
-}
-
-createViewTopLevelStmts(CompileView view, List<o.Statement> targetStatements) {
-  o.Expression nodeDebugInfosVar = o.NULL_EXPR;
-  if (view.genConfig.genDebugInfo) {
-    // Create top level node debug info.
-    // Example:
-    // const List<StaticNodeDebugInfo> nodeDebugInfos_MyAppComponent0 = const [
-    //     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-    //     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-    //     const StaticNodeDebugInfo(const [
-    //       import1.AcxDarkTheme,
-    //       import2.MaterialButtonComponent,
-    //       import3.ButtonDirective
-    //     ]
-    //     ,import2.MaterialButtonComponent,const <String, dynamic>{}),
-    // const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-    // ...
-    nodeDebugInfosVar = o.variable(
-        'nodeDebugInfos_${view.component.type.name}${view.viewIndex}');
-    targetStatements.add(((nodeDebugInfosVar as o.ReadVarExpr))
-        .set(o.literalArr(
-            view.nodes.map(createStaticNodeDebugInfo).toList(),
-            new o.ArrayType(new o.ExternalType(Identifiers.StaticNodeDebugInfo),
-                [o.TypeModifier.Const])))
-        .toDeclStmt(null, [o.StmtModifier.Final]));
-  }
-  String renderTypeVarName = 'renderType_${view.component.type.name}';
-  o.ReadVarExpr renderCompTypeVar = o.variable(renderTypeVarName);
-  // If we are compiling root view, create a render type for the component.
-  // Example: RenderComponentType renderType_MaterialButtonComponent;
-  if (identical(view.viewIndex, 0)) {
-    targetStatements.add(new o.DeclareVarStmt(renderTypeVarName, null,
-        o.importType(Identifiers.RenderComponentType)));
-  }
-  var viewClass = createViewClass(view, renderCompTypeVar, nodeDebugInfosVar);
-  targetStatements.add(viewClass);
-  targetStatements.add(createViewFactory(view, viewClass, renderCompTypeVar));
 }
 
 o.Expression createStaticNodeDebugInfo(CompileNode node) {

@@ -5,7 +5,8 @@ import 'package:angular2/src/core/render/api.dart'
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/facade/lang.dart' show Json;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
-
+import 'package:angular2/src/compiler/view_compiler/view_compiler_utils.dart'
+    show TEMPLATE_COMMENT_TEXT, TEMPLATE_BINDINGS_EXP;
 import 'dom_tokens.dart' show DOCUMENT;
 import 'events/event_manager.dart' show EventManager;
 import 'shared_styles_host.dart';
@@ -16,8 +17,6 @@ const NAMESPACE_URIS = const {
   'svg': 'http://www.w3.org/2000/svg',
   'xhtml': 'http://www.w3.org/1999/xhtml'
 };
-const TEMPLATE_COMMENT_TEXT = 'template bindings={}';
-var TEMPLATE_BINDINGS_EXP = new RegExp(r'^template bindings=(.*)$');
 
 @Injectable()
 class DomRootRenderer implements RootRenderer {
@@ -98,25 +97,6 @@ class DomRenderer implements Renderer {
     }
     DomRootRenderer.isDirty = true;
     return nodesParent;
-  }
-
-  dynamic createTemplateAnchor(
-      dynamic parentElement, RenderDebugInfo debugInfo) {
-    var comment = DOM.createComment(TEMPLATE_COMMENT_TEXT);
-    if (parentElement != null) {
-      DOM.appendChild(parentElement, comment);
-    }
-    return comment;
-  }
-
-  dynamic createText(
-      dynamic parentElement, String value, RenderDebugInfo debugInfo) {
-    var node = DOM.createTextNode(value);
-    if (parentElement != null) {
-      DOM.appendChild(parentElement, node);
-    }
-    DomRootRenderer.isDirty = true;
-    return node;
   }
 
   projectNodes(dynamic parentElement, List<dynamic> nodes) {

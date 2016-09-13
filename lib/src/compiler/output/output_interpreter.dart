@@ -614,6 +614,7 @@ void _initializeInterpreter() {
       flattenNestedViewRenderNodes;
   Identifiers.ComponentFactory.runtime = ComponentFactory;
   Identifiers.QueryList.runtime = QueryList;
+  Identifiers.HTML_COMMENT_NODE.runtime = Comment;
   Identifiers.HTML_TEXT_NODE.runtime = Text;
   Identifiers.HTML_DOCUMENT.runtime = document;
 }

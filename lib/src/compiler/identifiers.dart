@@ -245,6 +245,8 @@ class Identifiers {
   ];
   // Runtime is initialized by output interpreter. Compiler executes in VM and
   // can't import dart:html to initialize here.
+  static var HTML_COMMENT_NODE =
+      new CompileIdentifierMetadata(name: "Comment", moduleUrl: "dart:html");
   static var HTML_TEXT_NODE =
       new CompileIdentifierMetadata(name: "Text", moduleUrl: "dart:html");
   static var HTML_DOCUMENT =

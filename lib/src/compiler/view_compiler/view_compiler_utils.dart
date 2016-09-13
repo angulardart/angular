@@ -16,6 +16,11 @@ const NAMESPACE_URIS = const {
   'xhtml': 'http://www.w3.org/1999/xhtml'
 };
 
+// Template Anchor comment.
+const TEMPLATE_COMMENT_TEXT = 'template bindings={}';
+// RegExp to match anchor comment when logging bindings for debugging.
+var TEMPLATE_BINDINGS_EXP = new RegExp(r'^template bindings=(.*)$');
+
 // Creates method parameters list for AppView set attribute calls.
 List<o.Expression> createSetAttributeParams(
     String fieldName, String attrNs, String attrName, o.Expression valueExpr) {
@@ -74,7 +79,7 @@ o.Expression injectFromViewParentInjector(
 
 String getViewFactoryName(
     CompileDirectiveMetadata component, num embeddedTemplateIndex) {
-  return '''viewFactory_${ component . type . name}${ embeddedTemplateIndex}''';
+  return '''viewFactory_${component.type.name}${embeddedTemplateIndex}''';
 }
 
 o.Expression createDiTokenExpression(CompileTokenMetadata token) {

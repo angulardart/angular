@@ -98,10 +98,6 @@ abstract class Renderer {
   dynamic createElement(
       dynamic parentElement, String name, RenderDebugInfo debugInfo);
   dynamic createViewRoot(dynamic hostElement);
-  dynamic createTemplateAnchor(
-      dynamic parentElement, RenderDebugInfo debugInfo);
-  dynamic createText(
-      dynamic parentElement, String value, RenderDebugInfo debugInfo);
   void projectNodes(dynamic parentElement, List<dynamic> nodes);
   void attachViewAfter(dynamic node, List<dynamic> viewRootNodes);
   void detachView(List<dynamic> viewRootNodes);

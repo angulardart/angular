@@ -5,7 +5,7 @@ import 'package:angular2/src/core/change_detection/change_detection.dart'
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular2/src/debug/debug_node.dart'
-    show DebugElement, getDebugNode, indexDebugNode;
+    show DebugElement, DebugNode, getDebugNode, indexDebugNode;
 import 'package:angular2/src/core/profile/profile.dart'
     show wtfCreateScope, wtfLeave, WtfScopeFn;
 import 'package:angular2/src/debug/debug_context.dart'
@@ -40,6 +40,7 @@ class DebugAppView<T> extends AppView<T> {
       : super(clazz, componentType, type, locals, viewUtils, parentInjector,
             declarationAppElement, cdMode);
 
+  @override
   AppElement create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       selector) {
@@ -47,6 +48,34 @@ class DebugAppView<T> extends AppView<T> {
     this._resetDebug();
     try {
       return super.create(givenProjectableNodes, rootSelector);
+    } catch (e, e_stack) {
+      this._rethrowWithContext(e, e_stack);
+      rethrow;
+    }
+  }
+
+  @override
+  AppElement createComp(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      selector) {
+    String rootSelector = selector;
+    this._resetDebug();
+    try {
+      return super.createComp(givenProjectableNodes, rootSelector);
+    } catch (e, e_stack) {
+      this._rethrowWithContext(e, e_stack);
+      rethrow;
+    }
+  }
+
+  @override
+  AppElement createHost(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      selector) {
+    String rootSelector = selector;
+    this._resetDebug();
+    try {
+      return super.createHost(givenProjectableNodes, rootSelector);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
@@ -124,12 +153,20 @@ class DebugAppView<T> extends AppView<T> {
   void dbgElm(element, num nodeIndex, num rowNum, num colNum) {
     var debugInfo = new DebugContext<T>(this, nodeIndex, rowNum, colNum);
     if (element is Text) return;
-    var debugEl = new DebugElement(
-        element,
-        element.parentNode == null ? null : getDebugNode(element.parentNode),
-        debugInfo);
-    debugEl.name = element is Text ? 'text' : element.tagName.toLowerCase();
-    _currentDebugContext = debugInfo;
+    var debugEl;
+    if (element is Comment) {
+      debugEl =
+          new DebugNode(element, getDebugNode(element.parentNode), debugInfo);
+    } else {
+      debugEl = new DebugElement(
+          element,
+          element.parentNode == null ? null : getDebugNode(element.parentNode),
+          debugInfo);
+
+      debugEl.name = element is Text ? 'text' : element.tagName.toLowerCase();
+
+      _currentDebugContext = debugInfo;
+    }
     indexDebugNode(debugEl);
   }
 

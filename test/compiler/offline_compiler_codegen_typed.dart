@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'offline_compiler_compa.css.shim.dart' as import0;
 import 'package:angular2/src/debug/debug_context.dart' as import1;
 import 'package:angular2/src/core/render/api.dart' as import2;
@@ -39,7 +40,9 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
   import7.AppElement createInternal(dynamic rootSelector) {
     final parentRenderNode =
         this.initViewRoot(this.declarationAppElement.nativeElement);
-    this._text_0 = this.renderer.createText(parentRenderNode, '', dbg(0, 0, 0));
+    _text_0 = new Text('');
+    parentRenderNode.append(_text_0);
+    dbgElm(_text_0, 0, 0, 0);
     this._expr_0 = import9.uninitialized;
     this.init([], [this._text_0], []);
     return null;
