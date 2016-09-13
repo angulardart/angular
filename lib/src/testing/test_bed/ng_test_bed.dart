@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:angular2/angular2.dart';
 
 import 'flatten_providers.dart';
+import 'ng_dom_stabilizer.dart';
 import 'test_injector.dart';
 
 // Tracks the currently active test root to avoid multiple tests running.
@@ -46,12 +47,15 @@ class NgTestBed<T> {
   // Root-level DI providers that are used when creating an Injector.
   final List<Object> _providers;
 
+  // Types that implement NgDomStabilizer that are used to stabilize the DOM.
+  final List<Type> _stabilizers;
+
   /// Create a new empty [NgTestBed].
   factory NgTestBed() {
-    return new NgTestBed<T>._(<Provider>[]);
+    return new NgTestBed<T>._(<Provider>[], <Type>[]);
   }
 
-  NgTestBed._(this._providers) {
+  NgTestBed._(this._providers, this._stabilizers) {
     if (T == dynamic) {
       throw new UnsupportedError('Explicit component type T required.');
     }
@@ -65,29 +69,51 @@ class NgTestBed<T> {
   ///
   /// __Example use__:
   ///     ngTestBed = ngTestBed.addProviders([
-  ///       const Provide(Foo, useClass: StubFoo)
+  ///       const Provide(Foo, useClass: StubFoo),
   ///     ])
   NgTestBed<T> addProviders(Iterable<Object> providers) {
-    var flattenedProviders = new List<Object>.from(_providers);
-    flattenedProviders.addAll(flattenProviders(providers));
-    flattenedProviders = new List<Object>.unmodifiable(flattenedProviders);
-    return fork(providers: providers);
+    return fork(
+        providers: new List<Object>.unmodifiable(
+            new List<Object>.from(_providers)
+              ..addAll(flattenProviders(providers))));
+  }
+
+  /// Creates a new instance of [NgTestBed] with [stabilizers] added.
+  ///
+  /// __Example use__:
+  ///     ngTestBed = ngTestBed.addStabilizers([
+  ///       NgZoneStabilizer
+  ///     ])
+  NgTestBed<T> addStabilizers(Iterable<Type> stabilizers) {
+    var flattenedProviders = new List<Object>.unmodifiable(
+        new List<Object>.from(_providers)..addAll(stabilizers));
+    var allStabilizers = new List<Type>.unmodifiable(
+        new List<Type>.from(_stabilizers)..addAll(stabilizers));
+    return fork(providers: flattenedProviders, stabilizers: allStabilizers);
   }
 
   /// Returns a [Future] that completes with a handle to a new test application.
-  ///
-  ///
   Future<NgTestRoot<T>> create() {
     // Purposefully does not use async/await, due to that starting an additional
     // microtask at the beginning. We want this assert to happen synchronously
     // to immediately catch an error.
     _assertNoTestRunning();
     var injector = new TestInjector(_providers);
-    return injector.loadComponent(T).then((component) {
+    return injector.loadComponent(T).then((component) async {
       // Check one more time, because someone could have forgot to 'await' this
       // create statement and a test started since the last asynchronous event.
       _assertNoTestRunning();
-      return _activeTest = new NgTestRoot<T>._(component, injector);
+      // The component should be given in an initialized state by default.
+      var domStabilizer = new NgDomStabilizer.all(
+          _stabilizers.map/*<NgDomStabilizer>*/(
+              (s) => component.injector.get(s) as NgDomStabilizer));
+      var root = _activeTest = new NgTestRoot<T>._(
+        component,
+        domStabilizer,
+        injector,
+      );
+      await root.apply();
+      return root;
     });
   }
 
@@ -95,8 +121,11 @@ class NgTestBed<T> {
   ///
   /// __Example use__:
   ///     ngTestBed = ngTestBed.fork(providers: [ ... ]);
-  NgTestBed<T> fork({List<Object> providers}) {
-    return new NgTestBed<T>._(providers ?? _providers);
+  NgTestBed<T> fork({List<Object> providers, List<Type> stabilizers}) {
+    return new NgTestBed<T>._(
+      providers ?? _providers,
+      stabilizers ?? _stabilizers,
+    );
   }
 }
 
@@ -110,14 +139,34 @@ Future<Null> disposeActiveTestIfAny() => _activeTest?.dispose();
 /// A single [NgTestRoot] correlates to a running production application.
 class NgTestRoot<T> {
   final ComponentRef _componentRef;
+  final NgDomStabilizer _domStabilizer;
   final TestInjector _testInjector;
 
   // Avoids accidentally disposing a test multiple times.
   bool _wasDisposed = false;
 
-  NgTestRoot._(this._componentRef, this._testInjector) {
-    // TODO(matanl): Remove when stabilization API is implemented.
-    _componentRef.changeDetectorRef.detectChanges();
+  NgTestRoot._(this._componentRef, this._domStabilizer, this._testInjector);
+
+  /// Returns a [Future] that completes when the DOM is likely stable.
+  ///
+  /// This may be used to wait before asserting the state of DOM, for example:
+  ///     assertButton(ButtonElement button, NgTestRoot test) async {
+  ///       expect(button.text, 'Yes');
+  ///       await(test.apply(button.click));
+  ///       expect(button.text, 'No');
+  ///     }
+  ///
+  /// A [fn] may be supplied in order to run within the context of the test
+  /// application, which may be necessary when changing the state or triggering
+  /// callbacks that impact the Zone or other stabilization methods.
+  ///
+  /// See [NgDomStabilizer] for more details.
+  Future<Null> apply([void fn()]) async {
+    if (fn != null) {
+      await _domStabilizer.execute(fn);
+    } else {
+      await _domStabilizer.stabilize();
+    }
   }
 
   /// Returns a [Future] that completes when the application is destroyed.

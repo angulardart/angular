@@ -183,11 +183,10 @@ abstract class ApplicationRef {
   /// initializers are done.
   Future<dynamic> waitForAsyncInitializers();
 
-  /// Runs the given callback in the zone and returns the result of the
-  /// callback.
+  /// Runs the given [callback] in the zone and returns the result of the call.
   ///
   /// Exceptions will be forwarded to the ExceptionHandler and rethrown.
-  dynamic run(Function callback);
+  /*=R*/ run/*<R>*/(/*=R*/ callback());
 
   /// Bootstrap a new component at the root level of the application.
   ///
@@ -304,32 +303,10 @@ class ApplicationRefImpl extends ApplicationRef {
 
   Future<dynamic> waitForAsyncInitializers() => _asyncInitDonePromise;
 
-  dynamic run(Function callback) {
-    var zone = injector.get(NgZone);
-    var result;
-    // Note: Don't use zone.runGuarded as we want to know about the thrown
-    // exception!
-    //
-    // Note: the completer needs to be created outside of `zone.run` as Dart
-    // swallows rejected promises via the onError callback of the promise.
-    var completer = new Completer();
-    zone.run(() {
-      try {
-        result = callback();
-        if (result is Future) {
-          result.then((ref) {
-            completer.complete(ref);
-          }, onError: (err, stackTrace) {
-            completer.completeError(err, stackTrace);
-            _exceptionHandler.call(err, stackTrace);
-          });
-        }
-      } catch (e, e_stack) {
-        _exceptionHandler.call(e, e_stack);
-        rethrow;
-      }
-    });
-    return result is Future ? completer.future : result;
+  @override
+  /*=R*/ run/*<R>*/(/*=R*/ callback()) {
+    NgZone zone = injector.get(NgZone);
+    return zone.run/*<R>*/(callback);
   }
 
   ComponentRef bootstrap(ComponentFactory componentFactory) {

@@ -91,19 +91,6 @@ main() {
                 throwsWith("Test"));
           });
         });
-        test(
-            'should return a promise with rejected errors '
-            'even if the exceptionHandler is not rethrowing', () async {
-          return inject([AsyncTestCompleter, Injector],
-              (AsyncTestCompleter completer, injector) {
-            var ref = createApplication([]);
-            var promise = ref.run(() => new Future.error("Test"));
-            promise.catchError((e) {
-              expect(e, "Test");
-              completer.done();
-            });
-          });
-        });
       });
     });
     group("coreLoadAndBootstrap", () {
