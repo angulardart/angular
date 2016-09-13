@@ -1,14 +1,14 @@
 name: angular2
-version: 2.0.0-beta.21
+version: 2.0.0-beta.22
 author: Angular Dart Team <angular2@dartlang.org>
 description: Framework for modern web applications
 homepage: 'https://github.com/dart-lang/angular2'
 environment:
-  sdk: '>=1.16.0 <2.0.0'
+  sdk: '>=1.19.0 <2.0.0'
 dependencies:
   analyzer: '>=0.27.0 <0.28.0'
   barback: ^0.15.2+2
-  build: ^0.3.0
+  build: '>=0.3.0 <0.5.0'
   dart_style: '>=0.1.8 <0.3.0'
   glob: ^1.0.0
   html: '>=0.12.0 <0.14.0'
