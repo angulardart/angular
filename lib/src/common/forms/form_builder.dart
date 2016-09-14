@@ -28,10 +28,10 @@ import "model.dart" as model_module;
 ///
 ///   App(FormBuilder builder) {
 ///     this.loginForm = builder.group({
-///       login: ["", Validators.required],
-///       passwordRetry: builder.group({
-///         password: ["", Validators.required],
-///         passwordConfirmation: ["", Validators.required, asyncValidator]
+///       "login": ["", Validators.required],
+///       "passwordRetry": builder.group({
+///         "password": ["", Validators.required],
+///         "passwordConfirmation": ["", Validators.required, asyncValidator]
 ///       })
 ///     });
 ///   }
