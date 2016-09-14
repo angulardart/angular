@@ -1,12 +1,14 @@
 import "dart:async";
 
-import "package:angular2/src/core/di.dart" show Injectable;
+import "package:angular2/src/core/di.dart" show Injectable, Injector;
 import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentFactory;
+    show ComponentFactory, NgViewFactory;
+import "package:angular2/src/core/linker/app_element.dart";
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
+import "package:angular2/src/core/linker/view_utils.dart";
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
@@ -125,7 +127,7 @@ class RuntimeCompiler implements ComponentResolver {
             pipes,
             compMeta.type.name);
         var childPromises = <Future>[];
-        compiledTemplate.init(this._compileComponent(
+        compiledTemplate.init(_compileComponentViewFactory(
             compMeta,
             parsedTemplate,
             resolvedStyles.compileResult,
@@ -142,7 +144,7 @@ class RuntimeCompiler implements ComponentResolver {
     return compiledTemplate;
   }
 
-  Function _compileComponent(
+  NgViewFactory _compileComponentViewFactory(
       CompileDirectiveMetadata compMeta,
       List<TemplateAst> parsedTemplate,
       StylesCompileResult stylesCompileResult,
@@ -170,16 +172,21 @@ class RuntimeCompiler implements ComponentResolver {
       childCompilingComponentsPath.add(childCacheKey);
       var childComp = _loadAndCompileComponent(dep.comp.type.runtime, dep.comp,
           childViewDirectives, childViewPipes, childCompilingComponentsPath);
+      // ComponentFactory init may not have been called yet, so assign
+      // proxyViewFactory that will forward calls correctly after
+      // initialization.
       dep.factoryPlaceholder.runtime = childComp.proxyViewFactory;
-      dep.factoryPlaceholder.name =
-          '''viewFactory_${ dep . comp . type . name}''';
+      dep.factoryPlaceholder.name = 'viewFactory_${dep.comp.type.name}';
       if (!childIsRecursive) {
         // Only wait for a child if it is not a cycle
         childPromises.add(this._compiledTemplateDone[childCacheKey]);
       }
     });
-    return interpretStatements(compileResult.statements,
-        compileResult.viewFactoryVar, new InterpretiveAppViewInstanceFactory());
+    // Returns NgViewFactory that interprets viewFactoryVar for the AppView.
+    return interpretStatements(
+        compileResult.statements,
+        compileResult.viewFactoryVar,
+        new InterpretiveAppViewInstanceFactory()) as NgViewFactory;
   }
 
   Future<_ResolvedStyles> _compileComponentStyles(
@@ -231,14 +238,19 @@ class RuntimeCompiler implements ComponentResolver {
 }
 
 class CompiledTemplate {
-  Function viewFactory;
-  Function proxyViewFactory;
+  NgViewFactory viewFactory;
+
+  /// Proxy to viewFactory that will eventually be available when viewFactory
+  /// gets initialized.
+  NgViewFactory proxyViewFactory;
+
   CompiledTemplate() {
-    this.proxyViewFactory = (viewUtils, childInjector, contextEl) =>
-        this.viewFactory(viewUtils, childInjector, contextEl);
+    proxyViewFactory =
+        (ViewUtils viewUtils, Injector childInjector, AppElement contextEl) =>
+            viewFactory(viewUtils, childInjector, contextEl);
   }
-  init(Function viewFactory) {
-    this.viewFactory = viewFactory;
+  void init(NgViewFactory factory) {
+    viewFactory = factory;
   }
 }
 

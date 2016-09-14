@@ -1,21 +1,22 @@
 @TestOn('browser && !js')
 library angular2.test.core.linker.dynamic_component_loader_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/core.dart" show Injector, ViewContainerRef, ViewChild;
-import "package:angular2/src/core/metadata.dart" show Component;
-import "package:angular2/src/core/linker/dynamic_component_loader.dart"
+import 'dart:html';
+import 'package:angular2/testing_internal.dart';
+import 'package:angular2/core.dart' show Injector, ViewContainerRef, ViewChild;
+import 'package:angular2/src/core/metadata.dart' show Component;
+import 'package:angular2/src/core/linker/dynamic_component_loader.dart'
     show DynamicComponentLoader;
-import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/core/linker/element_ref.dart' show ElementRef;
+import 'package:angular2/src/platform/dom/dom_tokens.dart' show DOCUMENT;
+import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:test/test.dart';
 
 main() {
-  group("DynamicComponentLoader", () {
-    group("loading next to a location", () {
-      test("should work", () async {
+  group('DynamicComponentLoader', () {
+    group('loading next to a location', () {
+      test('should work', () async {
         return inject(
             [DynamicComponentLoader, TestComponentBuilder, AsyncTestCompleter],
             (DynamicComponentLoader loader, TestComponentBuilder tcb,
@@ -27,13 +28,13 @@ main() {
                     DynamicallyLoaded, tc.componentInstance.viewContainerRef)
                 .then((ref) {
               expect(tc.debugElement.nativeElement,
-                  hasTextContent("DynamicallyLoaded;"));
+                  hasTextContent('DynamicallyLoaded;'));
               completer.done();
             });
           });
         });
       });
-      test("should return a disposable component ref", () async {
+      test('should return a disposable component ref', () async {
         return inject(
             [DynamicComponentLoader, TestComponentBuilder, AsyncTestCompleter],
             (DynamicComponentLoader loader, TestComponentBuilder tcb,
@@ -49,17 +50,17 @@ main() {
                       DynamicallyLoaded2, tc.componentInstance.viewContainerRef)
                   .then((ref2) {
                 expect(tc.debugElement.nativeElement,
-                    hasTextContent("DynamicallyLoaded;DynamicallyLoaded2;"));
+                    hasTextContent('DynamicallyLoaded;DynamicallyLoaded2;'));
                 ref2.destroy();
                 expect(tc.debugElement.nativeElement,
-                    hasTextContent("DynamicallyLoaded;"));
+                    hasTextContent('DynamicallyLoaded;'));
                 completer.done();
               });
             });
           });
         });
       });
-      test("should update host properties", () async {
+      test('should update host properties', () async {
         return inject(
             [DynamicComponentLoader, TestComponentBuilder, AsyncTestCompleter],
             (DynamicComponentLoader loader, TestComponentBuilder tcb,
@@ -70,18 +71,18 @@ main() {
                 .loadNextToLocation(DynamicallyLoadedWithHostProps,
                     tc.componentInstance.viewContainerRef)
                 .then((ref) {
-              ref.instance.id = "new value";
+              ref.instance.id = 'new value';
               tc.detectChanges();
               var newlyInsertedElement =
                   tc.debugElement.childNodes[1].nativeNode;
-              expect(((newlyInsertedElement as dynamic)).id, "new value");
+              expect(((newlyInsertedElement as dynamic)).id, 'new value');
               completer.done();
             });
           });
         });
       });
       test(
-          "should leave the view tree in a consistent state if hydration fails",
+          'should leave the view tree in a consistent state if hydration fails',
           () async {
         return inject(
             [DynamicComponentLoader, TestComponentBuilder, AsyncTestCompleter],
@@ -93,7 +94,7 @@ main() {
                 .loadNextToLocation(DynamicallyLoadedThrows,
                     tc.componentInstance.viewContainerRef)
                 .catchError((error) {
-              expect(error.message, contains("ThrownInConstructor"));
+              expect(error.message, contains('ThrownInConstructor'));
               // should not throw.
               tc.detectChanges();
               completer.done();
@@ -102,7 +103,7 @@ main() {
           });
         });
       });
-      test("should allow to pass projectable nodes", () async {
+      test('should allow to pass projectable nodes', () async {
         return inject(
             [DynamicComponentLoader, TestComponentBuilder, AsyncTestCompleter],
             (DynamicComponentLoader loader, TestComponentBuilder tcb,
@@ -111,18 +112,18 @@ main() {
             tc.detectChanges();
             loader.loadNextToLocation(DynamicallyLoadedWithNgContent,
                 tc.componentInstance.viewContainerRef, null, [
-              [DOM.createTextNode("hello")]
+              [DOM.createTextNode('hello')]
             ]).then((ref) {
               tc.detectChanges();
               var newlyInsertedElement =
                   tc.debugElement.childNodes[1].nativeNode;
-              expect(newlyInsertedElement, hasTextContent("dynamic(hello)"));
+              expect(newlyInsertedElement, hasTextContent('dynamic(hello)'));
               completer.done();
             });
           });
         });
       });
-      test("should not throw if not enough projectable nodes are passed in",
+      test('should not throw if not enough projectable nodes are passed in',
           () async {
         return inject(
             [DynamicComponentLoader, TestComponentBuilder, AsyncTestCompleter],
@@ -138,40 +139,40 @@ main() {
         });
       });
     });
-    group("loadAsRoot", () {
-      test("should allow to create, update and destroy components", () async {
+    group('loadAsRoot', () {
+      test('should allow to create, update and destroy components', () async {
         return inject(
             [AsyncTestCompleter, DynamicComponentLoader, DOCUMENT, Injector],
             (AsyncTestCompleter completer, DynamicComponentLoader loader, doc,
                 Injector injector) {
-          var rootEl = createRootElement(doc, "child-cmp");
+          var rootEl = createRootElement(doc, 'child-cmp');
           DOM.appendChild(doc.body, rootEl);
-          loader.loadAsRoot(ChildComp, null, injector).then((componentRef) {
+          loader.loadAsRoot(ChildComp, injector).then((componentRef) {
             var el = new ComponentFixture(componentRef);
             expect(rootEl.parentNode, doc.body);
             el.detectChanges();
-            expect(rootEl, hasTextContent("hello"));
-            componentRef.instance.ctxProp = "new";
+            expect(rootEl, hasTextContent('hello'));
+            componentRef.instance.ctxProp = 'new';
             el.detectChanges();
-            expect(rootEl, hasTextContent("new"));
+            expect(rootEl, hasTextContent('new'));
             componentRef.destroy();
             expect(rootEl.parentNode, isNull);
             completer.done();
           });
         });
       });
-      test("should allow to pass projectable nodes", () async {
+      test('should allow to pass projectable nodes', () async {
         return inject(
             [AsyncTestCompleter, DynamicComponentLoader, DOCUMENT, Injector],
             (AsyncTestCompleter completer, DynamicComponentLoader loader, doc,
                 Injector injector) {
-          var rootEl = createRootElement(doc, "dummy");
+          var rootEl = createRootElement(doc, 'dummy');
           DOM.appendChild(doc.body, rootEl);
-          loader.loadAsRoot(
-              DynamicallyLoadedWithNgContent, null, injector, null, [
-            [DOM.createTextNode("hello")]
-          ]).then((_) {
-            expect(rootEl, hasTextContent("dynamic(hello)"));
+          loader.loadAsRoot(DynamicallyLoadedWithNgContent, injector,
+              projectableNodes: [
+                [new Text('hello')]
+              ]).then((_) {
+            expect(rootEl, hasTextContent('dynamic(hello)'));
             completer.done();
           });
         });
@@ -198,52 +199,52 @@ _Predicate<DebugElement> filterByDirective(Type type) {
   };
 }
 
-@Component(selector: "child-cmp", template: "{{ctxProp}}")
+@Component(selector: 'child-cmp', template: '{{ctxProp}}')
 class ChildComp {
   ElementRef elementRef;
   String ctxProp;
   ChildComp(this.elementRef) {
-    this.ctxProp = "hello";
+    this.ctxProp = 'hello';
   }
 }
 
-@Component(selector: "dummy", template: "DynamicallyLoaded;")
+@Component(selector: 'dummy', template: 'DynamicallyLoaded;')
 class DynamicallyLoaded {}
 
-@Component(selector: "dummy", template: "DynamicallyLoaded;")
+@Component(selector: 'dummy', template: 'DynamicallyLoaded;')
 class DynamicallyLoadedThrows {
   DynamicallyLoadedThrows() {
-    throw new BaseException("ThrownInConstructor");
+    throw new BaseException('ThrownInConstructor');
   }
 }
 
-@Component(selector: "dummy", template: "DynamicallyLoaded2;")
+@Component(selector: 'dummy', template: 'DynamicallyLoaded2;')
 class DynamicallyLoaded2 {}
 
 @Component(
-    selector: "dummy",
-    host: const {"[id]": "id"},
-    template: "DynamicallyLoadedWithHostProps;")
+    selector: 'dummy',
+    host: const {'[id]': 'id'},
+    template: 'DynamicallyLoadedWithHostProps;')
 class DynamicallyLoadedWithHostProps {
   String id;
   DynamicallyLoadedWithHostProps() {
-    this.id = "default";
+    this.id = 'default';
   }
 }
 
-@Component(selector: "dummy", template: "dynamic(<ng-content></ng-content>)")
+@Component(selector: 'dummy', template: 'dynamic(<ng-content></ng-content>)')
 class DynamicallyLoadedWithNgContent {
   String id;
   DynamicallyLoadedWithNgContent() {
-    this.id = "default";
+    this.id = 'default';
   }
 }
 
 @Component(
-    selector: "my-comp", directives: const [], template: "<div #loc></div>")
+    selector: 'my-comp', directives: const [], template: '<div #loc></div>')
 class MyComp {
   bool ctxBoolProp;
-  @ViewChild("loc", read: ViewContainerRef)
+  @ViewChild('loc', read: ViewContainerRef)
   ViewContainerRef viewContainerRef;
   MyComp() {
     this.ctxBoolProp = false;

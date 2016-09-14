@@ -79,26 +79,6 @@ class DomRenderer implements Renderer {
     return el;
   }
 
-  dynamic createViewRoot(dynamic hostElement) {
-    var nodesParent;
-    if (identical(componentProto.encapsulation, ViewEncapsulation.Native)) {
-      nodesParent = DOM.createShadowRoot(hostElement);
-      sharedStylesHost.addHost(nodesParent);
-      List<String> styles = componentProto.styles;
-      int styleCount = styles.length;
-      for (var i = 0; i < styleCount; i++) {
-        DOM.appendChild(nodesParent, DOM.createStyleElement(styles[i]));
-      }
-    } else {
-      if (componentProto.hostAttr != null) {
-        DOM.setAttribute(hostElement, componentProto.hostAttr, '');
-      }
-      nodesParent = hostElement;
-    }
-    DomRootRenderer.isDirty = true;
-    return nodesParent;
-  }
-
   projectNodes(dynamic parentElement, List<dynamic> nodes) {
     if (parentElement == null) return;
     appendNodes(parentElement, nodes);

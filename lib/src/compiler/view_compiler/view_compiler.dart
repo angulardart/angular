@@ -94,18 +94,18 @@ class ViewCompiler {
     targetStatements.add(createViewFactory(view, viewClass, renderCompTypeVar));
   }
 
-  // Create top level node debug info.
-  // Example:
-  // const List<StaticNodeDebugInfo> nodeDebugInfos_MyAppComponent0 = const [
-  //     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-  //     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-  //     const StaticNodeDebugInfo(const [
-  //       import1.AcxDarkTheme,
-  //       import2.MaterialButtonComponent,
-  //       import3.ButtonDirective
-  //     ]
-  //     ,import2.MaterialButtonComponent,const <String, dynamic>{}),
-  // const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
+  /// Create top level node debug info.
+  /// Example:
+  /// const List<StaticNodeDebugInfo> nodeDebugInfos_MyAppComponent0 = const [
+  ///     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
+  ///     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
+  ///     const StaticNodeDebugInfo(const [
+  ///       import1.AcxDarkTheme,
+  ///       import2.MaterialButtonComponent,
+  ///       import3.ButtonDirective
+  ///     ]
+  ///     ,import2.MaterialButtonComponent,const <String, dynamic>{}),
+  /// const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
   o.Expression createStaticNodeDebugInfos(
       CompileView view, List<o.Statement> targetStatements) {
     o.Expression nodeDebugInfosVar = o.NULL_EXPR;

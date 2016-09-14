@@ -40,7 +40,8 @@ class TestInjector {
     return appRef.run(() {
       DynamicComponentLoader componentLoader = _get(DynamicComponentLoader);
       return componentLoader
-          .loadAsRoot(componentType, 'ng-test-root', _appInjector)
+          .loadAsRoot(componentType, _appInjector,
+              overrideSelector: 'ng-test-root')
           .then((componentRef) {
         // Once the component is initially created, we hook it up (manually)
         // into the change detection tree. This is required because we aren't

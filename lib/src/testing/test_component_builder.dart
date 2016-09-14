@@ -186,8 +186,9 @@ class TestComponentBuilder {
     }
     DOM.appendChild(doc.body, rootEl);
     DynamicComponentLoader loader = _injector.get(DynamicComponentLoader);
-    Future<ComponentRef> promise =
-        loader.loadAsRoot(rootComponentType, '''#${ rootElId}''', _injector);
+    Future<ComponentRef> promise = loader.loadAsRoot(
+        rootComponentType, _injector,
+        overrideSelector: '#${rootElId}');
     return promise.then((componentRef) {
       return new ComponentFixture(componentRef);
     });
