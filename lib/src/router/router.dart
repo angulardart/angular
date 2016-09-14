@@ -469,7 +469,7 @@ class RootRouter extends Router {
             }
             var emitPath = instruction.path;
             var emitQuery = instruction.toUrlQuery();
-            if (emitPath.length > 0 && emitPath[0] != "/") {
+            if (emitPath.length == 0 || emitPath[0] != "/") {
               emitPath = "/" + emitPath;
             }
             // We've opted to use pushstate and popState APIs regardless of whether you
@@ -505,7 +505,7 @@ class RootRouter extends Router {
       [bool _skipLocationChange = false]) {
     var emitPath = instruction.path;
     var emitQuery = instruction.toUrlQuery();
-    if (emitPath.length > 0 && emitPath[0] != "/") {
+    if (emitPath.length == 0 || emitPath[0] != "/") {
       emitPath = "/" + emitPath;
     }
     if (_location.platformStrategy is PathLocationStrategy) {
