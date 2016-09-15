@@ -27,12 +27,10 @@ class NgTemplateOutlet implements OnChanges {
   NgTemplateOutlet(this._viewContainerRef);
 
   @Input()
-  set ngOutletContext(context) =>
-      _context = context;
+  set ngOutletContext(context) => _context = context;
 
   @Input()
-  set ngTemplateOutlet(TemplateRef templateRef) =>
-      _templateRef = templateRef;
+  set ngTemplateOutlet(TemplateRef templateRef) => _templateRef = templateRef;
 
   @override
   ngOnChanges(Map<String, SimpleChange> changes) {
