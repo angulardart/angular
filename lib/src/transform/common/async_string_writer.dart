@@ -1,8 +1,10 @@
 import 'dart:async';
 
-/// [StringBuffer] wrapper that allows asynchronous printing via
+import 'package:analyzer/src/generated/java_core.dart';
+
+/// [PrintWriter] implementation that allows asynchronous printing via
 /// [asyncPrint] and [asyncToString]. See those methods for details.
-class AsyncStringWriter {
+class AsyncStringWriter extends PrintWriter {
   /// All [Future]s we are currently waiting on.
   final List<Future<String>> _toAwait = <Future<String>>[];
   final List<StringBuffer> _bufs;
@@ -15,12 +17,9 @@ class AsyncStringWriter {
 
   AsyncStringWriter([Object content = ""]) : this._(new StringBuffer(content));
 
+  @override
   void print(x) {
     _curr.write(x);
-  }
-
-  void println(x) {
-    _curr.writeln(x);
   }
 
   /// Adds the result of `futureText` to the writer at the current position
