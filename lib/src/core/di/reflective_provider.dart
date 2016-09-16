@@ -2,6 +2,7 @@ import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 
 import "../metadata/di.dart"
     show InjectorModuleMetadata, ProviderPropertyMetadata;
+import '../reflection/reflection.dart' show NoReflectionCapabilitiesError;
 import "metadata.dart"
     show
         InjectMetadata,
@@ -283,7 +284,9 @@ List<dynamic> getInjectorModuleProviders(dynamic token) {
     if (token is Type) {
       annotations = reflector.annotations(token);
     }
-  } catch (e) {}
+  } on NoReflectionCapabilitiesError {
+    // ignoring reflection errors here
+  }
   InjectorModuleMetadata metadata = annotations != null
       ? annotations.firstWhere((type) => type is InjectorModuleMetadata,
           orElse: () => null)

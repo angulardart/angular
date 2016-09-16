@@ -13,47 +13,49 @@ class NoReflectionCapabilities implements PlatformReflectionCapabilities {
   }
 
   @override
-  Function factory(Type type) {
-    throw "Cannot find reflection information on ${stringify(type)}";
-  }
+  Function factory(Type type) =>
+      throw new NoReflectionCapabilitiesError._noInfo(type);
+  @override
+  List interfaces(Type type) =>
+      throw new NoReflectionCapabilitiesError._noInfo(type);
+  @override
+  List<List> parameters(dynamic type) =>
+      throw new NoReflectionCapabilitiesError._noInfo(type);
 
   @override
-  List interfaces(Type type) {
-    throw "Cannot find reflection information on ${stringify(type)}";
-  }
+  List annotations(dynamic type) => throw new NoReflectionCapabilitiesError._(
+      "Cannot find reflection information on ${stringify(type)}");
 
   @override
-  List<List> parameters(dynamic type) {
-    throw "Cannot find reflection information on ${stringify(type)}";
-  }
+  Map<String, List> propMetadata(dynamic type) =>
+      throw new NoReflectionCapabilitiesError._noInfo(type);
+  @override
+  GetterFn getter(String name) =>
+      throw new NoReflectionCapabilitiesError._("Cannot find getter ${name}");
 
   @override
-  List annotations(dynamic type) {
-    throw "Cannot find reflection information on ${stringify(type)}";
-  }
+  SetterFn setter(String name) =>
+      throw new NoReflectionCapabilitiesError._("Cannot find setter ${name}");
 
   @override
-  Map<String, List> propMetadata(dynamic type) {
-    throw "Cannot find reflection information on ${stringify(type)}";
-  }
-
-  @override
-  GetterFn getter(String name) {
-    throw "Cannot find getter ${name}";
-  }
-
-  @override
-  SetterFn setter(String name) {
-    throw "Cannot find setter ${name}";
-  }
-
-  @override
-  MethodFn method(String name) {
-    throw "Cannot find method ${name}";
-  }
+  MethodFn method(String name) =>
+      throw new NoReflectionCapabilitiesError._("Cannot find method ${name}");
 
   @override
   String importUri(Type type) => './';
 }
 
 final Reflector reflector = new Reflector(new NoReflectionCapabilities());
+
+class NoReflectionCapabilitiesError extends Error {
+  final String message;
+
+  NoReflectionCapabilitiesError._(this.message);
+
+  factory NoReflectionCapabilitiesError._noInfo(dynamic type) =>
+      new NoReflectionCapabilitiesError._(
+          "Cannot find reflection information on ${stringify(type)}");
+
+  @override
+  String toString() => message;
+}
