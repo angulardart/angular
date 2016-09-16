@@ -372,14 +372,17 @@ class ControlGroup extends AbstractControl {
   }
 
   _reduceValue() {
-    return this._reduceChildren({}, (Map<String, AbstractControl> acc,
-        AbstractControl control, String name) {
+    return this._reduceChildren(<String, dynamic>{},
+        (Map<String, dynamic> acc, AbstractControl control, String name) {
       acc[name] = control.value;
       return acc;
     });
   }
 
-  _reduceChildren(dynamic initValue, Function fn) {
+  _reduceChildren(
+      Map<String, dynamic> initValue,
+      Map<String, dynamic> fn(
+          Map<String, dynamic> acc, AbstractControl control, String name)) {
     var res = initValue;
     controls.forEach((name, control) {
       if (_included(name)) {
