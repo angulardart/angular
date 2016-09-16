@@ -161,11 +161,14 @@ main() {
               "and that 'NoAnnotations' is decorated with Injectable."));
     });
     test("should throw when no type and not @Inject (factory case)", () {
+      var funcRegExp = "'\.*factoryFn\.*'";
       expect(
           () => createInjector([provide("someToken", useFactory: factoryFn)]),
-          throwsWith("Cannot resolve all parameters for 'factoryFn'(?). "
-              "Make sure that all the parameters are decorated with Inject or have valid type annotations "
-              "and that 'factoryFn' is decorated with Injectable."));
+          throwsWith(new RegExp("Cannot resolve all parameters for $funcRegExp"
+              r"\(\?\)\. "
+              "Make sure that all the parameters are decorated with Inject or "
+              "have valid type annotations and that $funcRegExp is decorated "
+              r"with Injectable\.")));
     });
     test("should cache instances", () {
       var injector = createInjector([Engine]);

@@ -121,6 +121,15 @@ class SomeModuleWithProp {
   var multiProp = "aMultiValue";
 }
 
+final _funcRegExp = "'\.*factoryFn\.*'";
+
+final _notDecoratedRegExp =
+    new RegExp("Cannot resolve all parameters for $_funcRegExp"
+        r"\(\?\)\. "
+        "Make sure that all the parameters are decorated with Inject or have "
+        "valid type annotations and that $_funcRegExp is decorated with "
+        r"Injectable\.");
+
 main() {
   var dynamicProviders = [
     provide("provider0", useValue: 1),
@@ -194,10 +203,7 @@ main() {
     test("should throw when no type and not @Inject (factory case)", () {
       expect(
           () => createInjector([provide("someToken", useFactory: factoryFn)]),
-          throwsWith("Cannot resolve all parameters for 'factoryFn'(?). "
-              "Make sure that all the parameters are decorated "
-              "with Inject or have valid type annotations " +
-              "and that 'factoryFn' is decorated with Injectable."));
+          throwsWith(_notDecoratedRegExp));
     });
     test("should cache instances", () {
       var injector = createInjector([Engine]);
@@ -735,10 +741,7 @@ main() {
     test("should throw when no type and not @Inject (factory case)", () {
       expect(
           () => createInjector([provide("someToken", useFactory: factoryFn)]),
-          throwsWith("Cannot resolve all parameters for 'factoryFn'(?). "
-              "Make sure that all the parameters are decorated "
-              "with Inject or have valid type annotations " +
-              "and that 'factoryFn' is decorated with Injectable."));
+          throwsWith(_notDecoratedRegExp));
     });
     test("should cache instances", () {
       var injector = createInjector([Engine]);
