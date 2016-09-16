@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 main() {
   group("iterable differ", () {
     group("DefaultIterableDiffer", () {
-      var differ;
+      DefaultIterableDiffer differ;
       setUp(() {
         differ = new DefaultIterableDiffer();
       });
@@ -283,8 +283,10 @@ main() {
                   removals: ["a[0->null]", "b[1->null]"]));
         });
         test("should throw when given an invalid collection", () {
-          expect(() => differ.diff("invalid"),
-              throwsWith("type 'String' is not a subtype of type 'Iterable'"));
+          expect(
+              () => differ.diff("invalid" as dynamic),
+              throwsWith(new RegExp(
+                  "type '(JS)?String' is not a subtype of type 'Iterable'")));
         });
       });
     });
