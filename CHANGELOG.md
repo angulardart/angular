@@ -1,4 +1,16 @@
-# Changelog: Angular 2 for Dart
+## 2.0.0-beta.22
+
+### API changes
+
+ * Removed `Renderer.createViewRoot`.
+
+### Bug fixes and other changes
+
+ * Improved compiler errors.
+ * Fixes to reduce code size.
+ * Support the latest `pkg/build`.
+ * Now require Dart SDK 1.19 at a minimum.
+ * Added `.analysis_options` to enforce a number of style rules.
 
 ## 2.0.0-beta.21
 
