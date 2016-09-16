@@ -4,11 +4,9 @@ import "../../url_parser.dart" show Url, RootUrl, convertUrlParamsToArray;
 import "../../utils.dart" show TouchMap, normalizeString;
 import "route_path.dart" show RoutePath, GeneratedUrl, MatchedUrl;
 
-/**
- * `ParamRoutePath`s are made up of `PathSegment`s, each of which can
- * match a segment of a URL. Different kind of `PathSegment`s match
- * URL segments in different ways...
- */
+/// `ParamRoutePath`s are made up of `PathSegment`s, each of which can
+/// match a segment of a URL. Different kind of `PathSegment`s match
+/// URL segments in different ways...
 abstract class PathSegment {
   String get name;
   String generate(TouchMap params);
@@ -17,10 +15,8 @@ abstract class PathSegment {
   String hash;
 }
 
-/**
- * Identified by a `...` URL segment. This indicates that the
- * Route will continue to be matched by child `Router`s.
- */
+/// Identified by a `...` URL segment. This indicates that the
+/// Route will continue to be matched by child `Router`s.
 class ContinuationPathSegment implements PathSegment {
   String name = "";
   var specificity = "";
@@ -34,10 +30,8 @@ class ContinuationPathSegment implements PathSegment {
   }
 }
 
-/**
- * Identified by a string not starting with a `:` or `*`.
- * Only matches the URL segments that equal the segment path
- */
+/// Identified by a string not starting with a `:` or `*`.
+/// Only matches the URL segments that equal the segment path
 class StaticPathSegment implements PathSegment {
   String path;
   String name = "";
@@ -55,11 +49,9 @@ class StaticPathSegment implements PathSegment {
   }
 }
 
-/**
- * Identified by a string starting with `:`. Indicates a segment
- * that can contain a value that will be extracted and provided to
- * a matching `Instruction`.
- */
+/// Identified by a string starting with `:`. Indicates a segment
+/// that can contain a value that will be extracted and provided to
+/// a matching `Instruction`.
 class DynamicPathSegment implements PathSegment {
   final String name;
   static var paramMatcher = new RegExp(r'^:([^\/]+)$');
@@ -79,11 +71,9 @@ class DynamicPathSegment implements PathSegment {
   }
 }
 
-/**
- * Identified by a string starting with `*` Indicates that all the following
- * segments match this route and that the value of these segments should
- * be provided to a matching `Instruction`.
- */
+/// Identified by a string starting with `*` Indicates that all the following
+/// segments match this route and that the value of these segments should
+/// be provided to a matching `Instruction`.
 class StarPathSegment implements PathSegment {
   final String name;
   static var wildcardMatcher = new RegExp(r'^\*([^\/]+)$');
@@ -99,18 +89,15 @@ class StarPathSegment implements PathSegment {
   }
 }
 
-/**
- * Parses a URL string using a given matcher DSL, and generates URLs from param maps
- */
+/// Parses a URL string using a given matcher DSL, and generates URLs from param maps
 class ParamRoutePath implements RoutePath {
   String routePath;
   String specificity;
   bool terminal = true;
   String hash;
   List<PathSegment> _segments;
-  /**
-   * Takes a string representing the matcher DSL
-   */
+
+  /// Takes a string representing the matcher DSL
   ParamRoutePath(this.routePath) {
     this._assertValidPath(routePath);
     this._parsePathString(routePath);

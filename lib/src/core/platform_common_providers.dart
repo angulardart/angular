@@ -11,9 +11,7 @@ Reflector reflectorFactory() {
   return reflector;
 }
 
-/**
- * A default set of providers which should be included in any Angular platform.
- */
+/// A default set of providers which should be included in any Angular platform.
 const List<dynamic /* Type | Provider | List < dynamic > */ >
     PLATFORM_COMMON_PROVIDERS = const [
   PLATFORM_CORE_PROVIDERS,

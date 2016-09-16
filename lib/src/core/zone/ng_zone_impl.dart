@@ -5,10 +5,8 @@ import 'package:stack_trace/stack_trace.dart';
 typedef void ZeroArgFunction();
 typedef void ErrorHandlingFn(error, stackTrace);
 
-/**
- * A `Timer` wrapper that lets you specify additional functions to call when it
- * is cancelled.
- */
+/// A `Timer` wrapper that lets you specify additional functions to call when it
+/// is cancelled.
 class WrappedTimer implements Timer {
   Timer _timer;
   ZeroArgFunction _onCancelCb;
@@ -34,9 +32,7 @@ class WrappedTimer implements Timer {
   bool get isActive => _timer.isActive;
 }
 
-/**
- * Stores error information; delivered via [NgZone.onError] stream.
- */
+/// Stores error information; delivered via [NgZone.onError] stream.
 class NgZoneError {
   /// Error object thrown.
   final error;
@@ -46,21 +42,19 @@ class NgZoneError {
   NgZoneError(this.error, this.stackTrace);
 }
 
-/**
- * A `Zone` wrapper that lets you schedule tasks after its private microtask queue is exhausted but
- * before the next "VM turn", i.e. event loop iteration.
- *
- * This lets you freely schedule microtasks that prepare data, and set an {@link onMicrotaskEmpty} handler that
- * will consume that data after it's ready but before the browser has a chance to re-render.
- *
- * A VM turn consist of a single macrotask followed 0 to many microtasks.
- *
- * The wrapper maintains an "inner" and "mount" `Zone`. The application code will executes
- * in the "inner" zone unless `runOutsideAngular` is explicitely called.
- *
- * A typical application will create a singleton `NgZone`. The mount zone is the `Zone` where the singleton has been
- * instantiated. The default `onMicrotaskEmpty` runs the Angular change detection.
- */
+/// A `Zone` wrapper that lets you schedule tasks after its private microtask queue is exhausted but
+/// before the next "VM turn", i.e. event loop iteration.
+///
+/// This lets you freely schedule microtasks that prepare data, and set an {@link onMicrotaskEmpty} handler that
+/// will consume that data after it's ready but before the browser has a chance to re-render.
+///
+/// A VM turn consist of a single macrotask followed 0 to many microtasks.
+///
+/// The wrapper maintains an "inner" and "mount" `Zone`. The application code will executes
+/// in the "inner" zone unless `runOutsideAngular` is explicitely called.
+///
+/// A typical application will create a singleton `NgZone`. The mount zone is the `Zone` where the singleton has been
+/// instantiated. The default `onMicrotaskEmpty` runs the Angular change detection.
 class NgZoneImpl {
   static bool isInAngularZone() {
     return Zone.current['isAngularZone'] == true;
@@ -77,15 +71,14 @@ class NgZoneImpl {
 
   Zone _outerZone;
   Zone _innerZone;
-  /**
-   * Associates with this
-   *
-   * - a "mount" [Zone], which is a the one that instantiated this.
-   * - an "inner" [Zone], which is a child of the mount [Zone].
-   *
-   * @param {bool} trace whether to enable long stack trace. They should only be
-   *               enabled in development mode as they significantly impact perf.
-   */
+
+  /// Associates with this
+  ///
+  /// - a "mount" [Zone], which is a the one that instantiated this.
+  /// - an "inner" [Zone], which is a child of the mount [Zone].
+  ///
+  /// @param {bool} trace whether to enable long stack trace. They should only be
+  ///               enabled in development mode as they significantly impact perf.
   NgZoneImpl(
       {bool trace,
       this.onEnter,
@@ -126,25 +119,23 @@ class NgZoneImpl {
     return _innerZone.run(fn);
   }
 
-  /**
-   * Runs `fn` in the mount zone and returns whatever it returns.
-   *
-   * In a typical app where the inner zone is the Angular zone, this allows one to escape Angular's
-   * auto-digest mechanism.
-   *
-   * ```
-   * void myFunction(NgZone zone, Element element) {
-   *   element.onClick.listen(() {
-   *     // auto-digest will run after element click.
-   *   });
-   *   zone.runOutsideAngular(() {
-   *     element.onMouseMove.listen(() {
-   *       // auto-digest will NOT run after mouse move
-   *     });
-   *   });
-   * }
-   * ```
-   */
+  /// Runs `fn` in the mount zone and returns whatever it returns.
+  ///
+  /// In a typical app where the inner zone is the Angular zone, this allows one to escape Angular's
+  /// auto-digest mechanism.
+  ///
+  /// ```
+  /// void myFunction(NgZone zone, Element element) {
+  ///   element.onClick.listen(() {
+  ///     // auto-digest will run after element click.
+  ///   });
+  ///   zone.runOutsideAngular(() {
+  ///     element.onMouseMove.listen(() {
+  ///       // auto-digest will NOT run after mouse move
+  ///     });
+  ///   });
+  /// }
+  /// ```
   /*=R*/ runOuter/*<R>*/(/*=R*/ fn()) {
     return _outerZone.run(fn);
   }

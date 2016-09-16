@@ -14,43 +14,34 @@ enum ChangeDetectorState {
   /// changes.
   Errored
 }
-/**
- * Describes within the change detector which strategy will be used the next time change
- * detection is triggered.
- */
+
+/// Describes within the change detector which strategy will be used the next time change
+/// detection is triggered.
 enum ChangeDetectionStrategy {
-  /**
-   * `CheckedOnce` means that after calling detectChanges the mode of the change detector
-   * will become `Checked`.
-   */
+  /// `CheckedOnce` means that after calling detectChanges the mode of the change detector
+  /// will become `Checked`.
   CheckOnce,
-  /**
-   * `Checked` means that the change detector should be skipped until its mode changes to
-   * `CheckOnce`.
-   */
+
+  /// `Checked` means that the change detector should be skipped until its mode changes to
+  /// `CheckOnce`.
   Checked,
-  /**
-   * `CheckAlways` means that after calling detectChanges the mode of the change detector
-   * will remain `CheckAlways`.
-   */
+
+  /// `CheckAlways` means that after calling detectChanges the mode of the change detector
+  /// will remain `CheckAlways`.
   CheckAlways,
-  /**
-   * `Detached` means that the change detector sub tree is not a part of the main tree and
-   * should be skipped.
-   */
+
+  /// `Detached` means that the change detector sub tree is not a part of the main tree and
+  /// should be skipped.
   Detached,
-  /**
-   * `OnPush` means that the change detector's mode will be set to `CheckOnce` during hydration.
-   */
+
+  /// `OnPush` means that the change detector's mode will be set to `CheckOnce` during hydration.
   OnPush,
-  /**
-   * `Default` means that the change detector's mode will be set to `CheckAlways` during hydration.
-   */
+
+  /// `Default` means that the change detector's mode will be set to `CheckAlways` during hydration.
   Default
 }
-/**
- * List of possible [ChangeDetectionStrategy] values.
- */
+
+/// List of possible [ChangeDetectionStrategy] values.
 var CHANGE_DETECTION_STRATEGY_VALUES = [
   ChangeDetectionStrategy.CheckOnce,
   ChangeDetectionStrategy.Checked,
@@ -59,9 +50,8 @@ var CHANGE_DETECTION_STRATEGY_VALUES = [
   ChangeDetectionStrategy.OnPush,
   ChangeDetectionStrategy.Default
 ];
-/**
- * List of possible [ChangeDetectorState] values.
- */
+
+/// List of possible [ChangeDetectorState] values.
 var CHANGE_DETECTOR_STATE_VALUES = [
   ChangeDetectorState.NeverChecked,
   ChangeDetectorState.CheckedBefore,

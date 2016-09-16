@@ -6,11 +6,9 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 import "platform_location.dart" show PlatformLocation;
 
-/**
- * `PlatformLocation` encapsulates all of the direct calls to platform APIs.
- * This class should not be used directly by an application developer. Instead, use
- * [Location].
- */
+/// `PlatformLocation` encapsulates all of the direct calls to platform APIs.
+/// This class should not be used directly by an application developer. Instead, use
+/// [Location].
 @Injectable()
 class BrowserPlatformLocation extends PlatformLocation {
   Location _location;

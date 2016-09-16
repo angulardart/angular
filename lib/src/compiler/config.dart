@@ -15,11 +15,9 @@ class CompilerConfig {
   }
 }
 
-/**
- * Types used for the renderer.
- * Can be replaced to specialize the generated output to a specific renderer
- * to help tree shaking.
- */
+/// Types used for the renderer.
+/// Can be replaced to specialize the generated output to a specific renderer
+/// to help tree shaking.
 abstract class RenderTypes {
   CompileIdentifierMetadata get renderer;
 

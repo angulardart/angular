@@ -15,23 +15,21 @@ import "utils.dart" show getCanActivateHook;
 var _resolveToTrue = new Future.value(true);
 var _resolveToFalse = new Future.value(false);
 
-/**
- * The `Router` is responsible for mapping URLs to components.
- *
- * You can see the state of the router by inspecting the read-only field `router.navigating`.
- * This may be useful for showing a spinner, for instance.
- *
- * ## Concepts
- *
- * Routers and component instances have a 1:1 correspondence.
- *
- * The router holds reference to a number of [RouterOutlet].
- * An outlet is a placeholder that the router dynamically fills in depending on the current URL.
- *
- * When the router navigates from a URL, it must first recognize it and serialize it into an
- * `Instruction`.
- * The router uses the `RouteRegistry` to get an `Instruction`.
- */
+/// The `Router` is responsible for mapping URLs to components.
+///
+/// You can see the state of the router by inspecting the read-only field `router.navigating`.
+/// This may be useful for showing a spinner, for instance.
+///
+/// ## Concepts
+///
+/// Routers and component instances have a 1:1 correspondence.
+///
+/// The router holds reference to a number of [RouterOutlet].
+/// An outlet is a placeholder that the router dynamically fills in depending on the current URL.
+///
+/// When the router navigates from a URL, it must first recognize it and serialize it into an
+/// `Instruction`.
+/// The router uses the `RouteRegistry` to get an `Instruction`.
 @Injectable()
 class Router {
   RouteRegistry registry;
@@ -40,9 +38,8 @@ class Router {
   Router root;
   bool navigating = false;
   String lastNavigationAttempt;
-  /**
-   * The current `Instruction` for the router
-   */
+
+  /// The current `Instruction` for the router
   Instruction currentInstruction;
   Future<dynamic> _currentNavigation = _resolveToTrue;
   RouterOutlet _outlet;
@@ -50,27 +47,22 @@ class Router {
   Router _childRouter;
   EventEmitter<dynamic> _subject = new EventEmitter();
   Router(this.registry, this.parent, this.hostComponent, [this.root]);
-  /**
-   * Constructs a child router. You probably don't need to use this unless you're writing a reusable
-   * component.
-   */
+
+  /// Constructs a child router. You probably don't need to use this unless you're writing a reusable
+  /// component.
   Router childRouter(dynamic hostComponent) {
     return this._childRouter = new ChildRouter(this, hostComponent);
   }
 
-  /**
-   * Constructs a child router. You probably don't need to use this unless you're writing a reusable
-   * component.
-   */
+  /// Constructs a child router. You probably don't need to use this unless you're writing a reusable
+  /// component.
   Router auxRouter(dynamic hostComponent) {
     return new ChildRouter(this, hostComponent);
   }
 
-  /**
-   * Register an outlet to be notified of primary route changes.
-   *
-   * You probably don't need to use this unless you're writing a reusable component.
-   */
+  /// Register an outlet to be notified of primary route changes.
+  ///
+  /// You probably don't need to use this unless you're writing a reusable component.
   Future<dynamic> registerPrimaryOutlet(RouterOutlet outlet) {
     if (outlet.name != null) {
       throw new BaseException(
@@ -86,11 +78,9 @@ class Router {
     return _resolveToTrue;
   }
 
-  /**
-   * Unregister an outlet (because it was destroyed, etc).
-   *
-   * You probably don't need to use this unless you're writing a custom outlet implementation.
-   */
+  /// Unregister an outlet (because it was destroyed, etc).
+  ///
+  /// You probably don't need to use this unless you're writing a custom outlet implementation.
   void unregisterPrimaryOutlet(RouterOutlet outlet) {
     if (outlet.name != null) {
       throw new BaseException(
@@ -99,11 +89,9 @@ class Router {
     this._outlet = null;
   }
 
-  /**
-   * Register an outlet to notified of auxiliary route changes.
-   *
-   * You probably don't need to use this unless you're writing a reusable component.
-   */
+  /// Register an outlet to notified of auxiliary route changes.
+  ///
+  /// You probably don't need to use this unless you're writing a reusable component.
   Future<dynamic> registerAuxOutlet(RouterOutlet outlet) {
     var outletName = outlet.name;
     if (outletName == null) {
@@ -122,10 +110,8 @@ class Router {
     return _resolveToTrue;
   }
 
-  /**
-   * Given an instruction, returns `true` if the instruction is currently active,
-   * otherwise `false`.
-   */
+  /// Given an instruction, returns `true` if the instruction is currently active,
+  /// otherwise `false`.
   bool isRouteActive(Instruction instruction) {
     Router router = this;
     if (currentInstruction == null) {
@@ -153,18 +139,16 @@ class Router {
     return paramEquals;
   }
 
-  /**
-   * Dynamically update the routing configuration and trigger a navigation.
-   *
-   * ### Usage
-   *
-   * ```
-   * router.config([
-   *   { 'path': '/', 'component': IndexComp },
-   *   { 'path': '/user/:id', 'component': UserComp },
-   * ]);
-   * ```
-   */
+  /// Dynamically update the routing configuration and trigger a navigation.
+  ///
+  /// ### Usage
+  ///
+  /// ```
+  /// router.config([
+  ///   { 'path': '/', 'component': IndexComp },
+  ///   { 'path': '/user/:id', 'component': UserComp },
+  /// ]);
+  /// ```
   Future<dynamic> config(List<RouteDefinition> definitions) {
     definitions.forEach((routeDefinition) {
       this.registry.config(this.hostComponent, routeDefinition);
@@ -172,30 +156,26 @@ class Router {
     return this.renavigate();
   }
 
-  /**
-   * Navigate based on the provided Route Link DSL. It's preferred to navigate with this method
-   * over `navigateByUrl`.
-   *
-   * ### Usage
-   *
-   * This method takes an array representing the Route Link DSL:
-   * ```
-   * ['./MyCmp', {param: 3}]
-   * ```
-   * See the [RouterLink] directive for more.
-   */
+  /// Navigate based on the provided Route Link DSL. It's preferred to navigate with this method
+  /// over `navigateByUrl`.
+  ///
+  /// ### Usage
+  ///
+  /// This method takes an array representing the Route Link DSL:
+  /// ```
+  /// ['./MyCmp', {param: 3}]
+  /// ```
+  /// See the [RouterLink] directive for more.
   Future<dynamic> navigate(List<dynamic> linkParams) {
     var instruction = this.generate(linkParams);
     return this.navigateByInstruction(instruction, false);
   }
 
-  /**
-   * Navigate to a URL. Returns a promise that resolves when navigation is complete.
-   * It's preferred to navigate with `navigate` instead of this method, since URLs are more brittle.
-   *
-   * If the given URL begins with a `/`, router will navigate absolutely.
-   * If the given URL does not begin with `/`, the router will navigate relative to this component.
-   */
+  /// Navigate to a URL. Returns a promise that resolves when navigation is complete.
+  /// It's preferred to navigate with `navigate` instead of this method, since URLs are more brittle.
+  ///
+  /// If the given URL begins with a `/`, router will navigate absolutely.
+  /// If the given URL does not begin with `/`, the router will navigate relative to this component.
   Future<dynamic> navigateByUrl(String url,
       [bool _skipLocationChange = false]) {
     return this._currentNavigation = this._currentNavigation.then((_) {
@@ -211,10 +191,8 @@ class Router {
     });
   }
 
-  /**
-   * Navigate via the provided instruction. Returns a promise that resolves when navigation is
-   * complete.
-   */
+  /// Navigate via the provided instruction. Returns a promise that resolves when navigation is
+  /// complete.
   Future<dynamic> navigateByInstruction(Instruction instruction,
       [bool _skipLocationChange = false]) {
     if (instruction == null) {
@@ -334,9 +312,7 @@ class Router {
     });
   }
 
-  /**
-   * Updates this router and all descendant routers according to the given instruction
-   */
+  /// Updates this router and all descendant routers according to the given instruction
   Future<dynamic> commit(Instruction instruction,
       [bool _skipLocationChange = false]) {
     this.currentInstruction = instruction;
@@ -378,16 +354,12 @@ class Router {
     this.navigating = false;
   }
 
-  /**
-   * Subscribe to URL updates from the router
-   */
+  /// Subscribe to URL updates from the router
   Object subscribe(void onNext(dynamic value), [void onError(dynamic value)]) {
     return _subject.listen(onNext, onError: onError);
   }
 
-  /**
-   * Removes the contents of this router's outlet and all descendant outlets
-   */
+  /// Removes the contents of this router's outlet and all descendant outlets
   Future<dynamic> deactivate(Instruction instruction) {
     Instruction childInstruction;
     ComponentInstruction componentInstruction;
@@ -407,9 +379,7 @@ class Router {
     return next;
   }
 
-  /**
-   * Given a URL, returns an instruction representing the component graph
-   */
+  /// Given a URL, returns an instruction representing the component graph
   Future<Instruction> recognize(String url) {
     var ancestorComponents = this._getAncestorInstructions();
     return this.registry.recognize(url, ancestorComponents);
@@ -425,10 +395,8 @@ class Router {
     return ancestorInstructions;
   }
 
-  /**
-   * Navigates to either the last URL successfully navigated to, or the last URL requested if the
-   * router has yet to successfully navigate.
-   */
+  /// Navigates to either the last URL successfully navigated to, or the last URL requested if the
+  /// router has yet to successfully navigate.
   Future<dynamic> renavigate() {
     if (lastNavigationAttempt == null) {
       return _currentNavigation;
@@ -436,9 +404,7 @@ class Router {
     return navigateByUrl(lastNavigationAttempt);
   }
 
-  /**
-   * Generate an `Instruction` based on the provided Route Link DSL.
-   */
+  /// Generate an `Instruction` based on the provided Route Link DSL.
   Instruction generate(List<dynamic> linkParams) {
     var ancestorInstructions = this._getAncestorInstructions();
     return this.registry.generate(linkParams, ancestorInstructions);

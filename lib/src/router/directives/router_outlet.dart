@@ -48,10 +48,9 @@ class RouterOutlet implements OnDestroy {
       this._parentRouter.registerPrimaryOutlet(this);
     }
   }
-  /**
-   * Called by the Router to instantiate a new component during the commit phase of a navigation.
-   * This method in turn is responsible for calling the `routerOnActivate` hook of its child.
-   */
+
+  /// Called by the Router to instantiate a new component during the commit phase of a navigation.
+  /// This method in turn is responsible for calling the `routerOnActivate` hook of its child.
   Future<dynamic> activate(ComponentInstruction nextInstruction) {
     var previousInstruction = this._currentInstruction;
     this._currentInstruction = nextInstruction;
@@ -82,11 +81,9 @@ class RouterOutlet implements OnDestroy {
     });
   }
 
-  /**
-   * Called by the [Router] during the commit phase of a navigation when an outlet
-   * reuses a component between different routes.
-   * This method in turn is responsible for calling the `routerOnReuse` hook of its child.
-   */
+  /// Called by the [Router] during the commit phase of a navigation when an outlet
+  /// reuses a component between different routes.
+  /// This method in turn is responsible for calling the `routerOnReuse` hook of its child.
   Future<dynamic> reuse(ComponentInstruction nextInstruction) {
     var previousInstruction = this._currentInstruction;
     this._currentInstruction = nextInstruction;
@@ -106,10 +103,8 @@ class RouterOutlet implements OnDestroy {
     }
   }
 
-  /**
-   * Called by the [Router] when an outlet disposes of a component's contents.
-   * This method in turn is responsible for calling the `routerOnDeactivate` hook of its child.
-   */
+  /// Called by the [Router] when an outlet disposes of a component's contents.
+  /// This method in turn is responsible for calling the `routerOnDeactivate` hook of its child.
   Future<dynamic> deactivate(ComponentInstruction nextInstruction) {
     var next = _resolveToTrue;
     if (_componentRef != null) {
@@ -129,14 +124,12 @@ class RouterOutlet implements OnDestroy {
     });
   }
 
-  /**
-   * Called by the [Router] during recognition phase of a navigation.
-   *
-   * If this resolves to `false`, the given navigation is cancelled.
-   *
-   * This method delegates to the child component's `routerCanDeactivate` hook if it exists,
-   * and otherwise resolves to true.
-   */
+  /// Called by the [Router] during recognition phase of a navigation.
+  ///
+  /// If this resolves to `false`, the given navigation is cancelled.
+  ///
+  /// This method delegates to the child component's `routerCanDeactivate` hook if it exists,
+  /// and otherwise resolves to true.
   Future<bool> routerCanDeactivate(ComponentInstruction nextInstruction) {
     if (_currentInstruction == null) {
       return new Future.value(true);
@@ -148,16 +141,14 @@ class RouterOutlet implements OnDestroy {
             : true);
   }
 
-  /**
-   * Called by the [Router] during recognition phase of a navigation.
-   *
-   * If the new child component has a different Type than the existing child component,
-   * this will resolve to `false`. You can't reuse an old component when the new component
-   * is of a different Type.
-   *
-   * Otherwise, this method delegates to the child component's `routerCanReuse` hook if it exists,
-   * or resolves to true if the hook is not present.
-   */
+  /// Called by the [Router] during recognition phase of a navigation.
+  ///
+  /// If the new child component has a different Type than the existing child component,
+  /// this will resolve to `false`. You can't reuse an old component when the new component
+  /// is of a different Type.
+  ///
+  /// Otherwise, this method delegates to the child component's `routerCanReuse` hook if it exists,
+  /// or resolves to true if the hook is not present.
   Future<bool> routerCanReuse(ComponentInstruction nextInstruction) {
     Future<bool> result;
     if (this._currentInstruction == null ||

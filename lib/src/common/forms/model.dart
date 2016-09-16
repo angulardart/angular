@@ -68,9 +68,7 @@ abstract class AbstractControl {
     return identical(this._status, VALID);
   }
 
-  /**
-   * Returns the errors of this control.
-   */
+  /// Returns the errors of this control.
   Map<String, dynamic> get errors {
     return this._errors;
   }

@@ -9,18 +9,16 @@ const _u = const Object();
 
 quiver.FakeAsync _fakeAsync;
 
-/**
- * Wraps the [fn] to be executed in the fakeAsync zone:
- * - microtasks are manually executed by calling [flushMicrotasks],
- * - timers are synchronous, [tick] simulates the asynchronous passage of time.
- *
- * If there are any pending timers at the end of the function, an exception
- * will be thrown.
- *
- * Can be used to wrap inject() calls.
- *
- * Returns a `Function` that wraps [fn].
- */
+/// Wraps the [fn] to be executed in the fakeAsync zone:
+/// - microtasks are manually executed by calling [flushMicrotasks],
+/// - timers are synchronous, [tick] simulates the asynchronous passage of time.
+///
+/// If there are any pending timers at the end of the function, an exception
+/// will be thrown.
+///
+/// Can be used to wrap inject() calls.
+///
+/// Returns a `Function` that wraps [fn].
 Function fakeAsync(dynamic /* Function | FunctionWithParamTokens */ fn) {
   if (_fakeAsync != null) {
     throw 'fakeAsync() calls can not be nested';
@@ -85,28 +83,22 @@ Function fakeAsync(dynamic /* Function | FunctionWithParamTokens */ fn) {
   };
 }
 
-/**
- * Simulates the asynchronous passage of [millis] milliseconds for the timers
- * in the fakeAsync zone.
- *
- * The microtasks queue is drained at the very start of this function and after
- * any timer callback has been executed.
- */
+/// Simulates the asynchronous passage of [millis] milliseconds for the timers
+/// in the fakeAsync zone.
+///
+/// The microtasks queue is drained at the very start of this function and after
+/// any timer callback has been executed.
 void tick([int millis = 0]) {
   _assertInFakeAsyncZone();
   var duration = new Duration(milliseconds: millis);
   _fakeAsync.elapse(duration);
 }
 
-/**
- * This is not needed in Dart. Because quiver correctly removes a timer when
- * it throws an exception.
- */
+/// This is not needed in Dart. Because quiver correctly removes a timer when
+/// it throws an exception.
 void clearPendingTimers() {}
 
-/**
- * Flush any pending microtasks.
- */
+/// Flush any pending microtasks.
 void flushMicrotasks() {
   _assertInFakeAsyncZone();
   _fakeAsync.flushMicrotasks();

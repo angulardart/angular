@@ -12,23 +12,17 @@ abstract class IterableDiffer<T> {
   onDestroy();
 }
 
-/**
-  * An optional function passed into [NgFor] that defines how to track
-  * items in an iterable (e.g. by index or id)
- */
+/// An optional function passed into [NgFor] that defines how to track
+/// items in an iterable (e.g. by index or id)
 typedef dynamic TrackByFn(num index, dynamic item);
 
-/**
- * Provides a factory for [IterableDiffer].
- */
+/// Provides a factory for [IterableDiffer].
 abstract class IterableDifferFactory {
   bool supports(dynamic objects);
   IterableDiffer create(ChangeDetectorRef cdRef, [TrackByFn trackByFn]);
 }
 
-/**
- * A repository of different iterable diffing strategies used by NgFor, NgClass, and others.
- */
+/// A repository of different iterable diffing strategies used by NgFor, NgClass, and others.
 class IterableDiffers {
   final List<IterableDifferFactory> factories;
   const IterableDiffers(this.factories);
@@ -44,25 +38,23 @@ class IterableDiffers {
     }
   }
 
-  /**
-   * Takes an array of [IterableDifferFactory] and returns a provider used to extend the
-   * inherited [IterableDiffers] instance with the provided factories and return a new
-   * [IterableDiffers] instance.
-   *
-   * The following example shows how to extend an existing list of factories,
-         * which will only be applied to the injector for this component and its children.
-         * This step is all that's required to make a new [IterableDiffer] available.
-   *
-   * ### Example
-   *
-   * ```
-   * @Component({
-   *   viewProviders: [
-   *     IterableDiffers.extend([new ImmutableListDiffer()])
-   *   ]
-   * })
-   * ```
-   */
+  /// Takes an array of [IterableDifferFactory] and returns a provider used to extend the
+  /// inherited [IterableDiffers] instance with the provided factories and return a new
+  /// [IterableDiffers] instance.
+  ///
+  /// The following example shows how to extend an existing list of factories,
+  ///     * which will only be applied to the injector for this component and its children.
+  ///     * This step is all that's required to make a new [IterableDiffer] available.
+  ///
+  /// ### Example
+  ///
+  /// ```
+  /// @Component({
+  ///   viewProviders: [
+  ///     IterableDiffers.extend([new ImmutableListDiffer()])
+  ///   ]
+  /// })
+  /// ```
   static Provider extend(List<IterableDifferFactory> factories) {
     return new Provider(IterableDiffers, useFactory: (IterableDiffers parent) {
       if (parent == null) {

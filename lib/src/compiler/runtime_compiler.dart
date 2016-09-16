@@ -32,11 +32,9 @@ import "view_compiler/injector_compiler.dart" show InjectorCompiler;
 import "view_compiler/view_compiler.dart" show ViewCompiler;
 import "xhr.dart" show XHR;
 
-/**
- * An internal module of the Angular compiler that begins with component types,
- * extracts templates, and eventually produces a compiled version of the component
- * ready for linking into an application.
- */
+/// An internal module of the Angular compiler that begins with component types,
+/// extracts templates, and eventually produces a compiled version of the component
+/// ready for linking into an application.
 @Injectable()
 class RuntimeCompiler implements ComponentResolver {
   RuntimeMetadataResolver _runtimeMetadataResolver;

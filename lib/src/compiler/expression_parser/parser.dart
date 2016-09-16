@@ -602,9 +602,7 @@ class _ParseAST {
     return new Chain(exprs);
   }
 
-  /**
-   * An identifier, a keyword, a string with an optional `-` inbetween.
-   */
+  /// An identifier, a keyword, a string with an optional `-` inbetween.
   String expectTemplateBindingKey() {
     var result = "";
     var operatorFound = false;

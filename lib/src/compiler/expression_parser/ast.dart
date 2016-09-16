@@ -8,19 +8,17 @@ class AST {
   }
 }
 
-/**
- * Represents a quoted expression of the form:
- *
- * quote = prefix `:` uninterpretedExpression
- * prefix = identifier
- * uninterpretedExpression = arbitrary string
- *
- * A quoted expression is meant to be pre-processed by an AST transformer that
- * converts it into another AST that no longer contains quoted expressions.
- * It is meant to allow third-party developers to extend Angular template
- * expression language. The `uninterpretedExpression` part of the quote is
- * therefore not interpreted by the Angular's own expression parser.
- */
+/// Represents a quoted expression of the form:
+///
+/// quote = prefix `:` uninterpretedExpression
+/// prefix = identifier
+/// uninterpretedExpression = arbitrary string
+///
+/// A quoted expression is meant to be pre-processed by an AST transformer that
+/// converts it into another AST that no longer contains quoted expressions.
+/// It is meant to allow third-party developers to extend Angular template
+/// expression language. The `uninterpretedExpression` part of the quote is
+/// therefore not interpreted by the Angular's own expression parser.
 class Quote extends AST {
   String prefix;
   String uninterpretedExpression;
@@ -45,9 +43,7 @@ class ImplicitReceiver extends AST {
   }
 }
 
-/**
- * Multiple expressions separated by a semicolon.
- */
+/// Multiple expressions separated by a semicolon.
 class Chain extends AST {
   List<dynamic> expressions;
   Chain(this.expressions);

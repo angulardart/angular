@@ -7,54 +7,52 @@ import "location.dart" show Location;
 import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
 import "platform_location.dart" show PlatformLocation;
 
-/**
- * `PathLocationStrategy` is a [LocationStrategy] used to configure the
- * [Location] service to represent its state in the
- * [path](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax) of the
- * browser's URL.
- *
- * `PathLocationStrategy` is the default binding for [LocationStrategy]
- * provided in [ROUTER_PROVIDERS].
- *
- * If you're using `PathLocationStrategy`, you must provide a provider for
- * [APP_BASE_HREF] to a string representing the URL prefix that should
- * be preserved when generating and recognizing URLs.
- *
- * For instance, if you provide an `APP_BASE_HREF` of `'/my/app'` and call
- * `location.go('/foo')`, the browser's URL will become
- * `example.com/my/app/foo`.
- *
- * ### Example
- *
- * ```
- * import {Component, provide} from 'angular2/core';
- * import {bootstrap} from 'angular2/platform/browser';
- * import {
- *   Location,
- *   APP_BASE_HREF
- * } from 'angular2/platform/common';
- * import {
- *   ROUTER_DIRECTIVES,
- *   ROUTER_PROVIDERS,
- *   RouteConfig
- * } from 'angular2/router';
- *
- * @Component({directives: [ROUTER_DIRECTIVES]})
- * @RouteConfig([
- *  {...},
- * ])
- * class AppCmp {
- *   constructor(location: Location) {
- *     location.go('/foo');
- *   }
- * }
- *
- * bootstrap(AppCmp, [
- *   ROUTER_PROVIDERS, // includes binding to PathLocationStrategy
- *   provide(APP_BASE_HREF, {useValue: '/my/app'})
- * ]);
- * ```
- */
+/// `PathLocationStrategy` is a [LocationStrategy] used to configure the
+/// [Location] service to represent its state in the
+/// [path](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax) of the
+/// browser's URL.
+///
+/// `PathLocationStrategy` is the default binding for [LocationStrategy]
+/// provided in [ROUTER_PROVIDERS].
+///
+/// If you're using `PathLocationStrategy`, you must provide a provider for
+/// [APP_BASE_HREF] to a string representing the URL prefix that should
+/// be preserved when generating and recognizing URLs.
+///
+/// For instance, if you provide an `APP_BASE_HREF` of `'/my/app'` and call
+/// `location.go('/foo')`, the browser's URL will become
+/// `example.com/my/app/foo`.
+///
+/// ### Example
+///
+/// ```
+/// import {Component, provide} from 'angular2/core';
+/// import {bootstrap} from 'angular2/platform/browser';
+/// import {
+///   Location,
+///   APP_BASE_HREF
+/// } from 'angular2/platform/common';
+/// import {
+///   ROUTER_DIRECTIVES,
+///   ROUTER_PROVIDERS,
+///   RouteConfig
+/// } from 'angular2/router';
+///
+/// @Component({directives: [ROUTER_DIRECTIVES]})
+/// @RouteConfig([
+///  {...},
+/// ])
+/// class AppCmp {
+///   constructor(location: Location) {
+///     location.go('/foo');
+///   }
+/// }
+///
+/// bootstrap(AppCmp, [
+///   ROUTER_PROVIDERS, // includes binding to PathLocationStrategy
+///   provide(APP_BASE_HREF, {useValue: '/my/app'})
+/// ]);
+/// ```
 @Injectable()
 class PathLocationStrategy extends LocationStrategy {
   PlatformLocation _platformLocation;

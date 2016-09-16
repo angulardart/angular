@@ -8,11 +8,9 @@ final _SELECTOR_REGEXP = new RegExp("(\\:not\\()|" +
     "(\\))|" +
     "(\\s*,\\s*)");
 
-/**
- * A css selector contains an element name,
- * css classes and attribute/value pairs with the purpose
- * of selecting subsets out of them.
- */
+/// A css selector contains an element name,
+/// css classes and attribute/value pairs with the purpose
+/// of selecting subsets out of them.
 class CssSelector {
   String element;
   List<String> classNames = [];
@@ -80,7 +78,7 @@ class CssSelector {
     this.element = element;
   }
 
-  /** Gets a template string for an element that matches the selector. */
+  /// Gets a template string for an element that matches the selector.
   String getMatchingElementTemplate() {
     var tagName = element ?? "div";
     var classAttr = this.classNames.length > 0
@@ -139,10 +137,8 @@ class CssSelector {
   }
 }
 
-/**
- * Reads a list of CssSelectors and allows to calculate which ones
- * are contained in a given CssSelector.
- */
+/// Reads a list of CssSelectors and allows to calculate which ones
+/// are contained in a given CssSelector.
 class SelectorMatcher {
   static SelectorMatcher createNotMatcher(List<CssSelector> notSelectors) {
     var notMatcher = new SelectorMatcher();
@@ -168,11 +164,7 @@ class SelectorMatcher {
     }
   }
 
-  /**
-   * Add an object that can be found later on by calling `match`.
-   * 
-   * 
-   */
+  /// Add an object that can be found later on by calling `match`.
   _addSelectable(CssSelector cssSelector, dynamic callbackCtxt,
       SelectorListContext listContext) {
     SelectorMatcher matcher = this;
@@ -247,13 +239,8 @@ class SelectorMatcher {
     return matcher;
   }
 
-  /**
-   * Find the objects that have been added via `addSelectable`
-   * whose css selector is contained in the given css selector.
-   * 
-   * 
-   * 
-  */
+  /// Find the objects that have been added via `addSelectable`
+  /// whose css selector is contained in the given css selector.
   bool match(
       CssSelector cssSelector, void matchedCallback(CssSelector c, dynamic a)) {
     var result = false;

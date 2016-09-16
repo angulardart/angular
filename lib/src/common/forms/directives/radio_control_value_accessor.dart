@@ -46,9 +46,7 @@ class RadioControlRegistry {
   }
 }
 
-/**
- * The value provided by the forms API for radio buttons.
- */
+/// The value provided by the forms API for radio buttons.
 class RadioButtonState {
   bool checked;
   String value;
