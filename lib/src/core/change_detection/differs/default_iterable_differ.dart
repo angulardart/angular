@@ -119,7 +119,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     this._reset();
     CollectionChangeRecord record = this._itHead;
     bool mayBeDirty = false;
-    num index;
+    int index;
     var item;
     var itemTrackBy;
     if (collection is List) {
