@@ -49,6 +49,30 @@ class ReflectionInfoVisitor extends RecursiveAstVisitor<ReflectionInfoModel> {
         }
       }
     }
+    // If the constructor is named but private, it won't work!
+    if (ctor != null && ctor.name != null && ctor.name.name.startsWith('_')) {
+      log.error(
+          'Invalid @Injectable() annotation: '
+          'Cannot use private constructor on class ${node.name}',
+          asset: assetId);
+    }
+    // If we don't see any constructors (factory or not) and the class is
+    // abstract we have to assume there is no way to create this object and the
+    // annotation is incorrect.
+    if (node.isAbstract) {
+      if (ctor == null) {
+        log.error(
+            'Invalid @Injectable() annotation: '
+            'Found no constructors for abstract class ${node.name}',
+            asset: assetId);
+      } else if (ctor.factoryKeyword == null) {
+        log.error(
+            'Invalid @Injectable() annotation: '
+            'Found a constructor for abstract class ${node.name} but it is '
+            'not a "factory", and cannot be invoked',
+            asset: assetId);
+      }
+    }
     if (numCtorsFound > 1) {
       var ctorName = ctor.name;
       if (ctorName != null) {
