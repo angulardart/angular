@@ -1,6 +1,6 @@
 import "package:angular2/src/core/change_detection/constants.dart"
     show ChangeDetectionStrategy;
-import "package:angular2/src/core/linker/view_utils.dart";
+import "package:angular2/src/core/linker/app_view_utils.dart";
 
 import "../change_detection/change_detector_ref.dart" show ChangeDetectorRef;
 import "app_view.dart" show AppView;
@@ -100,9 +100,9 @@ class ViewRef_ implements EmbeddedViewRef, ChangeDetectorRef {
   }
 
   void checkNoChanges() {
-    ViewUtils.enterThrowOnChanges();
+    AppViewUtils.enterThrowOnChanges();
     _view.detectChanges();
-    ViewUtils.exitThrowOnChanges();
+    AppViewUtils.exitThrowOnChanges();
   }
 
   void reattach() {

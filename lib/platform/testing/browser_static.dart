@@ -11,6 +11,7 @@ import 'package:angular2/core.dart'
         PLATFORM_INITIALIZER;
 import 'package:angular2/platform/common.dart' show LocationStrategy;
 import 'package:angular2/src/core/render/api.dart' show RootRenderer;
+import 'package:angular2/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular2/src/debug/debug_renderer.dart'
     show DebugDomRootRenderer;
 import 'package:angular2/src/mock/directive_resolver_mock.dart'
@@ -45,6 +46,7 @@ const List<dynamic> ADDITIONAL_TEST_BROWSER_PROVIDERS = const [
   const Provider(RootRenderer, useClass: DebugDomRootRenderer),
   const Provider(DirectiveResolver, useClass: MockDirectiveResolver),
   const Provider(ViewResolver, useClass: MockViewResolver),
+  AppViewUtils,
   Log,
   TestComponentBuilder,
   const Provider(NgZone, useClass: MockNgZone),

@@ -7,6 +7,7 @@ import "package:angular2/src/debug/debug_context.dart"
     show StaticNodeDebugInfo, DebugContext;
 import "package:angular2/src/core/linker.dart" show QueryList;
 import "package:angular2/src/core/linker/app_view.dart";
+import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/debug/debug_app_view.dart";
 import "package:angular2/src/core/linker/component_factory.dart";
 import "package:angular2/src/core/linker/app_element.dart";
@@ -617,4 +618,5 @@ void _initializeInterpreter() {
   Identifiers.HTML_COMMENT_NODE.runtime = Comment;
   Identifiers.HTML_TEXT_NODE.runtime = Text;
   Identifiers.HTML_DOCUMENT.runtime = document;
+  Identifiers.appViewUtils.runtime = appViewUtils;
 }

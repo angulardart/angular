@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:angular2/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular2/src/core/console.dart';
 import 'package:angular2/src/core/di.dart';
-import 'package:angular2/src/core/linker/view_utils.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart';
 import 'package:angular2/src/core/linker/component_factory.dart'
     show ComponentRef, ComponentFactory;
 import 'package:angular2/src/core/linker/component_resolver.dart';
@@ -80,6 +80,7 @@ PlatformRef getPlatform() =>
 /// Requires a platform the be created first.
 ComponentRef coreBootstrap(
     Injector injector, ComponentFactory componentFactory) {
+  appViewUtils = injector.get(AppViewUtils);
   ApplicationRef appRef = injector.get(ApplicationRef);
   return appRef.bootstrap(componentFactory);
 }
@@ -90,6 +91,7 @@ ComponentRef coreBootstrap(
 /// Requires a platform the be created first.
 Future<ComponentRef> coreLoadAndBootstrap(
     Injector injector, Type componentType) async {
+  appViewUtils = injector.get(AppViewUtils);
   ApplicationRef appRef = injector.get(ApplicationRef);
   return await appRef.run(() async {
     ComponentResolver componentResolver = injector.get(ComponentResolver);
@@ -395,7 +397,7 @@ class ApplicationRefImpl extends ApplicationRef {
 
   @override
   void tick() {
-    ViewUtils.resetChangeDetection();
+    AppViewUtils.resetChangeDetection();
     if (_runningTick) {
       throw new BaseException('ApplicationRef.tick is called recursively');
     }

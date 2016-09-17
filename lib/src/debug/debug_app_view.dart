@@ -18,7 +18,6 @@ import 'package:angular2/src/core/linker/exceptions.dart'
 import 'package:angular2/src/core/linker/app_view.dart';
 export 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/view_type.dart';
-import 'package:angular2/src/core/linker/view_utils.dart';
 
 WtfScopeFn _scope_check = wtfCreateScope('AppView#check(ascii id)');
 
@@ -32,12 +31,11 @@ class DebugAppView<T> extends AppView<T> {
       RenderComponentType componentType,
       ViewType type,
       Map<String, dynamic> locals,
-      ViewUtils viewUtils,
       Injector parentInjector,
       AppElement declarationAppElement,
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
-      : super(clazz, componentType, type, locals, viewUtils, parentInjector,
+      : super(clazz, componentType, type, locals, parentInjector,
             declarationAppElement, cdMode);
 
   @override

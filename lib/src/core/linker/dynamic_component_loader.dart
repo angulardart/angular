@@ -5,7 +5,7 @@ import 'package:angular2/src/core/di.dart' show Injector, Injectable;
 import 'component_factory.dart' show ComponentRef;
 import 'component_resolver.dart' show ComponentResolver;
 import 'view_container_ref.dart' show ViewContainerRef;
-import 'view_utils.dart' show OnDestroyCallback;
+import 'app_view_utils.dart' show OnDestroyCallback;
 
 /// Service for instantiating a Component and attaching it to a View at a
 /// specified location.
@@ -65,12 +65,12 @@ abstract class DynamicComponentLoader {
   Future<ComponentRef> loadAsRoot(Type type, Injector injector,
       {String overrideSelector,
       OnDestroyCallback onDestroy,
-      List<List<dynamic>> projectableNodes});
+      List<List> projectableNodes});
 
   Future<ComponentRef> loadAsRootIntoNode(Type type, Injector injector,
       {Node overrideNode,
       OnDestroyCallback onDestroy,
-      List<List<dynamic>> projectableNodes});
+      List<List> projectableNodes});
 
   /// Creates an instance of a Component and attaches it to the View Container
   /// found at the `location` specified as [ViewContainerRef].
@@ -124,7 +124,7 @@ class DynamicComponentLoader_ extends DynamicComponentLoader {
   Future<ComponentRef> loadAsRoot(Type type, Injector injector,
       {String overrideSelector,
       OnDestroyCallback onDestroy,
-      List<List<dynamic>> projectableNodes}) {
+      List<List> projectableNodes}) {
     return this._compiler.resolveComponent(type).then((componentFactory) {
       var componentRef = componentFactory.create(injector, projectableNodes,
           overrideSelector ?? componentFactory.selector);
@@ -139,7 +139,7 @@ class DynamicComponentLoader_ extends DynamicComponentLoader {
   Future<ComponentRef> loadAsRootIntoNode(Type type, Injector injector,
       {Node overrideNode,
       OnDestroyCallback onDestroy,
-      List<List<dynamic>> projectableNodes}) {
+      List<List> projectableNodes}) {
     return this._compiler.resolveComponent(type).then((componentFactory) {
       var componentRef = componentFactory.loadIntoNode(
           injector, projectableNodes, overrideNode);

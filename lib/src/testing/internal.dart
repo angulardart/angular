@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:angular2/core.dart' show PLATFORM_INITIALIZER;
+import 'package:angular2/di.dart' show Injector, provide, Provider;
 import 'package:angular2/platform/testing/browser.dart';
-import 'package:angular2/src/core/di/provider.dart' show provide, Provider;
 import 'package:angular2/src/core/reflection/reflection.dart';
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
+import 'package:angular2/src/core/linker/app_view_utils.dart';
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import 'package:test/test.dart';
 
+import 'package:test/test.dart';
 import "internal_injector.dart";
 
 export "fake_async.dart";
@@ -49,8 +50,11 @@ Future<dynamic> inject(List<dynamic> tokens, Function fn) async {
     if (_extraPerTestProviders != null)
       _testInjector.addProviders(_extraPerTestProviders);
   }
-
   _inTest = true;
+  _testInjector
+      .execute(new FunctionWithParamTokens([Injector], (Injector injector) {
+    appViewUtils = injector.get(AppViewUtils);
+  }));
   _testInjector.execute(funcWithParams);
   _inTest = false;
   if (AsyncTestCompleter.currentTestFuture != null) {

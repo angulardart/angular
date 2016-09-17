@@ -7,7 +7,7 @@ import 'app_element.dart';
 import 'app_view.dart';
 import 'element_ref.dart' show ElementRef;
 import 'view_ref.dart' show ViewRef;
-import 'view_utils.dart' show OnDestroyCallback, ViewUtils;
+import 'app_view_utils.dart' show OnDestroyCallback;
 
 /// Represents an instance of a Component created via a [ComponentFactory].
 ///
@@ -103,23 +103,19 @@ class ComponentFactory {
   /// Creates a new component.
   ComponentRef create(Injector injector,
       [List<List> projectableNodes, String selector]) {
-    ViewUtils vu = injector.get(ViewUtils);
     projectableNodes ??= [];
-
     // Note: Host views don't need a declarationAppElement!
-    AppView hostView = _viewFactory(vu, injector, null);
+    AppView hostView = _viewFactory(injector, null);
     var hostElement = hostView.create(projectableNodes, selector);
     return new ComponentRef_(hostElement, this.componentType, this.metadata);
   }
 
-  /// Creates a component hosted on the provided node.
   ComponentRef loadIntoNode(Injector injector,
-      [List<List> projectableNodes, Node node]) {
-    ViewUtils vu = injector.get(ViewUtils);
-    projectableNodes ??= const [];
+      [List<List<dynamic>> projectableNodes, Node node]) {
+    projectableNodes ??= [];
 
     // Note: Host views don't need a declarationAppElement!
-    AppView hostView = _viewFactory(vu, injector, null);
+    AppView hostView = _viewFactory(injector, null);
     var hostElement = hostView.create(projectableNodes, node);
     return new ComponentRef_(hostElement, this.componentType, this.metadata);
   }
@@ -136,5 +132,4 @@ class ComponentFactory {
 ///        renderType_MyComponent = viewUtils.createRenderComponentType(....);
 ///        return new _View_MyComponent_Host0(parentInjector, declElement);
 ///     }
-typedef AppView NgViewFactory(
-    ViewUtils viewUtils, Injector injector, AppElement declarationElement);
+typedef AppView NgViewFactory(Injector injector, AppElement declarationElement);

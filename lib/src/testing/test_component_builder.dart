@@ -12,7 +12,7 @@ import "package:angular2/core.dart"
         ChangeDetectorRef;
 import "package:angular2/src/debug/debug_node.dart"
     show DebugElement, getDebugNode;
-import "package:angular2/src/core/linker/view_utils.dart";
+import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
@@ -52,7 +52,7 @@ class ComponentFixture {
 
   /// Trigger a change detection cycle for the component.
   void detectChanges([bool checkForNoChanges = true]) {
-    ViewUtils.resetChangeDetection();
+    AppViewUtils.resetChangeDetection();
     changeDetectorRef.detectChanges();
     if (checkForNoChanges) {
       checkNoChanges();
@@ -160,7 +160,7 @@ class TestComponentBuilder {
 
   /// Builds and returns a ComponentFixture.
   Future<ComponentFixture> createAsync(Type rootComponentType) {
-    ViewUtils.resetChangeDetection();
+    AppViewUtils.resetChangeDetection();
     var mockDirectiveResolver = _injector.get(DirectiveResolver);
     var mockViewResolver = _injector.get(ViewResolver);
     _viewOverrides
@@ -186,6 +186,7 @@ class TestComponentBuilder {
     }
     DOM.appendChild(doc.body, rootEl);
     DynamicComponentLoader loader = _injector.get(DynamicComponentLoader);
+    appViewUtils = _injector.get(AppViewUtils);
     Future<ComponentRef> promise = loader.loadAsRoot(
         rootComponentType, _injector,
         overrideSelector: '#${rootElId}');

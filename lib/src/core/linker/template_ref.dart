@@ -22,10 +22,8 @@ class TemplateRef {
   TemplateRef(this._appElement, this._viewFactory);
 
   EmbeddedViewRef createEmbeddedView() {
-    AppView<dynamic> view = this._viewFactory(
-        this._appElement.parentView.viewUtils,
-        this._appElement.parentInjector,
-        this._appElement);
+    AppView<dynamic> view =
+        this._viewFactory(this._appElement.parentInjector, this._appElement);
     view.create(null, null);
     return view.ref;
   }

@@ -12,7 +12,7 @@ import "linker/component_resolver.dart" show ComponentResolver;
 import "linker/component_resolver.dart" show ReflectorComponentResolver;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoader;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoader_;
-import "linker/view_utils.dart" show ViewUtils;
+import "linker/app_view_utils.dart" show AppViewUtils;
 
 Type ___unused;
 /**
@@ -24,7 +24,7 @@ const List<dynamic /* Type | Provider | List < dynamic > */ >
   APPLICATION_CORE_PROVIDERS,
   const Provider(ComponentResolver, useClass: ReflectorComponentResolver),
   APP_ID_RANDOM_PROVIDER,
-  ViewUtils,
+  AppViewUtils,
   const Provider(IterableDiffers, useValue: defaultIterableDiffers),
   const Provider(KeyValueDiffers, useValue: defaultKeyValueDiffers),
   const Provider(DynamicComponentLoader, useClass: DynamicComponentLoader_)

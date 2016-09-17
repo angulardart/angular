@@ -11,6 +11,7 @@ import "offline_compiler_codegen_typed.dart" as typed;
 import "package:angular2/src/platform/dom/shared_styles_host.dart"
     show sharedStylesHost;
 import "offline_compiler_util.dart" show CompA;
+
 import 'package:test/test.dart';
 
 main() {

@@ -15,7 +15,8 @@ import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
 import 'view_ref.dart' show ViewRef_;
 import 'view_type.dart' show ViewType;
-import 'view_utils.dart' show ViewUtils, ensureSlotCount, OnDestroyCallback;
+import 'app_view_utils.dart'
+    show appViewUtils, ensureSlotCount, OnDestroyCallback;
 
 const EMPTY_CONTEXT = const Object();
 
@@ -25,7 +26,6 @@ abstract class AppView<T> {
   RenderComponentType componentType;
   ViewType type;
   Map<String, dynamic> locals;
-  ViewUtils viewUtils;
   Injector parentInjector;
   AppElement declarationAppElement;
   ChangeDetectionStrategy _cdMode;
@@ -56,18 +56,11 @@ abstract class AppView<T> {
   bool destroyed = false;
   Renderer renderer;
   bool _hasExternalHostElement;
-  AppView(
-      this.clazz,
-      this.componentType,
-      this.type,
-      this.locals,
-      this.viewUtils,
-      this.parentInjector,
-      this.declarationAppElement,
-      this._cdMode) {
+  AppView(this.clazz, this.componentType, this.type, this.locals,
+      this.parentInjector, this.declarationAppElement, this._cdMode) {
     this.ref = new ViewRef_(this);
     if (identical(type, ViewType.COMPONENT) || identical(type, ViewType.HOST)) {
-      this.renderer = viewUtils.renderComponent(componentType);
+      this.renderer = appViewUtils.renderComponent(componentType);
     } else {
       this.renderer = declarationAppElement.parentView.renderer;
     }

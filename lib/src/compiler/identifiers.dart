@@ -12,9 +12,9 @@ import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjector, CodegenInjectorFactory;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/core/linker/view_utils.dart"
+import "package:angular2/src/core/linker/app_view_utils.dart"
     show
-        ViewUtils,
+        AppViewUtils,
         interpolate,
         interpolate0,
         checkBinding,
@@ -42,15 +42,14 @@ import "compile_metadata.dart"
 var APP_VIEW_MODULE_URL = "asset:angular2/lib/src/core/linker/app_view.dart";
 var DEBUG_APP_VIEW_MODULE_URL =
     "asset:angular2/lib/src/debug/debug_app_view.dart";
-var VIEW_UTILS_MODULE_URL =
-    "asset:angular2/lib/src/core/linker/view_utils.dart";
+var APP_VIEW_UTILS_MODULE_URL =
+    "asset:angular2/lib/src/core/linker/app_view_utils.dart";
 var CD_MODULE_URL =
     "asset:angular2/lib/src/core/change_detection/change_detection.dart";
 
 // Reassign the imports to different variables so we can
 // define static variables with the name of the import.
 
-var impViewUtils = ViewUtils;
 var impElementRef = ElementRef;
 var impChangeDetectorRef = ChangeDetectorRef;
 var impRenderComponentType = RenderComponentType;
@@ -67,7 +66,7 @@ var impUninitialized = uninitialized;
 var impChangeDetectorState = ChangeDetectorState;
 var impDevModeEqual = devModeEqual;
 var impInterpolate0 = interpolate0;
-var impThrowOnChanges = () => ViewUtils.throwOnChanges;
+var impThrowOnChanges = () => AppViewUtils.throwOnChanges;
 var impInterpolate = interpolate;
 var impCheckBinding = checkBinding;
 var impCastByValue = castByValue;
@@ -76,10 +75,9 @@ var impEMPTY_ARRAY = EMPTY_ARRAY;
 var impEMPTY_MAP = EMPTY_MAP;
 
 class Identifiers {
-  static final ViewUtils = new CompileIdentifierMetadata(
-      name: "ViewUtils",
-      moduleUrl: 'asset:angular2/lib/src/core/linker/view_utils.dart',
-      runtime: impViewUtils);
+  static final appViewUtils = new CompileIdentifierMetadata(
+      name: "appViewUtils",
+      moduleUrl: 'asset:angular2/lib/src/core/linker/app_view_utils.dart');
   static final AppView = new CompileIdentifierMetadata(
       name: "AppView", moduleUrl: APP_VIEW_MODULE_URL);
   static final DebugAppView = new CompileIdentifierMetadata(
@@ -167,7 +165,7 @@ class Identifiers {
       runtime: impChangeDetectorState);
   static final checkBinding = new CompileIdentifierMetadata(
       name: "checkBinding",
-      moduleUrl: VIEW_UTILS_MODULE_URL,
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impCheckBinding);
   static final flattenNestedViewRenderNodes = new CompileIdentifierMetadata(
       name: "flattenNestedViewRenderNodes", moduleUrl: APP_VIEW_MODULE_URL);
@@ -177,70 +175,70 @@ class Identifiers {
   /// String interpolation where prefix,suffix are empty
   /// (most common case).
   static final throwOnChanges = new CompileIdentifierMetadata(
-      name: "ViewUtils.throwOnChanges",
-      moduleUrl: VIEW_UTILS_MODULE_URL,
+      name: "AppViewUtils.throwOnChanges",
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtimeCallback: impThrowOnChanges);
   static final interpolate0 = new CompileIdentifierMetadata(
       name: "interpolate0",
-      moduleUrl: VIEW_UTILS_MODULE_URL,
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impInterpolate0);
   static final interpolate = new CompileIdentifierMetadata(
       name: "interpolate",
-      moduleUrl: VIEW_UTILS_MODULE_URL,
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impInterpolate);
   static final castByValue = new CompileIdentifierMetadata(
       name: "castByValue",
-      moduleUrl: VIEW_UTILS_MODULE_URL,
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impCastByValue);
   static final EMPTY_ARRAY = new CompileIdentifierMetadata(
       name: "EMPTY_ARRAY",
-      moduleUrl: VIEW_UTILS_MODULE_URL,
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impEMPTY_ARRAY);
   static final EMPTY_MAP = new CompileIdentifierMetadata(
       name: "EMPTY_MAP",
-      moduleUrl: VIEW_UTILS_MODULE_URL,
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impEMPTY_MAP);
   static final pureProxies = [
     null,
     new CompileIdentifierMetadata(
         name: "pureProxy1",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy1),
     new CompileIdentifierMetadata(
         name: "pureProxy2",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy2),
     new CompileIdentifierMetadata(
         name: "pureProxy3",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy3),
     new CompileIdentifierMetadata(
         name: "pureProxy4",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy4),
     new CompileIdentifierMetadata(
         name: "pureProxy5",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy5),
     new CompileIdentifierMetadata(
         name: "pureProxy6",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy6),
     new CompileIdentifierMetadata(
         name: "pureProxy7",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy7),
     new CompileIdentifierMetadata(
         name: "pureProxy8",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy8),
     new CompileIdentifierMetadata(
         name: "pureProxy9",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy9),
     new CompileIdentifierMetadata(
         name: "pureProxy10",
-        moduleUrl: VIEW_UTILS_MODULE_URL,
+        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
         runtime: pureProxy10)
   ];
   // Runtime is initialized by output interpreter. Compiler executes in VM and

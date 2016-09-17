@@ -8,7 +8,6 @@ import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
-import "package:angular2/src/core/linker/view_utils.dart";
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
@@ -245,9 +244,8 @@ class CompiledTemplate {
   NgViewFactory proxyViewFactory;
 
   CompiledTemplate() {
-    proxyViewFactory =
-        (ViewUtils viewUtils, Injector childInjector, AppElement contextEl) =>
-            viewFactory(viewUtils, childInjector, contextEl);
+    proxyViewFactory = (Injector childInjector, AppElement contextEl) =>
+        viewFactory(childInjector, contextEl);
   }
   void init(NgViewFactory factory) {
     viewFactory = factory;

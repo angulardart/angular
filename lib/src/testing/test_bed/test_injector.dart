@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:angular2/angular2.dart';
 import 'package:angular2/platform/browser_static.dart';
 import 'package:angular2/src/core/application_ref.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart';
 
 /// Test fixture facade into Angular dependency injection.
 class TestInjector {
@@ -39,6 +40,8 @@ class TestInjector {
     ApplicationRefImpl appRef = _get(ApplicationRef);
     return appRef.run(() {
       DynamicComponentLoader componentLoader = _get(DynamicComponentLoader);
+      // TODO(ferhat): move into common app initialization.
+      appViewUtils = _get(AppViewUtils);
       return componentLoader
           .loadAsRoot(componentType, _appInjector,
               overrideSelector: 'ng-test-root')

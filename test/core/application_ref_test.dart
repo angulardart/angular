@@ -30,6 +30,8 @@ import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, ComponentRef_, ComponentRef;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
+import "package:angular2/src/core/linker/app_view_utils.dart" show AppViewUtils;
+import "package:angular2/src/platform/browser_common.dart";
 import "package:angular2/src/facade/exception_handler.dart"
     show ExceptionHandler;
 import 'package:test/test.dart';
@@ -47,6 +49,7 @@ main() {
     tearDown(() {
       disposePlatform();
     });
+
     ApplicationRefImpl createApplication(List<dynamic> providers) {
       platform = createPlatform(
           ReflectiveInjector.resolveAndCreate(PLATFORM_CORE_PROVIDERS));
@@ -54,6 +57,7 @@ main() {
           new _MockComponentRef(ReflectiveInjector.resolveAndCreate([])));
       var appInjector = ReflectiveInjector.resolveAndCreate([
         APPLICATION_CORE_PROVIDERS,
+        BROWSER_APP_COMMON_PROVIDERS,
         new Provider(Console, useValue: new _MockConsole()),
         new Provider(ExceptionHandler,
             useValue: new ExceptionHandler(errorLogger, false)),
@@ -61,6 +65,7 @@ main() {
             useValue: new _MockComponentResolver(someCompFactory)),
         providers
       ], platform.injector);
+      appInjector.get(AppViewUtils);
       return appInjector.get(ApplicationRef);
     }
 

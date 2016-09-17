@@ -338,11 +338,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       compViewExpr = o.variable('compView_${nodeIndex}');
       compileElement.setComponentView(compViewExpr);
       this.view.createMethod.addStmt(compViewExpr
-          .set(o.importExpr(nestedComponentIdentifier).callFn([
-            ViewProperties.viewUtils,
-            compileElement.injector,
-            compileElement.appElement
-          ]))
+          .set(o
+              .importExpr(nestedComponentIdentifier)
+              .callFn([compileElement.injector, compileElement.appElement]))
           .toDeclStmt());
     }
     compileElement.beforeChildren();
@@ -580,8 +578,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
       .map((List entry) => [entry[0], o.NULL_EXPR])
       .toList();
   var viewConstructorArgs = [
-    new o.FnParam(ViewConstructorVars.viewUtils.name,
-        o.importType(Identifiers.ViewUtils)),
     new o.FnParam(ViewConstructorVars.parentInjector.name,
         o.importType(Identifiers.Injector)),
     new o.FnParam(ViewConstructorVars.declarationEl.name,
@@ -592,7 +588,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
     renderCompTypeVar,
     ViewTypeEnum.fromValue(view.viewType),
     o.literalMap(emptyTemplateVariableBindings),
-    ViewConstructorVars.viewUtils,
     ViewConstructorVars.parentInjector,
     ViewConstructorVars.declarationEl,
     ChangeDetectionStrategyEnum.fromValue(getChangeDetectionMode(view))
@@ -643,8 +638,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
 o.Statement createViewFactory(
     CompileView view, o.ClassStmt viewClass, o.ReadVarExpr renderCompTypeVar) {
   var viewFactoryArgs = [
-    new o.FnParam(ViewConstructorVars.viewUtils.name,
-        o.importType(Identifiers.ViewUtils)),
     new o.FnParam(ViewConstructorVars.parentInjector.name,
         o.importType(Identifiers.Injector)),
     new o.FnParam(ViewConstructorVars.declarationEl.name,
@@ -662,7 +655,8 @@ o.Statement createViewFactory(
     initRenderCompTypeStmts = [
       new o.IfStmt(renderCompTypeVar.identical(o.NULL_EXPR), [
         renderCompTypeVar
-            .set(ViewConstructorVars.viewUtils
+            .set(o
+                .importExpr(Identifiers.appViewUtils)
                 .callMethod("createRenderComponentType", [
               o.literal(templateUrlInfo),
               o.literal(view.component.template.ngContentSelectors.length),

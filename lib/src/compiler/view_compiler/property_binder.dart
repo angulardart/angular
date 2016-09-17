@@ -20,7 +20,7 @@ import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
-import 'constants.dart' show DetectChangesVars, ViewProperties;
+import 'constants.dart' show DetectChangesVars;
 
 o.ReadPropExpr createBindFieldExpr(num exprIndex) {
   return o.THIS_EXPR.prop('_expr_${ exprIndex}');
@@ -223,7 +223,7 @@ o.Expression sanitizedValue(
       throw new ArgumentError('internal error, unexpected '
           'TemplateSecurityContext ${boundProp.securityContext}.');
   }
-  var ctx = ViewProperties.viewUtils.prop('sanitizer');
+  var ctx = o.importExpr(Identifiers.appViewUtils).prop('sanitizer');
   return ctx.callMethod(methodName, [renderValue]);
 }
 

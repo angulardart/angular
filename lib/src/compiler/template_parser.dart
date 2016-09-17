@@ -4,7 +4,7 @@ import "package:angular2/src/compiler/schema/element_schema_registry.dart"
 import "package:angular2/src/compiler/selector.dart"
     show CssSelector, SelectorMatcher;
 import "package:angular2/src/core/console.dart" show Console;
-import "package:angular2/src/core/linker/view_utils.dart"
+import "package:angular2/src/core/linker/app_view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show jsSplit;

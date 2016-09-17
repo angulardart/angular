@@ -1,25 +1,30 @@
-import "package:angular2/src/core/application_tokens.dart" show APP_ID;
-import "package:angular2/src/core/change_detection/change_detection.dart"
+import 'package:angular2/src/core/application_tokens.dart' show APP_ID;
+import 'package:angular2/di.dart' show Injectable, Inject;
+import 'package:angular2/src/core/change_detection/change_detection.dart'
     show devModeEqual, uninitialized;
-import "package:angular2/src/core/di.dart" show Inject, Injectable;
-import "package:angular2/src/core/security.dart" show SafeValue;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/core/render/api.dart"
+import 'package:angular2/src/core/security.dart' show SafeValue;
+import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular2/src/core/render/api.dart'
     show RootRenderer, RenderComponentType, Renderer;
 import 'package:angular2/src/core/security.dart';
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show looseIdentical;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:angular2/src/facade/lang.dart' show looseIdentical;
 
-import "exceptions.dart" show ExpressionChangedAfterItHasBeenCheckedException;
+import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 
 /// Function called when a view is destroyed.
 typedef void OnDestroyCallback();
 
+/// Application wide view utilitizes.
+AppViewUtils appViewUtils;
+
+/// Utilities to create unique RenderComponentType instances for AppViews and
+/// provide access to root dom renderer.
 @Injectable()
-class ViewUtils {
+class AppViewUtils {
   RootRenderer _renderer;
   String _appId;
-  num _nextCompTypeId = 0;
+  static int _nextCompTypeId = 0;
 
   /// Whether change detection should throw an exception when a change is
   /// detected.
@@ -29,7 +34,7 @@ class ViewUtils {
   static int _throwOnChangesCounter = 0;
   SanitizationService sanitizer;
 
-  ViewUtils(this._renderer, @Inject(APP_ID) this._appId, this.sanitizer);
+  AppViewUtils(this._renderer, @Inject(APP_ID) this._appId, this.sanitizer);
 
   /// Used by the generated code.
   RenderComponentType createRenderComponentType(
@@ -219,12 +224,10 @@ String interpolate(num valueCount, String c0, dynamic a1, String c1,
   }
 }
 
-String _toStringWithNull(dynamic v) {
-  return v != null ? v.toString() : "";
-}
+String _toStringWithNull(dynamic v) => v?.toString() ?? '';
 
 bool checkBinding(dynamic oldValue, dynamic newValue) {
-  if (ViewUtils.throwOnChanges) {
+  if (AppViewUtils.throwOnChanges) {
     if (!devModeEqual(oldValue, newValue)) {
       throw new ExpressionChangedAfterItHasBeenCheckedException(
           oldValue, newValue, null);
