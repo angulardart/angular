@@ -45,26 +45,30 @@ o.Expression getPropertyInView(
   if (identical(callingView, definedView)) {
     return property;
   } else {
-    o.Expression viewProp = o.THIS_EXPR;
+    o.Expression viewProp;
     CompileView currView = callingView;
     while (!identical(currView, definedView) &&
         currView.declarationElement.view != null) {
       currView = currView.declarationElement.view;
-      viewProp = viewProp.prop("parent");
+      viewProp = viewProp == null
+          ? new o.ReadClassMemberExpr('parent')
+          : viewProp.prop('parent');
     }
     if (!identical(currView, definedView)) {
       throw new BaseException(
           '''Internal error: Could not calculate a property in a parent view: ${ property}''');
     }
-    if (property is o.ReadPropExpr) {
-      o.ReadPropExpr readPropExpr = property;
+    if (property is o.ReadClassMemberExpr) {
+      o.ReadClassMemberExpr readMemberExpr = property;
       // Note: Don't cast for members of the AppView base class...
-      if (definedView.fields.any((field) => field.name == readPropExpr.name) ||
-          definedView.getters.any((field) => field.name == readPropExpr.name)) {
+      if (definedView.fields
+              .any((field) => field.name == readMemberExpr.name) ||
+          definedView.getters
+              .any((field) => field.name == readMemberExpr.name)) {
         viewProp = viewProp.cast(definedView.classType);
       }
     }
-    return o.replaceVarInExpression(o.THIS_EXPR.name, viewProp, property);
+    return o.replaceReadClassMemberInExpression(viewProp, property);
   }
 }
 
@@ -126,10 +130,10 @@ o.Expression convertValueToOutputAst(dynamic value) {
   }
 }
 
-createPureProxy(o.Expression fn, num argCount, o.ReadPropExpr pureProxyProp,
-    CompileView view) {
-  view.fields.add(
-      new o.ClassField(pureProxyProp.name, null, [o.StmtModifier.Private]));
+createPureProxy(o.Expression fn, num argCount,
+    o.ReadClassMemberExpr pureProxyProp, CompileView view) {
+  view.fields.add(new o.ClassField(pureProxyProp.name,
+      modifiers: const [o.StmtModifier.Private]));
   var pureProxyId = argCount < Identifiers.pureProxies.length
       ? Identifiers.pureProxies[argCount]
       : null;

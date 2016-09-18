@@ -267,16 +267,22 @@ main() {
                 [new o.ClassField("someField")], [], null, [])),
             ["class SomeClass {", "  var someField;", "}"].join("\n"));
         expect(
-            emitStmt(new o.ClassStmt("SomeClass", null,
-                [new o.ClassField("someField", o.INT_TYPE)], [], null, [])),
+            emitStmt(new o.ClassStmt(
+                "SomeClass",
+                null,
+                [new o.ClassField("someField", outputType: o.INT_TYPE)],
+                [],
+                null,
+                [])),
             ["class SomeClass {", "  int someField;", "}"].join("\n"));
         expect(
             emitStmt(new o.ClassStmt(
                 "SomeClass",
                 null,
                 [
-                  new o.ClassField(
-                      "someField", o.INT_TYPE, [o.StmtModifier.Final])
+                  new o.ClassField("someField",
+                      outputType: o.INT_TYPE,
+                      modifiers: const [o.StmtModifier.Final])
                 ],
                 [],
                 null,

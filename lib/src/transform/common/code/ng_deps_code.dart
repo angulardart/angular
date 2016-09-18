@@ -115,17 +115,13 @@ class NgDepsWriter extends Object
 }
 
 const _ignoredProblems = const <String>[
-  'always_declare_return_types',
   'annotate_overrides',
-  'camel_case_types',
   'cancel_subscriptions',
   'constant_identifier_names',
   'non_constant_identifier_names',
   'implementation_imports',
   'library_prefixes',
-  'prefer_is_not_empty',
   'type_annotate_public_apis',
-  'DEPRECATED_MEMBER_USE',
   'STRONG_MODE_DOWN_CAST_COMPOSITE',
   'UNUSED_IMPORT',
   'UNUSED_SHOWN_NAME',

@@ -148,7 +148,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // Otherwise we can create a local variable and not baloon class prototype.
     if (isBound) {
       view.fields.add(new o.ClassField(fieldName,
-          o.importType(Identifiers.HTML_TEXT_NODE), [o.StmtModifier.Private]));
+          outputType: o.importType(Identifiers.HTML_TEXT_NODE),
+          modifiers: const [o.StmtModifier.Private]));
       renderNode = new o.ReadClassMemberExpr(fieldName);
     } else {
       view.createMethod.addStmt(new o.DeclareVarStmt(
@@ -233,8 +234,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var elementType = isHostRootView
         ? Identifiers.HTML_ELEMENT
         : identifierFromTagName(ast.name);
-    view.fields.add(new o.ClassField(
-        fieldName, o.importType(elementType), [o.StmtModifier.Private]));
+    view.fields.add(new o.ClassField(fieldName,
+        outputType: o.importType(elementType),
+        modifiers: const [o.StmtModifier.Private]));
 
     var debugContextExpr =
         this.view.createMethod.resetDebugInfoExpr(nodeIndex, ast);
@@ -288,7 +290,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       }
     }
 
-    var renderNode = o.THIS_EXPR.prop(fieldName);
+    var renderNode = new o.ReadClassMemberExpr(fieldName);
 
     var directives =
         ast.directives.map((directiveAst) => directiveAst.directive).toList();
@@ -385,10 +387,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     CompileElement parent = context;
     var nodeIndex = this.view.nodes.length;
     var fieldName = '_anchor_${nodeIndex}';
-    this.view.fields.add(new o.ClassField(
-        fieldName,
-        o.importType(view.genConfig.renderTypes.renderComment),
-        [o.StmtModifier.Private]));
+    this.view.fields.add(new o.ClassField(fieldName,
+        outputType: o.importType(view.genConfig.renderTypes.renderComment),
+        modifiers: const [o.StmtModifier.Private]));
     // Create a comment to serve as anchor for template.
     var anchorFieldExpr = new o.ReadClassMemberExpr(fieldName);
     var createAnchorNodeExpr = new o.WriteClassMemberExpr(
@@ -406,7 +407,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     view.createMethod
         .addStmt(createDbgElementCall(anchorFieldExpr, nodeIndex, ast));
 
-    var renderNode = o.THIS_EXPR.prop(fieldName);
+    var renderNode = new o.ReadClassMemberExpr(fieldName);
     var templateVariableBindings = ast.variables
         .map((VariableAst varAst) => [
               varAst.value.length > 0 ? varAst.value : IMPLICIT_TEMPLATE_VAR,
@@ -714,10 +715,7 @@ List<o.Statement> generateCreateMethod(CompileView view) {
       o.THIS_EXPR.callMethod("init", [
         createFlatArray(view.rootNodesOrAppElements),
         o.literalArr(view.nodes.map((node) {
-          if (node is CompileElement) {
-            return new o.ReadClassMemberExpr(node.renderNodeFieldName);
-          } else
-            return node.renderNode;
+          return node.renderNode;
         }).toList()),
         o.literalArr(view.subscriptions)
       ]).toStmt(),

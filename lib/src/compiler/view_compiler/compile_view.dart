@@ -1,23 +1,23 @@
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
+import 'package:angular2/src/core/linker/view_type.dart' show ViewType;
 
-import "../compile_metadata.dart"
+import '../compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompilePipeMetadata,
         CompileIdentifierMetadata,
         CompileTokenMap;
-import "../config.dart" show CompilerConfig;
-import "../identifiers.dart" show Identifiers;
-import "../output/output_ast.dart" as o;
-import "compile_binding.dart" show CompileBinding;
-import "compile_element.dart" show CompileElement, CompileNode;
-import "compile_method.dart" show CompileMethod;
-import "compile_pipe.dart" show CompilePipe;
-import "compile_query.dart"
+import '../config.dart' show CompilerConfig;
+import '../identifiers.dart' show Identifiers;
+import '../output/output_ast.dart' as o;
+import 'compile_binding.dart' show CompileBinding;
+import 'compile_element.dart' show CompileElement, CompileNode;
+import 'compile_method.dart' show CompileMethod;
+import 'compile_pipe.dart' show CompilePipe;
+import 'compile_query.dart'
     show CompileQuery, createQueryList, addQueryToTokenMap;
-import "constants.dart" show EventHandlerVars;
-import "expression_converter.dart" show NameResolver;
-import "view_compiler_utils.dart"
+import 'constants.dart' show EventHandlerVars;
+import 'expression_converter.dart' show NameResolver;
+import 'view_compiler_utils.dart'
     show getViewFactoryName, getPropertyInView, createPureProxy;
 
 class CompileView implements NameResolver {
@@ -72,7 +72,7 @@ class CompileView implements NameResolver {
     this.afterViewLifecycleCallbacksMethod = new CompileMethod(this);
     this.destroyMethod = new CompileMethod(this);
     this.viewType = getViewType(component, viewIndex);
-    this.className = '_View_${component.type.name}${viewIndex}';
+    this.className = 'View${component.type.name}${viewIndex}';
     this.classType =
         o.importType(new CompileIdentifierMetadata(name: this.className));
     this.viewFactory = o.variable(getViewFactoryName(component, viewIndex));
@@ -84,12 +84,12 @@ class CompileView implements NameResolver {
     }
     var viewQueries = new CompileTokenMap<List<CompileQuery>>();
     if (identical(this.viewType, ViewType.COMPONENT)) {
-      var directiveInstance = o.THIS_EXPR.prop("context");
+      var directiveInstance = new o.ReadClassMemberExpr('ctx');
       var queryIndex = -1;
       this.component.viewQueries.forEach((queryMeta) {
         queryIndex++;
         var propName =
-            '''_viewQuery_${ queryMeta . selectors [ 0 ] . name}_${ queryIndex}''';
+            '_viewQuery_${queryMeta.selectors[0].name}_${queryIndex}';
         var queryList =
             createQueryList(queryMeta, directiveInstance, propName, this);
         var query =
@@ -99,9 +99,8 @@ class CompileView implements NameResolver {
       var constructorViewQueryCount = 0;
       this.component.type.diDeps.forEach((dep) {
         if (dep.viewQuery != null) {
-          var queryList = o.THIS_EXPR
-              .prop("declarationAppElement")
-              .prop("componentConstructorViewQueries")
+          var queryList = new o.ReadClassMemberExpr('declarationAppElement')
+              .prop('componentConstructorViewQueries')
               .key(o.literal(constructorViewQueryCount++));
           var query = new CompileQuery(dep.viewQuery, queryList, null, this);
           addQueryToTokenMap(viewQueries, query);
@@ -111,7 +110,7 @@ class CompileView implements NameResolver {
     this.viewQueries = viewQueries;
     templateVariableBindings.forEach((entry) {
       this.locals[entry[1]] =
-          o.THIS_EXPR.prop("locals").key(o.literal(entry[0]));
+          new o.ReadClassMemberExpr('locals').key(o.literal(entry[0]));
     });
     if (this.declarationElement.hasRenderNode) {
       this.declarationElement.setEmbeddedView(this);
@@ -144,11 +143,11 @@ class CompileView implements NameResolver {
       return o.importExpr(Identifiers.EMPTY_ARRAY);
     }
     var proxyExpr =
-        o.THIS_EXPR.prop('''_arr_${ this . literalArrayCount ++}''');
+        new o.ReadClassMemberExpr('_arr_${ this . literalArrayCount ++}');
     List<o.FnParam> proxyParams = [];
     List<o.Expression> proxyReturnEntries = [];
     for (var i = 0; i < values.length; i++) {
-      var paramName = '''p${ i}''';
+      var paramName = 'p${ i}';
       proxyParams.add(new o.FnParam(paramName));
       proxyReturnEntries.add(o.variable(paramName));
     }
@@ -168,12 +167,12 @@ class CompileView implements NameResolver {
     if (identical(entries.length, 0)) {
       return o.importExpr(Identifiers.EMPTY_MAP);
     }
-    var proxyExpr = o.THIS_EXPR.prop('''_map_${ this . literalMapCount ++}''');
+    var proxyExpr = new o.ReadClassMemberExpr('_map_${this.literalMapCount++}');
     List<o.FnParam> proxyParams = [];
     List<List<dynamic /* String | o . Expression */ >> proxyReturnEntries = [];
     List<o.Expression> values = [];
     for (var i = 0; i < entries.length; i++) {
-      var paramName = '''p${ i}''';
+      var paramName = 'p${i}';
       proxyParams.add(new o.FnParam(paramName));
       proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
       values.add((entries[i][1] as o.Expression));

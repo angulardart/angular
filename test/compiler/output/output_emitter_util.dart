@@ -232,9 +232,9 @@ List<o.Statement> codegenStmts = [
       "DynamicClass",
       o.importExpr(testDataIdentifier),
       [
-        new o.ClassField("dynamicProp", o.DYNAMIC_TYPE),
-        new o.ClassField("dynamicChangeable", o.DYNAMIC_TYPE),
-        new o.ClassField("closure", o.FUNCTION_TYPE)
+        new o.ClassField("dynamicProp", outputType: o.DYNAMIC_TYPE),
+        new o.ClassField("dynamicChangeable", outputType: o.DYNAMIC_TYPE),
+        new o.ClassField("closure", outputType: o.FUNCTION_TYPE)
       ],
       [
         new o.ClassGetter(

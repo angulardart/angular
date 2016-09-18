@@ -42,7 +42,7 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
     dbgElm(_text_0, 0, 0, 0);
-    this._expr_0 = import9.uninitialized;
+    _expr_0 = import9.uninitialized;
     this.init([], [this._text_0], []);
     return null;
   }
@@ -51,8 +51,8 @@ class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
     this.detectContentChildrenChanges();
     dbg(0, 0, 0);
     final currVal_0 =
-        import5.interpolate(1, 'Hello World ', this.context.user, '!');
-    if (import5.checkBinding(this._expr_0, currVal_0)) {
+        import5.interpolate(1, 'Hello World ', this.ctx.user, '!');
+    if (import5.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }

@@ -22,18 +22,16 @@ import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
 
-o.ReadPropExpr createBindFieldExpr(num exprIndex) {
-  return o.THIS_EXPR.prop('_expr_${ exprIndex}');
-}
+o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
+    new o.ReadClassMemberExpr('_expr_${exprIndex}');
 
-o.ReadVarExpr createCurrValueExpr(num exprIndex) {
-  return o.variable('currVal_${ exprIndex}');
-}
+o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
+    o.variable('currVal_${exprIndex}');
 
 void bind(
     CompileView view,
     o.ReadVarExpr currValExpr,
-    o.ReadPropExpr fieldExpr,
+    o.ReadClassMemberExpr fieldExpr,
     ast.AST parsedExpression,
     o.Expression context,
     List<o.Statement> actions,
@@ -44,11 +42,9 @@ void bind(
     // e.g. an empty expression was given
     return;
   }
-  view.fields
-      .add(new o.ClassField(fieldExpr.name, null, [o.StmtModifier.Private]));
-  view.createMethod.addStmt(new o.WriteClassMemberExpr(
-          fieldExpr.name, o.importExpr(Identifiers.uninitialized))
-      .toStmt());
+  view.fields.add(new o.ClassField(fieldExpr.name,
+      modifiers: const [o.StmtModifier.Private],
+      initializer: o.importExpr(Identifiers.uninitialized)));
   if (checkExpression.needsValueUnwrapper) {
     var initValueUnwrapperStmt =
         DetectChangesVars.valUnwrapper.callMethod('reset', []).toStmt();
@@ -86,15 +82,8 @@ bindRenderText(
       currValExpr,
       valueField,
       boundText.value,
-      o.THIS_EXPR.prop('context'),
-      [
-        (compileNode is CompileElement
-                ? new o.ReadClassMemberExpr(compileNode.renderNodeFieldName)
-                    .prop('text')
-                    .set(currValExpr)
-                : compileNode.renderNode.prop('text').set(currValExpr))
-            .toStmt()
-      ],
+      new o.ReadClassMemberExpr('ctx'),
+      [compileNode.renderNode.prop('text').set(currValExpr).toStmt()],
       view.detectChangesRenderPropertiesMethod);
 }
 
@@ -170,7 +159,7 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
         renderMethod =
             compileElement.isHtmlElement ? 'updateClass' : 'updateElemClass';
         updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod, [
-          new o.ReadClassMemberExpr(compileElement.renderNodeFieldName),
+          compileElement.renderNode,
           o.literal(boundProp.name),
           renderValue
         ]).toStmt());
@@ -185,11 +174,10 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
               o.NULL_EXPR, styleValueExpr.plus(o.literal(boundProp.unit)));
         }
         // Call Element.style.setProperty(propName, value);
-        o.Expression updateStyleExpr =
-            new o.ReadClassMemberExpr(compileElement.renderNodeFieldName)
-                .prop('style')
-                .callMethod(
-                    'setProperty', [o.literal(boundProp.name), styleValueExpr]);
+        o.Expression updateStyleExpr = compileElement.renderNode
+            .prop('style')
+            .callMethod(
+                'setProperty', [o.literal(boundProp.name), styleValueExpr]);
         updateStmts.add(updateStyleExpr.toStmt());
         break;
     }
@@ -230,7 +218,7 @@ o.Expression sanitizedValue(
 void bindRenderInputs(
     List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {
   bindAndWriteToRenderer(
-      boundProps, o.THIS_EXPR.prop('context'), compileElement);
+      boundProps, new o.ReadClassMemberExpr('ctx'), compileElement);
 }
 
 void bindDirectiveHostProps(DirectiveAst directiveAst,
@@ -292,8 +280,14 @@ bindDirectiveInputs(DirectiveAst directiveAst, o.Expression directiveInstance,
       statements.add(logBindingUpdateStmt(
           compileElement.renderNode, input.directiveName, currValExpr));
     }
-    bind(view, currValExpr, fieldExpr, input.value, o.THIS_EXPR.prop('context'),
-        statements, detectChangesInInputsMethod);
+    bind(
+        view,
+        currValExpr,
+        fieldExpr,
+        input.value,
+        new o.ReadClassMemberExpr('ctx'),
+        statements,
+        detectChangesInInputsMethod);
   });
   if (isOnPushComp) {
     detectChangesInInputsMethod

@@ -1,11 +1,11 @@
-import "../compile_metadata.dart" show CompileDirectiveMetadata;
-import "../output/output_ast.dart" as o;
-import "../template_ast.dart" show BoundEventAst, DirectiveAst;
-import "compile_binding.dart" show CompileBinding;
-import "compile_element.dart" show CompileElement;
-import "compile_method.dart" show CompileMethod;
-import "constants.dart" show EventHandlerVars, ViewProperties;
-import "expression_converter.dart" show convertCdStatementToIr;
+import '../compile_metadata.dart' show CompileDirectiveMetadata;
+import '../output/output_ast.dart' as o;
+import '../template_ast.dart' show BoundEventAst, DirectiveAst;
+import 'compile_binding.dart' show CompileBinding;
+import 'compile_element.dart' show CompileElement;
+import 'compile_method.dart' show CompileMethod;
+import 'constants.dart' show EventHandlerVars, ViewProperties;
+import 'expression_converter.dart' show convertCdStatementToIr;
 
 class CompileEventListener {
   CompileElement compileElement;
@@ -44,7 +44,7 @@ class CompileEventListener {
       this._hasComponentHostListener = true;
     }
     this._method.resetDebugInfo(this.compileElement.nodeIndex, hostEvent);
-    var context = directiveInstance ?? o.THIS_EXPR.prop("context");
+    var context = directiveInstance ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(
         this.compileElement.view, context, hostEvent.handler);
     var lastIndex = actionStmts.length - 1;
@@ -67,14 +67,14 @@ class CompileEventListener {
 
   finishMethod() {
     var markPathToRootStart = this._hasComponentHostListener
-        ? this.compileElement.appElement.prop("componentView")
+        ? this.compileElement.appElement.prop('componentView')
         : o.THIS_EXPR;
     o.Expression resultExpr = o.literal(true);
     this._actionResultExprs.forEach((expr) {
       resultExpr = resultExpr.and(expr);
     });
     List<o.Statement> stmts = (new List.from((new List.from((<o.Statement>[
-      markPathToRootStart.callMethod("markPathToRootAsCheckOnce", []).toStmt()
+      markPathToRootStart.callMethod('markPathToRootAsCheckOnce', []).toStmt()
     ]))..addAll(this._method.finish())))
       ..addAll([new o.ReturnStatement(resultExpr)]));
     this.compileElement.view.eventHandlerMethods.add(new o.ClassMethod(
@@ -86,12 +86,11 @@ class CompileEventListener {
   }
 
   listenToRenderer() {
-    var eventListener = o.THIS_EXPR.callMethod("evt", [
-      o.THIS_EXPR
-          .prop(this._methodName)
+    var eventListener = new o.InvokeMemberMethodExpr('evt', [
+      new o.ReadClassMemberExpr(_methodName)
           .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
     ]);
-    o.Expression listenExpr = ViewProperties.renderer.callMethod("listen", [
+    o.Expression listenExpr = ViewProperties.renderer.callMethod('listen', [
       this.compileElement.renderNode,
       o.literal(this.eventName),
       eventListener
@@ -107,9 +106,8 @@ class CompileEventListener {
     var subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
-    var eventListener = o.THIS_EXPR.callMethod("evt", [
-      o.THIS_EXPR
-          .prop(this._methodName)
+    var eventListener = new o.InvokeMemberMethodExpr('evt', [
+      new o.ReadClassMemberExpr(_methodName)
           .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
     ]);
     this.compileElement.view.createMethod.addStmt(subscription
@@ -172,5 +170,5 @@ o.Expression convertStmtIntoExpression(o.Statement stmt) {
 }
 
 String sanitizeEventName(String name) {
-  return name.replaceAll(new RegExp(r'[^a-zA-Z_]'), "_");
+  return name.replaceAll(new RegExp(r'[^a-zA-Z_]'), '_');
 }

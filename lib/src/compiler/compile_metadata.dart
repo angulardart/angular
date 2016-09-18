@@ -712,7 +712,7 @@ CompileDirectiveMetadata createHostComponentMeta(
   return CompileDirectiveMetadata.create(
       type: new CompileTypeMetadata(
           runtime: Object,
-          name: '''${ componentType . name}_Host''',
+          name: '${componentType.name}Host',
           moduleUrl: componentType.moduleUrl,
           isHost: true),
       template: new CompileTemplateMetadata(

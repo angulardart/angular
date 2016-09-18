@@ -170,7 +170,12 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       field.type.visitType(this, ctx);
       ctx.print(' ');
     }
-    ctx.println('${ field . name};');
+    ctx.print('${field.name}');
+    if (field.initializer != null) {
+      ctx.print(' = ');
+      field.initializer.visitExpression(this, context);
+    }
+    ctx.println(';');
   }
 
   _visitClassGetter(o.ClassGetter getter, dynamic context) {
@@ -308,8 +313,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (!lineWasEmpty) {
       ctx.print('(');
     }
-    o.THIS_EXPR.visitExpression(this, ctx);
-    ctx.print('.${expr.name} = ');
+    ctx.print('${expr.name} = ');
     expr.value.visitExpression(this, ctx);
     if (!lineWasEmpty) {
       ctx.print(')');

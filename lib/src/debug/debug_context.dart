@@ -28,7 +28,7 @@ class DebugContext<T> implements RenderDebugInfo {
       : null;
 
   get context {
-    return this._view.context;
+    return this._view.ctx;
   }
 
   get component {

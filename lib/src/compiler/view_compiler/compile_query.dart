@@ -112,8 +112,7 @@ List<o.Expression> createQueryValues(ViewQueryValues viewValues) {
 o.Expression mapNestedViews(o.Expression declarationAppElement,
     CompileView view, List<o.Expression> expressions) {
   List<o.Expression> adjustedExpressions = expressions.map((expr) {
-    return o.replaceVarInExpression(
-        o.THIS_EXPR.name, o.variable("nestedView"), expr);
+    return o.replaceReadClassMemberInExpression(o.variable("nestedView"), expr);
   }).toList();
   return declarationAppElement.callMethod("mapNestedViews", [
     o.variable(view.className),
@@ -128,11 +127,11 @@ o.Expression createQueryList(
     String propertyName,
     CompileView compileView) {
   compileView.fields.add(new o.ClassField(propertyName,
-      o.importType(Identifiers.QueryList), [o.StmtModifier.Private]));
-  var expr = o.THIS_EXPR.prop(propertyName);
-  compileView.createMethod.addStmt(o.THIS_EXPR
-      .prop(propertyName)
-      .set(o.importExpr(Identifiers.QueryList).instantiate([]))
+      outputType: o.importType(Identifiers.QueryList),
+      modifiers: [o.StmtModifier.Private]));
+  var expr = new o.ReadClassMemberExpr(propertyName);
+  compileView.createMethod.addStmt(new o.WriteClassMemberExpr(
+          propertyName, o.importExpr(Identifiers.QueryList).instantiate([]))
       .toStmt());
   return expr;
 }

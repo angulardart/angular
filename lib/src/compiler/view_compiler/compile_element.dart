@@ -58,7 +58,7 @@ class CompileElement extends CompileNode {
   bool hasEmbeddedView;
 
   o.Expression _compViewExpr;
-  o.ReadPropExpr appElement;
+  o.ReadClassMemberExpr appElement;
   o.Expression elementRef;
   o.Expression injector;
   var _instances = new CompileTokenMap<o.Expression>();
@@ -117,21 +117,21 @@ class CompileElement extends CompileNode {
 
     // Create instance field for app element.
     view.fields.add(new o.ClassField(fieldName,
-        o.importType(Identifiers.AppElement), [o.StmtModifier.Private]));
+        outputType: o.importType(Identifiers.AppElement),
+        modifiers: [o.StmtModifier.Private]));
 
     // Write code to create an instance of AppElement.
     // Example: this._appEl_2 = new import7.AppElement(2,0,this,this._anchor_2);
-    var statement = o.THIS_EXPR
-        .prop(fieldName)
-        .set(o.importExpr(Identifiers.AppElement).instantiate([
+    var statement = new o.WriteClassMemberExpr(
+        fieldName,
+        o.importExpr(Identifiers.AppElement).instantiate([
           o.literal(nodeIndex),
           o.literal(parentNodeIndex),
           o.THIS_EXPR,
           renderNode
-        ]))
-        .toStmt();
+        ])).toStmt();
     view.createMethod.addStmt(statement);
-    appElement = o.THIS_EXPR.prop(fieldName);
+    appElement = new o.ReadClassMemberExpr(fieldName);
     _instances.add(identifierToken(Identifiers.AppElement), appElement);
   }
 
@@ -367,7 +367,7 @@ class CompileElement extends CompileNode {
           if (identical(requestingProviderType, ProviderAstType.Component)) {
             return _compViewExpr.prop("ref");
           } else {
-            return o.THIS_EXPR.prop("ref");
+            return new o.ReadClassMemberExpr('ref');
           }
         }
       }
@@ -441,23 +441,28 @@ o.Expression createProviderProperty(
   type ??= o.DYNAMIC_TYPE;
 
   if (isEager) {
-    view.fields.add(new o.ClassField(propName, type, [o.StmtModifier.Private]));
+    view.fields.add(new o.ClassField(propName,
+        outputType: type, modifiers: const [o.StmtModifier.Private]));
     view.createMethod.addStmt(
-        o.THIS_EXPR.prop(propName).set(resolvedProviderValueExpr).toStmt());
+        new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
+            .toStmt());
   } else {
-    var internalField = '''_${ propName}''';
-    view.fields
-        .add(new o.ClassField(internalField, type, [o.StmtModifier.Private]));
+    var internalField = '_${propName}';
+    view.fields.add(new o.ClassField(internalField,
+        outputType: type, modifiers: const [o.StmtModifier.Private]));
     var getter = new CompileMethod(view);
     getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
     // Note: Equals is important for JS so that it also checks the undefined case!
-    getter.addStmt(new o.IfStmt(o.THIS_EXPR.prop(internalField).isBlank(), [
-      o.THIS_EXPR.prop(internalField).set(resolvedProviderValueExpr).toStmt()
+    getter.addStmt(new o.IfStmt(
+        new o.ReadClassMemberExpr(internalField).isBlank(), [
+      new o.WriteClassMemberExpr(internalField, resolvedProviderValueExpr)
+          .toStmt()
     ]));
-    getter.addStmt(new o.ReturnStatement(o.THIS_EXPR.prop(internalField)));
+    getter.addStmt(
+        new o.ReturnStatement(new o.ReadClassMemberExpr(internalField)));
     view.getters.add(new o.ClassGetter(propName, getter.finish(), type));
   }
-  return o.THIS_EXPR.prop(propName);
+  return new o.ReadClassMemberExpr(propName);
 }
 
 class _QueryWithRead {

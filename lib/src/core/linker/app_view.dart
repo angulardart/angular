@@ -51,7 +51,7 @@ abstract class AppView<T> {
   /// evaluated against.
   ///
   /// This is always a component instance.
-  T context;
+  T ctx;
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
   Renderer renderer;
@@ -117,7 +117,7 @@ abstract class AppView<T> {
         return createHost(givenProjectableNodes, rootSelectorOrNode);
     }
     this._hasExternalHostElement = rootSelectorOrNode != null;
-    this.context = context;
+    this.ctx = context;
     this.projectableNodes = projectableNodes;
     return this.createInternal(rootSelectorOrNode);
   }
@@ -127,7 +127,7 @@ abstract class AppView<T> {
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | dynamic */ rootSelectorOrNode) {
     assert(this.type == ViewType.HOST);
-    context = null;
+    ctx = null;
     // Note: Don't ensure the slot count for the projectableNodes as
     // we store them only for the contained component view (which will
     // later check the slot count...)
@@ -142,7 +142,7 @@ abstract class AppView<T> {
       dynamic /* String | dynamic */ rootSelectorOrNode) {
     projectableNodes = declarationAppElement.parentView.projectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
-    context = declarationAppElement.parentView.context as T;
+    ctx = declarationAppElement.parentView.ctx as T;
     return createInternal(rootSelectorOrNode);
   }
 
@@ -153,7 +153,7 @@ abstract class AppView<T> {
     projectableNodes =
         ensureSlotCount(givenProjectableNodes, componentType.slotCount);
     _hasExternalHostElement = rootSelectorOrNode != null;
-    context = declarationAppElement.component as T;
+    ctx = declarationAppElement.component as T;
     return createInternal(rootSelectorOrNode);
   }
 

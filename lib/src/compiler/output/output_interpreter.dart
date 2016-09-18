@@ -118,7 +118,8 @@ class _DynamicClass {
         methods,
         this._ctx.instanceFactory);
     this._classStmt.fields.forEach((o.ClassField field) {
-      props[field.name] = null;
+      props[field.name] =
+          field.initializer?.visitExpression(this._visitor, _ctx);
     });
     this._classStmt.getters.forEach((o.ClassGetter getter) {
       getters[getter.name] = () => _executeFunctionStatements(

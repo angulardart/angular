@@ -178,12 +178,12 @@ class _InjectorBuilder {
     }
     type ??= o.DYNAMIC_TYPE;
     if (isEager) {
-      this._fields.add(new o.ClassField(propName, type));
+      this._fields.add(new o.ClassField(propName, outputType: type));
       this._ctorStmts.add(
           o.THIS_EXPR.prop(propName).set(resolvedProviderValueExpr).toStmt());
     } else {
       var internalField = '''_${ propName}''';
-      this._fields.add(new o.ClassField(internalField, type));
+      this._fields.add(new o.ClassField(internalField, outputType: type));
       // Note: Equals is important for JS so that it also checks the undefined case!
       var getterStmts = [
         new o.IfStmt(o.THIS_EXPR.prop(internalField).isBlank(), [

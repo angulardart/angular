@@ -622,9 +622,10 @@ class AbstractClassPart {
 
 class ClassField extends AbstractClassPart {
   String name;
+  Expression initializer;
   ClassField(this.name,
-      [OutputType type = null, List<StmtModifier> modifiers = null])
-      : super(type, modifiers);
+      {OutputType outputType, List<StmtModifier> modifiers, this.initializer})
+      : super(outputType, modifiers);
 }
 
 class ClassMethod extends AbstractClassPart {
@@ -1143,6 +1144,21 @@ class RecursiveExpressionVisitor
   }
 }
 
+Expression replaceReadClassMemberInExpression(
+    Expression newValue, Expression expression) {
+  var transformer = new _ReplaceReadClassMemberTransformer(newValue);
+  return expression.visitExpression(transformer, null);
+}
+
+class _ReplaceReadClassMemberTransformer extends ExpressionTransformer {
+  Expression _newValue;
+  _ReplaceReadClassMemberTransformer(this._newValue);
+
+  @override
+  dynamic visitReadClassMemberExpr(ReadClassMemberExpr ast, dynamic context) =>
+      new ReadPropExpr(_newValue, ast.name);
+}
+
 Expression replaceVarInExpression(
     String varName, Expression newValue, Expression expression) {
   var transformer = new _ReplaceVariableTransformer(varName, newValue);
@@ -1154,9 +1170,8 @@ class _ReplaceVariableTransformer extends ExpressionTransformer {
   Expression _newValue;
   _ReplaceVariableTransformer(this._varName, this._newValue);
 
-  dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) {
-    return ast.name == this._varName ? this._newValue : ast;
-  }
+  dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) =>
+      ast.name == this._varName ? this._newValue : ast;
 }
 
 Set<String> findReadVarNames(List<Statement> stmts) {
