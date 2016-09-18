@@ -277,17 +277,15 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
           throw new BaseException('Unknown builtin method ${expr.builtin}');
       }
     } else if (receiver is DynamicInstance) {
-      // Don't call if it's a check-for-null safe method call.
-      if (expr.checked && (receiver == null || receiver == o.NULL_EXPR))
-        return null;
       if (receiver.methods.containsKey(expr.name)) {
         result = Function.apply(receiver.methods[expr.name], args);
       } else {
         result = reflector.method(expr.name)(receiver, args);
       }
     } else {
-      if (expr.checked && (receiver == null || receiver == o.NULL_EXPR))
+      if (expr.checked && (receiver == null || receiver == o.NULL_EXPR)) {
         return null;
+      }
       result = reflector.method(expr.name)(receiver, args);
     }
     return result;
