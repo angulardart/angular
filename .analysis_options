@@ -2,7 +2,7 @@ analyzer:
  #strong-mode: true
 linter:
   rules:
-    #- always_declare_return_types
+    - always_declare_return_types
     #- always_specify_types
     #- annotate_overrides
     #- avoid_as
@@ -45,5 +45,5 @@ linter:
     #- unawaited_futures
     #- unnecessary_brace_in_string_interp
     #- unnecessary_getters_setters
-    #- unrelated_type_equality_checks
+    - unrelated_type_equality_checks
     - valid_regexps

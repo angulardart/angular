@@ -48,7 +48,8 @@ class CodegenTransformer extends TransformerGroup {
         ],
       ];
     }
-    if (options.modeName == BarbackMode.RELEASE || !options.lazyTransformers) {
+    if (options.modeName == BarbackMode.RELEASE.name ||
+        !options.lazyTransformers) {
       phases = phases
           .map((phase) => phase.map((t) => new EagerTransformerWrapper(t)));
     }
