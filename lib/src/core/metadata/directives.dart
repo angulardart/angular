@@ -625,8 +625,6 @@ class DirectiveMetadata extends InjectableMetadata {
   ///
   final String exportAs;
 
-// TODO: add an example after ContentChildren and ViewChildren are in master
-
   /// Configures the queries that will be injected into the directive.
   ///
   /// Content queries are set before the [ngAfterContentInit] callback is
@@ -637,23 +635,31 @@ class DirectiveMetadata extends InjectableMetadata {
   ///
   ///     @Component(
   ///       selector: 'someDir',
-  ///       queries: {
-  ///         contentChildren: new ContentChildren(ChildDirective),
-  ///         viewChildren: new ViewChildren(ChildDirective)
+  ///       queries: const {
+  ///         'contentChildren': const ContentChildren(ChildDirective),
+  ///         'viewChildren': const ViewChildren(ChildDirective),
+  ///         'contentChild': const ContentChild(SingleChildDirective),
+  ///         'viewChild': const ViewChild(SingleChildDirective)
   ///       },
-  ///       template: '<child-directive></child-directive>',
-  ///       directives: [ChildDirective]
+  ///       template: '''<child-directive></child-directive>
+  ///         <single-child-directive></single-child-directive>
+  ///         <ng-content></ng-content>''',
+  ///       directives: [ChildDirective, SingleChildDirective]
   ///     )
   ///     class SomeDir {
   ///       QueryList<ChildDirective> contentChildren;
   ///       QueryList<ChildDirective> viewChildren;
+  ///       SingleChildDirective contentChild;
+  ///       SingleChildDirective viewChild;
   ///
   ///       ngAfterContentInit() {
   ///         // contentChildren is set
+  ///         // contentChild is set
   ///       }
   ///
   ///       ngAfterViewInit() {
   ///         // viewChildren is set
+  ///         // viewChild is set
   ///       }
   ///     }
   ///
