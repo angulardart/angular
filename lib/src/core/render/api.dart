@@ -97,7 +97,6 @@ abstract class Renderer {
       dynamic /* String | dynamic */ selectorOrNode, RenderDebugInfo debugInfo);
   dynamic createElement(
       dynamic parentElement, String name, RenderDebugInfo debugInfo);
-  void projectNodes(dynamic parentElement, List<dynamic> nodes);
   void attachViewAfter(dynamic node, List<dynamic> viewRootNodes);
   void detachView(List<dynamic> viewRootNodes);
   void destroyView(dynamic hostElement, List<dynamic> viewAllNodes);

@@ -79,12 +79,6 @@ class DomRenderer implements Renderer {
     return el;
   }
 
-  projectNodes(dynamic parentElement, List<dynamic> nodes) {
-    if (parentElement == null) return;
-    appendNodes(parentElement, nodes);
-    DomRootRenderer.isDirty = true;
-  }
-
   attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
     moveNodesAfterSibling(node, viewRootNodes);
     DomRootRenderer.isDirty = true;

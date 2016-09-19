@@ -187,24 +187,19 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
   dynamic visitNgContent(NgContentAst ast, dynamic context) {
     CompileElement parent = context;
-    // the projected nodes originate from a different view, so we don't
-
-    // have debug information for them...
+    // The projected nodes originate from a different view, so we don't
+    // have debug information for them.
     this.view.createMethod.resetDebugInfo(null, ast);
     var parentRenderNode = this._getParentRenderNode(parent);
+    // AppView.projectableNodes property contains the list of nodes
+    // to project for each NgContent.
+    // Creates a call to project(parentNode, nodeIndex).
     var nodesExpression = ViewProperties.projectableNodes.key(
         o.literal(ast.index),
         new o.ArrayType(o.importType(view.genConfig.renderTypes.renderNode)));
     if (!identical(parentRenderNode, o.NULL_EXPR)) {
-      this
-          .view
-          .createMethod
-          .addStmt(ViewProperties.renderer.callMethod("projectNodes", [
-            parentRenderNode,
-            o
-                .importExpr(Identifiers.flattenNestedViewRenderNodes)
-                .callFn([nodesExpression])
-          ]).toStmt());
+      view.createMethod.addStmt(new o.InvokeMemberMethodExpr(
+          'project', [parentRenderNode, o.literal(ast.index)]).toStmt());
     } else if (this._isRootNode(parent)) {
       if (!identical(this.view.viewType, ViewType.COMPONENT)) {
         // store root nodes only for embedded/host views

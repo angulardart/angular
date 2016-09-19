@@ -262,7 +262,7 @@ abstract class AppView<T> {
   AppView<dynamic> get parent => this.declarationAppElement?.parentView;
 
   List<dynamic> get flatRootNodes =>
-      flattenNestedViewRenderNodes(rootNodesOrAppElements);
+      _flattenNestedViews(rootNodesOrAppElements);
 
   dynamic get lastRootNode {
     var lastNode = rootNodesOrAppElements.length > 0
@@ -438,6 +438,31 @@ abstract class AppView<T> {
   void setDomDirty() {
     DomRootRenderer.isDirty = true;
   }
+
+  /// Projects projectableNodes at specified index. We don't use helper
+  /// functions to flatten the tree since it allocates list that are not
+  /// required in most cases.
+  void project(Element parentElement, int index) {
+    if (parentElement == null) return;
+    // Optimization for projectables that doesn't include AppElement(s).
+    // If the projectable is AppElement we fall back to building up a list.
+    List projectables = projectableNodes[index];
+    int projectableCount = projectables.length;
+    for (var i = 0; i < projectableCount; i++) {
+      var projectable = projectables[i];
+      if (projectable is AppElement) {
+        if (projectable.nestedViews == null) {
+          parentElement.append(projectable.nativeElement as Node);
+        } else {
+          _appendNestedViewRenderNodes(parentElement, projectable);
+        }
+      } else {
+        Node child = projectable;
+        parentElement.append(child);
+      }
+    }
+    DomRootRenderer.isDirty = true;
+  }
 }
 
 dynamic _findLastRenderNode(dynamic node) {
@@ -461,7 +486,32 @@ dynamic _findLastRenderNode(dynamic node) {
   return lastNode;
 }
 
-List flattenNestedViewRenderNodes(List nodes) {
+/// Recursively appends app element and nested view nodes to target element.
+void _appendNestedViewRenderNodes(
+    Element targetElement, AppElement appElement) {
+  // TODO: strongly type nativeElement.
+  targetElement.append(appElement.nativeElement as Node);
+  var nestedViews = appElement.nestedViews;
+  // Components inside ngcontent may also have ngcontent to project,
+  // recursively walk nestedViews.
+  if (nestedViews == null || nestedViews.isEmpty) return;
+  int nestedViewCount = nestedViews.length;
+  for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
+    List projectables = nestedViews[viewIndex].rootNodesOrAppElements;
+    int projectableCount = projectables.length;
+    for (var i = 0; i < projectableCount; i++) {
+      var projectable = projectables[i];
+      if (projectable is AppElement) {
+        _appendNestedViewRenderNodes(targetElement, projectable);
+      } else {
+        Node child = projectable;
+        targetElement.append(child);
+      }
+    }
+  }
+}
+
+List _flattenNestedViews(List nodes) {
   return _flattenNestedViewRenderNodes(nodes, []);
 }
 

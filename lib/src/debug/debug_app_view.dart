@@ -2,6 +2,8 @@ import 'dart:html';
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
+import 'package:angular2/src/platform/dom/dom_renderer.dart'
+    show DomRootRenderer;
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular2/src/debug/debug_node.dart'
@@ -168,13 +170,70 @@ class DebugAppView<T> extends AppView<T> {
     indexDebugNode(debugEl);
   }
 
-  _rethrowWithContext(dynamic e, dynamic stack) {
+  /// Projects projectableNodes at specified index. We don't use helper
+  /// functions to flatten the tree since it allocates list that are not
+  /// required in most cases.
+  void project(Element parentElement, int index) {
+    DebugElement debugParent = getDebugNode(parentElement);
+    if (debugParent == null || debugParent is! DebugElement) {
+      super.project(parentElement, index);
+      return;
+    }
+    // Optimization for projectables that doesn't include AppElement(s).
+    // If the projectable is AppElement we fall back to building up a list.
+    List projectables = projectableNodes[index];
+    int projectableCount = projectables.length;
+    for (var i = 0; i < projectableCount; i++) {
+      var projectable = projectables[i];
+      if (projectable is AppElement) {
+        if (projectable.nestedViews == null) {
+          Node child = projectable.nativeElement;
+          parentElement.append(child);
+          debugParent.addChild(getDebugNode(child));
+        } else {
+          _appendDebugNestedViewRenderNodes(
+              debugParent, parentElement, projectable);
+        }
+      } else {
+        Node child = projectable;
+        parentElement.append(child);
+        debugParent.addChild(getDebugNode(child));
+      }
+    }
+    DomRootRenderer.isDirty = true;
+  }
+
+  void _rethrowWithContext(dynamic e, dynamic stack) {
     if (!(e is ViewWrappedException)) {
       if (!(e is ExpressionChangedAfterItHasBeenCheckedException)) {
         this.cdState = ChangeDetectorState.Errored;
       }
       if (this._currentDebugContext != null) {
         throw new ViewWrappedException(e, stack, this._currentDebugContext);
+      }
+    }
+  }
+}
+
+/// Recursively appends app element and nested view nodes to target element.
+void _appendDebugNestedViewRenderNodes(
+    DebugElement debugParent, Element targetElement, AppElement appElement) {
+  targetElement.append(appElement.nativeElement as Node);
+  var nestedViews = appElement.nestedViews;
+  if (nestedViews == null || nestedViews.isEmpty) return;
+  int nestedViewCount = nestedViews.length;
+  for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
+    List projectables = nestedViews[viewIndex].rootNodesOrAppElements;
+    int projectableCount = projectables.length;
+    for (var i = 0; i < projectableCount; i++) {
+      var projectable = projectables[i];
+      if (projectable is AppElement) {
+        _appendDebugNestedViewRenderNodes(
+            debugParent, targetElement, projectable);
+      } else {
+        Node child = projectable;
+        targetElement.append(child);
+        debugParent.addChild(getDebugNode(child));
       }
     }
   }

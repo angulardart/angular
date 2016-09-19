@@ -167,8 +167,6 @@ class Identifiers {
       name: "checkBinding",
       moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impCheckBinding);
-  static final flattenNestedViewRenderNodes = new CompileIdentifierMetadata(
-      name: "flattenNestedViewRenderNodes", moduleUrl: APP_VIEW_MODULE_URL);
   static final devModeEqual = new CompileIdentifierMetadata(
       name: "devModeEqual", moduleUrl: CD_MODULE_URL, runtime: impDevModeEqual);
 

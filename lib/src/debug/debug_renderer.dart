@@ -68,17 +68,6 @@ class DebugDomRenderer extends DomRenderer {
     return nativeEl;
   }
 
-  projectNodes(dynamic parentElement, List<dynamic> nodes) {
-    var debugParent = getDebugNode(parentElement);
-    if (debugParent != null && debugParent is DebugElement) {
-      var debugElement = debugParent;
-      nodes.forEach((node) {
-        debugElement.addChild(getDebugNode(node));
-      });
-    }
-    super.projectNodes(parentElement, nodes);
-  }
-
   attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
     var debugNode = getDebugNode(node);
     if (debugNode != null) {

@@ -610,8 +610,6 @@ void _initializeInterpreter() {
   Identifiers.DebugContext.runtime = DebugContext;
   Identifiers.TemplateRef.runtime = TemplateRef;
   Identifiers.ViewContainerRef.runtime = ViewContainerRef;
-  Identifiers.flattenNestedViewRenderNodes.runtime =
-      flattenNestedViewRenderNodes;
   Identifiers.ComponentFactory.runtime = ComponentFactory;
   Identifiers.QueryList.runtime = QueryList;
   Identifiers.HTML_COMMENT_NODE.runtime = Comment;
