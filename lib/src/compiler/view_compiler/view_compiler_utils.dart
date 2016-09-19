@@ -41,7 +41,8 @@ List<o.Expression> createSetAttributeParams(
 }
 
 o.Expression getPropertyInView(
-    o.Expression property, CompileView callingView, CompileView definedView) {
+    o.Expression property, CompileView callingView, CompileView definedView,
+    {bool forceCast: false}) {
   if (identical(callingView, definedView)) {
     return property;
   } else {
@@ -67,6 +68,8 @@ o.Expression getPropertyInView(
               .any((field) => field.name == readMemberExpr.name)) {
         viewProp = viewProp.cast(definedView.classType);
       }
+    } else if (forceCast) {
+      viewProp = viewProp.cast(definedView.classType);
     }
     return o.replaceReadClassMemberInExpression(viewProp, property);
   }

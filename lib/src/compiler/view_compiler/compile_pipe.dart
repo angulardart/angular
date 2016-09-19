@@ -87,7 +87,11 @@ class CompilePipe {
       return o.importExpr(Identifiers.castByValue).callFn([
         purePipeProxy.instance,
         getPropertyInView(
-            this.instance.prop("transform"), callingView, this.view)
+          this.instance.prop("transform"),
+          callingView,
+          this.view,
+          forceCast: true,
+        )
       ]).callFn(args);
     } else {
       return getPropertyInView(this.instance, callingView, this.view)
