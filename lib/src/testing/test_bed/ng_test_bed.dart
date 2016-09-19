@@ -189,4 +189,10 @@ class NgTestRoot<T> {
     _activeTest = null;
     return new Future<Null>.value();
   }
+
+  /// Component instance.
+  T get component => _componentRef.instance as T;
+
+  /// DOM element representing this component.
+  Element get element => _componentRef.location.nativeElement;
 }
