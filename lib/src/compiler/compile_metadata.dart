@@ -32,7 +32,8 @@ dynamic metadataFromJson(Map<String, dynamic> data) {
   return _COMPILE_METADATA_FROM_JSON[data["class"]](data);
 }
 
-class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
+class CompileIdentifierMetadata<TRuntime>
+    implements CompileMetadataWithIdentifier {
   String name;
   String prefix;
   String moduleUrl;
@@ -49,7 +50,7 @@ class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
   /// value for the output interpreter.
   ///
   /// Not marked final since tests modify value.
-  dynamic runtime;
+  TRuntime runtime;
 
   /// Same as runtime but evaluates function before using value.
   final Function runtimeCallback;
@@ -214,7 +215,9 @@ class CompileProviderMetadata {
 }
 
 class CompileFactoryMetadata
-    implements CompileIdentifierMetadata, CompileMetadataWithIdentifier {
+    implements
+        CompileIdentifierMetadata<Function>,
+        CompileMetadataWithIdentifier {
   Function runtime;
   Function runtimeCallback;
   String name;
@@ -369,7 +372,7 @@ class CompileTokenMap<VALUE> {
  * Metadata regarding compilation of a type.
  */
 class CompileTypeMetadata
-    implements CompileIdentifierMetadata, CompileMetadataWithType {
+    implements CompileIdentifierMetadata<Type>, CompileMetadataWithType {
   Type runtime;
   Function runtimeCallback;
   String name;
