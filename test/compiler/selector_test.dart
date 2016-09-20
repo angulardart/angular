@@ -9,12 +9,12 @@ import 'package:angular2/src/platform/browser/browser_adapter.dart'
     show BrowserDomAdapter;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   BrowserDomAdapter.makeCurrent();
   group('SelectorMatcher', () {
     var matcher, selectableCollector, s1, s2, s3, s4;
     List<dynamic> matched;
-    reset() {
+    void reset() {
       matched = [];
     }
 

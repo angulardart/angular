@@ -7,7 +7,7 @@ import "package:angular2/common.dart"
     show NgPlural, NgPluralCase, NgLocalization;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("switch", () {
     setUp(() {
       beforeEachProviders(

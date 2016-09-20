@@ -10,7 +10,7 @@ import 'package:mockito/mockito.dart';
 
 class MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}
 
-main() {
+void main() {
   group('ObservableListDiff', () {
     var factory, changeDetectorRef;
 

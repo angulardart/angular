@@ -20,7 +20,7 @@ class SecuredComponent {
   }
 }
 
-main() {
+void main() {
   BrowserDomAdapter.makeCurrent();
   group('security integration tests', () {
     setUp(() {

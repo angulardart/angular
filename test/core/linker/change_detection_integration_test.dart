@@ -62,7 +62,7 @@ void containerTest(String description, String template, Function fn,
       onError: onError);
 }
 
-main() {
+void main() {
   initAngularTests();
 
   group('Change Detection', () {
@@ -555,7 +555,7 @@ main() {
 @Pipe(name: "countingPipe")
 class CountingPipe implements PipeTransform {
   num state = 0;
-  transform(value) {
+  String transform(value) {
     return '''${ value} state:${ this . state ++}''';
   }
 }
@@ -563,7 +563,7 @@ class CountingPipe implements PipeTransform {
 @Pipe(name: "countingImpurePipe", pure: false)
 class CountingImpurePipe implements PipeTransform {
   num state = 0;
-  transform(value) {
+  String transform(value) {
     return '''${ value} state:${ this . state ++}''';
   }
 }

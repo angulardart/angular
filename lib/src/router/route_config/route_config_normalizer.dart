@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart";
 
@@ -8,13 +10,10 @@ import "route_config_decorator.dart";
 RouteDefinition normalizeRouteConfig(
     RouteDefinition config, RouteRegistry registry) {
   if (config is AsyncRoute) {
-    configRegistryAndReturnType(componentType) {
-      registry.configFromComponent(componentType);
-      return componentType;
-    }
-
-    loader() {
-      return config.loader().then(configRegistryAndReturnType);
+    Future loader() async {
+      var value = await config.loader();
+      registry.configFromComponent(value);
+      return value;
     }
 
     return new AsyncRoute(

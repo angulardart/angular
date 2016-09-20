@@ -6,7 +6,7 @@ import "package:angular2/src/compiler/url_resolver.dart"
     show UrlResolver, createOfflineCompileUrlResolver;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("UrlResolver", () {
     var resolver = new UrlResolver();
     group("absolute base url", () {

@@ -4,7 +4,7 @@ import "package:angular2/src/compiler/output/abstract_emitter.dart"
     show escapeSingleQuoteString;
 import "package:test/test.dart";
 
-main() {
+void main() {
   group("AbstractEmitter", () {
     group("escapeSingleQuoteString", () {
       test("should escape single quotes", () {

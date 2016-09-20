@@ -206,7 +206,7 @@ class _ThrowsWith extends Matcher {
 Matcher throwsWith(message) => new _ThrowsWith(message);
 
 String _elementText(n) {
-  hasNodes(n) {
+  bool hasNodes(n) {
     var children = DOM.childNodes(n);
     return children != null && children.length > 0;
   }

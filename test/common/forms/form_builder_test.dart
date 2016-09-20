@@ -12,7 +12,7 @@ Map<String, dynamic> _syncValidator(AbstractControl c) {
 
 dynamic _asyncValidator(AbstractControl c) => new Future.value(null);
 
-main() {
+void main() {
   var syncValidator = _syncValidator;
   var asyncValidator = _asyncValidator;
 

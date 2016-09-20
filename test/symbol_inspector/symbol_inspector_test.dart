@@ -8,7 +8,7 @@ import 'simple_library.dart';
 
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('getSymbolsFromLibrary', () {
     test('should extract symbols', () {
       var simpleLib = reflectClass(A).owner as LibraryMirror;

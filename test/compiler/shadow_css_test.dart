@@ -6,9 +6,9 @@ import "package:angular2/src/compiler/shadow_css.dart"
     show ShadowCss, processRules, CssRule;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("ShadowCss", () {
-    s(String css, String contentAttr, [String hostAttr = ""]) {
+    String s(String css, String contentAttr, [String hostAttr = ""]) {
       var shadowCss = new ShadowCss();
       var shim = shadowCss.shimCssText(css, contentAttr, hostAttr);
       var nlRegexp = new RegExp(r'\n');

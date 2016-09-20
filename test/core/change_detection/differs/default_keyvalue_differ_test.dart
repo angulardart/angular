@@ -5,7 +5,7 @@ import "package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 import 'package:test/test.dart';
 
 // todo(vicb): Update the code & tests for object equality
-main() {
+void main() {
   group("keyvalue differ", () {
     group("DefaultKeyValueDiffer", () {
       var differ;

@@ -88,7 +88,7 @@ class ExportedSymbol {
     }
   }
 
-  toString() => unwrapSymbol(symbol);
+  String toString() => unwrapSymbol(symbol);
 }
 
 class LibraryInfo {
@@ -97,7 +97,7 @@ class LibraryInfo {
 
   LibraryInfo(this.names, this.symbolsUsedForName);
 
-  addTo(List<String> names) {
+  void addTo(List<String> names) {
     this.names.forEach((ExportedSymbol es) => es.addTo(names));
     //this.names.addAll(symbolsUsedForName.keys.map(unwrapSymbol));
   }

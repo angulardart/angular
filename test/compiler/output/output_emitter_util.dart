@@ -15,7 +15,7 @@ class ExternalClass {
   ExternalClass(this.data) {
     this.changeable = data;
   }
-  someMethod(a) {
+  Map someMethod(a) {
     return {"param": a, "data": this.data};
   }
 }

@@ -22,7 +22,7 @@ void _testSanitize(String input, String expectedOutput, bool knownFailure) {
   expect(output, expectedOutput);
 }
 
-main() {
+void main() {
   BrowserDomAdapter.makeCurrent();
   group('HTML sanitizer', () {
     test('serializes nested structures', () {

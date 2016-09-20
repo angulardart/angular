@@ -130,7 +130,7 @@ final _notDecoratedRegExp =
         "valid type annotations and that $_funcRegExp is decorated with "
         r"Injectable\.");
 
-main() {
+void main() {
   var dynamicProviders = [
     provide("provider0", useValue: 1),
     provide("provider1", useValue: 1),
@@ -217,7 +217,7 @@ main() {
       expect(engine, "fake engine");
     });
     test("should provide to a factory", () {
-      sportsCarFactory(e) {
+      SportsCar sportsCarFactory(e) {
         return new SportsCar(e);
       }
 
@@ -231,7 +231,7 @@ main() {
     });
     test("should throw when using a factory with more than 20 dependencies",
         () {
-      factoryWithTooManyArgs() {
+      Car factoryWithTooManyArgs() {
         return new Car(null);
       }
 
@@ -755,7 +755,7 @@ main() {
       expect(engine, "fake engine");
     });
     test("should provide to a factory", () {
-      sportsCarFactory(e) {
+      SportsCar sportsCarFactory(e) {
         return new SportsCar(e);
       }
 
@@ -769,7 +769,7 @@ main() {
     });
     test("should throw when using a factory with more than 20 dependencies",
         () {
-      factoryWithTooManyArgs() {
+      Car factoryWithTooManyArgs() {
         return new Car(null);
       }
 

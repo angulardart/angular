@@ -16,7 +16,7 @@ import 'package:angular2/src/debug/debug_node.dart' show getAllDebugNodes;
 import 'package:angular2/src/testing/by.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('projection', () {
     test('should support simple components', () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],
@@ -726,11 +726,11 @@ class ManualViewportDirective {
   ViewContainerRef vc;
   TemplateRef templateRef;
   ManualViewportDirective(this.vc, this.templateRef);
-  show() {
+  void show() {
     this.vc.createEmbeddedView(this.templateRef, 0);
   }
 
-  hide() {
+  void hide() {
     this.vc.clear();
   }
 }
@@ -739,11 +739,11 @@ class ManualViewportDirective {
 class ProjectDirective {
   ViewContainerRef vc;
   ProjectDirective(this.vc);
-  show(TemplateRef templateRef) {
+  void show(TemplateRef templateRef) {
     this.vc.createEmbeddedView(templateRef, 0);
   }
 
-  hide() {
+  void hide() {
     this.vc.clear();
   }
 }

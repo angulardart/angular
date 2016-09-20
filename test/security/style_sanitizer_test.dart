@@ -6,7 +6,7 @@ import "package:angular2/src/platform/browser/browser_adapter.dart"
 import 'package:angular2/src/security/style_sanitizer.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   BrowserDomAdapter.makeCurrent();
   group('Style sanitizer', () {
     test('sanitizes values', () {

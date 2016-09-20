@@ -12,7 +12,7 @@ import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:test/test.dart";
 
-main() {
+void main() {
   var outputDefs = [];
   outputDefs.add({
     "getExpressions": () => interpretStatements(
@@ -180,7 +180,7 @@ main() {
           expect(expressions["throwError"], throwsWith("someError"));
         });
         test("should support catching errors", () {
-          someOperation() {
+          void someOperation() {
             throw new BaseException("Boom!");
           }
 

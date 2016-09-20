@@ -137,7 +137,7 @@ class RuleSet {
     return rule?.generate(params);
   }
 
-  _assertNoHashCollision(String hash, path) {
+  void _assertNoHashCollision(String hash, path) {
     this.rules.forEach((rule) {
       if (hash == rule.hash) {
         throw new BaseException(

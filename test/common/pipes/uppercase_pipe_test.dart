@@ -4,7 +4,7 @@ library angular2.test.common.pipes.uppercase_pipe_test;
 import "package:angular2/common.dart" show UpperCasePipe;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("UpperCasePipe", () {
     var upper;
     var lower;

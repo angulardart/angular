@@ -122,7 +122,7 @@ class SomeModuleWithUnknownArgs {
   SomeModuleWithUnknownArgs(a, b, c);
 }
 
-main() {
+void main() {
   group("generated injector integration tests", () {
     ComponentResolver compiler;
     setUp(() async {
@@ -182,7 +182,7 @@ main() {
       expect(engine, "fake engine");
     });
     test("should provide to a factory", () {
-      sportsCarFactory(e) {
+      SportsCar sportsCarFactory(e) {
         return new SportsCar(e);
       }
 

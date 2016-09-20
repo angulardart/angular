@@ -29,7 +29,7 @@ import 'package:angular2/src/core/platform_directives_and_pipes.dart'
     show PLATFORM_DIRECTIVES;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   beforeEachProviders(() => TEST_PROVIDERS);
   group('RuntimeMetadataResolver getMetadata', () {
     test('should read metadata', () async {

@@ -11,7 +11,7 @@ import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("Compiler", () {
     var someCompFactory;
     beforeEachProviders(() =>

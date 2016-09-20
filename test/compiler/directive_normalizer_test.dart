@@ -12,7 +12,7 @@ import 'package:angular2/src/compiler/xhr_mock.dart' show MockXHR;
 import 'test_bindings.dart' show TEST_PROVIDERS;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   CompileTypeMetadata dirType;
   CompileTypeMetadata dirTypeWithHttpUrl;
   group('DirectiveNormalizer', () {

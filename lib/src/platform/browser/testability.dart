@@ -75,11 +75,11 @@ class PublicTestability implements _JsObjectProxyable {
     return this._testability.isStable();
   }
 
-  whenStable(Function callback) {
-    return this._testability.whenStable(callback);
+  void whenStable(Function callback) {
+    this._testability.whenStable(callback);
   }
 
-  findBindings(Element elem, String binding, bool exactMatch) {
+  List findBindings(Element elem, String binding, bool exactMatch) {
     return this._testability.findBindings(elem, binding, exactMatch);
   }
 
@@ -147,7 +147,7 @@ class BrowserGetTestability implements GetTestability {
     jsRegistry.add(this._createRegistry(registry));
   }
 
-  findTestabilityInTree(
+  Testability findTestabilityInTree(
       TestabilityRegistry registry, dynamic elem, bool findInAncestors) {
     if (elem == null) {
       return null;

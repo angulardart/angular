@@ -8,7 +8,7 @@ import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("CompileMetadata", () {
     CompileTypeMetadata fullTypeMeta;
     CompileTemplateMetadata fullTemplateMeta;

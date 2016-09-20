@@ -7,7 +7,7 @@ import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/common/directives/ng_style.dart" show NgStyle;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("binding to CSS styles", () {
     test("should add styles specified in an object literal", () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],

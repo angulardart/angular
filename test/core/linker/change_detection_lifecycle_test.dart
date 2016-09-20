@@ -41,7 +41,7 @@ void containerTest(String description, String template, Function fn,
       onError: onError);
 }
 
-main() {
+void main() {
   initAngularTests();
 
   group('Change Detection lifecycle', () {
@@ -563,7 +563,7 @@ class TestDirective
     _name = value;
   }
 
-  get name => _name;
+  String get name => _name;
 
   @Input()
   String throwOn;

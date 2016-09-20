@@ -5,12 +5,9 @@ import "package:angular2/src/facade/async.dart" show EventEmitter;
 /// A mock implementation of [NgZone].
 @Injectable()
 class MockNgZone extends NgZone {
-  /** @internal */
-  EventEmitter<dynamic> _mockOnStable = new EventEmitter(false);
+  final _mockOnStable = new EventEmitter(false);
   MockNgZone() : super(enableLongStackTrace: false);
-  get onStable {
-    return this._mockOnStable;
-  }
+  EventEmitter get onStable => this._mockOnStable;
 
   /*=R*/ run/*<R>*/(/*=R*/ fn()) {
     return fn();

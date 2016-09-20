@@ -51,7 +51,7 @@ import "package:angular2/src/core/render.dart" show Renderer;
 import 'package:test/test.dart';
 
 const ANCHOR_ELEMENT = const OpaqueToken("AnchorElement");
-main() {
+void main() {
   bool isJit = false;
   BrowserDomAdapter.makeCurrent();
   group("integration tests", () {
@@ -1807,7 +1807,7 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property or known dire
           });
         });
         group("Missing directive checks", () {
-          expectCompileError(tcb, inlineTpl, errMessage, done) {
+          void expectCompileError(tcb, inlineTpl, errMessage, done) {
             tcb =
                 tcb.overrideView(MyComp, new ViewMetadata(template: inlineTpl));
             tcb.createAsync(MyComp).then((value) {
@@ -2141,7 +2141,7 @@ class DirectiveWithTitleAndHostProperty {
 
 @Component(selector: "event-cmp", template: "<div (click)=\"noop()\"></div>")
 class EventCmp {
-  noop() {}
+  void noop() {}
 }
 
 @Component(
@@ -2158,8 +2158,8 @@ class PushCmp {
   PushCmp() {
     this.numberOfChecks = 0;
   }
-  noop() {}
-  get field {
+  void noop() {}
+  String get field {
     this.numberOfChecks++;
     return "fixed";
   }
@@ -2179,12 +2179,12 @@ class PushCmpWithRef {
     this.numberOfChecks = 0;
     this.ref = ref;
   }
-  get field {
+  String get field {
     this.numberOfChecks++;
     return "fixed";
   }
 
-  propagate() {
+  void propagate() {
     this.ref.markForCheck();
   }
 }

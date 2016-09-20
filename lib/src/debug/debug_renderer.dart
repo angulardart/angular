@@ -68,7 +68,7 @@ class DebugDomRenderer extends DomRenderer {
     return nativeEl;
   }
 
-  attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
+  void attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
     var debugNode = getDebugNode(node);
     if (debugNode != null) {
       var debugParent = debugNode?.parent;
@@ -86,7 +86,7 @@ class DebugDomRenderer extends DomRenderer {
     super.attachViewAfter(node, viewRootNodes);
   }
 
-  detachView(List<dynamic> viewRootNodes) {
+  void detachView(List<dynamic> viewRootNodes) {
     viewRootNodes.forEach((node) {
       var debugNode = getDebugNode(node);
       if (debugNode != null && debugNode.parent != null) {
@@ -96,7 +96,7 @@ class DebugDomRenderer extends DomRenderer {
     super.detachView(viewRootNodes);
   }
 
-  destroyView(dynamic hostElement, List<dynamic> viewAllNodes) {
+  void destroyView(dynamic hostElement, List<dynamic> viewAllNodes) {
     int nodeCount = viewAllNodes.length;
     for (int i = 0; i < nodeCount; i++) {
       var debugNode = getDebugNode(viewAllNodes[i]);
@@ -114,7 +114,7 @@ class DebugDomRenderer extends DomRenderer {
     return super.listen(renderElement, name, callback);
   }
 
-  setElementProperty(
+  void setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue) {
     var debugEl = getDebugNode(renderElement);
     if (debugEl != null && debugEl is DebugElement) {

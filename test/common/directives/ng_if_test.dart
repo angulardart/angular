@@ -7,7 +7,7 @@ import "package:angular2/core.dart" show Component;
 import "package:angular2/common.dart" show NgIf;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("ngIf directive", () {
     test("should work in a template attribute", () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],

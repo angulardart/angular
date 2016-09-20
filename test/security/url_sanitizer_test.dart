@@ -6,7 +6,7 @@ import "package:angular2/src/platform/browser/browser_adapter.dart"
 import 'package:angular2/src/security/url_sanitizer.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   BrowserDomAdapter.makeCurrent();
   group('URL sanitizer', () {
     test('valid URLs', () {

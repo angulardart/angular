@@ -4,7 +4,7 @@ library angular2.test.transform.common.options_reader_test;
 import 'dart:io';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("options_reader", () {
     test("parseBarbackSettings reports invalid entry_points", () {
       var processResult = Process.runSync('dart', [

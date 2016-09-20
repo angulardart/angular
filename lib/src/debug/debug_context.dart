@@ -27,9 +27,7 @@ class DebugContext<T> implements RenderDebugInfo {
       ? this._view.staticNodeDebugInfos[this._nodeIndex]
       : null;
 
-  get context {
-    return this._view.ctx;
-  }
+  T get context => this._view.ctx;
 
   get component {
     var staticNodeInfo = _staticNodeInfo;

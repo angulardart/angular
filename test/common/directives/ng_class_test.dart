@@ -7,12 +7,12 @@ import "package:angular2/common.dart" show NgFor;
 import "package:angular2/src/common/directives/ng_class.dart";
 import 'package:test/test.dart';
 
-detectChangesAndCheckClasses(ComponentFixture fixture, String classes) {
+void detectChangesAndCheckClasses(ComponentFixture fixture, String classes) {
   fixture.detectChanges();
   expect(fixture.debugElement.children[0].nativeElement.className, classes);
 }
 
-main() {
+void main() {
   group("binding to CSS class list", () {
     test("should clean up when the directive is destroyed", () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],

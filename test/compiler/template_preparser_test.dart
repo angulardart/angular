@@ -7,7 +7,7 @@ import "package:angular2/src/compiler/template_preparser.dart"
     show preparseElement, PreparsedElementType, PreparsedElement;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("preparseElement", () {
     var htmlParser;
     setUp(() async {

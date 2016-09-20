@@ -7,7 +7,7 @@ import "package:angular2/src/compiler/parse_util.dart"
     show ParseSourceSpan, ParseLocation, ParseSourceFile;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("HtmlLexer", () {
     group("line/column numbers", () {
       test("should work without newlines", () {

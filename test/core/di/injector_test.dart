@@ -5,7 +5,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart" show Injector, InjectorFactory;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("Injector.NULL", () {
     test("should throw if no arg is given", () {
       expect(() => Injector.NULL.get("someToken"),

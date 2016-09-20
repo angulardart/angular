@@ -5,7 +5,7 @@ import "package:angular2/src/compiler/style_url_resolver.dart"
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("extractStyleUrls", () {
     var urlResolver;
     setUp(() {

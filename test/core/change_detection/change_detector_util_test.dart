@@ -4,7 +4,7 @@ import "package:angular2/src/core/change_detection/change_detection_util.dart"
     show devModeEqual;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("ChangeDetectionUtil", () {
     group("devModeEqual", () {
       test("should do the deep comparison of iterables", () {

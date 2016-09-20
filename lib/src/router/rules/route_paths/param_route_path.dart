@@ -195,7 +195,7 @@ class ParamRoutePath implements RoutePath {
     return this.routePath;
   }
 
-  _parsePathString(String routePath) {
+  void _parsePathString(String routePath) {
     // normalize route as not starting with a "/". Recognition will
 
     // also normalize.
@@ -273,7 +273,7 @@ class ParamRoutePath implements RoutePath {
     return hashParts.join("/");
   }
 
-  _assertValidPath(String path) {
+  void _assertValidPath(String path) {
     if (path.contains("#")) {
       throw new BaseException(
           '''Path "${ path}" should not include "#". Use "HashLocationStrategy" instead.''');

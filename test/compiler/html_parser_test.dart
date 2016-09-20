@@ -9,7 +9,7 @@ import "html_ast_spec_utils.dart"
     show humanizeDom, humanizeDomSourceSpans, humanizeLineColumn;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("HtmlParser", () {
     HtmlParser parser;
     setUp(() {

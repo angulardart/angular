@@ -7,7 +7,7 @@ import "package:angular2/core.dart" show Component, Directive;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("non-bindable", () {
     test("should not interpolate children", () async {
       inject([TestComponentBuilder, AsyncTestCompleter],

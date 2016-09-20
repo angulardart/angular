@@ -5,7 +5,7 @@ import 'dart:mirrors';
 import 'package:angular2/core.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('Binding', () {
     test('can create constant from token', () {
       expect(const Provider(Foo).token, Foo);

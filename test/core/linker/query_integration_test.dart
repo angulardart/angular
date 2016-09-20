@@ -21,7 +21,7 @@ import "package:angular2/common.dart" show NgIf, NgFor;
 import "package:angular2/core.dart" show ViewContainerRef;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("Query API", () {
     group("querying by directive type", () {
       test(

@@ -35,7 +35,7 @@ BrowserDetection browserDetection;
 
 class BrowserDetection {
   String _ua;
-  static setup() {
+  static void setup() {
     browserDetection = new BrowserDetection(null);
   }
 

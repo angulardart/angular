@@ -8,7 +8,7 @@ int getIntParameter(String name) {
   return int.parse(getStringParameter(name), radix: 10);
 }
 
-getStringParameter(String name) {
+String getStringParameter(String name) {
   var els = DOM.querySelectorAll(document, '''input[name="${ name}"]''');
   var value;
   var el;
@@ -27,14 +27,14 @@ getStringParameter(String name) {
   return value;
 }
 
-bindAction(String selector, Function callback) {
+void bindAction(String selector, Function callback) {
   var el = DOM.querySelector(document, selector);
   DOM.on(el, "click", (_) {
     callback();
   });
 }
 
-microBenchmark(name, iterationCount, callback) {
+void microBenchmark(name, iterationCount, callback) {
   var durationName = '''${ name}/${ iterationCount}''';
   window.console.time(durationName);
   callback();

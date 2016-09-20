@@ -243,14 +243,14 @@ abstract class ReflectionWriterMixin
     buffer.write(suffix);
   }
 
-  writeLocalMetadataMap(List<ReflectionInfoModel> models) {
+  void writeLocalMetadataMap(List<ReflectionInfoModel> models) {
     buffer.write('const _METADATA = const ');
     _writeListWithSeparator(models, _writeLocalMetadataEntry,
         prefix: '[', suffix: ']', separator: ',\n');
     buffer.writeln(';');
   }
 
-  _writeLocalMetadataEntry(ReflectionInfoModel model) {
+  void _writeLocalMetadataEntry(ReflectionInfoModel model) {
     buffer.write('${model.name}, ');
     _writeListWithSeparator(
         model.annotations

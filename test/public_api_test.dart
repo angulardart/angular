@@ -321,7 +321,7 @@ var NG_API = {
   platformCommonLib: NG_PLATFORM_COMMON,
 };
 
-main() {
+void main() {
   group('Public API check', () {
     var publicLibraries = [
       commonLib,

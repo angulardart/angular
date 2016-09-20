@@ -3,7 +3,7 @@ library angular2.test.core.wtf_impl_test;
 import 'package:angular2/src/core/profile/wtf_impl.dart' as impl;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('Web Tracing Framework', () {
     group('getArgSize', () {
       test("should parse args", () {

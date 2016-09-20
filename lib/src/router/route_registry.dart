@@ -520,7 +520,7 @@ num compareSpecificityStrings(String a, String b) {
   return a.length - b.length;
 }
 
-assertTerminalComponent(component, path) {
+void assertTerminalComponent(component, path) {
   if (component is! Type && !(component is ComponentFactory)) {
     return;
   }

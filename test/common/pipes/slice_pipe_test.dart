@@ -6,7 +6,7 @@ import 'package:angular2/core.dart' show Component;
 import 'package:angular2/common.dart' show SlicePipe;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('SlicePipe', () {
     List<num> list;
     var str;

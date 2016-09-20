@@ -147,7 +147,7 @@ class AuxRoute extends AbstractRoute {
  * ```
  */
 class AsyncRoute extends AbstractRoute {
-  final dynamic /* () => Promise<Type> */ loader;
+  final Function /* () => Promise<Type> */ loader;
   final String aux = null;
   const AsyncRoute(
       {String name,
@@ -156,7 +156,7 @@ class AsyncRoute extends AbstractRoute {
       String regex,
       RegexSerializer serializer,
       dynamic data,
-      dynamic /* () => Promise<Type> */ loader})
+      Future loader()})
       : loader = loader,
         super(
             name: name,

@@ -1,10 +1,10 @@
 import 'dart:html';
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
-var _inertElement;
+Node _inertElement;
 bool _inertIsTemplate = false;
 
-_getInertElement() {
+Node _getInertElement() {
   if (_inertElement == null) {
     // Prefer using <template> element if supported.
     TemplateElement templateEl = DOM.createTemplate('');

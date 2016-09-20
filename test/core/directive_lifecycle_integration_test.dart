@@ -15,7 +15,7 @@ import "package:angular2/src/core/metadata.dart"
     show Directive, Component, ViewMetadata;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("directive lifecycle integration spec", () {
     test(
         'should invoke lifecycle methods ngOnChanges > '

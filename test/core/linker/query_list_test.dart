@@ -5,7 +5,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/core/linker/query_list.dart" show QueryList;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("QueryList", () {
     QueryList<String> queryList;
     String log;
@@ -13,7 +13,7 @@ main() {
       queryList = new QueryList<String>();
       log = "";
     });
-    logAppend(item) {
+    void logAppend(item) {
       log += (log.length == 0 ? "" : ", ") + item;
     }
 

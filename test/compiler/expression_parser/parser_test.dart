@@ -10,8 +10,8 @@ import "package:angular2/src/compiler/expression_parser/ast.dart"
     show BindingPipe, AST;
 import "package:test/test.dart";
 
-main() {
-  createParser() {
+void main() {
+  Parser createParser() {
     return new Parser(new Lexer());
   }
 
@@ -41,19 +41,19 @@ main() {
     return new Unparser().unparse(ast);
   }
 
-  checkInterpolation(String exp, [String expected]) {
+  void checkInterpolation(String exp, [String expected]) {
     var ast = parseInterpolation(exp);
     expected ??= exp;
     expect(unparse(ast), expected);
   }
 
-  checkBinding(String exp, [String expected]) {
+  void checkBinding(String exp, [String expected]) {
     var ast = parseBinding(exp);
     expected ??= exp;
     expect(unparse(ast), expected);
   }
 
-  checkAction(String exp, [String expected]) {
+  void checkAction(String exp, [String expected]) {
     var ast = parseAction(exp);
     expected ??= exp;
     expect(unparse(ast), expected);

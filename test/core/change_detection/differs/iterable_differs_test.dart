@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import '../../core_mocks.dart';
 
-main() {
+void main() {
   group("IterableDiffers", () {
     var factory1;
     var factory2;

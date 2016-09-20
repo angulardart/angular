@@ -6,7 +6,7 @@ import 'package:angular2/src/compiler/directive_lifecycle_reflector.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('Directive lifecycle', () {
     setUp(() async {
       await inject([], () {});

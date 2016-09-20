@@ -27,8 +27,8 @@ import '../control_mocks.dart';
 
 class DummyControlValueAccessor implements ControlValueAccessor {
   var writtenValue;
-  registerOnChange(fn) {}
-  registerOnTouched(fn) {}
+  void registerOnChange(fn) {}
+  void registerOnTouched(fn) {}
   void writeValue(dynamic obj) {
     this.writtenValue = obj;
   }
@@ -40,14 +40,14 @@ class CustomValidatorDirective implements Validator {
   }
 }
 
-asyncValidator(expected) {
+Function asyncValidator(expected) {
   return (AbstractControl c) async =>
       c.value != expected ? {"async": true} : null;
 }
 
 class MockNgControl extends Mock implements NgControl {}
 
-main() {
+void main() {
   group("Shared selectValueAccessor", () {
     var defaultAccessor;
     NgControl dir;

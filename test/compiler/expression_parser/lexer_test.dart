@@ -10,47 +10,47 @@ List<Token> lex(String text) {
   return new Lexer().tokenize(text);
 }
 
-expectToken(token, index) {
+void expectToken(token, index) {
   expect(token is Token, isTrue);
   expect(token.index, index);
 }
 
-expectCharacterToken(token, index, character) {
+void expectCharacterToken(token, index, character) {
   expect(character, hasLength(1));
   expectToken(token, index);
   expect(token.isCharacter(character.codeUnitAt(0)), isTrue);
 }
 
-expectOperatorToken(token, index, operator) {
+void expectOperatorToken(token, index, operator) {
   expectToken(token, index);
   expect(token.isOperator(operator), isTrue);
 }
 
-expectNumberToken(token, index, n) {
+void expectNumberToken(token, index, n) {
   expectToken(token, index);
   expect(token.isNumber(), isTrue);
   expect(token.toNumber(), n);
 }
 
-expectStringToken(token, index, str) {
+void expectStringToken(token, index, str) {
   expectToken(token, index);
   expect(token.isString(), isTrue);
   expect(token.toString(), str);
 }
 
-expectIdentifierToken(Token token, int index, identifier) {
+void expectIdentifierToken(Token token, int index, identifier) {
   expectToken(token, index);
   expect(token.isIdentifier(), isTrue);
   expect(token.toString(), identifier);
 }
 
-expectKeywordToken(token, index, keyword) {
+void expectKeywordToken(token, index, keyword) {
   expectToken(token, index);
   expect(token.isKeyword(), isTrue);
   expect(token.toString(), keyword);
 }
 
-main() {
+void main() {
   group("lexer", () {
     group("token", () {
       test("should tokenize a simple identifier", () {

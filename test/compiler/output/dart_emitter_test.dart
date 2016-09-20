@@ -14,7 +14,7 @@ var sameModuleIdentifier = new CompileIdentifierMetadata(
 var externalModuleIdentifier = new CompileIdentifierMetadata(
     name: "someExternalId", moduleUrl: anotherModuleUrl);
 
-main() {
+void main() {
   // Not supported features of our OutputAst in Dart:
   // - declaring what should be exported via a special statement like `export`.
   //   Dart exports everything that has no `_` in its name.

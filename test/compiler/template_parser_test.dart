@@ -26,7 +26,7 @@ var MOCK_SCHEMA_REGISTRY = [
       useValue: new MockSchemaRegistry(
           {"invalidProp": false}, {"mappedAttr": "mappedProp"}))
 ];
-main() {
+void main() {
   var ngIf;
   Func3Opt1<String, List<CompileDirectiveMetadata>, List<CompilePipeMetadata>,
       List<TemplateAst>> parse;
@@ -1991,15 +1991,15 @@ bool compareProviderList(List a, List b) {
 class ArrayConsole implements Console {
   List<String> logs = [];
   List<String> warnings = [];
-  log(String msg) {
+  void log(String msg) {
     this.logs.add(msg);
   }
 
-  warn(String msg) {
+  void warn(String msg) {
     this.warnings.add(msg);
   }
 
-  clear() {
+  void clear() {
     logs.clear();
     warnings.clear();
   }

@@ -16,7 +16,7 @@ import "package:angular2/core.dart"
 import "package:angular2/common.dart" show NgIf, NgClass;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   // Place to put reproductions for regressions
   group("regressions", () {
     group("platform pipes", () {

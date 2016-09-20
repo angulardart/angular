@@ -10,19 +10,19 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
     setRootDomAdapter(new Html5LibDomAdapter());
   }
 
-  logError(errorMessage) {
+  void logError(errorMessage) {
     stderr.writeln('${errorMessage}');
   }
 
-  log(message) {
+  void log(message) {
     stdout.writeln('${message}');
   }
 
-  logGroup(message) {
+  void logGroup(message) {
     stdout.writeln('${message}');
   }
 
-  logGroupEnd() {}
+  void logGroupEnd() {}
 
   @override
   void setProperty(Element element, String name, Object value) {
@@ -30,22 +30,22 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  getProperty(Element element, String name) {
+  dynamic getProperty(Element element, String name) {
     throw new UnimplementedError();
   }
 
   @override
-  getTemplateContent(Element el) {
+  dynamic getTemplateContent(Element el) {
     throw new UnimplementedError();
   }
 
   @override
-  getTitle() {
+  String getTitle() {
     throw new UnimplementedError();
   }
 
   @override
-  setTitle(String newTitle) {
+  void setTitle(String newTitle) {
     throw new UnimplementedError();
   }
 
@@ -65,12 +65,12 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  query(selector) {
+  dynamic query(selector) {
     throw new UnimplementedError();
   }
 
   @override
-  on(el, evt, listener) {
+  void on(el, evt, listener) {
     throw new UnimplementedError();
   }
 
@@ -80,112 +80,112 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  dispatchEvent(el, evt) {
+  void dispatchEvent(el, evt) {
     throw new UnimplementedError();
   }
 
   @override
-  createMouseEvent(eventType) {
+  dynamic createMouseEvent(eventType) {
     throw new UnimplementedError();
   }
 
   @override
-  createEvent(eventType) {
+  dynamic createEvent(eventType) {
     throw new UnimplementedError();
   }
 
   @override
-  preventDefault(evt) {
+  void preventDefault(evt) {
     throw new UnimplementedError();
   }
 
   @override
-  isPrevented(evt) {
+  bool isPrevented(evt) {
     throw new UnimplementedError();
   }
 
   @override
-  removeChild(el, node) {
+  void removeChild(el, node) {
     throw new UnimplementedError();
   }
 
   @override
-  insertAllBefore(el, nodes) {
+  void insertAllBefore(el, nodes) {
     throw new UnimplementedError();
   }
 
   @override
-  insertAfter(el, node) {
+  void insertAfter(el, node) {
     throw new UnimplementedError();
   }
 
   @override
-  getValue(el) {
+  String getValue(el) {
     throw new UnimplementedError();
   }
 
   @override
-  setValue(el, String value) {
+  void setValue(el, String value) {
     throw new UnimplementedError();
   }
 
   @override
-  getChecked(el) {
+  bool getChecked(el) {
     throw new UnimplementedError();
   }
 
   @override
-  setChecked(el, bool value) {
+  void setChecked(el, bool value) {
     throw new UnimplementedError();
   }
 
   @override
-  createElementNS(ns, tagName, [doc]) {
+  Element createElementNS(ns, tagName, [doc]) {
     throw new UnimplementedError();
   }
 
   @override
-  createScriptTag(String attrName, String attrValue, [doc]) {
+  dynamic createScriptTag(String attrName, String attrValue, [doc]) {
     throw new UnimplementedError();
   }
 
   @override
-  createStyleElement(String css, [doc]) {
+  dynamic createStyleElement(String css, [doc]) {
     throw new UnimplementedError();
   }
 
   @override
-  createShadowRoot(el) {
+  dynamic createShadowRoot(el) {
     throw new UnimplementedError();
   }
 
   @override
-  getShadowRoot(el) {
+  dynamic getShadowRoot(el) {
     throw new UnimplementedError();
   }
 
   @override
-  getHost(el) {
+  dynamic getHost(el) {
     throw new UnimplementedError();
   }
 
   @override
-  getElementsByClassName(element, String name) {
+  List<Node> getElementsByClassName(element, String name) {
     throw new UnimplementedError();
   }
 
   @override
-  getElementsByTagName(element, String name) {
+  List<Node> getElementsByTagName(element, String name) {
     throw new UnimplementedError();
   }
 
   @override
-  removeClass(element, String className) {
+  void removeClass(element, String className) {
     throw new UnimplementedError();
   }
 
   @override
-  setStyle(element, String styleName, String styleValue) {
+  void setStyle(element, String styleName, String styleValue) {
     throw new UnimplementedError();
   }
 
@@ -195,42 +195,42 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  removeStyle(element, String styleName) {
+  void removeStyle(element, String styleName) {
     throw new UnimplementedError();
   }
 
   @override
-  getStyle(element, String styleName) {
+  String getStyle(element, String styleName) {
     throw new UnimplementedError();
   }
 
   @override
-  hasAttributeNS(element, String ns, String attribute) {
+  bool hasAttributeNS(element, String ns, String attribute) {
     throw new UnimplementedError();
   }
 
   @override
-  getAttributeNS(element, String ns, String attribute) {
+  String getAttributeNS(element, String ns, String attribute) {
     throw new UnimplementedError();
   }
 
   @override
-  setAttributeNS(element, String ns, String name, String value) {
+  void setAttributeNS(element, String ns, String name, String value) {
     throw new UnimplementedError();
   }
 
   @override
-  removeAttributeNS(element, String ns, String attribute) {
+  void removeAttributeNS(element, String ns, String attribute) {
     throw new UnimplementedError();
   }
 
   @override
-  createHtmlDocument() {
+  dynamic createHtmlDocument() {
     throw new UnimplementedError();
   }
 
   @override
-  defaultDoc() {
+  dynamic defaultDoc() {
     throw new UnimplementedError();
   }
 
@@ -250,12 +250,12 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  importIntoDoc(node) {
+  dynamic importIntoDoc(node) {
     throw new UnimplementedError();
   }
 
   @override
-  adoptNode(node) {
+  dynamic adoptNode(node) {
     throw new UnimplementedError();
   }
 
@@ -275,57 +275,57 @@ class Html5LibDomAdapter extends AbstractHtml5LibAdapter {
   }
 
   @override
-  getHistory() {
+  dynamic getHistory() {
     throw new UnimplementedError();
   }
 
   @override
-  getLocation() {
+  dynamic getLocation() {
     throw new UnimplementedError();
   }
 
   @override
-  getBaseHref() {
+  String getBaseHref() {
     throw new UnimplementedError();
   }
 
   @override
-  resetBaseElement() {
+  void resetBaseElement() {
     throw new UnimplementedError();
   }
 
   @override
-  getComputedStyle(element) {
+  dynamic getComputedStyle(element) {
     throw new UnimplementedError();
   }
 
   @override
-  requestAnimationFrame(callback) {
+  num requestAnimationFrame(callback) {
     throw new UnimplementedError();
   }
 
   @override
-  cancelAnimationFrame(id) {
+  void cancelAnimationFrame(id) {
     throw new UnimplementedError();
   }
 
   @override
-  performanceNow() {
+  num performanceNow() {
     throw new UnimplementedError();
   }
 
   @override
-  getAnimationPrefix() {
+  String getAnimationPrefix() {
     throw new UnimplementedError();
   }
 
   @override
-  getTransitionEnd() {
+  String getTransitionEnd() {
     throw new UnimplementedError();
   }
 
   @override
-  supportsAnimation() {
+  bool supportsAnimation() {
     throw new UnimplementedError();
   }
 }

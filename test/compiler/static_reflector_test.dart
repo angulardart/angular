@@ -4,7 +4,7 @@ import "package:angular2/src/compiler/static_reflector.dart"
     show StaticReflector, StaticReflectorHost;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("StaticRefelector", () {
     test("should get annotations for NgFor", () {
       var host = new MockReflectorHost();

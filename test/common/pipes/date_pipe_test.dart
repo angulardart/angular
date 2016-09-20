@@ -6,7 +6,7 @@ import 'package:angular2/common.dart' show DatePipe;
 import 'package:angular2/src/compiler/pipe_resolver.dart' show PipeResolver;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('DatePipe', () {
     var date;
     var pipe;

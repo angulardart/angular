@@ -42,7 +42,7 @@ void functionThatThrowsNonError() {
   }
 }
 
-main() {
+void main() {
   group('Error handling', () {
     test('should preserve Error stack traces thrown from components', () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],
@@ -221,9 +221,9 @@ class ThrowingComponent2 {
 class PropModel implements Map {
   final String foo = 'foo-prop';
 
-  operator [](_) => 'foo-map';
+  String operator [](_) => 'foo-map';
 
-  noSuchMethod(_) {
+  dynamic noSuchMethod(_) {
     throw 'property not found';
   }
 }

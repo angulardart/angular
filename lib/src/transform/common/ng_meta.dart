@@ -139,7 +139,7 @@ class NgMeta {
   /// Returns the metadata for every type associated with the given [alias].
   List<dynamic> flatten(String alias) {
     var result = [];
-    helper(name, path) {
+    void helper(name, path) {
       final newPath = []
         ..addAll(path)
         ..add(name);

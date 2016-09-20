@@ -13,7 +13,7 @@ import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('DynamicComponentLoader', () {
     group('loading next to a location', () {
       test('should work', () async {

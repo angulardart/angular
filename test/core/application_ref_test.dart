@@ -37,7 +37,7 @@ import "package:angular2/src/facade/exception_handler.dart"
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 
-main() {
+void main() {
   group("bootstrap", () {
     PlatformRef platform;
     _ArrayLogger errorLogger;
@@ -156,7 +156,7 @@ class _ArrayLogger {
     this.res.add(s);
   }
 
-  logGroupEnd() {}
+  void logGroupEnd() {}
 }
 
 class _MockComponentFactory extends ComponentFactory {
@@ -181,7 +181,7 @@ class _MockComponentResolver implements ComponentResolver {
     throw new UnimplementedError();
   }
 
-  clearCache() {}
+  void clearCache() {}
 }
 
 class _MockComponentRef extends ComponentRef_ {
@@ -200,6 +200,6 @@ class _MockComponentRef extends ComponentRef_ {
 }
 
 class _MockConsole implements Console {
-  log(message) {}
-  warn(message) {}
+  void log(message) {}
+  void warn(message) {}
 }

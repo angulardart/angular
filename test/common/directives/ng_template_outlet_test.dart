@@ -8,7 +8,7 @@ import "package:angular2/src/common/directives/ng_template_outlet.dart"
     show NgTemplateOutlet;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("insert", () {
     test("should do nothing if templateRef is null", () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],

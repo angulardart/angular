@@ -26,8 +26,8 @@ class RedirectMatch extends RouteMatch {
 
 // Rules are responsible for recognizing URL segments and generating instructions
 abstract class AbstractRule {
-  String hash;
-  String path;
+  String get hash;
+  String get path;
   Future<RouteMatch> recognize(Url beginningSegment);
   ComponentInstruction generate(Map<String, dynamic> params);
 }
@@ -39,7 +39,7 @@ class RedirectRule implements AbstractRule {
   RedirectRule(this._pathRecognizer, this.redirectTo) {
     this.hash = this._pathRecognizer.hash;
   }
-  get path {
+  String get path {
     return this._pathRecognizer.toString();
   }
 
@@ -81,7 +81,7 @@ class RouteRule implements AbstractRule {
     this.hash = this._routePath.hash;
     this.terminal = this._routePath.terminal;
   }
-  get path {
+  String get path {
     return this._routePath.toString();
   }
 

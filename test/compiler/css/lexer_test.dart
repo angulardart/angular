@@ -4,7 +4,7 @@ import 'package:angular2/src/compiler/css/lexer.dart'
     show CssToken, CssScannerError, CssLexer, CssLexerMode, CssTokenType;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   List<CssToken> tokenize(code,
       [bool trackComments = false, CssLexerMode mode = CssLexerMode.ALL]) {
     var scanner = new CssLexer().scan(code, trackComments);
@@ -238,7 +238,7 @@ main() {
       test(
           'should consider attribute selectors as valid input and throw when '
           'an invalid modifier is used', () {
-        tokenizeAttr(modifier) {
+        List<CssToken> tokenizeAttr(modifier) {
           var cssCode = 'value' + modifier + '=\'something\'';
           return tokenize(cssCode, false, CssLexerMode.ATTRIBUTE_SELECTOR);
         }
@@ -258,7 +258,7 @@ main() {
       test(
           'should validate media queries with'
           ' a reduced subset of valid characters', () {
-        tokenizeQuery(code) {
+        List<CssToken> tokenizeQuery(code) {
           return tokenize(code, false, CssLexerMode.MEDIA_QUERY);
         }
         // the reason why the numbers are so high is because MediaQueries keep
@@ -284,7 +284,7 @@ main() {
       test(
           'should validate pseudo selector identifiers with a reduced subset '
           'of valid characters', () {
-        tokenizePseudo(code) {
+        List<CssToken> tokenizePseudo(code) {
           return tokenize(code, false, CssLexerMode.PSEUDO_SELECTOR);
         }
 
@@ -303,7 +303,7 @@ main() {
       test(
           'should validate pseudo selector identifiers with a reduced subset '
           'of valid characters', () {
-        tokenizePseudo(code) {
+        List<CssToken> tokenizePseudo(code) {
           return tokenize(code, false, CssLexerMode.PSEUDO_SELECTOR);
         }
 
@@ -320,7 +320,7 @@ main() {
     });
     group('Style Block Mode', () {
       test('should style blocks with a reduced subset of valid characters', () {
-        tokenizeStyles(code) {
+        List<CssToken> tokenizeStyles(code) {
           return tokenize(code, false, CssLexerMode.STYLE_BLOCK);
         }
 

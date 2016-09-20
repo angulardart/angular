@@ -11,7 +11,7 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import '../control_mocks.dart';
 
-main() {
+void main() {
   group('AsyncPipe Observable', () {
     var emitter;
     var pipe;

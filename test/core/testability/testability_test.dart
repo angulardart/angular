@@ -52,7 +52,7 @@ class TestZone extends NgZone {
   }
 }
 
-main() {
+void main() {
   group("Testability", () {
     Testability testability;
     MockCallback callback;

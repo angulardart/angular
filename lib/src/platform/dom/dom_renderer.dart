@@ -79,12 +79,12 @@ class DomRenderer implements Renderer {
     return el;
   }
 
-  attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
+  void attachViewAfter(dynamic node, List<dynamic> viewRootNodes) {
     moveNodesAfterSibling(node, viewRootNodes);
     DomRootRenderer.isDirty = true;
   }
 
-  detachView(List<dynamic> viewRootNodes) {
+  void detachView(List<dynamic> viewRootNodes) {
     int len = viewRootNodes.length;
     for (var i = 0; i < len; i++) {
       var node = viewRootNodes[i];
@@ -93,7 +93,7 @@ class DomRenderer implements Renderer {
     }
   }
 
-  destroyView(dynamic hostElement, List<dynamic> viewAllNodes) {
+  void destroyView(dynamic hostElement, List<dynamic> viewAllNodes) {
     if (componentProto.encapsulation == ViewEncapsulation.Native &&
         hostElement != null) {
       sharedStylesHost.removeHost(DOM.getShadowRoot(hostElement));
@@ -187,7 +187,7 @@ class DomRenderer implements Renderer {
   }
 }
 
-moveNodesAfterSibling(sibling, nodes) {
+void moveNodesAfterSibling(sibling, nodes) {
   var parent = DOM.parentElement(sibling);
   if (nodes.isNotEmpty && parent != null) {
     var nextSibling = DOM.nextSibling(sibling);
@@ -204,7 +204,7 @@ moveNodesAfterSibling(sibling, nodes) {
   }
 }
 
-appendNodes(parent, nodes) {
+void appendNodes(parent, nodes) {
   for (var i = 0; i < nodes.length; i++) {
     DOM.appendChild(parent, nodes[i]);
   }

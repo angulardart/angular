@@ -21,22 +21,22 @@ List _errors;
 List _traces;
 NgZone _zone;
 
-logOnError() {
+void logOnError() {
   _zone.onError.listen((NgZoneError ngErr) {
     _errors.add(ngErr.error);
     _traces.add(ngErr.stackTrace);
   });
 }
 
-logOnUnstable() {
+void logOnUnstable() {
   _zone.onUnstable.listen(_log.fn("onUnstable"));
 }
 
-logOnMicrotaskEmpty() {
+void logOnMicrotaskEmpty() {
   _zone.onMicrotaskEmpty.listen(_log.fn("onMicrotaskEmpty"));
 }
 
-logOnStable() {
+void logOnStable() {
   _zone.onStable.listen(_log.fn("onStable"));
 }
 
@@ -54,7 +54,7 @@ createZone(enableLongStackTrace) {
   return new NgZone(enableLongStackTrace: enableLongStackTrace);
 }
 
-main() {
+void main() {
   group("NgZone", () {
     setUp(() {
       _log = new Log();
@@ -148,7 +148,7 @@ main() {
   });
 }
 
-commonTests() {
+void commonTests() {
   group("hasPendingMicrotasks", () {
     test("should be false", () {
       expect(_zone.hasPendingMicrotasks, isFalse);

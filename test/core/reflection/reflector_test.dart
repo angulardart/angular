@@ -76,7 +76,7 @@ class SuperClassImplementingOnInit implements OnInit {
 
 class SubClassDoesNotDeclareOnInit extends SuperClassImplementingOnInit {}
 
-main() {
+void main() {
   group("Reflector", () {
     var reflector;
     setUp(() {

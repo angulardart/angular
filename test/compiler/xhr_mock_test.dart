@@ -6,7 +6,7 @@ import "package:angular2/testing_internal.dart";
 import "package:angular2/src/compiler/xhr_mock.dart" show MockXHR;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("MockXHR", () {
     MockXHR xhr;
     setUp(() {

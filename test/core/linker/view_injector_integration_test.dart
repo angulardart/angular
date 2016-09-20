@@ -323,7 +323,7 @@ DebugElement createComp(String template, TestComponentBuilder tcb,
   return fixture.debugElement;
 }
 
-main() {
+void main() {
   TestComponentBuilder tcb;
 
   group("View Injector", () {

@@ -11,7 +11,7 @@ const _attrToPropMap = const {
 
 abstract class AbstractHtml5LibAdapter
     implements DomAdapter<Element, Node, Node> {
-  hasProperty(element, String name) {
+  bool hasProperty(element, String name) {
     // This is needed for serverside compile to generate the right getters/setters.
     // TODO: change this once we have property schema support.
     // Attention: Keep this in sync with browser_adapter.dart!
@@ -20,10 +20,8 @@ abstract class AbstractHtml5LibAdapter
 
   void setProperty(Element element, String name, Object value);
 
-  getProperty(Element element, String name);
-
   @override
-  get attrToPropMap => _attrToPropMap;
+  Map<String, String> get attrToPropMap => _attrToPropMap;
 
   @override
   set attrToPropMap(value) {
@@ -31,10 +29,10 @@ abstract class AbstractHtml5LibAdapter
   }
 
   @override
-  getTitle();
+  String getTitle();
 
   @override
-  setTitle(String newTitle);
+  void setTitle(String newTitle);
 
   @override
   String getEventKey(event);
@@ -49,9 +47,8 @@ abstract class AbstractHtml5LibAdapter
   Type getXHR() => XHR;
 
   Element parse(String templateHtml) => parser.parse(templateHtml).firstChild;
-  query(selector);
 
-  querySelector(el, String selector) {
+  dynamic querySelector(el, String selector) {
     return el.querySelector(selector);
   }
 
@@ -59,27 +56,15 @@ abstract class AbstractHtml5LibAdapter
     return el.querySelectorAll(selector);
   }
 
-  on(el, evt, listener);
+  void on(el, evt, listener);
 
   Function onAndCancel(el, evt, listener);
 
-  dispatchEvent(el, evt);
-
-  createMouseEvent(eventType);
-
-  createEvent(eventType);
-
-  preventDefault(evt);
-
-  isPrevented(evt);
-
-  getInnerHTML(el) {
+  String getInnerHTML(el) {
     return el.innerHtml;
   }
 
-  getTemplateContent(el);
-
-  getOuterHTML(el) {
+  String getOuterHTML(el) {
     return el.outerHtml;
   }
 
@@ -106,14 +91,14 @@ abstract class AbstractHtml5LibAdapter
     throw new UnimplementedError();
   }
 
-  content(node) {
+  dynamic content(node) {
     return node;
   }
 
-  firstChild(Element el) =>
+  dynamic firstChild(Element el) =>
       el is NodeList ? (el as NodeList).first : el.firstChild;
 
-  nextSibling(el) {
+  dynamic nextSibling(el) {
     final parentNode = el.parentNode;
     if (parentNode == null) return null;
     final siblings = parentNode.nodes;
@@ -124,93 +109,65 @@ abstract class AbstractHtml5LibAdapter
     return null;
   }
 
-  parentElement(el) {
+  dynamic parentElement(el) {
     return el.parent;
   }
 
   List childNodes(el) => el.nodes;
   List childNodesAsList(el) => el.nodes;
-  clearNodes(el) {
+  void clearNodes(el) {
     el.nodes.forEach((e) => e.remove());
   }
 
-  appendChild(el, node) => el.append(node.remove());
-  removeChild(el, node);
+  void appendChild(el, node) => el.append(node.remove());
 
-  remove(el) => el.remove();
-  insertBefore(el, node) {
+  void remove(el) {
+    el.remove();
+  }
+
+  void insertBefore(el, node) {
     if (el.parent == null) throw '$el must have a parent';
     el.parent.insertBefore(node, el);
   }
 
-  insertAllBefore(el, nodes);
-
-  insertAfter(el, node);
-
-  setInnerHTML(el, value) {
+  void setInnerHTML(el, value) {
     el.innerHtml = value;
   }
 
-  getText(el) {
+  String getText(el) {
     return el.text;
   }
 
   String setText(el, String value) => el.text = value;
 
-  getValue(el);
+  dynamic createComment(String text) => new Comment(text);
+  dynamic createTemplate(String html) =>
+      createElement('template')..innerHtml = html;
 
-  setValue(el, String value);
-
-  getChecked(el);
-
-  setChecked(el, bool value);
-
-  createComment(String text) => new Comment(text);
-  createTemplate(String html) => createElement('template')..innerHtml = html;
-  createElement(tagName, [doc]) {
+  Element createElement(tagName, [doc]) {
     return new Element.tag(tagName);
   }
 
-  createElementNS(ns, tagName, [doc]);
+  Element createElementNS(ns, tagName, [doc]);
 
-  createTextNode(String text, [doc]) => new Text(text);
+  Node createTextNode(String text, [doc]) => new Text(text);
 
-  createScriptTag(String attrName, String attrValue, [doc]);
-
-  createStyleElement(String css, [doc]);
-
-  createShadowRoot(el);
-
-  getShadowRoot(el);
-
-  getHost(el);
-
-  clone(node) => node.clone(true);
-  getElementsByClassName(element, String name);
-
-  getElementsByTagName(element, String name);
+  Node clone(node) => node.clone(true);
 
   List<String> classList(Element element) => element.classes.toList();
 
-  addClass(element, String className) {
+  void addClass(element, String className) {
     element.classes.add(className);
   }
 
-  removeClass(element, String className);
+  bool hasClass(element, String className) =>
+      element.classes.contains(className);
 
-  hasClass(element, String className) => element.classes.contains(className);
-
-  setStyle(element, String styleName, String styleValue);
-
-  bool hasStyle(Element element, String styleName, [String styleValue]);
-
-  removeStyle(element, String styleName);
-
-  getStyle(element, String styleName);
+  void setStyle(element, String styleName, String styleValue);
 
   String tagName(element) => element.localName;
 
-  attributeMap(element) {
+  Map<String, String> attributeMap(element) {
     // `attributes` keys can be {@link AttributeName}s.
     var map = <String, String>{};
     element.attributes.forEach((key, value) {
@@ -219,41 +176,29 @@ abstract class AbstractHtml5LibAdapter
     return map;
   }
 
-  hasAttribute(element, String attribute) {
+  bool hasAttribute(element, String attribute) {
     // `attributes` keys can be {@link AttributeName}s.
     return element.attributes.keys.any((key) => '$key' == attribute);
   }
 
-  hasAttributeNS(element, String ns, String attribute);
-
-  getAttribute(element, String attribute) {
+  String getAttribute(element, String attribute) {
     // `attributes` keys can be {@link AttributeName}s.
     var key = element.attributes.keys
         .firstWhere((key) => '$key' == attribute, orElse: () {});
     return element.attributes[key];
   }
 
-  getAttributeNS(element, String ns, String attribute);
-
-  setAttribute(element, String name, String value) {
+  void setAttribute(element, String name, String value) {
     element.attributes[name] = value;
   }
 
-  setAttributeNS(element, String ns, String name, String value);
-
-  removeAttribute(element, String attribute) {
+  void removeAttribute(element, String attribute) {
     element.attributes.remove(attribute);
   }
 
-  removeAttributeNS(element, String ns, String attribute);
+  void removeAttributeNS(element, String ns, String attribute);
 
-  templateAwareRoot(el) => el;
-
-  createHtmlDocument();
-
-  defaultDoc();
-
-  bool elementMatches(n, String selector);
+  dynamic templateAwareRoot(el) => el;
 
   bool isTemplateElement(Element el) {
     return el != null && el.localName.toLowerCase() == 'template';
@@ -264,19 +209,7 @@ abstract class AbstractHtml5LibAdapter
 
   bool isElementNode(node) => node.nodeType == Node.ELEMENT_NODE;
 
-  bool hasShadowRoot(node);
-
-  bool isShadowRoot(node);
-
-  importIntoDoc(node);
-
-  adoptNode(node);
-
-  String getHref(element);
-
-  void resolveAndSetHref(element, baseUrl, href);
-
-  List getDistributedNodes(Node);
+  dynamic importIntoDoc(node);
 
   bool supportsDOMEvents() {
     return false;
@@ -286,14 +219,6 @@ abstract class AbstractHtml5LibAdapter
     return false;
   }
 
-  getHistory();
-
-  getLocation();
-
-  getBaseHref();
-
-  resetBaseElement();
-
   String getUserAgent() {
     return 'Angular 2 Dart Transformer';
   }
@@ -302,26 +227,12 @@ abstract class AbstractHtml5LibAdapter
     this.setAttribute(element, 'data-${name}', value);
   }
 
-  getComputedStyle(element);
-
   String getData(Element element, String name) {
     return this.getAttribute(element, 'data-${name}');
   }
 
   // TODO(tbosch): move this into a separate environment class once we have it
-  setGlobalVar(String name, value) {
+  void setGlobalVar(String name, value) {
     // noop on the server
   }
-
-  requestAnimationFrame(callback);
-
-  cancelAnimationFrame(id);
-
-  performanceNow();
-
-  getAnimationPrefix();
-
-  getTransitionEnd();
-
-  supportsAnimation();
 }

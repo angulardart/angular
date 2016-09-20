@@ -9,7 +9,7 @@ import './hammer_common.dart';
 const OpaqueToken HAMMER_GESTURE_CONFIG =
     const OpaqueToken("HammerGestureConfig");
 
-overrideDefault(js.JsObject mc, String eventName, Object config) {
+void overrideDefault(js.JsObject mc, String eventName, Object config) {
   var jsObj = mc.callMethod('get', [eventName]);
   jsObj.callMethod('set', [new js.JsObject.jsify(config)]);
 }
@@ -68,7 +68,7 @@ class HammerGesturesPlugin extends HammerGesturesPluginCommon {
     });
   }
 
-  isCustomEvent(String eventName) {
+  bool isCustomEvent(String eventName) {
     return this._config.events.indexOf(eventName) > -1;
   }
 }

@@ -40,7 +40,7 @@ class ComponentWithoutView {}
 
 class SimpleClass {}
 
-main() {
+void main() {
   group("ViewResolver", () {
     ViewResolver resolver;
     setUp(() async {

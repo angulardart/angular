@@ -16,7 +16,7 @@ class Logger {
   Logger() {
     this.log = [];
   }
-  add(String thing) {
+  void add(String thing) {
     this.log.add(thing);
   }
 }
@@ -105,11 +105,11 @@ class EventsComp {
     this.clicked = false;
     this.customed = false;
   }
-  handleClick() {
+  void handleClick() {
     this.clicked = true;
   }
 
-  handleCustom() {
+  void handleCustom() {
     this.customed = true;
   }
 }
@@ -190,7 +190,7 @@ class BankAccount {
     directives: const [BankAccount])
 class TestApp {}
 
-main() {
+void main() {
   group("debug element", () {
     test("should list all child nodes", () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],

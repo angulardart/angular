@@ -8,7 +8,7 @@ import 'dart:collection';
 import 'package:test/test.dart';
 
 // todo(vicb): UnmodifiableListView / frozen object when implemented
-main() {
+void main() {
   group("iterable differ", () {
     group("DefaultIterableDiffer", () {
       DefaultIterableDiffer differ;
@@ -421,7 +421,7 @@ main() {
 class ItemWithId {
   final String id;
   ItemWithId(this.id);
-  toString() {
+  String toString() {
     return '''{id: ${ this . id}}''';
   }
 }
@@ -430,7 +430,7 @@ class ComplexItem {
   final String id;
   final String color;
   ComplexItem(this.id, this.color);
-  toString() {
+  String toString() {
     return '''{id: ${ this . id}, color: ${ this . color}}''';
   }
 }
@@ -440,7 +440,7 @@ class TestIterable extends IterableBase<int> {
   Iterator<int> get iterator => list.iterator;
 }
 
-iterableChangesAsString(
+String iterableChangesAsString(
     {collection: const [],
     previous: const [],
     additions: const [],

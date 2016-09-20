@@ -6,7 +6,7 @@ import 'package:angular2/src/compiler/output/path_util.dart'
     show getImportModulePath;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('PathUtils getImportModulePath', () {
     test('should calculate relative paths', () {
       expect(

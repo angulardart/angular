@@ -18,13 +18,13 @@ class _EagerTransformerWrapper extends EagerTransformerWrapper
   String get allowedExtensions => _wrapped.allowedExtensions;
 
   @override
-  apply(Transform transform) => _wrapped.apply(transform);
+  dynamic apply(Transform transform) => _wrapped.apply(transform);
 
   @override
-  isPrimary(AssetId id) => _wrapped.isPrimary(id);
+  bool isPrimary(AssetId id) => _wrapped.isPrimary(id);
 
   @override
-  toString() => _wrapped.toString();
+  String toString() => _wrapped.toString();
 }
 
 class _EagerAggregateTransformerWrapper extends EagerTransformerWrapper
@@ -33,11 +33,11 @@ class _EagerAggregateTransformerWrapper extends EagerTransformerWrapper
   _EagerAggregateTransformerWrapper(this._wrapped) : super._();
 
   @override
-  apply(AggregateTransform transform) => _wrapped.apply(transform);
+  dynamic apply(AggregateTransform transform) => _wrapped.apply(transform);
 
   @override
-  classifyPrimary(AssetId id) => _wrapped.classifyPrimary(id);
+  dynamic classifyPrimary(AssetId id) => _wrapped.classifyPrimary(id);
 
   @override
-  toString() => _wrapped.toString();
+  String toString() => _wrapped.toString();
 }

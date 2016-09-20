@@ -6,7 +6,7 @@ class TestInjector {
   bool _instantiated = false;
   ReflectiveInjector _injector;
   List<dynamic /* Type | Provider | List < dynamic > */ > _providers = [];
-  reset() {
+  void reset() {
     this._injector = null;
     this._providers = [];
     this._instantiated = false;
@@ -16,7 +16,7 @@ class TestInjector {
       [];
   List<dynamic /* Type | Provider | List < dynamic > */ > applicationProviders =
       [];
-  addProviders(
+  void addProviders(
       List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
     if (this._instantiated) {
       throw new StateError(
@@ -25,7 +25,7 @@ class TestInjector {
     this._providers = new List.from(this._providers)..addAll(providers);
   }
 
-  createInjector() {
+  ReflectiveInjector createInjector() {
     var rootInjector =
         ReflectiveInjector.resolveAndCreate(this.platformProviders);
     this._injector = rootInjector.resolveAndCreateChild(
@@ -65,7 +65,7 @@ TestInjector getTestInjector() {
  * Test Providers for individual platforms are available from
  * 'angular2/platform/testing/<platform_name>'.
  */
-setBaseTestProviders(
+void setBaseTestProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > platformProviders,
     List<
         dynamic /* Type | Provider | List < dynamic > */ > applicationProviders) {
@@ -87,7 +87,7 @@ setBaseTestProviders(
 /**
  * Reset the providers for the test injector.
  */
-resetBaseTestProviders() {
+void resetBaseTestProviders() {
   var testInjector = getTestInjector();
   testInjector.platformProviders = [];
   testInjector.applicationProviders = [];
@@ -137,7 +137,7 @@ class InjectSetupWrapper {
   }
 }
 
-withProviders(dynamic providers()) {
+InjectSetupWrapper withProviders(dynamic providers()) {
   return new InjectSetupWrapper(providers);
 }
 

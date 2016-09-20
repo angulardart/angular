@@ -7,7 +7,7 @@ import "package:angular2/src/common/directives/ng_switch.dart"
     show NgSwitch, NgSwitchWhen, NgSwitchDefault;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("switch", () {
     group("switch value changes", () {
       test("should switch amongst when values", () async {

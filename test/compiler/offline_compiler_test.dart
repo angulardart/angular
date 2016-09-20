@@ -14,7 +14,7 @@ import "offline_compiler_util.dart" show CompA;
 
 import 'package:test/test.dart';
 
-main() {
+void main() {
   var outputDefs = [];
   var typedComponentFactory = typed.CompANgFactory;
   // Our generator only works on node.js and Dart...

@@ -9,7 +9,7 @@ import "package:angular2/common.dart"
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   var asyncValidator = (expected, [timeouts = const {}]) {
     return (AbstractControl c) {
       var completer = new Completer();
@@ -518,7 +518,7 @@ main() {
       });
       group("errors", () {
         test("should run the validator when the value changes", () {
-          simpleValidator(c) =>
+          Map simpleValidator(c) =>
               c.controls[0].value != "correct" ? {"broken": true} : null;
           var c = new Control(null);
           var g = new ControlArray([c], simpleValidator);

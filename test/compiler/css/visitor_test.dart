@@ -5,13 +5,13 @@ import 'package:angular2/src/compiler/css/parser.dart';
 import 'package:angular2/src/compiler/css/lexer.dart' show CssLexer;
 import 'package:test/test.dart';
 
-tokensToStringList(tokens) {
+Iterable<String> tokensToStringList(tokens) {
   return tokens.map((t) => t.strValue);
 }
 
 class MyVisitor implements CssASTVisitor {
   Map<String, List<dynamic>> captures = {};
-  _capture(method, ast, context) {
+  void _capture(method, ast, context) {
     this.captures[method] = this.captures[method] ?? [];
     this.captures[method].add([ast, context]);
   }
@@ -78,8 +78,8 @@ class MyVisitor implements CssASTVisitor {
   void visitUnkownRule(CssUnknownTokenListAST ast, [dynamic context]) {}
 }
 
-main() {
-  parse(String cssCode) {
+void main() {
+  CssStyleSheetAST parse(String cssCode) {
     var lexer = new CssLexer();
     var scanner = lexer.scan(cssCode);
     var parser = new CssParser(scanner, 'some-fake-file-name.css');

@@ -12,7 +12,7 @@ import "package:angular2/common.dart";
 import "package:angular2/core.dart" show Provider, Input;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("integration tests", () {
     test("should initialize DOM elements with the given form object", () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],
@@ -1210,16 +1210,16 @@ class WrappedValue implements ControlValueAccessor {
   WrappedValue(NgControl cd) {
     cd.valueAccessor = this;
   }
-  writeValue(value) {
+  void writeValue(value) {
     this.value = '''!${ value}!''';
   }
 
-  registerOnChange(fn) {
+  void registerOnChange(fn) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {}
-  handleOnInput(value) {
+  void registerOnTouched(fn) {}
+  void handleOnInput(value) {
     this.onChange(value.substring(1, value.length - 1));
   }
 }
@@ -1232,21 +1232,22 @@ class MyInput implements ControlValueAccessor {
   MyInput(NgControl cd) {
     cd.valueAccessor = this;
   }
-  writeValue(value) {
+  void writeValue(value) {
     this.value = '''!${ value}!''';
   }
 
-  registerOnChange(fn) {
+  void registerOnChange(fn) {
     this.onInput.listen(fn);
   }
 
-  registerOnTouched(fn) {}
+  void registerOnTouched(fn) {}
+
   dispatchChangeEvent() {
     this.onInput.add(this.value.substring(1, this.value.length - 1));
   }
 }
 
-uniqLoginAsyncValidator(String expectedValue) {
+Function uniqLoginAsyncValidator(String expectedValue) {
   return (AbstractControl c) {
     var completer = new Completer<Map<String, dynamic>>();
     var res = (c.value == expectedValue) ? null : {"uniqLogin": true};
@@ -1255,7 +1256,7 @@ uniqLoginAsyncValidator(String expectedValue) {
   };
 }
 
-loginIsEmptyGroupValidator(ControlGroup c) {
+Map loginIsEmptyGroupValidator(ControlGroup c) {
   return c.controls["login"].value == "" ? {"loginIsEmpty": true} : null;
 }
 
@@ -1297,4 +1298,4 @@ class MyComp {
   }
 }
 
-sortedClassList(el) => DOM.classList(el)..sort();
+List sortedClassList(el) => DOM.classList(el)..sort();

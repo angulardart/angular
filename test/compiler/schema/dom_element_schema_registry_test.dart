@@ -5,7 +5,7 @@ import "package:angular2/src/compiler/schema/dom_element_schema_registry.dart"
 import "package:angular2/src/core/security.dart";
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("DOMElementSchema", () {
     DomElementSchemaRegistry registry;
     setUp(() {

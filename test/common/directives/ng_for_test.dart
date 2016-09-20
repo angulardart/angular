@@ -8,7 +8,7 @@ import "package:angular2/src/common/directives/ng_if.dart" show NgIf;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group("ngFor", () {
     var TEMPLATE = '<div><copy-me template=\"ngFor let item of items\">'
         '{{item.toString()}};</copy-me></div>';
@@ -608,7 +608,7 @@ main() {
 }
 
 class Foo {
-  toString() {
+  String toString() {
     return "foo";
   }
 }

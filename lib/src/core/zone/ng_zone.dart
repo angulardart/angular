@@ -179,30 +179,22 @@ class NgZone {
    * implies we are about to relinquish VM turn.
    * This event gets called just once.
    */
-  EventEmitter<dynamic> get onStable {
-    return this._onStable;
-  }
+  EventEmitter<dynamic> get onStable => this._onStable;
 
   /**
    * Notify that an error has been delivered.
    */
-  EventEmitter<dynamic> get onError {
-    return this._onErrorEvents;
-  }
+  EventEmitter<dynamic> get onError => this._onErrorEvents;
 
   /**
    * Whether there are any outstanding microtasks.
    */
-  bool get hasPendingMicrotasks {
-    return this._hasPendingMicrotasks;
-  }
+  bool get hasPendingMicrotasks => this._hasPendingMicrotasks;
 
   /**
    * Whether there are any outstanding microtasks.
    */
-  bool get hasPendingMacrotasks {
-    return this._hasPendingMacrotasks;
-  }
+  bool get hasPendingMacrotasks => this._hasPendingMacrotasks;
 
   /**
    * Executes the `fn` function synchronously within the Angular zone and returns value returned by

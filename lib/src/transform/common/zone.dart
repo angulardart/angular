@@ -5,7 +5,7 @@ import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:barback/barback.dart';
 import 'package:source_span/source_span.dart';
 
-typedef _SimpleCallback();
+typedef Future _SimpleCallback();
 
 // Keys used to store zone local values on the current zone.
 final _loggerKey = #loggingZonedLoggerKey;

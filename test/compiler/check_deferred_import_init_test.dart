@@ -6,7 +6,7 @@ import 'package:barback/barback.dart';
 import 'package:source_span/source_span.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('Check deferred import initialization', () {
     runTest('warns if deferred imports aren\'t initialized',
         invalidReflectiveCode, true);
@@ -25,7 +25,7 @@ main() {
   });
 }
 
-runTest(String name, String code, bool expectWarning) {
+void runTest(String name, String code, bool expectWarning) {
   test(name, () async {
     var logger = new _CapturingLogger();
     await zone.exec(() {
