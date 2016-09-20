@@ -51,7 +51,7 @@ abstract class GenericBrowserDomAdapter<T, N, ET> extends DomAdapter<T, N, ET> {
     return el.getDistributedNodes();
   }
 
-  resolveAndSetHref(dynamic el, String baseUrl, String href) {
+  void resolveAndSetHref(dynamic el, String baseUrl, String href) {
     el.href = href == null ? baseUrl : baseUrl + "/../" + href;
   }
 

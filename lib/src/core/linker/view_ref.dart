@@ -65,7 +65,7 @@ abstract class EmbeddedViewRef extends ViewRef {
   List<dynamic> get rootNodes;
 
   /// Destroys the view and all of the data structures associated with it.
-  destroy();
+  void destroy();
 }
 
 class ViewRef_ implements EmbeddedViewRef, ChangeDetectorRef {
@@ -115,7 +115,7 @@ class ViewRef_ implements EmbeddedViewRef, ChangeDetectorRef {
     _view.addOnDestroyCallback(callback);
   }
 
-  destroy() {
+  void destroy() {
     _view.destroy();
   }
 }

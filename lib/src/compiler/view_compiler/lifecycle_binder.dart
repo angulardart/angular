@@ -15,7 +15,7 @@ var STATE_IS_NEVER_CHECKED =
 
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
-bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
+void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
@@ -39,7 +39,7 @@ bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   }
 }
 
-bindDirectiveAfterContentLifecycleCallbacks(
+void bindDirectiveAfterContentLifecycleCallbacks(
     CompileDirectiveMetadata directiveMeta,
     o.Expression directiveInstance,
     CompileElement compileElement) {
@@ -61,8 +61,10 @@ bindDirectiveAfterContentLifecycleCallbacks(
   }
 }
 
-bindDirectiveAfterViewLifecycleCallbacks(CompileDirectiveMetadata directiveMeta,
-    o.Expression directiveInstance, CompileElement compileElement) {
+void bindDirectiveAfterViewLifecycleCallbacks(
+    CompileDirectiveMetadata directiveMeta,
+    o.Expression directiveInstance,
+    CompileElement compileElement) {
   var view = compileElement.view;
   var lifecycleHooks = directiveMeta.lifecycleHooks;
   var afterViewLifecycleCallbacksMethod =
@@ -80,8 +82,10 @@ bindDirectiveAfterViewLifecycleCallbacks(CompileDirectiveMetadata directiveMeta,
   }
 }
 
-bindDirectiveDestroyLifecycleCallbacks(CompileDirectiveMetadata directiveMeta,
-    o.Expression directiveInstance, CompileElement compileElement) {
+void bindDirectiveDestroyLifecycleCallbacks(
+    CompileDirectiveMetadata directiveMeta,
+    o.Expression directiveInstance,
+    CompileElement compileElement) {
   var onDestroyMethod = compileElement.view.destroyMethod;
   onDestroyMethod.resetDebugInfo(
       compileElement.nodeIndex, compileElement.sourceAst);
@@ -92,7 +96,7 @@ bindDirectiveDestroyLifecycleCallbacks(CompileDirectiveMetadata directiveMeta,
   }
 }
 
-bindPipeDestroyLifecycleCallbacks(
+void bindPipeDestroyLifecycleCallbacks(
     CompilePipeMetadata pipeMeta, o.Expression pipeInstance, CompileView view) {
   var onDestroyMethod = view.destroyMethod;
   if (!identical(

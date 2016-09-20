@@ -24,7 +24,7 @@ class MockXHR extends XHR {
    *
    * The response given will be returned if the expectation matches.
    */
-  expect(String url, String response) {
+  void expect(String url, String response) {
     var expectation = new _Expectation(url, response);
     this._expectations.add(expectation);
   }
@@ -35,7 +35,7 @@ class MockXHR extends XHR {
    * unlike expectations, unused definitions do not cause `verifyNoOutstandingExpectations`
    * to return an error.
    */
-  when(String url, String response) {
+  void when(String url, String response) {
     this._definitions[url] = response;
   }
 
@@ -43,7 +43,7 @@ class MockXHR extends XHR {
    * Process pending requests and verify there are no outstanding expectations. Also fails
    * if no requests are pending.
    */
-  flush() {
+  void flush() {
     if (identical(this._requests.length, 0)) {
       throw new BaseException("No pending requests to flush");
     }
@@ -56,7 +56,7 @@ class MockXHR extends XHR {
   /**
    * Throw an exception if any expectations have not been satisfied.
    */
-  verifyNoOutstandingExpectations() {
+  void verifyNoOutstandingExpectations() {
     if (identical(this._expectations.length, 0)) return;
     var urls = [];
     for (var i = 0; i < this._expectations.length; i++) {
@@ -67,7 +67,7 @@ class MockXHR extends XHR {
         '''Unsatisfied requests: ${ urls . join ( ", " )}''');
   }
 
-  _processRequest(_PendingRequest request) {
+  void _processRequest(_PendingRequest request) {
     var url = request.url;
     if (this._expectations.length > 0) {
       var expectation = this._expectations[0];
@@ -93,7 +93,7 @@ class _PendingRequest {
     this.url = url;
     this.completer = new Completer<String>();
   }
-  complete(String response) {
+  void complete(String response) {
     if (response == null) {
       this.completer.completeError('''Failed to load ${ this . url}''');
     } else {

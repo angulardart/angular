@@ -198,7 +198,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     this.pipesByName = new Map<String, CompilePipeMetadata>();
     pipes.forEach((pipe) => this.pipesByName[pipe.name] = pipe);
   }
-  _reportError(String message, ParseSourceSpan sourceSpan,
+  void _reportError(String message, ParseSourceSpan sourceSpan,
       [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
     this.errors.add(new TemplateParseError(message, sourceSpan, level));
   }
@@ -266,7 +266,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }
   }
 
-  _checkPipes(ASTWithSource ast, ParseSourceSpan sourceSpan) {
+  void _checkPipes(ASTWithSource ast, ParseSourceSpan sourceSpan) {
     if (ast == null) return;
     var collector = new PipeCollector();
     ast.visit(collector);
@@ -610,16 +610,16 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         : attrName;
   }
 
-  _parseVariable(String identifier, String value, ParseSourceSpan sourceSpan,
-      List<VariableAst> targetVars) {
+  void _parseVariable(String identifier, String value,
+      ParseSourceSpan sourceSpan, List<VariableAst> targetVars) {
     if (identifier.indexOf("-") > -1) {
       this._reportError('''"-" is not allowed in variable names''', sourceSpan);
     }
     targetVars.add(new VariableAst(identifier, value, sourceSpan));
   }
 
-  _parseReference(String identifier, String value, ParseSourceSpan sourceSpan,
-      List<ElementOrDirectiveRef> targetRefs) {
+  void _parseReference(String identifier, String value,
+      ParseSourceSpan sourceSpan, List<ElementOrDirectiveRef> targetRefs) {
     if (identifier.indexOf("-") > -1) {
       this._reportError(
           '''"-" is not allowed in reference names''', sourceSpan);
@@ -627,7 +627,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     targetRefs.add(new ElementOrDirectiveRef(identifier, value, sourceSpan));
   }
 
-  _parseProperty(
+  void _parseProperty(
       String name,
       String expression,
       ParseSourceSpan sourceSpan,
@@ -650,7 +650,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     return true;
   }
 
-  _parsePropertyAst(
+  void _parsePropertyAst(
       String name,
       ASTWithSource ast,
       ParseSourceSpan sourceSpan,
@@ -661,7 +661,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         .add(new BoundElementOrDirectiveProperty(name, ast, false, sourceSpan));
   }
 
-  _parseAssignmentEvent(
+  void _parseAssignmentEvent(
       String name,
       String expression,
       ParseSourceSpan sourceSpan,
@@ -671,7 +671,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         sourceSpan, targetMatchableAttrs, targetEvents);
   }
 
-  _parseEvent(
+  void _parseEvent(
       String name,
       String expression,
       ParseSourceSpan sourceSpan,
@@ -686,7 +686,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     targetEvents.add(new BoundEventAst(name, ast, sourceSpan));
   }
 
-  _parseLiteralAttr(String name, String value, ParseSourceSpan sourceSpan,
+  void _parseLiteralAttr(String name, String value, ParseSourceSpan sourceSpan,
       List<BoundElementOrDirectiveProperty> targetProps) {
     targetProps.add(new BoundElementOrDirectiveProperty(name,
         this._exprParser.wrapLiteralPrimitive(value, ""), true, sourceSpan));
@@ -761,7 +761,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     return directiveAsts;
   }
 
-  _createDirectiveHostPropertyAsts(
+  void _createDirectiveHostPropertyAsts(
       String elementName,
       Map<String, String> hostProps,
       ParseSourceSpan sourceSpan,
@@ -774,7 +774,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     });
   }
 
-  _createDirectiveHostEventAsts(Map<String, String> hostListeners,
+  void _createDirectiveHostEventAsts(Map<String, String> hostListeners,
       ParseSourceSpan sourceSpan, List<BoundEventAst> targetEventAsts) {
     if (hostListeners == null) return;
     hostListeners.forEach((String propName, String expression) {
@@ -782,7 +782,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     });
   }
 
-  _createDirectivePropertyAsts(
+  void _createDirectivePropertyAsts(
       Map<String, String> directiveProperties,
       List<BoundElementOrDirectiveProperty> boundProps,
       List<BoundDirectivePropertyAst> targetBoundDirectiveProps) {
@@ -909,7 +909,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     return componentTypeNames;
   }
 
-  _assertOnlyOneComponent(
+  void _assertOnlyOneComponent(
       List<DirectiveAst> directives, ParseSourceSpan sourceSpan) {
     var componentTypeNames = this._findComponentDirectiveNames(directives);
     if (componentTypeNames.length > 1) {
@@ -919,8 +919,10 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }
   }
 
-  _assertNoComponentsNorElementBindingsOnTemplate(List<DirectiveAst> directives,
-      List<BoundElementPropertyAst> elementProps, ParseSourceSpan sourceSpan) {
+  void _assertNoComponentsNorElementBindingsOnTemplate(
+      List<DirectiveAst> directives,
+      List<BoundElementPropertyAst> elementProps,
+      ParseSourceSpan sourceSpan) {
     List<String> componentTypeNames =
         this._findComponentDirectiveNames(directives);
     if (componentTypeNames.length > 0) {
@@ -935,7 +937,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     });
   }
 
-  _assertAllEventsPublishedByDirectives(
+  void _assertAllEventsPublishedByDirectives(
       List<DirectiveAst> directives, List<BoundEventAst> events) {
     var allDirectiveEvents = new Set<String>();
     directives.forEach((directive) {

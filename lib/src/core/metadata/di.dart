@@ -281,7 +281,7 @@ class ViewQueryMetadata extends QueryMetadata {
   /**
    * always `true` to differentiate it with [QueryMetadata].
    */
-  get isViewQuery {
+  bool get isViewQuery {
     return true;
   }
 

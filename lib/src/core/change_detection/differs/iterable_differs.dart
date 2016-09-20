@@ -9,7 +9,7 @@ import "../change_detector_ref.dart" show ChangeDetectorRef;
 /// DOM.
 abstract class IterableDiffer<T> {
   IterableDiffer<T> diff(T object);
-  onDestroy();
+  void onDestroy();
 }
 
 /**

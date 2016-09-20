@@ -40,7 +40,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
   DefaultIterableDiffer([this._trackByFn]) {
     _trackByFn = _trackByFn ?? trackByIdentity;
   }
-  get collection {
+  Iterable get collection {
     return this._collection;
   }
 
@@ -48,7 +48,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return this._length;
   }
 
-  forEachItem(Function fn) {
+  void forEachItem(Function fn) {
     CollectionChangeRecord record;
     for (record = this._itHead;
         !identical(record, null);
@@ -57,7 +57,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     }
   }
 
-  forEachPreviousItem(Function fn) {
+  void forEachPreviousItem(Function fn) {
     CollectionChangeRecord record;
     for (record = this._previousItHead;
         !identical(record, null);
@@ -66,7 +66,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     }
   }
 
-  forEachAddedItem(Function fn) {
+  void forEachAddedItem(Function fn) {
     CollectionChangeRecord record;
     for (record = this._additionsHead;
         !identical(record, null);
@@ -75,7 +75,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     }
   }
 
-  forEachMovedItem(Function fn) {
+  void forEachMovedItem(Function fn) {
     CollectionChangeRecord record;
     for (record = this._movesHead;
         !identical(record, null);
@@ -84,7 +84,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     }
   }
 
-  forEachRemovedItem(Function fn) {
+  void forEachRemovedItem(Function fn) {
     CollectionChangeRecord record;
     for (record = this._removalsHead;
         !identical(record, null);
@@ -93,7 +93,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     }
   }
 
-  forEachIdentityChange(Function fn) {
+  void forEachIdentityChange(Function fn) {
     CollectionChangeRecord record;
     for (record = this._identityChangesHead;
         !identical(record, null);
@@ -113,7 +113,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return this.check(collection) ? this : null;
   }
 
-  onDestroy() {}
+  void onDestroy() {}
   // todo(vicb): optim for UnmodifiableListView (frozen arrays)
   bool check(dynamic collection) {
     this._reset();
@@ -186,7 +186,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
    *
    * @internal
    */
-  _reset() {
+  void _reset() {
     if (this.isDirty) {
       CollectionChangeRecord record;
       CollectionChangeRecord nextRecord;
@@ -315,7 +315,7 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
    *
    * @internal
    */
-  _truncate(CollectionChangeRecord record) {
+  void _truncate(CollectionChangeRecord record) {
     // Anything after that needs to be removed;
     while (!identical(record, null)) {
       CollectionChangeRecord nextRecord = record._next;
@@ -502,7 +502,8 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  _addIdentityChange(CollectionChangeRecord record, dynamic item) {
+  CollectionChangeRecord _addIdentityChange(
+      CollectionChangeRecord record, dynamic item) {
     record.item = item;
     if (identical(this._identityChangesTail, null)) {
       this._identityChangesTail = this._identityChangesHead = record;
@@ -667,7 +668,7 @@ class _DuplicateItemRecordList {
 
 class _DuplicateMap {
   var map = new Map<dynamic, _DuplicateItemRecordList>();
-  put(CollectionChangeRecord record) {
+  void put(CollectionChangeRecord record) {
     // todo(vicb) handle corner cases
     var key = record.trackById;
     var duplicates = this.map[key];
@@ -711,7 +712,7 @@ class _DuplicateMap {
     return identical(this.map.length, 0);
   }
 
-  clear() {
+  void clear() {
     this.map.clear();
   }
 

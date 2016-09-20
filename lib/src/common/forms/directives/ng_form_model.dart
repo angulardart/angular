@@ -140,13 +140,13 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     directives.remove(dir);
   }
 
-  addControlGroup(NgControlGroup dir) {
+  void addControlGroup(NgControlGroup dir) {
     dynamic ctrl = form.find(dir.path);
     setUpControlGroup(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
   }
 
-  removeControlGroup(NgControlGroup dir) {}
+  void removeControlGroup(NgControlGroup dir) {}
   ControlGroup getControlGroup(NgControlGroup dir) {
     return (form.find(dir.path) as ControlGroup);
   }
@@ -162,14 +162,14 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     return false;
   }
 
-  _updateDomValue() {
+  void _updateDomValue() {
     directives.forEach((dir) {
       dynamic ctrl = form.find(dir.path);
       dir.valueAccessor.writeValue(ctrl.value);
     });
   }
 
-  _checkFormPresent() {
+  void _checkFormPresent() {
     if (form == null) {
       throw new BaseException(
           'ngFormModel expects a form. Please pass one in. Example: '

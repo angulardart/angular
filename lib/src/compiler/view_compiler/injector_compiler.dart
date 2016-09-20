@@ -78,7 +78,7 @@ class _InjectorBuilder {
   _InjectorBuilder(this._mainModuleType) {
     this._instances.add(identifierToken(Identifiers.Injector), o.THIS_EXPR);
   }
-  addProvider(ProviderAst resolvedProvider) {
+  void addProvider(ProviderAst resolvedProvider) {
     var providerValueExpressions = resolvedProvider.providers
         .map((provider) => this._getProviderValue(provider))
         .toList();

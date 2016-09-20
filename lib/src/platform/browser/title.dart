@@ -21,7 +21,7 @@ class Title {
    * Set the title of the current HTML document.
    * 
    */
-  setTitle(String newTitle) {
+  void setTitle(String newTitle) {
     DOM.setTitle(newTitle);
   }
 }

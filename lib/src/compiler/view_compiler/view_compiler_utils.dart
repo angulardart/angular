@@ -133,7 +133,7 @@ o.Expression convertValueToOutputAst(dynamic value) {
   }
 }
 
-createPureProxy(o.Expression fn, num argCount,
+void createPureProxy(o.Expression fn, num argCount,
     o.ReadClassMemberExpr pureProxyProp, CompileView view) {
   view.fields.add(new o.ClassField(pureProxyProp.name,
       modifiers: const [o.StmtModifier.Private]));

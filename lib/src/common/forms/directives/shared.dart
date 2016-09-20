@@ -41,7 +41,7 @@ void setUpControl(Control control, NgControl dir) {
   dir.valueAccessor.registerOnTouched(() => control.markAsTouched());
 }
 
-setUpControlGroup(ControlGroup control, NgControlGroup dir) {
+void setUpControlGroup(ControlGroup control, NgControlGroup dir) {
   if (control == null) _throwError(dir, "Cannot find control");
   control.validator = Validators.compose([control.validator, dir.validator]);
   control.asyncValidator =

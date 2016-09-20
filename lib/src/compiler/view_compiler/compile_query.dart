@@ -22,7 +22,7 @@ class CompileQuery {
       this.meta, this.queryList, this.ownerDirectiveExpression, this.view) {
     this._values = new ViewQueryValues(view, []);
   }
-  addValue(o.Expression value, CompileView view) {
+  void addValue(o.Expression value, CompileView view) {
     var currentView = view;
     List<CompileElement> elPath = [];
     while (currentView != null && !identical(currentView, this.view)) {
@@ -63,7 +63,7 @@ class CompileQuery {
     return isStatic;
   }
 
-  afterChildren(
+  void afterChildren(
       CompileMethod targetStaticMethod, CompileMethod targetDynamicMethod) {
     var values = createQueryValues(this._values);
     var updateStmts = [
@@ -136,7 +136,7 @@ o.Expression createQueryList(
   return expr;
 }
 
-addQueryToTokenMap(
+void addQueryToTokenMap(
     CompileTokenMap<List<CompileQuery>> map, CompileQuery query) {
   query.meta.selectors.forEach((selector) {
     var entry = map.get(selector);

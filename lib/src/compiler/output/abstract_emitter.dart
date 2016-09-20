@@ -55,7 +55,7 @@ class EmitterVisitorContext {
     return identical(this._currentLine.parts.length, 0);
   }
 
-  print(String part, [bool newLine = false]) {
+  void print(String part, [bool newLine = false]) {
     if (part.length > 0) {
       this._currentLine.parts.add(part);
     }
@@ -67,23 +67,23 @@ class EmitterVisitorContext {
     }
   }
 
-  removeEmptyLastLine() {
+  void removeEmptyLastLine() {
     if (this.lineIsEmpty()) {
       this._lines.removeLast();
     }
   }
 
-  incIndent() {
+  void incIndent() {
     this._indent++;
     this._currentLine.indent = this._indent;
   }
 
-  decIndent() {
+  void decIndent() {
     this._indent--;
     this._currentLine.indent = this._indent;
   }
 
-  pushClass(o.ClassStmt clazz) {
+  void pushClass(o.ClassStmt clazz) {
     this._classes.add(clazz);
   }
 

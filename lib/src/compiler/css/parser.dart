@@ -577,7 +577,6 @@ class CssParser {
     return new CssDefinitionAST(prop, value);
   }
 
-  /** @internal */
   bool _assertCondition(
       bool status, String errorMessage, CssToken problemToken) {
     if (!status) {
@@ -587,8 +586,7 @@ class CssParser {
     return false;
   }
 
-  /** @internal */
-  _error(String message, CssToken problemToken) {
+  void _error(String message, CssToken problemToken) {
     var length = problemToken.strValue.length;
     var error = CssParseError.create(
         this._file, 0, problemToken.line, problemToken.column, length, message);
@@ -600,7 +598,7 @@ class CssStyleValueAST extends CssAST {
   List<CssToken> tokens;
   String strValue;
   CssStyleValueAST(this.tokens, this.strValue);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssValue(this);
   }
 }
@@ -612,7 +610,7 @@ class CssBlockRuleAST extends CssRuleAST {
   CssBlockAST block;
   CssToken name;
   CssBlockRuleAST(this.type, this.block, [this.name = null]);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssBlock(this.block, context);
   }
 }
@@ -620,7 +618,7 @@ class CssBlockRuleAST extends CssRuleAST {
 class CssKeyframeRuleAST extends CssBlockRuleAST {
   CssKeyframeRuleAST(CssToken name, CssBlockAST block)
       : super(BlockType.Keyframes, block, name);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssKeyframeRule(this, context);
   }
 }
@@ -631,7 +629,7 @@ class CssKeyframeDefinitionAST extends CssBlockRuleAST {
       : super(BlockType.Keyframes, block, mergeTokens(_steps, ",")) {
     this.steps = _steps;
   }
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssKeyframeDefinition(this, context);
   }
 }
@@ -646,7 +644,7 @@ class CssBlockDefinitionRuleAST extends CssBlockRuleAST {
     this.name = new CssToken(firstCssToken.index, firstCssToken.column,
         firstCssToken.line, CssTokenType.Identifier, this.strValue);
   }
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssBlock(this.block, context);
   }
 }
@@ -654,7 +652,7 @@ class CssBlockDefinitionRuleAST extends CssBlockRuleAST {
 class CssMediaQueryRuleAST extends CssBlockDefinitionRuleAST {
   CssMediaQueryRuleAST(List<CssToken> query, CssBlockAST block)
       : super(BlockType.MediaQuery, query, block);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssMediaQueryRule(this, context);
   }
 }
@@ -663,7 +661,7 @@ class CssInlineRuleAST extends CssRuleAST {
   BlockType type;
   CssStyleValueAST value;
   CssInlineRuleAST(this.type, this.value) : super();
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitInlineCssRule(this, context);
   }
 }
@@ -676,7 +674,7 @@ class CssSelectorRuleAST extends CssBlockRuleAST {
     this.strValue =
         selectors.map((selector) => selector.strValue).toList().join(",");
   }
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssSelectorRule(this, context);
   }
 }
@@ -685,7 +683,7 @@ class CssDefinitionAST extends CssAST {
   CssToken property;
   CssStyleValueAST value;
   CssDefinitionAST(this.property, this.value);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssDefinition(this, context);
   }
 }
@@ -697,7 +695,7 @@ class CssSelectorAST extends CssAST {
   CssSelectorAST(this.tokens, [this.isComplex = false]) {
     this.strValue = tokens.map((token) => token.strValue).toList().join("");
   }
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssSelector(this, context);
   }
 }
@@ -705,7 +703,7 @@ class CssSelectorAST extends CssAST {
 class CssBlockAST extends CssAST {
   List<CssAST> entries;
   CssBlockAST(this.entries);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssBlock(this, context);
   }
 }
@@ -713,7 +711,7 @@ class CssBlockAST extends CssAST {
 class CssStyleSheetAST extends CssAST {
   List<CssAST> rules;
   CssStyleSheetAST(this.rules);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitCssStyleSheet(this, context);
   }
 }
@@ -734,7 +732,7 @@ class CssUnknownTokenListAST extends CssRuleAST {
   var name;
   List<CssToken> tokens;
   CssUnknownTokenListAST(this.name, this.tokens);
-  visit(CssASTVisitor visitor, [dynamic context]) {
+  void visit(CssASTVisitor visitor, [dynamic context]) {
     visitor.visitUnkownRule(this, context);
   }
 }

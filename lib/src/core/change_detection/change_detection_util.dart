@@ -64,7 +64,7 @@ class ValueUnwrapper {
     return value;
   }
 
-  reset() {
+  void reset() {
     this.hasWrappedValue = false;
   }
 }

@@ -99,19 +99,19 @@ class TreeBuilder {
     return null;
   }
 
-  _consumeCdata(HtmlToken startToken) {
+  void _consumeCdata(HtmlToken startToken) {
     this._consumeText(this._advance());
     this._advanceIf(HtmlTokenType.CDATA_END);
   }
 
-  _consumeComment(HtmlToken token) {
+  void _consumeComment(HtmlToken token) {
     var text = this._advanceIf(HtmlTokenType.RAW_TEXT);
     this._advanceIf(HtmlTokenType.COMMENT_END);
     var value = text != null ? text.parts[0].trim() : null;
     this._addToParent(new HtmlCommentAst(value, token.sourceSpan));
   }
 
-  _consumeExpansion(HtmlToken token) {
+  void _consumeExpansion(HtmlToken token) {
     var switchValue = this._advance();
     var type = this._advance();
     var cases = <HtmlExpansionCaseAst>[];
@@ -201,7 +201,7 @@ class TreeBuilder {
     }
   }
 
-  _consumeText(HtmlToken token) {
+  void _consumeText(HtmlToken token) {
     var text = token.parts[0];
     if (text.length > 0 && text[0] == "\n") {
       var parent = this._getParentElement();
@@ -225,7 +225,7 @@ class TreeBuilder {
     }
   }
 
-  _consumeStartTag(HtmlToken startTagToken) {
+  void _consumeStartTag(HtmlToken startTagToken) {
     var prefix = startTagToken.parts[0];
     var name = startTagToken.parts[1];
     var attrs = <HtmlAttrAst>[];
@@ -259,7 +259,7 @@ class TreeBuilder {
     }
   }
 
-  _pushElement(HtmlElementAst el) {
+  void _pushElement(HtmlElementAst el) {
     if (this.elementStack.length > 0) {
       var parentEl = elementStack.isNotEmpty ? elementStack.last : null;
       if (getHtmlTagDefinition(parentEl.name).isClosedByChild(el.name)) {
@@ -280,7 +280,7 @@ class TreeBuilder {
     }
   }
 
-  _consumeEndTag(HtmlToken endTagToken) {
+  void _consumeEndTag(HtmlToken endTagToken) {
     var fullName = getElementFullName(
         endTagToken.parts[0], endTagToken.parts[1], this._getParentElement());
     this._getParentElement().endSourceSpan = endTagToken.sourceSpan;
@@ -326,7 +326,7 @@ class TreeBuilder {
     return this.elementStack.length > 0 ? elementStack.last : null;
   }
 
-  _addToParent(HtmlAst node) {
+  void _addToParent(HtmlAst node) {
     var parent = this._getParentElement();
     if (parent != null) {
       parent.children.add(node);

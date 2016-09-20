@@ -67,7 +67,7 @@ void bind(
         ])));
 }
 
-bindRenderText(
+void bindRenderText(
     BoundTextAst boundText, CompileNode compileNode, CompileView view) {
   var bindingIndex = view.bindings.length;
   view.bindings.add(new CompileBinding(compileNode, boundText));
@@ -117,7 +117,7 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
     var currValExpr = createCurrValueExpr(bindingIndex);
 
     String renderMethod;
-    // Wraps current value with sanitization call if neccessary.
+    // Wraps current value with sanitization call if necessary.
     o.Expression renderValue = sanitizedValue(boundProp, currValExpr);
 
     var updateStmts = <o.Statement>[];
@@ -227,8 +227,8 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
       directiveAst.hostProperties, directiveInstance, compileElement);
 }
 
-bindDirectiveInputs(DirectiveAst directiveAst, o.Expression directiveInstance,
-    CompileElement compileElement) {
+void bindDirectiveInputs(DirectiveAst directiveAst,
+    o.Expression directiveInstance, CompileElement compileElement) {
   if (identical(directiveAst.inputs.length, 0)) {
     return;
   }

@@ -19,7 +19,7 @@ bool isControl(Object control) {
   return control is AbstractControl;
 }
 
-_find(AbstractControl control,
+AbstractControl _find(AbstractControl control,
     dynamic /* List< dynamic /* String | num */ > | String */ path) {
   if (path == null) return null;
   if (!(path is List)) {
@@ -45,7 +45,6 @@ Stream<dynamic> _toStream(futureOrStream) {
 abstract class AbstractControl {
   ValidatorFn validator;
   AsyncValidatorFn asyncValidator;
-  /** @internal */
   dynamic _value;
   EventEmitter<dynamic> _valueChanges;
   EventEmitter<dynamic> _statusChanges;
@@ -231,7 +230,7 @@ abstract class AbstractControl {
     _parent?._updateControlsErrors();
   }
 
-  _initObservables() {
+  void _initObservables() {
     this._valueChanges = new EventEmitter();
     this._statusChanges = new EventEmitter();
   }
@@ -292,7 +291,7 @@ class Control extends AbstractControl {
     this.updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
   }
 
-  _updateValue() {}
+  void _updateValue() {}
 
   bool _anyControlsHaveStatus(String status) {
     return false;
@@ -361,7 +360,7 @@ class ControlGroup extends AbstractControl {
     }
   }
 
-  _updateValue() {
+  void _updateValue() {
     this._value = this._reduceValue();
   }
 
@@ -371,7 +370,7 @@ class ControlGroup extends AbstractControl {
     });
   }
 
-  _reduceValue() {
+  Map<String, dynamic> _reduceValue() {
     return this._reduceChildren(<String, dynamic>{},
         (Map<String, dynamic> acc, AbstractControl control, String name) {
       acc[name] = control.value;
@@ -379,7 +378,7 @@ class ControlGroup extends AbstractControl {
     });
   }
 
-  _reduceChildren(
+  Map<String, dynamic> _reduceChildren(
       Map<String, dynamic> initValue,
       Map<String, dynamic> fn(
           Map<String, dynamic> acc, AbstractControl control, String name)) {

@@ -9,7 +9,7 @@ import "../change_detector_ref.dart" show ChangeDetectorRef;
  */
 abstract class KeyValueDiffer<T> {
   diff(T object);
-  onDestroy();
+  void onDestroy();
 }
 
 /**

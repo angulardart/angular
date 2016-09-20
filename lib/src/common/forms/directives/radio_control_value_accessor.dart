@@ -22,11 +22,11 @@ const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 @Injectable()
 class RadioControlRegistry {
   List<dynamic> _accessors = [];
-  add(NgControl control, RadioControlValueAccessor accessor) {
+  void add(NgControl control, RadioControlValueAccessor accessor) {
     this._accessors.add([control, accessor]);
   }
 
-  remove(RadioControlValueAccessor accessor) {
+  void remove(RadioControlValueAccessor accessor) {
     var indexToRemove = -1;
     for (var i = 0; i < this._accessors.length; ++i) {
       if (identical(this._accessors[i][1], accessor)) {
@@ -36,7 +36,7 @@ class RadioControlRegistry {
     _accessors.removeAt(indexToRemove);
   }
 
-  select(RadioControlValueAccessor accessor) {
+  void select(RadioControlValueAccessor accessor) {
     this._accessors.forEach((c) {
       if (identical(c[0].control.root, accessor._control.control.root) &&
           !identical(c[1], accessor)) {

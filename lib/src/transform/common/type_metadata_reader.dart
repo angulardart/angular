@@ -365,7 +365,8 @@ class _DirectiveMetadataVisitor extends Object
 
   bool get hasMetadata => _hasMetadata;
 
-  get _template => _viewTemplate != null ? _viewTemplate : _cmpTemplate;
+  CompileTemplateMetadata get _template =>
+      _viewTemplate != null ? _viewTemplate : _cmpTemplate;
 
   CompileDirectiveMetadata createMetadata() {
     return CompileDirectiveMetadata.create(
@@ -1260,8 +1261,8 @@ List<CompileDiDependencyMetadata> _readDeps(ListLiteral deps) {
   }).toList();
 }
 
-_createQueryMetadata(Annotation a, bool defaultDescendantsValue, bool first,
-    String propertyName) {
+CompileQueryMetadata _createQueryMetadata(Annotation a,
+    bool defaultDescendantsValue, bool first, String propertyName) {
   final selector = _readToken(a.arguments.arguments.first);
   var descendants = defaultDescendantsValue;
   var read;
@@ -1357,7 +1358,7 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
 _getAnnotation(p, String attrName) =>
     p.metadata.where((m) => m.name.toString() == attrName).first;
 
-_hasAnnotation(p, String attrName) =>
+bool _hasAnnotation(p, String attrName) =>
     p.metadata.where((m) => m.name.toString() == attrName).isNotEmpty;
 
 bool _hasConst(List list, String name) => list

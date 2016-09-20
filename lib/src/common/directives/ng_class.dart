@@ -159,11 +159,11 @@ class NgClass implements DoCheck, OnDestroy {
     });
   }
 
-  _applyInitialClasses(bool isCleanup) {
+  void _applyInitialClasses(bool isCleanup) {
     _initialClasses.forEach((className) => _toggleClass(className, !isCleanup));
   }
 
-  _applyClasses(
+  void _applyClasses(
       dynamic /* List < String > | Set< String > | Map < String , dynamic > */ rawClassVal,
       bool isCleanup) {
     if (rawClassVal != null) {

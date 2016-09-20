@@ -321,7 +321,7 @@ class CompileTokenMap<VALUE> {
   var _valueMap = new Map<dynamic, VALUE>();
   List<VALUE> _values = [];
   List<CompileTokenMetadata> _tokens = [];
-  add(CompileTokenMetadata token, VALUE value) {
+  void add(CompileTokenMetadata token, VALUE value) {
     var existing = this.get(token);
     if (existing != null) {
       throw new BaseException(

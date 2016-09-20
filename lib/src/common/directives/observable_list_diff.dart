@@ -12,7 +12,7 @@ class ObservableListDiff extends DefaultIterableDiffer {
   ObservableList _collection;
   StreamSubscription _subscription;
 
-  onDestroy() {
+  void onDestroy() {
     if (this._subscription != null) {
       this._subscription.cancel();
       this._subscription = null;

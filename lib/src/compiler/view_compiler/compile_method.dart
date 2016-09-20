@@ -19,7 +19,7 @@ class CompileMethod {
   CompileMethod(this._view) {
     this._debugEnabled = this._view.genConfig.genDebugInfo;
   }
-  _updateDebugContextIfNeeded() {
+  void _updateDebugContextIfNeeded() {
     if (!identical(this._newState.nodeIndex, this._currState.nodeIndex) ||
         !identical(this._newState.sourceAst, this._currState.sourceAst)) {
       var expr = this._updateDebugContext(this._newState);
@@ -50,16 +50,16 @@ class CompileMethod {
     return res ?? o.NULL_EXPR;
   }
 
-  resetDebugInfo(num nodeIndex, TemplateAst templateAst) {
+  void resetDebugInfo(num nodeIndex, TemplateAst templateAst) {
     this._newState = new _DebugState(nodeIndex, templateAst);
   }
 
-  addStmt(o.Statement stmt) {
+  void addStmt(o.Statement stmt) {
     this._updateDebugContextIfNeeded();
     this._bodyStatements.add(stmt);
   }
 
-  addStmts(List<o.Statement> stmts) {
+  void addStmts(List<o.Statement> stmts) {
     this._updateDebugContextIfNeeded();
     this._bodyStatements.addAll(stmts);
   }

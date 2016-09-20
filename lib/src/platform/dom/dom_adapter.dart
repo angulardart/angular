@@ -1,18 +1,18 @@
 /// Singleton adapter used by renderer layer.
 DomAdapter DOM;
-setRootDomAdapter(DomAdapter adapter) {
+void setRootDomAdapter(DomAdapter adapter) {
   DOM ??= adapter;
 }
 
 /// Provides DOM operations in an environment-agnostic way.
 abstract class DomAdapter<T, N, ET> {
   bool hasProperty(T element, String name);
-  setProperty(T element, String name, dynamic value);
+  void setProperty(T element, String name, dynamic value);
   dynamic getProperty(T element, String name);
-  logError(error);
-  log(error);
-  logGroup(error);
-  logGroupEnd();
+  void logError(error);
+  void log(error);
+  void logGroup(error);
+  void logGroupEnd();
 
   Type getXHR();
 
@@ -27,19 +27,19 @@ abstract class DomAdapter<T, N, ET> {
   }
 
   Map<String, String> _attrToPropMap;
-  parse(String templateHtml);
+  void parse(String templateHtml);
   dynamic query(String selector);
   dynamic querySelector(el, String selector);
   List<dynamic> querySelectorAll(el, String selector);
-  on(ET eventTarget, String evt, listener(arg));
+  void on(ET eventTarget, String evt, listener(arg));
   Function onAndCancel(T el, String evt, listener(arg));
-  dispatchEvent(T el, evt);
+  void dispatchEvent(T el, evt);
   dynamic createMouseEvent(String eventType);
   dynamic createEvent(String eventType);
-  preventDefault(evt);
+  void preventDefault(evt);
   bool isPrevented(evt);
   String getInnerHTML(T el);
-  getTemplateContent(T el);
+  dynamic getTemplateContent(T el);
   String getOuterHTML(T el);
   String nodeName(N node);
   String nodeValue(N node);
@@ -50,21 +50,21 @@ abstract class DomAdapter<T, N, ET> {
   dynamic parentElement(T el);
   List<dynamic> childNodes(T el);
   List<dynamic> childNodesAsList(T el);
-  clearNodes(T el);
-  appendChild(T el, N node);
-  removeChild(T el, N node);
-  replaceChild(T el, N newNode, N oldNode);
+  void clearNodes(T el);
+  void appendChild(T el, N node);
+  void removeChild(T el, N node);
+  void replaceChild(T el, N newNode, N oldNode);
   dynamic remove(T el);
-  insertBefore(T el, N node);
-  insertAllBefore(T el, List<N> nodes);
-  insertAfter(T el, N node);
-  setInnerHTML(T el, String value);
+  void insertBefore(T el, N node);
+  void insertAllBefore(T el, List<N> nodes);
+  void insertAfter(T el, N node);
+  void setInnerHTML(T el, String value);
   String getText(T el);
-  setText(T el, String value);
+  void setText(T el, String value);
   String getValue(T el);
-  setValue(T el, String value);
+  void setValue(T el, String value);
   bool getChecked(T el);
-  setChecked(T el, bool value);
+  void setChecked(T el, bool value);
   dynamic createComment(String text);
   dynamic createTemplate(String html);
   T createElement(String tagName, [doc]);
@@ -80,11 +80,11 @@ abstract class DomAdapter<T, N, ET> {
   List<N> getElementsByClassName(T element, String name);
   List<N> getElementsByTagName(T element, String name);
   List<String> classList(T element);
-  addClass(T element, String className);
-  removeClass(T element, String className);
+  void addClass(T element, String className);
+  void removeClass(T element, String className);
   bool hasClass(T element, String className);
-  setStyle(T element, String styleName, String styleValue);
-  removeStyle(T element, String styleName);
+  void setStyle(T element, String styleName, String styleValue);
+  void removeStyle(T element, String styleName);
   String getStyle(T element, String styleName);
   bool hasStyle(T element, String styleName, [String styleValue]);
   String tagName(T element);
@@ -93,16 +93,16 @@ abstract class DomAdapter<T, N, ET> {
   bool hasAttributeNS(T element, String ns, String attribute);
   String getAttribute(T element, String attribute);
   String getAttributeNS(T element, String ns, String attribute);
-  setAttribute(T element, String name, String value);
-  setAttributeNS(T element, String ns, String name, String value);
-  removeAttribute(T element, String attribute);
-  removeAttributeNS(T element, String ns, String attribute);
-  templateAwareRoot(T el);
+  void setAttribute(T element, String name, String value);
+  void setAttributeNS(T element, String ns, String name, String value);
+  void removeAttribute(T element, String attribute);
+  void removeAttributeNS(T element, String ns, String attribute);
+  dynamic templateAwareRoot(T el);
   dynamic createHtmlDocument();
   dynamic defaultDoc();
-  getBoundingClientRect(T el);
+  void getBoundingClientRect(T el);
   String getTitle();
-  setTitle(String newTitle);
+  void setTitle(String newTitle);
   bool elementMatches(n, String selector);
   bool isTemplateElement(T el);
   bool isTextNode(N node);
@@ -114,7 +114,7 @@ abstract class DomAdapter<T, N, ET> {
   dynamic adoptNode(N node);
   String getHref(T element);
   String getEventKey(event);
-  resolveAndSetHref(T element, String baseUrl, String href);
+  void resolveAndSetHref(T element, String baseUrl, String href);
   bool supportsDOMEvents();
   bool supportsNativeShadowDOM();
   dynamic getHistory();
@@ -122,12 +122,12 @@ abstract class DomAdapter<T, N, ET> {
   String getBaseHref();
   void resetBaseElement();
   String getUserAgent();
-  setData(T element, String name, String value);
+  void setData(T element, String name, String value);
   dynamic getComputedStyle(T element);
   String getData(T element, String name);
-  setGlobalVar(String name, dynamic value);
+  void setGlobalVar(String name, dynamic value);
   num requestAnimationFrame(callback);
-  cancelAnimationFrame(id);
+  void cancelAnimationFrame(id);
   num performanceNow();
   String getAnimationPrefix();
   String getTransitionEnd();

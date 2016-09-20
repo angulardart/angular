@@ -287,7 +287,7 @@ main() {
       });
       group("errors", () {
         test("should run the validator when the value changes", () {
-          Function simpleValidator = (c) =>
+          Map<String, bool> simpleValidator(c) =>
               c.controls["one"].value != "correct" ? {"broken": true} : null;
           var c = new Control(null);
           var g = new ControlGroup({"one": c}, null, simpleValidator);

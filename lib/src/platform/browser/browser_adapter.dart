@@ -125,20 +125,20 @@ class BrowserDomAdapter
       js_util.getProperty(element, name);
 
   // TODO(tbosch): move this into a separate environment class once we have it
-  logError(error) {
+  void logError(error) {
     window.console.error(error);
   }
 
-  log(error) {
+  void log(error) {
     window.console.log(error);
   }
 
-  logGroup(error) {
+  void logGroup(error) {
     window.console.group(error);
     this.logError(error);
   }
 
-  logGroupEnd() {
+  void logGroupEnd() {
     window.console.groupEnd();
   }
 
@@ -186,7 +186,8 @@ class BrowserDomAdapter
   }
 
   String getInnerHTML(Element el) => el.innerHtml;
-  getTemplateContent(Element el) => el is TemplateElement ? el.content : null;
+  dynamic getTemplateContent(Element el) =>
+      el is TemplateElement ? el.content : null;
   String getOuterHTML(Element el) => el.outerHtml;
   void setInnerHTML(Element el, String value) {
     el.innerHtml = value;
@@ -434,7 +435,7 @@ class BrowserDomAdapter
     return _relativePath(href);
   }
 
-  resetBaseElement() {
+  void resetBaseElement() {
     baseElement = null;
   }
 
@@ -452,7 +453,7 @@ class BrowserDomAdapter
 
   getComputedStyle(elem) => elem.getComputedStyle();
 
-  setGlobalVar(String path, value) {
+  void setGlobalVar(String path, value) {
     var parts = path.split('.');
     Object obj = window;
     for (var i = 0; i < parts.length - 1; i++) {
@@ -472,7 +473,7 @@ class BrowserDomAdapter
     return window.requestAnimationFrame(callback as FrameRequestCallback);
   }
 
-  cancelAnimationFrame(id) {
+  void cancelAnimationFrame(id) {
     window.cancelAnimationFrame(id);
   }
 

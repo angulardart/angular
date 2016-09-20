@@ -191,7 +191,7 @@ class _HtmlTokenizer {
     return new ParseSourceSpan(start, end);
   }
 
-  _beginToken(HtmlTokenType type, [ParseLocation start = null]) {
+  void _beginToken(HtmlTokenType type, [ParseLocation start = null]) {
     start ??= this._getLocation();
     this.currentTokenStart = start;
     this.currentTokenType = type;
@@ -214,7 +214,7 @@ class _HtmlTokenizer {
     return new ControlFlowError(error);
   }
 
-  _advance() {
+  void _advance() {
     if (this.index >= this.length) {
       throw this
           ._createError(unexpectedCharacterErrorMsg($EOF), this._getSpan());
@@ -249,7 +249,7 @@ class _HtmlTokenizer {
     return false;
   }
 
-  _requireCharCode(num charCode) {
+  void _requireCharCode(num charCode) {
     var location = this._getLocation();
     if (!this._attemptCharCode(charCode)) {
       throw this._createError(unexpectedCharacterErrorMsg(this.peek),
@@ -275,7 +275,7 @@ class _HtmlTokenizer {
     return true;
   }
 
-  _requireStr(String chars) {
+  void _requireStr(String chars) {
     var location = this._getLocation();
     if (!this._attemptStr(chars)) {
       throw this._createError(
@@ -283,13 +283,13 @@ class _HtmlTokenizer {
     }
   }
 
-  _attemptCharCodeUntilFn(Function predicate) {
+  void _attemptCharCodeUntilFn(Function predicate) {
     while (!predicate(this.peek)) {
       this._advance();
     }
   }
 
-  _requireCharCodeUntilFn(Function predicate, num len) {
+  void _requireCharCodeUntilFn(Function predicate, num len) {
     var start = this._getLocation();
     this._attemptCharCodeUntilFn(predicate);
     if (this.index - start.offset < len) {
@@ -298,7 +298,7 @@ class _HtmlTokenizer {
     }
   }
 
-  _attemptUntilChar(num char) {
+  void _attemptUntilChar(num char) {
     while (!identical(this.peek, char)) {
       this._advance();
     }
@@ -379,7 +379,7 @@ class _HtmlTokenizer {
         [this._processCarriageReturns(parts.join(""))], tagCloseStart);
   }
 
-  _consumeComment(ParseLocation start) {
+  void _consumeComment(ParseLocation start) {
     this._beginToken(HtmlTokenType.COMMENT_START, start);
     this._requireCharCode($MINUS);
     this._endToken([]);
@@ -389,7 +389,7 @@ class _HtmlTokenizer {
     this._endToken([]);
   }
 
-  _consumeCdata(ParseLocation start) {
+  void _consumeCdata(ParseLocation start) {
     this._beginToken(HtmlTokenType.CDATA_START, start);
     this._requireStr("CDATA[");
     this._endToken([]);
@@ -399,7 +399,7 @@ class _HtmlTokenizer {
     this._endToken([]);
   }
 
-  _consumeDocType(ParseLocation start) {
+  void _consumeDocType(ParseLocation start) {
     this._beginToken(HtmlTokenType.DOC_TYPE, start);
     this._attemptUntilChar($GT);
     this._advance();
@@ -426,7 +426,7 @@ class _HtmlTokenizer {
     return [prefix, name];
   }
 
-  _consumeTagOpen(ParseLocation start) {
+  void _consumeTagOpen(ParseLocation start) {
     var savedPos = this._savePosition();
     var lowercaseTagName;
     try {
@@ -469,7 +469,8 @@ class _HtmlTokenizer {
     }
   }
 
-  _consumeRawTextWithTagClose(String lowercaseTagName, bool decodeEntities) {
+  void _consumeRawTextWithTagClose(
+      String lowercaseTagName, bool decodeEntities) {
     var textToken = this._consumeRawText(decodeEntities, $LT, () {
       if (!this._attemptCharCode($SLASH)) return false;
       this._attemptCharCodeUntilFn(isNotWhitespace);
@@ -482,19 +483,19 @@ class _HtmlTokenizer {
     this._endToken([null, lowercaseTagName]);
   }
 
-  _consumeTagOpenStart(ParseLocation start) {
+  void _consumeTagOpenStart(ParseLocation start) {
     this._beginToken(HtmlTokenType.TAG_OPEN_START, start);
     var parts = this._consumePrefixAndName();
     this._endToken(parts);
   }
 
-  _consumeAttributeName() {
+  void _consumeAttributeName() {
     this._beginToken(HtmlTokenType.ATTR_NAME);
     var prefixAndName = this._consumePrefixAndName();
     this._endToken(prefixAndName);
   }
 
-  _consumeAttributeValue() {
+  void _consumeAttributeValue() {
     this._beginToken(HtmlTokenType.ATTR_VALUE);
     var value;
     if (identical(this.peek, $SQ) || identical(this.peek, $DQ)) {
@@ -514,7 +515,7 @@ class _HtmlTokenizer {
     this._endToken([this._processCarriageReturns(value)]);
   }
 
-  _consumeTagOpenEnd() {
+  void _consumeTagOpenEnd() {
     var tokenType = this._attemptCharCode($SLASH)
         ? HtmlTokenType.TAG_OPEN_END_VOID
         : HtmlTokenType.TAG_OPEN_END;
@@ -523,7 +524,7 @@ class _HtmlTokenizer {
     this._endToken([]);
   }
 
-  _consumeTagClose(ParseLocation start) {
+  void _consumeTagClose(ParseLocation start) {
     this._beginToken(HtmlTokenType.TAG_CLOSE, start);
     this._attemptCharCodeUntilFn(isNotWhitespace);
     List<String> prefixAndName;
@@ -533,7 +534,7 @@ class _HtmlTokenizer {
     this._endToken(prefixAndName);
   }
 
-  _consumeExpansionFormStart() {
+  void _consumeExpansionFormStart() {
     this._beginToken(HtmlTokenType.EXPANSION_FORM_START, this._getLocation());
     this._requireCharCode($LBRACE);
     this._endToken([]);
@@ -550,7 +551,7 @@ class _HtmlTokenizer {
     this.expansionCaseStack.add(HtmlTokenType.EXPANSION_FORM_START);
   }
 
-  _consumeExpansionCaseStart() {
+  void _consumeExpansionCaseStart() {
     this._requireCharCode($EQ);
     this._beginToken(HtmlTokenType.EXPANSION_CASE_VALUE, this._getLocation());
     var value = this._readUntil($LBRACE).trim();
@@ -564,7 +565,7 @@ class _HtmlTokenizer {
     this.expansionCaseStack.add(HtmlTokenType.EXPANSION_CASE_EXP_START);
   }
 
-  _consumeExpansionCaseEnd() {
+  void _consumeExpansionCaseEnd() {
     this._beginToken(HtmlTokenType.EXPANSION_CASE_EXP_END, this._getLocation());
     this._requireCharCode($RBRACE);
     this._endToken([], this._getLocation());
@@ -572,14 +573,14 @@ class _HtmlTokenizer {
     this.expansionCaseStack.removeLast();
   }
 
-  _consumeExpansionFormEnd() {
+  void _consumeExpansionFormEnd() {
     this._beginToken(HtmlTokenType.EXPANSION_FORM_END, this._getLocation());
     this._requireCharCode($RBRACE);
     this._endToken([]);
     this.expansionCaseStack.removeLast();
   }
 
-  _consumeText() {
+  void _consumeText() {
     var start = this._getLocation();
     this._beginToken(HtmlTokenType.TEXT, start);
     var parts = [];

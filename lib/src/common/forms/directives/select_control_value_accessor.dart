@@ -126,7 +126,7 @@ class NgSelectOption implements OnDestroy {
         .setElementProperty(this._element.nativeElement, "value", value);
   }
 
-  ngOnDestroy() {
+  void ngOnDestroy() {
     if (_select != null) {
       (this._select._optionMap.containsKey(this.id) &&
           (this._select._optionMap.remove(this.id) != null || true));

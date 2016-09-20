@@ -67,7 +67,7 @@ class NgModel extends NgControl implements OnChanges {
       : super() {
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
-  ngOnChanges(Map<String, SimpleChange> changes) {
+  void ngOnChanges(Map<String, SimpleChange> changes) {
     if (!this._added) {
       setUpControl(this._control, this);
       this._control.updateValueAndValidity(emitEvent: false);

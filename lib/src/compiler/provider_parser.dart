@@ -90,7 +90,7 @@ class ProviderElementContext {
       }
     });
   }
-  afterElement() {
+  void afterElement() {
     // collect lazy providers
     this._allProviders.values().forEach((provider) {
       this._getOrCreateLocalProvider(
@@ -119,7 +119,7 @@ class ProviderElementContext {
     return this._hasViewContainer;
   }
 
-  _addQueryReadsTo(
+  void _addQueryReadsTo(
       CompileTokenMetadata token, CompileTokenMap<bool> queryReadTokens) {
     this._getQueriesFor(token).forEach((query) {
       var queryReadToken = query.read ?? token;
@@ -212,7 +212,7 @@ class ProviderElementContext {
       return _transformProvider(provider,
           useExisting: transformedUseExisting,
           useValue: transformedUseValue,
-          deps: transformedDeps) as CompileProviderMetadata;
+          deps: transformedDeps);
     }).toList();
     transformedProviderAst = _transformProviderAst(resolvedProvider,
         eager: eager, providers: transformedProviders);
@@ -379,7 +379,7 @@ ${ errorString}''');
       return _transformProvider(provider,
           useExisting: transformedUseExisting,
           useValue: transformedUseValue,
-          deps: transformedDeps) as CompileProviderMetadata;
+          deps: transformedDeps);
     }).toList();
     transformedProviderAst = _transformProviderAst(resolvedProvider,
         eager: eager, providers: transformedProviders);
@@ -411,7 +411,7 @@ ${ errorString}''');
   }
 }
 
-_transformProvider(CompileProviderMetadata provider,
+CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
     {CompileTokenMetadata useExisting,
     dynamic useValue,
     List<CompileDiDependencyMetadata> deps}) {
@@ -514,7 +514,7 @@ CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
   return providersByToken;
 }
 
-_resolveProviders(
+void _resolveProviders(
     List<CompileProviderMetadata> providers,
     ProviderAstType providerType,
     bool eager,
@@ -574,7 +574,7 @@ CompileTokenMap<List<CompileQueryMetadata>> _getContentQueries(
   return contentQueries;
 }
 
-_addQueryToTokenMap(CompileTokenMap<List<CompileQueryMetadata>> map,
+void _addQueryToTokenMap(CompileTokenMap<List<CompileQueryMetadata>> map,
     CompileQueryMetadata query) {
   query.selectors.forEach((CompileTokenMetadata token) {
     var entry = map.get(token);

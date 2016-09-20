@@ -152,7 +152,7 @@ class Reflector extends ReflectorReader {
     return _injectableInfo[typeOrFunc];
   }
 
-  _containsReflectionInfo(dynamic typeOrFunc) {
+  bool _containsReflectionInfo(dynamic typeOrFunc) {
     return _injectableInfo.containsKey(typeOrFunc);
   }
 

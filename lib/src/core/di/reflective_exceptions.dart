@@ -204,7 +204,7 @@ class NoAnnotationError extends BaseException {
   NoAnnotationError(typeOrFunc, List<List<dynamic>> params)
       : super(NoAnnotationError._genMessage(typeOrFunc, params));
 
-  static _genMessage(typeOrFunc, List<List<dynamic>> params) {
+  static String _genMessage(typeOrFunc, List<List<dynamic>> params) {
     var signature = [];
     for (var i = 0, ii = params.length; i < ii; i++) {
       var parameter = params[i];

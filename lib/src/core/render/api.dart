@@ -111,11 +111,12 @@ abstract class Renderer {
   /// attributes.
   void setBindingDebugInfo(
       dynamic renderElement, String propertyName, String propertyValue);
-  setElementClass(dynamic renderElement, String className, bool isAdd);
+  void setElementClass(dynamic renderElement, String className, bool isAdd);
   @Deprecated("Use dart:html Element.style instead")
-  setElementStyle(dynamic renderElement, String styleName, String styleValue);
+  void setElementStyle(
+      dynamic renderElement, String styleName, String styleValue);
   @Deprecated("Use dart:html Text.text instead")
-  setText(dynamic renderNode, String text);
+  void setText(dynamic renderNode, String text);
 }
 
 /// Injectable service that provides a low-level interface for modifying the UI.

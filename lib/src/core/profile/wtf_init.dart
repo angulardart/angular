@@ -8,6 +8,6 @@ import 'wtf_impl.dart' as impl;
  * NOTE: this is done explicitly to allow WTF api not to depend on
  * JS context and possible to run the noop WTF stubs outside the browser.
  */
-wtfInit() {
+void wtfInit() {
   impl.context = js.context;
 }

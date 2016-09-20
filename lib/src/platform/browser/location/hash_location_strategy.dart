@@ -86,7 +86,7 @@ class HashLocationStrategy extends LocationStrategy {
     return url.length > 0 ? ("#" + url) : url;
   }
 
-  pushState(dynamic state, String title, String path, String queryParams) {
+  void pushState(dynamic state, String title, String path, String queryParams) {
     var url = this
         .prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
     if (url.length == 0) {
@@ -95,7 +95,8 @@ class HashLocationStrategy extends LocationStrategy {
     this._platformLocation.pushState(state, title, url);
   }
 
-  replaceState(dynamic state, String title, String path, String queryParams) {
+  void replaceState(
+      dynamic state, String title, String path, String queryParams) {
     var url = this
         .prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
     if (url.length == 0) {

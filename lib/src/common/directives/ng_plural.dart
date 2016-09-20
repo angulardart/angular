@@ -95,7 +95,7 @@ class NgPlural implements AfterContentInit {
     this._updateView();
   }
 
-  ngAfterContentInit() {
+  void ngAfterContentInit() {
     this.cases.forEach(/* void */ (NgPluralCase pluralCase) {
       this._caseViews[this._formatValue(pluralCase)] = pluralCase._view;
     });
@@ -109,11 +109,11 @@ class NgPlural implements AfterContentInit {
     _activateView(view);
   }
 
-  _clearViews() {
+  void _clearViews() {
     _activeView?.destroy();
   }
 
-  _activateView(SwitchView view) {
+  void _activateView(SwitchView view) {
     if (view == null) return;
     this._activeView = view;
     this._activeView.create();

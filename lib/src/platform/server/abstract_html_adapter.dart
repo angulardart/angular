@@ -155,7 +155,7 @@ abstract class AbstractHtml5LibAdapter
     return el.text;
   }
 
-  setText(el, String value) => el.text = value;
+  String setText(el, String value) => el.text = value;
 
   getValue(el);
 

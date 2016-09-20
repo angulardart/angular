@@ -75,7 +75,7 @@ class DebugElement extends DebugNode {
 
   Map get attributes => nativeElement.attributes;
 
-  insertChildrenAfter(DebugNode child, List<DebugNode> newChildren) {
+  void insertChildrenAfter(DebugNode child, List<DebugNode> newChildren) {
     var siblingIndex = this.childNodes.indexOf(child);
     if (!identical(siblingIndex, -1)) {
       var previousChildren = childNodes.sublist(0, siblingIndex + 1);
@@ -117,7 +117,7 @@ class DebugElement extends DebugNode {
     return children;
   }
 
-  triggerEventHandler(String eventName, dynamic eventObj) {
+  void triggerEventHandler(String eventName, dynamic eventObj) {
     listeners.forEach((listener) {
       if (listener.name == eventName) {
         listener.callback(eventObj);
@@ -130,8 +130,8 @@ dynamic asNativeElements(List<DebugElement> debugEls) {
   return debugEls.map((el) => el.nativeElement).toList();
 }
 
-_queryElementChildren(DebugElement element, Predicate<DebugElement> predicate,
-    List<DebugElement> matches) {
+void _queryElementChildren(DebugElement element,
+    Predicate<DebugElement> predicate, List<DebugElement> matches) {
   element.childNodes.forEach((node) {
     if (node is DebugElement) {
       if (predicate(node)) {
@@ -142,7 +142,7 @@ _queryElementChildren(DebugElement element, Predicate<DebugElement> predicate,
   });
 }
 
-_queryNodeChildren(DebugNode parentNode, Predicate<DebugNode> predicate,
+void _queryNodeChildren(DebugNode parentNode, Predicate<DebugNode> predicate,
     List<DebugNode> matches) {
   if (parentNode is DebugElement) {
     parentNode.childNodes.forEach((node) {
@@ -164,11 +164,11 @@ DebugNode getDebugNode(dynamic nativeNode) {
 
 List<DebugNode> getAllDebugNodes() => _nativeNodeToDebugNode.values.toList();
 
-indexDebugNode(DebugNode node) {
+void indexDebugNode(DebugNode node) {
   _nativeNodeToDebugNode[node.nativeNode] = node;
 }
 
-removeDebugNodeFromIndex(DebugNode node) {
+void removeDebugNodeFromIndex(DebugNode node) {
   (_nativeNodeToDebugNode.containsKey(node.nativeNode) &&
       (_nativeNodeToDebugNode.remove(node.nativeNode) != null || true));
 }

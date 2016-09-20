@@ -234,7 +234,7 @@ class _ParseAST {
         : this.input.length;
   }
 
-  advance() {
+  void advance() {
     this.index++;
   }
 
@@ -259,7 +259,7 @@ class _ParseAST {
     return this.next.isOperator("#");
   }
 
-  expectCharacter(num code) {
+  void expectCharacter(num code) {
     if (this.optionalCharacter(code)) return;
     this.error('''Missing expected ${new String.fromCharCode(code)}''');
   }
@@ -273,7 +273,7 @@ class _ParseAST {
     }
   }
 
-  expectOperator(String operator) {
+  void expectOperator(String operator) {
     if (this.optionalOperator(operator)) return;
     this.error('''Missing expected operator ${ operator}''');
   }
@@ -671,7 +671,7 @@ class _ParseAST {
     return new TemplateBindingParseResult(bindings, warnings);
   }
 
-  error(String message, [num index = null]) {
+  void error(String message, [num index = null]) {
     if (index == null) index = this.index;
     var location = (index < this.tokens.length)
         ? '''at column ${ this . tokens [ index ] . index + 1} in'''
@@ -688,66 +688,66 @@ class SimpleExpressionChecker implements AstVisitor {
   }
 
   var simple = true;
-  visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {}
-  visitInterpolation(Interpolation ast, dynamic context) {
+  void visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {}
+  void visitInterpolation(Interpolation ast, dynamic context) {
     this.simple = false;
   }
 
-  visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {}
-  visitPropertyRead(PropertyRead ast, dynamic context) {}
-  visitPropertyWrite(PropertyWrite ast, dynamic context) {
+  void visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {}
+  void visitPropertyRead(PropertyRead ast, dynamic context) {}
+  void visitPropertyWrite(PropertyWrite ast, dynamic context) {
     this.simple = false;
   }
 
-  visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
+  void visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
     this.simple = false;
   }
 
-  visitMethodCall(MethodCall ast, dynamic context) {
+  void visitMethodCall(MethodCall ast, dynamic context) {
     this.simple = false;
   }
 
-  visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
+  void visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
     this.simple = false;
   }
 
-  visitFunctionCall(FunctionCall ast, dynamic context) {
+  void visitFunctionCall(FunctionCall ast, dynamic context) {
     this.simple = false;
   }
 
-  visitLiteralArray(LiteralArray ast, dynamic context) {
+  void visitLiteralArray(LiteralArray ast, dynamic context) {
     this.visitAll(ast.expressions);
   }
 
-  visitLiteralMap(LiteralMap ast, dynamic context) {
+  void visitLiteralMap(LiteralMap ast, dynamic context) {
     this.visitAll(ast.values);
   }
 
-  visitBinary(Binary ast, dynamic context) {
+  void visitBinary(Binary ast, dynamic context) {
     this.simple = false;
   }
 
-  visitPrefixNot(PrefixNot ast, dynamic context) {
+  void visitPrefixNot(PrefixNot ast, dynamic context) {
     this.simple = false;
   }
 
-  visitConditional(Conditional ast, dynamic context) {
+  void visitConditional(Conditional ast, dynamic context) {
     this.simple = false;
   }
 
-  visitIfNull(IfNull ast, dynamic context) {
+  void visitIfNull(IfNull ast, dynamic context) {
     this.simple = false;
   }
 
-  visitPipe(BindingPipe ast, dynamic context) {
+  void visitPipe(BindingPipe ast, dynamic context) {
     this.simple = false;
   }
 
-  visitKeyedRead(KeyedRead ast, dynamic context) {
+  void visitKeyedRead(KeyedRead ast, dynamic context) {
     this.simple = false;
   }
 
-  visitKeyedWrite(KeyedWrite ast, dynamic context) {
+  void visitKeyedWrite(KeyedWrite ast, dynamic context) {
     this.simple = false;
   }
 
@@ -759,11 +759,11 @@ class SimpleExpressionChecker implements AstVisitor {
     return res;
   }
 
-  visitChain(Chain ast, dynamic context) {
+  void visitChain(Chain ast, dynamic context) {
     this.simple = false;
   }
 
-  visitQuote(Quote ast, dynamic context) {
+  void visitQuote(Quote ast, dynamic context) {
     this.simple = false;
   }
 }

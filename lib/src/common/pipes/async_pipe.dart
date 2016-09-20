@@ -107,7 +107,7 @@ class AsyncPipe implements OnDestroy {
     this._obj = null;
   }
 
-  _updateLatestValue(dynamic async, Object value) {
+  void _updateLatestValue(dynamic async, Object value) {
     if (identical(async, this._obj)) {
       this._latestValue = value;
       this._ref.markForCheck();

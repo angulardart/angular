@@ -136,7 +136,7 @@ class NgZone {
         },
         onError: (NgZoneError error) => this._onErrorEvents.emit(error));
   }
-  _checkStable() {
+  void _checkStable() {
     if (this._nesting == 0) {
       if (!this._hasPendingMicrotasks && !this._isStable) {
         try {

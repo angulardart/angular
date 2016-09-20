@@ -235,7 +235,7 @@ abstract class AppView<T> {
     destroyed = true;
   }
 
-  destroyLocal() {
+  void destroyLocal() {
     var hostElement = identical(this.type, ViewType.COMPONENT)
         ? this.declarationAppElement.nativeElement
         : null;

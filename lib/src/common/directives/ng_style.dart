@@ -40,14 +40,13 @@ import "../../core/change_detection/differs/default_keyvalue_differ.dart"
 /// [ex]: examples/template-syntax/#ngStyle
 @Directive(selector: "[ngStyle]", inputs: const ["rawStyle: ngStyle"])
 class NgStyle implements DoCheck {
-  KeyValueDiffers _differs;
-  Element _ngElement;
+  final KeyValueDiffers _differs;
+  final Element _ngElement;
   Map<String, String> _rawStyle;
   KeyValueDiffer _differ;
 
-  NgStyle(this._differs, ElementRef elementRef) {
-    _ngElement = elementRef.nativeElement;
-  }
+  NgStyle(this._differs, ElementRef elementRef)
+      : _ngElement = elementRef.nativeElement;
 
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;
@@ -56,7 +55,7 @@ class NgStyle implements DoCheck {
     }
   }
 
-  ngDoCheck() {
+  void ngDoCheck() {
     if (_differ == null) return;
     var changes = _differ.diff(_rawStyle);
     if (changes == null) return;

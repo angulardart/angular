@@ -20,13 +20,11 @@ class BrowserPlatformLocation extends PlatformLocation {
   }
   // This is moved to its own method so that `MockPlatformLocationStrategy` can overwrite it
 
-  /** @internal */
-  _init() {
+  void _init() {
     this._location = DOM.getLocation();
     this._history = DOM.getHistory();
   }
 
-  /** @internal */
   Location get location {
     return this._location;
   }

@@ -15,7 +15,7 @@ class _ArrayLogger {
     this.res.add(s);
   }
 
-  logGroupEnd() {}
+  void logGroupEnd() {}
 }
 
 /**

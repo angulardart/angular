@@ -104,7 +104,7 @@ class TestabilityRegistry {
     getter.addToWindow(this);
   }
 
-  registerApplication(dynamic token, Testability testability) {
+  void registerApplication(dynamic token, Testability testability) {
     _applications[token] = testability;
   }
 

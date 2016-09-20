@@ -92,7 +92,7 @@ class DebugAppView<T> extends AppView<T> {
     }
   }
 
-  destroyLocal() {
+  void destroyLocal() {
     this._resetDebug();
     try {
       super.destroyLocal();
@@ -127,7 +127,7 @@ class DebugAppView<T> extends AppView<T> {
     }
   }
 
-  _resetDebug() {
+  void _resetDebug() {
     this._currentDebugContext = null;
   }
 

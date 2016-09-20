@@ -35,8 +35,8 @@ class Token {
     return (this.type == TokenType.String);
   }
 
-  bool isOperator(String operater) {
-    return (this.type == TokenType.Operator && this.strValue == operater);
+  bool isOperator(String operator) {
+    return (this.type == TokenType.Operator && this.strValue == operator);
   }
 
   bool isIdentifier() {
@@ -186,7 +186,7 @@ class _Scanner {
     this.length = input.length;
     this.advance();
   }
-  advance() {
+  void advance() {
     this.peek =
         ++this.index >= this.length ? $EOF : this.input.codeUnitAt(this.index);
   }
@@ -382,7 +382,7 @@ class _Scanner {
     return newStringToken(start, unescaped);
   }
 
-  error(String message, num offset) {
+  void error(String message, num offset) {
     num position = this.index + offset;
     throw new ScannerError(
         '''Lexer Error: ${ message} at column ${ position} in expression [${ this . input}]''');

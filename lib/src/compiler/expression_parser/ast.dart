@@ -36,7 +36,7 @@ class Quote extends AST {
 }
 
 class EmptyExpr extends AST {
-  visit(AstVisitor visitor, [dynamic context = null]) {}
+  void visit(AstVisitor visitor, [dynamic context = null]) {}
 }
 
 class ImplicitReceiver extends AST {

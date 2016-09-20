@@ -29,7 +29,7 @@ class DirectiveProcessor extends Transformer implements LazyTransformer {
       id.extension.endsWith('dart') && !isGenerated(id.path);
 
   @override
-  declareOutputs(DeclaringTransform transform) {
+  void declareOutputs(DeclaringTransform transform) {
     transform.declareOutput(_deferredAssetId(transform.primaryId));
     transform.declareOutput(_ngSummaryAssetId(transform.primaryId));
   }

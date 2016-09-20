@@ -41,13 +41,13 @@ List<o.Statement> convertCdStatementToIr(NameResolver nameResolver,
 }
 
 enum _Mode { Statement, Expression }
-ensureStatementMode(_Mode mode, compiler_ast.AST ast) {
+void ensureStatementMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Statement)) {
     throw new BaseException('''Expected a statement, but saw ${ ast}''');
   }
 }
 
-ensureExpressionMode(_Mode mode, compiler_ast.AST ast) {
+void ensureExpressionMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Expression)) {
     throw new BaseException('''Expected an expression, but saw ${ ast}''');
   }
@@ -330,7 +330,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   }
 }
 
-flattenStatements(dynamic arg, List<o.Statement> output) {
+void flattenStatements(dynamic arg, List<o.Statement> output) {
   if (arg is List) {
     arg.forEach((entry) => flattenStatements(entry, output));
   } else {

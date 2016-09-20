@@ -38,7 +38,7 @@ class CompileEventListener {
         o.importType(
             this.compileElement.view.genConfig.renderTypes.renderEvent));
   }
-  addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
+  void addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
       o.Expression directiveInstance) {
     if (directive != null && directive.isComponent) {
       this._hasComponentHostListener = true;
@@ -65,7 +65,7 @@ class CompileEventListener {
     this._method.addStmts(actionStmts);
   }
 
-  finishMethod() {
+  void finishMethod() {
     var markPathToRootStart = this._hasComponentHostListener
         ? this.compileElement.appElement.prop('componentView')
         : o.THIS_EXPR;
@@ -85,7 +85,7 @@ class CompileEventListener {
         [o.StmtModifier.Private]));
   }
 
-  listenToRenderer() {
+  void listenToRenderer() {
     var eventListener = new o.InvokeMemberMethodExpr('evt', [
       new o.ReadClassMemberExpr(_methodName)
           .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
@@ -102,7 +102,8 @@ class CompileEventListener {
         .addStmt(new o.ExpressionStatement(listenExpr));
   }
 
-  listenToDirective(o.Expression directiveInstance, String observablePropName) {
+  void listenToDirective(
+      o.Expression directiveInstance, String observablePropName) {
     var subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
@@ -144,8 +145,8 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
   return eventListeners;
 }
 
-bindDirectiveOutputs(DirectiveAst directiveAst, o.Expression directiveInstance,
-    List<CompileEventListener> eventListeners) {
+void bindDirectiveOutputs(DirectiveAst directiveAst,
+    o.Expression directiveInstance, List<CompileEventListener> eventListeners) {
   directiveAst.directive.outputs.forEach((observablePropName, eventName) {
     eventListeners
         .where((listener) => listener.eventName == eventName)
@@ -156,7 +157,7 @@ bindDirectiveOutputs(DirectiveAst directiveAst, o.Expression directiveInstance,
   });
 }
 
-bindRenderOutputs(List<CompileEventListener> eventListeners) {
+void bindRenderOutputs(List<CompileEventListener> eventListeners) {
   eventListeners.forEach((listener) => listener.listenToRenderer());
 }
 

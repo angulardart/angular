@@ -95,7 +95,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return !identical(parent.view, this.view);
   }
 
-  _addRootNodeAndProject(
+  void _addRootNodeAndProject(
       CompileNode node, num ngContentIndex, CompileElement parent) {
     var vcAppEl = (node is CompileElement && node.hasViewContainer)
         ? node.appElement
@@ -145,7 +145,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var renderNode;
     // If Text field is bound, we need access to the renderNode beyond
     // createInternal method and write reference to class member.
-    // Otherwise we can create a local variable and not baloon class prototype.
+    // Otherwise we can create a local variable and not balloon class prototype.
     if (isBound) {
       view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(Identifiers.HTML_TEXT_NODE),

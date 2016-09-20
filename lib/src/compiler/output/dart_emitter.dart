@@ -159,7 +159,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
-  _visitClassField(o.ClassField field, dynamic context) {
+  void _visitClassField(o.ClassField field, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (field.hasModifier(o.StmtModifier.Final)) {
       ctx.print('final ');
@@ -178,7 +178,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     ctx.println(';');
   }
 
-  _visitClassGetter(o.ClassGetter getter, dynamic context) {
+  void _visitClassGetter(o.ClassGetter getter, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (getter.type != null) {
       getter.type.visitType(this, ctx);
@@ -191,7 +191,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     ctx.println('}');
   }
 
-  _visitClassConstructor(o.ClassStmt stmt, dynamic context) {
+  void _visitClassConstructor(o.ClassStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('${ stmt . name}(');
     this._visitParams(stmt.constructorMethod.params, ctx);
@@ -218,7 +218,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
   }
 
-  _visitClassMethod(o.ClassMethod method, dynamic context) {
+  void _visitClassMethod(o.ClassMethod method, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.enterMethod(method);
     if (method.type != null) {

@@ -31,7 +31,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
         !identical(this._removalsHead, null);
   }
 
-  forEachItem(Function fn) {
+  void forEachItem(Function fn) {
     KeyValueChangeRecord record;
     for (record = this._mapHead;
         !identical(record, null);
@@ -40,7 +40,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  forEachPreviousItem(Function fn) {
+  void forEachPreviousItem(Function fn) {
     KeyValueChangeRecord record;
     for (record = this._previousMapHead;
         !identical(record, null);
@@ -49,7 +49,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  forEachChangedItem(Function fn) {
+  void forEachChangedItem(Function fn) {
     KeyValueChangeRecord record;
     for (record = this._changesHead;
         !identical(record, null);
@@ -58,7 +58,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  forEachAddedItem(Function fn) {
+  void forEachAddedItem(Function fn) {
     KeyValueChangeRecord record;
     for (record = this._additionsHead;
         !identical(record, null);
@@ -67,7 +67,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  forEachRemovedItem(Function fn) {
+  void forEachRemovedItem(Function fn) {
     KeyValueChangeRecord record;
     for (record = this._removalsHead;
         !identical(record, null);
@@ -88,7 +88,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  onDestroy() {}
+  void onDestroy() {}
   bool check(Map<dynamic, dynamic> map) {
     this._reset();
     var records = this._records;
@@ -139,7 +139,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     return this.isDirty;
   }
 
-  _reset() {
+  void _reset() {
     if (this.isDirty) {
       KeyValueChangeRecord record;
       // Record the state of the mapping
@@ -213,7 +213,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  _truncate(KeyValueChangeRecord lastRecord, KeyValueChangeRecord record) {
+  void _truncate(KeyValueChangeRecord lastRecord, KeyValueChangeRecord record) {
     while (!identical(record, null)) {
       if (identical(lastRecord, null)) {
         this._mapHead = null;
@@ -244,13 +244,13 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  _isInRemovals(KeyValueChangeRecord record) {
+  bool _isInRemovals(KeyValueChangeRecord record) {
     return identical(record, this._removalsHead) ||
         !identical(record._nextRemoved, null) ||
         !identical(record._prevRemoved, null);
   }
 
-  _addToRemovals(KeyValueChangeRecord record) {
+  void _addToRemovals(KeyValueChangeRecord record) {
     // todo(vicb) assert
 
     // assert(record._next == null);
@@ -271,7 +271,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  _removeFromSeq(KeyValueChangeRecord prev, KeyValueChangeRecord record) {
+  void _removeFromSeq(KeyValueChangeRecord prev, KeyValueChangeRecord record) {
     var next = record._next;
     if (identical(prev, null)) {
       this._mapHead = next;
@@ -280,7 +280,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  _removeFromRemovals(KeyValueChangeRecord record) {
+  void _removeFromRemovals(KeyValueChangeRecord record) {
     // todo(vicb) assert
 
     // assert(record._next == null);
@@ -303,7 +303,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     record._prevRemoved = record._nextRemoved = null;
   }
 
-  _addToAdditions(KeyValueChangeRecord record) {
+  void _addToAdditions(KeyValueChangeRecord record) {
     // todo(vicb): assert
 
     // assert(record._next == null);
@@ -323,7 +323,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     }
   }
 
-  _addToChanges(KeyValueChangeRecord record) {
+  void _addToChanges(KeyValueChangeRecord record) {
     // todo(vicb) assert
 
     // assert(record._nextAdded == null);
@@ -390,7 +390,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
         "\n";
   }
 
-  _forEach(obj, Function fn) {
+  void _forEach(obj, Function fn) {
     if (obj is Map) {
       obj.forEach((k, v) => fn(v, k));
     } else {
@@ -400,7 +400,7 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
   }
 }
 
-typedef _MapHandler(dynamic value, String key);
+typedef void _MapHandler(dynamic value, String key);
 
 class KeyValueChangeRecord {
   dynamic key;

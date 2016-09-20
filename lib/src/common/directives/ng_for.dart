@@ -112,14 +112,14 @@ class NgFor implements DoCheck {
     this._ngForTrackBy = value;
   }
 
-  ngDoCheck() {
+  void ngDoCheck() {
     if (_differ != null) {
       var changes = this._differ.diff(this._ngForOf);
       if (changes != null) this._applyChanges(changes);
     }
   }
 
-  _applyChanges(DefaultIterableDiffer changes) {
+  void _applyChanges(DefaultIterableDiffer changes) {
     // TODO(rado): check if change detection can produce a change record that is
 
     // easier to consume than current.
@@ -146,7 +146,7 @@ class NgFor implements DoCheck {
     });
   }
 
-  _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
+  void _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
     view.setLocal("\$implicit", record.item);
     view.setLocal("index", record.currentIndex);
     view.setLocal("even", (record.currentIndex % 2 == 0));

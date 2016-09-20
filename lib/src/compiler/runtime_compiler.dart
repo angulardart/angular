@@ -89,7 +89,7 @@ class RuntimeCompiler implements ComponentResolver {
             compMeta.selector, compiledTemplate.viewFactory, componentType));
   }
 
-  clearCache() {
+  void clearCache() {
     this._styleCache.clear();
     this._compiledTemplateCache.clear();
     this._compiledTemplateDone.clear();
@@ -252,7 +252,7 @@ class CompiledTemplate {
   }
 }
 
-assertComponent(CompileDirectiveMetadata meta) {
+void assertComponent(CompileDirectiveMetadata meta) {
   if (!meta.isComponent) {
     throw new BaseException(
         '''Could not compile \'${ meta . type . name}\' because it is not a component.''');

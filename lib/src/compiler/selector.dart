@@ -76,7 +76,7 @@ class CssSelector {
         notSelectors.isEmpty;
   }
 
-  setElement([String element = null]) {
+  void setElement([String element = null]) {
     this.element = element;
   }
 
@@ -97,7 +97,7 @@ class CssSelector {
     return '''<${ tagName}${ classAttr}${ attrs}></${ tagName}>''';
   }
 
-  addAttribute(String name, [String value = _EMPTY_ATTR_VALUE]) {
+  void addAttribute(String name, [String value = _EMPTY_ATTR_VALUE]) {
     this.attrs.add(name);
     if (value != null) {
       value = value.toLowerCase();
@@ -107,7 +107,7 @@ class CssSelector {
     this.attrs.add(value);
   }
 
-  addClassName(String name) {
+  void addClassName(String name) {
     this.classNames.add(name.toLowerCase());
   }
 
@@ -157,7 +157,7 @@ class SelectorMatcher {
   var _attrValueMap = new Map<String, Map<String, List<SelectorContext>>>();
   var _attrValuePartialMap = new Map<String, Map<String, SelectorMatcher>>();
   List<SelectorListContext> _listContexts = [];
-  addSelectables(List<CssSelector> cssSelectors, [dynamic callbackCtxt]) {
+  void addSelectables(List<CssSelector> cssSelectors, [dynamic callbackCtxt]) {
     var listContext;
     if (cssSelectors.length > 1) {
       listContext = new SelectorListContext(cssSelectors);
@@ -173,7 +173,7 @@ class SelectorMatcher {
    * 
    * 
    */
-  _addSelectable(CssSelector cssSelector, dynamic callbackCtxt,
+  void _addSelectable(CssSelector cssSelector, dynamic callbackCtxt,
       SelectorListContext listContext) {
     SelectorMatcher matcher = this;
     var element = cssSelector.element;
@@ -228,7 +228,7 @@ class SelectorMatcher {
     }
   }
 
-  _addTerminal(Map<String, List<SelectorContext>> map, String name,
+  void _addTerminal(Map<String, List<SelectorContext>> map, String name,
       SelectorContext selectable) {
     var terminalList = map[name];
     if (terminalList == null) {

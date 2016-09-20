@@ -145,7 +145,7 @@ class CssScannerError extends BaseException {
   }
 }
 
-_trackWhitespace(CssLexerMode mode) {
+bool _trackWhitespace(CssLexerMode mode) {
   switch (mode) {
     case CssLexerMode.SELECTOR:
     case CssLexerMode.ALL_TRACK_WS:
@@ -178,7 +178,7 @@ class CssScanner {
     return this._currentMode;
   }
 
-  setMode(CssLexerMode mode) {
+  void setMode(CssLexerMode mode) {
     if (this._currentMode != mode) {
       if (_trackWhitespace(this._currentMode)) {
         this.consumeWhitespace();
