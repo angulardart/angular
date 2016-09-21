@@ -1247,7 +1247,9 @@ class MyInput implements ControlValueAccessor {
   }
 }
 
-Function uniqLoginAsyncValidator(String expectedValue) {
+typedef Future _foo(AbstractControl ac);
+
+_foo uniqLoginAsyncValidator(String expectedValue) {
   return (AbstractControl c) {
     var completer = new Completer<Map<String, dynamic>>();
     var res = (c.value == expectedValue) ? null : {"uniqLogin": true};

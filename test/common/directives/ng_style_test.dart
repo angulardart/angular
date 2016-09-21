@@ -42,7 +42,8 @@ void main() {
               DOM.getStyle(
                   fixture.debugElement.children[0].nativeElement, "max-width"),
               "40px");
-          expr = fixture.debugElement.componentInstance.expr;
+          expr = fixture.debugElement.componentInstance.expr
+              as Map<String, dynamic>;
           expr["max-width"] = "30%";
           fixture.detectChanges();
           expect(

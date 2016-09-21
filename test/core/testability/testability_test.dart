@@ -13,7 +13,7 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 // Schedules a microtasks (using a resolved promise .then())
-void microTask(Function fn) {
+void microTask(void fn()) {
   scheduleMicrotask(() {
     // We do double dispatch so that we  can wait for scheduleMicrotasks in
     // the Testability when NgZone becomes stable.

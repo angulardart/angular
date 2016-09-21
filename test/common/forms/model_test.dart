@@ -26,7 +26,7 @@ void main() {
     };
   };
 
-  asyncValidatorReturningObservable(c) {
+  asyncValidatorReturningObservable(AbstractControl c) {
     var e = new EventEmitter();
     scheduleMicrotask(() => e.emit({"async": true}));
     return e;
@@ -518,7 +518,7 @@ void main() {
       });
       group("errors", () {
         test("should run the validator when the value changes", () {
-          Map simpleValidator(c) =>
+          Map<String, dynamic> simpleValidator(c) =>
               c.controls[0].value != "correct" ? {"broken": true} : null;
           var c = new Control(null);
           var g = new ControlArray([c], simpleValidator);

@@ -165,7 +165,7 @@ void main() {
   group("processRules", () {
     group("parse rules", () {
       List<CssRule> captureRules(String input) {
-        var result = [];
+        var result = <CssRule>[];
         processRules(input, (cssRule) {
           result.add(cssRule);
           return cssRule;

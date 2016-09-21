@@ -9,7 +9,7 @@ void main() {
       [bool trackComments = false, CssLexerMode mode = CssLexerMode.ALL]) {
     var scanner = new CssLexer().scan(code, trackComments);
     scanner.setMode(mode);
-    var tokens = [];
+    var tokens = <CssToken>[];
     var output = scanner.scan();
     while (output != null) {
       var error = output.error;

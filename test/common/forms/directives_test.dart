@@ -109,7 +109,7 @@ void main() {
   });
   group("NgFormModel", () {
     var defaultAccessor;
-    var form;
+    NgFormModel form;
     ControlGroup formModel;
     var loginControlDir;
     setUp(() {
@@ -245,10 +245,10 @@ void main() {
     });
     group("NgForm", () {
       var defaultAccessor;
-      var form;
+      NgForm form;
       ControlGroup formModel;
       var loginControlDir;
-      var personControlGroupDir;
+      NgControlGroup personControlGroupDir;
       setUp(() {
         defaultAccessor = new DefaultValueAccessor(null, null);
         form = new NgForm([], []);

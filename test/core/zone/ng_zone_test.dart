@@ -11,7 +11,7 @@ var needsLongerTimers = browserDetection.isSlow || browserDetection.isEdge;
 var resultTimer = 1000;
 // Schedules a microtask (using a timer)
 
-void macroTask(Function fn, [timer = 1]) {
+void macroTask(void fn(), [timer = 1]) {
   // adds longer timers for passing tests in IE and Edge
   new Timer(new Duration(milliseconds: needsLongerTimers ? timer : 1), fn);
 }

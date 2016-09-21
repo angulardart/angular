@@ -7,6 +7,8 @@ import "package:angular2/common.dart" show Control, Validators, AbstractControl;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import 'package:test/test.dart';
 
+typedef Future validatorFunction(AbstractControl ac);
+
 void main() {
   var validator = (String key, dynamic error) {
     return (AbstractControl c) {
@@ -103,7 +105,7 @@ void main() {
       });
     });
     group("composeAsync", () {
-      Function asyncValidator(expected, response) {
+      validatorFunction asyncValidator(expected, response) {
         return (c) {
           var emitter = new EventEmitter();
           var res = c.value != expected ? response : null;

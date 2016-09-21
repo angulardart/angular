@@ -3,8 +3,8 @@ import "../model.dart" show AbstractControl;
 /// Base class for control directives.
 ///
 /// Only used internally in the forms module.
-abstract class AbstractControlDirective {
-  AbstractControl get control;
+abstract class AbstractControlDirective<T extends AbstractControl> {
+  T get control;
 
   dynamic get value => control?.value;
 
@@ -20,7 +20,5 @@ abstract class AbstractControlDirective {
 
   bool get untouched => control?.untouched;
 
-  List<String> get path {
-    return null;
-  }
+  List<String> get path => null;
 }

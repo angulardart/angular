@@ -1,23 +1,21 @@
 import "abstract_control_directive.dart" show AbstractControlDirective;
 import "form_interface.dart" show Form;
+import "../model.dart" show AbstractControl;
 
 /// A directive that contains multiple [NgControl]s.
 ///
 /// Only used by the forms module.
-class ControlContainer extends AbstractControlDirective {
+class ControlContainer<T extends AbstractControl>
+    extends AbstractControlDirective<T> {
   String name;
 
   /// Get the form to which this container belongs.
-  Form get formDirective {
-    return null;
-  }
+  Form get formDirective => null;
 
   /// Get the path to this container.
   @override
-  List<String> get path {
-    return null;
-  }
+  List<String> get path => null;
 
   @override
-  get control => null;
+  T get control => null;
 }

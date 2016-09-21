@@ -1,17 +1,17 @@
 import "package:angular2/di.dart" show Injectable;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
+typedef void logFunction([a, b, c, d, e]);
+
 @Injectable()
 class Log {
-  List<dynamic> logItems;
-  Log() {
-    this.logItems = [];
-  }
+  final List logItems = new List();
+
   void add(value) {
     this.logItems.add(value);
   }
 
-  fn(value) {
+  logFunction fn(value) {
     return (
         [dynamic a1 = null,
         dynamic a2 = null,
@@ -23,12 +23,10 @@ class Log {
   }
 
   void clear() {
-    this.logItems = [];
+    this.logItems.clear();
   }
 
-  String result() {
-    return this.logItems.join("; ");
-  }
+  String result() => this.logItems.join("; ");
 }
 
 BrowserDetection browserDetection;

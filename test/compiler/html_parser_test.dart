@@ -284,7 +284,7 @@ void main() {
             [HtmlExpansionCaseAst, "1"],
             [HtmlTextAst, "after", 1]
           ]);
-          var cases = ((parsed.rootNodes[0] as dynamic)).children[1].cases;
+          var cases = (parsed.rootNodes[0] as dynamic).children[1].cases;
           expect(
               humanizeDom(new HtmlParseTreeResult(cases[0].expression, [])), [
             [HtmlTextAst, "You have ", 0],
@@ -306,7 +306,7 @@ void main() {
             [HtmlExpansionAst, "messages.length", "plural"],
             [HtmlExpansionCaseAst, "0"]
           ]);
-          var firstCase = ((parsed.rootNodes[0] as dynamic)).cases[0];
+          var firstCase = (parsed.rootNodes[0] as dynamic).cases[0];
           expect(
               humanizeDom(new HtmlParseTreeResult(firstCase.expression, [])), [
             [HtmlExpansionAst, "p.gender", "gender"],

@@ -5,9 +5,8 @@ import 'package:angular2/src/compiler/css/parser.dart';
 import 'package:angular2/src/compiler/css/lexer.dart' show CssLexer;
 import 'package:test/test.dart';
 
-Iterable<String> tokensToStringList(tokens) {
-  return tokens.map((t) => t.strValue);
-}
+Iterable<String> tokensToStringList(List<CssToken> tokens) =>
+    tokens.map((t) => t.strValue);
 
 void main() {
   group("CssParser", () {

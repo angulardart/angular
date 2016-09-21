@@ -28,15 +28,14 @@ void main() {
       when(factory1.supports(any)).thenReturn(false);
       when(factory2.supports(any)).thenReturn(true);
       when(factory2.supports(any)).thenReturn(true);
-      var differs =
-          IterableDiffers.create(([factory1, factory2, factory3] as dynamic));
+      var differs = IterableDiffers.create(([factory1, factory2, factory3]));
       expect(differs.find("some object"), factory2);
     });
     test("should copy over differs from the parent repo", () {
       when(factory1.supports(any)).thenReturn(true);
       when(factory2.supports(any)).thenReturn(false);
-      var parent = IterableDiffers.create(([factory1] as dynamic));
-      var child = IterableDiffers.create(([factory2] as dynamic), parent);
+      var parent = IterableDiffers.create(([factory1]));
+      var child = IterableDiffers.create(([factory2]), parent);
       expect(child.factories, [factory2, factory1]);
     });
     group(".extend()", () {
