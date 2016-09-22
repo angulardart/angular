@@ -747,7 +747,7 @@ class CompilePipeMetadata implements CompileMetadataWithType {
       List<LifecycleHooks> lifecycleHooks}) {
     this.type = type;
     this.name = name;
-    this.pure = pure == true;
+    this.pure = pure ?? true;
     this.lifecycleHooks = lifecycleHooks ?? [];
   }
   CompileIdentifierMetadata get identifier {
