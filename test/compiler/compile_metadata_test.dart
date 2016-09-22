@@ -164,5 +164,10 @@ void main() {
             empty.toJson());
       });
     });
+    group("PipeMetadata", () {
+      test("should be pure by default", () {
+        expect(new CompilePipeMetadata().pure, isTrue);
+      });
+    });
   });
 }
