@@ -5,7 +5,7 @@ import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'app_element.dart';
 import 'element_ref.dart';
 import 'template_ref.dart';
-import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRef_;
+import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRefImpl;
 
 /// Represents a container where one or more Views can be attached.
 ///
@@ -102,7 +102,7 @@ class ViewContainerRef {
   ViewRef insert(ViewRef viewRef, [num index = -1]) {
     var s = this._insertScope();
     if (index == -1) index = this.length;
-    var viewRef_ = (viewRef as ViewRef_);
+    var viewRef_ = (viewRef as ViewRefImpl);
     this._element.attachView(viewRef_.internalView, index);
     return wtfLeave(s, viewRef_);
   }
@@ -110,7 +110,7 @@ class ViewContainerRef {
   /// Returns the index of the View, specified via [ViewRef], within the current
   /// container or `-1` if this container doesn't contain the View.
   num indexOf(ViewRef viewRef) =>
-      _element.nestedViews.indexOf((viewRef as ViewRef_).internalView);
+      _element.nestedViews.indexOf((viewRef as ViewRefImpl).internalView);
 
   var _removeScope = wtfCreateScope('ViewContainerRef#remove()');
 

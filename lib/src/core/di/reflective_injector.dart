@@ -24,7 +24,7 @@ const UNDEFINED = const Object();
 
 abstract class ReflectiveProtoInjectorStrategy {
   ResolvedReflectiveProvider getProviderAtIndex(num index);
-  ReflectiveInjectorStrategy createInjectorStrategy(ReflectiveInjector_ inj);
+  ReflectiveInjectorStrategy createInjectorStrategy(ReflectiveInjectorImpl inj);
 }
 
 class ReflectiveProtoInjectorInlineStrategy
@@ -108,7 +108,7 @@ class ReflectiveProtoInjectorInlineStrategy
   }
 
   ReflectiveInjectorStrategy createInjectorStrategy(
-      ReflectiveInjector_ injector) {
+      ReflectiveInjectorImpl injector) {
     return new ReflectiveInjectorInlineStrategy(injector, this);
   }
 }
@@ -126,7 +126,7 @@ class ReflectiveProtoInjectorDynamicStrategy
   }
   ResolvedReflectiveProvider getProviderAtIndex(num index) => providers[index];
 
-  ReflectiveInjectorStrategy createInjectorStrategy(ReflectiveInjector_ ei) {
+  ReflectiveInjectorStrategy createInjectorStrategy(ReflectiveInjectorImpl ei) {
     return new ReflectiveInjectorDynamicStrategy(this, ei);
   }
 }
@@ -159,7 +159,7 @@ abstract class ReflectiveInjectorStrategy {
 }
 
 class ReflectiveInjectorInlineStrategy implements ReflectiveInjectorStrategy {
-  ReflectiveInjector_ injector;
+  ReflectiveInjectorImpl injector;
   ReflectiveProtoInjectorInlineStrategy protoStrategy;
   dynamic obj0 = UNDEFINED;
   dynamic obj1 = UNDEFINED;
@@ -267,7 +267,7 @@ class ReflectiveInjectorInlineStrategy implements ReflectiveInjectorStrategy {
 
 class ReflectiveInjectorDynamicStrategy implements ReflectiveInjectorStrategy {
   ReflectiveProtoInjectorDynamicStrategy protoStrategy;
-  ReflectiveInjector_ injector;
+  ReflectiveInjectorImpl injector;
   List<dynamic> objs;
   ReflectiveInjectorDynamicStrategy(this.protoStrategy, this.injector) {
     this.objs = new List.filled(protoStrategy.providers.length, UNDEFINED,
@@ -415,7 +415,7 @@ abstract class ReflectiveInjector implements Injector {
   static ReflectiveInjector fromResolvedProviders(
       List<ResolvedReflectiveProvider> providers,
       [Injector parent = null]) {
-    return new ReflectiveInjector_(
+    return new ReflectiveInjectorImpl(
         ReflectiveProtoInjector.fromResolvedProviders(providers), parent);
   }
 
@@ -509,7 +509,7 @@ abstract class ReflectiveInjector implements Injector {
   dynamic get(dynamic token, [dynamic notFoundValue]);
 }
 
-class ReflectiveInjector_ implements ReflectiveInjector {
+class ReflectiveInjectorImpl implements ReflectiveInjector {
   final _proto;
   Injector _parent;
   final Function _debugContext;
@@ -517,7 +517,7 @@ class ReflectiveInjector_ implements ReflectiveInjector {
   ReflectiveInjectorStrategy _strategy;
   num _constructionCounter = 0;
 
-  ReflectiveInjector_(this._proto,
+  ReflectiveInjectorImpl(this._proto,
       [this._parent = null, this._debugContext = null]) {
     _strategy = _proto._strategy.createInjectorStrategy(this);
   }
@@ -545,7 +545,7 @@ class ReflectiveInjector_ implements ReflectiveInjector {
 
   ReflectiveInjector createChildFromResolved(
           List<ResolvedReflectiveProvider> providers) =>
-      new ReflectiveInjector_(new ReflectiveProtoInjector(providers))
+      new ReflectiveInjectorImpl(new ReflectiveProtoInjector(providers))
         .._parent = this;
 
   dynamic resolveAndInstantiate(dynamic /* Type | Provider */ provider) =>
@@ -794,8 +794,8 @@ class ReflectiveInjector_ implements ReflectiveInjector {
     } else {
       inj = this;
     }
-    while (inj is ReflectiveInjector_) {
-      var inj_ = (inj as ReflectiveInjector_);
+    while (inj is ReflectiveInjectorImpl) {
+      var inj_ = (inj as ReflectiveInjectorImpl);
       var obj = inj_._strategy.getObjByKeyId(key.id);
       if (!identical(obj, UNDEFINED)) return obj;
       inj = inj_._parent;
@@ -818,7 +818,7 @@ class ReflectiveInjector_ implements ReflectiveInjector {
 }
 
 var INJECTOR_KEY = ReflectiveKey.get(Injector);
-List<dynamic> _mapProviders(ReflectiveInjector_ injector, Function fn) {
+List<dynamic> _mapProviders(ReflectiveInjectorImpl injector, Function fn) {
   var res = [];
   for (var i = 0; i < injector._proto.numberOfProviders; ++i) {
     res.add(fn(injector._proto.getProviderAtIndex(i)));

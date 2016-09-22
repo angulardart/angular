@@ -11,7 +11,7 @@ import "change_detection/change_detection.dart"
 import "linker/component_resolver.dart" show ComponentResolver;
 import "linker/component_resolver.dart" show ReflectorComponentResolver;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoader;
-import "linker/dynamic_component_loader.dart" show DynamicComponentLoader_;
+import "linker/dynamic_component_loader.dart" show DynamicComponentLoaderImpl;
 import "linker/app_view_utils.dart" show AppViewUtils;
 
 Type ___unused;
@@ -27,5 +27,5 @@ const List<dynamic /* Type | Provider | List < dynamic > */ >
   AppViewUtils,
   const Provider(IterableDiffers, useValue: defaultIterableDiffers),
   const Provider(KeyValueDiffers, useValue: defaultKeyValueDiffers),
-  const Provider(DynamicComponentLoader, useClass: DynamicComponentLoader_)
+  const Provider(DynamicComponentLoader, useClass: DynamicComponentLoaderImpl)
 ];

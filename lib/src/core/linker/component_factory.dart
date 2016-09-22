@@ -42,12 +42,12 @@ abstract class ComponentRef {
   void onDestroy(OnDestroyCallback callback);
 }
 
-class ComponentRef_ extends ComponentRef {
+class ComponentRefImpl extends ComponentRef {
   final AppElement hostElement;
   final Type componentType;
   final List<dynamic> metadata;
 
-  ComponentRef_(this.hostElement, this.componentType, this.metadata);
+  ComponentRefImpl(this.hostElement, this.componentType, this.metadata);
 
   ElementRef get location => hostElement.elementRef;
 
@@ -107,7 +107,7 @@ class ComponentFactory {
     // Note: Host views don't need a declarationAppElement!
     AppView hostView = _viewFactory(injector, null);
     var hostElement = hostView.create(projectableNodes, selector);
-    return new ComponentRef_(hostElement, this.componentType, this.metadata);
+    return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
   }
 
   ComponentRef loadIntoNode(Injector injector,
@@ -117,7 +117,7 @@ class ComponentFactory {
     // Note: Host views don't need a declarationAppElement!
     AppView hostView = _viewFactory(injector, null);
     var hostElement = hostView.create(projectableNodes, node);
-    return new ComponentRef_(hostElement, this.componentType, this.metadata);
+    return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
   }
 }
 

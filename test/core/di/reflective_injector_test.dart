@@ -20,14 +20,14 @@ import "package:angular2/core.dart"
         Provides;
 import "package:angular2/src/core/di/reflective_injector.dart"
     show
-        ReflectiveInjector_,
+        ReflectiveInjectorImpl,
         ReflectiveInjectorInlineStrategy,
         ReflectiveInjectorDynamicStrategy,
         ReflectiveProtoInjector;
 import "package:angular2/src/core/di/reflective_exceptions.dart";
 import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
 import "package:angular2/src/core/di/reflective_provider.dart"
-    show ResolvedReflectiveProvider_;
+    show ResolvedReflectiveProviderImpl;
 import 'package:test/test.dart';
 
 class CustomDependencyMetadata extends DependencyMetadata {}
@@ -160,17 +160,17 @@ void main() {
               (new List.from(providers)..addAll(context["providers"])));
           if (parent != null) {
             return (parent.createChildFromResolved(resolvedProviders)
-                as ReflectiveInjector_);
+                as ReflectiveInjectorImpl);
           } else {
             return (ReflectiveInjector.fromResolvedProviders(resolvedProviders)
-                as ReflectiveInjector_);
+                as ReflectiveInjectorImpl);
           }
         };
       });
     });
 
     test("should use the right strategy", () {
-      ReflectiveInjector_ injector = createInjector([]);
+      ReflectiveInjectorImpl injector = createInjector([]);
       expect(injector.internalStrategy.runtimeType,
           ReflectiveInjectorInlineStrategy);
     });
@@ -395,7 +395,7 @@ void main() {
       var providers = ReflectiveInjector
           .resolve([Car, provide(Engine, useClass: BrokenEngine)]);
       var proto = new ReflectiveProtoInjector([providers[0], providers[1]]);
-      var injector = new ReflectiveInjector_(proto);
+      var injector = new ReflectiveInjectorImpl(proto);
       try {
         injector.get(Car);
         throw "Must throw";
@@ -415,9 +415,9 @@ void main() {
       var carProvider = ReflectiveInjector.resolve([Car])[0];
       var protoChild = new ReflectiveProtoInjector([carProvider]);
       var parent =
-          new ReflectiveInjector_(protoParent, null, () => "parentContext");
+          new ReflectiveInjectorImpl(protoParent, null, () => "parentContext");
       var child =
-          new ReflectiveInjector_(protoChild, parent, () => "childContext");
+          new ReflectiveInjectorImpl(protoChild, parent, () => "childContext");
       try {
         child.get(Car);
         throw "Must throw";
@@ -553,7 +553,7 @@ void main() {
         ]);
         providers.forEach((b) {
           if (b == null) return;
-          expect(b is ResolvedReflectiveProvider_, isTrue);
+          expect(b is ResolvedReflectiveProviderImpl, isTrue);
         });
       });
       test("should support multi providers", () {
@@ -633,7 +633,7 @@ void main() {
       test("should work", () {
         expect(
             ((ReflectiveInjector.resolveAndCreate([Engine, BrokenEngine])
-                    as ReflectiveInjector_))
+                    as ReflectiveInjectorImpl))
                 .displayName,
             'ReflectiveInjector(providers: [ "Engine" ,  "BrokenEngine" ])');
       });
@@ -699,16 +699,16 @@ void main() {
             .resolve((new List.from(providers)..addAll(context["providers"])));
         if (parent != null) {
           return (parent.createChildFromResolved(resolvedProviders)
-              as ReflectiveInjector_);
+              as ReflectiveInjectorImpl);
         } else {
           return (ReflectiveInjector.fromResolvedProviders(resolvedProviders)
-              as ReflectiveInjector_);
+              as ReflectiveInjectorImpl);
         }
       };
     });
 
     test("should use the right strategy", () {
-      ReflectiveInjector_ injector = createInjector([]);
+      ReflectiveInjectorImpl injector = createInjector([]);
       expect(injector.internalStrategy.runtimeType,
           ReflectiveInjectorDynamicStrategy);
     });
@@ -933,7 +933,7 @@ void main() {
       var providers = ReflectiveInjector
           .resolve([Car, provide(Engine, useClass: BrokenEngine)]);
       var proto = new ReflectiveProtoInjector([providers[0], providers[1]]);
-      var injector = new ReflectiveInjector_(proto);
+      var injector = new ReflectiveInjectorImpl(proto);
       try {
         injector.get(Car);
         throw "Must throw";
@@ -953,9 +953,9 @@ void main() {
       var carProvider = ReflectiveInjector.resolve([Car])[0];
       var protoChild = new ReflectiveProtoInjector([carProvider]);
       var parent =
-          new ReflectiveInjector_(protoParent, null, () => "parentContext");
+          new ReflectiveInjectorImpl(protoParent, null, () => "parentContext");
       var child =
-          new ReflectiveInjector_(protoChild, parent, () => "childContext");
+          new ReflectiveInjectorImpl(protoChild, parent, () => "childContext");
       try {
         child.get(Car);
         throw "Must throw";
@@ -1075,7 +1075,7 @@ void main() {
         ]);
         providers.forEach((b) {
           if (b == null) return;
-          expect(b is ResolvedReflectiveProvider_, isTrue);
+          expect(b is ResolvedReflectiveProviderImpl, isTrue);
         });
       });
       test("should support multi providers", () {
@@ -1155,7 +1155,7 @@ void main() {
       test("should work", () {
         expect(
             ((ReflectiveInjector.resolveAndCreate([Engine, BrokenEngine])
-                    as ReflectiveInjector_))
+                    as ReflectiveInjectorImpl))
                 .displayName,
             'ReflectiveInjector(providers: [ "Engine" ,  "BrokenEngine" ])');
       });

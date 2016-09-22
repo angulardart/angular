@@ -27,7 +27,7 @@ import "package:angular2/core.dart"
 import "package:angular2/src/core/console.dart" show Console;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentFactory, ComponentRef_, ComponentRef;
+    show ComponentFactory, ComponentRefImpl, ComponentRef;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
 import "package:angular2/src/core/linker/app_view_utils.dart" show AppViewUtils;
@@ -184,7 +184,7 @@ class _MockComponentResolver implements ComponentResolver {
   void clearCache() {}
 }
 
-class _MockComponentRef extends ComponentRef_ {
+class _MockComponentRef extends ComponentRefImpl {
   Injector _injector;
   _MockComponentRef(this._injector) : super(null, null, null);
 

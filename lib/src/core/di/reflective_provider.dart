@@ -65,11 +65,11 @@ abstract class ResolvedReflectiveProvider {
 abstract class ResolvedReflectiveBinding implements ResolvedReflectiveProvider {
 }
 
-class ResolvedReflectiveProvider_ implements ResolvedReflectiveBinding {
+class ResolvedReflectiveProviderImpl implements ResolvedReflectiveBinding {
   ReflectiveKey key;
   List<ResolvedReflectiveFactory> resolvedFactories;
   bool multiProvider;
-  ResolvedReflectiveProvider_(
+  ResolvedReflectiveProviderImpl(
       this.key, this.resolvedFactories, this.multiProvider);
   ResolvedReflectiveFactory get resolvedFactory {
     return this.resolvedFactories[0];
@@ -134,7 +134,7 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
 /// [Injector] internally only uses [ResolvedProvider], [Provider] contains
 /// convenience provider syntax.
 ResolvedReflectiveProvider resolveReflectiveProvider(Provider provider) {
-  return new ResolvedReflectiveProvider_(ReflectiveKey.get(provider.token),
+  return new ResolvedReflectiveProviderImpl(ReflectiveKey.get(provider.token),
       [resolveReflectiveFactory(provider)], provider.multi);
 }
 
@@ -173,7 +173,7 @@ Map<num, ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
     } else {
       var resolvedProvider;
       if (provider.multiProvider) {
-        resolvedProvider = new ResolvedReflectiveProvider_(provider.key,
+        resolvedProvider = new ResolvedReflectiveProviderImpl(provider.key,
             new List.from(provider.resolvedFactories), provider.multiProvider);
       } else {
         resolvedProvider = provider;

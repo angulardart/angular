@@ -116,9 +116,9 @@ abstract class DynamicComponentLoader {
 }
 
 @Injectable()
-class DynamicComponentLoader_ extends DynamicComponentLoader {
+class DynamicComponentLoaderImpl extends DynamicComponentLoader {
   ComponentResolver _compiler;
-  DynamicComponentLoader_(this._compiler);
+  DynamicComponentLoaderImpl(this._compiler);
 
   @override
   Future<ComponentRef> loadAsRoot(Type type, Injector injector,

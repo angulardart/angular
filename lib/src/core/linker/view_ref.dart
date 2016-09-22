@@ -68,10 +68,10 @@ abstract class EmbeddedViewRef extends ViewRef {
   void destroy();
 }
 
-class ViewRef_ implements EmbeddedViewRef, ChangeDetectorRef {
+class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
   final AppView<dynamic> _view;
 
-  ViewRef_(this._view);
+  ViewRefImpl(this._view);
 
   AppView<dynamic> get internalView => _view;
 

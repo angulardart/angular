@@ -1,7 +1,7 @@
 import "package:angular2/di.dart" show Injectable;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
-typedef void logFunction([a, b, c, d, e]);
+typedef void LogFunction([a, b, c, d, e]);
 
 @Injectable()
 class Log {
@@ -11,7 +11,7 @@ class Log {
     this.logItems.add(value);
   }
 
-  logFunction fn(value) {
+  LogFunction fn(value) {
     return (
         [dynamic a1 = null,
         dynamic a2 = null,

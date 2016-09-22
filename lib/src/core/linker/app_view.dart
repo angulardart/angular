@@ -13,7 +13,7 @@ import 'package:angular2/src/platform/dom/dom_renderer.dart'
 import 'app_element.dart';
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
-import 'view_ref.dart' show ViewRef_;
+import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
 import 'app_view_utils.dart'
     show appViewUtils, ensureSlotCount, OnDestroyCallback;
@@ -33,7 +33,7 @@ abstract class AppView<T> {
   // and change detection state checks. When set to true, this view doesn't need
   // to be change detected.
   bool _skipChangeDetection = false;
-  ViewRef_ ref;
+  ViewRefImpl ref;
   List<dynamic> rootNodesOrAppElements;
   List<dynamic> allNodes;
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
@@ -58,7 +58,7 @@ abstract class AppView<T> {
   bool _hasExternalHostElement;
   AppView(this.clazz, this.componentType, this.type, this.locals,
       this.parentInjector, this.declarationAppElement, this._cdMode) {
-    this.ref = new ViewRef_(this);
+    this.ref = new ViewRefImpl(this);
     if (identical(type, ViewType.COMPONENT) || identical(type, ViewType.HOST)) {
       this.renderer = appViewUtils.renderComponent(componentType);
     } else {

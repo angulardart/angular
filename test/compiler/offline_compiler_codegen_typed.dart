@@ -22,13 +22,12 @@ const List<import1.StaticNodeDebugInfo> nodeDebugInfos_CompA0 = const [
 ];
 import2.RenderComponentType renderType_CompA;
 
-class _View_CompA0 extends import3.DebugAppView<import4.CompA> {
+class _ViewCompA0 extends import3.DebugAppView<import4.CompA> {
   var _text_0;
   var _expr_0;
-  _View_CompA0(
-      import6.Injector parentInjector, import7.AppElement declarationEl)
+  _ViewCompA0(import6.Injector parentInjector, import7.AppElement declarationEl)
       : super(
-            _View_CompA0,
+            _ViewCompA0,
             renderType_CompA,
             import8.ViewType.COMPONENT,
             {},
@@ -69,7 +68,7 @@ import3.AppView<import4.CompA> viewFactory_CompA0(
         import10.ViewEncapsulation.Emulated,
         styles_CompA));
   }
-  return new _View_CompA0(parentInjector, declarationEl);
+  return new _ViewCompA0(parentInjector, declarationEl);
 }
 
 const List<dynamic> styles_CompA_Host = const [];
@@ -80,14 +79,14 @@ const List<import1.StaticNodeDebugInfo> nodeDebugInfos_CompA_Host0 = const [
 ];
 import2.RenderComponentType renderType_CompA_Host;
 
-class _View_CompA_Host0 extends import3.DebugAppView<dynamic> {
+class _ViewCompAHost0 extends import3.DebugAppView<dynamic> {
   var _el_0;
   import7.AppElement _appEl_0;
   import4.CompA _CompA_0_4;
-  _View_CompA_Host0(
+  _ViewCompAHost0(
       import6.Injector parentInjector, import7.AppElement declarationEl)
       : super(
-            _View_CompA_Host0,
+            _ViewCompAHost0,
             renderType_CompA_Host,
             import8.ViewType.HOST,
             {},
@@ -122,7 +121,7 @@ import3.AppView<dynamic> viewFactory_CompA_Host0(
     (renderType_CompA_Host = import5.appViewUtils.createRenderComponentType(
         '', 0, import10.ViewEncapsulation.Emulated, styles_CompA_Host));
   }
-  return new _View_CompA_Host0(parentInjector, declarationEl);
+  return new _ViewCompAHost0(parentInjector, declarationEl);
 }
 
 const import11.ComponentFactory CompANgFactory =
