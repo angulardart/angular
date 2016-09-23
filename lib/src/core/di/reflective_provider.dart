@@ -34,7 +34,7 @@ class ReflectiveDependency {
   }
 }
 
-_identityPostProcess(obj) {
+dynamic _identityPostProcess(obj) {
   return obj;
 }
 

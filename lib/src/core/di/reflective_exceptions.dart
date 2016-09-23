@@ -63,7 +63,7 @@ class AbstractProviderError extends BaseException {
     this.message = this.constructResolvingMessage(this.keys);
   }
 
-  get context {
+  dynamic get context {
     return injectors.last.debugContext();
   }
 }
@@ -153,7 +153,7 @@ class InstantiationError extends WrappedException {
     return this.keys[0];
   }
 
-  get context {
+  dynamic get context {
     return this.injectors[this.injectors.length - 1].debugContext();
   }
 }

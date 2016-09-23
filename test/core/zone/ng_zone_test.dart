@@ -40,7 +40,7 @@ void logOnStable() {
   _zone.onStable.listen(_log.fn("onStable"));
 }
 
-runNgZoneNoLog(dynamic fn()) {
+dynamic runNgZoneNoLog(dynamic fn()) {
   var length = _log.logItems.length;
   try {
     return _zone.run(fn);
@@ -50,7 +50,7 @@ runNgZoneNoLog(dynamic fn()) {
   }
 }
 
-createZone(enableLongStackTrace) {
+NgZone createZone(enableLongStackTrace) {
   return new NgZone(enableLongStackTrace: enableLongStackTrace);
 }
 

@@ -48,7 +48,7 @@ class TestObj {
     this.a = a;
     this.b = b;
   }
-  identity(arg) {
+  dynamic identity(arg) {
     return arg;
   }
 }

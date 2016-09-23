@@ -19,7 +19,7 @@ class HammerGestureConfig {
   List<String> events = [];
   Map overrides = {};
 
-  buildHammer(Element element) {
+  js.JsObject buildHammer(Element element) {
     var mc = new js.JsObject(js.context['Hammer'], [element]);
     overrideDefault(mc, 'pinch', {'enable': true});
     overrideDefault(mc, 'rotate', {'enable': true});

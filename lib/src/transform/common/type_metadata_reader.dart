@@ -1355,7 +1355,7 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
   }).toList();
 }
 
-_getAnnotation(p, String attrName) =>
+Annotation _getAnnotation(p, String attrName) =>
     p.metadata.where((m) => m.name.toString() == attrName).first;
 
 bool _hasAnnotation(p, String attrName) =>

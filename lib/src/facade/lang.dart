@@ -79,7 +79,7 @@ bool assertionsEnabled() {
 
 // Can't be all uppercase as our transpiler would think it is a special directive...
 class Json {
-  static parse(String s) => convert.JSON.decode(s);
+  static dynamic parse(String s) => convert.JSON.decode(s);
   static String stringify(data) {
     var encoder = new convert.JsonEncoder.withIndent("  ");
     return encoder.convert(data);

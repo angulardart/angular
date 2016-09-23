@@ -71,7 +71,7 @@ class ExportedSymbol {
 
   ExportedSymbol(this.symbol, this.declaration, this.library);
 
-  addTo(List<String> names) {
+  void addTo(List<String> names) {
     var name = unwrapSymbol(symbol);
     if (declaration is MethodMirror) {
       names.add(name);
@@ -206,5 +206,5 @@ LibraryInfo extractSymbols(LibraryMirror lib, [String printPrefix = ""]) {
   return new LibraryInfo(exportedSymbols, used);
 }
 
-var _SYMBOL_NAME = new RegExp('"(.*)"');
-unwrapSymbol(sym) => _SYMBOL_NAME.firstMatch(sym.toString()).group(1);
+final _SYMBOL_NAME = new RegExp('"(.*)"');
+String unwrapSymbol(sym) => _SYMBOL_NAME.firstMatch(sym.toString()).group(1);

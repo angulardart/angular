@@ -59,12 +59,12 @@ void main() {
     expect(unparse(ast), expected);
   }
 
-  expectActionError(text, matcher) {
-    return expect(() => parseAction(text), matcher);
+  void expectActionError(text, matcher) {
+    expect(() => parseAction(text), matcher);
   }
 
-  expectBindingError(text, matcher) {
-    return expect(() => parseBinding(text), matcher);
+  void expectBindingError(text, matcher) {
+    expect(() => parseBinding(text), matcher);
   }
 
   group("parser", () {
@@ -323,11 +323,11 @@ void main() {
       });
     });
     group("parseTemplateBindings", () {
-      keys(List<dynamic> templateBindings) {
+      List keys(List<dynamic> templateBindings) {
         return templateBindings.map((binding) => binding.key).toList();
       }
 
-      keyValues(List<dynamic> templateBindings) {
+      List keyValues(List<dynamic> templateBindings) {
         return templateBindings.map((binding) {
           if (binding.keyIsVar) {
             return "let " +
@@ -342,7 +342,7 @@ void main() {
         }).toList();
       }
 
-      exprSources(List<dynamic> templateBindings) {
+      List exprSources(List<dynamic> templateBindings) {
         return templateBindings
             .map((binding) =>
                 binding.expression != null ? binding.expression.source : null)

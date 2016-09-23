@@ -22,7 +22,7 @@ void microTask(void fn()) {
 }
 
 abstract class TestabilityCallback {
-  execute(value);
+  dynamic execute(value);
 }
 
 class MockCallback extends Mock implements TestabilityCallback {}
@@ -30,12 +30,12 @@ class MockCallback extends Mock implements TestabilityCallback {}
 @Injectable()
 class TestZone extends NgZone {
   EventEmitter<dynamic> _onUnstableStream;
-  get onUnstable {
+  EventEmitter get onUnstable {
     return _onUnstableStream;
   }
 
   EventEmitter<dynamic> _onStableStream;
-  get onStable {
+  EventEmitter get onStable {
     return _onStableStream;
   }
 

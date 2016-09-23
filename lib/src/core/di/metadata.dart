@@ -87,7 +87,7 @@ class OptionalMetadata {
 class DependencyMetadata {
   const DependencyMetadata();
 
-  get token => null;
+  dynamic get token => null;
 }
 
 /**

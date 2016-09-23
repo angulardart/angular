@@ -106,7 +106,7 @@ final bool _supportsTemplateElement = () {
 }();
 
 @JS('document.implementation.createHTMLDocument')
-external ngCreateDocument(value);
+external dynamic ngCreateDocument(value);
 
 class BrowserDomAdapter
     extends GenericBrowserDomAdapter<Element, Node, EventTarget> {
@@ -121,7 +121,7 @@ class BrowserDomAdapter
     js_util.setProperty(element, name, value);
   }
 
-  getProperty(Element element, String name) =>
+  dynamic getProperty(Element element, String name) =>
       js_util.getProperty(element, name);
 
   // TODO(tbosch): move this into a separate environment class once we have it
@@ -256,7 +256,7 @@ class BrowserDomAdapter
     return new Comment(text);
   }
 
-  createTemplate(String html) {
+  dynamic createTemplate(String html) {
     var t = new TemplateElement();
     // We do not sanitize because templates are part of the application code
     // not user code.
@@ -278,7 +278,7 @@ class BrowserDomAdapter
     return new Text(text);
   }
 
-  createScriptTag(String attrName, String attrValue, [d = null]) {
+  dynamic createScriptTag(String attrName, String attrValue, [d = null]) {
     HtmlDocument doc = d ?? document;
     var el = doc.createElement('SCRIPT');
     el.setAttribute(attrName, attrValue);
@@ -419,11 +419,11 @@ class BrowserDomAdapter
         : 'Unidentified';
   }
 
-  getHistory() {
+  dynamic getHistory() {
     return window.history;
   }
 
-  getLocation() {
+  dynamic getLocation() {
     return window.location;
   }
 
@@ -451,7 +451,7 @@ class BrowserDomAdapter
     return element.dataset[name];
   }
 
-  getComputedStyle(elem) => elem.getComputedStyle();
+  dynamic getComputedStyle(elem) => elem.getComputedStyle();
 
   void setGlobalVar(String path, value) {
     var parts = path.split('.');
@@ -469,7 +469,7 @@ class BrowserDomAdapter
         (value is Function) ? allowInterop(value) : value);
   }
 
-  requestAnimationFrame(callback) {
+  num requestAnimationFrame(callback) {
     return window.requestAnimationFrame(callback as FrameRequestCallback);
   }
 
@@ -481,7 +481,7 @@ class BrowserDomAdapter
     return window.performance.now();
   }
 
-  parse(s) {
+  void parse(s) {
     throw 'not implemented';
   }
 }

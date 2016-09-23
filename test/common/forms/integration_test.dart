@@ -1242,7 +1242,7 @@ class MyInput implements ControlValueAccessor {
 
   void registerOnTouched(fn) {}
 
-  dispatchChangeEvent() {
+  void dispatchChangeEvent() {
     this.onInput.add(this.value.substring(1, this.value.length - 1));
   }
 }

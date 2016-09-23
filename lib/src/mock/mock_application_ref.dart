@@ -24,7 +24,7 @@ class MockApplicationRef extends ApplicationRef {
   }
 
   @override
-  /*=R*/ run/*<R>*/(/*=R*/ callback()) => null;
+  dynamic/*=R*/ run/*<R>*/(/*=R*/ callback()) => null;
 
   Future<dynamic> waitForAsyncInitializers() {
     return null;

@@ -118,11 +118,11 @@ class NgZoneImpl {
         zoneValues: {'isAngularZone': true});
   }
 
-  /*=R*/ runInnerGuarded/*<R>*/(/*=R*/ fn()) {
+  dynamic/*=R*/ runInnerGuarded/*<R>*/(/*=R*/ fn()) {
     return _innerZone.runGuarded(fn);
   }
 
-  /*=R*/ runInner/*<R>*/(/*=R*/ fn()) {
+  dynamic/*=R*/ runInner/*<R>*/(/*=R*/ fn()) {
     return _innerZone.run(fn);
   }
 
@@ -145,7 +145,7 @@ class NgZoneImpl {
    * }
    * ```
    */
-  /*=R*/ runOuter/*<R>*/(/*=R*/ fn()) {
+  dynamic/*=R*/ runOuter/*<R>*/(/*=R*/ fn()) {
     return _outerZone.run(fn);
   }
 

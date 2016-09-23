@@ -110,7 +110,7 @@ class SomeDirectiveWithViewChild {
 
 class SomeDirectiveWithoutMetadata {}
 
-main() {
+void main() {
   group('DirectiveResolver', () {
     DirectiveResolver resolver;
     setUp(() async {

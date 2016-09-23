@@ -142,7 +142,7 @@ class AttributeMetadata extends DependencyMetadata {
  * See [QueryList] for more details.
  */
 class QueryMetadata extends DependencyMetadata {
-  final dynamic /* Type | String */ _selector;
+  final dynamic /* Type | String */ selector;
   /**
    * whether we want to query only direct children (false) or all
    * children (true).
@@ -153,7 +153,7 @@ class QueryMetadata extends DependencyMetadata {
    * The DI token to read from an element that matches the selector.
    */
   final dynamic read;
-  const QueryMetadata(this._selector,
+  const QueryMetadata(this.selector,
       {bool descendants: false, bool first: false, dynamic read: null})
       : descendants = descendants,
         first = first,
@@ -165,9 +165,6 @@ class QueryMetadata extends DependencyMetadata {
   bool get isViewQuery {
     return false;
   }
-
-  /// what this is querying for.
-  get selector => _selector;
 
   /**
    * whether this is querying for a variable binding or a directive.

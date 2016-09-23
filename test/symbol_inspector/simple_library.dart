@@ -12,9 +12,9 @@ class A {
     return null;
   }
 
-  methodWithFunc(ClosureReturn closure) {}
+  void methodWithFunc(ClosureReturn closure) {}
   static StaticFieldType staticField;
-  static staticMethod() {}
+  static void staticMethod() {}
 }
 
 class ConsParamType {}
@@ -44,5 +44,5 @@ class Generic<K> {
 }
 
 abstract class SomeInterface {
-  someMethod();
+  void someMethod();
 }

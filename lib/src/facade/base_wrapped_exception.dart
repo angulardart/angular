@@ -6,8 +6,8 @@
 class BaseWrappedException extends Error {
   BaseWrappedException();
 
-  get originalException => null;
-  get originalStack => null;
+  dynamic get originalException => null;
+  StackTrace get originalStack => null;
 
   String get message => '';
   String get wrapperMessage => '';

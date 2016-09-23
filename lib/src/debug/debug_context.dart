@@ -29,7 +29,7 @@ class DebugContext<T> implements RenderDebugInfo {
 
   T get context => this._view.ctx;
 
-  get component {
+  dynamic get component {
     var staticNodeInfo = _staticNodeInfo;
     if (staticNodeInfo?.componentToken != null) {
       return injector.get(staticNodeInfo.componentToken);
@@ -37,7 +37,7 @@ class DebugContext<T> implements RenderDebugInfo {
     return null;
   }
 
-  get componentRenderElement {
+  dynamic get componentRenderElement {
     var componentView = this._view;
     while (componentView.declarationAppElement != null &&
         !identical(componentView.type, ViewType.COMPONENT)) {

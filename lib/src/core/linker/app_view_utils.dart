@@ -93,7 +93,7 @@ List ensureSlotCount(List projectableNodes, num expectedSlotCount) {
   return res;
 }
 
-interpolate0(dynamic p) {
+dynamic interpolate0(dynamic p) {
   if (p is SafeValue) return p;
   return p == null ? '' : (p is String ? p : p.toString());
 }
