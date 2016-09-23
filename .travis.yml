@@ -21,4 +21,8 @@ before_script:
 script: ./tool/travis.sh
 matrix:
   allow_failures:
+  # Need compile timeout in pgk/test to be longer than 5 minutes
   - env: TEST_PLATFORM=firefox
+  # content shell issues with latest dev - https://github.com/dart-lang/sdk/issues/27418
+  - env: TEST_PLATFORM=content-shell
+    dart: dev

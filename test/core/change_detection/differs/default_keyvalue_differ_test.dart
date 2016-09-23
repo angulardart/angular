@@ -117,7 +117,7 @@ void main() {
         differ.check(m);
         expect(differ.toString(),
             kvChangesAsString(map: ["foo"], previous: ["foo"]));
-      });
+      }, tags: ['known_ff_failure']);
     });
   });
 }

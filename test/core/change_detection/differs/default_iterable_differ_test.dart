@@ -189,7 +189,7 @@ void main() {
             differ.toString(),
             iterableChangesAsString(
                 collection: [double.NAN], previous: [double.NAN]));
-      });
+      }, tags: ['known_ff_failure']);
       test("should remove and add same item", () {
         var l = ["a", "b", "c"];
         differ.check(l);

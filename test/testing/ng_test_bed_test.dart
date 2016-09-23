@@ -1,3 +1,5 @@
+@TestOn('browser')
+@Tags(const ['needs_pub'])
 library angular2.test.testing.ng_test_bed_test;
 
 import 'dart:async';
@@ -20,7 +22,11 @@ void main() {
       ngTestBed = new NgTestBed<HelloWorldComponent>();
     });
 
-    tearDown(() => ngTestRoot.dispose());
+    tearDown(() {
+      if (ngTestBed != null) {
+        ngTestRoot.dispose();
+      }
+    });
 
     test('should load a component into the DOM', () async {
       expect(
@@ -45,7 +51,11 @@ void main() {
       ngTestBed = new NgTestBed<AsyncHelloWorldComponent>();
     });
 
-    tearDown(() => ngTestRoot.dispose());
+    tearDown(() {
+      if (ngTestRoot != null) {
+        ngTestRoot.dispose();
+      }
+    });
 
     test('should not process any async work by default', () async {
       expect(

@@ -1,3 +1,5 @@
+@TestOn('browser')
+@Tags(const ['needs_pub'])
 library angular2.test.testing.ng_test_bed_test;
 
 import 'package:angular2/angular2.dart';
