@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 import '../control_mocks.dart';
 
 void main() {
-  group('AsyncPipe Observable', () {
+  group('AsyncPipe AutoObservable', () {
     var emitter;
     var pipe;
     var ref;

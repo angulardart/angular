@@ -157,7 +157,7 @@ void main() {
             .createAsync(Dummy)
             .then((tc) {
           tc.debugElement.componentInstance.value =
-              new ObservableList.from([1, 2]);
+              new AutoObservableList.from([1, 2]);
 
           tc.detectChanges();
 
@@ -183,7 +183,7 @@ void main() {
 
           // we replaced the list => a check
           tc.debugElement.componentInstance.value =
-              new ObservableList.from([5, 6, 7]);
+              new AutoObservableList.from([5, 6, 7]);
 
           tc.detectChanges();
 
