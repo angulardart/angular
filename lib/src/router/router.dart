@@ -197,7 +197,7 @@ class Router {
    * If the given URL does not begin with `/`, the router will navigate relative to this component.
    */
   Future<dynamic> navigateByUrl(String url,
-      [bool _skipLocationChange = false]) {
+      [bool _skipLocationChange = false, bool _replaceState = false]) {
     return this._currentNavigation = this._currentNavigation.then((_) {
       this.lastNavigationAttempt = url;
       this._startNavigating();
@@ -206,7 +206,7 @@ class Router {
         if (instruction == null) {
           return false;
         }
-        return this._navigate(instruction, _skipLocationChange);
+        return this._navigate(instruction, _skipLocationChange, _replaceState);
       }));
     });
   }
@@ -216,14 +216,14 @@ class Router {
    * complete.
    */
   Future<dynamic> navigateByInstruction(Instruction instruction,
-      [bool _skipLocationChange = false]) {
+      [bool _skipLocationChange = false, bool _replaceState = false]) {
     if (instruction == null) {
       return _resolveToFalse;
     }
     return this._currentNavigation = this._currentNavigation.then((_) {
       this._startNavigating();
       return this._afterPromiseFinishNavigating(
-          this._navigate(instruction, _skipLocationChange));
+          this._navigate(instruction, _skipLocationChange, _replaceState));
     });
   }
 
@@ -245,7 +245,8 @@ class Router {
   }
 
   /** @internal */
-  Future<dynamic> _navigate(Instruction instruction, bool _skipLocationChange) {
+  Future<dynamic> _navigate(
+      Instruction instruction, bool _skipLocationChange, bool _replaceState) {
     return this
         ._settleInstruction(instruction)
         .then((_) => this._routerCanReuse(instruction))
@@ -256,7 +257,9 @@ class Router {
       }
       return this._routerCanDeactivate(instruction).then((bool result) {
         if (result) {
-          return this.commit(instruction, _skipLocationChange).then((_) {
+          return this
+              .commit(instruction, _skipLocationChange, _replaceState)
+              .then((_) {
             this._emitNavigationFinish(instruction.rootUrl);
             return true;
           });
@@ -338,7 +341,7 @@ class Router {
    * Updates this router and all descendant routers according to the given instruction
    */
   Future<dynamic> commit(Instruction instruction,
-      [bool _skipLocationChange = false]) {
+      [bool _skipLocationChange = false, bool _replaceState = false]) {
     this.currentInstruction = instruction;
     Future<dynamic> next = _resolveToTrue;
     if (_outlet != null && instruction.component != null) {
@@ -502,7 +505,7 @@ class RootRouter extends Router {
     this.navigateByUrl(location.path());
   }
   Future<dynamic> commit(Instruction instruction,
-      [bool _skipLocationChange = false]) {
+      [bool _skipLocationChange = false, bool _replaceState = false]) {
     var emitPath = instruction.path;
     var emitQuery = instruction.toUrlQuery();
     if (emitPath.length == 0 || emitPath[0] != "/") {
@@ -518,7 +521,11 @@ class RootRouter extends Router {
     var promise = super.commit(instruction);
     if (!_skipLocationChange) {
       promise = promise.then((_) {
-        this._location.go(emitPath, emitQuery);
+        if (_replaceState) {
+          this._location.replaceState(emitPath, emitQuery);
+        } else {
+          this._location.go(emitPath, emitQuery);
+        }
       });
     }
     return promise;
@@ -536,15 +543,17 @@ class ChildRouter extends Router {
     this.parent = parent;
   }
   Future<dynamic> navigateByUrl(String url,
-      [bool _skipLocationChange = false]) {
+      [bool _skipLocationChange = false, bool _replaceState = false]) {
     // Delegate navigation to the root router
-    return this.parent.navigateByUrl(url, _skipLocationChange);
+    return this.parent.navigateByUrl(url, _skipLocationChange, _replaceState);
   }
 
   Future<dynamic> navigateByInstruction(Instruction instruction,
-      [bool _skipLocationChange = false]) {
+      [bool _skipLocationChange = false, bool _replaceState = false]) {
     // Delegate navigation to the root router
-    return this.parent.navigateByInstruction(instruction, _skipLocationChange);
+    return this
+        .parent
+        .navigateByInstruction(instruction, _skipLocationChange, _replaceState);
   }
 }
 
