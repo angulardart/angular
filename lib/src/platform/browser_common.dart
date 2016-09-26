@@ -46,11 +46,10 @@ export "dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
 
 const BROWSER_PLATFORM_MARKER = const OpaqueToken("BrowserPlatformMarker");
-/**
- * A set of providers to initialize the Angular platform in a web browser.
- *
- * Used automatically by `bootstrap`, or can be passed to [platform].
- */
+
+/// A set of providers to initialize the Angular platform in a web browser.
+///
+/// Used automatically by `bootstrap`, or can be passed to [platform].
 const List<dynamic> BROWSER_PROVIDERS = const [
   const Provider(BROWSER_PLATFORM_MARKER, useValue: true),
   PLATFORM_COMMON_PROVIDERS,

@@ -8,47 +8,46 @@ const BOOLEAN = "boolean";
 const NUMBER = "number";
 const STRING = "string";
 const OBJECT = "object";
-/**
- * This array represents the DOM schema. It encodes inheritance, properties, and events.
- *
- * ## Overview
- *
- * Each line represents one kind of element. The `element_inheritance` and properties are joined
- * using `element_inheritance|preperties` syntax.
- *
- * ## Element Inheritance
- *
- * The `element_inheritance` can be further subdivided as `element1,element2,...^parentElement`.
- * Here the individual elements are separated by `,` (commas). Every element in the list
- * has identical properties.
- *
- * An `element` may inherit additional properties from `parentElement` If no `^parentElement` is
- * specified then `""` (blank) element is assumed.
- *
- * NOTE: The blank element inherits from root `*` element, the super element of all elements.
- *
- * NOTE an element prefix such as `@svg:` has no special meaning to the schema.
- *
- * ## Properties
- *
- * Each element has a set of properties separated by `,` (commas). Each property can be prefixed
- * by a special character designating its type:
- *
- * - (no prefix): property is a string.
- * - `*`: property represents an event.
- * - `!`: property is a boolean.
- * - `#`: property is a number.
- * - `%`: property is an object.
- *
- * ## Query
- *
- * The class creates an internal representation of html elements and attributes
- * which allows to easily answer the query of if a given property exist on a
- * given element.
- *
- * NOTE: We don't yet support querying for types or events.
- * NOTE: This schema is auto extracted from `schema_extractor.ts` located in the test folder.
- */
+
+/// This array represents the DOM schema. It encodes inheritance, properties, and events.
+///
+/// ## Overview
+///
+/// Each line represents one kind of element. The `element_inheritance` and properties are joined
+/// using `element_inheritance|preperties` syntax.
+///
+/// ## Element Inheritance
+///
+/// The `element_inheritance` can be further subdivided as `element1,element2,...^parentElement`.
+/// Here the individual elements are separated by `,` (commas). Every element in the list
+/// has identical properties.
+///
+/// An `element` may inherit additional properties from `parentElement` If no `^parentElement` is
+/// specified then `""` (blank) element is assumed.
+///
+/// NOTE: The blank element inherits from root `*` element, the super element of all elements.
+///
+/// NOTE an element prefix such as `@svg:` has no special meaning to the schema.
+///
+/// ## Properties
+///
+/// Each element has a set of properties separated by `,` (commas). Each property can be prefixed
+/// by a special character designating its type:
+///
+/// - (no prefix): property is a string.
+/// - `*`: property represents an event.
+/// - `!`: property is a boolean.
+/// - `#`: property is a number.
+/// - `%`: property is an object.
+///
+/// ## Query
+///
+/// The class creates an internal representation of html elements and attributes
+/// which allows to easily answer the query of if a given property exist on a
+/// given element.
+///
+/// NOTE: We don't yet support querying for types or events.
+/// NOTE: This schema is auto extracted from `schema_extractor.ts` located in the test folder.
 const List<String> SCHEMA = const [
   "*|%classList,className,id,innerHTML,*beforecopy,*beforecut,*beforepaste,*copy,*cut,*paste,*search,*selectstart,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerHTML,#scrollLeft,#scrollTop",
   "^*|accessKey,contentEditable,dir,!draggable,!hidden,innerText,lang,*abort,*autocomplete,*autocompleteerror,*beforecopy,*beforecut,*beforepaste,*blur,*cancel,*canplay,*canplaythrough,*change,*click,*close,*contextmenu,*copy,*cuechange,*cut,*dblclick,*drag,*dragend,*dragenter,*dragleave,*dragover,*dragstart,*drop,*durationchange,*emptied,*ended,*error,*focus,*input,*invalid,*keydown,*keypress,*keyup,*load,*loadeddata,*loadedmetadata,*loadstart,*message,*mousedown,*mouseenter,*mouseleave,*mousemove,*mouseout,*mouseover,*mouseup,*mousewheel,*mozfullscreenchange,*mozfullscreenerror,*mozpointerlockchange,*mozpointerlockerror,*paste,*pause,*play,*playing,*progress,*ratechange,*reset,*resize,*scroll,*search,*seeked,*seeking,*select,*selectstart,*show,*stalled,*submit,*suspend,*timeupdate,*toggle,*volumechange,*waiting,*webglcontextcreationerror,*webglcontextlost,*webglcontextrestored,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerText,!spellcheck,%style,#tabIndex,title,!translate",

@@ -54,17 +54,15 @@ TestInjector getTestInjector() {
   return _testInjector;
 }
 
-/**
- * Set the providers that the test injector should use. These should be providers
- * common to every test in the suite.
- *
- * This may only be called once, to set up the common providers for the current test
- * suite on teh current platform. If you absolutely need to change the providers,
- * first use `resetBaseTestProviders`.
- *
- * Test Providers for individual platforms are available from
- * 'angular2/platform/testing/<platform_name>'.
- */
+/// Set the providers that the test injector should use. These should be providers
+/// common to every test in the suite.
+///
+/// This may only be called once, to set up the common providers for the current test
+/// suite on teh current platform. If you absolutely need to change the providers,
+/// first use `resetBaseTestProviders`.
+///
+/// Test Providers for individual platforms are available from
+/// 'angular2/platform/testing/<platform_name>'.
 void setBaseTestProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > platformProviders,
     List<
@@ -84,9 +82,7 @@ void setBaseTestProviders(
   testInjector.reset();
 }
 
-/**
- * Reset the providers for the test injector.
- */
+/// Reset the providers for the test injector.
 void resetBaseTestProviders() {
   var testInjector = getTestInjector();
   testInjector.platformProviders = [];
@@ -94,32 +90,26 @@ void resetBaseTestProviders() {
   testInjector.reset();
 }
 
-/**
- * Allows injecting dependencies in `beforeEach()` and `it()`.
- *
- * Example:
- *
- * ```
- * beforeEach(inject([Dependency, AClass], (dep, object) => {
- *   // some code that uses `dep` and `object`
- *   // ...
- * }));
- *
- * it('...', inject([AClass], (object) => {
- *   object.doSomething();
- *   expect(...);
- * })
- * ```
- *
- * Notes:
- * - inject is currently a function because of some Traceur limitation the syntax should
- * eventually
- *   becomes `it('...', @Inject (object: AClass, async: AsyncTestCompleter) => { ... });`
- *
- * 
- * 
- * 
- */
+/// Allows injecting dependencies in `beforeEach()` and `it()`.
+///
+/// Example:
+///
+/// ```
+/// beforeEach(inject([Dependency, AClass], (dep, object) => {
+///   // some code that uses `dep` and `object`
+///   // ...
+/// }));
+///
+/// it('...', inject([AClass], (object) => {
+///   object.doSomething();
+///   expect(...);
+/// })
+/// ```
+///
+/// Notes:
+/// - inject is currently a function because of some Traceur limitation the syntax should
+/// eventually
+///   becomes `it('...', @Inject (object: AClass, async: AsyncTestCompleter) => { ... });`
 FunctionWithParamTokens inject(List<dynamic> tokens, Function fn) {
   return new FunctionWithParamTokens(tokens, fn, false);
 }
@@ -141,45 +131,37 @@ InjectSetupWrapper withProviders(dynamic providers()) {
   return new InjectSetupWrapper(providers);
 }
 
-/**
- * @Deprecated {use async(inject())}
- *
- * Allows injecting dependencies in `beforeEach()` and `it()`. The test must return
- * a promise which will resolve when all asynchronous activity is complete.
- *
- * Example:
- *
- * ```
- * it('...', injectAsync([AClass], (object) => {
- *   return object.doSomething().then(() => {
- *     expect(...);
- *   });
- * })
- * ```
- *
- * 
- * 
- * 
- */
+/// @Deprecated {use async(inject())}
+///
+/// Allows injecting dependencies in `beforeEach()` and `it()`. The test must return
+/// a promise which will resolve when all asynchronous activity is complete.
+///
+/// Example:
+///
+/// ```
+/// it('...', injectAsync([AClass], (object) => {
+///   return object.doSomething().then(() => {
+///     expect(...);
+///   });
+/// })
+/// ```
 FunctionWithParamTokens injectAsync(List<dynamic> tokens, Function fn) {
   return new FunctionWithParamTokens(tokens, fn, true);
 }
 
-/**
- * Wraps a test function in an asynchronous test zone. The test will automatically
- * complete when all asynchronous calls within this zone are done. Can be used
- * to wrap an [inject] call.
- *
- * Example:
- *
- * ```
- * it('...', async(inject([AClass], (object) => {
- *   object.doSomething.then(() => {
- *     expect(...);
- *   })
- * });
- * ```
- */
+/// Wraps a test function in an asynchronous test zone. The test will automatically
+/// complete when all asynchronous calls within this zone are done. Can be used
+/// to wrap an [inject] call.
+///
+/// Example:
+///
+/// ```
+/// it('...', async(inject([AClass], (object) => {
+///   object.doSomething.then(() => {
+///     expect(...);
+///   })
+/// });
+/// ```
 FunctionWithParamTokens async(
     dynamic /* Function | FunctionWithParamTokens */ fn) {
   if (fn is FunctionWithParamTokens) {

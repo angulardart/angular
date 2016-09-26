@@ -17,10 +17,8 @@ bool isStyleUrlResolvable(String url) {
       schemeMatch[1] == "asset";
 }
 
-/**
- * Rewrites stylesheets by resolving and removing the @import urls that
- * are either relative or don't have a `package:` scheme
- */
+/// Rewrites stylesheets by resolving and removing the @import urls that
+/// are either relative or don't have a `package:` scheme
 StyleWithImports extractStyleUrls(
     UrlResolver resolver, String baseUrl, String cssText) {
   var foundUrls = <String>[];

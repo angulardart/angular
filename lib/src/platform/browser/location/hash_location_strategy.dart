@@ -6,46 +6,44 @@ import "location.dart" show Location;
 import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
 import "platform_location.dart" show PlatformLocation;
 
-/**
- * `HashLocationStrategy` is a [LocationStrategy] used to configure the
- * [PlatformLocation] service to represent its state in the
- * [hash fragment](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax)
- * of the browser's URL.
- *
- * For instance, if you call `location.go('/foo')`, the browser's URL will become
- * `example.com#/foo`.
- *
- * ### Example
- *
- * ```
- * import {Component, provide} from 'angular2/core';
- * import {
- *   Location,
- *   LocationStrategy,
- *   HashLocationStrategy
- * } from 'angular2/platform/common';
- * import {
- *   ROUTER_DIRECTIVES,
- *   ROUTER_PROVIDERS,
- *   RouteConfig
- * } from 'angular2/router';
- *
- * @Component({directives: [ROUTER_DIRECTIVES]})
- * @RouteConfig([
- *  {...},
- * ])
- * class AppCmp {
- *   constructor(location: Location) {
- *     location.go('/foo');
- *   }
- * }
- *
- * bootstrap(AppCmp, [
- *   ROUTER_PROVIDERS,
- *   provide(LocationStrategy, {useClass: HashLocationStrategy})
- * ]);
- * ```
- */
+/// `HashLocationStrategy` is a [LocationStrategy] used to configure the
+/// [PlatformLocation] service to represent its state in the
+/// [hash fragment](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax)
+/// of the browser's URL.
+///
+/// For instance, if you call `location.go('/foo')`, the browser's URL will become
+/// `example.com#/foo`.
+///
+/// ### Example
+///
+/// ```
+/// import {Component, provide} from 'angular2/core';
+/// import {
+///   Location,
+///   LocationStrategy,
+///   HashLocationStrategy
+/// } from 'angular2/platform/common';
+/// import {
+///   ROUTER_DIRECTIVES,
+///   ROUTER_PROVIDERS,
+///   RouteConfig
+/// } from 'angular2/router';
+///
+/// @Component({directives: [ROUTER_DIRECTIVES]})
+/// @RouteConfig([
+///  {...},
+/// ])
+/// class AppCmp {
+///   constructor(location: Location) {
+///     location.go('/foo');
+///   }
+/// }
+///
+/// bootstrap(AppCmp, [
+///   ROUTER_PROVIDERS,
+///   provide(LocationStrategy, {useClass: HashLocationStrategy})
+/// ]);
+/// ```
 @Injectable()
 class HashLocationStrategy extends LocationStrategy {
   PlatformLocation _platformLocation;

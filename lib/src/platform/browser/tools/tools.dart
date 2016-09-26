@@ -5,17 +5,15 @@ import 'package:angular2/src/core/linker/component_factory.dart'
 
 import 'common_tools.dart' show AngularTools;
 
-/**
- * Enabled Angular 2 debug tools that are accessible via your browser's
- * developer console.
- *
- * Usage:
- *
- * 1. Open developer console (e.g. in Chrome Ctrl + Shift + j)
- * 1. Type `ng.` (usually the console will show auto-complete suggestion)
- * 1. Try the change detection profiler `ng.profiler.timeChangeDetection()`
- *    then hit Enter.
- */
+/// Enabled Angular 2 debug tools that are accessible via your browser's
+/// developer console.
+///
+/// Usage:
+///
+/// 1. Open developer console (e.g. in Chrome Ctrl + Shift + j)
+/// 2. Type `ng.` (usually the console will show auto-complete suggestion)
+/// 3. Try the change detection profiler `ng.profiler.timeChangeDetection()`
+///    then hit Enter.
 void enableDebugTools(ComponentRef ref) {
   final tools = new AngularTools(ref);
   context['ng'] = new JsObject.jsify({
@@ -27,9 +25,7 @@ void enableDebugTools(ComponentRef ref) {
   });
 }
 
-/**
- * Disables Angular 2 tools.
- */
+/// Disables Angular 2 tools.
 void disableDebugTools() {
   context.deleteProperty('ng');
 }

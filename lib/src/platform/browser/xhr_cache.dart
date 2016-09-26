@@ -6,13 +6,11 @@ import 'package:angular2/di.dart';
 import 'package:angular2/src/compiler/xhr.dart';
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-/**
- * An implementation of XHR that uses a template cache to avoid doing an actual
- * XHR.
- *
- * The template cache needs to be built and loaded into window.$templateCache
- * via a separate mechanism.
- */
+/// An implementation of XHR that uses a template cache to avoid doing an actual
+/// XHR.
+///
+/// The template cache needs to be built and loaded into window.$templateCache
+/// via a separate mechanism.
 @Injectable()
 class CachedXHR extends XHR {
   js.JsObject _cache;
