@@ -40,47 +40,42 @@ var _resolveToNull = new Future.value();
 
 // export type LinkItemArray = Array<LinkItem>;
 
-/**
- * Token used to bind the component with the top-level [RouteConfig]s for the
- * application.
- *
- * ### Example ([live demo](http://plnkr.co/edit/iRUP8B5OUbxCWQ3AcIDm))
- *
- * ```
- * import {Component} from 'angular2/core';
- * import {
- *   ROUTER_DIRECTIVES,
- *   ROUTER_PROVIDERS,
- *   RouteConfig
- * } from 'angular2/router';
- *
- * @Component({directives: [ROUTER_DIRECTIVES]})
- * @RouteConfig([
- *  {...},
- * ])
- * class AppCmp {
- *   // ...
- * }
- *
- * bootstrap(AppCmp, [ROUTER_PROVIDERS]);
- * ```
- */
+/// Token used to bind the component with the top-level [RouteConfig]s for the
+/// application.
+///
+/// ### Example ([live demo](http://plnkr.co/edit/iRUP8B5OUbxCWQ3AcIDm))
+///
+/// ```
+/// import {Component} from 'angular2/core';
+/// import {
+///   ROUTER_DIRECTIVES,
+///   ROUTER_PROVIDERS,
+///   RouteConfig
+/// } from 'angular2/router';
+///
+/// @Component({directives: [ROUTER_DIRECTIVES]})
+/// @RouteConfig([
+///  {...},
+/// ])
+/// class AppCmp {
+///   // ...
+/// }
+///
+/// bootstrap(AppCmp, [ROUTER_PROVIDERS]);
+/// ```
 const OpaqueToken ROUTER_PRIMARY_COMPONENT =
     const OpaqueToken("RouterPrimaryComponent");
 
-/**
- * The RouteRegistry holds route configurations for each component in an Angular app.
- * It is responsible for creating Instructions from URLs, and generating URLs based on route and
- * parameters.
- */
+/// The RouteRegistry holds route configurations for each component in an Angular app.
+/// It is responsible for creating Instructions from URLs, and generating URLs based on route and
+/// parameters.
 @Injectable()
 class RouteRegistry {
   dynamic /* Type | ComponentFactory */ _rootComponent;
   var _rules = new Map<dynamic, RuleSet>();
   RouteRegistry(@Inject(ROUTER_PRIMARY_COMPONENT) this._rootComponent);
-  /**
-   * Given a component and a configuration object, add the route to this registry
-   */
+
+  /// Given a component and a configuration object, add the route to this registry
   void config(dynamic parentComponent, RouteDefinition config) {
     config = normalizeRouteConfig(config, this);
     // this is here because Dart type guard reasons
@@ -104,9 +99,7 @@ class RouteRegistry {
     }
   }
 
-  /**
-   * Reads the annotations of a component and configures the registry based on them
-   */
+  /// Reads the annotations of a component and configures the registry based on them
   void configFromComponent(dynamic component) {
     if (component is! Type && !(component is ComponentFactory)) {
       return;
@@ -129,19 +122,15 @@ class RouteRegistry {
     }
   }
 
-  /**
-   * Given a URL and a parent component, return the most specific instruction for navigating
-   * the application into the state specified by the url
-   */
+  /// Given a URL and a parent component, return the most specific instruction for navigating
+  /// the application into the state specified by the url
   Future<Instruction> recognize(
       String url, List<Instruction> ancestorInstructions) {
     var parsedUrl = parser.parse(url);
     return this._recognize(parsedUrl, []);
   }
 
-  /**
-   * Recognizes all parent-child routes, but creates unresolved auxiliary routes
-   */
+  /// Recognizes all parent-child routes, but creates unresolved auxiliary routes
   Future<Instruction> _recognize(
       Url parsedUrl, List<Instruction> ancestorInstructions,
       [_aux = false]) {
@@ -221,13 +210,11 @@ class RouteRegistry {
     return unresolvedAuxInstructions;
   }
 
-  /**
-   * Given a normalized list with component names and params like: `['user', {id: 3 }]`
-   * generates a url with a leading slash relative to the provided `parentComponent`.
-   *
-   * If the optional param `_aux` is `true`, then we generate starting at an auxiliary
-   * route boundary.
-   */
+  /// Given a normalized list with component names and params like: `['user', {id: 3 }]`
+  /// generates a url with a leading slash relative to the provided `parentComponent`.
+  ///
+  /// If the optional param `_aux` is `true`, then we generate starting at an auxiliary
+  /// route boundary.
   Instruction generate(
       List<dynamic> linkParams, List<Instruction> ancestorInstructions,
       [_aux = false]) {

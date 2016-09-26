@@ -31,15 +31,12 @@ export "differs/keyvalue_differs.dart"
     show KeyValueDiffers, KeyValueDiffer, KeyValueDifferFactory;
 export "pipe_transform.dart" show PipeTransform;
 
-/**
- * Structural diffing for `Object`s and `Map`s.
- */
+/// Structural diffing for `Object`s and `Map`s.
 const List<KeyValueDifferFactory> keyValDiff = const [
   const DefaultKeyValueDifferFactory()
 ];
-/**
- * Structural diffing for `Iterable` types such as `Array`s.
- */
+
+/// Structural diffing for `Iterable` types such as `Array`s.
 const List<IterableDifferFactory> iterableDiff = const [
   const DefaultIterableDifferFactory()
 ];

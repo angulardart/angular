@@ -6,9 +6,7 @@ import "package:angular2/src/router/route_registry.dart"
     show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
 import "package:angular2/src/router/router.dart" show Router, RootRouter;
 
-/**
- * The Platform agnostic ROUTER PROVIDERS
- */
+/// The Platform agnostic ROUTER PROVIDERS
 const List<dynamic> ROUTER_PROVIDERS_COMMON = const [
   RouteRegistry,
   const Provider(LocationStrategy, useClass: PathLocationStrategy),

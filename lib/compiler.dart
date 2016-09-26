@@ -1,8 +1,4 @@
-/**
- * 
- * 
- * Starting point to import all compiler APIs.
- */
+/// Starting point to import all compiler APIs.
 library angular2.compiler;
 
 export "package:angular2/src/compiler/compiler.dart"
