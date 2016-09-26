@@ -1,12 +1,12 @@
 @TestOn('browser')
 library angular2.test.directives.observable_list_iterable_diff_test;
 
-import 'package:angular2/testing_internal.dart';
-import 'package:observe/observe.dart' show AutoObservableList;
-import 'package:angular2/core.dart' show ChangeDetectorRef;
 import 'package:angular2/common.dart' show ObservableListDiffFactory;
-import 'package:test/test.dart';
+import 'package:angular2/core.dart' show ChangeDetectorRef;
+import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
+import 'package:observable/observable.dart' show ObservableList;
+import 'package:test/test.dart';
 
 class MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}
 
@@ -20,7 +20,7 @@ void main() {
     });
 
     test("supports AutoObservableList", () {
-      expect(factory.supports(new AutoObservableList()), isTrue);
+      expect(factory.supports(new ObservableList()), isTrue);
     });
 
     test("doesn't support non observables", () {
@@ -29,14 +29,14 @@ void main() {
 
     test("should return itself when called the first time", () {
       final d = factory.create(changeDetectorRef);
-      final c = new AutoObservableList.from([1, 2]);
+      final c = new ObservableList.from([1, 2]);
       expect(d.diff(c), d);
     });
 
     test("should return itself when no changes between the calls", () {
       final d = factory.create(changeDetectorRef);
 
-      final c = new AutoObservableList.from([1, 2]);
+      final c = new ObservableList.from([1, 2]);
 
       d.diff(c);
 
@@ -47,7 +47,7 @@ void main() {
         fakeAsync(() {
       final d = factory.create(changeDetectorRef);
 
-      final c = new AutoObservableList.from([1, 2]);
+      final c = new ObservableList.from([1, 2]);
 
       d.diff(c);
 
@@ -65,7 +65,7 @@ void main() {
         fakeAsync(() {
       final d = factory.create(changeDetectorRef);
 
-      final c = new AutoObservableList.from([1, 2]);
+      final c = new ObservableList.from([1, 2]);
       d.diff(c);
 
       c.add(3);
@@ -78,8 +78,8 @@ void main() {
     test("should return the wrapped value after changing a collection", () {
       final d = factory.create(changeDetectorRef);
 
-      final c1 = new AutoObservableList.from([1, 2]);
-      final c2 = new AutoObservableList.from([3, 4]);
+      final c1 = new ObservableList.from([1, 2]);
+      final c2 = new ObservableList.from([3, 4]);
 
       expect(d.diff(c1), d);
       expect(d.diff(c2), d);
@@ -90,10 +90,10 @@ void main() {
         ' a collection', () {
       final d = factory.create(changeDetectorRef);
 
-      final c1 = new AutoObservableList.from([1, 2]);
+      final c1 = new ObservableList.from([1, 2]);
       expect(d.diff(c1), d);
 
-      final c2 = new AutoObservableList.from([3, 4]);
+      final c2 = new ObservableList.from([3, 4]);
       expect(d.diff(c2), d);
 
       // pushing into the first collection has no effect, and we do not see the change

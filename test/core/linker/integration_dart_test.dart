@@ -3,11 +3,11 @@ library angular2.test.di.integration_dart_test;
 
 import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart';
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:angular2/src/debug/debug_node.dart';
 import 'package:angular2/testing_internal.dart';
-import 'package:observe/observe.dart';
-import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
-import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:observable/observable.dart';
 import 'package:test/test.dart';
 
 class MockException implements Error {
@@ -157,7 +157,7 @@ void main() {
             .createAsync(Dummy)
             .then((tc) {
           tc.debugElement.componentInstance.value =
-              new AutoObservableList.from([1, 2]);
+              new ObservableList.from([1, 2]);
 
           tc.detectChanges();
 
@@ -183,7 +183,7 @@ void main() {
 
           // we replaced the list => a check
           tc.debugElement.componentInstance.value =
-              new AutoObservableList.from([5, 6, 7]);
+              new ObservableList.from([5, 6, 7]);
 
           tc.detectChanges();
 

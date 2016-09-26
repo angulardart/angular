@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:angular2/core.dart';
 import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
-import 'package:observe/observe.dart' show AutoObservableList;
+import 'package:observable/observable.dart' show ObservableList;
 
 class ObservableListDiff extends DefaultIterableDiffer {
   ChangeDetectorRef _ref;
   ObservableListDiff(this._ref);
 
   bool _updated = true;
-  AutoObservableList _collection;
+  ObservableList _collection;
   StreamSubscription _subscription;
 
   void onDestroy() {
@@ -21,8 +21,8 @@ class ObservableListDiff extends DefaultIterableDiffer {
   }
 
   DefaultIterableDiffer diff(Iterable iterable) {
-    assert(iterable is AutoObservableList);
-    AutoObservableList collection = iterable;
+    assert(iterable is ObservableList);
+    ObservableList collection = iterable;
 
     // A new collection instance is passed in.
     // - We need to set up a listener.
@@ -54,7 +54,7 @@ class ObservableListDiff extends DefaultIterableDiffer {
 
 class ObservableListDiffFactory implements IterableDifferFactory {
   const ObservableListDiffFactory();
-  bool supports(obj) => obj is AutoObservableList;
+  bool supports(obj) => obj is ObservableList;
   IterableDiffer create(ChangeDetectorRef cdRef, [Function trackByFn]) {
     return new ObservableListDiff(cdRef);
   }
