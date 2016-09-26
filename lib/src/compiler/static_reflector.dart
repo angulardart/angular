@@ -17,38 +17,27 @@ import "package:angular2/src/core/metadata.dart"
         QueryMetadata;
 import "package:angular2/src/facade/lang.dart" show isPrimitive;
 
-/**
- * The host of the static resolver is expected to be able to provide module metadata in the form of
- * ModuleMetadata. Angular 2 CLI will produce this metadata for a module whenever a .d.ts files is
- * produced and the module has exported variables or classes with decorators. Module metadata can
- * also be produced directly from TypeScript sources by using MetadataCollector in tools/metadata.
- */
+/// The host of the static resolver is expected to be able to provide module metadata in the form of
+/// ModuleMetadata. Angular 2 CLI will produce this metadata for a module whenever a .d.ts files is
+/// produced and the module has exported variables or classes with decorators. Module metadata can
+/// also be produced directly from TypeScript sources by using MetadataCollector in tools/metadata.
 abstract class StaticReflectorHost {
-  /**
-   *  Return a ModuleMetadata for the give module.
-   *
-   *
-   *                 module import of an import statement.
-   *
-   */
+  /// Return a ModuleMetadata for the give module.
+  /// module import of an import statement.
   Map<String, dynamic> getMetadataFor(String moduleId);
 }
 
-/**
- * A token representing the a reference to a static type.
- *
- * This token is unique for a moduleId and name and can be used as a hash table key.
- */
+/// A token representing the a reference to a static type.
+///
+/// This token is unique for a moduleId and name and can be used as a hash table key.
 class StaticType {
   String moduleId;
   String name;
   StaticType(this.moduleId, this.name);
 }
 
-/**
- * A static reflector implements enough of the Reflector API that is necessary to compile
- * templates statically.
- */
+/// A static reflector implements enough of the Reflector API that is necessary to compile
+/// templates statically.
 class StaticReflector {
   StaticReflectorHost host;
   var typeCache = new Map<String, StaticType>();
@@ -59,13 +48,9 @@ class StaticReflector {
   StaticReflector(this.host) {
     this.initializeConversionMap();
   }
-  /**
-   * getStatictype produces a Type whose metadata is known but whose implementation is not loaded.
-   * All types passed to the StaticResolver should be pseudo-types returned by this method.
-   *
-   *
-   *
-   */
+
+  /// getStatictype produces a Type whose metadata is known but whose implementation is not loaded.
+  /// All types passed to the StaticResolver should be pseudo-types returned by this method.
   StaticType getStaticType(String moduleId, String name) {
     var key = '''"${ moduleId}".${ name}''';
     var result = this.typeCache[key];

@@ -2,9 +2,7 @@ import 'dart:collection';
 
 import 'package:angular2/src/facade/async.dart';
 
-/**
- * See query_list.ts
- */
+/// See query_list.ts
 class QueryList<T> extends Object with IterableMixin<T> {
   bool _dirty = true;
   List<T> _results = [];

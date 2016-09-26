@@ -275,17 +275,7 @@ class _Scanner {
     return newOperatorToken(start, str);
   }
 
-  /**
-   * Tokenize a 2/3 char long operator
-   *
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   */
+  /// Tokenize a 2/3 char long operator
   Token scanComplexOperator(num start, String one, num twoCode, String two,
       [num threeCode, String three]) {
     this.advance();

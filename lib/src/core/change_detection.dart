@@ -1,8 +1,4 @@
-/**
- * 
- * 
- * Change detection enables data binding in Angular.
- */
+/// Change detection enables data binding in Angular.
 
 export "change_detection/change_detection.dart"
     show

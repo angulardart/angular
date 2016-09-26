@@ -8,9 +8,7 @@ import "package:angular2/src/core/reflection/reflector_reader.dart"
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show stringify;
 
-/**
- * Resolves types to [ViewMetadata].
- */
+/// Resolves types to [ViewMetadata].
 @Injectable()
 class ViewResolver {
   ReflectorReader _reflector;

@@ -1,9 +1,7 @@
-/**
- * Tracing for Dart applications.
- *
- * The tracing API hooks up to either [WTF](http://google.github.io/tracing-framework/) or
- * [Dart Observatory](https://www.dartlang.org/tools/observatory/).
- */
+/// Tracing for Dart applications.
+///
+/// The tracing API hooks up to either [WTF](http://google.github.io/tracing-framework/) or
+/// [Dart Observatory](https://www.dartlang.org/tools/observatory/).
 
 typedef dynamic WtfScopeFn([arg0, arg1]);
 

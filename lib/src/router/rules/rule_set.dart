@@ -15,11 +15,9 @@ import "route_paths/route_path.dart" show RoutePath;
 import "rules.dart"
     show AbstractRule, RouteRule, RedirectRule, RouteMatch, PathMatch;
 
-/**
- * A `RuleSet` is responsible for recognizing routes for a particular component.
- * It is consumed by `RouteRegistry`, which knows how to recognize an entire hierarchy of
- * components.
- */
+/// A `RuleSet` is responsible for recognizing routes for a particular component.
+/// It is consumed by `RouteRegistry`, which knows how to recognize an entire hierarchy of
+/// components.
 class RuleSet {
   var rulesByName = new Map<String, RouteRule>();
   // map from name to rule
@@ -30,10 +28,8 @@ class RuleSet {
   List<AbstractRule> rules = [];
   // the rule to use automatically when recognizing or generating from this rule set
   RouteRule defaultRule;
-  /**
-   * Configure additional rules in this rule set from a route definition
-   * 
-   */
+
+  /// Configure additional rules in this rule set from a route definition
   bool config(RouteDefinition config) {
     var handler;
     if (config.name != null && config.name[0].toUpperCase() != config.name[0]) {
@@ -86,9 +82,7 @@ class RuleSet {
     return newRule.terminal;
   }
 
-  /**
-   * Given a URL, returns a list of `RouteMatch`es, which are partial recognitions for some route.
-   */
+  /// Given a URL, returns a list of `RouteMatch`es, which are partial recognitions for some route.
   List<Future<RouteMatch>> recognize(Url urlParse) {
     var solutions = <Future<RouteMatch>>[];
     this.rules.forEach((AbstractRule routeRecognizer) {

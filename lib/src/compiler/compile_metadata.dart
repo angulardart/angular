@@ -368,9 +368,7 @@ class CompileTokenMap<VALUE> {
   }
 }
 
-/**
- * Metadata regarding compilation of a type.
- */
+/// Metadata regarding compilation of a type.
 class CompileTypeMetadata
     implements CompileIdentifierMetadata<Type>, CompileMetadataWithType {
   Type runtime;
