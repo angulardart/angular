@@ -2,6 +2,8 @@
 
 ### API changes
 
+ * **POTENTIALLY BREAKING** Observable features new use the new `observable`
+ package, instead of `observe`.
  * Removed `Renderer.createViewRoot`.
 
 ### Bug fixes and other changes
