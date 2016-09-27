@@ -48,9 +48,7 @@ class RedirectRule implements AbstractRule {
         "you cannot set the path of a RedirectRule directly");
   }
 
-  /**
-   * Returns `null` or a `ParsedUrl` representing the new path to match
-   */
+  /// Returns `null` or a `ParsedUrl` representing the new path to match
   Future<RouteMatch> recognize(Url beginningSegment) {
     RouteMatch match;
     if (_pathRecognizer.matchUrl(beginningSegment) != null) {

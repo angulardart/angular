@@ -178,14 +178,12 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
         !identical(this._identityChangesHead, null);
   }
 
-  /**
-   * Reset the state of the change objects to show no changes. This means set previousKey to
-   * currentKey, and clear all of the queues (additions, moves, removals).
-   * Set the previousIndexes of moved and added items to their currentIndexes
-   * Reset the list of additions, moves and removals
-   *
-   * @internal
-   */
+  /// Reset the state of the change objects to show no changes. This means set previousKey to
+  /// currentKey, and clear all of the queues (additions, moves, removals).
+  /// Set the previousIndexes of moved and added items to their currentIndexes
+  /// Reset the list of additions, moves and removals
+  ///
+  /// @internal
   void _reset() {
     if (this.isDirty) {
       CollectionChangeRecord record;
@@ -213,16 +211,14 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     }
   }
 
-  /**
-   * This is the core function which handles differences between collections.
-   *
-   * - `record` is the record which we saw at this position last time. If null then it is a new
-   *   item.
-   * - `item` is the current item in the collection
-   * - `index` is the position of the item in the collection
-   *
-   * @internal
-   */
+  /// This is the core function which handles differences between collections.
+  ///
+  /// - `record` is the record which we saw at this position last time. If null then it is a new
+  ///   item.
+  /// - `item` is the current item in the collection
+  /// - `index` is the position of the item in the collection
+  ///
+  /// @internal
   CollectionChangeRecord _mismatch(CollectionChangeRecord record, dynamic item,
       dynamic itemTrackBy, num index) {
     // The previous record after which we will append the current one.
@@ -266,33 +262,31 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /**
-   * This check is only needed if an array contains duplicates. (Short circuit of nothing dirty)
-   *
-   * Use case: `[a, a]` => `[b, a, a]`
-   *
-   * If we did not have this check then the insertion of `b` would:
-   *   1) evict first `a`
-   *   2) insert `b` at `0` index.
-   *   3) leave `a` at index `1` as is. <-- this is wrong!
-   *   3) reinsert `a` at index 2. <-- this is wrong!
-   *
-   * The correct behavior is:
-   *   1) evict first `a`
-   *   2) insert `b` at `0` index.
-   *   3) reinsert `a` at index 1.
-   *   3) move `a` at from `1` to `2`.
-   *
-   *
-   * Double check that we have not evicted a duplicate item. We need to check if the item type may
-   * have already been removed:
-   * The insertion of b will evict the first 'a'. If we don't reinsert it now it will be reinserted
-   * at the end. Which will show up as the two 'a's switching position. This is incorrect, since a
-   * better way to think of it is as insert of 'b' rather then switch 'a' with 'b' and then add 'a'
-   * at the end.
-   *
-   * @internal
-   */
+  /// This check is only needed if an array contains duplicates. (Short circuit of nothing dirty)
+  ///
+  /// Use case: `[a, a]` => `[b, a, a]`
+  ///
+  /// If we did not have this check then the insertion of `b` would:
+  ///   1) evict first `a`
+  ///   2) insert `b` at `0` index.
+  ///   3) leave `a` at index `1` as is. <-- this is wrong!
+  ///   3) reinsert `a` at index 2. <-- this is wrong!
+  ///
+  /// The correct behavior is:
+  ///   1) evict first `a`
+  ///   2) insert `b` at `0` index.
+  ///   3) reinsert `a` at index 1.
+  ///   3) move `a` at from `1` to `2`.
+  ///
+  ///
+  /// Double check that we have not evicted a duplicate item. We need to check if the item type may
+  /// have already been removed:
+  /// The insertion of b will evict the first 'a'. If we don't reinsert it now it will be reinserted
+  /// at the end. Which will show up as the two 'a's switching position. This is incorrect, since a
+  /// better way to think of it is as insert of 'b' rather then switch 'a' with 'b' and then add 'a'
+  /// at the end.
+  ///
+  /// @internal
   CollectionChangeRecord _verifyReinsertion(CollectionChangeRecord record,
       dynamic item, dynamic itemTrackBy, num index) {
     CollectionChangeRecord reinsertRecord =
@@ -308,13 +302,11 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
     return record;
   }
 
-  /**
-   * Get rid of any excess [CollectionChangeRecord]s from the previous collection
-   *
-   * - `record` The first excess [CollectionChangeRecord].
-   *
-   * @internal
-   */
+  /// Get rid of any excess [CollectionChangeRecord]s from the previous collection
+  ///
+  /// - `record` The first excess [CollectionChangeRecord].
+  ///
+  /// @internal
   void _truncate(CollectionChangeRecord record) {
     // Anything after that needs to be removed;
     while (!identical(record, null)) {
@@ -591,11 +583,10 @@ class _DuplicateItemRecordList {
   CollectionChangeRecord _head;
 
   CollectionChangeRecord _tail;
-  /**
-   * Append the record to the list of duplicates.
-   *
-   * Note: by design all records in the list of duplicates hold the same value in record.item.
-   */
+
+  /// Append the record to the list of duplicates.
+  ///
+  /// Note: by design all records in the list of duplicates hold the same value in record.item.
   void add(CollectionChangeRecord record) {
     if (identical(this._head, null)) {
       this._head = this._tail = record;
@@ -629,11 +620,9 @@ class _DuplicateItemRecordList {
     return null;
   }
 
-  /**
-   * Remove one [CollectionChangeRecord] from the list of duplicates.
-   *
-   * Returns whether the list of duplicates is empty.
-   */
+  /// Remove one [CollectionChangeRecord] from the list of duplicates.
+  ///
+  /// Returns whether the list of duplicates is empty.
   bool remove(CollectionChangeRecord record) {
     // todo(vicb)
 
@@ -679,23 +668,19 @@ class _DuplicateMap {
     duplicates.add(record);
   }
 
-  /**
-   * Retrieve the `value` using key. Because the CollectionChangeRecord value may be one which we
-   * have already iterated over, we use the afterIndex to pretend it is not there.
-   *
-   * Use case: `[a, b, c, a, a]` if we are at index `3` which is the second `a` then asking if we
-   * have any more `a`s needs to return the last `a` not the first or second.
-   */
+  /// Retrieve the `value` using key. Because the CollectionChangeRecord value may be one which we
+  /// have already iterated over, we use the afterIndex to pretend it is not there.
+  ///
+  /// Use case: `[a, b, c, a, a]` if we are at index `3` which is the second `a` then asking if we
+  /// have any more `a`s needs to return the last `a` not the first or second.
   CollectionChangeRecord get(dynamic trackById, [num afterIndex = null]) {
     var recordList = this.map[trackById];
     return recordList == null ? null : recordList.get(trackById, afterIndex);
   }
 
-  /**
-   * Removes a [CollectionChangeRecord] from the list of duplicates.
-   *
-   * The list of duplicates also is removed from the map if it gets empty.
-   */
+  /// Removes a [CollectionChangeRecord] from the list of duplicates.
+  ///
+  /// The list of duplicates also is removed from the map if it gets empty.
   CollectionChangeRecord remove(CollectionChangeRecord record) {
     var key = record.trackById;
     // todo(vicb)

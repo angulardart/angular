@@ -7,11 +7,9 @@ export "../route_definition.dart" show RouteDefinition;
 
 Future<dynamic> ___make_dart_analyzer_happy;
 
-/**
- * The `RouteConfig` decorator defines routes for a given component.
- *
- * It takes an array of [RouteDefinition]s.
- */
+/// The `RouteConfig` decorator defines routes for a given component.
+///
+/// It takes an array of [RouteDefinition]s.
 class RouteConfig {
   final List<RouteDefinition> configs;
   const RouteConfig(this.configs);
@@ -39,28 +37,26 @@ abstract class AbstractRoute implements RouteDefinition {
         data = data;
 }
 
-/**
- * `Route` is a type of [RouteDefinition] used to route a path to a component.
- *
- * It has the following properties:
- * - `path` is a string that uses the route matcher DSL.
- * - `component` a component type.
- * - `name` is an optional `CamelCase` string representing the name of the route.
- * - `data` is an optional property of any type representing arbitrary route metadata for the given
- * route. It is injectable via [RouteData].
- * - `useAsDefault` is a boolean value. If `true`, the child route will be navigated to if no child
- * route is specified during the navigation.
- *
- * ### Example
- * ```
- * import {RouteConfig, Route} from 'angular2/router';
- *
- * @RouteConfig([
- *   new Route({path: '/home', component: HomeCmp, name: 'HomeCmp' })
- * ])
- * class MyApp {}
- * ```
- */
+/// `Route` is a type of [RouteDefinition] used to route a path to a component.
+///
+/// It has the following properties:
+/// - `path` is a string that uses the route matcher DSL.
+/// - `component` a component type.
+/// - `name` is an optional `CamelCase` string representing the name of the route.
+/// - `data` is an optional property of any type representing arbitrary route metadata for the given
+/// route. It is injectable via [RouteData].
+/// - `useAsDefault` is a boolean value. If `true`, the child route will be navigated to if no child
+/// route is specified during the navigation.
+///
+/// ### Example
+/// ```
+/// import {RouteConfig, Route} from 'angular2/router';
+///
+/// @RouteConfig([
+///   new Route({path: '/home', component: HomeCmp, name: 'HomeCmp' })
+/// ])
+/// class MyApp {}
+/// ```
 class Route extends AbstractRoute {
   final dynamic component;
   final String aux = null;
@@ -82,26 +78,24 @@ class Route extends AbstractRoute {
             data: data);
 }
 
-/**
- * `AuxRoute` is a type of [RouteDefinition] used to define an auxiliary route.
- *
- * It takes an object with the following properties:
- * - `path` is a string that uses the route matcher DSL.
- * - `component` a component type.
- * - `name` is an optional `CamelCase` string representing the name of the route.
- * - `data` is an optional property of any type representing arbitrary route metadata for the given
- * route. It is injectable via [RouteData].
- *
- * ### Example
- * ```
- * import {RouteConfig, AuxRoute} from 'angular2/router';
- *
- * @RouteConfig([
- *   new AuxRoute({path: '/home', component: HomeCmp})
- * ])
- * class MyApp {}
- * ```
- */
+/// `AuxRoute` is a type of [RouteDefinition] used to define an auxiliary route.
+///
+/// It takes an object with the following properties:
+/// - `path` is a string that uses the route matcher DSL.
+/// - `component` a component type.
+/// - `name` is an optional `CamelCase` string representing the name of the route.
+/// - `data` is an optional property of any type representing arbitrary route metadata for the given
+/// route. It is injectable via [RouteData].
+///
+/// ### Example
+/// ```
+/// import {RouteConfig, AuxRoute} from 'angular2/router';
+///
+/// @RouteConfig([
+///   new AuxRoute({path: '/home', component: HomeCmp})
+/// ])
+/// class MyApp {}
+/// ```
 class AuxRoute extends AbstractRoute {
   final dynamic component;
   const AuxRoute(
@@ -122,30 +116,28 @@ class AuxRoute extends AbstractRoute {
             data: data);
 }
 
-/**
- * `AsyncRoute` is a type of [RouteDefinition] used to route a path to an asynchronously
- * loaded component.
- *
- * It has the following properties:
- * - `path` is a string that uses the route matcher DSL.
- * - `loader` is a function that returns a promise that resolves to a component.
- * - `name` is an optional `CamelCase` string representing the name of the route.
- * - `data` is an optional property of any type representing arbitrary route metadata for the given
- * route. It is injectable via [RouteData].
- * - `useAsDefault` is a boolean value. If `true`, the child route will be navigated to if no child
- * route is specified during the navigation.
- *
- * ### Example
- * ```
- * import {RouteConfig, AsyncRoute} from 'angular2/router';
- *
- * @RouteConfig([
- *   new AsyncRoute({path: '/home', loader: () => Promise.resolve(MyLoadedCmp), name:
- * 'MyLoadedCmp'})
- * ])
- * class MyApp {}
- * ```
- */
+/// `AsyncRoute` is a type of [RouteDefinition] used to route a path to an asynchronously
+/// loaded component.
+///
+/// It has the following properties:
+/// - `path` is a string that uses the route matcher DSL.
+/// - `loader` is a function that returns a promise that resolves to a component.
+/// - `name` is an optional `CamelCase` string representing the name of the route.
+/// - `data` is an optional property of any type representing arbitrary route metadata for the given
+/// route. It is injectable via [RouteData].
+/// - `useAsDefault` is a boolean value. If `true`, the child route will be navigated to if no child
+/// route is specified during the navigation.
+///
+/// ### Example
+/// ```
+/// import {RouteConfig, AsyncRoute} from 'angular2/router';
+///
+/// @RouteConfig([
+///   new AsyncRoute({path: '/home', loader: () => Promise.resolve(MyLoadedCmp), name:
+/// 'MyLoadedCmp'})
+/// ])
+/// class MyApp {}
+/// ```
 class AsyncRoute extends AbstractRoute {
   final Function /* () => Promise<Type> */ loader;
   final String aux = null;
@@ -167,27 +159,25 @@ class AsyncRoute extends AbstractRoute {
             data: data);
 }
 
-/**
- * `Redirect` is a type of [RouteDefinition] used to route a path to a canonical route.
- *
- * It has the following properties:
- * - `path` is a string that uses the route matcher DSL.
- * - `redirectTo` is an array representing the link DSL.
- *
- * Note that redirects **do not** affect how links are generated. For that, see the `useAsDefault`
- * option.
- *
- * ### Example
- * ```
- * import {RouteConfig, Route, Redirect} from 'angular2/router';
- *
- * @RouteConfig([
- *   new Redirect({path: '/', redirectTo: ['/Home'] }),
- *   new Route({path: '/home', component: HomeCmp, name: 'Home'})
- * ])
- * class MyApp {}
- * ```
- */
+/// `Redirect` is a type of [RouteDefinition] used to route a path to a canonical route.
+///
+/// It has the following properties:
+/// - `path` is a string that uses the route matcher DSL.
+/// - `redirectTo` is an array representing the link DSL.
+///
+/// Note that redirects **do not** affect how links are generated. For that, see the `useAsDefault`
+/// option.
+///
+/// ### Example
+/// ```
+/// import {RouteConfig, Route, Redirect} from 'angular2/router';
+///
+/// @RouteConfig([
+///   new Redirect({path: '/', redirectTo: ['/Home'] }),
+///   new Route({path: '/home', component: HomeCmp, name: 'Home'})
+/// ])
+/// class MyApp {}
+/// ```
 class Redirect extends AbstractRoute {
   final List<dynamic> redirectTo;
   const Redirect(

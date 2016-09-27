@@ -16,9 +16,7 @@ String serializeParams(Map<String, dynamic> urlParams, [joiner = "&"]) {
   return convertUrlParamsToArray(urlParams).join(joiner);
 }
 
-/**
- * This class represents a parsed URL
- */
+/// This class represents a parsed URL
 class Url {
   String path;
   Url child;

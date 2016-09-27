@@ -25,24 +25,22 @@ bool devModeEqual(Object a, Object b) => const _DevModeEquality().equals(a, b);
 
 Object uninitialized = const Object();
 
-/**
- * Indicates that the result of a [PipeMetadata] transformation has changed even though the
- * reference
- * has not changed.
- *
- * The wrapped value will be unwrapped by change detection, and the unwrapped value will be stored.
- *
- * Example:
- *
- * ```
- * if (this._latestValue === this._latestReturnedValue) {
- *    return this._latestReturnedValue;
- *  } else {
- *    this._latestReturnedValue = this._latestValue;
- *    return WrappedValue.wrap(this._latestValue); // this will force update
- *  }
- * ```
- */
+/// Indicates that the result of a [PipeMetadata] transformation has changed even though the
+/// reference
+/// has not changed.
+///
+/// The wrapped value will be unwrapped by change detection, and the unwrapped value will be stored.
+///
+/// Example:
+///
+/// ```
+/// if (this._latestValue === this._latestReturnedValue) {
+///    return this._latestReturnedValue;
+///  } else {
+///    this._latestReturnedValue = this._latestValue;
+///    return WrappedValue.wrap(this._latestValue); // this will force update
+///  }
+/// ```
 class WrappedValue {
   dynamic wrapped;
   WrappedValue(this.wrapped);
@@ -51,9 +49,7 @@ class WrappedValue {
   }
 }
 
-/**
- * Helper class for unwrapping WrappedValue s
- */
+/// Helper class for unwrapping WrappedValue s
 class ValueUnwrapper {
   var hasWrappedValue = false;
   dynamic unwrap(dynamic value) {
@@ -69,16 +65,13 @@ class ValueUnwrapper {
   }
 }
 
-/**
- * Represents a basic change from a previous to a new value.
- */
+/// Represents a basic change from a previous to a new value.
 class SimpleChange {
   dynamic previousValue;
   dynamic currentValue;
   SimpleChange(this.previousValue, this.currentValue);
-  /**
-   * Check whether the new value is the first value assigned.
-   */
+
+  /// Check whether the new value is the first value assigned.
   bool isFirstChange() {
     return identical(this.previousValue, uninitialized);
   }

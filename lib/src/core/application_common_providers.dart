@@ -15,10 +15,9 @@ import "linker/dynamic_component_loader.dart" show DynamicComponentLoaderImpl;
 import "linker/app_view_utils.dart" show AppViewUtils;
 
 Type ___unused;
-/**
- * A default set of providers which should be included in any Angular
- * application, regardless of the platform it runs onto.
- */
+
+/// A default set of providers which should be included in any Angular
+/// application, regardless of the platform it runs onto.
 const List<dynamic /* Type | Provider | List < dynamic > */ >
     APPLICATION_COMMON_PROVIDERS = const [
   APPLICATION_CORE_PROVIDERS,
