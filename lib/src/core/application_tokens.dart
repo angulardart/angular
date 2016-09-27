@@ -1,13 +1,13 @@
 import 'dart:math' as math;
 import 'package:angular2/src/core/di.dart' show OpaqueToken, Provider;
 
-/// A DI Token representing a unique string id assigned to the application by Angular and used
-/// primarily for prefixing application attributes and CSS styles when
-/// [ViewEncapsulation#Emulated] is being used.
+/// A DI Token representing a unique string id assigned to the application by
+/// Angular and used primarily for prefixing application attributes and CSS
+/// styles when [ViewEncapsulation#Emulated] is being used.
 ///
-/// If you need to avoid randomly generated value to be used as an application id, you can provide
-/// a custom value via a DI provider <!-- TODO: provider --> configuring the root [Injector]
-/// using this token.
+/// If you need to avoid randomly generated value to be used as an application
+/// id, you can provide a custom value via a DI provider <!-- TODO: provider -->
+/// configuring the root [Injector] using this token.
 const OpaqueToken APP_ID = const OpaqueToken("AppId");
 String appIdRandomProviderFactory() {
   return '''${ _randomChar ( )}${ _randomChar ( )}${ _randomChar ( )}''';

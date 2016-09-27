@@ -2,12 +2,12 @@ import 'metadata.dart';
 
 export 'metadata.dart';
 
-/// {@link InjectMetadata}.
+/// See [InjectMetadata].
 class Inject extends InjectMetadata {
   const Inject(dynamic token) : super(token);
 }
 
-/// {@link OptionalMetadata}.
+/// See [OptionalMetadata].
 class Optional extends OptionalMetadata {
   const Optional() : super();
 }
@@ -20,7 +20,8 @@ class Optional extends OptionalMetadata {
 /// - the class is non-abstract with a public or default constructor
 /// - the class is abstract but has a factory constructor
 ///
-/// __Example use__:
+/// ## Eample:
+///
 ///   // Use the default constructor to create a new instance of MyService
 ///   @Injectable()
 ///   class MyService {}
@@ -41,7 +42,8 @@ class Optional extends OptionalMetadata {
 ///
 /// 2. On a top-level [Function] when used in conjunction with `useFactory`.
 ///
-/// __Example use__:
+/// ## Example:
+///
 ///   // Could be put anywhere DI providers are allowed.
 ///   const Provide(MyService, useFactory: createMyService);
 ///
@@ -52,17 +54,17 @@ class Injectable extends InjectableMetadata {
   const Injectable() : super();
 }
 
-/// {@link SelfMetadata}.
+/// See [SelfMetadata].
 class Self extends SelfMetadata {
   const Self() : super();
 }
 
-/// {@link HostMetadata}.
+/// See [HostMetadata].
 class Host extends HostMetadata {
   const Host() : super();
 }
 
-/// {@link SkipSelfMetadata}.
+/// See [SkipSelfMetadata].
 class SkipSelf extends SkipSelfMetadata {
   const SkipSelf() : super();
 }

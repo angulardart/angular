@@ -12,7 +12,15 @@ enum LifecycleHooks {
   AfterViewChecked
 }
 
-/// @internal
+/// Lifecycle hooks are guaranteed to be called in the following order:
+/// - `OnChanges` (if any bindings have changed),
+/// - `OnInit` (after the first check only),
+/// - `DoCheck`,
+/// - `AfterContentInit`,
+/// - `AfterContentChecked`,
+/// - `AfterViewInit`,
+/// - `AfterViewChecked`,
+/// - `OnDestroy` (at the very end before destruction)
 var LIFECYCLE_HOOKS_VALUES = [
   LifecycleHooks.OnInit,
   LifecycleHooks.OnDestroy,
@@ -24,160 +32,168 @@ var LIFECYCLE_HOOKS_VALUES = [
   LifecycleHooks.AfterViewChecked
 ];
 
-/// Lifecycle hooks are guaranteed to be called in the following order:
-/// - `OnChanges` (if any bindings have changed),
-/// - `OnInit` (after the first check only),
-/// - `DoCheck`,
-/// - `AfterContentInit`,
-/// - `AfterContentChecked`,
-/// - `AfterViewInit`,
-/// - `AfterViewChecked`,
-/// - `OnDestroy` (at the very end before destruction)
-
-/// Implement this interface to get notified when any data-bound property of your directive changes.
+/// Implement this interface to get notified when any data-bound property of
+/// your directive changes.
 ///
-/// `ngOnChanges` is called right after the data-bound properties have been checked and before view
-/// and content children are checked if at least one of them has changed.
+/// `ngOnChanges` is called right after the data-bound properties have been
+/// checked and before view and content children are checked if at least one of
+/// them has changed.
 ///
-/// The `changes` parameter contains an entry for each of the changed data-bound property. The key is
-/// the property name and the value is an instance of [SimpleChange].
+/// The `changes` parameter contains an entry for each of the changed data-bound
+/// property. The key is the property name and the value is an instance of
+/// [SimpleChange].
 ///
-/// ### Example ([live example](http://plnkr.co/edit/AHrB6opLqHDBPkt4KpdT?p=preview)):
+/// ## Example
 ///
-/// ```typescript
-/// @Component({
+/// ```dart
+/// @Component(
 ///   selector: 'my-cmp',
-///   template: `<p>myProp = {{myProp}}</p>`
-/// })
+///   template: '<p>myProp = {{myProp}}</p>'
+/// )
 /// class MyComponent implements OnChanges {
-///   @Input() myProp: any;
+///   @Input()
+///   dynamic myProp;
 ///
-///   ngOnChanges(changes: {[propName: string]: SimpleChange}) {
-///     console.log('ngOnChanges - myProp = ' + changes['myProp'].currentValue);
+///   @override
+///   ngOnChanges(Map<String, SimpleChange> changes) {
+///     print('ngOnChanges - myProp = ${changes['myProp'].currentValue}');
 ///   }
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   template: `
+///   template: '''
 ///     <button (click)="value = value + 1">Change MyComponent</button>
-///     <my-cmp [my-prop]="value"></my-cmp>`,
+///     <my-cmp [my-prop]="value"></my-cmp>
+///   ''',
 ///   directives: [MyComponent]
-/// })
-/// export class App {
-///   value = 0;
+/// )
+/// class App {
+///   int value = 0;
 /// }
 ///
-/// bootstrap(App).catch(err => console.error(err));
+/// bootstrap(App);
 /// ```
 abstract class OnChanges {
   ngOnChanges(Map<String, SimpleChange> changes);
 }
 
-/// Implement this interface to execute custom initialization logic after your directive's
-/// data-bound properties have been initialized.
+/// Implement this interface to execute custom initialization logic after your
+/// directive's data-bound properties have been initialized.
 ///
-/// `ngOnInit` is called right after the directive's data-bound properties have been checked for the
-/// first time, and before any of its children have been checked. It is invoked only once when the
-/// directive is instantiated.
+/// `ngOnInit` is called right after the directive's data-bound properties have
+/// been checked for the first time, and before any of its children have been
+/// checked. It is invoked only once when the directive is instantiated.
 ///
-/// ### Example ([live example](http://plnkr.co/edit/1MBypRryXd64v4pV03Yn?p=preview))
+/// ## Example
 ///
-/// ```typescript
-/// @Component({
+/// ```dart
+/// @Component(
 ///   selector: 'my-cmp',
-///   template: `<p>my-component</p>`
-/// })
+///   template: '<p>my-component</p>'
+/// )
 /// class MyComponent implements OnInit, OnDestroy {
+///   @override
 ///   ngOnInit() {
-///     console.log('ngOnInit');
+///     print('ngOnInit');
 ///   }
 ///
+///   @override
 ///   ngOnDestroy() {
-///     console.log('ngOnDestroy');
+///     print('ngOnDestroy');
 ///   }
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   template: `
+///   template: '''
 ///     <button (click)="hasChild = !hasChild">
 ///       {{hasChild ? 'Destroy' : 'Create'}} MyComponent
 ///     </button>
-///     <my-cmp *ngIf="hasChild"></my-cmp>`,
-///   directives: [MyComponent, NgIf]
-/// })
-/// export class App {
-///   hasChild = true;
+///     <my-cmp *ngIf="hasChild"></my-cmp>
+///   ''',
+///   directives: const [MyComponent, NgIf]
+/// )
+/// class App {
+///   bool hasChild = true;
 /// }
 ///
-/// bootstrap(App).catch(err => console.error(err));
+/// bootstrap(App);
 ///  ```
 abstract class OnInit {
   ngOnInit();
 }
 
-/// Implement this interface to override the default change detection algorithm for your directive.
+/// Implement this interface to override the default change detection algorithm
+/// for your directive.
 ///
-/// `ngDoCheck` gets called to check the changes in the directives instead of the default algorithm.
+/// `ngDoCheck` gets called to check the changes in the directives instead of
+/// the default algorithm.
 ///
-/// The default change detection algorithm looks for differences by comparing bound-property values
-/// by reference across change detection runs. When `DoCheck` is implemented, the default algorithm
-/// is disabled and `ngDoCheck` is responsible for checking for changes.
+/// The default change detection algorithm looks for differences by comparing
+/// bound-property values by reference across change detection runs. When
+/// `DoCheck` is implemented, the default algorithm is disabled and `ngDoCheck`
+/// is responsible for checking for changes.
 ///
-/// Implementing this interface allows improving performance by using insights about the component,
-/// its implementation and data types of its properties.
+/// Implementing this interface allows improving performance by using insights
+/// about the component, its implementation and data types of its properties.
 ///
-/// Note that a directive should not implement both `DoCheck` and [OnChanges] at the same time.
-/// `ngOnChanges` would not be called when a directive implements `DoCheck`. Reaction to the changes
-/// have to be handled from within the `ngDoCheck` callback.
+/// Note that a directive should not implement both `DoCheck` and [OnChanges] at
+/// the same time.  `ngOnChanges` would not be called when a directive
+/// implements `DoCheck`. Reaction to the changes have to be handled from within
+/// the `ngDoCheck` callback.
 ///
-/// Use [KeyValueDiffers] and [IterableDiffers] to add your custom check mechanisms.
+/// Use [KeyValueDiffers] and [IterableDiffers] to add your custom check
+/// mechanisms.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/QpnIlF0CR2i5bcYbHEUJ?p=preview))
+/// ## Example
 ///
-/// In the following example `ngDoCheck` uses an [IterableDiffers] to detect the updates to the
-/// array `list`:
+/// In the following example `ngDoCheck` uses an [IterableDiffers] to detect the
+/// updates to the array `list`:
 ///
-/// ```typescript
-/// @Component({
+/// ```dart
+/// @Component(
 ///   selector: 'custom-check',
-///   template: `
+///   template: '''
 ///     <p>Changes:</p>
 ///     <ul>
 ///       <li *ngFor="let line of logs">{{line}}</li>
-///     </ul>`,
-///   directives: [NgFor]
-/// })
+///     </ul>
+///   ''',
+///   directives: const [NgFor]
+/// )
 /// class CustomCheckComponent implements DoCheck {
-///   @Input() list: any[];
-///   differ: any;
-///   logs = [];
+///   final IterableDiffer differ;
+///   final List<String> logs = [];
 ///
-///   constructor(differs: IterableDiffers) {
-///     this.differ = differs.find([]).create(null);
-///   }
+///   @Input()
+///   List list;
 ///
+///   CustomCheckComponent(IterableDiffers differs) :
+///     differ = differs.find([]).create(null);
+///
+///   @override
 ///   ngDoCheck() {
-///     var changes = this.differ.diff(this.list);
+///     var changes = differ.diff(list);
 ///
-///     if (changes) {
-///       changes.forEachAddedItem(r => this.logs.push('added ' + r.item));
-///       changes.forEachRemovedItem(r => this.logs.push('removed ' + r.item))
+///     if (changes is DefaultIterableDiffer) {
+///       changes.forEachAddedItem(r => logs.add('added ${r.item}'));
+///       changes.forEachRemovedItem(r => logs.push('removed ${r.item}'))
 ///     }
 ///   }
 /// }
 ///
 /// @Component({
 ///   selector: 'app',
-///   template: `
+///   template: '''
 ///     <button (click)="list.push(list.length)">Push</button>
 ///     <button (click)="list.pop()">Pop</button>
-///     <custom-check [list]="list"></custom-check>`,
-///   directives: [CustomCheckComponent]
+///     <custom-check [list]="list"></custom-check>
+///   ''',
+///   directives: const [CustomCheckComponent]
 /// })
-/// export class App {
-///   list = [];
+/// class App {
+///   List list = [];
 /// }
 /// ```
 abstract class DoCheck {
@@ -186,287 +202,313 @@ abstract class DoCheck {
 
 /// Implement this interface to get notified when your directive is destroyed.
 ///
-/// `ngOnDestroy` callback is typically used for any custom cleanup that needs to occur when the
-/// instance is destroyed
+/// `ngOnDestroy` callback is typically used for any custom cleanup that needs
+/// to occur when the instance is destroyed
 ///
-/// ### Example ([live example](http://plnkr.co/edit/1MBypRryXd64v4pV03Yn?p=preview))
+/// ## Example
 ///
-/// ```typesript
-/// @Component({
+/// ```dart
+/// @Component(
 ///   selector: 'my-cmp',
-///   template: `<p>my-component</p>`
-/// })
+///   template: '<p>my-component</p>'
+/// )
 /// class MyComponent implements OnInit, OnDestroy {
+///   @override
 ///   ngOnInit() {
-///     console.log('ngOnInit');
+///     print('ngOnInit');
 ///   }
 ///
+///   @override
 ///   ngOnDestroy() {
-///     console.log('ngOnDestroy');
+///     print('ngOnDestroy');
 ///   }
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   template: `
+///   template: '''
 ///     <button (click)="hasChild = !hasChild">
 ///       {{hasChild ? 'Destroy' : 'Create'}} MyComponent
 ///     </button>
-///     <my-cmp *ngIf="hasChild"></my-cmp>`,
-///   directives: [MyComponent, NgIf]
+///     <my-cmp *ngIf="hasChild"></my-cmp>
+///   ''',
+///   directives: const [MyComponent, NgIf]
 /// })
-/// export class App {
-///   hasChild = true;
+/// class App {
+///   bool hasChild = true;
 /// }
 ///
-/// bootstrap(App).catch(err => console.error(err));
+/// bootstrap(App);
 /// ```
 ///
 ///
-/// To create a stateful Pipe, you should implement this interface and set the `pure`
-/// parameter to `false` in the [PipeMetadata].
+/// To create a stateful Pipe, you should implement this interface and set the
+/// `pure` parameter to `false` in the [PipeMetadata].
 ///
 /// A stateful pipe may produce different output, given the same input. It is
 /// likely that a stateful pipe may contain state that should be cleaned up when
-/// a binding is destroyed. For example, a subscription to a stream of data may need to
-/// be disposed, or an interval may need to be cleared.
+/// a binding is destroyed. For example, a subscription to a stream of data may
+/// need to be disposed, or an interval may need to be cleared.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/i8pm5brO4sPaLxBx56MR?p=preview))
+/// ## Example
 ///
-/// In this example, a pipe is created to countdown its input value, updating it every
-/// 50ms. Because it maintains an internal interval, it automatically clears
-/// the interval when the binding is destroyed or the countdown completes.
+/// In this example, a pipe is created to countdown its input value, updating it
+/// every 50ms. Because it maintains an internal interval, it automatically
+/// clears the interval when the binding is destroyed or the countdown
+/// completes.
 ///
-/// ```
-/// import {OnDestroy, Pipe, PipeTransform} from 'angular2/core'
-/// @Pipe({name: 'countdown', pure: false})
+/// ```dart
+/// import 'angular2/core' show OnDestroy, Pipe, PipeTransform;
+///
+/// @Pipe(name: 'countdown', pure: false)
 /// class CountDown implements PipeTransform, OnDestroy {
-///   remainingTime:Number;
-///   interval:SetInterval;
+///   num reminingTime;
+///   Timer timer;
+///
+///   @override
 ///   ngOnDestroy() {
-///     if (this.interval) {
-///       clearInterval(this.interval);
+///     _clearTimer();
+///   }
+///
+///   void _clearTimer() {
+///     if ( timer?.isActive ?? false ) {
+///       timer.cancel();
+///       timer = null;
 ///     }
 ///   }
-///   transform(value: any, args: any[] = []) {
-///     if (!parseInt(value, 10)) return null;
-///     if (typeof this.remainingTime !== 'number') {
-///       this.remainingTime = parseInt(value, 10);
-///     }
-///     if (!this.interval) {
-///       this.interval = setInterval(() => {
-///         this.remainingTime-=50;
-///         if (this.remainingTime <= 0) {
-///           this.remainingTime = 0;
-///           clearInterval(this.interval);
-///           delete this.interval;
+///
+///   int transform(String value) {
+///     int parsed = int.parse(value, onError: () => null);
+///     if (parse == null) return null;
+///     remainingTime = parsed;
+///     if ( !timer?.isActive ?? true) {
+///       timer = new Timer.periodic( const Duration(milliseconds: 50), () {
+///         remainingTime -= 50;
+///         if (remainingTime <= 0) {
+///           _clearTimer();
 ///         }
-///       }, 50);
+///       });
 ///     }
-///     return this.remainingTime;
+///     return remainingTime;
 ///   }
 /// }
 /// ```
 ///
-/// Invoking `{{ 10000 | countdown }}` would cause the value to be decremented by 50,
-/// every 50ms, until it reaches 0.
+/// Invoking `{{ 10000 | countdown }}` would cause the value to be decremented
+/// by 50, every 50ms, until it reaches 0.
+///
 abstract class OnDestroy {
   ngOnDestroy();
 }
 
-/// Implement this interface to get notified when your directive's content has been fully
-/// initialized.
+/// Implement this interface to get notified when your directive's content has
+/// been fully initialized.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/plamXUpsLQbIXpViZhUO?p=preview))
+/// ## Example
 ///
-/// ```typescript
-/// @Component({
+/// ```dart
+/// @Component(
 ///   selector: 'child-cmp',
-///   template: `{{where}} child`
-/// })
+///   template: '{{where}} child'
+/// )
 /// class ChildComponent {
-///   @Input() where: string;
+///   @Input()
+///   String where;
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'parent-cmp',
-///   template: `<ng-content></ng-content>`
-/// })
+///   template: '<ng-content></ng-content>'
+/// )
 /// class ParentComponent implements AfterContentInit {
-///   @ContentChild(ChildComponent) contentChild: ChildComponent;
+///   @ContentChild(ChildComponent)
+///   ChildComponent contentChild;;
 ///
-///   constructor() {
+///   ParentComponent() {
 ///     // contentChild is not initialized yet
-///     console.log(this.getMessage(this.contentChild));
+///     print(_message(contentChild));
 ///   }
 ///
+///   @override
 ///   ngAfterContentInit() {
 ///     // contentChild is updated after the content has been checked
-///     console.log('AfterContentInit: ' + this.getMessage(this.contentChild));
+///     console.log('AfterContentInit: ' + _message(contentChild));
 ///   }
 ///
-///   private getMessage(cmp: ChildComponent): string {
-///     return cmp ? cmp.where + ' child' : 'no child';
-///   }
+///   String _message(ChildComponent cmp) =>
+///       cmp == null ? 'no child' : '${cmp.where} child';
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   template: `
+///   template: '''
 ///     <parent-cmp>
 ///       <child-cmp where="content"></child-cmp>
-///     </parent-cmp>`,
-///   directives: [ParentComponent, ChildComponent]
-/// })
-/// export class App {
-/// }
+///     </parent-cmp>
+///   ''',
+///   directives: const [ParentComponent, ChildComponent]
+/// )
+/// export class App {}
 ///
-/// bootstrap(App).catch(err => console.error(err));
+/// bootstrap(App);
 /// ```
 abstract class AfterContentInit {
   ngAfterContentInit();
 }
 
-/// Implement this interface to get notified after every check of your directive's content.
+/// Implement this interface to get notified after every check of your
+/// directive's content.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/tGdrytNEKQnecIPkD7NU?p=preview))
+/// ## Example
 ///
-/// ```typescript
-/// @Component({selector: 'child-cmp', template: `{{where}} child`})
+/// ```dart
+/// @Component(selector: 'child-cmp', template: '{{where}} child')
 /// class ChildComponent {
-///   @Input() where: string;
+///   @Input()
+///   String where;
 /// }
 ///
-/// @Component({selector: 'parent-cmp', template: `<ng-content></ng-content>`})
+/// @Component(selector: 'parent-cmp', template: '<ng-content></ng-content>')
 /// class ParentComponent implements AfterContentChecked {
-///   @ContentChild(ChildComponent) contentChild: ChildComponent;
+///   @ContentChild(ChildComponent)
+///   ChildComponent contentChild;
 ///
-///   constructor() {
+///   ParentComponent() {
 ///     // contentChild is not initialized yet
-///     console.log(this.getMessage(this.contentChild));
+///     print(_message(contentChild));
 ///   }
 ///
+///   @override
 ///   ngAfterContentChecked() {
 ///     // contentChild is updated after the content has been checked
-///     console.log('AfterContentChecked: ' + this.getMessage(this.contentChild));
+///     print('AfterContentChecked: ${_message(contentChild)}');
 ///   }
 ///
-///   private getMessage(cmp: ChildComponent): string {
-///     return cmp ? cmp.where + ' child' : 'no child';
-///   }
+///   String _message(cmp: ChildComponent) =>
+///       cmp  == null ? 'no child' : '${cmp.where} child';
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   template: `
+///   template: '''
 ///     <parent-cmp>
-///       <button (click)="hasContent = !hasContent">Toggle content child</button>
+///       <button (click)="hasContent = !hasContent">
+///         Toggle content child
+///       </button>
 ///       <child-cmp *ngIf="hasContent" where="content"></child-cmp>
-///     </parent-cmp>`,
-///   directives: [NgIf, ParentComponent, ChildComponent]
-/// })
+///     </parent-cmp>
+///   ''',
+///   directives: const [NgIf, ParentComponent, ChildComponent]
+/// )
 /// export class App {
-///   hasContent = true;
+///   bool hasContent = true;
 /// }
 ///
-/// bootstrap(App).catch(err => console.error(err));
+/// bootstrap(App);
 /// ```
 abstract class AfterContentChecked {
   ngAfterContentChecked();
 }
 
-/// Implement this interface to get notified when your component's view has been fully initialized.
+/// Implement this interface to get notified when your component's view has been
+/// fully initialized.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/LhTKVMEM0fkJgyp4CI1W?p=preview))
+/// ## Example
 ///
-/// ```typescript
-/// @Component({selector: 'child-cmp', template: `{{where}} child`})
+/// ```dart
+/// @Component(selector: 'child-cmp', template: '{{where}} child')
 /// class ChildComponent {
-///   @Input() where: string;
+///   @Input()
+///   String where;
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'parent-cmp',
-///   template: `<child-cmp where="view"></child-cmp>`,
-///   directives: [ChildComponent]
-/// })
+///   template: '<child-cmp where="view"></child-cmp>',
+///   directives: const [ChildComponent]
+/// )
 /// class ParentComponent implements AfterViewInit {
-///   @ViewChild(ChildComponent) viewChild: ChildComponent;
+///   @ViewChild(ChildComponent)
+///   ChildComponentviewChild;
 ///
-///   constructor() {
+///   ParentComponent() {
 ///     // viewChild is not initialized yet
-///     console.log(this.getMessage(this.viewChild));
+///     print(_message(viewChild));
 ///   }
 ///
+///   @override
 ///   ngAfterViewInit() {
 ///     // viewChild is updated after the view has been initialized
-///     console.log('ngAfterViewInit: ' + this.getMessage(this.viewChild));
+///     console.log('ngAfterViewInit: ' + _message(viewChild));
 ///   }
 ///
-///   private getMessage(cmp: ChildComponent): string {
-///     return cmp ? cmp.where + ' child' : 'no child';
-///   }
+///   String _message(cmp: ChildComponent) =>
+///       cmp  == null ? 'no child' : '${cmp.where} child';
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   template: `<parent-cmp></parent-cmp>`,
-///   directives: [ParentComponent]
-/// })
+///   template: '<parent-cmp></parent-cmp>',
+///   directives: const [ParentComponent]
+/// )
 /// export class App {
 /// }
 ///
-/// bootstrap(App).catch(err => console.error(err));
+/// bootstrap(App);
 /// ```
 abstract class AfterViewInit {
   ngAfterViewInit();
 }
 
-/// Implement this interface to get notified after every check of your component's view.
+/// Implement this interface to get notified after every check of your
+/// component's view.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/0qDGHcPQkc25CXhTNzKU?p=preview))
+/// ## Example
 ///
-/// ```typescript
-/// @Component({selector: 'child-cmp', template: `{{where}} child`})
+/// ```dart
+/// @Component(selector: 'child-cmp', template: '{{where}} child')
 /// class ChildComponent {
-///   @Input() where: string;
+///   @Input()
+///   String where;
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'parent-cmp',
-///   template: `
+///   template: '''
 ///     <button (click)="showView = !showView">Toggle view child</button>
-///     <child-cmp *ngIf="showView" where="view"></child-cmp>`,
-///   directives: [NgIf, ChildComponent]
-/// })
+///     <child-cmp *ngIf="showView" where="view"></child-cmp>
+///   ''',
+///   directives: const [NgIf, ChildComponent]
+/// )
 /// class ParentComponent implements AfterViewChecked {
-///   @ViewChild(ChildComponent) viewChild: ChildComponent;
-///   showView = true;
+///   @ViewChild(ChildComponent)
+///   ChildComponent viewChild;
 ///
-///   constructor() {
+///   bool showView = true;
+///
+///   ParentComponent() {
 ///     // viewChild is not initialized yet
-///     console.log(this.getMessage(this.viewChild));
+///     print(_message(viewChild));
 ///   }
 ///
+///   @override
 ///   ngAfterViewChecked() {
 ///     // viewChild is updated after the view has been checked
-///     console.log('AfterViewChecked: ' + this.getMessage(this.viewChild));
+///     print('AfterViewChecked: ${_message(viewChild)}');
 ///   }
 ///
-///   private getMessage(cmp: ChildComponent): string {
-///     return cmp ? cmp.where + ' child' : 'no child';
-///   }
+///   String _message(cmp: ChildComponent) =>
+///       cmp  == null ? 'no child' : '${cmp.where} child';
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   template: `<parent-cmp></parent-cmp>`,
-///   directives: [ParentComponent]
-/// })
-/// export class App {
-/// }
+///   template: '<parent-cmp></parent-cmp>',
+///   directives: const [ParentComponent]
+/// )
+/// export class App {}
 ///
-/// bootstrap(App).catch(err => console.error(err));
+/// bootstrap(App);
 /// ```
 abstract class AfterViewChecked {
   ngAfterViewChecked();

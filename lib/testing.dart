@@ -1,6 +1,7 @@
 /// This module is used for writing tests for applications written in Angular.
 ///
-/// This module is not included in the `angular2` module; you must import the test module explicitly.
+/// This module is not included in the `angular2` module; you must import the
+/// test module explicitly.
 library angular2.testing;
 
 export "package:angular2/src/compiler/xhr_mock.dart" show MockXHR;

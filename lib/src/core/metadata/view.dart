@@ -1,24 +1,27 @@
-/// Defines template and style encapsulation options available for Component's [View].
+/// Defines template and style encapsulation options available for Component's
+/// [View].
 ///
 /// See [ViewMetadata#encapsulation].
 enum ViewEncapsulation {
-  /// Emulate `Native` scoping of styles by adding an attribute containing surrogate id to the Host
-  /// Element and pre-processing the style rules provided via
-  /// [ViewMetadata#styles] or [ViewMetadata#stylesUrls], and adding the new Host Element
-  /// attribute to all selectors.
+  /// Emulate `Native` scoping of styles by adding an attribute containing
+  /// surrogate id to the Host Element and pre-processing the style rules
+  /// provided via [ViewMetadata#styles] or [ViewMetadata#stylesUrls], and
+  /// adding the new Host Element attribute to all selectors.
   ///
   /// This is the default option.
   Emulated,
 
   /// Use the native encapsulation mechanism of the renderer.
   ///
-  /// For the DOM this means using [Shadow DOM](https://w3c.github.io/webcomponents/spec/shadow/) and
-  /// creating a ShadowRoot for Component's Host Element.
+  /// For the DOM this means using [Shadow
+  /// DOM](https://w3c.github.io/webcomponents/spec/shadow/) and creating a
+  /// ShadowRoot for Component's Host Element.
   Native,
 
   /// Don't provide any template or style encapsulation.
   None
 }
+
 var VIEW_ENCAPSULATION_VALUES = [
   ViewEncapsulation.Emulated,
   ViewEncapsulation.Native,
@@ -27,29 +30,28 @@ var VIEW_ENCAPSULATION_VALUES = [
 
 /// Metadata properties available for configuring Views.
 ///
-/// Each Angular component requires a single `@Component` and at least one `@View` annotation. The
-/// `@View` annotation specifies the HTML template to use, and lists the directives that are active
-/// within the template.
+/// Each Angular component requires a single `@Component` and at least one
+/// `@View` annotation. The `@View` annotation specifies the HTML template to
+/// use, and lists the directives that are active within the template.
 ///
-/// When a component is instantiated, the template is loaded into the component's shadow root, and
-/// the expressions and statements in the template are evaluated against the component.
+/// When a component is instantiated, the template is loaded into the
+/// component's shadow root, and the expressions and statements in the template
+/// are evaluated against the component.
 ///
 /// For details on the `@Component` annotation, see [ComponentMetadata].
 ///
-/// ### Example
+/// ## Example
 ///
 /// ```
-/// @Component({
+/// @Component(
 ///   selector: 'greet',
 ///   template: 'Hello {{name}}!',
-///   directives: [GreetUser, Bold]
-/// })
+///   directives: const [GreetUser, Bold]
+/// )
 /// class Greet {
-///   name: string;
+///   final String name;
 ///
-///   constructor() {
-///     this.name = 'World';
-///   }
+///   Greet() : name = 'World';
 /// }
 /// ```
 class ViewMetadata {
@@ -75,29 +77,29 @@ class ViewMetadata {
 
   /// Specifies a list of directives that can be used within a template.
   ///
-  /// Directives must be listed explicitly to provide proper component encapsulation.
+  /// Directives must be listed explicitly to provide proper component
+  /// encapsulation.
   ///
-  /// ### Example
+  /// ## Example
   ///
-  /// ```javascript
-  /// @Component({
+  /// ```dart
+  /// @Component(
   ///   selector: 'my-component',
-  ///   directives: [NgFor]
-  ///   template: '
+  ///   directives: const [NgFor],
+  ///   template: '''
   ///   <ul>
   ///     <li *ngFor="let item of items">{{item}}</li>
-  ///   </ul>'
-  /// })
-  /// class MyComponent {
-  /// }
+  ///   </ul>'''
+  /// )
+  /// class MyComponent {}
   /// ```
   final List<dynamic /* Type | List < dynamic > */ > directives;
   final List<dynamic /* Type | List < dynamic > */ > pipes;
 
   /// Specify how the template and the styles should be encapsulated.
-  /// The default is [ViewEncapsulation#Emulated `ViewEncapsulation.Emulated`] if the view
-  /// has styles,
-  /// otherwise [ViewEncapsulation#None `ViewEncapsulation.None`].
+  ///
+  /// The default is [ViewEncapsulation#Emulated] if the view has styles,
+  /// otherwise [ViewEncapsulation#None].
   final ViewEncapsulation encapsulation;
   const ViewMetadata(
       {String templateUrl,

@@ -1,40 +1,41 @@
 /// A parameter metadata that specifies a dependency.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/6uHYJK?p=preview))
+/// ## Example
 ///
-/// ```typescript
+/// ```dart
 /// class Engine {}
 ///
 /// @Injectable()
 /// class Car {
-///   engine;
-///   constructor(@Inject("MyEngine") engine:Engine) {
-///     this.engine = engine;
-///   }
+///   final Engine engine;
+///   Car(@Inject("MyEngine") this.engine);
 /// }
 ///
+/// var engine = new Engine();
+///
 /// var injector = Injector.resolveAndCreate([
-///  provide("MyEngine", {useClass: Engine}),
+///  new Provider("MyEngine", useValue: engine),
 ///  Car
 /// ]);
 ///
-/// expect(injector.get(Car).engine instanceof Engine).toBe(true);
+/// expect(injector.get(Car).engine, same(engine));
 /// ```
 ///
-/// When `@Inject()` is not present, [Injector] will use the type annotation of the parameter.
+/// When `@Inject()` is not present, [Injector] will use the type annotation of
+/// the parameter.
 ///
-/// ### Example
+/// ## Example
 ///
-/// ```typescript
+/// ```dart
 /// class Engine {}
 ///
 /// @Injectable()
 /// class Car {
-///   constructor(public engine: Engine) {} //same as constructor(@Inject(Engine) engine:Engine)
+///   Car(Engine engine) {} //same as Car(@Inject(Engine) Engine engine)
 /// }
 ///
 /// var injector = Injector.resolveAndCreate([Engine, Car]);
-/// expect(injector.get(Car).engine instanceof Engine).toBe(true);
+/// expect(injector.get(Car).engine, new isInstanceOf<Engine>());
 /// ```
 class InjectMetadata {
   final token;
@@ -49,24 +50,23 @@ class InjectMetadata {
   }
 }
 
-/// A parameter metadata that marks a dependency as optional. [Injector] provides `null` if
-/// the dependency is not found.
+/// A parameter metadata that marks a dependency as optional.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/AsryOm?p=preview))
+/// [Injector] provides `null` if the dependency is not found.
 ///
-/// ```typescript
+/// ## Example
+///
+/// ```dart
 /// class Engine {}
 ///
 /// @Injectable()
 /// class Car {
-///   engine;
-///   constructor(@Optional() engine:Engine) {
-///     this.engine = engine;
-///   }
+///   final Engine engine;
+///   constructor(@Optional() this.engine);
 /// }
 ///
 /// var injector = Injector.resolveAndCreate([Car]);
-/// expect(injector.get(Car).engine).toBeNull();
+/// expect(injector.get(Car).engine, isNull);
 /// ```
 class OptionalMetadata {
   const OptionalMetadata();
@@ -77,6 +77,7 @@ class OptionalMetadata {
 }
 
 /// `DependencyMetadata` is used by the framework to extend DI.
+///
 /// This is internal to Angular and should not be used directly.
 class DependencyMetadata {
   const DependencyMetadata();
@@ -84,34 +85,39 @@ class DependencyMetadata {
   dynamic get token => null;
 }
 
-/// A marker metadata that marks a class as available to [Injector] for creation.
+/// A marker metadata that marks a class as available to [Injector] for
+/// creation.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/Wk4DMQ?p=preview))
+/// ## Example
 ///
-/// ```typescript
+/// ```dart
 /// @Injectable()
 /// class UsefulService {}
 ///
 /// @Injectable()
 /// class NeedsService {
-///   constructor(public service:UsefulService) {}
+///   final UsefulService service;
+///   NeedsService(this.service);
 /// }
 ///
 /// var injector = Injector.resolveAndCreate([NeedsService, UsefulService]);
-/// expect(injector.get(NeedsService).service instanceof UsefulService).toBe(true);
+/// expect(injector.get(NeedsService).service,
+///     new isInstanceOf<UsefulService>());
 /// ```
-/// [Injector] will throw [NoAnnotationError] when trying to instantiate a class that
-/// does not have `@Injectable` marker, as shown in the example below.
 ///
-/// ```typescript
+/// [Injector] will throw [NoAnnotationError] when trying to instantiate a class
+/// that does not have `@Injectable` marker, as shown in the example below.
+///
+/// ```dart
 /// class UsefulService {}
 ///
 /// class NeedsService {
-///   constructor(public service:UsefulService) {}
+///   final UsefulService service;
+///   NeedsService(this.service);
 /// }
 ///
 /// var injector = Injector.resolveAndCreate([NeedsService, UsefulService]);
-/// expect(() => injector.get(NeedsService)).toThrowError();
+/// expect(() => injector.get(NeedsService), throws);
 /// ```
 class InjectableMetadata {
   const InjectableMetadata();
@@ -119,28 +125,25 @@ class InjectableMetadata {
 
 /// Specifies that an [Injector] should retrieve a dependency only from itself.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/NeagAg?p=preview))
+/// ## Example
 ///
-/// ```typescript
-/// class Dependency {
-/// }
+/// ```dart
+/// class Dependency {}
 ///
 /// @Injectable()
 /// class NeedsDependency {
-///   dependency;
-///   constructor(@Self() dependency:Dependency) {
-///     this.dependency = dependency;
-///   }
+///   final Dependency dependency;
+///   NeedsDependency(@Self() this.dependency);
 /// }
 ///
 /// var inj = Injector.resolveAndCreate([Dependency, NeedsDependency]);
 /// var nd = inj.get(NeedsDependency);
 ///
-/// expect(nd.dependency instanceof Dependency).toBe(true);
+/// expect(nd.dependency, new isInstanceOf<Dependency>());
 ///
-/// var inj = Injector.resolveAndCreate([Dependency]);
+/// inj = Injector.resolveAndCreate([Dependency]);
 /// var child = inj.resolveAndCreateChild([NeedsDependency]);
-/// expect(() => child.get(NeedsDependency)).toThrowError();
+/// expect(() => child.get(NeedsDependency), throws);
 /// ```
 class SelfMetadata {
   const SelfMetadata();
@@ -150,28 +153,27 @@ class SelfMetadata {
   }
 }
 
-/// Specifies that the dependency resolution should start from the parent injector.
+/// Specifies that the dependency resolution should start from the parent
+/// injector.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/Wchdzb?p=preview))
+/// ## Example
 ///
-/// ```typescript
-/// class Dependency {
-/// }
+/// ```dart
+/// class Dependency {}
 ///
 /// @Injectable()
 /// class NeedsDependency {
-///   dependency;
-///   constructor(@SkipSelf() dependency:Dependency) {
-///     this.dependency = dependency;
-///   }
+///   final Dependency dependency;
+///   NeedsDependency(@Self() this.dependency);
 /// }
 ///
 /// var parent = Injector.resolveAndCreate([Dependency]);
 /// var child = parent.resolveAndCreateChild([NeedsDependency]);
-/// expect(child.get(NeedsDependency).dependency instanceof Depedency).toBe(true);
+/// expect(child.get(NeedsDependency).dependency, new
+///     isInstanceOf<Dependency>());
 ///
 /// var inj = Injector.resolveAndCreate([Dependency, NeedsDependency]);
-/// expect(() => inj.get(NeedsDependency)).toThrowError();
+/// expect(() => inj.get(NeedsDependency), throws);
 /// ```
 class SkipSelfMetadata {
   const SkipSelfMetadata();
@@ -181,58 +183,59 @@ class SkipSelfMetadata {
   }
 }
 
-/// Specifies that an injector should retrieve a dependency from any injector until reaching the
-/// closest host.
+/// Specifies that an injector should retrieve a dependency from any injector
+/// until reaching the closest host.
 ///
-/// In Angular, a component element is automatically declared as a host for all the injectors in
-/// its view.
+/// In Angular, a component element is automatically declared as a host for all
+/// the injectors in its view.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/GX79pV?p=preview))
+/// ## Example
 ///
-/// In the following example `App` contains `ParentCmp`, which contains `ChildDirective`.
-/// So `ParentCmp` is the host of `ChildDirective`.
+/// In the following example `App` contains `ParentCmp`, which contains
+/// `ChildDirective`.  So `ParentCmp` is the host of `ChildDirective`.
 ///
 /// `ChildDirective` depends on two services: `HostService` and `OtherService`.
-/// `HostService` is defined at `ParentCmp`, and `OtherService` is defined at `App`.
+/// `HostService` is defined at `ParentCmp`, and `OtherService` is defined at
+/// `App`.
 ///
-/// ``typescript
+///```dart
 /// class OtherService {}
 /// class HostService {}
 ///
-/// @Directive({
+/// @Directive(
 ///   selector: 'child-directive'
-/// })
+/// )
 /// class ChildDirective {
-///   constructor(@Optional() @Host() os:OtherService, @Optional() @Host() hs:HostService){
-///     console.log("os is null", os);
-///     console.log("hs is NOT null", hs);
+///   ChildDirective(
+///       @Optional() @Host() OtherService os,
+///       @Optional() @Host() HostService hs) {
+///     print("os is null", os);
+///     print("hs is NOT null", hs);
 ///   }
 /// }
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'parent-cmp',
-///   providers: [HostService],
-///   template: `
+///   providers: const [HostService],
+///   template: '''
 ///     Dir: <child-directive></child-directive>
-///   `,
-///   directives: [ChildDirective]
-/// })
-/// class ParentCmp {
-/// }
+///   ''',
+///   directives: const [ChildDirective]
+/// )
+/// class ParentCmp {}
 ///
-/// @Component({
+/// @Component(
 ///   selector: 'app',
-///   providers: [OtherService],
-///   template: `
+///   providers: const [OtherService],
+///   template: '''
 ///     Parent: <parent-cmp></parent-cmp>
-///   `,
-///   directives: [ParentCmp]
-/// })
-/// class App {
-/// }
+///   ''',
+///   directives: const [ParentCmp]
+/// )
+/// class App {}
 ///
 /// bootstrap(App);
-/// ```
+///```
 class HostMetadata {
   const HostMetadata();
 

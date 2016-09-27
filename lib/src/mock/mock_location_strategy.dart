@@ -2,8 +2,8 @@ import "package:angular2/platform/common.dart" show LocationStrategy;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
-/// A mock implementation of [LocationStrategy] that allows tests to fire simulated
-/// location events.
+/// A mock implementation of [LocationStrategy] that allows tests to fire
+/// simulated location events.
 @Injectable()
 class MockLocationStrategy extends LocationStrategy {
   String internalBaseHref = "/";
@@ -11,7 +11,7 @@ class MockLocationStrategy extends LocationStrategy {
   String internalTitle = "";
   String internalHash = "";
   List<String> urlChanges = [];
-  /** @internal */
+
   EventEmitter<dynamic> _subject = new EventEmitter();
   MockLocationStrategy();
   void simulatePopState(String url) {

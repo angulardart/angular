@@ -15,29 +15,29 @@ enum ChangeDetectorState {
   Errored
 }
 
-/// Describes within the change detector which strategy will be used the next time change
-/// detection is triggered.
+/// Describes within the change detector which strategy will be used the next
+/// time change detection is triggered.
 enum ChangeDetectionStrategy {
-  /// `CheckedOnce` means that after calling detectChanges the mode of the change detector
-  /// will become `Checked`.
+  /// After calling detectChanges the mode of the change detector will become
+  /// `Checked`.
   CheckOnce,
 
-  /// `Checked` means that the change detector should be skipped until its mode changes to
+  /// The change detector should be skipped until its mode changes to
   /// `CheckOnce`.
   Checked,
 
-  /// `CheckAlways` means that after calling detectChanges the mode of the change detector
-  /// will remain `CheckAlways`.
+  /// After calling detectChanges the mode of the change detector will remain
+  /// `CheckAlways`.
   CheckAlways,
 
-  /// `Detached` means that the change detector sub tree is not a part of the main tree and
-  /// should be skipped.
+  /// The change detector sub tree is not a part of the main tree and should be
+  /// skipped.
   Detached,
 
-  /// `OnPush` means that the change detector's mode will be set to `CheckOnce` during hydration.
+  /// The change detector's mode will be set to `CheckOnce` during hydration.
   OnPush,
 
-  /// `Default` means that the change detector's mode will be set to `CheckAlways` during hydration.
+  /// The change detector's mode will be set to `CheckAlways` during hydration.
   Default
 }
 
@@ -57,6 +57,7 @@ var CHANGE_DETECTOR_STATE_VALUES = [
   ChangeDetectorState.CheckedBefore,
   ChangeDetectorState.Errored
 ];
+
 bool isDefaultChangeDetectionStrategy(
     ChangeDetectionStrategy changeDetectionStrategy) {
   return changeDetectionStrategy == null ||

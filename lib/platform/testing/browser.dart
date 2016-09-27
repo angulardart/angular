@@ -12,6 +12,7 @@ import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 
 /// Providers for using template cache to avoid actual XHR.
+///
 /// Re-exported here so that tests import from a single place.
 export "package:angular2/platform/browser.dart" show CACHED_TEMPLATE_PROVIDER;
 export "package:angular2/src/debug/debug_node.dart"

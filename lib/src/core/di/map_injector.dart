@@ -1,6 +1,6 @@
 import "injector.dart" show Injector, InjectorFactory, THROW_IF_NOT_FOUND;
 
-/// An simple injector based on a Map of values.
+/// A simple injector based on a Map of values.
 class MapInjector implements Injector {
   Injector _parent;
   static InjectorFactory<dynamic> createFactory(

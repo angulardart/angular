@@ -1,4 +1,5 @@
-/// Maps application URLs into application states, to support deep-linking and navigation.
+/// Maps application URLs into application states, to support deep-linking and
+/// navigation.
 library angular2.router;
 
 import "src/router/directives/router_link.dart" show RouterLink;
@@ -24,17 +25,18 @@ export "src/router/route_registry.dart"
 export "src/router/router.dart" show Router;
 
 /// A list of directives. To use the router directives like [RouterOutlet] and
-/// [RouterLink], add this to your `directives` array in the [View] decorator of your
-/// component.
+/// [RouterLink], add this to your `directives` array in the [View] decorator of
+/// your component.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/iRUP8B5OUbxCWQ3AcIDm))
+/// ## Example ([live demo](http://plnkr.co/edit/iRUP8B5OUbxCWQ3AcIDm))
 ///
 /// ```
-/// import {Component} from 'angular2/core';
-/// import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig} from 'angular2/router';
+/// import 'package:angular2/cored.dart' show Component;
+/// import 'package:angular2/router.dart'
+///     show ROUTER_DIRECTIVES, ROUTER_PROVIERS, RouteConfig;
 ///
-/// @Component({directives: [ROUTER_DIRECTIVES]})
-/// @RouteConfig([
+/// @Component(directives: const [ROUTER_DIRECTIVES])
+/// @RouteConfig(const [
 ///  {...},
 /// ])
 /// class AppCmp {

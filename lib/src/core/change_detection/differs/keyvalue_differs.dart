@@ -16,7 +16,8 @@ abstract class KeyValueDifferFactory {
   KeyValueDiffer create(ChangeDetectorRef cdRef);
 }
 
-/// A repository of different Map diffing strategies used by NgClass, NgStyle, and others.
+/// A repository of different Map diffing strategies used by NgClass, NgStyle,
+/// and others.
 class KeyValueDiffers {
   final List<KeyValueDifferFactory> factories;
   const KeyValueDiffers(this.factories);
@@ -32,31 +33,32 @@ class KeyValueDiffers {
     }
   }
 
-  /// Takes an array of [KeyValueDifferFactory] and returns a provider used to extend the
-  /// inherited [KeyValueDiffers] instance with the provided factories and return a new
-  /// [KeyValueDiffers] instance.
+  /// Takes an array of [KeyValueDifferFactory] and returns a provider used to
+  /// extend the inherited [KeyValueDiffers] instance with the provided
+  /// factories and return a new [KeyValueDiffers] instance.
   ///
   /// The following example shows how to extend an existing list of factories,
-  ///     * which will only be applied to the injector for this component and its children.
-  ///     * This step is all that's required to make a new [KeyValueDiffer] available.
+  /// which will only be applied to the injector for this component and its
+  /// children.  This step is all that's required to make a new [KeyValueDiffer]
+  /// available.
   ///
-  /// ### Example
+  /// ## Example
   ///
-  /// ```
-  /// @Component({
-  ///   viewProviders: [
-  ///     KeyValueDiffers.extend([new ImmutableMapDiffer()])
+  /// ```dart
+  /// @Component(
+  ///   viewProviders: const [
+  ///     const KeyValueDiffers([new ImmutableMapDiffer()])
   ///   ]
-  /// })
+  /// )
   /// ```
   static Provider extend(List<KeyValueDifferFactory> factories) {
     return new Provider(KeyValueDiffers, useFactory: (KeyValueDiffers parent) {
       if (parent == null) {
-        // Typically would occur when calling KeyValueDiffers.extend inside of dependencies passed
-        // to
-        // bootstrap(), which would override default pipes instead of extending them.
+        // Typically would occur when calling KeyValueDiffers.extend inside of
+        // dependencies passed to bootstrap(), which would override default
+        // pipes instead of extending them.
         throw new BaseException(
-            "Cannot extend KeyValueDiffers without a parent injector");
+            'Cannot extend KeyValueDiffers without a parent injector');
       }
       return KeyValueDiffers.create(factories, parent);
     }, deps: [
@@ -78,7 +80,7 @@ class KeyValueDiffers {
       return factory;
     } else {
       throw new BaseException(
-          '''Cannot find a differ supporting object \'${ kv}\'''');
+          'Cannot find a differ supporting object \'${ kv}\'');
     }
   }
 }

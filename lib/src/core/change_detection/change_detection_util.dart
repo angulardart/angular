@@ -25,20 +25,20 @@ bool devModeEqual(Object a, Object b) => const _DevModeEquality().equals(a, b);
 
 Object uninitialized = const Object();
 
-/// Indicates that the result of a [PipeMetadata] transformation has changed even though the
-/// reference
-/// has not changed.
+/// Indicates that the result of a [PipeMetadata] transformation has changed
+/// even though the reference has not changed.
 ///
-/// The wrapped value will be unwrapped by change detection, and the unwrapped value will be stored.
+/// The wrapped value will be unwrapped by change detection, and the unwrapped
+/// value will be stored.
 ///
-/// Example:
+/// ## Example
 ///
-/// ```
-/// if (this._latestValue === this._latestReturnedValue) {
+/// ```dart
+/// if (_latestValue == _latestReturnedValue) {
 ///    return this._latestReturnedValue;
 ///  } else {
-///    this._latestReturnedValue = this._latestValue;
-///    return WrappedValue.wrap(this._latestValue); // this will force update
+///    _latestReturnedValue = _latestValue;
+///    return WrappedValue.wrap(_latestValue); // this will force update
 ///  }
 /// ```
 class WrappedValue {
@@ -49,7 +49,7 @@ class WrappedValue {
   }
 }
 
-/// Helper class for unwrapping WrappedValue s
+/// Helper class for unwrapping [WrappedValue]s
 class ValueUnwrapper {
   var hasWrappedValue = false;
   dynamic unwrap(dynamic value) {
@@ -72,7 +72,5 @@ class SimpleChange {
   SimpleChange(this.previousValue, this.currentValue);
 
   /// Check whether the new value is the first value assigned.
-  bool isFirstChange() {
-    return identical(this.previousValue, uninitialized);
-  }
+  bool isFirstChange() => identical(this.previousValue, uninitialized);
 }

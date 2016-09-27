@@ -6,17 +6,13 @@ import "package:angular2/src/facade/async.dart" show EventEmitter;
 @Injectable()
 class SpyLocation implements Location {
   List<String> urlChanges = [];
-  /** @internal */
   String _path = "";
-  /** @internal */
   String _query = "";
-  /** @internal */
   EventEmitter<dynamic> _subject = new EventEmitter();
-  /** @internal */
   String _baseHref = "";
-  /** @internal */
   String _hash = "";
-  void setInitialPath(String url) {
+
+  setInitialPath(String url) {
     this._path = url;
   }
 

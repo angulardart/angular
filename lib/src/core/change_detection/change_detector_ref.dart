@@ -3,6 +3,8 @@ abstract class ChangeDetectorRef {
   ///
   /// <!-- TODO: Add a link to a chapter on OnPush components -->
   ///
+  /// ## Example
+  ///
   /// ```dart
   /// @Component(
   ///     selector: 'cmp',
@@ -10,12 +12,12 @@ abstract class ChangeDetectorRef {
   ///     template: 'Number of ticks: {{numberOfTicks}}')
   /// class Cmp {
   ///   int numberOfTicks = 0;
-  ///   ChangeDetectorRef ref;
   ///
-  ///   Cmp(this.ref) {
-  ///     new Timer(new Duration(milliseconds: 1000), () {
+  ///   Cmp(ChangeDetectorRef ref) {
+  ///     new Timer.periodic(const Duration(seconds: 1), () {
   ///       numberOfTicks++;
-  ///       this.ref.markForCheck();
+  ///       // the following is required, otherwise the view will not be updated
+  ///       ref.markForCheck();
   ///     });
   ///   }
   /// }
@@ -40,12 +42,12 @@ abstract class ChangeDetectorRef {
   ///
   /// The detached change detector will not be checked until it is reattached.
   ///
-  /// This can also be used in combination with [ChangeDetectorRef#detectChanges]
-  /// to implement local change detection checks.
+  /// This can also be used in combination with [detectChanges] to implement
+  /// local change detection checks.
   ///
   /// <!-- TODO: Add a link to a chapter on detach/reattach/local digest -->
   ///
-  /// ### Example
+  /// ## Example
   ///
   /// The following example defines a component with a large list of readonly
   /// data. Imagine the data changes constantly, many times per second. For
@@ -67,16 +69,14 @@ abstract class ChangeDetectorRef {
   ///     directives: const [NgFor])
   /// class GiantList {
   ///   ChangeDetectorRef _ref;
-  ///   DataProvider _dataProvider;
+  ///   final DataProvider dataProvider;
   ///
-  ///   GiantList(this._ref, this._dataProvider) {
+  ///   GiantList(this._ref, this.dataProvider) {
   ///     _ref.detach();
-  ///     new Timer(new Duration(milliseconds: 5000), () {
+  ///     new Timer(new Duration(seconds: 5), () {
   ///       _ref.detectChanges();
   ///     });
   ///   }
-  ///
-  ///   DataProvider get dataProvider => this._dataProvider;
   /// }
   ///
   /// @Component(
@@ -97,13 +97,13 @@ abstract class ChangeDetectorRef {
 
   /// Checks the change detector and its children.
   ///
-  /// This can also be used in combination with [ChangeDetectorRef#detach] to
-  /// implement local change detection checks.
+  /// This can also be used in combination with [detach] to implement local
+  /// change detection checks.
   ///
   /// <!-- TODO: Add a link to a chapter on detach/reattach/local digest -->
   /// <!-- TODO: Add an example or remove the following description -->
   ///
-  /// ### Example
+  /// ## Example
   ///
   /// The following example defines a component with a large list of readonly
   /// data. Imagine, the data changes constantly, many times per second. For
@@ -113,16 +113,14 @@ abstract class ChangeDetectorRef {
   /// We can do that by detaching the component's change detector and doing a
   /// local change detection check every five seconds.
   ///
-  /// See [ChangeDetectorRef#detach] for more information.
-  ///
+  /// See [detach] for more information.
   void detectChanges();
 
-  /// Checks the change detector and its children, and throws if any changes
-  /// are detected.
+  /// Checks the change detector and its children, and throws if any changes are
+  /// detected.
   ///
   /// This is used in development mode to verify that running change detection
   /// doesn't introduce other changes.
-  ///
   void checkNoChanges();
 
   /// Reattach the change detector to the change detector tree.
@@ -132,16 +130,18 @@ abstract class ChangeDetectorRef {
   ///
   /// <!-- TODO: Add a link to a chapter on detach/reattach/local digest -->
   ///
+  /// ## Example
+  ///
   /// The following example creates a component displaying `live` data. The
   /// component will detach its change detector from the main change detector
   /// tree when the component's live property is set to false.
   ///
-  /// ```dart
+  /// ```
   /// class DataProvider {
   ///   int data = 1;
   ///
-  ///   constructor() {
-  ///     new Timer(new Duration(milliseconds: 500), () {
+  ///   DataProvider() {
+  ///     new Timer.periodic( const Duration(milliseconds: 500), () {
   ///       data *= 2;
   ///     });
   ///   }
@@ -150,20 +150,20 @@ abstract class ChangeDetectorRef {
   /// @Component(
   ///     selector: 'live-data',
   ///     inputs: const ['live'],
-  ///     template: 'Data: {{dataProvider.data}}')
+  ///     template: 'Data: {{dataProvider.data}}'
+  /// )
   /// class LiveData {
-  ///   ChangeDetectorRef _ref;
-  ///   DataProvider _dataProvider;
+  ///   final ChangeDetectorRef ref;
+  ///   final DataProvider dataProvider;
   ///
-  ///   LiveData(this._ref, this._dataProvider);
+  ///   LiveData(this.ref, this.dataProvider);
   ///
-  ///   DataProvider get dataProvider => _dataProvider;
-  ///
-  ///   set live(value) {
-  ///     if (value)
-  ///       _ref.reattach();
-  ///     else
-  ///       _ref.detach();
+  ///   set live(bool value) {
+  ///     if (value) {
+  ///       ref.reattach();
+  ///     } else {
+  ///       ref.detach();
+  ///     }
   ///   }
   /// }
   ///
@@ -171,9 +171,9 @@ abstract class ChangeDetectorRef {
   ///     selector: 'app',
   ///     providers: const [DataProvider],
   ///     template: '''
-  ///         Live Update: <input type="checkbox" [(ngModel)]="live">
-  ///         <live-data [live]="live"><live-data>
-  ///       ''',
+  ///       Live Update: <input type="checkbox" [(ngModel)]="live">
+  ///       <live-data [live]="live"><live-data>
+  ///     ''',
   ///     directives: const [LiveData, FORM_DIRECTIVES])
   /// class App {
   ///   bool live = true;
