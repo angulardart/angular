@@ -3,180 +3,186 @@ abstract class ChangeDetectorRef {
   ///
   /// <!-- TODO: Add a link to a chapter on OnPush components -->
   ///
-  /// ### Example ([live demo](http://plnkr.co/edit/GC512b?p=preview))
-  ///
-  /// ```typescript
-  /// @Component({
-  ///   selector: 'cmp',
-  ///   changeDetection: ChangeDetectionStrategy.OnPush,
-  ///   template: `Number of ticks: {{numberOfTicks}}`
-  /// })
+  /// ```dart
+  /// @Component(
+  ///     selector: 'cmp',
+  ///     changeDetection: ChangeDetectionStrategy.OnPush,
+  ///     template: 'Number of ticks: {{numberOfTicks}}')
   /// class Cmp {
-  ///   numberOfTicks = 0;
+  ///   int numberOfTicks = 0;
+  ///   ChangeDetectorRef ref;
   ///
-  ///   constructor(ref: ChangeDetectorRef) {
-  ///     setInterval(() => {
-  ///       this.numberOfTicks ++
-  ///       // the following is required, otherwise the view will not be updated
+  ///   Cmp(this.ref) {
+  ///     new Timer(new Duration(milliseconds: 1000), () {
+  ///       numberOfTicks++;
   ///       this.ref.markForCheck();
-  ///     }, 1000);
+  ///     });
   ///   }
   /// }
   ///
-  /// @Component({
-  ///   selector: 'app',
-  ///   changeDetection: ChangeDetectionStrategy.OnPush,
-  ///   template: `
-  ///     <cmp><cmp>
-  ///   `,
-  ///   directives: [Cmp]
-  /// })
-  /// class App {
-  /// }
+  /// @Component(
+  ///     selector: 'app',
+  ///     changeDetection: ChangeDetectionStrategy.OnPush,
+  ///     template: '''
+  ///         <cmp><cmp>
+  ///       ''',
+  ///     directives: const [Cmp])
+  /// class App {}
   ///
-  /// bootstrap(App);
+  /// void main() {
+  ///   bootstrap(App);
+  /// }
   /// ```
+  ///
   void markForCheck();
 
   /// Detaches the change detector from the change detector tree.
   ///
   /// The detached change detector will not be checked until it is reattached.
   ///
-  /// This can also be used in combination with [ChangeDetectorRef#detectChanges] to implement
-  /// local change
-  /// detection checks.
+  /// This can also be used in combination with [ChangeDetectorRef#detectChanges]
+  /// to implement local change detection checks.
   ///
   /// <!-- TODO: Add a link to a chapter on detach/reattach/local digest -->
-  /// <!-- TODO: Add a live demo once ref.detectChanges is merged into master -->
   ///
   /// ### Example
   ///
-  /// The following example defines a component with a large list of readonly data.
-  /// Imagine the data changes constantly, many times per second. For performance reasons,
-  /// we want to check and update the list every five seconds. We can do that by detaching
-  /// the component's change detector and doing a local check every five seconds.
+  /// The following example defines a component with a large list of readonly
+  /// data. Imagine the data changes constantly, many times per second. For
+  /// performance reasons, we want to check and update the list every five
+  /// seconds. We can do that by detaching the component's change detector and
+  /// doing a local check every five seconds.
   ///
-  /// ```typescript
+  /// ```dart
   /// class DataProvider {
   ///   // in a real application the returned data will be different every time
-  ///   get data() {
-  ///     return [1,2,3,4,5];
-  ///   }
+  ///   List get data => [1, 2, 3, 4, 5];
   /// }
   ///
-  /// @Component({
-  ///   selector: 'giant-list',
-  ///   template: `
-  ///     <li *ngFor="let d of dataProvider.data">Data {{d}}</lig>
-  ///   `,
-  ///   directives: [NgFor]
-  /// })
+  /// @Component(
+  ///     selector: 'giant-list',
+  ///     template: '''
+  ///        <li *ngFor="let d of dataProvider.data">Data {{d}}</lig>
+  ///      ''',
+  ///     directives: const [NgFor])
   /// class GiantList {
-  ///   constructor(private ref: ChangeDetectorRef, private dataProvider:DataProvider) {
-  ///     ref.detach();
-  ///     setInterval(() => {
-  ///       this.ref.detectChanges();
-  ///     }, 5000);
+  ///   ChangeDetectorRef _ref;
+  ///   DataProvider _dataProvider;
+  ///
+  ///   GiantList(this._ref, this._dataProvider) {
+  ///     _ref.detach();
+  ///     new Timer(new Duration(milliseconds: 5000), () {
+  ///       _ref.detectChanges();
+  ///     });
   ///   }
+  ///
+  ///   DataProvider get dataProvider => this._dataProvider;
   /// }
   ///
-  /// @Component({
-  ///   selector: 'app',
-  ///   providers: [DataProvider],
-  ///   template: `
-  ///     <giant-list><giant-list>
-  ///   `,
-  ///   directives: [GiantList]
-  /// })
-  /// class App {
-  /// }
+  /// @Component(
+  ///     selector: 'app',
+  ///     providers: const [DataProvider],
+  ///     template: '''
+  ///        <giant-list><giant-list>
+  ///      ''',
+  ///     directives: const [GiantList])
+  /// class App {}
   ///
-  /// bootstrap(App);
+  /// void main() {
+  ///   bootstrap(App);
+  /// }
   /// ```
+  ///
   void detach();
 
   /// Checks the change detector and its children.
   ///
-  /// This can also be used in combination with [ChangeDetectorRef#detach] to implement local
-  /// change detection
-  /// checks.
+  /// This can also be used in combination with [ChangeDetectorRef#detach] to
+  /// implement local change detection checks.
   ///
   /// <!-- TODO: Add a link to a chapter on detach/reattach/local digest -->
-  /// <!-- TODO: Add a live demo once ref.detectChanges is merged into master -->
+  /// <!-- TODO: Add an example or remove the following description -->
   ///
   /// ### Example
   ///
-  /// The following example defines a component with a large list of readonly data.
-  /// Imagine, the data changes constantly, many times per second. For performance reasons,
-  /// we want to check and update the list every five seconds.
+  /// The following example defines a component with a large list of readonly
+  /// data. Imagine, the data changes constantly, many times per second. For
+  /// performance reasons, we want to check and update the list every five
+  /// seconds.
   ///
-  /// We can do that by detaching the component's change detector and doing a local change detection
-  /// check
-  /// every five seconds.
+  /// We can do that by detaching the component's change detector and doing a
+  /// local change detection check every five seconds.
   ///
   /// See [ChangeDetectorRef#detach] for more information.
+  ///
   void detectChanges();
 
-  /// Checks the change detector and its children, and throws if any changes are detected.
+  /// Checks the change detector and its children, and throws if any changes
+  /// are detected.
   ///
-  /// This is used in development mode to verify that running change detection doesn't introduce
-  /// other changes.
+  /// This is used in development mode to verify that running change detection
+  /// doesn't introduce other changes.
+  ///
   void checkNoChanges();
 
   /// Reattach the change detector to the change detector tree.
   ///
-  /// This also marks OnPush ancestors as to be checked. This reattached change detector will be
-  /// checked during the next change detection run.
+  /// This also marks OnPush ancestors as to be checked. This reattached change
+  /// detector will be checked during the next change detection run.
   ///
   /// <!-- TODO: Add a link to a chapter on detach/reattach/local digest -->
   ///
-  /// ### Example ([live demo](http://plnkr.co/edit/aUhZha?p=preview))
+  /// The following example creates a component displaying `live` data. The
+  /// component will detach its change detector from the main change detector
+  /// tree when the component's live property is set to false.
   ///
-  /// The following example creates a component displaying `live` data. The component will detach
-  /// its change detector from the main change detector tree when the component's live property
-  /// is set to false.
-  ///
-  /// ```typescript
+  /// ```dart
   /// class DataProvider {
-  ///   data = 1;
+  ///   int data = 1;
   ///
   ///   constructor() {
-  ///     setInterval(() => {
-  ///       this.data = this.data * 2;
-  ///     }, 500);
+  ///     new Timer(new Duration(milliseconds: 500), () {
+  ///       data *= 2;
+  ///     });
   ///   }
   /// }
   ///
-  /// @Component({
-  ///   selector: 'live-data',
-  ///   inputs: ['live'],
-  ///   template: `Data: {{dataProvider.data}}`
-  /// })
+  /// @Component(
+  ///     selector: 'live-data',
+  ///     inputs: const ['live'],
+  ///     template: 'Data: {{dataProvider.data}}')
   /// class LiveData {
-  ///   constructor(private ref: ChangeDetectorRef, private dataProvider:DataProvider) {}
+  ///   ChangeDetectorRef _ref;
+  ///   DataProvider _dataProvider;
+  ///
+  ///   LiveData(this._ref, this._dataProvider);
+  ///
+  ///   DataProvider get dataProvider => _dataProvider;
   ///
   ///   set live(value) {
   ///     if (value)
-  ///       this.ref.reattach();
+  ///       _ref.reattach();
   ///     else
-  ///       this.ref.detach();
+  ///       _ref.detach();
   ///   }
   /// }
   ///
-  /// @Component({
-  ///   selector: 'app',
-  ///   providers: [DataProvider],
-  ///   template: `
-  ///     Live Update: <input type="checkbox" [(ngModel)]="live">
-  ///     <live-data [live]="live"><live-data>
-  ///   `,
-  ///   directives: [LiveData, FORM_DIRECTIVES]
-  /// })
+  /// @Component(
+  ///     selector: 'app',
+  ///     providers: const [DataProvider],
+  ///     template: '''
+  ///         Live Update: <input type="checkbox" [(ngModel)]="live">
+  ///         <live-data [live]="live"><live-data>
+  ///       ''',
+  ///     directives: const [LiveData, FORM_DIRECTIVES])
   /// class App {
-  ///   live = true;
+  ///   bool live = true;
   /// }
   ///
-  /// bootstrap(App);
+  /// void main(){
+  ///   bootstrap(App);
+  /// }
   /// ```
+  ///
   void reattach();
 }
