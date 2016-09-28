@@ -51,6 +51,38 @@ class AppElement {
     return result;
   }
 
+  void moveView(AppView<dynamic> view, int currentIndex) {
+    int previousIndex = this.nestedViews.indexOf(view);
+
+    if (view.type == ViewType.COMPONENT) {
+      throw new Exception("Component views can't be moved!");
+    }
+
+    List<AppView<dynamic>> nestedViews = this.nestedViews;
+
+    if (nestedViews == null) {
+      nestedViews = [];
+      this.nestedViews = nestedViews;
+    }
+
+    nestedViews.removeAt(previousIndex);
+    nestedViews.insert(currentIndex, view);
+    dynamic refRenderNode;
+
+    if (currentIndex > 0) {
+      dynamic prevView = nestedViews[currentIndex - 1];
+      refRenderNode = prevView.lastRootNode;
+    } else {
+      refRenderNode = this.nativeElement;
+    }
+
+    if (refRenderNode != null) {
+      view.renderer.attachViewAfter(refRenderNode, view.flatRootNodes);
+    }
+
+    view.markContentChildAsMoved(this);
+  }
+
   void attachView(AppView<dynamic> view, num viewIndex) {
     if (identical(view.type, ViewType.COMPONENT)) {
       throw new BaseException("Component views can't be moved!");
