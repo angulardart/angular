@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:angular2/src/core/change_detection/change_detector_ref.dart';
-import 'package:angular2/src/core/console.dart';
 import 'package:angular2/src/core/di.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart';
 import 'package:angular2/src/core/linker/component_factory.dart'
@@ -362,14 +361,6 @@ class ApplicationRefImpl extends ApplicationRef {
             .registerApplication(compRef.location.nativeElement, testability);
       }
       _loadComponent(compRef);
-      var c = (_injector.get(Console) as Console);
-      assert(() {
-        if (assertionsEnabled()) {
-          c.log('Angular 2 is running in the development mode. '
-              'Call enableProdMode() to enable the production mode.');
-        }
-        return true;
-      });
       return compRef;
     });
   }
