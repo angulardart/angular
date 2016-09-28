@@ -14,7 +14,6 @@ import "package:angular2/src/core/render/api.dart"
 import '../platform/dom/dom_tokens.dart' show DOCUMENT;
 import '../platform/dom/dom_renderer.dart' show DomRenderer, DomRootRenderer;
 import '../platform/dom/events/event_manager.dart' show EventManager;
-import '../platform/dom/shared_styles_host.dart';
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
 const INSPECT_GLOBAL_NAME = "ng.probe";
@@ -32,7 +31,6 @@ class DebugDomRootRenderer implements DomRootRenderer {
 
   DebugDomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager) {
     DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
-    sharedStylesHost ??= new DomSharedStylesHost(document);
   }
 
   Renderer renderComponent(RenderComponentType componentProto) {

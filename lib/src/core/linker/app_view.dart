@@ -4,9 +4,8 @@ import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
-import 'package:angular2/src/core/render/api.dart'
-    show Renderer, RenderComponentType;
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
+import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/dom_renderer.dart'
     show DomRootRenderer;
 
@@ -59,6 +58,7 @@ abstract class AppView<T> {
   AppView(this.clazz, this.componentType, this.type, this.locals,
       this.parentInjector, this.declarationAppElement, this._cdMode) {
     this.ref = new ViewRefImpl(this);
+    sharedStylesHost ??= new DomSharedStylesHost(document);
     if (identical(type, ViewType.COMPONENT) || identical(type, ViewType.HOST)) {
       this.renderer = appViewUtils.renderComponent(componentType);
     } else {
@@ -358,7 +358,7 @@ abstract class AppView<T> {
   }
 
   static void initializeSharedStyleHost(document) {
-    sharedStylesHost = new DomSharedStylesHost(document);
+    sharedStylesHost ??= new DomSharedStylesHost(document);
   }
 
   // Returns content attribute to add to elements for css encapsulation.
@@ -384,15 +384,10 @@ abstract class AppView<T> {
     List<String> styles = componentType.styles;
     int styleCount = styles.length;
     for (var i = 0; i < styleCount; i++) {
-      nodesParent.append(createStyleElement(styles[i]));
+      StyleElement style = sharedStylesHost.createStyleElement(styles[i]);
+      nodesParent.append(style);
     }
     return nodesParent;
-  }
-
-  StyleElement createStyleElement(String css) {
-    StyleElement el = document.createElement('STYLE');
-    el.text = css;
-    return el;
   }
 
   // Called by template.dart code to updates [class.X] style bindings.

@@ -8,7 +8,13 @@ abstract class SharedStylesHost {
   void addHost(dynamic hostNode);
   void removeHost(dynamic hostNode);
   List<String> getAllStyles();
+  dynamic createStyleElement(String css);
 }
+
+/// Application level shared style host to shim styles for components.
+///
+/// Initialized by RootRenderer.
+SharedStylesHost sharedStylesHost;
 
 /// Component prototype and runtime style information that are shared
 /// across all instances of a component type.

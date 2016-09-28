@@ -1,10 +1,6 @@
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import 'package:angular2/src/core/render/api.dart';
+import 'dart:html';
 
-/// Returns application level shared style host to shim styles for components.
-///
-/// Initialized by RootRenderer.
-SharedStylesHost sharedStylesHost;
+import 'package:angular2/src/core/render/api.dart';
 
 /// Implementation of DomSharedStyleHost for DOM.
 class DomSharedStylesHost implements SharedStylesHost {
@@ -14,6 +10,13 @@ class DomSharedStylesHost implements SharedStylesHost {
 
   DomSharedStylesHost(dynamic doc) {
     _hostNodes.add(doc.head);
+  }
+
+  @override
+  dynamic createStyleElement(String css) {
+    StyleElement el = document.createElement('STYLE');
+    el.text = css;
+    return el;
   }
 
   @override
@@ -38,7 +41,7 @@ class DomSharedStylesHost implements SharedStylesHost {
   void _addStylesToHost(List<String> styles, dynamic host) {
     int styleCount = styles.length;
     for (var i = 0; i < styleCount; i++) {
-      DOM.appendChild(host, DOM.createStyleElement(styles[i]));
+      host.append(createStyleElement(styles[i]));
     }
   }
 
