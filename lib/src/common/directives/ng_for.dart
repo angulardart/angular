@@ -149,6 +149,8 @@ class NgFor implements DoCheck {
       var viewRef = _viewContainer.get(i);
       viewRef.setLocal("first", identical(i, 0));
       viewRef.setLocal("last", identical(i, ilen - 1));
+      viewRef.setLocal("index", i);
+      viewRef.setLocal("count", ilen);
     }
     changes.forEachIdentityChange((record) {
       var viewRef = _viewContainer.get(record.currentIndex);
@@ -158,7 +160,6 @@ class NgFor implements DoCheck {
 
   void _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
     view.setLocal("\$implicit", record.item);
-    view.setLocal("index", record.currentIndex);
     view.setLocal("even", (record.currentIndex % 2 == 0));
     view.setLocal("odd", (record.currentIndex % 2 == 1));
   }
