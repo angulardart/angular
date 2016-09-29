@@ -32,3 +32,8 @@ transformers:
   - $dart2js:
       commandLineOptions:
         - '--show-package-warnings'
+dependency_overrides:
+  test:
+    git:
+      url: https://github.com/kevmoo/test
+      ref: long_suite_timeout
