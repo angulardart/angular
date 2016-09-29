@@ -1,8 +1,14 @@
 presets:
   safe_firefox:
     platforms: [firefox]
-    exclude_tags: known_ff_failure
+    exclude_tags: known_ff_failure || travis_timeout
 tags:
   needs_pub:
     skip: "Can't run tests that need pub serve. Need to figure this out."
+
+  # These need to be triaged and fixed – but we don't want to block running
+  # on Travis
   known_ff_failure:
+  # Due to a hard-coded timeout in pkg/test LoadSuite
+  # https://github.com/dart-lang/test/issues/390
+  travis_timeout:

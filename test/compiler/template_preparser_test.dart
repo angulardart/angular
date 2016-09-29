@@ -1,4 +1,5 @@
 @TestOn('browser')
+@Tags(const ['travis_timeout'])
 library angular2.test.compiler.template_preparser_test;
 
 import "package:angular2/testing_internal.dart";

@@ -1,4 +1,5 @@
 @TestOn('browser')
+@Tags(const ['travis_timeout'])
 library angular2.test.common.forms.model_spec;
 
 import 'dart:async';
