@@ -1,4 +1,5 @@
 @TestOn('browser')
+@Tags(const ['travis_timeout'])
 library angular2.test.core.di.reflective_injector_test;
 
 import "package:angular2/src/facade/lang.dart" show stringify;
