@@ -291,9 +291,9 @@ packages:
     version: "1.0.0"
   test:
     description:
-      ref: long_suite_timeout
-      resolved-ref: "197bd1301404b8c3849116beba211c13f50c568b"
-      url: "https://github.com/kevmoo/test"
+      ref: HEAD
+      resolved-ref: f3d52e08907324152f4fb2d5f6c096d21986954f
+      url: "https://github.com/dart-lang/test"
     source: git
     version: "0.12.16-dev"
   transformer_test:
