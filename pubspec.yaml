@@ -32,3 +32,6 @@ transformers:
   - $dart2js:
       commandLineOptions:
         - '--show-package-warnings'
+dependency_overrides:
+  test:
+    git: https://github.com/dart-lang/test
