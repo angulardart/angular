@@ -5,6 +5,9 @@ import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/iterable_differs.dart"
     show IterableDiffer, IterableDifferFactory, TrackByFn;
 
+typedef void DefaultIterableCallback(
+    CollectionChangeRecord item, int previousIndex, int currentIndex);
+
 class DefaultIterableDifferFactory implements IterableDifferFactory {
   bool supports(Object obj) => obj is Iterable;
 
@@ -63,6 +66,90 @@ class DefaultIterableDiffer implements IterableDiffer<Iterable> {
         !identical(record, null);
         record = record._nextPrevious) {
       fn(record);
+    }
+  }
+
+  void forEachOperation(DefaultIterableCallback fn) {
+    dynamic nextIt = _itHead;
+    dynamic nextRemove = _removalsHead;
+    int addRemoveOffset = 0;
+    int sizeDeficit;
+    List<int> moveOffsets;
+
+    while (nextIt != null || nextRemove != null) {
+      // Figure out which is the next record to process
+      // Order: remove, add, move
+      dynamic record = nextRemove == null ||
+              nextIt != null &&
+                  nextIt.currentIndex <
+                      _getPreviousIndex(
+                          nextRemove, addRemoveOffset, moveOffsets)
+          ? nextIt
+          : nextRemove;
+
+      int adjPreviousIndex =
+          _getPreviousIndex(record, addRemoveOffset, moveOffsets);
+
+      int currentIndex = record.currentIndex;
+
+      // consume the item, and adjust the addRemoveOffset and update moveDistance if necessary
+      if (identical(record, nextRemove)) {
+        addRemoveOffset--;
+        nextRemove = nextRemove._nextRemoved;
+      } else {
+        nextIt = nextIt._next;
+
+        if (record.previousIndex == null) {
+          addRemoveOffset++;
+        } else {
+          // INVARIANT:  currentIndex < previousIndex
+          if (moveOffsets == null) {
+            moveOffsets = [];
+          }
+
+          int localMovePreviousIndex = adjPreviousIndex - addRemoveOffset;
+          int localCurrentIndex = currentIndex - addRemoveOffset;
+
+          if (localMovePreviousIndex != localCurrentIndex) {
+            for (int i = 0; i < localMovePreviousIndex; i++) {
+              int offset;
+
+              if (i < moveOffsets.length) {
+                offset = moveOffsets[i];
+              } else {
+                if (moveOffsets.length > i) {
+                  offset = moveOffsets[i] = 0;
+                } else {
+                  sizeDeficit = i - moveOffsets.length + 1;
+                  for (int j = 0; j < sizeDeficit; j++) {
+                    moveOffsets.add(null);
+                  }
+                  offset = moveOffsets[i] = 0;
+                }
+              }
+
+              int index = offset + i;
+
+              if (localCurrentIndex <= index &&
+                  index < localMovePreviousIndex) {
+                moveOffsets[i] = offset + 1;
+              }
+            }
+
+            int previousIndex = record.previousIndex;
+            sizeDeficit = previousIndex - moveOffsets.length + 1;
+            for (int j = 0; j < sizeDeficit; j++) {
+              moveOffsets.add(null);
+            }
+            moveOffsets[previousIndex] =
+                localCurrentIndex - localMovePreviousIndex;
+          }
+        }
+      }
+
+      if (adjPreviousIndex != currentIndex) {
+        fn(record, adjPreviousIndex, currentIndex);
+      }
     }
   }
 
@@ -704,4 +791,18 @@ class _DuplicateMap {
   String toString() {
     return "_DuplicateMap(" + stringify(this.map) + ")";
   }
+}
+
+int _getPreviousIndex(
+    CollectionChangeRecord item, int addRemoveOffset, List<int> moveOffsets) {
+  int previousIndex = item.previousIndex;
+
+  if (previousIndex == null) return previousIndex;
+
+  int moveOffset = 0;
+  if (moveOffsets != null && previousIndex < moveOffsets.length) {
+    moveOffset = moveOffsets[previousIndex];
+  }
+
+  return previousIndex + addRemoveOffset + moveOffset;
 }

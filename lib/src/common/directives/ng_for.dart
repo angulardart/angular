@@ -121,17 +121,27 @@ class NgFor implements DoCheck {
 
   void _applyChanges(DefaultIterableDiffer changes) {
     // TODO(rado): check if change detection can produce a change record that is
-
     // easier to consume than current.
-    List<RecordViewTuple> recordViewTuples = [];
-    changes.forEachRemovedItem((CollectionChangeRecord removedRecord) =>
-        recordViewTuples.add(new RecordViewTuple(removedRecord, null)));
-    changes.forEachMovedItem((CollectionChangeRecord movedRecord) =>
-        recordViewTuples.add(new RecordViewTuple(movedRecord, null)));
-    var insertTuples = this._bulkRemove(recordViewTuples);
-    changes.forEachAddedItem((CollectionChangeRecord addedRecord) =>
-        insertTuples.add(new RecordViewTuple(addedRecord, null)));
-    this._bulkInsert(insertTuples);
+
+    final List<RecordViewTuple> insertTuples = [];
+    changes.forEachOperation((CollectionChangeRecord item,
+        int adjustedPreviousIndex, int currentIndex) {
+      if (item.previousIndex == null) {
+        dynamic view =
+            this._viewContainer.createEmbeddedView(_templateRef, currentIndex);
+        RecordViewTuple tuple = new RecordViewTuple(item, view);
+
+        insertTuples.add(tuple);
+      } else if (currentIndex == null) {
+        _viewContainer.remove(adjustedPreviousIndex);
+      } else {
+        dynamic view = this._viewContainer.get(adjustedPreviousIndex);
+        this._viewContainer.move(view, currentIndex);
+        RecordViewTuple tuple = new RecordViewTuple(item, view);
+        insertTuples.add(tuple);
+      }
+    });
+
     for (var i = 0; i < insertTuples.length; i++) {
       this._perViewChange(insertTuples[i].view, insertTuples[i].record);
     }
@@ -139,6 +149,8 @@ class NgFor implements DoCheck {
       var viewRef = _viewContainer.get(i);
       viewRef.setLocal("first", identical(i, 0));
       viewRef.setLocal("last", identical(i, ilen - 1));
+      viewRef.setLocal("index", i);
+      viewRef.setLocal("count", ilen);
     }
     changes.forEachIdentityChange((record) {
       var viewRef = _viewContainer.get(record.currentIndex);
@@ -148,42 +160,8 @@ class NgFor implements DoCheck {
 
   void _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
     view.setLocal("\$implicit", record.item);
-    view.setLocal("index", record.currentIndex);
     view.setLocal("even", (record.currentIndex % 2 == 0));
     view.setLocal("odd", (record.currentIndex % 2 == 1));
-  }
-
-  List<RecordViewTuple> _bulkRemove(List<RecordViewTuple> tuples) {
-    tuples.sort((RecordViewTuple a, RecordViewTuple b) =>
-        a.record.previousIndex - b.record.previousIndex);
-    List<RecordViewTuple> movedTuples = [];
-    for (var i = tuples.length - 1; i >= 0; i--) {
-      var tuple = tuples[i];
-      // separate moved views from removed views.
-      if (tuple.record.currentIndex != null) {
-        tuple.view = (this._viewContainer.detach(tuple.record.previousIndex)
-            as EmbeddedViewRef);
-        movedTuples.add(tuple);
-      } else {
-        this._viewContainer.remove(tuple.record.previousIndex);
-      }
-    }
-    return movedTuples;
-  }
-
-  List<RecordViewTuple> _bulkInsert(List<RecordViewTuple> tuples) {
-    tuples.sort((a, b) => a.record.currentIndex - b.record.currentIndex);
-    for (var i = 0; i < tuples.length; i++) {
-      var tuple = tuples[i];
-      if (tuple.view != null) {
-        this._viewContainer.insert(tuple.view, tuple.record.currentIndex);
-      } else {
-        tuple.view = this
-            ._viewContainer
-            .createEmbeddedView(this._templateRef, tuple.record.currentIndex);
-      }
-    }
-    return tuples;
   }
 }
 
