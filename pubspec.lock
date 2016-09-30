@@ -292,10 +292,10 @@ packages:
   test:
     description:
       ref: long_suite_timeout
-      resolved-ref: "6cb2e96fc0acae917278467a45707c61f5439d90"
+      resolved-ref: "197bd1301404b8c3849116beba211c13f50c568b"
       url: "https://github.com/kevmoo/test"
     source: git
-    version: "0.12.15+7"
+    version: "0.12.16-dev"
   transformer_test:
     description:
       name: transformer_test
