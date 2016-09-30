@@ -3,6 +3,11 @@
 # Fast fail the script on failures.
 set -e
 
+if [ -z "$TEST_PLATFORM" ]; then
+  echo "TEST_PLATFORM must be set"
+  exit 1
+fi
+
 # Run a trivial travis-only test to see if the browser platform is even working
 pub run test -p $TEST_PLATFORM tool/travis_sniff_test.dart
 
