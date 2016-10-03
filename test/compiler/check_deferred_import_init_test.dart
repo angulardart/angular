@@ -8,39 +8,38 @@ import 'package:test/test.dart';
 
 void main() {
   group('Check deferred import initialization', () {
-    runTest('warns if deferred imports aren\'t initialized',
+    runTest('errors if deferred imports aren\'t initialized',
         invalidReflectiveCode, true);
 
-    runTest('warns if the .template.dart file isn\'t imported', invalidImport,
+    runTest('errors if the .template.dart file isn\'t imported', invalidImport,
         true);
 
-    runTest('Doesn\'t warn with @SkipAngularInitCheck()',
+    runTest('Doesn\'t error with @SkipAngularInitCheck()',
         invalidCodeWithSkipAnnotation, false);
 
-    runTest('Doesn\'t warn if properly initialized using async/await',
+    runTest('Doesn\'t error if properly initialized using async/await',
         validAsyncAwaitCode, false);
 
-    runTest('Doesn\'t warn if properly initialized using Future.then',
+    runTest('Doesn\'t error if properly initialized using Future.then',
         validFutureThenCode, false);
   });
 }
 
-void runTest(String name, String code, bool expectWarning) {
+void runTest(String name, String code, bool expectError) {
   test(name, () async {
     var logger = new _CapturingLogger();
     await zone.exec(() {
       var parsedCode = parseCompilationUnit(code);
       checkDeferredImportInitialization(code, parsedCode);
     }, log: logger);
-    var hasWarning = logger.entries.any((e) =>
-        e.level == LogLevel.WARNING && e.message.contains("initReflector"));
-    if (expectWarning) {
-      expect(hasWarning, isTrue,
-          reason: 'Expected a warning for uninitialized deferred imports.');
+    var hasError = logger.entries.any((e) =>
+        e.level == LogLevel.ERROR && e.message.contains("initReflector"));
+    if (expectError) {
+      expect(hasError, isTrue,
+          reason: 'Expected an error for uninitialized deferred imports.');
     } else {
-      expect(hasWarning, isFalse,
-          reason:
-              'Didn\'t expect a warning about unitialized deferred imports');
+      expect(hasError, isFalse,
+          reason: 'Didn\'t expect an error about unitialized deferred imports');
     }
   });
 }
