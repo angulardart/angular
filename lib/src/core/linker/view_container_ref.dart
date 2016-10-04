@@ -107,6 +107,14 @@ class ViewContainerRef {
     return wtfLeave(s, viewRef_);
   }
 
+  ViewRef move(ViewRef viewRef, int currentIndex) {
+    ViewRef s = _insertScope();
+    if (currentIndex == -1) return null;
+    var viewRef_ = viewRef as ViewRefImpl;
+    _element.moveView(viewRef_.internalView, currentIndex);
+    return wtfLeave(s, viewRef_);
+  }
+
   /// Returns the index of the View, specified via [ViewRef], within the current
   /// container or `-1` if this container doesn't contain the View.
   num indexOf(ViewRef viewRef) =>
