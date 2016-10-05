@@ -13,7 +13,7 @@ import "package:angular2/core.dart"
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;
-import "package:angular2/src/core/di.dart" show Provider, OpaqueToken;
+import "package:angular2/src/core/di.dart" show Injectable, Provider;
 import "package:angular2/src/core/profile/wtf_init.dart" show wtfInit;
 import "package:angular2/src/core/testability/testability.dart"
     show Testability;
@@ -27,7 +27,7 @@ import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 import "package:angular2/src/platform/dom/events/dom_events.dart"
     show DomEventsPlugin;
 import "package:angular2/src/platform/dom/events/event_manager.dart"
-    show EventManager, EVENT_MANAGER_PLUGINS;
+    show EventManager, EventManagerPlugin, EVENT_MANAGER_PLUGINS;
 import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
     show HammerGesturesPlugin;
 import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
@@ -82,10 +82,10 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   const Provider(ExceptionHandler,
       useFactory: exceptionHandler, deps: const []),
   const Provider(DOCUMENT, useFactory: document, deps: const []),
-  const Provider(EVENT_MANAGER_PLUGINS, useClass: DomEventsPlugin, multi: true),
-  const Provider(EVENT_MANAGER_PLUGINS, useClass: KeyEventsPlugin, multi: true),
-  const Provider(EVENT_MANAGER_PLUGINS,
-      useClass: HammerGesturesPlugin, multi: true),
+  DomEventsPlugin,
+  KeyEventsPlugin,
+  HammerGesturesPlugin,
+  const Provider(EVENT_MANAGER_PLUGINS, useFactory: createEventPlugins),
   const Provider(HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig),
   DomRootRenderer,
   const Provider(RootRenderer, useExisting: DomRootRenderer),
@@ -96,6 +96,11 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
 const List<dynamic> CACHED_TEMPLATE_PROVIDER = const [
   const Provider(XHR, useClass: CachedXHR)
 ];
+
+@Injectable()
+List<EventManagerPlugin> createEventPlugins(DomEventsPlugin dom,
+        KeyEventsPlugin keys, HammerGesturesPlugin hammer) =>
+    new List<EventManagerPlugin>.unmodifiable([dom, keys, hammer]);
 
 Function createInitDomAdapter(TestabilityRegistry testabilityRegistry) {
   return () {
