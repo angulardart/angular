@@ -19,7 +19,7 @@ import "package:angular2/core.dart"
 /// on type of the expression evaluation result:
 /// - [String] - all the CSS classes listed in a string (space delimited) are
 ///              added
-/// - [List]   - all the CSS classes (Array elements) are added
+/// - [List]   - all the CSS classes (List elements) are added
 /// - [Object] - each key corresponds to a CSS class name while values are
 /// interpreted as expressions evaluating to [bool]. If a given expression
 /// evaluates to [true] a corresponding CSS class is added - otherwise it is
@@ -29,45 +29,47 @@ import "package:angular2/core.dart"
 /// [String], [Array] or [Object], the [Object]-based version is the most often
 /// used and has an advantage of keeping all the CSS class names in a template.
 ///
-///     import 'package:angular2/angular2.dart';
+/// import 'package:angular2/angular2.dart';
 ///
-///     @Component(
-///       selector: 'toggle-button',
-///       inputs: ['isDisabled'],
-///       template: '''
-///          <div class="button"
-///              [ngClass]="{active: isOn, disabled: isDisabled}"
-///              (click)="toggle(!isOn)">
-///              Click me!
-///          </div>''',
-///       styles: ['''
-///         .button {
-///           width: 120px;
-///           border: medium solid black;
-///         }
-///
-///         .active {
-///           background-color: red;
-///        }
-///
-///         .disabled {
-///           color: gray;
-///           border: medium solid gray;
-///         }
-///       ''']
-///       directives: [NgClass]
-///     })
-///     class ToggleButton {
-///       bool isOn = false;
-///       bool isDisabled = false;
-///
-///       toggle(newState) {
-///         if (!isDisabled) {
-///           isOn = newState;
-///         }
+/// @Component(
+///     selector: 'toggle-button',
+///     template: '''
+///       <div class="button"
+///           [ngClass]="{active: isOn, disabled: isDisabled}"
+///           (click)="toggle(!isOn)">
+///           Click me!
+///       </div>''',
+///     styles: const [
+///       '''
+///       .button {
+///         width: 120px;
+///         border: medium solid black;
 ///       }
-///     }
 ///
+///       .active {
+///         background-color: red;
+///       }
+///
+///       .disabled {
+///         color: gray;
+///         border: medium solid gray;
+///       }'''
+///     ],
+///     directives: const [
+///       NgClass
+///     ])
+/// class ToggleButton {
+///   bool isOn = false;
+///
+///   @Input()
+///   bool isDisabled = false;
+///
+///   void toggle(bool newState) {
+///     if (!isDisabled) {
+///       isOn = newState;
+///     }
+///   }
+/// }
 @Directive(
     selector: "[ngClass]",
     inputs: const ["rawClass: ngClass", "initialClasses: class"])
