@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:angular2/di.dart';
 import 'package:angular2/src/core/zone/ng_zone.dart';
 import 'package:angular2/src/testing/test_bed/ng_dom_stabilizer.dart';
 import 'package:test/test.dart';
