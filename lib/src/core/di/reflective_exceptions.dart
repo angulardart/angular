@@ -111,24 +111,27 @@ class CyclicDependencyError extends AbstractProviderError {
 /// The [InstantiationError] class contains the original error plus the
 /// dependency graph which caused this object to be instantiated.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/7aWYdcqTQsP0eNqEdUAf?p=preview))
+/// ### Example
 ///
-/// ```typescript
+/// ```dart
 /// class A {
-///   constructor() {
-///     throw new Error('message');
+///   A() {
+///     throw new Exception('message');
 ///   }
 /// }
 ///
-/// var injector = Injector.resolveAndCreate([A]);
+/// void main() {
+///   Injector injector = ReflectiveInjector.resolveAndCreate([A]);
 ///
-/// try {
-///   injector.get(A);
-/// } catch (e) {
-///   expect(e instanceof InstantiationError).toBe(true);
-///   expect(e.originalException.message).toEqual("message");
-///   expect(e.originalStack).toBeDefined();
+///   try {
+///     injector.get(A);
+///   } catch (e) {
+///     expect(e, new isInstanceOf<InstantiationError>());
+///     expect(e.originalException.message, equals('message'));
+///     expect(e.originalStack, isNotNull);
+///   }
 /// }
+/// ```
 ///
 class InstantiationError extends WrappedException {
   List<ReflectiveKey> keys;
