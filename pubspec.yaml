@@ -28,7 +28,13 @@ dev_dependencies:
   test: ^0.12.6
   transformer_test: ^0.2.0
 transformers:
+  - test/pub_serve:
+      $include: test/**_test.dart
   - angular2/transform/codegen
+  - angular2/transform/reflection_remover:
+      $include:
+          - test/testing/ng_test_bed_test.dart
+          - test/security/safe_inner_html_test.dart
   - $dart2js:
       commandLineOptions:
         - '--show-package-warnings'
