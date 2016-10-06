@@ -1,5 +1,5 @@
+@Tags(const ['codegen'])
 @TestOn('browser')
-@Tags(const ['needs_pub'])
 library angular2.test.testing.ng_test_bed_test;
 
 import 'package:angular2/angular2.dart';
@@ -7,6 +7,7 @@ import 'package:angular2/security.dart';
 import 'package:angular2/src/testing/test_bed/ng_test_bed.dart';
 import 'package:test/test.dart';
 
+@AngularEntrypoint()
 void main() {
   group('$SafeInnerHtmlDirective', () {
     test('normally, "innerHtml" should be sanitized', () async {
