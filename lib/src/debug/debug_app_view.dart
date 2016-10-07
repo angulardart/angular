@@ -43,11 +43,10 @@ class DebugAppView<T> extends AppView<T> {
   @override
   AppElement create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      selector) {
-    String rootSelector = selector;
+      selectorOrNode) {
     this._resetDebug();
     try {
-      return super.create(givenProjectableNodes, rootSelector);
+      return super.create(givenProjectableNodes, selectorOrNode);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
@@ -57,11 +56,10 @@ class DebugAppView<T> extends AppView<T> {
   @override
   AppElement createComp(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      selector) {
-    String rootSelector = selector;
+      selectorOrNode) {
     this._resetDebug();
     try {
-      return super.createComp(givenProjectableNodes, rootSelector);
+      return super.createComp(givenProjectableNodes, selectorOrNode);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
@@ -71,11 +69,10 @@ class DebugAppView<T> extends AppView<T> {
   @override
   AppElement createHost(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      selector) {
-    String rootSelector = selector;
+      selectorOrNode) {
     this._resetDebug();
     try {
-      return super.createHost(givenProjectableNodes, rootSelector);
+      return super.createHost(givenProjectableNodes, selectorOrNode);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
