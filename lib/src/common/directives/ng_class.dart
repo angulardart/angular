@@ -29,6 +29,7 @@ import "package:angular2/core.dart"
 /// [String], [Array] or [Object], the [Object]-based version is the most often
 /// used and has an advantage of keeping all the CSS class names in a template.
 ///
+/// ```dart
 /// import 'package:angular2/angular2.dart';
 ///
 /// @Component(
@@ -70,6 +71,7 @@ import "package:angular2/core.dart"
 ///     }
 ///   }
 /// }
+/// ```
 @Directive(
     selector: "[ngClass]",
     inputs: const ["rawClass: ngClass", "initialClasses: class"])
