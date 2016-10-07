@@ -4,29 +4,29 @@ library angular2.test.testing.ng_test_bed_test;
 
 import 'package:angular2/angular2.dart';
 import 'package:angular2/security.dart';
-import 'package:angular2/src/testing/test_bed/ng_test_bed.dart';
+import 'package:angular2/testing_experimental.dart';
 import 'package:test/test.dart';
 
 void main() {
+  tearDown(() => disposeAnyRunningTest());
+
   group('$SafeInnerHtmlDirective', () {
     test('normally, "innerHtml" should be sanitized', () async {
       var testBed = new NgTestBed<NormalInnerHtmlTest>();
       var testRoot = await testBed.create();
       expect(testRoot.element.text, contains('Secure'));
-      await testRoot.dispose();
     });
 
     test('"safeInnerHtml" should be trusted', () async {
       var testBed = new NgTestBed<TrustedInnerHtmlTest>();
       var testRoot = await testBed.create();
       expect(testRoot.element.text, contains('Unsafe'));
-      await testRoot.dispose();
     });
 
-    // TODO(matanl): Add a test that throws when String is used.
-    // This works fine in a production app, but the NgTestBed does not surface
-    // errors in a way that can be caught in a test-clause right now. Internal
-    // test beds are able to do this correctly - we just need to port the code.
+    test('unsafe HTML should throw', () async {
+      var testBed = new NgTestBed<UntrustedInnerHtmlTest>();
+      expect(testBed.create(), throwsInAngular(isUnsupportedError));
+    });
   });
 }
 
@@ -63,4 +63,15 @@ class TrustedInnerHtmlTest {
           document.querySelector('.other-element').innerText = 'Unsafe';
         </script>
       ''');
+}
+
+@Component(
+  selector: 'test',
+  directives: const [SafeInnerHtmlDirective],
+  template: r'''
+    <div [safeInnerHtml]="untrustedHtml"></div>
+  ''',
+)
+class UntrustedInnerHtmlTest {
+  String untrustedHtml = '<script>Bad thing</script>';
 }
