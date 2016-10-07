@@ -14,42 +14,58 @@ class Optional extends OptionalMetadata {
 
 /// Compile-time metadata that marks a class [Type] or [Function] for injection.
 ///
-/// `@Injectable()` has two valid uses:
+/// The `@Injectable()` annotation has two valid uses:
 ///
-/// 1. On a class [Type] where:
-/// - the class is non-abstract with a public or default constructor
-/// - the class is abstract but has a factory constructor
+/// 1. On a class [Type]
+/// 2. On a top-level [Function]
 ///
-/// ## Eample:
+/// ## Use #1: A class [Type]
+/// The class must be one of the following:
 ///
-///   // Use the default constructor to create a new instance of MyService
-///   @Injectable()
-///   class MyService {}
+///  - non-abstract with a public or default constructor
+///  - abstract but with a factory constructor
 ///
-///   // Use the defined constructor to create a new instance of MyService
-///   //
-///   // Each positional argument is treated as a dependency to be resolved.
-///   @Injectable()
-///   class MyService {
-///     MyService(Dependency1 d1, Dependency2 d2)
-///   }
+/// A class annotated with `@Injectable()` can have only a single constructor
+/// or the default constructor. The DI framework resolves the dependencies
+/// and invokes the constructor with the resolved values.
 ///
-///   // Use the factory constructor to create a new instance of MyServiceImpl.
-///   @Injectable()
-///   abstract class MyService {
-///     factory MyService() => new MyServiceImpl();
-///   }
+/// ### Example
 ///
-/// 2. On a top-level [Function] when used in conjunction with `useFactory`.
+/// ```dart
+/// // Use the default constructor to create a new instance of MyService.
+/// @Injectable()
+/// class MyService {}
 ///
-/// ## Example:
+/// // Use the defined constructor to create a new instance of MyService.
+/// //
+/// // Each positional argument is treated as a dependency to be resolved.
+/// @Injectable()
+/// class MyService {
+///   MyService(Dependency1 d1, Dependency2 d2)
+/// }
 ///
-///   // Could be put anywhere DI providers are allowed.
-///   const Provide(MyService, useFactory: createMyService);
+/// // Use the factory constructor to create a new instance of MyServiceImpl.
+/// @Injectable()
+/// abstract class MyService {
+///   factory MyService() => new MyServiceImpl();
+/// }
+/// ```
 ///
-///   // A `Provide` may now use `createMyService` via `useFactory`.
-///   @Injectable()
-///   MyService createMyService(Dependency1 d1, Dependency2 d2) => ...
+/// ## Use #2: A top-level [Function]
+///
+/// The `Injectable()` annotation works with top-level functions
+/// when used with `useFactory`.
+///
+/// ### Example
+///
+/// ```dart
+/// // Could be put anywhere DI providers are allowed.
+/// const Provide(MyService, useFactory: createMyService);
+///
+/// // A `Provide` may now use `createMyService` via `useFactory`.
+/// @Injectable()
+/// MyService createMyService(Dependency1 d1, Dependency2 d2) => ...
+/// ```
 class Injectable extends InjectableMetadata {
   const Injectable() : super();
 }

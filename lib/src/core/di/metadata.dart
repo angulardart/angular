@@ -88,37 +88,7 @@ class DependencyMetadata {
 /// A marker metadata that marks a class as available to [Injector] for
 /// creation.
 ///
-/// ## Example
-///
-/// ```dart
-/// @Injectable()
-/// class UsefulService {}
-///
-/// @Injectable()
-/// class NeedsService {
-///   final UsefulService service;
-///   NeedsService(this.service);
-/// }
-///
-/// var injector = Injector.resolveAndCreate([NeedsService, UsefulService]);
-/// expect(injector.get(NeedsService).service,
-///     new isInstanceOf<UsefulService>());
-/// ```
-///
-/// [Injector] will throw [NoAnnotationError] when trying to instantiate a class
-/// that does not have `@Injectable` marker, as shown in the example below.
-///
-/// ```dart
-/// class UsefulService {}
-///
-/// class NeedsService {
-///   final UsefulService service;
-///   NeedsService(this.service);
-/// }
-///
-/// var injector = Injector.resolveAndCreate([NeedsService, UsefulService]);
-/// expect(() => injector.get(NeedsService), throws);
-/// ```
+/// This is internal to Angular and should not be used directly.
 class InjectableMetadata {
   const InjectableMetadata();
 }
