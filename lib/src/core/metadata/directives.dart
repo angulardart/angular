@@ -811,18 +811,10 @@ class ComponentMetadata extends DirectiveMetadata {
             queries: queries);
 }
 
-/// Declare reusable pipe function.
-///
-/// A "pure" pipe is only re-evaluated when either the input or any of the
-/// arguments change. When not specified, pipes default to being pure.
-///
 class PipeMetadata extends InjectableMetadata {
   final String name;
-  final bool _pure;
-  const PipeMetadata({this.name, bool pure})
-      : _pure = pure,
-        super();
-  bool get pure => _pure ?? true;
+  final bool pure;
+  const PipeMetadata({this.name, this.pure: true}) : super();
 }
 
 /// Declares a data-bound input property.

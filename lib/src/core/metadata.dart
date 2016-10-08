@@ -100,7 +100,31 @@ class View extends ViewMetadata {
             styleUrls: styleUrls);
 }
 
-/// See: [PipeMetadata] for docs.
+/// Declares a reusable pipe function.
+///
+/// Pipes are simple functions that accept an input value and return a
+/// transformed value. They're easy to apply within template expressions, using
+/// the pipe operator (|):
+///
+///     <div>Title through uppercase pipe: {{title | uppercase}}</div>
+///
+/// ### Example
+///
+/// ```dart
+/// @Pipe(name: "uppercase")
+/// @Injectable()
+/// class UpperCasePipe implements PipeTransform {
+///   String transform(String value) {
+///     if (value == null) return value;
+///     return value.toUpperCase();
+///   }
+///
+///   const UpperCasePipe();
+/// }
+/// ```
+///
+/// A "pure" pipe is only re-evaluated when either the input or any of the
+/// arguments change. When not specified, pipes default to being pure.
 class Pipe extends PipeMetadata {
   const Pipe({name, pure}) : super(name: name, pure: pure);
 }
