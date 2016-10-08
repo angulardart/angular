@@ -1,20 +1,19 @@
 import 'package:angular2/core.dart'
     show Directive, ViewContainerRef, TemplateRef;
 
-/// Causes the element and its contents to appear in the DOM conditionally.
+/// Causes an element and its contents to be added/removed from the DOM
+/// conditionally, based on the value of the supplied boolean template
+/// expression.
 ///
-/// The condition is supplied as a boolean template expression. When the
-/// condition changes, the UI is updated automatically.
+/// See the [Template Syntax section on `ngIf`][guide] for more details.
 ///
-/// **Example**:
+/// ### Examples
 ///
-///   <!-- Place directly on a DOM element -->
-///   <div *ngIf="shouldShowError">An occur occurred</div>
+/// {@example docs/template-syntax/lib/app_component.html region=NgIf-1}
 ///
-///   <!-- Or use the template tag -->
-///   <template [ngIf]="shouldShowError">
-///     <div>An error ocurred</div>
-///   </template>
+/// {@example docs/template-syntax/lib/app_component.html region=Template-2}
+///
+/// [guide]: docs/guide/template-syntax.html#ngIf
 @Directive(selector: "[ngIf]", inputs: const ["ngIf"])
 class NgIf {
   final TemplateRef _templateRef;

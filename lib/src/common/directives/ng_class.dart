@@ -17,59 +17,30 @@ import "package:angular2/core.dart"
 ///
 /// The result of an expression evaluation is interpreted differently depending
 /// on type of the expression evaluation result:
+///
 /// - [String] - all the CSS classes listed in a string (space delimited) are
-///              added
+///   added
 /// - [List]   - all the CSS classes (List elements) are added
 /// - [Object] - each key corresponds to a CSS class name while values are
-/// interpreted as expressions evaluating to [bool]. If a given expression
-/// evaluates to [true] a corresponding CSS class is added - otherwise it is
-/// removed.
+///   interpreted as expressions evaluating to [bool]. If a given expression
+///   evaluates to [true] a corresponding CSS class is added - otherwise it is
+///   removed.
 ///
 /// While the [NgClass] directive can interpret expressions evaluating to
 /// [String], [Array] or [Object], the [Object]-based version is the most often
 /// used and has an advantage of keeping all the CSS class names in a template.
 ///
-/// import 'package:angular2/angular2.dart';
+/// ### Examples
 ///
-/// @Component(
-///     selector: 'toggle-button',
-///     template: '''
-///       <div class="button"
-///           [ngClass]="{active: isOn, disabled: isDisabled}"
-///           (click)="toggle(!isOn)">
-///           Click me!
-///       </div>''',
-///     styles: const [
-///       '''
-///       .button {
-///         width: 120px;
-///         border: medium solid black;
-///       }
+/// {@example docs/template-syntax/lib/app_component.html region=NgClass-1}
 ///
-///       .active {
-///         background-color: red;
-///       }
+/// {@example docs/template-syntax/lib/app_component.dart region=setClasses}
 ///
-///       .disabled {
-///         color: gray;
-///         border: medium solid gray;
-///       }'''
-///     ],
-///     directives: const [
-///       NgClass
-///     ])
-/// class ToggleButton {
-///   bool isOn = false;
+/// Try the [live example][ex].
+/// See the [Template Syntax section on `ngClass`][guide] for more details.
 ///
-///   @Input()
-///   bool isDisabled = false;
-///
-///   void toggle(bool newState) {
-///     if (!isDisabled) {
-///       isOn = newState;
-///     }
-///   }
-/// }
+/// [ex]: examples/template-syntax/#ngClass
+/// [guide]: docs/guide/template-syntax.html#ngClass
 @Directive(
     selector: "[ngClass]",
     inputs: const ["rawClass: ngClass", "initialClasses: class"])

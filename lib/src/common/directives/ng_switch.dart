@@ -21,60 +21,30 @@ class SwitchView {
 /// Adds or removes DOM sub-trees when their match expressions match the switch
 /// expression.
 ///
-/// Elements within `NgSwitch` but without `NgSwitchWhen` or `NgSwitchDefault`
+/// Elements within [NgSwitch] but without [NgSwitchWhen] or [NgSwitchDefault]
 /// directives will be preserved at the location as specified in the template.
 ///
-/// `NgSwitch` simply inserts nested elements based on which match expression
+/// [NgSwitch] simply inserts nested elements based on which match expression
 /// matches the value obtained from the evaluated switch expression. In other
 /// words, you define a container element (where you place the directive with a
-/// switch expression on the `[ngSwitch]="..."` attribute), define any inner
-/// elements inside of the directive and place a `[ngSwitchWhen]` attribute per
+/// switch expression on the `[ngSwitch]="..."` property), define any inner
+/// elements inside of the directive and place a `[ngSwitchWhen]` property per
 /// element.
 ///
-/// The `ngSwitchWhen` property is used to inform `NgSwitch` which element to
+/// [NgSwitchWhen] is used to inform `NgSwitch` which element to
 /// display when the expression is evaluated. If a matching expression is not
-/// found via a `ngSwitchWhen` property then an element with the
-/// `ngSwitchDefault` attribute is displayed.
+/// found via `ngSwitchWhen` then an element with an
+/// [NgSwitchDefault] is displayed.
 ///
-/// ### Example:
+/// ### Examples
 ///
-/// ```dart
-/// @Component(
-///   selector: 'app',
-///   template: '''
-///     <p>Value = {{value}}</p>
-///     <button (click)="inc()">Increment</button>
+/// {@example docs/template-syntax/lib/app_component.html region=NgSwitch-expanded}
 ///
-///     <div [ngSwitch]="value">
-///       <p *ngSwitchWhen="'init'">increment to start</p>
-///       <p *ngSwitchWhen="0">0, increment again</p>
-///       <p *ngSwitchWhen="1">1, increment again</p>
-///       <p *ngSwitchWhen="2">2, stop incrementing</p>
-///       <p *ngSwitchDefault>&gt; 2, STOP!</p>
-///     </div>
+/// Try the [live example][ex].
+/// See the [Template Syntax section on `ngSwitch`][guide] for more details.
 ///
-///     <!-- alternate syntax -->
-///
-///     <p [ngSwitch]="value">
-///       <template ngSwitchWhen="init">increment to start</template>
-///       <template [ngSwitchWhen]="0">0, increment again</template>
-///       <template [ngSwitchWhen]="1">1, increment again</template>
-///       <template [ngSwitchWhen]="2">2, stop incrementing</template>
-///       <template ngSwitchDefault>&gt; 2, STOP!</template>
-///     </p>
-///   ''',
-///   directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault]
-/// )
-/// class App {
-///   dynamic value = 'init';
-///
-///   void inc() {
-///     value = value === 'init' ? 0 : value + 1;
-///   }
-/// }
-///
-/// bootstrap(App).catch((err) => print(err));
-/// ```
+/// [ex]: examples/template-syntax/#ngSwitch
+/// [guide]: docs/guide/template-syntax.html#ngSwitch
 @Directive(selector: "[ngSwitch]", inputs: const ["ngSwitch"])
 class NgSwitch {
   dynamic _switchValue;

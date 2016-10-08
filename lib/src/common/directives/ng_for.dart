@@ -64,11 +64,19 @@ import "../../facade/exceptions.dart" show BaseException;
 /// all old elements were deleted and all new elements inserted). This is an
 /// expensive operation and should be avoided if possible.
 ///
-/// ### Syntax
+/// ### Examples
 ///
-/// - `<li *ngFor="let item of items; #i = index">...</li>`
-/// - `<li template="ngFor #item of items; #i = index">...</li>`
-/// - `<template ngFor #item [ngForOf]="items" #i="index"><li>...</li></template>`
+/// {@example docs/template-syntax/lib/app_component.html region=NgFor-1}
+///
+/// {@example docs/template-syntax/lib/app_component.html region=NgFor-3}
+///
+/// {@example docs/template-syntax/lib/app_component.html region=Template-3}
+///
+/// {@example docs/template-syntax/lib/app_component.html region=Template-4}
+///
+/// See the [Template Syntax section on `ngFor`][guide] for details.
+///
+/// [guide]: docs/guide/template-syntax.html#ngFor
 @Directive(
     selector: "[ngFor][ngForOf]",
     inputs: const ["ngForTrackBy", "ngForOf", "ngForTemplate"])
