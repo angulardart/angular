@@ -35,45 +35,22 @@ var LIFECYCLE_HOOKS_VALUES = [
 /// Implement this interface to get notified when any data-bound property of
 /// your directive changes.
 ///
-/// `ngOnChanges` is called right after the data-bound properties have been
+/// [ngOnChanges] is called right after the data-bound properties have been
 /// checked and before view and content children are checked if at least one of
 /// them has changed.
 ///
-/// The `changes` parameter contains an entry for each of the changed data-bound
+/// The [changes] parameter contains an entry for each changed data-bound
 /// property. The key is the property name and the value is an instance of
 /// [SimpleChange].
 ///
-/// ## Example
+/// ### Examples
 ///
-/// ```dart
-/// @Component(
-///   selector: 'my-cmp',
-///   template: '<p>myProp = {{myProp}}</p>'
-/// )
-/// class MyComponent implements OnChanges {
-///   @Input()
-///   dynamic myProp;
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-///   @override
-///   ngOnChanges(Map<String, SimpleChange> changes) {
-///     print('ngOnChanges - myProp = ${changes['myProp'].currentValue}');
-///   }
-/// }
+/// {@example docs/lifecycle-hooks/lib/on_changes_component.dart region=ng-on-changes}
 ///
-/// @Component(
-///   selector: 'app',
-///   template: '''
-///     <button (click)="value = value + 1">Change MyComponent</button>
-///     <my-cmp [my-prop]="value"></my-cmp>
-///   ''',
-///   directives: [MyComponent]
-/// )
-/// class App {
-///   int value = 0;
-/// }
-///
-/// bootstrap(App);
-/// ```
+/// [docs]: docs/guide/lifecycle-hooks.html#onchanges
+/// [ex]: examples/lifecycle-hooks#onchanges
 abstract class OnChanges {
   ngOnChanges(Map<String, SimpleChange> changes);
 }
@@ -81,45 +58,18 @@ abstract class OnChanges {
 /// Implement this interface to execute custom initialization logic after your
 /// directive's data-bound properties have been initialized.
 ///
-/// `ngOnInit` is called right after the directive's data-bound properties have
+/// [ngOnInit] is called right after the directive's data-bound properties have
 /// been checked for the first time, and before any of its children have been
 /// checked. It is invoked only once when the directive is instantiated.
 ///
-/// ## Example
+/// ### Examples
 ///
-/// ```dart
-/// @Component(
-///   selector: 'my-cmp',
-///   template: '<p>my-component</p>'
-/// )
-/// class MyComponent implements OnInit, OnDestroy {
-///   @override
-///   ngOnInit() {
-///     print('ngOnInit');
-///   }
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-///   @override
-///   ngOnDestroy() {
-///     print('ngOnDestroy');
-///   }
-/// }
+/// {@example docs/lifecycle-hooks/lib/spy_directive.dart region=spy-directive}
 ///
-/// @Component(
-///   selector: 'app',
-///   template: '''
-///     <button (click)="hasChild = !hasChild">
-///       {{hasChild ? 'Destroy' : 'Create'}} MyComponent
-///     </button>
-///     <my-cmp *ngIf="hasChild"></my-cmp>
-///   ''',
-///   directives: const [MyComponent, NgIf]
-/// )
-/// class App {
-///   bool hasChild = true;
-/// }
-///
-/// bootstrap(App);
-///  ```
+/// [docs]: docs/guide/lifecycle-hooks.html#oninit
+/// [ex]: examples/lifecycle-hooks#spy
 abstract class OnInit {
   ngOnInit();
 }
@@ -202,101 +152,17 @@ abstract class DoCheck {
 
 /// Implement this interface to get notified when your directive is destroyed.
 ///
-/// `ngOnDestroy` callback is typically used for any custom cleanup that needs
+/// [ngOnDestroy] callback is typically used for any custom cleanup that needs
 /// to occur when the instance is destroyed
 ///
-/// ## Example
+/// ### Examples
 ///
-/// ```dart
-/// @Component(
-///   selector: 'my-cmp',
-///   template: '<p>my-component</p>'
-/// )
-/// class MyComponent implements OnInit, OnDestroy {
-///   @override
-///   ngOnInit() {
-///     print('ngOnInit');
-///   }
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-///   @override
-///   ngOnDestroy() {
-///     print('ngOnDestroy');
-///   }
-/// }
+/// {@example docs/lifecycle-hooks/lib/spy_directive.dart region=spy-directive}
 ///
-/// @Component(
-///   selector: 'app',
-///   template: '''
-///     <button (click)="hasChild = !hasChild">
-///       {{hasChild ? 'Destroy' : 'Create'}} MyComponent
-///     </button>
-///     <my-cmp *ngIf="hasChild"></my-cmp>
-///   ''',
-///   directives: const [MyComponent, NgIf]
-/// })
-/// class App {
-///   bool hasChild = true;
-/// }
-///
-/// bootstrap(App);
-/// ```
-///
-///
-/// To create a stateful Pipe, you should implement this interface and set the
-/// `pure` parameter to `false` in the [PipeMetadata].
-///
-/// A stateful pipe may produce different output, given the same input. It is
-/// likely that a stateful pipe may contain state that should be cleaned up when
-/// a binding is destroyed. For example, a subscription to a stream of data may
-/// need to be disposed, or an interval may need to be cleared.
-///
-/// ## Example
-///
-/// In this example, a pipe is created to countdown its input value, updating it
-/// every 50ms. Because it maintains an internal interval, it automatically
-/// clears the interval when the binding is destroyed or the countdown
-/// completes.
-///
-/// ```dart
-/// import 'angular2/core' show OnDestroy, Pipe, PipeTransform;
-///
-/// @Pipe(name: 'countdown', pure: false)
-/// class CountDown implements PipeTransform, OnDestroy {
-///   num reminingTime;
-///   Timer timer;
-///
-///   @override
-///   ngOnDestroy() {
-///     _clearTimer();
-///   }
-///
-///   void _clearTimer() {
-///     if ( timer?.isActive ?? false ) {
-///       timer.cancel();
-///       timer = null;
-///     }
-///   }
-///
-///   int transform(String value) {
-///     int parsed = int.parse(value, onError: () => null);
-///     if (parse == null) return null;
-///     remainingTime = parsed;
-///     if ( !timer?.isActive ?? true) {
-///       timer = new Timer.periodic( const Duration(milliseconds: 50), () {
-///         remainingTime -= 50;
-///         if (remainingTime <= 0) {
-///           _clearTimer();
-///         }
-///       });
-///     }
-///     return remainingTime;
-///   }
-/// }
-/// ```
-///
-/// Invoking `{{ 10000 | countdown }}` would cause the value to be decremented
-/// by 50, every 50ms, until it reaches 0.
-///
+/// [docs]: docs/guide/lifecycle-hooks.html#ondestroy
+/// [ex]: examples/lifecycle-hooks#spy
 abstract class OnDestroy {
   ngOnDestroy();
 }

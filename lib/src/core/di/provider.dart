@@ -4,9 +4,10 @@
 /// from default factory.
 const noValueProvided = '__noValueProvided__';
 
-/// Describes how the [Injector] should instantiate a given token.
+/// Describes how an [Injector] should instantiate a given token.
 ///
-/// See [provide].
+/// See [provide] and the [Dependency Injection][di] page of the Angular
+/// Guide.
 ///
 ///     var injector = Injector.resolveAndCreate([
 ///       new Provider("message", useValue: 'Hello')
@@ -14,6 +15,7 @@ const noValueProvided = '__noValueProvided__';
 ///
 ///     expect(injector.get('message'), 'Hello');
 ///
+/// [di]: docs/guide/dependency-injection.html#!#injector-providers
 class Provider {
   /// Token used when retrieving this provider. Usually, it is a type [Type].
   final token;
@@ -162,12 +164,22 @@ class Provider {
   bool get multi => _multi ?? false;
 }
 
-/// Creates a [Provider].
+/// Creates an injector [Provider] for the given [token] based on a given
 ///
-/// To construct a [Provider], bind a `token` to either a class, a value, a
-/// factory function, or to an existing [token].
+/// - Class
+/// - Value
+/// - Factory function, or
+/// - Another token
 ///
-/// The `token` is most commonly a class or [OpaqueToken-class.html].
+/// The [token] is most commonly a class or an opaque token. More details
+/// concerning providers can be found in the [Dependency Injection][di] page
+/// of the Angular Guide.
+///
+/// ### Example
+///
+/// {@example docs/toh-6/web/main.dart}
+///
+/// [di]: docs/guide/dependency-injection.html#!#injector-providers
 Provider provide(token,
     {Type useClass,
     dynamic useValue: noValueProvided,

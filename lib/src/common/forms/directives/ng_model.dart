@@ -18,25 +18,29 @@ import "validators.dart" show ValidatorFn, AsyncValidatorFn;
 
 const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 
-/// Binds a domain model to a form control.
+/// Creates a form [NgControl] instance from a domain model and binds it to a
+/// form control element. The form [NgControl] instance tracks the value,
+/// user interaction, and validation status of the control and keeps the view
+/// synced with the model. If used within a parent form, the directive will
+/// also register itself with the form as a child control.
 ///
-/// ### Usage
+/// This directive can be used by itself or as part of a larger form. All you
+/// need is the `ngModel` selector to activate it. For a two-way binding, use
+/// the `[(ngModel)]` syntax to ensure the model updates in both directions.
 ///
-/// `ngModel` binds an existing domain model to a form control. For a two-way
-/// binding, use `[(ngModel)]` to ensure the model updates in both directions.
+/// Learn more about `ngModel` in the Guide [Forms](docs/guide/forms.html#ngModel)
+/// and [Template Syntax](docs/guide/template-syntax.html#ngModel) pages.
 ///
-/// ### Example:
+/// ### Examples
 ///
-/// ```dart
-/// @Component(
-///      selector: "search-comp",
-///      directives: const [FORM_DIRECTIVES],
-///      template: '<input type="text" [(ngModel)]="searchQuery">'
-///      )
-/// class SearchComp {
-///  String searchQuery;
-/// }
-/// ```
+/// {@example docs/template-syntax/lib/app_component.html region=NgModel-1}
+///
+/// This is equivalent to having separate bindings:
+///
+/// {@example docs/template-syntax/lib/app_component.html region=NgModel-3}
+///
+/// Try the [live example][ex].
+/// [ex]: examples/template-syntax/#ngModel
 @Directive(
     selector: "[ngModel]:not([ngControl]):not([ngFormControl])",
     providers: const [formControlBinding],
