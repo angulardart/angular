@@ -63,26 +63,15 @@ PlatformRef browserPlatform() {
 /// to use as the root component for your application via the [bootstrap]
 /// method.
 ///
-/// Simple Example
-///
-///     Assuming this `index.html`:
-///
-///     <html>
-///       <!-- load Angular script tags here. -->
-///       <body>
-///         <my-app>loading...</my-app>
-///       </body>
-///     </html>
-///
 /// An application is bootstrapped inside an existing browser DOM, typically
-/// index.html. Unlike Angular 1, Angular 2 does not compile/process providers
+/// `index.html`. Unlike Angular 1, Angular 2 does not compile/process providers
 /// in index.html. This is mainly for security reasons, as well as architectural
-/// changes in Angular 2. This means that index.html can safely be processed
+/// changes in Angular 2. This means that `index.html` can safely be processed
 /// using server-side technologies such as providers. Bindings can thus use
-/// double-curly [{{ syntax }}] without collision from Angular 2 component
-/// double-curly [{{ syntax }}].
+/// double-curlyi syntax, `{{...}}`, without collision with Angular 2
+/// `{{...}}` template syntax.
 ///
-/// When the app developer invokes [bootstrap] with the root component [MyApp]
+/// When an app developer invokes [bootstrap] with a root component
 /// as its argument, Angular performs the following tasks:
 ///
 ///  1. It uses the component's [selector] property to locate the DOM element
@@ -98,7 +87,7 @@ PlatformRef browserPlatform() {
 ///  6. Finally, Angular performs change detection to apply the initial data
 ///     providers for the application.
 ///
-/// ## Bootstrapping Multiple Applications
+/// ### Bootstrapping Multiple Applications
 ///
 /// When working within a browser window, there are many singleton resources:
 /// cookies, title, location, and others. Angular services that represent these
@@ -111,11 +100,21 @@ PlatformRef browserPlatform() {
 /// multiple applications on a page, Angular treats each application injector's
 /// services as private to that application.
 ///
-/// ## API
+/// ### Examples
+///
+/// {@example docs/quickstart/web/main.dart}
+///
+/// {@example docs/toh-6/web/main.dart}
+///
+/// For details concerning these examples see the
+/// [Quickstart](docs/quickstart.html) and
+/// [Tour of Heros Part 6](docs/tutorial/toh-pt6.html) documents, respectively.
+///
+/// ### API
 ///
 /// - [appComponentType]: The root component which should act as the
 ///   application. This is a reference to a [Type] which is annotated with
-///   [@Component].
+///   `@Component`.
 /// - [customProviders]: An additional set of providers that can be added to the
 ///   app injector to override default injection behavior.
 ///
