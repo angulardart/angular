@@ -2,50 +2,70 @@ import 'dart:collection';
 
 import 'package:angular2/src/facade/async.dart';
 
-/// See query_list.ts
+/// A list of items that Angular keeps up to date when the state of the
+/// application changes.
+///
+/// Provides  an observable list for references to child components requested
+/// by @ViewChildren and @ViewChild annotations.
 class QueryList<T> extends Object with IterableMixin<T> {
   bool _dirty = true;
-  List<T> _results = [];
-  EventEmitter<Iterable<T>> _emitter = new EventEmitter<Iterable<T>>();
+  List<T> _results;
+  StreamController<Iterable<T>> _streamController;
 
-  Iterator<T> get iterator => _results.iterator;
+  @override
+  Iterator<T> get iterator {
+    _results ??= const [];
+    return _results.iterator;
+  }
 
-  Stream<Iterable<T>> get changes => _emitter;
+  Stream<Iterable<T>> get changes {
+    _streamController ??= new StreamController<Iterable<T>>.broadcast();
+    return _streamController.stream;
+  }
 
-  int get length => _results.length;
-  T get first => _results.length > 0 ? _results.first : null;
-  T get last => _results.length > 0 ? _results.last : null;
+  int get length => _results?.length ?? 0;
+  T get first => _results?.first;
+  T get last => _results?.last;
+
   String toString() {
     return _results.toString();
   }
 
-  /** @internal */
-  void reset(List newList) {
-    // This used to call ListWrapper.flatten(newList). Let's inline it for now.
-    var results = <T>[];
-    _flattenList(results, newList);
-    _results = results;
+  /// Called internally by AppView to initialize list of view children.
+  void reset(List<T> newList) {
+    int itemCount = newList.length;
+    for (int i = 0; i < itemCount; i++) {
+      if (newList[i] is List) {
+        var results = <T>[];
+        _flattenList(newList, results);
+        _results = results.isEmpty ? null : results;
+        _dirty = false;
+        return;
+      }
+    }
+    _results = newList.isEmpty ? null : newList;
     _dirty = false;
   }
 
-  /** @internal */
+  /// Called internally by AppView when list has changed.
   void notifyOnChanges() {
-    _emitter.add(this);
+    _streamController ??= new StreamController<Iterable<T>>.broadcast();
+    _streamController.add(this);
   }
 
-  /** @internal **/
   bool get dirty => _dirty;
 
-  /** @internal **/
   void setDirty() {
     _dirty = true;
   }
 }
 
-void _flattenList(List results, Iterable items) {
-  for (var item in items) {
-    if (item is Iterable) {
-      _flattenList(results, item);
+void _flattenList(List items, List results) {
+  int itemCount = items.length;
+  for (int i = 0; i < itemCount; i++) {
+    var item = items[i];
+    if (item is List) {
+      _flattenList(item, results);
     } else {
       results.add(item);
     }
