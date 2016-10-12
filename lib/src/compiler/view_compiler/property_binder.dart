@@ -13,7 +13,6 @@ import '../template_ast.dart'
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
-import "../compiler_utils.dart" show camelCaseToDashCase;
 import 'view_compiler_utils.dart' show NAMESPACE_URIS, createSetAttributeParams;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'compile_binding.dart' show CompileBinding;
@@ -303,7 +302,7 @@ o.Statement logBindingUpdateStmt(
     o.Expression renderNode, String propName, o.Expression value) {
   return o.THIS_EXPR.prop('renderer').callMethod('setBindingDebugInfo', [
     renderNode,
-    o.literal('ng-reflect-${ camelCaseToDashCase ( propName )}'),
+    o.literal('ng-reflect-${propName}'),
     value.isBlank().conditional(o.NULL_EXPR, value.callMethod('toString', []))
   ]).toStmt();
 }

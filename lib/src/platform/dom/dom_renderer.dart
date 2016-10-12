@@ -14,7 +14,6 @@ import 'package:angular2/src/compiler/view_compiler/view_compiler_utils.dart'
     show TEMPLATE_COMMENT_TEXT, TEMPLATE_BINDINGS_EXP;
 import 'dom_tokens.dart' show DOCUMENT;
 import 'events/event_manager.dart' show EventManager;
-import 'util.dart' show camelCaseToDashCase;
 
 const NAMESPACE_URIS = const {
   'xlink': 'http://www.w3.org/1999/xlink',
@@ -122,12 +121,11 @@ class DomRenderer implements Renderer {
 
   void setBindingDebugInfo(
       dynamic renderElement, String propertyName, String propertyValue) {
-    var dashCasedPropertyName = camelCaseToDashCase(propertyName);
     if (DOM.isCommentNode(renderElement)) {
       var existingBindings = TEMPLATE_BINDINGS_EXP.firstMatch(
           DOM.getText(renderElement).replaceAll(new RegExp(r'\n'), ''));
       var parsedBindings = Json.parse(existingBindings[1]);
-      parsedBindings[dashCasedPropertyName] = propertyValue;
+      parsedBindings[propertyName] = propertyValue;
       DOM.setText(
           renderElement,
           TEMPLATE_COMMENT_TEXT.replaceFirst(

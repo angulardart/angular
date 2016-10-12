@@ -1778,7 +1778,7 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property or known dire
                 fixture.debugElement.componentInstance.ctxProp = "hello";
                 fixture.detectChanges();
                 expect(DOM.getInnerHTML(fixture.debugElement.nativeElement),
-                    contains('ng-reflect-dir-prop="hello"'));
+                    contains('ng-reflect-dirprop="hello"'));
                 completer.done();
               });
             });
@@ -1800,7 +1800,7 @@ Can\'t bind to \'unknown\' since it isn\'t a known native property or known dire
                 fixture.debugElement.componentInstance.ctxBoolProp = true;
                 fixture.detectChanges();
                 expect(DOM.getInnerHTML(fixture.debugElement.nativeElement),
-                    contains('"ng-reflect-ng-if": "true"'));
+                    contains('"ng-reflect-ngIf": "true"'));
                 completer.done();
               });
             });
