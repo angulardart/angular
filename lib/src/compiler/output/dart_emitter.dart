@@ -364,6 +364,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (isConstType(ast.type)) {
       ctx.print('const ');
     }
+    if (ast.type == o.DYNAMIC_TYPE) {
+      ctx.print('<dynamic>');
+    }
     return super.visitLiteralArrayExpr(ast, ctx);
   }
 

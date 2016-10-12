@@ -101,24 +101,45 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
 }
 
 o.Expression createFlatArray(List<o.Expression> expressions) {
+  // Check for [].addAll([x,y,z]) case and optimize.
+  if (expressions.length == 1) {
+    if (expressions[0].type is o.ArrayType) {
+      return expressions[0];
+    } else {
+      return o.literalArr([expressions[0]]);
+    }
+  }
   var lastNonArrayExpressions = <o.Expression>[];
   o.Expression result = o.literalArr([]);
+  bool initialEmptyArray = true;
   for (var i = 0; i < expressions.length; i++) {
     var expr = expressions[i];
     if (expr.type is o.ArrayType) {
       if (lastNonArrayExpressions.length > 0) {
-        result = result.callMethod(o.BuiltinMethod.ConcatArray,
-            [o.literalArr(lastNonArrayExpressions)]);
+        if (initialEmptyArray) {
+          result = o.literalArr(lastNonArrayExpressions, o.DYNAMIC_TYPE);
+          initialEmptyArray = false;
+        } else {
+          result = result.callMethod(o.BuiltinMethod.ConcatArray,
+              [o.literalArr(lastNonArrayExpressions)]);
+        }
         lastNonArrayExpressions = [];
       }
-      result = result.callMethod(o.BuiltinMethod.ConcatArray, [expr]);
+      result = initialEmptyArray
+          ? o.literalArr([expr], o.DYNAMIC_TYPE)
+          : result.callMethod(o.BuiltinMethod.ConcatArray, [expr]);
+      initialEmptyArray = false;
     } else {
       lastNonArrayExpressions.add(expr);
     }
   }
   if (lastNonArrayExpressions.length > 0) {
-    result = result.callMethod(
-        o.BuiltinMethod.ConcatArray, [o.literalArr(lastNonArrayExpressions)]);
+    if (initialEmptyArray) {
+      result = o.literalArr(lastNonArrayExpressions);
+    } else {
+      result = result.callMethod(
+          o.BuiltinMethod.ConcatArray, [o.literalArr(lastNonArrayExpressions)]);
+    }
   }
   return result;
 }
