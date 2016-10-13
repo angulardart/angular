@@ -1,5 +1,6 @@
 import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
 
+@Deprecated('Use Attribute instead')
 class AttributeMetadata extends DependencyMetadata {
   final String attributeName;
   const AttributeMetadata(this.attributeName) : super();
@@ -17,6 +18,7 @@ class AttributeMetadata extends DependencyMetadata {
   }
 }
 
+@Deprecated('Use Query instead')
 class QueryMetadata extends DependencyMetadata {
   final dynamic /* Type | String */ selector;
 
@@ -49,6 +51,7 @@ class QueryMetadata extends DependencyMetadata {
 }
 // TODO: add an example after ContentChildren and ViewChildren are in master
 
+@Deprecated('Use ContentChildren instead')
 class ContentChildrenMetadata extends QueryMetadata {
   const ContentChildrenMetadata(dynamic /* Type | String */ _selector,
       {bool descendants: false, dynamic read: null})
@@ -56,12 +59,14 @@ class ContentChildrenMetadata extends QueryMetadata {
 }
 // TODO: add an example after ContentChild and ViewChild are in master
 
+@Deprecated('Use ContentChild instead')
 class ContentChildMetadata extends QueryMetadata {
   const ContentChildMetadata(dynamic /* Type | String */ _selector,
       {dynamic read: null})
       : super(_selector, descendants: true, first: true, read: read);
 }
 
+@Deprecated('Use ViewQuery instead')
 class ViewQueryMetadata extends QueryMetadata {
   const ViewQueryMetadata(dynamic /* Type | String */ _selector,
       {bool descendants: false, bool first: false, dynamic read: null})
@@ -73,18 +78,21 @@ class ViewQueryMetadata extends QueryMetadata {
   String toString() => '@ViewQuery($selector)';
 }
 
+@Deprecated('Use ViewChildren instead')
 class ViewChildrenMetadata extends ViewQueryMetadata {
   const ViewChildrenMetadata(dynamic /* Type | String */ _selector,
       {dynamic read: null})
       : super(_selector, descendants: true, read: read);
 }
 
+@Deprecated('Use ViewChild instead')
 class ViewChildMetadata extends ViewQueryMetadata {
   const ViewChildMetadata(dynamic /* Type | String */ _selector,
       {dynamic read: null})
       : super(_selector, descendants: true, first: true, read: read);
 }
 
+@Deprecated('Use ProviderProperty instead')
 class ProviderPropertyMetadata {
   final dynamic token;
   final bool _multi;
@@ -95,6 +103,7 @@ class ProviderPropertyMetadata {
   }
 }
 
+@Deprecated('Use Injector Module instead')
 class InjectorModuleMetadata {
   final List<dynamic> _providers;
   const InjectorModuleMetadata({List<dynamic> providers: const []})

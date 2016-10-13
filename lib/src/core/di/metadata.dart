@@ -37,6 +37,7 @@
 /// var injector = Injector.resolveAndCreate([Engine, Car]);
 /// expect(injector.get(Car).engine, new isInstanceOf<Engine>());
 /// ```
+@Deprecated('Use Inject instead')
 class InjectMetadata {
   final token;
   const InjectMetadata(this.token);
@@ -68,6 +69,7 @@ class InjectMetadata {
 /// var injector = Injector.resolveAndCreate([Car]);
 /// expect(injector.get(Car).engine, isNull);
 /// ```
+@Deprecated('Use Optional instead')
 class OptionalMetadata {
   const OptionalMetadata();
 
@@ -79,6 +81,7 @@ class OptionalMetadata {
 /// `DependencyMetadata` is used by the framework to extend DI.
 ///
 /// This is internal to Angular and should not be used directly.
+@Deprecated('Use Dependency instead')
 class DependencyMetadata {
   const DependencyMetadata();
 
@@ -89,6 +92,7 @@ class DependencyMetadata {
 /// creation.
 ///
 /// This is internal to Angular and should not be used directly.
+@Deprecated('Use Injectable instead')
 class InjectableMetadata {
   const InjectableMetadata();
 }
@@ -115,6 +119,7 @@ class InjectableMetadata {
 /// var child = inj.resolveAndCreateChild([NeedsDependency]);
 /// expect(() => child.get(NeedsDependency), throws);
 /// ```
+@Deprecated('Use Self instead')
 class SelfMetadata {
   const SelfMetadata();
 
@@ -145,6 +150,7 @@ class SelfMetadata {
 /// var inj = Injector.resolveAndCreate([Dependency, NeedsDependency]);
 /// expect(() => inj.get(NeedsDependency), throws);
 /// ```
+@Deprecated('Use SkipSelf instead')
 class SkipSelfMetadata {
   const SkipSelfMetadata();
 
@@ -206,6 +212,7 @@ class SkipSelfMetadata {
 ///
 /// bootstrap(App);
 ///```
+@Deprecated('Use Host instead')
 class HostMetadata {
   const HostMetadata();
 

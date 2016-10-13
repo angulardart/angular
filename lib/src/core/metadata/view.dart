@@ -54,6 +54,7 @@ var VIEW_ENCAPSULATION_VALUES = [
 ///   Greet() : name = 'World';
 /// }
 /// ```
+@Deprecated('Use View instead')
 class ViewMetadata {
   /// Specifies a template URL for an Angular component.
   ///

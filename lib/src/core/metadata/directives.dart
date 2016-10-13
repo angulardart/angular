@@ -3,6 +3,7 @@ import "package:angular2/src/core/change_detection.dart"
 import "package:angular2/src/core/di/metadata.dart" show InjectableMetadata;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 
+@Deprecated('Use directive instead')
 class DirectiveMetadata extends InjectableMetadata {
   /// The CSS selector that triggers the instantiation of a directive.
   ///
@@ -317,6 +318,7 @@ class DirectiveMetadata extends InjectableMetadata {
         super();
 }
 
+@Deprecated('Use Component instead')
 class ComponentMetadata extends DirectiveMetadata {
   /// Defines the used change detection strategy.
   ///
@@ -428,6 +430,7 @@ class ComponentMetadata extends DirectiveMetadata {
 /// A "pure" pipe is only re-evaluated when either the input or any of the
 /// arguments change. When not specified, pipes default to being pure.
 ///
+@Deprecated('Use Pipe instead')
 class PipeMetadata extends InjectableMetadata {
   final String name;
   final bool _pure;
@@ -437,6 +440,7 @@ class PipeMetadata extends InjectableMetadata {
   bool get pure => _pure ?? true;
 }
 
+@Deprecated('Use Input instead')
 class InputMetadata {
   final String bindingPropertyName;
   const InputMetadata(
@@ -446,16 +450,19 @@ class InputMetadata {
       this.bindingPropertyName]);
 }
 
+@Deprecated('Use Output instead')
 class OutputMetadata {
   final String bindingPropertyName;
   const OutputMetadata([this.bindingPropertyName]);
 }
 
+@Deprecated('Use HostBinding instead')
 class HostBindingMetadata {
   final String hostPropertyName;
   const HostBindingMetadata([this.hostPropertyName]);
 }
 
+@Deprecated('Use HostListener instead')
 class HostListenerMetadata {
   final String eventName;
   final List<String> args;
