@@ -6,11 +6,11 @@ import 'package:angular2/src/core/render/api.dart';
 class DomSharedStylesHost implements SharedStylesHost {
   List<String> _styles = [];
   var _stylesSet = new Set<String>();
-  var _hostNodes = new Set();
+  // Native ShadowDOM hosts.
+  List _nativeHosts;
+  final HeadElement _rootHost;
 
-  DomSharedStylesHost(dynamic doc) {
-    _hostNodes.add(doc.head);
-  }
+  DomSharedStylesHost(HtmlDocument doc) : _rootHost = doc.head;
 
   @override
   dynamic createStyleElement(String css) {
@@ -29,8 +29,11 @@ class DomSharedStylesHost implements SharedStylesHost {
       _stylesSet.add(style);
       _styles.add(style);
       additions.add(style);
+      _rootHost.append(createStyleElement(style));
     }
-    onStylesAdded(additions);
+    if (_nativeHosts != null) {
+      onStylesAdded(additions);
+    }
   }
 
   @override
@@ -47,17 +50,20 @@ class DomSharedStylesHost implements SharedStylesHost {
 
   @override
   void addHost(dynamic hostNode) {
-    _addStylesToHost(_styles, hostNode);
-    _hostNodes.add(hostNode);
+    Node host = hostNode;
+    _addStylesToHost(_styles, host);
+    _nativeHosts ??= <Node>[];
+    _nativeHosts.add(hostNode);
   }
 
   @override
   void removeHost(dynamic hostNode) {
-    _hostNodes.remove(hostNode);
+    _nativeHosts.remove(hostNode);
   }
 
   void onStylesAdded(List<String> additions) {
-    _hostNodes.forEach((hostNode) {
+    if (_nativeHosts == null) return;
+    _nativeHosts.forEach((hostNode) {
       _addStylesToHost(additions, hostNode);
     });
   }

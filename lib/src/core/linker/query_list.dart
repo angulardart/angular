@@ -13,10 +13,7 @@ class QueryList<T> extends Object with IterableMixin<T> {
   StreamController<Iterable<T>> _streamController;
 
   @override
-  Iterator<T> get iterator {
-    _results ??= const [];
-    return _results.iterator;
-  }
+  Iterator<T> get iterator => _results.iterator;
 
   Stream<Iterable<T>> get changes {
     _streamController ??= new StreamController<Iterable<T>>.broadcast();
