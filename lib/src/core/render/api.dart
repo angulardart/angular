@@ -27,7 +27,7 @@ class RenderComponentType {
   final ViewEncapsulation encapsulation;
   List<dynamic /* String | List < dynamic > */ > templateStyles;
 
-  var COMPONENT_REGEX = new RegExp(r'%COMP%');
+  static final COMPONENT_REGEX = new RegExp(r'%COMP%');
   static const COMPONENT_VARIABLE = '%COMP%';
   static const HOST_STYLE_PREFIX = '_nghost-';
   static const CONTENT_STYLE_PREFIX = '_ngcontent-';

@@ -9,7 +9,7 @@ import 'package:angular2/src/facade/async.dart';
 /// by @ViewChildren and @ViewChild annotations.
 class QueryList<T> extends Object with IterableMixin<T> {
   bool _dirty = true;
-  List<T> _results;
+  List<T> _results = const [];
   StreamController<Iterable<T>> _streamController;
 
   @override
@@ -23,9 +23,9 @@ class QueryList<T> extends Object with IterableMixin<T> {
     return _streamController.stream;
   }
 
-  int get length => _results?.length ?? 0;
-  T get first => _results?.first;
-  T get last => _results?.last;
+  int get length => _results.length;
+  T get first => _results.isNotEmpty ? _results.first : null;
+  T get last => _results.isNotEmpty ? _results.last : null;
 
   String toString() {
     return _results.toString();
@@ -38,12 +38,12 @@ class QueryList<T> extends Object with IterableMixin<T> {
       if (newList[i] is List) {
         var results = <T>[];
         _flattenList(newList, results);
-        _results = results.isEmpty ? null : results;
+        _results = results;
         _dirty = false;
         return;
       }
     }
-    _results = newList.isEmpty ? null : newList;
+    _results = newList;
     _dirty = false;
   }
 

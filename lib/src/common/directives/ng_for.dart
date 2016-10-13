@@ -137,7 +137,7 @@ class NgFor implements DoCheck {
         int adjustedPreviousIndex, int currentIndex) {
       if (item.previousIndex == null) {
         var view =
-            this._viewContainer.createEmbeddedView(_templateRef, currentIndex);
+            this._viewContainer.insertEmbeddedView(_templateRef, currentIndex);
         var tuple = new RecordViewTuple(item, view);
         insertTuples.add(tuple);
       } else if (currentIndex == null) {

@@ -1,6 +1,5 @@
 import 'package:angular2/src/core/di/injector.dart' show Injector;
 
-import '../profile/profile.dart' show wtfCreateScope, wtfLeave, WtfScopeFn;
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'app_element.dart';
 import 'element_ref.dart';
@@ -53,15 +52,19 @@ class ViewContainerRef {
   /// View in the container.
   ///
   /// Returns the [ViewRef] for the newly created View.
-  EmbeddedViewRef createEmbeddedView(TemplateRef templateRef,
-      [num index = -1]) {
+  EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index) {
     EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
-    this.insert(viewRef, index);
+    insert(viewRef, index);
     return viewRef;
   }
 
-  WtfScopeFn _createComponentInContainerScope =
-      wtfCreateScope('ViewContainerRef#createComponent()');
+  /// Instantiates an Embedded View based on the [TemplateRef `templateRef`]
+  /// and appends it into this container.
+  EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
+    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
+    _element.attachView((viewRef as ViewRefImpl).appView, length);
+    return viewRef;
+  }
 
   /// Instantiates a single [Component] and inserts its Host View into this
   /// container at the specified `index`.
@@ -81,16 +84,13 @@ class ViewContainerRef {
       [num index = -1,
       Injector injector = null,
       List<List<dynamic>> projectableNodes = null]) {
-    var s = this._createComponentInContainerScope();
     var contextInjector =
         injector != null ? injector : this._element.parentInjector;
     var componentRef =
         componentFactory.create(contextInjector, projectableNodes);
     this.insert(componentRef.hostView, index);
-    return wtfLeave(s, componentRef);
+    return componentRef;
   }
-
-  var _insertScope = wtfCreateScope('ViewContainerRef#insert()');
 
   /// Inserts a View identified by a [ViewRef] into the container.
   ///
@@ -100,27 +100,23 @@ class ViewContainerRef {
   /// Returns the inserted [ViewRef].
   /// TODO(i): refactor insert+remove into move
   ViewRef insert(ViewRef viewRef, [num index = -1]) {
-    var s = this._insertScope();
     if (index == -1) index = this.length;
     var viewRef_ = (viewRef as ViewRefImpl);
-    this._element.attachView(viewRef_.internalView, index);
-    return wtfLeave(s, viewRef_);
+    this._element.attachView(viewRef_.appView, index);
+    return viewRef;
   }
 
   ViewRef move(ViewRef viewRef, int currentIndex) {
-    ViewRef s = _insertScope();
     if (currentIndex == -1) return null;
     var viewRef_ = viewRef as ViewRefImpl;
-    _element.moveView(viewRef_.internalView, currentIndex);
-    return wtfLeave(s, viewRef_);
+    _element.moveView(viewRef_.appView, currentIndex);
+    return viewRef_;
   }
 
   /// Returns the index of the View, specified via [ViewRef], within the current
   /// container or `-1` if this container doesn't contain the View.
   num indexOf(ViewRef viewRef) =>
-      _element.nestedViews.indexOf((viewRef as ViewRefImpl).internalView);
-
-  var _removeScope = wtfCreateScope('ViewContainerRef#remove()');
+      _element.nestedViews.indexOf((viewRef as ViewRefImpl).appView);
 
   /// Destroys a View attached to this container at the specified `index`.
   ///
@@ -128,31 +124,24 @@ class ViewContainerRef {
   /// removed.
   /// TODO(i): rename to destroy
   void remove([num index = -1]) {
-    var s = this._removeScope();
     if (index == -1) index = this.length - 1;
     var view = this._element.detachView(index);
     view.destroy();
-    // view is intentionally not returned to the client.
-    wtfLeave(s);
   }
-
-  var _detachScope = wtfCreateScope('ViewContainerRef#detach()');
 
   /// Use along with [#insert] to move a View within the current container.
   ///
   /// If the `index` param is omitted, the last [ViewRef] is detached.
   /// TODO(i): refactor insert+remove into move
   ViewRef detach([num index = -1]) {
-    var s = this._detachScope();
     if (index == -1) index = this.length - 1;
-    var view = this._element.detachView(index);
-    return wtfLeave(s, view.ref);
+    return _element.detachView(index).ref;
   }
 
   /// Destroys all Views in this container.
   void clear() {
     for (var i = this.length - 1; i >= 0; i--) {
-      this.remove(i);
+      remove(i);
     }
   }
 }

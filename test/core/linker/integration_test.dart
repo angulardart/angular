@@ -2450,7 +2450,7 @@ class ToolbarViewContainer {
     this.vc = vc;
   }
   set toolbarVc(ToolbarPart part) {
-    var view = this.vc.createEmbeddedView(part.templateRef, 0);
+    var view = this.vc.insertEmbeddedView(part.templateRef, 0);
     view.setLocal("toolbarProp", "From toolbar");
   }
 }

@@ -69,53 +69,54 @@ abstract class EmbeddedViewRef extends ViewRef {
 }
 
 class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
-  final AppView<dynamic> _view;
+  final AppView appView;
 
-  ViewRefImpl(this._view);
+  ViewRefImpl(this.appView);
 
-  AppView<dynamic> get internalView => _view;
+  @Deprecated('Use appView instead')
+  AppView<dynamic> get internalView => appView;
 
-  List get rootNodes => _view.flatRootNodes;
+  List get rootNodes => appView.flatRootNodes;
 
   ChangeDetectorRef get changeDetectorRef => this;
 
   void setLocal(String variableName, dynamic value) {
-    _view.setLocal(variableName, value);
+    appView.setLocal(variableName, value);
   }
 
-  bool hasLocal(String variableName) => _view.hasLocal(variableName);
+  bool hasLocal(String variableName) => appView.hasLocal(variableName);
 
-  bool get destroyed => _view.destroyed;
+  bool get destroyed => appView.destroyed;
 
   void markForCheck() {
-    _view.markPathToRootAsCheckOnce();
+    appView.markPathToRootAsCheckOnce();
   }
 
   void detach() {
-    _view.cdMode = ChangeDetectionStrategy.Detached;
+    appView.cdMode = ChangeDetectionStrategy.Detached;
   }
 
   void detectChanges() {
-    _view.detectChanges();
+    appView.detectChanges();
   }
 
   void checkNoChanges() {
     AppViewUtils.enterThrowOnChanges();
-    _view.detectChanges();
+    appView.detectChanges();
     AppViewUtils.exitThrowOnChanges();
   }
 
   void reattach() {
-    _view.cdMode = ChangeDetectionStrategy.CheckAlways;
+    appView.cdMode = ChangeDetectionStrategy.CheckAlways;
     markForCheck();
   }
 
   @override
   void onDestroy(OnDestroyCallback callback) {
-    _view.addOnDestroyCallback(callback);
+    appView.addOnDestroyCallback(callback);
   }
 
   void destroy() {
-    _view.destroy();
+    appView.destroy();
   }
 }

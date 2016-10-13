@@ -727,7 +727,7 @@ class ManualViewportDirective {
   TemplateRef templateRef;
   ManualViewportDirective(this.vc, this.templateRef);
   void show() {
-    this.vc.createEmbeddedView(this.templateRef, 0);
+    this.vc.insertEmbeddedView(this.templateRef, 0);
   }
 
   void hide() {
@@ -740,7 +740,7 @@ class ProjectDirective {
   ViewContainerRef vc;
   ProjectDirective(this.vc);
   void show(TemplateRef templateRef) {
-    this.vc.createEmbeddedView(templateRef, 0);
+    this.vc.insertEmbeddedView(templateRef, 0);
   }
 
   void hide() {

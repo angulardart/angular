@@ -4,7 +4,7 @@ export "wtf_impl.dart" show WtfScopeFn;
 // Change exports to const once https://github.com/angular/ts2dart/issues/150
 
 /// True if WTF is enabled.
-var wtfEnabled = impl.detectWTF();
+bool wtfEnabled = impl.detectWTF();
 dynamic noopScope([dynamic arg0, dynamic arg1]) {
   return null;
 }
