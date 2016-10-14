@@ -20,6 +20,6 @@ class OpaqueToken {
   final String _desc;
   const OpaqueToken(this._desc);
   String toString() {
-    return '''Token ${ this . _desc}''';
+    return 'Token ${_desc}';
   }
 }
