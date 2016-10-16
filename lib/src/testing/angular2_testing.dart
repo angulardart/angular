@@ -166,7 +166,7 @@ void ngComponentTest(
         return tcb
             .overrideView(
                 componentType,
-                new ViewMetadata(
+                new View(
                     template: templateOverride,
                     directives: directives,
                     pipes: pipes))

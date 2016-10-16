@@ -2,7 +2,7 @@ import "package:angular2/src/compiler/view_resolver.dart" show ViewResolver;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-import "../core/metadata.dart" show ViewMetadata;
+import "../core/metadata/view.dart" show ViewMetadata;
 
 @Injectable()
 class MockViewResolver extends ViewResolver {
@@ -13,7 +13,7 @@ class MockViewResolver extends ViewResolver {
 
   MockViewResolver();
 
-  /// Overrides the [ViewMetadata] for a component.
+  /// Overrides the [View] for a component.
   void setView(Type component, ViewMetadata view) {
     this._checkOverrideable(component);
     this._views[component] = view;
@@ -26,7 +26,7 @@ class MockViewResolver extends ViewResolver {
     this._inlineTemplates[component] = template;
   }
 
-  /// Overrides a directive from the component [ViewMetadata].
+  /// Overrides a directive from the component [View].
   void overrideViewDirective(Type component, Type from, Type to) {
     this._checkOverrideable(component);
     var overrides = this._directiveOverrides[component];
@@ -37,9 +37,9 @@ class MockViewResolver extends ViewResolver {
     overrides[from] = to;
   }
 
-  /// Returns the [ViewMetadata] for a component.
+  /// Returns the [View] for a component.
   ///
-  /// Set the [ViewMetadata] to the overridden view when it exists or fallback
+  /// Set the [View] to the overridden view when it exists or fallback
   /// to the default [ViewResolver],
   ///   see [setView].
   /// - Override the directives, see `overrideViewDirective`.

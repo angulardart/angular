@@ -17,9 +17,7 @@ export "change_detector_ref.dart" show ChangeDetectorRef;
 export "constants.dart"
     show
         ChangeDetectionStrategy,
-        CHANGE_DETECTION_STRATEGY_VALUES,
         ChangeDetectorState,
-        CHANGE_DETECTOR_STATE_VALUES,
         isDefaultChangeDetectionStrategy;
 export "differs/default_iterable_differ.dart"
     show DefaultIterableDifferFactory, CollectionChangeRecord;

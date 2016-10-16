@@ -10,7 +10,7 @@ import "package:angular2/src/core/metadata.dart"
         HostListenerMetadata,
         OutputMetadata,
         PipeMetadata,
-        ViewMetadata,
+        View,
         ViewChildMetadata,
         ViewChildrenMetadata,
         ViewQueryMetadata,
@@ -169,7 +169,7 @@ class StaticReflector {
     conversionMap[this.getStaticType(core_metadata, "View")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0) ?? {};
-      return new ViewMetadata(
+      return new View(
           templateUrl: p0["templateUrl"],
           template: p0["template"],
           directives: p0["directives"],

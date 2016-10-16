@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
+export 'package:angular2/src/core/change_detection/component_state.dart';
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
@@ -107,7 +108,7 @@ abstract class AppView<T> {
     var projectableNodes;
     switch (this.type) {
       case ViewType.COMPONENT:
-        context = this.declarationAppElement.component as T;
+        context = declarationAppElement.component as T;
         projectableNodes = ensureSlotCount(
             givenProjectableNodes, this.componentType.slotCount);
         break;
@@ -327,6 +328,12 @@ abstract class AppView<T> {
 
   void markAsCheckOnce() {
     cdMode = ChangeDetectionStrategy.CheckOnce;
+  }
+
+  /// Called by ComponentState to mark view to be checked on next
+  /// change detection cycle.
+  void markStateChanged() {
+    markPathToRootAsCheckOnce();
   }
 
   void markPathToRootAsCheckOnce() {

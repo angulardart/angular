@@ -55,7 +55,7 @@ export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 /// the constructor dependencies for each directive.
 ///
 /// Angular then resolves dependencies as follows, according to the order in
-/// which they appear in the [ViewMetadata]:
+/// which they appear in the [View]:
 ///
 /// 1. Dependencies on the current element
 /// 2. Dependencies on element injectors and their parents until it encounters
@@ -280,7 +280,7 @@ export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 /// and represents a location in the current view where these actions are
 /// performed.
 ///
-/// Views are always created as children of the current [ViewMetadata], and as
+/// Views are always created as children of the current [ViewMeta], and as
 /// siblings of the `<template>` element. Thus a directive in a child view
 /// cannot inject the directive that created it.
 ///
@@ -397,7 +397,7 @@ class Directive extends DirectiveMetadata {
 /// All template expressions and statements are then evaluated against the
 /// component instance.
 ///
-/// For details on the `@View` annotation, see [ViewMetadata].
+/// For details on the `@View` annotation, see [View].
 ///
 /// ### Lifecycle hooks
 ///
@@ -445,7 +445,7 @@ class Component extends ComponentMetadata {
             styleUrls: styleUrls);
 }
 
-/// See: [ViewMetadata] for docs.
+/// See: [View] for docs.
 class View extends ViewMetadata {
   const View(
       {String templateUrl,

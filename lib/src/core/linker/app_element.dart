@@ -26,10 +26,8 @@ class AppElement {
 
   ViewContainerRef get vcRef => new ViewContainerRef(this);
 
-  void initComponent(
-      dynamic component,
-      List<QueryList<dynamic>> componentConstructorViewQueries,
-      AppView<dynamic> view) {
+  void initComponent(dynamic component,
+      List<QueryList> componentConstructorViewQueries, AppView view) {
     this.component = component;
     this.componentConstructorViewQueries = componentConstructorViewQueries;
     componentView = view;

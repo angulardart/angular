@@ -142,6 +142,8 @@ var NG_CORE = [
   'ChangeDetectorRef',
   'ComponentResolver',
   'Component',
+  'ComponentState',
+  'ComponentStateCallback',
   'ComponentMetadata',
   'ComponentRef',
   'ContentChild',
