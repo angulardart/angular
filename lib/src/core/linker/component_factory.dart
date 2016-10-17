@@ -1,13 +1,14 @@
 import 'dart:html';
+
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/reflection/reflection.dart' show reflector;
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_element.dart';
 import 'app_view.dart';
+import 'app_view_utils.dart' show OnDestroyCallback;
 import 'element_ref.dart' show ElementRef;
 import 'view_ref.dart' show ViewRef;
-import 'app_view_utils.dart' show OnDestroyCallback;
 
 /// Represents an instance of a Component created via a [ComponentFactory].
 ///

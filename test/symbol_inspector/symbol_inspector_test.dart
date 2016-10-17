@@ -3,10 +3,10 @@ library angular2.test.symbol_inspector.symbol_inspector_test;
 
 import 'dart:mirrors';
 
-import 'symbol_inspector.dart';
-import 'simple_library.dart';
-
 import 'package:test/test.dart';
+
+import 'simple_library.dart';
+import 'symbol_inspector.dart';
 
 void main() {
   group('getSymbolsFromLibrary', () {

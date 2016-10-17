@@ -1,7 +1,7 @@
 import 'package:angular2/src/core/di/injector.dart' show Injector;
 
-import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'app_element.dart';
+import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'element_ref.dart';
 import 'template_ref.dart';
 import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRefImpl;

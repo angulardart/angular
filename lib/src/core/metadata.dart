@@ -4,6 +4,7 @@ import 'metadata/di.dart';
 import 'metadata/directives.dart';
 import 'metadata/view.dart';
 
+export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 export 'metadata/di.dart';
 export 'metadata/directives.dart';
 export 'metadata/lifecycle_hooks.dart'
@@ -16,7 +17,6 @@ export 'metadata/lifecycle_hooks.dart'
         OnDestroy,
         OnInit,
         DoCheck;
-export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 
 /// Directives allow you to attach behavior to elements in the DOM.
 ///

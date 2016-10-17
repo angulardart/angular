@@ -17,6 +17,7 @@ import "package:angular2/src/compiler/view_compiler/view_compiler.dart"
     show ViewCompiler;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/facade/lang.dart" show assertionsEnabled;
+
 import "config.dart" show CompilerConfig;
 import "directive_resolver.dart" show DirectiveResolver;
 import "expression_parser/lexer.dart" show Lexer;

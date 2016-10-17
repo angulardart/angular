@@ -8,11 +8,11 @@ import "package:angular2/src/core/di/reflective_provider.dart"
         constructDependencies,
         ReflectiveDependency,
         getInjectorModuleProviders;
+import "package:angular2/src/core/metadata.dart" show ViewMetadata, Attribute;
 import "package:angular2/src/core/metadata/di.dart" as dimd;
 import "package:angular2/src/core/metadata/directives.dart" as md;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LIFECYCLE_HOOKS_VALUES;
-import "package:angular2/src/core/metadata.dart" show ViewMetadata, Attribute;
 import "package:angular2/src/core/platform_directives_and_pipes.dart"
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
@@ -20,10 +20,10 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show stringify;
 
 import "compile_metadata.dart" as cpl;
+import "compiler_utils.dart" show MODULE_SUFFIX, sanitizeIdentifier;
 import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
 import "directive_resolver.dart" show DirectiveResolver;
 import "pipe_resolver.dart" show PipeResolver;
-import "compiler_utils.dart" show MODULE_SUFFIX, sanitizeIdentifier;
 import "view_resolver.dart" show ViewResolver;
 
 @Injectable()

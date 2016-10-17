@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:html';
+
 import 'package:angular2/src/core/di.dart' show Injector, Injectable;
 
+import 'app_view_utils.dart' show OnDestroyCallback;
 import 'component_factory.dart' show ComponentRef;
 import 'component_resolver.dart' show ComponentResolver;
 import 'view_container_ref.dart' show ViewContainerRef;
-import 'app_view_utils.dart' show OnDestroyCallback;
 
 /// Service for instantiating a Component and attaching it to a View at a
 /// specified location.

@@ -1,6 +1,3 @@
-import "package:angular2/src/compiler/xhr.dart" show XHR;
-import "package:angular2/src/security/dom_sanitization_service.dart";
-import "package:angular2/src/security/dom_sanitization_service_impl.dart";
 import "package:angular2/common.dart"
     show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"
@@ -13,6 +10,7 @@ import "package:angular2/core.dart"
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;
+import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable, Provider;
 import "package:angular2/src/core/profile/wtf_init.dart" show wtfInit;
 import "package:angular2/src/core/testability/testability.dart"
@@ -34,6 +32,9 @@ import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
 import "package:angular2/src/platform/dom/events/key_events.dart"
     show KeyEventsPlugin;
+import "package:angular2/src/security/dom_sanitization_service.dart";
+import "package:angular2/src/security/dom_sanitization_service_impl.dart";
+
 import "browser/browser_adapter.dart" show BrowserDomAdapter;
 
 export "package:angular2/src/platform/browser/title.dart" show Title;

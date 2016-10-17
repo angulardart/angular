@@ -3,10 +3,12 @@ library browser_adapter;
 
 import 'dart:html';
 import 'dart:js_util' as js_util;
+
 import 'package:angular2/platform/common_dom.dart' show setRootDomAdapter;
-import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;
 import 'package:angular2/src/facade/browser.dart';
 import 'package:js/js.dart';
+
+import 'generic_browser_adapter.dart' show GenericBrowserDomAdapter;
 
 // WARNING: Do not expose outside this class. Parsing HTML using this
 // sanitizer is a security risk.

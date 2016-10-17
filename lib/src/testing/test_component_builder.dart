@@ -10,9 +10,9 @@ import "package:angular2/core.dart"
         View,
         ElementRef,
         ChangeDetectorRef;
+import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/debug/debug_node.dart"
     show DebugElement, getDebugNode;
-import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 

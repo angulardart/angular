@@ -1,3 +1,6 @@
+import 'package:angular2/src/core/di.dart' show Inject, Injectable;
+import "package:angular2/src/core/render/api.dart"
+    show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
 import "package:angular2/src/debug/debug_node.dart"
     show
         DebugNode,
@@ -7,14 +10,11 @@ import "package:angular2/src/debug/debug_node.dart"
         indexDebugNode,
         inspectNativeElement,
         removeDebugNodeFromIndex;
-
-import 'package:angular2/src/core/di.dart' show Inject, Injectable;
-import "package:angular2/src/core/render/api.dart"
-    show Renderer, RootRenderer, RenderComponentType, RenderDebugInfo;
-import '../platform/dom/dom_tokens.dart' show DOCUMENT;
-import '../platform/dom/dom_renderer.dart' show DomRenderer, DomRootRenderer;
-import '../platform/dom/events/event_manager.dart' show EventManager;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
+
+import '../platform/dom/dom_renderer.dart' show DomRenderer, DomRootRenderer;
+import '../platform/dom/dom_tokens.dart' show DOCUMENT;
+import '../platform/dom/events/event_manager.dart' show EventManager;
 
 const INSPECT_GLOBAL_NAME = "ng.probe";
 

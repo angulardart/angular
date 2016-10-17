@@ -1,17 +1,19 @@
 import 'dart:html';
-import 'offline_compiler_compa.css.shim.dart' as import0;
-import 'package:angular2/src/debug/debug_context.dart' as import1;
-import 'package:angular2/src/core/render/api.dart' as import2;
-import 'package:angular2/src/debug/debug_app_view.dart' as import3;
-import 'offline_compiler_util.dart' as import4;
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import5;
-import 'package:angular2/src/core/di/injector.dart' as import6;
-import 'package:angular2/src/core/linker/app_element.dart' as import7;
-import 'package:angular2/src/core/linker/view_type.dart' as import8;
+
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     as import9;
-import 'package:angular2/src/core/metadata/view.dart' as import10;
+import 'package:angular2/src/core/di/injector.dart' as import6;
+import 'package:angular2/src/core/linker/app_element.dart' as import7;
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import5;
 import 'package:angular2/src/core/linker/component_factory.dart' as import11;
+import 'package:angular2/src/core/linker/view_type.dart' as import8;
+import 'package:angular2/src/core/metadata/view.dart' as import10;
+import 'package:angular2/src/core/render/api.dart' as import2;
+import 'package:angular2/src/debug/debug_app_view.dart' as import3;
+import 'package:angular2/src/debug/debug_context.dart' as import1;
+
+import 'offline_compiler_compa.css.shim.dart' as import0;
+import 'offline_compiler_util.dart' as import4;
 
 const List<dynamic> styles_CompA = const [
   '.redStyle[_ngcontent-%COMP%] { color: red; }',

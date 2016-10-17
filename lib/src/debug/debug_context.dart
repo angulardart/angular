@@ -1,8 +1,7 @@
 import "package:angular2/src/core/di.dart" show Injector;
-import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
-
-import "package:angular2/src/debug/debug_app_view.dart";
 import "package:angular2/src/core/linker/view_type.dart";
+import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
+import "package:angular2/src/debug/debug_app_view.dart";
 
 class StaticNodeDebugInfo {
   final List providerTokens;

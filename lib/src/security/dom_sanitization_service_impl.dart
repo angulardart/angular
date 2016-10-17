@@ -1,9 +1,9 @@
+import '../core/di.dart' show Injectable;
+import '../core/security.dart';
+import 'dom_sanitization_service.dart';
 import 'html_sanitizer.dart';
 import 'style_sanitizer.dart';
 import 'url_sanitizer.dart';
-import '../core/security.dart';
-import '../core/di.dart' show Injectable;
-import 'dom_sanitization_service.dart';
 
 @Injectable()
 class DomSanitizationServiceImpl implements DomSanitizationService {

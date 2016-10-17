@@ -1,9 +1,8 @@
 library angular2.platform.browser;
 
 import "dart:async";
+
 import "package:angular2/compiler.dart" show COMPILER_PROVIDERS, XHR;
-import "package:angular2/src/compiler/runtime_compiler.dart"
-    show RuntimeCompiler;
 import "package:angular2/core.dart"
     show
         ComponentRef,
@@ -13,18 +12,20 @@ import "package:angular2/core.dart"
         PlatformRef,
         getPlatform,
         createPlatform;
+import "package:angular2/src/compiler/runtime_compiler.dart"
+    show RuntimeCompiler;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 import "package:angular2/src/core/reflection/reflection_capabilities.dart"
     show ReflectionCapabilities;
 import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
-export "package:angular2/src/core/security.dart"
-    show SanitizationService, TemplateSecurityContext;
 import "package:angular2/src/platform/browser_common.dart"
     show BROWSER_PROVIDERS, BROWSER_APP_COMMON_PROVIDERS;
 
 export "package:angular2/src/core/angular_entrypoint.dart";
+export "package:angular2/src/core/security.dart"
+    show SanitizationService, TemplateSecurityContext;
 export "package:angular2/src/platform/browser_common.dart"
     show
         BROWSER_PROVIDERS,

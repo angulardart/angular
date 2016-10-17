@@ -1,11 +1,11 @@
 @TestOn('browser && !js')
 library angular2.test.common.directives.ng_for_test;
 
-import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart" show Component, TemplateRef, ContentChild;
 import "package:angular2/src/common/directives/ng_for.dart" show NgFor;
 import "package:angular2/src/common/directives/ng_if.dart" show NgIf;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 void main() {

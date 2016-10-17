@@ -13,6 +13,7 @@ import "package:angular2/core.dart"
         MapInjector;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:collection/collection.dart" show MapEquality;
+
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
 import "../interfaces.dart"
     show OnActivate, CanReuse, OnReuse, OnDeactivate, CanDeactivate;

@@ -12,6 +12,7 @@ import 'package:angular2/src/core/zone/ng_zone.dart' show NgZone, NgZoneError;
 import 'package:angular2/src/facade/exceptions.dart'
     show BaseException, ExceptionHandler;
 import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
+
 import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import 'profile/profile.dart' show wtfLeave, wtfCreateScope, WtfScopeFn;
 

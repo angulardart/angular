@@ -9,15 +9,15 @@ import 'compile_metadata.dart'
         createHostComponentMeta,
         CompileInjectorModuleMetadata,
         CompileTypeMetadata;
+import 'compiler_utils.dart' show MODULE_SUFFIX;
 import 'directive_normalizer.dart' show DirectiveNormalizer;
+import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
 import 'template_parser.dart' show TemplateParser;
-import 'compiler_utils.dart' show MODULE_SUFFIX;
 import 'view_compiler/injector_compiler.dart' show InjectorCompiler;
 import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
-import 'identifiers.dart';
 
 class SourceModule {
   final String moduleUrl;

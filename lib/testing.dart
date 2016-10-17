@@ -13,9 +13,9 @@ export "package:angular2/src/mock/ng_zone_mock.dart" show MockNgZone;
 export "package:angular2/src/mock/view_resolver_mock.dart"
     show MockViewResolver;
 
-export "src/testing/fake_async.dart";
-export "src/testing/by.dart";
 export "src/debug/debug_node.dart" show DebugElement;
+export "src/testing/by.dart";
+export "src/testing/fake_async.dart";
 export "src/testing/test_component_builder.dart"
     show ComponentFixture, TestComponentBuilder;
 export "src/testing/test_injector.dart";

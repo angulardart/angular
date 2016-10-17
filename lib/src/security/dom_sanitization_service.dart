@@ -1,4 +1,5 @@
 import '../core/security.dart';
+
 export '../core/security.dart';
 
 abstract class SafeHtml extends SafeValue {}

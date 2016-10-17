@@ -6,8 +6,8 @@ import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
-import "../style_compiler.dart" show StylesCompileResult;
 import "../output/output_ast.dart" as o;
+import "../style_compiler.dart" show StylesCompileResult;
 import "../template_ast.dart"
     show
         TemplateAst,

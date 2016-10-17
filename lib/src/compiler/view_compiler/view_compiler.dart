@@ -1,13 +1,14 @@
-import "package:angular2/src/core/di.dart" show Injectable;
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
+import "package:angular2/src/core/di.dart" show Injectable;
+
 import "../compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import "../config.dart" show CompilerConfig;
 import "../identifiers.dart";
 import "../output/output_ast.dart" as o;
-import "../template_ast.dart" show TemplateAst, templateVisitAll;
 import "../style_compiler.dart" show StylesCompileResult;
+import "../template_ast.dart" show TemplateAst, templateVisitAll;
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
 import "view_binder.dart" show bindView;

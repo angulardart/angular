@@ -1,3 +1,5 @@
+import 'package:angular2/src/compiler/view_compiler/view_compiler_utils.dart'
+    show TEMPLATE_COMMENT_TEXT, TEMPLATE_BINDINGS_EXP;
 import 'package:angular2/src/core/di.dart' show Inject, Injectable;
 import 'package:angular2/src/core/metadata.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart'
@@ -10,8 +12,7 @@ import 'package:angular2/src/core/render/api.dart'
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/facade/lang.dart' show Json;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
-import 'package:angular2/src/compiler/view_compiler/view_compiler_utils.dart'
-    show TEMPLATE_COMMENT_TEXT, TEMPLATE_BINDINGS_EXP;
+
 import 'dom_tokens.dart' show DOCUMENT;
 import 'events/event_manager.dart' show EventManager;
 
