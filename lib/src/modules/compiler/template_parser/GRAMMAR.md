@@ -1,25 +1,34 @@
+#TODO:
+* Resolve ambiguities regarding what characters are allowed in different kinds of text blocks (possibly splitting them up).
+* Specify what features of HTML are not supported.
+* Including missing grammar elements.
+* What is Banana formally known as?
+
 ```dart
-Tag = TagSelfClosing | TagOpen, [RawText | Tag+ | Comment], TagClose ;
+Whitespace = " " | "\t" | "\n" | "\r" ;
 
-TagOpen = "<", TagName, Whitespace+, [Attribute, Whitespace]*, ">" ;
+// Upper case letters are lowercased
+AsciiLetter = "a" | ... | "Z" ;
 
-TagSelfClosing = "<", TagName, Whitespace+, [Attribute, [Whitespace]+]* , "/>" ;
+TagFragment = AsciiLetter+ ;
 
-TagClose = "</", TagName, Whitespace*, ">" ;
+TagName = TagFragment, [ "-" TagFragment]* ;
 
-Comment = "<!--", [Text]+ , "-->"
+AttributeName = // TODO - there are lots of things that are allowed attribute names that maybe we don't want to... ;
 
-Attribute = Normal | Structural | Input | Output | Banana | Binding ;
+RawText = (Text | Interpolation)* ;
 
-Normal = AttributeName | AttributeName, "=", AttributeValue ;
+Text = ... everything but /, <, {{ ;
 
-AttributeValue = '"', RawText , '"' ;
+Interpolation = "{{", DartExpression , "}}" ;
 
-Structural = "*", AttributeName, "=", '"', (DartExpression | NgForExpression), '"' ;
+DartExpression = // TODO ;
 
-Input = "[", AttributeName, "]", "=", '"', DartExpression ;
+Banana = "[(", AttributeName, ")", "]", "=", '"', DartExpression ;
 
-Output= "(", AttributeName, ")", "=", '"', DartExpression ;
+Binding = "#", AttriubteName ;
 
-Combined = "[(", AttributeName, ")", "]", "=", '"', DartExpression ;
+DartExpression = // TODO ;
+
+NgForExpression = // TODO ;
 ```
