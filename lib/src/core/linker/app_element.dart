@@ -1,9 +1,9 @@
 import "package:angular2/src/core/di.dart" show Injector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
+import "app_view.dart";
 import "element_ref.dart";
 import "query_list.dart" show QueryList;
-import "app_view.dart";
 import "view_container_ref.dart";
 import "view_type.dart";
 

@@ -6,6 +6,7 @@ import 'package:angular2/src/core/security.dart';
 import 'package:angular2/src/transform/common/names.dart'
     show toTemplateExtension;
 
+import "../compile_metadata.dart";
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
@@ -15,15 +16,14 @@ import '../template_ast.dart'
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
-import "../compile_metadata.dart";
-import 'view_compiler_utils.dart' show NAMESPACE_URIS, createSetAttributeParams;
-import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
+import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'view_builder.dart' show buildUpdaterFunctionName;
+import 'view_compiler_utils.dart' show NAMESPACE_URIS, createSetAttributeParams;
 
 o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
     new o.ReadClassMemberExpr('_expr_${exprIndex}');

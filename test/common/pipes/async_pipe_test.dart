@@ -2,13 +2,15 @@
 library angular2.test.common.pipes.async_pipe_test;
 
 import 'dart:async';
-import 'package:angular2/testing_internal.dart';
+
 import 'package:angular2/common.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
+import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+
 import '../control_mocks.dart';
 
 void main() {

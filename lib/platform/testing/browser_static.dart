@@ -10,8 +10,8 @@ import 'package:angular2/core.dart'
         PLATFORM_COMMON_PROVIDERS,
         PLATFORM_INITIALIZER;
 import 'package:angular2/platform/common.dart' show LocationStrategy;
-import 'package:angular2/src/core/render/api.dart' show RootRenderer;
 import 'package:angular2/src/core/linker/app_view_utils.dart' show AppViewUtils;
+import 'package:angular2/src/core/render/api.dart' show RootRenderer;
 import 'package:angular2/src/debug/debug_renderer.dart'
     show DebugDomRootRenderer;
 import 'package:angular2/src/mock/directive_resolver_mock.dart'

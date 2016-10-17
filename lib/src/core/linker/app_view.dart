@@ -2,21 +2,22 @@ import 'dart:html';
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
-export 'package:angular2/src/core/change_detection/component_state.dart';
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
-import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/dom_renderer.dart'
     show DomRootRenderer;
+import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 import 'app_element.dart';
+import 'app_view_utils.dart'
+    show appViewUtils, ensureSlotCount, OnDestroyCallback;
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
 import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
-import 'app_view_utils.dart'
-    show appViewUtils, ensureSlotCount, OnDestroyCallback;
+
+export 'package:angular2/src/core/change_detection/component_state.dart';
 
 const EMPTY_CONTEXT = const Object();
 

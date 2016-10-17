@@ -1,9 +1,10 @@
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, WrappedException;
+
+import "metadata.dart";
+import "provider.dart";
 import "reflective_injector.dart" show ReflectiveInjector;
 import "reflective_key.dart" show ReflectiveKey;
-import "provider.dart";
-import "metadata.dart";
 
 List<dynamic> findFirstClosedCycle(List keys) {
   var res = [];

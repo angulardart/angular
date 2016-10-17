@@ -2,22 +2,22 @@
 library angular2.test.core.linker.change_detection_integration_test;
 
 import 'dart:html';
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/core/change_detection/change_detection.dart"
-    show PipeTransform, WrappedValue;
-import "package:angular2/src/core/metadata/lifecycle_hooks.dart" show OnDestroy;
-import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/core.dart";
-import "package:angular2/common.dart" show AsyncPipe;
-import "../../compiler/test_bindings.dart" show TEST_PROVIDERS;
 
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing.dart';
+import "package:angular2/common.dart" show AsyncPipe;
+import "package:angular2/core.dart";
+import "package:angular2/src/core/change_detection/change_detection.dart"
+    show PipeTransform, WrappedValue;
+import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
+import "package:angular2/src/core/metadata/lifecycle_hooks.dart" show OnDestroy;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import 'package:angular2/src/testing/angular2_testing.dart';
-
+import 'package:angular2/testing.dart';
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
+
+import "../../compiler/test_bindings.dart" show TEST_PROVIDERS;
 
 const ALL_DIRECTIVES = const [
   TestContainer,

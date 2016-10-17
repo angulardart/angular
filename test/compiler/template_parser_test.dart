@@ -1,23 +1,23 @@
 @TestOn('browser')
 library angular2.test.compiler.template_parser_test;
 
-import "package:angular2/testing_internal.dart";
-import "package:angular2/src/core/di.dart" show provide;
-import "test_bindings.dart" show TEST_PROVIDERS;
-import "package:angular2/src/compiler/template_parser.dart"
-    show TemplateParser, splitClasses;
 import "package:angular2/src/compiler/compile_metadata.dart";
-import "package:angular2/src/compiler/template_ast.dart";
 import "package:angular2/src/compiler/identifiers.dart"
     show identifierToken, Identifiers;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
+import "package:angular2/src/compiler/template_ast.dart";
+import "package:angular2/src/compiler/template_parser.dart"
+    show TemplateParser, splitClasses;
+import "package:angular2/src/core/di.dart" show provide;
+import "package:angular2/testing_internal.dart";
+import 'package:func/func.dart';
 import "package:logging/logging.dart";
-import "schema_registry_mock.dart" show MockSchemaRegistry;
-import "expression_parser/unparser.dart" show Unparser;
 import 'package:test/test.dart';
 
-import 'package:func/func.dart';
+import "expression_parser/unparser.dart" show Unparser;
+import "schema_registry_mock.dart" show MockSchemaRegistry;
+import "test_bindings.dart" show TEST_PROVIDERS;
 
 var expressionUnparser = new Unparser();
 var someModuleUrl = "package:someModule";

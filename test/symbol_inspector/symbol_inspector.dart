@@ -1,14 +1,15 @@
 library angular.symbol_inspector.symbol_inspector;
 
 import 'dart:mirrors';
+
 import 'package:angular2/common.dart' as ng2common;
 import 'package:angular2/compiler.dart' as ng2compiler;
 import 'package:angular2/core.dart' as ng2core;
 import 'package:angular2/instrumentation.dart' as ng2instrumentation;
 import 'package:angular2/platform/browser.dart' as ng2platform_browser;
+import 'package:angular2/platform/common.dart' as ng2platform_common;
 import 'package:angular2/platform/testing/browser.dart'
     as ng2platform_browser_testing;
-import 'package:angular2/platform/common.dart' as ng2platform_common;
 
 final commonLib = getLibrary('package:angular2/common.dart');
 final compilerLib = getLibrary('package:angular2/compiler.dart');

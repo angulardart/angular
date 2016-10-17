@@ -7,7 +7,9 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show jsSplit;
+import "package:logging/logging.dart";
 
+import "../core/security.dart";
 import "compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import "expression_parser/ast.dart"
@@ -52,8 +54,6 @@ import "template_ast.dart"
         BoundDirectivePropertyAst,
         VariableAst;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
-import "../core/security.dart";
-import "package:logging/logging.dart";
 
 // Group 1 = "bind-"
 // Group 2 = "var-"

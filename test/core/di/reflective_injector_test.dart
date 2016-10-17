@@ -1,9 +1,6 @@
 @TestOn('browser')
 library angular2.test.core.di.reflective_injector_test;
 
-import "package:angular2/src/facade/lang.dart" show stringify;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/testing_internal.dart";
 import "package:angular2/core.dart"
     show
         provide,
@@ -18,16 +15,19 @@ import "package:angular2/core.dart"
         Provider,
         InjectorModule,
         Provides;
+import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
+import "package:angular2/src/core/di/reflective_exceptions.dart";
 import "package:angular2/src/core/di/reflective_injector.dart"
     show
         ReflectiveInjectorImpl,
         ReflectiveInjectorInlineStrategy,
         ReflectiveInjectorDynamicStrategy,
         ReflectiveProtoInjector;
-import "package:angular2/src/core/di/reflective_exceptions.dart";
-import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
 import "package:angular2/src/core/di/reflective_provider.dart"
     show ResolvedReflectiveProviderImpl;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/facade/lang.dart" show stringify;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 class CustomDependencyMetadata extends DependencyMetadata {}

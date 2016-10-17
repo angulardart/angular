@@ -8,10 +8,6 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
         ChangeDetectorState,
         ChangeDetectionStrategy;
 import "package:angular2/src/core/di/injector.dart" show Injector;
-import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/core/linker/injector_factory.dart"
-    show CodegenInjector, CodegenInjectorFactory;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/linker/app_view_utils.dart"
     show
         AppViewUtils,
@@ -33,6 +29,10 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
         pureProxy8,
         pureProxy9,
         pureProxy10;
+import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
+import "package:angular2/src/core/linker/injector_factory.dart"
+    show CodegenInjector, CodegenInjectorFactory;
+import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart"
     show Renderer, RenderComponentType;
