@@ -81,7 +81,7 @@ class HammerEvent {
   int deltaX;
   int deltaY;
   int direction;
-  int distance;
+  num distance;
   num rotation;
   num scale;
   Node target;
