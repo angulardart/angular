@@ -1,0 +1,20 @@
+# **NOTE**: This package is _not_ published and does not actually exist.
+#
+# Once stable, this pubspec.yaml will be deleted and the sub-package merged
+# with package:angular2|pubspec.yaml, including tests, dependenceis, tools.
+name: angular2_template_parser
+
+environment:
+  sdk: ">=1.8.0 <2.0.0"
+
+dependencies:
+  charcode: ">=1.1.0 <2.0.0"
+  collection: "^1.0.0"
+  string_scanner: "^1.0.0"
+
+dev_dependencies:
+  angular2:
+  benchmark_harness:
+  dart_style:
+  html:
+  test:
