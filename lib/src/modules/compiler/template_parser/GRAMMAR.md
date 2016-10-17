@@ -50,8 +50,4 @@ Output= "(", AttributeName, ")", "=", '"', DartExpression ;
 Banana = "[(", AttributeName, ")", "]", "=", '"', DartExpression ;
 
 Binding = "#", AttriubteName ;
-
-DartExpression = // TODO ;
-
-NgForExpression = // TODO ;
 ```
