@@ -27,8 +27,4 @@ DartExpression = // TODO ;
 Banana = "[(", AttributeName, ")", "]", "=", '"', DartExpression ;
 
 Binding = "#", AttriubteName ;
-
-DartExpression = // TODO ;
-
-NgForExpression = // TODO ;
 ```
