@@ -4,10 +4,10 @@ import "../compile_metadata.dart" show CompileIdentifierMetadata;
 enum TypeModifier { Const }
 
 abstract class OutputType {
-  List<TypeModifier> modifiers;
-  OutputType([this.modifiers = null]) {
-    this.modifiers ??= [];
-  }
+  final List<TypeModifier> modifiers;
+  const OutputType([List<TypeModifier> modifiers])
+      : this.modifiers = modifiers ?? const <TypeModifier>[];
+
   dynamic visitType(TypeVisitor visitor, dynamic context);
   bool hasModifier(TypeModifier modifier) {
     return !identical(this.modifiers.indexOf(modifier), -1);
@@ -17,9 +17,9 @@ abstract class OutputType {
 enum BuiltinTypeName { Dynamic, Bool, String, Int, Double, Number, Function }
 
 class BuiltinType extends OutputType {
-  BuiltinTypeName name;
+  final BuiltinTypeName name;
 
-  BuiltinType(this.name, [List<TypeModifier> modifiers = null])
+  const BuiltinType(this.name, [List<TypeModifier> modifiers = null])
       : super(modifiers);
 
   dynamic visitType(TypeVisitor visitor, dynamic context) {
@@ -28,10 +28,9 @@ class BuiltinType extends OutputType {
 }
 
 class ExternalType extends OutputType {
-  CompileIdentifierMetadata value;
-  List<OutputType> typeParams;
-  ExternalType(this.value,
-      [this.typeParams = null, List<TypeModifier> modifiers = null])
+  final CompileIdentifierMetadata value;
+  final List<OutputType> typeParams;
+  ExternalType(this.value, [this.typeParams, List<TypeModifier> modifiers])
       : super(modifiers);
 
   dynamic visitType(TypeVisitor visitor, dynamic context) {
@@ -40,8 +39,8 @@ class ExternalType extends OutputType {
 }
 
 class ArrayType extends OutputType {
-  OutputType of;
-  ArrayType(this.of, [List<TypeModifier> modifiers = null]) : super(modifiers);
+  final OutputType of;
+  ArrayType(this.of, [List<TypeModifier> modifiers]) : super(modifiers);
 
   dynamic visitType(TypeVisitor visitor, dynamic context) {
     return visitor.visitArrayType(this, context);
@@ -49,22 +48,21 @@ class ArrayType extends OutputType {
 }
 
 class MapType extends OutputType {
-  OutputType valueType;
-  MapType(this.valueType, [List<TypeModifier> modifiers = null])
-      : super(modifiers);
+  final OutputType valueType;
+  MapType(this.valueType, [List<TypeModifier> modifiers]) : super(modifiers);
 
   dynamic visitType(TypeVisitor visitor, dynamic context) {
     return visitor.visitMapType(this, context);
   }
 }
 
-var DYNAMIC_TYPE = new BuiltinType(BuiltinTypeName.Dynamic);
-var BOOL_TYPE = new BuiltinType(BuiltinTypeName.Bool);
-var INT_TYPE = new BuiltinType(BuiltinTypeName.Int);
-var DOUBLE_TYPE = new BuiltinType(BuiltinTypeName.Double);
-var NUMBER_TYPE = new BuiltinType(BuiltinTypeName.Number);
-var STRING_TYPE = new BuiltinType(BuiltinTypeName.String);
-var FUNCTION_TYPE = new BuiltinType(BuiltinTypeName.Function);
+const DYNAMIC_TYPE = const BuiltinType(BuiltinTypeName.Dynamic);
+const BOOL_TYPE = const BuiltinType(BuiltinTypeName.Bool);
+const INT_TYPE = const BuiltinType(BuiltinTypeName.Int);
+const DOUBLE_TYPE = const BuiltinType(BuiltinTypeName.Double);
+const NUMBER_TYPE = const BuiltinType(BuiltinTypeName.Number);
+const STRING_TYPE = const BuiltinType(BuiltinTypeName.String);
+const FUNCTION_TYPE = const BuiltinType(BuiltinTypeName.Function);
 
 abstract class TypeVisitor {
   dynamic visitBuiltintType(BuiltinType type, dynamic context);
@@ -254,12 +252,11 @@ class WriteClassMemberExpr extends Expression {
 }
 
 class WriteVarExpr extends Expression {
-  String name;
-  Expression value;
+  final String name;
+  final Expression value;
   WriteVarExpr(this.name, Expression value, [OutputType type = null])
-      : super(type ?? value.type) {
-    this.value = value;
-  }
+      : this.value = value,
+        super(type ?? value.type);
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitWriteVarExpr(this, context);
   }
@@ -271,28 +268,27 @@ class WriteVarExpr extends Expression {
 }
 
 class WriteKeyExpr extends Expression {
-  Expression receiver;
-  Expression index;
-  Expression value;
+  final Expression receiver;
+  final Expression index;
+  final Expression value;
   WriteKeyExpr(this.receiver, this.index, Expression value,
       [OutputType type = null])
-      : super(type ?? value.type) {
-    this.value = value;
-  }
+      : this.value = value,
+        super(type ?? value.type);
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitWriteKeyExpr(this, context);
   }
 }
 
 class WritePropExpr extends Expression {
-  Expression receiver;
-  String name;
-  Expression value;
+  final Expression receiver;
+  final String name;
+  final Expression value;
   WritePropExpr(this.receiver, this.name, Expression value,
       [OutputType type = null])
-      : super(type ?? value.type) {
-    this.value = value;
-  }
+      : this.value = value,
+        super(type ?? value.type);
+
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitWritePropExpr(this, context);
   }
@@ -301,11 +297,11 @@ class WritePropExpr extends Expression {
 enum BuiltinMethod { ConcatArray, SubscribeObservable, bind }
 
 class InvokeMethodExpr extends Expression {
-  Expression receiver;
-  List<Expression> args;
+  final Expression receiver;
+  final List<Expression> args;
   String name;
   BuiltinMethod builtin;
-  bool checked;
+  final bool checked;
 
   InvokeMethodExpr(
       this.receiver, dynamic /* String | BuiltinMethod */ method, this.args,
@@ -337,8 +333,8 @@ class InvokeMemberMethodExpr extends Expression {
 }
 
 class InvokeFunctionExpr extends Expression {
-  Expression fn;
-  List<Expression> args;
+  final Expression fn;
+  final List<Expression> args;
   InvokeFunctionExpr(this.fn, this.args, [OutputType type = null])
       : super(type);
 
@@ -348,8 +344,8 @@ class InvokeFunctionExpr extends Expression {
 }
 
 class InstantiateExpr extends Expression {
-  Expression classExpr;
-  List<Expression> args;
+  final Expression classExpr;
+  final List<Expression> args;
   InstantiateExpr(this.classExpr, this.args, [OutputType type]) : super(type);
 
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -358,7 +354,7 @@ class InstantiateExpr extends Expression {
 }
 
 class LiteralExpr extends Expression {
-  dynamic value;
+  final dynamic value;
   LiteralExpr(this.value, [OutputType type = null]) : super(type);
 
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -367,10 +363,9 @@ class LiteralExpr extends Expression {
 }
 
 class ExternalExpr extends Expression {
-  CompileIdentifierMetadata value;
-  List<OutputType> typeParams;
-  ExternalExpr(this.value, [OutputType type = null, this.typeParams = null])
-      : super(type);
+  final CompileIdentifierMetadata value;
+  final List<OutputType> typeParams;
+  ExternalExpr(this.value, [OutputType type, this.typeParams]) : super(type);
 
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitExternalExpr(this, context);
@@ -378,14 +373,13 @@ class ExternalExpr extends Expression {
 }
 
 class ConditionalExpr extends Expression {
-  Expression condition;
-  Expression falseCase;
-  Expression trueCase;
+  final Expression condition;
+  final Expression falseCase;
+  final Expression trueCase;
   ConditionalExpr(this.condition, Expression trueCase,
-      [this.falseCase = null, OutputType type = null])
-      : super(type ?? trueCase.type) {
-    this.trueCase = trueCase;
-  }
+      [this.falseCase, OutputType type])
+      : this.trueCase = trueCase,
+        super(type ?? trueCase.type);
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitConditionalExpr(this, context);
   }
@@ -408,7 +402,7 @@ class IfNullExpr extends Expression {
 }
 
 class NotExpr extends Expression {
-  Expression condition;
+  final Expression condition;
   NotExpr(this.condition) : super(BOOL_TYPE);
 
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -417,7 +411,7 @@ class NotExpr extends Expression {
 }
 
 class CastExpr extends Expression {
-  Expression value;
+  final Expression value;
   CastExpr(this.value, OutputType type) : super(type);
 
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -432,8 +426,8 @@ class FnParam {
 }
 
 class FunctionExpr extends Expression {
-  List<FnParam> params;
-  List<Statement> statements;
+  final List<FnParam> params;
+  final List<Statement> statements;
 
   FunctionExpr(this.params, this.statements, [OutputType type = null])
       : super(type);
@@ -450,22 +444,21 @@ class FunctionExpr extends Expression {
 }
 
 class BinaryOperatorExpr extends Expression {
-  BinaryOperator operator;
-  Expression rhs;
-  Expression lhs;
+  final BinaryOperator operator;
+  final Expression rhs;
+  final Expression lhs;
   BinaryOperatorExpr(this.operator, Expression lhs, this.rhs,
       [OutputType type = null])
-      : super(type ?? lhs.type) {
-    this.lhs = lhs;
-  }
+      : this.lhs = lhs,
+        super(type ?? lhs.type);
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitBinaryOperatorExpr(this, context);
   }
 }
 
 class ReadPropExpr extends Expression {
-  Expression receiver;
-  String name;
+  final Expression receiver;
+  final String name;
 
   ReadPropExpr(this.receiver, this.name, [OutputType type = null])
       : super(type);
@@ -480,8 +473,8 @@ class ReadPropExpr extends Expression {
 }
 
 class ReadKeyExpr extends Expression {
-  Expression receiver;
-  Expression index;
+  final Expression receiver;
+  final Expression index;
 
   ReadKeyExpr(this.receiver, this.index, [OutputType type = null])
       : super(type);
@@ -496,7 +489,7 @@ class ReadKeyExpr extends Expression {
 }
 
 class LiteralArrayExpr extends Expression {
-  List<Expression> entries;
+  final List<Expression> entries;
 
   LiteralArrayExpr(this.entries, [OutputType type = null]) : super(type);
 
