@@ -41,7 +41,11 @@ void bind(
     CompileMethod method,
     {o.OutputType fieldType}) {
   var checkExpression = convertCdExpressionToIr(
-      view, context, parsedExpression, DetectChangesVars.valUnwrapper);
+      view,
+      context,
+      parsedExpression,
+      DetectChangesVars.valUnwrapper,
+      view.component.template.preserveWhitespace);
   if (checkExpression.expression == null) {
     // e.g. an empty expression was given
     return;
@@ -354,7 +358,11 @@ void bindToUpdateMethod(
     CompileMethod method,
     {o.OutputType fieldType}) {
   var checkExpression = convertCdExpressionToIr(
-      view, context, parsedExpression, DetectChangesVars.valUnwrapper);
+      view,
+      context,
+      parsedExpression,
+      DetectChangesVars.valUnwrapper,
+      view.component.template.preserveWhitespace);
   if (checkExpression.expression == null) {
     // e.g. an empty expression was given
     return;

@@ -1,5 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
+import "../chars.dart";
 import "../expression_parser/ast.dart" as compiler_ast;
 import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
@@ -25,16 +26,21 @@ ExpressionWithWrappedValueInfo convertCdExpressionToIr(
     NameResolver nameResolver,
     o.Expression implicitReceiver,
     compiler_ast.AST expression,
-    o.ReadVarExpr valueUnwrapper) {
-  var visitor =
-      new _AstToIrVisitor(nameResolver, implicitReceiver, valueUnwrapper);
+    o.ReadVarExpr valueUnwrapper,
+    bool preserveWhitespace) {
+  var visitor = new _AstToIrVisitor(
+      nameResolver, implicitReceiver, valueUnwrapper, preserveWhitespace);
   o.Expression irAst = expression.visit(visitor, _Mode.Expression);
   return new ExpressionWithWrappedValueInfo(irAst, visitor.needsValueUnwrapper);
 }
 
-List<o.Statement> convertCdStatementToIr(NameResolver nameResolver,
-    o.Expression implicitReceiver, compiler_ast.AST stmt) {
-  var visitor = new _AstToIrVisitor(nameResolver, implicitReceiver, null);
+List<o.Statement> convertCdStatementToIr(
+    NameResolver nameResolver,
+    o.Expression implicitReceiver,
+    compiler_ast.AST stmt,
+    bool preserveWhitespace) {
+  var visitor = new _AstToIrVisitor(
+      nameResolver, implicitReceiver, null, preserveWhitespace);
   var statements = <o.Statement>[];
   flattenStatements(stmt.visit(visitor, _Mode.Statement), statements);
   return statements;
@@ -63,12 +69,13 @@ dynamic /* o . Expression | o . Statement */ convertToStatementIfNeeded(
 }
 
 class _AstToIrVisitor implements compiler_ast.AstVisitor {
-  NameResolver _nameResolver;
-  o.Expression _implicitReceiver;
+  final NameResolver _nameResolver;
+  final o.Expression _implicitReceiver;
+  final bool preserveWhitespace;
   o.ReadVarExpr _valueUnwrapper;
   bool needsValueUnwrapper = false;
-  _AstToIrVisitor(
-      this._nameResolver, this._implicitReceiver, this._valueUnwrapper);
+  _AstToIrVisitor(this._nameResolver, this._implicitReceiver,
+      this._valueUnwrapper, this.preserveWhitespace);
   dynamic visitBinary(compiler_ast.Binary ast, dynamic context) {
     _Mode mode = context;
     var op;
@@ -177,6 +184,16 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     return IMPLICIT_RECEIVER;
   }
 
+  /// Trim text in preserve whitespace mode if it contains \n preceding or
+  /// following an interpolation.
+  String compressWhitespace(String value) {
+    if (preserveWhitespace ||
+        value.contains('\u00A0') ||
+        value.contains(ngSpace) ||
+        !value.contains('\n')) return replaceNgSpace(value);
+    return replaceNgSpace(value.replaceAll('\n', '').trim());
+  }
+
   dynamic visitInterpolation(compiler_ast.Interpolation ast, dynamic context) {
     _Mode mode = context;
     ensureExpressionMode(mode, ast);
@@ -192,10 +209,12 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     } else if (ast.expressions.length <= 2) {
       var args = <o.Expression>[];
       for (var i = 0, len = ast.strings.length - 1; i < len; i++) {
-        args.add(o.literal(ast.strings[i]));
+        String literalStr = compressWhitespace(replaceNgSpace(ast.strings[i]));
+        args.add(o.literal(literalStr));
         args.add(ast.expressions[i].visit(this, _Mode.Expression));
       }
-      args.add(o.literal(ast.strings[ast.strings.length - 1]));
+      args.add(
+          o.literal(compressWhitespace(ast.strings[ast.strings.length - 1])));
       if (ast.expressions.length == 1)
         return o.importExpr(Identifiers.interpolate1).callFn(args);
       else
@@ -203,10 +222,14 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     } else {
       var args = [o.literal(ast.expressions.length)];
       for (var i = 0; i < ast.strings.length - 1; i++) {
-        args.add(o.literal(ast.strings[i]));
+        String literalStr = i == 0
+            ? compressWhitespace(ast.strings[i])
+            : replaceNgSpace(ast.strings[i]);
+        args.add(o.literal(literalStr));
         args.add(ast.expressions[i].visit(this, _Mode.Expression));
       }
-      args.add(o.literal(ast.strings[ast.strings.length - 1]));
+      args.add(
+          o.literal(compressWhitespace(ast.strings[ast.strings.length - 1])));
       return o.importExpr(Identifiers.interpolate).callFn(args);
     }
   }

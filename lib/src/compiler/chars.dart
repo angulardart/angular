@@ -49,9 +49,15 @@ const $LBRACE = 123;
 const $BAR = 124;
 const $RBRACE = 125;
 const $NBSP = 160;
+const $NGSP = 0xE500; // Unicode PUA for space.
 const $PIPE = 124;
 const $TILDA = 126;
 const $AT = 64;
+const String ngSpace = '\uE500';
+String replaceNgSpace(String value) {
+  return value.replaceAll(ngSpace, ' ');
+}
+
 bool isWhitespace(num code) {
-  return (code >= $TAB && code <= $SPACE) || (code == $NBSP);
+  return (code >= $TAB && code <= $SPACE) || (code == $NBSP) || (code == $NGSP);
 }

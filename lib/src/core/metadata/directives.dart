@@ -407,7 +407,7 @@ class ComponentMetadata extends DirectiveMetadata {
       Map<String, dynamic> queries,
       this.templateUrl,
       this.template,
-      this.preserveWhitespace: false,
+      this.preserveWhitespace: true,
       this.styleUrls,
       this.styles,
       this.directives,

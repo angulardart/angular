@@ -928,8 +928,7 @@ class _CompileTemplateMetadataVisitor
   }
 
   void _populatePreserveWhitespace(Expression value) {
-    _preserveWhitespace =
-        _expressionToString(value, 'View#preserveWhitespace') == "true";
+    _preserveWhitespace = _expressionToBool(value, 'View#preserveWhitespace');
   }
 
   void _populateTemplateUrl(Expression value) {

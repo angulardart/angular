@@ -490,7 +490,7 @@ class CompileTemplateMetadata {
     this.styles = styles ?? <String>[];
     this.styleUrls = styleUrls ?? <String>[];
     this.ngContentSelectors = ngContentSelectors ?? <String>[];
-    this.preserveWhitespace = preserveWhitespace ?? false;
+    this.preserveWhitespace = preserveWhitespace ?? true;
   }
 
   static CompileTemplateMetadata fromJson(Map<String, dynamic> data) {
@@ -500,7 +500,7 @@ class CompileTemplateMetadata {
             : data["encapsulation"],
         template: data["template"],
         templateUrl: data["templateUrl"],
-        preserveWhitespace: data["preserveWhitespace"] ?? false,
+        preserveWhitespace: data["preserveWhitespace"] ?? true,
         styles: data["styles"] as List<String>,
         styleUrls: data["styleUrls"] as List<String>,
         ngContentSelectors: data["ngContentSelectors"] as List<String>);
@@ -515,7 +515,7 @@ class CompileTemplateMetadata {
       "styleUrls": this.styleUrls,
       "ngContentSelectors": this.ngContentSelectors
     };
-    if (preserveWhitespace) res["preserveWhitespace"] = true;
+    if (preserveWhitespace == false) res["preserveWhitespace"] = false;
     return res;
   }
 }

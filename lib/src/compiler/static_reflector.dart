@@ -153,7 +153,7 @@ class StaticReflector {
           queries: p0["queries"] as Map<String, dynamic>,
           templateUrl: p0["templateUrl"],
           template: p0["template"],
-          preserveWhitespace: p0["preserveWhitespace"] ?? false,
+          preserveWhitespace: p0["preserveWhitespace"] ?? true,
           styleUrls: p0["styleUrls"] as List<String>,
           styles: p0["styles"] as List<String>,
           directives: p0["directives"],

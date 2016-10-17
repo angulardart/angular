@@ -7,7 +7,7 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show jsSplit;
-
+import "chars.dart";
 import "compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import "expression_parser/ast.dart"
@@ -296,21 +296,25 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       // If preserve white space is turned off, filter out spaces after line
       // breaks and any empty text nodes.
       if (preserveWhitespace == false) {
+        if (!(text.contains('\u00A0') || text.contains(ngSpace))) {
+          text = text.trim();
+        }
         if (text.isEmpty) return null;
         if (_isNewLineWithSpaces(text)) {
-          text = '\n';
+          return null;
         }
       }
-      return new TextAst(text, ngContentIndex, ast.sourceSpan);
+      return new TextAst(
+          text.replaceAll('\uE500', ' '), ngContentIndex, ast.sourceSpan);
     }
   }
 
   bool _isNewLineWithSpaces(String text) {
-    if (text.length <= 1) return false;
-    if (text[0] != '\n') return false;
     int len = text.length;
-    for (int i = 1; i < len; i++) {
-      if (text[i] != ' ') return false;
+    for (int i = 0; i < len; i++) {
+      if (text[i] != '\n' && text[i] != ' ') {
+        return false;
+      }
     }
     return true;
   }
