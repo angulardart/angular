@@ -1,0 +1,60 @@
+import 'package:angular2_template_parser/src/lexer.dart';
+import 'package:test/test.dart';
+
+void main() {
+  NgTemplateLexer lexer;
+
+  test('should lex a simple text node', () async {
+    lexer = new NgTemplateLexer('Hello World');
+    expect(
+      await lexer.tokenize().toList(),
+      [
+        new NgToken(NgTokenType.textNode, 'Hello World'),
+      ],
+    );
+  });
+
+  test('should lex a simple text node and elements', () async {
+    lexer = new NgTemplateLexer('<span>Hello World</span>');
+    expect(
+      await lexer.tokenize().toList(),
+      [
+        new NgToken(NgTokenType.startOpenElement, '<'),
+        new NgToken(NgTokenType.elementName, 'span'),
+        new NgToken(NgTokenType.endOpenElement, '>'),
+        new NgToken(NgTokenType.textNode, 'Hello World'),
+        new NgToken(NgTokenType.endElement, '</span>'),
+      ],
+    );
+  });
+
+  test('should lex a set of text and element nodes', () async {
+    lexer = new NgTemplateLexer(
+      '<div>\n'
+      '  <span>Hello<em>World</em>!</span>\n'
+      '</div>'
+    );
+    expect(
+      await lexer.tokenize().toList(),
+      [
+        new NgToken(NgTokenType.startOpenElement, '<'),
+        new NgToken(NgTokenType.elementName, 'div'),
+        new NgToken(NgTokenType.endOpenElement, '>'),
+        new NgToken(NgTokenType.textNode, '\n  '),
+        new NgToken(NgTokenType.startOpenElement, '<'),
+        new NgToken(NgTokenType.elementName, 'span'),
+        new NgToken(NgTokenType.endOpenElement, '>'),
+        new NgToken(NgTokenType.textNode, 'Hello'),
+        new NgToken(NgTokenType.startOpenElement, '<'),
+        new NgToken(NgTokenType.elementName, 'em'),
+        new NgToken(NgTokenType.endOpenElement, '>'),
+        new NgToken(NgTokenType.textNode, 'World'),
+        new NgToken(NgTokenType.endElement, '</em>'),
+        new NgToken(NgTokenType.textNode, '!'),
+        new NgToken(NgTokenType.endElement, '</span>'),
+        new NgToken(NgTokenType.textNode, '\n'),
+        new NgToken(NgTokenType.endElement, '</div>'),
+      ],
+    );
+  });
+}

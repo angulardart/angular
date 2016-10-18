@@ -12,6 +12,7 @@ dependencies:
   collection: "^1.0.0"
   meta: "^1.0.4"
   string_scanner: "^1.0.0"
+  quiver:
 
 dev_dependencies:
   dart_style:

@@ -32,8 +32,6 @@ linter:
     - prefer_is_not_empty
     - public_member_api_docs
     - slash_for_doc_comments
-    - sort_constructors_first
-    - sort_unnamed_constructors_first
     - type_init_formals
     - unnecessary_brace_in_string_interp
     - unnecessary_getters_setters

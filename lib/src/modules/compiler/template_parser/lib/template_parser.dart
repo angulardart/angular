@@ -1,19 +1,14 @@
 export 'src/ast.dart' 
     show 
-        NgAttributeAst,
-        NgCommentAst,
-        NgElementAst,
-        NgEventAst,
-        NgExpressionAst,
-        NgInterpolateAst,
-        NgPropertyAst,
-        NgTemplateAst,
-        NgTextAst;
+        NgAstNode,
+        NgDefinedNode,
+        NgElement,
+        NgText;
 export 'src/parser.dart' show NgTemplateParser;
 export 'src/schema.dart'
     show
         html5Schema,
-        NgElementSchema,
+        NgElementDefinition,
         NgEventDefinition,
         NgPropertyDefinition,
         NgTemplateSchema,
