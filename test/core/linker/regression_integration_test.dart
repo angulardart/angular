@@ -9,7 +9,7 @@ import "package:angular2/core.dart"
         Pipe,
         PipeTransform,
         provide,
-        ViewMetadata,
+        View,
         PLATFORM_PIPES,
         OpaqueToken,
         Injector;
@@ -29,7 +29,7 @@ void main() {
           tcb
               .overrideView(
                   MyComp,
-                  new ViewMetadata(
+                  new View(
                       template: "{{true | somePipe}}", pipes: [CustomPipe]))
               .createAsync(MyComp)
               .then((fixture) {
@@ -49,7 +49,7 @@ void main() {
           tcb
               .overrideView(
                   MyComp,
-                  new ViewMetadata(
+                  new View(
                       template:
                           '''{{\'red\' + (true ? \' border\' : \'\')}}'''))
               .createAsync(MyComp)
@@ -153,7 +153,7 @@ void main() {
         tcb
             .overrideView(
                 MyComp,
-                new ViewMetadata(
+                new View(
                     template:
                         '''A<cmp-content *ngIf="true" [ngClass]="\'red\'">B</cmp-content>C''',
                     directives: [NgClass, NgIf, CmpWithNgContent]))

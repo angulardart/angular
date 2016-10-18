@@ -17,6 +17,8 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
         AppViewUtils,
         interpolate,
         interpolate0,
+        interpolate1,
+        interpolate2,
         checkBinding,
         castByValue,
         EMPTY_ARRAY,
@@ -66,6 +68,8 @@ var impUninitialized = uninitialized;
 var impChangeDetectorState = ChangeDetectorState;
 var impDevModeEqual = devModeEqual;
 var impInterpolate0 = interpolate0;
+var impInterpolate1 = interpolate1;
+var impInterpolate2 = interpolate2;
 var impThrowOnChanges = () => AppViewUtils.throwOnChanges;
 var impInterpolate = interpolate;
 var impCheckBinding = checkBinding;
@@ -180,6 +184,14 @@ class Identifiers {
       name: "interpolate0",
       moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impInterpolate0);
+  static final interpolate1 = new CompileIdentifierMetadata(
+      name: "interpolate1",
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
+      runtime: impInterpolate1);
+  static final interpolate2 = new CompileIdentifierMetadata(
+      name: "interpolate2",
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
+      runtime: impInterpolate2);
   static final interpolate = new CompileIdentifierMetadata(
       name: "interpolate",
       moduleUrl: APP_VIEW_UTILS_MODULE_URL,

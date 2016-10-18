@@ -66,6 +66,9 @@ abstract class EmbeddedViewRef extends ViewRef {
 
   /// Destroys the view and all of the data structures associated with it.
   void destroy();
+
+  /// Marks the node for change detection.
+  void markForCheck();
 }
 
 class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
@@ -88,6 +91,7 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
 
   bool get destroyed => appView.destroyed;
 
+  @override
   void markForCheck() {
     appView.markPathToRootAsCheckOnce();
   }

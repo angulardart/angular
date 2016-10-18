@@ -14,7 +14,7 @@ abstract class OutputType {
   }
 }
 
-enum BuiltinTypeName { Dynamic, Bool, String, Int, Number, Function }
+enum BuiltinTypeName { Dynamic, Bool, String, Int, Double, Number, Function }
 
 class BuiltinType extends OutputType {
   BuiltinTypeName name;
@@ -61,6 +61,7 @@ class MapType extends OutputType {
 var DYNAMIC_TYPE = new BuiltinType(BuiltinTypeName.Dynamic);
 var BOOL_TYPE = new BuiltinType(BuiltinTypeName.Bool);
 var INT_TYPE = new BuiltinType(BuiltinTypeName.Int);
+var DOUBLE_TYPE = new BuiltinType(BuiltinTypeName.Double);
 var NUMBER_TYPE = new BuiltinType(BuiltinTypeName.Number);
 var STRING_TYPE = new BuiltinType(BuiltinTypeName.String);
 var FUNCTION_TYPE = new BuiltinType(BuiltinTypeName.Function);

@@ -18,16 +18,12 @@ abstract class ComponentResolver {
   void clearCache();
 }
 
-bool _isComponentFactory(dynamic type) {
-  return type is ComponentFactory;
-}
-
 @Injectable()
 class ReflectorComponentResolver implements ComponentResolver {
   Future<ComponentFactory> resolveComponent(Type componentType) {
     var metadatas = reflector.annotations(componentType);
-    var componentFactory =
-        metadatas.firstWhere(_isComponentFactory, orElse: () => null);
+    var componentFactory = metadatas
+        .firstWhere((type) => type is ComponentFactory, orElse: () => null);
     if (componentFactory == null) {
       throw new BaseException('No precompiled component $componentType found');
     }
