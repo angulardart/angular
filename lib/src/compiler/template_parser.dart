@@ -413,7 +413,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         ? CssSelector.parse(preparsedElement.projectAs)[0]
         : elementCssSelector;
     var ngContentIndex = parent.findNgContentIndex(projectionSelector);
-    var parsedElement;
+    TemplateAst parsedElement;
     if (identical(preparsedElement.type, PreparsedElementType.NG_CONTENT)) {
       var elementChildren = element.children;
       if (elementChildren != null && elementChildren.length > 0) {
