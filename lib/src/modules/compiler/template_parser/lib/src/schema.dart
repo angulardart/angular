@@ -1,5 +1,7 @@
 import 'package:meta/meta.dart';
 
+export 'schema/html.dart';
+
 /// A defined set of elements.
 abstract class NgTemplateSchema {
   /// Create a schema of [elements].
@@ -15,17 +17,24 @@ abstract class NgTemplateSchema {
   ///       ...
   ///     })
   @literal
-  const factory NgTemplateSchema(Map<String, NgTemplateSchema> elements) = _NgTemplateSchema;
+  const factory NgTemplateSchema(Map<String, NgElementSchema> elements) =
+      _NgTemplateSchema;
 
   /// Known elements in the schema.
-  Map<String, NgTemplateSchema> get elements;
+  Map<String, NgElementSchema> get elements;
+
+  /// Whether [tagName] is supported by this schema.
+  bool hasElement(String tagName);
 }
 
 class _NgTemplateSchema implements NgTemplateSchema {
   @override
-  final Map<String, NgTemplateSchema> elements;
+  final Map<String, NgElementSchema> elements;
 
   const _NgTemplateSchema(this.elements);
+
+  @override
+  bool hasElement(String tagName) => elements.containsKey(tagName);
 }
 
 /// A defined set of events and properties of an element.
@@ -44,7 +53,8 @@ abstract class NgElementSchema {
   ///       },
   ///     )
   @literal
-  const factory NgElementSchema(String tagName, {
+  const factory NgElementSchema(
+    String tagName, {
     Map<String, NgEventDefinition> events,
     Map<String, NgPropertyDefinition> properties,
   }) = _NgElementSchema;
@@ -54,6 +64,12 @@ abstract class NgElementSchema {
 
   /// Known properties on the element.
   Map<String, NgPropertyDefinition> get properties;
+
+  /// Whether event [name] is supported by this element.
+  bool hasEvent(String name);
+
+  /// Whether property [name] is supported by this element.
+  bool hasProperty(String name);
 
   /// Name of the element.
   String get tagName;
@@ -70,10 +86,17 @@ class _NgElementSchema implements NgElementSchema {
   final String tagName;
 
   @literal
-  const _NgElementSchema(this.tagName, {
+  const _NgElementSchema(
+    this.tagName, {
     this.events: const {},
     this.properties: const {},
   });
+
+  @override
+  bool hasEvent(String name) => events.containsKey(name);
+
+  @override
+  bool hasProperty(String name) => properties.containsKey(name);
 }
 
 /// A defined set of properties on an [NgElementSchema].
@@ -87,7 +110,8 @@ abstract class NgPropertyDefinition {
   ///       const NgTypeReference.dartSdk('core', 'String'),
   ///     )
   @literal
-  const factory NgPropertyDefinition(String name, [NgTypeReference type]) = _NgPropertyDefinition;
+  const factory NgPropertyDefinition(String name, [NgTypeReference type]) =
+      _NgPropertyDefinition;
 
   /// Name of the property.
   String get name;
@@ -117,14 +141,15 @@ abstract class NgEventDefinition {
   ///       'click',
   ///       const NgTypeReference.dartsdk('html', 'MouseEvent'),
   ///     )
-  /// 
+  ///
   ///     // A custom "closed" event.
   ///     const NgEventDefinition(
   ///       'closed',
   ///       const NgTypeReference('material/lib/material.dart', 'CloseEvent'),
   ///     )
   @literal
-  const factory NgEventDefinition(String name, [NgTypeReference type]) = _NgEventDefinition;
+  const factory NgEventDefinition(String name, [NgTypeReference type]) =
+      _NgEventDefinition;
 
   /// Name of the event.
   String get name;
@@ -159,18 +184,18 @@ abstract class NgTypeReference {
   ]) = _NgTypeReference;
 
   /// Create a reference to a `dart` SDK reference.
-  /// 
+  ///
   /// ## Example
   ///     // dart:core#String
   ///     const NgTypeReference.dartSdk('core', 'String')
-  /// 
+  ///
   ///     // dart:core#List<String>
   ///     const NgTypeReference.dartSdk('core', 'List', const [
   ///       const NgTypeReference.dartSdk('core', 'String'),
   ///     ])
   @literal
   const factory NgTypeReference.dartSdk(
-    String path, 
+    String path,
     String identifier, [
     List<NgTypeReference> types,
   ]) = _NgTypeReference.dartSdk;
@@ -209,7 +234,7 @@ class _NgTypeReference implements NgTypeReference {
     this.path,
     this.identifier, [
     this.types = const [],
-  ]) 
+  ])
       : this.scheme = 'assert';
 
   @literal
