@@ -1,9 +1,9 @@
-export 'src/ast.dart' show NgTemplateAst;
+export 'src/ast.dart' show NgAstNode, NgDefinedNode, NgElement, NgText;
 export 'src/parser.dart' show NgTemplateParser;
 export 'src/schema.dart'
     show
         html5Schema,
-        NgElementSchema,
+        NgElementDefinition,
         NgEventDefinition,
         NgPropertyDefinition,
         NgTemplateSchema,

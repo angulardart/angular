@@ -1,28 +1,28 @@
 import '../schema.dart';
 
-const _$mouse = const NgTypeReference.dartSdk('html', 'MouseEvent');
-const _$string = const NgTypeReference.dartSdk('core', 'String');
+const _eventMouse = const NgTypeReference.dartSdk('html', 'MouseEvent');
+const _typeString = const NgTypeReference.dartSdk('core', 'String');
 
 /// Represents the native DOM HTML5 schema.
 ///
 /// **WARNING**: This is an incomplete schema, and should be auto-generated.
 const html5Schema = const NgTemplateSchema(const {
-  'div': const NgElementSchema(
+  'div': const NgElementDefinition(
     'div',
     events: const {
-      'click': const NgEventDefinition('click', _$mouse),
+      'click': const NgEventDefinition('click', _eventMouse),
     },
     properties: const {
-      'title': const NgPropertyDefinition('title', _$string),
+      'title': const NgPropertyDefinition('title', _typeString),
     },
   ),
-  'span': const NgElementSchema(
+  'span': const NgElementDefinition(
     'span',
     events: const {
-      'click': const NgEventDefinition('click', _$mouse),
+      'click': const NgEventDefinition('click', _eventMouse),
     },
     properties: const {
-      'title': const NgPropertyDefinition('title', _$string),
+      'title': const NgPropertyDefinition('title', _typeString),
     },
   ),
 });

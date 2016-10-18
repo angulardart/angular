@@ -17,11 +17,11 @@ abstract class NgTemplateSchema {
   ///       ...
   ///     })
   @literal
-  const factory NgTemplateSchema(Map<String, NgElementSchema> elements) =
+  const factory NgTemplateSchema(Map<String, NgElementDefinition> elements) =
       _NgTemplateSchema;
 
   /// Known elements in the schema.
-  Map<String, NgElementSchema> get elements;
+  Map<String, NgElementDefinition> get elements;
 
   /// Whether [tagName] is supported by this schema.
   bool hasElement(String tagName);
@@ -29,7 +29,7 @@ abstract class NgTemplateSchema {
 
 class _NgTemplateSchema implements NgTemplateSchema {
   @override
-  final Map<String, NgElementSchema> elements;
+  final Map<String, NgElementDefinition> elements;
 
   const _NgTemplateSchema(this.elements);
 
@@ -38,7 +38,7 @@ class _NgTemplateSchema implements NgTemplateSchema {
 }
 
 /// A defined set of events and properties of an element.
-abstract class NgElementSchema {
+abstract class NgElementDefinition {
   /// Create a definition of an element with [tagName].
   ///
   /// ## Example
@@ -53,7 +53,7 @@ abstract class NgElementSchema {
   ///       },
   ///     )
   @literal
-  const factory NgElementSchema(
+  const factory NgElementDefinition(
     String tagName, {
     Map<String, NgEventDefinition> events,
     Map<String, NgPropertyDefinition> properties,
@@ -75,7 +75,7 @@ abstract class NgElementSchema {
   String get tagName;
 }
 
-class _NgElementSchema implements NgElementSchema {
+class _NgElementSchema implements NgElementDefinition {
   @override
   final Map<String, NgEventDefinition> events;
 
@@ -99,7 +99,7 @@ class _NgElementSchema implements NgElementSchema {
   bool hasProperty(String name) => properties.containsKey(name);
 }
 
-/// A defined set of properties on an [NgElementSchema].
+/// A defined set of properties on an [NgElementDefinition].
 abstract class NgPropertyDefinition {
   /// Create a definition of a property [name] that has a [type].
   ///
@@ -131,7 +131,7 @@ class _NgPropertyDefinition implements NgPropertyDefinition {
   const _NgPropertyDefinition(this.name, [this.type]);
 }
 
-/// A defined set of events on an [NgElementSchema].
+/// A defined set of events on an [NgElementDefinition].
 abstract class NgEventDefinition {
   /// Create a definition of an event [name] that emits a [type].
   ///
@@ -184,6 +184,10 @@ abstract class NgTypeReference {
   ]) = _NgTypeReference;
 
   /// Create a reference to a `dart` SDK reference.
+  ///
+  /// ## Example
+  ///     // dart:core#String
+  ///     const NgTypeReference.dartSdk('core', 'String')
   ///
   /// ## Example
   ///     // dart:core#String
