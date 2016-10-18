@@ -23,7 +23,9 @@ void main() {
         new NgToken(NgTokenType.elementName, 'span'),
         new NgToken(NgTokenType.endOpenElement, '>'),
         new NgToken(NgTokenType.textNode, 'Hello World'),
-        new NgToken(NgTokenType.endElement, '</span>'),
+        new NgToken(NgTokenType.startCloseElement, '</'),
+        new NgToken(NgTokenType.closeElementName, 'span'),
+        new NgToken(NgTokenType.endCloseElement, '>'),
       ],
     );
   });
@@ -49,11 +51,17 @@ void main() {
         new NgToken(NgTokenType.elementName, 'em'),
         new NgToken(NgTokenType.endOpenElement, '>'),
         new NgToken(NgTokenType.textNode, 'World'),
-        new NgToken(NgTokenType.endElement, '</em>'),
+        new NgToken(NgTokenType.startCloseElement, '</'),
+        new NgToken(NgTokenType.closeElementName, 'em'),
+        new NgToken(NgTokenType.endCloseElement, '>'),
         new NgToken(NgTokenType.textNode, '!'),
-        new NgToken(NgTokenType.endElement, '</span>'),
+        new NgToken(NgTokenType.startCloseElement, '</'),
+        new NgToken(NgTokenType.closeElementName, 'span'),
+        new NgToken(NgTokenType.endCloseElement, '>'),
         new NgToken(NgTokenType.textNode, '\n'),
-        new NgToken(NgTokenType.endElement, '</div>'),
+        new NgToken(NgTokenType.startCloseElement, '</'),
+        new NgToken(NgTokenType.closeElementName, 'div'),
+        new NgToken(NgTokenType.endCloseElement, '>'),
       ],
     );
   });

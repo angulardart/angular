@@ -161,11 +161,20 @@ enum NgTokenType {
   /// After parsing the [elementName].
   endOpenElement,
   
+  /// After parsing an [endOpenElement] that does not have content.
+  endVoidElement,
+
   /// Parsed element name.
   elementName,
 
+  /// Parsed closing an element.
+  closeElementName,
+
   /// After parsing an element tag and child nodes.
-  endElement,
+  startCloseElement,
+
+  /// After parsing [startCloseElement] and [closeElementName].
+  endCloseElement,
 
   /// Before the start of an attribute, event, or property (i.e. whitespace).
   beforeElementDecorator,

@@ -19,10 +19,14 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
             }
             advance();
             if (peek() == $slash) {
-              while (advance() != $gt) {
-                continue;
+              advance();
+              addToken(NgTokenType.startCloseElement, span());
+              while (peek() != $gt) {
+                advance();
               }
-              addToken(NgTokenType.endElement, span());
+              addToken(NgTokenType.closeElementName, span());
+              advance();
+              addToken(NgTokenType.endCloseElement, span());
               state = _State.scanningText;
             } else {
               addToken(NgTokenType.startOpenElement, span());
