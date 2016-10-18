@@ -6,12 +6,14 @@ class NgText extends NgAstNode {
   final String value;
 
   /// Create a new [text] node.
-  factory NgText(String text, [NgToken parsedToken, SourceSpan source]) = NgText._;
+  factory NgText(String text, [NgToken parsedToken, SourceSpan source]) =
+      NgText._;
 
-  NgText._(this.value, [NgToken parsedToken, SourceSpan source]) : super._([parsedToken], source);
+  NgText._(this.value, [NgToken parsedToken, SourceSpan source])
+      : super._([parsedToken], source);
 
   @override
-  bool operator==(Object o) => o is NgText && value == o.value;
+  bool operator ==(Object o) => o is NgText && value == o.value;
 
   @override
   int get hashCode => value.hashCode;

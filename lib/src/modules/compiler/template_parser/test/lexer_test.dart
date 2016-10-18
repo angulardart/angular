@@ -98,13 +98,11 @@ void main() {
   });
 
   test('should lex attributes with indenting whitespace', () async {
-    lexer = new NgTemplateLexer(
-      '<div \n'
-      '  title="Hello"\n'
-      '  class="fancy">\n'
-      '    Hello World\n'
-      '</div>'
-    );
+    lexer = new NgTemplateLexer('<div \n'
+        '  title="Hello"\n'
+        '  class="fancy">\n'
+        '    Hello World\n'
+        '</div>');
     expect(await lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'div'),

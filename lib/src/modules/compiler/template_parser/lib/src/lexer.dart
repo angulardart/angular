@@ -131,9 +131,9 @@ class NgToken {
   NgToken.fromSource(this.type, SourceSpan source)
       : this.text = source.text,
         this.source = source;
-  
+
   @override
-  bool operator==(Object o) {
+  bool operator ==(Object o) {
     if (o is NgToken) {
       return type == o.type && text == o.text;
     }
@@ -163,7 +163,7 @@ enum NgTokenType {
 
   /// After parsing the [elementName].
   endOpenElement,
-  
+
   /// After parsing an [endOpenElement] that does not have content.
   endVoidElement,
 

@@ -40,31 +40,43 @@ void main() {
 
     test('should equal an identical text node with the same source', () {
       expect(
-        new NgText('Hello', null, new SourceSpan(
-          new SourceLocation(0),
-          new SourceLocation(5),
-          'Hello',
-        )),
-        new NgText('Hello', null, new SourceSpan(
-          new SourceLocation(0),
-          new SourceLocation(5),
-          'Hello',
-        )),
+        new NgText(
+            'Hello',
+            null,
+            new SourceSpan(
+              new SourceLocation(0),
+              new SourceLocation(5),
+              'Hello',
+            )),
+        new NgText(
+            'Hello',
+            null,
+            new SourceSpan(
+              new SourceLocation(0),
+              new SourceLocation(5),
+              'Hello',
+            )),
       );
     });
 
     test('should not equal a non-identical text with (difference source)', () {
       expect(
-        new NgText('Hello', null, new SourceSpan(
-          new SourceLocation(5), 
-          new SourceLocation(10),
-          'Hello',
-        )),
-        new NgText('Hello', null, new SourceSpan(
-          new SourceLocation(0),
-          new SourceLocation(5),
-          'Hello',
-        )),
+        new NgText(
+            'Hello',
+            null,
+            new SourceSpan(
+              new SourceLocation(5),
+              new SourceLocation(10),
+              'Hello',
+            )),
+        new NgText(
+            'Hello',
+            null,
+            new SourceSpan(
+              new SourceLocation(0),
+              new SourceLocation(5),
+              'Hello',
+            )),
       );
     });
   });
