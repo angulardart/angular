@@ -1,53 +1,38 @@
-#TODO:
-* Resolve ambiguities regarding what characters are allowed in different kinds of text blocks (possibly splitting them up).
-* Specify what features of HTML are not supported.
-* Including missing grammar elements.
-* What is Banana formally known as?
+#Template Grammar
+
+###Todos
+* Can you interpolate comments?
+* Can you have multiple pipes?
+* What is the best way to handle the additional constraints on expressions?
+* What are we forgetting?
+
 
 ```dart
-Whitespace = " " | "\t" | "\n" | "\r" ;
+Node           = VoidTag | OpenTag {Node} CloseTag | Comment;
+OpenTag        = "<" TagName WhiteSpace {WhiteSpace} {Attribute WhiteSpace {WhiteSpace}} ">";
+VoidTag        = "<" TagName WhiteSpace {WhiteSpace} {Attribute WhiteSpace {WhiteSpace}} "/>";
+CloseTag       = "</" TagName {WhiteSpace} ">";
+Comment        = "<!--" {RawText} "-->";
 
-// Upper case letters are lowercased
-AsciiLetter = "a" | ... | "Z" ;
+Attribute      = Normal | Structural | Input | Event | Banana | Binding;
+Normal         = AttributeName | AttributeName "=" Text;
+Structural     = "*" AttributeName "=" (DartExpression | StructureSugar);
+Input          = "[" AttributeName ["." AttributeName] "]=" DartExpression;
+Event          = "(" AttributeName  ["." AttributeName] ")=" DartExpression;
+Banana         = "[(" AttributeName ")]=" DartExpression;
+Binding        = "#" AttributeName;
+Text           = { RawText | Interpolation };
+Interpolation  = "{{" DartExpression  ["|" DartIdentifier] "}}";
 
-TagFragment = AsciiLetter+ ;
+RawText        = ? valid unicode ?
+DartIdentifier = Letter { Letter | Digit };
+DartExpression = ? valid dart expression ?;
+StructureSugar = ? valid sugar ?;
+NSymbolUnicode = ? unicode - symbols ?
 
-TagName = TagFragment, [ "-" TagFragment]* ;
-
-AttributeName = // TODO - there are lots of things that are allowed attribute names that maybe we don't want to... ;
-
-RawText = (Text | Interpolation)* ;
-
-Text = ... everything but /, <, {{ ;
-
-Interpolation = "{{", DartExpression , "}}" ;
-
-DartExpression = // TODO ;
-
-Tag = TagSelfClosing | TagOpen, [RawText | Tag+ | Comment], TagClose ;
-
-TagOpen = "<", TagName, Whitespace+, [Attribute, Whitespace]*, ">" ;
-
-TagSelfClosing = "<", TagName, Whitespace+, [Attribute, [Whitespace]+]* , "/>" ;
-
-TagClose = "</", TagName, Whitespace*, ">" ;
-
-Comment = "<!--", [Text]+ , "-->"
-
-Attribute = Normal | Structural | Input | Output | Banana | Binding ;
-
-Normal = AttributeName | AttributeName, "=", AttributeValue ;
-
-// Not sure about this one.
-AttributeValue = '"', RawText , '"' ;
-
-Structural = "*", AttributeName, "=", '"', (DartExpression | NgForExpression), '"' ;
-
-Input = "[", AttributeName, "]", "=", '"', DartExpression ;
-
-Output= "(", AttributeName, ")", "=", '"', DartExpression ;
-
-Banana = "[(", AttributeName, ")", "]", "=", '"', DartExpression ;
-
-Binding = "#", AttriubteName ;
+TagName        = LowerLetter {LowerLetter | Digit | "-"};
+WhiteSpace     = " " | "\t" | "\n" | "\r" | "\f";
+AttributeName  = NSymbolUnicode { NSymbolUnicode | "_" | "-"};
+Letter         = "a" | "b" | ... | "Z";
+Digit          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" |"9";
 ```
