@@ -79,7 +79,7 @@ class OfflineCompiler {
       statements.add(o
           .variable(compFactoryVar)
           .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
-              [
+              <o.Expression>[
                 o.literal(compMeta.selector),
                 o.variable(hostViewFactoryVar),
                 o.importExpr(compMeta.type),
