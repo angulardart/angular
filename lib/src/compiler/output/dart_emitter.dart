@@ -413,6 +413,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinTypeName.Int:
         typeStr = "int";
         break;
+      case o.BuiltinTypeName.Double:
+        typeStr = "double";
+        break;
       case o.BuiltinTypeName.String:
         typeStr = "String";
         break;

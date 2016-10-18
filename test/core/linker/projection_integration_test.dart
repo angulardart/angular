@@ -11,7 +11,7 @@ import 'package:angular2/core.dart'
         TemplateRef,
         ViewContainerRef,
         ViewEncapsulation,
-        ViewMetadata;
+        View;
 import 'package:angular2/src/debug/debug_node.dart' show getAllDebugNodes;
 import 'package:angular2/src/testing/by.dart';
 import 'package:test/test.dart';
@@ -24,7 +24,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: '<simple>' + '<div>A</div>' + '</simple>',
                     directives: [Simple]))
             .createAsync(MainComp)
@@ -42,7 +42,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "{{'START('}}<simple>" +
                         "{{text}}" +
                         "</simple>{{')END'}}",
@@ -64,12 +64,12 @@ void main() {
         tcb
             .overrideView(
                 Simple,
-                new ViewMetadata(
+                new View(
                     template: "SIMPLE(<div><ng-content></ng-content></div>)",
                     directives: []))
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<simple>{{text}}</simple>",
                     directives: [Simple]))
             .createAsync(MainComp)
@@ -89,13 +89,13 @@ void main() {
         tcb
             .overrideView(
                 Simple,
-                new ViewMetadata(
+                new View(
                     template:
                         "SIMPLE(<div><ng-content></ng-content></div><div [tabIndex]=\"0\">EL</div>)",
                     directives: []))
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<simple>{{text}}</simple>",
                     directives: [Simple]))
             .createAsync(MainComp)
@@ -114,14 +114,14 @@ void main() {
         tcb
             .overrideView(
                 Simple,
-                new ViewMetadata(
+                new View(
                     template: "SIMPLE({{0}}|<ng-content></ng-content>|{{2}})",
                     directives: []))
             .overrideView(
-                OtherComp, new ViewMetadata(template: "{{1}}", directives: []))
+                OtherComp, new View(template: "{{1}}", directives: []))
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<simple><other></other></simple>",
                     directives: [Simple, OtherComp]))
             .createAsync(MainComp)
@@ -138,10 +138,8 @@ void main() {
       return inject([TestComponentBuilder, AsyncTestCompleter],
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb
-            .overrideView(
-                MainComp,
-                new ViewMetadata(
-                    template: "<empty>A</empty>", directives: [Empty]))
+            .overrideView(MainComp,
+                new View(template: "<empty>A</empty>", directives: [Empty]))
             .createAsync(MainComp)
             .then((main) {
           expect(main.debugElement.nativeElement, hasTextContent(""));
@@ -155,7 +153,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<multiple-content-tags>" +
                         "<div>B</div>" +
                         "<div>C</div>" +
@@ -175,7 +173,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<multiple-content-tags>" +
                         "<div>B<div class=\"left\">A</div></div>" +
                         "<div>C</div>" +
@@ -196,7 +194,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<multiple-content-tags>" +
                         "<template manual class=\"left\"><div>A1</div></template>" +
                         "<div>B</div>" +
@@ -227,7 +225,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<outer-with-indirect-nested>" +
                         "<div>A</div>" +
                         "<div>B</div>" +
@@ -249,7 +247,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<outer>" +
                         "<template manual class=\"left\"><div>A</div></template>" +
                         "<div>B</div>" +
@@ -276,7 +274,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<conditional-content>" +
                         "<div class=\"left\">A</div>" +
                         "<div>B</div>" +
@@ -306,7 +304,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<simple stringProp=\"text\"></simple>",
                     directives: [Simple]))
             .overrideTemplate(
@@ -327,7 +325,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<simple stringProp=\"text\"></simple>",
                     directives: [Simple]))
             .overrideTemplate(Simple, "<style></style><p>P,</p>{{stringProp}}")
@@ -345,7 +343,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<empty>" +
                         "  <template manual><div>A</div></template>" +
                         "</empty>" +
@@ -384,7 +382,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template:
                         "<simple><template manual><div>A</div></template></simple>" +
                             "START(<div project></div>)END",
@@ -416,7 +414,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<conditional-content>" +
                         "<div class=\"left\">A</div>" +
                         "<div>B</div>" +
@@ -459,7 +457,7 @@ void main() {
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb
             .overrideView(MainComp,
-                new ViewMetadata(template: "<tree></tree>", directives: [Tree]))
+                new View(template: "<tree></tree>", directives: [Tree]))
             .createAsync(MainComp)
             .then((main) {
           main.detectChanges();
@@ -485,10 +483,10 @@ void main() {
           (TestComponentBuilder tcb, AsyncTestCompleter completer) {
         tcb
             .overrideView(MainComp,
-                new ViewMetadata(template: "<tree></tree>", directives: [Tree]))
+                new View(template: "<tree></tree>", directives: [Tree]))
             .overrideView(
                 Tree,
-                new ViewMetadata(
+                new View(
                     template:
                         "TREE({{depth}}:<tree2 *manual [depth]=\"depth+1\"></tree2>)",
                     directives: [Tree2, ManualViewportDirective]))
@@ -522,7 +520,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<div class=\"redStyle\"></div>",
                     styles: [".redStyle { color: red}"],
                     encapsulation: ViewEncapsulation.None,
@@ -546,7 +544,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<div></div>",
                     styles: ["div { color: red}"],
                     encapsulation: ViewEncapsulation.Emulated))
@@ -569,7 +567,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: '<conditional-text>a</conditional-text>',
                     directives: [ConditionalTextComponent]))
             .createAsync(MainComp)
@@ -596,7 +594,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: '''<cmp-a><cmp-b></cmp-b></cmp-a>''',
                     directives: [CmpA, CmpB]))
             .createAsync(MainComp)
@@ -616,7 +614,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: '''<cmp-a1></cmp-a1><cmp-a2></cmp-a2>''',
                     directives: [CmpA1, CmpA2]))
             .createAsync(MainComp)
@@ -637,7 +635,7 @@ void main() {
         tcb
             .overrideView(
                 MainComp,
-                new ViewMetadata(
+                new View(
                     template: "<conditional-content>" +
                         "<div class=\"left\">A</div>" +
                         "<template manual class=\"left\">B</template>" +

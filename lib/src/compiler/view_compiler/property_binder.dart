@@ -1,8 +1,10 @@
 import 'package:angular2/src/core/change_detection/constants.dart'
-    show isDefaultChangeDetectionStrategy;
+    show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular2/src/core/security.dart';
+import 'package:angular2/src/transform/common/names.dart'
+    show toTemplateExtension;
 
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart' show Identifiers;
@@ -13,6 +15,7 @@ import '../template_ast.dart'
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
+import "../compile_metadata.dart";
 import 'view_compiler_utils.dart' show NAMESPACE_URIS, createSetAttributeParams;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'compile_binding.dart' show CompileBinding;
@@ -20,6 +23,7 @@ import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
+import 'view_builder.dart' show buildUpdaterFunctionName;
 
 o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
     new o.ReadClassMemberExpr('_expr_${exprIndex}');
@@ -34,7 +38,8 @@ void bind(
     ast.AST parsedExpression,
     o.Expression context,
     List<o.Statement> actions,
-    CompileMethod method) {
+    CompileMethod method,
+    {o.OutputType fieldType}) {
   var checkExpression = convertCdExpressionToIr(
       view, context, parsedExpression, DetectChangesVars.valUnwrapper);
   if (checkExpression.expression == null) {
@@ -240,11 +245,14 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       !identical(lifecycleHooks.indexOf(LifecycleHooks.OnChanges), -1);
   var isOnPushComp = directiveAst.directive.isComponent &&
       !isDefaultChangeDetectionStrategy(directiveAst.directive.changeDetection);
+  var isStatefulComp = directiveAst.directive.isComponent &&
+      directiveAst.directive.changeDetection ==
+          ChangeDetectionStrategy.Stateful;
   if (calcChangesMap) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changes.set(o.NULL_EXPR).toStmt());
   }
-  if (isOnPushComp) {
+  if (!isStatefulComp && isOnPushComp) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }
@@ -254,9 +262,27 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     detectChangesInInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
     var fieldExpr = createBindFieldExpr(bindingIndex);
     var currValExpr = createCurrValueExpr(bindingIndex);
-    List<o.Statement> statements = [
-      directiveInstance.prop(input.directiveName).set(currValExpr).toStmt()
-    ];
+    var statements = <o.Statement>[];
+    if (isStatefulComp) {
+      // Since we are not going to call markAsCheckOnce anymore we need to
+      // generate a call to property updater that will invoke setState() on the
+      // component if value has changed.
+      String updaterFunctionName = buildUpdaterFunctionName(
+          directiveAst.directive.type.name, input.directiveName);
+      var updateFuncExpr = o.importExpr(new CompileIdentifierMetadata(
+          name: updaterFunctionName,
+          moduleUrl:
+              toTemplateExtension(directiveAst.directive.identifier.moduleUrl),
+          prefix: directiveAst.directive.identifier.prefix));
+      statements.add(updateFuncExpr
+          .callFn([directiveInstance, fieldExpr, currValExpr]).toStmt());
+    } else {
+      // Set property on directiveInstance to new value.
+      statements.add(directiveInstance
+          .prop(input.directiveName)
+          .set(currValExpr)
+          .toStmt());
+    }
     if (calcChangesMap) {
       statements
           .add(new o.IfStmt(DetectChangesVars.changes.identical(o.NULL_EXPR), [
@@ -272,29 +298,103 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
               .instantiate([fieldExpr, currValExpr]))
           .toStmt());
     }
-    if (isOnPushComp) {
+    if (!isStatefulComp && isOnPushComp) {
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
     if (view.genConfig.logBindingUpdate) {
       statements.add(logBindingUpdateStmt(
           compileElement.renderNode, input.directiveName, currValExpr));
     }
-    bind(
-        view,
-        currValExpr,
-        fieldExpr,
-        input.value,
-        new o.ReadClassMemberExpr('ctx'),
-        statements,
-        detectChangesInInputsMethod);
+    // Execute actions and assign result to fieldExpr which hold previous value.
+    String inputTypeName = directiveAst.directive.inputTypes != null
+        ? directiveAst.directive.inputTypes[input.directiveName]
+        : null;
+    var inputType = inputTypeName != null
+        ? o.importType(new CompileIdentifierMetadata(name: inputTypeName))
+        : null;
+    if (isStatefulComp) {
+      bindToUpdateMethod(
+          view,
+          currValExpr,
+          fieldExpr,
+          input.value,
+          new o.ReadClassMemberExpr('ctx'),
+          statements,
+          detectChangesInInputsMethod,
+          fieldType: inputType);
+    } else {
+      bind(
+          view,
+          currValExpr,
+          fieldExpr,
+          input.value,
+          new o.ReadClassMemberExpr('ctx'),
+          statements,
+          detectChangesInInputsMethod,
+          fieldType: inputType);
+    }
   });
-  if (isOnPushComp) {
+  if (!isStatefulComp && isOnPushComp) {
     detectChangesInInputsMethod
         .addStmt(new o.IfStmt(DetectChangesVars.changed, [
       compileElement.appElement
           .prop('componentView')
           .callMethod('markAsCheckOnce', []).toStmt()
     ]));
+  }
+}
+
+void bindToUpdateMethod(
+    CompileView view,
+    o.ReadVarExpr currValExpr,
+    o.ReadClassMemberExpr fieldExpr,
+    ast.AST parsedExpression,
+    o.Expression context,
+    List<o.Statement> actions,
+    CompileMethod method,
+    {o.OutputType fieldType}) {
+  var checkExpression = convertCdExpressionToIr(
+      view, context, parsedExpression, DetectChangesVars.valUnwrapper);
+  if (checkExpression.expression == null) {
+    // e.g. an empty expression was given
+    return;
+  }
+  // Add class field to store previous value.
+  bool isPrimitive = _isPrimitiveFieldType(fieldType);
+  view.fields.add(new o.ClassField(fieldExpr.name,
+      outputType: isPrimitive ? fieldType : null,
+      modifiers: const [o.StmtModifier.Private]));
+  if (checkExpression.needsValueUnwrapper) {
+    var initValueUnwrapperStmt =
+        DetectChangesVars.valUnwrapper.callMethod('reset', []).toStmt();
+    method.addStmt(initValueUnwrapperStmt);
+  }
+  // Generate: final currVal_0 = ctx.expression.
+  method.addStmt(currValExpr
+      .set(checkExpression.expression)
+      .toDeclStmt(null, [o.StmtModifier.Final]));
+
+  // If we have only setter action, we can simply call updater and assign
+  // newValue to previous value.
+  if (checkExpression.needsValueUnwrapper == false && actions.length == 1) {
+    method.addStmt(actions.first);
+    method.addStmt(
+        new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt());
+  } else {
+    // Otherwise use traditional checkBinding call.
+    o.Expression condition =
+        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
+
+    if (checkExpression.needsValueUnwrapper) {
+      condition =
+          DetectChangesVars.valUnwrapper.prop('hasWrappedValue').or(condition);
+    }
+    method.addStmt(new o.IfStmt(
+        condition,
+        new List.from(actions)
+          ..addAll([
+            new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()
+          ])));
   }
 }
 
@@ -305,4 +405,29 @@ o.Statement logBindingUpdateStmt(
     o.literal('ng-reflect-${propName}'),
     value.isBlank().conditional(o.NULL_EXPR, value.callMethod('toString', []))
   ]).toStmt();
+}
+
+bool _isPrimitiveFieldType(o.OutputType type) {
+  if (type == o.BOOL_TYPE ||
+      type == o.INT_TYPE ||
+      type == o.DOUBLE_TYPE ||
+      type == o.NUMBER_TYPE ||
+      type == o.STRING_TYPE) return true;
+  if (type is o.ExternalType) {
+    String name = type.value.name;
+    return isPrimitiveTypeName(name.trim());
+  }
+  return false;
+}
+
+bool isPrimitiveTypeName(String typeName) {
+  switch (typeName) {
+    case 'bool':
+    case 'int':
+    case 'num':
+    case 'bool':
+    case 'String':
+      return true;
+  }
+  return false;
 }

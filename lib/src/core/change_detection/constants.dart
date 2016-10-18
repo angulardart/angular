@@ -37,26 +37,13 @@ enum ChangeDetectionStrategy {
   /// The change detector's mode will be set to `CheckOnce` during hydration.
   OnPush,
 
+  /// The component manages state itself and explicitly calls setState to
+  /// notify Angular to update template.
+  Stateful,
+
   /// The change detector's mode will be set to `CheckAlways` during hydration.
   Default
 }
-
-/// List of possible [ChangeDetectionStrategy] values.
-var CHANGE_DETECTION_STRATEGY_VALUES = [
-  ChangeDetectionStrategy.CheckOnce,
-  ChangeDetectionStrategy.Checked,
-  ChangeDetectionStrategy.CheckAlways,
-  ChangeDetectionStrategy.Detached,
-  ChangeDetectionStrategy.OnPush,
-  ChangeDetectionStrategy.Default
-];
-
-/// List of possible [ChangeDetectorState] values.
-var CHANGE_DETECTOR_STATE_VALUES = [
-  ChangeDetectorState.NeverChecked,
-  ChangeDetectorState.CheckedBefore,
-  ChangeDetectorState.Errored
-];
 
 bool isDefaultChangeDetectionStrategy(
     ChangeDetectionStrategy changeDetectionStrategy) {

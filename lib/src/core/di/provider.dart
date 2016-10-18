@@ -121,21 +121,15 @@ class Provider {
   final List<Object> dependencies;
   final bool _multi;
 
-  const Provider(token,
-      {Type useClass,
-      dynamic useValue: noValueProvided,
-      dynamic useExisting,
-      Function useFactory,
-      String useProperty,
+  const Provider(this.token,
+      {this.useClass,
+      this.useValue: noValueProvided,
+      this.useExisting,
+      this.useFactory,
+      this.useProperty,
       List<Object> deps,
       bool multi})
-      : token = token,
-        useClass = useClass,
-        useValue = useValue,
-        useExisting = useExisting,
-        useFactory = useFactory,
-        useProperty = useProperty,
-        dependencies = deps,
+      : dependencies = deps,
         _multi = multi;
 
   /// Creates multiple providers matching the same token (a multi-provider).

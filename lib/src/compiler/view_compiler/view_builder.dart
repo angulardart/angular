@@ -36,6 +36,7 @@ import "constants.dart"
         ViewEncapsulationEnum,
         ChangeDetectionStrategyEnum,
         ViewProperties;
+import 'property_binder.dart';
 import "view_compiler_utils.dart"
     show
         getViewFactoryName,
@@ -631,6 +632,11 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
   return viewClass;
 }
 
+o.Statement createInputUpdateFunction(
+    CompileView view, o.ClassStmt viewClass, o.ReadVarExpr renderCompTypeVar) {
+  return null;
+}
+
 o.Statement createViewFactory(
     CompileView view, o.ClassStmt viewClass, o.ReadVarExpr renderCompTypeVar) {
   var viewFactoryArgs = [
@@ -647,14 +653,14 @@ o.Statement createViewFactory(
   } else {
     templateUrlInfo = view.component.template.templateUrl;
   }
-  if (identical(view.viewIndex, 0)) {
+  if (view.viewIndex == 0) {
     initRenderCompTypeStmts = [
       new o.IfStmt(renderCompTypeVar.identical(o.NULL_EXPR), [
         renderCompTypeVar
             .set(o
                 .importExpr(Identifiers.appViewUtils)
                 .callMethod("createRenderComponentType", [
-              o.literal(templateUrlInfo),
+              o.literal(view.genConfig.genDebugInfo ? templateUrlInfo : ''),
               o.literal(view.component.template.ngContentSelectors.length),
               ViewEncapsulationEnum
                   .fromValue(view.component.template.encapsulation),
@@ -674,14 +680,15 @@ o.Statement createViewFactory(
                       .map((o.FnParam param) => o.variable(param.name))
                       .toList()))
             ])),
-          o.importType(Identifiers.AppView, [getContextType(view)]))
+          o.importType(Identifiers.AppView))
       .toDeclStmt(view.viewFactory.name, [o.StmtModifier.Final]);
 }
 
 List<o.Statement> generateCreateMethod(CompileView view) {
   o.Expression parentRenderNodeExpr = o.NULL_EXPR;
-  var parentRenderNodeStmts = [];
-  if (identical(view.viewType, ViewType.COMPONENT)) {
+  var parentRenderNodeStmts = <o.Statement>[];
+  bool isComponent = view.viewType == ViewType.COMPONENT;
+  if (isComponent) {
     if (view.component.template.encapsulation == ViewEncapsulation.Native) {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
           "createViewShadowRoot", [
@@ -703,19 +710,28 @@ List<o.Statement> generateCreateMethod(CompileView view) {
   } else {
     resultExpr = o.NULL_EXPR;
   }
-  return (new List.from(
-      (new List.from(parentRenderNodeStmts)
-        ..addAll(view.createMethod.finish())))
-    ..addAll([
-      o.THIS_EXPR.callMethod("init", [
-        createFlatArray(view.rootNodesOrAppElements),
-        o.literalArr(view.nodes.map((node) {
-          return node.renderNode;
-        }).toList()),
-        o.literalArr(view.subscriptions)
-      ]).toStmt(),
-      new o.ReturnStatement(resultExpr)
-    ]));
+  var statements = <o.Statement>[];
+  statements.addAll(parentRenderNodeStmts);
+  statements.addAll(view.createMethod.finish());
+  var renderNodes = view.nodes.map((node) {
+    return node.renderNode;
+  }).toList();
+  statements.add(new o.InvokeMemberMethodExpr('init', [
+    createFlatArray(view.rootNodesOrAppElements),
+    o.literalArr(renderNodes),
+    o.literalArr(view.subscriptions)
+  ]).toStmt());
+  if (isComponent &&
+      view.viewIndex == 0 &&
+      view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
+    // Connect ComponentState callback to view.
+    statements.add((new o.ReadClassMemberExpr('ctx')
+            .prop('stateChangeCallback')
+            .set(new o.ReadClassMemberExpr('markStateChanged')))
+        .toStmt());
+  }
+  statements.add(new o.ReturnStatement(resultExpr));
+  return statements;
 }
 
 List<o.Statement> generateDetectChangesMethod(CompileView view) {
@@ -929,3 +945,80 @@ bool detectHtmlElementFromTagName(String tagName) {
   }
   return tagNameSet.contains(tagName);
 }
+
+/// Writes proxy for setting an @Input property.
+void writeInputUpdaters(CompileView view, List<o.Statement> targetStatements) {
+  var writtenInputs = new Set<String>();
+  if (view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
+    for (String input in view.component.inputs.keys) {
+      if (!writtenInputs.contains(input)) {
+        writtenInputs.add(input);
+        writeInputUpdater(view, input, targetStatements);
+      }
+    }
+  }
+}
+
+void writeInputUpdater(
+    CompileView view, String inputName, List<o.Statement> targetStatements) {
+  var prevValueVarName = 'prev$inputName';
+  String inputTypeName = view.component.inputTypes != null
+      ? view.component.inputTypes[inputName]
+      : null;
+  var inputType = inputTypeName != null
+      ? o.importType(new CompileIdentifierMetadata(name: inputTypeName))
+      : null;
+  var arguments = [
+    new o.FnParam('component', getContextType(view)),
+    new o.FnParam(prevValueVarName, inputType),
+    new o.FnParam(inputName, inputType)
+  ];
+  String name = buildUpdaterFunctionName(view.component.type.name, inputName);
+  var statements = <o.Statement>[];
+  const String changedBoolVarName = 'changed';
+  o.Expression conditionExpr;
+  var prevValueExpr = new o.ReadVarExpr(prevValueVarName);
+  var newValueExpr = new o.ReadVarExpr(inputName);
+  if (view.genConfig.genDebugInfo) {
+    // In debug mode call checkBinding so throwOnChanges is checked for
+    // stabilization.
+    conditionExpr = o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([prevValueExpr, newValueExpr]);
+  } else {
+    if (isPrimitiveTypeName(inputTypeName.trim())) {
+      conditionExpr = new o.ReadVarExpr(prevValueVarName)
+          .notIdentical(new o.ReadVarExpr(inputName));
+    } else {
+      conditionExpr = new o.ReadVarExpr(prevValueVarName)
+          .notEquals(new o.ReadVarExpr(inputName));
+    }
+  }
+  // Generates: bool changed = !identical(prevValue, newValue);
+  statements.add(o
+      .variable(changedBoolVarName, o.BOOL_TYPE)
+      .set(conditionExpr)
+      .toDeclStmt(o.BOOL_TYPE));
+  // Generates: if (changed) {
+  //               component.property = newValue;
+  //               setState() //optional
+  //            }
+  var updateStatements = <o.Statement>[];
+  updateStatements.add(new o.ReadVarExpr('component')
+      .prop(inputName)
+      .set(newValueExpr)
+      .toStmt());
+  o.Statement conditionalUpdateStatement =
+      new o.IfStmt(new o.ReadVarExpr(changedBoolVarName), updateStatements);
+  statements.add(conditionalUpdateStatement);
+  // Generates: return changed;
+  statements.add(new o.ReturnStatement(new o.ReadVarExpr(changedBoolVarName)));
+  // Add function decl as top level statement.
+  targetStatements
+      .add(o.fn(arguments, statements, o.BOOL_TYPE).toDeclStmt(name));
+}
+
+/// Constructs name of global function that can be used to update an input
+/// on a component with change detection.
+String buildUpdaterFunctionName(String typeName, String inputName) =>
+    'set' + typeName + r'$' + inputName;

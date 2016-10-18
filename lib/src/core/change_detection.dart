@@ -16,3 +16,4 @@ export "change_detection/change_detection.dart"
         KeyValueDifferFactory,
         CollectionChangeRecord,
         TrackByFn;
+export "change_detection/component_state.dart";

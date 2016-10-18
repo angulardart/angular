@@ -189,6 +189,17 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         ast.expressions[0].visit(this, _Mode.Expression)
       ];
       return o.importExpr(Identifiers.interpolate0).callFn(args);
+    } else if (ast.expressions.length <= 2) {
+      var args = <o.Expression>[];
+      for (var i = 0, len = ast.strings.length - 1; i < len; i++) {
+        args.add(o.literal(ast.strings[i]));
+        args.add(ast.expressions[i].visit(this, _Mode.Expression));
+      }
+      args.add(o.literal(ast.strings[ast.strings.length - 1]));
+      if (ast.expressions.length == 1)
+        return o.importExpr(Identifiers.interpolate1).callFn(args);
+      else
+        return o.importExpr(Identifiers.interpolate2).callFn(args);
     } else {
       var args = [o.literal(ast.expressions.length)];
       for (var i = 0; i < ast.strings.length - 1; i++) {
