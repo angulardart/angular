@@ -8,9 +8,9 @@
 
 
 ```dart
-Node           = VoidTag | OpenTag {Node} CloseTag | Comment | Text;
+Node           = VoidTag | OpenTag {Node} CloseTag | Comment;
 OpenTag        = "<" TagName WhiteSpace {WhiteSpace} {Attribute WhiteSpace {WhiteSpace}} ">";
-VoidTag        = "<" TagName WhiteSpace {WhiteSpace} {Attribute WhiteSpace {WhiteSpace}} ["/"] ">";
+VoidTag        = "<" TagName WhiteSpace {WhiteSpace} {Attribute WhiteSpace {WhiteSpace}} "/>";
 CloseTag       = "</" TagName {WhiteSpace} ">";
 Comment        = "<!--" {RawText} "-->";
 
@@ -22,7 +22,7 @@ Event          = "(" AttributeName  ["." AttributeName] ")=" DartExpression;
 Banana         = "[(" AttributeName ")]=" DartExpression;
 Binding        = "#" AttributeName;
 Text           = { RawText | Interpolation };
-Interpolation  = "{{" DartExpression  {"|" DartIdentifier} "}}";
+Interpolation  = "{{" DartExpression  ["|" DartIdentifier] "}}";
 
 RawText        = ? valid unicode ?
 DartIdentifier = Letter { Letter | Digit };
