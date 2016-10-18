@@ -30,7 +30,7 @@ DartExpression = ? valid dart expression ?
 StructureSugar = { Letter | Digit };
 
 TagName        = LowerLetter {LowerLetter | Digit | "-"};
-WhiteSpace     = " " | "\t" | "\n" | "\r";
+WhiteSpace     = " " | "\t" | "\n" | "\r" | "\f";
 AttributeName  = Letter {Letter | Digit | "_" | "-"};
 Letter         = LowerLetter | UpperLetter;
 LowerLetter    = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
