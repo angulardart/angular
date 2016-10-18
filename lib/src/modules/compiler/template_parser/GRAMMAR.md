@@ -29,19 +29,19 @@ WhiteSpace = " " | "\t" | "\n" | "\r" ;
 Letter = [a-zA-Z] ;
 Digit = [0-9] ;
 Fragment = (Digit | Letter)+ ;
-StartFragment = Letter, [Fragment] ;
 
 /// A TagName identifies HTML elements and components.
 ///
 /// Uppercase letters are converted to lowercase by the parser.
-TagName = StartFragment, [ "-", Fragment ]* ;
+/// Tags must begin with a Letter.
+TagName = Letter, [Fragment], [ "-", Fragment ]* ;
 
-// Does it make sense to distinguish between Tags and Components?
+
 Node = VoidTag | OpenTag, [Node]*, CloseTag | Comment ;
 OpenTag = "<", TagName, Whitespace+, [Attribute, Whitespace+]*, ">" ;
 VoidTag = "<", TagName, Whitespace+, [Attribute, Whitespace+]*, "/>" ;
 CloseTag = "</", TagName, Whitespace*, ">" ;
-Comment = "<!--", [Text]+ , "-->"
+Comment = "<!--", [RawText]+ , "-->"
 
 
 /// An AttributeName with added restrictions from HTML.
@@ -49,8 +49,8 @@ Comment = "<!--", [Text]+ , "-->"
 /// In order to make the grammar of directives less ambiguous,
 /// There is an added restriction of the characters '*', '[', ']'
 /// '(', ')', and '#'.
-AttributeName = [^"`'//=\t\n\r \(\)\[\]\*#]+
-AttributeValue = '"', Text+, '"'
+AttributeName = [^"`'//=\t\n\r \(\)\[\]\*#]+ ;
+AttributeValue = '"', Text+, '"' ;
 
 Attribute = Normal | Structural | Input | Event | Banana | Binding ;
 Normal = AttributeName | AttributeName, "=", AttributeValue ;
