@@ -96,4 +96,23 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
+
+  test('should lex attributes with indenting whitespace', () async {
+    lexer = new NgTemplateLexer(
+      '<div \n'
+      '  title="Hello"\n'
+      '  class="fancy">\n'
+      '    Hello World'
+      '</div>'
+    );
+    expect(await lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' \n'),
+      new NgToken(NgTokenType.attributeName, 'title'),
+      new NgToken(NgTokenType.beforeDecoratorValue, '="'),
+      new NgToken(NgTokenType.attributeValue, 'Hello'),
+      new NgToken(NgTokenType.endAttribute, '"'),
+    ]);
+  });
 }
