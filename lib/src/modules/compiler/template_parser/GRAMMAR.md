@@ -26,8 +26,8 @@ Interpolation  = "{{" DartExpression  ["|" DartIdentifier] "}}";
 
 RawText        = { Letter | Digit };
 DartIdentifier = Letter { Letter | Digit };
-DartExpression = ? valid dart expression ?
-StructureSugar = { Letter | Digit };
+DartExpression = ? valid dart expression ?;
+StructureSugar = ? valid sugar ?;
 
 TagName        = LowerLetter {LowerLetter | Digit | "-"};
 WhiteSpace     = " " | "\t" | "\n" | "\r" | "\f";
