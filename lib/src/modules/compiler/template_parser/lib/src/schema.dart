@@ -189,6 +189,10 @@ abstract class NgTypeReference {
   ///     // dart:core#String
   ///     const NgTypeReference.dartSdk('core', 'String')
   ///
+  /// ## Example
+  ///     // dart:core#String
+  ///     const NgTypeReference.dartSdk('core', 'String')
+  ///
   ///     // dart:core#List<String>
   ///     const NgTypeReference.dartSdk('core', 'List', const [
   ///       const NgTypeReference.dartSdk('core', 'String'),
