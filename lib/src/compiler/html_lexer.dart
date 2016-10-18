@@ -408,7 +408,7 @@ class _HtmlTokenizer {
 
   List<String> _consumePrefixAndName() {
     var nameOrPrefixStart = this.index;
-    var prefix;
+    String prefix;
     while (!identical(this.peek, $COLON) && !isPrefixEnd(this.peek)) {
       this._advance();
     }
