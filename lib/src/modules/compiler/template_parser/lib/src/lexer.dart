@@ -8,6 +8,8 @@ import 'package:quiver/core.dart';
 import 'package:source_span/source_span.dart';
 import 'package:string_scanner/string_scanner.dart';
 
+import 'utils.dart';
+
 part 'lexer/sync_lexer_impl.dart';
 
 /// A tokenizer for the Angular Dart template language.
@@ -59,7 +61,8 @@ abstract class NgTemplateLexerBase implements NgTemplateLexer {
 
   /// Adds a token [type] with [source] scanned.
   @protected
-  void addToken(NgTokenType type, FileSpan source) {
+  void addToken(NgTokenType type, [FileSpan source]) {
+    source ??= span();
     _tokenizer.add(new NgToken.fromSource(type, source));
   }
 
@@ -167,9 +170,6 @@ enum NgTokenType {
   /// Parsed element name.
   elementName,
 
-  /// Parsed closing an element.
-  closeElementName,
-
   /// After parsing an element tag and child nodes.
   startCloseElement,
 
@@ -179,8 +179,8 @@ enum NgTokenType {
   /// Before the start of an attribute, event, or property (i.e. whitespace).
   beforeElementDecorator,
 
-  /// Before parsing an [attributeName].
-  startAttribute,
+  /// Before parsing a decorator value.
+  beforeDecoratorValue,
 
   /// Parsed attribute name.
   attributeName,

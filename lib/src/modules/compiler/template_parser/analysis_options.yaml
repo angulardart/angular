@@ -14,12 +14,12 @@ linter:
     - unrelated_type_equality_checks
     - valid_regexps
     - annotate_overrides
-    - avoid_as
+    # - avoid_as
     - avoid_init_to_null
     - avoid_return_types_on_setters
     - await_only_futures
     - camel_case_types
-    - constant_identifier_names
+    # - constant_identifier_names
     - empty_catches
     - empty_constructor_bodies
     - library_names
