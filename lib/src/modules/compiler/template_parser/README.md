@@ -6,4 +6,9 @@ This sub-package is unsupported and not used within `angular2`.
 
 ## Contributing
 
-Due to https://github.com/dart-lang/angular2/issues/129, use `pub get --no-precompile`.
+Make sure to the run the internal suite of tests:
+
+```bash
+$ cd lib/src/modules/compiler/template_parser
+$ pub run test
+```
