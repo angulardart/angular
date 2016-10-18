@@ -24,20 +24,15 @@ Binding        = "#" AttributeName;
 Text           = { RawText | Interpolation };
 Interpolation  = "{{" DartExpression  ["|" DartIdentifier] "}}";
 
-RawText        = { Letter | Digit };
+RawText        = ? valid unicode ?
 DartIdentifier = Letter { Letter | Digit };
 DartExpression = ? valid dart expression ?;
 StructureSugar = ? valid sugar ?;
+NSymbolUnicode = ? unicode - symbols ?
 
 TagName        = LowerLetter {LowerLetter | Digit | "-"};
 WhiteSpace     = " " | "\t" | "\n" | "\r" | "\f";
-AttributeName  = Letter {Letter | Digit | "_" | "-"};
-Letter         = LowerLetter | UpperLetter;
-LowerLetter    = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
-                 "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" |
-                 "u" | "v" | "w" | "x" | "y" | "z" ;
-UpperLetter    = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" |
-                 "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" |
-                 "U" | "V" | "W" | "X" | "Y" | "Z" ;
+AttributeName  = NSymbolUnicode { NSymbolUnicode | "_" | "-"};
+Letter         = "a" | "b" | ... | "Z";
 Digit          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" |"9";
 ```
