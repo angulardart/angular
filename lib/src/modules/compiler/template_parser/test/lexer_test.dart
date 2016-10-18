@@ -102,17 +102,27 @@ void main() {
       '<div \n'
       '  title="Hello"\n'
       '  class="fancy">\n'
-      '    Hello World'
+      '    Hello World\n'
       '</div>'
     );
     expect(await lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'div'),
-      new NgToken(NgTokenType.beforeElementDecorator, ' \n'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' \n  '),
       new NgToken(NgTokenType.attributeName, 'title'),
       new NgToken(NgTokenType.beforeDecoratorValue, '="'),
       new NgToken(NgTokenType.attributeValue, 'Hello'),
       new NgToken(NgTokenType.endAttribute, '"'),
+      new NgToken(NgTokenType.beforeElementDecorator, '\n  '),
+      new NgToken(NgTokenType.attributeName, 'class'),
+      new NgToken(NgTokenType.beforeDecoratorValue, '="'),
+      new NgToken(NgTokenType.attributeValue, 'fancy'),
+      new NgToken(NgTokenType.endAttribute, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.textNode, '\n    Hello World\n'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
 }

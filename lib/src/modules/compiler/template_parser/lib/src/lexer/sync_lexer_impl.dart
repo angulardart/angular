@@ -148,6 +148,7 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
       _scanText();
     } else {
       advance();
+      _consumeWhitespace();
       addToken(NgTokenType.beforeElementDecorator);
       _scanDecorator();
     }
