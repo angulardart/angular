@@ -8,7 +8,7 @@
 
 
 ```dart
-Node           = VoidTag | OpenTag {Node} CloseTag | Comment;
+Node           = VoidTag | OpenTag {Node} CloseTag | Comment | Text;
 OpenTag        = "<" TagName WhiteSpace {WhiteSpace} {Attribute WhiteSpace {WhiteSpace}} ">";
 VoidTag        = "<" TagName WhiteSpace {WhiteSpace} {Attribute WhiteSpace {WhiteSpace}} "/>";
 CloseTag       = "</" TagName {WhiteSpace} ">";
