@@ -73,6 +73,7 @@ var NG_COMMON = [
   'SlicePipe',
   'UpperCasePipe',
   'Validator',
+  'ValidatorFn',
   'Validators',
   'RadioButtonState',
   'NgLocalization',

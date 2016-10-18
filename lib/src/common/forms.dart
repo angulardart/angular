@@ -36,7 +36,8 @@ export "forms/directives/validators.dart"
         MinLengthValidator,
         MaxLengthValidator,
         PatternValidator,
-        Validator;
+        Validator,
+        ValidatorFn;
 export "forms/form_builder.dart" show FormBuilder;
 export "forms/model.dart"
     show AbstractControl, Control, ControlGroup, ControlArray;
