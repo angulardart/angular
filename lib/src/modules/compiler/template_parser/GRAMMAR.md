@@ -63,8 +63,5 @@ Binding = "#", AttributeName ;
 Text = (RawText | Interpolation)* ;
 Interpolation = "{{", QuotedDartExpression , "}}" ;
 
-Text = ... everything but /, <, {{ ;
-
-
 QuotedDartExpression = '"', 'Dart without double quotes?', '"';
 ```
