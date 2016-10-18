@@ -1,6 +1,7 @@
 import 'package:angular2/src/facade/lang.dart' show looseIdentical, isPrimitive;
-export 'package:angular2/src/facade/lang.dart' show looseIdentical;
 import 'package:collection/collection.dart';
+
+export 'package:angular2/src/facade/lang.dart' show looseIdentical;
 
 class _DevModeEquality extends DefaultEquality<Object> {
   const _DevModeEquality();

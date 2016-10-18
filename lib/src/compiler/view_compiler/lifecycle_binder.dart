@@ -3,9 +3,9 @@ import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
+import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show DirectiveAst;
-import '../identifiers.dart';
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars, ChangeDetectorStateEnum;

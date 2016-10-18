@@ -1,8 +1,9 @@
 @TestOn('browser && !js')
 library angular2.test.public_api_test;
 
-import 'symbol_inspector/symbol_inspector.dart';
 import 'package:test/test.dart';
+
+import 'symbol_inspector/symbol_inspector.dart';
 
 // =============================================================================
 // =============================================================================

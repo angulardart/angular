@@ -1,7 +1,7 @@
 @TestOn('browser && !js')
 library angular2.test.core.linker.query_integration_test;
 
-import "package:angular2/testing_internal.dart";
+import "package:angular2/common.dart" show NgIf, NgFor;
 import "package:angular2/core.dart"
     show
         Component,
@@ -17,8 +17,8 @@ import "package:angular2/core.dart"
         AfterViewInit,
         AfterContentChecked,
         AfterViewChecked;
-import "package:angular2/common.dart" show NgIf, NgFor;
 import "package:angular2/core.dart" show ViewContainerRef;
+import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
 void main() {

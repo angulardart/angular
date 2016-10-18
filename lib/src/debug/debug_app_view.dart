@@ -2,24 +2,25 @@ import 'dart:html';
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
-import 'package:angular2/src/platform/dom/dom_renderer.dart'
-    show DomRootRenderer;
 import 'package:angular2/src/core/di.dart' show Injector;
-import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
-import 'package:angular2/src/debug/debug_node.dart'
-    show DebugElement, DebugNode, getDebugNode, indexDebugNode;
-import 'package:angular2/src/core/profile/profile.dart'
-    show wtfCreateScope, wtfLeave, WtfScopeFn;
-import 'package:angular2/src/debug/debug_context.dart'
-    show StaticNodeDebugInfo, DebugContext;
-export 'package:angular2/src/debug/debug_context.dart'
-    show StaticNodeDebugInfo, DebugContext;
 import 'package:angular2/src/core/linker/app_element.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/exceptions.dart'
     show ExpressionChangedAfterItHasBeenCheckedException, ViewWrappedException;
-import 'package:angular2/src/core/linker/app_view.dart';
-export 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/view_type.dart';
+import 'package:angular2/src/core/profile/profile.dart'
+    show wtfCreateScope, wtfLeave, WtfScopeFn;
+import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
+import 'package:angular2/src/debug/debug_context.dart'
+    show StaticNodeDebugInfo, DebugContext;
+import 'package:angular2/src/debug/debug_node.dart'
+    show DebugElement, DebugNode, getDebugNode, indexDebugNode;
+import 'package:angular2/src/platform/dom/dom_renderer.dart'
+    show DomRootRenderer;
+
+export 'package:angular2/src/core/linker/app_view.dart';
+export 'package:angular2/src/debug/debug_context.dart'
+    show StaticNodeDebugInfo, DebugContext;
 
 WtfScopeFn _scope_check = wtfCreateScope('AppView#check(ascii id)');
 

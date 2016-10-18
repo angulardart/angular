@@ -1,9 +1,9 @@
 library angular2_testing.angular2_testing;
 
 import 'dart:async';
-import 'package:test/test.dart';
 
 import 'package:angular2/angular2.dart';
+import 'package:angular2/platform/testing/browser.dart';
 import 'package:angular2/src/core/di/metadata.dart' show InjectMetadata;
 import 'package:angular2/src/core/di/reflective_exceptions.dart'
     show NoAnnotationError;
@@ -16,6 +16,10 @@ import 'package:angular2/src/testing/internal.dart'
         setBaseTestProviders,
         getTestInjector,
         inject;
+import 'package:test/test.dart';
+
+import "internal_injector.dart";
+
 export 'package:angular2/src/testing/internal.dart'
     show
         TestComponentBuilder,
@@ -23,8 +27,6 @@ export 'package:angular2/src/testing/internal.dart'
         setBaseTestProviders,
         getTestInjector,
         inject;
-import "internal_injector.dart";
-import 'package:angular2/platform/testing/browser.dart';
 
 /// One time initialization that must be done for Angular2 component
 /// tests.

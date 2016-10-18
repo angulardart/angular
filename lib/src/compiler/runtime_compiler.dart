@@ -1,9 +1,9 @@
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable, Injector;
+import "package:angular2/src/core/linker/app_element.dart";
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, NgViewFactory;
-import "package:angular2/src/core/linker/app_element.dart";
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
 import "package:angular2/src/core/linker/injector_factory.dart"

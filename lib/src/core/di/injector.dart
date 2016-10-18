@@ -1,4 +1,5 @@
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+
 import 'metadata.dart';
 
 const _THROW_IF_NOT_FOUND = const Object();

@@ -7,8 +7,8 @@ import "package:angular2/src/core/metadata/view.dart"
     show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-import "url_resolver.dart" show getUrlScheme;
 import "compiler_utils.dart";
+import "url_resolver.dart" show getUrlScheme;
 
 // group 1: "property" from "[property]"
 // group 2: "event" from "(event)"

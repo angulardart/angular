@@ -1,5 +1,5 @@
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/src/debug/debug_node.dart";
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 /// Predicates for use with [DebugElement]'s query functions.
 class By {

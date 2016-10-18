@@ -2,15 +2,7 @@
 library angular2.test.core.application_ref_test;
 
 import "dart:async";
-import "package:angular2/testing_internal.dart";
-import "core_mocks.dart";
-import "package:angular2/src/core/application_ref.dart"
-    show
-        ApplicationRefImpl,
-        ApplicationRef,
-        PlatformRef,
-        PLATFORM_CORE_PROVIDERS,
-        APPLICATION_CORE_PROVIDERS;
+
 import "package:angular2/core.dart"
     show
         Injector,
@@ -24,17 +16,27 @@ import "package:angular2/core.dart"
         disposePlatform,
         ComponentResolver,
         ChangeDetectorRef;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/core/application_ref.dart"
+    show
+        ApplicationRefImpl,
+        ApplicationRef,
+        PlatformRef,
+        PLATFORM_CORE_PROVIDERS,
+        APPLICATION_CORE_PROVIDERS;
+import "package:angular2/src/core/linker/app_view_utils.dart" show AppViewUtils;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, ComponentRefImpl, ComponentRef;
 import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjectorFactory;
-import "package:angular2/src/core/linker/app_view_utils.dart" show AppViewUtils;
-import "package:angular2/src/platform/browser_common.dart";
 import "package:angular2/src/facade/exception_handler.dart"
     show ExceptionHandler;
-import 'package:test/test.dart';
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import "package:angular2/src/platform/browser_common.dart";
+import "package:angular2/testing_internal.dart";
 import 'package:mockito/mockito.dart';
+import 'package:test/test.dart';
+
+import "core_mocks.dart";
 
 void main() {
   group("bootstrap", () {
