@@ -159,4 +159,37 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
+
+  test('should lex bindings', () async {
+    lexer = new NgTemplateLexer('<button #input></button>');
+    expect(await lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startBinding, '#'),
+      new NgToken(NgTokenType.bindingName, 'input'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
+
+  test('should lex bananas', () async {
+    lexer = new NgTemplateLexer('<button [(banana)]="someValue"></button>');
+    expect(await lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startBanana, '[('),
+      new NgToken(NgTokenType.bananaName, 'banana'),
+      new NgToken(NgTokenType.beforeDecoratorValue, ')]="'),
+      new NgToken(NgTokenType.bananaValue, 'someValue'),
+      new NgToken(NgTokenType.endBanana, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
 }
