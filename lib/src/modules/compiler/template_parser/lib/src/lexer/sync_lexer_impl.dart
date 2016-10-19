@@ -3,6 +3,15 @@ part of angular2_template_parser.src.lexer;
 class _SyncNgTemplateLexer extends NgTemplateLexerBase {
   _SyncNgTemplateLexer(SpanScanner scanner) : super(scanner);
 
+  // Returns when `c` is found. 
+  void _consumeUntil(int c) {
+    var char = peek();
+    while (char != c) {
+      advance();
+      char = peek();
+    }
+  }
+
   // Returns the first non-whitespace character while scanning forward.
   int _consumeWhitespace() {
     var char = peek();
@@ -19,11 +28,9 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     switch (peek()) {
       case $openEvent:
         advance();
-        addToken(NgTokenType.startEvent);
         return _scanEvent();
       case $openProperty:
         advance();
-        addToken(NgTokenType.startProperty);
         return _scanProperty();
       default:
         return _scanAttributeName();
@@ -58,6 +65,8 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     }
   }
 
+  // <button class="foo" disabled title="Hello"></button>
+  //        ^           ^        ^             ^
   void _scanAfterDecorator() {
     _consumeWhitespace();
     if (peek() == $gt) {
@@ -78,25 +87,47 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     // Assume this is a `"` character, for now.
     advance();
     addToken(NgTokenType.beforeDecoratorValue);
-    var char = peek();
-    while (char != $double_quote) {
-      advance();
-      char = peek();
-    }
+    _consumeUntil($double_quote);
     addToken(NgTokenType.attributeValue);
     advance();
     addToken(NgTokenType.endAttribute);
     _scanAfterDecorator();
   }
 
+  // <button [title]="value"></button>
+  //          ^^^^^
   void _scanProperty() {
-    throw new UnimplementedError();
+    addToken(NgTokenType.startProperty);
+    _consumeUntil($closeProperty);
+    addToken(NgTokenType.propertyName);
+    advance();
+    _consumeUntil($equal);
+    _consumeUntil($double_quote);
+    advance();
+    addToken(NgTokenType.beforeDecoratorValue);
+    _consumeUntil($double_quote);
+    addToken(NgTokenType.propertyValue);
+    advance();
+    addToken(NgTokenType.endProperty);
+    _scanAfterDecorator();
   }
 
   void _scanEvent() {
-    throw new UnimplementedError();
+    addToken(NgTokenType.startEvent);
+    _consumeUntil($closeEvent);
+    addToken(NgTokenType.eventName);
+    _consumeUntil($equal);
+    _consumeUntil($double_quote);
+    advance();
+    addToken(NgTokenType.beforeDecoratorValue);
+    _consumeUntil($double_quote);
+    addToken(NgTokenType.eventValue);
+    advance();
+    addToken(NgTokenType.endEvent);
+    _scanAfterDecorator();
   }
 
+  // Base case: Scans for an indication of a non-text node.
   void _scanText() {
     var char = peek();
     while (char != $lt && char != null) {
@@ -120,16 +151,22 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     }
   }
 
+  // <span>Hello</span>
+  // ^
   void _scanOpenElement() {
     addToken(NgTokenType.startOpenElement);
     _scanElementName();
   }
 
+  // <span>Hello</span>
+  //            ^^
   void _scanCloseElement() {
     addToken(NgTokenType.startCloseElement);
     _scanElementName(true);
   }
 
+  // <span>Hello</span>
+  //  ^^^^        ^^^^
   void _scanElementName([bool closingTag = false]) {
     var char = peek();
     while (!isWhiteSpace(char) && char != $gt) {
