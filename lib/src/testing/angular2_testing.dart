@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:angular2/angular2.dart';
 import 'package:angular2/platform/testing/browser.dart';
-import 'package:angular2/src/core/di/metadata.dart' show InjectMetadata;
 import 'package:angular2/src/core/di/reflective_exceptions.dart'
     show NoAnnotationError;
 import 'package:angular2/src/core/reflection/reflection.dart';
@@ -111,7 +110,7 @@ dynamic _runInjectableFunction(Function fn) {
     for (var paramMetadata in param) {
       if (paramMetadata is Type) {
         token = paramMetadata;
-      } else if (paramMetadata is InjectMetadata) {
+      } else if (paramMetadata is Inject) {
         token = paramMetadata.token;
       }
     }

@@ -1,11 +1,11 @@
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/core/metadata.dart" show PipeMetadata;
+import "package:angular2/src/core/metadata.dart" show Pipe;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-/// Resolve a type for [PipeMetadata].
+/// Resolve a type for [Pipe].
 ///
 /// Application developer can inject a new implementation to customize
 /// strategy to resolve Types from metadata.
@@ -18,8 +18,8 @@ class PipeResolver {
     this._reflector = _reflector ?? reflector;
   }
 
-  /// Return [PipeMetadata] for a given [Type].
-  PipeMetadata resolve(Type type) {
+  /// Return [Pipe] for a given [Type].
+  Pipe resolve(Type type) {
     var metas = this._reflector.annotations(type);
     if (metas != null) {
       var annotation = metas.firstWhere(_isPipeMetadata, orElse: () => null);
@@ -32,5 +32,5 @@ class PipeResolver {
 }
 
 bool _isPipeMetadata(dynamic type) {
-  return type is PipeMetadata;
+  return type is Pipe;
 }

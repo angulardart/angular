@@ -1,5 +1,4 @@
-import "package:angular2/src/core/di.dart"
-    show Provider, SkipSelfMetadata, OptionalMetadata;
+import "package:angular2/src/core/di.dart" show Provider, SkipSelf, Optional;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
@@ -69,7 +68,7 @@ class IterableDiffers {
       }
       return IterableDiffers.create(factories, parent);
     }, deps: [
-      [IterableDiffers, new SkipSelfMetadata(), new OptionalMetadata()]
+      [IterableDiffers, new SkipSelf(), new Optional()]
     ]);
   }
 

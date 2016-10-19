@@ -118,7 +118,7 @@ void main() {
       await inject([], () {});
     });
     test('should read out the Directive metadata', () {
-      DirectiveMetadata directiveMetadata = resolver.resolve(SomeDirective);
+      Directive directiveMetadata = resolver.resolve(SomeDirective);
       expect(directiveMetadata.selector, 'someDirective');
     });
     test('should throw if not matching metadata is found', () {

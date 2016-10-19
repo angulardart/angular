@@ -1,4 +1,4 @@
-import "metadata.dart";
+import "decorators.dart";
 
 /// A unique object used for retrieving items from the [ReflectiveInjector].
 ///
@@ -22,7 +22,7 @@ class ReflectiveKey {
   }
 
   /// Returns a stringified token.
-  String get displayName => InjectMetadata.tokenToString(token);
+  String get displayName => Inject.tokenToString(token);
 
   /// Retrieves a [Key] for a token.
   static ReflectiveKey get(Object token) => _globalKeyRegistry.get(token);

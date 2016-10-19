@@ -43,6 +43,7 @@ class DebugDomRootRenderer implements DomRootRenderer {
   }
 }
 
+@Deprecated('Use dart:html apis')
 class DebugDomRenderer extends DomRenderer {
   DebugDomRenderer(
       RootRenderer rootRenderer, RenderComponentType componentProto)

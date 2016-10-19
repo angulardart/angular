@@ -1,12 +1,10 @@
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 
 import 'metadata/di.dart';
-import 'metadata/directives.dart';
 import 'metadata/view.dart';
 
 export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 export 'metadata/di.dart';
-export 'metadata/directives.dart';
 export 'metadata/lifecycle_hooks.dart'
     show
         AfterContentInit,
@@ -20,7 +18,7 @@ export 'metadata/lifecycle_hooks.dart'
 
 /// Directives allow you to attach behavior to elements in the DOM.
 ///
-/// [DirectiveMetadata]s with an embedded view are called [ComponentMetadata]s.
+/// [Directive]s with an embedded view are called [Component]s.
 ///
 /// A directive consists of a single directive annotation and a controller
 /// class. When the directive's [selector] matches elements in the DOM, the
@@ -84,7 +82,7 @@ export 'metadata/lifecycle_hooks.dart'
 /// - `ElementRef element`, to obtain a reference to logical element in the
 ///   view.
 /// - `ViewContainerRef viewContainer`, to control child template instantiation,
-///   for [DirectiveMetadata] directives only
+///   for [Directive] directives only
 /// - `BindingPropagation bindingPropagation`, to control change detection in a
 ///   more granular way.
 ///
@@ -362,23 +360,318 @@ export 'metadata/lifecycle_hooks.dart'
 /// Note also that although the `<li></li>` template still exists inside the
 /// `<template></template>`, the instantiated view occurs on the second
 /// `<li></li>` which is a sibling to the `<template>` element.
-class Directive extends DirectiveMetadata {
+class Directive extends Injectable {
+  /// The CSS selector that triggers the instantiation of a directive.
+  ///
+  /// Angular only allows directives to trigger on CSS selectors that do not
+  /// cross element boundaries.
+  ///
+  /// The [selector] may be declared as one of the following:
+  ///
+  /// - `element-name`: select by element name.
+  /// - `.class`: select by class name.
+  /// - `[attribute]`: select by attribute name.
+  /// - `[attribute=value]` : select by attribute name and value.
+  /// - `:not(sub_selector)`: select only if the element does not match the
+  ///   `sub_selector`.
+  /// - `selector1, selector2`: select if either `selector1` or `selector2`
+  ///   matches.
+  ///
+  /// ### Example
+  ///
+  /// Suppose we have a directive with an `input[type=text]` selector.
+  ///
+  /// And the following HTML:
+  ///
+  /// ```html
+  /// <form>
+  ///   <input type="text">
+  ///   <input type="radio">
+  /// <form>
+  /// ```
+  ///
+  /// The directive would only be instantiated on the `<input type="text">`
+  /// element.
+  final String selector;
+
+  /// Enumerates the set of data-bound input properties for a directive
+  ///
+  /// Angular automatically updates input properties during change detection.
+  ///
+  /// The [inputs] property defines a set of _directiveProperty_ to
+  /// _bindingProperty_ configuration:
+  ///
+  /// - _directiveProperty_ specifies the component property where the value
+  ///   is written.
+  /// - _bindingProperty_ specifies the DOM property where the value is read
+  ///   from.
+  ///
+  /// When _bindingProperty_ is not provided, it is assumed to be equal to
+  /// _directiveProperty_.
+  ///
+  /// The following example creates a component with two data-bound properties.
+  ///
+  /// ```dart
+  /// @Component(
+  ///   selector: 'bank-account',
+  ///   inputs: const ['bankName', 'id: account-id'],
+  ///   template: '''
+  ///     Bank Name: {{bankName}}
+  ///     Account Id: {{id}}
+  ///   ''')
+  /// class BankAccount {
+  ///   String bankName, id;
+  ///
+  ///   // This property is not bound, and won't be automatically updated by
+  ///   // Angular
+  ///   String normalizedBankName;
+  /// }
+  ///
+  /// @Component(
+  ///   selector: 'app',
+  ///   template: '''
+  ///     <bank-account bank-name="RBC" account-id="4747"></bank-account>
+  ///   ''',
+  ///   directives: const [BankAccount])
+  /// class App {}
+  /// ```
+  final List<String> inputs;
+
+  /// Enumerates the set of event-bound output properties.
+  ///
+  /// When an output property emits an event, an event handler attached to
+  /// that event the template is invoked.
+  ///
+  /// The [outputs] property defines a set of _directiveProperty_ to
+  /// _bindingProperty_ configuration:
+  ///
+  /// - _directiveProperty_ specifies the component property that emits events.
+  /// - _bindingProperty_ specifies the DOM property the event handler is
+  /// attached to.
+  ///
+  /// ```dart
+  /// @Directive(
+  ///   selector: 'interval-dir',
+  ///   outputs: const ['everySecond', 'five5Secs: everyFiveSeconds'])
+  /// class IntervalDir {
+  ///   final everySecond = new EventEmitter<String>();
+  ///
+  ///   final five5Secs = new EventEmitter<String>();
+  ///
+  ///   IntervalDir() {
+  ///     setInterval(() => everySecond.emit("event"), 1000);
+  ///     setInterval(() => five5Secs.emit("event"), 5000);
+  ///   }
+  /// }
+  ///
+  /// @Component(
+  ///   selector: 'app',
+  ///   template: '''
+  ///     <interval-dir (everySecond)="everySecond()" (everyFiveSeconds)="everyFiveSeconds()">
+  ///     </interval-dir>
+  ///   ''',
+  ///   directives: const [IntervalDir])
+  /// class App {
+  ///   everySecond() { print('second'); }
+  ///   everyFiveSeconds() { print('five seconds'); }
+  /// }
+  /// ```
+  final List<String> outputs;
+
+  /// Specify the events, actions, properties and attributes related to the host
+  /// element.
+  ///
+  /// ## Host Listeners
+  /// Specifies which DOM events a directive listens to via a set of '(_event_)'
+  /// to _statement_ key-value pairs:
+  ///
+  /// - _event_: the DOM event that the directive listens to
+  /// - _statement_: the statement to execute when the event occurs
+  ///
+  /// If the evaluation of the statement returns [false], then [preventDefault]
+  /// is applied on the DOM event.
+  ///
+  /// To listen to global events, a target must be added to the event name.
+  /// The target can be `window`, `document` or `body`.
+  ///
+  /// When writing a directive event binding, you can also refer to the $event
+  /// local variable.
+  ///
+  /// The following example declares a directive that attaches a click listener
+  /// to the button and counts clicks.
+  ///
+  /// ```dart
+  /// @Directive(
+  ///   selector: 'button[counting]',
+  ///   host: const {
+  ///     '(click)': 'onClick($event.target)'
+  ///   })
+  /// class CountClicks {
+  ///   var numberOfClicks = 0;
+  ///
+  ///   void onClick(btn) {
+  ///     print("Button $btn, number of clicks: ${numberOfClicks++}.");
+  ///   }
+  /// }
+  ///
+  /// @Component(
+  ///   selector: 'app',
+  ///   template: `<button counting>Increment</button>`,
+  ///   directives: const [CountClicks])
+  /// class App {}
+  /// ```
+  ///
+  /// ## Host Property Bindings
+  /// Specifies which DOM properties a directive updates.
+  ///
+  /// Angular automatically checks host property bindings during change
+  /// detection. If a binding changes, it will update the host element of the
+  /// directive.
+  ///
+  /// The following example creates a directive that sets the `valid` and
+  /// `invalid` classes on the DOM element that has ngModel directive on it.
+  ///
+  ///     @Directive(
+  ///       selector: '[ngModel]',
+  ///       host: {
+  ///         '[class.valid]': 'valid',
+  ///         '[class.invalid]': 'invalid'
+  ///       }
+  ///     )
+  ///     class NgModelStatus {
+  ///       NgModel control;
+  ///
+  ///       NgModelStatus(this.control);
+  ///       get valid => control.valid;
+  ///       get invalid => control.invalid;
+  ///     }
+  ///
+  ///     @Component({
+  ///       selector: 'app',
+  ///       template: `<input [(ngModel)]="prop">`,
+  ///       directives: [FORM_DIRECTIVES, NgModelStatus]
+  ///     })
+  ///     class App {
+  ///       prop;
+  ///     }
+  ///
+  ///     bootstrap(App);
+  ///
+  /// ## Attributes
+  ///
+  /// Specifies static attributes that should be propagated to a host element.
+  ///
+  /// ### Example
+  ///
+  /// In this example using `my-button` directive (ex.: `<div my-button></div>`)
+  /// on a host element (here: `<div>` ) will ensure that this element will get
+  /// the "button" role.
+  ///
+  /// ```dart
+  /// @Directive(
+  ///   selector: '[my-button]',
+  ///   host: const {
+  ///     'role': 'button'
+  ///   })
+  /// class MyButton {}
+  /// ```
+  final Map<String, String> host;
+
+  /// Defines the set of injectable objects that are visible to a Directive and
+  /// its light DOM children.
+  ///
+  /// ### Example
+  /// Here is an example of a class that can be injected:
+  ///
+  /// ```dart
+  /// class Greeter {
+  ///   String greet(String name) => 'Hello ${name}!';
+  /// }
+  ///
+  /// @Directive(
+  ///   selector: 'greet',
+  ///   providers: const [ Greeter])
+  /// class HelloWorld {
+  ///   final Greeter greeter;
+  ///
+  ///   HelloWorld(this.greeter);
+  /// }
+  /// ```
+  final List providers;
+
+  /// Defines the name that can be used in the template to assign this directive
+  /// to a variable.
+  ///
+  /// ### Example
+  ///
+  /// ```dart
+  /// @Directive(
+  ///   selector: 'child-dir',
+  ///   exportAs: 'child')
+  /// class ChildDir {}
+  ///
+  /// @Component(
+  ///   selector: 'main',
+  ///   template: `<child-dir #c="child"></child-dir>`,
+  ///   directives: const [ChildDir])
+  /// class MainComponent {}
+  /// ```
+  final String exportAs;
+
+  /// Configures the queries that will be injected into the directive.
+  ///
+  /// Content queries are set before the [ngAfterContentInit] callback is
+  /// called. View queries are set before the [ngAfterViewInit] callback is
+  /// called.
+  ///
+  /// ### Example
+  ///
+  ///     @Component(
+  ///       selector: 'someDir',
+  ///       queries: const {
+  ///         'contentChildren': const ContentChildren(ChildDirective),
+  ///         'viewChildren': const ViewChildren(ChildDirective),
+  ///         'contentChild': const ContentChild(SingleChildDirective),
+  ///         'viewChild': const ViewChild(SingleChildDirective)
+  ///       },
+  ///       template: '''
+  ///         <child-directive></child-directive>
+  ///         <single-child-directive></single-child-directive>
+  ///         <ng-content></ng-content>
+  ///       ''',
+  ///       directives: const [ChildDirective, SingleChildDirective])
+  ///     class SomeDir {
+  ///       QueryList<ChildDirective> contentChildren;
+  ///       QueryList<ChildDirective> viewChildren;
+  ///       SingleChildDirective contentChild;
+  ///       SingleChildDirective viewChild;
+  ///
+  ///       ngAfterContentInit() {
+  ///         // contentChildren is set
+  ///         // contentChild is set
+  ///       }
+  ///
+  ///       ngAfterViewInit() {
+  ///         // viewChildren is set
+  ///         // viewChild is set
+  ///       }
+  ///     }
+  ///
+  final Map<String, dynamic> queries;
+
   const Directive(
       {String selector,
-      List<String> inputs,
-      List<String> outputs,
+      this.inputs,
+      this.outputs,
       Map<String, String> host,
-      List providers,
+      this.providers,
       String exportAs,
       Map<String, dynamic> queries})
-      : super(
-            selector: selector,
-            inputs: inputs,
-            outputs: outputs,
-            host: host,
-            providers: providers,
-            exportAs: exportAs,
-            queries: queries);
+      : selector = selector,
+        host = host,
+        exportAs = exportAs,
+        queries = queries,
+        super();
 }
 
 /// Declare reusable UI building blocks for an application.
@@ -404,70 +697,215 @@ class Directive extends DirectiveMetadata {
 /// When the component class implements some [lifecycle-hooks](docs/guide/lifecycle-hooks.html)
 /// the callbacks are called by the change detection at defined points in time
 /// during the life of the component.
-class Component extends ComponentMetadata {
+class Component extends Directive {
+  /// Defines the used change detection strategy.
+  ///
+  /// When a component is instantiated, Angular creates a change detector, which
+  /// is responsible for propagating the component's bindings.
+  ///
+  /// The [changeDetection] property defines, whether the change detection will
+  /// be checked every time or only when the component tells it to do so.
+  final ChangeDetectionStrategy changeDetection;
+
+  /// Defines the set of injectable objects that are visible to its view
+  /// DOM children.
+  ///
+  /// ## Simple Example
+  ///
+  /// Here is an example of a class that can be injected:
+  ///
+  ///     class Greeter {
+  ///        greet(String name) => 'Hello ${name}!';
+  ///     }
+  ///
+  ///     @Directive(
+  ///       selector: 'needs-greeter'
+  ///     )
+  ///     class NeedsGreeter {
+  ///       final Greeter greeter;
+  ///
+  ///       NeedsGreeter(this.greeter);
+  ///     }
+  ///
+  ///     @Component(
+  ///       selector: 'greet',
+  ///       viewProviders: [
+  ///         Greeter
+  ///       ],
+  ///       template: '<needs-greeter></needs-greeter>',
+  ///       directives: [NeedsGreeter]
+  ///     )
+  ///     class HelloWorld {
+  ///     }
+  ///
+  List get viewProviders => (_viewBindings != null && _viewBindings.isNotEmpty)
+      ? this._viewBindings
+      : this._viewProviders;
+
+  List get viewBindings {
+    return this.viewProviders;
+  }
+
+  final List _viewProviders;
+  final List _viewBindings;
+
+  /// The module id of the module that contains the component.
+  /// Needed to be able to resolve relative urls for templates and styles.
+  /// In Dart, this can be determined automatically and does not need to be set.
+  /// In CommonJS, this can always be set to `module.id`.
+  ///
+  /// ### Example
+  ///
+  ///     @Directive(
+  ///       selector: 'someDir',
+  ///       moduleId: module.id
+  ///     })
+  ///     class SomeDir {
+  ///     }
+  ///
+  final String moduleId;
+  final String templateUrl;
+  final String template;
+  final bool preserveWhitespace;
+  final List<String> styleUrls;
+  final List<String> styles;
+  final List<dynamic /* Type | List < dynamic > */ > directives;
+  final List<dynamic /* Type | List < dynamic > */ > pipes;
+  final ViewEncapsulation encapsulation;
   const Component(
       {String selector,
       List<String> inputs,
       List<String> outputs,
       Map<String, String> host,
-      List providers,
       String exportAs,
-      String moduleId,
-      Map<String, dynamic> queries,
+      this.moduleId,
+      List providers,
+      List viewBindings,
       List viewProviders,
-      ChangeDetectionStrategy changeDetection,
-      String templateUrl,
-      String template,
-      bool preserveWhitespace,
-      dynamic directives,
-      dynamic pipes,
-      ViewEncapsulation encapsulation,
-      List<String> styles,
-      List<String> styleUrls})
-      : super(
+      this.changeDetection: ChangeDetectionStrategy.Default,
+      Map<String, dynamic> queries,
+      this.templateUrl,
+      this.template,
+      this.preserveWhitespace: true,
+      this.styleUrls,
+      this.styles,
+      this.directives,
+      this.pipes,
+      this.encapsulation})
+      : _viewProviders = viewProviders,
+        _viewBindings = viewBindings,
+        super(
             selector: selector,
             inputs: inputs,
             outputs: outputs,
             host: host,
-            providers: providers,
             exportAs: exportAs,
-            moduleId: moduleId,
-            viewProviders: viewProviders,
-            queries: queries,
-            changeDetection: changeDetection,
-            templateUrl: templateUrl,
-            template: template,
-            preserveWhitespace: preserveWhitespace,
-            directives: directives,
-            pipes: pipes,
-            encapsulation: encapsulation,
-            styles: styles,
-            styleUrls: styleUrls);
+            providers: providers,
+            queries: queries);
 }
 
-/// See: [View] for docs.
-class View extends ViewMetadata {
+/// Metadata properties available for configuring Views.
+///
+/// Each Angular component requires a single `@Component` and at least one
+/// `@View` annotation. The `@View` annotation specifies the HTML template to
+/// use, and lists the directives that are active within the template.
+///
+/// When a component is instantiated, the template is loaded into the
+/// component's shadow root, and the expressions and statements in the template
+/// are evaluated against the component.
+///
+/// For details on the `@Component` annotation, see [Component].
+///
+/// ## Example
+///
+/// ```
+/// @Component(
+///   selector: 'greet',
+///   template: 'Hello {{name}}!',
+///   directives: const [GreetUser, Bold]
+/// )
+/// class Greet {
+///   final String name;
+///
+///   Greet() : name = 'World';
+/// }
+/// ```
+class View {
+  /// Specifies a template URL for an Angular component.
+  ///
+  /// NOTE: Only one of `templateUrl` or `template` can be defined per View.
+  ///
+  /// <!-- TODO: what's the url relative to? -->
+  final String templateUrl;
+
+  /// Specifies an inline template for an Angular component.
+  ///
+  /// NOTE: Only one of `templateUrl` or `template` can be defined per View.
+  final String template;
+
+  /// Specifies stylesheet URLs for an Angular component.
+  ///
+  /// <!-- TODO: what's the url relative to? -->
+  final List<String> styleUrls;
+
+  /// Specifies an inline stylesheet for an Angular component.
+  final List<String> styles;
+
+  /// Specifies a list of directives that can be used within a template.
+  ///
+  /// Directives must be listed explicitly to provide proper component
+  /// encapsulation.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// @Component(
+  ///   selector: 'my-component',
+  ///   directives: const [NgFor],
+  ///   template: '''
+  ///   <ul>
+  ///     <li *ngFor="let item of items">{{item}}</li>
+  ///   </ul>'''
+  /// )
+  /// class MyComponent {}
+  /// ```
+  final List<dynamic /* Type | List < dynamic > */ > directives;
+  final List<dynamic /* Type | List < dynamic > */ > pipes;
+
+  /// Specify how the template and the styles should be encapsulated.
+  ///
+  /// The default is [ViewEncapsulation#Emulated] if the view has styles,
+  /// otherwise [ViewEncapsulation#None].
+  final ViewEncapsulation encapsulation;
   const View(
       {String templateUrl,
       String template,
-      dynamic directives,
-      dynamic pipes,
+      List<dynamic /* Type | List < dynamic > */ > directives,
+      List<dynamic /* Type | List < dynamic > */ > pipes,
       ViewEncapsulation encapsulation,
       List<String> styles,
       List<String> styleUrls})
-      : super(
-            templateUrl: templateUrl,
-            template: template,
-            directives: directives,
-            pipes: pipes,
-            encapsulation: encapsulation,
-            styles: styles,
-            styleUrls: styleUrls);
+      : templateUrl = templateUrl,
+        template = template,
+        styleUrls = styleUrls,
+        styles = styles,
+        directives = directives,
+        pipes = pipes,
+        encapsulation = encapsulation;
 }
 
-/// See: [PipeMetadata] for docs.
-class Pipe extends PipeMetadata {
-  const Pipe({name, pure}) : super(name: name, pure: pure);
+/// Declare reusable pipe function.
+///
+/// A "pure" pipe is only re-evaluated when either the input or any of the
+/// arguments change. When not specified, pipes default to being pure.
+///
+class Pipe extends Injectable {
+  final String name;
+  final bool _pure;
+  const Pipe({this.name, bool pure})
+      : _pure = pure,
+        super();
+  bool get pure => _pure ?? true;
 }
 
 /// An annotation to specify that a constant attribute value should be injected.
@@ -493,8 +931,22 @@ class Pipe extends PipeMetadata {
 ///   }
 /// }
 /// ```
-class Attribute extends AttributeMetadata {
-  const Attribute(String attributeName) : super(attributeName);
+class Attribute extends DependencyMetadata {
+  final String attributeName;
+  const Attribute(this.attributeName) : super();
+  @override
+  dynamic get token {
+    // Normally one would default a token to a type of an injected value but
+    // here the type of a variable is "string" and we can't use primitive type
+    // as a return value so we use instance of Attribute instead. This doesn't
+    // matter much in practice as arguments with @Attribute annotation are
+    // injected by ElementInjector that doesn't take tokens into account.
+    return this;
+  }
+
+  String toString() {
+    return '@Attribute($attributeName)';
+  }
 }
 
 /// Declares an injectable parameter to be a live list of directives or variable
@@ -606,11 +1058,35 @@ class Attribute extends AttributeMetadata {
 ///
 /// The injected object is an unmodifiable live list. See [QueryList] for more
 /// details.
-@Deprecated("Use ContentChildren/ContentChild instead")
-class Query extends QueryMetadata {
-  const Query(dynamic /*Type | string*/ selector,
-      {bool descendants: false, dynamic read: null})
-      : super(selector, descendants: descendants, read: read);
+class Query extends DependencyMetadata {
+  final dynamic /* Type | String */ selector;
+
+  /// whether we want to query only direct children (false) or all children
+  /// (true).
+  final bool descendants;
+  final bool first;
+
+  /// The DI token to read from an element that matches the selector.
+  final dynamic read;
+  const Query(this.selector,
+      {bool descendants: false, bool first: false, dynamic read: null})
+      : descendants = descendants,
+        first = first,
+        read = read,
+        super();
+
+  /// Always `false` to differentiate it with [ViewQuery].
+  bool get isViewQuery => false;
+
+  /// Whether this is querying for a variable binding or a directive.
+  bool get isVarBindingQuery => selector is String;
+
+  /// A list of variable bindings this is querying for.
+  ///
+  /// Only applicable if this is a variable bindings query.
+  List get varBindings => selector.split(',');
+
+  String toString() => '@Query($selector)';
 }
 
 /// Configures a content query.
@@ -631,7 +1107,7 @@ class Query extends QueryMetadata {
 ///   }
 /// }
 /// ```
-class ContentChildren extends ContentChildrenMetadata {
+class ContentChildren extends Query {
   const ContentChildren(dynamic /*Type | string*/ selector,
       {bool descendants: false, dynamic read: null})
       : super(selector, descendants: descendants, read: read);
@@ -655,12 +1131,13 @@ class ContentChildren extends ContentChildrenMetadata {
 ///   }
 /// }
 /// ```
-class ContentChild extends ContentChildMetadata {
-  const ContentChild(dynamic /*Type | string*/ selector, {dynamic read: null})
-      : super(selector, read: read);
+class ContentChild extends Query {
+  const ContentChild(dynamic /* Type | String */ _selector,
+      {dynamic read: null})
+      : super(_selector, descendants: true, first: true, read: read);
 }
 
-/// Similar to [QueryMetadata], but querying the component view, instead of the
+/// Similar to [Query], but querying the component view, instead of the
 /// content children.
 ///
 /// ### Example
@@ -685,7 +1162,7 @@ class ContentChild extends ContentChildMetadata {
 /// }
 /// ```
 ///
-/// Supports the same querying parameters as [QueryMetadata], except
+/// Supports the same querying parameters as [Query], except
 /// `descendants`. This always queries the whole view.
 ///
 /// As `shouldShow` is flipped between true and false, items will contain zero
@@ -695,10 +1172,15 @@ class ContentChild extends ContentChildMetadata {
 ///
 /// The injected object is an iterable and observable live list.  See
 /// [QueryList] for more details.
-@Deprecated("Use ViewChildren/ViewChild instead")
-class ViewQuery extends ViewQueryMetadata {
-  const ViewQuery(dynamic /*Type | string*/ selector, {dynamic read: null})
-      : super(selector, descendants: true, read: read);
+class ViewQuery extends Query {
+  const ViewQuery(dynamic /* Type | String */ _selector,
+      {bool descendants: false, bool first: false, dynamic read: null})
+      : super(_selector, descendants: descendants, first: first, read: read);
+
+  /// Always `true` to differentiate it with [Query].
+  get isViewQuery => true;
+
+  String toString() => '@ViewQuery($selector)';
 }
 
 /// Declares a reference to multiple child elements.
@@ -783,9 +1265,10 @@ class ViewQuery extends ViewQueryMetadata {
 ///   }
 /// }
 /// ```
-class ViewChildren extends ViewChildrenMetadata {
-  const ViewChildren(dynamic /*Type | string*/ selector, {dynamic read: null})
-      : super(selector, read: read);
+class ViewChildren extends ViewQuery {
+  const ViewChildren(dynamic /* Type | String */ _selector,
+      {dynamic read: null})
+      : super(_selector, descendants: true, read: read);
 }
 
 /// Declares a reference to a single child element.
@@ -860,16 +1343,16 @@ class ViewChildren extends ViewChildrenMetadata {
 ///   }
 /// }
 /// ```
-class ViewChild extends ViewChildMetadata {
-  const ViewChild(dynamic /*Type | string*/ selector, {dynamic read: null})
-      : super(selector, read: read);
+class ViewChild extends ViewQuery {
+  const ViewChild(dynamic /* Type | String */ _selector, {dynamic read: null})
+      : super(_selector, descendants: true, first: true, read: read);
 }
 
 /// Declares a data-bound input property.
 ///
 /// Data-bound properties are automatically updated during change detection.
 ///
-/// The [InputMetadata] annotation takes an optional parameter that specifies
+/// The [Input] annotation takes an optional parameter that specifies
 /// the name used when instantiating a component in the template. When not
 /// provided, the name of the decorated property is used.
 ///
@@ -903,8 +1386,10 @@ class ViewChild extends ViewChildMetadata {
 ///    directives: const [BankAccount])
 ///  class App {}
 ///  ```
-class Input extends InputMetadata {
-  const Input([String bindingPropertyName]) : super(bindingPropertyName);
+class Input {
+  /// Name used when instantiating a component in the template.
+  final String bindingPropertyName;
+  const Input([this.bindingPropertyName]);
 }
 
 /// Declares an event-bound output property.
@@ -912,7 +1397,7 @@ class Input extends InputMetadata {
 /// When an output property emits an event, an event handler attached to that
 /// event the template is invoked.
 ///
-/// The [OutputMetadata] annotation takes an optional parameter that specifies
+/// The [Output] annotation takes an optional parameter that specifies
 /// the name used when instantiating a component in the template. When not
 /// provided, the name of the decorated property is used.
 ///
@@ -952,8 +1437,9 @@ class Input extends InputMetadata {
 ///   }
 /// }
 /// ```
-class Output extends OutputMetadata {
-  const Output([String bindingPropertyName]) : super(bindingPropertyName);
+class Output {
+  final String bindingPropertyName;
+  const Output([this.bindingPropertyName]);
 }
 
 /// Declares a host property binding.
@@ -961,7 +1447,7 @@ class Output extends OutputMetadata {
 /// Host property bindings are automatically checked during change detection. If
 /// a binding changes, the host element of the directive is updated.
 ///
-/// The [HostBindingMetadata] annotation takes an optional parameter that
+/// The [HostBinding] annotation takes an optional parameter that
 /// specifies the property name of the host element that will be updated. When
 /// not provided, the property name is used.
 ///
@@ -992,8 +1478,9 @@ class Output extends OutputMetadata {
 ///   var prop;
 ///  }
 /// ```
-class HostBinding extends HostBindingMetadata {
-  const HostBinding([String hostPropertyName]) : super(hostPropertyName);
+class HostBinding {
+  final String hostPropertyName;
+  const HostBinding([this.hostPropertyName]);
 }
 
 /// Declares a host listener.
@@ -1025,9 +1512,10 @@ class HostBinding extends HostBindingMetadata {
 ///   directives: const [CountClicks])
 /// class App {}
 /// ```
-class HostListener extends HostListenerMetadata {
-  const HostListener(String eventName, [List<String> args])
-      : super(eventName, args);
+class HostListener {
+  final String eventName;
+  final List<String> args;
+  const HostListener(this.eventName, [this.args]);
 }
 
 /// Defines an injector module from which an injector can be generated.
@@ -1042,9 +1530,9 @@ class HostListener extends HostListenerMetadata {
 ///
 /// ```
 /// @experimental
-class InjectorModule extends InjectorModuleMetadata {
-  const InjectorModule({List providers: const []})
-      : super(providers: providers);
+class InjectorModule {
+  final List providers;
+  const InjectorModule({this.providers: const []});
 }
 
 /// Defines an injectable whose value is given by a property on an
@@ -1060,7 +1548,7 @@ class InjectorModule extends InjectorModuleMetadata {
 /// }
 /// ```
 /// @experimental
-class Provides extends ProviderPropertyMetadata {
+class Provides extends ProviderProperty {
   const Provides(dynamic token, {bool multi: false})
       : super(token, multi: multi);
 }

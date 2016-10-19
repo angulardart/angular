@@ -8,7 +8,7 @@ import "package:angular2/core.dart"
         Injectable,
         Provider,
         Inject,
-        SelfMetadata,
+        Self,
         Optional,
         InjectorModule,
         ComponentResolver,
@@ -338,7 +338,7 @@ void main() {
           var inj = createInjector([
             Engine,
             provide(Car, useFactory: (e) => new Car(e), deps: [
-              [Engine, new SelfMetadata()]
+              [Engine, new Self()]
             ])
           ]);
           expect(inj.get(Car), new isInstanceOf<Car>());
@@ -347,7 +347,7 @@ void main() {
           expect(
               () => createInjector([
                     provide(Car, useFactory: (e) => new Car(e), deps: [
-                      [Engine, new SelfMetadata()]
+                      [Engine, new Self()]
                     ])
                   ]),
               throwsWith(new RegExp(r'No provider for Engine')));

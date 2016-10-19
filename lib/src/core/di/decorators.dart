@@ -1,15 +1,59 @@
-import 'metadata.dart';
+class DependencyMetadata {
+  const DependencyMetadata();
 
-export 'metadata.dart';
-
-/// See [InjectMetadata].
-class Inject extends InjectMetadata {
-  const Inject(dynamic token) : super(token);
+  dynamic get token => null;
 }
 
-/// See [OptionalMetadata].
-class Optional extends OptionalMetadata {
-  const Optional() : super();
+/// A parameter metadata that specifies a dependency.
+///
+/// ## Example
+///
+/// ```dart
+/// class Engine {}
+///
+/// @Injectable()
+/// class Car {
+///   final Engine engine;
+///   Car(@Inject("MyEngine") this.engine);
+/// }
+///
+/// var engine = new Engine();
+///
+/// var injector = Injector.resolveAndCreate([
+///  new Provider("MyEngine", useValue: engine),
+///  Car
+/// ]);
+///
+/// expect(injector.get(Car).engine, same(engine));
+/// ```
+///
+/// When `@Inject()` is not present, [Injector] will use the type annotation of
+/// the parameter.
+///
+/// ## Example
+///
+/// ```dart
+/// class Engine {}
+///
+/// @Injectable()
+/// class Car {
+///   Car(Engine engine) {} //same as Car(@Inject(Engine) Engine engine)
+/// }
+///
+/// var injector = Injector.resolveAndCreate([Engine, Car]);
+/// expect(injector.get(Car).engine, new isInstanceOf<Engine>());
+/// ```
+class Inject {
+  final token;
+  const Inject(this.token);
+  String toString() => '@Inject(${tokenToString(token)})';
+
+  static String tokenToString(token) {
+    RegExp funcMatcher = new RegExp(r"from Function '(\w+)'");
+    String tokenStr = token.toString();
+    var match = funcMatcher.firstMatch(tokenStr);
+    return (match != null) ? match.group(1) : tokenStr;
+  }
 }
 
 /// Compile-time metadata that marks a class [Type] or [Function] for injection.
@@ -66,21 +110,137 @@ class Optional extends OptionalMetadata {
 /// @Injectable()
 /// MyService createMyService(Dependency1 d1, Dependency2 d2) => ...
 /// ```
-class Injectable extends InjectableMetadata {
-  const Injectable() : super();
+class Injectable {
+  const Injectable();
 }
 
-/// See [SelfMetadata].
-class Self extends SelfMetadata {
-  const Self() : super();
+/// A parameter metadata that marks a dependency as optional.
+///
+/// [Injector] provides `null` if the dependency is not found.
+///
+/// ## Example
+///
+/// ```dart
+/// class Engine {}
+///
+/// @Injectable()
+/// class Car {
+///   final Engine engine;
+///   constructor(@Optional() this.engine);
+/// }
+///
+/// var injector = Injector.resolveAndCreate([Car]);
+/// expect(injector.get(Car).engine, isNull);
+/// ```
+class Optional {
+  const Optional();
 }
 
-/// See [HostMetadata].
-class Host extends HostMetadata {
-  const Host() : super();
+/// Specifies that an [Injector] should retrieve a dependency only from itself.
+///
+/// ## Example
+///
+/// ```dart
+/// class Dependency {}
+///
+/// @Injectable()
+/// class NeedsDependency {
+///   final Dependency dependency;
+///   NeedsDependency(@Self() this.dependency);
+/// }
+///
+/// var inj = Injector.resolveAndCreate([Dependency, NeedsDependency]);
+/// var nd = inj.get(NeedsDependency);
+///
+/// expect(nd.dependency, new isInstanceOf<Dependency>());
+///
+/// inj = Injector.resolveAndCreate([Dependency]);
+/// var child = inj.resolveAndCreateChild([NeedsDependency]);
+/// expect(() => child.get(NeedsDependency), throws);
+/// ```
+class Self {
+  const Self();
 }
 
-/// See [SkipSelfMetadata].
-class SkipSelf extends SkipSelfMetadata {
+/// Specifies that the dependency resolution should start from the parent
+/// injector.
+///
+/// ## Example
+///
+/// ```dart
+/// class Dependency {}
+///
+/// @Injectable()
+/// class NeedsDependency {
+///   final Dependency dependency;
+///   NeedsDependency(@Self() this.dependency);
+/// }
+///
+/// var parent = Injector.resolveAndCreate([Dependency]);
+/// var child = parent.resolveAndCreateChild([NeedsDependency]);
+/// expect(child.get(NeedsDependency).dependency, new
+///     isInstanceOf<Dependency>());
+///
+/// var inj = Injector.resolveAndCreate([Dependency, NeedsDependency]);
+/// expect(() => inj.get(NeedsDependency), throws);
+/// ```
+class SkipSelf {
   const SkipSelf() : super();
+}
+
+/// Specifies that an injector should retrieve a dependency from any injector
+/// until reaching the closest host.
+///
+/// In Angular, a component element is automatically declared as a host for all
+/// the injectors in its view.
+///
+/// ## Example
+///
+/// In the following example `App` contains `ParentCmp`, which contains
+/// `ChildDirective`.  So `ParentCmp` is the host of `ChildDirective`.
+///
+/// `ChildDirective` depends on two services: `HostService` and `OtherService`.
+/// `HostService` is defined at `ParentCmp`, and `OtherService` is defined at
+/// `App`.
+///
+///```dart
+/// class OtherService {}
+/// class HostService {}
+///
+/// @Directive(
+///   selector: 'child-directive'
+/// )
+/// class ChildDirective {
+///   ChildDirective(
+///       @Optional() @Host() OtherService os,
+///       @Optional() @Host() HostService hs) {
+///     print("os is null", os);
+///     print("hs is NOT null", hs);
+///   }
+/// }
+///
+/// @Component(
+///   selector: 'parent-cmp',
+///   providers: const [HostService],
+///   template: '''
+///     Dir: <child-directive></child-directive>
+///   ''',
+///   directives: const [ChildDirective]
+/// )
+/// class ParentCmp {}
+///
+/// @Component(
+///   selector: 'app',
+///   providers: const [OtherService],
+///   template: '''
+///     Parent: <parent-cmp></parent-cmp>
+///   ''',
+///   directives: const [ParentCmp]
+/// )
+/// class App {}
+///
+/// bootstrap(App);
+///```
+class Host {
+  const Host();
 }

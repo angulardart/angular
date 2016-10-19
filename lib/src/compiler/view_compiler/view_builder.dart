@@ -143,7 +143,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       TemplateAst ast, String value, num ngContentIndex, CompileElement parent,
       {bool isBound}) {
     var fieldName = '_text_${this.view.nodes.length}';
-    var renderNode;
+    o.Expression renderNode;
     // If Text field is bound, we need access to the renderNode beyond
     // createInternal method and write reference to class member.
     // Otherwise we can create a local variable and not balloon class prototype.
@@ -346,7 +346,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(this.view.nodes.length - nodeIndex - 1);
     if (compViewExpr != null) {
-      var codeGenContentNodes;
+      o.Expression codeGenContentNodes;
       if (this.view.component.type.isHost) {
         codeGenContentNodes = ViewProperties.projectableNodes;
       } else {
@@ -517,8 +517,8 @@ String mergeAttributeValue(
 }
 
 List<List<String>> mapToKeyValueArray(Map<String, String> data) {
-  var entryArray = [];
-  data.forEach((name, value) {
+  var entryArray = <List<String>>[];
+  data.forEach((String name, String value) {
     entryArray.add([name, value]);
   });
   // We need to sort to get a defined output order

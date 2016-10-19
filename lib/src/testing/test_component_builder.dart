@@ -93,7 +93,7 @@ class TestComponentBuilder {
     return clone;
   }
 
-  /// Overrides only the html of a [ComponentMetadata].
+  /// Overrides only the html of a [Component].
   ///
   /// All the other properties of the component's [View] are preserved.
   TestComponentBuilder overrideTemplate(Type componentType, String template) {

@@ -1,5 +1,4 @@
-import "package:angular2/src/core/di.dart"
-    show Provider, SkipSelfMetadata, OptionalMetadata;
+import "package:angular2/src/core/di.dart" show Provider, SkipSelf, Optional;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
@@ -62,7 +61,7 @@ class KeyValueDiffers {
       }
       return KeyValueDiffers.create(factories, parent);
     }, deps: [
-      [KeyValueDiffers, new SkipSelfMetadata(), new OptionalMetadata()]
+      [KeyValueDiffers, new SkipSelf(), new Optional()]
     ]);
   }
 

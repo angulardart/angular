@@ -2,7 +2,7 @@ import "package:angular2/src/compiler/directive_resolver.dart"
     show DirectiveResolver;
 import "package:angular2/src/core/di.dart" show Injectable;
 
-import "../core/metadata.dart" show DirectiveMetadata, ComponentMetadata;
+import "../core/metadata.dart" show Directive, Component;
 
 /// An implementation of [DirectiveResolver] that allows overriding
 /// various properties of directives.
@@ -10,7 +10,7 @@ import "../core/metadata.dart" show DirectiveMetadata, ComponentMetadata;
 class MockDirectiveResolver extends DirectiveResolver {
   var _providerOverrides = new Map<Type, List<dynamic>>();
   var viewProviderOverrides = new Map<Type, List<dynamic>>();
-  DirectiveMetadata resolve(Type type) {
+  Directive resolve(Type type) {
     var dm = super.resolve(type);
     var providerOverrides = _providerOverrides[type];
     var viewOverrides = viewProviderOverrides[type];
@@ -20,14 +20,14 @@ class MockDirectiveResolver extends DirectiveResolver {
       providers =
           (new List.from(originalViewProviders)..addAll(providerOverrides));
     }
-    if (dm is ComponentMetadata) {
+    if (dm is Component) {
       var viewProviders = dm.viewProviders;
       if (viewOverrides != null) {
         var originalViewProviders = dm.viewProviders ?? [];
         viewProviders =
             (new List.from(originalViewProviders)..addAll(viewOverrides));
       }
-      return new ComponentMetadata(
+      return new Component(
           selector: dm.selector,
           inputs: dm.inputs,
           outputs: dm.outputs,
@@ -40,7 +40,7 @@ class MockDirectiveResolver extends DirectiveResolver {
           providers: providers,
           viewProviders: viewProviders);
     }
-    return new DirectiveMetadata(
+    return new Directive(
         selector: dm.selector,
         inputs: dm.inputs,
         outputs: dm.outputs,

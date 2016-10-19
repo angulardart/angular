@@ -41,6 +41,7 @@ class DomRootRenderer implements RootRenderer {
   }
 }
 
+@Deprecated('Use dart:html apis')
 class DomRenderer implements Renderer {
   DomRootRenderer _rootRenderer;
   RenderComponentType componentProto;

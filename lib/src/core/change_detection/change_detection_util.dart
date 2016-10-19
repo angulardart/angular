@@ -26,7 +26,7 @@ bool devModeEqual(Object a, Object b) => const _DevModeEquality().equals(a, b);
 
 Object uninitialized = const Object();
 
-/// Indicates that the result of a [PipeMetadata] transformation has changed
+/// Indicates that the result of a [Pipe] transformation has changed
 /// even though the reference has not changed.
 ///
 /// The wrapped value will be unwrapped by change detection, and the unwrapped

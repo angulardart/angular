@@ -1,21 +1,5 @@
-import "package:angular2/src/core/metadata.dart"
-    show
-        AttributeMetadata,
-        DirectiveMetadata,
-        ComponentMetadata,
-        ContentChildrenMetadata,
-        ContentChildMetadata,
-        InputMetadata,
-        HostBindingMetadata,
-        HostListenerMetadata,
-        OutputMetadata,
-        PipeMetadata,
-        View,
-        ViewChildMetadata,
-        ViewChildrenMetadata,
-        ViewQueryMetadata,
-        QueryMetadata;
-import "package:angular2/src/facade/lang.dart" show isPrimitive;
+import 'package:angular2/src/core/metadata.dart';
+import 'package:angular2/src/facade/lang.dart' show isPrimitive;
 
 /// The host of the static resolver is expected to be able to provide module metadata in the form of
 /// ModuleMetadata. Angular 2 CLI will produce this metadata for a module whenever a .d.ts files is
@@ -126,7 +110,7 @@ class StaticReflector {
       var p0 = getDecoratorParameter(
               moduleContext, expression as Map<String, dynamic>, 0) ??
           {};
-      return new DirectiveMetadata(
+      return new Directive(
           selector: p0["selector"],
           inputs: p0["inputs"] as List<String>,
           outputs: p0["outputs"] as List<String>,
@@ -139,7 +123,7 @@ class StaticReflector {
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0);
       p0 ??= {};
-      return new ComponentMetadata(
+      return new Component(
           selector: p0["selector"],
           inputs: p0["inputs"] as List<String>,
           outputs: p0["outputs"] as List<String>,
@@ -160,12 +144,12 @@ class StaticReflector {
           pipes: p0["pipes"],
           encapsulation: p0["encapsulation"]);
     };
-    conversionMap[this.getStaticType(core_metadata, "Input")] = (moduleContext,
-            Map<String, dynamic> expression) =>
-        new InputMetadata(getDecoratorParameter(moduleContext, expression, 0));
-    conversionMap[this.getStaticType(core_metadata, "Output")] = (moduleContext,
-            Map<String, dynamic> expression) =>
-        new OutputMetadata(getDecoratorParameter(moduleContext, expression, 0));
+    conversionMap[this.getStaticType(core_metadata, "Input")] =
+        (moduleContext, Map<String, dynamic> expression) =>
+            new Input(getDecoratorParameter(moduleContext, expression, 0));
+    conversionMap[this.getStaticType(core_metadata, "Output")] =
+        (moduleContext, Map<String, dynamic> expression) =>
+            new Output(getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "View")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0) ?? {};
@@ -179,53 +163,48 @@ class StaticReflector {
     };
     conversionMap[this.getStaticType(core_metadata, "Attribute")] =
         (moduleContext, Map<String, dynamic> expression) =>
-            new AttributeMetadata(
-                getDecoratorParameter(moduleContext, expression, 0));
+            new Attribute(getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "Query")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0);
       var p1 = getDecoratorParameter(moduleContext, expression, 1) ?? {};
-      return new QueryMetadata(p0,
-          descendants: p1.descendants, first: p1.first);
+      return new Query(p0, descendants: p1.descendants, first: p1.first);
     };
     conversionMap[this.getStaticType(core_metadata, "ContentChildren")] =
-        (moduleContext, Map<String, dynamic> expression) =>
-            new ContentChildrenMetadata(
-                getDecoratorParameter(moduleContext, expression, 0));
-    conversionMap[this.getStaticType(core_metadata, "ContentChild")] =
-        (moduleContext, Map<String, dynamic> expression) =>
-            new ContentChildMetadata(
-                getDecoratorParameter(moduleContext, expression, 0));
-    conversionMap[this.getStaticType(core_metadata, "ViewChildren")] =
-        (moduleContext, Map<String, dynamic> expression) =>
-            new ViewChildrenMetadata(
-                getDecoratorParameter(moduleContext, expression, 0));
+        (moduleContext, Map<String, dynamic> expression) => new ContentChildren(
+            getDecoratorParameter(moduleContext, expression, 0));
+    conversionMap[
+        this.getStaticType(core_metadata, "ContentChild")] = (moduleContext,
+            Map<String, dynamic> expression) =>
+        new ContentChild(getDecoratorParameter(moduleContext, expression, 0));
+    conversionMap[
+        this.getStaticType(core_metadata, "ViewChildren")] = (moduleContext,
+            Map<String, dynamic> expression) =>
+        new ViewChildren(getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "ViewChild")] =
         (moduleContext, Map<String, dynamic> expression) =>
-            new ViewChildMetadata(
-                getDecoratorParameter(moduleContext, expression, 0));
+            new ViewChild(getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "ViewQuery")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0);
       var p1 = getDecoratorParameter(moduleContext, expression, 1) ?? {};
-      return new ViewQueryMetadata(p0,
+      return new ViewQuery(p0,
           descendants: p1["descendants"], first: p1["first"]);
     };
     conversionMap[this.getStaticType(core_metadata, "Pipe")] =
         (moduleContext, Map<String, dynamic> expression) {
       var p0 = getDecoratorParameter(moduleContext, expression, 0) ?? {};
-      return new PipeMetadata(name: p0["name"], pure: p0["pure"]);
+      return new Pipe(name: p0["name"], pure: p0["pure"]);
     };
-    conversionMap[this.getStaticType(core_metadata, "HostBinding")] =
-        (moduleContext, Map<String, dynamic> expression) =>
-            new HostBindingMetadata(
-                getDecoratorParameter(moduleContext, expression, 0));
+    conversionMap[
+        this.getStaticType(core_metadata, "HostBinding")] = (moduleContext,
+            Map<String, dynamic> expression) =>
+        new HostBinding(getDecoratorParameter(moduleContext, expression, 0));
     conversionMap[this.getStaticType(core_metadata, "HostListener")] =
-        (moduleContext, Map<String, dynamic> expression) =>
-            new HostListenerMetadata(
-                getDecoratorParameter(moduleContext, expression, 0),
-                getDecoratorParameter(moduleContext, expression, 1)
-                as List<String>);
+        (moduleContext, Map<String, dynamic> expression) => new HostListener(
+            getDecoratorParameter(moduleContext, expression, 0),
+            getDecoratorParameter(moduleContext, expression, 1)
+            as List<String>);
     return null;
   }
 

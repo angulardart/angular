@@ -1,7 +1,7 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "injector.dart" show Injector, THROW_IF_NOT_FOUND;
-import "metadata.dart" show SelfMetadata, SkipSelfMetadata;
+import "decorators.dart";
 import "provider.dart" show Provider;
 import "reflective_exceptions.dart"
     show
@@ -764,7 +764,7 @@ class ReflectiveInjectorImpl implements ReflectiveInjector {
     if (identical(key, INJECTOR_KEY)) {
       return this;
     }
-    if (upperBoundVisibility is SelfMetadata) {
+    if (upperBoundVisibility is Self) {
       return _getByKeySelf(key, notFoundValue);
     } else {
       return _getByKeyDefault(key, notFoundValue, lowerBoundVisibility);
@@ -789,7 +789,7 @@ class ReflectiveInjectorImpl implements ReflectiveInjector {
   dynamic _getByKeyDefault(
       ReflectiveKey key, dynamic notFoundValue, Object lowerBoundVisibility) {
     Injector inj;
-    if (lowerBoundVisibility is SkipSelfMetadata) {
+    if (lowerBoundVisibility is SkipSelf) {
       inj = this._parent;
     } else {
       inj = this;

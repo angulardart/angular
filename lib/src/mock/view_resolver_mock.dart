@@ -2,19 +2,19 @@ import "package:angular2/src/compiler/view_resolver.dart" show ViewResolver;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-import "../core/metadata/view.dart" show ViewMetadata;
+import "../core/metadata.dart" show View;
 
 @Injectable()
 class MockViewResolver extends ViewResolver {
-  var _views = new Map<Type, ViewMetadata>();
+  var _views = new Map<Type, View>();
   var _inlineTemplates = new Map<Type, String>();
-  var _viewCache = new Map<Type, ViewMetadata>();
+  var _viewCache = new Map<Type, View>();
   var _directiveOverrides = new Map<Type, Map<Type, Type>>();
 
   MockViewResolver();
 
   /// Overrides the [View] for a component.
-  void setView(Type component, ViewMetadata view) {
+  void setView(Type component, View view) {
     this._checkOverrideable(component);
     this._views[component] = view;
   }
@@ -45,7 +45,7 @@ class MockViewResolver extends ViewResolver {
   /// - Override the directives, see `overrideViewDirective`.
   /// - Override the @View definition, see `setInlineTemplate`.
   ///
-  ViewMetadata resolve(Type component) {
+  View resolve(Type component) {
     var view = _viewCache[component];
     if (view != null) return view;
     view = _views[component] ?? super.resolve(component);
@@ -62,14 +62,14 @@ class MockViewResolver extends ViewResolver {
         }
         directives[srcIndex] = to;
       });
-      view = new ViewMetadata(
+      view = new View(
           template: view.template,
           templateUrl: view.templateUrl,
           directives: directives);
     }
     var inlineTemplate = this._inlineTemplates[component];
     if (inlineTemplate != null) {
-      view = new ViewMetadata(
+      view = new View(
           template: inlineTemplate,
           templateUrl: null,
           directives: view.directives);

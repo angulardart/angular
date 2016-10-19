@@ -358,7 +358,7 @@ void main() {
               provide("injectable2",
                   useFactory: (val) => '''${ val}-injectable2''',
                   deps: [
-                    [new InjectMetadata("injectable1"), new SkipSelfMetadata()]
+                    [new Inject("injectable1"), new SkipSelf()]
                   ])
             ]));
         expect(el.children[0].children[0].inject("injectable2"),

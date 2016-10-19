@@ -1,7 +1,6 @@
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/core/metadata/directives.dart"
-    show ComponentMetadata;
-import "package:angular2/src/core/metadata/view.dart" show ViewMetadata;
+import "package:angular2/src/core/metadata.dart" show Component;
+import "package:angular2/src/core/metadata.dart" show View;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/core/reflection/reflector_reader.dart"
     show ReflectorReader;
@@ -13,7 +12,7 @@ import "package:angular2/src/facade/lang.dart" show stringify;
 class ViewResolver {
   ReflectorReader _reflector;
   /** @internal */
-  var _cache = new Map<Type, ViewMetadata>();
+  var _cache = new Map<Type, View>();
   ViewResolver([ReflectorReader _reflector]) {
     if (_reflector != null) {
       this._reflector = _reflector;
@@ -21,7 +20,7 @@ class ViewResolver {
       this._reflector = reflector;
     }
   }
-  ViewMetadata resolve(Type component) {
+  View resolve(Type component) {
     var view = this._cache[component];
     if (view == null) {
       view = this._resolve(component);
@@ -31,14 +30,14 @@ class ViewResolver {
   }
 
   /** @internal */
-  ViewMetadata _resolve(Type component) {
-    ComponentMetadata compMeta;
-    ViewMetadata viewMeta;
+  View _resolve(Type component) {
+    Component compMeta;
+    View viewMeta;
     this._reflector.annotations(component).forEach((m) {
-      if (m is ViewMetadata) {
+      if (m is View) {
         viewMeta = m;
       }
-      if (m is ComponentMetadata) {
+      if (m is Component) {
         compMeta = m;
       }
     });
@@ -65,7 +64,7 @@ class ViewResolver {
       } else if (viewMeta != null) {
         return viewMeta;
       } else {
-        return new ViewMetadata(
+        return new View(
             templateUrl: compMeta.templateUrl,
             template: compMeta.template,
             directives: compMeta.directives,

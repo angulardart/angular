@@ -16,7 +16,6 @@ import "package:angular2/core.dart"
         Inject,
         Host,
         SkipSelf,
-        SkipSelfMetadata,
         OnDestroy,
         ReflectiveInjector;
 import "package:angular2/src/core/change_detection/change_detection.dart"
@@ -2558,7 +2557,7 @@ createParentBus(peb) {
     selector: "parent-providing-event-bus",
     providers: const [
       const Provider(EventBus, useFactory: createParentBus, deps: const [
-        const [EventBus, const SkipSelfMetadata()]
+        const [EventBus, const SkipSelf()]
       ])
     ],
     directives: const [ChildConsumingEventBus],

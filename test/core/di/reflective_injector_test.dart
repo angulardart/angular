@@ -8,14 +8,14 @@ import "package:angular2/core.dart"
         ReflectiveInjector,
         Injector,
         Injectable,
-        InjectMetadata,
-        SelfMetadata,
+        Inject,
+        Self,
         Optional,
         Inject,
         Provider,
         InjectorModule,
         Provides;
-import "package:angular2/src/core/di/metadata.dart" show DependencyMetadata;
+import "package:angular2/src/core/di/decorators.dart";
 import "package:angular2/src/core/di/reflective_exceptions.dart";
 import "package:angular2/src/core/di/reflective_injector.dart"
     show
@@ -30,7 +30,10 @@ import "package:angular2/src/facade/lang.dart" show stringify;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
-class CustomDependencyMetadata extends DependencyMetadata {}
+class CustomDependencyMetadata extends DependencyMetadata {
+  @override
+  get token => null;
+}
 
 class Engine {}
 
@@ -500,7 +503,7 @@ void main() {
           var inj = ReflectiveInjector.resolveAndCreate([
             Engine,
             provide(Car, useFactory: (e) => new Car(e), deps: [
-              [Engine, new SelfMetadata()]
+              [Engine, new Self()]
             ])
           ]);
           expect(inj.get(Car), new isInstanceOf<Car>());
@@ -509,7 +512,7 @@ void main() {
           var parent = ReflectiveInjector.resolveAndCreate([Engine]);
           var child = parent.resolveAndCreateChild([
             provide(Car, useFactory: (e) => new Car(e), deps: [
-              [Engine, new SelfMetadata()]
+              [Engine, new Self()]
             ])
           ]);
           expect(
@@ -607,7 +610,7 @@ void main() {
           'dependency annotations', () {
         var providers = ReflectiveInjector.resolve([
           provide("token", useFactory: (e) => "result", deps: [
-            [new InjectMetadata("dep"), new CustomDependencyMetadata()]
+            [new Inject("dep"), new CustomDependencyMetadata()]
           ])
         ]);
         var provider = providers[0];
@@ -617,12 +620,11 @@ void main() {
       });
       test("should allow declaring dependencies with flat arrays", () {
         var resolved = ReflectiveInjector.resolve([
-          provide("token",
-              useFactory: (e) => e, deps: [new InjectMetadata("dep")])
+          provide("token", useFactory: (e) => e, deps: [new Inject("dep")])
         ]);
         var nestedResolved = ReflectiveInjector.resolve([
           provide("token", useFactory: (e) => e, deps: [
-            [new InjectMetadata("dep")]
+            [new Inject("dep")]
           ])
         ]);
         expect(resolved[0].resolvedFactories[0].dependencies[0].key.token,
@@ -1038,7 +1040,7 @@ void main() {
           var inj = ReflectiveInjector.resolveAndCreate([
             Engine,
             provide(Car, useFactory: (e) => new Car(e), deps: [
-              [Engine, new SelfMetadata()]
+              [Engine, new Self()]
             ])
           ]);
           expect(inj.get(Car), new isInstanceOf<Car>());
@@ -1047,7 +1049,7 @@ void main() {
           var parent = ReflectiveInjector.resolveAndCreate([Engine]);
           var child = parent.resolveAndCreateChild([
             provide(Car, useFactory: (e) => new Car(e), deps: [
-              [Engine, new SelfMetadata()]
+              [Engine, new Self()]
             ])
           ]);
           expect(
@@ -1129,7 +1131,7 @@ void main() {
           'dependency annotations', () {
         var providers = ReflectiveInjector.resolve([
           provide("token", useFactory: (e) => "result", deps: [
-            [new InjectMetadata("dep"), new CustomDependencyMetadata()]
+            [new Inject("dep"), new CustomDependencyMetadata()]
           ])
         ]);
         var provider = providers[0];
@@ -1139,12 +1141,11 @@ void main() {
       });
       test("should allow declaring dependencies with flat arrays", () {
         var resolved = ReflectiveInjector.resolve([
-          provide("token",
-              useFactory: (e) => e, deps: [new InjectMetadata("dep")])
+          provide("token", useFactory: (e) => e, deps: [new Inject("dep")])
         ]);
         var nestedResolved = ReflectiveInjector.resolve([
           provide("token", useFactory: (e) => e, deps: [
-            [new InjectMetadata("dep")]
+            [new Inject("dep")]
           ])
         ]);
         expect(resolved[0].resolvedFactories[0].dependencies[0].key.token,

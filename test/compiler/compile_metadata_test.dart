@@ -121,7 +121,7 @@ void main() {
             empty.toJson());
       });
     });
-    group("DirectiveMetadata", () {
+    group("Directive", () {
       test("should serialize with full data", () {
         expect(
             CompileDirectiveMetadata
@@ -164,7 +164,7 @@ void main() {
             empty.toJson());
       });
     });
-    group("PipeMetadata", () {
+    group("Pipe", () {
       test("should be pure by default", () {
         expect(new CompilePipeMetadata().pure, isTrue);
       });

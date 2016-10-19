@@ -1,16 +1,8 @@
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 
-import "../metadata/di.dart"
-    show InjectorModuleMetadata, ProviderPropertyMetadata;
 import '../reflection/reflection.dart' show NoReflectionCapabilitiesError;
-import "metadata.dart"
-    show
-        InjectMetadata,
-        OptionalMetadata,
-        SelfMetadata,
-        HostMetadata,
-        SkipSelfMetadata,
-        DependencyMetadata;
+import '../metadata.dart';
+import "decorators.dart";
 import "provider.dart" show Provider, provide, noValueProvided;
 import "reflective_exceptions.dart"
     show
@@ -236,7 +228,7 @@ ReflectiveDependency _extractToken(
   var token;
   var optional = false;
   if (metadata is! List) {
-    if (metadata is InjectMetadata) {
+    if (metadata is Inject) {
       return _createDependency(metadata.token, optional, null, null, depProps);
     } else {
       return _createDependency(metadata, optional, null, null, depProps);
@@ -248,15 +240,15 @@ ReflectiveDependency _extractToken(
     var paramMetadata = metadata[i];
     if (paramMetadata is Type) {
       token = paramMetadata;
-    } else if (paramMetadata is InjectMetadata) {
+    } else if (paramMetadata is Inject) {
       token = paramMetadata.token;
-    } else if (paramMetadata is OptionalMetadata) {
+    } else if (paramMetadata is Optional) {
       optional = true;
-    } else if (paramMetadata is SelfMetadata) {
+    } else if (paramMetadata is Self) {
       upperBoundVisibility = paramMetadata;
-    } else if (paramMetadata is HostMetadata) {
+    } else if (paramMetadata is Host) {
       upperBoundVisibility = paramMetadata;
-    } else if (paramMetadata is SkipSelfMetadata) {
+    } else if (paramMetadata is SkipSelf) {
       lowerBoundVisibility = paramMetadata;
     } else if (paramMetadata is DependencyMetadata) {
       if (paramMetadata.token != null) {
@@ -276,8 +268,8 @@ ReflectiveDependency _createDependency(
       lowerBoundVisibility, upperBoundVisibility, depProps);
 }
 
-/// Returns [InjectorModuleMetadata] providers for a given token if possible.
-List<dynamic> getInjectorModuleProviders(dynamic token) {
+/// Returns [InjectorModule] providers for a given token if possible.
+List getInjectorModuleProviders(dynamic token) {
   var providers = [];
   List<dynamic> annotations;
   try {
@@ -287,8 +279,8 @@ List<dynamic> getInjectorModuleProviders(dynamic token) {
   } on NoReflectionCapabilitiesError {
     // ignoring reflection errors here
   }
-  InjectorModuleMetadata metadata = annotations != null
-      ? annotations.firstWhere((type) => type is InjectorModuleMetadata,
+  InjectorModule metadata = annotations != null
+      ? annotations.firstWhere((type) => type is InjectorModule,
           orElse: () => null)
       : null;
   if (metadata != null) {
@@ -296,7 +288,7 @@ List<dynamic> getInjectorModuleProviders(dynamic token) {
     providers.addAll(metadata.providers);
     propertyMetadata.forEach((String propName, List<dynamic> metadata) {
       metadata.forEach((a) {
-        if (a is ProviderPropertyMetadata) {
+        if (a is ProviderProperty) {
           providers.add(new Provider(a.token,
               multi: a.multi, useProperty: propName, useExisting: token));
         }

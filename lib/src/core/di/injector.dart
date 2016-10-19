@@ -1,6 +1,6 @@
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import 'metadata.dart';
+import 'decorators.dart';
 
 const _THROW_IF_NOT_FOUND = const Object();
 const THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
@@ -9,7 +9,7 @@ class _NullInjector implements Injector {
   dynamic get(dynamic token, [dynamic notFoundValue = _THROW_IF_NOT_FOUND]) {
     if (identical(notFoundValue, _THROW_IF_NOT_FOUND)) {
       throw new BaseException(
-          'No provider for ${InjectMetadata.tokenToString(token)}!');
+          'No provider for ${Inject.tokenToString(token)}!');
     }
     return notFoundValue;
   }

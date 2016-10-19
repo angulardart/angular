@@ -1,16 +1,14 @@
 import "package:angular2/src/compiler/url_resolver.dart" show getUrlScheme;
 import "package:angular2/src/core/di.dart" show Injectable, Inject, Optional;
-import "package:angular2/src/core/di/metadata.dart"
-    show SelfMetadata, HostMetadata, SkipSelfMetadata;
+import "package:angular2/src/core/di/decorators.dart";
 import "package:angular2/src/core/di/provider.dart" show Provider;
 import "package:angular2/src/core/di/reflective_provider.dart"
     show
         constructDependencies,
         ReflectiveDependency,
         getInjectorModuleProviders;
-import "package:angular2/src/core/metadata.dart" show ViewMetadata, Attribute;
-import "package:angular2/src/core/metadata/di.dart" as dimd;
-import "package:angular2/src/core/metadata/directives.dart" as md;
+import "package:angular2/src/core/metadata.dart"
+    show View, Attribute, Query, Component;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LIFECYCLE_HOOKS_VALUES;
 import "package:angular2/src/core/platform_directives_and_pipes.dart"
@@ -65,8 +63,8 @@ class RuntimeMetadataResolver {
       var templateMeta;
       var changeDetectionStrategy;
       var viewProviders = [];
-      if (dirMeta is md.ComponentMetadata) {
-        md.ComponentMetadata cmpMeta = dirMeta;
+      if (dirMeta is Component) {
+        Component cmpMeta = dirMeta;
         moduleUrl = calcModuleUrl(directiveType, cmpMeta);
         var viewMeta = this._viewResolver.resolve(directiveType);
         templateMeta = new cpl.CompileTemplateMetadata(
@@ -88,10 +86,10 @@ class RuntimeMetadataResolver {
       var queries = [];
       var viewQueries = [];
       if (dirMeta.queries != null) {
-        queries = getQueriesMetadata(
-            dirMeta.queries as Map<String, dimd.QueryMetadata>, false);
-        viewQueries = getQueriesMetadata(
-            dirMeta.queries as Map<String, dimd.QueryMetadata>, true);
+        queries =
+            getQueriesMetadata(dirMeta.queries as Map<String, Query>, false);
+        viewQueries =
+            getQueriesMetadata(dirMeta.queries as Map<String, Query>, true);
       }
       meta = cpl.CompileDirectiveMetadata.create(
           selector: dirMeta.selector,
@@ -190,16 +188,16 @@ class RuntimeMetadataResolver {
         compileToken = this.getTokenMetadata(dep.key.token);
       }
       var compileQuery;
-      var q = (dep.properties.firstWhere((p) => p is dimd.QueryMetadata,
-          orElse: () => null) as dimd.QueryMetadata);
+      var q = (dep.properties.firstWhere((p) => p is Query, orElse: () => null)
+          as Query);
       if (q != null) {
         compileQuery = this.getQueryMetadata(q, null);
       }
       return new cpl.CompileDiDependencyMetadata(
           isAttribute: isAttribute,
-          isHost: dep.upperBoundVisibility is HostMetadata,
-          isSelf: dep.upperBoundVisibility is SelfMetadata,
-          isSkipSelf: dep.lowerBoundVisibility is SkipSelfMetadata,
+          isHost: dep.upperBoundVisibility is Host,
+          isSelf: dep.upperBoundVisibility is Self,
+          isSkipSelf: dep.lowerBoundVisibility is SkipSelf,
           isOptional: dep.optional,
           query: q != null && !q.isViewQuery ? compileQuery : null,
           viewQuery: q != null && q.isViewQuery ? compileQuery : null,
@@ -273,7 +271,7 @@ class RuntimeMetadataResolver {
   }
 
   List<cpl.CompileQueryMetadata> getQueriesMetadata(
-      Map<String, dimd.QueryMetadata> queries, bool isViewQuery) {
+      Map<String, Query> queries, bool isViewQuery) {
     var compileQueries = <cpl.CompileQueryMetadata>[];
     queries.forEach((propertyName, query) {
       if (identical(query.isViewQuery, isViewQuery)) {
@@ -283,8 +281,7 @@ class RuntimeMetadataResolver {
     return compileQueries;
   }
 
-  cpl.CompileQueryMetadata getQueryMetadata(
-      dimd.QueryMetadata q, String propertyName) {
+  cpl.CompileQueryMetadata getQueryMetadata(Query q, String propertyName) {
     List<cpl.CompileTokenMetadata> selectors;
     if (q.isVarBindingQuery) {
       selectors = q.varBindings
@@ -316,8 +313,7 @@ class RuntimeMetadataResolver {
   }
 }
 
-List<Type> flattenDirectives(
-    ViewMetadata view, List<dynamic> platformDirectives) {
+List<Type> flattenDirectives(View view, List<dynamic> platformDirectives) {
   var directives = <Type>[];
   if (platformDirectives != null) {
     flattenArray(platformDirectives, directives);
@@ -328,7 +324,7 @@ List<Type> flattenDirectives(
   return directives;
 }
 
-List<Type> flattenPipes(ViewMetadata view, List<dynamic> platformPipes) {
+List<Type> flattenPipes(View view, List<dynamic> platformPipes) {
   var pipes = <Type>[];
   if (platformPipes != null) {
     flattenArray(platformPipes, pipes);
@@ -353,7 +349,7 @@ void flattenArray(
 
 bool isValidType(Object value) => value is Type;
 
-String calcModuleUrl(Type type, md.ComponentMetadata cmpMetadata) {
+String calcModuleUrl(Type type, Component cmpMetadata) {
   var moduleId = cmpMetadata.moduleId;
   if (moduleId != null) {
     var scheme = getUrlScheme(moduleId);

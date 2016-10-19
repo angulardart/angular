@@ -1,7 +1,7 @@
 import "package:angular2/src/facade/exceptions.dart"
     show BaseException, WrappedException;
 
-import "metadata.dart";
+import "decorators.dart";
 import "provider.dart";
 import "reflective_injector.dart" show ReflectiveInjector;
 import "reflective_key.dart" show ReflectiveKey;
@@ -35,9 +35,8 @@ List<dynamic> findFirstClosedCycleReversed(List keys) {
 String constructResolvingPath(List<dynamic> keys) {
   if (keys.length > 1) {
     var reversed = findFirstClosedCycleReversed(keys);
-    var tokenStrs = reversed
-        .map((k) => '${InjectMetadata.tokenToString(k.token)}')
-        .toList();
+    var tokenStrs =
+        reversed.map((k) => '${Inject.tokenToString(k.token)}').toList();
     return " (" + tokenStrs.join(" -> ") + ")";
   } else {
     return "";
@@ -81,7 +80,7 @@ class AbstractProviderError extends BaseException {
 class NoProviderError extends AbstractProviderError {
   NoProviderError(ReflectiveInjector injector, ReflectiveKey key)
       : super(injector, key, (List<dynamic> keys) {
-          var first = '${InjectMetadata.tokenToString(keys.first.token)}';
+          var first = '${Inject.tokenToString(keys.first.token)}';
           return 'No provider for ${first}!${constructResolvingPath(keys)}';
         });
 }
@@ -150,7 +149,7 @@ class InstantiationError extends WrappedException {
   }
 
   String get wrapperMessage => 'Error during instantiation of '
-      '${InjectMetadata.tokenToString(keys.first.token)}!'
+      '${Inject.tokenToString(keys.first.token)}!'
       '${constructResolvingPath(keys)}.';
 
   ReflectiveKey get causeKey {
@@ -215,13 +214,11 @@ class NoAnnotationError extends BaseException {
       if (parameter == null || parameter.length == 0) {
         signature.add("?");
       } else {
-        signature.add(parameter
-            .map((x) => InjectMetadata.tokenToString(x))
-            .toList()
-            .join(" "));
+        signature.add(
+            parameter.map((x) => Inject.tokenToString(x)).toList().join(" "));
       }
     }
-    String typeStr = InjectMetadata.tokenToString(typeOrFunc);
+    String typeStr = Inject.tokenToString(typeOrFunc);
     return "Cannot resolve all parameters for '$typeStr'(" +
         signature.join(", ") +
         "). " +
