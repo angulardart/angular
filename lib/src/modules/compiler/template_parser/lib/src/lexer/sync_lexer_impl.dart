@@ -170,7 +170,7 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     addToken(NgTokenType.beginComment);
     var char = peek();
     var dash = 0;
-    while (char != $greater_than && dash != 2) {
+    while (char != $greater_than && dash < 2) {
       if (char == $dash) {
         dash++;
       } else {
