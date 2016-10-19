@@ -3,7 +3,7 @@ part of angular2_template_parser.src.lexer;
 class _SyncNgTemplateLexer extends NgTemplateLexerBase {
   _SyncNgTemplateLexer(SpanScanner scanner) : super(scanner);
 
-  // Returns when `c` is found. 
+  // Returns when `c` is found.
   void _consumeUntil(int c) {
     var char = peek();
     while (char != c) {
@@ -22,8 +22,8 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     return char;
   }
 
-  // <button class="foo" [title]="title" (click)="onClick"></button>
-  //         ^           ^               ^
+  // <button class="foo" [title]="title" (click)="onClick" #foo></button>
+  //         ^           ^               ^                 ^
   void _scanDecorator() {
     switch (peek()) {
       case $openEvent:
@@ -31,10 +31,33 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
         return _scanEvent();
       case $openProperty:
         advance();
+        if (peek() == $openEvent) {
+          advance();
+          return _scanBanana();
+        }
         return _scanProperty();
+      case $binding:
+        advance();
+        return _scanBinding();
       default:
         return _scanAttributeName();
     }
+  }
+
+  // <button [(foo)]="bar"></button>
+  //         ^^^^^^^^^^^^^
+  void _scanBanana() {
+    addToken(NgTokenType.startBanana);
+    _consumeUntil($closeEvent);
+    addToken(NgTokenType.bananaName);
+    _consumeUntil($double_quote);
+    advance();
+    addToken(NgTokenType.beforeDecoratorValue);
+    _consumeUntil($double_quote);
+    addToken(NgTokenType.bananaValue);
+    advance();
+    addToken(NgTokenType.endBanana);
+    _scanAfterDecorator();
   }
 
   // <button class="foo" disabled title="Hello"></button>
@@ -94,8 +117,21 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     _scanAfterDecorator();
   }
 
+  // <button #input></button>
+  //         ^^^^^^
+  void _scanBinding() {
+    addToken(NgTokenType.startBinding);
+    var char = peek();
+    while (!isWhiteSpace(char) && char != $gt && char != $slash) {
+      advance();
+      char = peek();
+    }
+    addToken(NgTokenType.bindingName);
+    _scanAfterDecorator();
+  }
+
   // <button [title]="value"></button>
-  //          ^^^^^
+  //         ^^^^^^^^^^^^^^^
   void _scanProperty() {
     addToken(NgTokenType.startProperty);
     _consumeUntil($closeProperty);
@@ -112,6 +148,8 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     _scanAfterDecorator();
   }
 
+  // <button (onClick)="handleClick()"></button>
+  //         ^^^^^^^^^^^^^^^^^^^^^^^^^
   void _scanEvent() {
     addToken(NgTokenType.startEvent);
     _consumeUntil($closeEvent);

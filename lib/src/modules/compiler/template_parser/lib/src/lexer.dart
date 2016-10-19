@@ -215,6 +215,24 @@ enum NgTokenType {
   /// After parsing an [eventName] and [eventValue].
   endEvent,
 
+  /// Before parsing a binding.
+  startBinding,
+
+  /// Binding name.
+  bindingName,
+
+  /// Before parsing a banana (in a box).
+  startBanana,
+
+  /// The name of the banana (in a box).
+  bananaName,
+
+  /// The banana value.
+  bananaValue,
+
+  /// After parsing a [bananaName] and [bananaValue].
+  endBanana,
+
   /// An unexpected or invalid token.
   ///
   /// In a stricter mode, this should cause the parsing to fail. It can also be
