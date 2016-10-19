@@ -123,4 +123,34 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
+
+  test('should lex properties', () async {
+    lexer = new NgTemplateLexer(r'<div [foo]="bar">');
+    expect(await lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startProperty, '['),
+      new NgToken(NgTokenType.propertyName, 'foo'),
+      new NgToken(NgTokenType.beforeDecoratorValue, ']="'),
+      new NgToken(NgTokenType.propertyValue, 'bar'),
+      new NgToken(NgTokenType.endProperty, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+    ]);
+  });
+
+  test('should lex events', () async {
+    lexer = new NgTemplateLexer(r'<div (onClick)="fizz($event)">');
+    expect(await lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startEvent, '('),
+      new NgToken(NgTokenType.eventName, 'onClick'),
+      new NgToken(NgTokenType.beforeDecoratorValue, ')="'),
+      new NgToken(NgTokenType.eventValue, r'fizz($event)'),
+      new NgToken(NgTokenType.endEvent, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+    ]);
+  });
 }

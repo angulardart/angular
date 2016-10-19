@@ -89,12 +89,54 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     _scanAfterDecorator();
   }
 
+  // <button [foo]="bar"></button>
+  //         ^^^^^^^^^^^
   void _scanProperty() {
-    throw new UnimplementedError();
+    var char = peek();
+    while (char != $closeProperty) {
+      advance();
+      char = peek();
+    }
+    addToken(NgTokenType.propertyName);
+    while (char != $double_quote) {
+      advance();
+      char = peek();
+    }
+    advance();
+    addToken(NgTokenType.beforeDecoratorValue);
+    char = advance();
+    while (char != $double_quote) {
+      advance();
+      char = peek();
+    }
+    addToken(NgTokenType.propertyValue);
+    advance();
+    addToken(NgTokenType.endProperty);
+    _scanAfterDecorator();
   }
 
   void _scanEvent() {
-    throw new UnimplementedError();
+    var char = peek();
+    while (char != $closeEvent) {
+      advance();
+      char = peek();
+    }
+    addToken(NgTokenType.eventName);
+    while (char != $double_quote) {
+      advance();
+      char = peek();
+    }
+    advance();
+    addToken(NgTokenType.beforeDecoratorValue);
+    char = advance();
+    while (char != $double_quote) {
+      advance();
+      char = peek();
+    }
+    addToken(NgTokenType.eventValue);
+    advance();
+    addToken(NgTokenType.endEvent);
+    _scanAfterDecorator();
   }
 
   void _scanText() {
