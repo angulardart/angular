@@ -85,6 +85,11 @@ abstract class NgTemplateLexerBase implements NgTemplateLexer {
   /// Whether additional input is remaining.
   bool get hasNext => !_scanner.isDone;
 
+  /// Moves the scanner back n positions.
+  void backTrack(int n) {
+    _scanner.position -= n;
+  }
+
   /// Returns the next character without advancing the position.
   int peek() => _scanner.peekChar();
 
@@ -152,8 +157,14 @@ enum NgTokenType {
   /// Parsed text.
   textNode,
 
+  /// <!-- before comment
+  beginComment,
+
   /// Parsed comment.
   commentNode,
+
+  /// --> after comment
+  endComment,
 
   /// Parsed interpolated expression.
   interplateNode,
