@@ -165,6 +165,29 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     _scanAfterDecorator();
   }
 
+  // consumes characters until it encounteres `-->`
+  void _scanComment() {
+    addToken(NgTokenType.beginComment);
+    var char = peek();
+    var dash = 0;
+    while (char != $greater_than && dash != 2) {
+      if (char == $dash) {
+        dash++;
+      } else {
+        dash = 0;
+      }
+      advance();
+      char = peek();
+    }
+    // need to backtrack so we don't include --> in comment text.
+    backTrack(2);
+    addToken(NgTokenType.commentNode);
+    advance();
+    advance();
+    advance();
+    addToken(NgTokenType.endComment);
+  }
+
   // Base case: Scans for an indication of a non-text node.
   void _scanText() {
     var char = peek();
@@ -184,6 +207,11 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     if (peek() == $slash) {
       advance();
       _scanCloseElement();
+    } else if (peek() == $exclamation) {
+      advance();
+      advance();
+      advance();
+      _scanComment();
     } else {
       _scanOpenElement();
     }

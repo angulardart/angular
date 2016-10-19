@@ -192,4 +192,17 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
+
+  test('should lex comments', () async {
+    lexer = new NgTemplateLexer('<h1>test <!-- This a comment -->');
+    expect(await lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'h1'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.textNode, 'test '),
+      new NgToken(NgTokenType.beginComment, '<!--'),
+      new NgToken(NgTokenType.commentNode, ' This a comment '),
+      new NgToken(NgTokenType.endComment, '-->'),
+    ]);
+  });
 }
