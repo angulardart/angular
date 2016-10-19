@@ -43,6 +43,7 @@ class DirectiveNormalizer {
                 exportAs: directive.exportAs,
                 changeDetection: directive.changeDetection,
                 inputs: directive.inputs,
+                inputTypes: directive.inputTypes,
                 outputs: directive.outputs,
                 hostListeners: directive.hostListeners,
                 hostProperties: directive.hostProperties,

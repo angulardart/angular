@@ -9,11 +9,10 @@ import "package:angular2/src/core/di/reflective_provider.dart"
         ReflectiveDependency,
         getInjectorModuleProviders;
 import "package:angular2/src/core/metadata/di.dart" as dimd;
-import "package:angular2/src/core/metadata/di.dart" show AttributeMetadata;
 import "package:angular2/src/core/metadata/directives.dart" as md;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LIFECYCLE_HOOKS_VALUES;
-import "package:angular2/src/core/metadata/view.dart" show ViewMetadata;
+import "package:angular2/src/core/metadata.dart" show ViewMetadata, Attribute;
 import "package:angular2/src/core/platform_directives_and_pipes.dart"
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
@@ -181,8 +180,8 @@ class RuntimeMetadataResolver {
         constructDependencies(typeOrFunc, dependencies);
     return deps.map((dep) {
       var compileToken;
-      var p = (dep.properties.firstWhere((p) => p is AttributeMetadata,
-          orElse: () => null) as AttributeMetadata);
+      var p = (dep.properties
+          .firstWhere((p) => p is Attribute, orElse: () => null) as Attribute);
       var isAttribute = false;
       if (p != null) {
         compileToken = this.getTokenMetadata(p.attributeName);

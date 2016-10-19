@@ -1,6 +1,6 @@
 import "package:angular2/src/compiler/selector.dart" show CssSelector;
 import "package:angular2/src/core/change_detection/change_detection.dart"
-    show ChangeDetectionStrategy, CHANGE_DETECTION_STRATEGY_VALUES;
+    show ChangeDetectionStrategy;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks, LIFECYCLE_HOOKS_VALUES;
 import "package:angular2/src/core/metadata/view.dart"
@@ -556,16 +556,23 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     });
 
     Map<String, String> inputsMap = {};
+    Map<String, String> inputTypeMap = {};
     inputs?.forEach((String bindConfig) {
-      // canonical syntax: [dirProp: elProp]
+      // Syntax: dirProp [; type] | dirProp : elProp [; type]
       // if there is no [:], use dirProp = elProp
-      var parts = splitAtColon(bindConfig, [bindConfig, bindConfig]);
-      inputsMap[parts[0]] = parts[1];
+      var parts = bindConfig.split(';');
+      String typeName = parts.length > 1 ? parts[1] : null;
+      String inputName = parts[0];
+      var inputParts = splitAtColon(inputName, [inputName, inputName]);
+      inputsMap[inputParts[0]] = inputParts[1];
+      if (typeName != null) {
+        inputTypeMap[inputParts[0]] = typeName;
+      }
     });
 
     Map<String, String> outputsMap = {};
     outputs?.forEach((String bindConfig) {
-      // canonical syntax: [dirProp: elProp]
+      // canonical syntax: dirProp | dirProp : elProp
       // if there is no [:], use dirProp = elProp
       var parts = splitAtColon(bindConfig, [bindConfig, bindConfig]);
       outputsMap[parts[0]] = parts[1];
@@ -578,6 +585,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         exportAs: exportAs,
         changeDetection: changeDetection,
         inputs: inputsMap,
+        inputTypes: inputTypeMap,
         outputs: outputsMap,
         hostListeners: hostListeners,
         hostProperties: hostProperties,
@@ -596,6 +604,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   String exportAs;
   ChangeDetectionStrategy changeDetection;
   Map<String, String> inputs;
+  Map<String, String> inputTypes;
   Map<String, String> outputs;
   Map<String, String> hostListeners;
   Map<String, String> hostProperties;
@@ -607,16 +616,17 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   List<CompileQueryMetadata> viewQueries;
   CompileTemplateMetadata template;
   CompileDirectiveMetadata(
-      {CompileTypeMetadata type,
-      bool isComponent,
-      String selector,
-      String exportAs,
-      ChangeDetectionStrategy changeDetection,
-      Map<String, String> inputs,
-      Map<String, String> outputs,
-      Map<String, String> hostListeners,
-      Map<String, String> hostProperties,
-      Map<String, String> hostAttributes,
+      {this.type,
+      this.isComponent,
+      this.selector,
+      this.exportAs,
+      this.changeDetection,
+      this.inputs,
+      this.inputTypes,
+      this.outputs,
+      this.hostListeners,
+      this.hostProperties,
+      this.hostAttributes,
       List<LifecycleHooks> lifecycleHooks,
       // CompileProviderMetadata | CompileTypeMetadata |
       // CompileIdentifierMetadata | List
@@ -627,16 +637,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       List<CompileQueryMetadata> queries,
       List<CompileQueryMetadata> viewQueries,
       CompileTemplateMetadata template}) {
-    this.type = type;
-    this.isComponent = isComponent;
-    this.selector = selector;
-    this.exportAs = exportAs;
-    this.changeDetection = changeDetection;
-    this.inputs = inputs;
-    this.outputs = outputs;
-    this.hostListeners = hostListeners;
-    this.hostProperties = hostProperties;
-    this.hostAttributes = hostAttributes;
     this.lifecycleHooks = lifecycleHooks ?? [];
     this.providers = providers as List<CompileProviderMetadata> ?? [];
     this.viewProviders = viewProviders as List<CompileProviderMetadata> ?? [];
@@ -656,9 +656,10 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
             ? CompileTypeMetadata.fromJson(data["type"] as Map<String, dynamic>)
             : data["type"],
         changeDetection: data["changeDetection"] != null
-            ? CHANGE_DETECTION_STRATEGY_VALUES[data["changeDetection"]]
-            : data["changeDetection"],
+            ? ChangeDetectionStrategy.values[data["changeDetection"]]
+            : null,
         inputs: data["inputs"] as Map<String, String>,
+        inputTypes: data["inputTypes"] as Map<String, String>,
         outputs: data["outputs"] as Map<String, String>,
         hostListeners: data["hostListeners"] as Map<String, String>,
         hostProperties: data["hostProperties"] as Map<String, String>,
@@ -688,6 +689,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       "type": type?.toJson(),
       "changeDetection": changeDetection?.index,
       "inputs": inputs,
+      "inputTypes": inputTypes,
       "outputs": outputs,
       "hostListeners": hostListeners,
       "hostProperties": hostProperties,

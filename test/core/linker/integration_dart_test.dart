@@ -50,7 +50,7 @@ void main() {
         tb
             .overrideView(
                 Dummy,
-                new ViewMetadata(
+                new View(
                     template: '<throwing-component></throwing-component>',
                     directives: [ThrowingComponent]))
             .createAsync(Dummy)
@@ -69,7 +69,7 @@ void main() {
         tb
             .overrideView(
                 Dummy,
-                new ViewMetadata(
+                new View(
                     template: '<throwing-component2></throwing-component2>',
                     directives: [ThrowingComponent2]))
             .createAsync(Dummy)
@@ -89,7 +89,7 @@ void main() {
         tb
             .overrideView(
                 Dummy,
-                new ViewMetadata(
+                new View(
                     template: '<property-access></property-access>',
                     directives: [PropertyAccess]))
             .createAsync(Dummy)
@@ -109,7 +109,7 @@ void main() {
         tb
             .overrideView(
                 Dummy,
-                new ViewMetadata(
+                new View(
                     template: '<no-property-access></no-property-access>',
                     directives: [NoPropertyAccess]))
             .createAsync(Dummy)
@@ -129,7 +129,7 @@ void main() {
         tb
             .overrideView(
                 Dummy,
-                new ViewMetadata(
+                new View(
                     template: '''<on-change [prop]="'hello'"></on-change>''',
                     directives: [OnChangeComponent]))
             .createAsync(Dummy)
@@ -150,7 +150,7 @@ void main() {
         tcb
             .overrideView(
                 Dummy,
-                new ViewMetadata(
+                new View(
                     template:
                         '''<component-with-observable-list [list]="value"></component-with-observable-list>''',
                     directives: [ComponentWithObservableList]))

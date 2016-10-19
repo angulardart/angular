@@ -12,7 +12,7 @@ import "package:angular2/core.dart"
         AfterViewInit,
         AfterViewChecked;
 import "package:angular2/src/core/metadata.dart"
-    show Directive, Component, ViewMetadata;
+    show Directive, Component, View;
 import 'package:test/test.dart';
 
 void main() {
@@ -25,7 +25,7 @@ void main() {
         tcb
             .overrideView(
                 MyComp,
-                new ViewMetadata(
+                new View(
                     template: "<div [field]=\"123\" lifecycle></div>",
                     directives: [LifecycleCmp]))
             .createAsync(MyComp)

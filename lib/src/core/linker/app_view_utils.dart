@@ -76,7 +76,7 @@ class AppViewUtils {
   }
 }
 
-List ensureSlotCount(List projectableNodes, num expectedSlotCount) {
+List ensureSlotCount(List projectableNodes, int expectedSlotCount) {
   var res;
   if (projectableNodes == null) {
     return const [];
@@ -97,6 +97,12 @@ dynamic interpolate0(dynamic p) {
   if (p is SafeValue) return p;
   return p == null ? '' : (p is String ? p : p.toString());
 }
+
+dynamic interpolate1(String c0, dynamic a1, String c1) =>
+    c0 + (a1 == null ? '' : (a1 is String ? a1 : a1.toString())) + c1;
+
+dynamic interpolate2(String c0, dynamic a1, String c1, dynamic a2, String c2) =>
+    c0 + _toStringWithNull(a1) + c1 + _toStringWithNull(a2) + c2;
 
 const MAX_INTERPOLATION_VALUES = 9;
 String interpolate(num valueCount, String c0, dynamic a1, String c1,

@@ -7,7 +7,7 @@ import "package:angular2/core.dart"
         DynamicComponentLoader,
         Injector,
         Injectable,
-        ViewMetadata,
+        View,
         ElementRef,
         ChangeDetectorRef;
 import "package:angular2/src/debug/debug_node.dart"
@@ -80,7 +80,7 @@ class TestComponentBuilder {
   var _directiveOverrides = new Map<Type, Map<Type, Type>>();
   var _templateOverrides = new Map<Type, String>();
   var _viewBindingsOverrides = new Map<Type, List<dynamic>>();
-  var _viewOverrides = new Map<Type, ViewMetadata>();
+  var _viewOverrides = new Map<Type, View>();
 
   TestComponentBuilder(this._injector);
   TestComponentBuilder _clone() {
@@ -95,21 +95,21 @@ class TestComponentBuilder {
 
   /// Overrides only the html of a [ComponentMetadata].
   ///
-  /// All the other properties of the component's [ViewMetadata] are preserved.
+  /// All the other properties of the component's [View] are preserved.
   TestComponentBuilder overrideTemplate(Type componentType, String template) {
     var clone = _clone();
     clone._templateOverrides[componentType] = template;
     return clone;
   }
 
-  /// Overrides a component's [ViewMetadata].
-  TestComponentBuilder overrideView(Type componentType, ViewMetadata view) {
+  /// Overrides a component's [View].
+  TestComponentBuilder overrideView(Type componentType, View view) {
     var clone = _clone();
     clone._viewOverrides[componentType] = view;
     return clone;
   }
 
-  /// Overrides the directives from the component [ViewMetadata].
+  /// Overrides the directives from the component [View].
   TestComponentBuilder overrideDirective(
       Type componentType, Type from, Type to) {
     var clone = _clone();

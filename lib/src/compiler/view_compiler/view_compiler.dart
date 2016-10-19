@@ -1,5 +1,6 @@
 import "package:angular2/src/core/di.dart" show Injectable;
-
+import 'package:angular2/src/core/change_detection/change_detection.dart'
+    show ChangeDetectionStrategy;
 import "../compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import "../config.dart" show CompilerConfig;
@@ -85,13 +86,19 @@ class ViewCompiler {
     o.ReadVarExpr renderCompTypeVar = o.variable(renderTypeVarName);
     // If we are compiling root view, create a render type for the component.
     // Example: RenderComponentType renderType_MaterialButtonComponent;
-    if (identical(view.viewIndex, 0)) {
+    bool creatingMainView = view.viewIndex == 0;
+    if (creatingMainView) {
       targetStatements.add(new o.DeclareVarStmt(renderTypeVarName, null,
           o.importType(Identifiers.RenderComponentType)));
     }
     var viewClass = createViewClass(view, renderCompTypeVar, nodeDebugInfosVar);
     targetStatements.add(viewClass);
     targetStatements.add(createViewFactory(view, viewClass, renderCompTypeVar));
+    if (creatingMainView &&
+        view.component.inputs != null &&
+        view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
+      writeInputUpdaters(view, targetStatements);
+    }
   }
 
   /// Create top level node debug info.

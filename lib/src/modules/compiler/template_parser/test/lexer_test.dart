@@ -125,32 +125,38 @@ void main() {
   });
 
   test('should lex properties', () async {
-    lexer = new NgTemplateLexer(r'<div [foo]="bar">');
+    lexer = new NgTemplateLexer('<button [title]="value"></button>');
     expect(await lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
-      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
       new NgToken(NgTokenType.startProperty, '['),
-      new NgToken(NgTokenType.propertyName, 'foo'),
+      new NgToken(NgTokenType.propertyName, 'title'),
       new NgToken(NgTokenType.beforeDecoratorValue, ']="'),
-      new NgToken(NgTokenType.propertyValue, 'bar'),
+      new NgToken(NgTokenType.propertyValue, 'value'),
       new NgToken(NgTokenType.endProperty, '"'),
       new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
 
   test('should lex events', () async {
-    lexer = new NgTemplateLexer(r'<div (onClick)="fizz($event)">');
+    lexer = new NgTemplateLexer('<button (click)="onClick()"></button>');
     expect(await lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
-      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
       new NgToken(NgTokenType.startEvent, '('),
-      new NgToken(NgTokenType.eventName, 'onClick'),
+      new NgToken(NgTokenType.eventName, 'click'),
       new NgToken(NgTokenType.beforeDecoratorValue, ')="'),
-      new NgToken(NgTokenType.eventValue, r'fizz($event)'),
+      new NgToken(NgTokenType.eventValue, 'onClick()'),
       new NgToken(NgTokenType.endEvent, '"'),
       new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
 }

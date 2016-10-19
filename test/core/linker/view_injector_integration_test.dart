@@ -311,7 +311,7 @@ ComponentFixture createCompFixture(String template, TestComponentBuilder tcb,
   return tcb
       .overrideView(
           comp,
-          new ViewMetadata(
+          new View(
               template: template, directives: ALL_DIRECTIVES, pipes: ALL_PIPES))
       .createFakeAsync(comp);
 }
