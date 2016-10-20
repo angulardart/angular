@@ -1,3 +1,22 @@
+## 2.0.0 Release
+
+### API changes
+ * Implemented NgTestBed to improve test infrastructure goo.gl/NAXXlN.
+ * Removed Metadata classes used for angular annotations.
+ * Added ComponentState to provide push change detection with better
+   ergonomics and code generation.
+ * ViewContainerRef.createEmbeddedView index parameter removed instead
+   introduced insertEmbeddedView.
+ * Added support for minimal code generation when user explicitly marks
+   component with preserveWhitespace:false.
+
+### Bug fixes and other changes
+ * Improved ngFor performance.
+ * Improved shared style host performance.
+ * Improved @ViewChild/@ViewChildren performance.
+ * Code and documentation cleanups.
+ * Strong mode fixes.
+
 ## 2.0.0-beta.22
 
 ### API changes
