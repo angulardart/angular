@@ -1,7 +1,6 @@
 import 'package:angular2_template_parser/template_parser.dart';
 import 'package:test/test.dart';
 
-// TODO: Import an HTML5 schema, parse, and compare.
 void main() {
   group('div', () {
     test('should be supported', () {

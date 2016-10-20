@@ -7,7 +7,7 @@ void main() {
   test('should lex a simple text node', () async {
     lexer = new NgTemplateLexer('Hello World');
     expect(
-      await lexer.tokenize().toList(),
+      lexer.tokenize().toList(),
       [
         new NgToken(NgTokenType.textNode, 'Hello World'),
       ],
@@ -17,7 +17,7 @@ void main() {
   test('should lex a simple text node and elements', () async {
     lexer = new NgTemplateLexer('<span>Hello World</span>');
     expect(
-      await lexer.tokenize().toList(),
+      lexer.tokenize().toList(),
       [
         new NgToken(NgTokenType.startOpenElement, '<'),
         new NgToken(NgTokenType.elementName, 'span'),
@@ -35,7 +35,7 @@ void main() {
         '  <span>Hello<em>World</em>!</span>\n'
         '</div>');
     expect(
-      await lexer.tokenize().toList(),
+      lexer.tokenize().toList(),
       [
         new NgToken(NgTokenType.startOpenElement, '<'),
         new NgToken(NgTokenType.elementName, 'div'),
@@ -68,7 +68,7 @@ void main() {
     lexer = new NgTemplateLexer(
       '<div class="fancy" title="Hello"><button disabled></button></div>',
     );
-    expect(await lexer.tokenize().toList(), [
+    expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'div'),
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
@@ -103,7 +103,7 @@ void main() {
         '  class="fancy">\n'
         '    Hello World\n'
         '</div>');
-    expect(await lexer.tokenize().toList(), [
+    expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'div'),
       new NgToken(NgTokenType.beforeElementDecorator, ' \n  '),
@@ -126,7 +126,7 @@ void main() {
 
   test('should lex properties', () async {
     lexer = new NgTemplateLexer('<button [title]="value"></button>');
-    expect(await lexer.tokenize().toList(), [
+    expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
@@ -144,7 +144,7 @@ void main() {
 
   test('should lex events', () async {
     lexer = new NgTemplateLexer('<button (click)="onClick()"></button>');
-    expect(await lexer.tokenize().toList(), [
+    expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
@@ -162,7 +162,7 @@ void main() {
 
   test('should lex bindings', () async {
     lexer = new NgTemplateLexer('<button #input></button>');
-    expect(await lexer.tokenize().toList(), [
+    expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
@@ -177,7 +177,7 @@ void main() {
 
   test('should lex bananas', () async {
     lexer = new NgTemplateLexer('<button [(banana)]="someValue"></button>');
-    expect(await lexer.tokenize().toList(), [
+    expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
@@ -195,7 +195,7 @@ void main() {
 
   test('should lex comments', () async {
     lexer = new NgTemplateLexer('<h1>test <!-- This a comment -->');
-    expect(await lexer.tokenize().toList(), [
+    expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'h1'),
       new NgToken(NgTokenType.endOpenElement, '>'),

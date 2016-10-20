@@ -264,6 +264,5 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     if (textNode.length > 0) {
       addToken(NgTokenType.textNode, textNode);
     }
-    _tokenizer.close();
   }
 }

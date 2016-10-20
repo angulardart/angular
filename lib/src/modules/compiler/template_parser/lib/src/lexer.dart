@@ -29,7 +29,7 @@ abstract class NgTemplateLexer {
   /// Constructs and returns a series of scanned tokens frm the input source.
   ///
   /// Any errors during lexing are represented as [NgTokenType.errorToken]s.
-  Stream<NgToken> tokenize();
+  Iterable<NgToken> tokenize();
 }
 
 /// A partial implementation of [NgTemplateLexer] with convenience functions.
@@ -40,7 +40,7 @@ abstract class NgTemplateLexerBase implements NgTemplateLexer {
   LineScannerState _sentinel;
 
   // Represents an executing [tokenize] call.
-  StreamController<NgToken> _tokenizer;
+  final List<NgToken> _tokenizer = <NgToken>[];
 
   NgTemplateLexerBase(this._scanner) {
     _sentinel = _scanner.state;
@@ -51,12 +51,12 @@ abstract class NgTemplateLexerBase implements NgTemplateLexer {
   /// Triggers an error [message].
   @protected
   void addError(String message, [int offset]) {
-    _tokenizer.addError(new FormatException(
+    throw new FormatException(
       message,
       _scanner.string,
       offset ?? _scanner.position,
-    ));
-    _hasErrors = true;
+    );
+    // _hasErrors = true;
   }
 
   /// Adds a token [type] with [source] scanned.
@@ -68,9 +68,6 @@ abstract class NgTemplateLexerBase implements NgTemplateLexer {
 
   /// Moves ahead a space and returns the current character.
   int advance() => _scanner.readChar();
-
-  /// Closes the tokenizer stream.
-  Future<Null> close() => _tokenizer.close() as Future<Null>;
 
   /// Called after [tokenize] is initiated.
   @protected
@@ -106,15 +103,10 @@ abstract class NgTemplateLexerBase implements NgTemplateLexer {
   }
 
   @override
-  Stream<NgToken> tokenize() {
-    if (_tokenizer != null && !_tokenizer.isClosed) {
-      _tokenizer.addError(new StateError('Tokenizer already running'));
-      _tokenizer.close();
-    }
-    _tokenizer = new StreamController<NgToken>(sync: true);
+  Iterable<NgToken> tokenize() {
     _scanner.position = 0;
-    scheduleMicrotask(doTokenize);
-    return _tokenizer.stream;
+    doTokenize();
+    return _tokenizer;
   }
 }
 
@@ -251,4 +243,60 @@ enum NgTokenType {
   /// may want to still validate the rest of the (seemingly valid) template
   /// even if there is an error somewhere at the beginning.
   errorToken,
+}
+
+/// Simple interface for using an [NgTemplateLexer] to parse nodes.
+abstract class NgTemplateScanner<T> {
+  final List<T> _stack = <T>[];
+
+  Iterator<NgToken> _iterator;
+
+  /// Peeks at the top of the stack.
+  T peek() => _stack.last;
+
+  /// Pops the top of the stack.
+  T pop() => _stack.removeLast();
+
+  /// Push an item to the top of the stack.
+  void push(T node) {
+    _stack.add(node);
+  }
+
+  /// Returns the next token.
+  NgToken next() => (_iterator..moveNext()).current;
+
+  /// Scans from [lexer].
+  List<T> scan(NgTemplateLexer lexer) {
+    _iterator = lexer.tokenize().iterator;
+    while (_iterator.moveNext()) {
+      var token = _iterator.current;
+      switch (token.type) {
+        case NgTokenType.textNode:
+          scanText(token);
+          break;
+        case NgTokenType.startOpenElement:
+          scanOpenElement(token);
+          break;
+        case NgTokenType.startCloseElement:
+          scanCloseElement(token);
+          break;
+        default:
+      }
+    }
+    return result();
+  }
+
+  /// Returns the scanned result.
+  List<T> result();
+
+  /// Called when [NgTokenType.startOpenElement] is scanned.
+  void scanOpenElement(NgToken token);
+
+  /// Called when [NgTokenType.start]
+  void scanCloseElement(NgToken token);
+
+  /// Called when [NgTokenType.textNode] is scanned.
+  ///
+  /// Returns a [Future] that completes after processing.
+  void scanText(NgToken token);
 }
