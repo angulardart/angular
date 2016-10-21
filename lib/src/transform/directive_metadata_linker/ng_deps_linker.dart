@@ -47,7 +47,7 @@ Future<NgDepsModel> linkNgDeps(NgDepsModel ngDepsModel, AssetReader reader,
       }
     }
     return ngDepsModel;
-  }, operationName: 'linkNgDeps', assetId: assetId) as Future<NgDepsModel>;
+  }, operationName: 'linkNgDeps', assetId: assetId);
 }
 
 bool _isNotDartDirective(dynamic model) => !isDartCoreUri(model.uri);

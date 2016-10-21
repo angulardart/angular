@@ -37,7 +37,7 @@ Future<String> inlineParts(AssetReader reader, AssetId assetId) async {
 
   return logElapsedAsync(() {
     return _getAllDeclarations(reader, assetId, code, directivesVisitor);
-  }, operationName: 'inlineParts', assetId: assetId) as Future<String>;
+  }, operationName: 'inlineParts', assetId: assetId);
 }
 
 /// Processes `visitor.parts`, reading and appending their contents to the

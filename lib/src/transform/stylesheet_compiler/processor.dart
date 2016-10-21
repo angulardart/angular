@@ -29,6 +29,5 @@ Future<Iterable<Asset>> processStylesheet(
 
     return sourceModules.map((SourceModule module) => new Asset.fromString(
         new AssetId.parse('${module.moduleUrl}'), writeSourceModule(module)));
-  }, operationName: 'processStylesheet', assetId: stylesheetId)
-      as Future<Iterable<Asset>>;
+  }, operationName: 'processStylesheet', assetId: stylesheetId);
 }

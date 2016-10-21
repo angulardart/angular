@@ -32,8 +32,7 @@ Future<CompileDataResults> createCompileData(
     final creator = await _CompileDataCreator.create(
         reader, assetId, platformDirectives, platformPipes);
     return creator != null ? creator.createCompileData() : null;
-  }, operationName: 'createCompileData', assetId: assetId)
-      as Future<CompileDataResults>;
+  }, operationName: 'createCompileData', assetId: assetId);
 }
 
 class CompileDataResults {

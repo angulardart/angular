@@ -52,7 +52,7 @@ Future<NgMeta> createNgMeta(
     parsedCode.accept(ngMetaVisitor);
     await ngMetaVisitor.whenDone();
     return ngMeta;
-  }, operationName: 'createNgMeta', assetId: assetId) as Future<NgMeta>;
+  }, operationName: 'createNgMeta', assetId: assetId);
 }
 
 // TODO(kegluneq): Allow the caller to provide an InterfaceMatcher.
