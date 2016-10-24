@@ -96,7 +96,7 @@ abstract class OnInit {
 /// Use [KeyValueDiffers] and [IterableDiffers] to add your custom check
 /// mechanisms.
 ///
-/// ## Example
+/// ### Example
 ///
 /// In the following example `ngDoCheck` uses an [IterableDiffers] to detect the
 /// updates to the array `list`:
@@ -128,7 +128,7 @@ abstract class OnInit {
 ///
 ///     if (changes is DefaultIterableDiffer) {
 ///       changes.forEachAddedItem(r => logs.add('added ${r.item}'));
-///       changes.forEachRemovedItem(r => logs.push('removed ${r.item}'))
+///       changes.forEachRemovedItem(r => logs.add('removed ${r.item}'))
 ///     }
 ///   }
 /// }
@@ -170,7 +170,7 @@ abstract class OnDestroy {
 /// Implement this interface to get notified when your directive's content has
 /// been fully initialized.
 ///
-/// ## Example
+/// ### Example
 ///
 /// ```dart
 /// @Component(
@@ -198,7 +198,7 @@ abstract class OnDestroy {
 ///   @override
 ///   ngAfterContentInit() {
 ///     // contentChild is updated after the content has been checked
-///     console.log('AfterContentInit: ' + _message(contentChild));
+///     print('AfterContentInit: ' + _message(contentChild));
 ///   }
 ///
 ///   String _message(ChildComponent cmp) =>
@@ -214,9 +214,7 @@ abstract class OnDestroy {
 ///   ''',
 ///   directives: const [ParentComponent, ChildComponent]
 /// )
-/// export class App {}
-///
-/// bootstrap(App);
+/// class App {}
 /// ```
 abstract class AfterContentInit {
   ngAfterContentInit();
@@ -225,7 +223,7 @@ abstract class AfterContentInit {
 /// Implement this interface to get notified after every check of your
 /// directive's content.
 ///
-/// ## Example
+/// ### Example
 ///
 /// ```dart
 /// @Component(selector: 'child-cmp', template: '{{where}} child')
@@ -250,7 +248,7 @@ abstract class AfterContentInit {
 ///     print('AfterContentChecked: ${_message(contentChild)}');
 ///   }
 ///
-///   String _message(cmp: ChildComponent) =>
+///   String _message(ChildComponent cmp) =>
 ///       cmp  == null ? 'no child' : '${cmp.where} child';
 /// }
 ///
@@ -266,11 +264,9 @@ abstract class AfterContentInit {
 ///   ''',
 ///   directives: const [NgIf, ParentComponent, ChildComponent]
 /// )
-/// export class App {
+/// class App {
 ///   bool hasContent = true;
 /// }
-///
-/// bootstrap(App);
 /// ```
 abstract class AfterContentChecked {
   ngAfterContentChecked();
@@ -279,7 +275,7 @@ abstract class AfterContentChecked {
 /// Implement this interface to get notified when your component's view has been
 /// fully initialized.
 ///
-/// ## Example
+/// ### Example
 ///
 /// ```dart
 /// @Component(selector: 'child-cmp', template: '{{where}} child')
@@ -295,7 +291,7 @@ abstract class AfterContentChecked {
 /// )
 /// class ParentComponent implements AfterViewInit {
 ///   @ViewChild(ChildComponent)
-///   ChildComponentviewChild;
+///   ChildComponent viewChild;
 ///
 ///   ParentComponent() {
 ///     // viewChild is not initialized yet
@@ -305,10 +301,10 @@ abstract class AfterContentChecked {
 ///   @override
 ///   ngAfterViewInit() {
 ///     // viewChild is updated after the view has been initialized
-///     console.log('ngAfterViewInit: ' + _message(viewChild));
+///     print('ngAfterViewInit: ' + _message(viewChild));
 ///   }
 ///
-///   String _message(cmp: ChildComponent) =>
+///   String _message(ChildComponent cmp) =>
 ///       cmp  == null ? 'no child' : '${cmp.where} child';
 /// }
 ///
@@ -317,10 +313,7 @@ abstract class AfterContentChecked {
 ///   template: '<parent-cmp></parent-cmp>',
 ///   directives: const [ParentComponent]
 /// )
-/// export class App {
-/// }
-///
-/// bootstrap(App);
+/// class App {}
 /// ```
 abstract class AfterViewInit {
   ngAfterViewInit();
@@ -329,7 +322,7 @@ abstract class AfterViewInit {
 /// Implement this interface to get notified after every check of your
 /// component's view.
 ///
-/// ## Example
+/// ### Example
 ///
 /// ```dart
 /// @Component(selector: 'child-cmp', template: '{{where}} child')
@@ -363,7 +356,7 @@ abstract class AfterViewInit {
 ///     print('AfterViewChecked: ${_message(viewChild)}');
 ///   }
 ///
-///   String _message(cmp: ChildComponent) =>
+///   String _message(ChildComponent cmp) =>
 ///       cmp  == null ? 'no child' : '${cmp.where} child';
 /// }
 ///
@@ -372,9 +365,7 @@ abstract class AfterViewInit {
 ///   template: '<parent-cmp></parent-cmp>',
 ///   directives: const [ParentComponent]
 /// )
-/// export class App {}
-///
-/// bootstrap(App);
+/// class App {}
 /// ```
 abstract class AfterViewChecked {
   ngAfterViewChecked();
