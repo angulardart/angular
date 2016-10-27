@@ -6,10 +6,17 @@ class NgText extends NgAstNode {
   final String value;
 
   /// Create a new [text] node.
-  factory NgText(String text, [NgToken parsedToken, SourceSpan source]) =
-      NgText._;
+  factory NgText(
+    String text, [
+    NgToken parsedToken,
+    SourceSpan source,
+  ]) = NgText._;
 
-  NgText._(this.value, [NgToken parsedToken, SourceSpan source])
+  NgText._(
+    this.value, [
+    NgToken parsedToken,
+    SourceSpan source,
+  ])
       : super._([parsedToken], source);
 
   @override
