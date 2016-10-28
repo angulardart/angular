@@ -85,7 +85,6 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
         addToken(NgTokenType.endAttribute);
         _consumeWhitespace();
         addToken(NgTokenType.beforeElementDecorator);
-        advance();
         return _scanDecorator();
     }
   }
@@ -100,7 +99,6 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
       _scanText();
     } else {
       addToken(NgTokenType.beforeElementDecorator);
-      advance();
       _scanDecorator();
     }
   }

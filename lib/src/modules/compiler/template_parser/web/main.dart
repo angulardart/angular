@@ -26,24 +26,22 @@ void main() {
       ast.children.clear();
       nodes.forEach((n) => writeNode(ast, n));
     } catch (e, s) {
-      errors.children.add(new LIElement()..append(new PreElement()..text = e.toString()));
+      errors.children
+          .add(new LIElement()..append(new PreElement()..text = e.toString()));
       window.console.error(Trace.format(s, terse: true));
     }
   });
 }
 
 void writeNode(Element container, NgAstNode node, {int indent: 0}) {
-  if (node is NgAttribute) {
-    container.append(new DivElement()..text = '${'-' * indent}NgAttribute ${node.name}${node.value != null ? ' = ${node.value}' : ''}');
-  } else if (node is NgComment) {
-    container.append(new DivElement()..text = '${'-' * indent}NgComment <!--${node.value}-->');
-  } else if (node is NgElement) {
-    var div = new DivElement()..text = '${'-' * indent}NgElement <${node.name}>';
+  if (node is NgElement) {
+    var div = new DivElement()
+      ..text =
+          '${'-' * indent} $NgElement <${node.name}:${node.childNodes.length}>';
     container.append(div);
     node.childNodes.forEach((c) => writeNode(div, c, indent: indent + 2));
-  } else if (node is NgText) {
-    var escaped = node.value;
-    escaped = Uri.encodeQueryComponent(escaped);
-    container.append(new DivElement()..text = '${'-' * indent}NgText $escaped');
+  } else {
+    var div = new DivElement()..text = '${'-' * indent} $node';
+    container.append(div);
   }
 }

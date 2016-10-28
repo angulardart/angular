@@ -8,8 +8,11 @@ import 'lexer.dart';
 import 'schema.dart';
 
 part 'ast/attribute.dart';
+part 'ast/binding.dart';
 part 'ast/comment.dart';
 part 'ast/element.dart';
+part 'ast/event.dart';
+part 'ast/property.dart';
 part 'ast/text.dart';
 
 String stringifyAstTree(NgAstNode node, {int indent: 0}) {
@@ -60,7 +63,8 @@ abstract class NgAstNode {
       _listEquals.equals(parsedTokens, o.parsedTokens);
 
   @override
-  int get hashCode => hash2(_listEquals.hash(childNodes), parsedTokens != null ? _listEquals.hash(parsedTokens) : null);
+  int get hashCode => hash2(_listEquals.hash(childNodes),
+      parsedTokens != null ? _listEquals.hash(parsedTokens) : null);
 
   /// Where the node was parsed from.
   ///

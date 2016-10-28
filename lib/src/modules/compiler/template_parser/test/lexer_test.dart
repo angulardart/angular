@@ -164,7 +164,7 @@ void main() {
     ]);
   });
 
-  test('should lex events', () async {
+  test('should lex events', () {
     lexer = new NgTemplateLexer('<button (click)="onClick()"></button>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
@@ -175,6 +175,31 @@ void main() {
       new NgToken(NgTokenType.beforeDecoratorValue, ')="'),
       new NgToken(NgTokenType.eventValue, 'onClick()'),
       new NgToken(NgTokenType.endEvent, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
+
+  test('should lex properties and events', () {
+    lexer = new NgTemplateLexer(
+        '<button (click)="onClick()" [title]="name"></button>');
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startEvent, '('),
+      new NgToken(NgTokenType.eventName, 'click'),
+      new NgToken(NgTokenType.beforeDecoratorValue, ')="'),
+      new NgToken(NgTokenType.eventValue, 'onClick()'),
+      new NgToken(NgTokenType.endEvent, '"'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startProperty, '['),
+      new NgToken(NgTokenType.propertyName, 'title'),
+      new NgToken(NgTokenType.beforeDecoratorValue, ']="'),
+      new NgToken(NgTokenType.propertyValue, 'name'),
+      new NgToken(NgTokenType.endProperty, '"'),
       new NgToken(NgTokenType.endOpenElement, '>'),
       new NgToken(NgTokenType.startCloseElement, '</'),
       new NgToken(NgTokenType.elementName, 'button'),

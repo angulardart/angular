@@ -63,4 +63,7 @@ class NgElement extends NgAstNode
 
   @override
   bool operator ==(Object o) => o is NgElement && name == o.name && super == o;
+
+  @override
+  String toString() => '$NgElement <$name> [${childNodes.join(', ')}]';
 }

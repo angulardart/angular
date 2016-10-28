@@ -67,11 +67,9 @@ void main() {
 
     test('should parse a comment in a nested DOM tree', () {
       expect(
-        parse(
-          '<div>\n'
-          '  <span>Hello<!--World--></span>\n'
-          '</div>'
-        ),
+        parse('<div>\n'
+            '  <span>Hello<!--World--></span>\n'
+            '</div>'),
         [
           new NgElement.unknown('div', childNodes: [
             new NgText('\n  '),
@@ -92,6 +90,30 @@ void main() {
           new NgElement.unknown('button', childNodes: [
             new NgAttribute('class', 'fancy'),
             new NgAttribute('disabled'),
+            new NgText('Hello'),
+          ]),
+        ],
+      );
+    });
+
+    test('should parse a property', () {
+      expect(
+        parse('<button [title]="hint">Hello</button>'),
+        [
+          new NgElement.unknown('button', childNodes: [
+            new NgProperty('title', 'hint'),
+            new NgText('Hello'),
+          ]),
+        ],
+      );
+    });
+
+    test('should parse an event', () {
+      expect(
+        parse('<button (click)="onClick()">Hello</button>'),
+        [
+          new NgElement.unknown('button', childNodes: [
+            new NgEvent('click', 'onClick()'),
             new NgText('Hello'),
           ]),
         ],

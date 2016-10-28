@@ -1,7 +1,7 @@
 part of angular2_template_parser.src.ast;
 
 /// A parsed comment AST.
-/// 
+///
 /// Comments are used to annotate the HTML to provide extra information for
 /// developers or tools but are not rendered when the application is rendered
 /// within the browser.
@@ -16,7 +16,7 @@ part of angular2_template_parser.src.ast;
 /// ### Examples
 ///   ```html
 ///   <!-- A single or multi line comment -->
-///   ``` 
+///   ```
 class NgComment extends NgAstNode with NgAstSourceTokenMixin {
   /// Comment value.
   final String value;
@@ -36,10 +36,13 @@ class NgComment extends NgAstNode with NgAstSourceTokenMixin {
   }
 
   @override
-  bool operator==(Object o) {
+  bool operator ==(Object o) {
     if (o is NgComment) {
       return parsedTokens == null ? value == o.value : super == o;
     }
     return false;
   }
+
+  @override
+  String toString() => '$NgComment <!--$value-->';
 }

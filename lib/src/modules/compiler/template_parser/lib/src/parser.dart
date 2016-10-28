@@ -66,11 +66,27 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
   }
 
   @override
+  void scanBinding(NgToken before, NgToken start) {
+    var name = next();
+    var end = next();
+    addChild(new NgBinding.fromTokens(before, start, name, end));
+  }
+
+  @override
   void scanCloseElement(NgToken token) {
     while (token.type != NgTokenType.endCloseElement) {
       token = next();
     }
     pop();
+  }
+
+  @override
+  void scanEvent(NgToken before, NgToken start) {
+    var name = next();
+    var equals = next();
+    var value = next();
+    var end = next();
+    addChild(new NgEvent.fromTokens(before, start, name, equals, value, end));
   }
 
   @override
@@ -87,8 +103,8 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     var element = new NgElement.unknown(tagName.text);
     addChild(element);
     push(element);
-    while (token.type != NgTokenType.endOpenElement && 
-           token.type != NgTokenType.beforeElementDecorator) {
+    while (token.type != NgTokenType.endOpenElement &&
+        token.type != NgTokenType.beforeElementDecorator) {
       token = next();
     }
     if (token.type == NgTokenType.beforeElementDecorator) {
@@ -96,6 +112,16 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
       var end = next();
       assert(end == null || end.type == NgTokenType.endOpenElement);
     }
+  }
+
+  @override
+  void scanProperty(NgToken before, NgToken start) {
+    var name = next();
+    var equals = next();
+    var value = next();
+    var end = next();
+    addChild(
+        new NgProperty.fromTokens(before, start, name, equals, value, end));
   }
 
   @override

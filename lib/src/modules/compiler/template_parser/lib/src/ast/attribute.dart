@@ -10,7 +10,7 @@ class NgAttribute extends NgAstNode with NgAstSourceTokenMixin {
   final String name;
 
   /// Value of the attribute.
-  /// 
+  ///
   /// If `null`, the attribute is considered value-less.
   final String value;
 
@@ -18,33 +18,29 @@ class NgAttribute extends NgAstNode with NgAstSourceTokenMixin {
   NgAttribute(this.name, [this.value]) : super._(const []);
 
   /// Create a new [NgAttribute] from tokenized HTML.
-  NgAttribute.fromTokens(
-      NgToken begin,
-      NgToken name,
-      NgToken end)
-          : this.name = name.text,
-            this.value = null,
-            super._([begin, name, end]);
-  
+  NgAttribute.fromTokens(NgToken begin, NgToken name, NgToken end)
+      : this.name = name.text,
+        this.value = null,
+        super._([begin, name, end]);
+
   /// Create a new [NgAttribute] with a [value] from tokenized HTML.
   NgAttribute.fromTokensWithValue(
-      NgToken before,
-      NgToken name,
-      NgToken space,
-      NgToken value,
-      NgToken end)
-          : this.name = name.text,
-            this.value = value.text,
-            super._([before, name, value, end]);
+      NgToken before, NgToken name, NgToken space, NgToken value, NgToken end)
+      : this.name = name.text,
+        this.value = value.text,
+        super._([before, name, value, end]);
 
   @override
   int get hashCode => hash2(name, value);
 
   @override
-  bool operator==(Object o) {
+  bool operator ==(Object o) {
     if (o is NgAttribute) {
       return o.name == name && o.value == value;
     }
     return false;
   }
+
+  @override
+  String toString() => '$NgAttribute $name="$value"';
 }

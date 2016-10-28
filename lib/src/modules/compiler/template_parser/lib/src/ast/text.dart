@@ -22,4 +22,7 @@ class NgText extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   int get hashCode => value.hashCode;
+
+  @override
+  String toString() => '$NgText $value';
 }
