@@ -1,6 +1,22 @@
 part of angular2_template_parser.src.ast;
 
-/// A comment node.
+/// A parsed comment AST.
+/// 
+/// Comments are used to annotate the HTML to provide extra information for
+/// developers or tools but are not rendered when the application is rendered
+/// within the browser.
+///
+/// Comments may be removed in a production build.
+///
+/// ### Grammar
+///   ```bnf
+///   Comment ::= '<!--' CommentCharData? '-->'
+///   ```
+///
+/// ### Examples
+///   ```html
+///   <!-- A single or multi line comment -->
+///   ``` 
 class NgComment extends NgAstNode with NgAstSourceTokenMixin {
   /// Comment value.
   final String value;

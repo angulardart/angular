@@ -1,12 +1,23 @@
 part of angular2_template_parser.src.ast;
 
+/// A parsed attribute AST.
+///
+/// An attribute is static property [name] defined at compile-time that
+/// decorates an [NgElement]. A non-null [value] means the attribute also
+/// receives a value, otherwise it is considered standalone.
 class NgAttribute extends NgAstNode with NgAstSourceTokenMixin {
+  /// Name of the attribute.
   final String name;
 
+  /// Value of the attribute.
+  /// 
+  /// If `null`, the attribute is considered value-less.
   final String value;
 
+  /// Create a new [NgAttribute] with a [name] and [value].
   NgAttribute(this.name, [this.value]) : super._(const []);
 
+  /// Create a new [NgAttribute] from tokenized HTML.
   NgAttribute.fromTokens(
       NgToken begin,
       NgToken name,
@@ -15,6 +26,7 @@ class NgAttribute extends NgAstNode with NgAstSourceTokenMixin {
             this.value = null,
             super._([begin, name, end]);
   
+  /// Create a new [NgAttribute] with a [value] from tokenized HTML.
   NgAttribute.fromTokensWithValue(
       NgToken before,
       NgToken name,

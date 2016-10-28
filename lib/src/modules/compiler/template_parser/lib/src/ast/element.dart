@@ -1,6 +1,9 @@
 part of angular2_template_parser.src.ast;
 
-/// A parsed element, representing a browser element, directive, or component.
+/// A parsed element AST.
+///
+/// A [NgElement] represents a browser element, directive, or component, of
+/// which may be determined by looking at the [schema] found when parsing.
 class NgElement extends NgAstNode
     with NgDefinedNode<NgElementDefinition>, NgAstSourceTokenMixin {
   @override
