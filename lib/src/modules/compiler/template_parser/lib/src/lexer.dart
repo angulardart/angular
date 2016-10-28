@@ -10,7 +10,7 @@ import 'package:string_scanner/string_scanner.dart';
 
 import 'utils.dart';
 
-part 'lexer/sync_lexer_impl.dart';
+part 'lexer/sync_lexer.dart';
 
 /// A tokenizer for the Angular Dart template language.
 abstract class NgTemplateLexer {
@@ -176,7 +176,7 @@ enum NgTokenType {
   /// After parsing an element tag and child nodes.
   startCloseElement,
 
-  /// After parsing [startCloseElement] and [closeElementName].
+  /// After parsing an element.
   endCloseElement,
 
   /// Before the start of an attribute, event, or property (i.e. whitespace).
@@ -268,31 +268,53 @@ abstract class NgTemplateScanner<T> {
   /// Scans from [lexer].
   List<T> scan(NgTemplateLexer lexer) {
     _iterator = lexer.tokenize().iterator;
-    while (_iterator.moveNext()) {
-      var token = _iterator.current;
-      switch (token.type) {
-        case NgTokenType.textNode:
-          scanText(token);
-          break;
-        case NgTokenType.startOpenElement:
-          scanOpenElement(token);
-          break;
-        case NgTokenType.startCloseElement:
-          scanCloseElement(token);
-          break;
-        default:
-      }
-    }
+    scanToken(next());
     return result();
+  }
+
+  /// Scans a [token].
+  void scanToken(NgToken token) {
+    switch (token.type) {
+      case NgTokenType.textNode:
+        scanText(token);
+        break;
+      case NgTokenType.startOpenElement:
+        scanOpenElement(token);
+        break;
+      case NgTokenType.startCloseElement:
+        scanCloseElement(token);
+        break;
+      case NgTokenType.beginComment:
+        scanComment(token);
+        break;
+      case NgTokenType.beforeElementDecorator:
+        var after = next();
+        if (after.type == NgTokenType.attributeName) {
+          scanAttribute(token, after);
+        }
+        break;
+      default:
+        // Intentionally do nothing.
+    }
+    var after = next();
+    if (after != null) {
+      scanToken(after);
+    }
   }
 
   /// Returns the scanned result.
   List<T> result();
 
+  /// Called when ...
+  void scanAttribute(NgToken before, NgToken actual);
+
+  /// Called when [NgTokenType.beginComment] is scanned.
+  void scanComment(NgToken token);
+
   /// Called when [NgTokenType.startOpenElement] is scanned.
   void scanOpenElement(NgToken token);
 
-  /// Called when [NgTokenType.start]
+  /// Called when [NgTokenType.startCloseElement]
   void scanCloseElement(NgToken token);
 
   /// Called when [NgTokenType.textNode] is scanned.

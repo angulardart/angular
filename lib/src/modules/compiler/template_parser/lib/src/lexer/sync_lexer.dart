@@ -186,6 +186,7 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     advance();
     advance();
     addToken(NgTokenType.endComment);
+    _scanText();
   }
 
   // Base case: Scans for an indication of a non-text node.

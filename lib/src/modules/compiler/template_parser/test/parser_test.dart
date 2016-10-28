@@ -3,9 +3,12 @@ import 'package:angular2_template_parser/src/parser.dart';
 import 'package:test/test.dart';
 
 void main() {
+  List<NgAstNode> parse(String text) =>
+      new NgTemplateParser().parse(text).toList();
+
   group('$NgTemplateParser', () {
     test('should parse text nodes', () {
-      var nodes = new NgTemplateParser().parse(r'Hello World').toList();
+      var nodes = parse(r'Hello World');
       expect(
         nodes,
         [
@@ -15,11 +18,7 @@ void main() {
     });
 
     test('should parse element nodes', () {
-      var nodes = new NgTemplateParser()
-          .parse(
-            '<div><span>Hello World</span></div>',
-          )
-          .toList();
+      var nodes = parse('<div><span>Hello World</span></div>');
       expect(
         nodes,
         [
@@ -33,13 +32,11 @@ void main() {
     });
 
     test('should parse a complex set of element nodes', () {
-      var nodes = new NgTemplateParser()
-          .parse('<div>\n'
-              '  <div>\n'
-              '    <span>Hello World</span>\n'
-              '  </div>\n'
-              '</div>\n')
-          .toList();
+      var nodes = parse('<div>\n'
+          '  <div>\n'
+          '    <span>Hello World</span>\n'
+          '  </div>\n'
+          '</div>\n');
       expect(
         nodes,
         [
@@ -55,6 +52,48 @@ void main() {
             new NgText('\n'),
           ]),
           new NgText('\n'),
+        ],
+      );
+    });
+
+    test('should parse a comment', () {
+      expect(
+        parse('<!--Hello World-->'),
+        [
+          new NgComment('Hello World'),
+        ],
+      );
+    });
+
+    test('should parse a comment in a nested DOM tree', () {
+      expect(
+        parse(
+          '<div>\n'
+          '  <span>Hello<!--World--></span>\n'
+          '</div>'
+        ),
+        [
+          new NgElement.unknown('div', childNodes: [
+            new NgText('\n  '),
+            new NgElement.unknown('span', childNodes: [
+              new NgText('Hello'),
+              new NgComment('World'),
+            ]),
+            new NgText('\n'),
+          ])
+        ],
+      );
+    });
+
+    test('should parse an attribute', () {
+      expect(
+        parse('<button class="fancy" disabled>Hello</button>'),
+        [
+          new NgElement.unknown('button', childNodes: [
+            new NgAttribute('class', 'fancy'),
+            new NgAttribute('disabled'),
+            new NgText('Hello'),
+          ]),
         ],
       );
     });

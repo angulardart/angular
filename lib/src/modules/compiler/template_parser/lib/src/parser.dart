@@ -46,11 +46,37 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
   List<NgAstNode> result() => peek().childNodes;
 
   @override
+  void scanAttribute(NgToken before, NgToken name) {
+    assert(name.type == NgTokenType.attributeName);
+    final after = next();
+    if (after.type == NgTokenType.beforeDecoratorValue) {
+      final space = after;
+      final value = next();
+      addChild(
+        new NgAttribute.fromTokensWithValue(before, name, space, value, next()),
+      );
+    } else if (after.type == NgTokenType.endAttribute) {
+      addChild(
+        new NgAttribute.fromTokens(before, name, after),
+      );
+    } else {
+      throw new UnsupportedError('${after.type}');
+    }
+  }
+
+  @override
   void scanCloseElement(NgToken token) {
     while (token.type != NgTokenType.endCloseElement) {
       token = next();
     }
     pop();
+  }
+
+  @override
+  void scanComment(NgToken token) {
+    final comment = next();
+    assert(comment.type == NgTokenType.commentNode);
+    addChild(new NgComment.fromTokens(token, comment, next()));
   }
 
   @override
@@ -60,13 +86,17 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     var element = new NgElement.unknown(tagName.text);
     addChild(element);
     push(element);
-    while (token.type != NgTokenType.endOpenElement) {
+    while (token.type != NgTokenType.endOpenElement && 
+           token.type != NgTokenType.beforeElementDecorator) {
       token = next();
+    }
+    if (token.type == NgTokenType.beforeElementDecorator) {
+      scanToken(token);
     }
   }
 
   @override
   void scanText(NgToken token) {
-    addChild(new NgText(token.text, token, token.source));
+    addChild(new NgText(token.text, token));
   }
 }

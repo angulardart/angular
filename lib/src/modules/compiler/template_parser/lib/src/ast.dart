@@ -7,8 +7,32 @@ import 'package:quiver/core.dart';
 import 'lexer.dart';
 import 'schema.dart';
 
+part 'ast/attribute.dart';
+part 'ast/comment.dart';
 part 'ast/element.dart';
 part 'ast/text.dart';
+
+String stringifyAstTree(NgAstNode node, {int indent: 0}) {
+  var buffer = new StringBuffer(' ' * indent);
+  if (node is NgAttribute) {
+    buffer.write('$NgAttribute ${node.name}');
+    if (node.value != null) {
+      buffer.write(' = ${node.value}');
+    }
+  } else if (node is NgComment) {
+    buffer.writeln('$NgComment ${node.value}');
+  } else if (node is NgElement) {
+    buffer.writeln('$NgElement ${node.name}');
+    for (var childNode in node.childNodes) {
+      buffer.writeln(stringifyAstTree(childNode, indent: indent + 2));
+    }
+  } else if (node is NgText) {
+    buffer.writeln('$NgText ${node.value}');
+  } else {
+    buffer.writeln('${node.runtimeType}');
+  }
+  return buffer.toString();
+}
 
 /// A parsed AST node from an Angular Dart template.
 ///
@@ -27,23 +51,23 @@ abstract class NgAstNode {
   /// What tokens were parsed to create this AST.
   final List<NgToken> parsedTokens;
 
-  /// Where the node was parsed from.
-  ///
-  /// When the AST is parsed in development or debug mode, the span maintains
-  /// the original context that was parsed to create this node. Useful to
-  /// reference when errors occur or to emit source maps.
-  final SourceSpan source;
-
-  NgAstNode._(this.parsedTokens, this.source);
+  NgAstNode._(this.parsedTokens);
 
   @override
   bool operator ==(Object o) =>
       o is NgAstNode &&
       _listEquals.equals(childNodes, o.childNodes) &&
-      source == o.source;
+      _listEquals.equals(parsedTokens, o.parsedTokens);
 
   @override
-  int get hashCode => hash2(_listEquals.hash(childNodes), source);
+  int get hashCode => hash2(_listEquals.hash(childNodes), parsedTokens != null ? _listEquals.hash(parsedTokens) : null);
+
+  /// Where the node was parsed from.
+  ///
+  /// When the AST is parsed in development or debug mode, the span maintains
+  /// the original context that was parsed to create this node. Useful to
+  /// reference when errors occur or to emit source maps.
+  SourceSpan get source;
 }
 
 /// An [NgAstNode] that is expected to be recognized in a schema.
@@ -57,4 +81,17 @@ abstract class NgDefinedNode<T> implements NgAstNode {
 
   /// Whether [schema] is `null` (not recognized).
   bool get unknown => schema != null;
+}
+
+/// May be mixed in to implement [NgAstNode.source] from existing tokens.
+abstract class NgAstSourceTokenMixin implements NgAstNode {
+  @override
+  SourceSpan get source {
+    if (parsedTokens?.isNotEmpty != true) return null;
+    var span = parsedTokens.first.source;
+    for (var i = 1; i < parsedTokens.length; i++) {
+      span = span.union(parsedTokens[i].source);
+    }
+    return span;
+  }
 }

@@ -1,7 +1,8 @@
 part of angular2_template_parser.src.ast;
 
 /// A parsed element, representing a browser element, directive, or component.
-class NgElement extends NgAstNode with NgDefinedNode<NgElementDefinition> {
+class NgElement extends NgAstNode
+    with NgDefinedNode<NgElementDefinition>, NgAstSourceTokenMixin {
   @override
   final List<NgAstNode> childNodes;
 
@@ -21,14 +22,12 @@ class NgElement extends NgAstNode with NgDefinedNode<NgElementDefinition> {
     NgElementDefinition schema, {
     Iterable<NgAstNode> childNodes,
     List<NgToken> parsedTokens,
-    SourceSpan source,
   }) {
     return new NgElement._(
       schema.tagName,
       schema,
       childNodes,
       parsedTokens,
-      source,
     );
   }
 
@@ -44,7 +43,6 @@ class NgElement extends NgAstNode with NgDefinedNode<NgElementDefinition> {
       null,
       childNodes,
       parsedTokens,
-      source,
     );
   }
 
@@ -53,10 +51,9 @@ class NgElement extends NgAstNode with NgDefinedNode<NgElementDefinition> {
     this.schema,
     Iterable<NgAstNode> childNodes,
     List<NgToken> parsedTokens,
-    SourceSpan source,
   )
       : this.childNodes = (childNodes ?? const []).toList(),
-        super._(parsedTokens, source);
+        super._(parsedTokens);
 
   @override
   int get hashCode => hash2(name, super.hashCode);
