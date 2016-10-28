@@ -1,0 +1,64 @@
+/// A deep tree of HTML.
+const html = r'''
+<a>
+  <b>
+    <c>
+      <d></d>
+      <d></d>
+      <d></d>
+      <e>
+        <f>1</f>
+        <f>2</f>
+        <f>3</f>
+        <f>4</f>
+        <f>
+          <g>5</g>
+          <g>6</g>
+          <a>
+          <b><!-- SOME EXTRA LONG COMMENT -->
+            <c><!--
+            Multi
+              Line
+                Comment
+            -->
+              <d></d>
+              <d></d>
+              <d></d>
+              <e>
+                <f>1</f>
+                <f>2</f>
+                <f>3</f>
+                <f>4</f>
+                <f>
+                  <g>5</g>
+                  <g>6</g>
+                  <a>
+                    <b>
+                      <c>
+                        <d></d>
+                        <d></d>
+                        <d></d>
+                        <e>
+                          <f>1</f>
+                          <f>2</f>
+                          <f>3</f>
+                          <f>4</f>
+                          <f>
+                            <g>5</g>
+                            <g>6</g>
+                          </f>
+                        </e>
+                      </c>
+                    </b>
+                  </a>
+                </f>
+              </e>
+            </c>
+          </b>
+        </a>
+        </f>
+      </e>
+    </c>
+  </b>
+</a>
+''';
