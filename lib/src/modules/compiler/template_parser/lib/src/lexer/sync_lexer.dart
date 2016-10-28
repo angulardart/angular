@@ -83,6 +83,8 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
       default: // Whitespace
         addToken(NgTokenType.attributeName);
         addToken(NgTokenType.endAttribute);
+        _consumeWhitespace();
+        addToken(NgTokenType.beforeElementDecorator);
         advance();
         return _scanDecorator();
     }

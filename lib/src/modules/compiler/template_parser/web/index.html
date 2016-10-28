@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<style>
+		body {
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+			margin: 0;
+		}
+		
+		#editor {
+			display: flex;
+			flex: 3;
+		}
+		
+		#debugger {
+			display: flex;
+			flex: 1;
+		}
+		
+		#editor > * {
+			border: 1px solid #333;
+			flex: 1;
+			margin: 8px;
+		}
+		
+		#html {
+			display: flex;
+		}
+		
+		.CodeMirror {
+			flex: 1;
+			height: auto !important;
+		}
+
+	</style>
+	<link href="packages/codemirror/css/codemirror.css" rel="stylesheet" media="screen">
+	<link href="packages/codemirror/theme/material.css" rel="stylesheet">
+	<script src="packages/codemirror/codemirror.js" defer></script>
+	<script src="packages/codemirror/addon/mode/multiplex.js" defer></script>
+	<script defer src="main.dart" type="application/dart"></script>
+	<script defer src="packages/browser/dart.js"></script>
+	<script defer src="packages/codemirror/mode/htmlembedded/htmlembedded.js"></script>
+</head>
+
+<body>
+	<section id="editor">
+		<textarea id="html"></textarea>
+		<div id="ast"></div>
+	</section>
+	<section id="debugger">
+		<ul id="errors">
+		</ul>
+	</section>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet" type="text/css">
+</body>
+
+</html>

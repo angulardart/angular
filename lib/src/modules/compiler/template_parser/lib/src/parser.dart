@@ -16,6 +16,7 @@ class NgTemplateParser {
     /* Uri|String*/
     sourceUrl,
   }) {
+    if (template == null || template.isEmpty) return const [];
     var scanner = new _ScannerParser();
     scanner.scan(new NgTemplateLexer(template, sourceUrl: sourceUrl));
     return scanner.result();
@@ -92,6 +93,8 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     }
     if (token.type == NgTokenType.beforeElementDecorator) {
       scanToken(token);
+      var end = next();
+      assert(end == null || end.type == NgTokenType.endOpenElement);
     }
   }
 

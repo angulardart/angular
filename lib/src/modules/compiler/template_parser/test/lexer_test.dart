@@ -64,7 +64,7 @@ void main() {
     );
   });
 
-  test('should lex attributes with and without a value', () async {
+  test('should lex attributes with and without a value separate', () async {
     lexer = new NgTemplateLexer(
       '<div class="fancy" title="Hello"><button disabled></button></div>',
     );
@@ -93,6 +93,28 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>'),
       new NgToken(NgTokenType.startCloseElement, '</'),
       new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
+
+  test('should lex attributes with and without a value', () {
+    lexer = new NgTemplateLexer(
+      '<button disabled title="Hello"></button>',
+    );
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.attributeName, 'disabled'),
+      new NgToken(NgTokenType.endAttribute, ''),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.attributeName, 'title'),
+      new NgToken(NgTokenType.beforeDecoratorValue, '="'),
+      new NgToken(NgTokenType.attributeValue, 'Hello'),
+      new NgToken(NgTokenType.endAttribute, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });

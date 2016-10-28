@@ -250,6 +250,10 @@ abstract class NgTemplateScanner<T> {
   final List<T> _stack = <T>[];
 
   Iterator<NgToken> _iterator;
+  bool _canAcceptChildren = true;
+
+  /// Whether child nodes (not decorators) can be added.
+  bool get canAcceptChildren => _canAcceptChildren;
 
   /// Peeks at the top of the stack.
   T peek() => _stack.last;
@@ -280,6 +284,7 @@ abstract class NgTemplateScanner<T> {
         break;
       case NgTokenType.startOpenElement:
         scanOpenElement(token);
+        _canAcceptChildren = false;
         break;
       case NgTokenType.startCloseElement:
         scanCloseElement(token);
@@ -288,13 +293,19 @@ abstract class NgTemplateScanner<T> {
         scanComment(token);
         break;
       case NgTokenType.beforeElementDecorator:
+        var attribute = next();
+        if (attribute.type == NgTokenType.attributeName) {
+          scanAttribute(token, attribute);
+        }
         var after = next();
-        if (after.type == NgTokenType.attributeName) {
-          scanAttribute(token, after);
+        if (after.type == NgTokenType.endOpenElement) {
+          _canAcceptChildren = true;
+        } else {
+          scanToken(after);
         }
         break;
       default:
-        // Intentionally do nothing.
+        throw new UnsupportedError('${token.source.message(token.type.toString())}');
     }
     var after = next();
     if (after != null) {
@@ -312,6 +323,8 @@ abstract class NgTemplateScanner<T> {
   void scanComment(NgToken token);
 
   /// Called when [NgTokenType.startOpenElement] is scanned.
+  ///
+  /// Expected to return the `<tag>` being opened.
   void scanOpenElement(NgToken token);
 
   /// Called when [NgTokenType.startCloseElement]

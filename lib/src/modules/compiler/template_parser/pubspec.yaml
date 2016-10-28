@@ -15,5 +15,7 @@ dependencies:
   quiver:
 
 dev_dependencies:
+  codemirror:
+  browser:
   dart_style:
   test:
