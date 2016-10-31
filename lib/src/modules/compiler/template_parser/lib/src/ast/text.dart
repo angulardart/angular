@@ -1,7 +1,7 @@
 part of angular2_template_parser.src.ast;
 
 /// A simple string value (not an expression).
-class NgText extends NgAstNode {
+class NgText extends NgAstNode with NgAstSourceTokenMixin {
   /// Text value.
   final String value;
 
@@ -9,19 +9,20 @@ class NgText extends NgAstNode {
   factory NgText(
     String text, [
     NgToken parsedToken,
-    SourceSpan source,
   ]) = NgText._;
 
   NgText._(
     this.value, [
     NgToken parsedToken,
-    SourceSpan source,
   ])
-      : super._([parsedToken], source);
+      : super._(parsedToken != null ? [parsedToken] : const []);
 
   @override
   bool operator ==(Object o) => o is NgText && value == o.value;
 
   @override
   int get hashCode => value.hashCode;
+
+  @override
+  String toString() => '$NgText $value';
 }

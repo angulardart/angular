@@ -83,7 +83,8 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
       default: // Whitespace
         addToken(NgTokenType.attributeName);
         addToken(NgTokenType.endAttribute);
-        advance();
+        _consumeWhitespace();
+        addToken(NgTokenType.beforeElementDecorator);
         return _scanDecorator();
     }
   }
@@ -98,7 +99,6 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
       _scanText();
     } else {
       addToken(NgTokenType.beforeElementDecorator);
-      advance();
       _scanDecorator();
     }
   }
@@ -186,6 +186,7 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     advance();
     advance();
     addToken(NgTokenType.endComment);
+    _scanText();
   }
 
   // Base case: Scans for an indication of a non-text node.
