@@ -128,4 +128,16 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
   void scanText(NgToken token) {
     addChild(new NgText(token.text, token));
   }
+
+  @override
+  void scanBanana(NgToken before, NgToken start) {
+    var name = next();
+    var equals = next();
+    var value = next();
+    var end = next();
+    addChild(
+      new NgProperty.fromTokens(before, start, name, equals, value, end));
+    addChild(
+      new NgEvent.fromBanana(before, start, name, equals, value, end));
+  }
 }
