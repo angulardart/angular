@@ -386,17 +386,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     bool createFieldForAnchor = view.genConfig.logBindingUpdate;
     var nodeIndex = this.view.nodes.length;
     var fieldName = '_anchor_${nodeIndex}';
-    var anchorVarExpr;
+    o.Expression anchorVarExpr;
+    // Create a comment to serve as anchor for template.
     if (createFieldForAnchor) {
       this.view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(view.genConfig.renderTypes.renderComment),
           modifiers: const [o.StmtModifier.Private]));
       anchorVarExpr = new o.ReadClassMemberExpr(fieldName);
-    } else {
-      anchorVarExpr = o.variable(fieldName);
-    }
-    // Create a comment to serve as anchor for template.
-    if (createFieldForAnchor) {
       var createAnchorNodeExpr = new o.WriteClassMemberExpr(
           fieldName,
           o
@@ -404,7 +400,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
               .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
       view.createMethod.addStmt(createAnchorNodeExpr.toStmt());
     } else {
-      var createAnchorNodeExpr = anchorVarExpr.set(o
+      var readVarExp = o.variable(fieldName);
+      anchorVarExpr = readVarExp;
+      var createAnchorNodeExpr = readVarExp.set(o
           .importExpr(Identifiers.HTML_COMMENT_NODE)
           .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
       view.createMethod.addStmt(createAnchorNodeExpr.toDeclStmt());
