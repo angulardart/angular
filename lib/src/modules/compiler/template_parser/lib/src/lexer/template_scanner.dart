@@ -117,7 +117,7 @@ abstract class NgTemplateScanner<T> {
 
   /// Called when [NgTokenType.startStructural] is scanned.
   ///
-  ///
+  /// Creates a parent template tag with a property
   void scanStructural(NgToken token, NgToken start);
 
   /// Called to notify that warnings or errors were found in a template.
