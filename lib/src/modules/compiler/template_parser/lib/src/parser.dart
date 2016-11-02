@@ -8,7 +8,8 @@ import 'package:source_span/src/span.dart';
 /// See `./doc/syntax.md` for more information.
 class NgTemplateParser {
   /// Creates a new default template parser.
-  const NgTemplateParser();
+  final ErrorCallback errorHandler;
+  const NgTemplateParser({this.errorHandler});
 
   /// Parses [template] into a series of root nodes.
   Iterable<NgAstNode> parse(
@@ -17,7 +18,7 @@ class NgTemplateParser {
     sourceUrl,
   }) {
     if (template == null || template.isEmpty) return const [];
-    var scanner = new _ScannerParser();
+    var scanner = new _ScannerParser(errorHandler: errorHandler);
     scanner.scan(new NgTemplateLexer(template, sourceUrl: sourceUrl));
     return scanner.result();
   }
@@ -32,10 +33,15 @@ class _Fragment implements NgAstNode {
 
   @override
   final SourceSpan source = null;
+
 }
 
+typedef void ErrorCallback(Error error);
+
 class _ScannerParser extends NgTemplateScanner<NgAstNode> {
-  _ScannerParser() {
+  final ErrorCallback errorHandler;
+
+  _ScannerParser({this.errorHandler}) {
     push(new _Fragment());
   }
 
@@ -61,7 +67,7 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
         new NgAttribute.fromTokens(before, name, after),
       );
     } else {
-      throw new UnsupportedError('${after.type}');
+      onError(new UnsupportedError('${after.type}'));
     }
   }
 
@@ -140,4 +146,31 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     addChild(
       new NgEvent.fromBanana(before, start, name, equals, value, end));
   }
+
+  @override
+  void scanStructural(NgToken before, NgToken start) {
+    var name = next();
+    var equals = next();
+    var value = next();
+    var end = next();
+    var old = pop();
+    // will this work in general?  what about duplicate tags?
+    final idx = peek().childNodes.lastIndexOf(old);
+    // if the index is -1, then we have already added a structural tag.
+    if (idx == -1) {
+      onError(new StateError('Elements can only have one structural directive'));
+      push(old);
+      return;
+    }
+    peek().childNodes.removeAt(idx);
+    var newOld = new NgElement.unknown('template', childNodes: [
+      new NgProperty.fromTokens(before, start, name, equals, value, end),
+      old
+    ]);
+    addChild(newOld);
+    push(old);
+  }
+
+  @override
+  onError(Error error) => errorHandler != null ? errorHandler(error) : null;
 }

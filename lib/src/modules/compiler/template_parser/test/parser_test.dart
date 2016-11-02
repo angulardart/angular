@@ -130,5 +130,34 @@ void main() {
           ]),
         ]);
     });
+
+    test('should parse a structural directive', () {
+      expect(
+        parse('<div *ngIf="foo"></div>'),
+        [
+          new NgElement.unknown('template', childNodes: [
+            new NgProperty('ngIf', 'foo'),
+            new NgElement.unknown('div')
+          ])
+        ]);
+    });
+
+    test('should only produce one structural directive per element', () {
+      expect(
+        parse('<div *ngIf="baz" *ngFor="let foo of bars"></div>'),
+        [
+          new NgElement.unknown('template', childNodes: [
+            new NgProperty('ngIf', 'baz'),
+            new NgElement.unknown('div')
+          ])
+        ]);
+    });
+
+    test('should throw when provided an error handler on multiple structural'
+         ' directives', () {
+           expect(() => new NgTemplateParser(errorHandler: (err) => throw err)
+               .parse('<div *ngIf="baz" *ngFor="let foo of bars"></div>')
+               .toList(), throws);
+         });
   });
 }
