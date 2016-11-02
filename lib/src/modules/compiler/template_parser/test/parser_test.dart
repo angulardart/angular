@@ -119,5 +119,16 @@ void main() {
         ],
       );
     });
+
+    test('should parse a banana into a property and an event', () {
+      expect(
+        parse('<my-select [(input)]="textValue"></my-select>'),
+        [
+          new NgElement.unknown('my-select', childNodes: [
+            new NgProperty('input', 'textValue'),
+            new NgEvent('inputChange', 'textValue = \$event'),
+          ]),
+        ]);
+    });
   });
 }

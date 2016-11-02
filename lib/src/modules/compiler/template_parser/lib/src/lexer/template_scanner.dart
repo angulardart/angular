@@ -57,6 +57,8 @@ abstract class NgTemplateScanner<T> {
           scanEvent(token, decorator);
         } else if (decorator.type == NgTokenType.startBinding) {
           scanBinding(token, decorator);
+        } else if (decorator.type == NgTokenType.startBanana) {
+          scanBanana(token, decorator);
         }
         var after = next();
         if (after.type == NgTokenType.endOpenElement) {
@@ -105,4 +107,9 @@ abstract class NgTemplateScanner<T> {
   ///
   /// Returns a [Future] that completes after processing.
   void scanText(NgToken token);
+
+  /// Called when [NgTokenType.startBanana] is scanned.
+  ///
+  /// creates both a property and an event.
+  void scanBanana(NgToken token, NgToken start);
 }
