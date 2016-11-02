@@ -273,7 +273,6 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>')
     ]);
   });
-
   test('should lex just an interpolation', () {
     lexer = new NgTemplateLexer('{{value}}');
     expect(lexer.tokenize().toList(), [

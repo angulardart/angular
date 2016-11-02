@@ -130,6 +130,7 @@ void main() {
           ]),
         ]);
     });
+
     test('should parse a structural directive', () {
       expect(
         parse('<div *ngIf="foo"></div>'),
@@ -151,5 +152,5 @@ void main() {
           ])
         ]);
     });
-  });
+});
 }
