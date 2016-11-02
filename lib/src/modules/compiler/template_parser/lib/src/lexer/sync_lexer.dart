@@ -39,9 +39,28 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
       case $binding:
         advance();
         return _scanBinding();
+      case $star:
+        advance();
+        return _scanStructural();
       default:
         return _scanAttributeName();
     }
+  }
+
+  // <button *NgIf="foo"></button>
+  //         ^^^^^^^^^^^
+  void _scanStructural() {
+    addToken(NgTokenType.startStructural);
+    _consumeUntil($equal);
+    addToken(NgTokenType.structuralName);
+    _consumeUntil($double_quote);
+    advance();
+    addToken(NgTokenType.beforeDecoratorValue);
+    _consumeUntil($double_quote);
+    addToken(NgTokenType.structuralValue);
+    advance();
+    addToken(NgTokenType.endStructural);
+    _scanAfterDecorator();
   }
 
   // <button [(foo)]="bar"></button>

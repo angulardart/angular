@@ -15,6 +15,9 @@ const int $closeEvent = $close_paren;
 /// A `#` character.
 const int $binding = $hash;
 
+/// A `*` character.
+const int $star = $asterisk;
+
 /// Returns whether [char] is `(a-Z)`.
 bool isAsciiLetter(int char) => char >= $a && char <= $Z;
 

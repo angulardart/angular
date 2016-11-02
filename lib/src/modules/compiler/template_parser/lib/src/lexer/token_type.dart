@@ -92,6 +92,18 @@ enum NgTokenType {
   /// After parsing a [bananaName] and [bananaValue].
   endBanana,
 
+  /// Before parsing a a structural directive.
+  startStructural,
+
+  /// The name of the structural directive.
+  structuralName,
+
+  /// The structural expression
+  structuralValue,
+
+  /// After a structural directive
+  endStructural,
+
   /// An unexpected or invalid token.
   ///
   /// In a stricter mode, this should cause the parsing to fail. It can also be

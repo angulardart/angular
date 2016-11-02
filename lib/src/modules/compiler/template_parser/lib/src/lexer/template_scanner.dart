@@ -59,6 +59,8 @@ abstract class NgTemplateScanner<T> {
           scanBinding(token, decorator);
         } else if (decorator.type == NgTokenType.startBanana) {
           scanBanana(token, decorator);
+        } else if (decorator.type == NgTokenType.startStructural) {
+          scanStructural(token, decorator);
         }
         var after = next();
         if (after.type == NgTokenType.endOpenElement) {
@@ -110,6 +112,16 @@ abstract class NgTemplateScanner<T> {
 
   /// Called when [NgTokenType.startBanana] is scanned.
   ///
-  /// creates both a property and an event.
+  /// Creates both a property and an event.
   void scanBanana(NgToken token, NgToken start);
+
+  /// Called when [NgTokenType.startStructural] is scanned.
+  ///
+  /// Creates a parent template tag with a property
+  void scanStructural(NgToken token, NgToken start);
+
+  /// Called to notify that warnings or errors were found in a template.
+  ///
+  /// It is an implementation detail how the parser should recover.
+  void onError(Error error);
 }

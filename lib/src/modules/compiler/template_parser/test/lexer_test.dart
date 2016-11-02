@@ -255,4 +255,22 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
+
+  test('should lex structural directives', () async {
+    lexer = new NgTemplateLexer('<div *ngIf="bar"></div>');
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startStructural, '*'),
+      new NgToken(NgTokenType.structuralName, 'ngIf'),
+      new NgToken(NgTokenType.beforeDecoratorValue, '="'),
+      new NgToken(NgTokenType.structuralValue, 'bar'),
+      new NgToken(NgTokenType.endStructural, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.endCloseElement, '>')
+    ]);
+  });
 }
