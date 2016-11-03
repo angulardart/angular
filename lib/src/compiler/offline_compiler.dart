@@ -31,6 +31,13 @@ class NormalizedComponentWithViewDirectives {
   List<CompilePipeMetadata> pipes;
   NormalizedComponentWithViewDirectives(
       this.component, this.directives, this.pipes);
+
+  Map<String, dynamic> toJson() => {
+        'class': 'NormalizedComponentWithViewDirectives',
+        'component': component,
+        'directives': directives,
+        'pipes': pipes,
+      };
 }
 
 /// Compiles a view template.
