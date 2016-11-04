@@ -208,18 +208,65 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
     _scanText();
   }
 
+  // Scans between {{ and }}.
+  void _scanInterpolate() {
+    var char = peek();
+    while (true) {
+      advance();
+      char = peek();
+      if (char == $close_brace) {
+        advance();
+        char = peek();
+        if (char == $close_brace) {
+          backTrack(1);
+          break;
+        }
+      }
+    }
+    addToken(NgTokenType.interpolation);
+    advance();
+    advance();
+    addToken(NgTokenType.endInterpolate);
+    _scanText();
+  }
+
   // Base case: Scans for an indication of a non-text node.
   void _scanText() {
     var char = peek();
-    while (char != $lt && char != null) {
+    bool interpolate = false;
+    if (char == $open_brace) {
       advance();
       char = peek();
+      if (char == $open_brace) {
+        interpolate = true;
+        backTrack(1);
+      }
+    }
+    while (!interpolate && char != $lt && char != null) {
+      advance();
+      char = peek();
+      if (char == $open_brace) {
+        advance();
+        char = peek();
+        if (char == $open_brace) {
+          interpolate = true;
+          backTrack(1);
+          break;
+        }
+      }
     }
     var textSpan = span();
     if (textSpan.length > 0) {
       addToken(NgTokenType.textNode, textSpan);
     }
     if (char == null) {
+      return;
+    }
+    if (interpolate) {
+      advance();
+      advance();
+      addToken(NgTokenType.startInterpolate);
+      _scanInterpolate();
       return;
     }
     // Either a new element or close the last one.

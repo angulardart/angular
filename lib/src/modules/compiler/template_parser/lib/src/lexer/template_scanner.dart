@@ -37,6 +37,9 @@ abstract class NgTemplateScanner<T> {
       case NgTokenType.textNode:
         scanText(token);
         break;
+      case NgTokenType.startInterpolate:
+        scanInterpolation(token);
+        break;
       case NgTokenType.startOpenElement:
         scanOpenElement(token);
         _canAcceptChildren = false;
@@ -104,6 +107,9 @@ abstract class NgTemplateScanner<T> {
 
   /// Called when [NgTokenType.startCloseElement]
   void scanCloseElement(NgToken token);
+
+  /// Called when ...
+  void scanInterpolation(NgToken token);
 
   /// Called when [NgTokenType.textNode] is scanned.
   ///
