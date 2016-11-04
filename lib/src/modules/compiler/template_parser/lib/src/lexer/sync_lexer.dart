@@ -221,6 +221,11 @@ class _SyncNgTemplateLexer extends NgTemplateLexerBase {
           backTrack(1);
           break;
         }
+      } else if (char == null) {
+        addError('Expected interpolation to end "}}" before EOF');
+        addToken(NgTokenType.interpolation);
+        addToken(NgTokenType.endInterpolate);
+        return;
       }
     }
     addToken(NgTokenType.interpolation);
