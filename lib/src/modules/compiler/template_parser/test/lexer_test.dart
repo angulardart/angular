@@ -207,7 +207,7 @@ void main() {
     ]);
   });
 
-  test('should lex bindings', () async {
+  test('should lex bindings', () {
     lexer = new NgTemplateLexer('<button #input></button>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
@@ -222,7 +222,7 @@ void main() {
     ]);
   });
 
-  test('should lex bananas', () async {
+  test('should lex bananas', () {
     lexer = new NgTemplateLexer('<button [(banana)]="someValue"></button>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
@@ -240,7 +240,7 @@ void main() {
     ]);
   });
 
-  test('should lex comments', () async {
+  test('should lex comments', () {
     lexer = new NgTemplateLexer('<h1>test <!-- This a comment --></h1>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
@@ -256,7 +256,7 @@ void main() {
     ]);
   });
 
-  test('should lex structural directives', () async {
+  test('should lex structural directives', () {
     lexer = new NgTemplateLexer('<div *ngIf="bar"></div>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
