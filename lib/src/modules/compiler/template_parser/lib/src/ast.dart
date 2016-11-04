@@ -12,6 +12,7 @@ part 'ast/binding.dart';
 part 'ast/comment.dart';
 part 'ast/element.dart';
 part 'ast/event.dart';
+part 'ast/interpolation.dart';
 part 'ast/property.dart';
 part 'ast/text.dart';
 

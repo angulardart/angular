@@ -131,6 +131,11 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
   }
 
   @override
+  void scanInterpolation(NgToken start) {
+    addChild(new NgInterpolation.fromTokens(start, next(), next()));
+  }
+
+  @override
   void scanText(NgToken token) {
     addChild(new NgText(token.text, token));
   }

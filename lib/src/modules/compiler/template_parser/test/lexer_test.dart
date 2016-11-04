@@ -273,4 +273,24 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>')
     ]);
   });
+
+  test('should lex just an interpolation', () {
+    lexer = new NgTemplateLexer('{{value}}');
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startInterpolate, '{{'),
+      new NgToken(NgTokenType.interpolation, 'value'),
+      new NgToken(NgTokenType.endInterpolate, '}}'),
+    ]);
+  });
+
+  test('should lex interpolated text', () {
+    lexer = new NgTemplateLexer('Hello {{place}}!');
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.textNode, 'Hello '),
+      new NgToken(NgTokenType.startInterpolate, '{{'),
+      new NgToken(NgTokenType.interpolation, 'place'),
+      new NgToken(NgTokenType.endInterpolate, '}}'),
+      new NgToken(NgTokenType.textNode, '!'),
+    ]);
+  });
 }

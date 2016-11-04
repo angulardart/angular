@@ -15,7 +15,9 @@ enum NgTokenType {
   endComment,
 
   /// Parsed interpolated expression.
-  interplateNode,
+  startInterpolate,
+  interpolation,
+  endInterpolate,
 
   /// Before parsing the [elementName].
   startOpenElement,
