@@ -1,7 +1,12 @@
 import 'ast.dart';
 import 'lexer.dart';
+import 'source_error.dart';
 
 import 'package:source_span/src/span.dart';
+
+// WIP - stll sorting out what is a valid element.
+final RegExp _elementValidator = new RegExp(r'[a-zA-Z][a-zA-Z0-9_\-]+');
+
 
 /// Parses an Angular Dart template into a concrete AST.
 ///
@@ -29,7 +34,7 @@ class _Fragment implements NgAstNode {
   final List<NgAstNode> childNodes = <NgAstNode>[];
 
   @override
-  final List<NgToken> parsedTokens = const <NgToken>[];
+  final List<NgToken> parsedTokens = <NgToken>[];
 
   @override
   final SourceSpan source = null;
@@ -49,6 +54,15 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     peek().childNodes.add(node);
   }
 
+  /// Adds parsed tokens to an NgElement tag.
+  void addTokens(NgToken token) {
+    peek().parsedTokens.add(token);
+  }
+
+  void addAllTokens(Iterable<NgToken> tokens) {
+    peek().parsedTokens.addAll(tokens);
+  }
+
   @override
   List<NgAstNode> result() => peek().childNodes;
 
@@ -59,13 +73,16 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     if (after.type == NgTokenType.beforeDecoratorValue) {
       final space = after;
       final value = next();
+      final end = next();
       addChild(
-        new NgAttribute.fromTokensWithValue(before, name, space, value, next()),
+        new NgAttribute.fromTokensWithValue(before, name, space, value, end),
       );
+      addAllTokens([before, name, space, value, end]);
     } else if (after.type == NgTokenType.endAttribute) {
       addChild(
         new NgAttribute.fromTokens(before, name, after),
       );
+      addAllTokens([before, name, after]);
     } else {
       onError(new UnsupportedError('${after.type}'));
     }
@@ -106,16 +123,21 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
   void scanOpenElement(NgToken token) {
     var tagName = next();
     assert(tagName.type == NgTokenType.elementName);
-    var element = new NgElement.unknown(tagName.text);
+    if (_elementValidator.stringMatch(tagName.text) != tagName.text) {
+      onError(new IllegalTagName(tagName, peek().parsedTokens));
+    }
+    var element = new NgElement.unknown(tagName.text, parsedTokens: [token, tagName]);
     addChild(element);
     push(element);
     while (token.type != NgTokenType.endOpenElement &&
         token.type != NgTokenType.beforeElementDecorator) {
       token = next();
+      addTokens(token);
     }
     if (token.type == NgTokenType.beforeElementDecorator) {
       scanToken(token);
       var end = next();
+      addTokens(end);
       assert(end == null || end.type == NgTokenType.endOpenElement);
     }
   }
@@ -128,6 +150,7 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     var end = next();
     addChild(
         new NgProperty.fromTokens(before, start, name, equals, value, end));
+    addAllTokens([before, start, name, equals, value, end]);
   }
 
   @override
@@ -150,6 +173,7 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
       new NgProperty.fromTokens(before, start, name, equals, value, end));
     addChild(
       new NgEvent.fromBanana(before, start, name, equals, value, end));
+    addAllTokens([before, start, name, equals, value, end]);
   }
 
   @override
@@ -163,7 +187,7 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     final idx = peek().childNodes.lastIndexOf(old);
     // if the index is -1, then we have already added a structural tag.
     if (idx == -1) {
-      onError(new StateError('Elements can only have one structural directive'));
+      onError(new ExtraStructuralDirective(old, [before, start, name, equals, value, end]));
       push(old);
       return;
     }
@@ -174,6 +198,7 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     ]);
     addChild(newOld);
     push(old);
+    addAllTokens([before, start, name, equals, value, end]);
   }
 
   @override
