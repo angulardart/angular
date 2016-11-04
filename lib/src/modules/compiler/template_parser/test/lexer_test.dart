@@ -64,7 +64,7 @@ void main() {
     );
   });
 
-  test('should lex attributes with and without a value', () async {
+  test('should lex attributes with and without a value separate', () async {
     lexer = new NgTemplateLexer(
       '<div class="fancy" title="Hello"><button disabled></button></div>',
     );
@@ -93,6 +93,28 @@ void main() {
       new NgToken(NgTokenType.endCloseElement, '>'),
       new NgToken(NgTokenType.startCloseElement, '</'),
       new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
+
+  test('should lex attributes with and without a value', () {
+    lexer = new NgTemplateLexer(
+      '<button disabled title="Hello"></button>',
+    );
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.attributeName, 'disabled'),
+      new NgToken(NgTokenType.endAttribute, ''),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.attributeName, 'title'),
+      new NgToken(NgTokenType.beforeDecoratorValue, '="'),
+      new NgToken(NgTokenType.attributeValue, 'Hello'),
+      new NgToken(NgTokenType.endAttribute, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
       new NgToken(NgTokenType.endCloseElement, '>'),
     ]);
   });
@@ -142,7 +164,7 @@ void main() {
     ]);
   });
 
-  test('should lex events', () async {
+  test('should lex events', () {
     lexer = new NgTemplateLexer('<button (click)="onClick()"></button>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
@@ -153,6 +175,31 @@ void main() {
       new NgToken(NgTokenType.beforeDecoratorValue, ')="'),
       new NgToken(NgTokenType.eventValue, 'onClick()'),
       new NgToken(NgTokenType.endEvent, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
+
+  test('should lex properties and events', () {
+    lexer = new NgTemplateLexer(
+        '<button (click)="onClick()" [title]="name"></button>');
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'button'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startEvent, '('),
+      new NgToken(NgTokenType.eventName, 'click'),
+      new NgToken(NgTokenType.beforeDecoratorValue, ')="'),
+      new NgToken(NgTokenType.eventValue, 'onClick()'),
+      new NgToken(NgTokenType.endEvent, '"'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startProperty, '['),
+      new NgToken(NgTokenType.propertyName, 'title'),
+      new NgToken(NgTokenType.beforeDecoratorValue, ']="'),
+      new NgToken(NgTokenType.propertyValue, 'name'),
+      new NgToken(NgTokenType.endProperty, '"'),
       new NgToken(NgTokenType.endOpenElement, '>'),
       new NgToken(NgTokenType.startCloseElement, '</'),
       new NgToken(NgTokenType.elementName, 'button'),
@@ -194,7 +241,7 @@ void main() {
   });
 
   test('should lex comments', () async {
-    lexer = new NgTemplateLexer('<h1>test <!-- This a comment -->');
+    lexer = new NgTemplateLexer('<h1>test <!-- This a comment --></h1>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
       new NgToken(NgTokenType.elementName, 'h1'),
@@ -203,6 +250,27 @@ void main() {
       new NgToken(NgTokenType.beginComment, '<!--'),
       new NgToken(NgTokenType.commentNode, ' This a comment '),
       new NgToken(NgTokenType.endComment, '-->'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'h1'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
+
+  test('should lex structural directives', () async {
+    lexer = new NgTemplateLexer('<div *ngIf="bar"></div>');
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startStructural, '*'),
+      new NgToken(NgTokenType.structuralName, 'ngIf'),
+      new NgToken(NgTokenType.beforeDecoratorValue, '="'),
+      new NgToken(NgTokenType.structuralValue, 'bar'),
+      new NgToken(NgTokenType.endStructural, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.endCloseElement, '>')
     ]);
   });
 }

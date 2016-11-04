@@ -17,6 +17,8 @@ Comments are used to annotate the HTML to provide extra information for
 developers or tools but are not rendered when the application is rendered
 within the browser.
 
+Comments may be removed in a production build.
+
 ### Grammar
 ```bnf
 Comment ::= '<!--' CommentCharData? '-->'
@@ -26,8 +28,6 @@ Comment ::= '<!--' CommentCharData? '-->'
 ```html
 <!-- A single or multi line comment -->
 ```
-
-Comments may be _stripped out_ in a production build.
 
 ## Interpolation
 

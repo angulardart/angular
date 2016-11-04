@@ -15,5 +15,9 @@ dependencies:
   quiver:
 
 dev_dependencies:
+  angular2:
+  benchmark_harness:
+  codemirror:
+  browser:
   dart_style:
   test:

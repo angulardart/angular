@@ -1,7 +1,5 @@
 library angular2_template_parser.src.lexer;
 
-import 'dart:async';
-
 import 'package:charcode/charcode.dart';
 import 'package:meta/meta.dart';
 import 'package:quiver/core.dart';
@@ -10,7 +8,10 @@ import 'package:string_scanner/string_scanner.dart';
 
 import 'utils.dart';
 
-part 'lexer/sync_lexer_impl.dart';
+part 'lexer/sync_lexer.dart';
+part 'lexer/template_scanner.dart';
+part 'lexer/token.dart';
+part 'lexer/token_type.dart';
 
 /// A tokenizer for the Angular Dart template language.
 abstract class NgTemplateLexer {
@@ -108,195 +109,4 @@ abstract class NgTemplateLexerBase implements NgTemplateLexer {
     doTokenize();
     return _tokenizer;
   }
-}
-
-/// A recognized token while scanning a template.
-class NgToken {
-  /// What text was scanned.
-  final SourceSpan source;
-
-  /// Token text.
-  final String text;
-
-  /// What type of token.
-  final NgTokenType type;
-
-  /// Creates a new [NgToken] from a [type] and [text].
-  NgToken(this.type, this.text) : source = null;
-
-  /// Creates a new [NgToken] of [type] from [source].
-  NgToken.fromSource(this.type, SourceSpan source)
-      : this.text = source.text,
-        this.source = source;
-
-  @override
-  bool operator ==(Object o) {
-    if (o is NgToken) {
-      return type == o.type && text == o.text;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => hash2(source, type);
-
-  @override
-  String toString() => '{$type: $text}';
-}
-
-/// Type of [NgToken].
-enum NgTokenType {
-  /// Parsed text.
-  textNode,
-
-  /// <!-- before comment
-  beginComment,
-
-  /// Parsed comment.
-  commentNode,
-
-  /// --> after comment
-  endComment,
-
-  /// Parsed interpolated expression.
-  interplateNode,
-
-  /// Before parsing the [elementName].
-  startOpenElement,
-
-  /// After parsing the [elementName].
-  endOpenElement,
-
-  /// After parsing an [endOpenElement] that does not have content.
-  endVoidElement,
-
-  /// Parsed element name.
-  elementName,
-
-  /// After parsing an element tag and child nodes.
-  startCloseElement,
-
-  /// After parsing [startCloseElement] and [closeElementName].
-  endCloseElement,
-
-  /// Before the start of an attribute, event, or property (i.e. whitespace).
-  beforeElementDecorator,
-
-  /// Before parsing a decorator value.
-  beforeDecoratorValue,
-
-  /// Parsed attribute name.
-  attributeName,
-
-  /// Parsed attribute value.
-  attributeValue,
-
-  /// After parsing an [attributeName], and optionally, [attributeValue].
-  endAttribute,
-
-  /// Before parsing a [propertyName].
-  startProperty,
-
-  /// Parsed property name.
-  propertyName,
-
-  /// Parsed property value.
-  propertyValue,
-
-  /// After parsing a [propertyName], and optionally, [propertyValue].
-  endProperty,
-
-  /// Before parsing an [eventName].
-  startEvent,
-
-  /// Parsed event name.
-  eventName,
-
-  /// Parsed event value.
-  eventValue,
-
-  /// After parsing an [eventName] and [eventValue].
-  endEvent,
-
-  /// Before parsing a binding.
-  startBinding,
-
-  /// Binding name.
-  bindingName,
-
-  /// Before parsing a banana (in a box).
-  startBanana,
-
-  /// The name of the banana (in a box).
-  bananaName,
-
-  /// The banana value.
-  bananaValue,
-
-  /// After parsing a [bananaName] and [bananaValue].
-  endBanana,
-
-  /// An unexpected or invalid token.
-  ///
-  /// In a stricter mode, this should cause the parsing to fail. It can also be
-  /// ignored in order to attempt to produce valid output - for example a user
-  /// may want to still validate the rest of the (seemingly valid) template
-  /// even if there is an error somewhere at the beginning.
-  errorToken,
-}
-
-/// Simple interface for using an [NgTemplateLexer] to parse nodes.
-abstract class NgTemplateScanner<T> {
-  final List<T> _stack = <T>[];
-
-  Iterator<NgToken> _iterator;
-
-  /// Peeks at the top of the stack.
-  T peek() => _stack.last;
-
-  /// Pops the top of the stack.
-  T pop() => _stack.removeLast();
-
-  /// Push an item to the top of the stack.
-  void push(T node) {
-    _stack.add(node);
-  }
-
-  /// Returns the next token.
-  NgToken next() => (_iterator..moveNext()).current;
-
-  /// Scans from [lexer].
-  List<T> scan(NgTemplateLexer lexer) {
-    _iterator = lexer.tokenize().iterator;
-    while (_iterator.moveNext()) {
-      var token = _iterator.current;
-      switch (token.type) {
-        case NgTokenType.textNode:
-          scanText(token);
-          break;
-        case NgTokenType.startOpenElement:
-          scanOpenElement(token);
-          break;
-        case NgTokenType.startCloseElement:
-          scanCloseElement(token);
-          break;
-        default:
-      }
-    }
-    return result();
-  }
-
-  /// Returns the scanned result.
-  List<T> result();
-
-  /// Called when [NgTokenType.startOpenElement] is scanned.
-  void scanOpenElement(NgToken token);
-
-  /// Called when [NgTokenType.start]
-  void scanCloseElement(NgToken token);
-
-  /// Called when [NgTokenType.textNode] is scanned.
-  ///
-  /// Returns a [Future] that completes after processing.
-  void scanText(NgToken token);
 }

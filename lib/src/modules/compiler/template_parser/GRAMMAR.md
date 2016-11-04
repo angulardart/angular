@@ -2,7 +2,6 @@
 
 ###Todos
 * Can you interpolate comments?
-* Can you have multiple pipes?
 * What is the best way to handle the additional constraints on expressions?
 * What are we forgetting?
 
