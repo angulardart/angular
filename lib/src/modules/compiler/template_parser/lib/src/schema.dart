@@ -57,6 +57,8 @@ abstract class NgElementDefinition {
     String tagName, {
     Map<String, NgEventDefinition> events,
     Map<String, NgPropertyDefinition> properties,
+    Map<String, NgEventDefinition> globalEvents,
+    Map<String, NgPropertyDefinition> globalProperties,
   }) = _NgElementSchema;
 
   /// Known events on the element.
@@ -76,11 +78,18 @@ abstract class NgElementDefinition {
 }
 
 class _NgElementSchema implements NgElementDefinition {
+  // any aria attribute
+  static final _isAria = new RegExp(r'aria-.*');
+  // any attribute with data-
+  static final _isData = new RegExp(r'data-.*');
+
   @override
   final Map<String, NgEventDefinition> events;
+  final Map<String, NgEventDefinition> _globalEvents;
 
   @override
   final Map<String, NgPropertyDefinition> properties;
+  final Map<String, NgPropertyDefinition> _globalProperties;
 
   @override
   final String tagName;
@@ -90,13 +99,19 @@ class _NgElementSchema implements NgElementDefinition {
     this.tagName, {
     this.events: const {},
     this.properties: const {},
-  });
+    Map<String, NgEventDefinition> globalEvents: const {},
+    Map<String, NgPropertyDefinition> globalProperties: const {},
+  }): _globalEvents = globalEvents,
+      _globalProperties = globalProperties;
 
   @override
-  bool hasEvent(String name) => events.containsKey(name);
-
+  bool hasEvent(String name) => events.containsKey(name)
+      || _globalEvents.containsKey(name);
   @override
-  bool hasProperty(String name) => properties.containsKey(name);
+  bool hasProperty(String name) => properties.containsKey(name)
+      || _globalProperties.containsKey(name)
+      || _isAria.hasMatch(name)
+      || _isData.hasMatch(name);
 }
 
 /// A defined set of properties on an [NgElementDefinition].
