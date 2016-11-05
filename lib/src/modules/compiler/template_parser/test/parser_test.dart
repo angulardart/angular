@@ -152,12 +152,5 @@ void main() {
           ])
         ]);
     });
-
-    test('should throw when provided an error handler on multiple structural'
-         ' directives', () {
-           expect(() => new NgTemplateParser(errorHandler: (err) => throw err)
-               .parse('<div *ngIf="baz" *ngFor="let foo of bars"></div>')
-               .toList(), throws);
-         });
   });
 }

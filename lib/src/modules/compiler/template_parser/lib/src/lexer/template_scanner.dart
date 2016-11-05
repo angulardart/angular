@@ -112,8 +112,6 @@ abstract class NgTemplateScanner<T> {
   void scanInterpolation(NgToken token);
 
   /// Called when [NgTokenType.textNode] is scanned.
-  ///
-  /// Returns a [Future] that completes after processing.
   void scanText(NgToken token);
 
   /// Called when [NgTokenType.startBanana] is scanned.

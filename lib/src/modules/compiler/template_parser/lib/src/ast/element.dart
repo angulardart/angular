@@ -38,7 +38,7 @@ class NgElement extends NgAstNode
   factory NgElement.unknown(
     String tagName, {
     Iterable<NgAstNode> childNodes,
-    List<NgToken> parsedTokens,
+    List<NgToken> parsedTokens: const [],
     SourceSpan source,
   }) {
     return new NgElement._(
