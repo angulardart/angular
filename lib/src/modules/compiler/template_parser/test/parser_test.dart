@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 void main() {
   List<NgAstNode> parse(String text) =>
-      new NgTemplateParser().parse(text).toList();
+      const NgTemplateParser().parse(text, onError: (_) => null).toList();
 
   group('$NgTemplateParser', () {
     test('should parse text nodes', () {
