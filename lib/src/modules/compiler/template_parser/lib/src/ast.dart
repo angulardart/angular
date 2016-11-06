@@ -12,6 +12,7 @@ part 'ast/binding.dart';
 part 'ast/comment.dart';
 part 'ast/element.dart';
 part 'ast/event.dart';
+part 'ast/interpolation.dart';
 part 'ast/property.dart';
 part 'ast/text.dart';
 
@@ -59,12 +60,10 @@ abstract class NgAstNode {
   @override
   bool operator ==(Object o) =>
       o is NgAstNode &&
-      _listEquals.equals(childNodes, o.childNodes) &&
-      _listEquals.equals(parsedTokens, o.parsedTokens);
+      _listEquals.equals(childNodes, o.childNodes);
 
   @override
-  int get hashCode => hash2(_listEquals.hash(childNodes),
-      parsedTokens != null ? _listEquals.hash(parsedTokens) : null);
+  int get hashCode => hash2(_listEquals.hash(childNodes), null);
 
   /// Where the node was parsed from.
   ///
