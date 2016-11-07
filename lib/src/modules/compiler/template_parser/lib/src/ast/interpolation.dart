@@ -5,6 +5,11 @@ class NgInterpolation extends NgAstNode with NgAstSourceTokenMixin {
   /// Expression value.
   final String value;
 
+  /// A parsed Dart expression.
+  ///
+  /// should be set with parseAngularExpression(...)
+  Expression expression;
+
   /// Create a new [NgInterpolation] node.
   NgInterpolation(this.value) : super._(const []);
 

@@ -8,6 +8,11 @@ class NgProperty extends NgAstNode with NgAstSourceTokenMixin {
   /// Value of the property (an expression).
   final String value;
 
+  /// A parsed Dart expression.
+  ///
+  /// should be set with parseAngularExpression(...)
+  Expression expression;
+
   NgProperty(this.name, this.value) : super._(const []);
 
   NgProperty.fromTokens(

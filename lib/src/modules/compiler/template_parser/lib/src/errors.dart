@@ -1,12 +1,15 @@
 library angular2_template_parser.src.compiler_error;
 
 import 'package:source_span/source_span.dart';
+import 'package:analyzer/analyzer.dart';
 
 import 'ast.dart';
 import 'lexer.dart';
 
 part 'errors/extra_structural_directive.dart';
 part 'errors/illegal_tag_name.dart';
+part 'errors/invalid_dart_expression.dart';
+part 'errors/banana_limited_identifier.dart';
 
 /// Represents errors with [SourceSpan]s found while parsing.
 abstract class SourceError implements Error {
