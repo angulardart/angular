@@ -1,6 +1,6 @@
 import 'ast.dart';
 import 'lexer.dart';
-import 'source_error.dart';
+import 'errors.dart';
 
 import 'package:source_span/src/span.dart';
 
@@ -12,18 +12,20 @@ final RegExp _elementValidator = new RegExp(r'[a-zA-Z][a-zA-Z0-9_\-]+');
 ///
 /// See `./doc/syntax.md` for more information.
 class NgTemplateParser {
-  /// Creates a new default template parser.
-  final ErrorCallback errorHandler;
-  const NgTemplateParser({this.errorHandler});
+  const NgTemplateParser();
 
-  /// Parses [template] into a series of root nodes.
+  /// Parses [template] from [sourceUrl] into a series of AST nodes.
+  ///
+  /// If [onError] is set, errors are *not* thrown during parsing, and instead
+  /// are emitted as events on the callback.
   Iterable<NgAstNode> parse(
     String template, {
+    ErrorCallback onError,
     /* Uri|String*/
     sourceUrl,
   }) {
     if (template == null || template.isEmpty) return const [];
-    var scanner = new _ScannerParser(errorHandler: errorHandler);
+    var scanner = new _ScannerParser(errorHandler: onError);
     scanner.scan(new NgTemplateLexer(template, sourceUrl: sourceUrl));
     return scanner.result();
   }
@@ -124,7 +126,7 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     var tagName = next();
     assert(tagName.type == NgTokenType.elementName);
     if (_elementValidator.stringMatch(tagName.text) != tagName.text) {
-      onError(new IllegalTagName(tagName, peek().parsedTokens));
+      onError(new IllegalTagNameError(tagName));
     }
     var element = new NgElement.unknown(tagName.text, parsedTokens: [token, tagName]);
     addChild(element);
@@ -178,16 +180,32 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
 
   @override
   void scanStructural(NgToken before, NgToken start) {
+    // The element that the structural directive will exist on.
+    final NgElement element = peek(); 
+
+    // Parse all of the tokens that make up the structual directive.
     var name = next();
     var equals = next();
     var value = next();
     var end = next();
     var old = pop();
+
     // will this work in general?  what about duplicate tags?
     final idx = peek().childNodes.lastIndexOf(old);
+
     // if the index is -1, then we have already added a structural tag.
     if (idx == -1) {
-      onError(new ExtraStructuralDirective(old, [before, start, name, equals, value, end]));
+      final NgProperty firstDirective = peek().childNodes.first.childNodes.first;
+      onError(
+        new ExtraStructuralDirectiveError(
+          element,
+          start,
+          name,
+          value,
+          firstDirective.parsedTokens[2],
+          firstDirective.parsedTokens[4],
+        ),
+      );
       push(old);
       return;
     }
@@ -202,5 +220,11 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
   }
 
   @override
-  onError(Error error) => errorHandler != null ? errorHandler(error) : null;
+  void onError(Error error) {
+    if (errorHandler != null) {
+      errorHandler(error);
+    } else {
+      throw error;
+    }
+  }
 }

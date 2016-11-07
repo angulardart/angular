@@ -1,31 +1,63 @@
 part of angular2_template_parser.src.compiler_error;
 
+/// When more than one structural directives is used on a single element.
+class ExtraStructuralDirectiveError extends SourceError {
+  /// The element where more than one directive was attempted.
+  final NgElement element;
 
-class ExtraStructuralDirective implements Error {
+  /// Orginal directive's name.
+  final NgToken firstNameToken;
+
+  /// Original directive's value.
+  final NgToken firstValueToken;
+
+  /// The extra directive's name.
+  final NgToken nameToken;
+
+  /// The extra directive's value.
+  final NgToken valueToken;
+
+  factory ExtraStructuralDirectiveError(
+    NgElement elementAst,
+    NgToken startToken,
+    NgToken nameToken,
+    NgToken valueToken,
+    NgToken firstNameToken,
+    NgToken firstValueToken,
+  ) =>
+      new ExtraStructuralDirectiveError._(
+          elementAst,
+          nameToken,
+          valueToken,
+          firstNameToken,
+          firstValueToken,
+          [startToken, nameToken].fold/*<SourceSpan>*/(
+            null,
+            (span, token) {
+              return span == null ? token.source : span.union(token.source);
+            },
+          ));
+
+  ExtraStructuralDirectiveError._(this.element, this.nameToken, this.valueToken,
+      this.firstNameToken, this.firstValueToken, SourceSpan context)
+      : super._(context);
 
   @override
-  StackTrace stackTrace;
-
-  Iterable<NgToken> node;
-  NgElement parent;
-
-  ExtraStructuralDirective(this.parent, this.node): stackTrace = StackTrace.current;
-
-  @override
-  String toString() {
-    final problemTag = node.map((x) => x.source.text).join('');
-    final parentTag = parent.parsedTokens.map((x) => x.text).join('');
-    final location = node.first.source;
-    return
-      '${location.start.line}:${location.start.column} '
-      'error: cannot have multiple structural directives on the same tag.\n\n'
-      '$parentTag$problemTag\n'
-      '${" " * parentTag.length}${"^" * problemTag.length}\n'
-      'to fix this error, change the first structural directive to a property with the same name\n'
-      'and place it on a template tag wrapping the existing element.\n\n'
-      '    <template [firstDirective]="...">\n'
-      '      <div *secondDirective="..."></div>\n'
-      '    </template>\n'
-      '    \n';
-  }
+  String toString() => toFriendlyMessage(
+        header:
+            'Cannot have more than a single structural (*) directive on an element',
+        fixIt:
+            // ---------------------------------80 chars--------------------------------------
+            'Structural directives (i.e. ${context.text}) are just a convenience syntax:\n'
+            '    <template [${nameToken.text}]="${valueToken.text}">\n'
+            '      <${element.name}>...</${element.name}>\n'
+            '    </template>\n'
+            '\n\n'
+            'Rewrite your tags as nested <template> tags in order you want them to apply:\n'
+            '    <template [${firstNameToken.text}]="${firstValueToken.text}">\n'
+            '      <template [${nameToken.text}]="${valueToken.text}">\n'
+            '        <${element.name}>...</${element.name}>\n'
+            '      </template>\n'
+            '    </template>',
+      );
 }
