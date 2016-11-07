@@ -8,6 +8,11 @@ class NgEvent extends NgAstNode with NgAstSourceTokenMixin {
   /// Listener of the event (an expression).
   final String value;
 
+  /// A parsed Dart expression.
+  ///
+  /// should be set with parseAngularExpression(...)
+  Expression expression;
+
   NgEvent(this.name, this.value) : super._(const []);
 
   NgEvent.fromTokens(
@@ -24,14 +29,8 @@ class NgEvent extends NgAstNode with NgAstSourceTokenMixin {
 
   /// Creates an Event action from a banana desugar.  Has new
   /// names and values but links to original source.
-  NgEvent.fromBanana(
-    NgToken before,
-    NgToken start,
-    NgToken name,
-    NgToken equals,
-    NgToken value,
-    NgToken end
-  )
+  NgEvent.fromBanana(NgToken before, NgToken start, NgToken name,
+      NgToken equals, NgToken value, NgToken end)
       : this.name = '${name.text}Change',
         this.value = '${value.text} = \$event',
         super._([before, start, name, equals, value, end]);

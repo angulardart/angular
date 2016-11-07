@@ -32,4 +32,49 @@ void main() {
         '      </template>\n'
         '    </template>');
   });
+
+  test('should fail when interpolation nodes have invalid dart expressions',
+      () {
+    expect(
+        getParseError('<div> 1 + 1 = {{1 + }}</div>'),
+        'line 1, column 17: Error in interpolation node: Expected an identifier\n'
+        '\n'
+        '<div> 1 + 1 = {{1 + }}</div>\n'
+        '                ^^^^\n'
+        '\n'
+        '');
+  });
+
+  test('should fail when there is more than an identifier in a banana', () {
+    expect(getParseErrors('<div [(prop)]="1 +"></div>'), [
+      'line 1, column 16: Error in bananan (in a box): Expected an identifier\n'
+          '\n'
+          '<div [(prop)]="1 +"></div>\n'
+          '               ^^^\n'
+          '\n'
+          ''
+    ]);
+  });
+
+  test('should fail when an event node contains an invalid expression', () {
+    expect(
+        getParseError('<div (click)="1 +"></div>'),
+        'line 1, column 15: Error in event node: Expected an identifier\n'
+        '\n'
+        '<div (click)="1 +"></div>\n'
+        '              ^^^\n'
+        '\n'
+        '');
+  });
+
+  test('should fail when a property node contains an invalid expression', () {
+    expect(
+        getParseError('<div [prop]="1 + "></div>'),
+        'line 1, column 14: Error in property node: Expected an identifier\n'
+        '\n'
+        '<div [prop]="1 + "></div>\n'
+        '             ^^^^\n'
+        '\n'
+        '');
+  });
 }

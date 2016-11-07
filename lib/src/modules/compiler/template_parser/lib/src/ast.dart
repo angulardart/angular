@@ -3,9 +3,11 @@ library angular2_template_parser.src.ast;
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
 import 'package:quiver/core.dart';
+import 'package:analyzer/analyzer.dart';
 
 import 'lexer.dart';
 import 'schema.dart';
+import 'utils.dart';
 
 part 'ast/attribute.dart';
 part 'ast/binding.dart';
