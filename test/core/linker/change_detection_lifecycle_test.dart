@@ -408,20 +408,20 @@ void main() {
           'viewChild: ngOnDestroy',
           'parent: ngOnDestroy'
         ]);
+      });
 
-        containerTest(
-            'should be called in reverse order so the child is always '
-            'notified before the parent',
-            '<div testDirective="parent">'
-            '  <div testDirective="child"></div>'
-            '</div>', (ComponentFixture fixture, TestContainer container,
-                TestChild child) {
-          TestDirective.log.clear();
-          fixture.detectChanges(false);
-          fixture.destroy();
-          expect(filterLog(TestDirective.log, ['ngOnDestroy']),
-              ['child: ngOnDestroy', 'parent: ngOnDestroy']);
-        });
+      containerTest(
+          'should be called in reverse order so the child is always '
+          'notified before the parent',
+          '<div testDirective="parent">'
+          '  <div testDirective="child"></div>'
+          '</div>',
+          (ComponentFixture fixture, TestContainer container, TestChild child) {
+        TestDirective.log.clear();
+        fixture.detectChanges(false);
+        fixture.destroy();
+        expect(filterLog(TestDirective.log, ['ngOnDestroy']),
+            ['child: ngOnDestroy', 'parent: ngOnDestroy']);
       });
 
       group("enforce no new changes", () {
