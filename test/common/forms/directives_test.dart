@@ -49,7 +49,7 @@ class MockNgControl extends Mock implements NgControl {}
 
 void main() {
   group("Shared selectValueAccessor", () {
-    var defaultAccessor;
+    DefaultValueAccessor defaultAccessor;
     NgControl dir;
     setUp(() {
       defaultAccessor = new DefaultValueAccessor(null, null);
@@ -108,7 +108,7 @@ void main() {
     });
   });
   group("NgFormModel", () {
-    var defaultAccessor;
+    DefaultValueAccessor defaultAccessor;
     NgFormModel form;
     ControlGroup formModel;
     var loginControlDir;
@@ -244,7 +244,7 @@ void main() {
       }));
     });
     group("NgForm", () {
-      var defaultAccessor;
+      DefaultValueAccessor defaultAccessor;
       NgForm form;
       ControlGroup formModel;
       var loginControlDir;
@@ -302,7 +302,7 @@ void main() {
       }));
     });
     group("NgControlGroup", () {
-      var formModel;
+      ControlGroup formModel;
       var controlGroupDir;
       setUp(() {
         formModel = new ControlGroup({"login": new Control(null)});
@@ -387,7 +387,7 @@ void main() {
       }));
     });
     group("NgControlName", () {
-      var formModel;
+      Control formModel;
       var controlNameDir;
       setUp(() {
         formModel = new Control("name");
