@@ -1498,7 +1498,7 @@ dynamic _readValue(dynamic el) {
   }
 }
 
-dynamic _readToken(dynamic el) {
+CompileTokenMetadata _readToken(dynamic el) {
   if (el is DoubleLiteral ||
       el is IntegerLiteral ||
       el is SimpleStringLiteral ||

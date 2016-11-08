@@ -1,15 +1,10 @@
 @TestOn('vm')
-library template_compiler_test;
-
 import 'dart:async';
-import 'dart:io';
-import 'dart:mirrors';
-
-import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
+import 'compare_to_golden.dart' as golden;
 
-const String summaryExtension = '.ng_summary';
-const String goldenExtension = '.golden';
+const String summaryExtension = '.ng_component';
+const String goldenExtension = '.ng_component.golden';
 
 main() {
   group('Test Components', () {
@@ -43,22 +38,6 @@ main() {
   });
 }
 
-Future compareSummaryFileToGolden(String dartFileName) async {
-  var input = getFile(dartFileName, summaryExtension);
-  var golden = getFile(dartFileName, goldenExtension);
-
-  expect(await input.readAsString(), await golden.readAsString());
-}
-
-File getFile(String dartFileName, String extension) =>
-    _getFile('${p.withoutExtension(dartFileName)}${extension}');
-
-File _getFile(String filename) {
-  Uri fileUri = new Uri.file(p.join(_testFilesDir, filename));
-  return new File.fromUri(fileUri);
-}
-
-final String _testFilesDir = p.join(_scriptDir(), 'test_files');
-
-String _scriptDir() => p.dirname(
-    currentMirrorSystem().findLibrary(#template_compiler_test).uri.path);
+Future compareSummaryFileToGolden(String dartFile) =>
+    golden.compareSummaryFileToGolden(dartFile,
+        summaryExtension: summaryExtension, goldenExtension: goldenExtension);

@@ -11,6 +11,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'find_components.dart';
+import 'find_injectable_modules.dart';
 
 /// Generates `.template.dart` files to initialize the Angular2 system.
 ///
@@ -41,20 +42,24 @@ Future<Outputs> processTemplates(Element element, BuildStep buildStep,
         reflectPropertiesAsAttributes, false),
   );
 
-  final compileComponentsData = findComponents(buildStep, element);
+  final compileComponentsData = logElapsedSync(
+      () => findComponents(buildStep, element),
+      operationName: 'findComponents',
+      assetId: buildStep.input.id,
+      log: buildStep.logger);
   if (compileComponentsData.isEmpty) return new Outputs._(null);
   await Future.forEach(compileComponentsData, (component) async {
     component.component =
         await templateCompiler.normalizeDirectiveMetadata(component.component);
   });
-
-  final injectorDefinitions = <CompileInjectorModuleMetadata>[];
-  final compiledTemplates = logElapsedSync(
-      () =>
-          templateCompiler.compile(compileComponentsData, injectorDefinitions),
-      operationName: 'compile',
+  List<CompileInjectorModuleMetadata> injectorDefinitions = logElapsedSync(
+      () => findInjectableModules(buildStep, element),
+      operationName: 'findInjectableModules',
       assetId: buildStep.input.id,
       log: buildStep.logger);
+  final compiledTemplates = logElapsedSync(() {
+    return templateCompiler.compile(compileComponentsData, injectorDefinitions);
+  }, operationName: 'compile', assetId: buildStep.input.id);
   return new Outputs._(compiledTemplates);
 }
 
