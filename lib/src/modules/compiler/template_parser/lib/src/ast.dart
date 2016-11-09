@@ -60,8 +60,7 @@ abstract class NgAstNode {
 
   @override
   bool operator ==(Object o) =>
-      o is NgAstNode &&
-      _listEquals.equals(childNodes, o.childNodes);
+      o is NgAstNode && _listEquals.equals(childNodes, o.childNodes);
 
   @override
   int get hashCode => hash2(_listEquals.hash(childNodes), null);

@@ -9,10 +9,11 @@ void main() {
   // Example migration program - add test to all NgAstNames, remove comments.
   NgAstNode migrate(NgAstNode node) {
     if (node is NgElement) {
-      return new NgElement.unknown('${node.name}-test', childNodes:
-        node.childNodes
-            .map((x) => x.map(migrate))
-            .where((x) => x != null).toList());
+      return new NgElement.unknown('${node.name}-test',
+          childNodes: node.childNodes
+              .map((x) => x.map(migrate))
+              .where((x) => x != null)
+              .toList());
     }
     if (node is NgComment) {
       return null;

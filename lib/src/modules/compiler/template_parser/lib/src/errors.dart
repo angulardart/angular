@@ -26,9 +26,9 @@ abstract class SourceError implements Error {
     String header: 'Invalid text',
     String fixIt: '',
   }) =>
-    '${context.message(header)}\n'
-    '\n'
-    '$fixIt';
+      '${context.message(header)}\n'
+      '\n'
+      '$fixIt';
 
   // A default toString message that at least gives contextual information.
   @override

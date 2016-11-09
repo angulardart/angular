@@ -10,7 +10,6 @@ import 'package:analyzer/dart/ast/token.dart' as analyzer;
 // WIP - stll sorting out what is a valid element.
 final RegExp _elementValidator = new RegExp(r'[a-zA-Z][a-zA-Z0-9_\-]+');
 
-
 /// Parses an Angular Dart template into a concrete AST.
 ///
 /// See `./doc/syntax.md` for more information.
@@ -47,10 +46,8 @@ class _Fragment implements NgAstNode {
   @override
   NgAstNode map(NgAstNode mapping(NgAstNode node)) {
     return new _Fragment()
-      ..childNodes.addAll(
-        childNodes.map((node) => node.map(mapping)));
+      ..childNodes.addAll(childNodes.map((node) => node.map(mapping)));
   }
-
 }
 
 typedef void ErrorCallback(Error error);
@@ -146,7 +143,8 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     if (_elementValidator.stringMatch(tagName.text) != tagName.text) {
       onError(new IllegalTagNameError(tagName));
     }
-    var element = new NgElement.unknown(tagName.text, parsedTokens: [token, tagName]);
+    var element =
+        new NgElement.unknown(tagName.text, parsedTokens: [token, tagName]);
     addChild(element);
     push(element);
     while (token.type != NgTokenType.endOpenElement &&
@@ -168,7 +166,8 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     var equals = next();
     var value = next();
     var end = next();
-    var node = new NgProperty.fromTokens(before, start, name, equals, value, end);
+    var node =
+        new NgProperty.fromTokens(before, start, name, equals, value, end);
     try {
       node..expression = parseAngularExpression(value.text, 'property node');
     } on AnalyzerErrorGroup catch (e) {
@@ -185,7 +184,8 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
     var end = next();
     var node = new NgInterpolation.fromTokens(start, value, end);
     try {
-      node..expression = parseAngularExpression(value.text, 'interpolation node');
+      node
+        ..expression = parseAngularExpression(value.text, 'interpolation node');
     } on AnalyzerErrorGroup catch (e) {
       onError(new InvalidDartExpressionError(value, e));
       return;
@@ -210,22 +210,20 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
       expression = parseAngularExpression(value.text, location);
       if (expression.beginToken.type != analyzer.TokenType.IDENTIFIER ||
           expression.beginToken != expression.endToken) {
-            onError(new BananaLimitedIdentifierError(value));
-            return;
-          }
+        onError(new BananaLimitedIdentifierError(value));
+        return;
+      }
     } on AnalyzerErrorGroup catch (e) {
       onError(new InvalidDartExpressionError(value, e));
       return;
     }
-    addChild(
-      new NgProperty.fromTokens(before, start, name, equals, value, end)
-        ..expression = expression);
+    addChild(new NgProperty.fromTokens(before, start, name, equals, value, end)
+      ..expression = expression);
     // In theory, this second parse should never fail provided the first
     // is only an identifier.
-    addChild(
-      new NgEvent.fromBanana(before, start, name, equals, value, end)
-        ..expression = parseAngularExpression('${value.text} = \$event',
-          location));
+    addChild(new NgEvent.fromBanana(before, start, name, equals, value, end)
+      ..expression =
+          parseAngularExpression('${value.text} = \$event', location));
     addAllTokens([before, start, name, equals, value, end]);
   }
 
@@ -246,7 +244,8 @@ class _ScannerParser extends NgTemplateScanner<NgAstNode> {
 
     // if the index is -1, then we have already added a structural tag.
     if (idx == -1) {
-      final NgProperty firstDirective = peek().childNodes.first.childNodes.first;
+      final NgProperty firstDirective =
+          peek().childNodes.first.childNodes.first;
       onError(
         new ExtraStructuralDirectiveError(
           element,

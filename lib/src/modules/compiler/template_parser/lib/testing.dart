@@ -11,7 +11,7 @@ String getParseError(String template, {NgTemplateParser parser}) {
 ///
 /// May specify a [parser] implementation, or use a default.
 List<String> getParseErrors(String template, {NgTemplateParser parser}) {
-  final errors = <Error> [];
+  final errors = <Error>[];
   (parser ?? const NgTemplateParser()).parse(template, onError: errors.add);
   return errors.map((e) => e.toString()).toList();
 }
