@@ -121,36 +121,30 @@ void main() {
     });
 
     test('should parse a banana into a property and an event', () {
-      expect(
-        parse('<my-select [(input)]="textValue"></my-select>'),
-        [
-          new NgElement.unknown('my-select', childNodes: [
-            new NgProperty('input', 'textValue'),
-            new NgEvent('inputChange', 'textValue = \$event'),
-          ]),
-        ]);
+      expect(parse('<my-select [(input)]="textValue"></my-select>'), [
+        new NgElement.unknown('my-select', childNodes: [
+          new NgProperty('input', 'textValue'),
+          new NgEvent('inputChange', 'textValue = \$event'),
+        ]),
+      ]);
     });
 
     test('should parse a structural directive', () {
-      expect(
-        parse('<div *ngIf="foo"></div>'),
-        [
-          new NgElement.unknown('template', childNodes: [
-            new NgProperty('ngIf', 'foo'),
-            new NgElement.unknown('div')
-          ])
-        ]);
+      expect(parse('<div *ngIf="foo"></div>'), [
+        new NgElement.unknown('template', childNodes: [
+          new NgProperty('ngIf', 'foo'),
+          new NgElement.unknown('div')
+        ])
+      ]);
     });
 
     test('should only produce one structural directive per element', () {
-      expect(
-        parse('<div *ngIf="baz" *ngFor="let foo of bars"></div>'),
-        [
-          new NgElement.unknown('template', childNodes: [
-            new NgProperty('ngIf', 'baz'),
-            new NgElement.unknown('div')
-          ])
-        ]);
+      expect(parse('<div *ngIf="baz" *ngFor="let foo of bars"></div>'), [
+        new NgElement.unknown('template', childNodes: [
+          new NgProperty('ngIf', 'baz'),
+          new NgElement.unknown('div')
+        ])
+      ]);
     });
   });
 }

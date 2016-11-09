@@ -7,7 +7,6 @@ import 'package:analyzer/analyzer.dart';
 
 import 'lexer.dart';
 import 'schema.dart';
-import 'utils.dart';
 
 part 'ast/attribute.dart';
 part 'ast/binding.dart';
@@ -61,8 +60,7 @@ abstract class NgAstNode {
 
   @override
   bool operator ==(Object o) =>
-      o is NgAstNode &&
-      _listEquals.equals(childNodes, o.childNodes);
+      o is NgAstNode && _listEquals.equals(childNodes, o.childNodes);
 
   @override
   int get hashCode => hash2(_listEquals.hash(childNodes), null);
@@ -73,6 +71,11 @@ abstract class NgAstNode {
   /// the original context that was parsed to create this node. Useful to
   /// reference when errors occur or to emit source maps.
   SourceSpan get source;
+
+  /// Transforms the NgAstNode by applying a transformation from its
+  /// attributes to a new NgAstNode.
+  ///
+  NgAstNode map(NgAstNode mapping(NgAstNode node)) => mapping(this);
 }
 
 /// An [NgAstNode] that is expected to be recognized in a schema.

@@ -101,17 +101,19 @@ class _NgElementSchema implements NgElementDefinition {
     this.properties: const {},
     Map<String, NgEventDefinition> globalEvents: const {},
     Map<String, NgPropertyDefinition> globalProperties: const {},
-  }): _globalEvents = globalEvents,
-      _globalProperties = globalProperties;
+  })
+      : _globalEvents = globalEvents,
+        _globalProperties = globalProperties;
 
   @override
-  bool hasEvent(String name) => events.containsKey(name)
-      || _globalEvents.containsKey(name);
+  bool hasEvent(String name) =>
+      events.containsKey(name) || _globalEvents.containsKey(name);
   @override
-  bool hasProperty(String name) => properties.containsKey(name)
-      || _globalProperties.containsKey(name)
-      || _isAria.hasMatch(name)
-      || _isData.hasMatch(name);
+  bool hasProperty(String name) =>
+      properties.containsKey(name) ||
+      _globalProperties.containsKey(name) ||
+      _isAria.hasMatch(name) ||
+      _isData.hasMatch(name);
 }
 
 /// A defined set of properties on an [NgElementDefinition].

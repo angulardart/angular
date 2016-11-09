@@ -18,14 +18,14 @@ void expectFailure(NgTemplateLexer lexer, String message) {
 void main() {
   test('should fail when interpolation never is closed at beginning', () {
     expectFailure(
-      new NgTemplateLexer('{{name'), 
+      new NgTemplateLexer('{{name'),
       'Expected interpolation to end "}}" before EOF',
     );
   });
 
   test('should fail when interpolation never is closed later on', () {
     expectFailure(
-      new NgTemplateLexer('Hello {{name'), 
+      new NgTemplateLexer('Hello {{name'),
       'Expected interpolation to end "}}" before EOF',
     );
   });

@@ -27,7 +27,8 @@ const _globalEvents = const {
   'mouseLeave': const NgEventDefinition('mouseleave', _eventMouse),
   'mouseOut': const NgEventDefinition('mouseout', _eventMouse),
   'select': const NgEventDefinition('select', _eventMouse),
-  'pointerLockChange': const NgEventDefinition('pointerlockchange', _eventMouse),
+  'pointerLockChange':
+      const NgEventDefinition('pointerlockchange', _eventMouse),
   'pointerLockError': const NgEventDefinition('pointerLockError', _eventMouse),
   // keyboard events.
   'keyDown': const NgEventDefinition('keydown', _eventKeyboard),
@@ -54,7 +55,6 @@ const _globalProperties = const {
   'title': const NgPropertyDefinition('title', _typeString),
   'translate': const NgPropertyDefinition('translate', _typeString),
 };
-
 
 /// Represents the native DOM HTML5 schema.
 ///
@@ -112,9 +112,11 @@ const html5Schema = const NgTemplateSchema(const {
       'placeholder': const NgPropertyDefinition('placeholder', _typeString),
       'readonly': const NgPropertyDefinition('readonly', _typeString),
       'required': const NgPropertyDefinition('required', _typeString),
-      'selectiondirection': const NgPropertyDefinition('selectiondirection', _typeString),
+      'selectiondirection':
+          const NgPropertyDefinition('selectiondirection', _typeString),
       'selectionend': const NgPropertyDefinition('selectionend', _typeString),
-      'selectionstart': const NgPropertyDefinition('selectionstart', _typeString),
+      'selectionstart':
+          const NgPropertyDefinition('selectionstart', _typeString),
       'size': const NgPropertyDefinition('size', _typeString),
       'spellcheck': const NgPropertyDefinition('spellcheck', _typeString),
       'src': const NgPropertyDefinition('src', _typeString),
@@ -135,7 +137,8 @@ const html5Schema = const NgTemplateSchema(const {
       'formaction': const NgPropertyDefinition('formaction', _typeString),
       'formenctype': const NgPropertyDefinition('formenctype', _typeString),
       'formmethod': const NgPropertyDefinition('formmethod', _typeString),
-      'formnovalidate': const NgPropertyDefinition('formnovalidate', _typeString),
+      'formnovalidate':
+          const NgPropertyDefinition('formnovalidate', _typeString),
       'formtarget': const NgPropertyDefinition('formtarget', _typeString),
       'name': const NgPropertyDefinition('name', _typeString),
       'type': const NgPropertyDefinition('type', _typeString),
