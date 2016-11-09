@@ -7,7 +7,6 @@ import 'package:analyzer/analyzer.dart';
 
 import 'lexer.dart';
 import 'schema.dart';
-import 'utils.dart';
 
 part 'ast/attribute.dart';
 part 'ast/binding.dart';
@@ -73,6 +72,11 @@ abstract class NgAstNode {
   /// the original context that was parsed to create this node. Useful to
   /// reference when errors occur or to emit source maps.
   SourceSpan get source;
+
+  /// Transforms the NgAstNode by applying a transformation from its
+  /// attributes to a new NgAstNode.
+  ///
+  NgAstNode map(NgAstNode mapping(NgAstNode node)) => mapping(this);
 }
 
 /// An [NgAstNode] that is expected to be recognized in a schema.

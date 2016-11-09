@@ -44,6 +44,13 @@ class _Fragment implements NgAstNode {
   @override
   final SourceSpan source = null;
 
+  @override
+  NgAstNode map(NgAstNode mapping(NgAstNode node)) {
+    return new _Fragment()
+      ..childNodes.addAll(
+        childNodes.map((node) => node.map(mapping)));
+  }
+
 }
 
 typedef void ErrorCallback(Error error);
