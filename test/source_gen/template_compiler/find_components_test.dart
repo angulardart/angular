@@ -1,4 +1,4 @@
-@TestOn('vm')
+@Skip("TODO extra build step")
 import 'dart:async';
 import 'package:test/test.dart';
 import 'compare_to_golden.dart' as golden;
