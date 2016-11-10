@@ -1,5 +1,3 @@
-import 'package:angular2/src/compiler/view_compiler/view_compiler_utils.dart'
-    show TEMPLATE_COMMENT_TEXT, TEMPLATE_BINDINGS_EXP;
 import 'package:angular2/src/core/di.dart' show Inject, Injectable;
 import 'package:angular2/src/core/metadata.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart'
@@ -10,11 +8,9 @@ import 'package:angular2/src/core/render/api.dart'
         RenderDebugInfo,
         sharedStylesHost;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
-import 'package:angular2/src/facade/lang.dart' show Json;
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
 import 'dom_tokens.dart' show DOCUMENT;
-import 'events/event_manager.dart' show EventManager;
 
 const NAMESPACE_URIS = const {
   'xlink': 'http://www.w3.org/1999/xlink',
@@ -26,10 +22,9 @@ const NAMESPACE_URIS = const {
 class DomRootRenderer implements RootRenderer {
   static bool isDirty = false;
   dynamic document;
-  EventManager eventManager;
   var _registeredComponents = <String, DomRenderer>{};
 
-  DomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager);
+  DomRootRenderer(@Inject(DOCUMENT) this.document);
 
   Renderer renderComponent(RenderComponentType componentProto) {
     var renderer = this._registeredComponents[componentProto.id];
@@ -104,11 +99,6 @@ class DomRenderer implements Renderer {
     }
   }
 
-  Function listen(dynamic renderElement, String name, Function callback) {
-    return _rootRenderer.eventManager.addEventListener(
-        renderElement, name, decoratePreventDefault(callback));
-  }
-
   void setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue) {
     DOM.setProperty(renderElement, propertyName, propertyValue);
@@ -119,22 +109,6 @@ class DomRenderer implements Renderer {
   void setElementAttribute(
       dynamic renderElement, String attributeName, String attributeValue) {
     _setAttr(renderElement, attributeName, attributeValue);
-  }
-
-  void setBindingDebugInfo(
-      dynamic renderElement, String propertyName, String propertyValue) {
-    if (DOM.isCommentNode(renderElement)) {
-      var existingBindings = TEMPLATE_BINDINGS_EXP.firstMatch(
-          DOM.getText(renderElement).replaceAll(new RegExp(r'\n'), ''));
-      var parsedBindings = Json.parse(existingBindings[1]);
-      parsedBindings[propertyName] = propertyValue;
-      DOM.setText(
-          renderElement,
-          TEMPLATE_COMMENT_TEXT.replaceFirst(
-              '{}', Json.stringify(parsedBindings)));
-    } else {
-      _setAttr(renderElement, propertyName, propertyValue);
-    }
   }
 
   // TODO: deprecate after setBindingInfo is refactored.
@@ -210,16 +184,6 @@ void appendNodes(parent, nodes) {
   for (var i = 0; i < nodes.length; i++) {
     DOM.appendChild(parent, nodes[i]);
   }
-}
-
-Function decoratePreventDefault(Function eventHandler) {
-  return (event) {
-    var allowDefaultBehavior = eventHandler(event);
-    if (identical(allowDefaultBehavior, false)) {
-      // TODO(tbosch): move preventDefault into event plugins...
-      DOM.preventDefault(event);
-    }
-  };
 }
 
 var NS_PREFIX_RE = new RegExp(r'^@([^:]+):(.+)');

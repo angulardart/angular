@@ -77,7 +77,6 @@ class ViewConstructorVars {
 }
 
 class ViewProperties {
-  static var renderer = new o.ReadClassMemberExpr('renderer');
   static var projectableNodes = new o.ReadClassMemberExpr('projectableNodes');
 }
 

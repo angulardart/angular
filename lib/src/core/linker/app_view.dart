@@ -16,6 +16,7 @@ import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
 import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
+import 'dart:js_util' as js_util;
 
 export 'package:angular2/src/core/change_detection/component_state.dart';
 
@@ -462,6 +463,20 @@ abstract class AppView<T> {
       }
     }
     DomRootRenderer.isDirty = true;
+  }
+
+  Function listen(dynamic renderElement, String name, Function callback) {
+    return appViewUtils.eventManager.addEventListener(renderElement, name,
+        (Event event) {
+      var result = callback(event);
+      if (identical(result, false)) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  void setProp(Element element, String name, Object value) {
+    js_util.setProperty(element, name, value);
   }
 }
 

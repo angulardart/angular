@@ -1,6 +1,7 @@
 @TestOn('browser && !js')
 library angular2.test.core.linker.integration_test;
 
+import 'dart:html';
 import "dart:async";
 
 import "package:angular2/common.dart" show NgIf, NgFor;
@@ -848,7 +849,8 @@ void main() {
             PushCmpWithHostEvent cmp = cmpEl.inject(PushCmpWithHostEvent);
             cmp.ctxCallback = (_) => fixture.destroy();
             // Should not throw.
-            cmpEl.triggerEventHandler("click", {});
+            (cmpEl.nativeElement as Element)
+                .dispatchEvent(new MouseEvent('click'));
           });
         }));
 

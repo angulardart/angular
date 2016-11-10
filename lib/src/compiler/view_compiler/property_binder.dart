@@ -137,9 +137,9 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
           updateStmts.add(
               logBindingUpdateStmt(renderNode, boundProp.name, currValExpr));
         }
-        updateStmts.add(new o.ReadClassMemberExpr('renderer').callMethod(
-            renderMethod,
-            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
+        updateStmts.add(new o.InvokeMemberMethodExpr(
+                'setProp', [renderNode, o.literal(boundProp.name), renderValue])
+            .toStmt());
         break;
       case PropertyBindingType.Attribute:
         // For attributes convert value to a string.
@@ -408,7 +408,7 @@ void bindToUpdateMethod(
 
 o.Statement logBindingUpdateStmt(
     o.Expression renderNode, String propName, o.Expression value) {
-  return o.THIS_EXPR.prop('renderer').callMethod('setBindingDebugInfo', [
+  return new o.InvokeMemberMethodExpr('setBindingDebugInfo', [
     renderNode,
     o.literal('ng-reflect-${propName}'),
     value.isBlank().conditional(o.NULL_EXPR, value.callMethod('toString', []))

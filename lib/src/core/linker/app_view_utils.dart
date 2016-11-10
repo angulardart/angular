@@ -9,7 +9,8 @@ import 'package:angular2/src/core/security.dart' show SafeValue;
 import 'package:angular2/src/core/security.dart';
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/facade/lang.dart' show looseIdentical;
-
+import 'package:angular2/src/platform/dom/events/event_manager.dart'
+    show EventManager;
 import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 
 /// Function called when a view is destroyed.
@@ -24,6 +25,7 @@ AppViewUtils appViewUtils;
 class AppViewUtils {
   RootRenderer _renderer;
   String _appId;
+  EventManager eventManager;
   static int _nextCompTypeId = 0;
 
   /// Whether change detection should throw an exception when a change is
@@ -34,7 +36,8 @@ class AppViewUtils {
   static int _throwOnChangesCounter = 0;
   SanitizationService sanitizer;
 
-  AppViewUtils(this._renderer, @Inject(APP_ID) this._appId, this.sanitizer);
+  AppViewUtils(this._renderer, @Inject(APP_ID) this._appId, this.sanitizer,
+      this.eventManager);
 
   /// Used by the generated code.
   RenderComponentType createRenderComponentType(

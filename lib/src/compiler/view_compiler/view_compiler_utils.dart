@@ -18,8 +18,6 @@ const NAMESPACE_URIS = const {
 
 // Template Anchor comment.
 const TEMPLATE_COMMENT_TEXT = 'template bindings={}';
-// RegExp to match anchor comment when logging bindings for debugging.
-var TEMPLATE_BINDINGS_EXP = new RegExp(r'^template bindings=(.*)$');
 
 // Creates method parameters list for AppView set attribute calls.
 List<o.Expression> createSetAttributeParams(

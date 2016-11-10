@@ -5,7 +5,6 @@ import "package:angular2/src/debug/debug_node.dart"
     show
         DebugNode,
         DebugElement,
-        EventListener,
         getDebugNode,
         indexDebugNode,
         inspectNativeElement,
@@ -14,7 +13,6 @@ import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
 import '../platform/dom/dom_renderer.dart' show DomRenderer, DomRootRenderer;
 import '../platform/dom/dom_tokens.dart' show DOCUMENT;
-import '../platform/dom/events/event_manager.dart' show EventManager;
 
 const INSPECT_GLOBAL_NAME = "ng.probe";
 
@@ -26,10 +24,9 @@ const INSPECT_GLOBAL_NAME = "ng.probe";
 class DebugDomRootRenderer implements DomRootRenderer {
   static bool isDirty = false;
   dynamic document;
-  EventManager eventManager;
   var _registeredComponents = <String, DomRenderer>{};
 
-  DebugDomRootRenderer(@Inject(DOCUMENT) this.document, this.eventManager) {
+  DebugDomRootRenderer(@Inject(DOCUMENT) this.document) {
     DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
   }
 
@@ -103,14 +100,6 @@ class DebugDomRenderer extends DomRenderer {
       removeDebugNodeFromIndex(debugNode);
     }
     super.destroyView(hostElement, viewAllNodes);
-  }
-
-  Function listen(dynamic renderElement, String name, Function callback) {
-    var debugEl = getDebugNode(renderElement);
-    if (debugEl != null) {
-      debugEl.listeners.add(new EventListener(name, callback));
-    }
-    return super.listen(renderElement, name, callback);
   }
 
   void setElementProperty(

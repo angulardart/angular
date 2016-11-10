@@ -1,6 +1,7 @@
 @TestOn('browser && !js')
 library angular2.test.core.debug.debug_node_test;
 
+import 'dart:html';
 import "package:angular2/common.dart" show NgFor, NgIf;
 import "package:angular2/core.dart" show Injectable;
 import "package:angular2/src/core/metadata.dart"
@@ -376,11 +377,13 @@ void main() {
           fixture.detectChanges();
           expect(fixture.debugElement.componentInstance.clicked, isFalse);
           expect(fixture.debugElement.componentInstance.customed, isFalse);
-          fixture.debugElement.children[0]
-              .triggerEventHandler("click", ({} as dynamic));
+          (fixture.debugElement.children[0].nativeElement as Element)
+              .dispatchEvent(new MouseEvent('click'));
+//              .triggerEventHandler("click", ({} as dynamic));
           expect(fixture.debugElement.componentInstance.clicked, isTrue);
-          fixture.debugElement.children[1]
-              .triggerEventHandler("myevent", ({} as dynamic));
+          (fixture.debugElement.children[1].nativeElement as Element)
+              .dispatchEvent(new Event('myevent'));
+//              .triggerEventHandler("myevent", ({} as dynamic));
           expect(fixture.debugElement.componentInstance.customed, isTrue);
           completer.done();
         });

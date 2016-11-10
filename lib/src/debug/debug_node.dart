@@ -5,16 +5,16 @@ import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 
 typedef bool Predicate<T>(T item);
 
-class EventListener {
+class DebugEventListener {
   String name;
   Function callback;
-  EventListener(this.name, this.callback);
+  DebugEventListener(this.name, this.callback);
 }
 
 class DebugNode {
   RenderDebugInfo _debugInfo;
   dynamic nativeNode;
-  List<EventListener> listeners;
+  List<DebugEventListener> listeners;
   DebugElement parent;
   DebugNode(dynamic nativeNode, DebugNode parent, this._debugInfo) {
     this.nativeNode = nativeNode;

@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 void main() {
   var testRoot;
   group('preservewhitespace', () {
-    tearDown(() async => await testRoot.dispose());
+    tearDown(() => disposeAnyRunningTest());
 
     test('should not remove whitespace by default', () async {
       var testBed = new NgTestBed<DefaultWhiteSpaceComponent>();

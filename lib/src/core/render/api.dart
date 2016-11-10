@@ -98,6 +98,7 @@ abstract class RenderDebugInfo {
   String get source;
 }
 
+@Deprecated('Use dart:html')
 abstract class Renderer {
   dynamic selectRootElement(
       dynamic /* String | dynamic */ selectorOrNode, RenderDebugInfo debugInfo);
@@ -106,17 +107,12 @@ abstract class Renderer {
   void attachViewAfter(dynamic node, List<dynamic> viewRootNodes);
   void detachView(List<dynamic> viewRootNodes);
   void destroyView(dynamic hostElement, List<dynamic> viewAllNodes);
-  Function listen(dynamic renderElement, String name, Function callback);
   void setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue);
   @Deprecated("Use dart:html Element attributes and setAttribute.")
   void setElementAttribute(
       dynamic renderElement, String attributeName, String attributeValue);
 
-  /// Used only in debug mode to serialize property changes to dom nodes as
-  /// attributes.
-  void setBindingDebugInfo(
-      dynamic renderElement, String propertyName, String propertyValue);
   void setElementClass(dynamic renderElement, String className, bool isAdd);
   @Deprecated("Use dart:html Element.style instead")
   void setElementStyle(

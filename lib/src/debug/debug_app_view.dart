@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'dart:convert';
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
@@ -14,7 +15,12 @@ import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular2/src/debug/debug_context.dart'
     show StaticNodeDebugInfo, DebugContext;
 import 'package:angular2/src/debug/debug_node.dart'
-    show DebugElement, DebugNode, getDebugNode, indexDebugNode;
+    show
+        DebugElement,
+        DebugNode,
+        getDebugNode,
+        indexDebugNode,
+        DebugEventListener;
 import 'package:angular2/src/platform/dom/dom_renderer.dart'
     show DomRootRenderer;
 
@@ -23,6 +29,10 @@ export 'package:angular2/src/debug/debug_context.dart'
     show StaticNodeDebugInfo, DebugContext;
 
 WtfScopeFn _scope_check = wtfCreateScope('AppView#check(ascii id)');
+
+// RegExp to match anchor comment when logging bindings for debugging.
+RegExp _TEMPLATE_BINDINGS_EXP = new RegExp(r'^template bindings=(.*)$');
+const _TEMPLATE_COMMENT_TEXT = 'template bindings={}';
 
 class DebugAppView<T> extends AppView<T> {
   static bool profilingEnabled = false;
@@ -140,6 +150,31 @@ class DebugAppView<T> extends AppView<T> {
         rethrow;
       }
     };
+  }
+
+  Function listen(dynamic renderElement, String name, Function callback) {
+    var debugEl = getDebugNode(renderElement);
+    if (debugEl != null) {
+      debugEl.listeners.add(new DebugEventListener(name, callback));
+    }
+    return super.listen(renderElement, name, callback);
+  }
+
+  /// Used only in debug mode to serialize property changes to dom nodes as
+  /// attributes.
+  void setBindingDebugInfo(
+      dynamic renderElement, String propertyName, String propertyValue) {
+    if (renderElement is Comment) {
+      var existingBindings = _TEMPLATE_BINDINGS_EXP
+          .firstMatch(renderElement.text.replaceAll(new RegExp(r'\n'), ''));
+      var parsedBindings = JSON.decode(existingBindings[1]);
+      parsedBindings[propertyName] = propertyValue;
+      String debugStr =
+          const JsonEncoder.withIndent('  ').convert(parsedBindings);
+      renderElement.text = _TEMPLATE_COMMENT_TEXT.replaceFirst('{}', debugStr);
+    } else {
+      setAttr(renderElement, propertyName, propertyValue);
+    }
   }
 
   /// Sets up current debug context to node so that failures can be associated

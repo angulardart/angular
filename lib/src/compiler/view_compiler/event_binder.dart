@@ -4,7 +4,7 @@ import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
-import 'constants.dart' show EventHandlerVars, ViewProperties;
+import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show convertCdStatementToIr;
 
 class CompileEventListener {
@@ -93,11 +93,13 @@ class CompileEventListener {
       new o.ReadClassMemberExpr(_methodName)
           .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
     ]);
-    o.Expression listenExpr = ViewProperties.renderer.callMethod('listen', [
+
+    o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
       this.compileElement.renderNode,
       o.literal(this.eventName),
       eventListener
     ]);
+
     this
         .compileElement
         .view
