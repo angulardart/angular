@@ -11,8 +11,6 @@ import "package:angular2/src/compiler/style_compiler.dart" show StyleCompiler;
 import "package:angular2/src/compiler/template_parser.dart" show TemplateParser;
 import "package:angular2/src/compiler/url_resolver.dart"
     show UrlResolver, DEFAULT_PACKAGE_URL_PROVIDER;
-import "package:angular2/src/compiler/view_compiler/injector_compiler.dart"
-    show InjectorCompiler;
 import "package:angular2/src/compiler/view_compiler/view_compiler.dart"
     show ViewCompiler;
 import "package:angular2/src/core/di.dart" show Provider;
@@ -55,7 +53,6 @@ const List<dynamic /* Type | Provider | List < dynamic > */ >
   DEFAULT_PACKAGE_URL_PROVIDER,
   StyleCompiler,
   ViewCompiler,
-  InjectorCompiler,
   const Provider(CompilerConfig,
       useFactory: createCompilerConfig, deps: const []),
   DomElementSchemaRegistry,

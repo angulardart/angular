@@ -112,8 +112,7 @@ class ReflectionInfoVisitor extends RecursiveAstVisitor<ReflectionInfoModel> {
           viewDirectives = _extractReferencedTypes(node, 'directives');
           viewPipes = _extractReferencedTypes(node, 'pipes');
           keepAnnotation = false;
-        } else if (_annotationMatcher.isDirective(node, assetId) ||
-            _annotationMatcher.isInjectorModule(node, assetId)) {
+        } else if (_annotationMatcher.isDirective(node, assetId)) {
           keepAnnotation = false;
         }
         if (keepAnnotation) {

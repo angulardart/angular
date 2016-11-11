@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/source_gen/common/logging.dart';
@@ -11,7 +10,6 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'find_components.dart';
-import 'find_injectable_modules.dart';
 
 /// Generates `.template.dart` files to initialize the Angular2 system.
 ///
@@ -52,13 +50,8 @@ Future<Outputs> processTemplates(Element element, BuildStep buildStep,
     component.component =
         await templateCompiler.normalizeDirectiveMetadata(component.component);
   });
-  List<CompileInjectorModuleMetadata> injectorDefinitions = logElapsedSync(
-      () => findInjectableModules(buildStep, element),
-      operationName: 'findInjectableModules',
-      assetId: buildStep.input.id,
-      log: buildStep.logger);
   final compiledTemplates = logElapsedSync(() {
-    return templateCompiler.compile(compileComponentsData, injectorDefinitions);
+    return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: buildStep.input.id);
   return new Outputs._(compiledTemplates);
 }

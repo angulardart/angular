@@ -144,10 +144,6 @@ class AnnotationMatcher extends ClassMatcherBase {
   bool isPipe(Annotation annotation, AssetId assetId) =>
       _implementsWithWarning(annotation, assetId, _PIPES);
 
-  /// Checks if an [Annotation] node implements [InjectorModule].
-  bool isInjectorModule(Annotation annotation, AssetId assetId) =>
-      _implementsWithWarning(annotation, assetId, _INJECTOR_MODULES);
-
   /// Checks if an [Annotation] node implements [AngularEntrypoint]
   bool isEntrypoint(Annotation annotation, AssetId assetId) =>
       _implementsWithWarning(annotation, assetId, _ENTRYPOINTS);

@@ -197,13 +197,6 @@ class _NgMetaIdentifierResolver {
       } else if (meta is CompilePipeMetadata) {
         _resolveDiDependencyMetadata(
             ngMetaMap, meta.type.name, meta.type.diDeps);
-      } else if (meta is CompileInjectorModuleMetadata) {
-        if (meta.injectable) {
-          // Only resolve constructor arguments if the InjectorModule is marked as
-          // @Injectable.
-          _resolveDiDependencyMetadata(ngMetaMap, meta.name, meta.diDeps);
-        }
-        _resolveInjectorProviders(ngMetaMap, meta);
       } else if (meta is CompileTypeMetadata) {
         _resolveDiDependencyMetadata(ngMetaMap, meta.name, meta.diDeps);
       } else if (meta is CompileFactoryMetadata) {
@@ -223,11 +216,6 @@ class _NgMetaIdentifierResolver {
     } else if (value is CompileProviderMetadata) {
       _resolveProvider(ngMetaMap, neededBy, value);
       var providers = [value];
-      if (value.token.identifier is CompileInjectorModuleMetadata) {
-        var cimm = value.token.identifier as CompileInjectorModuleMetadata;
-        providers
-            .addAll(_resolveProviders(ngMetaMap, cimm.providers, cimm.name));
-      }
       return providers;
     } else if (value is CompileIdentifierMetadata) {
       final resolved = _resolveIdentifier(ngMetaMap, neededBy, value);
@@ -239,11 +227,6 @@ class _NgMetaIdentifierResolver {
               token: new CompileTokenMetadata(identifier: resolved),
               useClass: resolved)
         ];
-        if (resolved is CompileInjectorModuleMetadata) {
-          CompileInjectorModuleMetadata cimm = resolved;
-          providers
-              .addAll(_resolveProviders(ngMetaMap, cimm.providers, cimm.name));
-        }
         return providers;
       } else if (resolved is CompileIdentifierMetadata &&
           resolved.value is List) {
@@ -270,15 +253,6 @@ class _NgMetaIdentifierResolver {
     if (dirMeta.viewProviders != null) {
       dirMeta.viewProviders =
           _resolveProviders(ngMetaMap, dirMeta.viewProviders, neededBy);
-    }
-  }
-
-  void _resolveInjectorProviders(Map<String, NgMeta> ngMetaMap,
-      CompileInjectorModuleMetadata injectorModuleMeta) {
-    final neededBy = injectorModuleMeta.type.name;
-    if (injectorModuleMeta.providers != null) {
-      injectorModuleMeta.providers =
-          _resolveProviders(ngMetaMap, injectorModuleMeta.providers, neededBy);
     }
   }
 

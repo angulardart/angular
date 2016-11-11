@@ -39,10 +39,11 @@ class CompileDataResults {
   final NgMeta ngMeta;
   final Map<ReflectionInfoModel, NormalizedComponentWithViewDirectives>
       viewDefinitions;
-  final List<CompileInjectorModuleMetadata> injectorDefinitions;
 
   CompileDataResults._(
-      this.ngMeta, this.viewDefinitions, this.injectorDefinitions);
+    this.ngMeta,
+    this.viewDefinitions,
+  );
 }
 
 /// Creates [ViewDefinition] objects for all `View` `Directive`s defined in
@@ -76,14 +77,12 @@ class _CompileDataCreator {
         ngDeps.reflectables.any((reflectable) {
           if (ngMeta.identifiers.containsKey(reflectable.name)) {
             final metadata = ngMeta.identifiers[reflectable.name];
-            return metadata is CompileDirectiveMetadata ||
-                metadata is CompileInjectorModuleMetadata;
+            return metadata is CompileDirectiveMetadata;
           }
           return false;
         });
 
-    if (!hasTemplate)
-      return new CompileDataResults._(ngMeta, const {}, const []);
+    if (!hasTemplate) return new CompileDataResults._(ngMeta, const {});
 
     final compileComponentData =
         <ReflectionInfoModel, NormalizedComponentWithViewDirectives>{};
@@ -92,7 +91,6 @@ class _CompileDataCreator {
     final platformPipes = await _readPlatformTypes(this.platformPipes, 'pipes');
     final ngMetaMap = await _extractNgMeta();
 
-    final List<CompileInjectorModuleMetadata> injectorModuleMetadatas = [];
     for (var reflectable in ngDeps.reflectables) {
       if (ngMeta.identifiers.containsKey(reflectable.name)) {
         final compileMetadata = ngMeta.identifiers[reflectable.name];
@@ -112,13 +110,10 @@ class _CompileDataCreator {
               _resolveTypeMetadata(ngMetaMap, reflectable.pipes)
               as Iterable<CompilePipeMetadata>);
           compileComponentData[reflectable] = compileComponentDatum;
-        } else if (compileMetadata is CompileInjectorModuleMetadata) {
-          injectorModuleMetadatas.add(compileMetadata);
         }
       }
     }
-    return new CompileDataResults._(
-        ngMeta, compileComponentData, injectorModuleMetadatas);
+    return new CompileDataResults._(ngMeta, compileComponentData);
   }
 
   List<dynamic> _resolveTypeMetadata(

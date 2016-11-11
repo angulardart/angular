@@ -3,10 +3,7 @@ import "package:angular2/src/core/di.dart" show Injectable, Inject, Optional;
 import "package:angular2/src/core/di/decorators.dart";
 import "package:angular2/src/core/di/provider.dart" show Provider;
 import "package:angular2/src/core/di/reflective_provider.dart"
-    show
-        constructDependencies,
-        ReflectiveDependency,
-        getInjectorModuleProviders;
+    show constructDependencies, ReflectiveDependency;
 import "package:angular2/src/core/metadata.dart"
     show View, Attribute, Query, Component;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
@@ -225,15 +222,12 @@ class RuntimeMetadataResolver {
       } else if (provider is Provider) {
         return [
           this.getProviderMetadata(provider),
-          isValidType(provider.token)
-              ? this.getProvidersMetadata(
-                  getInjectorModuleProviders(provider.token))
-              : []
+          const [],
         ];
       } else if (isValidType(provider)) {
         return [
           this.getTypeMetadata(provider, null),
-          this.getProvidersMetadata(getInjectorModuleProviders(provider))
+          const [],
         ];
       } else {
         throw new BaseException(
@@ -296,20 +290,6 @@ class RuntimeMetadataResolver {
         descendants: q.descendants,
         propertyName: propertyName,
         read: q.read != null ? this.getTokenMetadata(q.read) : null);
-  }
-
-  cpl.CompileInjectorModuleMetadata getInjectorModuleMetadata(
-      Type config, List<dynamic> extraProviders) {
-    var providers = getInjectorModuleProviders(config);
-    if (extraProviders != null) {
-      providers = (new List.from(providers)..addAll(extraProviders));
-    }
-    return new cpl.CompileInjectorModuleMetadata(
-        name: this.sanitizeTokenName(config),
-        moduleUrl: null,
-        runtime: config,
-        diDeps: [],
-        providers: this.getProvidersMetadata(providers));
   }
 }
 

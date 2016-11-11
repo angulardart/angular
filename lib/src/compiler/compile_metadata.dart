@@ -776,78 +776,6 @@ class CompilePipeMetadata implements CompileMetadataWithType {
   }
 }
 
-/// Metadata regarding compilation of an InjectorModule.
-class CompileInjectorModuleMetadata
-    implements CompileMetadataWithType, CompileTypeMetadata {
-  Type runtime;
-  Function runtimeCallback;
-  String name;
-  String prefix;
-  String moduleUrl;
-  var isHost = false;
-  dynamic value;
-  List<CompileDiDependencyMetadata> diDeps;
-  bool injectable;
-  // CompileProviderMetadata | CompileTypeMetadata | CompileIdentifierMetadata
-  // | List
-  List<dynamic /*  < dynamic > */ > providers;
-  CompileInjectorModuleMetadata(
-      {Type runtime,
-      String name,
-      String moduleUrl,
-      String prefix,
-      dynamic value,
-      List<CompileDiDependencyMetadata> diDeps,
-      // CompileProviderMetadata | CompileTypeMetadata |
-      // CompileIdentifierMetadata | List
-      List providers,
-      bool injectable}) {
-    this.runtime = runtime;
-    this.name = name;
-    this.moduleUrl = moduleUrl;
-    this.prefix = prefix;
-    this.value = value;
-    this.diDeps = diDeps ?? [];
-    this.providers = providers ?? [];
-    this.injectable = injectable == true;
-  }
-  static CompileInjectorModuleMetadata fromJson(Map<String, dynamic> data) {
-    return new CompileInjectorModuleMetadata(
-        name: data["name"],
-        moduleUrl: data["moduleUrl"],
-        prefix: data["prefix"],
-        value: data["value"],
-        diDeps:
-            _arrayFromJson(data["diDeps"], CompileDiDependencyMetadata.fromJson)
-            as List<CompileDiDependencyMetadata>,
-        providers: _arrayFromJson(data["providers"], metadataFromJson),
-        injectable: data["injectable"]);
-  }
-
-  CompileIdentifierMetadata get identifier {
-    return this;
-  }
-
-  CompileInjectorModuleMetadata get type {
-    return this;
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      // Note: Runtime type can't be serialized...
-      "class": "InjectorModule",
-      "name": this.name,
-      "moduleUrl": this.moduleUrl,
-      "prefix": this.prefix,
-      "isHost": this.isHost,
-      "value": this.value,
-      "diDeps": _arrayToJson(this.diDeps),
-      "providers": _arrayToJson(this.providers),
-      "injectable": this.injectable
-    };
-  }
-}
-
 var _COMPILE_METADATA_FROM_JSON = {
   "Directive": CompileDirectiveMetadata.fromJson,
   "Pipe": CompilePipeMetadata.fromJson,
@@ -855,7 +783,6 @@ var _COMPILE_METADATA_FROM_JSON = {
   "Provider": CompileProviderMetadata.fromJson,
   "Identifier": CompileIdentifierMetadata.fromJson,
   "Factory": CompileFactoryMetadata.fromJson,
-  "InjectorModule": CompileInjectorModuleMetadata.fromJson
 };
 
 dynamic _arrayFromJson(List<dynamic> obj, dynamic fn(Map<String, dynamic> a)) {

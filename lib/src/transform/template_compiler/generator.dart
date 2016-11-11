@@ -45,14 +45,12 @@ Future<Outputs> processTemplates(AssetReader reader, AssetId assetId,
 
   final compileComponentsData =
       compileDefs.viewDefinitions.values.toList(growable: false);
-  if (compileComponentsData.isEmpty &&
-      compileDefs.injectorDefinitions.isEmpty) {
+  if (compileComponentsData.isEmpty) {
     return new Outputs._(compileDefs.ngMeta.ngDeps, null);
   }
 
   final compiledTemplates = logElapsedSync(() {
-    return templateCompiler.compile(
-        compileComponentsData, compileDefs.injectorDefinitions);
+    return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: assetId);
 
   if (compiledTemplates != null) {

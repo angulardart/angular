@@ -1518,23 +1518,6 @@ class HostListener {
   const HostListener(this.eventName, [this.args]);
 }
 
-/// Defines an injector module from which an injector can be generated.
-///
-/// ## Example
-///
-/// ```dart
-/// @InjectorModule(
-///   providers: const [SomeService]
-/// )
-/// class MyModule {}
-///
-/// ```
-/// @experimental
-class InjectorModule {
-  final List providers;
-  const InjectorModule({this.providers: const []});
-}
-
 /// Defines an injectable whose value is given by a property on an
 /// InjectorModule class.
 ///

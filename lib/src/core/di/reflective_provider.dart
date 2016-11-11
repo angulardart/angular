@@ -1,6 +1,5 @@
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 
-import '../reflection/reflection.dart' show NoReflectionCapabilitiesError;
 import '../metadata.dart';
 import "decorators.dart";
 import "provider.dart" show Provider, provide, noValueProvided;
@@ -182,10 +181,10 @@ List<Provider> _normalizeProviders(
   providers.forEach((b) {
     if (b is Type) {
       res.add(provide(b, useClass: b));
-      _normalizeProviders(getInjectorModuleProviders(b), res);
+      _normalizeProviders(const [], res);
     } else if (b is Provider) {
+      _normalizeProviders(const [], res);
       res.add(b);
-      _normalizeProviders(getInjectorModuleProviders(b.token), res);
     } else if (b is List) {
       _normalizeProviders(b, res);
     } else {
@@ -266,34 +265,4 @@ ReflectiveDependency _createDependency(
     token, optional, lowerBoundVisibility, upperBoundVisibility, depProps) {
   return new ReflectiveDependency(ReflectiveKey.get(token), optional,
       lowerBoundVisibility, upperBoundVisibility, depProps);
-}
-
-/// Returns [InjectorModule] providers for a given token if possible.
-List getInjectorModuleProviders(dynamic token) {
-  var providers = [];
-  List<dynamic> annotations;
-  try {
-    if (token is Type) {
-      annotations = reflector.annotations(token);
-    }
-  } on NoReflectionCapabilitiesError {
-    // ignoring reflection errors here
-  }
-  InjectorModule metadata = annotations != null
-      ? annotations.firstWhere((type) => type is InjectorModule,
-          orElse: () => null)
-      : null;
-  if (metadata != null) {
-    var propertyMetadata = reflector.propMetadata(token);
-    providers.addAll(metadata.providers);
-    propertyMetadata.forEach((String propName, List<dynamic> metadata) {
-      metadata.forEach((a) {
-        if (a is ProviderProperty) {
-          providers.add(new Provider(a.token,
-              multi: a.multi, useProperty: propName, useExisting: token));
-        }
-      });
-    });
-  }
-  return providers;
 }

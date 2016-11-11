@@ -3,7 +3,6 @@ library angular2.test.core.linker.view_injector_integration_test;
 
 import "package:angular2/common.dart";
 import "package:angular2/core.dart";
-import "package:angular2/src/facade/lang.dart" show stringify;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
@@ -287,23 +286,6 @@ class Car {
 
 @Injectable()
 class SomeService {}
-
-@InjectorModule(providers: const [Car])
-class SomeModuleWithProvider {}
-
-@InjectorModule()
-class SomeModuleWithDeps {
-  SomeService someService;
-  SomeModuleWithDeps(this.someService);
-}
-
-@InjectorModule()
-class SomeModuleWithProp {
-  @Provides(Engine)
-  String a = "aChildValue";
-  @Provides("multiProp", multi: true)
-  var multiProp = "aMultiValue";
-}
 
 ComponentFixture createCompFixture(String template, TestComponentBuilder tcb,
     [Type comp = null]) {
@@ -740,78 +722,6 @@ No provider for SimpleDirective ("[ERROR ->]<div needsDirectiveFromHost></div>")
         expect(purePipe3 != purePipe1, isTrue);
         expect(purePipe4, new isInstanceOf<ImpurePipe>());
         expect(purePipe4 != purePipe1, isTrue);
-      }));
-    });
-    group("modules", () {
-      test("should use the providers of modules (types)", fakeAsync(() {
-        var injector = createComp(
-                "",
-                tcb.overrideProviders(
-                    TestComp, [SomeModuleWithProvider, Engine]),
-                TestComp)
-            .injector;
-        expect(injector.get(SomeModuleWithProvider),
-            new isInstanceOf<SomeModuleWithProvider>());
-        expect(injector.get(Car), new isInstanceOf<Car>());
-      }));
-      test("should use the providers of modules (providers)", fakeAsync(() {
-        var injector = createComp(
-                "",
-                tcb.overrideProviders(TestComp, [
-                  provide(SomeModuleWithProvider,
-                      useClass: SomeModuleWithProvider),
-                  Engine
-                ]),
-                TestComp)
-            .injector;
-        expect(injector.get(SomeModuleWithProvider),
-            new isInstanceOf<SomeModuleWithProvider>());
-        expect(injector.get(Car), new isInstanceOf<Car>());
-      }));
-      test("should inject deps into modules", fakeAsync(() {
-        var injector = createComp(
-                "",
-                tcb.overrideProviders(
-                    TestComp, [SomeModuleWithDeps, SomeService]),
-                TestComp)
-            .injector;
-        expect(injector.get(SomeModuleWithDeps).someService,
-            new isInstanceOf<SomeService>());
-      }));
-    });
-    group("provider properties", () {
-      test("should support provider properties", fakeAsync(() {
-        var inj = createComp("",
-                tcb.overrideProviders(TestComp, [SomeModuleWithProp]), TestComp)
-            .injector;
-        expect(inj.get(Engine), "aChildValue");
-      }));
-      test("should support multi providers", fakeAsync(() {
-        var inj = createComp(
-                "",
-                tcb.overrideProviders(TestComp, [
-                  SomeModuleWithProp,
-                  new Provider("multiProp",
-                      useValue: "bMultiValue", multi: true)
-                ]),
-                TestComp)
-            .injector;
-        expect(inj.get("multiProp"), ["aMultiValue", "bMultiValue"]);
-      }));
-      test("should throw if the module is missing when the value is read",
-          fakeAsync(() {
-        var inj = createComp(
-                "",
-                tcb.overrideProviders(TestComp, [
-                  new Provider(Engine,
-                      useProperty: "a", useExisting: SomeModuleWithProp)
-                ]),
-                TestComp)
-            .injector;
-        expect(
-            () => inj.get(Engine),
-            throwsWith(
-                'No provider for ${ stringify ( SomeModuleWithProp )}!'));
       }));
     });
   });

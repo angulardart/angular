@@ -75,7 +75,6 @@ class NgMeta {
         id is CompilePipeMetadata ||
         id is CompileTypeMetadata ||
         id is CompileFactoryMetadata ||
-        id is CompileInjectorModuleMetadata ||
         (id is CompileIdentifierMetadata && id.value != null));
   }
 

@@ -7,7 +7,6 @@ import 'compile_metadata.dart'
         CompileDirectiveMetadata,
         CompilePipeMetadata,
         createHostComponentMeta,
-        CompileInjectorModuleMetadata,
         CompileTypeMetadata;
 import 'compiler_utils.dart' show MODULE_SUFFIX;
 import 'directive_normalizer.dart' show DirectiveNormalizer;
@@ -16,7 +15,6 @@ import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
 import 'template_parser.dart' show TemplateParser;
-import 'view_compiler/injector_compiler.dart' show InjectorCompiler;
 import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
 
 class SourceModule {
@@ -46,27 +44,18 @@ class OfflineCompiler {
   final TemplateParser _templateParser;
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
-  InjectorCompiler _injectorCompiler;
   OutputEmitter _outputEmitter;
-  OfflineCompiler(
-      this._directiveNormalizer,
-      this._templateParser,
-      this._styleCompiler,
-      this._viewCompiler,
-      this._injectorCompiler,
-      this._outputEmitter);
+  OfflineCompiler(this._directiveNormalizer, this._templateParser,
+      this._styleCompiler, this._viewCompiler, this._outputEmitter);
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
     return _directiveNormalizer.normalizeDirective(directive);
   }
 
-  SourceModule compile(List<NormalizedComponentWithViewDirectives> components,
-      List<CompileInjectorModuleMetadata> injectorModules) {
+  SourceModule compile(List<NormalizedComponentWithViewDirectives> components) {
     String moduleUrl;
     if (components.isNotEmpty) {
       moduleUrl = _templateModuleUrl(components[0].component.type);
-    } else if (injectorModules.isNotEmpty) {
-      moduleUrl = _templateModuleUrl(injectorModules[0].type);
     } else {
       throw new BaseException('No components nor injectorModules given');
     }
@@ -96,11 +85,6 @@ class OfflineCompiler {
                   Identifiers.ComponentFactory, null, [o.TypeModifier.Const])))
           .toDeclStmt(null, [o.StmtModifier.Final]));
       exportedVars.add(compFactoryVar);
-    });
-    injectorModules.forEach((injectorModuleMeta) {
-      var compileResult = _injectorCompiler.compileInjector(injectorModuleMeta);
-      compileResult.statements.forEach((stmt) => statements.add(stmt));
-      exportedVars.add(compileResult.injectorFactoryVar);
     });
     return _codegenSourceModule(moduleUrl, statements, exportedVars);
   }

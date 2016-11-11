@@ -10,41 +10,6 @@ import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';
 import 'package:build/build.dart';
 
-List<CompileInjectorModuleMetadata> findInjectableModules(
-    BuildStep buildStep, Element element) {
-  var visitor = new CompileInjectorModuleMetadataVisitor(buildStep);
-  element.accept(visitor);
-  return visitor.modules;
-}
-
-class CompileInjectorModuleMetadataVisitor
-    extends RecursiveElementVisitor<Null> {
-  final List<CompileInjectorModuleMetadata> _modules = [];
-  final BuildStep _buildStep;
-
-  CompileInjectorModuleMetadataVisitor(this._buildStep);
-
-  List<CompileInjectorModuleMetadata> get modules =>
-      _modules.where((module) => module != null).toList();
-
-  @override
-  Null visitClassElement(ClassElement element) {
-    if (element.metadata.any((annotation) =>
-        annotation_matcher.matchAnnotation(InjectorModule, annotation))) {
-      var typeVisitor = new CompileTypeMetadataVisitor(_buildStep);
-      CompileTypeMetadata type = element.accept(typeVisitor);
-      _modules.add(new CompileInjectorModuleMetadata(
-          name: type.name,
-          moduleUrl: type.moduleUrl,
-          diDeps: type.diDeps,
-          injectable: element.metadata.any(_isInjectable),
-          // TODO(alorenzen): Find providers.
-          providers: []));
-    }
-    return null;
-  }
-}
-
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final BuildStep _buildStep;
@@ -143,5 +108,4 @@ bool _isInjectable(ElementAnnotation element) => const [
       Directive,
       Pipe,
       Injectable,
-      InjectorModule
     ].any((type) => annotation_matcher.matchAnnotation(type, element));

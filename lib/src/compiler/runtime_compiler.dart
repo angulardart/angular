@@ -6,8 +6,6 @@ import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, NgViewFactory;
 import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver;
-import "package:angular2/src/core/linker/injector_factory.dart"
-    show CodegenInjectorFactory;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
@@ -17,8 +15,6 @@ import "compile_metadata.dart"
         CompilePipeMetadata,
         CompileIdentifierMetadata;
 import "directive_normalizer.dart" show DirectiveNormalizer;
-import "output/interpretive_injector.dart"
-    show InterpretiveInjectorInstanceFactory;
 import "output/interpretive_view.dart" show InterpretiveAppViewInstanceFactory;
 import "output/output_ast.dart" as ir;
 import "output/output_interpreter.dart" show interpretStatements;
@@ -27,7 +23,6 @@ import "style_compiler.dart"
     show StyleCompiler, StylesCompileDependency, StylesCompileResult;
 import "template_ast.dart" show TemplateAst;
 import "template_parser.dart" show TemplateParser;
-import "view_compiler/injector_compiler.dart" show InjectorCompiler;
 import "view_compiler/view_compiler.dart" show ViewCompiler;
 import "xhr.dart" show XHR;
 
@@ -42,33 +37,19 @@ class RuntimeCompiler implements ComponentResolver {
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
   XHR _xhr;
-  InjectorCompiler _injectorCompiler;
   Map<String, Future<String>> _styleCache = new Map<String, Future<String>>();
   var _hostCacheKeys = new Map<Type, dynamic>();
   var _compiledTemplateCache = new Map<dynamic, CompiledTemplate>();
   var _compiledTemplateDone = new Map<dynamic, Future<CompiledTemplate>>();
 
   RuntimeCompiler(
-      this._runtimeMetadataResolver,
-      this._templateNormalizer,
-      this._templateParser,
-      this._styleCompiler,
-      this._viewCompiler,
-      this._xhr,
-      this._injectorCompiler);
-
-  CodegenInjectorFactory<dynamic> createInjectorFactory(Type moduleClass,
-      [List<dynamic> extraProviders = const []]) {
-    var injectorModuleMeta = this
-        ._runtimeMetadataResolver
-        .getInjectorModuleMetadata(moduleClass, extraProviders);
-    var compileResult =
-        this._injectorCompiler.compileInjector(injectorModuleMeta);
-    return interpretStatements(
-        compileResult.statements,
-        compileResult.injectorFactoryVar,
-        new InterpretiveInjectorInstanceFactory());
-  }
+    this._runtimeMetadataResolver,
+    this._templateNormalizer,
+    this._templateParser,
+    this._styleCompiler,
+    this._viewCompiler,
+    this._xhr,
+  );
 
   Future<ComponentFactory> resolveComponent(Type componentType) {
     CompileDirectiveMetadata compMeta =

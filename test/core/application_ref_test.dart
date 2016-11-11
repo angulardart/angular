@@ -26,8 +26,6 @@ import "package:angular2/src/core/application_ref.dart"
 import "package:angular2/src/core/linker/app_view_utils.dart" show AppViewUtils;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, ComponentRefImpl, ComponentRef;
-import "package:angular2/src/core/linker/injector_factory.dart"
-    show CodegenInjectorFactory;
 import "package:angular2/src/facade/exception_handler.dart"
     show ExceptionHandler;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -174,11 +172,6 @@ class _MockComponentResolver implements ComponentResolver {
   _MockComponentResolver(this._compFactory);
   Future<ComponentFactory> resolveComponent(Type type) {
     return new Future.value(this._compFactory);
-  }
-
-  CodegenInjectorFactory<dynamic> createInjectorFactory(Type injectorModule,
-      [List<dynamic> extraProviders]) {
-    throw new UnimplementedError();
   }
 
   void clearCache() {}
