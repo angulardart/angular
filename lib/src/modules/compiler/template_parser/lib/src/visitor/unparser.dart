@@ -1,13 +1,17 @@
 part of angular2_template_parser.src.visitor;
 
-/// this is an example [Visitor] implementation used to
-/// produce a basic printout of the original source using an efficient
-/// [StringBuffer] and lite formatting.  This does not use the original text,
-/// so it can be used to produce new html files from
-/// modified trees.
+/// This is a [Visitor] for producing a source template from an [NgAstNode].
 ///
-/// Currently does not handle desugaring from a banana in a box
-/// or structural directives.
+/// This is a stateful visitor, so at most one Unparser can be used per unparse.
+/// Currently does not handle desugaring from a banana in a box or structural
+/// directives.
+///
+/// example_use:
+///     NgAstNode node;
+///     Unparser unparser = new Unparser();
+///     node.visit(unparser);
+///     // The AST as source template.
+///     print(unparser);
 class Unparser implements Visitor {
   static bool _onElementBody(NgAstNode node) =>
       node is! NgComment &&

@@ -51,8 +51,8 @@ class _Fragment implements NgAstNode {
   }
 
   @override
-  void visit(Visitor visitor) => childNodes
-    .forEach((node) => node.visit(visitor));
+  void visit(Visitor visitor) =>
+      childNodes.forEach((node) => node.visit(visitor));
 }
 
 typedef void ErrorCallback(Error error);

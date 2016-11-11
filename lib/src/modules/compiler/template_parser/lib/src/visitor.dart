@@ -4,10 +4,10 @@ import 'ast.dart';
 
 part 'visitor/unparser.dart';
 
-/// [Visitor] interface is provided to an [NgAstNode] node via
-/// the `visit(Visitor visitor)` method, and can be used to do
-/// all the things that visitors do.
+/// Allows visiting of an [NgAstNode].
 ///
+/// [Visitor] interface is provided to an [NgAstNode] node via
+/// the `visit(Visitor visitor)` method.
 abstract class Visitor {
   const Visitor();
 

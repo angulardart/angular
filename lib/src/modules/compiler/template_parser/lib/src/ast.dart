@@ -79,9 +79,7 @@ abstract class NgAstNode {
   NgAstNode map(NgAstNode mapping(NgAstNode node)) => mapping(this);
 
 
-  /// Accepts a [Visitor] and calls the correct
-  /// method on it.
-  ///
+  /// Accepts a [Visitor] and calls the correct method on it.
   void visit(Visitor visitor);
 }
 
