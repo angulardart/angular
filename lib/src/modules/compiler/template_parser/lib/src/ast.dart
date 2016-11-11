@@ -7,6 +7,7 @@ import 'package:analyzer/analyzer.dart';
 
 import 'lexer.dart';
 import 'schema.dart';
+import 'visitor.dart';
 
 part 'ast/attribute.dart';
 part 'ast/binding.dart';
@@ -76,6 +77,12 @@ abstract class NgAstNode {
   /// attributes to a new NgAstNode.
   ///
   NgAstNode map(NgAstNode mapping(NgAstNode node)) => mapping(this);
+
+
+  /// Accepts a [Visitor] and calls the correct
+  /// method on it.
+  ///
+  void visit(Visitor visitor);
 }
 
 /// An [NgAstNode] that is expected to be recognized in a schema.

@@ -43,4 +43,7 @@ class NgAttribute extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   String toString() => '$NgAttribute $name="$value"';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitAttribute(this);
 }

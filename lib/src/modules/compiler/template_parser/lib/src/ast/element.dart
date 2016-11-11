@@ -66,4 +66,7 @@ class NgElement extends NgAstNode
 
   @override
   String toString() => '$NgElement <$name> [${childNodes.join(', ')}]';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitElement(this);
 }

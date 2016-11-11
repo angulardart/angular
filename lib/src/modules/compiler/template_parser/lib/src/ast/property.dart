@@ -40,4 +40,7 @@ class NgProperty extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   String toString() => '$NgProperty [$name]="$value"';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitProperty(this);
 }

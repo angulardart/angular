@@ -2,6 +2,7 @@ import 'ast.dart';
 import 'lexer.dart';
 import 'errors.dart';
 import 'utils.dart';
+import 'visitor.dart';
 
 import 'package:source_span/src/span.dart';
 import 'package:analyzer/analyzer.dart';
@@ -48,6 +49,10 @@ class _Fragment implements NgAstNode {
     return new _Fragment()
       ..childNodes.addAll(childNodes.map((node) => node.map(mapping)));
   }
+
+  @override
+  void visit(Visitor visitor) => childNodes
+    .forEach((node) => node.visit(visitor));
 }
 
 typedef void ErrorCallback(Error error);

@@ -45,4 +45,7 @@ class NgComment extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   String toString() => '$NgComment <!--$value-->';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitComment(this);
 }
