@@ -25,4 +25,7 @@ class NgText extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   String toString() => '$NgText $value';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitText(this);
 }

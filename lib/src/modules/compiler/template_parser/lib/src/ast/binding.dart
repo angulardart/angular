@@ -31,4 +31,7 @@ class NgBinding extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   String toString() => '$NgBinding #$name';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitBinding(this);
 }

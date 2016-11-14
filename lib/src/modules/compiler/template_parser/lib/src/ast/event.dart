@@ -48,4 +48,7 @@ class NgEvent extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   String toString() => '$NgEvent ($name)="$value"';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitEvent(this);
 }

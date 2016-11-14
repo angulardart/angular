@@ -29,4 +29,7 @@ class NgInterpolation extends NgAstNode with NgAstSourceTokenMixin {
 
   @override
   String toString() => '$NgInterpolation $value';
+
+  @override
+  void visit(Visitor visitor) => visitor.visitInterpolation(this);
 }
