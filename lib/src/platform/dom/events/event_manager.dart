@@ -1,18 +1,20 @@
-import "package:angular2/src/core/di.dart" show Injectable, Inject, OpaqueToken;
-import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/core/di.dart' show Injectable, Inject, OpaqueToken;
+import 'package:angular2/src/core/zone/ng_zone.dart' show NgZone;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
 const OpaqueToken EVENT_MANAGER_PLUGINS =
-    const OpaqueToken("EventManagerPlugins");
+    const OpaqueToken('EventManagerPlugins');
 
 @Injectable()
 class EventManager {
   NgZone _zone;
   List<EventManagerPlugin> _plugins;
+  Map<String, EventManagerPlugin> _eventToPlugin;
   EventManager(@Inject(EVENT_MANAGER_PLUGINS) List<EventManagerPlugin> plugins,
       this._zone) {
     plugins.forEach((p) => p.manager = this);
     this._plugins = plugins.reversed.toList();
+    _eventToPlugin = <String, EventManagerPlugin>{};
   }
   Function addEventListener(
       dynamic element, String eventName, Function handler) {
@@ -24,34 +26,34 @@ class EventManager {
     return this._zone;
   }
 
-  /** @internal */
   EventManagerPlugin _findPluginFor(String eventName) {
+    EventManagerPlugin plugin = _eventToPlugin[eventName];
+    if (plugin != null) return plugin;
     var plugins = this._plugins;
     for (var i = 0; i < plugins.length; i++) {
-      var plugin = plugins[i];
+      plugin = plugins[i];
       if (plugin.supports(eventName)) {
+        _eventToPlugin[eventName] = plugin;
         return plugin;
       }
     }
     throw new BaseException(
-        '''No event manager plugin found for event ${ eventName}''');
+        'No event manager plugin found for event ${eventName}');
   }
 }
 
-class EventManagerPlugin {
+abstract class EventManagerPlugin {
   EventManager manager;
-  // That is equivalent to having supporting $event.target
-  bool supports(String eventName) {
-    return false;
-  }
+
+  bool supports(String eventName);
 
   Function addEventListener(
       dynamic element, String eventName, Function handler) {
-    throw "not implemented";
+    throw 'not implemented';
   }
 
   Function addGlobalEventListener(
       String element, String eventName, Function handler) {
-    throw "not implemented";
+    throw 'not implemented';
   }
 }

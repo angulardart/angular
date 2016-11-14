@@ -35,6 +35,7 @@ class HammerGesturesPlugin extends HammerGesturesPluginCommon {
 
   HammerGesturesPlugin(@Inject(HAMMER_GESTURE_CONFIG) this._config);
 
+  @override
   bool supports(String eventName) {
     if (!super.supports(eventName) && !this.isCustomEvent(eventName))
       return false;
@@ -47,16 +48,18 @@ class HammerGesturesPlugin extends HammerGesturesPluginCommon {
     return true;
   }
 
-  addEventListener(el, String eventName, Function handler) {
+  @override
+  Function addEventListener(el, String eventName, Function handler) {
     Element element = el;
-    var zone = this.manager.getZone();
+    var zone = manager.getZone();
+    var subscription;
     eventName = eventName.toLowerCase();
 
     zone.runOutsideAngular(() {
       // Creating the manager bind events, must be done outside of angular
       var mc = this._config.buildHammer(element);
 
-      mc.callMethod('on', [
+      subscription = mc.callMethod('on', [
         eventName,
         (eventObj) {
           zone.runGuarded(() {
@@ -66,6 +69,7 @@ class HammerGesturesPlugin extends HammerGesturesPluginCommon {
         }
       ]);
     });
+    return () => subscription?.cancel();
   }
 
   bool isCustomEvent(String eventName) {

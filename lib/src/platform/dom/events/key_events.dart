@@ -17,10 +17,12 @@ Map<String, dynamic /* (event: KeyboardEvent) => boolean */ >
 
 @Injectable()
 class KeyEventsPlugin extends EventManagerPlugin {
+  @override
   bool supports(String eventName) {
     return KeyEventsPlugin.parseEventName(eventName) != null;
   }
 
+  @override
   Function addEventListener(
       dynamic element, String eventName, Function handler) {
     var parsedEvent = KeyEventsPlugin.parseEventName(eventName);
@@ -84,7 +86,6 @@ class KeyEventsPlugin extends EventManagerPlugin {
     };
   }
 
-  /** @internal */
   static String _normalizeKey(String keyName) {
     // TODO: switch to a StringMap if the mapping grows too much
     switch (keyName) {
