@@ -88,13 +88,13 @@ abstract class NgTemplateScanner<T> {
   /// Called when ...
   void scanAttribute(NgToken before, NgToken actual);
 
-  /// Called when...
+  /// Called when [NgTokenType.startBinding] is scanned.
   void scanBinding(NgToken before, NgToken start);
 
   /// Called when [NgTokenType.beginComment] is scanned.
   void scanComment(NgToken token);
 
-  /// Called when ...
+  /// Called when [NgTokenType.startEvent] is scanned.
   void scanEvent(NgToken before, NgToken start);
 
   /// Called when [NgTokenType.startOpenElement] is scanned.
