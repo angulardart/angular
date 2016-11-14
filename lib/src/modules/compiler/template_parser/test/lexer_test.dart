@@ -207,7 +207,7 @@ void main() {
     ]);
   });
 
-  test('should lex bindings', () async {
+  test('should lex bindings without values', () {
     lexer = new NgTemplateLexer('<button #input></button>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
@@ -215,6 +215,7 @@ void main() {
       new NgToken(NgTokenType.beforeElementDecorator, ' '),
       new NgToken(NgTokenType.startBinding, '#'),
       new NgToken(NgTokenType.bindingName, 'input'),
+      new NgToken(NgTokenType.endBinding, ''),
       new NgToken(NgTokenType.endOpenElement, '>'),
       new NgToken(NgTokenType.startCloseElement, '</'),
       new NgToken(NgTokenType.elementName, 'button'),
@@ -222,7 +223,25 @@ void main() {
     ]);
   });
 
-  test('should lex bananas', () async {
+  test('should lex bindings with values', () {
+    lexer = new NgTemplateLexer('<div #autoFocus="directive"></div>');
+    expect(lexer.tokenize().toList(), [
+      new NgToken(NgTokenType.startOpenElement, '<'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.beforeElementDecorator, ' '),
+      new NgToken(NgTokenType.startBinding, '#'),
+      new NgToken(NgTokenType.bindingName, 'autoFocus'),
+      new NgToken(NgTokenType.beforeDecoratorValue, '="'),
+      new NgToken(NgTokenType.bindingValue, 'directive'),
+      new NgToken(NgTokenType.endBinding, '"'),
+      new NgToken(NgTokenType.endOpenElement, '>'),
+      new NgToken(NgTokenType.startCloseElement, '</'),
+      new NgToken(NgTokenType.elementName, 'div'),
+      new NgToken(NgTokenType.endCloseElement, '>'),
+    ]);
+  });
+
+  test('should lex bananas', () {
     lexer = new NgTemplateLexer('<button [(banana)]="someValue"></button>');
     expect(lexer.tokenize().toList(), [
       new NgToken(NgTokenType.startOpenElement, '<'),
