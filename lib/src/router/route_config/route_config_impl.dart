@@ -7,9 +7,15 @@ export "../route_definition.dart" show RouteDefinition;
 
 Future<dynamic> ___make_dart_analyzer_happy;
 
-/// The `RouteConfig` decorator defines routes for a given component.
+/// The [RouteConfig] decorator defines routes for a given component.
 ///
-/// It takes an array of [RouteDefinition]s.
+/// ### Example
+///
+/// Here is an example from the [tutorial on routing][routing]:
+///
+/// {@example docs/toh-5/lib/app_component.dart region=routes}
+///
+/// [routing]: docs/tutorial/toh-pt5.html#configure-routes
 class RouteConfig {
   final List<RouteDefinition> configs;
   const RouteConfig(this.configs);
