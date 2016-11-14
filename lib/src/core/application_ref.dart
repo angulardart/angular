@@ -223,6 +223,7 @@ class ApplicationRefImpl extends ApplicationRef {
   final List<ComponentRef> _rootComponents = [];
   final List<ComponentFactory> _rootComponentFactories = [];
   final List<ChangeDetectorRef> _changeDetectorRefs = [];
+  final List<StreamSubscription> _streamSubscriptions = [];
   bool _runningTick = false;
   bool _enforceNoNewChanges = false;
   ExceptionHandler _exceptionHandler;
@@ -259,14 +260,14 @@ class ApplicationRefImpl extends ApplicationRef {
       }
       return asyncInitDonePromise;
     });
-    _zone.onError.listen((NgZoneError error) {
+    _streamSubscriptions.add(_zone.onError.listen((NgZoneError error) {
       _exceptionHandler.call(error.error, error.stackTrace);
-    });
-    _zone.onMicrotaskEmpty.listen((_) {
-      _zone.run(() {
+    }));
+    _streamSubscriptions.add(_zone.onMicrotaskEmpty.listen((_) {
+      _zone.runGuarded(() {
         tick();
       });
-    });
+    }));
   }
   void registerBootstrapListener(void listener(ComponentRef ref)) {
     _bootstrapListeners.add(listener);
@@ -397,6 +398,8 @@ class ApplicationRefImpl extends ApplicationRef {
     _rootComponents.forEach((ref) => ref.destroy());
     _disposeListeners.forEach((dispose) => dispose());
     _disposeListeners.clear();
+    _streamSubscriptions.forEach((subscription) => subscription.cancel());
+    _streamSubscriptions.clear();
     _platform._applicationDisposed(this);
   }
 

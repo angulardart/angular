@@ -81,7 +81,42 @@ void main() {
           ref.unregisterChangeDetector(cdRef);
         });
       });
+      test("should pass tick errors to exceptionHandler", () {
+        return inject([AsyncTestCompleter], (AsyncTestCompleter testCompleter) {
+          var ref = createApplication([]);
+          ref.waitForAsyncInitializers().whenComplete(() {
+            var cdRef = new MockChangeDetectorRef();
+            when(cdRef.detectChanges()).thenThrow(new BaseException("Test"));
+            ref.registerChangeDetector(cdRef);
+            try {
+              expect(errorLogger.res, isEmpty);
+              try {
+                ref.zone.run(() {});
+              } catch (ex) {
+                fail('Errors during tick should not be rethrown, '
+                    'but caught the following: $ex');
+              }
+              expect(errorLogger.res, isNotEmpty);
+            } finally {
+              ref.unregisterChangeDetector(cdRef);
+              testCompleter.done();
+            }
+          });
+        });
+      });
       group("run", () {
+        test("should pass errors to exceptionHandler", () {
+          return inject([], () {
+            var ref = createApplication([]);
+            expect(errorLogger.res, isEmpty);
+            try {
+              ref.run(() {
+                throw new BaseException("Test");
+              });
+            } catch (_) {}
+            expect(errorLogger.res, isNotEmpty);
+          });
+        });
         test(
             "should rethrow errors even if the exceptionHandler is not rethrowing",
             () async {
