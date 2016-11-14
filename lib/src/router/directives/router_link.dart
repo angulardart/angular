@@ -7,18 +7,12 @@ import "../router.dart" show Router;
 /// The RouterLink directive lets you link to specific parts of your app.
 ///
 /// Consider the following route configuration:
-/// ```
-/// @RouteConfig([
-///   { path: '/user', component: UserCmp, as: 'User' }
-/// ]);
-/// class MyComp {}
-/// ```
 ///
-/// When linking to this `User` route, you can write:
+/// {@example docs/toh-5/lib/app_component.dart region=heroes}
 ///
-/// ```
-/// <a [routerLink]="['./User']">link to user component</a>
-/// ```
+/// When linking to this `Heroes` route, you can write:
+///
+/// {@example docs/toh-5/lib/app_component_1.dart region=template-v2}
 ///
 /// RouterLink expects the value to be an array of route names, followed by the params
 /// for that level of routing. For instance `['/Team', {teamId: 1}, 'User', {userId: 2}]`

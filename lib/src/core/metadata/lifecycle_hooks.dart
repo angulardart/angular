@@ -77,75 +77,33 @@ abstract class OnInit {
 /// Implement this interface to override the default change detection algorithm
 /// for your directive.
 ///
-/// `ngDoCheck` gets called to check the changes in the directives instead of
+/// [ngDoCheck] gets called to check the changes in the directives instead of
 /// the default algorithm.
 ///
 /// The default change detection algorithm looks for differences by comparing
 /// bound-property values by reference across change detection runs. When
-/// `DoCheck` is implemented, the default algorithm is disabled and `ngDoCheck`
+/// [DoCheck] is implemented, the default algorithm is disabled and [ngDoCheck]
 /// is responsible for checking for changes.
 ///
 /// Implementing this interface allows improving performance by using insights
 /// about the component, its implementation and data types of its properties.
 ///
-/// Note that a directive should not implement both `DoCheck` and [OnChanges] at
-/// the same time.  `ngOnChanges` would not be called when a directive
-/// implements `DoCheck`. Reaction to the changes have to be handled from within
-/// the `ngDoCheck` callback.
+/// Note that a directive should not implement both [DoCheck] and [OnChanges] at
+/// the same time.  [ngOnChanges] would not be called when a directive
+/// implements [DoCheck]. Reaction to the changes have to be handled from within
+/// the [ngDoCheck] callback.
 ///
 /// Use [KeyValueDiffers] and [IterableDiffers] to add your custom check
 /// mechanisms.
 ///
-/// ### Example
+/// ### Examples
 ///
-/// In the following example `ngDoCheck` uses an [IterableDiffers] to detect the
-/// updates to the array `list`:
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// ```dart
-/// @Component(
-///   selector: 'custom-check',
-///   template: '''
-///     <p>Changes:</p>
-///     <ul>
-///       <li *ngFor="let line of logs">{{line}}</li>
-///     </ul>
-///   ''',
-///   directives: const [NgFor]
-/// )
-/// class CustomCheckComponent implements DoCheck {
-///   final IterableDiffer differ;
-///   final List<String> logs = [];
+/// {@example docs/lifecycle-hooks/lib/do_check_component.dart region=ng-do-check}
 ///
-///   @Input()
-///   List list;
-///
-///   CustomCheckComponent(IterableDiffers differs) :
-///     differ = differs.find([]).create(null);
-///
-///   @override
-///   ngDoCheck() {
-///     var changes = differ.diff(list);
-///
-///     if (changes is DefaultIterableDiffer) {
-///       changes.forEachAddedItem(r => logs.add('added ${r.item}'));
-///       changes.forEachRemovedItem(r => logs.add('removed ${r.item}'))
-///     }
-///   }
-/// }
-///
-/// @Component({
-///   selector: 'app',
-///   template: '''
-///     <button (click)="list.push(list.length)">Push</button>
-///     <button (click)="list.pop()">Pop</button>
-///     <custom-check [list]="list"></custom-check>
-///   ''',
-///   directives: const [CustomCheckComponent]
-/// })
-/// class App {
-///   List list = [];
-/// }
-/// ```
+/// [docs]: docs/guide/lifecycle-hooks.html#docheck
+/// [ex]: examples/lifecycle-hooks#docheck
 abstract class DoCheck {
   ngDoCheck();
 }
@@ -170,52 +128,16 @@ abstract class OnDestroy {
 /// Implement this interface to get notified when your directive's content has
 /// been fully initialized.
 ///
-/// ### Example
+/// ### Examples
 ///
-/// ```dart
-/// @Component(
-///   selector: 'child-cmp',
-///   template: '{{where}} child'
-/// )
-/// class ChildComponent {
-///   @Input()
-///   String where;
-/// }
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// @Component(
-///   selector: 'parent-cmp',
-///   template: '<ng-content></ng-content>'
-/// )
-/// class ParentComponent implements AfterContentInit {
-///   @ContentChild(ChildComponent)
-///   ChildComponent contentChild;;
+/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=template}
 ///
-///   ParentComponent() {
-///     // contentChild is not initialized yet
-///     print(_message(contentChild));
-///   }
+/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=hooks}
 ///
-///   @override
-///   ngAfterContentInit() {
-///     // contentChild is updated after the content has been checked
-///     print('AfterContentInit: ' + _message(contentChild));
-///   }
-///
-///   String _message(ChildComponent cmp) =>
-///       cmp == null ? 'no child' : '${cmp.where} child';
-/// }
-///
-/// @Component(
-///   selector: 'app',
-///   template: '''
-///     <parent-cmp>
-///       <child-cmp where="content"></child-cmp>
-///     </parent-cmp>
-///   ''',
-///   directives: const [ParentComponent, ChildComponent]
-/// )
-/// class App {}
-/// ```
+/// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
+/// [ex]: examples/lifecycle-hooks#after-content
 abstract class AfterContentInit {
   ngAfterContentInit();
 }
@@ -223,51 +145,16 @@ abstract class AfterContentInit {
 /// Implement this interface to get notified after every check of your
 /// directive's content.
 ///
-/// ### Example
+/// ### Examples
 ///
-/// ```dart
-/// @Component(selector: 'child-cmp', template: '{{where}} child')
-/// class ChildComponent {
-///   @Input()
-///   String where;
-/// }
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// @Component(selector: 'parent-cmp', template: '<ng-content></ng-content>')
-/// class ParentComponent implements AfterContentChecked {
-///   @ContentChild(ChildComponent)
-///   ChildComponent contentChild;
+/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=template}
 ///
-///   ParentComponent() {
-///     // contentChild is not initialized yet
-///     print(_message(contentChild));
-///   }
+/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=hooks}
 ///
-///   @override
-///   ngAfterContentChecked() {
-///     // contentChild is updated after the content has been checked
-///     print('AfterContentChecked: ${_message(contentChild)}');
-///   }
-///
-///   String _message(ChildComponent cmp) =>
-///       cmp  == null ? 'no child' : '${cmp.where} child';
-/// }
-///
-/// @Component(
-///   selector: 'app',
-///   template: '''
-///     <parent-cmp>
-///       <button (click)="hasContent = !hasContent">
-///         Toggle content child
-///       </button>
-///       <child-cmp *ngIf="hasContent" where="content"></child-cmp>
-///     </parent-cmp>
-///   ''',
-///   directives: const [NgIf, ParentComponent, ChildComponent]
-/// )
-/// class App {
-///   bool hasContent = true;
-/// }
-/// ```
+/// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
+/// [ex]: examples/lifecycle-hooks#after-content
 abstract class AfterContentChecked {
   ngAfterContentChecked();
 }
@@ -275,46 +162,16 @@ abstract class AfterContentChecked {
 /// Implement this interface to get notified when your component's view has been
 /// fully initialized.
 ///
-/// ### Example
+/// ### Examples
 ///
-/// ```dart
-/// @Component(selector: 'child-cmp', template: '{{where}} child')
-/// class ChildComponent {
-///   @Input()
-///   String where;
-/// }
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// @Component(
-///   selector: 'parent-cmp',
-///   template: '<child-cmp where="view"></child-cmp>',
-///   directives: const [ChildComponent]
-/// )
-/// class ParentComponent implements AfterViewInit {
-///   @ViewChild(ChildComponent)
-///   ChildComponent viewChild;
+/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=template}
 ///
-///   ParentComponent() {
-///     // viewChild is not initialized yet
-///     print(_message(viewChild));
-///   }
+/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=hooks}
 ///
-///   @override
-///   ngAfterViewInit() {
-///     // viewChild is updated after the view has been initialized
-///     print('ngAfterViewInit: ' + _message(viewChild));
-///   }
-///
-///   String _message(ChildComponent cmp) =>
-///       cmp  == null ? 'no child' : '${cmp.where} child';
-/// }
-///
-/// @Component(
-///   selector: 'app',
-///   template: '<parent-cmp></parent-cmp>',
-///   directives: const [ParentComponent]
-/// )
-/// class App {}
-/// ```
+/// [docs]: docs/guide/lifecycle-hooks.html#afterview
+/// [ex]: examples/lifecycle-hooks#after-view
 abstract class AfterViewInit {
   ngAfterViewInit();
 }
@@ -322,51 +179,16 @@ abstract class AfterViewInit {
 /// Implement this interface to get notified after every check of your
 /// component's view.
 ///
-/// ### Example
+/// ### Examples
 ///
-/// ```dart
-/// @Component(selector: 'child-cmp', template: '{{where}} child')
-/// class ChildComponent {
-///   @Input()
-///   String where;
-/// }
+/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// @Component(
-///   selector: 'parent-cmp',
-///   template: '''
-///     <button (click)="showView = !showView">Toggle view child</button>
-///     <child-cmp *ngIf="showView" where="view"></child-cmp>
-///   ''',
-///   directives: const [NgIf, ChildComponent]
-/// )
-/// class ParentComponent implements AfterViewChecked {
-///   @ViewChild(ChildComponent)
-///   ChildComponent viewChild;
+/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=template}
 ///
-///   bool showView = true;
+/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=hooks}
 ///
-///   ParentComponent() {
-///     // viewChild is not initialized yet
-///     print(_message(viewChild));
-///   }
-///
-///   @override
-///   ngAfterViewChecked() {
-///     // viewChild is updated after the view has been checked
-///     print('AfterViewChecked: ${_message(viewChild)}');
-///   }
-///
-///   String _message(ChildComponent cmp) =>
-///       cmp  == null ? 'no child' : '${cmp.where} child';
-/// }
-///
-/// @Component(
-///   selector: 'app',
-///   template: '<parent-cmp></parent-cmp>',
-///   directives: const [ParentComponent]
-/// )
-/// class App {}
-/// ```
+/// [docs]: docs/guide/lifecycle-hooks.html#afterview
+/// [ex]: examples/lifecycle-hooks#after-view
 abstract class AfterViewChecked {
   ngAfterViewChecked();
 }

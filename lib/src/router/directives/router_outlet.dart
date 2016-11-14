@@ -25,11 +25,13 @@ var _resolveToTrue = new Future.value(true);
 
 /// A router outlet is a placeholder that Angular dynamically fills based on the application's route.
 ///
-/// ## Use
+/// ### Example
 ///
-/// ```
-/// <router-outlet></router-outlet>
-/// ```
+/// Here is an example from the [tutorial on routing][routing]:
+///
+/// {@example docs/toh-5/lib/app_component.dart region=template}
+///
+/// [routing]: docs/tutorial/toh-pt5.html#router-outlet
 @Directive(selector: "router-outlet")
 class RouterOutlet implements OnDestroy {
   ViewContainerRef _viewContainerRef;
