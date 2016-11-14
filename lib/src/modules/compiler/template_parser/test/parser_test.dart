@@ -108,6 +108,15 @@ void main() {
       );
     });
 
+    test('should parse a binding with a value', () {
+      expect(parse('<div #autoFocus="myDirective">Test</div>'), [
+        new NgElement.unknown('div', childNodes: [
+          new NgBinding('autoFocus', value: 'myDirective'),
+          new NgText('Test')
+        ]),
+      ]);
+    });
+
     test('should parse an event', () {
       expect(
         parse('<button (click)="onClick()">Hello</button>'),

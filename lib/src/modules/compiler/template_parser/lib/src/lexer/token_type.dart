@@ -82,6 +82,12 @@ enum NgTokenType {
   /// Binding name.
   bindingName,
 
+  /// Binding value (optional).
+  bindingValue,
+
+  /// after parsing a binding, should be empty.
+  endBinding,
+
   /// Before parsing a banana (in a box).
   startBanana,
 
