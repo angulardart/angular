@@ -12,6 +12,9 @@ import "ng_control.dart" show NgControl;
   "[class.ng-valid]": "ngClassValid",
   "[class.ng-invalid]": "ngClassInvalid"
 })
+@Deprecated("Use listeners or variable binding on the control itself instead. "
+    "This adds overhead for every form control whether the class is "
+    "used or not.")
 class NgControlStatus {
   NgControl _cd;
   NgControlStatus(@Self() NgControl cd) {

@@ -3,7 +3,6 @@ import "directives/checkbox_value_accessor.dart"
 import "directives/default_value_accessor.dart" show DefaultValueAccessor;
 import "directives/ng_control_group.dart" show NgControlGroup;
 import "directives/ng_control_name.dart" show NgControlName;
-import "directives/ng_control_status.dart" show NgControlStatus;
 import "directives/ng_form.dart" show NgForm;
 import "directives/ng_form_control.dart" show NgFormControl;
 import "directives/ng_form_model.dart" show NgFormModel;
@@ -71,7 +70,6 @@ const List<Type> FORM_DIRECTIVES = const [
   CheckboxControlValueAccessor,
   SelectControlValueAccessor,
   RadioControlValueAccessor,
-  NgControlStatus,
   RequiredValidator,
   MinLengthValidator,
   MaxLengthValidator,
