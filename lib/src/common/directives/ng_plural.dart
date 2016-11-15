@@ -13,6 +13,7 @@ import "ng_switch.dart" show SwitchView;
 
 const _CATEGORY_DEFAULT = "other";
 
+@Deprecated('Copy into your own project if needed, no longer supported')
 abstract class NgLocalization {
   String getPluralCategory(dynamic value);
 }
@@ -70,6 +71,7 @@ abstract class NgLocalization {
 ///   }
 /// }
 /// ```
+@Deprecated('Copy into your own project if needed, no longer supported')
 @Directive(selector: "[ngPluralCase]")
 class NgPluralCase {
   String value;
@@ -80,6 +82,7 @@ class NgPluralCase {
   }
 }
 
+@Deprecated('Copy into your own project if needed, no longer supported')
 @Directive(selector: "[ngPlural]")
 class NgPlural implements AfterContentInit {
   NgLocalization _localization;
