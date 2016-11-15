@@ -124,19 +124,19 @@ import "package:angular2/src/facade/lang.dart" show jsSplit;
 */
 class ShadowCss {
   bool strictStyling = true;
-  /*
-  * Shim some cssText with the given selector. Returns cssText that can
-  * be included in the document via WebComponents.ShadowCSS.addCssToDocument(css).
-  *
-  * When strictStyling is true:
-  * - selector is the attribute added to all elements inside the host,
-  * - hostSelector is the attribute added to the host itself.
-  */
+
+  /// Shim some cssText with the given selector. Returns cssText that can
+  /// be included in the document via WebComponents.ShadowCSS.addCssToDocument(css).
+  ///
+  /// When strictStyling is true:
+  /// - selector is the attribute added to all elements inside the host,
+  /// - hostSelector is the attribute added to the host itself.
   String shimCssText(String cssText, String selector,
-      [String hostSelector = ""]) {
+      [String hostSelector = '']) {
+    final String sourceMappingUrl = _extractSourceMappingUrl(cssText);
     cssText = stripComments(cssText);
-    cssText = this._insertDirectives(cssText);
-    return this._scopeCssText(cssText, selector, hostSelector);
+    cssText = _insertDirectives(cssText);
+    return _scopeCssText(cssText, selector, hostSelector) + sourceMappingUrl;
   }
 
   String _insertDirectives(String cssText) {
@@ -144,20 +144,18 @@ class ShadowCss {
     return this._insertPolyfillRulesInCssText(cssText);
   }
 
-  /*
-   * Process styles to convert native ShadowDOM rules that will trip
-   * up the css parser; we rely on decorating the stylesheet with inert rules.
-   *
-   * For example, we convert this rule:
-   *
-   * polyfill-next-selector { content: ':host menu-item'; }
-   * ::content menu-item {
-   *
-   * to this:
-   *
-   * scopeName menu-item {
-   *
-  **/
+  /// Process styles to convert native ShadowDOM rules that will trip
+  /// up the css parser; we rely on decorating the stylesheet with inert rules.
+  ///
+  /// For example, we convert this rule:
+  ///
+  /// polyfill-next-selector { content: ':host menu-item'; }
+  /// ::content menu-item {
+  ///
+  /// to this:
+  ///
+  /// scopeName menu-item {
+  ///
   String _insertPolyfillDirectivesInCssText(String cssText) {
     // Difference with webcomponents.js: does not handle comments
     return cssText.replaceAllMapped(_cssContentNextSelectorRe, (m) {
@@ -165,120 +163,110 @@ class ShadowCss {
     });
   }
 
-  /*
-   * Process styles to add rules which will only apply under the polyfill
-   *
-   * For example, we convert this rule:
-   *
-   * polyfill-rule {
-   *   content: ':host menu-item';
-   * ...
-   * }
-   *
-   * to this:
-   *
-   * scopeName menu-item {...}
-   *
-  **/
+  /// Process styles to add rules which will only apply under the polyfill
+  ///
+  /// For example, we convert this rule:
+  ///
+  /// polyfill-rule {
+  ///   content: ':host menu-item';
+  /// ...
+  /// }
+  ///
+  /// to this:
+  ///
+  /// scopeName menu-item {...}
+  ///
   String _insertPolyfillRulesInCssText(String cssText) {
     // Difference with webcomponents.js: does not handle comments
     return cssText.replaceAllMapped(_cssContentRuleRe, (m) {
       var rule = m[0];
-      rule = rule.replaceFirst(m[1], "");
-      rule = rule.replaceFirst(m[2], "");
+      rule = rule.replaceFirst(m[1], '');
+      rule = rule.replaceFirst(m[2], '');
       return m[3] + rule;
     });
   }
 
-  /* Ensure styles are scoped. Pseudo-scoping takes a rule like:
-   *
-   *  .foo {... }
-   *
-   *  and converts this to
-   *
-   *  scopeName .foo { ... }
-  */
+  /// Ensure styles are scoped. Pseudo-scoping takes a rule like:
+  ///
+  ///  .foo {... }
+  ///
+  ///  and converts this to
+  ///
+  ///  scopeName .foo { ... }
   String _scopeCssText(
       String cssText, String scopeSelector, String hostSelector) {
-    var unscoped = this._extractUnscopedRulesFromCssText(cssText);
+    final unscoped = this._extractUnscopedRulesFromCssText(cssText);
     cssText = this._insertPolyfillHostInCssText(cssText);
     cssText = this._convertColonHost(cssText);
     cssText = this._convertColonHostContext(cssText);
     cssText = this._convertShadowDOMSelectors(cssText);
     if (scopeSelector != null) {
-      cssText = this._scopeSelectors(cssText, scopeSelector, hostSelector);
+      cssText = _scopeSelectors(cssText, scopeSelector, hostSelector);
     }
-    cssText = cssText + "\n" + unscoped;
+    cssText = cssText + '\n' + unscoped;
     return cssText.trim();
   }
 
-  /*
-   * Process styles to add rules which will only apply under the polyfill
-   * and do not process via CSSOM. (CSSOM is destructive to rules on rare
-   * occasions, e.g. -webkit-calc on Safari.)
-   * For example, we convert this rule:
-   *
-   * @polyfill-unscoped-rule {
-   *   content: 'menu-item';
-   * ... }
-   *
-   * to this:
-   *
-   * menu-item {...}
-   *
-  **/
+  /// Process styles to add rules which will only apply under the polyfill
+  /// and do not process via CSSOM. (CSSOM is destructive to rules on rare
+  /// occasions, e.g. -webkit-calc on Safari.)
+  /// For example, we convert this rule:
+  ///
+  /// @polyfill-unscoped-rule {
+  ///   content: 'menu-item';
+  /// ... }
+  ///
+  /// to this:
+  ///
+  /// menu-item {...}
+  ///
   String _extractUnscopedRulesFromCssText(String cssText) {
     // Difference with webcomponents.js: does not handle comments
-    var r = "";
+    var r = '';
     var matches = _cssContentUnscopedRuleRe.allMatches(cssText);
     for (var m in matches) {
       if (m == null) break;
       var rule = m[0];
-      rule = rule.replaceFirst(m[2], "");
+      rule = rule.replaceFirst(m[2], '');
       rule = rule.replaceFirst(m[1], m[3]);
-      r += rule + "\n\n";
+      r += rule + '\n\n';
     }
     return r;
   }
 
-  /*
-   * convert a rule like :host(.foo) > .bar { }
-   *
-   * to
-   *
-   * scopeName.foo > .bar
-  */
+  /// convert a rule like :host(.foo) > .bar { }
+  ///
+  /// to
+  ///
+  /// scopeName.foo > .bar
+  ///
   String _convertColonHost(String cssText) {
-    return this._convertColonRule(
-        cssText, _cssColonHostRe, this._colonHostPartReplacer);
+    return _convertColonRule(cssText, _cssColonHostRe, _colonHostPartReplacer);
   }
 
-  /*
-   * convert a rule like :host-context(.foo) > .bar { }
-   *
-   * to
-   *
-   * scopeName.foo > .bar, .foo scopeName > .bar { }
-   *
-   * and
-   *
-   * :host-context(.foo:host) .bar { ... }
-   *
-   * to
-   *
-   * scopeName.foo .bar { ... }
-  */
-  String _convertColonHostContext(String cssText) {
-    return this._convertColonRule(
-        cssText, _cssColonHostContextRe, this._colonHostContextPartReplacer);
-  }
+  /// convert a rule like :host-context(.foo) > .bar { }
+  ///
+  /// to
+  ///
+  /// scopeName.foo > .bar, .foo scopeName > .bar { }
+  ///
+  /// and
+  ///
+  /// :host-context(.foo:host) .bar { ... }
+  ///
+  /// to
+  ///
+  /// scopeName.foo .bar { ... }
+  ///
+  String _convertColonHostContext(String cssText) => _convertColonRule(
+      cssText, _cssColonHostContextRe, _colonHostContextPartReplacer);
 
   String _convertColonRule(
       String cssText, RegExp regExp, Function partReplacer) {
     // p1 = :host, p2 = contents of (), p3 rest of rule
     return cssText.replaceAllMapped(regExp, (m) {
       if (m[2] != null) {
-        var parts = m[2].split(","), r = [];
+        var parts = m[2].split(','), r = [];
         for (var i = 0; i < parts.length; i++) {
           var p = parts[i];
           if (p == null) break;
@@ -295,36 +283,34 @@ class ShadowCss {
   String _colonHostContextPartReplacer(
       String host, String part, String suffix) {
     if (part.contains(_polyfillHost)) {
-      return this._colonHostPartReplacer(host, part, suffix);
+      return _colonHostPartReplacer(host, part, suffix);
     } else {
-      return host + part + suffix + ", " + part + " " + host + suffix;
+      return host + part + suffix + ', ' + part + ' ' + host + suffix;
     }
   }
 
   String _colonHostPartReplacer(String host, String part, String suffix) {
-    return host + part.replaceFirst(_polyfillHost, "") + suffix;
+    return host + part.replaceFirst(_polyfillHost, '') + suffix;
   }
 
-  /*
-   * Convert combinators like ::shadow and pseudo-elements like ::content
-   * by replacing with space.
-  */
+  /// Convert combinators like ::shadow and pseudo-elements like ::content
+  /// by replacing with space.
   String _convertShadowDOMSelectors(String cssText) {
     for (var i = 0; i < _shadowDOMSelectorsRe.length; i++) {
-      cssText = cssText.replaceAll(_shadowDOMSelectorsRe[i], " ");
+      cssText = cssText.replaceAll(_shadowDOMSelectorsRe[i], ' ');
     }
     return cssText;
   }
 
-  // change a selector like 'div' to 'name div'
+  /// Change a selector like 'div' to 'name div'.
   String _scopeSelectors(
       String cssText, String scopeSelector, String hostSelector) {
     return processRules(cssText, (CssRule rule) {
       var selector = rule.selector;
       var content = rule.content;
       if (rule.selector[0] != "@" || rule.selector.startsWith("@page")) {
-        selector = this._scopeSelector(
-            rule.selector, scopeSelector, hostSelector, this.strictStyling);
+        selector = _scopeSelector(
+            rule.selector, scopeSelector, hostSelector, strictStyling);
       } else if (rule.selector.startsWith("@media")) {
         content =
             this._scopeSelectors(rule.content, scopeSelector, hostSelector);
@@ -341,11 +327,10 @@ class ShadowCss {
       var deepParts = jsSplit(p, _shadowDeepSelectors);
       var shallowPart = deepParts[0];
       if (this._selectorNeedsScoping(shallowPart, scopeSelector)) {
-        deepParts[0] = strict &&
-                !shallowPart.contains(_polyfillHostNoCombinator)
-            ? this._applyStrictSelectorScope(shallowPart, scopeSelector)
-            : this
-                ._applySelectorScope(shallowPart, scopeSelector, hostSelector);
+        deepParts[0] =
+            strict && !shallowPart.contains(_polyfillHostNoCombinator)
+                ? this._applyStrictSelectorScope(shallowPart, scopeSelector)
+                : _applySelectorScope(shallowPart, scopeSelector, hostSelector);
       }
       // replace /deep/ with a space for child selectors
       r.add(deepParts.join(" "));
@@ -354,7 +339,7 @@ class ShadowCss {
   }
 
   bool _selectorNeedsScoping(String selector, String scopeSelector) {
-    var re = this._makeScopeMatcher(scopeSelector);
+    var re = _makeScopeMatcher(scopeSelector);
     return re.firstMatch(selector) == null;
   }
 
@@ -389,32 +374,46 @@ class ShadowCss {
   // return a selector with [name] suffix on each simple selector
 
   // e.g. .foo.bar > .zot becomes .foo[name].bar[name] > .zot[name]  /** @internal */
-  String _applyStrictSelectorScope(String selector, String scopeSelector) {
-    var isRe = new RegExp(r'\[is=([^\]]*)\]');
+  String _applyStrictSelectorScope(String selector, String scopeSelector,
+      {String hostSelector: ''}) {
+    final isRe = new RegExp(r'\[is=([^\]]*)\]');
+    final sep = new RegExp(r'( |>|\+|~(?!=))\s*');
     scopeSelector = scopeSelector.replaceAllMapped(isRe, (m) => m[1]);
-    var splits = [" ", ">", "+", "~"],
-        scoped = selector,
-        attrName = "[" + scopeSelector + "]";
-    for (var i = 0; i < splits.length; i++) {
-      var sep = splits[i];
-      var parts = scoped.split(sep);
-      scoped = parts
-          .map((p) {
-            // remove :host since it should be unnecessary
-            var t = p.trim().replaceAll(_polyfillHostRe, "");
-            if (t.length > 0 && !splits.contains(t) && !t.contains(attrName)) {
-              var re = new RegExp(r'([^:]*)(:*)(.*)');
-              var m = re.firstMatch(t);
-              if (m != null) {
-                p = m[1] + attrName + m[2] + m[3];
-              }
-            }
-            return p;
-          })
-          .toList()
-          .join(sep);
-    }
-    return scoped;
+
+    final attrName = '[' + scopeSelector + ']';
+    final scopeAfter = scopeSelector.indexOf(_polyfillHostNoCombinator);
+
+    var scopeSelectorPart = (p) {
+      // remove :host since it should be unnecessary
+      var scopedP = p.trim().replaceAll(_polyfillHostRe, "");
+      if (scopedP.isEmpty) return '';
+      if (p.indexOf(_polyfillHostNoCombinator) > -1) {
+        scopedP = _applySimpleSelectorScope(p, scopeSelector, hostSelector);
+      } else {
+        // Remove :host since it is unnecessary.
+        var re = new RegExp(r'([^:]*)(:*)(.*)');
+        var m = re.firstMatch(scopedP);
+        if (m != null) {
+          scopedP = m[1] + attrName + m[2] + m[3];
+        }
+      }
+      return scopedP;
+    };
+
+    var scoped = '';
+    int startIndex = 0;
+    sep.allMatches(selector).forEach((Match m) {
+      var separator = m[1];
+      final part = selector.substring(startIndex, m.start);
+      // if a selector appears before :host-context it should not be shimmed as
+      // it matches on ancestor elements and not on elements in the host's
+      // shadow.
+      final scopedPart =
+          startIndex >= scopeAfter ? scopeSelectorPart(part) : part;
+      scoped += '$scopedPart $separator ';
+      startIndex = m.end;
+    });
+    return scoped + scopeSelectorPart(selector.substring(startIndex));
   }
 
   String _insertPolyfillHostInCssText(String selector) {
@@ -546,4 +545,13 @@ StringWithEscapedBlocks escapeBlocks(String input) {
     resultParts.add(BLOCK_PLACEHOLDER);
   }
   return new StringWithEscapedBlocks(resultParts.join(""), escapedBlocks);
+}
+
+// all comments except inline source mapping
+final RegExp _sourceMappingUrlRe =
+    new RegExp(r'\*\s*#\s*sourceMappingURL=[\s\S]+?\*');
+
+String _extractSourceMappingUrl(String input) {
+  var match = _sourceMappingUrlRe.firstMatch(input);
+  return match == null ? '' : match[0];
 }

@@ -355,7 +355,7 @@ abstract class AppView<T> {
 
   // Used to get around strong mode error due to loosely typed
   // subscription handlers.
-  Function evt(Function cb) {
+  /*<R>*/ evt/*<E,R>*/(/*<R>*/ cb(/*<E>*/ e)) {
     return cb;
   }
 

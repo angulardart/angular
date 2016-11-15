@@ -73,14 +73,15 @@ void main() {
           res == ".one.two[a] > three[a] {}" ||
               res == ".two.one[a] > three[a] {}",
           isTrue);
-      expect(s("one[attr=\"value\"] {}", "a"), "one[attr=\"value\"][a] {}");
-      expect(s("one[attr=value] {}", "a"), "one[attr=\"value\"][a] {}");
-      expect(s("one[attr^=\"value\"] {}", "a"), "one[attr^=\"value\"][a] {}");
-      expect(s("one[attr\$=\"value\"] {}", "a"), "one[attr\$=\"value\"][a] {}");
-      expect(s("one[attr*=\"value\"] {}", "a"), "one[attr*=\"value\"][a] {}");
-      expect(s("one[attr|=\"value\"] {}", "a"), "one[attr|=\"value\"][a] {}");
+      expect(s('one[attr="value"] {}', 'a'), 'one[attr="value"][a] {}');
+      expect(s('one[attr=value] {}', 'a'), 'one[attr="value"][a] {}');
+      expect(s('one[attr^="value"] {}', 'a'), 'one[attr^="value"][a] {}');
+      expect(s('one[attr\$="value"] {}', 'a'), 'one[attr\$="value"][a] {}');
+      expect(s('one[attr*="value"] {}', 'a'), 'one[attr*="value"][a] {}');
+      expect(s('one[attr|="value"] {}', 'a'), 'one[attr|="value"][a] {}');
+      expect(s('one[attr~="value"] {}', 'a'), 'one[attr~="value"][a] {}');
       expect(s("one[attr] {}", "a"), "one[attr][a] {}");
-      expect(s("[is=\"one\"] {}", "a"), "[is=\"one\"][a] {}");
+      expect(s('[is="one"] {}', 'a'), '[is="one"][a] {}');
     });
     test("should handle :host", () {
       expect(s(":host {}", "a", "a-host"), "[a-host] {}");

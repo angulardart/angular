@@ -139,9 +139,9 @@ class DebugAppView<T> extends AppView<T> {
     this._currentDebugContext = null;
   }
 
-  Function evt(Function cb) {
+  /*<R>*/ evt/*<E,R>*/(/*<R>*/ cb(/*<E>*/ e)) {
     var superHandler = super.evt(cb);
-    return (event) {
+    return (/*<E>*/ event) {
       this._resetDebug();
       try {
         return superHandler(event);
