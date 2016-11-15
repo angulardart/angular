@@ -4,6 +4,7 @@ import 'package:angular2/core.dart';
 import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:observable/observable.dart' show ObservableList;
 
+@Deprecated('No longer part of Angular. Copy into your project if needed')
 class ObservableListDiff extends DefaultIterableDiffer {
   ChangeDetectorRef _ref;
   ObservableListDiff(this._ref);
@@ -52,6 +53,7 @@ class ObservableListDiff extends DefaultIterableDiffer {
   }
 }
 
+@Deprecated('No longer part of Angular. Copy into your project if needed')
 class ObservableListDiffFactory implements IterableDifferFactory {
   const ObservableListDiffFactory();
   bool supports(obj) => obj is ObservableList;
