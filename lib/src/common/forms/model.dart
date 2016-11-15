@@ -193,6 +193,9 @@ abstract class AbstractControl {
       this._statusChanges.add(this._status);
     }
     _parent?._updateControlsErrors();
+    // If a control's errors were specifically set then mark the control as
+    // changed.
+    markAsDirty();
   }
 
   AbstractControl find(
