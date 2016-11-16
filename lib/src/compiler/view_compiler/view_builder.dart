@@ -66,6 +66,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   static Map<String, CompileIdentifierMetadata> tagNameToIdentifier;
 
   num nestedViewCount = 0;
+
+  /// Local variable name used to refer to document. null if not created yet.
+  static final defaultDocVarName = 'doc';
+  String docVarName;
+
   ViewBuilderVisitor(
       this.view, this.targetDependencies, this.stylesCompileResult) {
     tagNameToIdentifier ??= {
@@ -260,8 +265,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
                 'createElementNS', [o.literal(ns), o.literal(nameParts[1])]);
       } else {
         // No namespace just call [document.createElement].
-        createRenderNodeExpr = o
-            .importExpr(Identifiers.HTML_DOCUMENT)
+        if (docVarName == null) {
+          view.createMethod.addStmt(_createLocalDocumentVar());
+        }
+        createRenderNodeExpr = new o.ReadVarExpr(docVarName)
             .callMethod('createElement', [tagNameExpr]);
       }
       view.createMethod.addStmt(
@@ -293,24 +300,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var component = directives.firstWhere((directive) => directive.isComponent,
         orElse: () => null);
     var htmlAttrs = _readHtmlAttrs(ast.attrs);
+
+    // Create statements to initialize literal attribute values.
     var attrNameAndValues = _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
     for (var i = 0; i < attrNameAndValues.length; i++) {
-      var attrName = attrNameAndValues[i][0];
-      var attrValue = attrNameAndValues[i][1];
-
-      var attrNs;
-      if (attrName.startsWith('@') && attrName.contains(':')) {
-        var nameParts = attrName.substring(1).split(':');
-        attrNs = NAMESPACE_URIS[nameParts[0]];
-        attrName = nameParts[1];
-      }
-      var params = createSetAttributeParams(
-          fieldName, attrNs, attrName, o.literal(attrValue));
-
-      this.view.createMethod.addStmt(new o.InvokeMemberMethodExpr(
-              attrNs == null ? "setAttr" : "setAttrNS", params)
-          .toStmt());
+      o.Statement stmt = _createSetAttributeStatement(ast.name, fieldName,
+          attrNameAndValues[i][0], attrNameAndValues[i][1]);
+      view.createMethod.addStmt(stmt);
     }
+
     var compileElement = new CompileElement(
         parent,
         this.view,
@@ -366,6 +364,69 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
           createMethod, [codeGenContentNodes, o.NULL_EXPR]).toStmt());
     }
     return null;
+  }
+
+  o.Statement _createLocalDocumentVar() {
+    docVarName = defaultDocVarName;
+    return new o.DeclareVarStmt(
+        docVarName, o.importExpr(Identifiers.HTML_DOCUMENT));
+  }
+
+  o.Statement _createSetAttributeStatement(String astNodeName,
+      String elementFieldName, String attrName, String attrValue) {
+    var attrNs;
+    if (attrName.startsWith('@') && attrName.contains(':')) {
+      var nameParts = attrName.substring(1).split(':');
+      attrNs = NAMESPACE_URIS[nameParts[0]];
+      attrName = nameParts[1];
+    }
+
+    /// Optimization for common attributes. Call dart:html directly without
+    /// going through setAttr wrapper.
+    if (attrNs == null) {
+      switch (attrName) {
+        case 'class':
+          // Remove check below after SVGSVGElement DDC bug is fixed b2/32931607
+          bool hasNamespace =
+              astNodeName.startsWith('@') || astNodeName.contains(':');
+          if (!hasNamespace) {
+            return new o.ReadClassMemberExpr(elementFieldName)
+                .prop('className')
+                .set(o.literal(attrValue))
+                .toStmt();
+          }
+          break;
+        case 'tabindex':
+          try {
+            int tabValue = int.parse(attrValue);
+            return new o.ReadClassMemberExpr(elementFieldName)
+                .prop('tabIndex')
+                .set(o.literal(tabValue))
+                .toStmt();
+          } catch (_) {
+            // fallthrough to default handler since index is not int.
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    var params = createSetAttributeParams(
+        elementFieldName, attrNs, attrName, o.literal(attrValue));
+    return new o.InvokeMemberMethodExpr(
+            attrNs == null ? "createAttr" : "setAttrNS", params)
+        .toStmt();
+  }
+
+  String attributeNameToDartHtmlMember(String attrName) {
+    switch (attrName) {
+      case 'class':
+        return 'className';
+      case 'tabindex':
+        return 'tabIndex';
+      default:
+        return null;
+    }
   }
 
   o.Statement createDbgElementCall(

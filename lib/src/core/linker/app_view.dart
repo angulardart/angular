@@ -481,6 +481,11 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
+  void createAttr(
+      Element renderElement, String attributeName, String attributeValue) {
+    renderElement.setAttribute(attributeName, attributeValue);
+  }
+
   void setAttrNS(Element renderElement, String attrNS, String attributeName,
       String attributeValue) {
     if (attributeValue != null) {
