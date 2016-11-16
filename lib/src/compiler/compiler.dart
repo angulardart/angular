@@ -30,7 +30,7 @@ export "package:angular2/src/core/platform_directives_and_pipes.dart"
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 
 export "compile_metadata.dart";
-export "config.dart" show CompilerConfig, RenderTypes;
+export "config.dart" show CompilerConfig;
 export "directive_resolver.dart" show DirectiveResolver;
 export "offline_compiler.dart";
 export "pipe_resolver.dart" show PipeResolver;

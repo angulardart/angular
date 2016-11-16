@@ -40,6 +40,7 @@ class RenderComponentType {
   String _hostAttr;
 
   List<String> _styles;
+  bool stylesShimmed = false;
 
   RenderComponentType(this.id, this.templateUrl, this.slotCount,
       this.encapsulation, this.templateStyles);
@@ -100,13 +101,6 @@ abstract class RenderDebugInfo {
 
 @Deprecated('Use dart:html')
 abstract class Renderer {
-  dynamic selectRootElement(
-      dynamic /* String | dynamic */ selectorOrNode, RenderDebugInfo debugInfo);
-  dynamic createElement(
-      dynamic parentElement, String name, RenderDebugInfo debugInfo);
-  void attachViewAfter(dynamic node, List<dynamic> viewRootNodes);
-  void detachView(List<dynamic> viewRootNodes);
-  void destroyView(dynamic hostElement, List<dynamic> viewAllNodes);
   void setElementProperty(
       dynamic renderElement, String propertyName, dynamic propertyValue);
   @Deprecated("Use dart:html Element attributes and setAttribute.")
@@ -133,6 +127,4 @@ abstract class Renderer {
 ///
 /// The default Renderer implementation is `DomRenderer`. Also available is
 /// `WebWorkerRenderer`.
-abstract class RootRenderer {
-  Renderer renderComponent(RenderComponentType componentType);
-}
+abstract class RootRenderer {}

@@ -100,8 +100,6 @@ class CompileElement extends CompileNode {
     _instances.add(identifierToken(Identifiers.ElementRef), this.elementRef);
     injector = o.THIS_EXPR.callMethod("injector", [o.literal(this.nodeIndex)]);
     _instances.add(identifierToken(Identifiers.Injector), this.injector);
-    _instances.add(
-        identifierToken(Identifiers.Renderer), o.THIS_EXPR.prop("renderer"));
     if (hasViewContainer || hasEmbeddedView || component != null) {
       this._createAppElement();
     }

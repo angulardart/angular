@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular2/src/core/di.dart' show Injector;
+import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_element.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/exceptions.dart'
@@ -20,9 +21,10 @@ import 'package:angular2/src/debug/debug_node.dart'
         DebugNode,
         getDebugNode,
         indexDebugNode,
-        DebugEventListener;
-import 'package:angular2/src/platform/dom/dom_renderer.dart'
-    show DomRootRenderer;
+        DebugEventListener,
+        removeDebugNodeFromIndex;
+import "package:angular2/src/debug/debug_node.dart" show inspectNativeElement;
+import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
 export 'package:angular2/src/core/linker/app_view.dart';
 export 'package:angular2/src/debug/debug_context.dart'
@@ -33,9 +35,11 @@ WtfScopeFn _scope_check = wtfCreateScope('AppView#check(ascii id)');
 // RegExp to match anchor comment when logging bindings for debugging.
 RegExp _TEMPLATE_BINDINGS_EXP = new RegExp(r'^template bindings=(.*)$');
 const _TEMPLATE_COMMENT_TEXT = 'template bindings={}';
+const INSPECT_GLOBAL_NAME = "ng.probe";
 
 class DebugAppView<T> extends AppView<T> {
   static bool profilingEnabled = false;
+  static bool _ngProbeInitialized = false;
 
   final List<StaticNodeDebugInfo> staticNodeDebugInfos;
   DebugContext _currentDebugContext;
@@ -49,7 +53,12 @@ class DebugAppView<T> extends AppView<T> {
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
       : super(clazz, componentType, type, locals, parentInjector,
-            declarationAppElement, cdMode);
+            declarationAppElement, cdMode) {
+    if (!_ngProbeInitialized) {
+      _ngProbeInitialized = true;
+      DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
+    }
+  }
 
   @override
   AppElement create(
@@ -233,7 +242,67 @@ class DebugAppView<T> extends AppView<T> {
         debugParent.addChild(getDebugNode(child));
       }
     }
-    DomRootRenderer.isDirty = true;
+    domRootRendererIsDirty = true;
+  }
+
+  void detachViewNodes(List<dynamic> viewRootNodes) {
+    viewRootNodes.forEach((node) {
+      var debugNode = getDebugNode(node);
+      if (debugNode != null && debugNode.parent != null) {
+        debugNode.parent.removeChild(debugNode);
+      }
+    });
+    super.detachViewNodes(viewRootNodes);
+  }
+
+  @override
+  dynamic selectRootElement(dynamic /* String | dynamic */ selectorOrNode,
+      RenderDebugInfo debugInfo) {
+    var nativeEl = super.selectRootElement(selectorOrNode, debugInfo);
+    var debugEl = new DebugElement(nativeEl, null, debugInfo);
+    indexDebugNode(debugEl);
+    return nativeEl;
+  }
+
+  @override
+  dynamic createElement(
+      dynamic parentElement, String name, RenderDebugInfo debugInfo) {
+    var nativeEl = super.createElement(parentElement, name, debugInfo);
+    var debugEl =
+        new DebugElement(nativeEl, getDebugNode(parentElement), debugInfo);
+    debugEl.name = name;
+    indexDebugNode(debugEl);
+    return nativeEl;
+  }
+
+  @override
+  void attachViewAfter(dynamic node, List<Node> viewRootNodes) {
+    var debugNode = getDebugNode(node);
+    if (debugNode != null) {
+      var debugParent = debugNode?.parent;
+      if (viewRootNodes.length > 0 && debugParent != null) {
+        List<DebugNode> debugViewRootNodes = [];
+        int rootNodeCount = viewRootNodes.length;
+        for (int n = 0; n < rootNodeCount; n++) {
+          var debugNode = getDebugNode(viewRootNodes[n]);
+          if (debugNode == null) continue;
+          debugViewRootNodes.add(debugNode);
+        }
+        debugParent.insertChildrenAfter(debugNode, debugViewRootNodes);
+      }
+    }
+    super.attachViewAfter(node, viewRootNodes);
+  }
+
+  @override
+  void destroyViewNodes(dynamic hostElement, List<dynamic> viewAllNodes) {
+    int nodeCount = viewAllNodes.length;
+    for (int i = 0; i < nodeCount; i++) {
+      var debugNode = getDebugNode(viewAllNodes[i]);
+      if (debugNode == null) continue;
+      removeDebugNodeFromIndex(debugNode);
+    }
+    super.destroyViewNodes(hostElement, viewAllNodes);
   }
 
   void _rethrowWithContext(dynamic e, dynamic stack) {

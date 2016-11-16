@@ -41,7 +41,6 @@ import "package:angular2/src/core/metadata.dart"
         Output,
         HostBinding,
         HostListener;
-import "package:angular2/src/core/render.dart" show Renderer;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show stringify;
@@ -2076,9 +2075,9 @@ class MyService {
 @Injectable()
 class SimpleImperativeViewComponent {
   var done;
-  SimpleImperativeViewComponent(ElementRef self, Renderer renderer) {
-    var hostElement = self.nativeElement;
-    DOM.appendChild(hostElement, el("hello imp view"));
+  SimpleImperativeViewComponent(ElementRef self) {
+    Element hostElement = self.nativeElement;
+    hostElement.append(el("hello imp view"));
   }
 }
 

@@ -1,13 +1,6 @@
+import 'dart:html';
 import "package:angular2/core.dart"
-    show
-        Directive,
-        Renderer,
-        Provider,
-        ElementRef,
-        Input,
-        Host,
-        OnDestroy,
-        Optional;
+    show Directive, Provider, ElementRef, Input, Host, OnDestroy, Optional;
 import "package:angular2/src/facade/lang.dart" show isPrimitive, looseIdentical;
 
 import "control_value_accessor.dart"
@@ -47,19 +40,18 @@ String _extractId(String valueString) {
       SELECT_VALUE_ACCESSOR
     ])
 class SelectControlValueAccessor implements ControlValueAccessor {
-  Renderer _renderer;
   ElementRef _elementRef;
   dynamic value;
   Map<String, dynamic> _optionMap = new Map<String, dynamic>();
   num _idCounter = 0;
   var onChange = (dynamic _) {};
   var onTouched = () {};
-  SelectControlValueAccessor(this._renderer, this._elementRef);
+  SelectControlValueAccessor(this._elementRef);
   void writeValue(dynamic value) {
     this.value = value;
     var valueString = _buildValueString(this._getOptionId(value), value);
-    this._renderer.setElementProperty(
-        this._elementRef.nativeElement, "value", valueString);
+    SelectElement elm = _elementRef.nativeElement;
+    elm.value = valueString;
   }
 
   void registerOnChange(dynamic fn(dynamic value)) {
@@ -99,11 +91,9 @@ class SelectControlValueAccessor implements ControlValueAccessor {
 @Directive(selector: "option")
 class NgSelectOption implements OnDestroy {
   ElementRef _element;
-  Renderer _renderer;
   SelectControlValueAccessor _select;
   String id;
-  NgSelectOption(
-      this._element, this._renderer, @Optional() @Host() this._select) {
+  NgSelectOption(this._element, @Optional() @Host() this._select) {
     if (_select != null) this.id = this._select._registerOption();
   }
   @Input("ngValue")
@@ -121,9 +111,8 @@ class NgSelectOption implements OnDestroy {
   }
 
   void _setElementValue(String value) {
-    this
-        ._renderer
-        .setElementProperty(this._element.nativeElement, "value", value);
+    OptionElement elm = _element.nativeElement;
+    elm.value = value;
   }
 
   void ngOnDestroy() {

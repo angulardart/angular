@@ -6,7 +6,6 @@ import "package:angular2/core.dart"
         ElementRef,
         IterableDiffers,
         KeyValueDiffers,
-        Renderer,
         IterableDiffer,
         KeyValueDiffer,
         CollectionChangeRecord,
@@ -51,13 +50,11 @@ class NgClass implements DoCheck, OnDestroy {
   IterableDiffers _iterableDiffers;
   KeyValueDiffers _keyValueDiffers;
   ElementRef _ngEl;
-  Renderer _renderer;
   IterableDiffer _iterableDiffer;
   KeyValueDiffer _keyValueDiffer;
   List<String> _initialClasses = [];
   dynamic /* List < String > | Set< String > */ _rawClass;
-  NgClass(
-      this._iterableDiffers, this._keyValueDiffers, this._ngEl, this._renderer);
+  NgClass(this._iterableDiffers, this._keyValueDiffers, this._ngEl);
 
   set initialClasses(String v) {
     this._applyInitialClasses(true);
@@ -160,10 +157,18 @@ class NgClass implements DoCheck, OnDestroy {
         _separator ??= new RegExp(r'\s+');
         var classes = className.split(_separator);
         for (var i = 0, len = classes.length; i < len; i++) {
-          _renderer.setElementClass(_ngEl.nativeElement, classes[i], enabled);
+          if (enabled) {
+            _ngEl.nativeElement.classes.add(classes[i]);
+          } else {
+            _ngEl.nativeElement.classes.remove(classes[i]);
+          }
         }
       } else {
-        _renderer.setElementClass(_ngEl.nativeElement, className, enabled);
+        if (enabled) {
+          _ngEl.nativeElement.classes.add(className);
+        } else {
+          _ngEl.nativeElement.classes.remove(className);
+        }
       }
     }
   }

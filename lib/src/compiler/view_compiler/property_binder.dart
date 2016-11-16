@@ -23,7 +23,9 @@ import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'view_builder.dart' show buildUpdaterFunctionName;
-import 'view_compiler_utils.dart' show NAMESPACE_URIS, createSetAttributeParams;
+import 'view_compiler_utils.dart' show createSetAttributeParams;
+import 'package:angular2/src/core/linker/app_view_utils.dart'
+    show NAMESPACE_URIS;
 
 o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
     new o.ReadClassMemberExpr('_expr_${exprIndex}');

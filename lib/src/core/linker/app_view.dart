@@ -5,13 +5,10 @@ import 'package:angular2/src/core/change_detection/change_detection.dart'
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart';
-import 'package:angular2/src/platform/dom/dom_renderer.dart'
-    show DomRootRenderer;
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 import 'app_element.dart';
-import 'app_view_utils.dart'
-    show appViewUtils, ensureSlotCount, OnDestroyCallback;
+import 'app_view_utils.dart';
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
 import 'view_ref.dart' show ViewRefImpl;
@@ -21,6 +18,8 @@ import 'dart:js_util' as js_util;
 export 'package:angular2/src/core/change_detection/component_state.dart';
 
 const EMPTY_CONTEXT = const Object();
+
+bool domRootRendererIsDirty = false;
 
 /// Cost of making objects: http://jsperf.com/instantiate-size-of-object
 abstract class AppView<T> {
@@ -56,16 +55,14 @@ abstract class AppView<T> {
   T ctx;
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
-  Renderer renderer;
   bool _hasExternalHostElement;
   AppView(this.clazz, this.componentType, this.type, this.locals,
       this.parentInjector, this.declarationAppElement, this._cdMode) {
     ref = new ViewRefImpl(this);
     sharedStylesHost ??= new DomSharedStylesHost(document);
-    if (type == ViewType.COMPONENT || type == ViewType.HOST) {
-      renderer = appViewUtils.renderComponent(componentType);
-    } else {
-      renderer = declarationAppElement.parentView.renderer;
+    if (!componentType.stylesShimmed) {
+      componentType.shimStyles(sharedStylesHost);
+      componentType.stylesShimmed = true;
     }
   }
 
@@ -105,7 +102,7 @@ abstract class AppView<T> {
 
   AppElement create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | dynamic */ rootSelectorOrNode) {
+      dynamic /* String | Node */ rootSelectorOrNode) {
     T context;
     var projectableNodes;
     switch (this.type) {
@@ -128,7 +125,7 @@ abstract class AppView<T> {
   /// Builds a host view.
   AppElement createHost(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | dynamic */ rootSelectorOrNode) {
+      dynamic /* String | Node */ rootSelectorOrNode) {
     assert(type == ViewType.HOST);
     ctx = null;
     // Note: Don't ensure the slot count for the projectableNodes as
@@ -142,7 +139,7 @@ abstract class AppView<T> {
   /// Builds a nested embedded view.
   AppElement createEmbedded(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | dynamic */ rootSelectorOrNode) {
+      dynamic /* String | Node */ rootSelectorOrNode) {
     projectableNodes = declarationAppElement.parentView.projectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
     ctx = declarationAppElement.parentView.ctx as T;
@@ -152,7 +149,7 @@ abstract class AppView<T> {
   /// Builds a component view.
   AppElement createComp(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | dynamic */ rootSelectorOrNode) {
+      dynamic /* String | Node */ rootSelectorOrNode) {
     projectableNodes =
         ensureSlotCount(givenProjectableNodes, componentType.slotCount);
     _hasExternalHostElement = rootSelectorOrNode != null;
@@ -163,8 +160,7 @@ abstract class AppView<T> {
   /// Returns the AppElement for the host element for ViewType.HOST.
   ///
   /// Overwritten by implementations.
-  AppElement createInternal(
-          dynamic /* String | dynamic */ rootSelectorOrNode) =>
+  AppElement createInternal(dynamic /* String | Node */ rootSelectorOrNode) =>
       null;
 
   /// Called by createInternal once all dom nodes are available.
@@ -181,14 +177,59 @@ abstract class AppView<T> {
   }
 
   dynamic selectOrCreateHostElement(String elementName,
-      dynamic /* String | dynamic */ rootSelectorOrNode, debugCtx) {
+      dynamic /* String | Node */ rootSelectorOrNode, debugCtx) {
     var hostElement;
-    if (rootSelectorOrNode != null) {
-      hostElement = renderer.selectRootElement(rootSelectorOrNode, debugCtx);
+    if (type == ViewType.COMPONENT || type == ViewType.HOST) {
+      if (rootSelectorOrNode != null) {
+        hostElement = selectRootElement(rootSelectorOrNode, debugCtx);
+      } else {
+        hostElement = createElement(null, elementName, debugCtx);
+      }
     } else {
-      hostElement = renderer.createElement(null, elementName, debugCtx);
+      var target = declarationAppElement.parentView;
+      if (rootSelectorOrNode != null) {
+        hostElement = target.selectRootElement(rootSelectorOrNode, debugCtx);
+      } else {
+        hostElement = target.createElement(null, elementName, debugCtx);
+      }
     }
     return hostElement;
+  }
+
+  dynamic selectRootElement(
+      dynamic /* String | Node */ selectorOrNode, RenderDebugInfo debugInfo) {
+    Node el;
+    if (selectorOrNode is String) {
+      el = querySelector(selectorOrNode);
+      if (el == null) {
+        throw new Exception(
+            'The selector "${selectorOrNode}" did not match any elements');
+      }
+    } else {
+      el = selectorOrNode;
+    }
+    el.nodes = [];
+    return el;
+  }
+
+  dynamic createElement(
+      dynamic parent, String name, RenderDebugInfo debugInfo) {
+    var nsAndName = splitNamespace(name);
+    var el = nsAndName[0] != null
+        ? document.createElementNS(NAMESPACE_URIS[nsAndName[0]], nsAndName[1])
+        : document.createElement(nsAndName[1]);
+    String contentAttr = componentType.contentAttr;
+    if (contentAttr != null) {
+      el.attributes[contentAttr] = '';
+    }
+    parent?.append(el);
+    domRootRendererIsDirty = true;
+    return el;
+  }
+
+  void attachViewAfter(dynamic node, List<Node> viewRootNodes) {
+    moveNodesAfterSibling(node, viewRootNodes);
+    domRootRendererIsDirty = true;
   }
 
   dynamic injectorGet(dynamic token, num nodeIndex, dynamic notFoundResult) {
@@ -210,12 +251,21 @@ abstract class AppView<T> {
 
   void destroy() {
     if (_hasExternalHostElement) {
-      renderer.detachView(flatRootNodes);
+      detachViewNodes(flatRootNodes);
     } else {
       viewContainerElement
           ?.detachView(viewContainerElement.nestedViews.indexOf(this));
     }
     _destroyRecurse();
+  }
+
+  void detachViewNodes(List<dynamic> viewRootNodes) {
+    int len = viewRootNodes.length;
+    for (var i = 0; i < len; i++) {
+      var node = viewRootNodes[i];
+      node.remove();
+      domRootRendererIsDirty = true;
+    }
   }
 
   void _destroyRecurse() {
@@ -247,7 +297,15 @@ abstract class AppView<T> {
     }
     destroyInternal();
     dirtyParentQueriesInternal();
-    renderer.destroyView(hostElement, allNodes);
+    destroyViewNodes(hostElement, allNodes);
+  }
+
+  void destroyViewNodes(dynamic hostElement, List<dynamic> viewAllNodes) {
+    if (componentType.encapsulation == ViewEncapsulation.Native &&
+        hostElement != null) {
+      sharedStylesHost.removeHost(hostElement.shadowRoot);
+      domRootRendererIsDirty = true;
+    }
   }
 
   void addOnDestroyCallback(OnDestroyCallback callback) {
@@ -261,10 +319,9 @@ abstract class AppView<T> {
 
   AppView<dynamic> get parent => declarationAppElement?.parentView;
 
-  List<dynamic> get flatRootNodes =>
-      _flattenNestedViews(rootNodesOrAppElements);
+  List<Node> get flatRootNodes => _flattenNestedViews(rootNodesOrAppElements);
 
-  dynamic get lastRootNode {
+  Node get lastRootNode {
     var lastNode =
         rootNodesOrAppElements.isNotEmpty ? rootNodesOrAppElements.last : null;
     return _findLastRenderNode(lastNode);
@@ -421,7 +478,7 @@ abstract class AppView<T> {
     } else {
       renderElement.attributes.remove(attributeName);
     }
-    DomRootRenderer.isDirty = true;
+    domRootRendererIsDirty = true;
   }
 
   void setAttrNS(Element renderElement, String attrNS, String attributeName,
@@ -431,13 +488,13 @@ abstract class AppView<T> {
     } else {
       renderElement.getNamespacedAttributes(attrNS).remove(attributeName);
     }
-    DomRootRenderer.isDirty = true;
+    domRootRendererIsDirty = true;
   }
 
   // Marks DOM dirty so that end of zone turn we can detect if DOM was updated
   // for sharded apps support.
   void setDomDirty() {
-    DomRootRenderer.isDirty = true;
+    domRootRendererIsDirty = true;
   }
 
   /// Projects projectableNodes at specified index. We don't use helper
@@ -462,7 +519,7 @@ abstract class AppView<T> {
         parentElement.append(child);
       }
     }
-    DomRootRenderer.isDirty = true;
+    domRootRendererIsDirty = true;
   }
 
   Function listen(dynamic renderElement, String name, Function callback) {
@@ -480,8 +537,8 @@ abstract class AppView<T> {
   }
 }
 
-dynamic _findLastRenderNode(dynamic node) {
-  var lastNode;
+Node _findLastRenderNode(dynamic node) {
+  Node lastNode;
   if (node is AppElement) {
     AppElement appEl = node;
     lastNode = appEl.nativeElement;
@@ -526,11 +583,11 @@ void _appendNestedViewRenderNodes(
   }
 }
 
-List _flattenNestedViews(List nodes) {
-  return _flattenNestedViewRenderNodes(nodes, []);
+List<Node> _flattenNestedViews(List nodes) {
+  return _flattenNestedViewRenderNodes(nodes, <Node>[]);
 }
 
-List _flattenNestedViewRenderNodes(List nodes, List renderNodes) {
+List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
   int nodeCount = nodes.length;
   for (var i = 0; i < nodeCount; i++) {
     var node = nodes[i];
@@ -548,6 +605,23 @@ List _flattenNestedViewRenderNodes(List nodes, List renderNodes) {
     }
   }
   return renderNodes;
+}
+
+void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
+  Node parent = sibling.parentNode;
+  if (nodes.isNotEmpty && parent != null) {
+    var nextSibling = sibling.nextNode;
+    int len = nodes.length;
+    if (nextSibling != null) {
+      for (var i = 0; i < len; i++) {
+        parent.insertBefore(nodes[i], nextSibling);
+      }
+    } else {
+      for (var i = 0; i < len; i++) {
+        parent.append(nodes[i]);
+      }
+    }
+  }
 }
 
 /// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.

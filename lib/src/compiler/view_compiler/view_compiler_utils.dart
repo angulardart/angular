@@ -1,20 +1,12 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-
-import "../compile_metadata.dart"
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import '../compile_metadata.dart'
     show
         CompileTokenMetadata,
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
-import "../identifiers.dart" show Identifiers;
-import "../output/output_ast.dart" as o;
-import "compile_view.dart" show CompileView;
-
-// List of supported namespaces.
-const NAMESPACE_URIS = const {
-  'xlink': 'http://www.w3.org/1999/xlink',
-  'svg': 'http://www.w3.org/2000/svg',
-  'xhtml': 'http://www.w3.org/1999/xhtml'
-};
+import '../identifiers.dart' show Identifiers;
+import '../output/output_ast.dart' as o;
+import 'compile_view.dart' show CompileView;
 
 // Template Anchor comment.
 const TEMPLATE_COMMENT_TEXT = 'template bindings={}';

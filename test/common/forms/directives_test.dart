@@ -52,7 +52,7 @@ void main() {
     DefaultValueAccessor defaultAccessor;
     NgControl dir;
     setUp(() {
-      defaultAccessor = new DefaultValueAccessor(null, null);
+      defaultAccessor = new DefaultValueAccessor(null);
       dir = new MockNgControl();
     });
     test("should throw when given an empty array", () {
@@ -62,24 +62,24 @@ void main() {
       expect(selectValueAccessor(dir, [defaultAccessor]), defaultAccessor);
     });
     test("should return checkbox accessor when provided", () {
-      var checkboxAccessor = new CheckboxControlValueAccessor(null, null);
+      var checkboxAccessor = new CheckboxControlValueAccessor(null);
       expect(selectValueAccessor(dir, [defaultAccessor, checkboxAccessor]),
           checkboxAccessor);
     });
     test("should return select accessor when provided", () {
-      var selectAccessor = new SelectControlValueAccessor(null, null);
+      var selectAccessor = new SelectControlValueAccessor(null);
       expect(selectValueAccessor(dir, [defaultAccessor, selectAccessor]),
           selectAccessor);
     });
     test("should throw when more than one build-in accessor is provided", () {
-      var checkboxAccessor = new CheckboxControlValueAccessor(null, null);
-      var selectAccessor = new SelectControlValueAccessor(null, null);
+      var checkboxAccessor = new CheckboxControlValueAccessor(null);
+      var selectAccessor = new SelectControlValueAccessor(null);
       expect(() => selectValueAccessor(dir, [checkboxAccessor, selectAccessor]),
           throws);
     });
     test("should return custom accessor when provided", () {
       var customAccessor = new MockValueAccessor();
-      var checkboxAccessor = new CheckboxControlValueAccessor(null, null);
+      var checkboxAccessor = new CheckboxControlValueAccessor(null);
       expect(
           selectValueAccessor(
               dir, [defaultAccessor, customAccessor, checkboxAccessor]),
@@ -93,7 +93,7 @@ void main() {
   });
   group("Shared composeValidators", () {
     setUp(() {
-      new DefaultValueAccessor(null, null);
+      new DefaultValueAccessor(null);
     });
     test("should compose functions", () {
       var dummy1 = (_) => ({"dummy1": true});
@@ -113,7 +113,7 @@ void main() {
     ControlGroup formModel;
     var loginControlDir;
     setUp(() {
-      defaultAccessor = new DefaultValueAccessor(null, null);
+      defaultAccessor = new DefaultValueAccessor(null);
       form = new NgFormModel([], []);
       formModel = new ControlGroup({
         "login": new Control(),
@@ -250,7 +250,7 @@ void main() {
       var loginControlDir;
       NgControlGroup personControlGroupDir;
       setUp(() {
-        defaultAccessor = new DefaultValueAccessor(null, null);
+        defaultAccessor = new DefaultValueAccessor(null);
         form = new NgForm([], []);
         formModel = form.form;
         personControlGroupDir = new NgControlGroup(form, [], []);

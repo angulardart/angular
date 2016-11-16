@@ -3,8 +3,7 @@ import 'package:angular2/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show devModeEqual, uninitialized;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
-import 'package:angular2/src/core/render/api.dart'
-    show RootRenderer, RenderComponentType, Renderer;
+import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular2/src/core/security.dart' show SafeValue;
 import 'package:angular2/src/core/security.dart';
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
@@ -23,7 +22,6 @@ AppViewUtils appViewUtils;
 /// provide access to root dom renderer.
 @Injectable()
 class AppViewUtils {
-  RootRenderer _renderer;
   String _appId;
   EventManager eventManager;
   static int _nextCompTypeId = 0;
@@ -36,8 +34,7 @@ class AppViewUtils {
   static int _throwOnChangesCounter = 0;
   SanitizationService sanitizer;
 
-  AppViewUtils(this._renderer, @Inject(APP_ID) this._appId, this.sanitizer,
-      this.eventManager);
+  AppViewUtils(@Inject(APP_ID) this._appId, this.sanitizer, this.eventManager);
 
   /// Used by the generated code.
   RenderComponentType createRenderComponentType(
@@ -47,10 +44,6 @@ class AppViewUtils {
       List<dynamic /* String | List < dynamic > */ > styles) {
     return new RenderComponentType('${_appId}-${_nextCompTypeId++}',
         templateUrl, slotCount, encapsulation, styles);
-  }
-
-  Renderer renderComponent(RenderComponentType renderComponentType) {
-    return this._renderer.renderComponent(renderComponentType);
   }
 
   /// Enters execution mode that will throw exceptions if any binding
@@ -559,4 +552,20 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: 
     }
     return result;
   };
+}
+
+// List of supported namespaces.
+const NAMESPACE_URIS = const {
+  'xlink': 'http://www.w3.org/1999/xlink',
+  'svg': 'http://www.w3.org/2000/svg',
+  'xhtml': 'http://www.w3.org/1999/xhtml'
+};
+
+var NS_PREFIX_RE = new RegExp(r'^@([^:]+):(.+)');
+List<String> splitNamespace(String name) {
+  if (name[0] != '@') {
+    return [null, name];
+  }
+  var match = NS_PREFIX_RE.firstMatch(name);
+  return [match[1], match[2]];
 }

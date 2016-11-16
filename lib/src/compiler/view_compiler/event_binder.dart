@@ -33,10 +33,10 @@ class CompileEventListener {
     this._methodName =
         '_handle_${sanitizeEventName(eventName)}_${compileElement.nodeIndex}_'
         '${ listenerIndex}';
-    this._eventParam = new o.FnParam(
-        EventHandlerVars.event.name,
-        o.importType(
-            this.compileElement.view.genConfig.renderTypes.renderEvent));
+    // TODO: type event param as Identifiers.HTML_EVENT if non-custom event or
+    // stream.
+    this._eventParam =
+        new o.FnParam(EventHandlerVars.event.name, o.importType(null));
   }
   void addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
       o.Expression directiveInstance) {

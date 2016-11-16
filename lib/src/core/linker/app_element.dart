@@ -75,7 +75,7 @@ class AppElement {
     }
 
     if (refRenderNode != null) {
-      view.renderer.attachViewAfter(refRenderNode, view.flatRootNodes);
+      view.attachViewAfter(refRenderNode, view.flatRootNodes);
     }
 
     view.markContentChildAsMoved(this);
@@ -95,7 +95,7 @@ class AppElement {
       refRenderNode = nativeElement;
     }
     if (refRenderNode != null) {
-      view.renderer.attachViewAfter(refRenderNode, view.flatRootNodes);
+      view.attachViewAfter(refRenderNode, view.flatRootNodes);
     }
     view.addToContentChildren(this);
   }
@@ -105,7 +105,7 @@ class AppElement {
     if (view.type == ViewType.COMPONENT) {
       throw new BaseException("Component views can't be moved!");
     }
-    view.renderer.detachView(view.flatRootNodes);
+    view.detachViewNodes(view.flatRootNodes);
     view.removeFromContentChildren(this);
     return view;
   }

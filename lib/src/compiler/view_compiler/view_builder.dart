@@ -1,8 +1,9 @@
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
+import 'package:angular2/src/core/linker/app_view_utils.dart'
+    show NAMESPACE_URIS;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
@@ -42,7 +43,6 @@ import "view_compiler_utils.dart"
         getViewFactoryName,
         createFlatArray,
         createDiTokenExpression,
-        NAMESPACE_URIS,
         createSetAttributeParams,
         TEMPLATE_COMMENT_TEXT;
 
@@ -197,7 +197,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // Creates a call to project(parentNode, nodeIndex).
     var nodesExpression = ViewProperties.projectableNodes.key(
         o.literal(ast.index),
-        new o.ArrayType(o.importType(view.genConfig.renderTypes.renderNode)));
+        new o.ArrayType(o.importType(Identifiers.HTML_NODE)));
     if (!identical(parentRenderNode, o.NULL_EXPR)) {
       view.createMethod.addStmt(new o.InvokeMemberMethodExpr(
           'project', [parentRenderNode, o.literal(ast.index)]).toStmt());
@@ -390,7 +390,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // Create a comment to serve as anchor for template.
     if (createFieldForAnchor) {
       this.view.fields.add(new o.ClassField(fieldName,
-          outputType: o.importType(view.genConfig.renderTypes.renderComment),
+          outputType: o.importType(Identifiers.HTML_COMMENT_NODE),
           modifiers: const [o.StmtModifier.Private]));
       anchorVarExpr = new o.ReadClassMemberExpr(fieldName);
       var createAnchorNodeExpr = new o.WriteClassMemberExpr(
@@ -715,8 +715,7 @@ List<o.Statement> generateCreateMethod(CompileView view) {
     }
     parentRenderNodeStmts = [
       parentRenderNodeVar.set(parentRenderNodeExpr).toDeclStmt(
-          o.importType(view.genConfig.renderTypes.renderNode),
-          [o.StmtModifier.Final])
+          o.importType(Identifiers.HTML_NODE), [o.StmtModifier.Final])
     ];
   }
   o.Expression resultExpr;

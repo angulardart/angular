@@ -221,8 +221,8 @@ class BrowserDomAdapter
     oldNode.replaceWith(newNode);
   }
 
-  ChildNode remove(ChildNode el) {
-    return el..remove();
+  void remove(ChildNode el) {
+    el.remove();
   }
 
   void insertBefore(Node el, node) {

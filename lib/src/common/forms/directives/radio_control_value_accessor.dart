@@ -2,13 +2,13 @@ import "package:angular2/core.dart"
     show
         Directive,
         ElementRef,
-        Renderer,
         Provider,
         Input,
         OnInit,
         OnDestroy,
         Injector,
         Injectable;
+import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import "package:angular2/src/common/forms/directives/control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 import "package:angular2/src/common/forms/directives/ng_control.dart"
@@ -77,7 +77,6 @@ class RadioButtonState {
     providers: const [RADIO_VALUE_ACCESSOR])
 class RadioControlValueAccessor
     implements ControlValueAccessor, OnDestroy, OnInit {
-  Renderer _renderer;
   ElementRef _elementRef;
   RadioControlRegistry _registry;
   Injector _injector;
@@ -88,8 +87,7 @@ class RadioControlValueAccessor
   Function _fn;
   var onChange = () {};
   var onTouched = () {};
-  RadioControlValueAccessor(
-      this._renderer, this._elementRef, this._registry, this._injector);
+  RadioControlValueAccessor(this._elementRef, this._registry, this._injector);
   void ngOnInit() {
     this._control = this._injector.get(NgControl);
     this._registry.add(this._control, this);
@@ -102,7 +100,7 @@ class RadioControlValueAccessor
   void writeValue(dynamic value) {
     this._state = value;
     if (value?.checked ?? false) {
-      _renderer.setElementProperty(_elementRef.nativeElement, "checked", true);
+      DOM.setProperty(_elementRef.nativeElement, 'checked', true);
     }
   }
 

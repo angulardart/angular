@@ -6,7 +6,6 @@ import "package:angular2/core.dart"
         PLATFORM_DIRECTIVES,
         PLATFORM_PIPES,
         ExceptionHandler,
-        RootRenderer,
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;
@@ -19,8 +18,6 @@ import "package:angular2/src/platform/browser/testability.dart"
     show BrowserGetTestability;
 import "package:angular2/src/platform/browser/xhr_cache.dart" show CachedXHR;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/src/platform/dom/dom_renderer.dart"
-    show DomRootRenderer;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 import "package:angular2/src/platform/dom/events/dom_events.dart"
     show DomEventsPlugin;
@@ -88,8 +85,6 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   HammerGesturesPlugin,
   const Provider(EVENT_MANAGER_PLUGINS, useFactory: createEventPlugins),
   const Provider(HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig),
-  DomRootRenderer,
-  const Provider(RootRenderer, useExisting: DomRootRenderer),
   Testability,
   EventManager,
 ];

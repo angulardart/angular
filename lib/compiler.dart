@@ -7,7 +7,6 @@ export "package:angular2/src/compiler/compiler.dart"
         PLATFORM_PIPES,
         COMPILER_PROVIDERS,
         CompilerConfig,
-        RenderTypes,
         UrlResolver,
         DEFAULT_PACKAGE_URL_PROVIDER,
         createOfflineCompileUrlResolver,

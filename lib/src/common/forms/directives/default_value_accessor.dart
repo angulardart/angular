@@ -1,8 +1,8 @@
-import "package:angular2/core.dart"
-    show Directive, ElementRef, Renderer, Provider;
+import "package:angular2/core.dart" show Directive, ElementRef, Provider;
 
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
+import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: DefaultValueAccessor, multi: true);
@@ -23,15 +23,13 @@ const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
       DEFAULT_VALUE_ACCESSOR
     ])
 class DefaultValueAccessor implements ControlValueAccessor {
-  Renderer _renderer;
   ElementRef _elementRef;
   var onChange = (dynamic _) {};
   var onTouched = () {};
-  DefaultValueAccessor(this._renderer, this._elementRef);
+  DefaultValueAccessor(this._elementRef);
   void writeValue(dynamic value) {
     var normalizedValue = value ?? '';
-    this._renderer.setElementProperty(
-        this._elementRef.nativeElement, "value", normalizedValue);
+    DOM.setProperty(_elementRef.nativeElement, 'value', normalizedValue);
   }
 
   void registerOnChange(void fn(dynamic _)) {

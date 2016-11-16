@@ -22,7 +22,7 @@ import "utils.dart" show el;
 /// Fixture for debugging and testing a component.
 class ComponentFixture {
   /// The DebugElement associated with the root element of this component.
-  DebugElement debugElement;
+  DebugElement _debugElement;
 
   /// The instance of the root component class.
   dynamic componentInstance;
@@ -42,12 +42,19 @@ class ComponentFixture {
   ComponentFixture(ComponentRef ref) {
     changeDetectorRef = ref.changeDetectorRef;
     elementRef = ref.location;
-    debugElement = (getDebugNode(elementRef.nativeElement) as DebugElement);
-    assert(debugElement != null);
+    _debugElement = (getDebugNode(elementRef.nativeElement) as DebugElement);
     componentInstance = ref.instance;
     assert(componentInstance != null);
     nativeElement = elementRef.nativeElement;
     componentRef = ref;
+  }
+
+  DebugElement get debugElement {
+    if (_debugElement == null) {
+      throw new Exception(
+          'DebugElement is not available in DART_CODEGEN_MODE=release');
+    }
+    return _debugElement;
   }
 
   /// Trigger a change detection cycle for the component.

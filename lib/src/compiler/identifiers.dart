@@ -34,8 +34,7 @@ import "package:angular2/src/core/linker/injector_factory.dart"
     show CodegenInjector, CodegenInjectorFactory;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/core/render/api.dart"
-    show Renderer, RenderComponentType;
+import "package:angular2/src/core/render/api.dart" show RenderComponentType;
 import "package:angular2/src/core/security.dart" show TemplateSecurityContext;
 
 import "compile_metadata.dart"
@@ -62,7 +61,6 @@ var impCodegenInjectorFactory = CodegenInjectorFactory;
 var impViewEncapsulation = ViewEncapsulation;
 var impViewType = ViewType;
 var impChangeDetectionStrategy = ChangeDetectionStrategy;
-var impRenderer = Renderer;
 var impSimpleChange = SimpleChange;
 var impUninitialized = uninitialized;
 var impChangeDetectorState = ChangeDetectorState;
@@ -153,10 +151,6 @@ class Identifiers {
       name: 'TemplateSecurityContext',
       moduleUrl: 'asset:angular2/lib/src/core/security.dart',
       runtime: impTemplateSecurityContext);
-  static final Renderer = new CompileIdentifierMetadata(
-      name: "Renderer",
-      moduleUrl: "asset:angular2/lib/src/core/render/api.dart",
-      runtime: impRenderer);
   static final SimpleChange = new CompileIdentifierMetadata(
       name: "SimpleChange", moduleUrl: CD_MODULE_URL, runtime: impSimpleChange);
   static final uninitialized = new CompileIdentifierMetadata(
@@ -299,6 +293,10 @@ class Identifiers {
       name: "TableColElement", moduleUrl: "dart:html");
   static final HTML_ULIST_ELEMENT = new CompileIdentifierMetadata(
       name: "UListElement", moduleUrl: "dart:html");
+  static final HTML_EVENT =
+      new CompileIdentifierMetadata(name: "Event", moduleUrl: "dart:html");
+  static final HTML_NODE =
+      new CompileIdentifierMetadata(name: "Node", moduleUrl: "dart:html");
 }
 
 CompileTokenMetadata identifierToken(CompileIdentifierMetadata identifier) {

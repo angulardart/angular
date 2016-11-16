@@ -1,5 +1,5 @@
-import "package:angular2/core.dart"
-    show Directive, ElementRef, Renderer, Provider;
+import 'dart:html';
+import "package:angular2/core.dart" show Directive, ElementRef, Provider;
 
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -25,15 +25,13 @@ const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
       NUMBER_VALUE_ACCESSOR
     ])
 class NumberValueAccessor implements ControlValueAccessor {
-  Renderer _renderer;
   ElementRef _elementRef;
   var onChange = (_) {};
   var onTouched = () {};
-  NumberValueAccessor(this._renderer, this._elementRef);
+  NumberValueAccessor(this._elementRef);
   void writeValue(value) {
-    this
-        ._renderer
-        .setElementProperty(this._elementRef.nativeElement, "value", value);
+    InputElement elm = _elementRef.nativeElement;
+    elm.value = '$value';
   }
 
   void registerOnChange(dynamic fn) {

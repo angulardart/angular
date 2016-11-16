@@ -234,8 +234,7 @@ class ProviderElementContext {
       // access builtints
       if ((identical(requestingProviderType, ProviderAstType.Directive) ||
           identical(requestingProviderType, ProviderAstType.Component))) {
-        if (dep.token.equalsTo(identifierToken(Identifiers.Renderer)) ||
-            dep.token.equalsTo(identifierToken(Identifiers.ElementRef)) ||
+        if (dep.token.equalsTo(identifierToken(Identifiers.ElementRef)) ||
             dep.token
                 .equalsTo(identifierToken(Identifiers.ChangeDetectorRef)) ||
             dep.token.equalsTo(identifierToken(Identifiers.TemplateRef))) {
