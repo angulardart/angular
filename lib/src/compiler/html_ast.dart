@@ -74,6 +74,10 @@ class HtmlCommentAst implements HtmlAst {
 }
 
 abstract class HtmlAstVisitor {
+  /// Intercepts node visit for all nodes. If [visit] returns true, it indicates
+  /// that the ast node was handled and will prevent visitAll from calling
+  /// specific typed visit methods for that node.
+  bool visit(HtmlAst astNode, dynamic context) => false;
   dynamic visitElement(HtmlElementAst ast, dynamic context);
   dynamic visitAttr(HtmlAttrAst ast, dynamic context);
   dynamic visitText(HtmlTextAst ast, dynamic context);
@@ -86,9 +90,12 @@ List<dynamic> htmlVisitAll(HtmlAstVisitor visitor, List<HtmlAst> asts,
     [dynamic context = null]) {
   var result = [];
   asts.forEach((ast) {
-    var astResult = ast.visit(visitor, context);
-    if (astResult != null) {
-      result.add(astResult);
+    bool handled = visitor.visit(ast, context);
+    if (!handled) {
+      var astResult = ast.visit(visitor, context);
+      if (astResult != null) {
+        result.add(astResult);
+      }
     }
   });
   return result;

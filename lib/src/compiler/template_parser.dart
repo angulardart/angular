@@ -8,11 +8,12 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show jsSplit;
 import "package:logging/logging.dart";
-
+import "expression_parser/ast.dart";
 import "../core/security.dart";
 import "chars.dart";
 import "compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
+import "html_ast.dart";
 import "expression_parser/ast.dart"
     show
         AST,
@@ -22,16 +23,6 @@ import "expression_parser/ast.dart"
         RecursiveAstVisitor,
         BindingPipe;
 import "expression_parser/parser.dart" show Parser;
-import "html_ast.dart"
-    show
-        HtmlAstVisitor,
-        HtmlElementAst,
-        HtmlAttrAst,
-        HtmlTextAst,
-        HtmlCommentAst,
-        HtmlExpansionAst,
-        HtmlExpansionCaseAst,
-        htmlVisitAll;
 import "html_parser.dart" show HtmlParser;
 import "html_tags.dart" show splitNsName, mergeNsAndName;
 import "identifiers.dart" show identifierToken, Identifiers;
@@ -278,6 +269,10 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     });
   }
 
+  @override
+  bool visit(HtmlAst ast, dynamic context) => false;
+
+  @override
   dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
     return null;
   }
@@ -960,6 +955,10 @@ class TemplateParseVisitor implements HtmlAstVisitor {
 }
 
 class NonBindableVisitor implements HtmlAstVisitor {
+  @override
+  bool visit(HtmlAst ast, dynamic context) => false;
+
+  @override
   ElementAst visitElement(HtmlElementAst ast, dynamic context) {
     ElementContext parent = context;
     var preparsedElement = preparseElement(ast);
@@ -993,24 +992,29 @@ class NonBindableVisitor implements HtmlAstVisitor {
         ast.sourceSpan);
   }
 
+  @override
   dynamic visitComment(HtmlCommentAst ast, dynamic context) {
     return null;
   }
 
+  @override
   AttrAst visitAttr(HtmlAttrAst ast, dynamic context) {
     return new AttrAst(ast.name, ast.value, ast.sourceSpan);
   }
 
+  @override
   TextAst visitText(HtmlTextAst ast, dynamic context) {
     ElementContext parent = context;
     var ngContentIndex = parent.findNgContentIndex(TEXT_CSS_SELECTOR);
     return new TextAst(ast.value, ngContentIndex, ast.sourceSpan);
   }
 
+  @override
   dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
     return ast;
   }
 
+  @override
   dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
     return ast;
   }

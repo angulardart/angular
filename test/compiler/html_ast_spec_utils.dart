@@ -47,6 +47,11 @@ class _Humanizer implements HtmlAstVisitor {
   List<dynamic> result = [];
   num elDepth = 0;
   _Humanizer(this.includeSourceSpan);
+
+  @override
+  bool visit(HtmlAst ast, dynamic context) => false;
+
+  @override
   dynamic visitElement(HtmlElementAst ast, dynamic context) {
     var res =
         this._appendContext(ast, [HtmlElementAst, ast.name, this.elDepth++]);
@@ -57,18 +62,21 @@ class _Humanizer implements HtmlAstVisitor {
     return null;
   }
 
+  @override
   dynamic visitAttr(HtmlAttrAst ast, dynamic context) {
     var res = this._appendContext(ast, [HtmlAttrAst, ast.name, ast.value]);
     this.result.add(res);
     return null;
   }
 
+  @override
   dynamic visitText(HtmlTextAst ast, dynamic context) {
     var res = this._appendContext(ast, [HtmlTextAst, ast.value, this.elDepth]);
     this.result.add(res);
     return null;
   }
 
+  @override
   dynamic visitComment(HtmlCommentAst ast, dynamic context) {
     var res =
         this._appendContext(ast, [HtmlCommentAst, ast.value, this.elDepth]);
@@ -76,6 +84,7 @@ class _Humanizer implements HtmlAstVisitor {
     return null;
   }
 
+  @override
   dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
     var res =
         this._appendContext(ast, [HtmlExpansionAst, ast.switchValue, ast.type]);
@@ -84,6 +93,7 @@ class _Humanizer implements HtmlAstVisitor {
     return null;
   }
 
+  @override
   dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
     var res = this._appendContext(ast, [HtmlExpansionCaseAst, ast.value]);
     this.result.add(res);

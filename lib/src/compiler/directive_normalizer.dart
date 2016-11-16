@@ -8,16 +8,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
     show CompileTypeMetadata, CompileDirectiveMetadata, CompileTemplateMetadata;
-import "html_ast.dart"
-    show
-        HtmlAstVisitor,
-        HtmlElementAst,
-        HtmlTextAst,
-        HtmlAttrAst,
-        HtmlCommentAst,
-        HtmlExpansionAst,
-        HtmlExpansionCaseAst,
-        htmlVisitAll;
+import "html_ast.dart";
 import "html_parser.dart" show HtmlParser;
 import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
@@ -134,6 +125,11 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
   List<String> styles = [];
   List<String> styleUrls = [];
   num ngNonBindableStackCount = 0;
+
+  @override
+  bool visit(HtmlAst ast, dynamic context) => false;
+
+  @override
   dynamic visitElement(HtmlElementAst ast, dynamic context) {
     var preparsedElement = preparseElement(ast);
     switch (preparsedElement.type) {
@@ -170,22 +166,27 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
     return null;
   }
 
+  @override
   dynamic visitComment(HtmlCommentAst ast, dynamic context) {
     return null;
   }
 
+  @override
   dynamic visitAttr(HtmlAttrAst ast, dynamic context) {
     return null;
   }
 
+  @override
   dynamic visitText(HtmlTextAst ast, dynamic context) {
     return null;
   }
 
+  @override
   dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
     return null;
   }
 
+  @override
   dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
     return null;
   }

@@ -370,6 +370,64 @@ void main() {
           expect(node.endSourceSpan.end.offset, 12);
         });
       });
+
+      group("visitor", () {
+        test("should visit text nodes", () {
+          var result = humanizeDom(parser.parse('text', 'TestComp'));
+          expect(result, [
+            [HtmlTextAst, 'text', 0]
+          ]);
+        });
+
+        test("should visit element nodes", () {
+          var result = humanizeDom(parser.parse('<div></div>', 'TestComp'));
+          expect(result, [
+            [HtmlElementAst, 'div', 0]
+          ]);
+        });
+
+        test("should visit attribute nodes", () {
+          var result =
+              humanizeDom(parser.parse('<div id="foo"></div>', 'TestComp'));
+          expect(
+              result,
+              ([
+                [HtmlElementAst, 'div', 0],
+                [HtmlAttrAst, 'id', 'foo']
+              ]));
+        });
+
+        test("should visit all nodes", () {
+          var result = parser.parse(
+              '<div id="foo"><span id="bar">a</span>'
+              '<span>b</span></div>',
+              'TestComp');
+          final accumulator = <HtmlAst>[];
+          var visitor = new TestVisitor(accumulator);
+          htmlVisitAll(visitor, result.rootNodes);
+          expect(accumulator.map((n) => n.runtimeType), [
+            HtmlElementAst,
+            HtmlAttrAst,
+            HtmlElementAst,
+            HtmlAttrAst,
+            HtmlTextAst,
+            HtmlElementAst,
+            HtmlTextAst
+          ]);
+        });
+
+        test("should skip nodes if visit intercepts traversal", () {
+          var result = parser.parse(
+              '<div id="foo"><span id="bar">a</span>'
+              '<span>b</span></div>',
+              'TestComp');
+          final accumulator = <HtmlAst>[];
+          var visitor = new TestVisitor(accumulator, skip: true);
+          htmlVisitAll(visitor, result.rootNodes);
+          expect(accumulator.length, 0);
+        });
+      });
+
       group("errors", () {
         test("should report unexpected closing tags", () {
           var errors = parser.parse("<div></p></div>", "TestComp").errors;
@@ -438,4 +496,51 @@ List<dynamic> humanizeErrors(List<ParseError> errors) {
       humanizeLineColumn(error.span.start)
     ];
   }).toList();
+}
+
+class TestVisitor implements HtmlAstVisitor {
+  final List<HtmlAst> list;
+  final bool skip;
+
+  TestVisitor(this.list, {this.skip: false});
+
+  @override
+  bool visit(HtmlAst astNode, dynamic context) {
+    if (skip) return true;
+    list.add(astNode);
+    return false;
+  }
+
+  @override
+  dynamic visitElement(HtmlElementAst ast, dynamic context) {
+    htmlVisitAll(this, ast.attrs);
+    htmlVisitAll(this, ast.children);
+    return null;
+  }
+
+  @override
+  dynamic visitAttr(HtmlAttrAst ast, dynamic context) {
+    return null;
+  }
+
+  @override
+  dynamic visitText(HtmlTextAst ast, dynamic context) {
+    return null;
+  }
+
+  @override
+  dynamic visitComment(HtmlCommentAst ast, dynamic context) {
+    return null;
+  }
+
+  @override
+  dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
+    htmlVisitAll(this, ast.cases);
+    return null;
+  }
+
+  @override
+  dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
+    return null;
+  }
 }
