@@ -173,7 +173,7 @@ class Self {
 /// @Injectable()
 /// class NeedsDependency {
 ///   final Dependency dependency;
-///   NeedsDependency(@Self() this.dependency);
+///   NeedsDependency(@SkipSelf() this.dependency);
 /// }
 ///
 /// var parent = Injector.resolveAndCreate([Dependency]);
