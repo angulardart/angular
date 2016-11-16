@@ -66,6 +66,14 @@ class DirectiveResolver {
         }
         if (a is HostBinding) {
           if (a.hostPropertyName != null) {
+            if (a.hostPropertyName.startsWith('(')) {
+              throw new Exception('@HostBinding can not bind to events. '
+                  'Use @HostListener instead.');
+            } else if (a.hostPropertyName.startsWith('[')) {
+              throw new Exception(
+                  '@HostBinding parameter should be a property name, '
+                  '\'class.<name>\', or \'attr.<name>\'.');
+            }
             host['[${a.hostPropertyName}]'] = propName;
           } else {
             host['[$propName]'] = propName;

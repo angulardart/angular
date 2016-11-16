@@ -110,6 +110,18 @@ class SomeDirectiveWithViewChild {
 
 class SomeDirectiveWithoutMetadata {}
 
+@Directive(selector: 'someDirective')
+class SomeDirectiveWithMalformedEventHostbinding {
+  @HostBinding('(a)')
+  void onA() {}
+}
+
+@Directive(selector: 'someDirective')
+class SomeDirectiveWithMalformedPropHostbinding {
+  @HostBinding('[a]')
+  void onA() {}
+}
+
 void main() {
   group('DirectiveResolver', () {
     DirectiveResolver resolver;
@@ -169,6 +181,19 @@ void main() {
             resolver.resolve(SomeDirectiveWithHostListeners);
         expect(directiveMetadata.host,
             {"(c)": "onC()", "(a)": "onA()", "(b)": "onB(\$event.value)"});
+      });
+      test('should throw when @HostBinding name starts with "("', () {
+        expect(
+            () => resolver.resolve(SomeDirectiveWithMalformedEventHostbinding),
+            throwsWith('@HostBinding can not bind to events. '
+                'Use @HostListener instead.'));
+      });
+
+      test('should throw when @HostBinding name starts with "["', () {
+        expect(
+            () => resolver.resolve(SomeDirectiveWithMalformedPropHostbinding),
+            throwsWith('@HostBinding parameter should be a property name,'
+                ' \'class.<name>\', or \'attr.<name>\'.'));
       });
     });
     group("queries", () {
