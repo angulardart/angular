@@ -66,20 +66,21 @@ class CompileTypeMetadataVisitor
       ? _createQueryMetadata(_getAnnotation(p, Query))
       : _hasAnnotation(p, ContentChildren)
           ? _createQueryMetadata(_getAnnotation(p, ContentChildren))
-          : null;
+          : null; // TODO(alorenzen): handle ContentChild
 
   CompileQueryMetadata _getViewQuery(ParameterElement p) =>
       _hasAnnotation(p, ViewQuery)
-          ? _createQueryMetadata(_getAnnotation(p, ViewQuery))
+          ? _createQueryMetadata(_getAnnotation(p, ViewQuery), first: true)
           : _hasAnnotation(p, ViewChildren)
               ? _createQueryMetadata(_getAnnotation(p, ViewChildren))
               : null;
 
-  CompileQueryMetadata _createQueryMetadata(ElementAnnotation annotation) {
+  CompileQueryMetadata _createQueryMetadata(ElementAnnotation annotation,
+      {bool first: false}) {
     return new CompileQueryMetadata(
         selectors: _getSelector(getField(annotation.constantValue, 'selector')),
         descendants: coerceBool(annotation.constantValue, 'descendants'),
-        first: false,
+        first: first,
         read: null,
         propertyName: null);
   }

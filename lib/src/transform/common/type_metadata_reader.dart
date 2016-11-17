@@ -501,23 +501,23 @@ class _DirectiveMetadataVisitor extends Object
 
         if (_isAnnotation(meta, 'ContentChild')) {
           _verifyHasZeroOrMoreArgs('ContentChild', node, meta);
-          _queries.add(_createQueryMetadata(
-              meta, false, true, variable.name.toString()));
+          _queries.add(_createQueryMetadata(meta, variable.name.toString(),
+              first: true));
         }
         if (_isAnnotation(meta, 'ContentChildren')) {
           _verifyHasZeroOrMoreArgs('ContentChildren', node, meta);
-          _queries.add(_createQueryMetadata(
-              meta, false, false, variable.name.toString()));
+          _queries.add(_createQueryMetadata(meta, variable.name.toString(),
+              first: false));
         }
         if (_isAnnotation(meta, 'ViewChild')) {
           _verifyHasZeroOrMoreArgs('ViewChild', node, meta);
-          _viewQueries.add(
-              _createQueryMetadata(meta, true, true, variable.name.toString()));
+          _viewQueries.add(_createQueryMetadata(meta, variable.name.toString(),
+              defaultDescendantsValue: true, first: true));
         }
         if (_isAnnotation(meta, 'ViewChildren')) {
           _verifyHasZeroOrMoreArgs('ViewChildren', node, meta);
-          _viewQueries.add(_createQueryMetadata(
-              meta, false, false, variable.name.toString()));
+          _viewQueries.add(_createQueryMetadata(meta, variable.name.toString(),
+              first: false));
         }
       }
     }
@@ -545,22 +545,22 @@ class _DirectiveMetadataVisitor extends Object
       if (_isAnnotation(meta, 'ContentChild') && node.isSetter) {
         _verifyMethodHasZeroOrMoreArgs('ContentChild', node, meta);
         _queries
-            .add(_createQueryMetadata(meta, false, true, node.name.toString()));
+            .add(_createQueryMetadata(meta, node.name.toString(), first: true));
       }
       if (_isAnnotation(meta, 'ContentChildren') && node.isSetter) {
         _verifyMethodHasZeroOrMoreArgs('ContentChildren', node, meta);
         _queries.add(
-            _createQueryMetadata(meta, false, false, node.name.toString()));
+            _createQueryMetadata(meta, node.name.toString(), first: false));
       }
       if (_isAnnotation(meta, 'ViewChild') && node.isSetter) {
         _verifyMethodHasZeroOrMoreArgs('ViewChild', node, meta);
-        _viewQueries
-            .add(_createQueryMetadata(meta, true, true, node.name.toString()));
+        _viewQueries.add(_createQueryMetadata(meta, node.name.toString(),
+            defaultDescendantsValue: true, first: true));
       }
       if (_isAnnotation(meta, 'ViewChildren') && node.isSetter) {
         _verifyMethodHasZeroOrMoreArgs('ViewChildren', node, meta);
         _viewQueries.add(
-            _createQueryMetadata(meta, false, false, node.name.toString()));
+            _createQueryMetadata(meta, node.name.toString(), first: false));
       }
 
       if (_isAnnotation(meta, 'HostListener')) {
@@ -1184,8 +1184,8 @@ List<CompileDiDependencyMetadata> _readDeps(ListLiteral deps) {
   }).toList();
 }
 
-CompileQueryMetadata _createQueryMetadata(Annotation a,
-    bool defaultDescendantsValue, bool first, String propertyName) {
+CompileQueryMetadata _createQueryMetadata(Annotation a, String propertyName,
+    {bool defaultDescendantsValue: false, bool first: false}) {
   final selector = _readToken(a.arguments.arguments.first);
   var descendants = defaultDescendantsValue;
   var read;
@@ -1246,21 +1246,21 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
     var query;
     if (_hasAnnotation(p, "Query")) {
       query =
-          _createQueryMetadata(_getAnnotation(p, "Query"), false, false, null);
+          _createQueryMetadata(_getAnnotation(p, "Query"), null, first: false);
     }
     if (_hasAnnotation(p, "ContentChildren")) {
-      query = _createQueryMetadata(
-          _getAnnotation(p, "ContentChildren"), true, false, null);
+      query = _createQueryMetadata(_getAnnotation(p, "ContentChildren"), null,
+          defaultDescendantsValue: true, first: false);
     }
 
     var viewQuery;
     if (_hasAnnotation(p, "ViewQuery")) {
-      viewQuery = _createQueryMetadata(
-          _getAnnotation(p, "ViewQuery"), false, false, null);
+      viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewQuery"), null,
+          first: false);
     }
     if (_hasAnnotation(p, "ViewChildren")) {
-      viewQuery = _createQueryMetadata(
-          _getAnnotation(p, "ViewChildren"), true, false, null);
+      viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewChildren"), null,
+          defaultDescendantsValue: true, first: false);
     }
     if (token == null) {
       throw new ArgumentError(

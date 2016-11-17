@@ -129,11 +129,10 @@ o.Expression createQueryList(
   compileView.fields.add(new o.ClassField(propertyName,
       outputType: o.importType(Identifiers.QueryList),
       modifiers: [o.StmtModifier.Private]));
-  var expr = new o.ReadClassMemberExpr(propertyName);
   compileView.createMethod.addStmt(new o.WriteClassMemberExpr(
           propertyName, o.importExpr(Identifiers.QueryList).instantiate([]))
       .toStmt());
-  return expr;
+  return new o.ReadClassMemberExpr(propertyName);
 }
 
 void addQueryToTokenMap(

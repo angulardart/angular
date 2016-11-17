@@ -251,6 +251,7 @@ class CompileElement extends CompileNode {
         var token = (referenceTokens != null)
             ? referenceTokens[queryWithRead.read.value]
             : null;
+        // elementRef contains expression of the form new ElementRef(...).
         value = token != null ? _instances.get(token) : elementRef;
       }
       if (value != null) {
