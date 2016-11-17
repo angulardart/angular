@@ -262,13 +262,39 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }
-  directiveAst.inputs.forEach((input) {
+  // directiveAst contains the target directive we are updating.
+  // input is a BoundPropertyAst that contains binding metadata.
+  for (var input in directiveAst.inputs) {
     var bindingIndex = view.bindings.length;
     view.bindings.add(new CompileBinding(compileElement, input));
     detectChangesInInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
     var fieldExpr = createBindFieldExpr(bindingIndex);
     var currValExpr = createCurrValueExpr(bindingIndex);
     var statements = <o.Statement>[];
+
+    // Optimization specifically for NgIf. Since the directive already performs
+    // change detection we can directly update it's input.
+    // TODO: generalize to SingleInputDirective mixin.
+    if (directiveAst.directive.identifier.name == 'NgIf' &&
+        input.directiveName == 'ngIf') {
+      var checkExpression = convertCdExpressionToIr(
+          view,
+          new o.ReadClassMemberExpr('ctx'),
+          input.value,
+          DetectChangesVars.valUnwrapper,
+          view.component.template.preserveWhitespace);
+      detectChangesInInputsMethod.addStmt(directiveInstance
+          .prop(input.directiveName)
+          .set(checkExpression.expression)
+          .toStmt());
+      if (view.genConfig.logBindingUpdate) {
+        detectChangesInInputsMethod.addStmt(logBindingUpdateStmt(
+            compileElement.renderNode,
+            input.directiveName,
+            checkExpression.expression));
+      }
+      continue;
+    }
     if (isStatefulComp) {
       // Since we are not going to call markAsCheckOnce anymore we need to
       // generate a call to property updater that will invoke setState() on the
@@ -339,7 +365,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           detectChangesInInputsMethod,
           fieldType: inputType);
     }
-  });
+  }
   if (!isStatefulComp && isOnPushComp) {
     detectChangesInInputsMethod
         .addStmt(new o.IfStmt(DetectChangesVars.changed, [
