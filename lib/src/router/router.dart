@@ -46,6 +46,7 @@ class Router {
   var _auxRouters = new Map<String, Router>();
   Router _childRouter;
   EventEmitter<dynamic> _subject = new EventEmitter();
+  EventEmitter<String> _startNavigationEvent = new EventEmitter<String>();
   Router(this.registry, this.parent, this.hostComponent, [this.root]);
 
   /// Constructs a child router. You probably don't need to use this unless you're writing a reusable
@@ -180,7 +181,7 @@ class Router {
       [bool _skipLocationChange = false, bool _replaceState = false]) {
     return this._currentNavigation = this._currentNavigation.then((_) {
       this.lastNavigationAttempt = url;
-      this._startNavigating();
+      this._startNavigating(url);
       return this._afterPromiseFinishNavigating(
           this.recognize(url).then((instruction) {
         if (instruction == null) {
@@ -199,7 +200,7 @@ class Router {
       return _resolveToFalse;
     }
     return this._currentNavigation = this._currentNavigation.then((_) {
-      this._startNavigating();
+      this._startNavigating(instruction.toLinkUrl());
       return this._afterPromiseFinishNavigating(
           this._navigate(instruction, _skipLocationChange, _replaceState));
     });
@@ -348,14 +349,19 @@ class Router {
   }
 
   /** @internal */
-  void _startNavigating() {
+  void _startNavigating(String url) {
     this.navigating = true;
+    _startNavigationEvent.add(url);
   }
 
   /** @internal */
   void _finishNavigating() {
     this.navigating = false;
   }
+
+  /// Stream on router publishes URL it has starting navigating to.
+  /// Use subscribe method below to be informed if navigation was successful.
+  Stream<String> get onStartNavigation => _startNavigationEvent;
 
   /// Subscribe to URL updates from the router
   Object subscribe(void onNext(dynamic value), [void onError(dynamic value)]) {
