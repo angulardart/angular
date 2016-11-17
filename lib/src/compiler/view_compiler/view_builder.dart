@@ -104,12 +104,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   void _addRootNodeAndProject(
       CompileNode node, num ngContentIndex, CompileElement parent) {
     var vcAppEl = (node is CompileElement && node.hasViewContainer)
-        ? node.appElement
+        ? node.appViewContainer
         : null;
     if (this._isRootNode(parent)) {
       // store appElement as root node only for ViewContainers
       if (view.viewType != ViewType.COMPONENT) {
-        view.rootNodesOrAppElements.add(vcAppEl ?? node.renderNode);
+        view.rootNodesOrViewContainers.add(vcAppEl ?? node.renderNode);
       }
     } else if (parent.component != null && ngContentIndex != null) {
       parent.addContentNode(ngContentIndex, vcAppEl ?? node.renderNode);
@@ -209,7 +209,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     } else if (this._isRootNode(parent)) {
       if (!identical(this.view.viewType, ViewType.COMPONENT)) {
         // store root nodes only for embedded/host views
-        this.view.rootNodesOrAppElements.add(nodesExpression);
+        this.view.rootNodesOrViewContainers.add(nodesExpression);
       }
     } else {
       if (parent.component != null && ast.ngContentIndex != null) {
@@ -334,9 +334,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       compViewExpr = o.variable('compView_${nodeIndex}');
       compileElement.setComponentView(compViewExpr);
       this.view.createMethod.addStmt(compViewExpr
-          .set(o
-              .importExpr(nestedComponentIdentifier)
-              .callFn([compileElement.injector, compileElement.appElement]))
+          .set(o.importExpr(nestedComponentIdentifier).callFn(
+              [compileElement.injector, compileElement.appViewContainer]))
           .toDeclStmt());
     }
     compileElement.beforeChildren();
@@ -654,7 +653,7 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
     new o.FnParam(ViewConstructorVars.parentInjector.name,
         o.importType(Identifiers.Injector)),
     new o.FnParam(ViewConstructorVars.declarationEl.name,
-        o.importType(Identifiers.AppElement))
+        o.importType(Identifiers.ViewContainer))
   ];
   var superConstructorArgs = [
     o.variable(view.className),
@@ -675,7 +674,7 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
         "createInternal",
         [new o.FnParam(rootSelectorVar.name, o.DYNAMIC_TYPE)],
         generateCreateMethod(view),
-        o.importType(Identifiers.AppElement)),
+        o.importType(Identifiers.ViewContainer)),
     new o.ClassMethod(
         "injectorGetInternal",
         [
@@ -719,7 +718,7 @@ o.Statement createViewFactory(
     new o.FnParam(ViewConstructorVars.parentInjector.name,
         o.importType(Identifiers.Injector)),
     new o.FnParam(ViewConstructorVars.declarationEl.name,
-        o.importType(Identifiers.AppElement))
+        o.importType(Identifiers.ViewContainer))
   ];
   var initRenderCompTypeStmts = [];
   var templateUrlInfo;
@@ -768,11 +767,12 @@ List<o.Statement> generateCreateMethod(CompileView view) {
     if (view.component.template.encapsulation == ViewEncapsulation.Native) {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
           "createViewShadowRoot", [
-        new o.ReadClassMemberExpr("declarationAppElement").prop("nativeElement")
+        new o.ReadClassMemberExpr("declarationViewContainer")
+            .prop("nativeElement")
       ]);
     } else {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr("initViewRoot",
-          [o.THIS_EXPR.prop("declarationAppElement").prop("nativeElement")]);
+          [o.THIS_EXPR.prop("declarationViewContainer").prop("nativeElement")]);
     }
     parentRenderNodeStmts = [
       parentRenderNodeVar.set(parentRenderNodeExpr).toDeclStmt(
@@ -781,7 +781,7 @@ List<o.Statement> generateCreateMethod(CompileView view) {
   }
   o.Expression resultExpr;
   if (identical(view.viewType, ViewType.HOST)) {
-    resultExpr = ((view.nodes[0] as CompileElement)).appElement;
+    resultExpr = ((view.nodes[0] as CompileElement)).appViewContainer;
   } else {
     resultExpr = o.NULL_EXPR;
   }
@@ -792,7 +792,7 @@ List<o.Statement> generateCreateMethod(CompileView view) {
     return node.renderNode;
   }).toList();
   statements.add(new o.InvokeMemberMethodExpr('init', [
-    createFlatArray(view.rootNodesOrAppElements),
+    createFlatArray(view.rootNodesOrViewContainers),
     o.literalArr(renderNodes),
     o.literalArr(view.subscriptions)
   ]).toStmt());

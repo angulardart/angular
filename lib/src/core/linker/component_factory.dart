@@ -4,7 +4,7 @@ import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/reflection/reflection.dart' show reflector;
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
-import 'app_element.dart';
+import 'view_container.dart';
 import 'app_view.dart';
 import 'app_view_utils.dart' show OnDestroyCallback;
 import 'element_ref.dart' show ElementRef;
@@ -44,7 +44,7 @@ abstract class ComponentRef {
 }
 
 class ComponentRefImpl extends ComponentRef {
-  final AppElement hostElement;
+  final ViewContainer hostElement;
   final Type componentType;
   final List<dynamic> metadata;
 
@@ -105,7 +105,7 @@ class ComponentFactory {
   ComponentRef create(Injector injector,
       [List<List> projectableNodes, String selector]) {
     projectableNodes ??= [];
-    // Note: Host views don't need a declarationAppElement!
+    // Note: Host views don't need a declarationViewContainer!
     AppView hostView = _viewFactory(injector, null);
     var hostElement = hostView.create(projectableNodes, selector);
     return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
@@ -115,7 +115,7 @@ class ComponentFactory {
       [List<List<dynamic>> projectableNodes, Node node]) {
     projectableNodes ??= [];
 
-    // Note: Host views don't need a declarationAppElement!
+    // Note: Host views don't need a declarationViewContainer!
     AppView hostView = _viewFactory(injector, null);
     var hostElement = hostView.create(projectableNodes, node);
     return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
@@ -133,4 +133,5 @@ class ComponentFactory {
 ///        renderType_MyComponent = viewUtils.createRenderComponentType(....);
 ///        return new _View_MyComponent_Host0(parentInjector, declElement);
 ///     }
-typedef AppView NgViewFactory(Injector injector, AppElement declarationElement);
+typedef AppView NgViewFactory(
+    Injector injector, ViewContainer declarationElement);

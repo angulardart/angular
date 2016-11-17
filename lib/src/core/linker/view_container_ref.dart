@@ -1,10 +1,9 @@
 import 'package:angular2/src/core/di/injector.dart' show Injector;
 
-import 'app_element.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'element_ref.dart';
 import 'template_ref.dart';
-import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRefImpl;
+import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
 
 /// Represents a container where one or more Views can be attached.
 ///
@@ -23,27 +22,21 @@ import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRefImpl;
 /// To access a `ViewContainerRef` of an Element, you can either place a
 /// [Directive] injected with `ViewContainerRef` on the Element, or you obtain
 /// it via a [ViewChild] query.
-class ViewContainerRef {
-  AppElement _element;
-
-  ViewContainerRef(this._element);
-
+abstract class ViewContainerRef {
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
-  EmbeddedViewRef get(num index) {
-    return _element.nestedViews[index].ref;
-  }
+  EmbeddedViewRef get(int index);
 
   /// Returns the number of Views currently attached to this container.
-  num get length => _element.nestedViews?.length ?? 0;
+  int get length;
 
   /// Anchor element that specifies the location of this container in the
   /// containing View.
-  ElementRef get element => _element.elementRef;
+  ElementRef get element;
 
-  Injector get injector => _element.injector;
+  Injector get injector;
 
-  Injector get parentInjector => _element.parentInjector;
+  Injector get parentInjector;
 
   /// Instantiates an Embedded View based on the [TemplateRef `templateRef`]
   /// and inserts it into this container at the specified `index`.
@@ -52,19 +45,11 @@ class ViewContainerRef {
   /// View in the container.
   ///
   /// Returns the [ViewRef] for the newly created View.
-  EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
-    insert(viewRef, index);
-    return viewRef;
-  }
+  EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index);
 
   /// Instantiates an Embedded View based on the [TemplateRef `templateRef`]
   /// and appends it into this container.
-  EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
-    _element.attachView((viewRef as ViewRefImpl).appView, length);
-    return viewRef;
-  }
+  EmbeddedViewRef createEmbeddedView(TemplateRef templateRef);
 
   /// Instantiates a single [Component] and inserts its Host View into this
   /// container at the specified `index`.
@@ -83,14 +68,7 @@ class ViewContainerRef {
   ComponentRef createComponent(ComponentFactory componentFactory,
       [num index = -1,
       Injector injector = null,
-      List<List<dynamic>> projectableNodes = null]) {
-    var contextInjector =
-        injector != null ? injector : this._element.parentInjector;
-    var componentRef =
-        componentFactory.create(contextInjector, projectableNodes);
-    this.insert(componentRef.hostView, index);
-    return componentRef;
-  }
+      List<List<dynamic>> projectableNodes = null]);
 
   /// Inserts a View identified by a [ViewRef] into the container.
   ///
@@ -99,49 +77,27 @@ class ViewContainerRef {
   ///
   /// Returns the inserted [ViewRef].
   /// TODO(i): refactor insert+remove into move
-  ViewRef insert(ViewRef viewRef, [num index = -1]) {
-    if (index == -1) index = this.length;
-    var viewRef_ = (viewRef as ViewRefImpl);
-    this._element.attachView(viewRef_.appView, index);
-    return viewRef;
-  }
+  ViewRef insert(ViewRef viewRef, [num index = -1]);
 
-  ViewRef move(ViewRef viewRef, int currentIndex) {
-    if (currentIndex == -1) return null;
-    var viewRef_ = viewRef as ViewRefImpl;
-    _element.moveView(viewRef_.appView, currentIndex);
-    return viewRef_;
-  }
+  ViewRef move(ViewRef viewRef, int currentIndex);
 
   /// Returns the index of the View, specified via [ViewRef], within the current
   /// container or `-1` if this container doesn't contain the View.
-  num indexOf(ViewRef viewRef) =>
-      _element.nestedViews.indexOf((viewRef as ViewRefImpl).appView);
+  int indexOf(ViewRef viewRef);
 
   /// Destroys a View attached to this container at the specified `index`.
   ///
   /// If `index` is not specified, the last View in the container will be
   /// removed.
   /// TODO(i): rename to destroy
-  void remove([num index = -1]) {
-    if (index == -1) index = this.length - 1;
-    var view = this._element.detachView(index);
-    view.destroy();
-  }
+  void remove([num index = -1]);
 
   /// Use along with [#insert] to move a View within the current container.
   ///
   /// If the `index` param is omitted, the last [ViewRef] is detached.
   /// TODO(i): refactor insert+remove into move
-  ViewRef detach([num index = -1]) {
-    if (index == -1) index = this.length - 1;
-    return _element.detachView(index).ref;
-  }
+  ViewRef detach([num index = -1]);
 
   /// Destroys all Views in this container.
-  void clear() {
-    for (var i = this.length - 1; i >= 0; i--) {
-      remove(i);
-    }
-  }
+  void clear();
 }

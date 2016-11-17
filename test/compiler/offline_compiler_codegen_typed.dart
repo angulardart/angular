@@ -3,7 +3,7 @@ import 'dart:html';
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     as import9;
 import 'package:angular2/src/core/di/injector.dart' as import6;
-import 'package:angular2/src/core/linker/app_element.dart' as import7;
+import 'package:angular2/src/core/linker/view_container.dart' as import7;
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import5;
 import 'package:angular2/src/core/linker/component_factory.dart' as import11;
 import 'package:angular2/src/core/linker/view_type.dart' as import8;
@@ -27,7 +27,8 @@ import2.RenderComponentType renderType_CompA;
 class _ViewCompA0 extends import3.DebugAppView<import4.CompA> {
   var _text_0;
   var _expr_0;
-  _ViewCompA0(import6.Injector parentInjector, import7.AppElement declarationEl)
+  _ViewCompA0(
+      import6.Injector parentInjector, import7.ViewContainer declarationEl)
       : super(
             _ViewCompA0,
             renderType_CompA,
@@ -37,9 +38,9 @@ class _ViewCompA0 extends import3.DebugAppView<import4.CompA> {
             declarationEl,
             import9.ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CompA0);
-  import7.AppElement createInternal(dynamic rootSelector) {
+  import7.ViewContainer createInternal(dynamic rootSelector) {
     final parentRenderNode =
-        this.initViewRoot(this.declarationAppElement.nativeElement);
+        this.initViewRoot(this.declarationViewContainer.nativeElement);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
     dbgElm(_text_0, 0, 0, 0);
@@ -62,7 +63,7 @@ class _ViewCompA0 extends import3.DebugAppView<import4.CompA> {
 }
 
 import3.AppView<import4.CompA> viewFactory_CompA0(
-    import6.Injector parentInjector, import7.AppElement declarationEl) {
+    import6.Injector parentInjector, import7.ViewContainer declarationEl) {
   if (identical(renderType_CompA, null)) {
     (renderType_CompA = import5.appViewUtils.createRenderComponentType(
         'asset:angular2/test/compiler/offline_compiler_compa.html',
@@ -83,10 +84,10 @@ import2.RenderComponentType renderType_CompA_Host;
 
 class _ViewCompAHost0 extends import3.DebugAppView<dynamic> {
   var _el_0;
-  import7.AppElement _appEl_0;
+  import7.ViewContainer _appEl_0;
   import4.CompA _CompA_0_4;
   _ViewCompAHost0(
-      import6.Injector parentInjector, import7.AppElement declarationEl)
+      import6.Injector parentInjector, import7.ViewContainer declarationEl)
       : super(
             _ViewCompAHost0,
             renderType_CompA_Host,
@@ -96,10 +97,10 @@ class _ViewCompAHost0 extends import3.DebugAppView<dynamic> {
             declarationEl,
             import9.ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CompA_Host0);
-  import7.AppElement createInternal(dynamic rootSelector) {
+  import7.ViewContainer createInternal(dynamic rootSelector) {
     this._el_0 =
         this.selectOrCreateHostElement('comp-a', rootSelector, dbg(0, 0, 0));
-    this._appEl_0 = new import7.AppElement(0, null, this, this._el_0);
+    this._appEl_0 = new import7.ViewContainer(0, null, this, this._el_0);
     var compView_0 = viewFactory_CompA0(this.injector(0), this._appEl_0);
     this._CompA_0_4 = new import4.CompA();
     this._appEl_0.initComponent(this._CompA_0_4, [], compView_0);
@@ -118,7 +119,7 @@ class _ViewCompAHost0 extends import3.DebugAppView<dynamic> {
 }
 
 import3.AppView<dynamic> viewFactory_CompA_Host0(
-    import6.Injector parentInjector, import7.AppElement declarationEl) {
+    import6.Injector parentInjector, import7.ViewContainer declarationEl) {
   if (identical(renderType_CompA_Host, null)) {
     (renderType_CompA_Host = import5.appViewUtils.createRenderComponentType(
         '', 0, import10.ViewEncapsulation.Emulated, styles_CompA_Host));

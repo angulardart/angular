@@ -5,7 +5,7 @@ import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/render/api.dart';
-import 'package:angular2/src/core/linker/app_element.dart';
+import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/exceptions.dart'
     show ExpressionChangedAfterItHasBeenCheckedException, ViewWrappedException;
@@ -49,11 +49,11 @@ class DebugAppView<T> extends AppView<T> {
       ViewType type,
       Map<String, dynamic> locals,
       Injector parentInjector,
-      AppElement declarationAppElement,
+      ViewContainer declarationViewContainer,
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
       : super(clazz, componentType, type, locals, parentInjector,
-            declarationAppElement, cdMode) {
+            declarationViewContainer, cdMode) {
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;
       DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
@@ -61,7 +61,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  AppElement create(
+  ViewContainer create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       selectorOrNode) {
     this._resetDebug();
@@ -74,7 +74,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  AppElement createComp(
+  ViewContainer createComp(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       selectorOrNode) {
     this._resetDebug();
@@ -87,7 +87,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  AppElement createHost(
+  ViewContainer createHost(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       selectorOrNode) {
     this._resetDebug();
@@ -221,13 +221,13 @@ class DebugAppView<T> extends AppView<T> {
       super.project(parentElement, index);
       return;
     }
-    // Optimization for projectables that doesn't include AppElement(s).
-    // If the projectable is AppElement we fall back to building up a list.
+    // Optimization for projectables that doesn't include ViewContainer(s).
+    // If the projectable is ViewContainer we fall back to building up a list.
     List projectables = projectableNodes[index];
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];
-      if (projectable is AppElement) {
+      if (projectable is ViewContainer) {
         if (projectable.nestedViews == null) {
           Node child = projectable.nativeElement;
           parentElement.append(child);
@@ -319,17 +319,17 @@ class DebugAppView<T> extends AppView<T> {
 
 /// Recursively appends app element and nested view nodes to target element.
 void _appendDebugNestedViewRenderNodes(
-    DebugElement debugParent, Element targetElement, AppElement appElement) {
+    DebugElement debugParent, Element targetElement, ViewContainer appElement) {
   targetElement.append(appElement.nativeElement as Node);
   var nestedViews = appElement.nestedViews;
   if (nestedViews == null || nestedViews.isEmpty) return;
   int nestedViewCount = nestedViews.length;
   for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
-    List projectables = nestedViews[viewIndex].rootNodesOrAppElements;
+    List projectables = nestedViews[viewIndex].rootNodesOrViewContainers;
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];
-      if (projectable is AppElement) {
+      if (projectable is ViewContainer) {
         _appendDebugNestedViewRenderNodes(
             debugParent, targetElement, projectable);
       } else {

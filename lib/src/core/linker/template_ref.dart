@@ -1,4 +1,4 @@
-import 'app_element.dart';
+import 'view_container.dart';
 import 'app_view.dart';
 import 'element_ref.dart';
 import 'view_ref.dart' show EmbeddedViewRef;
@@ -16,7 +16,7 @@ import 'view_ref.dart' show EmbeddedViewRef;
 /// [ViewContainerRef#createEmbeddedView], which will create the View and attach
 /// it to the View Container.
 class TemplateRef {
-  final AppElement _appElement;
+  final ViewContainer _appElement;
   final Function _viewFactory;
 
   TemplateRef(this._appElement, this._viewFactory);

@@ -1,4 +1,4 @@
-import 'package:angular2/src/core/linker/app_element.dart';
+import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
 import 'package:angular2/src/debug/debug_context.dart' show StaticNodeDebugInfo;
@@ -38,7 +38,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
       : super(args[0], args[1], args[2], args[3] as Map<String, dynamic>,
             args[4], args[5], args[6], args[7] as List<StaticNodeDebugInfo>);
 
-  AppElement createInternal(dynamic /* String | dynamic */ rootSelector) {
+  ViewContainer createInternal(dynamic /* String | dynamic */ rootSelector) {
     var m = methods['createInternal'];
     if (m != null) {
       return m(rootSelector);

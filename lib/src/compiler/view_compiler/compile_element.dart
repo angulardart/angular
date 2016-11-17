@@ -58,7 +58,7 @@ class CompileElement extends CompileNode {
   bool hasEmbeddedView;
 
   o.Expression _compViewExpr;
-  o.ReadClassMemberExpr appElement;
+  o.ReadClassMemberExpr appViewContainer;
   o.Expression elementRef;
   o.Expression injector;
   var _instances = new CompileTokenMap<o.Expression>();
@@ -101,7 +101,7 @@ class CompileElement extends CompileNode {
     injector = o.THIS_EXPR.callMethod("injector", [o.literal(this.nodeIndex)]);
     _instances.add(identifierToken(Identifiers.Injector), this.injector);
     if (hasViewContainer || hasEmbeddedView || component != null) {
-      this._createAppElement();
+      this._createViewContainer();
     }
   }
 
@@ -109,28 +109,30 @@ class CompileElement extends CompileNode {
       : this(
             null, null, null, null, null, null, null, [], [], false, false, []);
 
-  void _createAppElement() {
+  void _createViewContainer() {
     var fieldName = '_appEl_${nodeIndex}';
     var parentNodeIndex = isRootElement ? null : parent.nodeIndex;
 
     // Create instance field for app element.
     view.fields.add(new o.ClassField(fieldName,
-        outputType: o.importType(Identifiers.AppElement),
+        outputType: o.importType(Identifiers.ViewContainer),
         modifiers: [o.StmtModifier.Private]));
 
-    // Write code to create an instance of AppElement.
-    // Example: this._appEl_2 = new import7.AppElement(2,0,this,this._anchor_2);
+    // Write code to create an instance of ViewContainer.
+    // Example:
+    //     this._appEl_2 = new import7.ViewContainer(2,0,this,this._anchor_2);
     var statement = new o.WriteClassMemberExpr(
         fieldName,
-        o.importExpr(Identifiers.AppElement).instantiate([
+        o.importExpr(Identifiers.ViewContainer).instantiate([
           o.literal(nodeIndex),
           o.literal(parentNodeIndex),
           o.THIS_EXPR,
           renderNode
         ])).toStmt();
     view.createMethod.addStmt(statement);
-    appElement = new o.ReadClassMemberExpr(fieldName);
-    _instances.add(identifierToken(Identifiers.AppElement), appElement);
+    appViewContainer = new o.ReadClassMemberExpr(fieldName);
+    _instances.add(
+        identifierToken(Identifiers.ViewContainer), appViewContainer);
   }
 
   void setComponentView(o.Expression compViewExpr) {
@@ -147,7 +149,7 @@ class CompileElement extends CompileNode {
     if (view != null) {
       var createTemplateRefExpr = o
           .importExpr(Identifiers.TemplateRef)
-          .instantiate([this.appElement, view.viewFactory]);
+          .instantiate([this.appViewContainer, view.viewFactory]);
       var provider = new CompileProviderMetadata(
           token: identifierToken(Identifiers.TemplateRef),
           useValue: createTemplateRefExpr);
@@ -163,8 +165,8 @@ class CompileElement extends CompileNode {
 
   void beforeChildren() {
     if (hasViewContainer) {
-      _instances.add(identifierToken(Identifiers.ViewContainerRef),
-          this.appElement.prop("vcRef"));
+      _instances.add(
+          identifierToken(Identifiers.ViewContainerRef), this.appViewContainer);
     }
     _resolvedProviders = new CompileTokenMap<ProviderAst>();
     _resolvedProvidersArray.forEach(
@@ -260,7 +262,8 @@ class CompileElement extends CompileNode {
       var componentConstructorViewQueryList =
           o.literalArr(_componentConstructorViewQueryLists);
       var compExpr = getComponent() ?? o.NULL_EXPR;
-      view.createMethod.addStmt(this.appElement.callMethod("initComponent", [
+      view.createMethod.addStmt(this.appViewContainer.callMethod(
+          "initComponent", [
         compExpr,
         componentConstructorViewQueryList,
         _compViewExpr

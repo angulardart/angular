@@ -67,9 +67,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     // ElementRef.
     'asset:angular2/lib/src/core/linker/element_ref.dart',
     'package:angular2/src/core/linker/element_ref.dart',
-    // AppElement
-    'asset:angular2/lib/src/core/linker/app_element.dart',
-    'package:angular2/src/core/linker/app_element.dart',
+    // ViewContainer.
+    'asset:angular2/lib/src/core/linker/view_container.dart',
+    'package:angular2/src/core/linker/view_container.dart',
     // TemplateRef.
     'asset:angular2/lib/src/core/linker/template_ref.dart',
     'package:angular2/src/core/linker/template_ref.dart',

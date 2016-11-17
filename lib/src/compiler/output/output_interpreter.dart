@@ -2,7 +2,7 @@ import 'dart:html';
 
 import "package:angular2/src/compiler/identifiers.dart";
 import "package:angular2/src/core/linker.dart" show QueryList;
-import "package:angular2/src/core/linker/app_element.dart";
+import "package:angular2/src/core/linker/view_container.dart";
 import "package:angular2/src/core/linker/app_view.dart";
 import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/core/linker/component_factory.dart";
@@ -606,7 +606,7 @@ var CATCH_STACK_VAR = "stack";
 void _initializeInterpreter() {
   Identifiers.DebugAppView.runtime = DebugAppView;
   Identifiers.AppView.runtime = AppView;
-  Identifiers.AppElement.runtime = AppElement;
+  Identifiers.ViewContainer.runtime = ViewContainer;
   Identifiers.StaticNodeDebugInfo.runtime = StaticNodeDebugInfo;
   Identifiers.DebugContext.runtime = DebugContext;
   Identifiers.TemplateRef.runtime = TemplateRef;

@@ -84,9 +84,9 @@ class Identifiers {
       name: "AppView", moduleUrl: APP_VIEW_MODULE_URL);
   static final DebugAppView = new CompileIdentifierMetadata(
       name: "DebugAppView", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
-  static final AppElement = new CompileIdentifierMetadata(
-      name: "AppElement",
-      moduleUrl: "asset:angular2/lib/src/core/linker/app_element.dart");
+  static final ViewContainer = new CompileIdentifierMetadata(
+      name: "ViewContainer",
+      moduleUrl: "asset:angular2/lib/src/core/linker/view_container.dart");
   static final ElementRef = new CompileIdentifierMetadata(
       name: "ElementRef",
       moduleUrl: "asset:angular2/lib/src/core/linker/element_ref.dart",

@@ -70,7 +70,7 @@ class CompileEventListener {
 
   void finishMethod() {
     var markPathToRootStart = this._hasComponentHostListener
-        ? this.compileElement.appElement.prop('componentView')
+        ? this.compileElement.appViewContainer.prop('componentView')
         : o.THIS_EXPR;
     o.Expression resultExpr = o.literal(true);
     this._actionResultExprs.forEach((expr) {

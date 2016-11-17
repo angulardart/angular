@@ -7,7 +7,7 @@ import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
-import 'app_element.dart';
+import 'view_container.dart';
 import 'app_view_utils.dart';
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
@@ -28,21 +28,21 @@ abstract class AppView<T> {
   ViewType type;
   Map<String, dynamic> locals;
   Injector parentInjector;
-  AppElement declarationAppElement;
+  ViewContainer declarationViewContainer;
   ChangeDetectionStrategy _cdMode;
   // Improves change detection tree traversal by caching change detection mode
   // and change detection state checks. When set to true, this view doesn't need
   // to be change detected.
   bool _skipChangeDetection = false;
   ViewRefImpl ref;
-  List rootNodesOrAppElements;
+  List rootNodesOrViewContainers;
   List allNodes;
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
   List subscriptions;
   List<AppView> contentChildren = [];
   List<AppView> viewChildren = [];
   AppView renderParent;
-  AppElement viewContainerElement;
+  ViewContainer viewContainerElement;
 
   // The names of the below fields must be kept in sync with codegen_name_util.ts or
   // change detection will fail.
@@ -57,7 +57,7 @@ abstract class AppView<T> {
   bool destroyed = false;
   bool _hasExternalHostElement;
   AppView(this.clazz, this.componentType, this.type, this.locals,
-      this.parentInjector, this.declarationAppElement, this._cdMode) {
+      this.parentInjector, this.declarationViewContainer, this._cdMode) {
     ref = new ViewRefImpl(this);
     sharedStylesHost ??= new DomSharedStylesHost(document);
     if (!componentType.stylesShimmed) {
@@ -100,14 +100,14 @@ abstract class AppView<T> {
             identical(_cdState, ChangeDetectorState.Errored);
   }
 
-  AppElement create(
+  ViewContainer create(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | Node */ rootSelectorOrNode) {
     T context;
     var projectableNodes;
     switch (this.type) {
       case ViewType.COMPONENT:
-        context = declarationAppElement.component as T;
+        context = declarationViewContainer.component as T;
         projectableNodes = ensureSlotCount(
             givenProjectableNodes, this.componentType.slotCount);
         break;
@@ -123,7 +123,7 @@ abstract class AppView<T> {
   }
 
   /// Builds a host view.
-  AppElement createHost(
+  ViewContainer createHost(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | Node */ rootSelectorOrNode) {
     assert(type == ViewType.HOST);
@@ -137,41 +137,42 @@ abstract class AppView<T> {
   }
 
   /// Builds a nested embedded view.
-  AppElement createEmbedded(
+  ViewContainer createEmbedded(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | Node */ rootSelectorOrNode) {
-    projectableNodes = declarationAppElement.parentView.projectableNodes;
+    projectableNodes = declarationViewContainer.parentView.projectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
-    ctx = declarationAppElement.parentView.ctx as T;
+    ctx = declarationViewContainer.parentView.ctx as T;
     return createInternal(rootSelectorOrNode);
   }
 
   /// Builds a component view.
-  AppElement createComp(
+  ViewContainer createComp(
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | Node */ rootSelectorOrNode) {
     projectableNodes =
         ensureSlotCount(givenProjectableNodes, componentType.slotCount);
     _hasExternalHostElement = rootSelectorOrNode != null;
-    ctx = declarationAppElement.component as T;
+    ctx = declarationViewContainer.component as T;
     return createInternal(rootSelectorOrNode);
   }
 
-  /// Returns the AppElement for the host element for ViewType.HOST.
+  /// Returns the ViewContainer for the host element for ViewType.HOST.
   ///
   /// Overwritten by implementations.
-  AppElement createInternal(dynamic /* String | Node */ rootSelectorOrNode) =>
+  ViewContainer createInternal(
+          dynamic /* String | Node */ rootSelectorOrNode) =>
       null;
 
   /// Called by createInternal once all dom nodes are available.
-  void init(List rootNodesOrAppElements, List allNodes, List subscriptions) {
-    this.rootNodesOrAppElements = rootNodesOrAppElements;
+  void init(List rootNodesOrViewContainers, List allNodes, List subscriptions) {
+    this.rootNodesOrViewContainers = rootNodesOrViewContainers;
     this.allNodes = allNodes;
     this.subscriptions = subscriptions;
     if (type == ViewType.COMPONENT) {
       // Note: the render nodes have been attached to their host element
       // in the ViewFactory already.
-      declarationAppElement.parentView.viewChildren.add(this);
+      declarationViewContainer.parentView.viewChildren.add(this);
       dirtyParentQueriesInternal();
     }
   }
@@ -186,7 +187,7 @@ abstract class AppView<T> {
         hostElement = createElement(null, elementName, debugCtx);
       }
     } else {
-      var target = declarationAppElement.parentView;
+      var target = declarationViewContainer.parentView;
       if (rootSelectorOrNode != null) {
         hostElement = target.selectRootElement(rootSelectorOrNode, debugCtx);
       } else {
@@ -287,8 +288,9 @@ abstract class AppView<T> {
   }
 
   void destroyLocal() {
-    var hostElement =
-        type == ViewType.COMPONENT ? declarationAppElement.nativeElement : null;
+    var hostElement = type == ViewType.COMPONENT
+        ? declarationViewContainer.nativeElement
+        : null;
     for (int i = 0, len = _onDestroyCallbacks.length; i < len; i++) {
       _onDestroyCallbacks[i]();
     }
@@ -317,13 +319,15 @@ abstract class AppView<T> {
 
   ChangeDetectorRef get changeDetectorRef => ref;
 
-  AppView<dynamic> get parent => declarationAppElement?.parentView;
+  AppView<dynamic> get parent => declarationViewContainer?.parentView;
 
-  List<Node> get flatRootNodes => _flattenNestedViews(rootNodesOrAppElements);
+  List<Node> get flatRootNodes =>
+      _flattenNestedViews(rootNodesOrViewContainers);
 
   Node get lastRootNode {
-    var lastNode =
-        rootNodesOrAppElements.isNotEmpty ? rootNodesOrAppElements.last : null;
+    var lastNode = rootNodesOrViewContainers.isNotEmpty
+        ? rootNodesOrViewContainers.last
+        : null;
     return _findLastRenderNode(lastNode);
   }
 
@@ -369,18 +373,18 @@ abstract class AppView<T> {
     }
   }
 
-  void markContentChildAsMoved(AppElement renderAppElement) {
+  void markContentChildAsMoved(ViewContainer renderViewContainer) {
     dirtyParentQueriesInternal();
   }
 
-  void addToContentChildren(AppElement renderAppElement) {
-    renderAppElement.parentView.contentChildren.add(this);
-    viewContainerElement = renderAppElement;
+  void addToContentChildren(ViewContainer renderViewContainer) {
+    renderViewContainer.parentView.contentChildren.add(this);
+    viewContainerElement = renderViewContainer;
     dirtyParentQueriesInternal();
   }
 
-  void removeFromContentChildren(AppElement renderAppElement) {
-    renderAppElement.parentView.contentChildren.remove(this);
+  void removeFromContentChildren(ViewContainer renderViewContainer) {
+    renderViewContainer.parentView.contentChildren.remove(this);
     dirtyParentQueriesInternal();
     viewContainerElement = null;
   }
@@ -404,7 +408,7 @@ abstract class AppView<T> {
         view.cdMode = ChangeDetectionStrategy.CheckOnce;
       }
       var parentEl = view.type == ViewType.COMPONENT
-          ? view.declarationAppElement
+          ? view.declarationViewContainer
           : view.viewContainerElement;
       view = parentEl?.parentView;
     }
@@ -507,13 +511,13 @@ abstract class AppView<T> {
   /// required in most cases.
   void project(Element parentElement, int index) {
     if (parentElement == null) return;
-    // Optimization for projectables that doesn't include AppElement(s).
-    // If the projectable is AppElement we fall back to building up a list.
+    // Optimization for projectables that doesn't include ViewContainer(s).
+    // If the projectable is ViewContainer we fall back to building up a list.
     List projectables = projectableNodes[index];
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];
-      if (projectable is AppElement) {
+      if (projectable is ViewContainer) {
         if (projectable.nestedViews == null) {
           parentElement.append(projectable.nativeElement as Node);
         } else {
@@ -544,16 +548,16 @@ abstract class AppView<T> {
 
 Node _findLastRenderNode(dynamic node) {
   Node lastNode;
-  if (node is AppElement) {
-    AppElement appEl = node;
+  if (node is ViewContainer) {
+    ViewContainer appEl = node;
     lastNode = appEl.nativeElement;
     if (appEl.nestedViews != null) {
       // Note: Views might have no root nodes at all!
       for (var i = appEl.nestedViews.length - 1; i >= 0; i--) {
         var nestedView = appEl.nestedViews[i];
-        if (nestedView.rootNodesOrAppElements.isNotEmpty) {
+        if (nestedView.rootNodesOrViewContainers.isNotEmpty) {
           lastNode =
-              _findLastRenderNode(nestedView.rootNodesOrAppElements.last);
+              _findLastRenderNode(nestedView.rootNodesOrViewContainers.last);
         }
       }
     }
@@ -565,7 +569,7 @@ Node _findLastRenderNode(dynamic node) {
 
 /// Recursively appends app element and nested view nodes to target element.
 void _appendNestedViewRenderNodes(
-    Element targetElement, AppElement appElement) {
+    Element targetElement, ViewContainer appElement) {
   // TODO: strongly type nativeElement.
   targetElement.append(appElement.nativeElement as Node);
   var nestedViews = appElement.nestedViews;
@@ -574,11 +578,11 @@ void _appendNestedViewRenderNodes(
   if (nestedViews == null || nestedViews.isEmpty) return;
   int nestedViewCount = nestedViews.length;
   for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
-    List projectables = nestedViews[viewIndex].rootNodesOrAppElements;
+    List projectables = nestedViews[viewIndex].rootNodesOrViewContainers;
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];
-      if (projectable is AppElement) {
+      if (projectable is ViewContainer) {
         _appendNestedViewRenderNodes(targetElement, projectable);
       } else {
         Node child = projectable;
@@ -596,13 +600,13 @@ List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
   int nodeCount = nodes.length;
   for (var i = 0; i < nodeCount; i++) {
     var node = nodes[i];
-    if (node is AppElement) {
-      AppElement appEl = node;
+    if (node is ViewContainer) {
+      ViewContainer appEl = node;
       renderNodes.add(appEl.nativeElement);
       if (appEl.nestedViews != null) {
         for (var k = 0; k < appEl.nestedViews.length; k++) {
           _flattenNestedViewRenderNodes(
-              appEl.nestedViews[k].rootNodesOrAppElements, renderNodes);
+              appEl.nestedViews[k].rootNodesOrViewContainers, renderNodes);
         }
       }
     } else {

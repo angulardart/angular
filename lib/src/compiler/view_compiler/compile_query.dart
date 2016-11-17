@@ -101,7 +101,7 @@ class CompileQuery {
 List<o.Expression> createQueryValues(ViewQueryValues viewValues) {
   return viewValues.values.map/*<o.Expression>*/((entry) {
     if (entry is ViewQueryValues) {
-      return mapNestedViews(entry.view.declarationElement.appElement,
+      return mapNestedViews(entry.view.declarationElement.appViewContainer,
           entry.view, createQueryValues(entry));
     } else {
       return (entry as o.Expression);
@@ -109,12 +109,12 @@ List<o.Expression> createQueryValues(ViewQueryValues viewValues) {
   }).toList();
 }
 
-o.Expression mapNestedViews(o.Expression declarationAppElement,
+o.Expression mapNestedViews(o.Expression declarationViewContainer,
     CompileView view, List<o.Expression> expressions) {
   List<o.Expression> adjustedExpressions = expressions.map((expr) {
     return o.replaceReadClassMemberInExpression(o.variable("nestedView"), expr);
   }).toList();
-  return declarationAppElement.callMethod("mapNestedViews", [
+  return declarationViewContainer.callMethod("mapNestedViews", [
     o.variable(view.className),
     o.fn([new o.FnParam("nestedView", view.classType)],
         [new o.ReturnStatement(o.literalArr(adjustedExpressions))])

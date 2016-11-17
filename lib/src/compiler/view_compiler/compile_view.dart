@@ -31,8 +31,7 @@ class CompileView implements NameResolver {
   ViewType viewType;
   CompileTokenMap<List<CompileQuery>> viewQueries;
   List<CompileNode> nodes = [];
-  // root nodes or AppElements for ViewContainers
-  List<o.Expression> rootNodesOrAppElements = [];
+  List<o.Expression> rootNodesOrViewContainers = [];
   List<CompileBinding> bindings = [];
   List<o.Statement> classStatements = [];
   CompileMethod createMethod;
@@ -99,7 +98,7 @@ class CompileView implements NameResolver {
       var constructorViewQueryCount = 0;
       this.component.type.diDeps.forEach((dep) {
         if (dep.viewQuery != null) {
-          var queryList = new o.ReadClassMemberExpr('declarationAppElement')
+          var queryList = new o.ReadClassMemberExpr('declarationViewContainer')
               .prop('componentConstructorViewQueries')
               .key(o.literal(constructorViewQueryCount++));
           var query = new CompileQuery(dep.viewQuery, queryList, null, this);
