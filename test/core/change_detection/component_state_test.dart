@@ -36,6 +36,8 @@ void main() {
     template: r'<span class="target">{{title}}</span>')
 class SingleBindingTest extends Object with ComponentState {
   String _title;
+  Iterable<String> _messages;
+
   @Input()
   set title(String value) {
     setState(() => _title = value);
@@ -46,5 +48,11 @@ class SingleBindingTest extends Object with ComponentState {
   /// Doesn't call setState on purpose to make sure title is not updated.
   void updateTitle(String value) {
     _title = value;
+  }
+
+  @Input()
+  set messages(Iterable<String> messages) {
+    if (_messages == messages) return;
+    setState(() => _messages = messages);
   }
 }

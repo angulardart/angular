@@ -1061,7 +1061,7 @@ void writeInputUpdater(
         .importExpr(Identifiers.checkBinding)
         .callFn([prevValueExpr, newValueExpr]);
   } else {
-    if (isPrimitiveTypeName(inputTypeName.trim())) {
+    if (inputTypeName != null && isPrimitiveTypeName(inputTypeName.trim())) {
       conditionExpr = new o.ReadVarExpr(prevValueVarName)
           .notIdentical(new o.ReadVarExpr(inputName));
     } else {
