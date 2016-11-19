@@ -15,7 +15,7 @@ const noValueProvided = '__noValueProvided__';
 ///
 ///     expect(injector.get('message'), 'Hello');
 ///
-/// [di]: docs/guide/dependency-injection.html#!#injector-providers
+/// [di]: docs/guide/dependency-injection.html#injector-providers
 class Provider {
   /// Token used when retrieving this provider. Usually, it is a type [Type].
   final token;
@@ -173,7 +173,7 @@ class Provider {
 ///
 /// {@example docs/toh-6/web/main.dart}
 ///
-/// [di]: docs/guide/dependency-injection.html#!#injector-providers
+/// [di]: docs/guide/dependency-injection.html#injector-providers
 Provider provide(token,
     {Type useClass,
     dynamic useValue: noValueProvided,
