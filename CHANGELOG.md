@@ -1,3 +1,28 @@
+## 2.1.0
+
+### API changes
+ * Breaking changes
+   * `NgControlStatus` no longer included in `COMMON_DIRECTIVES` and in
+     `FORM_DIRECTIVES`. Needs to be manually included in your bootstrap or
+     migrated off of
+ * Deprecations
+   * Using `@Query` in a component constructor; move to field-level
+   * `Renderer`: Use `dart:html` directly
+   * `NgControlStatus`: A form control should set class they are interested in
+   * `NgPlural`: Was never formally suppported in Angular Dart. Recommend using
+     `package:intl` with getters on your `@Component` pointing to an
+     `Intl.message` call until we have formal template support (planned)
+   * `ObservableListDiff`: Not properly implemented, will re-introduce later
+ * Removed support for `InjectorModule` - was never formally supported
+
+### Bug fixes and other changes
+ * Documentation fixes and cleanups across the codebase
+ * Code size and runtime performance improvements across the codebase
+ * More reduction of STRONG_MODE exceptions in the compiler
+ * Removed `InjectorModule` code (from TS-transpiler era)
+ * Fixed a bug with `ExceptionHandler` not being called during change detection
+ * Fixed a bug where controls were not marked dirty when an error was set
+
 ## 2.0.0 Release
 
 ### API changes
