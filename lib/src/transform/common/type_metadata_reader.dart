@@ -462,7 +462,7 @@ class _DirectiveMetadataVisitor extends Object
     return null;
   }
 
-  /// Verifies that annotation has parantheses.
+  /// Verifies that annotation has parentheses.
   ///
   /// Throws error for input such as `@Input String value`.
   void _verifyHasZeroOrMoreArgs(

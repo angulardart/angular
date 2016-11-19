@@ -1485,7 +1485,7 @@ class HostBinding {
 
 /// Declares a host listener.
 ///
-/// The decoreated method is invoked when the host element emits the specified
+/// The decorated method is invoked when the host element emits the specified
 /// event.
 ///
 /// If the decorated method returns [false], then [preventDefault] is applied

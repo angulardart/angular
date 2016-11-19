@@ -112,7 +112,7 @@ class CompileDiDependencyMetadata {
       CompileTokenMetadata token,
       dynamic value}) {
     // TODO: Make the defaults of the constructor 'false' instead of doing this.
-    // This is to prevent any breaking changes while cleaing up TS facades.
+    // This is to prevent any breaking changes while cleaning up TS facades.
     this.isAttribute = isAttribute == true;
     this.isSelf = isSelf == true;
     this.isHost = isHost == true;
