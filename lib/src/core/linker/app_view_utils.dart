@@ -15,7 +15,7 @@ import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 /// Function called when a view is destroyed.
 typedef void OnDestroyCallback();
 
-/// Application wide view utilitizes.
+/// Application wide view utilities.
 AppViewUtils appViewUtils;
 
 /// Utilities to create unique RenderComponentType instances for AppViews and

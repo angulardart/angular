@@ -51,7 +51,7 @@ class NgZoneError {
 /// A VM turn consist of a single macrotask followed 0 to many microtasks.
 ///
 /// The wrapper maintains an "inner" and "mount" `Zone`. The application code will executes
-/// in the "inner" zone unless `runOutsideAngular` is explicitely called.
+/// in the "inner" zone unless `runOutsideAngular` is explicitly called.
 ///
 /// A typical application will create a singleton `NgZone`. The mount zone is the `Zone` where the singleton has been
 /// instantiated. The default `onMicrotaskEmpty` runs the Angular change detection.

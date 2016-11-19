@@ -14,7 +14,7 @@ const OBJECT = "object";
 /// ## Overview
 ///
 /// Each line represents one kind of element. The `element_inheritance` and properties are joined
-/// using `element_inheritance|preperties` syntax.
+/// using `element_inheritance|properties` syntax.
 ///
 /// ## Element Inheritance
 ///

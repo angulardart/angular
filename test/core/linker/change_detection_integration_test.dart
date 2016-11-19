@@ -400,7 +400,7 @@ void main() {
       fixture.detectChanges(false);
       expect(child.someProp, 'ConstStr');
       child.someProp = '';
-      // Since the value was wrapped, each change detection will generatae
+      // Since the value was wrapped, each change detection will generate
       // new identity and update binding.
       fixture.detectChanges(false);
       expect(child.someProp, 'ConstStr');

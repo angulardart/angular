@@ -33,7 +33,7 @@ export "src/router/router.dart" show Router;
 /// ```
 /// import 'package:angular2/cored.dart' show Component;
 /// import 'package:angular2/router.dart'
-///     show ROUTER_DIRECTIVES, ROUTER_PROVIERS, RouteConfig;
+///     show ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig;
 ///
 /// @Component(directives: const [ROUTER_DIRECTIVES])
 /// @RouteConfig(const [

@@ -21,7 +21,7 @@ const _REFLECTION_CAPABILITIES_URI =
 /// It should be used in place of [_BOOTSTRAP_URI] in production apps.
 const BOOTSTRAP_STATIC_URI = 'package:angular2/platform/browser_static.dart';
 
-/// Syntactially checks for code related to the use of `dart:mirrors`.
+/// Syntactically checks for code related to the use of `dart:mirrors`.
 ///
 /// Checks various [AstNode]s to determine if they are
 /// - Libraries that transitively import `dart:mirrors`
