@@ -75,15 +75,12 @@ class Validators {
     return /* Map < String , dynamic > */ (model_module
         .AbstractControl control) {
       if (Validators.required(control) != null) return null;
-      var regex = new RegExp('''^${ pattern}\$''');
+      var regex = new RegExp('^${pattern}\$');
       String v = control.value;
       return regex.hasMatch(v)
           ? null
           : {
-              "pattern": {
-                "requiredPattern": '''^${ pattern}\$''',
-                "actualValue": v
-              }
+              "pattern": {"requiredPattern": '^${ pattern}\$', "actualValue": v}
             };
     };
   }

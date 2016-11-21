@@ -16,6 +16,8 @@ abstract class SharedStylesHost {
 /// Initialized by RootRenderer.
 SharedStylesHost sharedStylesHost;
 
+final RegExp COMPONENT_REGEX = new RegExp(r'%COMP%');
+
 /// Component prototype and runtime style information that are shared
 /// across all instances of a component type.
 class RenderComponentType {
@@ -27,7 +29,6 @@ class RenderComponentType {
   final ViewEncapsulation encapsulation;
   List<dynamic /* String | List < dynamic > */ > templateStyles;
 
-  static final COMPONENT_REGEX = new RegExp(r'%COMP%');
   static const COMPONENT_VARIABLE = '%COMP%';
   static const HOST_STYLE_PREFIX = '_nghost-';
   static const CONTENT_STYLE_PREFIX = '_ngcontent-';

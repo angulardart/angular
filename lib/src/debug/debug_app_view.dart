@@ -33,8 +33,9 @@ export 'package:angular2/src/debug/debug_context.dart'
 WtfScopeFn _scope_check = wtfCreateScope('AppView#check(ascii id)');
 
 // RegExp to match anchor comment when logging bindings for debugging.
-RegExp _TEMPLATE_BINDINGS_EXP = new RegExp(r'^template bindings=(.*)$');
-const _TEMPLATE_COMMENT_TEXT = 'template bindings={}';
+final RegExp _templateBindingsExp = new RegExp(r'^template bindings=(.*)$');
+final RegExp _matchNewLine = new RegExp(r'\n');
+const _templateCommentText = 'template bindings={}';
 const INSPECT_GLOBAL_NAME = "ng.probe";
 
 class DebugAppView<T> extends AppView<T> {
@@ -174,13 +175,13 @@ class DebugAppView<T> extends AppView<T> {
   void setBindingDebugInfo(
       dynamic renderElement, String propertyName, String propertyValue) {
     if (renderElement is Comment) {
-      var existingBindings = _TEMPLATE_BINDINGS_EXP
-          .firstMatch(renderElement.text.replaceAll(new RegExp(r'\n'), ''));
+      var existingBindings = _templateBindingsExp
+          .firstMatch(renderElement.text.replaceAll(_matchNewLine, ''));
       var parsedBindings = JSON.decode(existingBindings[1]);
       parsedBindings[propertyName] = propertyValue;
       String debugStr =
           const JsonEncoder.withIndent('  ').convert(parsedBindings);
-      renderElement.text = _TEMPLATE_COMMENT_TEXT.replaceFirst('{}', debugStr);
+      renderElement.text = _templateCommentText.replaceFirst('{}', debugStr);
     } else {
       setAttr(renderElement, propertyName, propertyValue);
     }

@@ -826,7 +826,11 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       (new List.from(view.updateContentQueriesMethod.finish())
         ..addAll(view.afterContentLifecycleCallbacksMethod.finish()));
   if (afterContentStmts.length > 0) {
-    stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
+    if (view.genConfig.genDebugInfo) {
+      stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
+    } else {
+      stmts.addAll(afterContentStmts);
+    }
   }
   stmts.addAll(view.detectChangesRenderPropertiesMethod.finish());
   stmts.add(o.THIS_EXPR.callMethod("detectViewChildrenChanges", []).toStmt());
@@ -834,7 +838,11 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       (new List.from(view.updateViewQueriesMethod.finish())
         ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
   if (afterViewStmts.length > 0) {
-    stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterViewStmts));
+    if (view.genConfig.genDebugInfo) {
+      stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterViewStmts));
+    } else {
+      stmts.addAll(afterViewStmts);
+    }
   }
   var varStmts = [];
   var readVars = o.findReadVarNames(stmts);

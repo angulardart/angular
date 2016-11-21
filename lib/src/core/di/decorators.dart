@@ -45,13 +45,14 @@ class DependencyMetadata {
 /// ```
 class Inject {
   final token;
+  static RegExp _funcMatcher;
   const Inject(this.token);
   String toString() => '@Inject(${tokenToString(token)})';
 
   static String tokenToString(token) {
-    RegExp funcMatcher = new RegExp(r"from Function '(\w+)'");
+    _funcMatcher ??= new RegExp(r"from Function '(\w+)'");
     String tokenStr = token.toString();
-    var match = funcMatcher.firstMatch(tokenStr);
+    var match = _funcMatcher.firstMatch(tokenStr);
     return (match != null) ? match.group(1) : tokenStr;
   }
 }
