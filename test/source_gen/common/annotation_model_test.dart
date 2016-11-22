@@ -1,3 +1,4 @@
+@Skip("TODO extra build step")
 import 'package:angular2/src/source_gen/common/annotation_model.dart';
 import 'package:code_builder/testing.dart';
 import 'package:test/test.dart';
