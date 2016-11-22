@@ -11,6 +11,13 @@ fi
 echo "** Run a trivial travis-only test to see if the current platform works"
 pub run test -p $TEST_PLATFORM tool/travis_sniff_test.dart
 
+if [ $TEST_PLATFORM == 'vm' ]; then
+  echo "** Generating template files."
+  THE_COMMAND="dart test/source_gen/template_compiler/generate_goldens.dart"
+  echo $THE_COMMAND
+  $THE_COMMAND
+fi
+
 echo "** Running main tests – no codegen"
 # Run tests that don't require codegen.
 if [ $TEST_PLATFORM == 'firefox' ]; then

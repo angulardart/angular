@@ -1,3 +1,4 @@
+@TestOn('vm')
 import 'package:angular2/src/source_gen/common/annotation_model.dart';
 import 'package:angular2/src/source_gen/common/parameter_model.dart';
 import 'package:angular2/src/source_gen/common/reflection_info_model.dart';
