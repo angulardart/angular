@@ -24,7 +24,7 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
       ElementAnnotation annotation, ClassElement element) {
     var value = annotation.computeConstantValue();
     return new CompilePipeMetadata(
-        type: getType(element, _buildStep.input.id),
+        type: element.accept(new CompileTypeMetadataVisitor(_buildStep)),
         name: coerceString(value, 'name'),
         pure: coerceBool(value, 'pure', defaultValue: true),
         lifecycleHooks: []);

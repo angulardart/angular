@@ -40,8 +40,8 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   NormalizedComponentWithViewDirectives _visitClassElement(
       ClassElement element) {
     var componentVisitor = new ComponentVisitor(_buildStep, loadTemplate: true);
-    var directive = element.accept(componentVisitor);
-    if (directive == null) return null;
+    CompileDirectiveMetadata directive = element.accept(componentVisitor);
+    if (directive == null || !directive.isComponent) return null;
     var directives = _visitDirectives(element);
     var pipes = _visitPipes(element);
     return new NormalizedComponentWithViewDirectives(
@@ -153,7 +153,7 @@ class ComponentVisitor
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
-      ElementAnnotation annotation, Element element) {
+      ElementAnnotation annotation, ClassElement element) {
     var value = annotation.computeConstantValue();
     var isComponent = annotation_matcher.isComponent(annotation);
     var template =
@@ -161,7 +161,7 @@ class ComponentVisitor
     var inputs = coerceStringList(value, '_inputs')..addAll(_inputs);
     var outputs = coerceStringList(value, '_outputs')..addAll(_outputs);
     return CompileDirectiveMetadata.create(
-        type: getType(element, _buildStep.input.id),
+        type: element.accept(new CompileTypeMetadataVisitor(_buildStep)),
         isComponent: isComponent,
         selector: coerceString(value, 'selector'),
         exportAs: coerceString(value, 'exportAs'),
