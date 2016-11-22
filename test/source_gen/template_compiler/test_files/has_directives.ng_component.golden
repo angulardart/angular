@@ -107,39 +107,6 @@ final String output = """[
     "class": "NormalizedComponentWithViewDirectives",
     "component": {
       "class": "Directive",
-      "isComponent": false,
-      "selector": "directive",
-      "exportAs": null,
-      "type": {
-        "class": "Type",
-        "name": "TestDirective",
-        "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/has_directives.dart",
-        "prefix": null,
-        "isHost": false,
-        "value": null,
-        "diDeps": []
-      },
-      "changeDetection": null,
-      "inputs": {},
-      "inputTypes": {},
-      "outputs": {},
-      "hostListeners": {},
-      "hostProperties": {},
-      "hostAttributes": {},
-      "lifecycleHooks": [],
-      "template": null,
-      "providers": [],
-      "viewProviders": [],
-      "queries": [],
-      "viewQueries": []
-    },
-    "directives": [],
-    "pipes": []
-  },
-  {
-    "class": "NormalizedComponentWithViewDirectives",
-    "component": {
-      "class": "Directive",
       "isComponent": true,
       "selector": "test-bar",
       "exportAs": null,
