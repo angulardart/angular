@@ -6,6 +6,9 @@ import 'compare_to_golden.dart' as golden;
 const String summaryExtension = '.ng_component';
 const String goldenExtension = '.ng_component.golden';
 
+/// To update the golden files, in the root angular2 directory, run
+/// `pub get` and then
+/// `dart test/source_gen/template_compiler/generate.dart --update-goldens`
 main() {
   group('Test Components', () {
     test('test_foo', () async {
