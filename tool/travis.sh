@@ -13,7 +13,7 @@ pub run test -p $TEST_PLATFORM tool/travis_sniff_test.dart
 
 if [ $TEST_PLATFORM == 'vm' ]; then
   echo "** Generating template files."
-  THE_COMMAND="dart test/source_gen/template_compiler/generate_goldens.dart"
+  THE_COMMAND="dart test/source_gen/template_compiler/generate.dart"
   echo $THE_COMMAND
   $THE_COMMAND
 fi
