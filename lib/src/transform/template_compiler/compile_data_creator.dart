@@ -137,7 +137,7 @@ class _CompileDataCreator {
             'Could not find Directive/Pipe entry for $dep. '
             'Please be aware that Dart transformers have limited support for '
             'reusable, pre-defined lists of Directives/Pipes (aka '
-            '"directive/pipe aliases"). See https://goo.gl/d8XPt0 for details.',
+            '"directive/pipe aliases"). See https://goo.gl/Ux0OBp for details.',
             asset: entryPoint);
       }
     }
