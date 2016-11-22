@@ -180,14 +180,4 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
   dynamic visitText(HtmlTextAst ast, dynamic context) {
     return null;
   }
-
-  @override
-  dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
-    return null;
-  }
-
-  @override
-  dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
-    return null;
-  }
 }

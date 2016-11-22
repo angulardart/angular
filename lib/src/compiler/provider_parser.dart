@@ -1,4 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:source_span/source_span.dart';
 
 import "compile_metadata.dart"
     show
@@ -10,17 +11,17 @@ import "compile_metadata.dart"
         CompileDirectiveMetadata,
         CompileDiDependencyMetadata;
 import "identifiers.dart" show Identifiers, identifierToken;
-import "parse_util.dart" show ParseSourceSpan, ParseError;
+import "parse_util.dart" show ParseError;
 import "template_ast.dart"
     show ReferenceAst, AttrAst, DirectiveAst, ProviderAst, ProviderAstType;
 
 class ProviderError extends ParseError {
-  ProviderError(String message, ParseSourceSpan span) : super(span, message);
+  ProviderError(String message, SourceSpan span) : super(span, message);
 }
 
 class ProviderViewContext {
   CompileDirectiveMetadata component;
-  ParseSourceSpan sourceSpan;
+  SourceSpan sourceSpan;
   /**
    * @internal
    */
@@ -47,7 +48,7 @@ class ProviderElementContext {
   ProviderElementContext _parent;
   bool _isViewRoot;
   List<DirectiveAst> _directiveAsts;
-  ParseSourceSpan _sourceSpan;
+  SourceSpan _sourceSpan;
   CompileTokenMap<List<CompileQueryMetadata>> _contentQueries;
   var _transformedProviders = new CompileTokenMap<ProviderAst>();
   var _seenProviders = new CompileTokenMap<bool>();
@@ -306,7 +307,7 @@ class ProviderElementContext {
 }
 
 class AppProviderParser {
-  ParseSourceSpan _sourceSpan;
+  SourceSpan _sourceSpan;
   var _transformedProviders = new CompileTokenMap<ProviderAst>();
   var _seenProviders = new CompileTokenMap<bool>();
   CompileTokenMap<ProviderAst> _allProviders;
@@ -439,7 +440,7 @@ ProviderAst _transformProviderAst(ProviderAst provider,
 List<CompileProviderMetadata> _normalizeProviders(
     List<
         dynamic /* CompileProviderMetadata | CompileTypeMetadata | List < dynamic > */ > providers,
-    ParseSourceSpan sourceSpan,
+    SourceSpan sourceSpan,
     List<ParseError> targetErrors,
     [List<CompileProviderMetadata> targetProviders = null]) {
   if (targetProviders == null) {
@@ -473,7 +474,7 @@ List<CompileProviderMetadata> _normalizeProviders(
 
 CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
     List<CompileDirectiveMetadata> directives,
-    ParseSourceSpan sourceSpan,
+    SourceSpan sourceSpan,
     List<ParseError> targetErrors) {
   var providersByToken = new CompileTokenMap<ProviderAst>();
   directives.forEach((directive) {
@@ -517,7 +518,7 @@ void _resolveProviders(
     List<CompileProviderMetadata> providers,
     ProviderAstType providerType,
     bool eager,
-    ParseSourceSpan sourceSpan,
+    SourceSpan sourceSpan,
     List<ParseError> targetErrors,
     CompileTokenMap<ProviderAst> targetProvidersByToken) {
   providers.forEach((provider) {

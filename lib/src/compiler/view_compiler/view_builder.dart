@@ -435,7 +435,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       nodeExpr,
       o.literal(nodeIndex),
       sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),
-      sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.col)
+      sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.column)
     ]).toStmt();
   }
 

@@ -184,23 +184,27 @@ void main() {
           expect(
               () => parse("<p [atTr.foo]>", []),
               throwsWith('Template parse errors:\n'
-                  'Invalid property name \'atTr.foo\' '
-                  '("<p [ERROR ->][atTr.foo]>"): TestComp@0:3'));
+                  'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'atTr.foo\'\n'
+                  '[atTr.foo]\n'
+                  '^^^^^^^^^^'));
           expect(
               () => parse("<p [sTyle.foo]>", []),
               throwsWith('Template parse errors:\n'
-                  'Invalid property name \'sTyle.foo\' '
-                  '("<p [ERROR ->][sTyle.foo]>"): TestComp@0:3'));
+                  'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'sTyle.foo\'\n'
+                  '[sTyle.foo]\n'
+                  '^^^^^^^^^^^'));
           expect(
               () => parse("<p [Class.foo]>", []),
               throwsWith('Template parse errors:\n'
-                  'Invalid property name \'Class.foo\' '
-                  '("<p [ERROR ->][Class.foo]>"): TestComp@0:3'));
+                  'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'Class.foo\'\n'
+                  '[Class.foo]\n'
+                  '^^^^^^^^^^^'));
           expect(
               () => parse("<p [bar.foo]>", []),
               throwsWith('Template parse errors:\n'
-                  'Invalid property name \'bar.foo\' '
-                  '("<p [ERROR ->][bar.foo]>"): TestComp@0:3'));
+                  'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'bar.foo\'\n'
+                  '[bar.foo]\n'
+                  '^^^^^^^^^'));
         });
         test(
             'should parse bound properties via [...] and not report '
@@ -250,8 +254,9 @@ void main() {
           expect(
               () => parse('<div (window:event)="v">', []),
               throwsWith('Template parse errors:\n'
-                  '":" is not allowed in event names: window:event '
-                  '("<div [ERROR ->](window:event)="v">"): TestComp@0:5'));
+                  'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: ":" is not allowed in event names: window:event\n'
+                  '(window:event)="v"\n'
+                  '^^^^^^^^^^^^^^^^^^'));
         });
         test(
             'should parse bound events via (...) and not report them '
@@ -662,9 +667,9 @@ void main() {
           expect(
               () => parse("<div dirA dirB>", [dirA, dirB]),
               throwsWith('Template parse errors:\n'
-                  'Mixing multi and non multi provider is not possible for '
-                  'token service0 ("[ERROR ->]<div dirA dirB>"): '
-                  'TestComp@0:0'));
+                  'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Mixing multi and non multi provider is not possible for token service0\n'
+                  '<div dirA dirB>\n'
+                  '^^^^^^^^^^^^^^^'));
         });
         test("should sort providers by their DI order", () {
           var provider0 = createProvider("service0", deps: ["type:[dir2]"]);
@@ -766,8 +771,10 @@ void main() {
           var dirA = createDir("[dirA]", deps: ["self:provider0"]);
           expect(
               () => parse("<div dirA></div>", [dirA]),
-              throwsWith('No provider for provider0 (\"[ERROR ->]'
-                  '<div dirA></div>\"): TestComp@0:0'));
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: No provider for provider0\n'
+                  '<div dirA>\n'
+                  '^^^^^^^^^^'));
         });
         test("should change missing @Self() that are optional to nulls", () {
           var dirA = createDir("[dirA]", deps: ["optional:self:provider0"]);
@@ -780,8 +787,10 @@ void main() {
           var dirA = createDir("[dirA]", deps: ["host:provider0"]);
           expect(
               () => parse("<div dirA></div>", [dirA]),
-              throwsWith('No provider for provider0 (\"[ERROR ->]'
-                  '<div dirA></div>\"): TestComp@0:0'));
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: No provider for provider0\n'
+                  '<div dirA>\n'
+                  '^^^^^^^^^^'));
         });
         test("should change missing @Host() that are optional to nulls", () {
           var dirA = createDir("[dirA]", deps: ["optional:host:provider0"]);
@@ -817,9 +826,10 @@ void main() {
           ]);
           expect(console.warnings, [
             [
-              'Template parse warnings:',
-              '"var-" on non <template> elements is deprecated. Use "ref-" '
-                  'instead! (\"<div [ERROR ->]var-a>\"): TestComp@0:5'
+              'Template parse warnings:\n'
+                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "var-" on non <template> elements is deprecated. Use "ref-" instead!\n'
+                  'var-a\n'
+                  '^^^^^'
             ].join("\n")
           ]);
         });
@@ -857,22 +867,25 @@ void main() {
           expect(
               () => parse("<div #a=\"dirA\"></div>", []),
               throwsWith('Template parse errors:\n'
-                  'There is no directive with "exportAs" set to "dirA" '
-                  '("<div [ERROR ->]#a="dirA"></div>"): TestComp@0:5'));
+                  'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: There is no directive with "exportAs" set to "dirA"\n'
+                  '#a="dirA"\n'
+                  '^^^^^^^^^'));
         });
         test("should report invalid reference names", () {
           expect(
               () => parse("<div #a-b></div>", []),
               throwsWith('Template parse errors:\n'
-                  '"-" is not allowed in reference names '
-                  '("<div [ERROR ->]#a-b></div>"): TestComp@0:5'));
+                  'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: "-" is not allowed in reference names\n'
+                  '#a-b\n'
+                  '^^^^'));
         });
         test("should report variables as errors", () {
           expect(
               () => parse("<div let-a></div>", []),
               throwsWith('Template parse errors:\n'
-                  '"let-" is only supported on template elements. '
-                  '("<div [ERROR ->]let-a></div>"): TestComp@0:5'));
+                  'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: "let-" is only supported on template elements.\n'
+                  'let-a\n'
+                  '^^^^^'));
         });
         test("should assign references with empty value to components", () {
           var dirA = CompileDirectiveMetadata.create(
@@ -952,9 +965,10 @@ void main() {
           ]);
           expect(console.warnings, [
             [
-              'Template parse warnings:',
-              '"var-" on <template> elements is deprecated. Use "let-" '
-                  'instead! ("<template [ERROR ->]var-a="b">"): TestComp@0:10'
+              'Template parse warnings:\n'
+                  'line 1, column 11 of TestComp: ParseErrorLevel.WARNING: "var-" on <template> elements is deprecated. Use "let-" instead!\n'
+                  'var-a="b"\n'
+                  '^^^^^^^^^'
             ].join("\n")
           ]);
         });
@@ -1001,9 +1015,10 @@ void main() {
               ].toString());
           expect(console.warnings, [
             [
-              'Template parse warnings:',
-              '"#" inside of expressions is deprecated. Use "let" '
-                  'instead! ("<div [ERROR ->]*ngIf="#a=b">"): TestComp@0:5'
+              'Template parse warnings:\n'
+                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "#" inside of expressions is deprecated. Use "let" instead!\n'
+                  '*ngIf="#a=b"\n'
+                  '^^^^^^^^^^^^'
             ].join("\n")
           ]);
         });
@@ -1018,9 +1033,10 @@ void main() {
               ].toString());
           expect(console.warnings, [
             [
-              'Template parse warnings:',
-              '"var" inside of expressions is deprecated. Use "let" instead!'
-                  ' ("<div [ERROR ->]*ngIf="var a=b">"): TestComp@0:5'
+              'Template parse warnings:\n'
+                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "var" inside of expressions is deprecated. Use "let" instead!\n'
+                  '*ngIf="var a=b"\n'
+                  '^^^^^^^^^^^^^^^'
             ].join("\n")
           ]);
         });
@@ -1356,26 +1372,25 @@ void main() {
         expect(
             () => parse("<ng-content>content</ng-content>", []),
             throwsWith('Template parse errors:\n'
-                '<ng-content> element cannot have content. <ng-content> '
-                'must be immediately followed by </ng-content> ("[ERROR ->]'
-                '<ng-content>content</ng-content>"): TestComp@0:0'));
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: <ng-content> element cannot have content. <ng-content> must be immediately followed by </ng-content>\n'
+                '<ng-content>\n'
+                '^^^^^^^^^^^^'));
       });
       test("should report invalid property names", () {
         expect(
             () => parse("<div [invalidProp]></div>", []),
             throwsWith('Template parse errors:\n'
-                'Can\'t bind to \'invalidProp\' since it isn\'t a known '
-                'native property or known directive. Please fix typo or add '
-                'to directives list. ("<div [ERROR ->][invalidProp]></div>"): '
-                'TestComp@0:5'));
+                'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Can\'t bind to \'invalidProp\' since it isn\'t a known native property or known directive. Please fix typo or add to directives list.\n'
+                '[invalidProp]\n'
+                '^^^^^^^^^^^^^'));
       });
       test("should report errors in expressions", () {
         expect(
             () => parse("<div [prop]=\"a b\"></div>", []),
             throwsWith('Template parse errors:\n'
-                'Parser Error: Unexpected token \'b\' at column 3 in [a b] in '
-                'TestComp@0:5 ("<div [ERROR ->][prop]="a b"></div>"): '
-                'TestComp@0:5'));
+                'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in <FileLocation: 5 TestComp:1:6>\n'
+                '[prop]="a b"\n'
+                '^^^^^^^^^^^^'));
       });
       test(
           'should not throw on invalid property names if the property is '
@@ -1404,8 +1419,9 @@ void main() {
         expect(
             () => parse("<div>", [dirB, dirA]),
             throwsWith('Template parse errors:\n'
-                'More than one component: DirB,DirA ("[ERROR ->]<div>"): '
-                'TestComp@0:0'));
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: More than one component: DirB,DirA\n'
+                '<div>\n'
+                '^^^^^'));
       });
       test(
           'should not allow components or element bindings nor dom events '
@@ -1419,14 +1435,15 @@ void main() {
         expect(
             () => parse("<template [a]=\"b\" (e)=\"f\"></template>", [dirA]),
             throwsWith('Template parse errors:\n'
-                'Event binding e not emitted by any directive on an embedded '
-                'template ("<template [a]="b" [ERROR ->](e)="f"></template>")'
-                ': TestComp@0:18\n'
-                'Components on an embedded template: DirA ("[ERROR ->]'
-                '<template [a]="b" (e)="f"></template>"): TestComp@0:0\n'
-                'Property binding a not used by any directive on an embedded '
-                'template ("[ERROR ->]<template [a]="b" '
-                '(e)="f"></template>"): TestComp@0:0'));
+                'line 1, column 19 of TestComp: ParseErrorLevel.FATAL: Event binding e not emitted by any directive on an embedded template\n'
+                '(e)="f"\n'
+                '^^^^^^^\n'
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Components on an embedded template: DirA\n'
+                '<template [a]="b" (e)="f">\n'
+                '^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Property binding a not used by any directive on an embedded template\n'
+                '<template [a]="b" (e)="f">\n'
+                '^^^^^^^^^^^^^^^^^^^^^^^^^^'));
       });
       test(
           'should not allow components or element bindings on inline '
@@ -1440,10 +1457,12 @@ void main() {
         expect(
             () => parse("<div *a=\"b\"></div>", [dirA]),
             throwsWith('Template parse errors:\n'
-                'Components on an embedded template: DirA ("[ERROR ->]'
-                '<div *a="b"></div>"): TestComp@0:0\n'
-                'Property binding a not used by any directive on an embedded '
-                'template ("[ERROR ->]<div *a="b"></div>"): TestComp@0:0'));
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Components on an embedded template: DirA\n'
+                '<div *a="b">\n'
+                '^^^^^^^^^^^^\n'
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Property binding a not used by any directive on an embedded template\n'
+                '<div *a="b">\n'
+                '^^^^^^^^^^^^'));
       });
     });
     group("ignore elements", () {
@@ -1709,8 +1728,9 @@ void main() {
         expect(
             () => parse("{{a | test}}", []),
             throwsWith('Template parse errors:\n'
-                'The pipe \'test\' could not be found '
-                '("[ERROR ->]{{a | test}}"): TestComp@0:0'));
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: The pipe \'test\' could not be found\n'
+                '{{a | test}}\n'
+                '^^^^^^^^^^^^'));
       });
     });
   });
@@ -1837,13 +1857,13 @@ class TemplateHumanizer implements TemplateAstVisitor {
 
   List<dynamic> _appendContext(TemplateAst ast, List<dynamic> input) {
     if (!this.includeSourceSpan) return input;
-    input.add(ast.sourceSpan.toString());
+    input.add(ast.sourceSpan.text);
     return input;
   }
 }
 
 String sourceInfo(TemplateAst ast) {
-  return '''${ ast . sourceSpan}: ${ ast . sourceSpan . start}''';
+  return '${ast.sourceSpan.text}: ${ast.sourceSpan.start.offset}';
 }
 
 List<dynamic> humanizeContentProjection(List<TemplateAst> templateAsts) {

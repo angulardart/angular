@@ -3,7 +3,7 @@ library angular2.test.compiler.html_parser_test;
 import "package:angular2/src/compiler/html_ast.dart";
 import "package:angular2/src/compiler/html_lexer.dart" show HtmlTokenType;
 import "package:angular2/src/compiler/html_parser.dart"
-    show HtmlParser, HtmlParseTreeResult, HtmlTreeError;
+    show HtmlParser, HtmlTreeError;
 import "package:angular2/src/compiler/parse_util.dart" show ParseError;
 import 'package:test/test.dart';
 
@@ -270,77 +270,6 @@ void main() {
               ]);
         });
       });
-      group("expansion forms", () {
-        test("should parse out expansion forms", () {
-          var parsed = parser.parse(
-              '<div>before{messages.length, plural, =0 {You have <b>no</b> '
-              'messages} =1 {One {{message}}}}after</div>',
-              "TestComp",
-              true);
-          expect(humanizeDom(parsed), [
-            [HtmlElementAst, "div", 0],
-            [HtmlTextAst, "before", 1],
-            [HtmlExpansionAst, "messages.length", "plural"],
-            [HtmlExpansionCaseAst, "0"],
-            [HtmlExpansionCaseAst, "1"],
-            [HtmlTextAst, "after", 1]
-          ]);
-          var cases = (parsed.rootNodes[0] as dynamic).children[1].cases;
-          expect(
-              humanizeDom(new HtmlParseTreeResult(cases[0].expression, [])), [
-            [HtmlTextAst, "You have ", 0],
-            [HtmlElementAst, "b", 0],
-            [HtmlTextAst, "no", 1],
-            [HtmlTextAst, " messages", 0]
-          ]);
-          expect(
-              humanizeDom(new HtmlParseTreeResult(cases[1].expression, [])), [
-            [HtmlTextAst, "One {{message}}", 0]
-          ]);
-        });
-        test("should parse out nested expansion forms", () {
-          var parsed = parser.parse(
-              '{messages.length, plural, =0 { {p.gender, gender, =m {m}} }}',
-              "TestComp",
-              true);
-          expect(humanizeDom(parsed), [
-            [HtmlExpansionAst, "messages.length", "plural"],
-            [HtmlExpansionCaseAst, "0"]
-          ]);
-          var firstCase = (parsed.rootNodes[0] as dynamic).cases[0];
-          expect(
-              humanizeDom(new HtmlParseTreeResult(firstCase.expression, [])), [
-            [HtmlExpansionAst, "p.gender", "gender"],
-            [HtmlExpansionCaseAst, "m"],
-            [HtmlTextAst, " ", 0]
-          ]);
-        });
-        test("should error when expansion form is not closed", () {
-          var p = parser.parse(
-              '''{messages.length, plural, =0 {one}''', "TestComp", true);
-          expect(humanizeErrors(p.errors), [
-            [null, "Invalid expansion form. Missing '}'.", "0:34"]
-          ]);
-        });
-        test("should error when expansion case is not closed", () {
-          var p = parser.parse(
-              '''{messages.length, plural, =0 {one''', "TestComp", true);
-          expect(humanizeErrors(p.errors), [
-            [null, "Invalid expansion form. Missing '}'.", "0:29"]
-          ]);
-        });
-        test("should error when invalid html in the case", () {
-          var p = parser.parse(
-              '''{messages.length, plural, =0 {<b/>}''', "TestComp", true);
-          expect(humanizeErrors(p.errors), [
-            [
-              "b",
-              "Only void and foreign elements can be self closed \"b\"",
-              "0:30"
-            ]
-          ]);
-        });
-      });
       group("source spans", () {
         test("should store the location", () {
           expect(
@@ -530,17 +459,6 @@ class TestVisitor implements HtmlAstVisitor {
 
   @override
   dynamic visitComment(HtmlCommentAst ast, dynamic context) {
-    return null;
-  }
-
-  @override
-  dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
-    htmlVisitAll(this, ast.cases);
-    return null;
-  }
-
-  @override
-  dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
     return null;
   }
 }
