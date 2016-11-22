@@ -1,7 +1,8 @@
-import "html_tags.dart"
+import 'package:source_span/source_span.dart';
+
+import 'html_tags.dart'
     show getHtmlTagDefinition, HtmlTagContentType, NAMED_ENTITIES;
-import "parse_util.dart"
-    show ParseLocation, ParseError, ParseSourceFile, ParseSourceSpan;
+import 'parse_util.dart' show ParseError;
 
 enum HtmlTokenType {
   TAG_OPEN_START,
@@ -29,13 +30,13 @@ enum HtmlTokenType {
 class HtmlToken {
   final HtmlTokenType type;
   final List<String> parts;
-  final ParseSourceSpan sourceSpan;
+  SourceSpan sourceSpan;
   HtmlToken(this.type, this.parts, this.sourceSpan);
 }
 
 class HtmlTokenError extends ParseError {
   final HtmlTokenType tokenType;
-  HtmlTokenError(String errorMsg, this.tokenType, ParseSourceSpan span)
+  HtmlTokenError(String errorMsg, this.tokenType, SourceSpan span)
       : super(span, errorMsg);
 }
 
@@ -48,7 +49,7 @@ class HtmlTokenizeResult {
 HtmlTokenizeResult tokenizeHtml(String sourceContent, String sourceUrl,
     [bool tokenizeExpansionForms = false]) {
   return new _HtmlTokenizer(
-          new ParseSourceFile(sourceContent, sourceUrl), tokenizeExpansionForms)
+          new SourceFile(sourceContent, url: sourceUrl), tokenizeExpansionForms)
       .tokenize();
 }
 
@@ -106,7 +107,7 @@ class ControlFlowError extends Error {
 
 // See http://www.w3.org/TR/html51/syntax.html#writing
 class _HtmlTokenizer {
-  ParseSourceFile file;
+  final SourceFile file;
   bool tokenizeExpansionForms;
   String input;
   num length;
@@ -116,14 +117,14 @@ class _HtmlTokenizer {
   num index = -1;
   num line = 0;
   num column = -1;
-  ParseLocation currentTokenStart;
+  SourceLocation currentTokenStart;
   HtmlTokenType currentTokenType;
   var expansionCaseStack = [];
   List<HtmlToken> tokens = [];
   List<HtmlTokenError> errors = [];
   _HtmlTokenizer(this.file, this.tokenizeExpansionForms) {
-    this.input = file.content;
-    this.length = file.content.length;
+    this.input = file.getText(0);
+    this.length = file.length;
     this._advance();
   }
   String _processCarriageReturns(String content) {
@@ -178,36 +179,44 @@ class _HtmlTokenizer {
     }
     this._beginToken(HtmlTokenType.EOF);
     this._endToken([]);
-    return new HtmlTokenizeResult(mergeTextTokens(this.tokens), this.errors);
+    return new HtmlTokenizeResult(
+        mergeTextTokens(this.tokens, file), this.errors);
   }
 
-  ParseLocation _getLocation() {
-    return new ParseLocation(this.file, this.index, this.line, this.column);
+  SourceLocation _getLocation() {
+    return file.location(index);
   }
 
-  ParseSourceSpan _getSpan([ParseLocation start, ParseLocation end]) {
-    start ??= this._getLocation();
-    end ??= this._getLocation();
-    return new ParseSourceSpan(start, end);
+  SourceSpan _getSpan([SourceLocation start, SourceLocation end]) {
+    start ??= _getLocation();
+    end ??= _getLocation();
+    return new SourceSpan(
+      start,
+      end,
+      file.getText(start.offset, end.offset),
+    );
   }
 
-  void _beginToken(HtmlTokenType type, [ParseLocation start = null]) {
+  void _beginToken(HtmlTokenType type, [SourceLocation start]) {
     start ??= this._getLocation();
     this.currentTokenStart = start;
     this.currentTokenType = type;
   }
 
-  HtmlToken _endToken(List<String> parts, [ParseLocation end = null]) {
+  HtmlToken _endToken(List<String> parts, [SourceLocation end]) {
     end ??= this._getLocation();
-    var token = new HtmlToken(this.currentTokenType, parts,
-        new ParseSourceSpan(this.currentTokenStart, end));
+    var token = new HtmlToken(
+        this.currentTokenType,
+        parts,
+        new SourceSpan(this.currentTokenStart, end,
+            file.getText(currentTokenStart.offset, end.offset)));
     this.tokens.add(token);
     this.currentTokenStart = null;
     this.currentTokenType = null;
     return token;
   }
 
-  ControlFlowError _createError(String msg, ParseSourceSpan span) {
+  ControlFlowError _createError(String msg, SourceSpan span) {
     var error = new HtmlTokenError(msg, this.currentTokenType, span);
     this.currentTokenStart = null;
     this.currentTokenType = null;
@@ -379,7 +388,7 @@ class _HtmlTokenizer {
         [this._processCarriageReturns(parts.join(""))], tagCloseStart);
   }
 
-  void _consumeComment(ParseLocation start) {
+  void _consumeComment(SourceLocation start) {
     this._beginToken(HtmlTokenType.COMMENT_START, start);
     this._requireCharCode($MINUS);
     this._endToken([]);
@@ -389,7 +398,7 @@ class _HtmlTokenizer {
     this._endToken([]);
   }
 
-  void _consumeCdata(ParseLocation start) {
+  void _consumeCdata(SourceLocation start) {
     this._beginToken(HtmlTokenType.CDATA_START, start);
     this._requireStr("CDATA[");
     this._endToken([]);
@@ -399,7 +408,7 @@ class _HtmlTokenizer {
     this._endToken([]);
   }
 
-  void _consumeDocType(ParseLocation start) {
+  void _consumeDocType(SourceLocation start) {
     this._beginToken(HtmlTokenType.DOC_TYPE, start);
     this._attemptUntilChar($GT);
     this._advance();
@@ -426,7 +435,7 @@ class _HtmlTokenizer {
     return [prefix, name];
   }
 
-  void _consumeTagOpen(ParseLocation start) {
+  void _consumeTagOpen(SourceLocation start) {
     var savedPos = this._savePosition();
     var lowercaseTagName;
     try {
@@ -483,7 +492,7 @@ class _HtmlTokenizer {
     this._endToken([null, lowercaseTagName]);
   }
 
-  void _consumeTagOpenStart(ParseLocation start) {
+  void _consumeTagOpenStart(SourceLocation start) {
     this._beginToken(HtmlTokenType.TAG_OPEN_START, start);
     var parts = this._consumePrefixAndName();
     this._endToken(parts);
@@ -524,7 +533,7 @@ class _HtmlTokenizer {
     this._endToken([]);
   }
 
-  void _consumeTagClose(ParseLocation start) {
+  void _consumeTagClose(SourceLocation start) {
     this._beginToken(HtmlTokenType.TAG_CLOSE, start);
     this._attemptCharCodeUntilFn(isNotWhitespace);
     List<String> prefixAndName;
@@ -709,7 +718,7 @@ num toUpperCaseCharCode(num code) {
   return code >= $a && code <= $z ? code - $a + $A : code;
 }
 
-List<HtmlToken> mergeTextTokens(List<HtmlToken> srcTokens) {
+List<HtmlToken> mergeTextTokens(List<HtmlToken> srcTokens, SourceFile file) {
   var dstTokens = <HtmlToken>[];
   HtmlToken lastDstToken;
   for (var i = 0; i < srcTokens.length; i++) {
@@ -718,7 +727,14 @@ List<HtmlToken> mergeTextTokens(List<HtmlToken> srcTokens) {
         lastDstToken.type == HtmlTokenType.TEXT &&
         token.type == HtmlTokenType.TEXT) {
       lastDstToken.parts[0] += token.parts[0];
-      lastDstToken.sourceSpan.end = token.sourceSpan.end;
+      lastDstToken.sourceSpan = new SourceSpan(
+        lastDstToken.sourceSpan.start,
+        token.sourceSpan.end,
+        file.getText(
+          lastDstToken.sourceSpan.start.offset,
+          token.sourceSpan.end.offset,
+        ),
+      );
     } else {
       lastDstToken = token;
       dstTokens.add(lastDstToken);

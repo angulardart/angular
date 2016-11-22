@@ -485,10 +485,9 @@ void main() {
           fakeAsync(() {
         expect(
             () => createComp("<div cycleDirective></div>", tcb),
-            throwsWith(
-                'Template parse errors:\nCannot instantiate cyclic dependency! '
-                'CycleDirective (\"[ERROR ->]<div cycleDirective></div>\"): '
-                'TestComp@0:0'));
+            throwsWith('Template parse errors:\n'
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Cannot instantiate cyclic dependency! CycleDirective\n'
+                '<div cycleDirective>\n'));
       }));
       test(
           "should not instantiate a directive in a view that has a host dependency on providers" +
@@ -500,8 +499,9 @@ void main() {
                   provide("service", useValue: "hostService")
                 ]).overrideTemplate(
                     SimpleComponent, "<div needsServiceFromHost><div>")),
-            throwsWith('''Template parse errors:
-No provider for service ("[ERROR ->]<div needsServiceFromHost><div>"): SimpleComponent@0:0'''));
+            throwsWith('Template parse errors:\n'
+                'line 1, column 1 of SimpleComponent: ParseErrorLevel.FATAL: No provider for service\n'
+                '<div needsServiceFromHost>\n'));
       }));
       test(
           "should not instantiate a directive in a view that has a host dependency on providers" +
@@ -513,8 +513,9 @@ No provider for service ("[ERROR ->]<div needsServiceFromHost><div>"): SimpleCom
                   provide("service", useValue: "hostService")
                 ]).overrideTemplate(
                     SimpleComponent, "<div needsServiceFromHost><div>")),
-            throwsWith('''Template parse errors:
-No provider for service ("[ERROR ->]<div needsServiceFromHost><div>"): SimpleComponent@0:0'''));
+            throwsWith('Template parse errors:\n'
+                'line 1, column 1 of SimpleComponent: ParseErrorLevel.FATAL: No provider for service\n'
+                '<div needsServiceFromHost>\n'));
       }));
       test(
           "should not instantiate a directive in a view that has a self dependency on a parent directive",
@@ -523,8 +524,9 @@ No provider for service ("[ERROR ->]<div needsServiceFromHost><div>"): SimpleCom
             () => createComp(
                 "<div simpleDirective><div needsDirectiveFromSelf></div></div>",
                 tcb),
-            throwsWith('''Template parse errors:
-No provider for SimpleDirective ("<div simpleDirective>[ERROR ->]<div needsDirectiveFromSelf></div></div>"): TestComp@0:21'''));
+            throwsWith('Template parse errors:\n'
+                'line 1, column 22 of TestComp: ParseErrorLevel.FATAL: No provider for SimpleDirective\n'
+                '<div needsDirectiveFromSelf>\n'));
       }));
       test("should instantiate directives that depend on other directives",
           fakeAsync(() {
@@ -567,8 +569,10 @@ No provider for SimpleDirective ("<div simpleDirective>[ERROR ->]<div needsDirec
                 "<div simpleComponent simpleDirective></div>",
                 tcb.overrideTemplate(
                     SimpleComponent, "<div needsDirectiveFromHost></div>")),
-            throwsWith('''Template parse errors:
-No provider for SimpleDirective ("[ERROR ->]<div needsDirectiveFromHost></div>"): SimpleComponent@0:0'''));
+            throwsWith('Template parse errors:\n'
+                'line 1, column 1 of SimpleComponent: ParseErrorLevel.FATAL: No provider for SimpleDirective\n'
+                '<div needsDirectiveFromHost>\n'
+                '^^^^^^^^^^^^^^^^^^^^^^^^^^^^'));
       }));
     });
     group("static attributes", () {

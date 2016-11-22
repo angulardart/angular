@@ -2,9 +2,8 @@ library angular2.test.compiler.html_lexer_test;
 
 import "package:angular2/src/compiler/html_lexer.dart"
     show tokenizeHtml, HtmlToken, HtmlTokenType, HtmlTokenError;
-import "package:angular2/src/compiler/parse_util.dart"
-    show ParseSourceSpan, ParseLocation, ParseSourceFile;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:source_span/source_span.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -42,8 +41,8 @@ void main() {
           [HtmlTokenType.TAG_OPEN_START, "0:0"],
           [HtmlTokenType.TAG_OPEN_END, "1:0"],
           [HtmlTokenType.TEXT, "1:1"],
-          [HtmlTokenType.TAG_CLOSE, "2:1"],
-          [HtmlTokenType.EOF, "2:5"]
+          [HtmlTokenType.TAG_CLOSE, "3:0"],
+          [HtmlTokenType.EOF, "3:4"]
         ]);
       });
     });
@@ -614,19 +613,17 @@ t</title>'''), [
     group("errors", () {
       test("should include 2 lines of context in message", () {
         var src = "111\n222\n333\nE\n444\n555\n666\n";
-        var file = new ParseSourceFile(src, "file://");
-        var location = new ParseLocation(file, 12, 123, 456);
-        var span = new ParseSourceSpan(location, location);
+        var file = new SourceFile(src, url: "file://");
+        var start = new SourceLocation(src.indexOf('E\n'));
+        var end = new SourceLocation(start.offset + 1);
+        var span =
+            new SourceSpan(start, end, file.getText(start.offset, end.offset));
         var error = new HtmlTokenError("**ERROR**", null, span);
         expect(
             error.toString(),
-            '''**ERROR** ("
-222
-333
-[ERROR ->]E
-444
-555
-"): file://@123:456''');
+            'line 1, column 13: ParseErrorLevel.FATAL: **ERROR**\n'
+            'E\n'
+            '^');
       });
     });
     group("unicode characters", () {
@@ -664,12 +661,13 @@ List<dynamic> tokenizeAndHumanizeParts(String input,
 
 List<dynamic> tokenizeAndHumanizeSourceSpans(String input) {
   return tokenizeWithoutErrors(input)
-      .map((token) => [(token.type as dynamic), token.sourceSpan.toString()])
+      .map((token) => [(token.type as dynamic), token.sourceSpan.text])
       .toList();
 }
 
-String humanizeLineColumn(ParseLocation location) {
-  return '''${ location . line}:${ location . col}''';
+String humanizeLineColumn(SourceLocation location) {
+  // Retains the old TS-era `ParseSourceLocation` semantics for now.
+  return '${location.line}:${location.column}';
 }
 
 List<dynamic> tokenizeAndHumanizeLineColumn(String input) {

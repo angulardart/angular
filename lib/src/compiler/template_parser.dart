@@ -8,6 +8,8 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show jsSplit;
 import "package:logging/logging.dart";
+import 'package:source_span/source_span.dart';
+
 import "expression_parser/ast.dart";
 import "../core/security.dart";
 import "chars.dart";
@@ -26,7 +28,7 @@ import "expression_parser/parser.dart" show Parser;
 import "html_parser.dart" show HtmlParser;
 import "html_tags.dart" show splitNsName, mergeNsAndName;
 import "identifiers.dart" show identifierToken, Identifiers;
-import "parse_util.dart" show ParseSourceSpan, ParseError, ParseErrorLevel;
+import "parse_util.dart" show ParseError, ParseErrorLevel;
 import "provider_parser.dart" show ProviderElementContext, ProviderViewContext;
 import "style_url_resolver.dart" show isStyleUrlResolvable;
 import "template_ast.dart"
@@ -70,8 +72,7 @@ const STYLE_PREFIX = "style";
 final TEXT_CSS_SELECTOR = CssSelector.parse("*")[0];
 
 class TemplateParseError extends ParseError {
-  TemplateParseError(
-      String message, ParseSourceSpan span, ParseErrorLevel level)
+  TemplateParseError(String message, SourceSpan span, ParseErrorLevel level)
       : super(span, message, level);
 }
 
@@ -189,12 +190,12 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     this.pipesByName = new Map<String, CompilePipeMetadata>();
     pipes.forEach((pipe) => this.pipesByName[pipe.name] = pipe);
   }
-  void _reportError(String message, ParseSourceSpan sourceSpan,
+  void _reportError(String message, SourceSpan sourceSpan,
       [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
     this.errors.add(new TemplateParseError(message, sourceSpan, level));
   }
 
-  ASTWithSource _parseInterpolation(String value, ParseSourceSpan sourceSpan) {
+  ASTWithSource _parseInterpolation(String value, SourceSpan sourceSpan) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var ast = this._exprParser.parseInterpolation(value, sourceInfo);
@@ -212,7 +213,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }
   }
 
-  ASTWithSource _parseAction(String value, ParseSourceSpan sourceSpan) {
+  ASTWithSource _parseAction(String value, SourceSpan sourceSpan) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var ast = this._exprParser.parseAction(value, sourceInfo);
@@ -224,7 +225,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }
   }
 
-  ASTWithSource _parseBinding(String value, ParseSourceSpan sourceSpan) {
+  ASTWithSource _parseBinding(String value, SourceSpan sourceSpan) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var ast = this._exprParser.parseBinding(value, sourceInfo);
@@ -237,7 +238,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   List<TemplateBinding> _parseTemplateBindings(
-      String value, ParseSourceSpan sourceSpan) {
+      String value, SourceSpan sourceSpan) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var bindingsResult =
@@ -257,7 +258,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }
   }
 
-  void _checkPipes(ASTWithSource ast, ParseSourceSpan sourceSpan) {
+  void _checkPipes(ASTWithSource ast, SourceSpan sourceSpan) {
     if (ast == null) return;
     var collector = new PipeCollector();
     ast.visit(collector);
@@ -271,15 +272,6 @@ class TemplateParseVisitor implements HtmlAstVisitor {
 
   @override
   bool visit(HtmlAst ast, dynamic context) => false;
-
-  @override
-  dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
-    return null;
-  }
-
-  dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
-    return null;
-  }
 
   dynamic visitText(HtmlTextAst ast, dynamic context) {
     ElementContext parent = context;
@@ -609,16 +601,16 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         : attrName;
   }
 
-  void _parseVariable(String identifier, String value,
-      ParseSourceSpan sourceSpan, List<VariableAst> targetVars) {
+  void _parseVariable(String identifier, String value, SourceSpan sourceSpan,
+      List<VariableAst> targetVars) {
     if (identifier.indexOf("-") > -1) {
       this._reportError('''"-" is not allowed in variable names''', sourceSpan);
     }
     targetVars.add(new VariableAst(identifier, value, sourceSpan));
   }
 
-  void _parseReference(String identifier, String value,
-      ParseSourceSpan sourceSpan, List<ElementOrDirectiveRef> targetRefs) {
+  void _parseReference(String identifier, String value, SourceSpan sourceSpan,
+      List<ElementOrDirectiveRef> targetRefs) {
     if (identifier.indexOf("-") > -1) {
       this._reportError(
           '''"-" is not allowed in reference names''', sourceSpan);
@@ -629,7 +621,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _parseProperty(
       String name,
       String expression,
-      ParseSourceSpan sourceSpan,
+      SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundElementOrDirectiveProperty> targetProps) {
     this._parsePropertyAst(name, this._parseBinding(expression, sourceSpan),
@@ -639,7 +631,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   bool _parsePropertyInterpolation(
       String name,
       String value,
-      ParseSourceSpan sourceSpan,
+      SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundElementOrDirectiveProperty> targetProps) {
     var expr = _parseInterpolation(value, sourceSpan);
@@ -652,7 +644,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _parsePropertyAst(
       String name,
       ASTWithSource ast,
-      ParseSourceSpan sourceSpan,
+      SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundElementOrDirectiveProperty> targetProps) {
     targetMatchableAttrs.add([name, ast.source]);
@@ -663,7 +655,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _parseAssignmentEvent(
       String name,
       String expression,
-      ParseSourceSpan sourceSpan,
+      SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundEventAst> targetEvents) {
     this._parseEvent('''${ name}Change''', '''${ expression}=\$event''',
@@ -673,7 +665,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _parseEvent(
       String name,
       String expression,
-      ParseSourceSpan sourceSpan,
+      SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundEventAst> targetEvents) {
     if (name.contains(':')) {
@@ -685,7 +677,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     targetEvents.add(new BoundEventAst(name, ast, sourceSpan));
   }
 
-  void _parseLiteralAttr(String name, String value, ParseSourceSpan sourceSpan,
+  void _parseLiteralAttr(String name, String value, SourceSpan sourceSpan,
       List<BoundElementOrDirectiveProperty> targetProps) {
     targetProps.add(new BoundElementOrDirectiveProperty(name,
         this._exprParser.wrapLiteralPrimitive(value, ""), true, sourceSpan));
@@ -713,7 +705,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<CompileDirectiveMetadata> directives,
       List<BoundElementOrDirectiveProperty> props,
       List<ElementOrDirectiveRef> elementOrDirectiveRefs,
-      ParseSourceSpan sourceSpan,
+      SourceSpan sourceSpan,
       List<ReferenceAst> targetReferences) {
     var matchedReferences = new Set<String>();
     CompileDirectiveMetadata component;
@@ -763,7 +755,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _createDirectiveHostPropertyAsts(
       String elementName,
       Map<String, String> hostProps,
-      ParseSourceSpan sourceSpan,
+      SourceSpan sourceSpan,
       List<BoundElementPropertyAst> targetPropertyAsts) {
     if (hostProps == null) return;
     hostProps.forEach((String propName, String expression) {
@@ -774,7 +766,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   void _createDirectiveHostEventAsts(Map<String, String> hostListeners,
-      ParseSourceSpan sourceSpan, List<BoundEventAst> targetEventAsts) {
+      SourceSpan sourceSpan, List<BoundEventAst> targetEventAsts) {
     if (hostListeners == null) return;
     hostListeners.forEach((String propName, String expression) {
       this._parseEvent(propName, expression, sourceSpan, [], targetEventAsts);
@@ -826,7 +818,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   BoundElementPropertyAst _createElementPropertyAst(
-      String elementName, String name, AST ast, ParseSourceSpan sourceSpan) {
+      String elementName, String name, AST ast, SourceSpan sourceSpan) {
     var unit;
     var bindingType;
     String boundPropertyName;
@@ -881,8 +873,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         boundPropertyName, bindingType, securityContext, ast, unit, sourceSpan);
   }
 
-  void _reportUnknownPropertyOrDirective(String elementName,
-      String boundPropertyName, ParseSourceSpan sourceSpan) {
+  void _reportUnknownPropertyOrDirective(
+      String elementName, String boundPropertyName, SourceSpan sourceSpan) {
     // Very common mistake is to type [ngClass] as [ngclass]
     if (boundPropertyName == 'ngclass') {
       _reportError(
@@ -909,7 +901,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   void _assertOnlyOneComponent(
-      List<DirectiveAst> directives, ParseSourceSpan sourceSpan) {
+      List<DirectiveAst> directives, SourceSpan sourceSpan) {
     var componentTypeNames = this._findComponentDirectiveNames(directives);
     if (componentTypeNames.length > 1) {
       this._reportError(
@@ -921,7 +913,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _assertNoComponentsNorElementBindingsOnTemplate(
       List<DirectiveAst> directives,
       List<BoundElementPropertyAst> elementProps,
-      ParseSourceSpan sourceSpan) {
+      SourceSpan sourceSpan) {
     List<String> componentTypeNames =
         this._findComponentDirectiveNames(directives);
     if (componentTypeNames.length > 0) {
@@ -1008,23 +1000,13 @@ class NonBindableVisitor implements HtmlAstVisitor {
     var ngContentIndex = parent.findNgContentIndex(TEXT_CSS_SELECTOR);
     return new TextAst(ast.value, ngContentIndex, ast.sourceSpan);
   }
-
-  @override
-  dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
-    return ast;
-  }
-
-  @override
-  dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
-    return ast;
-  }
 }
 
 class BoundElementOrDirectiveProperty {
   String name;
   AST expression;
   bool isLiteral;
-  ParseSourceSpan sourceSpan;
+  SourceSpan sourceSpan;
   BoundElementOrDirectiveProperty(
       this.name, this.expression, this.isLiteral, this.sourceSpan);
 }
@@ -1032,7 +1014,7 @@ class BoundElementOrDirectiveProperty {
 class ElementOrDirectiveRef {
   String name;
   String value;
-  ParseSourceSpan sourceSpan;
+  SourceSpan sourceSpan;
   ElementOrDirectiveRef(this.name, this.value, this.sourceSpan);
 }
 

@@ -38,7 +38,7 @@ class CompileMethod {
       return new o.InvokeMemberMethodExpr('dbg', [
         o.literal(newState.nodeIndex),
         sourceLocation != null ? o.literal(sourceLocation.line) : o.NULL_EXPR,
-        sourceLocation != null ? o.literal(sourceLocation.col) : o.NULL_EXPR
+        sourceLocation != null ? o.literal(sourceLocation.column) : o.NULL_EXPR
       ]);
     } else {
       return null;

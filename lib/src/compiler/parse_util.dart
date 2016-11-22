@@ -1,73 +1,14 @@
-class ParseLocation {
-  ParseSourceFile file;
-  num offset;
-  num line;
-  num col;
-  ParseLocation(this.file, this.offset, this.line, this.col);
-  String toString() {
-    return offset != null
-        ? '''${ this . file . url}@${ this . line}:${ this . col}'''
-        : this.file.url;
-  }
-}
-
-class ParseSourceFile {
-  final String content;
-  final String url;
-  ParseSourceFile(this.content, this.url);
-}
-
-class ParseSourceSpan {
-  ParseLocation start;
-  ParseLocation end;
-  ParseSourceSpan(this.start, this.end);
-  String toString() =>
-      start.file.content.substring(this.start.offset, this.end.offset);
-}
+import 'package:source_span/source_span.dart';
 
 enum ParseErrorLevel { WARNING, FATAL }
 
 abstract class ParseError {
-  ParseSourceSpan span;
-  String msg;
-  ParseErrorLevel level;
+  final SourceSpan span;
+  final String msg;
+  final ParseErrorLevel level;
+
   ParseError(this.span, this.msg, [this.level = ParseErrorLevel.FATAL]);
-  String toString() {
-    var source = this.span.start.file.content;
-    var ctxStart = this.span.start.offset;
-    var contextStr = "";
-    if (ctxStart != null) {
-      if (ctxStart > source.length - 1) {
-        ctxStart = source.length - 1;
-      }
-      var ctxEnd = ctxStart;
-      var ctxLen = 0;
-      var ctxLines = 0;
-      while (ctxLen < 100 && ctxStart > 0) {
-        ctxStart--;
-        ctxLen++;
-        if (source[ctxStart] == "\n") {
-          if (++ctxLines == 3) {
-            break;
-          }
-        }
-      }
-      ctxLen = 0;
-      ctxLines = 0;
-      while (ctxLen < 100 && ctxEnd < source.length - 1) {
-        ctxEnd++;
-        ctxLen++;
-        if (source[ctxEnd] == "\n") {
-          if (++ctxLines == 3) {
-            break;
-          }
-        }
-      }
-      var context = source.substring(ctxStart, this.span.start.offset) +
-          "[ERROR ->]" +
-          source.substring(this.span.start.offset, ctxEnd + 1);
-      contextStr = ''' ("${ context}")''';
-    }
-    return '''${ this . msg}${ contextStr}: ${ this . span . start}''';
-  }
+
+  @override
+  String toString() => span.message('$level: $msg');
 }

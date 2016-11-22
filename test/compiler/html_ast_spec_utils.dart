@@ -8,13 +8,11 @@ import "package:angular2/src/compiler/html_ast.dart"
         HtmlAttrAst,
         HtmlTextAst,
         HtmlCommentAst,
-        HtmlExpansionAst,
-        HtmlExpansionCaseAst,
         htmlVisitAll;
 import "package:angular2/src/compiler/html_parser.dart"
     show HtmlParseTreeResult;
-import "package:angular2/src/compiler/parse_util.dart" show ParseLocation;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:source_span/source_span.dart';
 
 List<dynamic> humanizeDom(HtmlParseTreeResult parseResult) {
   if (parseResult.errors.length > 0) {
@@ -38,8 +36,9 @@ ${ errorString}''');
   return humanizer.result;
 }
 
-String humanizeLineColumn(ParseLocation location) {
-  return '''${ location . line}:${ location . col}''';
+String humanizeLineColumn(SourceLocation location) {
+  // Retains the old TS-era `ParseSourceLocation` semantics for now.
+  return '${location.line }:${location.column}';
 }
 
 class _Humanizer implements HtmlAstVisitor {
@@ -84,25 +83,9 @@ class _Humanizer implements HtmlAstVisitor {
     return null;
   }
 
-  @override
-  dynamic visitExpansion(HtmlExpansionAst ast, dynamic context) {
-    var res =
-        this._appendContext(ast, [HtmlExpansionAst, ast.switchValue, ast.type]);
-    this.result.add(res);
-    htmlVisitAll(this, ast.cases);
-    return null;
-  }
-
-  @override
-  dynamic visitExpansionCase(HtmlExpansionCaseAst ast, dynamic context) {
-    var res = this._appendContext(ast, [HtmlExpansionCaseAst, ast.value]);
-    this.result.add(res);
-    return null;
-  }
-
   List<dynamic> _appendContext(HtmlAst ast, List<dynamic> input) {
     if (!this.includeSourceSpan) return input;
-    input.add(ast.sourceSpan.toString());
+    input.add(ast.sourceSpan.text);
     return input;
   }
 }
