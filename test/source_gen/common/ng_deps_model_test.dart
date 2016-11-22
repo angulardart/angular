@@ -1,3 +1,4 @@
+@TestOn('vm')
 import 'package:angular2/src/source_gen/common/namespace_model.dart';
 import 'package:angular2/src/source_gen/common/ng_deps_model.dart';
 import 'package:angular2/src/source_gen/common/reflection_info_model.dart';
