@@ -15,8 +15,6 @@ import "package:angular2/core.dart"
 import "package:angular2/src/core/application_ref.dart" show PlatformRefImpl;
 import "package:angular2/src/core/reflection/reflection.dart"
     show Reflector, reflector;
-import "package:angular2/src/core/reflection/reflector_reader.dart"
-    show ReflectorReader;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
 import "package:angular2/src/platform/browser_common.dart"
@@ -45,7 +43,6 @@ PlatformRef browserStaticPlatform() {
     tokens[PlatformRef] = platform;
     tokens[PlatformRefImpl] = platform;
     tokens[Reflector] = reflector;
-    tokens[ReflectorReader] = reflector;
     var testabilityRegistry = new TestabilityRegistry();
     tokens[TestabilityRegistry] = testabilityRegistry;
     tokens[PLATFORM_INITIALIZER] = [createInitDomAdapter(testabilityRegistry)];

@@ -1,19 +1,18 @@
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata.dart" show Component;
 import "package:angular2/src/core/metadata.dart" show View;
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/core/reflection/reflector_reader.dart"
-    show ReflectorReader;
+import "package:angular2/src/core/reflection/reflection.dart"
+    show Reflector, reflector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show stringify;
 
 /// Resolves types to [View].
 @Injectable()
 class ViewResolver {
-  ReflectorReader _reflector;
+  Reflector _reflector;
   /** @internal */
   var _cache = new Map<Type, View>();
-  ViewResolver([ReflectorReader _reflector]) {
+  ViewResolver([Reflector _reflector]) {
     if (_reflector != null) {
       this._reflector = _reflector;
     } else {
