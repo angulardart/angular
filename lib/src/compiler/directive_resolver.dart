@@ -1,8 +1,7 @@
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata.dart";
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/core/reflection/reflector_reader.dart"
-    show ReflectorReader;
+import "package:angular2/src/core/reflection/reflection.dart"
+    show Reflector, reflector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 bool _isDirectiveMetadata(dynamic type) {
@@ -23,8 +22,9 @@ class NoDirectiveAnnotationError extends BaseException {
 ///
 @Injectable()
 class DirectiveResolver {
-  ReflectorReader _reflector;
-  DirectiveResolver([ReflectorReader _reflector]) {
+  Reflector _reflector;
+
+  DirectiveResolver([Reflector _reflector]) {
     this._reflector = _reflector ?? reflector;
   }
 

@@ -1,7 +1,6 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "platform_reflection_capabilities.dart";
-import "reflector_reader.dart" show ReflectorReader;
 import "types.dart";
 
 export "platform_reflection_capabilities.dart";
@@ -26,7 +25,7 @@ class ReflectionInfo {
 /// Provides access to reflection data about symbols.
 ///
 /// Used internally by Angular to power dependency injection and compilation.
-class Reflector extends ReflectorReader {
+class Reflector {
   var _injectableInfo = new Map<dynamic, ReflectionInfo>();
   var _getters = new Map<String, GetterFn>();
   var _setters = new Map<String, SetterFn>();

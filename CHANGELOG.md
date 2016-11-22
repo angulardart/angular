@@ -1,3 +1,10 @@
+## 2.1.1
+
+### API changes
+  * Introduced `angular2/reflection.dart` as canonical way to opt-in to mirrors.
+    In 2.2.0 it will be considered deprecated to enable runtime reflection by
+    any other means.
+
 ## 2.1.0
 
 ### API changes
