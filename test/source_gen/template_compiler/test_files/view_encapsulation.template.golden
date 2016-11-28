@@ -1,0 +1,291 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+import 'view_encapsulation.dart';
+export 'view_encapsulation.dart';
+import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'view_encapsulation.dart' as import2;
+import 'dart:html';
+import 'package:angular2/src/core/di/injector.dart' as import4;
+import 'package:angular2/src/core/linker/view_container.dart';
+import 'package:angular2/src/core/linker/view_type.dart' as import6;
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular2/src/core/metadata/view.dart' as import9;
+import 'package:angular2/src/core/linker/component_factory.dart' as import10;
+
+const List<dynamic> styles_EmulatedComponent = const [];
+RenderComponentType renderType_EmulatedComponent;
+
+class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
+  Element _el_0;
+  ViewEmulatedComponent0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewEmulatedComponent0,
+            renderType_EmulatedComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    final Node parentRenderNode =
+        initViewRoot(this.declarationViewContainer.nativeElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    Text _text_1 = new Text('Emulated');
+    _el_0.append(_text_1);
+    init([], [_el_0, _text_1], []);
+    return null;
+  }
+}
+
+AppView viewFactory_EmulatedComponent0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_EmulatedComponent, null)) {
+    (renderType_EmulatedComponent = import8.appViewUtils
+        .createRenderComponentType(
+            '', 0, import9.ViewEncapsulation.None, styles_EmulatedComponent));
+  }
+  return new ViewEmulatedComponent0(parentInjector, declarationEl);
+}
+
+const List<dynamic> styles_EmulatedComponentHost = const [];
+RenderComponentType renderType_EmulatedComponentHost;
+
+class ViewEmulatedComponentHost0 extends AppView<dynamic> {
+  Element _el_0;
+  ViewContainer _appEl_0;
+  import2.EmulatedComponent _EmulatedComponent_0_3;
+  ViewEmulatedComponentHost0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewEmulatedComponentHost0,
+            renderType_EmulatedComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('Emulated', rootSelector, null);
+    _appEl_0 = new ViewContainer(0, null, this, _el_0);
+    var compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
+    _EmulatedComponent_0_3 = new import2.EmulatedComponent();
+    _appEl_0.initComponent(_EmulatedComponent_0_3, [], compView_0);
+    compView_0.createComp(projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return _appEl_0;
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.EmulatedComponent) &&
+        identical(0, requestNodeIndex))) {
+      return _EmulatedComponent_0_3;
+    }
+    return notFoundResult;
+  }
+}
+
+AppView viewFactory_EmulatedComponentHost0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_EmulatedComponentHost, null)) {
+    (renderType_EmulatedComponentHost = import8.appViewUtils
+        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
+            styles_EmulatedComponentHost));
+  }
+  return new ViewEmulatedComponentHost0(parentInjector, declarationEl);
+}
+
+const import10.ComponentFactory EmulatedComponentNgFactory =
+    const import10.ComponentFactory(
+        'Emulated',
+        viewFactory_EmulatedComponentHost0,
+        import2.EmulatedComponent,
+        _METADATA);
+const List<dynamic> styles_NativeComponent = const [];
+RenderComponentType renderType_NativeComponent;
+
+class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
+  Element _el_0;
+  ViewNativeComponent0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewNativeComponent0,
+            renderType_NativeComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    final Node parentRenderNode =
+        createViewShadowRoot(declarationViewContainer.nativeElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    Text _text_1 = new Text('Native');
+    _el_0.append(_text_1);
+    init([], [_el_0, _text_1], []);
+    return null;
+  }
+}
+
+AppView viewFactory_NativeComponent0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_NativeComponent, null)) {
+    (renderType_NativeComponent = import8.appViewUtils
+        .createRenderComponentType(
+            '', 0, import9.ViewEncapsulation.Native, styles_NativeComponent));
+  }
+  return new ViewNativeComponent0(parentInjector, declarationEl);
+}
+
+const List<dynamic> styles_NativeComponentHost = const [];
+RenderComponentType renderType_NativeComponentHost;
+
+class ViewNativeComponentHost0 extends AppView<dynamic> {
+  Element _el_0;
+  ViewContainer _appEl_0;
+  import2.NativeComponent _NativeComponent_0_3;
+  ViewNativeComponentHost0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewNativeComponentHost0,
+            renderType_NativeComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('Native', rootSelector, null);
+    _appEl_0 = new ViewContainer(0, null, this, _el_0);
+    var compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
+    _NativeComponent_0_3 = new import2.NativeComponent();
+    _appEl_0.initComponent(_NativeComponent_0_3, [], compView_0);
+    compView_0.createComp(projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return _appEl_0;
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.NativeComponent) &&
+        identical(0, requestNodeIndex))) {
+      return _NativeComponent_0_3;
+    }
+    return notFoundResult;
+  }
+}
+
+AppView viewFactory_NativeComponentHost0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_NativeComponentHost, null)) {
+    (renderType_NativeComponentHost = import8.appViewUtils
+        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
+            styles_NativeComponentHost));
+  }
+  return new ViewNativeComponentHost0(parentInjector, declarationEl);
+}
+
+const import10.ComponentFactory NativeComponentNgFactory =
+    const import10.ComponentFactory('Native', viewFactory_NativeComponentHost0,
+        import2.NativeComponent, _METADATA);
+const List<dynamic> styles_NoneComponent = const [];
+RenderComponentType renderType_NoneComponent;
+
+class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
+  Element _el_0;
+  ViewNoneComponent0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewNoneComponent0,
+            renderType_NoneComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    final Node parentRenderNode =
+        initViewRoot(this.declarationViewContainer.nativeElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    Text _text_1 = new Text('None');
+    _el_0.append(_text_1);
+    init([], [_el_0, _text_1], []);
+    return null;
+  }
+}
+
+AppView viewFactory_NoneComponent0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_NoneComponent, null)) {
+    (renderType_NoneComponent = import8.appViewUtils.createRenderComponentType(
+        '', 0, import9.ViewEncapsulation.None, styles_NoneComponent));
+  }
+  return new ViewNoneComponent0(parentInjector, declarationEl);
+}
+
+const List<dynamic> styles_NoneComponentHost = const [];
+RenderComponentType renderType_NoneComponentHost;
+
+class ViewNoneComponentHost0 extends AppView<dynamic> {
+  Element _el_0;
+  ViewContainer _appEl_0;
+  import2.NoneComponent _NoneComponent_0_3;
+  ViewNoneComponentHost0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewNoneComponentHost0,
+            renderType_NoneComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('None', rootSelector, null);
+    _appEl_0 = new ViewContainer(0, null, this, _el_0);
+    var compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
+    _NoneComponent_0_3 = new import2.NoneComponent();
+    _appEl_0.initComponent(_NoneComponent_0_3, [], compView_0);
+    compView_0.createComp(projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return _appEl_0;
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.NoneComponent) &&
+        identical(0, requestNodeIndex))) {
+      return _NoneComponent_0_3;
+    }
+    return notFoundResult;
+  }
+}
+
+AppView viewFactory_NoneComponentHost0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_NoneComponentHost, null)) {
+    (renderType_NoneComponentHost = import8.appViewUtils
+        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
+            styles_NoneComponentHost));
+  }
+  return new ViewNoneComponentHost0(parentInjector, declarationEl);
+}
+
+const import10.ComponentFactory NoneComponentNgFactory =
+    const import10.ComponentFactory('None', viewFactory_NoneComponentHost0,
+        import2.NoneComponent, _METADATA);
+void initReflector() {}

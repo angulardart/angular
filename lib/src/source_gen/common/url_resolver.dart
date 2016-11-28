@@ -14,6 +14,12 @@ AssetId fromUri(String assetUri) {
       uri.pathSegments.first, uri.pathSegments.skip(1).join('/'));
 }
 
+/// Returns the base file name for [AssetId].
+String fileName(AssetId id) {
+  var uri = toAssetScheme(Uri.parse(toAssetUri(id)));
+  return uri.pathSegments.last;
+}
+
 /// Converts `absoluteUri` to use the 'asset' scheme used in the Angular 2
 /// template compiler.
 ///
