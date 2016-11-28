@@ -54,7 +54,7 @@ Future<Null> disposeAnyRunningTest() async {
 ///       test('should render "Hello World", () async {
 ///         var bed = new NgTestBed<HelloWorldComponent>();
 ///         var fixture = await bed.create();
-///         expect(controller, containsText('Hello World'));
+///         expect(fixture.text, contains('Hello World'));
 ///       });
 ///     });
 ///
@@ -68,7 +68,7 @@ Future<Null> disposeAnyRunningTest() async {
 ///
 ///       test('should render "Hello World", () async {
 ///         fixture = await bed.create();
-///         expect(fixture.rootElement, containsText('Hello World'));
+///         expect(fixture.text, contains('Hello World'));
 ///       });
 ///
 ///       test('should render "Hello World" in all-caps', () async {
@@ -76,7 +76,7 @@ Future<Null> disposeAnyRunningTest() async {
 ///           const Provider(TextFormatter, useClass: AllCapsTextFormatter),
 ///         ]);
 ///         fixture = await bed.create();
-///         expect(fixture.rootElement, containsText('HELLO WORLD'));
+///         expect(fixture.text, contains('HELLO WORLD'));
 ///       });
 ///     });
 class NgTestBed<T> {
@@ -130,7 +130,7 @@ class NgTestBed<T> {
   ///
   /// __Example use__:
   ///     ngTestBed = ngTestBed.addProviders([
-  ///       const Provide(Foo, useClass: StubFoo),
+  ///       const Provider(Foo, useClass: StubFoo),
   ///     ])
   NgTestBed<T> addProviders(Iterable<Object> providers) {
     return fork(providers: _concat(_providers, providers));
