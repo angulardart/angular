@@ -98,6 +98,7 @@ class NgPlural implements AfterContentInit {
     this._updateView();
   }
 
+  @override
   void ngAfterContentInit() {
     this.cases.forEach(/* void */ (NgPluralCase pluralCase) {
       this._caseViews[this._formatValue(pluralCase)] = pluralCase._view;

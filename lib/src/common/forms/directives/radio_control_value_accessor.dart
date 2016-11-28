@@ -88,15 +88,19 @@ class RadioControlValueAccessor
   var onChange = () {};
   var onTouched = () {};
   RadioControlValueAccessor(this._elementRef, this._registry, this._injector);
+
+  @override
   void ngOnInit() {
     this._control = this._injector.get(NgControl);
     this._registry.add(this._control, this);
   }
 
+  @override
   void ngOnDestroy() {
     this._registry.remove(this);
   }
 
+  @override
   void writeValue(dynamic value) {
     this._state = value;
     if (value?.checked ?? false) {
@@ -104,6 +108,7 @@ class RadioControlValueAccessor
     }
   }
 
+  @override
   void registerOnChange(dynamic fn(dynamic _)) {
     this._fn = fn;
     this.onChange = () {
@@ -116,6 +121,7 @@ class RadioControlValueAccessor
     this._fn(new RadioButtonState(false, this._state.value));
   }
 
+  @override
   void registerOnTouched(dynamic fn()) {
     this.onTouched = fn;
   }

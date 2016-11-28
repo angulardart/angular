@@ -71,6 +71,7 @@ class NgModel extends NgControl implements OnChanges {
       : super() {
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
+  @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
     if (!this._added) {
       setUpControl(this._control, this);
@@ -83,22 +84,27 @@ class NgModel extends NgControl implements OnChanges {
     }
   }
 
+  @override
   Control get control {
     return this._control;
   }
 
+  @override
   List<String> get path {
     return [];
   }
 
+  @override
   ValidatorFn get validator {
     return composeValidators(this._validators);
   }
 
+  @override
   AsyncValidatorFn get asyncValidator {
     return composeAsyncValidators(this._asyncValidators);
   }
 
+  @override
   void viewToModelUpdate(dynamic newValue) {
     this.viewModel = newValue;
     this.update.add(newValue);

@@ -47,6 +47,8 @@ class SelectControlValueAccessor implements ControlValueAccessor {
   var onChange = (dynamic _) {};
   var onTouched = () {};
   SelectControlValueAccessor(this._elementRef);
+
+  @override
   void writeValue(dynamic value) {
     this.value = value;
     var valueString = _buildValueString(this._getOptionId(value), value);
@@ -54,12 +56,14 @@ class SelectControlValueAccessor implements ControlValueAccessor {
     elm.value = valueString;
   }
 
+  @override
   void registerOnChange(dynamic fn(dynamic value)) {
     this.onChange = (String valueString) {
       fn(this._getOptionValue(valueString));
     };
   }
 
+  @override
   void registerOnTouched(dynamic fn()) {
     this.onTouched = fn;
   }
@@ -115,6 +119,7 @@ class NgSelectOption implements OnDestroy {
     elm.value = value;
   }
 
+  @override
   void ngOnDestroy() {
     if (_select != null) {
       (this._select._optionMap.containsKey(this.id) &&

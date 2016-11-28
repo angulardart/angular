@@ -107,6 +107,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
       @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators);
 
+  @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
     _checkFormPresent();
     if (changes.containsKey('form')) {
@@ -120,12 +121,16 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     _updateDomValue();
   }
 
+  @override
   Form get formDirective => this;
 
+  @override
   ControlGroup get control => form;
 
+  @override
   List<String> get path => [];
 
+  @override
   void addControl(NgControl dir) {
     dynamic ctrl = form.find(dir.path);
     setUpControl(ctrl, dir);
@@ -133,25 +138,32 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     directives.add(dir);
   }
 
+  @override
   Control getControl(NgControl dir) {
     return (form.find(dir.path) as Control);
   }
 
+  @override
   void removeControl(NgControl dir) {
     directives.remove(dir);
   }
 
+  @override
   void addControlGroup(NgControlGroup dir) {
     dynamic ctrl = form.find(dir.path);
     setUpControlGroup(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
   }
 
+  @override
   void removeControlGroup(NgControlGroup dir) {}
+
+  @override
   ControlGroup getControlGroup(NgControlGroup dir) {
     return (form.find(dir.path) as ControlGroup);
   }
 
+  @override
   void updateModel(NgControl dir, dynamic value) {
     var ctrl = (form.find(dir.path) as Control);
     ctrl.updateValue(value);

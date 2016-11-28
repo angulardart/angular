@@ -823,6 +823,7 @@ class NeedsContentChildren implements AfterContentInit {
   @ContentChildren(TextDirective)
   QueryList<TextDirective> textDirChildren;
   num numberOfChildrenAfterContentInit;
+  @override
   ngAfterContentInit() {
     this.numberOfChildrenAfterContentInit = this.textDirChildren.length;
   }
@@ -836,6 +837,7 @@ class NeedsViewChildren implements AfterViewInit {
   @ViewChildren(TextDirective)
   QueryList<TextDirective> textDirChildren;
   num numberOfChildrenAfterViewInit;
+  @override
   ngAfterViewInit() {
     this.numberOfChildrenAfterViewInit = this.textDirChildren.length;
   }
@@ -855,10 +857,12 @@ class NeedsContentChild implements AfterContentInit, AfterContentChecked {
   }
 
   var log = [];
+  @override
   ngAfterContentInit() {
     this.log.add(["init", child != null ? child.text : null]);
   }
 
+  @override
   ngAfterContentChecked() {
     this.log.add(["check", child != null ? child.text : null]);
   }
@@ -885,10 +889,12 @@ class NeedsViewChild implements AfterViewInit, AfterViewChecked {
   }
 
   var log = [];
+  @override
   ngAfterViewInit() {
     this.log.add(["init", child != null ? child.text : null]);
   }
 
+  @override
   ngAfterViewChecked() {
     this.log.add(["check", child != null ? child.text : null]);
   }

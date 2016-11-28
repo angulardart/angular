@@ -93,6 +93,7 @@ class NgFormControl extends NgControl implements OnChanges {
           List<ControlValueAccessor> valueAccessors) {
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
+  @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
     if (this._isControlChanged(changes)) {
       setUpControl(this.form, this);
@@ -104,22 +105,27 @@ class NgFormControl extends NgControl implements OnChanges {
     }
   }
 
+  @override
   List<String> get path {
     return [];
   }
 
+  @override
   ValidatorFn get validator {
     return composeValidators(this._validators);
   }
 
+  @override
   AsyncValidatorFn get asyncValidator {
     return composeAsyncValidators(this._asyncValidators);
   }
 
+  @override
   Control get control {
     return this.form;
   }
 
+  @override
   void viewToModelUpdate(dynamic newValue) {
     this.viewModel = newValue;
     this.update.add(newValue);

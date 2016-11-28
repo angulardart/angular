@@ -279,5 +279,6 @@ class DirectiveLoggingChecks implements DoCheck {
 
   DirectiveLoggingChecks(this.log);
 
+  @override
   ngDoCheck() => log.add("check");
 }

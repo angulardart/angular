@@ -13,6 +13,7 @@ class ObservableListDiff extends DefaultIterableDiffer {
   ObservableList _collection;
   StreamSubscription _subscription;
 
+  @override
   void onDestroy() {
     if (this._subscription != null) {
       this._subscription.cancel();
@@ -21,6 +22,7 @@ class ObservableListDiff extends DefaultIterableDiffer {
     }
   }
 
+  @override
   DefaultIterableDiffer diff(Iterable iterable) {
     assert(iterable is ObservableList);
     ObservableList collection = iterable;
@@ -56,7 +58,9 @@ class ObservableListDiff extends DefaultIterableDiffer {
 @Deprecated('No longer part of Angular. Copy into your project if needed')
 class ObservableListDiffFactory implements IterableDifferFactory {
   const ObservableListDiffFactory();
+  @override
   bool supports(obj) => obj is ObservableList;
+  @override
   IterableDiffer create(ChangeDetectorRef cdRef, [Function trackByFn]) {
     return new ObservableListDiff(cdRef);
   }
