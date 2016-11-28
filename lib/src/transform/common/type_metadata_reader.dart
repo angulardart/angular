@@ -11,6 +11,7 @@ import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/interface_matcher.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:barback/barback.dart' show AssetId;
+import 'package:logging/logging.dart';
 
 import 'naive_eval.dart';
 import 'url_resolver.dart';
@@ -225,7 +226,8 @@ class _CompileTypeMetadataVisitor extends Object
       final fieldTypes = _readFields(node);
       diDeps = constructor == null
           ? []
-          : _getCompileDiDependencyMetadata(constructor.parameters, fieldTypes);
+          : _getCompileDiDependencyMetadata(
+              node, constructor.parameters, fieldTypes);
       _type = new CompileTypeMetadata(
           moduleUrl: toAssetUri(_assetId),
           name: node.name.toString(),
@@ -301,7 +303,7 @@ class _CompileFactoryMetadataVisitor extends Object
           moduleUrl: toAssetUri(_assetId),
           name: node.name.toString(),
           diDeps: _getCompileDiDependencyMetadata(
-              node.functionExpression.parameters, {}),
+              null, node.functionExpression.parameters, {}),
           runtime: null // Intentionally `null`, cannot be provided here.
           );
     }
@@ -1218,7 +1220,9 @@ CompileQueryMetadata _createQueryMetadata(Annotation a, String propertyName,
 }
 
 List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
-    FormalParameterList params, Map<String, TypeName> fieldTypes) {
+    ClassDeclaration classDecl,
+    FormalParameterList params,
+    Map<String, TypeName> fieldTypes) {
   return params.parameters.map((dynamic p) {
     if (p is DefaultFormalParameter) {
       p = p.parameter;
@@ -1247,20 +1251,24 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
     if (_hasAnnotation(p, "Query")) {
       query =
           _createQueryMetadata(_getAnnotation(p, "Query"), null, first: false);
+      _reportDeprecation(classDecl, query);
     }
     if (_hasAnnotation(p, "ContentChildren")) {
       query = _createQueryMetadata(_getAnnotation(p, "ContentChildren"), null,
           defaultDescendantsValue: true, first: false);
+      _reportDeprecation(classDecl, query);
     }
 
     var viewQuery;
     if (_hasAnnotation(p, "ViewQuery")) {
       viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewQuery"), null,
           first: false);
+      _reportDeprecation(classDecl, viewQuery);
     }
     if (_hasAnnotation(p, "ViewChildren")) {
       viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewChildren"), null,
           defaultDescendantsValue: true, first: false);
+      _reportDeprecation(classDecl, viewQuery);
     }
     if (token == null) {
       throw new ArgumentError(
@@ -1276,6 +1284,16 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
         query: query,
         viewQuery: viewQuery);
   }).toList();
+}
+
+final Logger _deprecationLogger = new Logger('angular2.transformer');
+void _reportDeprecation(
+    ClassDeclaration classDecl, CompileQueryMetadata query) {
+  String source = classDecl == null
+      ? '${query?.propertyName}'
+      : 'in class ${classDecl.name.name}';
+  _deprecationLogger.warning('Queries inside constructors are deprecated, '
+      'please replace with query annotations on fields $source');
 }
 
 Annotation _getAnnotation(p, String attrName) =>
