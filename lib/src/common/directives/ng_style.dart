@@ -56,6 +56,7 @@ class NgStyle implements DoCheck {
     }
   }
 
+  @override
   void ngDoCheck() {
     if (_differ == null) return;
     var changes = _differ.diff(_rawStyle);

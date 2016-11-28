@@ -29,17 +29,20 @@ class NumberValueAccessor implements ControlValueAccessor {
   var onChange = (_) {};
   var onTouched = () {};
   NumberValueAccessor(this._elementRef);
+  @override
   void writeValue(value) {
     InputElement elm = _elementRef.nativeElement;
     elm.value = '$value';
   }
 
+  @override
   void registerOnChange(dynamic fn) {
     this.onChange = (value) {
       fn(value == "" ? null : double.parse(value));
     };
   }
 
+  @override
   void registerOnTouched(dynamic fn) {
     this.onTouched = fn;
   }

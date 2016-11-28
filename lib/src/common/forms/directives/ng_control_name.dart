@@ -113,6 +113,7 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
           List<ControlValueAccessor> valueAccessors) {
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
+  @override
   ngOnChanges(Map<String, SimpleChange> changes) {
     if (!this._added) {
       this.formDirective.addControl(this);
@@ -124,15 +125,18 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
     }
   }
 
+  @override
   void ngOnDestroy() {
     this.formDirective.removeControl(this);
   }
 
+  @override
   void viewToModelUpdate(dynamic newValue) {
     this.viewModel = newValue;
     this.update.add(newValue);
   }
 
+  @override
   List<String> get path {
     return controlPath(this.name, this._parent);
   }
@@ -141,14 +145,17 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
     return this._parent.formDirective;
   }
 
+  @override
   ValidatorFn get validator {
     return composeValidators(this._validators);
   }
 
+  @override
   AsyncValidatorFn get asyncValidator {
     return composeAsyncValidators(this._asyncValidators);
   }
 
+  @override
   Control get control {
     return this.formDirective.getControl(this);
   }

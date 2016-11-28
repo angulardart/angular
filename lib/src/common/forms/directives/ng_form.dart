@@ -97,14 +97,17 @@ class NgForm extends ControlContainer implements Form {
     this.form = new ControlGroup({}, null, composeValidators(validators),
         composeAsyncValidators(asyncValidators));
   }
+  @override
   Form get formDirective {
     return this;
   }
 
+  @override
   ControlGroup get control {
     return this.form;
   }
 
+  @override
   List<String> get path {
     return [];
   }
@@ -113,6 +116,7 @@ class NgForm extends ControlContainer implements Form {
     return this.form.controls;
   }
 
+  @override
   void addControl(NgControl dir) {
     var container = _findContainer(dir.path);
     var ctrl = new Control();
@@ -123,10 +127,12 @@ class NgForm extends ControlContainer implements Form {
     });
   }
 
+  @override
   Control getControl(NgControl dir) {
     return (this.form.find(dir.path) as Control);
   }
 
+  @override
   void removeControl(NgControl dir) {
     scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
@@ -137,6 +143,7 @@ class NgForm extends ControlContainer implements Form {
     });
   }
 
+  @override
   void addControlGroup(NgControlGroup dir) {
     var container = _findContainer(dir.path);
     var group = new ControlGroup({});
@@ -147,6 +154,7 @@ class NgForm extends ControlContainer implements Form {
     });
   }
 
+  @override
   void removeControlGroup(NgControlGroup dir) {
     scheduleMicrotask(() {
       var container = this._findContainer(dir.path);
@@ -157,10 +165,12 @@ class NgForm extends ControlContainer implements Form {
     });
   }
 
+  @override
   ControlGroup getControlGroup(NgControlGroup dir) {
     return (this.form.find(dir.path) as ControlGroup);
   }
 
+  @override
   void updateModel(NgControl dir, dynamic value) {
     scheduleMicrotask(() {
       var ctrl = (this.form.find(dir.path) as Control);

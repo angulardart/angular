@@ -121,6 +121,7 @@ class NgFor implements DoCheck {
     this._ngForTrackBy = value;
   }
 
+  @override
   void ngDoCheck() {
     if (_differ != null) {
       var changes = this._differ.diff(this._ngForOf);

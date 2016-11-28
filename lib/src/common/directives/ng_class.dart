@@ -81,6 +81,7 @@ class NgClass implements DoCheck, OnDestroy {
     }
   }
 
+  @override
   void ngDoCheck() {
     if (_iterableDiffer != null) {
       var changes = _iterableDiffer.diff(_rawClass);
@@ -96,6 +97,7 @@ class NgClass implements DoCheck, OnDestroy {
     }
   }
 
+  @override
   void ngOnDestroy() {
     _cleanupClasses(_rawClass);
   }
