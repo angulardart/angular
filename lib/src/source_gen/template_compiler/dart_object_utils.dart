@@ -13,11 +13,23 @@ List<String> coerceStringList(DartObject value, String field) =>
 List<DartObject> coerceList(DartObject value, String field) =>
     getField(value, field)?.toListValue() ?? const [];
 
-/*=T*/ coerceEnumValue/*<T>*/(DartObject value, String field,
-    List/*<T>*/ values, dynamic/*=T*/ defaultValue) {
-  var enumValue = getField(value, field);
-  var index = getField(enumValue, 'index');
-  if (index == null || index.isNull) return defaultValue;
+/*=T*/ coerceEnumValue/*<T>*/(DartObject object, String field,
+    List<dynamic/*=T*/ > values, /*=T*/ defaultValue) {
+  var enumField = getField(object, field);
+  return _findEnumByFieldName(enumField, values) ??
+      _findEnumByIndex(enumField, values, defaultValue);
+}
+
+/*=T*/ _findEnumByFieldName/*<T>*/(
+        DartObject object, List<dynamic/*=T*/ > values) =>
+    values.firstWhere(
+        (field) => !_isNull(getField(object, '$field'.split('.')[1])),
+        orElse: () => null);
+
+/*=T*/ _findEnumByIndex/*<T>*/(
+    DartObject enumField, List<dynamic/*=T*/ > values, /*=T*/ defaultValue) {
+  var index = getField(enumField, 'index');
+  if (_isNull(index)) return defaultValue;
   var indexNum = index.toIntValue();
   return indexNum != null ? values[indexNum] : defaultValue;
 }
@@ -30,7 +42,7 @@ bool coerceBool(DartObject value, String field, {bool defaultValue: false}) =>
 /// If the field is not found in the object, then it will visit the super
 /// object.
 DartObject getField(DartObject object, String field) {
-  if (object == null || object.isNull) return null;
+  if (_isNull(object)) return null;
   var fieldValue = object.getField(field);
   if (fieldValue != null && !fieldValue.isNull) {
     return fieldValue;
@@ -62,3 +74,5 @@ List<dynamic/*=T*/ > visitAll/*<T>*/(
   }
   return metadata;
 }
+
+bool _isNull(DartObject obj) => obj == null || obj.isNull;
