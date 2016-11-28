@@ -56,10 +56,10 @@ abstract class AbstractRoute implements RouteDefinition {
 ///
 /// ### Example
 /// ```
-/// import {RouteConfig, Route} from 'angular2/router';
+/// import 'package:angular2/router.dart';
 ///
-/// @RouteConfig([
-///   new Route({path: '/home', component: HomeCmp, name: 'HomeCmp' })
+/// @RouteConfig(const [
+///   const Route(path: '/home', component: HomeCmp, name: 'HomeCmp'),
 /// ])
 /// class MyApp {}
 /// ```
@@ -95,10 +95,10 @@ class Route extends AbstractRoute {
 ///
 /// ### Example
 /// ```
-/// import {RouteConfig, AuxRoute} from 'angular2/router';
+/// import 'package:angular2/router.dart';
 ///
-/// @RouteConfig([
-///   new AuxRoute({path: '/home', component: HomeCmp})
+/// @RouteConfig(const [
+///   const AuxRoute(path: '/home', component: HomeCmp),
 /// ])
 /// class MyApp {}
 /// ```
@@ -136,13 +136,15 @@ class AuxRoute extends AbstractRoute {
 ///
 /// ### Example
 /// ```
-/// import {RouteConfig, AsyncRoute} from 'angular2/router';
+/// import 'package:angular2/router.dart';
+/// import 'package:my_package/my_component.dart' deferred as my_component;
 ///
-/// @RouteConfig([
-///   new AsyncRoute({path: '/home', loader: () => Promise.resolve(MyLoadedCmp), name:
-/// 'MyLoadedCmp'})
+/// @RouteConfig(const [
+///   const AsyncRoute(path: '/home', loader: l, name: 'MyLoadedCmp'),
 /// ])
 /// class MyApp {}
+///
+/// l() => my_component.loadLibrary().then((_) => my_component.MyLoadedCmp);
 /// ```
 class AsyncRoute extends AbstractRoute {
   final Function /* () => Promise<Type> */ loader;
@@ -176,11 +178,11 @@ class AsyncRoute extends AbstractRoute {
 ///
 /// ### Example
 /// ```
-/// import {RouteConfig, Route, Redirect} from 'angular2/router';
+/// import 'package:angular2/router.dart';
 ///
-/// @RouteConfig([
-///   new Redirect({path: '/', redirectTo: ['/Home'] }),
-///   new Route({path: '/home', component: HomeCmp, name: 'Home'})
+/// @RouteConfig(const [
+///   const Redirect(path: '/', redirectTo: const ['/Home']),
+///   const Route(path: '/home', component: HomeCmp, name: 'Home'),
 /// ])
 /// class MyApp {}
 /// ```
