@@ -1,0 +1,118 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+import 'has_template_file.dart';
+export 'has_template_file.dart';
+import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'has_template_file.dart' as import2;
+import 'dart:html';
+import 'package:angular2/src/core/di/injector.dart' as import4;
+import 'package:angular2/src/core/linker/view_container.dart';
+import 'package:angular2/src/core/linker/view_type.dart' as import6;
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular2/src/core/metadata/view.dart' as import9;
+import 'package:angular2/src/core/linker/component_factory.dart' as import10;
+
+const List<dynamic> styles_HasTemplateFileComponent = const [];
+RenderComponentType renderType_HasTemplateFileComponent;
+
+class ViewHasTemplateFileComponent0
+    extends AppView<import2.HasTemplateFileComponent> {
+  Element _el_0;
+  ViewHasTemplateFileComponent0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewHasTemplateFileComponent0,
+            renderType_HasTemplateFileComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    final Node parentRenderNode =
+        initViewRoot(this.declarationViewContainer.nativeElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    Text _text_1 = new Text('Has Template File!');
+    _el_0.append(_text_1);
+    Text _text_2 = new Text('\n');
+    parentRenderNode.append(_text_2);
+    init([], [_el_0, _text_1, _text_2], []);
+    return null;
+  }
+}
+
+AppView viewFactory_HasTemplateFileComponent0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_HasTemplateFileComponent, null)) {
+    (renderType_HasTemplateFileComponent = import8.appViewUtils
+        .createRenderComponentType('', 0, import9.ViewEncapsulation.None,
+            styles_HasTemplateFileComponent));
+  }
+  return new ViewHasTemplateFileComponent0(parentInjector, declarationEl);
+}
+
+const List<dynamic> styles_HasTemplateFileComponentHost = const [];
+RenderComponentType renderType_HasTemplateFileComponentHost;
+
+class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
+  Element _el_0;
+  ViewContainer _appEl_0;
+  import2.HasTemplateFileComponent _HasTemplateFileComponent_0_3;
+  ViewHasTemplateFileComponentHost0(
+      import4.Injector parentInjector, ViewContainer declarationEl)
+      : super(
+            ViewHasTemplateFileComponentHost0,
+            renderType_HasTemplateFileComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentInjector,
+            declarationEl,
+            ChangeDetectionStrategy.CheckAlways);
+  ViewContainer createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('has-template-file', rootSelector, null);
+    _appEl_0 = new ViewContainer(0, null, this, _el_0);
+    var compView_0 =
+        viewFactory_HasTemplateFileComponent0(this.injector(0), _appEl_0);
+    _HasTemplateFileComponent_0_3 = new import2.HasTemplateFileComponent();
+    _appEl_0.initComponent(_HasTemplateFileComponent_0_3, [], compView_0);
+    compView_0.createComp(projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return _appEl_0;
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.HasTemplateFileComponent) &&
+        identical(0, requestNodeIndex))) {
+      return _HasTemplateFileComponent_0_3;
+    }
+    return notFoundResult;
+  }
+}
+
+AppView viewFactory_HasTemplateFileComponentHost0(
+    import4.Injector parentInjector, ViewContainer declarationEl) {
+  if (identical(renderType_HasTemplateFileComponentHost, null)) {
+    (renderType_HasTemplateFileComponentHost = import8.appViewUtils
+        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
+            styles_HasTemplateFileComponentHost));
+  }
+  return new ViewHasTemplateFileComponentHost0(parentInjector, declarationEl);
+}
+
+const import10.ComponentFactory HasTemplateFileComponentNgFactory =
+    const import10.ComponentFactory(
+        'has-template-file',
+        viewFactory_HasTemplateFileComponentHost0,
+        import2.HasTemplateFileComponent,
+        _METADATA);
+void initReflector() {}
