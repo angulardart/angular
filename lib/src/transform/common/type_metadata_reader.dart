@@ -1292,7 +1292,7 @@ void _reportDeprecation(
   String source = classDecl == null
       ? '${query?.propertyName}'
       : 'in class ${classDecl.name.name}';
-  _deprecationLogger.warning('Queries inside constructors are deprecated, '
+  throw new Exception('Queries inside constructors are deprecated, '
       'please replace with query annotations on fields $source');
 }
 
