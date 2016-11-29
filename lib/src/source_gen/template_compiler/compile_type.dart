@@ -18,7 +18,7 @@ class CompileTypeMetadataVisitor
 
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) =>
-      element.metadata.any(_isInjectable)
+      annotation_matcher.isInjectable(element)
           ? new CompileTypeMetadata(
               moduleUrl: _moduleUrl(element),
               name: element.name,
@@ -106,10 +106,3 @@ class CompileTypeMetadataVisitor
   bool _hasAnnotation(Element element, Type type) => element.metadata.any(
       (annotation) => annotation_matcher.matchAnnotation(type, annotation));
 }
-
-bool _isInjectable(ElementAnnotation element) => const [
-      Component,
-      Directive,
-      Pipe,
-      Injectable,
-    ].any((type) => annotation_matcher.matchAnnotation(type, element));

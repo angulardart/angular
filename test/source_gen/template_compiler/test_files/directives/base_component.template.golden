@@ -6,6 +6,7 @@
 // **************************************************************************
 
 import 'base_component.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 export 'base_component.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -108,4 +109,15 @@ AppView viewFactory_TestFooComponentHost0(
 const import10.ComponentFactory TestFooComponentNgFactory =
     const import10.ComponentFactory('test-foo',
         viewFactory_TestFooComponentHost0, import2.TestFooComponent, _METADATA);
-void initReflector() {}
+const _METADATA = const <dynamic>[TestFooComponent, const <dynamic>[]];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  reflector.registerType(
+      TestFooComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new TestFooComponent()));
+}

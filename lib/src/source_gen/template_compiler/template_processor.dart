@@ -4,14 +4,14 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/source_gen/common/logging.dart';
 import 'package:angular2/src/source_gen/common/ng_compiler.dart';
-import 'package:angular2/src/source_gen/common/ng_deps_model.dart';
 import 'package:angular2/src/source_gen/template_compiler/find_components.dart';
+import 'package:angular2/src/source_gen/template_compiler/ng_deps_visitor.dart';
 import 'package:angular2/src/source_gen/template_compiler/template_compiler_outputs.dart';
 import 'package:angular2/src/transform/common/options.dart';
 import 'package:build/build.dart';
 
 Future<TemplateCompilerOutputs> processTemplates(
-    Element element, BuildStep buildStep,
+    LibraryElement element, BuildStep buildStep,
     {String codegenMode: '',
     bool reflectPropertiesAsAttributes: false,
     List<String> platformDirectives,
@@ -36,5 +36,7 @@ Future<TemplateCompilerOutputs> processTemplates(
   final compiledTemplates = logElapsedSync(() {
     return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: buildStep.input.id);
-  return new TemplateCompilerOutputs(compiledTemplates, new NgDepsModel());
+
+  final ngDepsModel = element.accept(new NgDepsVisitor(buildStep));
+  return new TemplateCompilerOutputs(compiledTemplates, ngDepsModel);
 }
