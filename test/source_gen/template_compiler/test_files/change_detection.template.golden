@@ -6,6 +6,7 @@
 // **************************************************************************
 
 import 'change_detection.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 export 'change_detection.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -657,4 +658,54 @@ AppView viewFactory_DefaultComponentHost0(
 const import10.ComponentFactory DefaultComponentNgFactory =
     const import10.ComponentFactory('Default',
         viewFactory_DefaultComponentHost0, import2.DefaultComponent, _METADATA);
-void initReflector() {}
+const _METADATA = const <dynamic>[
+  CheckOnceComponent,
+  const <dynamic>[],
+  CheckedComponent,
+  const <dynamic>[],
+  CheckAlwaysComponent,
+  const <dynamic>[],
+  DetachedComponent,
+  const <dynamic>[],
+  OnPushComponent,
+  const <dynamic>[],
+  StatefulComponent,
+  const <dynamic>[],
+  DefaultComponent,
+  const <dynamic>[]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  reflector.registerType(
+      CheckOnceComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new CheckOnceComponent()));
+  reflector.registerType(
+      CheckedComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new CheckedComponent()));
+  reflector.registerType(
+      CheckAlwaysComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new CheckAlwaysComponent()));
+  reflector.registerType(
+      DetachedComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new DetachedComponent()));
+  reflector.registerType(
+      OnPushComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new OnPushComponent()));
+  reflector.registerType(
+      StatefulComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new StatefulComponent()));
+  reflector.registerType(
+      DefaultComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new DefaultComponent()));
+}

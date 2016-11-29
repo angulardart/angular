@@ -37,9 +37,9 @@ void main() {
       test('has type name, type args, and param name', () {
         expect(
             new ParameterModel(
-                    typeName: 'Foo', typeArgs: 'bar', paramName: 'foo')
+                    typeName: 'Foo', typeArgs: ['Bar'], paramName: 'foo')
                 .asBuilder,
-            equalsSource('Foo foo'));
+            equalsSource('Foo<Bar> foo'));
       });
     });
   });

@@ -6,6 +6,7 @@
 // **************************************************************************
 
 import 'directives.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 export 'directives.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -108,4 +109,24 @@ AppView viewFactory_TestSubComponentHost0(
 const import10.ComponentFactory TestSubComponentNgFactory =
     const import10.ComponentFactory('test-bar',
         viewFactory_TestSubComponentHost0, import2.TestSubComponent, _METADATA);
-void initReflector() {}
+const _METADATA = const <dynamic>[
+  TestDirective,
+  const <dynamic>[],
+  TestSubComponent,
+  const <dynamic>[]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  reflector.registerType(
+      TestDirective,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new TestDirective()));
+  reflector.registerType(
+      TestSubComponent,
+      new ReflectionInfo(
+          const <dynamic>[], const [], () => new TestSubComponent()));
+}

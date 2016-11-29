@@ -29,8 +29,8 @@ class ReflectionInfoModel {
 
   List<ExpressionBuilder> get localMetadataEntry => [
         reference(name),
-        _annotationList(
-            _annotations.where((am) => !am.name.endsWith('NgFactory')))
+        _annotationList(_annotations
+            .where((AnnotationModel am) => !am.name.endsWith('NgFactory')))
       ];
 
   StatementBuilder get asRegistration {
