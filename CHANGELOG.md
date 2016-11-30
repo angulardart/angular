@@ -1,3 +1,35 @@
+## 2.2.0
+
+### API changes
+  * Breaking changes
+    * Using `@ViewQuery|Children|Content|` in a constructor is no longer valid.
+      This caused significant extra code to need to be generated for a case that
+      is relatively rare. Code can safely be moved into a setter in most cases.
+
+**BEFORE**
+```dart
+class MyComponent {
+  QueryList<ChildComponent> _childComponents;
+
+  MyComponent(@ContentChildren(ChildComponent) this._childComponents);
+}
+```
+
+**AFTER**
+```dart
+class MyComponent {
+  QueryList<ChildComponent> _childComponents;
+
+  @ContentChildren(ChildComponent)
+  set childComponents(QueryList<ChildComponent> childComponents) {
+    _childComponents = childComponents;
+  }
+}
+```
+
+### Bug fixes
+  * Importing `angular2/reflection.dart` now works properly.
+
 ## 2.1.1
 
 ### API changes
