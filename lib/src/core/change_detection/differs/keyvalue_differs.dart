@@ -4,12 +4,14 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 
 /// A differ that tracks changes made to an object over time.
+@Deprecated('Extending and using injected differs no longer supported')
 abstract class KeyValueDiffer<T> {
   diff(T object);
   void onDestroy();
 }
 
 /// Provides a factory for [KeyValueDiffer].
+@Deprecated('Extending and using injected differs no longer supported')
 abstract class KeyValueDifferFactory {
   bool supports(dynamic objects);
   KeyValueDiffer create(ChangeDetectorRef cdRef);
@@ -17,6 +19,7 @@ abstract class KeyValueDifferFactory {
 
 /// A repository of different Map diffing strategies used by NgClass, NgStyle,
 /// and others.
+@Deprecated('Extending and using injected differs no longer supported')
 class KeyValueDiffers {
   final List<KeyValueDifferFactory> factories;
   const KeyValueDiffers(this.factories);

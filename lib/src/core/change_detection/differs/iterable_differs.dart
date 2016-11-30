@@ -7,6 +7,7 @@ import "../change_detector_ref.dart" show ChangeDetectorRef;
 ///
 /// Used for [NgFor] to respond to changes in an iterable by effecting
 /// equivalent changes in the DOM.
+@Deprecated('Extending and using injected differs no longer supported')
 abstract class IterableDiffer<T> {
   IterableDiffer<T> diff(T object);
   void onDestroy();
@@ -17,6 +18,7 @@ abstract class IterableDiffer<T> {
 typedef dynamic TrackByFn(num index, dynamic item);
 
 /// Provides a factory for [IterableDiffer].
+@Deprecated('Extending and using injected differs no longer supported')
 abstract class IterableDifferFactory {
   bool supports(dynamic objects);
   IterableDiffer create(ChangeDetectorRef cdRef, [TrackByFn trackByFn]);
@@ -24,6 +26,7 @@ abstract class IterableDifferFactory {
 
 /// A repository of different iterable diffing strategies used by NgFor,
 /// NgClass, and others.
+@Deprecated('Extending and using injected differs no longer supported')
 class IterableDiffers {
   final List<IterableDifferFactory> factories;
   const IterableDiffers(this.factories);
