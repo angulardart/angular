@@ -6,7 +6,6 @@ import 'package:angular2/platform/testing/browser.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart';
 import 'package:angular2/src/core/reflection/reflection.dart';
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
-import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import 'package:test/test.dart';
 
@@ -120,8 +119,6 @@ void setBaseTestProviders(
   initializers?.forEach((init) => init());
   testInjector.reset();
 }
-
-bool isInInnerZone() => NgZone.isInAngularZone();
 
 class _HasTextContent extends Matcher {
   final String expectedText;
