@@ -59,6 +59,8 @@ class MinLengthValidator implements Validator {
   MinLengthValidator(@Attribute("minlength") String minLength) {
     this._validator = Validators.minLength(int.parse(minLength, radix: 10));
   }
+
+  @override
   Map<String, dynamic> validate(AbstractControl c) {
     return this._validator(c);
   }
@@ -80,6 +82,7 @@ class MaxLengthValidator implements Validator {
   MaxLengthValidator(@Attribute("maxlength") String maxLength) {
     this._validator = Validators.maxLength(int.parse(maxLength, radix: 10));
   }
+  @override
   Map<String, dynamic> validate(AbstractControl c) {
     return this._validator(c);
   }
@@ -105,6 +108,7 @@ class PatternValidator implements Validator {
   PatternValidator(@Attribute("pattern") String pattern) {
     this._validator = Validators.pattern(pattern);
   }
+  @override
   Map<String, dynamic> validate(AbstractControl c) {
     return this._validator(c);
   }

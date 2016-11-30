@@ -686,82 +686,102 @@ class SimpleExpressionChecker implements AstVisitor {
   }
 
   var simple = true;
+  @override
   void visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {}
+  @override
   void visitInterpolation(Interpolation ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {}
+  @override
   void visitPropertyRead(PropertyRead ast, dynamic context) {}
+  @override
   void visitPropertyWrite(PropertyWrite ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitMethodCall(MethodCall ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitFunctionCall(FunctionCall ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitLiteralArray(LiteralArray ast, dynamic context) {
-    this.visitAll(ast.expressions);
+    this._visitAll(ast.expressions);
   }
 
+  @override
   void visitLiteralMap(LiteralMap ast, dynamic context) {
-    this.visitAll(ast.values);
+    this._visitAll(ast.values);
   }
 
+  @override
   void visitBinary(Binary ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitPrefixNot(PrefixNot ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitConditional(Conditional ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitIfNull(IfNull ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitPipe(BindingPipe ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitKeyedRead(KeyedRead ast, dynamic context) {
     this.simple = false;
   }
 
+  @override
   void visitKeyedWrite(KeyedWrite ast, dynamic context) {
     this.simple = false;
   }
 
-  List<dynamic> visitAll(List<dynamic> asts) {
+  @override
+  void visitChain(Chain ast, dynamic context) {
+    this.simple = false;
+  }
+
+  @override
+  void visitQuote(Quote ast, dynamic context) {
+    this.simple = false;
+  }
+
+  List<dynamic> _visitAll(List<dynamic> asts) {
     var res = new List(asts.length);
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }
     return res;
-  }
-
-  void visitChain(Chain ast, dynamic context) {
-    this.simple = false;
-  }
-
-  void visitQuote(Quote ast, dynamic context) {
-    this.simple = false;
   }
 }
