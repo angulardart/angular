@@ -91,9 +91,9 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.HasTemplateFileComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _HasTemplateFileComponent_0_3;
     }
     return notFoundResult;

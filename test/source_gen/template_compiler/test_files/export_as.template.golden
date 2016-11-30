@@ -87,9 +87,9 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.TestFooComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _TestFooComponent_0_3;
     }
     return notFoundResult;

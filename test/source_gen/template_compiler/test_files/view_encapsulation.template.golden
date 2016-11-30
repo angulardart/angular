@@ -87,9 +87,9 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.EmulatedComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _EmulatedComponent_0_3;
     }
     return notFoundResult;
@@ -179,9 +179,9 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.NativeComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _NativeComponent_0_3;
     }
     return notFoundResult;
@@ -267,9 +267,8 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.NoneComponent) &&
-        identical(0, requestNodeIndex))) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.NoneComponent) && (0 == requestNodeIndex))) {
       return _NoneComponent_0_3;
     }
     return notFoundResult;

@@ -48,7 +48,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num nodeIndex, dynamic notFoundResult) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
     var m = methods['injectorGetInternal'];
     if (m != null) {
       return m(token, nodeIndex, notFoundResult);

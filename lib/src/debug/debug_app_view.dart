@@ -100,7 +100,7 @@ class DebugAppView<T> extends AppView<T> {
     }
   }
 
-  dynamic injectorGet(dynamic token, num nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGet(dynamic token, int nodeIndex, dynamic notFoundResult) {
     this._resetDebug();
     try {
       return super.injectorGet(token, nodeIndex, notFoundResult);

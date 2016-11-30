@@ -233,13 +233,13 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  dynamic injectorGet(dynamic token, num nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGet(dynamic token, int nodeIndex, dynamic notFoundResult) {
     return this.injectorGetInternal(token, nodeIndex, notFoundResult);
   }
 
   /// Overwritten by implementations
   dynamic injectorGetInternal(
-      dynamic token, num nodeIndex, dynamic notFoundResult) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
     return notFoundResult;
   }
 
