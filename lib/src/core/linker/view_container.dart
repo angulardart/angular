@@ -4,7 +4,6 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "app_view.dart";
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import "element_ref.dart";
-import "query_list.dart" show QueryList;
 import 'template_ref.dart';
 import "view_container_ref.dart";
 import "view_type.dart";
@@ -21,17 +20,15 @@ class ViewContainer implements ViewContainerRef {
   List<AppView> nestedViews;
   AppView componentView;
   dynamic component;
-  List<QueryList> componentConstructorViewQueries;
+  ElementRef _elementRef;
 
   ViewContainer(
       this.index, this.parentIndex, this.parentView, this.nativeElement);
 
-  ElementRef get elementRef => new ElementRef(nativeElement);
+  ElementRef get elementRef => _elementRef ??= new ElementRef(nativeElement);
 
-  void initComponent(dynamic component,
-      List<QueryList> componentConstructorViewQueries, AppView view) {
+  void initComponent(dynamic component, AppView view) {
     this.component = component;
-    this.componentConstructorViewQueries = componentConstructorViewQueries;
     componentView = view;
   }
 

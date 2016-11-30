@@ -103,7 +103,7 @@ class _ViewCompAHost0 extends import3.DebugAppView<dynamic> {
     this._appEl_0 = new import7.ViewContainer(0, null, this, this._el_0);
     var compView_0 = viewFactory_CompA0(this.injector(0), this._appEl_0);
     this._CompA_0_4 = new import4.CompA();
-    this._appEl_0.initComponent(this._CompA_0_4, [], compView_0);
+    this._appEl_0.initComponent(this._CompA_0_4, compView_0);
     compView_0.create(this.projectableNodes, null);
     this.init([]..addAll([this._el_0]), [this._el_0], []);
     return this._appEl_0;

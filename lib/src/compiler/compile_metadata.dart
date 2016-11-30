@@ -98,8 +98,6 @@ class CompileDiDependencyMetadata {
   bool isSkipSelf;
   bool isOptional;
   bool isValue;
-  CompileQueryMetadata query;
-  CompileQueryMetadata viewQuery;
   CompileTokenMetadata token;
   dynamic value;
   CompileDiDependencyMetadata(
@@ -109,8 +107,6 @@ class CompileDiDependencyMetadata {
       bool isSkipSelf,
       bool isOptional,
       bool isValue,
-      CompileQueryMetadata query,
-      CompileQueryMetadata viewQuery,
       CompileTokenMetadata token,
       dynamic value}) {
     // TODO: Make the defaults of the constructor 'false' instead of doing this.
@@ -121,17 +117,12 @@ class CompileDiDependencyMetadata {
     this.isSkipSelf = isSkipSelf == true;
     this.isOptional = isOptional == true;
     this.isValue = isValue == true;
-    this.query = query;
-    this.viewQuery = viewQuery;
     this.token = token;
     this.value = value;
   }
   static CompileDiDependencyMetadata fromJson(Map<String, dynamic> data) {
     return new CompileDiDependencyMetadata(
         token: _objFromJson(data["token"], CompileTokenMetadata.fromJson),
-        query: _objFromJson(data["query"], CompileQueryMetadata.fromJson),
-        viewQuery:
-            _objFromJson(data["viewQuery"], CompileQueryMetadata.fromJson),
         value: data["value"],
         isAttribute: data["isAttribute"],
         isSelf: data["isSelf"],
@@ -144,8 +135,6 @@ class CompileDiDependencyMetadata {
   Map<String, dynamic> toJson() {
     return {
       "token": _objToJson(this.token),
-      "query": _objToJson(this.query),
-      "viewQuery": _objToJson(this.viewQuery),
       "value": this.value,
       "isAttribute": this.isAttribute,
       "isSelf": this.isSelf,

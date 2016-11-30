@@ -1247,29 +1247,15 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
       token = injectTokens.isNotEmpty ? injectTokens.first : typeToken;
     }
 
-    var query;
-    if (_hasAnnotation(p, "Query")) {
-      query =
-          _createQueryMetadata(_getAnnotation(p, "Query"), null, first: false);
-      _reportDeprecation(classDecl, query);
-    }
-    if (_hasAnnotation(p, "ContentChildren")) {
-      query = _createQueryMetadata(_getAnnotation(p, "ContentChildren"), null,
-          defaultDescendantsValue: true, first: false);
-      _reportDeprecation(classDecl, query);
+    // View queries in constructors were deprecated Nov 2016. Remove this
+    // code and deprecation warning EOQ1 2017.
+    if (_hasAnnotation(p, "Query") ||
+        _hasAnnotation(p, "ContentChildren") ||
+        _hasAnnotation(p, "ViewQuery") ||
+        _hasAnnotation(p, "ViewChildren")) {
+      _reportDeprecation(classDecl);
     }
 
-    var viewQuery;
-    if (_hasAnnotation(p, "ViewQuery")) {
-      viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewQuery"), null,
-          first: false);
-      _reportDeprecation(classDecl, viewQuery);
-    }
-    if (_hasAnnotation(p, "ViewChildren")) {
-      viewQuery = _createQueryMetadata(_getAnnotation(p, "ViewChildren"), null,
-          defaultDescendantsValue: true, first: false);
-      _reportDeprecation(classDecl, viewQuery);
-    }
     if (token == null) {
       throw new ArgumentError(
           'Missing class member or type for constructor parameter $p');
@@ -1280,18 +1266,17 @@ List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
         isSelf: _hasAnnotation(p, "Self"),
         isHost: _hasAnnotation(p, "Host"),
         isSkipSelf: _hasAnnotation(p, "SkipSelf"),
-        isOptional: _hasAnnotation(p, "Optional"),
-        query: query,
-        viewQuery: viewQuery);
+        isOptional: _hasAnnotation(p, "Optional"));
   }).toList();
 }
 
 final Logger _deprecationLogger = new Logger('angular2.transformer');
-void _reportDeprecation(
-    ClassDeclaration classDecl, CompileQueryMetadata query) {
-  String source = classDecl == null
-      ? '${query?.propertyName}'
-      : 'in class ${classDecl.name.name}';
+void _reportDeprecation(ClassDeclaration classDecl) {
+  if (classDecl == null) {
+    throw new Exception('View queries inside global functions '
+        'are not supported');
+  }
+  String source = 'in class ${classDecl.name.name}';
   throw new Exception('Queries inside constructors are deprecated, '
       'please replace with query annotations on fields $source');
 }

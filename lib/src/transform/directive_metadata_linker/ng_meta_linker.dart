@@ -311,14 +311,6 @@ class _NgMetaIdentifierResolver {
       if (dep.token != null) {
         _setModuleUrl(ngMetaMap, neededBy, dep.token.identifier);
       }
-      if (dep.query != null) {
-        dep.query.selectors
-            .forEach((s) => _setModuleUrl(ngMetaMap, neededBy, s.identifier));
-      }
-      if (dep.viewQuery != null) {
-        dep.viewQuery.selectors
-            .forEach((s) => _setModuleUrl(ngMetaMap, neededBy, s.identifier));
-      }
     }
   }
 

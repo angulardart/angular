@@ -228,9 +228,6 @@ class ProviderElementContext {
       var attrValue = this._attrs[dep.token.value];
       return new CompileDiDependencyMetadata(isValue: true, value: attrValue);
     }
-    if (dep.query != null || dep.viewQuery != null) {
-      return dep;
-    }
     if (dep.token != null) {
       // access builtints
       if ((identical(requestingProviderType, ProviderAstType.Directive) ||
@@ -549,11 +546,6 @@ CompileTokenMap<List<CompileQueryMetadata>> _getViewQueries(
     component.viewQueries
         .forEach((query) => _addQueryToTokenMap(viewQueries, query));
   }
-  component.type.diDeps.forEach((dep) {
-    if (dep.viewQuery != null) {
-      _addQueryToTokenMap(viewQueries, dep.viewQuery);
-    }
-  });
   return viewQueries;
 }
 
@@ -565,11 +557,6 @@ CompileTokenMap<List<CompileQueryMetadata>> _getContentQueries(
       directive.queries
           .forEach((query) => _addQueryToTokenMap(contentQueries, query));
     }
-    directive.type.diDeps.forEach((dep) {
-      if (dep.query != null) {
-        _addQueryToTokenMap(contentQueries, dep.query);
-      }
-    });
   });
   return contentQueries;
 }

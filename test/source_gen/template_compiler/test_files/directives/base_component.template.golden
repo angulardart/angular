@@ -80,7 +80,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_TestFooComponent0(this.injector(0), _appEl_0);
     _TestFooComponent_0_3 = new import2.TestFooComponent();
-    _appEl_0.initComponent(_TestFooComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_TestFooComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;

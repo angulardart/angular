@@ -84,7 +84,7 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
     var compView_0 =
         viewFactory_HasTemplateFileComponent0(this.injector(0), _appEl_0);
     _HasTemplateFileComponent_0_3 = new import2.HasTemplateFileComponent();
-    _appEl_0.initComponent(_HasTemplateFileComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_HasTemplateFileComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;

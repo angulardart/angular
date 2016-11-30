@@ -20,17 +20,7 @@ void main() {
           isHost: true,
           isSkipSelf: true,
           isOptional: true,
-          token: new CompileTokenMetadata(value: "someToken"),
-          query: new CompileQueryMetadata(
-              selectors: [new CompileTokenMetadata(value: "one")],
-              descendants: true,
-              first: true,
-              propertyName: "one"),
-          viewQuery: new CompileQueryMetadata(
-              selectors: [new CompileTokenMetadata(value: "one")],
-              descendants: true,
-              first: true,
-              propertyName: "one"));
+          token: new CompileTokenMetadata(value: "someToken"));
       fullTypeMeta = new CompileTypeMetadata(
           name: "SomeType",
           moduleUrl: "someUrl",

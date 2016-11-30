@@ -81,7 +81,7 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
     var compView_0 =
         viewFactory_CheckOnceComponent0(this.injector(0), _appEl_0);
     _CheckOnceComponent_0_3 = new import2.CheckOnceComponent();
-    _appEl_0.initComponent(_CheckOnceComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_CheckOnceComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -173,7 +173,7 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_CheckedComponent0(this.injector(0), _appEl_0);
     _CheckedComponent_0_3 = new import2.CheckedComponent();
-    _appEl_0.initComponent(_CheckedComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_CheckedComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -263,7 +263,7 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
     var compView_0 =
         viewFactory_CheckAlwaysComponent0(this.injector(0), _appEl_0);
     _CheckAlwaysComponent_0_3 = new import2.CheckAlwaysComponent();
-    _appEl_0.initComponent(_CheckAlwaysComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_CheckAlwaysComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -355,7 +355,7 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_DetachedComponent0(this.injector(0), _appEl_0);
     _DetachedComponent_0_3 = new import2.DetachedComponent();
-    _appEl_0.initComponent(_DetachedComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_DetachedComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -447,7 +447,7 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_OnPushComponent0(this.injector(0), _appEl_0);
     _OnPushComponent_0_3 = new import2.OnPushComponent();
-    _appEl_0.initComponent(_OnPushComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_OnPushComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -537,7 +537,7 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_StatefulComponent0(this.injector(0), _appEl_0);
     _StatefulComponent_0_3 = new import2.StatefulComponent();
-    _appEl_0.initComponent(_StatefulComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_StatefulComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -629,7 +629,7 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_DefaultComponent0(this.injector(0), _appEl_0);
     _DefaultComponent_0_3 = new import2.DefaultComponent();
-    _appEl_0.initComponent(_DefaultComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_DefaultComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;

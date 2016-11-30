@@ -95,16 +95,6 @@ class CompileView implements NameResolver {
             new CompileQuery(queryMeta, queryList, directiveInstance, this);
         addQueryToTokenMap(viewQueries, query);
       });
-      var constructorViewQueryCount = 0;
-      this.component.type.diDeps.forEach((dep) {
-        if (dep.viewQuery != null) {
-          var queryList = new o.ReadClassMemberExpr('declarationViewContainer')
-              .prop('componentConstructorViewQueries')
-              .key(o.literal(constructorViewQueryCount++));
-          var query = new CompileQuery(dep.viewQuery, queryList, null, this);
-          addQueryToTokenMap(viewQueries, query);
-        }
-      });
     }
     this.viewQueries = viewQueries;
     templateVariableBindings.forEach((entry) {

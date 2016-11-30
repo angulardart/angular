@@ -27,8 +27,6 @@ final String output = """[
               "identifier": null,
               "identifierIsInstance": false
             },
-            "query": null,
-            "viewQuery": null,
             "value": null,
             "isAttribute": true,
             "isSelf": false,
@@ -49,8 +47,6 @@ final String output = """[
               },
               "identifierIsInstance": false
             },
-            "query": null,
-            "viewQuery": null,
             "value": null,
             "isAttribute": false,
             "isSelf": false,

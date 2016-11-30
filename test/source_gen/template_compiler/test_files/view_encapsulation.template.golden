@@ -80,7 +80,7 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
     _EmulatedComponent_0_3 = new import2.EmulatedComponent();
-    _appEl_0.initComponent(_EmulatedComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_EmulatedComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -172,7 +172,7 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
     _NativeComponent_0_3 = new import2.NativeComponent();
-    _appEl_0.initComponent(_NativeComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_NativeComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
@@ -260,7 +260,7 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     var compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
     _NoneComponent_0_3 = new import2.NoneComponent();
-    _appEl_0.initComponent(_NoneComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_NoneComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
