@@ -413,7 +413,7 @@ o.Statement createInjectInternalCondition(num nodeIndex, num childNodeCount,
             .lowerEquals(o.literal(nodeIndex + childNodeCount)));
   } else {
     indexCondition =
-        o.literal(nodeIndex).identical(InjectMethodVars.requestNodeIndex);
+        o.literal(nodeIndex).equals(InjectMethodVars.requestNodeIndex);
   }
   return new o.IfStmt(
       InjectMethodVars.token

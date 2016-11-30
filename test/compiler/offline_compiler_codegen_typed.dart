@@ -110,8 +110,8 @@ class _ViewCompAHost0 extends import3.DebugAppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import4.CompA) && identical(0, requestNodeIndex))) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import4.CompA) && (0 == requestNodeIndex))) {
       return this._CompA_0_4;
     }
     return notFoundResult;

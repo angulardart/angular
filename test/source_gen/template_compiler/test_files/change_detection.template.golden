@@ -88,9 +88,9 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckOnceComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _CheckOnceComponent_0_3;
     }
     return notFoundResult;
@@ -180,9 +180,9 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckedComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _CheckedComponent_0_3;
     }
     return notFoundResult;
@@ -270,9 +270,9 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckAlwaysComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _CheckAlwaysComponent_0_3;
     }
     return notFoundResult;
@@ -362,9 +362,9 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DetachedComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _DetachedComponent_0_3;
     }
     return notFoundResult;
@@ -454,9 +454,9 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.OnPushComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _OnPushComponent_0_3;
     }
     return notFoundResult;
@@ -544,9 +544,9 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.StatefulComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _StatefulComponent_0_3;
     }
     return notFoundResult;
@@ -636,9 +636,9 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, num requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DefaultComponent) &&
-        identical(0, requestNodeIndex))) {
+        (0 == requestNodeIndex))) {
       return _DefaultComponent_0_3;
     }
     return notFoundResult;
