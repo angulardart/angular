@@ -22,9 +22,9 @@ class BuiltinType extends OutputType {
   const BuiltinType(this.name, [List<TypeModifier> modifiers = null])
       : super(modifiers);
 
-  dynamic visitType(TypeVisitor visitor, dynamic context) {
-    return visitor.visitBuiltintType(this, context);
-  }
+  @override
+  dynamic visitType(TypeVisitor visitor, dynamic context) =>
+      visitor.visitBuiltintType(this, context);
 }
 
 class ExternalType extends OutputType {
@@ -33,27 +33,27 @@ class ExternalType extends OutputType {
   ExternalType(this.value, [this.typeParams, List<TypeModifier> modifiers])
       : super(modifiers);
 
-  dynamic visitType(TypeVisitor visitor, dynamic context) {
-    return visitor.visitExternalType(this, context);
-  }
+  @override
+  dynamic visitType(TypeVisitor visitor, dynamic context) =>
+      visitor.visitExternalType(this, context);
 }
 
 class ArrayType extends OutputType {
   final OutputType of;
   ArrayType(this.of, [List<TypeModifier> modifiers]) : super(modifiers);
 
-  dynamic visitType(TypeVisitor visitor, dynamic context) {
-    return visitor.visitArrayType(this, context);
-  }
+  @override
+  dynamic visitType(TypeVisitor visitor, dynamic context) =>
+      visitor.visitArrayType(this, context);
 }
 
 class MapType extends OutputType {
   final OutputType valueType;
   MapType(this.valueType, [List<TypeModifier> modifiers]) : super(modifiers);
 
-  dynamic visitType(TypeVisitor visitor, dynamic context) {
-    return visitor.visitMapType(this, context);
-  }
+  @override
+  dynamic visitType(TypeVisitor visitor, dynamic context) =>
+      visitor.visitMapType(this, context);
 }
 
 const DYNAMIC_TYPE = const BuiltinType(BuiltinTypeName.Dynamic);
@@ -219,6 +219,7 @@ class ReadVarExpr extends Expression {
       this.builtin = (name as BuiltinVar);
     }
   }
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitReadVarExpr(this, context);
   }
@@ -232,6 +233,7 @@ class ReadClassMemberExpr extends Expression {
   final String name;
   ReadClassMemberExpr(this.name, [OutputType type = null]) : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitReadClassMemberExpr(this, context);
   }
@@ -242,10 +244,11 @@ class ReadClassMemberExpr extends Expression {
 }
 
 class WriteClassMemberExpr extends Expression {
-  String name;
-  Expression value;
+  final String name;
+  final Expression value;
   WriteClassMemberExpr(this.name, this.value, [OutputType type]) : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitWriteClassMemberExpr(this, context);
   }
@@ -257,6 +260,7 @@ class WriteVarExpr extends Expression {
   WriteVarExpr(this.name, Expression value, [OutputType type = null])
       : this.value = value,
         super(type ?? value.type);
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitWriteVarExpr(this, context);
   }
@@ -275,6 +279,7 @@ class WriteKeyExpr extends Expression {
       [OutputType type = null])
       : this.value = value,
         super(type ?? value.type);
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitWriteKeyExpr(this, context);
   }
@@ -289,6 +294,7 @@ class WritePropExpr extends Expression {
       : this.value = value,
         super(type ?? value.type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitWritePropExpr(this, context);
   }
@@ -315,6 +321,7 @@ class InvokeMethodExpr extends Expression {
       this.builtin = (method as BuiltinMethod);
     }
   }
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitInvokeMethodExpr(this, context);
   }
@@ -327,6 +334,7 @@ class InvokeMemberMethodExpr extends Expression {
   InvokeMemberMethodExpr(this.methodName, this.args, {OutputType outputType})
       : super(outputType);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitInvokeMemberMethodExpr(this, context);
   }
@@ -338,6 +346,7 @@ class InvokeFunctionExpr extends Expression {
   InvokeFunctionExpr(this.fn, this.args, [OutputType type = null])
       : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitInvokeFunctionExpr(this, context);
   }
@@ -348,6 +357,7 @@ class InstantiateExpr extends Expression {
   final List<Expression> args;
   InstantiateExpr(this.classExpr, this.args, [OutputType type]) : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitInstantiateExpr(this, context);
   }
@@ -357,6 +367,7 @@ class LiteralExpr extends Expression {
   final dynamic value;
   LiteralExpr(this.value, [OutputType type = null]) : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitLiteralExpr(this, context);
   }
@@ -367,6 +378,7 @@ class ExternalExpr extends Expression {
   final List<OutputType> typeParams;
   ExternalExpr(this.value, [OutputType type, this.typeParams]) : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitExternalExpr(this, context);
   }
@@ -380,6 +392,7 @@ class ConditionalExpr extends Expression {
       [this.falseCase, OutputType type])
       : this.trueCase = trueCase,
         super(type ?? trueCase.type);
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitConditionalExpr(this, context);
   }
@@ -396,6 +409,7 @@ class IfNullExpr extends Expression {
   IfNullExpr(this.condition, Expression nullCase, [OutputType type = null])
       : nullCase = nullCase,
         super(type ?? nullCase.type);
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitIfNullExpr(this, context);
   }
@@ -405,6 +419,7 @@ class NotExpr extends Expression {
   final Expression condition;
   NotExpr(this.condition) : super(BOOL_TYPE);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitNotExpr(this, context);
   }
@@ -414,6 +429,7 @@ class CastExpr extends Expression {
   final Expression value;
   CastExpr(this.value, OutputType type) : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitCastExpr(this, context);
   }
@@ -432,6 +448,7 @@ class FunctionExpr extends Expression {
   FunctionExpr(this.params, this.statements, [OutputType type = null])
       : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitFunctionExpr(this, context);
   }
@@ -451,6 +468,7 @@ class BinaryOperatorExpr extends Expression {
       [OutputType type = null])
       : this.lhs = lhs,
         super(type ?? lhs.type);
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitBinaryOperatorExpr(this, context);
   }
@@ -463,6 +481,7 @@ class ReadPropExpr extends Expression {
   ReadPropExpr(this.receiver, this.name, [OutputType type = null])
       : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitReadPropExpr(this, context);
   }
@@ -479,6 +498,7 @@ class ReadKeyExpr extends Expression {
   ReadKeyExpr(this.receiver, this.index, [OutputType type = null])
       : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitReadKeyExpr(this, context);
   }
@@ -493,6 +513,7 @@ class LiteralArrayExpr extends Expression {
 
   LiteralArrayExpr(this.entries, [OutputType type = null]) : super(type);
 
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitLiteralArrayExpr(this, context);
   }
@@ -506,6 +527,7 @@ class LiteralMapExpr extends Expression {
       this.valueType = type.valueType;
     }
   }
+  @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
     return visitor.visitLiteralMapExpr(this, context);
   }
@@ -558,46 +580,50 @@ abstract class Statement {
 }
 
 class DeclareVarStmt extends Statement {
-  String name;
-  Expression value;
-  OutputType type;
+  final String name;
+  final Expression value;
+  final OutputType type;
   DeclareVarStmt(this.name, Expression value,
       [OutputType type = null, List<StmtModifier> modifiers = null])
       : this.type = type ?? value.type,
         this.value = value,
         super(modifiers);
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitDeclareVarStmt(this, context);
   }
 }
 
 class DeclareFunctionStmt extends Statement {
-  String name;
-  List<FnParam> params;
-  List<Statement> statements;
-  OutputType type;
+  final String name;
+  final List<FnParam> params;
+  final List<Statement> statements;
+  final OutputType type;
   DeclareFunctionStmt(this.name, this.params, this.statements,
       [this.type = null, List<StmtModifier> modifiers = null])
       : super(modifiers);
 
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitDeclareFunctionStmt(this, context);
   }
 }
 
 class ExpressionStatement extends Statement {
-  Expression expr;
+  final Expression expr;
   ExpressionStatement(this.expr);
 
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitExpressionStmt(this, context);
   }
 }
 
 class ReturnStatement extends Statement {
-  Expression value;
+  final Expression value;
   ReturnStatement(this.value);
 
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitReturnStmt(this, context);
   }
@@ -665,6 +691,7 @@ class ClassStmt extends Statement {
       this.constructorMethod, this.methods,
       [List<StmtModifier> modifiers = null])
       : super(modifiers);
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitDeclareClassStmt(this, context);
   }
@@ -676,6 +703,7 @@ class IfStmt extends Statement {
   List<Statement> falseCase;
   IfStmt(this.condition, this.trueCase, [this.falseCase = const []]);
 
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitIfStmt(this, context);
   }
@@ -685,6 +713,7 @@ class CommentStmt extends Statement {
   String comment;
   CommentStmt(this.comment);
 
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitCommentStmt(this, context);
   }
@@ -695,6 +724,7 @@ class TryCatchStmt extends Statement {
   List<Statement> catchStmts;
   TryCatchStmt(this.bodyStmts, this.catchStmts);
 
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitTryCatchStmt(this, context);
   }
@@ -704,6 +734,7 @@ class ThrowStmt extends Statement {
   Expression error;
   ThrowStmt(this.error);
 
+  @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
     return visitor.visitThrowStmt(this, context);
   }
@@ -1160,10 +1191,11 @@ Expression replaceVarInExpression(
 }
 
 class _ReplaceVariableTransformer extends ExpressionTransformer {
-  String _varName;
-  Expression _newValue;
+  final String _varName;
+  final Expression _newValue;
   _ReplaceVariableTransformer(this._varName, this._newValue);
 
+  @override
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) =>
       ast.name == this._varName ? this._newValue : ast;
 }
@@ -1175,7 +1207,9 @@ Set<String> findReadVarNames(List<Statement> stmts) {
 }
 
 class _VariableFinder extends RecursiveExpressionVisitor {
-  var varNames = new Set<String>();
+  final varNames = new Set<String>();
+
+  @override
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) {
     this.varNames.add(ast.name);
     return null;
