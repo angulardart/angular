@@ -292,8 +292,10 @@ class Control extends AbstractControl {
     this.updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
   }
 
+  @override
   void _updateValue() {}
 
+  @override
   bool _anyControlsHaveStatus(String status) {
     return false;
   }
@@ -361,10 +363,12 @@ class ControlGroup extends AbstractControl {
     }
   }
 
+  @override
   void _updateValue() {
     this._value = this._reduceValue();
   }
 
+  @override
   bool _anyControlsHaveStatus(String status) {
     return controls.keys.any((name) {
       return contains(name) && controls[name].status == status;
@@ -455,10 +459,12 @@ class ControlArray extends AbstractControl {
     return this.controls.length;
   }
 
+  @override
   void _updateValue() {
     this._value = this.controls.map((control) => control.value).toList();
   }
 
+  @override
   bool _anyControlsHaveStatus(String status) {
     return this.controls.any((c) => c.status == status);
   }

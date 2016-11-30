@@ -76,6 +76,7 @@ class Token {
     return (this.type == TokenType.Number) ? this.numValue : -1;
   }
 
+  @override
   String toString() {
     switch (this.type) {
       case TokenType.Character:
@@ -170,8 +171,12 @@ const $RBRACE = 125;
 const $NBSP = 160;
 
 class ScannerError extends BaseException {
+  @override
   final String message;
+
   ScannerError(this.message);
+
+  @override
   String toString() {
     return this.message;
   }

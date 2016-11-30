@@ -142,6 +142,7 @@ abstract class AbstractEmitterVisitor
     implements o.StatementVisitor, o.ExpressionVisitor {
   final bool _escapeDollarInStrings;
   AbstractEmitterVisitor(this._escapeDollarInStrings);
+  @override
   dynamic visitExpressionStmt(o.ExpressionStatement stmt, context) {
     EmitterVisitorContext ctx = context;
     stmt.expr.visitExpression(this, ctx);
@@ -149,6 +150,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('return ');
@@ -157,8 +159,11 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitCastExpr(o.CastExpr ast, dynamic context);
+  @override
   dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context);
+  @override
   dynamic visitIfStmt(o.IfStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('if (');
@@ -186,7 +191,9 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context);
+  @override
   dynamic visitThrowStmt(o.ThrowStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('throw ');
@@ -195,6 +202,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitCommentStmt(o.CommentStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     var lines = stmt.comment.split('\n');
@@ -204,8 +212,10 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context);
 
+  @override
   dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
@@ -220,6 +230,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitWriteKeyExpr(o.WriteKeyExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
@@ -237,6 +248,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitWritePropExpr(o.WritePropExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
@@ -252,6 +264,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitWriteClassMemberExpr(
       o.WriteClassMemberExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
@@ -268,6 +281,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitInvokeMethodExpr(o.InvokeMethodExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     expr.receiver.visitExpression(this, ctx);
@@ -290,6 +304,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitInvokeMemberMethodExpr(
       o.InvokeMemberMethodExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
@@ -300,6 +315,8 @@ abstract class AbstractEmitterVisitor
   }
 
   String getBuiltinMethodName(o.BuiltinMethod method);
+
+  @override
   dynamic visitInvokeFunctionExpr(o.InvokeFunctionExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
     expr.fn.visitExpression(this, ctx);
@@ -309,6 +326,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var varName = ast.name;
@@ -337,12 +355,14 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitReadClassMemberExpr(o.ReadClassMemberExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('this.${ast.name}');
     return null;
   }
 
+  @override
   dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('new ');
@@ -353,6 +373,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitLiteralExpr(o.LiteralExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var value = ast.value;
@@ -366,7 +387,10 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context);
+
+  @override
   dynamic visitConditionalExpr(o.ConditionalExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('(');
@@ -379,6 +403,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitIfNullExpr(o.IfNullExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('(');
@@ -389,6 +414,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('!');
@@ -396,8 +422,13 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context);
+
+  @override
   dynamic visitDeclareFunctionStmt(o.DeclareFunctionStmt stmt, dynamic context);
+
+  @override
   dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var opStr;
@@ -458,6 +489,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitReadPropExpr(o.ReadPropExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ast.receiver.visitExpression(this, ctx);
@@ -466,6 +498,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitReadKeyExpr(o.ReadKeyExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ast.receiver.visitExpression(this, ctx);
@@ -475,6 +508,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var useNewLine = ast.entries.length > 1;
@@ -487,6 +521,7 @@ abstract class AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     var useNewLine = ast.entries.length > 1;
@@ -533,9 +568,9 @@ abstract class AbstractEmitterVisitor
 
   void visitAllStatements(
       List<o.Statement> statements, EmitterVisitorContext ctx) {
-    statements.forEach((stmt) {
-      return stmt.visitStatement(this, ctx);
-    });
+    for (var stmt in statements) {
+      stmt.visitStatement(this, ctx);
+    }
   }
 }
 

@@ -53,6 +53,7 @@ class AsyncPipe implements OnDestroy {
   AsyncPipe(ChangeDetectorRef _ref) {
     this._ref = _ref;
   }
+  @override
   void ngOnDestroy() {
     if (this._subscription != null) {
       this._dispose();
