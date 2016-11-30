@@ -450,33 +450,6 @@ void main() {
           });
         });
       });
-      test("should notify child's query before notifying parent's query",
-          () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var template = "<needs-query-desc #q1>" +
-              "<needs-query-desc #q2>" +
-              "<div text=\"1\"></div>" +
-              "</needs-query-desc>" +
-              "</needs-query-desc>";
-          tcb
-              .overrideTemplate(MyComp, template)
-              .createAsync(MyComp)
-              .then((view) {
-            var q1 = view.debugElement.children[0].getLocal("q1");
-            var q2 = view.debugElement.children[0].getLocal("q2");
-            var firedQ2 = false;
-            q2.query.changes.listen((_) {
-              firedQ2 = true;
-            });
-            q1.query.changes.listen((_) {
-              expect(firedQ2, isTrue);
-              completer.done();
-            });
-            view.detectChanges();
-          });
-        });
-      });
       test(
           "should correctly clean-up when destroyed together with the directives it is querying",
           () async {
@@ -926,10 +899,8 @@ class InertDirective {
         "<div text=\"ignoreme\"></div><b *ngFor=\"let  dir of query\">{{dir.text}}|</b>")
 @Injectable()
 class NeedsQuery {
+  @ContentChildren(TextDirective)
   QueryList<TextDirective> query;
-  NeedsQuery(@ContentChildren(TextDirective) QueryList<TextDirective> query) {
-    this.query = query;
-  }
 }
 
 @Component(selector: "needs-four-queries", template: "")
@@ -950,12 +921,8 @@ class NeedsFourQueries {
     template: "<div *ngFor=\"let  dir of query\">{{dir.text}}|</div>")
 @Injectable()
 class NeedsQueryDesc {
+  @ContentChildren(TextDirective, descendants: true)
   QueryList<TextDirective> query;
-  NeedsQueryDesc(
-      @ContentChildren(TextDirective, descendants: true)
-          QueryList<TextDirective> query) {
-    this.query = query;
-  }
 }
 
 @Component(
@@ -964,12 +931,8 @@ class NeedsQueryDesc {
     template: "<ng-content>")
 @Injectable()
 class NeedsQueryByLabel {
+  @ContentChildren("textLabel", descendants: true)
   QueryList<dynamic> query;
-  NeedsQueryByLabel(
-      @ContentChildren("textLabel", descendants: true)
-          QueryList<dynamic> query) {
-    this.query = query;
-  }
 }
 
 @Component(
@@ -978,10 +941,8 @@ class NeedsQueryByLabel {
     template: "<div #textLabel>text</div>")
 @Injectable()
 class NeedsViewQueryByLabel {
+  @ViewChildren("textLabel")
   QueryList<dynamic> query;
-  NeedsViewQueryByLabel(@ViewChildren("textLabel") QueryList<dynamic> query) {
-    this.query = query;
-  }
 }
 
 @Component(
@@ -990,12 +951,8 @@ class NeedsViewQueryByLabel {
     template: "<ng-content>")
 @Injectable()
 class NeedsQueryByTwoLabels {
+  @ContentChildren("textLabel1,textLabel2", descendants: true)
   QueryList<dynamic> query;
-  NeedsQueryByTwoLabels(
-      @ContentChildren("textLabel1,textLabel2", descendants: true)
-          QueryList<dynamic> query) {
-    this.query = query;
-  }
 }
 
 @Component(
@@ -1005,11 +962,8 @@ class NeedsQueryByTwoLabels {
         "<div *ngFor=\"let  dir of query\">{{dir.text}}|</div><ng-content></ng-content>")
 @Injectable()
 class NeedsQueryAndProject {
+  @ContentChildren(TextDirective)
   QueryList<TextDirective> query;
-  NeedsQueryAndProject(
-      @ContentChildren(TextDirective) QueryList<TextDirective> query) {
-    this.query = query;
-  }
 }
 
 @Component(
@@ -1019,10 +973,8 @@ class NeedsQueryAndProject {
         "<div text=\"3\"></div><div text=\"4\"></div>")
 @Injectable()
 class NeedsViewQuery {
+  @ViewChildren(TextDirective)
   QueryList<TextDirective> query;
-  NeedsViewQuery(@ViewChildren(TextDirective) QueryList<TextDirective> query) {
-    this.query = query;
-  }
 }
 
 @Component(
@@ -1032,10 +984,9 @@ class NeedsViewQuery {
 @Injectable()
 class NeedsViewQueryIf {
   bool show;
+  @ViewChildren(TextDirective)
   QueryList<TextDirective> query;
-  NeedsViewQueryIf(
-      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
-    this.query = query;
+  NeedsViewQueryIf() {
     this.show = false;
   }
 }
@@ -1047,10 +998,9 @@ class NeedsViewQueryIf {
 @Injectable()
 class NeedsViewQueryNestedIf {
   bool show;
+  @ViewChildren(TextDirective)
   QueryList<TextDirective> query;
-  NeedsViewQueryNestedIf(
-      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
-    this.query = query;
+  NeedsViewQueryNestedIf() {
     this.show = true;
   }
 }
@@ -1063,11 +1013,10 @@ class NeedsViewQueryNestedIf {
         "<div text=\"4\"></div>")
 @Injectable()
 class NeedsViewQueryOrder {
+  @ViewChildren(TextDirective)
   QueryList<TextDirective> query;
   List<String> list;
-  NeedsViewQueryOrder(
-      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
-    this.query = query;
+  NeedsViewQueryOrder() {
     this.list = ["2", "3"];
   }
 }
@@ -1080,11 +1029,10 @@ class NeedsViewQueryOrder {
         "<div text=\"4\"></div></div>")
 @Injectable()
 class NeedsViewQueryOrderWithParent {
+  @ViewChildren(TextDirective)
   QueryList<TextDirective> query;
   List<String> list;
-  NeedsViewQueryOrderWithParent(
-      @ViewChildren(TextDirective) QueryList<TextDirective> query) {
-    this.query = query;
+  NeedsViewQueryOrderWithParent() {
     this.list = ["2", "3"];
   }
 }
@@ -1093,13 +1041,11 @@ class NeedsViewQueryOrderWithParent {
     selector: "needs-tpl", template: "<template let-x=\"shadow\"></template>")
 class NeedsTpl {
   ViewContainerRef vc;
+  @ViewChildren(TemplateRef)
   QueryList<TemplateRef> viewQuery;
+  @ContentChildren(TemplateRef)
   QueryList<TemplateRef> query;
-  NeedsTpl(@ViewChildren(TemplateRef) QueryList<TemplateRef> viewQuery,
-      @ContentChildren(TemplateRef) QueryList<TemplateRef> query, this.vc) {
-    this.viewQuery = viewQuery;
-    this.query = query;
-  }
+  NeedsTpl(this.vc);
 }
 
 @Component(

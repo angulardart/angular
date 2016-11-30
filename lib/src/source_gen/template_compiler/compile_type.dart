@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
@@ -43,9 +42,7 @@ class CompileTypeMetadataVisitor
           isSelf: _hasAnnotation(p, Self),
           isHost: _hasAnnotation(p, Host),
           isSkipSelf: _hasAnnotation(p, SkipSelf),
-          isOptional: _hasAnnotation(p, Optional),
-          query: _getQuery(p),
-          viewQuery: _getViewQuery(p));
+          isOptional: _hasAnnotation(p, Optional));
 
   CompileTokenMetadata _getToken(ParameterElement p) =>
       _hasAnnotation(p, Attribute)
@@ -64,40 +61,6 @@ class CompileTypeMetadataVisitor
   CompileTokenMetadata _tokenForType(ParameterElement p) =>
       new CompileTokenMetadata(
           identifier: new CompileIdentifierMetadata(name: p.type.name));
-
-  CompileQueryMetadata _getQuery(ParameterElement p) => _hasAnnotation(p, Query)
-      ? _createQueryMetadata(_getAnnotation(p, Query))
-      : _hasAnnotation(p, ContentChildren)
-          ? _createQueryMetadata(_getAnnotation(p, ContentChildren))
-          : null; // TODO(alorenzen): handle ContentChild
-
-  CompileQueryMetadata _getViewQuery(ParameterElement p) =>
-      _hasAnnotation(p, ViewQuery)
-          ? _createQueryMetadata(_getAnnotation(p, ViewQuery), first: true)
-          : _hasAnnotation(p, ViewChildren)
-              ? _createQueryMetadata(_getAnnotation(p, ViewChildren))
-              : null;
-
-  CompileQueryMetadata _createQueryMetadata(ElementAnnotation annotation,
-      {bool first: false}) {
-    return new CompileQueryMetadata(
-        selectors: _getSelector(getField(annotation.constantValue, 'selector')),
-        descendants: coerceBool(annotation.constantValue, 'descendants'),
-        first: first,
-        read: null,
-        propertyName: null);
-  }
-
-  List<CompileTokenMetadata> _getSelector(DartObject obj) {
-    if (obj.toStringValue() != null) {
-      return obj
-          .toStringValue()
-          .split(',')
-          .map((value) => new CompileTokenMetadata(value: value))
-          .toList();
-    }
-    throw new ArgumentError("Types not yet supported.");
-  }
 
   ElementAnnotation _getAnnotation(Element element, Type type) =>
       element.metadata.firstWhere(

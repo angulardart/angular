@@ -82,7 +82,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
         viewFactory_InjectableComponent0(this.injector(0), _appEl_0);
     _InjectableComponent_0_3 = new import2.InjectableComponent(
         null, this.parentInjector.get(InjectableService, null));
-    _appEl_0.initComponent(_InjectableComponent_0_3, [], compView_0);
+    _appEl_0.initComponent(_InjectableComponent_0_3, compView_0);
     compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;

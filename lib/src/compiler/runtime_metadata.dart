@@ -184,20 +184,12 @@ class RuntimeMetadataResolver {
       } else {
         compileToken = this.getTokenMetadata(dep.key.token);
       }
-      var compileQuery;
-      var q = (dep.properties.firstWhere((p) => p is Query, orElse: () => null)
-          as Query);
-      if (q != null) {
-        compileQuery = this.getQueryMetadata(q, null);
-      }
       return new cpl.CompileDiDependencyMetadata(
           isAttribute: isAttribute,
           isHost: dep.upperBoundVisibility is Host,
           isSelf: dep.upperBoundVisibility is Self,
           isSkipSelf: dep.lowerBoundVisibility is SkipSelf,
           isOptional: dep.optional,
-          query: q != null && !q.isViewQuery ? compileQuery : null,
-          viewQuery: q != null && q.isViewQuery ? compileQuery : null,
           token: compileToken);
     }).toList();
   }

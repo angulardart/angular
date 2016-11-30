@@ -2443,11 +2443,11 @@ class ToolbarViewContainer {
     directives: const [ToolbarViewContainer, NgFor])
 @Injectable()
 class ToolbarComponent {
+  @ContentChildren(ToolbarPart)
   QueryList<ToolbarPart> query;
   String ctxProp;
-  ToolbarComponent(@ContentChildren(ToolbarPart) QueryList<ToolbarPart> query) {
+  ToolbarComponent() {
     this.ctxProp = "hello world";
-    this.query = query;
   }
 }
 
