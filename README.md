@@ -9,7 +9,7 @@
 [![Build Status](https://travis-ci.org/dart-lang/angular2.svg?branch=master)](https://travis-ci.org/dart-lang/angular2)
 [![Gitter](https://img.shields.io/gitter/room/dart-lang/angular2.svg)](https://gitter.im/dart-lang/angular2)
 
-We're the production web framework of choice for Google [AdWords][ad_words] and [AdSense] [ad_sense].
+We're the production web framework of choice for Google [AdWords][ad_words] and [AdSense][ad_sense].
 
 [ad_words]: http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html
 [ad_sense]: http://news.dartlang.org/2016/10/google-adsense-angular-dart.html
