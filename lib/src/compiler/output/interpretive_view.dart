@@ -7,6 +7,7 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'dynamic_instance.dart';
 
 class InterpretiveAppViewInstanceFactory implements InstanceFactory {
+  @override
   DynamicInstance createInstance(
       dynamic superClass,
       dynamic clazz,
@@ -30,14 +31,18 @@ class InterpretiveAppViewInstanceFactory implements InstanceFactory {
 
 class _InterpretiveAppView extends DebugAppView<dynamic>
     implements DynamicInstance {
+  @override
   final Map<String, dynamic> props;
+  @override
   final Map<String, Function> getters;
+  @override
   final Map<String, Function> methods;
   _InterpretiveAppView(
       List<dynamic> args, this.props, this.getters, this.methods)
       : super(args[0], args[1], args[2], args[3] as Map<String, dynamic>,
             args[4], args[5], args[6], args[7] as List<StaticNodeDebugInfo>);
 
+  @override
   ViewContainer createInternal(dynamic /* String | dynamic */ rootSelector) {
     var m = methods['createInternal'];
     if (m != null) {
@@ -47,6 +52,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
     }
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     var m = methods['injectorGetInternal'];
@@ -57,6 +63,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
     }
   }
 
+  @override
   void destroyInternal() {
     var m = methods['destroyInternal'];
     if (m != null) {
@@ -66,6 +73,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
     }
   }
 
+  @override
   void dirtyParentQueriesInternal() {
     var m = methods['dirtyParentQueriesInternal'];
     if (m != null) {
@@ -75,6 +83,7 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
     }
   }
 
+  @override
   void detectChangesInternal() {
     var m = methods['detectChangesInternal'];
     if (m != null) {

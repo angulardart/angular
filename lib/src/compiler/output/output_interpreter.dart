@@ -313,6 +313,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return result;
   }
 
+  @override
   dynamic visitInvokeFunctionExpr(o.InvokeFunctionExpr stmt, dynamic context) {
     _ExecutionContext ctx = context;
     var args = this.visitAllExpressions(stmt.args, ctx);
@@ -329,11 +330,13 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
+  @override
   dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
     _ExecutionContext ctx = context;
     return new ReturnValue(stmt.value.visitExpression(this, ctx));
   }
 
+  @override
   dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
     _ExecutionContext ctx = context;
     var clazz = new _DynamicClass(stmt, ctx, this);
@@ -341,11 +344,13 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
+  @override
   dynamic visitExpressionStmt(o.ExpressionStatement stmt, dynamic context) {
     _ExecutionContext ctx = context;
     return stmt.expr.visitExpression(this, ctx);
   }
 
+  @override
   dynamic visitIfStmt(o.IfStmt stmt, dynamic context) {
     _ExecutionContext ctx = context;
     var condition = stmt.condition.visitExpression(this, ctx);
@@ -357,6 +362,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
+  @override
   dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
     _ExecutionContext ctx = context;
     try {
@@ -369,15 +375,16 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
+  @override
   dynamic visitThrowStmt(o.ThrowStmt stmt, dynamic context) {
     _ExecutionContext ctx = context;
     throw stmt.error.visitExpression(this, ctx);
   }
 
-  dynamic visitCommentStmt(o.CommentStmt stmt, [dynamic context]) {
-    return null;
-  }
+  @override
+  dynamic visitCommentStmt(o.CommentStmt stmt, [dynamic context]) => null;
 
+  @override
   dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var args = this.visitAllExpressions(ast.args, ctx);
@@ -389,16 +396,17 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
-  dynamic visitLiteralExpr(o.LiteralExpr ast, dynamic context) {
-    return ast.value;
-  }
+  @override
+  dynamic visitLiteralExpr(o.LiteralExpr ast, dynamic context) => ast.value;
 
+  @override
   dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
     return ast.value.runtimeCallback != null
         ? ast.value.runtimeCallback()
         : ast.value.runtime;
   }
 
+  @override
   dynamic visitConditionalExpr(o.ConditionalExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     if (ast.condition.visitExpression(this, ctx)) {
@@ -409,28 +417,33 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
+  @override
   dynamic visitIfNullExpr(o.IfNullExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     return ast.condition.visitExpression(this, ctx) ??
         ast.nullCase.visitExpression(this, ctx);
   }
 
+  @override
   dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     return !ast.condition.visitExpression(this, ctx);
   }
 
+  @override
   dynamic visitCastExpr(o.CastExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     return ast.value.visitExpression(this, ctx);
   }
 
+  @override
   dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var paramNames = ast.params.map((param) => param.name).toList();
     return _declareFn(paramNames, ast.statements, ctx, this);
   }
 
+  @override
   dynamic visitDeclareFunctionStmt(
       o.DeclareFunctionStmt stmt, dynamic context) {
     _ExecutionContext ctx = context;
@@ -439,6 +452,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return null;
   }
 
+  @override
   dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var lhs = () => ast.lhs.visitExpression(this, ctx);
@@ -479,6 +493,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     }
   }
 
+  @override
   dynamic visitReadPropExpr(o.ReadPropExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var receiver = ast.receiver.visitExpression(this, ctx);
@@ -503,6 +518,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return result;
   }
 
+  @override
   dynamic visitReadKeyExpr(o.ReadKeyExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var receiver = ast.receiver.visitExpression(this, ctx);
@@ -510,11 +526,13 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     return receiver[prop];
   }
 
+  @override
   dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     return this.visitAllExpressions(ast.entries, ctx);
   }
 
+  @override
   dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
     _ExecutionContext ctx = context;
     var result = {};

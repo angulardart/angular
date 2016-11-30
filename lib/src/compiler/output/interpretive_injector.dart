@@ -5,6 +5,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "dynamic_instance.dart";
 
 class InterpretiveInjectorInstanceFactory implements InstanceFactory {
+  @override
   DynamicInstance createInstance(
       dynamic superClass,
       dynamic clazz,
@@ -22,13 +23,18 @@ class InterpretiveInjectorInstanceFactory implements InstanceFactory {
 
 class _InterpretiveInjector extends CodegenInjector<dynamic>
     implements DynamicInstance {
-  dynamic clazz;
-  Map<String, dynamic> props;
-  Map<String, Function> getters;
-  Map<String, Function> methods;
+  @override
+  final dynamic clazz;
+  @override
+  final Map<String, dynamic> props;
+  @override
+  final Map<String, Function> getters;
+  @override
+  final Map<String, Function> methods;
   _InterpretiveInjector(
       List<dynamic> args, this.clazz, this.props, this.getters, this.methods)
       : super(args[0], args[1], args[2]);
+  @override
   dynamic getInternal(dynamic token, dynamic notFoundResult) {
     var m = this.methods["getInternal"];
     return m(token, notFoundResult);

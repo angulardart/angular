@@ -36,6 +36,7 @@ String debugOutputAstAsDart(
 }
 
 class DartEmitter implements OutputEmitter {
+  @override
   String emitStatements(
       String moduleUrl, List<o.Statement> stmts, List<String> exportedVars) {
     var srcParts = [];
@@ -95,12 +96,14 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   _DartEmitterVisitor(this._moduleUrl) : super(true);
 
+  @override
   dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     this._visitIdentifier(ast.value, ast.typeParams, ctx);
     return null;
   }
 
+  @override
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (stmt.hasModifier(o.StmtModifier.Final)) {
@@ -127,6 +130,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitCastExpr(o.CastExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('(');
@@ -137,6 +141,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.pushClass(stmt);
@@ -236,6 +241,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     ctx.exitMethod();
   }
 
+  @override
   dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('(');
@@ -248,6 +254,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitDeclareFunctionStmt(
       o.DeclareFunctionStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
@@ -266,6 +273,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   String getBuiltinMethodName(o.BuiltinMethod method) {
     var name;
     switch (method) {
@@ -284,6 +292,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return name;
   }
 
+  @override
   dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (identical(ast.builtin, o.BuiltinVar.MetadataMap)) {
@@ -294,6 +303,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitReadClassMemberExpr(o.ReadClassMemberExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (ctx.activeMethod != null &&
@@ -306,6 +316,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitWriteClassMemberExpr(
       o.WriteClassMemberExpr expr, dynamic context) {
     EmitterVisitorContext ctx = context;
@@ -321,6 +332,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.println('try {');
@@ -336,6 +348,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     switch (ast.operator) {
@@ -359,6 +372,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (isConstType(ast.type)) {
@@ -370,6 +384,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return super.visitLiteralArrayExpr(ast, ctx);
   }
 
+  @override
   dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (isConstType(ast.type)) {
@@ -383,6 +398,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return super.visitLiteralMapExpr(ast, ctx);
   }
 
+  @override
   dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print(isConstType(ast.type) ? 'const' : 'new');
@@ -394,6 +410,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitBuiltintType(o.BuiltinType type, dynamic context) {
     EmitterVisitorContext ctx = context;
     var typeStr;
@@ -426,12 +443,14 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitExternalType(o.ExternalType ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     this._visitIdentifier(ast.value, ast.typeParams, ctx);
     return null;
   }
 
+  @override
   dynamic visitArrayType(o.ArrayType type, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('List<');
@@ -444,6 +463,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     return null;
   }
 
+  @override
   dynamic visitMapType(o.MapType type, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.print('Map<String, ');
