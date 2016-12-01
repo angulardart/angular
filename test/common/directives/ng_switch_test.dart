@@ -52,11 +52,18 @@ void main() {
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement,
                 hasTextContent("when default"));
+            // Set to a.
             fixture.debugElement.componentInstance.switchValue = "a";
             fixture.detectChanges();
             expect(
                 fixture.debugElement.nativeElement, hasTextContent("when a"));
+            // Set to b.
             fixture.debugElement.componentInstance.switchValue = "b";
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement,
+                hasTextContent("when default"));
+            // Set it again to default using c.
+            fixture.debugElement.componentInstance.switchValue = "c";
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement,
                 hasTextContent("when default"));
