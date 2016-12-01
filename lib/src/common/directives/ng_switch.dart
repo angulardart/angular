@@ -4,17 +4,17 @@ import "package:angular2/core.dart"
 const _WHEN_DEFAULT = const Object();
 
 class SwitchView {
-  ViewContainerRef _viewContainerRef;
-  TemplateRef _templateRef;
+  final ViewContainerRef _viewContainerRef;
+  final TemplateRef _templateRef;
 
   SwitchView(this._viewContainerRef, this._templateRef);
 
   void create() {
-    this._viewContainerRef.createEmbeddedView(this._templateRef);
+    _viewContainerRef.createEmbeddedView(this._templateRef);
   }
 
   void destroy() {
-    this._viewContainerRef.clear();
+    _viewContainerRef.clear();
   }
 }
 
@@ -45,24 +45,29 @@ class SwitchView {
 ///
 /// [ex]: examples/template-syntax/#ngSwitch
 /// [guide]: docs/guide/template-syntax.html#ngSwitch
+///
 @Directive(selector: "[ngSwitch]", inputs: const ["ngSwitch"])
 class NgSwitch {
   dynamic _switchValue;
   bool _useDefault = false;
   var _valueViews = new Map<dynamic, List<SwitchView>>();
+
   List<SwitchView> _activeViews = [];
   set ngSwitch(dynamic value) {
-    // Empty the currently active ViewContainers
-    this._emptyAllActiveViews();
-    // Add the ViewContainers matching the value (with a fallback to default)
-    this._useDefault = false;
-    var views = this._valueViews[value];
-    if (views == null) {
-      this._useDefault = true;
-      views = this._valueViews[_WHEN_DEFAULT];
+    // Calculate set of views to display for this value.
+    var views = _valueViews[value];
+    if (views != null) {
+      _useDefault = false;
+    } else {
+      // Since there is no matching view for the value and there is no
+      // default case, nothing to do just return.
+      if (_useDefault) return;
+      _useDefault = true;
+      views = _valueViews[_WHEN_DEFAULT];
     }
-    this._activateViews(views);
-    this._switchValue = value;
+    _emptyAllActiveViews();
+    _activateViews(views);
+    _switchValue = value;
   }
 
   void _onWhenValueChanged(dynamic oldWhen, dynamic newWhen, SwitchView view) {
@@ -88,27 +93,25 @@ class NgSwitch {
 
   void _emptyAllActiveViews() {
     var activeContainers = this._activeViews;
-    for (var i = 0; i < activeContainers.length; i++) {
+    for (var i = 0, len = activeContainers.length; i < len; i++) {
       activeContainers[i].destroy();
     }
     this._activeViews = [];
   }
 
   void _activateViews(List<SwitchView> views) {
-    // TODO(vicb): assert(this._activeViews.length === 0);
-    if (views != null) {
-      for (var i = 0; i < views.length; i++) {
-        views[i].create();
-      }
-      this._activeViews = views;
+    if (views == null) return;
+    for (var i = 0, len = views.length; i < len; i++) {
+      views[i].create();
     }
+    _activeViews = views;
   }
 
   void _registerView(dynamic value, SwitchView view) {
-    var views = this._valueViews[value];
+    var views = _valueViews[value];
     if (views == null) {
-      views = [];
-      this._valueViews[value] = views;
+      views = <SwitchView>[];
+      _valueViews[value] = views;
     }
     views.add(view);
   }
@@ -116,10 +119,10 @@ class NgSwitch {
   void _deregisterView(dynamic value, SwitchView view) {
     // `_WHEN_DEFAULT` is used a marker for non-registered whens
     if (identical(value, _WHEN_DEFAULT)) return;
-    var views = this._valueViews[value];
+    var views = _valueViews[value];
     if (views.length == 1) {
-      (this._valueViews.containsKey(value) &&
-          (this._valueViews.remove(value) != null || true));
+      (_valueViews.containsKey(value) &&
+          (_valueViews.remove(value) != null || true));
     } else {
       views.remove(view);
     }
@@ -133,6 +136,7 @@ class NgSwitch {
 /// are displayed.
 ///
 /// See [NgSwitch] for more details and example.
+///
 @Directive(selector: "[ngSwitchWhen]", inputs: const ["ngSwitchWhen"])
 class NgSwitchWhen {
   // `_WHEN_DEFAULT` is used as a marker for a not yet initialized value
@@ -155,11 +159,12 @@ class NgSwitchWhen {
 /// switch expression value.
 ///
 /// See [NgSwitch] for more details and example.
+///
 @Directive(selector: "[ngSwitchDefault]")
 class NgSwitchDefault {
   NgSwitchDefault(ViewContainerRef viewContainer, TemplateRef templateRef,
-      @Host() NgSwitch sswitch) {
-    sswitch._registerView(
+      @Host() NgSwitch switchDirective) {
+    switchDirective._registerView(
         _WHEN_DEFAULT, new SwitchView(viewContainer, templateRef));
   }
 }
