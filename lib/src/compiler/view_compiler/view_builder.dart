@@ -715,6 +715,9 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
 
 List<o.Statement> generateDestroyMethod(CompileView view) {
   var statements = <o.Statement>[];
+  for (o.Expression child in view.viewContainerAppElements) {
+    statements.add(child.callMethod('destroyNestedViews', []).toStmt());
+  }
   for (o.Expression child in view.viewChildren) {
     statements.add(child.callMethod('destroy', []).toStmt());
   }
@@ -832,13 +835,18 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       view.detectChangesRenderPropertiesMethod.isEmpty &&
       view.updateViewQueriesMethod.isEmpty &&
       view.afterViewLifecycleCallbacksMethod.isEmpty &&
-      view.viewChildren.isEmpty) {
+      view.viewChildren.isEmpty &&
+      view.viewContainerAppElements.isEmpty) {
     return stmts;
   }
   // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
-  stmts.add(new o.InvokeMemberMethodExpr('detectContentChildrenChanges', [])
-      .toStmt());
+
+  // Add content child change detection calls.
+  for (o.Expression contentChild in view.viewContainerAppElements) {
+    stmts.add(
+        contentChild.callMethod('detectChangesInNestedViews', []).toStmt());
+  }
 
   // Add Content query updates.
   List<o.Statement> afterContentStmts =

@@ -36,6 +36,7 @@ class CompileView implements NameResolver {
   List<o.Expression> viewChildren = [];
   List<CompileNode> nodes = [];
   List<o.Expression> rootNodesOrViewContainers = [];
+  List<o.Expression> viewContainerAppElements = [];
   List<CompileBinding> bindings = [];
   List<o.Statement> classStatements = [];
   CompileMethod createMethod;
