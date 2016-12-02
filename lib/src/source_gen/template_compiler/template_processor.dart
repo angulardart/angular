@@ -37,6 +37,6 @@ Future<TemplateCompilerOutputs> processTemplates(
     return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: buildStep.input.id);
 
-  final ngDepsModel = element.accept(new NgDepsVisitor(buildStep));
+  final ngDepsModel = await extractNgDepsModel(element, buildStep);
   return new TemplateCompilerOutputs(compiledTemplates, ngDepsModel);
 }
