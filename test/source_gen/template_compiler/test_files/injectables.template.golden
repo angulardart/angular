@@ -7,6 +7,7 @@
 
 import 'injectables.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular2/angular2.dart';
 export 'injectables.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
