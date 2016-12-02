@@ -61,7 +61,7 @@ class ComponentRefImpl extends ComponentRef {
   ChangeDetectorRef get changeDetectorRef => hostElement.parentView.ref;
 
   void destroy() {
-    hostElement.parentView.destroy();
+    hostElement.parentView.detachAndDestroy();
   }
 
   void onDestroy(OnDestroyCallback callback) {

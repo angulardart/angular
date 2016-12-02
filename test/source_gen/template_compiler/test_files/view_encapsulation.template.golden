@@ -97,7 +97,6 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -199,7 +198,6 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -296,7 +294,6 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 

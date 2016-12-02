@@ -110,10 +110,10 @@ class DebugAppView<T> extends AppView<T> {
     }
   }
 
-  void destroyLocal() {
+  void destroy() {
     this._resetDebug();
     try {
-      super.destroyLocal();
+      super.destroy();
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;

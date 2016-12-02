@@ -97,7 +97,6 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -199,7 +198,6 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -298,7 +296,6 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -400,7 +397,6 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -502,7 +498,6 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -602,7 +597,6 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
@@ -704,7 +698,6 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 
