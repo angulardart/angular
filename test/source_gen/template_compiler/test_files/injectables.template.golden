@@ -64,6 +64,7 @@ RenderComponentType renderType_InjectableComponentHost;
 class ViewInjectableComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.InjectableComponent> _compView_0;
   import2.InjectableComponent _InjectableComponent_0_3;
   ViewInjectableComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -78,12 +79,11 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('test-injectables', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 =
-        viewFactory_InjectableComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_InjectableComponent0(this.injector(0), _appEl_0);
     _InjectableComponent_0_3 = new import2.InjectableComponent(
         null, this.parentInjector.get(InjectableService, null));
-    _appEl_0.initComponent(_InjectableComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
+    _appEl_0.initComponent(_InjectableComponent_0_3, _compView_0);
+    _compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
   }
@@ -95,6 +95,15 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
       return _InjectableComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    detectContentChildrenChanges();
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
   }
 }
 
