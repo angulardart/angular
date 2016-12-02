@@ -1,7 +1,6 @@
 [Dart][dart_web] implementation of the [Angular web framework][angular_dart].
 
 [dart_web]: https://webdev.dartlang.org/
-[angular_dart]: https://angular.io/dart
 
 <!-- Badges -->
 
@@ -17,5 +16,7 @@ We're the production web framework of choice for Google [AdWords][ad_words] and 
  * [Pub package](https://pub.dartlang.org/packages/angular2)
  * [Source code](https://github.com/dart-lang/angular2)
  * [Issues](https://github.com/dart-lang/angular2/issues)
- * [Documentation](http://angular.io/dart)
+ * [Documentation][angular_dart]
  * [Contributor guidelines](https://github.com/dart-lang/angular2/blob/master/CONTRIBUTING.md)
+
+[angular_dart]: https://webdev.dartlang.org/angular
