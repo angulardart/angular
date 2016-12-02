@@ -11,27 +11,27 @@ class _DebugState {
 var NULL_DEBUG_STATE = new _DebugState(null, null);
 
 class CompileMethod {
-  CompileView _view;
   _DebugState _newState = NULL_DEBUG_STATE;
   _DebugState _currState = NULL_DEBUG_STATE;
   bool _debugEnabled;
   List<o.Statement> _bodyStatements = [];
-  CompileMethod(this._view) {
-    this._debugEnabled = this._view.genConfig.genDebugInfo;
+
+  CompileMethod(CompileView view) {
+    _debugEnabled = view.genConfig.genDebugInfo;
   }
   void _updateDebugContextIfNeeded() {
-    if (!identical(this._newState.nodeIndex, this._currState.nodeIndex) ||
-        !identical(this._newState.sourceAst, this._currState.sourceAst)) {
-      var expr = this._updateDebugContext(this._newState);
+    if ((_newState.nodeIndex != _currState.nodeIndex) ||
+        (_newState.sourceAst != _currState.sourceAst)) {
+      var expr = _updateDebugContext(this._newState);
       if (expr != null) {
-        this._bodyStatements.add(expr.toStmt());
+        _bodyStatements.add(expr.toStmt());
       }
     }
   }
 
   o.Expression _updateDebugContext(_DebugState newState) {
-    this._currState = this._newState = newState;
-    if (this._debugEnabled) {
+    _currState = _newState = newState;
+    if (_debugEnabled) {
       var sourceLocation = newState.sourceAst != null
           ? newState.sourceAst.sourceSpan.start
           : null;
@@ -46,29 +46,27 @@ class CompileMethod {
   }
 
   o.Expression resetDebugInfoExpr(num nodeIndex, TemplateAst templateAst) {
-    var res = this._updateDebugContext(new _DebugState(nodeIndex, templateAst));
+    var res = _updateDebugContext(new _DebugState(nodeIndex, templateAst));
     return res ?? o.NULL_EXPR;
   }
 
   void resetDebugInfo(num nodeIndex, TemplateAst templateAst) {
-    this._newState = new _DebugState(nodeIndex, templateAst);
+    _newState = new _DebugState(nodeIndex, templateAst);
   }
 
   void addStmt(o.Statement stmt) {
-    this._updateDebugContextIfNeeded();
-    this._bodyStatements.add(stmt);
+    _updateDebugContextIfNeeded();
+    _bodyStatements.add(stmt);
   }
 
   void addStmts(List<o.Statement> stmts) {
-    this._updateDebugContextIfNeeded();
-    this._bodyStatements.addAll(stmts);
+    _updateDebugContextIfNeeded();
+    _bodyStatements.addAll(stmts);
   }
 
   List<o.Statement> finish() {
-    return this._bodyStatements;
+    return _bodyStatements;
   }
 
-  bool isEmpty() {
-    return identical(this._bodyStatements.length, 0);
-  }
+  bool get isEmpty => _bodyStatements.isEmpty;
 }

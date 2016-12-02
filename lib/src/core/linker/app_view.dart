@@ -40,7 +40,6 @@ abstract class AppView<T> {
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
   List subscriptions;
   List<AppView> contentChildren = [];
-  List<AppView> viewChildren = [];
   AppView renderParent;
   ViewContainer viewContainerElement;
 
@@ -170,9 +169,6 @@ abstract class AppView<T> {
     this.allNodes = allNodes;
     this.subscriptions = subscriptions;
     if (type == ViewType.COMPONENT) {
-      // Note: the render nodes have been attached to their host element
-      // in the ViewFactory already.
-      declarationViewContainer.parentView.viewChildren.add(this);
       dirtyParentQueriesInternal();
     }
   }
@@ -278,11 +274,6 @@ abstract class AppView<T> {
     for (var i = 0; i < length; i++) {
       children[i]._destroyRecurse();
     }
-    children = viewChildren;
-    int viewChildCount = viewChildren.length;
-    for (var i = 0; i < viewChildCount; i++) {
-      children[i]._destroyRecurse();
-    }
     destroyLocal();
     destroyed = true;
   }
@@ -358,18 +349,11 @@ abstract class AppView<T> {
   /// Overwritten by implementations
   void detectChangesInternal() {
     detectContentChildrenChanges();
-    detectViewChildrenChanges();
   }
 
   void detectContentChildrenChanges() {
     for (var i = 0, length = contentChildren.length; i < length; ++i) {
       contentChildren[i].detectChanges();
-    }
-  }
-
-  void detectViewChildrenChanges() {
-    for (var i = 0, len = viewChildren.length; i < len; ++i) {
-      viewChildren[i].detectChanges();
     }
   }
 

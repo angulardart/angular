@@ -30,6 +30,10 @@ class CompileView implements NameResolver {
   List<List<String>> templateVariableBindings;
   ViewType viewType;
   CompileTokenMap<List<CompileQuery>> viewQueries;
+
+  /// Contains references to view children so we can generate code for
+  /// change detection and destroy.
+  List<o.Expression> viewChildren = [];
   List<CompileNode> nodes = [];
   List<o.Expression> rootNodesOrViewContainers = [];
   List<CompileBinding> bindings = [];

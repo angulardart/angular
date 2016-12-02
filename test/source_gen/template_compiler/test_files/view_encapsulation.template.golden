@@ -64,6 +64,7 @@ RenderComponentType renderType_EmulatedComponentHost;
 class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.EmulatedComponent> _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_3;
   ViewEmulatedComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -78,10 +79,10 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Emulated', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
     _EmulatedComponent_0_3 = new import2.EmulatedComponent();
-    _appEl_0.initComponent(_EmulatedComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
+    _appEl_0.initComponent(_EmulatedComponent_0_3, _compView_0);
+    _compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
   }
@@ -93,6 +94,15 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
       return _EmulatedComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    detectContentChildrenChanges();
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
   }
 }
 
@@ -156,6 +166,7 @@ RenderComponentType renderType_NativeComponentHost;
 class ViewNativeComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.NativeComponent> _compView_0;
   import2.NativeComponent _NativeComponent_0_3;
   ViewNativeComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -170,10 +181,10 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Native', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
     _NativeComponent_0_3 = new import2.NativeComponent();
-    _appEl_0.initComponent(_NativeComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
+    _appEl_0.initComponent(_NativeComponent_0_3, _compView_0);
+    _compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
   }
@@ -185,6 +196,15 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
       return _NativeComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    detectContentChildrenChanges();
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
   }
 }
 
@@ -244,6 +264,7 @@ RenderComponentType renderType_NoneComponentHost;
 class ViewNoneComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.NoneComponent> _compView_0;
   import2.NoneComponent _NoneComponent_0_3;
   ViewNoneComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -258,10 +279,10 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('None', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
     _NoneComponent_0_3 = new import2.NoneComponent();
-    _appEl_0.initComponent(_NoneComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
+    _appEl_0.initComponent(_NoneComponent_0_3, _compView_0);
+    _compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
   }
@@ -272,6 +293,15 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
       return _NoneComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    detectContentChildrenChanges();
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
   }
 }
 

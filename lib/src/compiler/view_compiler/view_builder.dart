@@ -324,19 +324,25 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.references,
         isHtmlElement: isHtmlElement);
     this.view.nodes.add(compileElement);
-    o.ReadVarExpr compViewExpr;
+    o.Expression compViewExpr;
     if (component != null) {
       var nestedComponentIdentifier =
           new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));
       this
           .targetDependencies
           .add(new ViewCompileDependency(component, nestedComponentIdentifier));
-      compViewExpr = o.variable('compView_${nodeIndex}');
+      String compViewName = '_compView_${nodeIndex}';
+      compViewExpr = new o.ReadClassMemberExpr(compViewName);
+      view.fields.add(new o.ClassField(compViewName,
+          outputType: o.importType(
+              Identifiers.AppView, [o.importType(component.type)])));
       compileElement.setComponentView(compViewExpr);
-      this.view.createMethod.addStmt(compViewExpr
-          .set(o.importExpr(nestedComponentIdentifier).callFn(
-              [compileElement.injector, compileElement.appViewContainer]))
-          .toDeclStmt());
+      view.viewChildren.add(compViewExpr);
+      view.createMethod.addStmt(new o.WriteClassMemberExpr(
+              compViewName,
+              o.importExpr(nestedComponentIdentifier).callFn(
+                  [compileElement.injector, compileElement.appViewContainer]))
+          .toStmt());
     }
     compileElement.beforeChildren();
     this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
@@ -449,7 +455,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     o.Expression anchorVarExpr;
     // Create a comment to serve as anchor for template.
     if (createFieldForAnchor) {
-      this.view.fields.add(new o.ClassField(fieldName,
+      view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(Identifiers.HTML_COMMENT_NODE),
           modifiers: const [o.StmtModifier.Private]));
       anchorVarExpr = new o.ReadClassMemberExpr(fieldName);
@@ -689,7 +695,7 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
         "detectChangesInternal", [], generateDetectChangesMethod(view)),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish()),
-    new o.ClassMethod("destroyInternal", [], view.destroyMethod.finish())
+    new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view))
   ])..addAll(view.eventHandlerMethods));
   var superClass = view.genConfig.genDebugInfo
       ? Identifiers.DebugAppView
@@ -701,9 +707,19 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
       view.getters,
       viewConstructor,
       viewMethods
-          .where((o.ClassMethod method) => method.body.length > 0)
+          .where((o.ClassMethod method) =>
+              method.body != null && method.body.length > 0)
           .toList() as List<o.ClassMethod>);
   return viewClass;
+}
+
+List<o.Statement> generateDestroyMethod(CompileView view) {
+  var statements = <o.Statement>[];
+  for (o.Expression child in view.viewChildren) {
+    statements.add(child.callMethod('destroy', []).toStmt());
+  }
+  statements.addAll(view.destroyMethod.finish());
+  return statements;
 }
 
 o.Statement createInputUpdateFunction(
@@ -810,17 +826,21 @@ List<o.Statement> generateCreateMethod(CompileView view) {
 
 List<o.Statement> generateDetectChangesMethod(CompileView view) {
   var stmts = <o.Statement>[];
-  if (view.detectChangesInInputsMethod.isEmpty() &&
-      view.updateContentQueriesMethod.isEmpty() &&
-      view.afterContentLifecycleCallbacksMethod.isEmpty() &&
-      view.detectChangesRenderPropertiesMethod.isEmpty() &&
-      view.updateViewQueriesMethod.isEmpty() &&
-      view.afterViewLifecycleCallbacksMethod.isEmpty()) {
+  if (view.detectChangesInInputsMethod.isEmpty &&
+      view.updateContentQueriesMethod.isEmpty &&
+      view.afterContentLifecycleCallbacksMethod.isEmpty &&
+      view.detectChangesRenderPropertiesMethod.isEmpty &&
+      view.updateViewQueriesMethod.isEmpty &&
+      view.afterViewLifecycleCallbacksMethod.isEmpty &&
+      view.viewChildren.isEmpty) {
     return stmts;
   }
+  // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
-  stmts
-      .add(o.THIS_EXPR.callMethod("detectContentChildrenChanges", []).toStmt());
+  stmts.add(new o.InvokeMemberMethodExpr('detectContentChildrenChanges', [])
+      .toStmt());
+
+  // Add Content query updates.
   List<o.Statement> afterContentStmts =
       (new List.from(view.updateContentQueriesMethod.finish())
         ..addAll(view.afterContentLifecycleCallbacksMethod.finish()));
@@ -831,8 +851,15 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       stmts.addAll(afterContentStmts);
     }
   }
+
+  // Add render properties change detectors.
   stmts.addAll(view.detectChangesRenderPropertiesMethod.finish());
-  stmts.add(o.THIS_EXPR.callMethod("detectViewChildrenChanges", []).toStmt());
+
+  // Add view child change detection calls.
+  for (o.Expression viewChild in view.viewChildren) {
+    stmts.add(viewChild.callMethod('detectChanges', []).toStmt());
+  }
+
   List<o.Statement> afterViewStmts =
       (new List.from(view.updateViewQueriesMethod.finish())
         ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
