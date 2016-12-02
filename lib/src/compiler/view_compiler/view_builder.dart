@@ -679,7 +679,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
         "injectorGetInternal",
         [
           new o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
-          // Note: Can't use o.INT_TYPE here as the method in AppView uses number
           new o.FnParam(InjectMethodVars.requestNodeIndex.name, o.INT_TYPE),
           new o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
         ],
