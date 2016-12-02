@@ -58,7 +58,6 @@ class _ViewCompA0 extends import3.DebugAppView<import4.CompA> {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
-    this.detectViewChildrenChanges();
   }
 }
 

@@ -67,6 +67,7 @@ RenderComponentType renderType_HasTemplateFileComponentHost;
 class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.HasTemplateFileComponent> _compView_0;
   import2.HasTemplateFileComponent _HasTemplateFileComponent_0_3;
   ViewHasTemplateFileComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -81,11 +82,11 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('has-template-file', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 =
+    _compView_0 =
         viewFactory_HasTemplateFileComponent0(this.injector(0), _appEl_0);
     _HasTemplateFileComponent_0_3 = new import2.HasTemplateFileComponent();
-    _appEl_0.initComponent(_HasTemplateFileComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
+    _appEl_0.initComponent(_HasTemplateFileComponent_0_3, _compView_0);
+    _compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
     return _appEl_0;
   }
@@ -97,6 +98,15 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
       return _HasTemplateFileComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    detectContentChildrenChanges();
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
   }
 }
 
