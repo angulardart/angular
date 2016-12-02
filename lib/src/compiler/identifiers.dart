@@ -207,43 +207,43 @@ class Identifiers {
     new CompileIdentifierMetadata(
         name: "pureProxy1",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy1),
+        runtime: (f(p0)) => pureProxy1(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy2",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy2),
+        runtime: (f(p0, p1)) => pureProxy2(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy3",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy3),
+        runtime: (f(p0, p1, p2)) => pureProxy3(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy4",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy4),
+        runtime: (f(p0, p1, p2, p3)) => pureProxy4(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy5",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy5),
+        runtime: (f(p0, p1, p2, p3, p4)) => pureProxy5(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy6",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy6),
+        runtime: (f(p0, p1, p2, p3, p4, p5)) => pureProxy6(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy7",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy7),
+        runtime: (f(p0, p1, p2, p3, p4, p5, p6)) => pureProxy7(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy8",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy8),
+        runtime: (f(p0, p1, p2, p3, p4, p5, p6, p7)) => pureProxy8(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy9",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy9),
+        runtime: (f(p0, p1, p2, p3, p4, p5, p6, p7, p8)) => pureProxy9(f)),
     new CompileIdentifierMetadata(
         name: "pureProxy10",
         moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: pureProxy10)
+        runtime: (f(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9)) => pureProxy10(f))
   ];
   // Runtime is initialized by output interpreter. Compiler executes in VM and
   // can't import dart:html to initialize here.
