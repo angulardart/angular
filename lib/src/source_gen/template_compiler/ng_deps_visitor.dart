@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
@@ -5,27 +6,90 @@ import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular2/src/source_gen/common/annotation_model.dart';
+import 'package:angular2/src/source_gen/common/namespace_model.dart';
 import 'package:angular2/src/source_gen/common/ng_deps_model.dart';
 import 'package:angular2/src/source_gen/common/parameter_model.dart';
 import 'package:angular2/src/source_gen/common/reflection_info_model.dart';
 import 'package:angular2/src/source_gen/template_compiler/compile_type.dart';
+import 'package:angular2/src/transform/common/names.dart';
 import 'package:build/build.dart';
 import 'package:logging/logging.dart';
+import 'package:path/path.dart' as path;
 
-/// An [ElementVisitor] which creates an [NgDepsModel] for the [LibraryElement]
-/// supplied.
-class NgDepsVisitor extends SimpleElementVisitor<NgDepsModel> {
+/// Create an [NgDepsModel] for the [LibraryElement] supplied.
+Future<NgDepsModel> extractNgDepsModel(
+    LibraryElement element, BuildStep buildStep) async {
+  var reflectableVisitor = new ReflectableVisitor(buildStep);
+  element.accept(reflectableVisitor);
+  var namespaceVisitor = new NameSpaceVisitor(buildStep);
+  element.accept(namespaceVisitor);
+  return new NgDepsModel(
+      reflectables: reflectableVisitor.reflectables,
+      imports: namespaceVisitor.imports,
+      exports: namespaceVisitor.exports,
+      // TODO(alorenzen): Implement.
+      depImports: await namespaceVisitor.depImports);
+}
+
+class NameSpaceVisitor extends RecursiveElementVisitor {
   final BuildStep _buildStep;
+  List<ImportModel> imports = [];
+  List<ExportModel> exports = [];
 
-  NgDepsVisitor(this._buildStep);
+  NameSpaceVisitor(this._buildStep);
 
   @override
-  NgDepsModel visitLibraryElement(LibraryElement element) {
-    var reflectableVisitor = new ReflectableVisitor(_buildStep);
-    element.accept(reflectableVisitor);
-    return new NgDepsModel(reflectables: reflectableVisitor.reflectables,
-        // TODO(alorenzen): Implement.
-        depImports: [], imports: [], exports: []);
+  void visitImportElement(ImportElement element) {
+    if (element.uri != null) {
+      imports.add(new ImportModel.fromElement(element));
+    }
+  }
+
+  @override
+  void visitExportElement(ExportElement element) {
+    if (element.uri != null) {
+      exports.add(new ExportModel.fromElement(element));
+    }
+  }
+
+  Future<List<ImportModel>> get depImports async {
+    var deps = <ImportModel>[];
+    for (var import in imports) {
+      var templateAsset =
+          _assetId(import).changeExtension(TEMPLATE_EXTENSION);
+      if (await _buildStep.hasInput(templateAsset)) {
+        deps.add(new ImportModel(
+            uri: import.uri.replaceFirst('\.dart', TEMPLATE_EXTENSION)));
+      }
+    }
+    return deps;
+  }
+
+  AssetId _assetId(ImportModel import) {
+    var uri = Uri.parse(import.uri);
+    if (uri.isAbsolute) {
+      return _assetIdfromUri(uri);
+    } else {
+      var inputId = _buildStep.input.id;
+      var templatePath = path.join(path.dirname(inputId.path), uri.path);
+      return new AssetId(inputId.package, templatePath);
+    }
+  }
+
+  /// Parse an [AssetId] from a [Uri].
+  ///
+  /// The [uri] argument must:
+  /// - Be either a `package:` or `asset:` Uri.
+  /// - Not be relative.
+  /// - Use '/' as a separator
+  // TODO(alorenzen): Merge into AssetId.
+  AssetId _assetIdfromUri(Uri uri) {
+    assert(uri.scheme == 'package' || uri.scheme == 'asset');
+    var firstSlash = uri.path.indexOf('/');
+    var package = uri.path.substring(0, firstSlash);
+    var rawPath = uri.path.substring(firstSlash);
+    var path = (uri.scheme == 'package') ? 'lib$rawPath' : rawPath.substring(1);
+    return new AssetId(package, path);
   }
 }
 

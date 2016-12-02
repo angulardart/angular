@@ -1,4 +1,6 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:quiver/iterables.dart';
 
 /// A simple Import reference.
 ///
@@ -17,6 +19,13 @@ class ImportModel extends _NamespaceModel {
             uri: uri,
             showCombinators: showCombinators,
             hideCombinators: hideCombinators);
+
+  factory ImportModel.fromElement(ImportElement element) => new ImportModel(
+      uri: element.uri,
+      prefix: element.prefix?.name,
+      isDeferred: element.isDeferred,
+      showCombinators: _showCombinators(element.combinators),
+      hideCombinators: _hideCombinators(element.combinators));
 
   ImportBuilder get asBuilder =>
       new ImportBuilder(uri, deferred: isDeferred, prefix: prefix)
@@ -39,6 +48,11 @@ class ExportModel extends _NamespaceModel {
             showCombinators: showCombinators,
             hideCombinators: hideCombinators);
 
+  factory ExportModel.fromElement(ExportElement element) => new ExportModel(
+      uri: element.uri,
+      showCombinators: _showCombinators(element.combinators),
+      hideCombinators: _hideCombinators(element.combinators));
+
   ExportBuilder get asBuilder => new ExportBuilder(uri)
     ..showAll(showCombinators)
     ..hideAll(hideCombinators);
@@ -54,3 +68,15 @@ abstract class _NamespaceModel {
       this.showCombinators: const [],
       this.hideCombinators: const []});
 }
+
+List<String> _showCombinators(List<NamespaceCombinator> combinators) =>
+    concat(combinators
+        .where((combinator) => combinator is ShowElementCombinator)
+        .map((combinator) =>
+            (combinator as ShowElementCombinator).shownNames)).toList();
+
+List<String> _hideCombinators(List<NamespaceCombinator> combinators) =>
+    concat(combinators
+        .where((combinator) => combinator is HideElementCombinator)
+        .map((combinator) =>
+            (combinator as HideElementCombinator).hiddenNames)).toList();
