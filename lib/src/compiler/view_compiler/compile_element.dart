@@ -132,6 +132,9 @@ class CompileElement extends CompileNode {
     appViewContainer = new o.ReadClassMemberExpr(fieldName);
     _instances.add(
         identifierToken(Identifiers.ViewContainer), appViewContainer);
+    if (hasViewContainer) {
+      view.viewContainerAppElements.add(appViewContainer);
+    }
   }
 
   void setComponentView(o.Expression compViewExpr) {

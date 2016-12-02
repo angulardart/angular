@@ -50,7 +50,6 @@ class _ViewCompA0 extends import3.DebugAppView<import4.CompA> {
   }
 
   void detectChangesInternal() {
-    this.detectContentChildrenChanges();
     dbg(0, 0, 0);
     final currVal_0 =
         import5.interpolate(1, 'Hello World ', this.ctx.user, '!');

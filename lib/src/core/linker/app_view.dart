@@ -39,7 +39,6 @@ abstract class AppView<T> {
   List allNodes;
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
   List subscriptions;
-  List<AppView> contentChildren = [];
   AppView renderParent;
   ViewContainer viewContainerElement;
 
@@ -246,14 +245,14 @@ abstract class AppView<T> {
     return new ElementInjector(this, nodeIndex);
   }
 
-  void destroy() {
+  void detachAndDestroy() {
     if (_hasExternalHostElement) {
       detachViewNodes(flatRootNodes);
     } else {
       viewContainerElement
           ?.detachView(viewContainerElement.nestedViews.indexOf(this));
     }
-    _destroyRecurse();
+    destroy();
   }
 
   void detachViewNodes(List<dynamic> viewRootNodes) {
@@ -265,20 +264,12 @@ abstract class AppView<T> {
     }
   }
 
-  void _destroyRecurse() {
+  void destroy() {
     if (destroyed) {
       return;
     }
-    var children = contentChildren;
-    int length = children.length;
-    for (var i = 0; i < length; i++) {
-      children[i]._destroyRecurse();
-    }
-    destroyLocal();
     destroyed = true;
-  }
 
-  void destroyLocal() {
     var hostElement = type == ViewType.COMPONENT
         ? declarationViewContainer.nativeElement
         : null;
@@ -286,7 +277,7 @@ abstract class AppView<T> {
       _onDestroyCallbacks[i]();
     }
     for (var i = 0, len = subscriptions.length; i < len; i++) {
-      this.subscriptions[i].cancel();
+      subscriptions[i].cancel();
     }
     destroyInternal();
     dirtyParentQueriesInternal();
@@ -347,28 +338,18 @@ abstract class AppView<T> {
   }
 
   /// Overwritten by implementations
-  void detectChangesInternal() {
-    detectContentChildrenChanges();
-  }
-
-  void detectContentChildrenChanges() {
-    for (var i = 0, length = contentChildren.length; i < length; ++i) {
-      contentChildren[i].detectChanges();
-    }
-  }
+  void detectChangesInternal() {}
 
   void markContentChildAsMoved(ViewContainer renderViewContainer) {
     dirtyParentQueriesInternal();
   }
 
   void addToContentChildren(ViewContainer renderViewContainer) {
-    renderViewContainer.parentView.contentChildren.add(this);
     viewContainerElement = renderViewContainer;
     dirtyParentQueriesInternal();
   }
 
   void removeFromContentChildren(ViewContainer renderViewContainer) {
-    renderViewContainer.parentView.contentChildren.remove(this);
     dirtyParentQueriesInternal();
     viewContainerElement = null;
   }

@@ -101,7 +101,6 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    detectContentChildrenChanges();
     _compView_0.detectChanges();
   }
 

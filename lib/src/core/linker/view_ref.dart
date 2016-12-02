@@ -121,6 +121,6 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
   }
 
   void destroy() {
-    appView.destroy();
+    appView.detachAndDestroy();
   }
 }

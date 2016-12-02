@@ -54,6 +54,20 @@ class ViewContainer implements ViewContainerRef {
   @override
   Injector get injector => parentView.injector(index);
 
+  void detectChangesInNestedViews() {
+    if (nestedViews == null) return;
+    for (var i = 0, len = nestedViews.length; i < len; i++) {
+      nestedViews[i].detectChanges();
+    }
+  }
+
+  void destroyNestedViews() {
+    if (nestedViews == null) return;
+    for (var i = 0, len = nestedViews.length; i < len; i++) {
+      nestedViews[i].destroy();
+    }
+  }
+
   /// Instantiates an Embedded View based on the [TemplateRef `templateRef`]
   /// and inserts it into this container at the specified `index`.
   ///
