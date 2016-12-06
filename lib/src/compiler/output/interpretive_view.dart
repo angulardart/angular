@@ -29,6 +29,11 @@ class InterpretiveAppViewInstanceFactory implements InstanceFactory {
   }
 }
 
+/// AppView that delegates generated methods to interpreted version stored
+/// in methods/getter/props constructed at runtime.
+///
+/// Any time a new method is added to AppView by code generator, this class
+/// will need to be updated with member method signature.
 class _InterpretiveAppView extends DebugAppView<dynamic>
     implements DynamicInstance {
   @override
@@ -90,6 +95,39 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
       return m();
     } else {
       return super.detectChangesInternal();
+    }
+  }
+
+  @override
+  void visitRootNodesInternal(void callback(node, nodeContext), ctx) {
+    var m = methods['visitRootNodesInternal'];
+    if (m != null) {
+      return m(callback, ctx);
+    } else {
+      return super.visitRootNodesInternal(callback, ctx);
+    }
+  }
+
+  @override
+  void visitProjectedNodes(
+      int ngContentIndex, void callback(node, nodeContext), ctx) {
+    var m = methods['visitProjectedNodes'];
+    if (m != null) {
+      return m(ngContentIndex, callback, ctx);
+    } else {
+      return super.visitProjectableNodes(ngContentIndex, callback, ctx);
+    }
+  }
+
+  @override
+  void visitProjectableNodesInternal(int nodeIndex, int ngContentIndex,
+      void callback(node, nodeContext), ctx) {
+    var m = methods['visitProjectableNodesInternal'];
+    if (m != null) {
+      return m(nodeIndex, ngContentIndex, callback, ctx);
+    } else {
+      return super.visitProjectableNodesInternal(
+          nodeIndex, ngContentIndex, callback, ctx);
     }
   }
 }

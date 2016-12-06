@@ -23,7 +23,7 @@ class TemplateRef {
 
   EmbeddedViewRef createEmbeddedView() {
     AppView view = _viewFactory(_appElement.parentInjector, _appElement);
-    view.create(null, null);
+    view.createEmbedded(null);
     return view.ref;
   }
 
