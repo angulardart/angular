@@ -7,6 +7,7 @@
 
 import 'change_detection.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular2/angular2.dart';
 export 'change_detection.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -25,6 +26,7 @@ RenderComponentType renderType_CheckOnceComponent;
 
 class ViewCheckOnceComponent0 extends AppView<import2.CheckOnceComponent> {
   Element _el_0;
+  Text _text_1;
   ViewCheckOnceComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -41,9 +43,9 @@ class ViewCheckOnceComponent0 extends AppView<import2.CheckOnceComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('CheckOnce');
+    _text_1 = new Text('CheckOnce');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -64,6 +66,7 @@ RenderComponentType renderType_CheckOnceComponentHost;
 class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.CheckOnceComponent> _compView_0;
   import2.CheckOnceComponent _CheckOnceComponent_0_3;
   ViewCheckOnceComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -78,12 +81,11 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('CheckOnce', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 =
-        viewFactory_CheckOnceComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_CheckOnceComponent0(this.injector(0), _appEl_0);
     _CheckOnceComponent_0_3 = new import2.CheckOnceComponent();
-    _appEl_0.initComponent(_CheckOnceComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_CheckOnceComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -94,6 +96,18 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
       return _CheckOnceComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -118,6 +132,7 @@ RenderComponentType renderType_CheckedComponent;
 
 class ViewCheckedComponent0 extends AppView<import2.CheckedComponent> {
   Element _el_0;
+  Text _text_1;
   ViewCheckedComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -134,9 +149,9 @@ class ViewCheckedComponent0 extends AppView<import2.CheckedComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('Checked');
+    _text_1 = new Text('Checked');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -157,6 +172,7 @@ RenderComponentType renderType_CheckedComponentHost;
 class ViewCheckedComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.CheckedComponent> _compView_0;
   import2.CheckedComponent _CheckedComponent_0_3;
   ViewCheckedComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -171,11 +187,11 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Checked', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_CheckedComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_CheckedComponent0(this.injector(0), _appEl_0);
     _CheckedComponent_0_3 = new import2.CheckedComponent();
-    _appEl_0.initComponent(_CheckedComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_CheckedComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -186,6 +202,18 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
       return _CheckedComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -207,6 +235,7 @@ RenderComponentType renderType_CheckAlwaysComponent;
 
 class ViewCheckAlwaysComponent0 extends AppView<import2.CheckAlwaysComponent> {
   Element _el_0;
+  Text _text_1;
   ViewCheckAlwaysComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -223,9 +252,9 @@ class ViewCheckAlwaysComponent0 extends AppView<import2.CheckAlwaysComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('CheckAlways');
+    _text_1 = new Text('CheckAlways');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -246,6 +275,7 @@ RenderComponentType renderType_CheckAlwaysComponentHost;
 class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.CheckAlwaysComponent> _compView_0;
   import2.CheckAlwaysComponent _CheckAlwaysComponent_0_3;
   ViewCheckAlwaysComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -260,12 +290,11 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('CheckAlways', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 =
-        viewFactory_CheckAlwaysComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_CheckAlwaysComponent0(this.injector(0), _appEl_0);
     _CheckAlwaysComponent_0_3 = new import2.CheckAlwaysComponent();
-    _appEl_0.initComponent(_CheckAlwaysComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_CheckAlwaysComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -276,6 +305,18 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
       return _CheckAlwaysComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -300,6 +341,7 @@ RenderComponentType renderType_DetachedComponent;
 
 class ViewDetachedComponent0 extends AppView<import2.DetachedComponent> {
   Element _el_0;
+  Text _text_1;
   ViewDetachedComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -316,9 +358,9 @@ class ViewDetachedComponent0 extends AppView<import2.DetachedComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('Detached');
+    _text_1 = new Text('Detached');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -339,6 +381,7 @@ RenderComponentType renderType_DetachedComponentHost;
 class ViewDetachedComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.DetachedComponent> _compView_0;
   import2.DetachedComponent _DetachedComponent_0_3;
   ViewDetachedComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -353,11 +396,11 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Detached', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_DetachedComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_DetachedComponent0(this.injector(0), _appEl_0);
     _DetachedComponent_0_3 = new import2.DetachedComponent();
-    _appEl_0.initComponent(_DetachedComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_DetachedComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -368,6 +411,18 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
       return _DetachedComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -392,6 +447,7 @@ RenderComponentType renderType_OnPushComponent;
 
 class ViewOnPushComponent0 extends AppView<import2.OnPushComponent> {
   Element _el_0;
+  Text _text_1;
   ViewOnPushComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -408,9 +464,9 @@ class ViewOnPushComponent0 extends AppView<import2.OnPushComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('OnPush');
+    _text_1 = new Text('OnPush');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -431,6 +487,7 @@ RenderComponentType renderType_OnPushComponentHost;
 class ViewOnPushComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.OnPushComponent> _compView_0;
   import2.OnPushComponent _OnPushComponent_0_3;
   ViewOnPushComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -445,11 +502,11 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('OnPush', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_OnPushComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_OnPushComponent0(this.injector(0), _appEl_0);
     _OnPushComponent_0_3 = new import2.OnPushComponent();
-    _appEl_0.initComponent(_OnPushComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_OnPushComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -460,6 +517,18 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
       return _OnPushComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -481,6 +550,7 @@ RenderComponentType renderType_StatefulComponent;
 
 class ViewStatefulComponent0 extends AppView<import2.StatefulComponent> {
   Element _el_0;
+  Text _text_1;
   ViewStatefulComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -497,9 +567,9 @@ class ViewStatefulComponent0 extends AppView<import2.StatefulComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('Stateful');
+    _text_1 = new Text('Stateful');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     ctx.stateChangeCallback = markStateChanged;
     return null;
   }
@@ -521,6 +591,7 @@ RenderComponentType renderType_StatefulComponentHost;
 class ViewStatefulComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.StatefulComponent> _compView_0;
   import2.StatefulComponent _StatefulComponent_0_3;
   ViewStatefulComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -535,11 +606,11 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Stateful', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_StatefulComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_StatefulComponent0(this.injector(0), _appEl_0);
     _StatefulComponent_0_3 = new import2.StatefulComponent();
-    _appEl_0.initComponent(_StatefulComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_StatefulComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -550,6 +621,18 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
       return _StatefulComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -574,6 +657,7 @@ RenderComponentType renderType_DefaultComponent;
 
 class ViewDefaultComponent0 extends AppView<import2.DefaultComponent> {
   Element _el_0;
+  Text _text_1;
   ViewDefaultComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -590,9 +674,9 @@ class ViewDefaultComponent0 extends AppView<import2.DefaultComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('Default');
+    _text_1 = new Text('Default');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -613,6 +697,7 @@ RenderComponentType renderType_DefaultComponentHost;
 class ViewDefaultComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.DefaultComponent> _compView_0;
   import2.DefaultComponent _DefaultComponent_0_3;
   ViewDefaultComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -627,11 +712,11 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Default', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_DefaultComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_DefaultComponent0(this.injector(0), _appEl_0);
     _DefaultComponent_0_3 = new import2.DefaultComponent();
-    _appEl_0.initComponent(_DefaultComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_DefaultComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -642,6 +727,18 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
       return _DefaultComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 

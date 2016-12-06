@@ -27,7 +27,7 @@ import "../template_ast.dart"
         BoundDirectivePropertyAst,
         templateVisitAll;
 import "compile_element.dart" show CompileElement, CompileNode;
-import "compile_view.dart" show CompileView;
+import "compile_view.dart";
 import "constants.dart"
     show
         ViewConstructorVars,
@@ -35,13 +35,11 @@ import "constants.dart"
         DetectChangesVars,
         ViewTypeEnum,
         ViewEncapsulationEnum,
-        ChangeDetectionStrategyEnum,
-        ViewProperties;
+        ChangeDetectionStrategyEnum;
 import 'property_binder.dart';
 import "view_compiler_utils.dart"
     show
         getViewFactoryName,
-        createFlatArray,
         createDiTokenExpression,
         createSetAttributeParams,
         TEMPLATE_COMMENT_TEXT;
@@ -101,23 +99,83 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return !identical(parent.view, this.view);
   }
 
-  void _addRootNodeAndProject(
-      CompileNode node, num ngContentIndex, CompileElement parent) {
-    var vcAppEl = (node is CompileElement && node.hasViewContainer)
+  /// Walks up the nodes while the direct parent is a container.
+  ///
+  /// Returns the outer container or the node itself when it is not a direct
+  /// child of a container.
+  CompileNode _getOuterContainerOrSelf(CompileNode node) {
+    final view = node.view;
+    while (_isNgContainer(node.parent, view)) {
+      node = node.parent;
+    }
+    return node;
+  }
+
+  /// Walks up the nodes while they are container and returns the first parent
+  /// which is not.
+  ///
+  /// Returns the parent of the outer container or the node itself when it is
+  /// not a container.
+  CompileElement _getOuterContainerParentOrSelf(CompileElement el) {
+    final view = el.view;
+    while (_isNgContainer(el, view)) {
+      el = el.parent;
+    }
+    return el;
+  }
+
+  bool _isNgContainer(CompileNode node, CompileView view) {
+    return node.hasRenderNode &&
+        (node.sourceAst as ElementAst).name == 'ng-container' &&
+        node.view == view;
+  }
+
+  int _ngContentIndexFromAst(TemplateAst sourceAst) {
+    if (sourceAst is TextAst) {
+      return sourceAst.ngContentIndex;
+    } else if (sourceAst is BoundTextAst) {
+      return sourceAst.ngContentIndex;
+    } else if (sourceAst is NgContentAst) {
+      return sourceAst.ngContentIndex;
+    } else if (sourceAst is ElementAst) {
+      return sourceAst.ngContentIndex;
+    } else if (sourceAst is EmbeddedTemplateAst) {
+      return sourceAst.ngContentIndex;
+    }
+    return null;
+  }
+
+  void _addRootNodeAndProject(CompileNode node) {
+    var projectedNode = _getOuterContainerOrSelf(node);
+    var parent = projectedNode.parent;
+    var ngContentIndex = _ngContentIndexFromAst(projectedNode.sourceAst);
+    var viewContainer = (node is CompileElement && node.hasViewContainer)
         ? node.appViewContainer
         : null;
-    if (this._isRootNode(parent)) {
-      // store appElement as root node only for ViewContainers
-      if (view.viewType != ViewType.COMPONENT) {
-        view.rootNodesOrViewContainers.add(vcAppEl ?? node.renderNode);
+    if (_isRootNode(parent)) {
+      // Store appElement as root node only for ViewContainers and Hosts.
+      if (view.viewType == ViewType.EMBEDDED ||
+          view.viewType == ViewType.HOST) {
+        view.rootNodes.add(new CompileViewRootNode(
+            viewContainer != null
+                ? CompileViewRootNodeType.viewContainer
+                : CompileViewRootNodeType.node,
+            viewContainer ?? node.renderNode));
       }
     } else if (parent.component != null && ngContentIndex != null) {
-      parent.addContentNode(ngContentIndex, vcAppEl ?? node.renderNode);
+      parent.addContentNode(
+          ngContentIndex,
+          new CompileViewRootNode(
+              viewContainer != null
+                  ? CompileViewRootNodeType.viewContainer
+                  : CompileViewRootNodeType.node,
+              viewContainer ?? node.renderNode));
     }
   }
 
   o.Expression _getParentRenderNode(CompileElement parent) {
-    if (this._isRootNode(parent)) {
+    parent = _getOuterContainerParentOrSelf(parent);
+    if (_isRootNode(parent)) {
       if (identical(this.view.viewType, ViewType.COMPONENT)) {
         return parentRenderNodeVar;
       } else {
@@ -133,9 +191,24 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     }
   }
 
+  o.Expression getOrCreateLastRenderNode() {
+    final view = this.view;
+    if (view.rootNodes.isEmpty ||
+        view.rootNodes.last.nodeType != CompileViewRootNodeType.node) {
+      var fieldName = '_el_${view.nodes.length}';
+      view.fields
+          .add(new o.ClassField(fieldName, outputType: o.importType(null)));
+      view.createMethod.addStmt(new o.WriteClassMemberExpr(fieldName,
+          new o.InvokeMemberMethodExpr('createTemplateAnchor', [])).toStmt());
+      view.rootNodes.add(new CompileViewRootNode(
+          CompileViewRootNodeType.node, new o.ReadClassMemberExpr(fieldName)));
+    }
+    return view.rootNodes.last.expression;
+  }
+
   dynamic visitBoundText(BoundTextAst ast, dynamic context) {
     CompileElement parent = context;
-    return this._visitText(ast, "", ast.ngContentIndex, parent, isBound: true);
+    return this._visitText(ast, '', ast.ngContentIndex, parent, isBound: true);
   }
 
   dynamic visitText(TextAst ast, dynamic context) {
@@ -152,6 +225,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // If Text field is bound, we need access to the renderNode beyond
     // createInternal method and write reference to class member.
     // Otherwise we can create a local variable and not balloon class prototype.
+
+    // TODO: reenable isBound optimization after switch to ComponentRefImpl.
+    isBound = true;
     if (isBound) {
       view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(Identifiers.HTML_TEXT_NODE),
@@ -187,7 +263,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       view.createMethod.addStmt(
           createDbgElementCall(renderNode, view.nodes.length - 1, ast));
     }
-    this._addRootNodeAndProject(compileNode, ngContentIndex, parent);
+    _addRootNodeAndProject(compileNode);
     return renderNode;
   }
 
@@ -197,23 +273,21 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // have debug information for them.
     this.view.createMethod.resetDebugInfo(null, ast);
     var parentRenderNode = this._getParentRenderNode(parent);
-    // AppView.projectableNodes property contains the list of nodes
-    // to project for each NgContent.
-    // Creates a call to project(parentNode, nodeIndex).
-    var nodesExpression = ViewProperties.projectableNodes.key(
-        o.literal(ast.index),
-        new o.ArrayType(o.importType(Identifiers.HTML_NODE)));
     if (!identical(parentRenderNode, o.NULL_EXPR)) {
       view.createMethod.addStmt(new o.InvokeMemberMethodExpr(
           'project', [parentRenderNode, o.literal(ast.index)]).toStmt());
     } else if (this._isRootNode(parent)) {
       if (!identical(this.view.viewType, ViewType.COMPONENT)) {
         // store root nodes only for embedded/host views
-        this.view.rootNodesOrViewContainers.add(nodesExpression);
+        view.rootNodes.add(new CompileViewRootNode(
+            CompileViewRootNodeType.ngContent, null, ast.index));
       }
     } else {
       if (parent.component != null && ast.ngContentIndex != null) {
-        parent.addContentNode(ast.ngContentIndex, nodesExpression);
+        parent.addContentNode(
+            ast.ngContentIndex,
+            new CompileViewRootNode(
+                CompileViewRootNodeType.ngContent, null, ast.index));
       }
     }
     return null;
@@ -324,43 +398,39 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.references,
         isHtmlElement: isHtmlElement);
     this.view.nodes.add(compileElement);
-    o.ReadVarExpr compViewExpr;
+    o.Expression compViewExpr;
     if (component != null) {
       var nestedComponentIdentifier =
           new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));
       this
           .targetDependencies
           .add(new ViewCompileDependency(component, nestedComponentIdentifier));
-      compViewExpr = o.variable('compView_${nodeIndex}');
+      String compViewName = '_compView_${nodeIndex}';
+      compViewExpr = new o.ReadClassMemberExpr(compViewName);
+      view.fields.add(new o.ClassField(compViewName,
+          outputType: o.importType(
+              Identifiers.AppView, [o.importType(component.type)])));
       compileElement.setComponentView(compViewExpr);
-      this.view.createMethod.addStmt(compViewExpr
-          .set(o.importExpr(nestedComponentIdentifier).callFn(
-              [compileElement.injector, compileElement.appViewContainer]))
-          .toDeclStmt());
+      view.viewChildren.add(compViewExpr);
+      view.createMethod.addStmt(new o.WriteClassMemberExpr(
+              compViewName,
+              o.importExpr(nestedComponentIdentifier).callFn(
+                  [compileElement.injector, compileElement.appViewContainer]))
+          .toStmt());
     }
     compileElement.beforeChildren();
-    this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
+    _addRootNodeAndProject(compileElement);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(this.view.nodes.length - nodeIndex - 1);
     if (compViewExpr != null) {
-      o.Expression codeGenContentNodes;
-      if (this.view.component.type.isHost) {
-        codeGenContentNodes = ViewProperties.projectableNodes;
-      } else {
-        codeGenContentNodes = o.literalArr(compileElement
-            .contentNodesByNgContentIndex
-            .map((nodes) => createFlatArray(nodes))
-            .toList());
-      }
-
       String createMethod;
       if (component == null) {
         createMethod = 'createHost';
       } else {
         createMethod = 'createComp';
       }
-      view.createMethod.addStmt(compViewExpr.callMethod(
-          createMethod, [codeGenContentNodes, o.NULL_EXPR]).toStmt());
+      view.createMethod.addStmt(
+          compViewExpr.callMethod(createMethod, [o.NULL_EXPR]).toStmt());
     }
     return null;
   }
@@ -443,13 +513,14 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     CompileElement parent = context;
     // When logging updates, we need to create anchor as a field to be able
     // to update the comment, otherwise we can create simple local field.
-    bool createFieldForAnchor = view.genConfig.logBindingUpdate;
+    // TODO: replace with view.genConfig.logBindingUpdate if possible or remove.
+    bool createFieldForAnchor = true;
     var nodeIndex = this.view.nodes.length;
     var fieldName = '_anchor_${nodeIndex}';
     o.Expression anchorVarExpr;
     // Create a comment to serve as anchor for template.
     if (createFieldForAnchor) {
-      this.view.fields.add(new o.ClassField(fieldName,
+      view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(Identifiers.HTML_COMMENT_NODE),
           modifiers: const [o.StmtModifier.Private]));
       anchorVarExpr = new o.ReadClassMemberExpr(fieldName);
@@ -520,10 +591,20 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         embeddedView.declarationElement.hasRenderNode
             ? embeddedView.declarationElement.parent
             : embeddedView.declarationElement);
+    if (embeddedView.viewType == ViewType.EMBEDDED ||
+        embeddedView.viewType == ViewType.HOST) {
+      // We need a reference to last node in embedded template so we can
+      // attachViewAfter this element when multiple instances of a TemplateRef
+      // are instantiated such is the case when using ngFor.
+      embeddedView.lastRenderNode =
+          embeddedViewVisitor.getOrCreateLastRenderNode();
+      assert(embeddedView.lastRenderNode != null &&
+          embeddedView.lastRenderNode != o.NULL_EXPR);
+    }
     nestedViewCount += embeddedViewVisitor.nestedViewCount;
 
     compileElement.beforeChildren();
-    this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
+    _addRootNodeAndProject(compileElement);
     compileElement.afterChildren(0);
     return null;
   }
@@ -679,7 +760,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
         "injectorGetInternal",
         [
           new o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
-          // Note: Can't use o.INT_TYPE here as the method in AppView uses number
           new o.FnParam(InjectMethodVars.requestNodeIndex.name, o.INT_TYPE),
           new o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
         ],
@@ -690,7 +770,9 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
         "detectChangesInternal", [], generateDetectChangesMethod(view)),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish()),
-    new o.ClassMethod("destroyInternal", [], view.destroyMethod.finish())
+    new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view)),
+    generateVisitRootNodesMethod(view),
+    generateVisitProjectableNodesMethod(view),
   ])..addAll(view.eventHandlerMethods));
   var superClass = view.genConfig.genDebugInfo
       ? Identifiers.DebugAppView
@@ -702,9 +784,22 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
       view.getters,
       viewConstructor,
       viewMethods
-          .where((o.ClassMethod method) => method.body.length > 0)
+          .where((o.ClassMethod method) =>
+              method.body != null && method.body.length > 0)
           .toList() as List<o.ClassMethod>);
   return viewClass;
+}
+
+List<o.Statement> generateDestroyMethod(CompileView view) {
+  var statements = <o.Statement>[];
+  for (o.Expression child in view.viewContainerAppElements) {
+    statements.add(child.callMethod('destroyNestedViews', []).toStmt());
+  }
+  for (o.Expression child in view.viewChildren) {
+    statements.add(child.callMethod('destroy', []).toStmt());
+  }
+  statements.addAll(view.destroyMethod.finish());
+  return statements;
 }
 
 o.Statement createInputUpdateFunction(
@@ -792,7 +887,7 @@ List<o.Statement> generateCreateMethod(CompileView view) {
     return node.renderNode;
   }).toList();
   statements.add(new o.InvokeMemberMethodExpr('init', [
-    createFlatArray(view.rootNodesOrViewContainers),
+    view.lastRenderNode,
     o.literalArr(renderNodes),
     o.literalArr(view.subscriptions)
   ]).toStmt());
@@ -811,17 +906,26 @@ List<o.Statement> generateCreateMethod(CompileView view) {
 
 List<o.Statement> generateDetectChangesMethod(CompileView view) {
   var stmts = <o.Statement>[];
-  if (view.detectChangesInInputsMethod.isEmpty() &&
-      view.updateContentQueriesMethod.isEmpty() &&
-      view.afterContentLifecycleCallbacksMethod.isEmpty() &&
-      view.detectChangesRenderPropertiesMethod.isEmpty() &&
-      view.updateViewQueriesMethod.isEmpty() &&
-      view.afterViewLifecycleCallbacksMethod.isEmpty()) {
+  if (view.detectChangesInInputsMethod.isEmpty &&
+      view.updateContentQueriesMethod.isEmpty &&
+      view.afterContentLifecycleCallbacksMethod.isEmpty &&
+      view.detectChangesRenderPropertiesMethod.isEmpty &&
+      view.updateViewQueriesMethod.isEmpty &&
+      view.afterViewLifecycleCallbacksMethod.isEmpty &&
+      view.viewChildren.isEmpty &&
+      view.viewContainerAppElements.isEmpty) {
     return stmts;
   }
+  // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
-  stmts
-      .add(o.THIS_EXPR.callMethod("detectContentChildrenChanges", []).toStmt());
+
+  // Add content child change detection calls.
+  for (o.Expression contentChild in view.viewContainerAppElements) {
+    stmts.add(
+        contentChild.callMethod('detectChangesInNestedViews', []).toStmt());
+  }
+
+  // Add Content query updates.
   List<o.Statement> afterContentStmts =
       (new List.from(view.updateContentQueriesMethod.finish())
         ..addAll(view.afterContentLifecycleCallbacksMethod.finish()));
@@ -832,8 +936,15 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       stmts.addAll(afterContentStmts);
     }
   }
+
+  // Add render properties change detectors.
   stmts.addAll(view.detectChangesRenderPropertiesMethod.finish());
-  stmts.add(o.THIS_EXPR.callMethod("detectViewChildrenChanges", []).toStmt());
+
+  // Add view child change detection calls.
+  for (o.Expression viewChild in view.viewChildren) {
+    stmts.add(viewChild.callMethod('detectChanges', []).toStmt());
+  }
+
   List<o.Statement> afterViewStmts =
       (new List.from(view.updateViewQueriesMethod.finish())
         ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
@@ -860,6 +971,73 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
         .toDeclStmt(null, [o.StmtModifier.Final]));
   }
   return (new List.from(varStmts)..addAll(stmts));
+}
+
+o.ClassMethod generateVisitRootNodesMethod(CompileView view) {
+  final cbVar = o.variable('cb');
+  final ctxVar = o.variable('ctx');
+  List<o.Statement> stmts =
+      generateVisitNodesStmts(view.rootNodes, cbVar, ctxVar);
+  return new o.ClassMethod(
+      'visitRootNodesInternal',
+      [
+        new o.FnParam(cbVar.name, o.DYNAMIC_TYPE),
+        new o.FnParam(ctxVar.name, o.DYNAMIC_TYPE)
+      ],
+      stmts);
+}
+
+o.ClassMethod generateVisitProjectableNodesMethod(CompileView view) {
+  final nodeIndexVar = o.variable('nodeIndex');
+  final ngContentIndexVar = o.variable('ngContentIndex');
+  final cbVar = o.variable('cb');
+  final ctxVar = o.variable('ctx');
+  var statements = <o.Statement>[];
+  for (CompileNode node in view.nodes) {
+    if (node is CompileElement && node.component != null) {
+      int len = node.contentNodesByNgContentIndex.length;
+      for (int ngContentIndex = 0; ngContentIndex < len; ngContentIndex++) {
+        var projectedNodes = node.contentNodesByNgContentIndex[ngContentIndex];
+        statements.add(new o.IfStmt(
+            nodeIndexVar
+                .equals(o.literal(node.nodeIndex))
+                .and(ngContentIndexVar.equals(o.literal(ngContentIndex))),
+            generateVisitNodesStmts(projectedNodes, cbVar, ctxVar)));
+      }
+    }
+  }
+  return new o.ClassMethod(
+      'visitProjectableNodesInternal',
+      [
+        new o.FnParam(nodeIndexVar.name, o.NUMBER_TYPE),
+        new o.FnParam(ngContentIndexVar.name, o.NUMBER_TYPE),
+        new o.FnParam(cbVar.name, o.DYNAMIC_TYPE),
+        new o.FnParam(ctxVar.name, o.DYNAMIC_TYPE)
+      ],
+      statements);
+}
+
+List<o.Statement> generateVisitNodesStmts(
+    List<CompileViewRootNode> nodes, o.Expression cb, o.Expression ctx) {
+  var stmts = <o.Statement>[];
+  for (CompileViewRootNode node in nodes) {
+    switch (node.nodeType) {
+      case CompileViewRootNodeType.node:
+        stmts.add(cb.callFn([node.expression, ctx]).toStmt());
+        break;
+      case CompileViewRootNodeType.viewContainer:
+        stmts.add(
+            cb.callFn([node.expression.prop('nativeElement'), ctx]).toStmt());
+        stmts.add(node.expression
+            .callMethod('visitNestedViewRootNodes', [cb, ctx]).toStmt());
+        break;
+      case CompileViewRootNodeType.ngContent:
+        stmts.add(o.THIS_EXPR.callMethod('visitProjectedNodes',
+            [o.literal(node.ngContentIndex), cb, ctx]).toStmt());
+        break;
+    }
+  }
+  return stmts;
 }
 
 List<o.Statement> addReturnValuefNotEmpty(

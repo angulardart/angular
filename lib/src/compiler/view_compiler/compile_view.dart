@@ -30,8 +30,14 @@ class CompileView implements NameResolver {
   List<List<String>> templateVariableBindings;
   ViewType viewType;
   CompileTokenMap<List<CompileQuery>> viewQueries;
+
+  /// Contains references to view children so we can generate code for
+  /// change detection and destroy.
+  List<o.Expression> viewChildren = [];
   List<CompileNode> nodes = [];
-  List<o.Expression> rootNodesOrViewContainers = [];
+  List<CompileViewRootNode> rootNodes = [];
+  o.Expression lastRenderNode = o.NULL_EXPR;
+  List<o.Expression> viewContainerAppElements = [];
   List<CompileBinding> bindings = [];
   List<o.Statement> classStatements = [];
   CompileMethod createMethod;
@@ -193,4 +199,14 @@ ViewType getViewType(
   } else {
     return ViewType.COMPONENT;
   }
+}
+
+enum CompileViewRootNodeType { node, viewContainer, ngContent }
+
+class CompileViewRootNode {
+  final CompileViewRootNodeType nodeType;
+  final o.Expression expression;
+  final int ngContentIndex;
+
+  CompileViewRootNode(this.nodeType, this.expression, [this.ngContentIndex]);
 }

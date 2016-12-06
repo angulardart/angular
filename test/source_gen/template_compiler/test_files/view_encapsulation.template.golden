@@ -7,6 +7,7 @@
 
 import 'view_encapsulation.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular2/angular2.dart';
 export 'view_encapsulation.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -25,6 +26,7 @@ RenderComponentType renderType_EmulatedComponent;
 
 class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
   Element _el_0;
+  Text _text_1;
   ViewEmulatedComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -41,9 +43,9 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('Emulated');
+    _text_1 = new Text('Emulated');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -64,6 +66,7 @@ RenderComponentType renderType_EmulatedComponentHost;
 class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.EmulatedComponent> _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_3;
   ViewEmulatedComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -78,11 +81,11 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Emulated', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
     _EmulatedComponent_0_3 = new import2.EmulatedComponent();
-    _appEl_0.initComponent(_EmulatedComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_EmulatedComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -93,6 +96,18 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
       return _EmulatedComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -117,6 +132,7 @@ RenderComponentType renderType_NativeComponent;
 
 class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
   Element _el_0;
+  Text _text_1;
   ViewNativeComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -133,9 +149,9 @@ class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('Native');
+    _text_1 = new Text('Native');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -156,6 +172,7 @@ RenderComponentType renderType_NativeComponentHost;
 class ViewNativeComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.NativeComponent> _compView_0;
   import2.NativeComponent _NativeComponent_0_3;
   ViewNativeComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -170,11 +187,11 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Native', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
     _NativeComponent_0_3 = new import2.NativeComponent();
-    _appEl_0.initComponent(_NativeComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_NativeComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -185,6 +202,18 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
       return _NativeComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
@@ -206,6 +235,7 @@ RenderComponentType renderType_NoneComponent;
 
 class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
   Element _el_0;
+  Text _text_1;
   ViewNoneComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -222,9 +252,9 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('None');
+    _text_1 = new Text('None');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -244,6 +274,7 @@ RenderComponentType renderType_NoneComponentHost;
 class ViewNoneComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   ViewContainer _appEl_0;
+  AppView<import2.NoneComponent> _compView_0;
   import2.NoneComponent _NoneComponent_0_3;
   ViewNoneComponentHost0(
       import4.Injector parentInjector, ViewContainer declarationEl)
@@ -258,11 +289,11 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
   ViewContainer createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('None', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
-    var compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
+    _compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
     _NoneComponent_0_3 = new import2.NoneComponent();
-    _appEl_0.initComponent(_NoneComponent_0_3, compView_0);
-    compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _appEl_0.initComponent(_NoneComponent_0_3, _compView_0);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -272,6 +303,18 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
       return _NoneComponent_0_3;
     }
     return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
