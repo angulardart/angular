@@ -104,19 +104,20 @@ class ComponentFactory {
   /// Creates a new component.
   ComponentRef create(Injector injector,
       [List<List> projectableNodes, String selector]) {
+    projectableNodes ??= [];
     // Note: Host views don't need a declarationViewContainer!
     AppView hostView = _viewFactory(injector, null);
-    hostView.externalProjectableNodes = projectableNodes;
-    var hostElement = hostView.create(selector);
+    var hostElement = hostView.create(projectableNodes, selector);
     return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
   }
 
   ComponentRef loadIntoNode(Injector injector,
       [List<List<dynamic>> projectableNodes, Node node]) {
+    projectableNodes ??= [];
+
     // Note: Host views don't need a declarationViewContainer!
     AppView hostView = _viewFactory(injector, null);
-    hostView.externalProjectableNodes = projectableNodes;
-    var hostElement = hostView.create(node);
+    var hostElement = hostView.create(projectableNodes, node);
     return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
   }
 }

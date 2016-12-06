@@ -12,7 +12,7 @@ import 'app_view_utils.dart';
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
 import 'view_ref.dart' show ViewRefImpl;
-import 'view_type.dart';
+import 'view_type.dart' show ViewType;
 import 'dart:js_util' as js_util;
 
 export 'package:angular2/src/core/change_detection/component_state.dart';
@@ -20,8 +20,6 @@ export 'package:angular2/src/core/change_detection/component_state.dart';
 const EMPTY_CONTEXT = const Object();
 
 bool domRootRendererIsDirty = false;
-// Template Anchor comment.
-const String templateCommentText = 'template bindings={}';
 
 /// Cost of making objects: http://jsperf.com/instantiate-size-of-object
 abstract class AppView<T> {
@@ -37,9 +35,7 @@ abstract class AppView<T> {
   // to be change detected.
   bool _skipChangeDetection = false;
   ViewRefImpl ref;
-  // Only set by component factory.
-  List externalProjectableNodes;
-  Node lastRootNode;
+  List rootNodesOrViewContainers;
   List allNodes;
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
   List subscriptions;
@@ -55,9 +51,9 @@ abstract class AppView<T> {
   ///
   /// This is always a component instance.
   T ctx;
+  List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
   bool _hasExternalHostElement;
-
   AppView(this.clazz, this.componentType, this.type, this.locals,
       this.parentInjector, this.declarationViewContainer, this._cdMode) {
     ref = new ViewRefImpl(this);
@@ -102,42 +98,61 @@ abstract class AppView<T> {
             identical(_cdState, ChangeDetectorState.Errored);
   }
 
-  ViewContainer create(dynamic /* String | Node */ rootSelectorOrNode) {
+  ViewContainer create(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      dynamic /* String | Node */ rootSelectorOrNode) {
     T context;
+    var projectableNodes;
+    switch (this.type) {
+      case ViewType.COMPONENT:
+        context = declarationViewContainer.component as T;
+        projectableNodes = ensureSlotCount(
+            givenProjectableNodes, this.componentType.slotCount);
+        break;
+      case ViewType.EMBEDDED:
+        return createEmbedded(givenProjectableNodes, rootSelectorOrNode);
+      case ViewType.HOST:
+        return createHost(givenProjectableNodes, rootSelectorOrNode);
+    }
     this._hasExternalHostElement = rootSelectorOrNode != null;
     this.ctx = context;
+    this.projectableNodes = projectableNodes;
     return this.createInternal(rootSelectorOrNode);
   }
 
   /// Builds a host view.
-  ViewContainer createHost(dynamic /* String | Node */ rootSelectorOrNode) {
+  ViewContainer createHost(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      dynamic /* String | Node */ rootSelectorOrNode) {
     assert(type == ViewType.HOST);
     ctx = null;
     // Note: Don't ensure the slot count for the projectableNodes as
     // we store them only for the contained component view (which will
     // later check the slot count...)
+    projectableNodes = givenProjectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
     return createInternal(rootSelectorOrNode);
   }
 
   /// Builds a nested embedded view.
-  ViewContainer createEmbedded(dynamic /* String | Node */ rootSelectorOrNode) {
+  ViewContainer createEmbedded(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      dynamic /* String | Node */ rootSelectorOrNode) {
+    projectableNodes = declarationViewContainer.parentView.projectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
     ctx = declarationViewContainer.parentView.ctx as T;
     return createInternal(rootSelectorOrNode);
   }
 
   /// Builds a component view.
-  ViewContainer createComp(dynamic /* String | Node */ rootSelectorOrNode) {
+  ViewContainer createComp(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      dynamic /* String | Node */ rootSelectorOrNode) {
+    projectableNodes =
+        ensureSlotCount(givenProjectableNodes, componentType.slotCount);
     _hasExternalHostElement = rootSelectorOrNode != null;
     ctx = declarationViewContainer.component as T;
     return createInternal(rootSelectorOrNode);
-  }
-
-  Comment createTemplateAnchor([Element parentElement]) {
-    var comment = new Comment(templateCommentText);
-    parentElement?.append(comment);
-    return comment;
   }
 
   /// Returns the ViewContainer for the host element for ViewType.HOST.
@@ -148,8 +163,8 @@ abstract class AppView<T> {
       null;
 
   /// Called by createInternal once all dom nodes are available.
-  void init(dynamic lastRootNode, List allNodes, List subscriptions) {
-    this.lastRootNode = lastRootNode;
+  void init(List rootNodesOrViewContainers, List allNodes, List subscriptions) {
+    this.rootNodesOrViewContainers = rootNodesOrViewContainers;
     this.allNodes = allNodes;
     this.subscriptions = subscriptions;
     if (type == ViewType.COMPONENT) {
@@ -288,52 +303,14 @@ abstract class AppView<T> {
 
   AppView<dynamic> get parent => declarationViewContainer?.parentView;
 
-  List<Node> get flatRootNodes {
-    var nodes = <Node>[];
-    visitRootNodesInternal(addToNodeList, nodes);
-    return nodes;
-  }
+  List<Node> get flatRootNodes =>
+      _flattenNestedViews(rootNodesOrViewContainers);
 
-  List<Node> projectedNodes(int ngContentIndex) {
-    var nodes = <Node>[];
-    visitProjectableNodes(ngContentIndex, addToNodeList, nodes);
-    return nodes;
-  }
-
-  void visitProjectedNodes(
-      int ngContentIndex, void callback(node, nodeContext), ctx) {
-    var viewContainer = declarationViewContainer;
-    // TODO investigate compiler crash when using switch instead.
-    if (type == ViewType.EMBEDDED) {
-      viewContainer.parentView
-          .visitProjectedNodes(ngContentIndex, callback, ctx);
-    } else if (type == ViewType.COMPONENT) {
-      viewContainer.parentView.visitProjectableNodesInternal(
-          viewContainer.index, ngContentIndex, callback, ctx);
-    }
-  }
-
-  void visitProjectableNodes(
-      int ngContentIndex, void callback(node, nodeContext), ctx) {
-    var viewContainer = declarationViewContainer;
-    if (type == ViewType.EMBEDDED) {
-      viewContainer.parentView
-          .visitProjectableNodes(ngContentIndex, callback, ctx);
-    } else if (type == ViewType.COMPONENT) {
-      AppView parentView = viewContainer.parentView;
-      if (parentView.externalProjectableNodes != null) {
-        if (ngContentIndex >= parentView.externalProjectableNodes.length)
-          return;
-        final nodes = parentView.externalProjectableNodes[ngContentIndex];
-        if (nodes == null) return;
-        for (var i = 0; i < nodes.length; i++) {
-          callback(nodes[i], ctx);
-        }
-      } else {
-        parentView.visitProjectableNodesInternal(
-            viewContainer.index, ngContentIndex, callback, ctx);
-      }
-    }
+  Node get lastRootNode {
+    var lastNode = rootNodesOrViewContainers.isNotEmpty
+        ? rootNodesOrViewContainers.last
+        : null;
+    return _findLastRenderNode(lastNode);
   }
 
   // TODO: remove when all tests use codegen=debug.
@@ -343,20 +320,6 @@ abstract class AppView<T> {
 
   void setLocal(String contextName, dynamic value) {
     locals[contextName] = value;
-  }
-
-  /// Overwritten by implementations
-  void visitRootNodesInternal(void callback(node, nodeContext), ctx) {}
-
-  /// Overwritten by implementations
-  void visitProjectableNodesInternal(int nodeIndex, int ngContentIndex,
-      void callback(node, nodeContext), ctx) {
-    if (externalProjectableNodes == null) return;
-    final nodes = externalProjectableNodes[ngContentIndex];
-    if (nodes == null) return;
-    for (var i = 0; i < nodes.length; i++) {
-      callback(nodes[i], ctx);
-    }
   }
 
   /// Overwritten by implementations
@@ -515,12 +478,20 @@ abstract class AppView<T> {
     if (parentElement == null) return;
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.
-    List projectables = projectedNodes(index);
+    List projectables = projectableNodes[index];
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];
-      Node child = projectable;
-      parentElement.append(child);
+      if (projectable is ViewContainer) {
+        if (projectable.nestedViews == null) {
+          parentElement.append(projectable.nativeElement as Node);
+        } else {
+          _appendNestedViewRenderNodes(parentElement, projectable);
+        }
+      } else {
+        Node child = projectable;
+        parentElement.append(child);
+      }
     }
     domRootRendererIsDirty = true;
   }
@@ -538,6 +509,76 @@ abstract class AppView<T> {
   void setProp(Element element, String name, Object value) {
     js_util.setProperty(element, name, value);
   }
+}
+
+Node _findLastRenderNode(dynamic node) {
+  Node lastNode;
+  if (node is ViewContainer) {
+    ViewContainer appEl = node;
+    lastNode = appEl.nativeElement;
+    if (appEl.nestedViews != null) {
+      // Note: Views might have no root nodes at all!
+      for (var i = appEl.nestedViews.length - 1; i >= 0; i--) {
+        var nestedView = appEl.nestedViews[i];
+        if (nestedView.rootNodesOrViewContainers.isNotEmpty) {
+          lastNode =
+              _findLastRenderNode(nestedView.rootNodesOrViewContainers.last);
+        }
+      }
+    }
+  } else {
+    lastNode = node;
+  }
+  return lastNode;
+}
+
+/// Recursively appends app element and nested view nodes to target element.
+void _appendNestedViewRenderNodes(
+    Element targetElement, ViewContainer appElement) {
+  // TODO: strongly type nativeElement.
+  targetElement.append(appElement.nativeElement as Node);
+  var nestedViews = appElement.nestedViews;
+  // Components inside ngcontent may also have ngcontent to project,
+  // recursively walk nestedViews.
+  if (nestedViews == null || nestedViews.isEmpty) return;
+  int nestedViewCount = nestedViews.length;
+  for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
+    List projectables = nestedViews[viewIndex].rootNodesOrViewContainers;
+    int projectableCount = projectables.length;
+    for (var i = 0; i < projectableCount; i++) {
+      var projectable = projectables[i];
+      if (projectable is ViewContainer) {
+        _appendNestedViewRenderNodes(targetElement, projectable);
+      } else {
+        Node child = projectable;
+        targetElement.append(child);
+      }
+    }
+  }
+}
+
+List<Node> _flattenNestedViews(List nodes) {
+  return _flattenNestedViewRenderNodes(nodes, <Node>[]);
+}
+
+List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
+  int nodeCount = nodes.length;
+  for (var i = 0; i < nodeCount; i++) {
+    var node = nodes[i];
+    if (node is ViewContainer) {
+      ViewContainer appEl = node;
+      renderNodes.add(appEl.nativeElement);
+      if (appEl.nestedViews != null) {
+        for (var k = 0; k < appEl.nestedViews.length; k++) {
+          _flattenNestedViewRenderNodes(
+              appEl.nestedViews[k].rootNodesOrViewContainers, renderNodes);
+        }
+      }
+    } else {
+      renderNodes.add(node);
+    }
+  }
+  return renderNodes;
 }
 
 void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
@@ -560,8 +601,3 @@ void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
 /// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
 /// This prevents unused import error in dart_analyzed_library build.
 Element _temporaryTodo;
-
-// Default callback used for visiting projected nodes.
-void addToNodeList(Node item, List<Node> list) {
-  list.add(item);
-}

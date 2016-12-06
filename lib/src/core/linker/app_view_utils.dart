@@ -72,7 +72,22 @@ class AppViewUtils {
   }
 }
 
-const EMPTY_ARRAY = const [];
+List ensureSlotCount(List projectableNodes, int expectedSlotCount) {
+  var res;
+  if (projectableNodes == null) {
+    return const [];
+  }
+  if (projectableNodes.length < expectedSlotCount) {
+    var givenSlotCount = projectableNodes.length;
+    res = new List(expectedSlotCount);
+    for (var i = 0; i < expectedSlotCount; i++) {
+      res[i] = (i < givenSlotCount) ? projectableNodes[i] : const [];
+    }
+  } else {
+    res = projectableNodes;
+  }
+  return res;
+}
 
 dynamic interpolate0(dynamic p) {
   if (p is SafeValue) return p;
@@ -255,6 +270,8 @@ dynamic/*= T */ castByValue/*< T >*/(dynamic input, dynamic/*= T */ value) {
   return (input as dynamic/*= T */);
 }
 
+const EMPTY_ARRAY = const [];
+const EMPTY_MAP = const {};
 dynamic /* (p0: P0) => R */ pureProxy1/*< P0, R >*/(
     dynamic/*= R */ fn(dynamic /* P0 */ p0)) {
   dynamic/*= R */ result;
