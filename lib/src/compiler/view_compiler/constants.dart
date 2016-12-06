@@ -76,10 +76,6 @@ class ViewConstructorVars {
   static var declarationEl = o.variable('declarationEl');
 }
 
-class ViewProperties {
-  static var projectableNodes = new o.ReadClassMemberExpr('projectableNodes');
-}
-
 class EventHandlerVars {
   static var event = o.variable('\$event');
 }
