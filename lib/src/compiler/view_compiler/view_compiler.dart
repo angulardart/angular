@@ -13,7 +13,6 @@ import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
 import "view_binder.dart" show bindView;
 import "view_builder.dart";
-import '../../core/linker/view_type.dart';
 
 class ViewCompileResult {
   List<o.Statement> statements;
@@ -54,13 +53,12 @@ class ViewCompiler {
       List<ViewCompileDependency> targetDependencies) {
     var builderVisitor =
         new ViewBuilderVisitor(view, targetDependencies, stylesCompileResult);
-    var parentElement = view.declarationElement.hasRenderNode
-        ? view.declarationElement.parent
-        : view.declarationElement;
-    templateVisitAll(builderVisitor, template, parentElement);
-    if (view.viewType == ViewType.EMBEDDED || view.viewType == ViewType.HOST) {
-      view.lastRenderNode = builderVisitor.getOrCreateLastRenderNode();
-    }
+    templateVisitAll(
+        builderVisitor,
+        template,
+        view.declarationElement.hasRenderNode
+            ? view.declarationElement.parent
+            : view.declarationElement);
     return builderVisitor.nestedViewCount;
   }
 
