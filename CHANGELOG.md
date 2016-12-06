@@ -1,3 +1,19 @@
+## 2.3.0
+
+### API changes
+  * Deprecations
+      * `Iterable|KeyValue`Differs is deprecated. The cost of looking up to see
+        if a custom differ is available is too high for almost no use. Before
+        removed, we'll have other customization options
+
+### Bug fixes
+  * Fixed a bug where the router didn't work on a root path in IE11
+
+### Refactors
+  * Removed `NgZoneImpl`, all the code exists in `NgZone` now
+  * We now generate specific code for view and content children (faster)
+  * Projectable nodes now use the visitor pattern in `AppView`
+
 ## 2.2.0
 
 ### API changes
