@@ -507,5 +507,5 @@ String _relativePath(String url) {
   }
   _urlParsingNode.href = url;
   var pathname = _urlParsingNode.pathname;
-  return (pathname[0] == '/') ? pathname : '/${pathname}';
+  return (pathname.isEmpty || pathname[0] == '/') ? pathname : '/${pathname}';
 }
