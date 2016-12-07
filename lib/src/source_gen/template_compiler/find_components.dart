@@ -77,7 +77,8 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       visitAll/*<T>*/(
           directives,
           (Element element) => element.metadata.any(annotationMatcher)
-              ? element.accept(visitor) as dynamic/*=T*/ : null);
+              ? element.accept(visitor)
+              : null);
 }
 
 class ComponentVisitor
