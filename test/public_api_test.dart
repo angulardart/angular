@@ -63,8 +63,6 @@ var NG_COMMON = [
   'NgSwitchWhen',
   'NgSwitchDefault',
   'NumberPipe',
-  'ObservableListDiff',
-  'ObservableListDiffFactory',
   'PatternValidator',
   'PercentPipe',
   'ReplacePipe',
@@ -76,9 +74,6 @@ var NG_COMMON = [
   'ValidatorFn',
   'Validators',
   'RadioButtonState',
-  'NgLocalization',
-  'NgPlural',
-  'NgPluralCase'
 ];
 var NG_COMPILER = [
   'TemplateAst',
