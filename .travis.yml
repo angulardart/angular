@@ -3,6 +3,8 @@ sudo: false
 dart:
   - stable
   - dev
+  - 1.21.0
+  - 1.20.1
   - 1.19.1
 env:
   - TEST_PLATFORM=vm
