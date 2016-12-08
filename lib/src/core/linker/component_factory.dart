@@ -15,55 +15,41 @@ import 'view_ref.dart' show ViewRef;
 /// [ComponentRef] provides access to the Component Instance as well other
 /// objects related to this Component Instance and allows you to destroy the
 /// Component Instance via the [#destroy] method.
-abstract class ComponentRef {
+class ComponentRef {
+  /// The component type.
+  final Type componentType;
+
+  final ViewContainer _hostElement;
+  final List _metadata;
+
+  ComponentRef(this._hostElement, this.componentType, this._metadata);
+
   /// Location of the Host Element of this Component Instance.
-  ElementRef get location;
+  ElementRef get location => _hostElement.elementRef;
 
   /// The injector on which the component instance exists.
-  Injector get injector;
+  Injector get injector => _hostElement.injector;
 
   /// The instance of the Component.
-  dynamic get instance;
+  dynamic get instance => _hostElement.component;
 
   /// The [ViewRef] of the Host View of this Component instance.
-  ViewRef get hostView;
+  ViewRef get hostView => _hostElement.parentView.ref;
 
   /// The [ChangeDetectorRef] of the Component instance.
-  ChangeDetectorRef get changeDetectorRef;
+  ChangeDetectorRef get changeDetectorRef => _hostElement.parentView.ref;
 
-  /// The component type.
-  Type get componentType;
+  @Deprecated('Part of internal ComponentRefImpl to be deprecated')
+  List get metadata => _metadata;
 
   /// Destroys the component instance and all of the data structures associated
   /// with it.
-  void destroy();
+  void destroy() {
+    _hostElement.parentView.detachAndDestroy();
+  }
 
   /// Allows to register a callback that will be called when the component is
   /// destroyed.
-  void onDestroy(OnDestroyCallback callback);
-}
-
-class ComponentRefImpl extends ComponentRef {
-  final ViewContainer hostElement;
-  final Type componentType;
-  final List<dynamic> metadata;
-
-  ComponentRefImpl(this.hostElement, this.componentType, this.metadata);
-
-  ElementRef get location => hostElement.elementRef;
-
-  Injector get injector => hostElement.injector;
-
-  dynamic get instance => hostElement.component;
-
-  ViewRef get hostView => hostElement.parentView.ref;
-
-  ChangeDetectorRef get changeDetectorRef => hostElement.parentView.ref;
-
-  void destroy() {
-    hostElement.parentView.detachAndDestroy();
-  }
-
   void onDestroy(OnDestroyCallback callback) {
     hostView.onDestroy(callback);
   }
@@ -108,7 +94,7 @@ class ComponentFactory {
     AppView hostView = _viewFactory(injector, null);
     hostView.externalProjectableNodes = projectableNodes;
     var hostElement = hostView.create(selector);
-    return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
+    return new ComponentRef(hostElement, this.componentType, this.metadata);
   }
 
   ComponentRef loadIntoNode(Injector injector,
@@ -117,7 +103,7 @@ class ComponentFactory {
     AppView hostView = _viewFactory(injector, null);
     hostView.externalProjectableNodes = projectableNodes;
     var hostElement = hostView.create(node);
-    return new ComponentRefImpl(hostElement, this.componentType, this.metadata);
+    return new ComponentRef(hostElement, this.componentType, this.metadata);
   }
 }
 
