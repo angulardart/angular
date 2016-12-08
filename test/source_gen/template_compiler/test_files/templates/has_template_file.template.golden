@@ -133,8 +133,8 @@ void initReflector() {
     return;
   }
   _visited = true;
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       HasTemplateFileComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new HasTemplateFileComponent()));
 }

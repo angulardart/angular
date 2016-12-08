@@ -131,12 +131,12 @@ void initReflector() {
     return;
   }
   _visited = true;
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       TestDirective,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new TestDirective()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       TestSubComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new TestSubComponent()));
 }

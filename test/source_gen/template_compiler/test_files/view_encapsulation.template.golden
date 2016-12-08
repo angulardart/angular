@@ -330,16 +330,16 @@ void initReflector() {
     return;
   }
   _visited = true;
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       EmulatedComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new EmulatedComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       NativeComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new NativeComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       NoneComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new NoneComponent()));
 }
