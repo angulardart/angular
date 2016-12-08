@@ -1,7 +1,7 @@
 import 'package:angular2/di.dart' show Injectable, Inject;
 import 'package:angular2/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular2/src/core/change_detection/change_detection.dart'
-    show devModeEqual, uninitialized;
+    show devModeEqual;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular2/src/core/security.dart' show SafeValue;
@@ -272,13 +272,13 @@ dynamic/*= T */ castByValue/*< T >*/(dynamic input, dynamic/*= T */ value) {
 
 const EMPTY_ARRAY = const [];
 const EMPTY_MAP = const {};
-dynamic /* (p0: P0) => R */ pureProxy1/*< P0, R >*/(
-    dynamic/*= R */ fn(dynamic /* P0 */ p0)) {
-  dynamic/*= R */ result;
+dynamic pureProxy1(dynamic fn(dynamic p0)) {
+  dynamic result;
+  var first = true;
   var v0;
-  v0 = uninitialized;
   return (p0) {
-    if (!looseIdentical(v0, p0)) {
+    if (first || !looseIdentical(v0, p0)) {
+      first = false;
       v0 = p0;
       result = fn(p0);
     }
@@ -286,13 +286,13 @@ dynamic /* (p0: P0) => R */ pureProxy1/*< P0, R >*/(
   };
 }
 
-dynamic /* (p0: P0, p1: P1) => R */ pureProxy2/*< P0, P1, R >*/(
-    dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1)) {
-  dynamic/*= R */ result;
+dynamic pureProxy2(dynamic fn(dynamic p0, dynamic p1)) {
+  dynamic result;
+  var first = true;
   var v0, v1;
-  v0 = v1 = uninitialized;
   return (p0, p1) {
-    if (!looseIdentical(v0, p0) || !looseIdentical(v1, p1)) {
+    if (first || !looseIdentical(v0, p0) || !looseIdentical(v1, p1)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       result = fn(p0, p1);
@@ -301,19 +301,16 @@ dynamic /* (p0: P0, p1: P1) => R */ pureProxy2/*< P0, P1, R >*/(
   };
 }
 
-dynamic
-    /* (p0: P0, p1: P1,
-                                                                               p2: P2) => R */
-    pureProxy3/*< P0, P1, P2, R >*/(
-        dynamic/*= R */ fn(
-            dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2)) {
-  dynamic/*= R */ result;
+dynamic pureProxy3(dynamic fn(dynamic p0, dynamic p1, dynamic p2)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2;
-  v0 = v1 = v2 = uninitialized;
   return (p0, p1, p2) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;
@@ -323,19 +320,17 @@ dynamic
   };
 }
 
-dynamic /* (
-    p0: P0, p1: P1, p2: P2, p3: P3) => R */
-    pureProxy4/*< P0, P1, P2, P3, R >*/(
-        dynamic/*= R */ fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1,
-            dynamic /* P2 */ p2, dynamic /* P3 */ p3)) {
-  dynamic/*= R */ result;
+dynamic pureProxy4(dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2, v3;
-  v0 = v1 = v2 = v3 = uninitialized;
   return (p0, p1, p2, p3) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2) ||
         !looseIdentical(v3, p3)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;
@@ -346,21 +341,19 @@ dynamic /* (
   };
 }
 
-dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) =>
-    R */
-    pureProxy5/*< P0, P1, P2, P3, P4, R >*/(
-        dynamic/*= R */
-        fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
-            dynamic /* P3 */ p3, dynamic /* P4 */ p4)) {
-  dynamic/*= R */ result;
+dynamic pureProxy5(
+    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2, v3, v4;
-  v0 = v1 = v2 = v3 = v4 = uninitialized;
   return (p0, p1, p2, p3, p4) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2) ||
         !looseIdentical(v3, p3) ||
         !looseIdentical(v4, p4)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;
@@ -372,23 +365,21 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) =>
   };
 }
 
-dynamic
-    /* (p0: P0, p1: P1, p2: P2, p3: P3,
-                                                                 p4: P4, p5: P5) => R */
-    pureProxy6/*< P0, P1, P2, P3, P4, P5, R >*/(
-        dynamic/*= R */
-        fn(dynamic /* P0 */ p0, dynamic /* P1 */ p1, dynamic /* P2 */ p2,
-            dynamic /* P3 */ p3, dynamic /* P4 */ p4, dynamic /* P5 */ p5)) {
-  dynamic/*= R */ result;
+dynamic pureProxy6(
+    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
+        dynamic p5)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2, v3, v4, v5;
-  v0 = v1 = v2 = v3 = v4 = v5 = uninitialized;
   return (p0, p1, p2, p3, p4, p5) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2) ||
         !looseIdentical(v3, p3) ||
         !looseIdentical(v4, p4) ||
         !looseIdentical(v5, p5)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;
@@ -401,27 +392,22 @@ dynamic
   };
 }
 
-dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */
-    pureProxy7/*< P0, P1, P2, P3, P4, P5, P6, R >*/(
-        dynamic/*= R */ fn(
-            dynamic /* P0 */ p0,
-            dynamic /* P1 */ p1,
-            dynamic /* P2 */ p2,
-            dynamic /* P3 */ p3,
-            dynamic /* P4 */ p4,
-            dynamic /* P5 */ p5,
-            dynamic /* P6 */ p6)) {
-  dynamic/*= R */ result;
+dynamic pureProxy7(
+    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
+        dynamic p5, dynamic p6)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2, v3, v4, v5, v6;
-  v0 = v1 = v2 = v3 = v4 = v5 = v6 = uninitialized;
   return (p0, p1, p2, p3, p4, p5, p6) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2) ||
         !looseIdentical(v3, p3) ||
         !looseIdentical(v4, p4) ||
         !looseIdentical(v5, p5) ||
         !looseIdentical(v6, p6)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;
@@ -435,23 +421,15 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) => R */
   };
 }
 
-dynamic
-    /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) => R */
-    pureProxy8/*< P0, P1, P2, P3, P4, P5, P6, P7, R >*/(
-        dynamic/*= R */ fn(
-            dynamic /* P0 */ p0,
-            dynamic /* P1 */ p1,
-            dynamic /* P2 */ p2,
-            dynamic /* P3 */ p3,
-            dynamic /* P4 */ p4,
-            dynamic /* P5 */ p5,
-            dynamic /* P6 */ p6,
-            dynamic /* P7 */ p7)) {
-  dynamic/*= R */ result;
+dynamic pureProxy8(
+    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
+        dynamic p5, dynamic p6, dynamic p7)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2, v3, v4, v5, v6, v7;
-  v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = uninitialized;
   return (p0, p1, p2, p3, p4, p5, p6, p7) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2) ||
         !looseIdentical(v3, p3) ||
@@ -459,6 +437,7 @@ dynamic
         !looseIdentical(v5, p5) ||
         !looseIdentical(v6, p6) ||
         !looseIdentical(v7, p7)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;
@@ -473,22 +452,15 @@ dynamic
   };
 }
 
-dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8) => R */ pureProxy9/*< P0, P1, P2, P3, P4, P5, P6, P7, P8, R >*/(
-    dynamic/*= R */ fn(
-        dynamic /* P0 */ p0,
-        dynamic /* P1 */ p1,
-        dynamic /* P2 */ p2,
-        dynamic /* P3 */ p3,
-        dynamic /* P4 */ p4,
-        dynamic /* P5 */ p5,
-        dynamic /* P6 */ p6,
-        dynamic /* P7 */ p7,
-        dynamic /* P8 */ p8)) {
-  dynamic/*= R */ result;
+dynamic pureProxy9(
+    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
+        dynamic p5, dynamic p6, dynamic p7, dynamic p8)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2, v3, v4, v5, v6, v7, v8;
-  v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = v8 = uninitialized;
   return (p0, p1, p2, p3, p4, p5, p6, p7, p8) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2) ||
         !looseIdentical(v3, p3) ||
@@ -497,6 +469,7 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: 
         !looseIdentical(v6, p6) ||
         !looseIdentical(v7, p7) ||
         !looseIdentical(v8, p8)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;
@@ -512,23 +485,15 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: 
   };
 }
 
-dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9) => R */ pureProxy10/*< P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, R >*/(
-    dynamic/*= R */ fn(
-        dynamic /* P0 */ p0,
-        dynamic /* P1 */ p1,
-        dynamic /* P2 */ p2,
-        dynamic /* P3 */ p3,
-        dynamic /* P4 */ p4,
-        dynamic /* P5 */ p5,
-        dynamic /* P6 */ p6,
-        dynamic /* P7 */ p7,
-        dynamic /* P8 */ p8,
-        dynamic /* P9 */ p9)) {
-  dynamic/*= R */ result;
+dynamic pureProxy10(
+    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
+        dynamic p5, dynamic p6, dynamic p7, dynamic p8, dynamic p9)) {
+  dynamic result;
+  var first = true;
   var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9;
-  v0 = v1 = v2 = v3 = v4 = v5 = v6 = v7 = v8 = v9 = uninitialized;
   return (p0, p1, p2, p3, p4, p5, p6, p7, p8, p9) {
-    if (!looseIdentical(v0, p0) ||
+    if (first ||
+        !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
         !looseIdentical(v2, p2) ||
         !looseIdentical(v3, p3) ||
@@ -538,6 +503,7 @@ dynamic /* (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: 
         !looseIdentical(v7, p7) ||
         !looseIdentical(v8, p8) ||
         !looseIdentical(v9, p9)) {
+      first = false;
       v0 = p0;
       v1 = p1;
       v2 = p2;

@@ -1,5 +1,13 @@
 import "package:angular2/core.dart"
-    show OnChanges, SimpleChange, Directive, Provider, Inject, Optional, Self;
+    show
+        OnChanges,
+        OnInit,
+        SimpleChange,
+        Directive,
+        Provider,
+        Inject,
+        Optional,
+        Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show Control;
@@ -47,11 +55,10 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
     inputs: const ["model: ngModel"],
     outputs: const ["update: ngModelChange"],
     exportAs: "ngForm")
-class NgModel extends NgControl implements OnChanges {
+class NgModel extends NgControl implements OnChanges, OnInit {
   List<dynamic> _validators;
   List<dynamic> _asyncValidators;
   var _control = new Control();
-  var _added = false;
   var update = new EventEmitter(false);
   dynamic model;
   dynamic viewModel;
@@ -71,13 +78,9 @@ class NgModel extends NgControl implements OnChanges {
       : super() {
     this.valueAccessor = selectValueAccessor(this, valueAccessors);
   }
+
   @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
-    if (!this._added) {
-      setUpControl(this._control, this);
-      this._control.updateValueAndValidity(emitEvent: false);
-      this._added = true;
-    }
     if (isPropertyUpdated(changes, this.viewModel)) {
       this._control.updateValue(this.model);
       this.viewModel = this.model;
@@ -85,6 +88,11 @@ class NgModel extends NgControl implements OnChanges {
   }
 
   @override
+  ngOnInit() {
+    setUpControl(this._control, this);
+    this._control.updateValueAndValidity(emitEvent: false);
+  }
+
   Control get control {
     return this._control;
   }

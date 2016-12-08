@@ -70,7 +70,6 @@ AsyncValidatorFn composeAsyncValidators(List<dynamic> validators) {
 bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
   if (!changes.containsKey('model')) return false;
   var change = changes["model"];
-  if (change.isFirstChange()) return true;
   return !looseIdentical(viewModel, change.currentValue);
 }
 

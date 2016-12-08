@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'package:angular2/platform/browser.dart';
+import 'package:angular2/src/core/linker/element_ref.dart';
 @TestOn('browser')
 import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
@@ -113,7 +116,9 @@ void main() {
     ControlGroup formModel;
     var loginControlDir;
     setUp(() {
-      defaultAccessor = new DefaultValueAccessor(null);
+      BrowserDomAdapter.makeCurrent();
+      defaultAccessor = new DefaultValueAccessor(
+          new ElementRef(document.createElement('div')));
       form = new NgFormModel([], []);
       formModel = new ControlGroup({
         "login": new Control(),
@@ -378,6 +383,7 @@ void main() {
       });
       test("should set up validator", fakeAsync(() {
         // this will add the required validator and recalculate the validity
+        ngModel.ngOnInit();
         ngModel.ngOnChanges({});
         tick();
         expect(ngModel.control.errors, {"required": true});

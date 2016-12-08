@@ -74,7 +74,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     // TemplateRef.
     'asset:angular2/lib/src/core/linker/template_ref.dart',
     'package:angular2/src/core/linker/template_ref.dart',
-    // uninitialized, ChangeDetectionStrategy, Differs*
+    // ChangeDetectionStrategy, Differs*
     'asset:angular2/lib/src/core/change_detection/change_detection.dart',
     'package:angular2/src/core/change_detection/change_detection.dart',
     // NgIf.

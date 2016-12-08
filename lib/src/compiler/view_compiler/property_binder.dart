@@ -53,8 +53,7 @@ void bind(
     return;
   }
   view.fields.add(new o.ClassField(fieldExpr.name,
-      modifiers: const [o.StmtModifier.Private],
-      initializer: o.importExpr(Identifiers.uninitialized)));
+      modifiers: const [o.StmtModifier.Private]));
   if (checkExpression.needsValueUnwrapper) {
     var initValueUnwrapperStmt =
         DetectChangesVars.valUnwrapper.callMethod('reset', []).toStmt();

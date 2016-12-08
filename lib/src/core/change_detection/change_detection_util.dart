@@ -24,8 +24,6 @@ class _DevModeEquality extends DefaultEquality<Object> {
 
 bool devModeEqual(Object a, Object b) => const _DevModeEquality().equals(a, b);
 
-Object uninitialized = const Object();
-
 /// Indicates that the result of a [Pipe] transformation has changed
 /// even though the reference has not changed.
 ///
@@ -71,7 +69,4 @@ class SimpleChange {
   dynamic previousValue;
   dynamic currentValue;
   SimpleChange(this.previousValue, this.currentValue);
-
-  /// Check whether the new value is the first value assigned.
-  bool isFirstChange() => identical(this.previousValue, uninitialized);
 }

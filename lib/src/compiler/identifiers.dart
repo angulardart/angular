@@ -1,6 +1,5 @@
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show
-        uninitialized,
         devModeEqual,
         SimpleChange,
         ValueUnwrapper,
@@ -62,7 +61,6 @@ var impViewEncapsulation = ViewEncapsulation;
 var impViewType = ViewType;
 var impChangeDetectionStrategy = ChangeDetectionStrategy;
 var impSimpleChange = SimpleChange;
-var impUninitialized = uninitialized;
 var impChangeDetectorState = ChangeDetectorState;
 var impDevModeEqual = devModeEqual;
 var impInterpolate0 = interpolate0;
@@ -153,10 +151,6 @@ class Identifiers {
       runtime: impTemplateSecurityContext);
   static final SimpleChange = new CompileIdentifierMetadata(
       name: "SimpleChange", moduleUrl: CD_MODULE_URL, runtime: impSimpleChange);
-  static final uninitialized = new CompileIdentifierMetadata(
-      name: "uninitialized",
-      moduleUrl: CD_MODULE_URL,
-      runtime: impUninitialized);
   static final ChangeDetectorState = new CompileIdentifierMetadata(
       name: "ChangeDetectorState",
       moduleUrl: CD_MODULE_URL,
