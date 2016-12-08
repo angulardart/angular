@@ -26,6 +26,7 @@ RenderComponentType renderType_TestFooComponent;
 
 class ViewTestFooComponent0 extends AppView<import2.TestFooComponent> {
   Element _el_0;
+  Text _text_1;
   ViewTestFooComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -42,9 +43,9 @@ class ViewTestFooComponent0 extends AppView<import2.TestFooComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    Text _text_1 = new Text('Foo');
+    _text_1 = new Text('Foo');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(null, [_el_0, _text_1], []);
     return null;
   }
 }
@@ -83,8 +84,8 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
     _compView_0 = viewFactory_TestFooComponent0(this.injector(0), _appEl_0);
     _TestFooComponent_0_3 = new import2.TestFooComponent();
     _appEl_0.initComponent(_TestFooComponent_0_3, _compView_0);
-    _compView_0.createComp(projectableNodes, null);
-    init([_el_0], [_el_0], []);
+    _compView_0.createComp(null);
+    init(_el_0, [_el_0], []);
     return _appEl_0;
   }
 
@@ -103,6 +104,10 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
 
   void destroyInternal() {
     _compView_0.destroy();
+  }
+
+  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
+    cb(_el_0, ctx);
   }
 }
 
