@@ -24,8 +24,7 @@ import "package:angular2/src/core/application_ref.dart"
         PLATFORM_CORE_PROVIDERS,
         APPLICATION_CORE_PROVIDERS;
 import "package:angular2/src/core/linker/app_view_utils.dart" show AppViewUtils;
-import "package:angular2/src/core/linker/component_factory.dart"
-    show ComponentFactory, ComponentRefImpl, ComponentRef;
+import "package:angular2/src/core/linker/component_factory.dart";
 import "package:angular2/src/facade/exception_handler.dart"
     show ExceptionHandler;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -205,24 +204,28 @@ class _MockComponentFactory extends ComponentFactory {
 class _MockComponentResolver implements ComponentResolver {
   ComponentFactory _compFactory;
   _MockComponentResolver(this._compFactory);
+
+  @override
   Future<ComponentFactory> resolveComponent(Type type) {
     return new Future.value(this._compFactory);
   }
 
+  @override
   void clearCache() {}
 }
 
-class _MockComponentRef extends ComponentRefImpl {
+class _MockComponentRef extends ComponentRef {
   Injector _injector;
   _MockComponentRef(this._injector) : super(null, null, null);
 
-  Injector get injector {
-    return this._injector;
-  }
+  @override
+  Injector get injector => _injector;
 
+  @override
   ChangeDetectorRef get changeDetectorRef {
     return (new MockChangeDetectorRef());
   }
 
-  onDestroy(Function cb) {}
+  @override
+  void onDestroy(Function cb) {}
 }
