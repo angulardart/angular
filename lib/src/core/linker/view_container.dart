@@ -154,6 +154,13 @@ class ViewContainer implements ViewContainerRef {
     }
   }
 
+  visitNestedViewRootNodes(void callback(node, callbackContext), ctx) {
+    if (nestedViews == null) return;
+    for (int i = 0, len = nestedViews.length; i < len; i++) {
+      nestedViews[i].visitRootNodesInternal(callback, ctx);
+    }
+  }
+
   List<dynamic> mapNestedViews(dynamic nestedViewClass, Function callback) {
     var result = [];
     if (nestedViews != null) {
