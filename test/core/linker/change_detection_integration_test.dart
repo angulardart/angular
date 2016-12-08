@@ -24,8 +24,6 @@ const ALL_DIRECTIVES = const [
   TestChild,
   TestDirective,
   TestLocals,
-  TestUninitialized,
-  TestUninitializedChild,
 ];
 
 const ALL_PIPES = const [
@@ -112,16 +110,6 @@ void main() {
         '["foo", "bar"][0]', 'foo');
     bindingTest('should support keyed access to a map item',
         '{"foo": "bar"}["foo"]', 'bar');
-
-    ngComponentTest(
-        'Should assign null to uninitialized values', TestUninitialized,
-        (ComponentFixture fixture) {
-      TestUninitializedChild child =
-          fixture.debugElement.childNodes[0].inject(TestUninitializedChild);
-      expect(child.someProp, isNotNull);
-      fixture.detectChanges(false);
-      expect(child.someProp, null);
-    });
 
     containerTest(
         'Should assign null values', "<test-child [someProp]='a'></test-child>",
@@ -411,24 +399,18 @@ void main() {
         '<test-child [someProp]="name | countingPipe">'
         '</test-child>',
         (ComponentFixture fixture, TestContainer container, TestChild child) {
-      // uninitialized -> null.
-      container.name = null;
-      fixture.detectChanges(false);
-      expect(child.someProp, 'null state:0');
-      fixture.detectChanges(false);
-      expect(child.someProp, 'null state:0');
       // Change from null to value.
       container.name = 'bob';
       fixture.detectChanges(false);
-      expect(child.someProp, 'bob state:1');
+      expect(child.someProp, 'bob state:0');
       fixture.detectChanges(false);
-      expect(child.someProp, 'bob state:1');
+      expect(child.someProp, 'bob state:0');
       // Change to new value.
       container.name = 'new';
       fixture.detectChanges(false);
-      expect(child.someProp, 'new state:2');
+      expect(child.someProp, 'new state:1');
       fixture.detectChanges(false);
-      expect(child.someProp, 'new state:2');
+      expect(child.someProp, 'new state:1');
     });
 
     containerTest('should call impure pipes on each change detection run',
@@ -763,27 +745,6 @@ class TestChild {
 
   dynamic get someProp => _someProp;
   Element get element => elementRef.nativeElement as Element;
-}
-
-@Component(
-    selector: "test-uninitialized",
-    template: '<test-uninitialized-child [someProp]="value">'
-        '</test-uninitialized-child>',
-    directives: ALL_DIRECTIVES,
-    pipes: ALL_PIPES)
-class TestUninitialized {
-  dynamic value;
-}
-
-@Component(selector: "test-uninitialized-child", template: "")
-class TestUninitializedChild {
-  dynamic _someProp = 'uninitialized';
-  @Input()
-  set someProp(value) {
-    _someProp = value;
-  }
-
-  dynamic get someProp => _someProp;
 }
 
 /// Helper to set a local variable value on a template.

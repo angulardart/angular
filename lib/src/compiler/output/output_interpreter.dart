@@ -50,7 +50,7 @@ dynamic _executeFunctionStatements(
     List<o.Statement> statements,
     _ExecutionContext ctx,
     StatementInterpreter visitor) {
-  var childCtx = ctx.createChildWihtLocalVars();
+  var childCtx = ctx.createChildWithLocalVars();
   for (var i = 0; i < varNames.length; i++) {
     childCtx.vars[varNames[i]] = varValues[i];
   }
@@ -78,7 +78,7 @@ class _ExecutionContext {
       this.getters,
       this.methods,
       this.instanceFactory);
-  _ExecutionContext createChildWihtLocalVars() {
+  _ExecutionContext createChildWithLocalVars() {
     return new _ExecutionContext(
         this,
         this.superClass,
@@ -368,7 +368,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     try {
       return this.visitAllStatements(stmt.bodyStmts, ctx);
     } catch (e, e_stack) {
-      var childCtx = ctx.createChildWihtLocalVars();
+      var childCtx = ctx.createChildWithLocalVars();
       childCtx.vars[CATCH_ERROR_VAR] = e;
       childCtx.vars[CATCH_STACK_VAR] = e_stack;
       return this.visitAllStatements(stmt.catchStmts, childCtx);

@@ -44,7 +44,6 @@ class _ViewCompA0 extends import3.DebugAppView<import4.CompA> {
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
     dbgElm(_text_0, 0, 0, 0);
-    _expr_0 = import9.uninitialized;
     this.init([], [this._text_0], []);
     return null;
   }

@@ -3,7 +3,7 @@ import 'package:angular2/core.dart'
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import '../model.dart' show Control, ControlGroup;
+import '../model.dart' show AbstractControl, Control, ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 import 'control_container.dart' show ControlContainer;
 import 'form_interface.dart' show Form;

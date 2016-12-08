@@ -37,6 +37,10 @@ void main() {
                 <input type="text" ngControl="login">
                </div>''';
         tcb.overrideTemplate(MyComp, t).createAsync(MyComp).then((fixture) {
+          fixture.debugElement.componentInstance.form =
+              new ControlGroup({"login": new Control("loginValue")});
+          fixture.detectChanges();
+          fixture.debugElement.componentInstance.form = null;
           expect(
               () => fixture.detectChanges(),
               throwsA(allOf(
@@ -321,7 +325,7 @@ void main() {
                   </div>''';
           tcb.overrideTemplate(MyComp, t).createAsync(MyComp).then((fixture) {
             fixture.debugElement.componentInstance.form = form;
-            fixture.debugElement.componentInstance.data = null;
+            fixture.debugElement.componentInstance.data = "";
             fixture.detectChanges();
             var input = fixture.debugElement.query(By.css("input"));
             expect(input.nativeElement.value, "");
