@@ -742,32 +742,32 @@ void initReflector() {
     return;
   }
   _visited = true;
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       CheckOnceComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new CheckOnceComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       CheckedComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new CheckedComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       CheckAlwaysComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new CheckAlwaysComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       DetachedComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new DetachedComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       OnPushComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new OnPushComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       StatefulComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new StatefulComponent()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       DefaultComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new DefaultComponent()));
 }

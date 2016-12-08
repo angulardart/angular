@@ -126,8 +126,8 @@ void initReflector() {
     return;
   }
   _visited = true;
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       TestFooComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new TestFooComponent()));
 }

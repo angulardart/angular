@@ -52,7 +52,6 @@ class NgDepsModel {
 
     // Call the setup method for our dependencies.
     for (var importModel in depImports) {
-      // TODO(alorenzen): Fix scoping (prefix).
       setUpMethod
           .addStatement(reference(SETUP_METHOD_NAME, importModel.uri).call([]));
     }

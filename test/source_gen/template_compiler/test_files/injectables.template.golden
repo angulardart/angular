@@ -137,9 +137,9 @@ void initReflector() {
     return;
   }
   _visited = true;
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       InjectableComponent,
-      new ReflectionInfo(
+      new _ngRef.ReflectionInfo(
           const <dynamic>[],
           const [
             const <dynamic>[BaseService, Attribute, optional],
@@ -147,12 +147,12 @@ void initReflector() {
           ],
           (BaseService service, InjectableService injectableService) =>
               new InjectableComponent(service, injectableService)));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       BaseService,
-      new ReflectionInfo(const <dynamic>[const Injectable()], const [],
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
           () => new BaseService()));
-  reflector.registerType(
+  _ngRef.reflector.registerType(
       InjectableService,
-      new ReflectionInfo(const <dynamic>[const Injectable()], const [],
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
           () => new InjectableService()));
 }
