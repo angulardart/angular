@@ -319,14 +319,14 @@ class ShadowCss {
     });
   }
 
-  String _scopeSelector(
-      String selector, String scopeSelector, String hostSelector, bool strict) {
-    var r = [], parts = selector.split(",");
+  String _scopeSelector(String sourceSelector, String scopeSelector,
+      String hostSelector, bool strict) {
+    var r = [], parts = sourceSelector.split(",");
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i].trim();
       var deepParts = jsSplit(p, _shadowDeepSelectors);
       var shallowPart = deepParts[0];
-      if (this._selectorNeedsScoping(shallowPart, scopeSelector)) {
+      if (_selectorNeedsScoping(shallowPart, scopeSelector)) {
         deepParts[0] =
             strict && !shallowPart.contains(_polyfillHostNoCombinator)
                 ? this._applyStrictSelectorScope(shallowPart, scopeSelector)
