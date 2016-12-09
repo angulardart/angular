@@ -52,7 +52,6 @@ import 'package:test/test.dart';
 
 const ANCHOR_ELEMENT = const OpaqueToken("AnchorElement");
 void main() {
-  bool isJit = false;
   BrowserDomAdapter.makeCurrent();
   group("integration tests", () {
     setUp(() {
@@ -1748,7 +1747,7 @@ void main() {
             beforeEachProviders(() => [
                   // Switch to debug mode.
                   provide(CompilerConfig,
-                      useValue: new CompilerConfig(true, true, isJit))
+                      useValue: new CompilerConfig(true, true))
                 ]);
             return inject([TestComponentBuilder, AsyncTestCompleter],
                 (TestComponentBuilder tcb, AsyncTestCompleter completer) {
@@ -1772,7 +1771,7 @@ void main() {
             beforeEachProviders(() => [
                   // Switch to debug mode.
                   provide(CompilerConfig,
-                      useValue: new CompilerConfig(true, true, isJit))
+                      useValue: new CompilerConfig(true, true))
                 ]);
             return inject([TestComponentBuilder, AsyncTestCompleter],
                 (TestComponentBuilder tcb, AsyncTestCompleter completer) {

@@ -19,8 +19,8 @@ Future<TemplateCompilerOutputs> processTemplates(
     Map<String, String> resolvedIdentifiers}) async {
   final templateCompiler = createTemplateCompiler(
     buildStep,
-    compilerConfig: new CompilerConfig(codegenMode == CODEGEN_DEBUG_MODE,
-        reflectPropertiesAsAttributes, false),
+    compilerConfig: new CompilerConfig(
+        codegenMode == CODEGEN_DEBUG_MODE, reflectPropertiesAsAttributes),
   );
 
   final ngDepsModel = await extractNgDepsModel(element, buildStep);

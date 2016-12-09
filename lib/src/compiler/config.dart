@@ -1,6 +1,10 @@
 class CompilerConfig {
+  /// [true] if compiler is generating development binary.
   final bool genDebugInfo;
+
+  /// If [true], generates code to show binding values inside live DOM for
+  /// debugging.
   final bool logBindingUpdate;
-  final bool useJit;
-  CompilerConfig(this.genDebugInfo, this.logBindingUpdate, this.useJit);
+
+  CompilerConfig(this.genDebugInfo, this.logBindingUpdate);
 }

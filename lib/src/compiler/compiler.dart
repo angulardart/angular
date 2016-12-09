@@ -37,7 +37,7 @@ export "pipe_resolver.dart" show PipeResolver;
 export "view_resolver.dart" show ViewResolver;
 
 CompilerConfig createCompilerConfig() {
-  return new CompilerConfig(assertionsEnabled(), false, true);
+  return new CompilerConfig(assertionsEnabled(), false);
 }
 
 /// A set of providers that provide `Compiler` and its dependencies to use for

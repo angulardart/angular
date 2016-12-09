@@ -39,8 +39,8 @@ Future<Outputs> processTemplates(AssetReader reader, AssetId assetId,
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
     templateCompiler = createTemplateCompiler(reader,
-        compilerConfig: new CompilerConfig(codegenMode == CODEGEN_DEBUG_MODE,
-            reflectPropertiesAsAttributes, false));
+        compilerConfig: new CompilerConfig(
+            codegenMode == CODEGEN_DEBUG_MODE, reflectPropertiesAsAttributes));
   }
 
   final compileComponentsData =
