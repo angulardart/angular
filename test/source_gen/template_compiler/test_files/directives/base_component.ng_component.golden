@@ -80,7 +80,7 @@ final String output = """[
         "type": {
           "class": "Type",
           "name": "TestSubComponent",
-          "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/directives/directives.dart",
+          "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/directives/components.dart",
           "prefix": null,
           "isHost": false,
           "value": null,

@@ -13,7 +13,8 @@ class TestComponentExtractor extends Generator {
   Future<String> generate(Element element, BuildStep buildStep) async {
     if (element is! LibraryElement) return null;
     var components = findComponents(buildStep, element);
-    if (components.isEmpty) return null;
+    if (components.isEmpty)
+      return 'final String output = "No components found.";';
     var output = _encoder.convert(components);
     return 'final String output = """$output""";';
   }
