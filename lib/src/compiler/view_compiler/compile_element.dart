@@ -13,7 +13,7 @@ import "../template_ast.dart"
 import "compile_method.dart" show CompileMethod;
 import "compile_query.dart"
     show CompileQuery, createQueryList, addQueryToTokenMap;
-import "compile_view.dart";
+import "compile_view.dart" show CompileView;
 import "constants.dart" show InjectMethodVars;
 import "view_compiler_utils.dart"
     show
@@ -65,7 +65,7 @@ class CompileElement extends CompileNode {
   CompileTokenMap<ProviderAst> _resolvedProviders;
   var _queryCount = 0;
   var _queries = new CompileTokenMap<List<CompileQuery>>();
-  List<List<CompileViewRootNode>> contentNodesByNgContentIndex;
+  List<List<o.Expression>> contentNodesByNgContentIndex;
   CompileView embeddedView;
   List<o.Expression> directiveInstances;
   Map<String, CompileTokenMetadata> referenceTokens;
@@ -140,10 +140,9 @@ class CompileElement extends CompileNode {
   void setComponentView(o.Expression compViewExpr) {
     _compViewExpr = compViewExpr;
     int indexCount = component.template.ngContentSelectors.length;
-    contentNodesByNgContentIndex =
-        new List<List<CompileViewRootNode>>(indexCount);
+    contentNodesByNgContentIndex = new List<List<o.Expression>>(indexCount);
     for (var i = 0; i < indexCount; i++) {
-      contentNodesByNgContentIndex[i] = <CompileViewRootNode>[];
+      this.contentNodesByNgContentIndex[i] = <o.Expression>[];
     }
   }
 
@@ -293,8 +292,8 @@ class CompileElement extends CompileNode {
         .afterChildren(view.createMethod, view.updateContentQueriesMethod)));
   }
 
-  void addContentNode(int ngContentIndex, CompileViewRootNode node) {
-    contentNodesByNgContentIndex[ngContentIndex].add(node);
+  void addContentNode(num ngContentIndex, o.Expression nodeExpr) {
+    contentNodesByNgContentIndex[ngContentIndex].add(nodeExpr);
   }
 
   o.Expression getComponent() => component != null
