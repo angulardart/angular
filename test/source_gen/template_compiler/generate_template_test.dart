@@ -35,8 +35,12 @@ main() {
       await compareSummaryFileToGolden('injectables.dart');
     });
 
-    test('directives', () async {
+    test('directives/base_component', () async {
       await compareSummaryFileToGolden('directives/base_component.dart');
+    });
+
+    test('directives/directives', () async {
+      await compareSummaryFileToGolden('directives/directives.dart');
     });
 
     test('has_template_file', () async {

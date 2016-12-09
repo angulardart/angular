@@ -15,7 +15,7 @@ String buildGeneratedCode(
     buffer.writeln('library $libraryName$TEMPLATE_EXTENSION;\n');
   }
 
-  String templateCode = outputs.templatesSource.source;
+  String templateCode = outputs.templatesSource?.source ?? '';
   var model = outputs.ngDepsModel;
 
   var scope = new _NgScope(model);

@@ -23,12 +23,15 @@ Future<TemplateCompilerOutputs> processTemplates(
         reflectPropertiesAsAttributes, false),
   );
 
+  final ngDepsModel = await extractNgDepsModel(element, buildStep);
+
   final compileComponentsData = logElapsedSync(
       () => findComponents(buildStep, element),
       operationName: 'findComponents',
       assetId: buildStep.input.id,
       log: buildStep.logger);
-  if (compileComponentsData.isEmpty) return null;
+  if (compileComponentsData.isEmpty)
+    return new TemplateCompilerOutputs(null, ngDepsModel);
   await Future.forEach(compileComponentsData, (component) async {
     component.component =
         await templateCompiler.normalizeDirectiveMetadata(component.component);
@@ -37,6 +40,5 @@ Future<TemplateCompilerOutputs> processTemplates(
     return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: buildStep.input.id);
 
-  final ngDepsModel = await extractNgDepsModel(element, buildStep);
   return new TemplateCompilerOutputs(compiledTemplates, ngDepsModel);
 }
