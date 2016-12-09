@@ -26,7 +26,6 @@ RenderComponentType renderType_EmulatedComponent;
 
 class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
   Element _el_0;
-  Text _text_1;
   ViewEmulatedComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -43,9 +42,9 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    _text_1 = new Text('Emulated');
+    Text _text_1 = new Text('Emulated');
     _el_0.append(_text_1);
-    init(null, [_el_0, _text_1], []);
+    init([], [_el_0, _text_1], []);
     return null;
   }
 }
@@ -84,8 +83,8 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
     _compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
     _EmulatedComponent_0_3 = new import2.EmulatedComponent();
     _appEl_0.initComponent(_EmulatedComponent_0_3, _compView_0);
-    _compView_0.createComp(null);
-    init(_el_0, [_el_0], []);
+    _compView_0.createComp(projectableNodes, null);
+    init([_el_0], [_el_0], []);
     return _appEl_0;
   }
 
@@ -104,10 +103,6 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
 
   void destroyInternal() {
     _compView_0.destroy();
-  }
-
-  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
-    cb(_el_0, ctx);
   }
 }
 
@@ -132,7 +127,6 @@ RenderComponentType renderType_NativeComponent;
 
 class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
   Element _el_0;
-  Text _text_1;
   ViewNativeComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -149,9 +143,9 @@ class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    _text_1 = new Text('Native');
+    Text _text_1 = new Text('Native');
     _el_0.append(_text_1);
-    init(null, [_el_0, _text_1], []);
+    init([], [_el_0, _text_1], []);
     return null;
   }
 }
@@ -190,8 +184,8 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
     _compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
     _NativeComponent_0_3 = new import2.NativeComponent();
     _appEl_0.initComponent(_NativeComponent_0_3, _compView_0);
-    _compView_0.createComp(null);
-    init(_el_0, [_el_0], []);
+    _compView_0.createComp(projectableNodes, null);
+    init([_el_0], [_el_0], []);
     return _appEl_0;
   }
 
@@ -210,10 +204,6 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
 
   void destroyInternal() {
     _compView_0.destroy();
-  }
-
-  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
-    cb(_el_0, ctx);
   }
 }
 
@@ -235,7 +225,6 @@ RenderComponentType renderType_NoneComponent;
 
 class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
   Element _el_0;
-  Text _text_1;
   ViewNoneComponent0(
       import4.Injector parentInjector, ViewContainer declarationEl)
       : super(
@@ -252,9 +241,9 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
-    _text_1 = new Text('None');
+    Text _text_1 = new Text('None');
     _el_0.append(_text_1);
-    init(null, [_el_0, _text_1], []);
+    init([], [_el_0, _text_1], []);
     return null;
   }
 }
@@ -292,8 +281,8 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
     _compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
     _NoneComponent_0_3 = new import2.NoneComponent();
     _appEl_0.initComponent(_NoneComponent_0_3, _compView_0);
-    _compView_0.createComp(null);
-    init(_el_0, [_el_0], []);
+    _compView_0.createComp(projectableNodes, null);
+    init([_el_0], [_el_0], []);
     return _appEl_0;
   }
 
@@ -311,10 +300,6 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
 
   void destroyInternal() {
     _compView_0.destroy();
-  }
-
-  void visitRootNodesInternal(dynamic cb, dynamic ctx) {
-    cb(_el_0, ctx);
   }
 }
 

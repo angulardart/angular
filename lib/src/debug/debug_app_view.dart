@@ -62,10 +62,12 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  ViewContainer create(selectorOrNode) {
+  ViewContainer create(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      selectorOrNode) {
     this._resetDebug();
     try {
-      return super.create(selectorOrNode);
+      return super.create(givenProjectableNodes, selectorOrNode);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
@@ -73,10 +75,12 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  ViewContainer createComp(selectorOrNode) {
+  ViewContainer createComp(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      selectorOrNode) {
     this._resetDebug();
     try {
-      return super.createComp(selectorOrNode);
+      return super.createComp(givenProjectableNodes, selectorOrNode);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
@@ -84,10 +88,12 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  ViewContainer createHost(selectorOrNode) {
+  ViewContainer createHost(
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
+      selectorOrNode) {
     this._resetDebug();
     try {
-      return super.createHost(selectorOrNode);
+      return super.createHost(givenProjectableNodes, selectorOrNode);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
@@ -218,13 +224,24 @@ class DebugAppView<T> extends AppView<T> {
     }
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.
-    List projectables = projectedNodes(index);
+    List projectables = projectableNodes[index];
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];
-      Node child = projectable;
-      parentElement.append(child);
-      debugParent.addChild(getDebugNode(child));
+      if (projectable is ViewContainer) {
+        if (projectable.nestedViews == null) {
+          Node child = projectable.nativeElement;
+          parentElement.append(child);
+          debugParent.addChild(getDebugNode(child));
+        } else {
+          _appendDebugNestedViewRenderNodes(
+              debugParent, parentElement, projectable);
+        }
+      } else {
+        Node child = projectable;
+        parentElement.append(child);
+        debugParent.addChild(getDebugNode(child));
+      }
     }
     domRootRendererIsDirty = true;
   }
@@ -296,6 +313,30 @@ class DebugAppView<T> extends AppView<T> {
       }
       if (this._currentDebugContext != null) {
         throw new ViewWrappedException(e, stack, this._currentDebugContext);
+      }
+    }
+  }
+}
+
+/// Recursively appends app element and nested view nodes to target element.
+void _appendDebugNestedViewRenderNodes(
+    DebugElement debugParent, Element targetElement, ViewContainer appElement) {
+  targetElement.append(appElement.nativeElement as Node);
+  var nestedViews = appElement.nestedViews;
+  if (nestedViews == null || nestedViews.isEmpty) return;
+  int nestedViewCount = nestedViews.length;
+  for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
+    List projectables = nestedViews[viewIndex].rootNodesOrViewContainers;
+    int projectableCount = projectables.length;
+    for (var i = 0; i < projectableCount; i++) {
+      var projectable = projectables[i];
+      if (projectable is ViewContainer) {
+        _appendDebugNestedViewRenderNodes(
+            debugParent, targetElement, projectable);
+      } else {
+        Node child = projectable;
+        targetElement.append(child);
+        debugParent.addChild(getDebugNode(child));
       }
     }
   }
