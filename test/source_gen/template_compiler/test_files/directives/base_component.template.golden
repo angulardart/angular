@@ -10,6 +10,8 @@ import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.dart';
 import 'components.dart';
 import 'directives.dart' as directive;
+import 'components.template.dart' as _i1;
+import 'directives.template.dart' as _i2;
 export 'base_component.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -132,4 +134,6 @@ void initReflector() {
       TestFooComponent,
       new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new TestFooComponent()));
+  _i1.initReflector();
+  _i2.initReflector();
 }
