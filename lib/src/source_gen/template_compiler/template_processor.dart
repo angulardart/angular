@@ -23,7 +23,11 @@ Future<TemplateCompilerOutputs> processTemplates(
         codegenMode == CODEGEN_DEBUG_MODE, reflectPropertiesAsAttributes),
   );
 
-  final ngDepsModel = await extractNgDepsModel(element, buildStep);
+  final ngDepsModel = logElapsedSync(
+      () => extractNgDepsModel(element, buildStep),
+      operationName: 'extractNgDepsModel',
+      assetId: buildStep.input.id,
+      log: buildStep.logger);
 
   final compileComponentsData = logElapsedSync(
       () => findComponents(buildStep, element),
