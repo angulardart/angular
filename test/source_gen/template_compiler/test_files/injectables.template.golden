@@ -82,7 +82,9 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     _compView_0 = viewFactory_InjectableComponent0(this.injector(0), _appEl_0);
     _InjectableComponent_0_3 = new import2.InjectableComponent(
-        null, this.parentInjector.get(InjectableService, null));
+        null,
+        this.parentInjector.get(InjectableService, null),
+        this.parentInjector.get(bool));
     _appEl_0.initComponent(_InjectableComponent_0_3, _compView_0);
     _compView_0.createComp(projectableNodes, null);
     init([_el_0], [_el_0], []);
@@ -124,6 +126,8 @@ const import10.ComponentFactory InjectableComponentNgFactory =
         import2.InjectableComponent,
         _METADATA);
 const _METADATA = const <dynamic>[
+  injectableFactory,
+  const <dynamic>[const Injectable()],
   InjectableComponent,
   const <dynamic>[],
   BaseService,
@@ -137,16 +141,25 @@ void initReflector() {
     return;
   }
   _visited = true;
+  _ngRef.reflector.registerFunction(
+      injectableFactory,
+      new _ngRef.ReflectionInfo(const <dynamic>[
+        const Injectable()
+      ], const [
+        const <dynamic>[String]
+      ]));
   _ngRef.reflector.registerType(
       InjectableComponent,
       new _ngRef.ReflectionInfo(
           const <dynamic>[],
           const [
             const <dynamic>[BaseService, Attribute, optional],
-            const <dynamic>[InjectableService, Optional]
+            const <dynamic>[InjectableService, Optional],
+            const <dynamic>[bool, Inject]
           ],
-          (BaseService service, InjectableService injectableService) =>
-              new InjectableComponent(service, injectableService)));
+          (BaseService service, InjectableService injectableService,
+                  bool isTest) =>
+              new InjectableComponent(service, injectableService, isTest)));
   _ngRef.reflector.registerType(
       BaseService,
       new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
