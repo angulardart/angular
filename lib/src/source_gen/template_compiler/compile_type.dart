@@ -1,4 +1,6 @@
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/core/di/decorators.dart';
@@ -47,20 +49,37 @@ class CompileTypeMetadataVisitor
   CompileTokenMetadata _getToken(ParameterElement p) =>
       _hasAnnotation(p, Attribute)
           ? _tokenForAttribute(p)
-          : _hasAnnotation(p, Inject) ? _tokenForInject(p) : _tokenForType(p);
+          : _hasAnnotation(p, Inject)
+              ? _tokenForInject(p)
+              : _tokenForType(p.type);
 
   CompileTokenMetadata _tokenForAttribute(ParameterElement p) =>
       new CompileTokenMetadata(
           value: coerceString(
               _getAnnotation(p, Attribute).constantValue, 'attributeName'));
 
-  CompileTokenMetadata _tokenForInject(ParameterElement p) {
-    throw new ArgumentError("@Inject is not yet supported.");
+  CompileTokenMetadata _tokenForInject(ParameterElement p) =>
+      _token(getField(_getAnnotation(p, Inject).constantValue, 'token'));
+
+  CompileTokenMetadata _token(DartObject token) {
+    if (token.toStringValue() != null) {
+      return new CompileTokenMetadata(value: token.toStringValue());
+    } else if (token.toBoolValue() != null) {
+      return new CompileTokenMetadata(value: token.toBoolValue());
+    } else if (token.toIntValue() != null) {
+      return new CompileTokenMetadata(value: token.toIntValue());
+    } else if (token.toDoubleValue() != null) {
+      return new CompileTokenMetadata(value: token.toDoubleValue());
+    } else if (token.toTypeValue() != null) {
+      return _tokenForType(token.toTypeValue());
+    }
+    throw new ArgumentError('@Inject is not yet supported for $token.');
   }
 
-  CompileTokenMetadata _tokenForType(ParameterElement p) =>
-      new CompileTokenMetadata(
-          identifier: new CompileIdentifierMetadata(name: p.type.name));
+  CompileTokenMetadata _tokenForType(DartType type) {
+    return new CompileTokenMetadata(
+        identifier: new CompileIdentifierMetadata(name: type.name));
+  }
 
   ElementAnnotation _getAnnotation(Element element, Type type) =>
       element.metadata.firstWhere(

@@ -90,6 +90,17 @@ class ReflectableVisitor extends RecursiveElementVisitor {
         interfaces: _interfaces(element)));
   }
 
+  @override
+  void visitFunctionElement(FunctionElement element) {
+    if (annotation_matcher.isInjectable(element)) {
+      _reflectables.add(new ReflectionInfoModel(
+          isFunction: true,
+          name: element.name,
+          parameters: _parameters(element),
+          annotations: _annotations(element.metadata)));
+    }
+  }
+
   /// Finds the unnamed constructor if it is present.
   ///
   /// Otherwise, use the first encountered.
@@ -124,8 +135,8 @@ class ReflectableVisitor extends RecursiveElementVisitor {
     return constructor;
   }
 
-  List<ParameterModel> _parameters(ConstructorElement constructor) =>
-      constructor.parameters
+  List<ParameterModel> _parameters(ExecutableElement element) =>
+      element.parameters
           .map((parameter) => new ParameterModel.fromElement(parameter))
           .toList();
 
