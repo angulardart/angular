@@ -52,7 +52,7 @@ class ViewHasTemplateFileComponent0
   }
 }
 
-AppView viewFactory_HasTemplateFileComponent0(
+AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_HasTemplateFileComponent, null)) {
     (renderType_HasTemplateFileComponent = import8.appViewUtils

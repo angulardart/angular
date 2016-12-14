@@ -49,7 +49,7 @@ class ViewCheckOnceComponent0 extends AppView<import2.CheckOnceComponent> {
   }
 }
 
-AppView viewFactory_CheckOnceComponent0(
+AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_CheckOnceComponent, null)) {
     (renderType_CheckOnceComponent = import8.appViewUtils
@@ -150,7 +150,7 @@ class ViewCheckedComponent0 extends AppView<import2.CheckedComponent> {
   }
 }
 
-AppView viewFactory_CheckedComponent0(
+AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_CheckedComponent, null)) {
     (renderType_CheckedComponent = import8.appViewUtils
@@ -248,7 +248,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import2.CheckAlwaysComponent> {
   }
 }
 
-AppView viewFactory_CheckAlwaysComponent0(
+AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_CheckAlwaysComponent, null)) {
     (renderType_CheckAlwaysComponent = import8.appViewUtils
@@ -349,7 +349,7 @@ class ViewDetachedComponent0 extends AppView<import2.DetachedComponent> {
   }
 }
 
-AppView viewFactory_DetachedComponent0(
+AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_DetachedComponent, null)) {
     (renderType_DetachedComponent = import8.appViewUtils
@@ -450,7 +450,7 @@ class ViewOnPushComponent0 extends AppView<import2.OnPushComponent> {
   }
 }
 
-AppView viewFactory_OnPushComponent0(
+AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_OnPushComponent, null)) {
     (renderType_OnPushComponent = import8.appViewUtils
@@ -549,7 +549,7 @@ class ViewStatefulComponent0 extends AppView<import2.StatefulComponent> {
   }
 }
 
-AppView viewFactory_StatefulComponent0(
+AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_StatefulComponent, null)) {
     (renderType_StatefulComponent = import8.appViewUtils
@@ -650,7 +650,7 @@ class ViewDefaultComponent0 extends AppView<import2.DefaultComponent> {
   }
 }
 
-AppView viewFactory_DefaultComponent0(
+AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_DefaultComponent, null)) {
     (renderType_DefaultComponent = import8.appViewUtils

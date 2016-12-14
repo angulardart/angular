@@ -49,7 +49,7 @@ class ViewInjectableComponent0 extends AppView<import2.InjectableComponent> {
   }
 }
 
-AppView viewFactory_InjectableComponent0(
+AppView<import2.InjectableComponent> viewFactory_InjectableComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_InjectableComponent, null)) {
     (renderType_InjectableComponent = import8.appViewUtils

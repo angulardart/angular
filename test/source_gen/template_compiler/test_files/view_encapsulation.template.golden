@@ -49,7 +49,7 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
   }
 }
 
-AppView viewFactory_EmulatedComponent0(
+AppView<import2.EmulatedComponent> viewFactory_EmulatedComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_EmulatedComponent, null)) {
     (renderType_EmulatedComponent = import8.appViewUtils
@@ -150,7 +150,7 @@ class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
   }
 }
 
-AppView viewFactory_NativeComponent0(
+AppView<import2.NativeComponent> viewFactory_NativeComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_NativeComponent, null)) {
     (renderType_NativeComponent = import8.appViewUtils
@@ -248,7 +248,7 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
   }
 }
 
-AppView viewFactory_NoneComponent0(
+AppView<import2.NoneComponent> viewFactory_NoneComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_NoneComponent, null)) {
     (renderType_NoneComponent = import8.appViewUtils.createRenderComponentType(
