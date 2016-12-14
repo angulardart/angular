@@ -411,7 +411,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   @override
-  dynamic visitBuiltintType(o.BuiltinType type, dynamic context) {
+  dynamic visitBuiltinType(o.BuiltinType type, dynamic context) {
     EmitterVisitorContext ctx = context;
     var typeStr;
     switch (type.name) {

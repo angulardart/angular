@@ -24,7 +24,7 @@ class BuiltinType extends OutputType {
 
   @override
   dynamic visitType(TypeVisitor visitor, dynamic context) =>
-      visitor.visitBuiltintType(this, context);
+      visitor.visitBuiltinType(this, context);
 }
 
 class ExternalType extends OutputType {
@@ -65,7 +65,7 @@ const STRING_TYPE = const BuiltinType(BuiltinTypeName.String);
 const FUNCTION_TYPE = const BuiltinType(BuiltinTypeName.Function);
 
 abstract class TypeVisitor {
-  dynamic visitBuiltintType(BuiltinType type, dynamic context);
+  dynamic visitBuiltinType(BuiltinType type, dynamic context);
   dynamic visitExternalType(ExternalType type, dynamic context);
   dynamic visitArrayType(ArrayType type, dynamic context);
   dynamic visitMapType(MapType type, dynamic context);
