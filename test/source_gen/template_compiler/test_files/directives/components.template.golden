@@ -49,7 +49,7 @@ class ViewTestSubComponent0 extends AppView<import2.TestSubComponent> {
   }
 }
 
-AppView viewFactory_TestSubComponent0(
+AppView<import2.TestSubComponent> viewFactory_TestSubComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_TestSubComponent, null)) {
     (renderType_TestSubComponent = import8.appViewUtils

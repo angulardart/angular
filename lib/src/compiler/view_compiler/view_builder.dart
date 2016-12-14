@@ -763,6 +763,13 @@ o.Statement createViewFactory(
       ])
     ];
   }
+  var factoryReturnType;
+  if (view.viewType == ViewType.HOST) {
+    factoryReturnType = o.importType(Identifiers.AppView);
+  } else {
+    factoryReturnType =
+        o.importType(Identifiers.AppView, [o.importType(view.component.type)]);
+  }
   return o
       .fn(
           viewFactoryArgs,
@@ -773,7 +780,7 @@ o.Statement createViewFactory(
                       .map((o.FnParam param) => o.variable(param.name))
                       .toList()))
             ])),
-          o.importType(Identifiers.AppView))
+          factoryReturnType)
       .toDeclStmt(view.viewFactory.name, [o.StmtModifier.Final]);
 }
 
