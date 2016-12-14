@@ -1,12 +1,13 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
-const _EMPTY_ATTR_VALUE = "";
-final _SELECTOR_REGEXP = new RegExp("(\\:not\\()|" +
-    "([-\\w]+)|" +
-    "(?:\\.([-\\w]+))|" +
-    "(?:\\[([-\\w*]+)(?:=([^\\]]*))?\\])|" +
-    "(\\))|" +
-    "(\\s*,\\s*)");
+const _EMPTY_ATTR_VALUE = '';
+final _SELECTOR_REGEXP = new RegExp(r'(:not\()|' + // ":not("
+        r'([-\w]+)|' + // "tag-name"
+        r'(?:\.([-\w]+))|' + // ".class"
+        r'(?:\[([-\w*]+)(?:=([^\]]*))?\])|' + // "[name]", "[name=value]"
+        r'(\))|' + // ")"
+        r'(\s*,\s*)' // ","
+    );
 
 /// A css selector contains an element name,
 /// css classes and attribute/value pairs with the purpose
