@@ -104,9 +104,11 @@ abstract class AbstractControl {
     this._touched = true;
   }
 
-  void markAsDirty({bool onlySelf}) {
+  void markAsDirty({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
+    emitEvent = emitEvent ?? true;
     this._pristine = false;
+    if (emitEvent) _statusChanges.add(_status);
     if (_parent != null && !onlySelf) {
       this._parent.markAsDirty(onlySelf: onlySelf);
     }
@@ -195,7 +197,7 @@ abstract class AbstractControl {
     _parent?._updateControlsErrors();
     // If a control's errors were specifically set then mark the control as
     // changed.
-    markAsDirty();
+    markAsDirty(emitEvent: false);
   }
 
   AbstractControl find(
