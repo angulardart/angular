@@ -52,8 +52,10 @@ void bind(
     // e.g. an empty expression was given
     return;
   }
+  bool isPrimitive = _isPrimitiveFieldType(fieldType);
   view.fields.add(new o.ClassField(fieldExpr.name,
-      modifiers: const [o.StmtModifier.Private]));
+      modifiers: const [o.StmtModifier.Private],
+      outputType: isPrimitive ? fieldType : null));
   if (checkExpression.needsValueUnwrapper) {
     var initValueUnwrapperStmt =
         DetectChangesVars.valUnwrapper.callMethod('reset', []).toStmt();
