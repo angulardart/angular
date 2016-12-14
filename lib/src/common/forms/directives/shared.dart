@@ -32,7 +32,7 @@ void setUpControl(Control control, NgControl dir) {
   dir.valueAccessor.registerOnChange((dynamic newValue) {
     dir.viewToModelUpdate(newValue);
     control.updateValue(newValue, emitModelToViewChange: false);
-    control.markAsDirty();
+    control.markAsDirty(emitEvent: false);
   });
   // model -> view
   control.registerOnChange(
