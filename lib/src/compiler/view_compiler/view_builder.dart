@@ -1,6 +1,6 @@
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
+import "package:angular2/src/core/linker/view_type.dart";
 import 'package:angular2/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
@@ -274,14 +274,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       view.createMethod.addStmt(
           new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr).toStmt());
 
-      if (view.component.template.encapsulation == ViewEncapsulation.Emulated) {
-        // Set ng_content attribute for CSS shim.
-        o.Expression shimAttributeExpr = new o.ReadClassMemberExpr(fieldName)
-            .callMethod('setAttribute',
-                [new o.ReadClassMemberExpr('shimCAttr'), o.literal('')]);
-        view.createMethod.addStmt(shimAttributeExpr.toStmt());
-      }
-
       if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
         // Write append code.
         view.createMethod.addStmt(parentRenderNodeExpr.callMethod(
@@ -307,6 +299,14 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       o.Statement stmt = _createSetAttributeStatement(ast.name, fieldName,
           attrNameAndValues[i][0], attrNameAndValues[i][1]);
       view.createMethod.addStmt(stmt);
+    }
+
+    if (!isHostRootView &&
+        view.component.template.encapsulation == ViewEncapsulation.Emulated) {
+      // Set ng_content class for CSS shim.
+      o.Expression shimClassExpr = new o.InvokeMemberMethodExpr(
+          'addShimC', [new o.ReadClassMemberExpr(fieldName)]);
+      view.createMethod.addStmt(shimClassExpr.toStmt());
     }
 
     var compileElement = new CompileElement(
@@ -336,7 +336,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       view.fields.add(new o.ClassField(compViewName,
           outputType: o.importType(
               Identifiers.AppView, [o.importType(component.type)])));
-      compileElement.setComponentView(compViewExpr);
+      compileElement.componentView = compViewExpr;
       view.viewChildren.add(compViewExpr);
       view.createMethod.addStmt(new o.WriteClassMemberExpr(
               compViewName,

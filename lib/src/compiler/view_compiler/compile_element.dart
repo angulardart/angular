@@ -137,7 +137,7 @@ class CompileElement extends CompileNode {
     }
   }
 
-  void setComponentView(o.Expression compViewExpr) {
+  set componentView(o.Expression compViewExpr) {
     _compViewExpr = compViewExpr;
     int indexCount = component.template.ngContentSelectors.length;
     contentNodesByNgContentIndex = new List<List<o.Expression>>(indexCount);
@@ -145,6 +145,8 @@ class CompileElement extends CompileNode {
       this.contentNodesByNgContentIndex[i] = <o.Expression>[];
     }
   }
+
+  o.Expression get componentView => _compViewExpr;
 
   void setEmbeddedView(CompileView view) {
     embeddedView = view;
