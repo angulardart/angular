@@ -20,36 +20,36 @@ void main() {
     });
     test("should add an attribute to every rule", () {
       var css = "one {color: red;}two {color: red;}";
-      var expected = "one[a] {color:red;}two[a] {color:red;}";
+      var expected = "one.a {color:red;}two.a {color:red;}";
       expect(s(css, "a"), expected);
     });
     test("should handle invalid css", () {
       var css = "one {color: red;}garbage";
-      var expected = "one[a] {color:red;}garbage";
+      var expected = "one.a {color:red;}garbage";
       expect(s(css, "a"), expected);
     });
     test("should add an attribute to every selector", () {
       var css = "one, two {color: red;}";
-      var expected = "one[a], two[a] {color:red;}";
+      var expected = "one.a, two.a {color:red;}";
       expect(s(css, "a"), expected);
     });
     test("should support newlines in the selector and content ", () {
       var css = "one, \ntwo {\ncolor: red;}";
-      var expected = "one[a], two[a] {color:red;}";
+      var expected = "one.a, two.a {color:red;}";
       expect(s(css, "a"), expected);
     });
     test("should handle media rules", () {
       var css = '@media screen and (max-width:800px, '
           'max-height:100%) {div {font-size:50px;}}';
       var expected = '@media screen and (max-width:800px, '
-          'max-height:100%) {div[a] {font-size:50px;}}';
+          'max-height:100%) {div.a {font-size:50px;}}';
       expect(s(css, "a"), expected);
     });
     test("should handle media rules with simple rules", () {
       var css = '@media screen and (max-width: 800px) '
           '{div {font-size: 50px;}} div {}';
       var expected = '@media screen and (max-width:800px) '
-          '{div[a] {font-size:50px;}} div[a] {}';
+          '{div.a {font-size:50px;}} div.a {}';
       expect(s(css, "a"), expected);
     });
     // Check that the browser supports unprefixed CSS animation
@@ -63,43 +63,42 @@ void main() {
       expect(s(css, "a"), css);
     });
     test("should handle complicated selectors", () {
-      expect(s("one::before {}", "a"), "one[a]::before {}");
-      expect(s("one two {}", "a"), "one[a] two[a] {}");
-      expect(s("one > two {}", "a"), "one[a] > two[a] {}");
-      expect(s("one + two {}", "a"), "one[a] + two[a] {}");
-      expect(s("one ~ two {}", "a"), "one[a] ~ two[a] {}");
+      expect(s("one::before {}", "a"), "one.a::before {}");
+      expect(s("one two {}", "a"), "one.a two.a {}");
+      expect(s("one > two {}", "a"), "one.a > two.a {}");
+      expect(s("one + two {}", "a"), "one.a + two.a {}");
+      expect(s("one ~ two {}", "a"), "one.a ~ two.a {}");
       var res = s(".one.two > three {}", "a");
       expect(
-          res == ".one.two[a] > three[a] {}" ||
-              res == ".two.one[a] > three[a] {}",
+          res == ".one.two.a > three.a {}" || res == ".two.one.a > three.a {}",
           isTrue);
-      expect(s('one[attr="value"] {}', 'a'), 'one[attr="value"][a] {}');
-      expect(s('one[attr=value] {}', 'a'), 'one[attr="value"][a] {}');
-      expect(s('one[attr^="value"] {}', 'a'), 'one[attr^="value"][a] {}');
-      expect(s('one[attr\$="value"] {}', 'a'), 'one[attr\$="value"][a] {}');
-      expect(s('one[attr*="value"] {}', 'a'), 'one[attr*="value"][a] {}');
-      expect(s('one[attr|="value"] {}', 'a'), 'one[attr|="value"][a] {}');
-      expect(s('one[attr~="value"] {}', 'a'), 'one[attr~="value"][a] {}');
-      expect(s("one[attr] {}", "a"), "one[attr][a] {}");
-      expect(s('[is="one"] {}', 'a'), '[is="one"][a] {}');
+      expect(s('one[attr="value"] {}', 'a'), 'one[attr="value"].a {}');
+      expect(s('one[attr=value] {}', 'a'), 'one[attr="value"].a {}');
+      expect(s('one[attr^="value"] {}', 'a'), 'one[attr^="value"].a {}');
+      expect(s('one[attr\$="value"] {}', 'a'), 'one[attr\$="value"].a {}');
+      expect(s('one[attr*="value"] {}', 'a'), 'one[attr*="value"].a {}');
+      expect(s('one[attr|="value"] {}', 'a'), 'one[attr|="value"].a {}');
+      expect(s('one[attr~="value"] {}', 'a'), 'one[attr~="value"].a {}');
+      expect(s("one[attr] {}", "a"), "one[attr].a {}");
+      expect(s('[is="one"] {}', 'a'), '[is="one"].a {}');
     });
     test("should handle :host", () {
-      expect(s(":host {}", "a", "a-host"), "[a-host] {}");
-      expect(s(":host(.x,.y) {}", "a", "a-host"), "[a-host].x, [a-host].y {}");
+      expect(s(":host {}", "a", "a-host"), ".a-host {}");
+      expect(s(":host(.x,.y) {}", "a", "a-host"), ".a-host.x, .a-host.y {}");
       expect(s(":host(.x,.y) > .z {}", "a", "a-host"),
-          "[a-host].x > .z, [a-host].y > .z {}");
+          ".a-host.x > .z, .a-host.y > .z {}");
     });
     test("should handle :host-context", () {
-      expect(s(":host-context(.x) {}", "a", "a-host"),
-          "[a-host].x, .x [a-host] {}");
+      expect(
+          s(":host-context(.x) {}", "a", "a-host"), ".a-host.x, .x .a-host {}");
       expect(s(":host-context(.x) > .y {}", "a", "a-host"),
-          "[a-host].x > .y, .x [a-host] > .y {}");
+          ".a-host.x > .y, .x .a-host > .y {}");
     });
     test("should support polyfill-next-selector", () {
       var css = s("polyfill-next-selector {content: 'x > y'} z {}", "a");
-      expect(css, "x[a] > y[a]{}");
+      expect(css, "x.a > y.a{}");
       css = s("polyfill-next-selector {content: \"x > y\"} z {}", "a");
-      expect(css, "x[a] > y[a]{}");
+      expect(css, "x.a > y.a{}");
     });
     test("should support polyfill-unscoped-rule", () {
       var css = s(
@@ -120,22 +119,22 @@ void main() {
     test("should support polyfill-rule", () {
       var css = s("polyfill-rule {content: ':host.foo .bar';color: blue;}", "a",
           "a-host");
-      expect(css, "[a-host].foo .bar {;color:blue;}");
+      expect(css, ".a-host.foo .bar {;color:blue;}");
       css = s("polyfill-rule {content: \":host.foo .bar\";color:blue;}", "a",
           "a-host");
-      expect(css, "[a-host].foo .bar {;color:blue;}");
+      expect(css, ".a-host.foo .bar {;color:blue;}");
     });
     test("should handle ::shadow", () {
       var css = s("x::shadow > y {}", "a");
-      expect(css, "x[a] > y[a] {}");
+      expect(css, "x.a > y.a {}");
     });
     test("should handle /deep/", () {
       var css = s("x /deep/ y {}", "a");
-      expect(css, "x[a] y {}");
+      expect(css, "x.a y {}");
     });
     test("should handle >>>", () {
       var css = s("x >>> y {}", "a");
-      expect(css, "x[a] y {}");
+      expect(css, "x.a y {}");
     });
     test("should pass through @import directives", () {
       var styleStr =
@@ -146,21 +145,21 @@ void main() {
     test("should shim rules after @import", () {
       var styleStr = "@import url(\"a\"); div {}";
       var css = s(styleStr, "a");
-      expect(css, "@import url(\"a\"); div[a] {}");
+      expect(css, "@import url(\"a\"); div.a {}");
     });
     test("should leave calc() unchanged", () {
       var styleStr = "div {height:calc(100% - 55px);}";
       var css = s(styleStr, "a");
-      expect(css, "div[a] {height:calc(100% - 55px);}");
+      expect(css, "div.a {height:calc(100% - 55px);}");
     });
     test("should strip comments", () {
-      expect(s("/* x */b {c}", "a"), "b[a] {c}");
+      expect(s("/* x */b {c}", "a"), "b.a {c}");
     });
     test("should ignore special characters in comments", () {
-      expect(s("/* {;, */b {c}", "a"), "b[a] {c}");
+      expect(s("/* {;, */b {c}", "a"), "b.a {c}");
     });
     test("should support multiline comments", () {
-      expect(s("/* \n */b {c}", "a"), "b[a] {c}");
+      expect(s("/* \n */b {c}", "a"), "b.a {c}");
     });
   });
   group("processRules", () {

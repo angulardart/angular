@@ -73,6 +73,42 @@ void main() {
       Element elm = testFixture.element.querySelector('#sectionA');
       expectColor(elm, '#000000');
     });
+
+    test('host selector should not override class binding on host', () async {
+      var testBed = new NgTestBed<ClassOnHostTestComponent>();
+      NgTestFixture<ClassOnHostTestComponent> testFixture =
+          await testBed.create();
+      Element elm = testFixture.element;
+      expect(elm.className.startsWith('customhostclass _nghost-'), isTrue);
+    });
+
+    test('should support [attr.class] bindings', () async {
+      var testBed = new NgTestBed<ClassAttribBindingComponent>();
+      NgTestFixture<ClassAttribBindingComponent> testFixture =
+          await testBed.create();
+      Element elm = testFixture.element.querySelector('#item1');
+      expect(elm.className.startsWith('xyz _ngcontent-'), isTrue);
+    });
+
+    test('should support class interpolation', () async {
+      var testBed = new NgTestBed<ClassInterpolateComponent>();
+      NgTestFixture<ClassInterpolateComponent> testFixture =
+          await testBed.create();
+      Element elm = testFixture.element.querySelector('#item1');
+      expect(
+          elm.className.startsWith('prefix xyz postfix _ngcontent-'), isTrue);
+    });
+
+    test(
+        'binding class on a component should add both content '
+        'and host selector', () async {
+      var testBed = new NgTestBed<ComponentContainerTestComponent>();
+      NgTestFixture<ComponentContainerTestComponent> testFixture =
+          await testBed.create();
+      Element elm = testFixture.element.querySelector('child-component1');
+      expect(elm.className.contains('_ngcontent'), isTrue);
+      expect(elm.className.contains('_nghost'), isTrue);
+    });
   });
 }
 
@@ -137,6 +173,51 @@ class ContentSelectorTestComponent {}
     template: '<section class="secA" id="sectionA">SectionA</section>'
         '<content-selector-test-child></content-selector-test-child>')
 class ContentSelectorChildComponent {}
+
+@Component(
+  selector: 'class-on-host',
+  template: '<div id="item1">Test1</div>',
+  styles: const [':host { color: rgb(64, 255, 127); }'],
+  host: const {'class': 'customhostclass'},
+)
+class ClassOnHostTestComponent {}
+
+@Component(
+  selector: 'class-attrib-binding',
+  template: '<div id="item1" [attr.class]="someClass">Test1</div>',
+  styles: const [':host { color: rgb(64, 255, 127); }'],
+)
+class ClassAttribBindingComponent {
+  String get someClass => 'xyz';
+}
+
+@Component(
+  selector: 'class-interpolate-test',
+  template: '<div id="item1" class="prefix {{someClass}} postfix">Test1</div>',
+  styles: const [':host { color: rgb(64, 255, 127); }'],
+  host: const {'class': 'customhostclass'},
+)
+class ClassInterpolateComponent {
+  String get someClass => 'xyz';
+}
+
+@Component(
+    selector: 'component-container1',
+    template: '<div><child-component1 class="{{activeClass}}">'
+        '<div class="mobile"></div>'
+        '</child-component1></div>',
+    styles: const [':host { color: rgb(0, 0, 0); }'],
+    directives: const [ChildComponent])
+class ComponentContainerTestComponent {
+  String get activeClass => 'active';
+}
+
+@Component(
+  selector: 'child-component1',
+  template: '<div id="child-div1"><ng-content></ng-content></div>',
+  styles: const [':host { color: #FF0000; }'],
+)
+class ChildComponent {}
 
 void expectColor(Element element, String color) {
   String elementColor = element.getComputedStyle().color;

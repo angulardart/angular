@@ -363,12 +363,11 @@ class ShadowCss {
   String _applySimpleSelectorScope(
       String selector, String scopeSelector, String hostSelector) {
     if (_polyfillHostRe.firstMatch(selector) != null) {
-      var replaceBy =
-          this.strictStyling ? '''[${ hostSelector}]''' : scopeSelector;
+      var replaceBy = strictStyling ? '.${hostSelector}' : scopeSelector;
       selector = selector.replaceFirst(_polyfillHostNoCombinator, replaceBy);
-      return selector.replaceAll(_polyfillHostRe, replaceBy + " ");
+      return selector.replaceAll(_polyfillHostRe, replaceBy + ' ');
     } else {
-      return scopeSelector + " " + selector;
+      return '$scopeSelector $selector';
     }
   }
   // return a selector with [name] suffix on each simple selector
@@ -380,7 +379,7 @@ class ShadowCss {
     final sep = new RegExp(r'( |>|\+|~(?!=))\s*');
     scopeSelector = scopeSelector.replaceAllMapped(isRe, (m) => m[1]);
 
-    final attrName = '[' + scopeSelector + ']';
+    final attrName = '.$scopeSelector';
     final scopeAfter = scopeSelector.indexOf(_polyfillHostNoCombinator);
 
     var scopeSelectorPart = (p) {

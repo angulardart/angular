@@ -393,15 +393,12 @@ abstract class AppView<T> {
     sharedStylesHost ??= new DomSharedStylesHost(document);
   }
 
-  // Returns content attribute to add to elements for css encapsulation.
-  String get shimCAttr => componentType.contentAttr;
-
   /// Initializes styling to enable css shim for host element.
   Element initViewRoot(dynamic hostElement) {
     assert(componentType.encapsulation != ViewEncapsulation.Native);
     if (componentType.hostAttr != null) {
       Element host = hostElement;
-      host.attributes[componentType.hostAttr] = '';
+      host.classes.add(componentType.hostAttr);
     }
     return hostElement;
   }
@@ -463,6 +460,18 @@ abstract class AppView<T> {
       renderElement.getNamespacedAttributes(attrNS).remove(attributeName);
     }
     domRootRendererIsDirty = true;
+  }
+
+  /// Adds content shim class.
+  void addShimC(Element element) {
+    String contentClass = componentType.contentAttr;
+    if (contentClass != null) element.classes.add(contentClass);
+  }
+
+  /// Adds host shim class.
+  void addShimH(Element element) {
+    String hostClass = componentType.hostAttr;
+    if (hostClass != null) element.classes.add(hostClass);
   }
 
   // Marks DOM dirty so that end of zone turn we can detect if DOM was updated

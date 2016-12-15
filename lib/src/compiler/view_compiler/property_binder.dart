@@ -26,6 +26,8 @@ import 'view_builder.dart' show buildUpdaterFunctionName;
 import 'view_compiler_utils.dart' show createSetAttributeParams;
 import 'package:angular2/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
+import "package:angular2/src/core/linker/view_type.dart";
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 
 o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
     new o.ReadClassMemberExpr('_expr_${exprIndex}');
@@ -140,18 +142,16 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
           updateStmts.add(
               logBindingUpdateStmt(renderNode, boundProp.name, currValExpr));
         }
-        updateStmts.add(new o.InvokeMemberMethodExpr(
-                'setProp', [renderNode, o.literal(boundProp.name), renderValue])
-            .toStmt());
+        if (boundProp.name == 'className') {
+          // Handle className special case for class="binding".
+          updateStmts
+              .addAll(_createSetClassNameStmt(compileElement, renderValue));
+        } else {
+          updateStmts.add(new o.InvokeMemberMethodExpr('setProp',
+              [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
+        }
         break;
       case PropertyBindingType.Attribute:
-        // For attributes convert value to a string.
-        // TODO: Once we have analyzer summaries and know the type is already
-        // String short-circuit
-        renderValue = renderValue
-            .isBlank()
-            .conditional(o.NULL_EXPR, renderValue.callMethod('toString', []));
-
         var attrNs;
         String attrName = boundProp.name;
         if (attrName.startsWith('@') && attrName.contains(':')) {
@@ -159,12 +159,28 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
           attrNs = NAMESPACE_URIS[nameParts[0]];
           attrName = nameParts[1];
         }
-        var params = createSetAttributeParams(
-            compileElement.renderNodeFieldName, attrNs, attrName, renderValue);
 
-        updateStmts.add(new o.InvokeMemberMethodExpr(
-                attrNs == null ? 'setAttr' : 'setAttrNS', params)
-            .toStmt());
+        if (attrName == 'class') {
+          // Handle [attr.class].
+          updateStmts
+              .addAll(_createSetClassNameStmt(compileElement, renderValue));
+        } else {
+          // For attributes other than class convert value to a string.
+          // TODO: Once we have analyzer summaries and know the type is already
+          // String short-circuit.
+          renderValue =
+              renderValue.callMethod('toString', const [], checked: true);
+
+          var params = createSetAttributeParams(
+              compileElement.renderNodeFieldName,
+              attrNs,
+              attrName,
+              renderValue);
+
+          updateStmts.add(new o.InvokeMemberMethodExpr(
+                  attrNs == null ? 'setAttr' : 'setAttrNS', params)
+              .toStmt());
+        }
         break;
       case PropertyBindingType.Class:
         renderMethod =
@@ -195,6 +211,34 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
     bind(view, currValExpr, fieldExpr, boundProp.value, context, updateStmts,
         view.detectChangesRenderPropertiesMethod);
   });
+}
+
+List<o.Statement> _createSetClassNameStmt(
+    CompileElement compileElement, o.Expression renderValue) {
+  var updateStmts = <o.Statement>[];
+  // TODO: upgrade to codebuilder / build string interpolation to
+  // move into single expression.
+  updateStmts.add(
+      compileElement.renderNode.prop('className').set(renderValue).toStmt());
+  bool isHostRootView = compileElement.nodeIndex == 0 &&
+      compileElement.view.viewType == ViewType.HOST;
+  // _ngcontent- class should be applied to every element other than host's
+  // main node.
+  if (!isHostRootView &&
+      compileElement.view.component.template.encapsulation ==
+          ViewEncapsulation.Emulated) {
+    updateStmts.add(
+        (new o.InvokeMemberMethodExpr('addShimC', [compileElement.renderNode]))
+            .toStmt());
+  }
+  // Since we are overriding component className above with bound value we need
+  // to add host class.
+  if (compileElement.component != null) {
+    updateStmts.add((compileElement.componentView
+            .callMethod('addShimH', [compileElement.renderNode]))
+        .toStmt());
+  }
+  return updateStmts;
 }
 
 o.Expression sanitizedValue(
