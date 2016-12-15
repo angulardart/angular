@@ -29,9 +29,10 @@ void setUpControl(Control control, NgControl dir) {
       Validators.composeAsync([control.asyncValidator, dir.asyncValidator]);
   dir.valueAccessor.writeValue(control.value);
   // view -> model
-  dir.valueAccessor.registerOnChange((dynamic newValue) {
+  dir.valueAccessor.registerOnChange((dynamic newValue, {String rawValue}) {
     dir.viewToModelUpdate(newValue);
-    control.updateValue(newValue, emitModelToViewChange: false);
+    control.updateValue(newValue,
+        emitModelToViewChange: false, rawValue: rawValue);
     control.markAsDirty(emitEvent: false);
   });
   // model -> view

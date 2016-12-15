@@ -156,6 +156,11 @@ void main() {
           c.updateValue("newValue", emitEvent: false);
           tick();
         }));
+        test("should update raw value", () {
+          c.updateValue("newValue", rawValue: "rawValue");
+          expect(c.rawValue, "rawValue");
+          expect(g.value, {"one": "newValue"});
+        });
       });
       group("valueChanges & statusChanges", () {
         var c;
