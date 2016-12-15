@@ -13,7 +13,7 @@ UrlResolver createOfflineCompileUrlResolver() {
 }
 
 const DEFAULT_PACKAGE_URL_PROVIDER =
-    const Provider(PACKAGE_ROOT_URL, useValue: "/packages");
+    const Provider(PACKAGE_ROOT_URL, useValue: "packages");
 
 @Injectable()
 class UrlResolver {
