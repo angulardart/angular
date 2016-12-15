@@ -265,6 +265,7 @@ abstract class AbstractControl {
 /// custom validation function.
 class Control extends AbstractControl {
   Function _onChange;
+  String _rawValue;
   Control(
       [dynamic value = null,
       ValidatorFn validator = null,
@@ -287,12 +288,23 @@ class Control extends AbstractControl {
   /// new value via an `onChange` event. This is the default behavior if
   /// `emitModelToViewChange` is not specified.
   void updateValue(dynamic value,
-      {bool onlySelf, bool emitEvent, bool emitModelToViewChange}) {
+      {bool onlySelf,
+      bool emitEvent,
+      bool emitModelToViewChange,
+      String rawValue}) {
     emitModelToViewChange = emitModelToViewChange ?? true;
     this._value = value;
+    _rawValue = rawValue;
     if (_onChange != null && emitModelToViewChange) this._onChange(this._value);
     this.updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
   }
+
+  /// If [value] was coerced from a HTML element this is the original value from
+  /// that element.
+  ///
+  /// This allows validators to validate either the raw value which was provided
+  /// by HTML, or the coerced value that was provided by the accessor.
+  String get rawValue => _rawValue;
 
   @override
   void _updateValue() {}

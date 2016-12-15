@@ -11,7 +11,7 @@ abstract class ControlValueAccessor<T> {
   void writeValue(T obj);
 
   /// Set the function to be called when the control receives a change event.
-  void registerOnChange(dynamic fn(T value));
+  void registerOnChange(dynamic fn(T value, {String rawValue}));
 
   /// Set the function to be called when the control receives a touch event.
   void registerOnTouched(dynamic fn());
