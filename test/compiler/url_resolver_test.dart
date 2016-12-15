@@ -93,7 +93,7 @@ void main() {
           'should contain a default value of "/packages" when nothing is '
           'provided for DART', () async {
         return inject([UrlResolver], (UrlResolver resolver) {
-          expect(resolver.resolve(null, "package:file"), "/packages/file");
+          expect(resolver.resolve(null, "package:file"), "packages/file");
         });
       });
       test("should resolve a package value when present within the baseurl",
