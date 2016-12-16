@@ -42,6 +42,6 @@ class DefaultValueAccessor implements ControlValueAccessor {
 
   @override
   void registerOnTouched(void fn()) {
-    this.onTouched = fn;
+    onTouched = fn;
   }
 }

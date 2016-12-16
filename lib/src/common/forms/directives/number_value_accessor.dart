@@ -37,13 +37,13 @@ class NumberValueAccessor implements ControlValueAccessor {
 
   @override
   void registerOnChange(dynamic fn) {
-    this.onChange = (value) {
+    onChange = (value) {
       fn(value == "" ? null : double.parse(value));
     };
   }
 
   @override
   void registerOnTouched(dynamic fn) {
-    this.onTouched = fn;
+    onTouched = fn;
   }
 }

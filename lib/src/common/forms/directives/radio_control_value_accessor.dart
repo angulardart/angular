@@ -23,13 +23,13 @@ const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 class RadioControlRegistry {
   List<dynamic> _accessors = [];
   void add(NgControl control, RadioControlValueAccessor accessor) {
-    this._accessors.add([control, accessor]);
+    _accessors.add([control, accessor]);
   }
 
   void remove(RadioControlValueAccessor accessor) {
     var indexToRemove = -1;
-    for (var i = 0; i < this._accessors.length; ++i) {
-      if (identical(this._accessors[i][1], accessor)) {
+    for (var i = 0; i < _accessors.length; ++i) {
+      if (identical(_accessors[i][1], accessor)) {
         indexToRemove = i;
       }
     }
@@ -37,7 +37,7 @@ class RadioControlRegistry {
   }
 
   void select(RadioControlValueAccessor accessor) {
-    this._accessors.forEach((c) {
+    _accessors.forEach((c) {
       if (identical(c[0].control.root, accessor._control.control.root) &&
           !identical(c[1], accessor)) {
         c[1].fireUncheck();
@@ -91,18 +91,18 @@ class RadioControlValueAccessor
 
   @override
   void ngOnInit() {
-    this._control = this._injector.get(NgControl);
-    this._registry.add(this._control, this);
+    _control = _injector.get(NgControl);
+    _registry.add(_control, this);
   }
 
   @override
   void ngOnDestroy() {
-    this._registry.remove(this);
+    _registry.remove(this);
   }
 
   @override
   void writeValue(dynamic value) {
-    this._state = value;
+    _state = value;
     if (value?.checked ?? false) {
       DOM.setProperty(_elementRef.nativeElement, 'checked', true);
     }
@@ -110,19 +110,19 @@ class RadioControlValueAccessor
 
   @override
   void registerOnChange(dynamic fn(dynamic _)) {
-    this._fn = fn;
-    this.onChange = () {
-      fn(new RadioButtonState(true, this._state.value));
-      this._registry.select(this);
+    _fn = fn;
+    onChange = () {
+      fn(new RadioButtonState(true, _state.value));
+      _registry.select(this);
     };
   }
 
   void fireUncheck() {
-    this._fn(new RadioButtonState(false, this._state.value));
+    _fn(new RadioButtonState(false, _state.value));
   }
 
   @override
   void registerOnTouched(dynamic fn()) {
-    this.onTouched = fn;
+    onTouched = fn;
   }
 }

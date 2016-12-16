@@ -17,30 +17,19 @@ import "ng_control.dart" show NgControl;
     "used or not.")
 class NgControlStatus {
   NgControl _cd;
-  NgControlStatus(@Self() NgControl cd) {
-    this._cd = cd;
-  }
-  bool get ngClassUntouched {
-    return _cd.control != null ? _cd.control.untouched : false;
-  }
+  NgControlStatus(@Self() this._cd);
 
-  bool get ngClassTouched {
-    return _cd.control != null ? _cd.control.touched : false;
-  }
+  bool get ngClassUntouched =>
+      _cd.control != null ? _cd.control.untouched : false;
 
-  bool get ngClassPristine {
-    return _cd.control != null ? _cd.control.pristine : false;
-  }
+  bool get ngClassTouched => _cd.control != null ? _cd.control.touched : false;
 
-  bool get ngClassDirty {
-    return _cd.control != null ? _cd.control.dirty : false;
-  }
+  bool get ngClassPristine =>
+      _cd.control != null ? _cd.control.pristine : false;
 
-  bool get ngClassValid {
-    return _cd.control != null ? _cd.control.valid : false;
-  }
+  bool get ngClassDirty => _cd.control != null ? _cd.control.dirty : false;
 
-  bool get ngClassInvalid {
-    return _cd.control != null ? !_cd.control.valid : false;
-  }
+  bool get ngClassValid => _cd.control != null ? _cd.control.valid : false;
+
+  bool get ngClassInvalid => _cd.control != null ? !_cd.control.valid : false;
 }

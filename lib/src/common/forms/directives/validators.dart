@@ -57,13 +57,11 @@ const MIN_LENGTH_VALIDATOR =
 class MinLengthValidator implements Validator {
   ValidatorFn _validator;
   MinLengthValidator(@Attribute("minlength") String minLength) {
-    this._validator = Validators.minLength(int.parse(minLength, radix: 10));
+    _validator = Validators.minLength(int.parse(minLength, radix: 10));
   }
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) {
-    return this._validator(c);
-  }
+  Map<String, dynamic> validate(AbstractControl c) => _validator(c);
 }
 
 /// Provider which adds [MaxLengthValidator] to [NG_VALIDATORS].
@@ -80,12 +78,10 @@ const MAX_LENGTH_VALIDATOR =
 class MaxLengthValidator implements Validator {
   ValidatorFn _validator;
   MaxLengthValidator(@Attribute("maxlength") String maxLength) {
-    this._validator = Validators.maxLength(int.parse(maxLength, radix: 10));
+    _validator = Validators.maxLength(int.parse(maxLength, radix: 10));
   }
   @override
-  Map<String, dynamic> validate(AbstractControl c) {
-    return this._validator(c);
-  }
+  Map<String, dynamic> validate(AbstractControl c) => _validator(c);
 }
 
 /// A Directive that adds the `pattern` validator to any controls marked with
@@ -106,10 +102,8 @@ const PATTERN_VALIDATOR =
 class PatternValidator implements Validator {
   ValidatorFn _validator;
   PatternValidator(@Attribute("pattern") String pattern) {
-    this._validator = Validators.pattern(pattern);
+    _validator = Validators.pattern(pattern);
   }
   @override
-  Map<String, dynamic> validate(AbstractControl c) {
-    return this._validator(c);
-  }
+  Map<String, dynamic> validate(AbstractControl c) => _validator(c);
 }
