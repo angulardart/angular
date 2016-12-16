@@ -77,8 +77,8 @@ const controlNameBinding =
 ///  credentials: {login:string, password:string};
 ///
 ///  onLogIn(): void {
-///    // this.credentials.login === "some login"
-///    // this.credentials.password === "some password"
+///    // credentials.login === "some login"
+///    // credentials.password === "some password"
 ///  }
 /// }
 /// ```
@@ -111,52 +111,43 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors) {
-    this.valueAccessor = selectValueAccessor(this, valueAccessors);
+    valueAccessor = selectValueAccessor(this, valueAccessors);
   }
   @override
   ngOnChanges(Map<String, SimpleChange> changes) {
-    if (!this._added) {
-      this.formDirective.addControl(this);
-      this._added = true;
+    if (!_added) {
+      formDirective.addControl(this);
+      _added = true;
     }
-    if (isPropertyUpdated(changes, this.viewModel)) {
-      this.viewModel = this.model;
-      this.formDirective.updateModel(this, this.model);
+    if (isPropertyUpdated(changes, viewModel)) {
+      viewModel = model;
+      formDirective.updateModel(this, model);
     }
   }
 
   @override
   void ngOnDestroy() {
-    this.formDirective.removeControl(this);
+    formDirective.removeControl(this);
   }
 
   @override
   void viewToModelUpdate(dynamic newValue) {
-    this.viewModel = newValue;
-    this.update.add(newValue);
+    viewModel = newValue;
+    update.add(newValue);
   }
 
   @override
-  List<String> get path {
-    return controlPath(this.name, this._parent);
-  }
+  List<String> get path => controlPath(name, _parent);
 
-  dynamic get formDirective {
-    return this._parent.formDirective;
-  }
+  dynamic get formDirective => _parent.formDirective;
 
   @override
-  ValidatorFn get validator {
-    return composeValidators(this._validators);
-  }
+  ValidatorFn get validator => composeValidators(_validators);
 
   @override
-  AsyncValidatorFn get asyncValidator {
-    return composeAsyncValidators(this._asyncValidators);
-  }
+  AsyncValidatorFn get asyncValidator =>
+      composeAsyncValidators(_asyncValidators);
 
   @override
-  Control get control {
-    return this.formDirective.getControl(this);
-  }
+  Control get control => formDirective.getControl(this);
 }

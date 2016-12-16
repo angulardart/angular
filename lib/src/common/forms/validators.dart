@@ -21,7 +21,8 @@ const OpaqueToken NG_ASYNC_VALIDATORS = const OpaqueToken("NgAsyncValidators");
 ///  Provides a set of validators used by form controls.
 ///
 ///  A validator is a function that processes a [Control] or collection of
-///  controls and returns a map of errors. A null map means that validation has passed.
+///  controls and returns a map of errors. A null map means that validation has
+///  passed.
 ///
 ///  ### Example
 ///
@@ -86,9 +87,8 @@ class Validators {
   }
 
   ///  No-op validator.
-  static Map<String, bool> nullValidator(model_module.AbstractControl c) {
-    return null;
-  }
+  static Map<String, bool> nullValidator(model_module.AbstractControl c) =>
+      null;
 
   ///  Compose multiple validators into a single function that returns the union
   ///  of the individual error maps.
@@ -113,22 +113,16 @@ class Validators {
   }
 }
 
-Future _toFuture(futureOrStream) {
-  if (futureOrStream is Stream) {
-    return futureOrStream.single;
-  }
-  return futureOrStream;
-}
+Future _toFuture(futureOrStream) =>
+    (futureOrStream is Stream) ? futureOrStream.single : futureOrStream;
 
 List<dynamic> _executeValidators(
-    model_module.AbstractControl control, List<ValidatorFn> validators) {
-  return validators.map((v) => v(control)).toList();
-}
+        model_module.AbstractControl control, List<ValidatorFn> validators) =>
+    validators.map((v) => v(control)).toList();
 
-List<dynamic> _executeAsyncValidators(
-    model_module.AbstractControl control, List<AsyncValidatorFn> validators) {
-  return validators.map((v) => v(control)).toList();
-}
+List<dynamic> _executeAsyncValidators(model_module.AbstractControl control,
+        List<AsyncValidatorFn> validators) =>
+    validators.map((v) => v(control)).toList();
 
 Map<String, dynamic> _mergeErrors(List<dynamic> arrayOfErrors) {
   Map<String, dynamic> res = arrayOfErrors.fold({},

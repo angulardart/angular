@@ -17,9 +17,8 @@ import "radio_control_value_accessor.dart" show RadioControlValueAccessor;
 import "select_control_value_accessor.dart" show SelectControlValueAccessor;
 import "validators.dart" show ValidatorFn, AsyncValidatorFn;
 
-List<String> controlPath(String name, ControlContainer parent) {
-  return parent.path.toList()..add(name);
-}
+List<String> controlPath(String name, ControlContainer parent) =>
+    parent.path.toList()..add(name);
 
 void setUpControl(Control control, NgControl dir) {
   if (control == null) _throwError(dir, "Cannot find control");

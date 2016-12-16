@@ -80,37 +80,28 @@ class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
 
   @override
   void ngOnInit() {
-    this.formDirective.addControlGroup(this);
+    formDirective.addControlGroup(this);
   }
 
   @override
   void ngOnDestroy() {
-    this.formDirective.removeControlGroup(this);
+    formDirective.removeControlGroup(this);
   }
 
   /// Get the [ControlGroup] backing this binding.
   @override
-  ControlGroup get control {
-    return this.formDirective.getControlGroup(this);
-  }
+  ControlGroup get control => formDirective.getControlGroup(this);
 
   /// Get the path to this control group.
   @override
-  List<String> get path {
-    return controlPath(this.name, this._parent);
-  }
+  List<String> get path => controlPath(name, _parent);
 
   /// Get the [Form] to which this group belongs.
   @override
-  Form get formDirective {
-    return this._parent.formDirective;
-  }
+  Form get formDirective => _parent.formDirective;
 
-  ValidatorFn get validator {
-    return composeValidators(this._validators);
-  }
+  ValidatorFn get validator => composeValidators(_validators);
 
-  AsyncValidatorFn get asyncValidator {
-    return composeAsyncValidators(this._asyncValidators);
-  }
+  AsyncValidatorFn get asyncValidator =>
+      composeAsyncValidators(_asyncValidators);
 }

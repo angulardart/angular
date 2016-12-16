@@ -91,44 +91,37 @@ class NgFormControl extends NgControl implements OnChanges {
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors) {
-    this.valueAccessor = selectValueAccessor(this, valueAccessors);
+    valueAccessor = selectValueAccessor(this, valueAccessors);
   }
   @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
-    if (this._isControlChanged(changes)) {
-      setUpControl(this.form, this);
-      this.form.updateValueAndValidity(emitEvent: false);
+    if (_isControlChanged(changes)) {
+      setUpControl(form, this);
+      form.updateValueAndValidity(emitEvent: false);
     }
-    if (isPropertyUpdated(changes, this.viewModel)) {
-      this.form.updateValue(this.model);
-      this.viewModel = this.model;
+    if (isPropertyUpdated(changes, viewModel)) {
+      form.updateValue(model);
+      viewModel = model;
     }
   }
 
   @override
-  List<String> get path {
-    return [];
-  }
+  List<String> get path => [];
 
   @override
-  ValidatorFn get validator {
-    return composeValidators(this._validators);
-  }
+  ValidatorFn get validator => composeValidators(_validators);
 
   @override
-  AsyncValidatorFn get asyncValidator {
-    return composeAsyncValidators(this._asyncValidators);
-  }
+  AsyncValidatorFn get asyncValidator =>
+      composeAsyncValidators(_asyncValidators);
 
   @override
-  Control get control {
-    return this.form;
-  }
+  Control get control => form;
 
   @override
   void viewToModelUpdate(dynamic newValue) {
-    this.viewModel = newValue;
-    this.update.add(newValue);
+    viewModel = newValue;
+    update.add(newValue);
   }
 
   bool _isControlChanged(Map<String, dynamic> changes) =>

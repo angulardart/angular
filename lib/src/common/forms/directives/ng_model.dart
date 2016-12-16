@@ -76,45 +76,38 @@ class NgModel extends NgControl implements OnChanges, OnInit {
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors)
       : super() {
-    this.valueAccessor = selectValueAccessor(this, valueAccessors);
+    valueAccessor = selectValueAccessor(this, valueAccessors);
   }
 
   @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
-    if (isPropertyUpdated(changes, this.viewModel)) {
-      this._control.updateValue(this.model);
-      this.viewModel = this.model;
+    if (isPropertyUpdated(changes, viewModel)) {
+      _control.updateValue(model);
+      viewModel = model;
     }
   }
 
   @override
   ngOnInit() {
-    setUpControl(this._control, this);
-    this._control.updateValueAndValidity(emitEvent: false);
+    setUpControl(_control, this);
+    _control.updateValueAndValidity(emitEvent: false);
   }
 
-  Control get control {
-    return this._control;
-  }
+  Control get control => _control;
 
   @override
-  List<String> get path {
-    return [];
-  }
+  List<String> get path => [];
 
   @override
-  ValidatorFn get validator {
-    return composeValidators(this._validators);
-  }
+  ValidatorFn get validator => composeValidators(_validators);
 
   @override
-  AsyncValidatorFn get asyncValidator {
-    return composeAsyncValidators(this._asyncValidators);
-  }
+  AsyncValidatorFn get asyncValidator =>
+      composeAsyncValidators(_asyncValidators);
 
   @override
   void viewToModelUpdate(dynamic newValue) {
-    this.viewModel = newValue;
-    this.update.add(newValue);
+    viewModel = newValue;
+    update.add(newValue);
   }
 }
