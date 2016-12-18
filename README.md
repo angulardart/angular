@@ -17,5 +17,5 @@ We're the production web framework of choice for Google [AdWords][ad_words] and 
  * [Pub package](https://pub.dartlang.org/packages/angular2)
  * [Source code](https://github.com/dart-lang/angular2)
  * [Issues](https://github.com/dart-lang/angular2/issues)
- * [Documentation](http://angular.io/dart)
+ * [Documentation](https://webdev.dartlang.org/angular/guide)
  * [Contributor guidelines](https://github.com/dart-lang/angular2/blob/master/CONTRIBUTING.md)
