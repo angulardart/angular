@@ -1,6 +1,37 @@
 ## 2.3.0
 
 ### API changes
+  * Features
+      * (Forms) `AbstractControl.markAsDirty` now emits a status change event
+  * Breaking changes
+      * `Null` is no longer propogated as an initial change value. Code should
+        be updated to either deliver a different initial value or components
+        with an `@Input()` should have an appropriate default value.
+
+**BEFORE**
+```html
+<my-component [value]="null"></my-component>
+```
+
+```dart
+String _value;
+
+set value(String value) {
+  _value = value ?? 'Default name';
+}
+```
+
+**AFTER**
+```dart
+String _value = 'Default name';
+
+set value(String value) {
+  _value = value;
+}
+```
+
+      * Removed `NgPlural`, deprecated as-of 2.1.0
+      * Removed `ObservableListDiffFactory`, deprecated as-of 2.1.0
   * Deprecations
       * `Iterable|KeyValue`Differs is deprecated. The cost of looking up to see
         if a custom differ is available is too high for almost no use. Before
@@ -8,11 +39,13 @@
 
 ### Bug fixes
   * Fixed a bug where the router didn't work on a root path in IE11
+  * Fixed generated code that caused a strong-mode warning on `AppView<...>`
 
 ### Refactors
   * Removed `NgZoneImpl`, all the code exists in `NgZone` now
   * We now generate specific code for view and content children (faster)
   * Projectable nodes now use the visitor pattern in `AppView`
+  * In generated `.template.dart` change detected primitives are typed
 
 ## 2.2.0
 
