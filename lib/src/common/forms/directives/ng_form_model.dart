@@ -112,7 +112,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     _checkFormPresent();
     if (changes.containsKey('form')) {
       var sync = composeValidators(_validators);
-      this.form.validator = Validators.compose([form.validator, sync]);
+      form.validator = Validators.compose([form.validator, sync]);
       var async = composeAsyncValidators(_asyncValidators);
       form.asyncValidator =
           Validators.composeAsync([form.asyncValidator, async]);
@@ -139,9 +139,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   @override
-  Control getControl(NgControl dir) {
-    return (form.find(dir.path) as Control);
-  }
+  Control getControl(NgControl dir) => form.find(dir.path) as Control;
 
   @override
   void removeControl(NgControl dir) {
@@ -159,9 +157,8 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   void removeControlGroup(NgControlGroup dir) {}
 
   @override
-  ControlGroup getControlGroup(NgControlGroup dir) {
-    return (form.find(dir.path) as ControlGroup);
-  }
+  ControlGroup getControlGroup(NgControlGroup dir) =>
+      (form.find(dir.path) as ControlGroup);
 
   @override
   void updateModel(NgControl dir, dynamic value) {
