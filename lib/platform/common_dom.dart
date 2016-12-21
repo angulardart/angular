@@ -6,7 +6,5 @@ export "package:angular2/src/core/render/api.dart" show sharedStylesHost;
 export "package:angular2/src/platform/dom/dom_adapter.dart"
     show DOM, setRootDomAdapter, DomAdapter;
 export "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
-export "package:angular2/src/platform/dom/events/dom_events.dart"
-    show DomEventsPlugin;
 export "package:angular2/src/platform/dom/events/event_manager.dart"
     show EVENT_MANAGER_PLUGINS, EventManager, EventManagerPlugin;
