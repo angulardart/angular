@@ -110,7 +110,7 @@ class NgZoneStabilizer implements NgTestStabilizer {
         completer.completeError(ngZoneError.error, s);
       }
     });
-    final onStableSub = _ngZone.onStable.listen((_) {
+    final onStableSub = _ngZone.onTurnDone.listen((_) {
       if (!completer.isCompleted) {
         completer.complete(_isStable);
       }
