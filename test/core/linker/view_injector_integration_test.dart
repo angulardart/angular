@@ -222,7 +222,7 @@ class PushComponentNeedsChangeDetectorRef {
   PushComponentNeedsChangeDetectorRef(this.changeDetectorRef);
 }
 
-@Pipe(name: "purePipe", pure: true)
+@Pipe("purePipe", pure: true)
 class PurePipe implements PipeTransform {
   PurePipe();
   dynamic transform(dynamic value) {
@@ -230,14 +230,14 @@ class PurePipe implements PipeTransform {
   }
 }
 
-@Pipe(name: "impurePipe", pure: false)
+@Pipe("impurePipe", pure: false)
 class ImpurePipe implements PipeTransform {
   dynamic transform(dynamic value) {
     return this;
   }
 }
 
-@Pipe(name: "pipeNeedsChangeDetectorRef")
+@Pipe("pipeNeedsChangeDetectorRef")
 class PipeNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
   PipeNeedsChangeDetectorRef(this.changeDetectorRef);
@@ -246,7 +246,7 @@ class PipeNeedsChangeDetectorRef {
   }
 }
 
-@Pipe(name: "pipeNeedsService")
+@Pipe("pipeNeedsService")
 class PipeNeedsService implements PipeTransform {
   dynamic service;
   PipeNeedsService(@Inject("service") service) {
@@ -257,14 +257,14 @@ class PipeNeedsService implements PipeTransform {
   }
 }
 
-@Pipe(name: "duplicatePipe")
+@Pipe("duplicatePipe")
 class DuplicatePipe1 implements PipeTransform {
   dynamic transform(dynamic value) {
     return this;
   }
 }
 
-@Pipe(name: "duplicatePipe")
+@Pipe("duplicatePipe")
 class DuplicatePipe2 implements PipeTransform {
   dynamic transform(dynamic value) {
     return this;

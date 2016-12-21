@@ -41,7 +41,7 @@ Future<dynamic> ___unused;
 ///
 /// {@example common/pipes/lib/async_pipe.dart region='AsyncPipe'}
 ///
-@Pipe(name: "async", pure: false)
+@Pipe("async", pure: false)
 @Injectable()
 class AsyncPipe implements OnDestroy {
   Object _latestValue;

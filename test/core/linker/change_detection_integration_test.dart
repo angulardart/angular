@@ -534,7 +534,7 @@ void main() {
   });
 }
 
-@Pipe(name: "countingPipe")
+@Pipe("countingPipe")
 class CountingPipe implements PipeTransform {
   num state = 0;
   String transform(value) {
@@ -542,7 +542,7 @@ class CountingPipe implements PipeTransform {
   }
 }
 
-@Pipe(name: "countingImpurePipe", pure: false)
+@Pipe("countingImpurePipe", pure: false)
 class CountingImpurePipe implements PipeTransform {
   num state = 0;
   String transform(value) {
@@ -550,7 +550,7 @@ class CountingImpurePipe implements PipeTransform {
   }
 }
 
-@Pipe(name: "pipeWithOnDestroy")
+@Pipe("pipeWithOnDestroy")
 class PipeWithOnDestroy implements PipeTransform, OnDestroy {
   static bool ngDestroyCalled = false;
 
@@ -566,21 +566,21 @@ class PipeWithOnDestroy implements PipeTransform, OnDestroy {
   }
 }
 
-@Pipe(name: "identityPipe")
+@Pipe("identityPipe")
 class IdentityPipe implements PipeTransform {
   transform(value) {
     return value;
   }
 }
 
-@Pipe(name: "wrappedPipe")
+@Pipe("wrappedPipe")
 class WrappedPipe implements PipeTransform {
   transform(value) {
     return WrappedValue.wrap(value);
   }
 }
 
-@Pipe(name: "multiArgPipe")
+@Pipe("multiArgPipe")
 class MultiArgPipe implements PipeTransform {
   transform(value, arg1, arg2, [arg3 = "default"]) {
     return '''${ value} ${ arg1} ${ arg2} ${ arg3}''';

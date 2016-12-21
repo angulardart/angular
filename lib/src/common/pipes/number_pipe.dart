@@ -65,7 +65,7 @@ class NumberPipe {
 ///
 /// For more information on the acceptable range for each of these numbers and other
 /// details see your native internationalization library.
-@Pipe(name: "number")
+@Pipe("number")
 @Injectable()
 class DecimalPipe extends NumberPipe implements PipeTransform {
   String transform(dynamic value, [String digits = null]) {
@@ -85,7 +85,7 @@ class DecimalPipe extends NumberPipe implements PipeTransform {
 ///     expression | percent[:digitInfo]
 ///
 /// For more information about `digitInfo` see [DecimalPipe]
-@Pipe(name: "percent")
+@Pipe("percent")
 @Injectable()
 class PercentPipe extends NumberPipe implements PipeTransform {
   String transform(dynamic value, [String digits = null]) {
@@ -109,7 +109,7 @@ class PercentPipe extends NumberPipe implements PipeTransform {
 /// whether to use the currency symbol (e.g. $) or the currency code (e.g. USD)
 /// in the output. The default for this value is `false`.
 /// For more information about `digitInfo` see [DecimalPipe]
-@Pipe(name: "currency")
+@Pipe("currency")
 @Injectable()
 class CurrencyPipe extends NumberPipe implements PipeTransform {
   String transform(dynamic value,

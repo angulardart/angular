@@ -175,14 +175,14 @@ class MyComp {
   MyComp(this.injector);
 }
 
-@Pipe(name: "somePipe", pure: true)
+@Pipe("somePipe", pure: true)
 class PlatformPipe implements PipeTransform {
   dynamic transform(dynamic value) {
     return "somePlatformPipe";
   }
 }
 
-@Pipe(name: "somePipe", pure: true)
+@Pipe("somePipe", pure: true)
 class CustomPipe implements PipeTransform {
   dynamic transform(dynamic value) {
     return "someCustomPipe";

@@ -949,7 +949,7 @@ class _CompileTemplateMetadataVisitor
 /// Visitor responsible for processing a [Pipe] annotated
 /// [ClassDeclaration] and creating a [CompilePipeMetadata] object.
 class _PipeMetadataVisitor extends Object with RecursiveAstVisitor<Object> {
-  /// Tests [Annotation]s to determine if they deifne a [Directive],
+  /// Tests [Annotation]s to determine if they define a [Directive],
   /// [Component], [View], or none of these.
   final AnnotationMatcher _annotationMatcher;
 
@@ -1001,12 +1001,37 @@ class _PipeMetadataVisitor extends Object with RecursiveAstVisitor<Object> {
     if (isPipe) {
       if (_hasMetadata) {
         throw new FormatException(
-            'Only one Pipe is allowed per class. '
-            'Found unexpected "$node".',
+            'Only one Pipe is allowed per class. Found unexpected "$node".',
             '$node' /* source */);
       }
+
+      NodeList<Expression> args = node.arguments.arguments;
+      if (args.isEmpty) {
+        throw new FormatException(
+            'Missing required parameter.', '$node' /* source */);
+      }
+
       _hasMetadata = true;
-      super.visitAnnotation(node);
+      _populateName(args.first);
+
+      for (var arg in args.skip(1)) {
+        var namedParam = arg as NamedExpression;
+        if (namedParam.name is! Label ||
+            namedParam.name.label is! SimpleIdentifier) {
+          // TODO(leonsenft): Remove this limitation.
+          throw new FormatException(
+              'Angular currently only supports simple identifiers in pipes.',
+              '$node' /* source */);
+        }
+
+        var name = '${namedParam.name.label}';
+        if (name == 'pure') {
+          _populatePure(namedParam.expression);
+        } else {
+          throw new FormatException(
+              'Unexpected named parameter: $name', '$node' /* source */);
+        }
+      }
     }
 
     // Annotation we do not recognize - no need to visit.
@@ -1028,26 +1053,6 @@ class _PipeMetadataVisitor extends Object with RecursiveAstVisitor<Object> {
     return null;
   }
 
-  @override
-  Object visitNamedExpression(NamedExpression node) {
-    // TODO(kegluneq): Remove this limitation.
-    if (node.name is! Label || node.name.label is! SimpleIdentifier) {
-      throw new FormatException(
-          'Angular 2 currently only supports simple identifiers in pipes.',
-          '$node' /* source */);
-    }
-    var keyString = '${node.name.label}';
-    switch (keyString) {
-      case 'name':
-        _popuplateName(node.expression);
-        break;
-      case 'pure':
-        _populatePure(node.expression);
-        break;
-    }
-    return null;
-  }
-
   void _checkMeta() {
     if (!_hasMetadata) {
       throw new ArgumentError('Incorrect value passed to readTypeMetadata. '
@@ -1055,7 +1060,7 @@ class _PipeMetadataVisitor extends Object with RecursiveAstVisitor<Object> {
     }
   }
 
-  void _popuplateName(Expression nameValue) {
+  void _populateName(Expression nameValue) {
     _checkMeta();
     _name = _expressionToString(nameValue, 'Pipe#name');
   }

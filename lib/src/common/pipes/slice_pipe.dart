@@ -52,7 +52,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 ///
 ///     <li>b</li>
 ///     <li>c</li>
-@Pipe(name: "slice", pure: false)
+@Pipe("slice", pure: false)
 @Injectable()
 class SlicePipe implements PipeTransform {
   dynamic transform(dynamic value, num start, [num end = null]) {

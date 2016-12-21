@@ -69,7 +69,7 @@ String defaultLocale = "en-US";
 ///     {{ dateObj | date:'medium' }}    // output is 'Jun 15, 2015, 9:43:11 PM'
 ///     {{ dateObj | date:'shortTime' }} // output is '9:43 PM'
 ///     {{ dateObj | date:'mmss' }}      // output is '43:11'
-@Pipe(name: "date", pure: true)
+@Pipe("date", pure: true)
 @Injectable()
 class DatePipe implements PipeTransform {
   static final Map<String, String> _ALIASES = {
