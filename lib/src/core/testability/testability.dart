@@ -24,12 +24,12 @@ class Testability {
   }
 
   void _watchAngularEvents() {
-    _ngZone.onUnstable.listen((_) {
+    _ngZone.onTurnStart.listen((_) {
       _didWork = true;
       _isZoneStable = false;
     });
     _ngZone.runOutsideAngular(() {
-      _ngZone.onStable.listen((_) {
+      _ngZone.onTurnDone.listen((_) {
         NgZone.assertNotInAngularZone();
         scheduleMicrotask(() {
           _isZoneStable = true;

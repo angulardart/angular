@@ -30,12 +30,12 @@ class MockCallback extends Mock implements TestabilityCallback {}
 @Injectable()
 class TestZone extends NgZone {
   EventEmitter<dynamic> _onUnstableStream;
-  EventEmitter get onUnstable {
+  EventEmitter get onTurnStart {
     return _onUnstableStream;
   }
 
   EventEmitter<dynamic> _onStableStream;
-  EventEmitter get onStable {
+  EventEmitter get onTurnDone {
     return _onStableStream;
   }
 

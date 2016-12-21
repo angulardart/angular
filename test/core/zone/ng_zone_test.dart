@@ -30,7 +30,7 @@ void logOnError() {
 }
 
 void logOnUnstable() {
-  _zone.onUnstable.listen(_log.fn("onUnstable"));
+  _zone.onTurnStart.listen(_log.fn("onUnstable"));
 }
 
 void logOnMicrotaskEmpty() {
@@ -38,7 +38,7 @@ void logOnMicrotaskEmpty() {
 }
 
 void logOnStable() {
-  _zone.onStable.listen(_log.fn("onStable"));
+  _zone.onTurnDone.listen(_log.fn("onStable"));
 }
 
 dynamic runNgZoneNoLog(dynamic fn()) {
@@ -321,7 +321,7 @@ void commonTests() {
         () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
         runNgZoneNoLog(() => macroTask(_log.fn("run")));
-        _zone.onStable.listen((_) {
+        _zone.onTurnDone.listen((_) {
           NgZone.assertNotInAngularZone();
           _log.add("onMyTaskDone");
         });
@@ -556,7 +556,7 @@ void commonTests() {
         });
         var donePromiseRan = false;
         var startPromiseRan = false;
-        _zone.onUnstable.listen((_) {
+        _zone.onTurnStart.listen((_) {
           _log.add("onUnstable(begin)");
           if (!startPromiseRan) {
             _log.add("onUnstable(schedulePromise)");
