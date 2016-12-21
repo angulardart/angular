@@ -17,9 +17,12 @@ class EventManager {
     _eventToPlugin = <String, EventManagerPlugin>{};
   }
   Function addEventListener(
-      dynamic element, String eventName, Function handler) {
+    dynamic element,
+    String eventName,
+    void callback(event),
+  ) {
     var plugin = this._findPluginFor(eventName);
-    return plugin.addEventListener(element, eventName, handler);
+    return plugin.addEventListener(element, eventName, callback);
   }
 
   NgZone getZone() {
@@ -45,15 +48,26 @@ class EventManager {
 abstract class EventManagerPlugin {
   EventManager manager;
 
+  /// Whether this plugin should handle the event.
   bool supports(String eventName);
 
+  /// Adds an event listener on [element] on [eventName].
+  ///
+  /// Calls [callback] when the event occurs.
+  ///
+  /// Returns a function, when called, cancels the event listener.
   Function addEventListener(
-      dynamic element, String eventName, Function handler) {
-    throw 'not implemented';
-  }
+    dynamic element,
+    String eventName,
+    void callback(event),
+  ) =>
+      throw new UnsupportedError('Not supported');
 
+  @Deprecated('No longer supported by the event plugin system')
   Function addGlobalEventListener(
-      String element, String eventName, Function handler) {
-    throw 'not implemented';
-  }
+    dynamic element,
+    String eventName,
+    void callback(event),
+  ) =>
+      throw new UnsupportedError('Not supported');
 }
