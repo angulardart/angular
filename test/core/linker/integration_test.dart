@@ -2289,7 +2289,7 @@ class SomeViewport {
   }
 }
 
-@Pipe(name: "double")
+@Pipe("double")
 class DoublePipe implements PipeTransform, OnDestroy {
   ngOnDestroy() {}
   transform(value) {

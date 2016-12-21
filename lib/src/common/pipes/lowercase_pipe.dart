@@ -3,7 +3,7 @@ import "package:angular2/di.dart" show Injectable, PipeTransform, Pipe;
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
 /// Transforms text to lowercase.
-@Pipe(name: "lowercase")
+@Pipe("lowercase")
 @Injectable()
 class LowerCasePipe implements PipeTransform {
   String transform(String value) {

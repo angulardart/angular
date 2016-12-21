@@ -905,7 +905,11 @@ class View {
 class Pipe extends Injectable {
   final String name;
   final bool _pure;
-  const Pipe({this.name, bool pure})
+
+  /// Warning: [_PipeMetaDataVisitor.visitAnnotation] depends on this
+  /// constructor signature to generate metadata, and will require an update if
+  /// changes are made to the parameter list.
+  const Pipe(this.name, {bool pure})
       : _pure = pure,
         super();
   bool get pure => _pure ?? true;

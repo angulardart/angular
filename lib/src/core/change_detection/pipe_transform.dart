@@ -15,7 +15,7 @@
 /// ```dart
 /// import 'package:angular2/core.dart' show Pipe, PipeTransform;
 ///
-/// @Pipe(name: 'repeat')
+/// @Pipe('repeat')
 /// class RepeatPipe implements PipeTransform {
 ///   transform(dynamic value, int times) => '$value' * times;
 /// }
