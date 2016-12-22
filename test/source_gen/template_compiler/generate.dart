@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:angular2/src/source_gen/template_compiler/generator.dart';
 import 'package:angular2/src/source_gen/template_compiler/testing/component_extractor_generator.dart';
 import 'package:args/args.dart';
-import 'package:build/build.dart';
+import 'package:build_runner/build_runner.dart';
 import 'package:source_gen/source_gen.dart';
 
 const testFiles = 'test/source_gen/template_compiler/test_files';
