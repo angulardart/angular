@@ -1,9 +1,22 @@
-## 2.3.0
+## Unreleased (TBD)
 
 ### API changes
   * Features
       * (Forms) `AbstractControl.markAsDirty` now emits a status change event
   * Breaking changes
+      * A `name` parameter is now _required_ for all `@Pipe(...)` definitions:
+
+**BEFORE**
+```dart
+@Pipe(name: 'uppercase')
+```
+
+**AFTER**
+```dart
+@Pipe('uppercase')
+```
+
+      * `DomEventsPlugin` now requires a strongly typed interface to `dart:html`
       * `Null` is no longer propogated as an initial change value. Code should
         be updated to either deliver a different initial value or components
         with an `@Input()` should have an appropriate default value.
