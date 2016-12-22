@@ -1,22 +1,27 @@
 import 'package:analyzer/analyzer.dart';
+import 'package:analyzer/src/generated/java_core.dart';
 
 /// Serializes the provided [AstNode] to Dart source, replacing `new` in
 /// [InstanceCreationExpression]s and the `@` in [Annotation]s with `const`.
 String constify(AstNode node) {
-  var sink = new StringBuffer();
-  node.accept(new _ConstifyingVisitor(sink));
-  return sink.toString();
+  var writer = new PrintStringWriter();
+  node.accept(new _ConstifyingVisitor(writer));
+  return '$writer';
 }
 
-class _ConstifyingVisitor extends ToSourceVisitor2 {
-  _ConstifyingVisitor(StringSink sink) : super(sink);
+class _ConstifyingVisitor extends ToSourceVisitor {
+  final PrintWriter writer;
+
+  _ConstifyingVisitor(PrintWriter writer)
+      : this.writer = writer,
+        super(writer);
 
   @override
   Object visitInstanceCreationExpression(InstanceCreationExpression node) {
     if (node.keyword.lexeme == 'const') {
       return super.visitInstanceCreationExpression(node);
     } else if (node.keyword.lexeme == 'new') {
-      sink.write('const ');
+      writer.print('const ');
       if (node.constructorName != null) {
         node.constructorName.accept(this);
       }
@@ -32,25 +37,25 @@ class _ConstifyingVisitor extends ToSourceVisitor2 {
     var hasArguments =
         node.arguments != null && node.arguments.arguments != null;
     if (hasArguments) {
-      sink.write('const ');
+      writer.print('const ');
     }
     if (node.name != null) {
       node.name.accept(this);
     }
     if (node.constructorName != null) {
-      sink.write('.');
+      writer.print('.');
       node.constructorName.accept(this);
     }
     if (hasArguments) {
       var args = node.arguments.arguments;
-      sink.write('(');
+      writer.print('(');
       for (var i = 0, iLen = args.length; i < iLen; ++i) {
         if (i != 0) {
-          sink.write(', ');
+          writer.print(', ');
         }
         args[i].accept(this);
       }
-      sink.write(')');
+      writer.print(')');
     }
     return null;
   }
