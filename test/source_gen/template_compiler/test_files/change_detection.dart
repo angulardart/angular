@@ -34,7 +34,7 @@ class OnPushComponent {}
     selector: 'Stateful',
     template: '<div>Stateful</div>',
     changeDetection: ChangeDetectionStrategy.Stateful)
-class StatefulComponent {}
+class StatefulComponent extends ComponentState {}
 
 @Component(
     selector: 'Default',
