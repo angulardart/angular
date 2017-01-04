@@ -57,7 +57,8 @@ class CompileElement extends CompileNode {
   bool hasViewContainer;
   bool hasEmbeddedView;
 
-  o.Expression _compViewExpr;
+  /// Expression that contains reference to componentView.
+  o.Expression compViewExpr;
   o.ReadClassMemberExpr appViewContainer;
   o.Expression elementRef;
   o.Expression injector;
@@ -138,7 +139,7 @@ class CompileElement extends CompileNode {
   }
 
   set componentView(o.Expression compViewExpr) {
-    _compViewExpr = compViewExpr;
+    this.compViewExpr = compViewExpr;
     int indexCount = component.template.ngContentSelectors.length;
     contentNodesByNgContentIndex = new List<List<o.Expression>>(indexCount);
     for (var i = 0; i < indexCount; i++) {
@@ -146,7 +147,7 @@ class CompileElement extends CompileNode {
     }
   }
 
-  o.Expression get componentView => _compViewExpr;
+  o.Expression get componentView => compViewExpr;
 
   void setEmbeddedView(CompileView view) {
     embeddedView = view;
@@ -262,13 +263,6 @@ class CompileElement extends CompileNode {
         queryWithRead.query.addValue(value, this.view);
       }
     });
-
-    if (component != null) {
-      var compExpr = getComponent() ?? o.NULL_EXPR;
-      view.createMethod.addStmt(this
-          .appViewContainer
-          .callMethod("initComponent", [compExpr, _compViewExpr]).toStmt());
-    }
   }
 
   void afterChildren(num childNodeCount) {
@@ -351,7 +345,7 @@ class CompileElement extends CompileNode {
         if (dep.token
             .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
           if (identical(requestingProviderType, ProviderAstType.Component)) {
-            return _compViewExpr.prop("ref");
+            return compViewExpr.prop("ref");
           } else {
             return new o.ReadClassMemberExpr('ref');
           }

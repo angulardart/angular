@@ -635,4 +635,5 @@ void _initializeInterpreter() {
   Identifiers.HTML_TEXT_NODE.runtime = Text;
   Identifiers.HTML_DOCUMENT.runtime = document;
   Identifiers.appViewUtils.runtime = appViewUtils;
+  Identifiers.ComponentRef.runtime = ComponentRef;
 }

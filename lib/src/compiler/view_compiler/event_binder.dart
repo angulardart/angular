@@ -80,9 +80,8 @@ class CompileEventListener {
   }
 
   void finishMethod() {
-    var markPathToRootStart = _hasComponentHostListener
-        ? compileElement.appViewContainer.prop('componentView')
-        : o.THIS_EXPR;
+    var markPathToRootStart =
+        _hasComponentHostListener ? compileElement.compViewExpr : o.THIS_EXPR;
     o.Expression resultExpr = o.literal(true);
     for (var i = 0, len = _actionResultExprs.length; i < len; i++) {
       resultExpr = resultExpr.and(_actionResultExprs[i]);

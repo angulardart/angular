@@ -7,6 +7,7 @@ import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/core/linker/component_factory.dart';
 import 'package:angular2/src/core/linker/exceptions.dart'
     show ExpressionChangedAfterItHasBeenCheckedException, ViewWrappedException;
 import 'package:angular2/src/core/linker/view_type.dart';
@@ -62,38 +63,13 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  ViewContainer create(
+  ComponentRef create(
+      T context,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      selectorOrNode) {
+      dynamic /* String | Node */ rootSelectorOrNode) {
     this._resetDebug();
     try {
-      return super.create(givenProjectableNodes, selectorOrNode);
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
-      rethrow;
-    }
-  }
-
-  @override
-  ViewContainer createComp(
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      selectorOrNode) {
-    this._resetDebug();
-    try {
-      return super.createComp(givenProjectableNodes, selectorOrNode);
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
-      rethrow;
-    }
-  }
-
-  @override
-  ViewContainer createHost(
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      selectorOrNode) {
-    this._resetDebug();
-    try {
-      return super.createHost(givenProjectableNodes, selectorOrNode);
+      return super.create(context, givenProjectableNodes, rootSelectorOrNode);
     } catch (e, e_stack) {
       this._rethrowWithContext(e, e_stack);
       rethrow;
@@ -224,6 +200,7 @@ class DebugAppView<T> extends AppView<T> {
     }
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.
+    if (projectableNodes == null || index >= projectableNodes.length) return;
     List projectables = projectableNodes[index];
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {

@@ -16,8 +16,7 @@ import "package:angular2/src/core/linker/component_resolver.dart"
 /// Re-exported here so that tests import from a single place.
 export "package:angular2/platform/browser.dart" show CACHED_TEMPLATE_PROVIDER;
 export "package:angular2/src/debug/debug_node.dart"
-    show inspectNativeElement, DebugNode, DebugElement;
-export "package:angular2/src/testing/by.dart";
+    show inspectNativeElement, DebugNode, DebugElement, By;
 
 /// Default platform providers for testing.
 const List<dynamic> TEST_BROWSER_PLATFORM_PROVIDERS = const [

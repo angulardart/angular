@@ -216,7 +216,7 @@ class _MockComponentResolver implements ComponentResolver {
 
 class _MockComponentRef extends ComponentRef {
   Injector _injector;
-  _MockComponentRef(this._injector) : super(null, null, null);
+  _MockComponentRef(this._injector) : super(0, null, null, null);
 
   @override
   Injector get injector => _injector;

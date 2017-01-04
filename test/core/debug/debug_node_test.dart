@@ -1,173 +1,273 @@
-@TestOn('browser && !js')
-library angular2.test.core.debug.debug_node_test;
+@Tags(const ['codegen'])
+@TestOn('browser')
+library angular2.test.common.directives.if_test;
 
 import 'dart:html';
-import "package:angular2/common.dart" show NgFor, NgIf;
-import "package:angular2/core.dart" show Injectable;
-import "package:angular2/src/core/metadata.dart"
-    show Directive, Component, Input;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/testing_internal.dart";
+import 'package:angular2/angular2.dart';
+import 'package:angular2/testing_experimental.dart';
+import 'package:angular2/src/debug/debug_node.dart';
+import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
-@Injectable()
-class Logger {
-  List<String> log;
-  Logger() {
-    this.log = [];
-  }
-  void add(String thing) {
-    this.log.add(thing);
-  }
+void main() {
+  group('debug element', () {
+    tearDown(() => disposeAnyRunningTest());
+
+    test("should list all child nodes", () async {
+      var testBed = new NgTestBed<ParentComp>();
+      var fixture = await testBed.create();
+      // The root component has 3 elements.
+      DebugElement debugElement = getDebugNode(fixture.element);
+      expect(debugElement.childNodes.length, 3);
+    });
+
+    test("should list all child nodes without whitespace", () async {
+      var testBed = new NgTestBed<ParentCompNoWhitespace>();
+      var fixture = await testBed.create();
+      // The root component has 3 elements and no text node children.
+      DebugElement debugElement = getDebugNode(fixture.element);
+      expect(debugElement.childNodes.length, 3);
+    });
+
+    test("should list all component child elements", () async {
+      var testBed = new NgTestBed<ParentComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      var childEls = debugElement.children;
+      // The root component has 3 elements in its view.
+      expect(childEls.length, 3);
+      Element element = childEls[0].nativeElement as Element;
+      expect(element.classes, contains("parent1"));
+      element = childEls[1].nativeElement as Element;
+      expect(element.classes, contains("parent2"));
+      element = childEls[2].nativeElement as Element;
+      expect(element.classes, contains("child-comp-class"));
+      // Get children nested under parent.
+      var nested = childEls[0].children;
+      expect(nested.length, 1);
+      expect((nested[0].nativeElement as Element).classes,
+          contains("parentnested"));
+      var childComponent = childEls[2];
+      var childCompChildren = childComponent.children;
+      expect(childCompChildren.length, 2);
+      expect((childCompChildren[0].nativeElement as Element).classes,
+          contains("child"));
+      expect((childCompChildren[1].nativeElement as Element).classes,
+          contains("child"));
+      var childNested = childCompChildren[0].children;
+      expect(childNested.length, 1);
+      expect((childNested[0].nativeElement as Element).classes,
+          contains("childnested"));
+    });
+
+    test("should list conditional component child elements", () async {
+      var testBed = new NgTestBed<ConditionalParentComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      var childEls = debugElement.children;
+      // The root component has 2 elements in its view.
+      expect(childEls.length, 2);
+      expect(
+          (childEls[0].nativeElement as Element).classes, contains("parent"));
+      expect((childEls[1].nativeElement as Element).classes,
+          contains("cond-content-comp-class"));
+      // Since startup condition in false, there should be no children.
+      var conditionalContentComp = childEls[1];
+      expect(conditionalContentComp.children, hasLength(0));
+      await fixture.update((ConditionalParentComp component) {
+        ConditionalContentComp childComp =
+            conditionalContentComp.componentInstance;
+        childComp.myBool = true;
+      });
+      expect(conditionalContentComp.children, hasLength(1));
+    });
+
+    test("should list child elements within viewports", () async {
+      var testBed = new NgTestBed<UsingFor>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      var childEls = debugElement.children;
+      expect(childEls.length, 4);
+      // The 4th child is the <ul>.
+      var list = childEls[3];
+      expect(list.children.length, 3);
+    });
+
+    test("should list element attributes", () async {
+      var testBed = new NgTestBed<BankAccountApp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      var bankElem = debugElement.children[0];
+      expect(bankElem.attributes["bank"], "RBC");
+      expect(bankElem.attributes["account"], "4747");
+    });
+
+    test("should query child elements by css", () async {
+      var testBed = new NgTestBed<ParentComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      var childTestEls = debugElement.queryAll(By.css("child-comp"));
+      expect(childTestEls, hasLength(1));
+      expect((childTestEls[0].nativeElement as Element).classes,
+          contains("child-comp-class"));
+    });
+
+    test("should query child elements by directive", () async {
+      var testBed = new NgTestBed<ParentComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      var childTestEls = debugElement.queryAll(By.directive(MessageDir));
+      expect(childTestEls, hasLength(4));
+      expect((childTestEls[0].nativeElement as Element).classes,
+          contains("parent1"));
+      expect((childTestEls[1].nativeElement as Element).classes,
+          contains("parentnested"));
+      expect((childTestEls[2].nativeElement as Element).classes,
+          contains("child"));
+      expect((childTestEls[3].nativeElement as Element).classes,
+          contains("childnested"));
+    });
+
+    test("should list providerTokens", () async {
+      var testBed = new NgTestBed<ParentComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      expect(debugElement.providerTokens, contains(ParentCompProvider));
+    });
+
+    test("should list locals", () async {
+      var testBed = new NgTestBed<LocalsComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      expect(debugElement.children[0].getLocal("alice") is MyDir, isTrue);
+    });
+
+    test("should allow injecting from the element injector", () async {
+      var testBed = new NgTestBed<ParentComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      var provider = debugElement.children[0].inject(ParentCompProvider);
+      expect(provider is ParentCompProvider, isTrue);
+    });
+
+    test("should list event listeners", () async {
+      var testBed = new NgTestBed<EventsComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      expect(debugElement.children[0].listeners, hasLength(1));
+      expect(debugElement.children[1].listeners, hasLength(1));
+    });
+
+    test("should trigger event handlers", () async {
+      var testBed = new NgTestBed<EventsComp>();
+      var fixture = await testBed.create();
+      DebugElement debugElement = getDebugNode(fixture.element);
+      expect(debugElement.componentInstance.clicked, isFalse);
+      expect(debugElement.componentInstance.customed, isFalse);
+      (debugElement.children[0].nativeElement as Element)
+          .dispatchEvent(new MouseEvent('click'));
+      expect(debugElement.componentInstance.clicked, isTrue);
+      (debugElement.children[1].nativeElement as Element)
+          .dispatchEvent(new Event('myevent'));
+      expect(debugElement.componentInstance.customed, isTrue);
+    });
+  });
 }
 
+/// Directive that logs bound value.
 @Directive(selector: "[message]", inputs: const ["message"])
-@Injectable()
 class MessageDir {
   Logger logger;
-  MessageDir(Logger logger) {
-    this.logger = logger;
+
+  MessageDir() {
+    logger = new Logger("debug_element_test_logger");
   }
   set message(newMessage) {
-    this.logger.add(newMessage);
+    logger.info(newMessage);
   }
 }
 
 @Component(
-    selector: "child-comp",
-    template: '''<div class="child" message="child">
-               <span class="childnested" message="nestedchild">Child</span>
-             </div>
-             <span class="child" [innerHtml]="childBinding"></span>''',
+    selector: 'child-comp',
+    template: '''
+        <div class="child" message="child">
+          <span class="childnested" message="nestedchild">Child</span>
+        </div>
+        <span class="child" [innerHtml]="childBinding"></span>''',
     directives: const [MessageDir])
-@Injectable()
 class ChildComp {
-  String childBinding;
-  ChildComp() {
-    this.childBinding = "Original";
-  }
+  final String childBinding = "Original";
+}
+
+@Injectable()
+class ParentCompProvider {
+  final List<String> log = [];
 }
 
 @Component(
     selector: "parent-comp",
-    viewProviders: const [Logger],
-    template: '''<div class="parent" message="parent">
-               <span class="parentnested" message="nestedparent">Parent</span>
-             </div>
-             <span class="parent" [innerHtml]="parentBinding"></span>
-             <child-comp class="child-comp-class"></child-comp>''',
+    viewProviders: const [ParentCompProvider],
+    template: '''
+        <div class="parent1" message="parent">
+          <span class="parentnested" message="nestedparent">Parent</span>
+        </div>
+        <span class="parent2" [innerHtml]="parentBinding"></span>
+        <child-comp class="child-comp-class"></child-comp>''',
     directives: const [ChildComp, MessageDir])
-@Injectable()
 class ParentComp {
-  String parentBinding;
-  ParentComp() {
-    this.parentBinding = "OriginalParent";
-  }
+  final String parentBinding = "OriginalParent";
 }
 
 @Component(
-    selector: "parent-comp2",
-    viewProviders: const [Logger],
-    template: '''<div class="parent" message="parent">
-               <span class="parentnested" message="nestedparent">Parent</span>
-             </div>
-             <span class="parent" [innerHtml]="parentBinding"></span>
-             <child-comp class="child-comp-class"></child-comp>''',
-    directives: const [ChildComp, MessageDir],
-    preserveWhitespace: true)
-@Injectable()
-class ParentComp2 {
-  String parentBinding;
-  ParentComp2() {
-    this.parentBinding = "OriginalParent";
-  }
-}
-
-@Directive(selector: "custom-emitter", outputs: const ["myevent"])
-@Injectable()
-class CustomEmitter {
-  EventEmitter<dynamic> myevent;
-  CustomEmitter() {
-    this.myevent = new EventEmitter();
-  }
-}
-
-@Component(
-    selector: "events-comp",
-    template: '''<button (click)="handleClick()"></button>
-             <custom-emitter (myevent)="handleCustom()"></custom-emitter>''',
-    directives: const [CustomEmitter])
-@Injectable()
-class EventsComp {
-  bool clicked;
-  bool customed;
-  EventsComp() {
-    this.clicked = false;
-    this.customed = false;
-  }
-  void handleClick() {
-    this.clicked = true;
-  }
-
-  void handleCustom() {
-    this.customed = true;
-  }
+    selector: "parent-comp-no-ws",
+    template: '''
+        <div class="parent1" message="parent">
+          <span class="parentnested" message="nestedparent">Parent</span>
+        </div>
+        <span class="parent2" [innerHtml]="parentBinding"></span>
+        <child-comp class="child-comp-class"></child-comp>''',
+    directives: const [ChildComp, MessageDir])
+class ParentCompNoWhitespace {
+  final String parentBinding = "OriginalParent";
 }
 
 @Component(
     selector: "cond-content-comp",
-    viewProviders: const [Logger],
-    template:
-        '''<div class="child" message="child" *ngIf="myBool"><ng-content></ng-content></div>''',
+    template: '<div class="child" message="child" *ngIf="myBool">'
+        '  <ng-content></ng-content>'
+        '</div>',
     directives: const [NgIf, MessageDir])
-@Injectable()
 class ConditionalContentComp {
   bool myBool = false;
 }
 
 @Component(
     selector: "conditional-parent-comp",
-    viewProviders: const [Logger],
-    template: '''<span class="parent" [innerHtml]="parentBinding"></span>
-            <cond-content-comp class="cond-content-comp-class">
-              <span class="from-parent"></span>
-            </cond-content-comp>''',
+    template: '''
+        <span class="parent" [innerHtml]="parentBinding"></span>
+        <cond-content-comp class="cond-content-comp-class">
+          <span class="from-parent"></span>
+        </cond-content-comp>''',
     directives: const [ConditionalContentComp])
-@Injectable()
 class ConditionalParentComp {
-  String parentBinding;
-  ConditionalParentComp() {
-    this.parentBinding = "OriginalParent";
-  }
+  String parentBinding = "OriginalParent";
 }
 
 @Component(
     selector: "using-for",
     viewProviders: const [Logger],
-    template: '''<span *ngFor="let thing of stuff" [innerHtml]="thing"></span>
-            <ul message="list">
-              <li *ngFor="let item of stuff" [innerHtml]="item"></li>
-            </ul>''',
+    template: '''
+        <span *ngFor="let thing of stuff" [innerHtml]="thing"></span>
+        <ul message="list">
+           <li *ngFor="let item of stuff" [innerHtml]="item"></li>
+        </ul>''',
     directives: const [NgFor, MessageDir])
-@Injectable()
 class UsingFor {
   List<String> stuff;
   UsingFor() {
-    this.stuff = ["one", "two", "three"];
+    stuff = ["one", "two", "three"];
   }
 }
-
-@Directive(selector: "[mydir]", exportAs: "mydir")
-class MyDir {}
-
-@Component(
-    selector: "locals-comp",
-    template: '''
-   <div mydir #alice="mydir"></div>
- ''',
-    directives: const [MyDir])
-class LocalsComp {}
 
 @Component(
     selector: "bank-account",
@@ -178,216 +278,54 @@ class LocalsComp {}
 class BankAccount {
   @Input()
   String bank;
+
   @Input("account")
   String id;
+
   String normalizedBankName;
 }
 
 @Component(
-    selector: "test-app",
-    template: '''
-   <bank-account bank="RBC" account="4747"></bank-account>
- ''',
+    selector: "bank-account-app",
+    template: '<bank-account bank="RBC" account="4747"></bank-account>',
     directives: const [BankAccount])
-class TestApp {}
+class BankAccountApp {}
 
-void main() {
-  group("debug element", () {
-    test("should list all child nodes", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ParentComp).then((fixture) {
-          fixture.detectChanges();
-          // The root component has 3 elements and no text node children.
-          expect(fixture.debugElement.childNodes.length, 3);
-          completer.done();
-        });
-      });
-    });
-    test("should list all child nodes including whitespace", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ParentComp2).then((fixture) {
-          fixture.detectChanges();
-          // The root component has 3 elements and no text node children.
-          expect(fixture.debugElement.childNodes.length, 3);
-          completer.done();
-        });
-      });
-    });
-    test("should list all component child elements", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ParentComp).then((fixture) {
-          fixture.detectChanges();
-          var childEls = fixture.debugElement.children;
-          // The root component has 3 elements in its view.
-          expect(childEls.length, 3);
-          expect(DOM.hasClass(childEls[0].nativeElement, "parent"), isTrue);
-          expect(DOM.hasClass(childEls[1].nativeElement, "parent"), isTrue);
-          expect(DOM.hasClass(childEls[2].nativeElement, "child-comp-class"),
-              isTrue);
-          var nested = childEls[0].children;
-          expect(nested.length, 1);
-          expect(DOM.hasClass(nested[0].nativeElement, "parentnested"), isTrue);
-          var childComponent = childEls[2];
-          var childCompChildren = childComponent.children;
-          expect(childCompChildren.length, 2);
-          expect(DOM.hasClass(childCompChildren[0].nativeElement, "child"),
-              isTrue);
-          expect(DOM.hasClass(childCompChildren[1].nativeElement, "child"),
-              isTrue);
-          var childNested = childCompChildren[0].children;
-          expect(childNested.length, 1);
-          expect(DOM.hasClass(childNested[0].nativeElement, "childnested"),
-              isTrue);
-          completer.done();
-        });
-      });
-    });
-    test("should list conditional component child elements", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ConditionalParentComp).then((fixture) {
-          fixture.detectChanges();
-          var childEls = fixture.debugElement.children;
-          // The root component has 2 elements in its view.
-          expect(childEls.length, 2);
-          expect(DOM.hasClass(childEls[0].nativeElement, "parent"), isTrue);
-          expect(
-              DOM.hasClass(
-                  childEls[1].nativeElement, "cond-content-comp-class"),
-              isTrue);
-          var conditionalContentComp = childEls[1];
-          expect(conditionalContentComp.children.length, 0);
-          conditionalContentComp.componentInstance.myBool = true;
-          fixture.detectChanges();
-          expect(conditionalContentComp.children.length, 1);
-          completer.done();
-        });
-      });
-    });
-    test("should list child elements within viewports", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(UsingFor).then((fixture) {
-          fixture.detectChanges();
-          var childEls = fixture.debugElement.children;
-          expect(childEls.length, 4);
-          // The 4th child is the <ul>
-          var list = childEls[3];
-          expect(list.children.length, 3);
-          completer.done();
-        });
-      });
-    });
-    test("should list element attributes", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(TestApp).then((fixture) {
-          fixture.detectChanges();
-          var bankElem = fixture.debugElement.children[0];
-          expect(bankElem.attributes["bank"], "RBC");
-          expect(bankElem.attributes["account"], "4747");
-          completer.done();
-        });
-      });
-    });
-    test("should query child elements by css", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ParentComp).then((fixture) {
-          fixture.detectChanges();
-          var childTestEls =
-              fixture.debugElement.queryAll(By.css("child-comp"));
-          expect(childTestEls, hasLength(1));
-          expect(
-              DOM.hasClass(childTestEls[0].nativeElement, "child-comp-class"),
-              isTrue);
-          completer.done();
-        });
-      });
-    });
-    test("should query child elements by directive", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ParentComp).then((fixture) {
-          fixture.detectChanges();
-          var childTestEls =
-              fixture.debugElement.queryAll(By.directive(MessageDir));
-          expect(childTestEls, hasLength(4));
-          expect(DOM.hasClass(childTestEls[0].nativeElement, "parent"), isTrue);
-          expect(DOM.hasClass(childTestEls[1].nativeElement, "parentnested"),
-              isTrue);
-          expect(DOM.hasClass(childTestEls[2].nativeElement, "child"), isTrue);
-          expect(DOM.hasClass(childTestEls[3].nativeElement, "childnested"),
-              isTrue);
-          completer.done();
-        });
-      });
-    });
-    test("should list providerTokens", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ParentComp).then((fixture) {
-          fixture.detectChanges();
-          expect(fixture.debugElement.providerTokens, contains(Logger));
-          completer.done();
-        });
-      });
-    });
-    test("should list locals", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(LocalsComp).then((fixture) {
-          fixture.detectChanges();
-          expect(fixture.debugElement.children[0].getLocal("alice") is MyDir,
-              isTrue);
-          completer.done();
-        });
-      });
-    });
-    test("should allow injecting from the element injector", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(ParentComp).then((fixture) {
-          fixture.detectChanges();
-          Logger logger = fixture.debugElement.children[0].inject(Logger);
-          expect(
-              logger.log, ["parent", "nestedparent", "child", "nestedchild"]);
-          completer.done();
-        });
-      });
-    });
-    test("should list event listeners", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(EventsComp).then((fixture) {
-          fixture.detectChanges();
-          expect(fixture.debugElement.children[0].listeners, hasLength(1));
-          expect(fixture.debugElement.children[1].listeners, hasLength(1));
-          completer.done();
-        });
-      });
-    });
-    test("should trigger event handlers", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb.createAsync(EventsComp).then((fixture) {
-          fixture.detectChanges();
-          expect(fixture.debugElement.componentInstance.clicked, isFalse);
-          expect(fixture.debugElement.componentInstance.customed, isFalse);
-          (fixture.debugElement.children[0].nativeElement as Element)
-              .dispatchEvent(new MouseEvent('click'));
-//              .triggerEventHandler("click", ({} as dynamic));
-          expect(fixture.debugElement.componentInstance.clicked, isTrue);
-          (fixture.debugElement.children[1].nativeElement as Element)
-              .dispatchEvent(new Event('myevent'));
-//              .triggerEventHandler("myevent", ({} as dynamic));
-          expect(fixture.debugElement.componentInstance.customed, isTrue);
-          completer.done();
-        });
-      });
-    });
-  });
+@Directive(selector: "[mydir]", exportAs: "mydir")
+class MyDir {}
+
+@Component(
+    selector: "locals-comp",
+    template: '<div mydir #alice="mydir"></div>',
+    directives: const [MyDir])
+class LocalsComp {}
+
+@Directive(selector: "custom-emitter", outputs: const ["myevent"])
+class CustomEmitter {
+  EventEmitter<dynamic> myevent;
+  CustomEmitter() {
+    myevent = new EventEmitter();
+  }
+}
+
+@Component(
+    selector: "events-comp",
+    template: '''
+        <button (click)="handleClick()"></button>
+        <custom-emitter (myevent)="handleCustom()"></custom-emitter>''',
+    directives: const [CustomEmitter])
+class EventsComp {
+  bool clicked;
+  bool customed;
+  EventsComp() {
+    clicked = false;
+    customed = false;
+  }
+  void handleClick() {
+    clicked = true;
+  }
+
+  void handleCustom() {
+    customed = true;
+  }
 }

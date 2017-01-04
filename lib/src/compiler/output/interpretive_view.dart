@@ -1,5 +1,5 @@
-import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/core/linker/component_factory.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
 import 'package:angular2/src/debug/debug_context.dart' show StaticNodeDebugInfo;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
@@ -29,7 +29,7 @@ class InterpretiveAppViewInstanceFactory implements InstanceFactory {
   }
 }
 
-class _InterpretiveAppView extends DebugAppView<dynamic>
+class _InterpretiveAppView<T> extends DebugAppView<T>
     implements DynamicInstance {
   @override
   final Map<String, dynamic> props;
@@ -37,13 +37,14 @@ class _InterpretiveAppView extends DebugAppView<dynamic>
   final Map<String, Function> getters;
   @override
   final Map<String, Function> methods;
+
   _InterpretiveAppView(
       List<dynamic> args, this.props, this.getters, this.methods)
       : super(args[0], args[1], args[2], args[3] as Map<String, dynamic>,
             args[4], args[5], args[6], args[7] as List<StaticNodeDebugInfo>);
 
   @override
-  ViewContainer createInternal(dynamic /* String | dynamic */ rootSelector) {
+  ComponentRef createInternal(dynamic /* String | dynamic */ rootSelector) {
     var m = methods['createInternal'];
     if (m != null) {
       return m(rootSelector);
