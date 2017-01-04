@@ -35,6 +35,7 @@ import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart" show RenderComponentType;
 import "package:angular2/src/core/security.dart" show TemplateSecurityContext;
+import "package:angular2/src/facade/lang.dart" show looseIdentical;
 
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileTokenMetadata;
@@ -70,6 +71,7 @@ var impInterpolate2 = interpolate2;
 var impThrowOnChanges = () => AppViewUtils.throwOnChanges;
 var impInterpolate = interpolate;
 var impCheckBinding = checkBinding;
+var impLooseIdentical = looseIdentical;
 var impCastByValue = castByValue;
 var impTemplateSecurityContext = TemplateSecurityContext;
 var impEMPTY_ARRAY = EMPTY_ARRAY;
@@ -163,6 +165,10 @@ class Identifiers {
       runtime: impCheckBinding);
   static final devModeEqual = new CompileIdentifierMetadata(
       name: "devModeEqual", moduleUrl: CD_MODULE_URL, runtime: impDevModeEqual);
+  static final looseIdentical = new CompileIdentifierMetadata(
+      name: "looseIdentical",
+      moduleUrl: 'asset:angular2/lib/src/facade/lang.dart',
+      runtime: impLooseIdentical);
 
   /// String interpolation where prefix,suffix are empty
   /// (most common case).

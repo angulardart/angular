@@ -66,8 +66,15 @@ void bind(
   method.addStmt(currValExpr
       .set(checkExpression.expression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
-  o.Expression condition =
-      o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
+  o.Expression condition;
+  if (view.genConfig.genDebugInfo) {
+    condition =
+        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
+  } else {
+    condition = new o.NotExpr(o
+        .importExpr(Identifiers.looseIdentical)
+        .callFn([fieldExpr, currValExpr]));
+  }
   if (checkExpression.needsValueUnwrapper) {
     condition =
         DetectChangesVars.valUnwrapper.prop('hasWrappedValue').or(condition);
@@ -461,8 +468,16 @@ void bindToUpdateMethod(
         new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt());
   } else {
     // Otherwise use traditional checkBinding call.
-    o.Expression condition =
-        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
+    o.Expression condition;
+    if (view.genConfig.genDebugInfo) {
+      condition = o
+          .importExpr(Identifiers.checkBinding)
+          .callFn([fieldExpr, currValExpr]);
+    } else {
+      condition = new o.NotExpr(o
+          .importExpr(Identifiers.looseIdentical)
+          .callFn([fieldExpr, currValExpr]));
+    }
 
     if (checkExpression.needsValueUnwrapper) {
       condition =
