@@ -18,19 +18,12 @@ class ViewContainer implements ViewContainerRef {
   final AppView parentView;
   final dynamic nativeElement;
   List<AppView> nestedViews;
-  AppView componentView;
-  dynamic component;
   ElementRef _elementRef;
 
   ViewContainer(
       this.index, this.parentIndex, this.parentView, this.nativeElement);
 
   ElementRef get elementRef => _elementRef ??= new ElementRef(nativeElement);
-
-  void initComponent(dynamic component, AppView view) {
-    this.component = component;
-    componentView = view;
-  }
 
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
@@ -77,7 +70,7 @@ class ViewContainer implements ViewContainerRef {
   /// Returns the [ViewRef] for the newly created View.
   @override
   EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
+    EmbeddedViewRef viewRef = templateRef.createEmbeddedView(parentView.ctx);
     insert(viewRef, index);
     return viewRef;
   }
@@ -86,7 +79,7 @@ class ViewContainer implements ViewContainerRef {
   /// and appends it into this container.
   @override
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
+    EmbeddedViewRef viewRef = templateRef.createEmbeddedView(parentView.ctx);
     attachView((viewRef as ViewRefImpl).appView, length);
     return viewRef;
   }

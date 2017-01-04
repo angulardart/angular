@@ -9,6 +9,7 @@ import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 import 'view_container.dart';
 import 'app_view_utils.dart';
+import 'component_factory.dart';
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
 import 'view_ref.dart' show ViewRefImpl;
@@ -39,7 +40,6 @@ abstract class AppView<T> {
   List allNodes;
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
   List subscriptions;
-  AppView renderParent;
   ViewContainer viewContainerElement;
 
   // The names of the below fields must be kept in sync with codegen_name_util.ts or
@@ -98,68 +98,33 @@ abstract class AppView<T> {
             identical(_cdState, ChangeDetectorState.Errored);
   }
 
-  ViewContainer create(
+  ComponentRef create(
+      T context,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | Node */ rootSelectorOrNode) {
-    T context;
-    var projectableNodes;
-    switch (this.type) {
-      case ViewType.COMPONENT:
-        context = declarationViewContainer.component as T;
-        projectableNodes = ensureSlotCount(
-            givenProjectableNodes, this.componentType.slotCount);
-        break;
-      case ViewType.EMBEDDED:
-        return createEmbedded(givenProjectableNodes, rootSelectorOrNode);
-      case ViewType.HOST:
-        return createHost(givenProjectableNodes, rootSelectorOrNode);
-    }
     this._hasExternalHostElement = rootSelectorOrNode != null;
     this.ctx = context;
-    this.projectableNodes = projectableNodes;
+    if (type == ViewType.COMPONENT) {
+      this.projectableNodes =
+          ensureSlotCount(givenProjectableNodes, componentType.slotCount);
+    } else {
+      this.projectableNodes = givenProjectableNodes;
+    }
     return this.createInternal(rootSelectorOrNode);
   }
 
-  /// Builds a host view.
-  ViewContainer createHost(
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | Node */ rootSelectorOrNode) {
-    assert(type == ViewType.HOST);
-    ctx = null;
-    // Note: Don't ensure the slot count for the projectableNodes as
-    // we store them only for the contained component view (which will
-    // later check the slot count...)
-    projectableNodes = givenProjectableNodes;
-    _hasExternalHostElement = rootSelectorOrNode != null;
-    return createInternal(rootSelectorOrNode);
-  }
-
   /// Builds a nested embedded view.
-  ViewContainer createEmbedded(
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | Node */ rootSelectorOrNode) {
+  ComponentRef createEmbedded(dynamic /* String | Node */ rootSelectorOrNode) {
     projectableNodes = declarationViewContainer.parentView.projectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
     ctx = declarationViewContainer.parentView.ctx as T;
     return createInternal(rootSelectorOrNode);
   }
 
-  /// Builds a component view.
-  ViewContainer createComp(
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | Node */ rootSelectorOrNode) {
-    projectableNodes =
-        ensureSlotCount(givenProjectableNodes, componentType.slotCount);
-    _hasExternalHostElement = rootSelectorOrNode != null;
-    ctx = declarationViewContainer.component as T;
-    return createInternal(rootSelectorOrNode);
-  }
-
-  /// Returns the ViewContainer for the host element for ViewType.HOST.
+  /// Returns the ComponentRef for the host element for ViewType.HOST.
   ///
   /// Overwritten by implementations.
-  ViewContainer createInternal(
-          dynamic /* String | Node */ rootSelectorOrNode) =>
+  ComponentRef createInternal(dynamic /* String | Node */ rootSelectorOrNode) =>
       null;
 
   /// Called by createInternal once all dom nodes are available.
@@ -487,6 +452,7 @@ abstract class AppView<T> {
     if (parentElement == null) return;
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.
+    if (projectableNodes == null || index >= projectableNodes.length) return;
     List projectables = projectableNodes[index];
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {

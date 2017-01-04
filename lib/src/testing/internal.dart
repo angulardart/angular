@@ -6,14 +6,13 @@ import 'package:angular2/platform/testing/browser.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart';
 import 'package:angular2/src/core/reflection/reflection.dart';
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import 'package:test/test.dart';
 
 import "internal_injector.dart";
 
 export "package:angular2/src/debug/debug_node.dart";
+export "matchers.dart";
 
-export "by.dart";
 export "fake_async.dart";
 export "internal_injector.dart";
 export "test_component_builder.dart";
@@ -120,22 +119,6 @@ void setBaseTestProviders(
   testInjector.reset();
 }
 
-class _HasTextContent extends Matcher {
-  final String expectedText;
-  const _HasTextContent(this.expectedText);
-  bool matches(item, Map matchState) => _elementText(item) == expectedText;
-  Description describe(Description description) =>
-      description.add('$expectedText');
-  Description describeMismatch(
-      item, Description mismatchDescription, Map matchState, bool verbose) {
-    mismatchDescription.add('Text content of element: '
-        '\'${_elementText(item)}\'');
-    return mismatchDescription;
-  }
-}
-
-Matcher hasTextContent(expected) => new _HasTextContent(expected);
-
 class _ThrowsWith extends Matcher {
   // RegExp or String.
   final expected;
@@ -202,34 +185,5 @@ class _ThrowsWith extends Matcher {
 }
 
 Matcher throwsWith(message) => new _ThrowsWith(message);
-
-String _elementText(n) {
-  bool hasNodes(n) {
-    var children = DOM.childNodes(n);
-    return children != null && children.length > 0;
-  }
-
-  if (n is Iterable) {
-    return n.map(_elementText).join("");
-  }
-
-  if (DOM.isCommentNode(n)) {
-    return '';
-  }
-
-  if (DOM.isElementNode(n) && DOM.tagName(n) == 'CONTENT') {
-    return _elementText(DOM.getDistributedNodes(n));
-  }
-
-  if (DOM.hasShadowRoot(n)) {
-    return _elementText(DOM.childNodesAsList(DOM.getShadowRoot(n)));
-  }
-
-  if (hasNodes(n)) {
-    return _elementText(DOM.childNodesAsList(n));
-  }
-
-  return DOM.getText(n);
-}
 
 TestInjector getTestInjector() => _testInjector;

@@ -412,11 +412,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
   }
   if (!isStatefulComp && isOnPushComp) {
-    detectChangesInInputsMethod
-        .addStmt(new o.IfStmt(DetectChangesVars.changed, [
-      compileElement.appViewContainer
-          .prop('componentView')
-          .callMethod('markAsCheckOnce', []).toStmt()
+    detectChangesInInputsMethod.addStmt(new o.IfStmt(
+        DetectChangesVars.changed, [
+      compileElement.compViewExpr.callMethod('markAsCheckOnce', []).toStmt()
     ]));
   }
 }

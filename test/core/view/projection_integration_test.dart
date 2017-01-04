@@ -1,5 +1,5 @@
 @TestOn('browser && !js')
-library angular2.test.core.linker.projection_integration_test;
+library angular2.test.core.view.projection_integration_test;
 
 import 'package:angular2/core.dart'
     show
@@ -10,77 +10,14 @@ import 'package:angular2/core.dart'
         ViewContainerRef,
         ViewEncapsulation,
         View;
-import 'package:angular2/src/debug/debug_node.dart' show getAllDebugNodes;
+import 'package:angular2/src/debug/debug_node.dart';
 import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
-import 'package:angular2/src/testing/by.dart';
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('projection', () {
-    test('should support simple components', () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: '<simple>' + '<div>A</div>' + '</simple>',
-                    directives: [Simple]))
-            .createAsync(MainComp)
-            .then((main) {
-          expect(main.debugElement.nativeElement, hasTextContent('SIMPLE(A)'));
-          completer.done();
-        });
-      });
-    });
-    test(
-        'should support simple components with text interpolation as '
-        'direct children', () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "{{'START('}}<simple>" +
-                        "{{text}}" +
-                        "</simple>{{')END'}}",
-                    directives: [Simple]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.debugElement.componentInstance.text = "A";
-          main.detectChanges();
-          expect(main.debugElement.nativeElement,
-              hasTextContent("START(SIMPLE(A))END"));
-          completer.done();
-        });
-      });
-    });
-    test("should support projecting text interpolation to a non bound element",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                Simple,
-                new View(
-                    template: "SIMPLE(<div><ng-content></ng-content></div>)",
-                    directives: []))
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<simple>{{text}}</simple>",
-                    directives: [Simple]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.debugElement.componentInstance.text = "A";
-          main.detectChanges();
-          expect(main.debugElement.nativeElement, hasTextContent("SIMPLE(A)"));
-          completer.done();
-        });
-      });
-    });
+    // TODO: move remaining tests to projection_test.dart.
     test(
         "should support projecting text interpolation to a non bound element with other bound elements after it",
         () async {

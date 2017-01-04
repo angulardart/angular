@@ -359,14 +359,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             .toList());
       }
 
-      String createMethod;
-      if (component == null) {
-        createMethod = 'createHost';
-      } else {
-        createMethod = 'createComp';
-      }
-      view.createMethod.addStmt(compViewExpr.callMethod(
-          createMethod, [codeGenContentNodes, o.NULL_EXPR]).toStmt());
+      view.createMethod.addStmt(compViewExpr.callMethod('create', [
+        compileElement.getComponent(),
+        codeGenContentNodes,
+        o.NULL_EXPR
+      ]).toStmt());
     }
     return null;
   }
@@ -680,7 +677,7 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
         "createInternal",
         [new o.FnParam(rootSelectorVar.name, o.DYNAMIC_TYPE)],
         generateCreateMethod(view),
-        o.importType(Identifiers.ViewContainer)),
+        o.importType(Identifiers.ComponentRef, null)),
     new o.ClassMethod(
         "injectorGetInternal",
         [
@@ -804,23 +801,20 @@ List<o.Statement> generateCreateMethod(CompileView view) {
           o.importType(Identifiers.HTML_NODE), [o.StmtModifier.Final])
     ];
   }
-  o.Expression resultExpr;
-  if (identical(view.viewType, ViewType.HOST)) {
-    resultExpr = ((view.nodes[0] as CompileElement)).appViewContainer;
-  } else {
-    resultExpr = o.NULL_EXPR;
-  }
+
   var statements = <o.Statement>[];
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
   var renderNodes = view.nodes.map((node) {
     return node.renderNode;
   }).toList();
+
   statements.add(new o.InvokeMemberMethodExpr('init', [
     createFlatArray(view.rootNodesOrViewContainers),
     o.literalArr(renderNodes),
     o.literalArr(view.subscriptions)
   ]).toStmt());
+
   if (isComponent &&
       view.viewIndex == 0 &&
       view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
@@ -829,6 +823,19 @@ List<o.Statement> generateCreateMethod(CompileView view) {
             .prop('stateChangeCallback')
             .set(new o.ReadClassMemberExpr('markStateChanged')))
         .toStmt());
+  }
+
+  o.Expression resultExpr;
+  if (identical(view.viewType, ViewType.HOST)) {
+    var hostElement = view.nodes[0] as CompileElement;
+    resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate([
+      o.literal(hostElement.nodeIndex),
+      o.THIS_EXPR,
+      hostElement.renderNode,
+      hostElement.getComponent()
+    ]);
+  } else {
+    resultExpr = o.NULL_EXPR;
   }
   statements.add(new o.ReturnStatement(resultExpr));
   return statements;

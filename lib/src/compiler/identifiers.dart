@@ -46,6 +46,7 @@ var APP_VIEW_UTILS_MODULE_URL =
     "asset:angular2/lib/src/core/linker/app_view_utils.dart";
 var CD_MODULE_URL =
     "asset:angular2/lib/src/core/change_detection/change_detection.dart";
+var ANGULAR_ROOT_URL = "package:angular2/angular2.dart";
 
 // Reassign the imports to different variables so we can
 // define static variables with the name of the import.
@@ -98,12 +99,13 @@ class Identifiers {
           'change_detector_ref.dart',
       runtime: impChangeDetectorRef);
   static final ComponentFactory = new CompileIdentifierMetadata(
-      name: 'ComponentFactory',
-      moduleUrl: 'asset:angular2/lib/src/core/linker/component_factory.dart');
+      name: 'ComponentFactory', moduleUrl: ANGULAR_ROOT_URL);
   static final RenderComponentType = new CompileIdentifierMetadata(
       name: "RenderComponentType",
       moduleUrl: "asset:angular2/lib/src/core/render/api.dart",
       runtime: impRenderComponentType);
+  static final ComponentRef = new CompileIdentifierMetadata(
+      name: "ComponentRef", moduleUrl: ANGULAR_ROOT_URL);
   static final QueryList = new CompileIdentifierMetadata(
       name: "QueryList",
       moduleUrl: "asset:angular2/lib/src/core/linker/query_list.dart");
@@ -129,7 +131,7 @@ class Identifiers {
       runtime: impCodegenInjector);
   static final ViewEncapsulation = new CompileIdentifierMetadata(
       name: "ViewEncapsulation",
-      moduleUrl: "asset:angular2/lib/src/core/metadata/view.dart",
+      moduleUrl: ANGULAR_ROOT_URL,
       runtime: impViewEncapsulation);
   static final ViewType = new CompileIdentifierMetadata(
       name: "ViewType",

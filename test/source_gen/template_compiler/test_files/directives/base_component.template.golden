@@ -7,7 +7,6 @@
 
 import 'base_component.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
-import 'package:angular2/angular2.dart';
 import 'components.dart';
 import 'directives.dart' as directive;
 import 'components.template.dart' as _i1;
@@ -21,9 +20,8 @@ import 'package:angular2/src/core/di/injector.dart' as import4;
 import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/view_type.dart' as import6;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
-import 'package:angular2/src/core/metadata/view.dart' as import9;
-import 'package:angular2/src/core/linker/component_factory.dart' as import10;
+import 'package:angular2/angular2.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
 
 const List<dynamic> styles_TestFooComponent = const [];
 RenderComponentType renderType_TestFooComponent;
@@ -40,7 +38,7 @@ class ViewTestFooComponent0 extends AppView<import2.TestFooComponent> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode =
         initViewRoot(this.declarationViewContainer.nativeElement);
     var doc = document;
@@ -56,9 +54,9 @@ class ViewTestFooComponent0 extends AppView<import2.TestFooComponent> {
 AppView<import2.TestFooComponent> viewFactory_TestFooComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_TestFooComponent, null)) {
-    (renderType_TestFooComponent = import8.appViewUtils
+    (renderType_TestFooComponent = import9.appViewUtils
         .createRenderComponentType(
-            '', 0, import9.ViewEncapsulation.None, styles_TestFooComponent));
+            '', 0, ViewEncapsulation.None, styles_TestFooComponent));
   }
   return new ViewTestFooComponent0(parentInjector, declarationEl);
 }
@@ -81,15 +79,14 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('test-foo', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     _compView_0 = viewFactory_TestFooComponent0(this.injector(0), _appEl_0);
     _TestFooComponent_0_3 = new import2.TestFooComponent();
-    _appEl_0.initComponent(_TestFooComponent_0_3, _compView_0);
-    _compView_0.createComp(projectableNodes, null);
+    _compView_0.create(_TestFooComponent_0_3, projectableNodes, null);
     init([_el_0], [_el_0], []);
-    return _appEl_0;
+    return new ComponentRef(0, this, _el_0, _TestFooComponent_0_3);
   }
 
   dynamic injectorGetInternal(
@@ -113,16 +110,18 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
 AppView viewFactory_TestFooComponentHost0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_TestFooComponentHost, null)) {
-    (renderType_TestFooComponentHost = import8.appViewUtils
-        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
-            styles_TestFooComponentHost));
+    (renderType_TestFooComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_TestFooComponentHost));
   }
   return new ViewTestFooComponentHost0(parentInjector, declarationEl);
 }
 
-const import10.ComponentFactory TestFooComponentNgFactory =
-    const import10.ComponentFactory('test-foo',
-        viewFactory_TestFooComponentHost0, import2.TestFooComponent, _METADATA);
+const ComponentFactory TestFooComponentNgFactory = const ComponentFactory(
+    'test-foo',
+    viewFactory_TestFooComponentHost0,
+    import2.TestFooComponent,
+    _METADATA);
 const _METADATA = const <dynamic>[TestFooComponent, const <dynamic>[]];
 var _visited = false;
 void initReflector() {

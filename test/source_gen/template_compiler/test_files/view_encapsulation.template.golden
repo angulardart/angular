@@ -7,7 +7,6 @@
 
 import 'view_encapsulation.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
-import 'package:angular2/angular2.dart';
 export 'view_encapsulation.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -17,9 +16,8 @@ import 'package:angular2/src/core/di/injector.dart' as import4;
 import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/view_type.dart' as import6;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
-import 'package:angular2/src/core/metadata/view.dart' as import9;
-import 'package:angular2/src/core/linker/component_factory.dart' as import10;
+import 'package:angular2/angular2.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
 
 const List<dynamic> styles_EmulatedComponent = const [];
 RenderComponentType renderType_EmulatedComponent;
@@ -36,7 +34,7 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode =
         initViewRoot(this.declarationViewContainer.nativeElement);
     var doc = document;
@@ -52,9 +50,9 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
 AppView<import2.EmulatedComponent> viewFactory_EmulatedComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_EmulatedComponent, null)) {
-    (renderType_EmulatedComponent = import8.appViewUtils
+    (renderType_EmulatedComponent = import9.appViewUtils
         .createRenderComponentType(
-            '', 0, import9.ViewEncapsulation.None, styles_EmulatedComponent));
+            '', 0, ViewEncapsulation.None, styles_EmulatedComponent));
   }
   return new ViewEmulatedComponent0(parentInjector, declarationEl);
 }
@@ -77,15 +75,14 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Emulated', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     _compView_0 = viewFactory_EmulatedComponent0(this.injector(0), _appEl_0);
     _EmulatedComponent_0_3 = new import2.EmulatedComponent();
-    _appEl_0.initComponent(_EmulatedComponent_0_3, _compView_0);
-    _compView_0.createComp(projectableNodes, null);
+    _compView_0.create(_EmulatedComponent_0_3, projectableNodes, null);
     init([_el_0], [_el_0], []);
-    return _appEl_0;
+    return new ComponentRef(0, this, _el_0, _EmulatedComponent_0_3);
   }
 
   dynamic injectorGetInternal(
@@ -109,19 +106,18 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
 AppView viewFactory_EmulatedComponentHost0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_EmulatedComponentHost, null)) {
-    (renderType_EmulatedComponentHost = import8.appViewUtils
-        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
-            styles_EmulatedComponentHost));
+    (renderType_EmulatedComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_EmulatedComponentHost));
   }
   return new ViewEmulatedComponentHost0(parentInjector, declarationEl);
 }
 
-const import10.ComponentFactory EmulatedComponentNgFactory =
-    const import10.ComponentFactory(
-        'Emulated',
-        viewFactory_EmulatedComponentHost0,
-        import2.EmulatedComponent,
-        _METADATA);
+const ComponentFactory EmulatedComponentNgFactory = const ComponentFactory(
+    'Emulated',
+    viewFactory_EmulatedComponentHost0,
+    import2.EmulatedComponent,
+    _METADATA);
 const List<dynamic> styles_NativeComponent = const [];
 RenderComponentType renderType_NativeComponent;
 
@@ -137,7 +133,7 @@ class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode =
         createViewShadowRoot(declarationViewContainer.nativeElement);
     var doc = document;
@@ -153,9 +149,9 @@ class ViewNativeComponent0 extends AppView<import2.NativeComponent> {
 AppView<import2.NativeComponent> viewFactory_NativeComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_NativeComponent, null)) {
-    (renderType_NativeComponent = import8.appViewUtils
+    (renderType_NativeComponent = import9.appViewUtils
         .createRenderComponentType(
-            '', 0, import9.ViewEncapsulation.Native, styles_NativeComponent));
+            '', 0, ViewEncapsulation.Native, styles_NativeComponent));
   }
   return new ViewNativeComponent0(parentInjector, declarationEl);
 }
@@ -178,15 +174,14 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Native', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     _compView_0 = viewFactory_NativeComponent0(this.injector(0), _appEl_0);
     _NativeComponent_0_3 = new import2.NativeComponent();
-    _appEl_0.initComponent(_NativeComponent_0_3, _compView_0);
-    _compView_0.createComp(projectableNodes, null);
+    _compView_0.create(_NativeComponent_0_3, projectableNodes, null);
     init([_el_0], [_el_0], []);
-    return _appEl_0;
+    return new ComponentRef(0, this, _el_0, _NativeComponent_0_3);
   }
 
   dynamic injectorGetInternal(
@@ -210,16 +205,18 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
 AppView viewFactory_NativeComponentHost0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_NativeComponentHost, null)) {
-    (renderType_NativeComponentHost = import8.appViewUtils
-        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
-            styles_NativeComponentHost));
+    (renderType_NativeComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_NativeComponentHost));
   }
   return new ViewNativeComponentHost0(parentInjector, declarationEl);
 }
 
-const import10.ComponentFactory NativeComponentNgFactory =
-    const import10.ComponentFactory('Native', viewFactory_NativeComponentHost0,
-        import2.NativeComponent, _METADATA);
+const ComponentFactory NativeComponentNgFactory = const ComponentFactory(
+    'Native',
+    viewFactory_NativeComponentHost0,
+    import2.NativeComponent,
+    _METADATA);
 const List<dynamic> styles_NoneComponent = const [];
 RenderComponentType renderType_NoneComponent;
 
@@ -235,7 +232,7 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode =
         initViewRoot(this.declarationViewContainer.nativeElement);
     var doc = document;
@@ -251,8 +248,8 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
 AppView<import2.NoneComponent> viewFactory_NoneComponent0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_NoneComponent, null)) {
-    (renderType_NoneComponent = import8.appViewUtils.createRenderComponentType(
-        '', 0, import9.ViewEncapsulation.None, styles_NoneComponent));
+    (renderType_NoneComponent = import9.appViewUtils.createRenderComponentType(
+        '', 0, ViewEncapsulation.None, styles_NoneComponent));
   }
   return new ViewNoneComponent0(parentInjector, declarationEl);
 }
@@ -275,15 +272,14 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
             parentInjector,
             declarationEl,
             ChangeDetectionStrategy.CheckAlways);
-  ViewContainer createInternal(dynamic rootSelector) {
+  ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('None', rootSelector, null);
     _appEl_0 = new ViewContainer(0, null, this, _el_0);
     _compView_0 = viewFactory_NoneComponent0(this.injector(0), _appEl_0);
     _NoneComponent_0_3 = new import2.NoneComponent();
-    _appEl_0.initComponent(_NoneComponent_0_3, _compView_0);
-    _compView_0.createComp(projectableNodes, null);
+    _compView_0.create(_NoneComponent_0_3, projectableNodes, null);
     init([_el_0], [_el_0], []);
-    return _appEl_0;
+    return new ComponentRef(0, this, _el_0, _NoneComponent_0_3);
   }
 
   dynamic injectorGetInternal(
@@ -306,16 +302,15 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
 AppView viewFactory_NoneComponentHost0(
     import4.Injector parentInjector, ViewContainer declarationEl) {
   if (identical(renderType_NoneComponentHost, null)) {
-    (renderType_NoneComponentHost = import8.appViewUtils
-        .createRenderComponentType('', 0, import9.ViewEncapsulation.Emulated,
-            styles_NoneComponentHost));
+    (renderType_NoneComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_NoneComponentHost));
   }
   return new ViewNoneComponentHost0(parentInjector, declarationEl);
 }
 
-const import10.ComponentFactory NoneComponentNgFactory =
-    const import10.ComponentFactory('None', viewFactory_NoneComponentHost0,
-        import2.NoneComponent, _METADATA);
+const ComponentFactory NoneComponentNgFactory = const ComponentFactory(
+    'None', viewFactory_NoneComponentHost0, import2.NoneComponent, _METADATA);
 const _METADATA = const <dynamic>[
   EmulatedComponent,
   const <dynamic>[],

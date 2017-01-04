@@ -15,37 +15,38 @@ import 'view_ref.dart' show ViewRef;
 /// [ComponentRef] provides access to the Component Instance as well other
 /// objects related to this Component Instance and allows you to destroy the
 /// Component Instance via the [#destroy] method.
-class ComponentRef {
-  /// The component type.
-  final Type componentType;
+class ComponentRef<C> {
+  final AppView _parentView;
+  final int _nodeIndex;
+  final Element _nativeElement;
+  C _component;
 
-  final ViewContainer _hostElement;
-  final List _metadata;
-
-  ComponentRef(this._hostElement, this.componentType, this._metadata);
+  ComponentRef(
+      this._nodeIndex, this._parentView, this._nativeElement, this._component);
 
   /// Location of the Host Element of this Component Instance.
-  ElementRef get location => _hostElement.elementRef;
+  ElementRef get location => new ElementRef(_nativeElement);
 
   /// The injector on which the component instance exists.
-  Injector get injector => _hostElement.injector;
+  Injector get injector => _parentView.injector(_nodeIndex);
 
   /// The instance of the Component.
-  dynamic get instance => _hostElement.component;
+  C get instance => _component;
 
   /// The [ViewRef] of the Host View of this Component instance.
-  ViewRef get hostView => _hostElement.parentView.ref;
+  ViewRef get hostView => _parentView.ref;
 
   /// The [ChangeDetectorRef] of the Component instance.
-  ChangeDetectorRef get changeDetectorRef => _hostElement.parentView.ref;
+  ChangeDetectorRef get changeDetectorRef => _parentView.ref;
 
-  @Deprecated('Part of internal ComponentRefImpl to be deprecated')
-  List get metadata => _metadata;
+  /// Returns type of component.
+  /// TODO: remove use from angular router and deprecate.
+  Type get componentType => _component.runtimeType;
 
   /// Destroys the component instance and all of the data structures associated
   /// with it.
   void destroy() {
-    _hostElement.parentView.detachAndDestroy();
+    _parentView.detachAndDestroy();
   }
 
   /// Allows to register a callback that will be called when the component is
@@ -93,8 +94,7 @@ class ComponentFactory {
     projectableNodes ??= [];
     // Note: Host views don't need a declarationViewContainer!
     AppView hostView = _viewFactory(injector, null);
-    var hostElement = hostView.create(projectableNodes, selector);
-    return new ComponentRef(hostElement, this.componentType, this.metadata);
+    return hostView.create(hostView.ctx, projectableNodes, selector);
   }
 
   ComponentRef loadIntoNode(Injector injector,
@@ -103,8 +103,7 @@ class ComponentFactory {
 
     // Note: Host views don't need a declarationViewContainer!
     AppView hostView = _viewFactory(injector, null);
-    var hostElement = hostView.create(projectableNodes, node);
-    return new ComponentRef(hostElement, this.componentType, this.metadata);
+    return hostView.create(hostView.ctx, projectableNodes, node);
   }
 }
 
