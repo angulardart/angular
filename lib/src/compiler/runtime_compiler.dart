@@ -1,7 +1,7 @@
 import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable, Injector;
-import "package:angular2/src/core/linker/view_container.dart";
+import "package:angular2/src/core/linker/app_view.dart";
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentFactory, NgViewFactory;
 import "package:angular2/src/core/linker/component_resolver.dart"
@@ -223,8 +223,9 @@ class CompiledTemplate {
   NgViewFactory proxyViewFactory;
 
   CompiledTemplate() {
-    proxyViewFactory = (Injector childInjector, ViewContainer contextEl) =>
-        viewFactory(childInjector, contextEl);
+    proxyViewFactory = (Injector childInjector, AppView parentView,
+            int parentIndex, parentElement) =>
+        viewFactory(childInjector, parentView, parentIndex, parentElement);
   }
   void init(NgViewFactory factory) {
     viewFactory = factory;

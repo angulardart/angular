@@ -256,7 +256,6 @@ var NG_PLATFORM_BROWSER = [
   'SanitizationService',
   'TemplateSecurityContext',
   'BrowserDomAdapter',
-  'CACHED_TEMPLATE_PROVIDER',
   'DOCUMENT',
   'Title',
   'bootstrap',
@@ -270,7 +269,6 @@ var NG_PLATFORM_BROWSER_TESTING = [
   'By',
   'DebugNode',
   'DebugElement',
-  'CACHED_TEMPLATE_PROVIDER',
   'TEST_BROWSER_APPLICATION_PROVIDERS',
   'TEST_BROWSER_PLATFORM_PROVIDERS',
 ];

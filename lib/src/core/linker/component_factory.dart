@@ -4,7 +4,6 @@ import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/reflection/reflection.dart' show reflector;
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
-import 'view_container.dart';
 import 'app_view.dart';
 import 'app_view_utils.dart' show OnDestroyCallback;
 import 'element_ref.dart' show ElementRef;
@@ -93,7 +92,7 @@ class ComponentFactory {
       [List<List> projectableNodes, String selector]) {
     projectableNodes ??= [];
     // Note: Host views don't need a declarationViewContainer!
-    AppView hostView = _viewFactory(injector, null);
+    AppView hostView = _viewFactory(injector, null, 0, null);
     return hostView.create(hostView.ctx, projectableNodes, selector);
   }
 
@@ -102,7 +101,7 @@ class ComponentFactory {
     projectableNodes ??= [];
 
     // Note: Host views don't need a declarationViewContainer!
-    AppView hostView = _viewFactory(injector, null);
+    AppView hostView = _viewFactory(injector, null, 0, null);
     return hostView.create(hostView.ctx, projectableNodes, node);
   }
 }
@@ -119,4 +118,4 @@ class ComponentFactory {
 ///        return new _View_MyComponent_Host0(parentInjector, declElement);
 ///     }
 typedef AppView NgViewFactory(
-    Injector injector, ViewContainer declarationElement);
+    Injector injector, AppView parentView, int parentIndex, Node parentElement);

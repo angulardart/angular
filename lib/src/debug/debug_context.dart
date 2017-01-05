@@ -37,13 +37,12 @@ class DebugContext<T> implements RenderDebugInfo {
   }
 
   dynamic get componentRenderElement {
-    var componentView = this._view;
-    while (componentView.declarationViewContainer != null &&
+    AppView componentView = _view;
+    while (componentView.parentView != null &&
         !identical(componentView.type, ViewType.COMPONENT)) {
-      componentView = (componentView.declarationViewContainer.parentView
-          as DebugAppView<T>);
+      componentView = componentView.parentView;
     }
-    return componentView.declarationViewContainer?.nativeElement;
+    return componentView.parentElement;
   }
 
   Injector get injector => _view.injector(this._nodeIndex);
