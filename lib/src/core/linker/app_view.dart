@@ -29,7 +29,10 @@ abstract class AppView<T> {
   ViewType type;
   Map<String, dynamic> locals;
   Injector parentInjector;
-  ViewContainer declarationViewContainer;
+  final AppView parentView;
+  final int parentIndex;
+  final Node parentElement;
+
   ChangeDetectionStrategy _cdMode;
   // Improves change detection tree traversal by caching change detection mode
   // and change detection state checks. When set to true, this view doesn't need
@@ -54,8 +57,16 @@ abstract class AppView<T> {
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
   bool _hasExternalHostElement;
-  AppView(this.clazz, this.componentType, this.type, this.locals,
-      this.parentInjector, this.declarationViewContainer, this._cdMode) {
+  AppView(
+      this.clazz,
+      this.componentType,
+      this.type,
+      this.locals,
+      this.parentInjector,
+      this.parentView,
+      this.parentIndex,
+      this.parentElement,
+      this._cdMode) {
     ref = new ViewRefImpl(this);
     sharedStylesHost ??= new DomSharedStylesHost(document);
     if (!componentType.stylesShimmed) {
@@ -115,9 +126,9 @@ abstract class AppView<T> {
 
   /// Builds a nested embedded view.
   ComponentRef createEmbedded(dynamic /* String | Node */ rootSelectorOrNode) {
-    projectableNodes = declarationViewContainer.parentView.projectableNodes;
+    projectableNodes = parentView.projectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
-    ctx = declarationViewContainer.parentView.ctx as T;
+    ctx = parentView.ctx as T;
     return createInternal(rootSelectorOrNode);
   }
 
@@ -147,11 +158,11 @@ abstract class AppView<T> {
         hostElement = createElement(null, elementName, debugCtx);
       }
     } else {
-      var target = declarationViewContainer.parentView;
       if (rootSelectorOrNode != null) {
-        hostElement = target.selectRootElement(rootSelectorOrNode, debugCtx);
+        hostElement =
+            parentView.selectRootElement(rootSelectorOrNode, debugCtx);
       } else {
-        hostElement = target.createElement(null, elementName, debugCtx);
+        hostElement = parentView.createElement(null, elementName, debugCtx);
       }
     }
     return hostElement;
@@ -235,9 +246,7 @@ abstract class AppView<T> {
     }
     destroyed = true;
 
-    var hostElement = type == ViewType.COMPONENT
-        ? declarationViewContainer.nativeElement
-        : null;
+    var hostElement = type == ViewType.COMPONENT ? parentElement : null;
     for (int i = 0, len = _onDestroyCallbacks.length; i < len; i++) {
       _onDestroyCallbacks[i]();
     }
@@ -265,8 +274,6 @@ abstract class AppView<T> {
   void destroyInternal() {}
 
   ChangeDetectorRef get changeDetectorRef => ref;
-
-  AppView<dynamic> get parent => declarationViewContainer?.parentView;
 
   List<Node> get flatRootNodes =>
       _flattenNestedViews(rootNodesOrViewContainers);
@@ -337,10 +344,9 @@ abstract class AppView<T> {
       if (cdMode == ChangeDetectionStrategy.Checked) {
         view.cdMode = ChangeDetectionStrategy.CheckOnce;
       }
-      var parentEl = view.type == ViewType.COMPONENT
-          ? view.declarationViewContainer
-          : view.viewContainerElement;
-      view = parentEl?.parentView;
+      view = view.type == ViewType.COMPONENT
+          ? view.parentView
+          : view.viewContainerElement?.parentView;
     }
   }
 

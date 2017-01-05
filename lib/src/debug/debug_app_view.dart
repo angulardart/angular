@@ -51,11 +51,14 @@ class DebugAppView<T> extends AppView<T> {
       ViewType type,
       Map<String, dynamic> locals,
       Injector parentInjector,
-      ViewContainer declarationViewContainer,
+      AppView parentView,
+      int parentIndex,
+      Node parentElement,
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
-      : super(clazz, componentType, type, locals, parentInjector,
-            declarationViewContainer, cdMode) {
+      : super(clazz, componentType, type, locals, parentInjector, parentView,
+            parentIndex, parentElement, cdMode) {
+    this.cdMode = cdMode;
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;
       DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);

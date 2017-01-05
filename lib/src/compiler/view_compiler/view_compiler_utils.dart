@@ -42,8 +42,8 @@ o.Expression getPropertyInView(
         currView.declarationElement.view != null) {
       currView = currView.declarationElement.view;
       viewProp = viewProp == null
-          ? new o.ReadClassMemberExpr('parent')
-          : viewProp.prop('parent');
+          ? new o.ReadClassMemberExpr('parentView')
+          : viewProp.prop('parentView');
     }
     if (!identical(currView, definedView)) {
       throw new BaseException(

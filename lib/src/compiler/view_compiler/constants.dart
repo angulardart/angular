@@ -73,7 +73,9 @@ class ChangeDetectionStrategyEnum {
 
 class ViewConstructorVars {
   static var parentInjector = o.variable('parentInjector');
-  static var declarationEl = o.variable('declarationEl');
+  static var parentView = o.variable('parentView');
+  static var parentIndex = o.variable('parentIndex');
+  static var parentElement = o.variable('parentElement');
 }
 
 class ViewProperties {

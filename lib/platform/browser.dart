@@ -29,7 +29,6 @@ export "package:angular2/src/core/security.dart"
 export "package:angular2/src/platform/browser_common.dart"
     show
         BROWSER_PROVIDERS,
-        CACHED_TEMPLATE_PROVIDER,
         BROWSER_SANITIZATION_PROVIDERS,
         BrowserDomAdapter,
         Title,
