@@ -54,7 +54,7 @@ class CompilePipe {
           .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
         return new o.ReadClassMemberExpr('ref');
       }
-      return injectFromViewParentInjector(diDep.token, false);
+      return injectFromViewParentInjector(this.view, diDep.token, false);
     }).toList();
     this.view.fields.add(new o.ClassField(this.instance.name,
         outputType: o.importType(this.meta.type),

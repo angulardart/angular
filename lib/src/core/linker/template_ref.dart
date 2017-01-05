@@ -22,10 +22,7 @@ class TemplateRef {
   TemplateRef(this._viewContainer, this._viewFactory);
 
   EmbeddedViewRef createEmbeddedView(context) {
-    AppView view = _viewFactory(
-        _viewContainer.parentInjector,
-        _viewContainer.parentView,
-        _viewContainer.index,
+    AppView view = _viewFactory(_viewContainer.parentView, _viewContainer.index,
         _viewContainer.nativeElement);
     view.createEmbedded(null);
     return view.ref;

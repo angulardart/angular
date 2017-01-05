@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular2/src/core/di.dart' show Injector;
+import 'package:angular2/src/core/di/injector.dart' show THROW_IF_NOT_FOUND;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
@@ -18,7 +19,7 @@ import 'dart:js_util' as js_util;
 
 export 'package:angular2/src/core/change_detection/component_state.dart';
 
-const EMPTY_CONTEXT = const Object();
+const _UndefinedInjectorResult = const Object();
 
 bool domRootRendererIsDirty = false;
 
@@ -28,7 +29,6 @@ abstract class AppView<T> {
   RenderComponentType componentType;
   ViewType type;
   Map<String, dynamic> locals;
-  Injector parentInjector;
   final AppView parentView;
   final int parentIndex;
   final Node parentElement;
@@ -57,16 +57,10 @@ abstract class AppView<T> {
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
   bool _hasExternalHostElement;
-  AppView(
-      this.clazz,
-      this.componentType,
-      this.type,
-      this.locals,
-      this.parentInjector,
-      this.parentView,
-      this.parentIndex,
-      this.parentElement,
-      this._cdMode) {
+  Injector _hostInjector;
+
+  AppView(this.clazz, this.componentType, this.type, this.locals,
+      this.parentView, this.parentIndex, this.parentElement, this._cdMode) {
     ref = new ViewRefImpl(this);
     sharedStylesHost ??= new DomSharedStylesHost(document);
     if (!componentType.stylesShimmed) {
@@ -113,15 +107,15 @@ abstract class AppView<T> {
       T context,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | Node */ rootSelectorOrNode) {
-    this._hasExternalHostElement = rootSelectorOrNode != null;
-    this.ctx = context;
+    _hasExternalHostElement = rootSelectorOrNode != null;
+    ctx = context;
     if (type == ViewType.COMPONENT) {
-      this.projectableNodes =
+      projectableNodes =
           ensureSlotCount(givenProjectableNodes, componentType.slotCount);
     } else {
-      this.projectableNodes = givenProjectableNodes;
+      projectableNodes = givenProjectableNodes;
     }
-    return this.createInternal(rootSelectorOrNode);
+    return createInternal(rootSelectorOrNode);
   }
 
   /// Builds a nested embedded view.
@@ -129,6 +123,17 @@ abstract class AppView<T> {
     projectableNodes = parentView.projectableNodes;
     _hasExternalHostElement = rootSelectorOrNode != null;
     ctx = parentView.ctx as T;
+    return createInternal(rootSelectorOrNode);
+  }
+
+  /// Builds host level view.
+  ComponentRef createHostView(
+      dynamic /* String | Node */ rootSelectorOrNode,
+      Injector hostInjector,
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
+    _hasExternalHostElement = rootSelectorOrNode != null;
+    _hostInjector = hostInjector;
+    projectableNodes = givenProjectableNodes;
     return createInternal(rootSelectorOrNode);
   }
 
@@ -204,8 +209,23 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  dynamic injectorGet(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    return this.injectorGetInternal(token, nodeIndex, notFoundResult);
+  dynamic injectorGet(dynamic token, int nodeIndex,
+      [dynamic notFoundValue = THROW_IF_NOT_FOUND]) {
+    var result = _UndefinedInjectorResult;
+    AppView view = this;
+    while (identical(result, _UndefinedInjectorResult)) {
+      if (nodeIndex != null) {
+        result = view.injectorGetInternal(
+            token, nodeIndex, _UndefinedInjectorResult);
+      }
+      if (identical(result, _UndefinedInjectorResult) &&
+          identical(view.type, ViewType.HOST)) {
+        result = view._hostInjector.get(token, notFoundValue);
+      }
+      nodeIndex = view.parentIndex;
+      view = view.parentView;
+    }
+    return result;
   }
 
   /// Overwritten by implementations
@@ -214,12 +234,7 @@ abstract class AppView<T> {
     return notFoundResult;
   }
 
-  Injector injector(int nodeIndex) {
-    if (nodeIndex == null) {
-      return parentInjector;
-    }
-    return new ElementInjector(this, nodeIndex);
-  }
+  Injector injector(int nodeIndex) => new ElementInjector(this, nodeIndex);
 
   void detachAndDestroy() {
     if (_hasExternalHostElement) {
