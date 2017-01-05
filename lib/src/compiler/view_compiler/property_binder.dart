@@ -137,6 +137,7 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
     var currValExpr = createCurrValueExpr(bindingIndex);
 
     String renderMethod;
+    o.OutputType fieldType;
     // Wraps current value with sanitization call if necessary.
     o.Expression renderValue = sanitizedValue(boundProp, currValExpr);
 
@@ -153,6 +154,7 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
           // Handle className special case for class="binding".
           updateStmts
               .addAll(_createSetClassNameStmt(compileElement, renderValue));
+          fieldType = o.STRING_TYPE;
         } else {
           updateStmts.add(new o.InvokeMemberMethodExpr('setProp',
               [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
@@ -190,6 +192,7 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
         }
         break;
       case PropertyBindingType.Class:
+        fieldType = o.BOOL_TYPE;
         renderMethod =
             compileElement.isHtmlElement ? 'updateClass' : 'updateElemClass';
         updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod, [
@@ -216,7 +219,8 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
         break;
     }
     bind(view, currValExpr, fieldExpr, boundProp.value, context, updateStmts,
-        view.detectChangesRenderPropertiesMethod);
+        view.detectChangesRenderPropertiesMethod,
+        fieldType: fieldType);
   });
 }
 
