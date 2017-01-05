@@ -61,7 +61,6 @@ class CompileElement extends CompileNode {
   o.Expression compViewExpr;
   o.ReadClassMemberExpr appViewContainer;
   o.Expression elementRef;
-  o.Expression injector;
   var _instances = new CompileTokenMap<o.Expression>();
   CompileTokenMap<ProviderAst> _resolvedProviders;
   var _queryCount = 0;
@@ -94,12 +93,12 @@ class CompileElement extends CompileNode {
         referenceTokens[ref.name] = ref.value;
       }
     }
-
     elementRef =
         o.importExpr(Identifiers.ElementRef).instantiate([this.renderNode]);
     _instances.add(identifierToken(Identifiers.ElementRef), this.elementRef);
-    injector = o.THIS_EXPR.callMethod("injector", [o.literal(this.nodeIndex)]);
-    _instances.add(identifierToken(Identifiers.Injector), this.injector);
+    var readInjectorExpr =
+        new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
+    _instances.add(identifierToken(Identifiers.Injector), readInjectorExpr);
     if (hasViewContainer || hasEmbeddedView) {
       _createViewContainer();
     }
@@ -374,7 +373,7 @@ class CompileElement extends CompileNode {
       result = currElement._getLocalDependency(ProviderAstType.PublicService,
           new CompileDiDependencyMetadata(token: dep.token));
     }
-    result ??= injectFromViewParentInjector(dep.token, dep.isOptional);
+    result ??= injectFromViewParentInjector(view, dep.token, dep.isOptional);
     result ??= o.NULL_EXPR;
     return getPropertyInView(result, view, currElement.view);
   }

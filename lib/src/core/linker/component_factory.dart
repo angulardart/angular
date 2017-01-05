@@ -92,8 +92,8 @@ class ComponentFactory {
       [List<List> projectableNodes, String selector]) {
     projectableNodes ??= [];
     // Note: Host views don't need a declarationViewContainer!
-    AppView hostView = _viewFactory(injector, null, 0, null);
-    return hostView.create(hostView.ctx, projectableNodes, selector);
+    AppView hostView = _viewFactory(null, null, null);
+    return hostView.createHostView(selector, injector, projectableNodes);
   }
 
   ComponentRef loadIntoNode(Injector injector,
@@ -101,8 +101,8 @@ class ComponentFactory {
     projectableNodes ??= [];
 
     // Note: Host views don't need a declarationViewContainer!
-    AppView hostView = _viewFactory(injector, null, 0, null);
-    return hostView.create(hostView.ctx, projectableNodes, node);
+    AppView hostView = _viewFactory(null, null, null);
+    return hostView.createHostView(node, injector, projectableNodes);
   }
 }
 
@@ -118,4 +118,4 @@ class ComponentFactory {
 ///        return new _View_MyComponent_Host0(parentInjector, declElement);
 ///     }
 typedef AppView NgViewFactory(
-    Injector injector, AppView parentView, int parentIndex, Node parentElement);
+    AppView parentView, int parentIndex, Node parentElement);

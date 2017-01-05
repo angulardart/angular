@@ -339,13 +339,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       compileElement.componentView = compViewExpr;
       view.viewChildren.add(compViewExpr);
       view.createMethod.addStmt(new o.WriteClassMemberExpr(
-          compViewName,
-          o.importExpr(nestedComponentIdentifier).callFn([
-            compileElement.injector,
-            o.THIS_EXPR,
-            o.literal(nodeIndex),
-            renderNode
-          ])).toStmt());
+              compViewName,
+              o
+                  .importExpr(nestedComponentIdentifier)
+                  .callFn([o.THIS_EXPR, o.literal(nodeIndex), renderNode]))
+          .toStmt());
     }
     compileElement.beforeChildren();
     this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
@@ -656,8 +654,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
       .map((List entry) => [entry[0], o.NULL_EXPR])
       .toList();
   var viewConstructorArgs = [
-    new o.FnParam(ViewConstructorVars.parentInjector.name,
-        o.importType(Identifiers.Injector)),
     new o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
     new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE),
@@ -668,7 +664,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
     renderCompTypeVar,
     ViewTypeEnum.fromValue(view.viewType),
     o.literalMap(emptyTemplateVariableBindings),
-    ViewConstructorVars.parentInjector,
     ViewConstructorVars.parentView,
     ViewConstructorVars.parentIndex,
     ViewConstructorVars.parentElement,
@@ -737,8 +732,6 @@ o.Statement createInputUpdateFunction(
 o.Statement createViewFactory(
     CompileView view, o.ClassStmt viewClass, o.ReadVarExpr renderCompTypeVar) {
   var viewFactoryArgs = [
-    new o.FnParam(ViewConstructorVars.parentInjector.name,
-        o.importType(Identifiers.Injector)),
     new o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
     new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE),

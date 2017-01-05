@@ -7,6 +7,7 @@ import '../compile_metadata.dart'
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;
+import 'package:angular2/src/core/linker/view_type.dart';
 
 // Template Anchor comment.
 const TEMPLATE_COMMENT_TEXT = 'template bindings={}';
@@ -66,12 +67,18 @@ o.Expression getPropertyInView(
 }
 
 o.Expression injectFromViewParentInjector(
-    CompileTokenMetadata token, bool optional) {
-  var args = [createDiTokenExpression(token)];
+    CompileView view, CompileTokenMetadata token, bool optional) {
+  o.Expression viewExpr = (view.viewType == ViewType.HOST)
+      ? o.THIS_EXPR
+      : new o.ReadClassMemberExpr('parentView');
+  var args = [
+    createDiTokenExpression(token),
+    new o.ReadClassMemberExpr('parentIndex')
+  ];
   if (optional) {
     args.add(o.NULL_EXPR);
   }
-  return o.THIS_EXPR.prop("parentInjector").callMethod("get", args);
+  return viewExpr.callMethod('injectorGet', args);
 }
 
 String getViewFactoryName(

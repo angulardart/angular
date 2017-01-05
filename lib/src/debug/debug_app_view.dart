@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular2/src/core/di.dart' show Injector;
+import 'package:angular2/src/core/di/injector.dart' show THROW_IF_NOT_FOUND;
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
@@ -50,14 +51,13 @@ class DebugAppView<T> extends AppView<T> {
       RenderComponentType componentType,
       ViewType type,
       Map<String, dynamic> locals,
-      Injector parentInjector,
       AppView parentView,
       int parentIndex,
       Node parentElement,
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
-      : super(clazz, componentType, type, locals, parentInjector, parentView,
-            parentIndex, parentElement, cdMode) {
+      : super(clazz, componentType, type, locals, parentView, parentIndex,
+            parentElement, cdMode) {
     this.cdMode = cdMode;
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;
@@ -73,43 +73,63 @@ class DebugAppView<T> extends AppView<T> {
     this._resetDebug();
     try {
       return super.create(context, givenProjectableNodes, rootSelectorOrNode);
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
+    } catch (e, s) {
+      this._rethrowWithContext(e, s);
       rethrow;
     }
   }
 
-  dynamic injectorGet(dynamic token, int nodeIndex, dynamic notFoundResult) {
+  /// Builds host level view.
+  @override
+  ComponentRef createHostView(
+      dynamic /* String | Node */ rootSelectorOrNode,
+      Injector hostInjector,
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
+    this._resetDebug();
+    try {
+      return super.createHostView(
+          rootSelectorOrNode, hostInjector, givenProjectableNodes);
+    } catch (e, s) {
+      this._rethrowWithContext(e, s);
+      rethrow;
+    }
+  }
+
+  @override
+  dynamic injectorGet(dynamic token, int nodeIndex,
+      [dynamic notFoundResult = THROW_IF_NOT_FOUND]) {
     this._resetDebug();
     try {
       return super.injectorGet(token, nodeIndex, notFoundResult);
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
+    } catch (e, s) {
+      this._rethrowWithContext(e, s);
       rethrow;
     }
   }
 
+  @override
   void destroy() {
     this._resetDebug();
     try {
       super.destroy();
-    } catch (e, e_stack) {
-      this._rethrowWithContext(e, e_stack);
+    } catch (e, s) {
+      this._rethrowWithContext(e, s);
       rethrow;
     }
   }
 
+  @override
   void detectChanges() {
     this._resetDebug();
     if (profilingEnabled) {
-      var s;
+      var scope;
       try {
-        var s = _scope_check(this.clazz);
+        var scope = _scope_check(this.clazz);
         super.detectChanges();
-        wtfLeave(s);
-      } catch (e, e_stack) {
-        wtfLeave(s);
-        this._rethrowWithContext(e, e_stack);
+        wtfLeave(scope);
+      } catch (e, s) {
+        wtfLeave(scope);
+        this._rethrowWithContext(e, s);
         rethrow;
       }
     } else {
@@ -128,19 +148,21 @@ class DebugAppView<T> extends AppView<T> {
     this._currentDebugContext = null;
   }
 
+  @override
   /*<R>*/ evt/*<E,R>*/(/*<R>*/ cb(/*<E>*/ e)) {
     var superHandler = super.evt(cb);
     return (/*<E>*/ event) {
       this._resetDebug();
       try {
         return superHandler(event);
-      } catch (e, e_stack) {
-        this._rethrowWithContext(e, e_stack);
+      } catch (e, s) {
+        this._rethrowWithContext(e, s);
         rethrow;
       }
     };
   }
 
+  @override
   Function listen(dynamic renderElement, String name, Function callback) {
     var debugEl = getDebugNode(renderElement);
     if (debugEl != null) {
@@ -195,6 +217,7 @@ class DebugAppView<T> extends AppView<T> {
   /// Projects projectableNodes at specified index. We don't use helper
   /// functions to flatten the tree since it allocates list that are not
   /// required in most cases.
+  @override
   void project(Element parentElement, int index) {
     DebugElement debugParent = getDebugNode(parentElement);
     if (debugParent == null || debugParent is! DebugElement) {
@@ -226,6 +249,7 @@ class DebugAppView<T> extends AppView<T> {
     domRootRendererIsDirty = true;
   }
 
+  @override
   void detachViewNodes(List<dynamic> viewRootNodes) {
     viewRootNodes.forEach((node) {
       var debugNode = getDebugNode(node);

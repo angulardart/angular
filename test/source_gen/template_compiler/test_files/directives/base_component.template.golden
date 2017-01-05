@@ -16,25 +16,23 @@ import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'base_component.dart' as import2;
 import 'dart:html';
-import 'package:angular2/src/core/di/injector.dart' as import4;
-import 'package:angular2/src/core/linker/view_type.dart' as import5;
+import 'package:angular2/src/core/linker/view_type.dart' as import4;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/angular2.dart';
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
 
 const List<dynamic> styles_TestFooComponent = const [];
 RenderComponentType renderType_TestFooComponent;
 
 class ViewTestFooComponent0 extends AppView<import2.TestFooComponent> {
   Element _el_0;
-  ViewTestFooComponent0(import4.Injector parentInjector,
+  ViewTestFooComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewTestFooComponent0,
             renderType_TestFooComponent,
-            import5.ViewType.COMPONENT,
+            import4.ViewType.COMPONENT,
             {},
-            parentInjector,
             parentView,
             parentIndex,
             parentElement,
@@ -52,17 +50,13 @@ class ViewTestFooComponent0 extends AppView<import2.TestFooComponent> {
 }
 
 AppView<import2.TestFooComponent> viewFactory_TestFooComponent0(
-    import4.Injector parentInjector,
-    AppView<dynamic> parentView,
-    num parentIndex,
-    dynamic parentElement) {
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
   if (identical(renderType_TestFooComponent, null)) {
-    (renderType_TestFooComponent = import8.appViewUtils
+    (renderType_TestFooComponent = import7.appViewUtils
         .createRenderComponentType(
             '', 0, ViewEncapsulation.None, styles_TestFooComponent));
   }
-  return new ViewTestFooComponent0(
-      parentInjector, parentView, parentIndex, parentElement);
+  return new ViewTestFooComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
@@ -72,22 +66,20 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   AppView<import2.TestFooComponent> _compView_0;
   import2.TestFooComponent _TestFooComponent_0_2;
-  ViewTestFooComponentHost0(import4.Injector parentInjector,
+  ViewTestFooComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewTestFooComponentHost0,
             renderType_TestFooComponentHost,
-            import5.ViewType.HOST,
+            import4.ViewType.HOST,
             {},
-            parentInjector,
             parentView,
             parentIndex,
             parentElement,
             ChangeDetectionStrategy.CheckAlways);
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('test-foo', rootSelector, null);
-    _compView_0 =
-        viewFactory_TestFooComponent0(this.injector(0), this, 0, _el_0);
+    _compView_0 = viewFactory_TestFooComponent0(this, 0, _el_0);
     _TestFooComponent_0_2 = new import2.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
@@ -112,15 +104,14 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestFooComponentHost0(import4.Injector parentInjector,
+AppView viewFactory_TestFooComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
   if (identical(renderType_TestFooComponentHost, null)) {
-    (renderType_TestFooComponentHost = import8.appViewUtils
+    (renderType_TestFooComponentHost = import7.appViewUtils
         .createRenderComponentType(
             '', 0, ViewEncapsulation.Emulated, styles_TestFooComponentHost));
   }
-  return new ViewTestFooComponentHost0(
-      parentInjector, parentView, parentIndex, parentElement);
+  return new ViewTestFooComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory TestFooComponentNgFactory = const ComponentFactory(
