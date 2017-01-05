@@ -4,7 +4,7 @@ library angular2.test.core.linker.change_detection_integration_test;
 import 'dart:html';
 
 import 'package:angular2/angular2.dart';
-import "package:angular2/common.dart" show AsyncPipe;
+import "package:angular2/common.dart" show AsyncPipe, DatePipe;
 import "package:angular2/core.dart";
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show PipeTransform, WrappedValue;
@@ -33,7 +33,8 @@ const ALL_PIPES = const [
   PipeWithOnDestroy,
   IdentityPipe,
   WrappedPipe,
-  AsyncPipe
+  AsyncPipe,
+  DatePipe
 ];
 
 void bindingTest(String description, String binding, expectation) {
@@ -366,6 +367,16 @@ void main() {
       container.name = "value";
       fixture.detectChanges(false);
       expect(child.someProp, 'value a b default 0 1 2');
+    });
+
+    containerTest(
+        'should support date pipe with formatting argument',
+        '<test-child'
+        ' [someProp]="date | date:  \'yyyy-MM-dd @ HH:mm:ss.SSS\'">'
+        '</test-child>',
+        (ComponentFixture fixture, TestContainer container, TestChild child) {
+      fixture.detectChanges(false);
+      expect(child.someProp, '2016-07-20 @ 20:18:00.000');
     });
 
     containerTest(
@@ -731,6 +742,7 @@ class TestContainer {
 
   String sayHi(name) => 'Hi, $name';
   Element get element => elementRef.nativeElement as Element;
+  DateTime get date => DateTime.parse('2016-07-20 20:18:00');
 }
 
 @Component(selector: "test-child", template: "")
