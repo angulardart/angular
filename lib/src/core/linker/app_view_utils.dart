@@ -276,7 +276,7 @@ dynamic pureProxy1(dynamic fn(dynamic p0)) {
   dynamic result;
   var first = true;
   var v0;
-  return (p0) {
+  return ([p0]) {
     if (first || !looseIdentical(v0, p0)) {
       first = false;
       v0 = p0;
@@ -290,7 +290,7 @@ dynamic pureProxy2(dynamic fn(dynamic p0, dynamic p1)) {
   dynamic result;
   var first = true;
   var v0, v1;
-  return (p0, p1) {
+  return ([p0, p1]) {
     if (first || !looseIdentical(v0, p0) || !looseIdentical(v1, p1)) {
       first = false;
       v0 = p0;
@@ -305,7 +305,7 @@ dynamic pureProxy3(dynamic fn(dynamic p0, dynamic p1, dynamic p2)) {
   dynamic result;
   var first = true;
   var v0, v1, v2;
-  return (p0, p1, p2) {
+  return ([p0, p1, p2]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -324,7 +324,7 @@ dynamic pureProxy4(dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3)) {
   dynamic result;
   var first = true;
   var v0, v1, v2, v3;
-  return (p0, p1, p2, p3) {
+  return ([p0, p1, p2, p3]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -346,7 +346,7 @@ dynamic pureProxy5(
   dynamic result;
   var first = true;
   var v0, v1, v2, v3, v4;
-  return (p0, p1, p2, p3, p4) {
+  return ([p0, p1, p2, p3, p4]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -371,7 +371,7 @@ dynamic pureProxy6(
   dynamic result;
   var first = true;
   var v0, v1, v2, v3, v4, v5;
-  return (p0, p1, p2, p3, p4, p5) {
+  return ([p0, p1, p2, p3, p4, p5]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -398,7 +398,7 @@ dynamic pureProxy7(
   dynamic result;
   var first = true;
   var v0, v1, v2, v3, v4, v5, v6;
-  return (p0, p1, p2, p3, p4, p5, p6) {
+  return ([p0, p1, p2, p3, p4, p5, p6]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -427,7 +427,7 @@ dynamic pureProxy8(
   dynamic result;
   var first = true;
   var v0, v1, v2, v3, v4, v5, v6, v7;
-  return (p0, p1, p2, p3, p4, p5, p6, p7) {
+  return ([p0, p1, p2, p3, p4, p5, p6, p7]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -458,7 +458,7 @@ dynamic pureProxy9(
   dynamic result;
   var first = true;
   var v0, v1, v2, v3, v4, v5, v6, v7, v8;
-  return (p0, p1, p2, p3, p4, p5, p6, p7, p8) {
+  return ([p0, p1, p2, p3, p4, p5, p6, p7, p8]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -491,7 +491,7 @@ dynamic pureProxy10(
   dynamic result;
   var first = true;
   var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9;
-  return (p0, p1, p2, p3, p4, p5, p6, p7, p8, p9) {
+  return ([p0, p1, p2, p3, p4, p5, p6, p7, p8, p9]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
