@@ -1,0 +1,234 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TestComponentExtractor
+// Target: library
+// **************************************************************************
+
+final String output = """[
+  {
+    "class": "NormalizedComponentWithViewDirectives",
+    "component": {
+      "class": "Directive",
+      "isComponent": true,
+      "selector": "test-foo",
+      "exportAs": null,
+      "type": {
+        "class": "Type",
+        "name": "TestFooComponent",
+        "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/core_directives.dart",
+        "prefix": null,
+        "isHost": false,
+        "value": null,
+        "diDeps": []
+      },
+      "changeDetection": 6,
+      "inputs": {},
+      "inputTypes": {},
+      "outputs": {},
+      "hostListeners": {},
+      "hostProperties": {},
+      "hostAttributes": {},
+      "lifecycleHooks": [],
+      "template": {
+        "encapsulation": 0,
+        "template": "    <div *ngIf=\"foo\">Foo</div>\n    <div *ngFor=\"let bar of bars\">\n      <span>{{bar}}</span>\n    </div>\n    ",
+        "templateUrl": null,
+        "styles": [],
+        "styleUrls": [],
+        "ngContentSelectors": []
+      },
+      "providers": [],
+      "viewProviders": [],
+      "queries": [],
+      "viewQueries": []
+    },
+    "directives": [
+      {
+        "class": "Directive",
+        "isComponent": false,
+        "selector": "[ngIf]",
+        "exportAs": null,
+        "type": {
+          "class": "Type",
+          "name": "NgIf",
+          "moduleUrl": "package:angular2/src/common/directives/ng_if.dart",
+          "prefix": null,
+          "isHost": false,
+          "value": null,
+          "diDeps": [
+            {
+              "token": {
+                "value": null,
+                "identifier": {
+                  "class": "Identifier",
+                  "name": "ViewContainerRef",
+                  "moduleUrl": null,
+                  "prefix": null,
+                  "value": null
+                },
+                "identifierIsInstance": false
+              },
+              "value": null,
+              "isAttribute": false,
+              "isSelf": false,
+              "isHost": false,
+              "isSkipSelf": false,
+              "isOptional": false,
+              "isValue": false
+            },
+            {
+              "token": {
+                "value": null,
+                "identifier": {
+                  "class": "Identifier",
+                  "name": "TemplateRef",
+                  "moduleUrl": null,
+                  "prefix": null,
+                  "value": null
+                },
+                "identifierIsInstance": false
+              },
+              "value": null,
+              "isAttribute": false,
+              "isSelf": false,
+              "isHost": false,
+              "isSkipSelf": false,
+              "isOptional": false,
+              "isValue": false
+            }
+          ]
+        },
+        "changeDetection": null,
+        "inputs": {
+          "ngIf": "ngIf"
+        },
+        "inputTypes": {},
+        "outputs": {},
+        "hostListeners": {},
+        "hostProperties": {},
+        "hostAttributes": {},
+        "lifecycleHooks": [],
+        "template": null,
+        "providers": [],
+        "viewProviders": [],
+        "queries": [],
+        "viewQueries": []
+      },
+      {
+        "class": "Directive",
+        "isComponent": false,
+        "selector": "[ngFor][ngForOf]",
+        "exportAs": null,
+        "type": {
+          "class": "Type",
+          "name": "NgFor",
+          "moduleUrl": "package:angular2/src/common/directives/ng_for.dart",
+          "prefix": null,
+          "isHost": false,
+          "value": null,
+          "diDeps": [
+            {
+              "token": {
+                "value": null,
+                "identifier": {
+                  "class": "Identifier",
+                  "name": "ViewContainerRef",
+                  "moduleUrl": null,
+                  "prefix": null,
+                  "value": null
+                },
+                "identifierIsInstance": false
+              },
+              "value": null,
+              "isAttribute": false,
+              "isSelf": false,
+              "isHost": false,
+              "isSkipSelf": false,
+              "isOptional": false,
+              "isValue": false
+            },
+            {
+              "token": {
+                "value": null,
+                "identifier": {
+                  "class": "Identifier",
+                  "name": "TemplateRef",
+                  "moduleUrl": null,
+                  "prefix": null,
+                  "value": null
+                },
+                "identifierIsInstance": false
+              },
+              "value": null,
+              "isAttribute": false,
+              "isSelf": false,
+              "isHost": false,
+              "isSkipSelf": false,
+              "isOptional": false,
+              "isValue": false
+            },
+            {
+              "token": {
+                "value": null,
+                "identifier": {
+                  "class": "Identifier",
+                  "name": "IterableDiffers",
+                  "moduleUrl": null,
+                  "prefix": null,
+                  "value": null
+                },
+                "identifierIsInstance": false
+              },
+              "value": null,
+              "isAttribute": false,
+              "isSelf": false,
+              "isHost": false,
+              "isSkipSelf": false,
+              "isOptional": false,
+              "isValue": false
+            },
+            {
+              "token": {
+                "value": null,
+                "identifier": {
+                  "class": "Identifier",
+                  "name": "ChangeDetectorRef",
+                  "moduleUrl": null,
+                  "prefix": null,
+                  "value": null
+                },
+                "identifierIsInstance": false
+              },
+              "value": null,
+              "isAttribute": false,
+              "isSelf": false,
+              "isHost": false,
+              "isSkipSelf": false,
+              "isOptional": false,
+              "isValue": false
+            }
+          ]
+        },
+        "changeDetection": null,
+        "inputs": {
+          "ngForTrackBy": "ngForTrackBy",
+          "ngForOf": "ngForOf",
+          "ngForTemplate": "ngForTemplate"
+        },
+        "inputTypes": {},
+        "outputs": {},
+        "hostListeners": {},
+        "hostProperties": {},
+        "hostAttributes": {},
+        "lifecycleHooks": [],
+        "template": null,
+        "providers": [],
+        "viewProviders": [],
+        "queries": [],
+        "viewQueries": []
+      }
+    ],
+    "pipes": []
+  }
+]""";
