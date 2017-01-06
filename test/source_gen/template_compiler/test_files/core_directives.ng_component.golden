@@ -52,7 +52,7 @@ final String output = """[
         "type": {
           "class": "Type",
           "name": "NgIf",
-          "moduleUrl": "package:angular2/src/common/directives/ng_if.dart",
+          "moduleUrl": "asset:angular2/lib/src/common/directives/ng_if.dart",
           "prefix": null,
           "isHost": false,
           "value": null,
@@ -123,7 +123,7 @@ final String output = """[
         "type": {
           "class": "Type",
           "name": "NgFor",
-          "moduleUrl": "package:angular2/src/common/directives/ng_for.dart",
+          "moduleUrl": "asset:angular2/lib/src/common/directives/ng_for.dart",
           "prefix": null,
           "isHost": false,
           "value": null,

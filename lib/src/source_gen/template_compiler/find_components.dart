@@ -49,7 +49,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   }
 
   List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
-      element, 'pipes', annotation_matcher.isPipe, new PipeVisitor(_buildStep));
+      element, 'pipes', annotation_matcher.isPipe, new PipeVisitor());
 
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
       _visitTypes(element, 'directives', annotation_matcher.isDirective,
@@ -162,7 +162,7 @@ class ComponentVisitor
     var inputs = coerceStringList(value, 'inputs')..addAll(_inputs);
     var outputs = coerceStringList(value, 'outputs')..addAll(_outputs);
     return CompileDirectiveMetadata.create(
-        type: element.accept(new CompileTypeMetadataVisitor(_buildStep)),
+        type: element.accept(new CompileTypeMetadataVisitor()),
         isComponent: isComponent,
         selector: coerceString(value, 'selector'),
         exportAs: coerceString(value, 'exportAs'),

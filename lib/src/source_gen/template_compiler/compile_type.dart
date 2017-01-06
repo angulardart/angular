@@ -9,14 +9,9 @@ import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';
-import 'package:build/build.dart';
 
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
-  final BuildStep _buildStep;
-
-  CompileTypeMetadataVisitor(this._buildStep);
-
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) =>
       annotation_matcher.isInjectable(element)
@@ -30,7 +25,7 @@ class CompileTypeMetadataVisitor
           : null;
 
   String _moduleUrl(ClassElement element) =>
-      element?.source?.uri?.toString() ?? toAssetUri(_buildStep.input.id);
+      toAssetUri(fromUri(element?.source?.uri?.toString()));
 
   List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
           List<ParameterElement> parameters) =>
