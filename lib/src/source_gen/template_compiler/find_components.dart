@@ -159,8 +159,8 @@ class ComponentVisitor
     var isComponent = annotation_matcher.isComponent(annotation);
     var template =
         (isComponent && _loadTemplate) ? _createTemplateMetadata(value) : null;
-    var inputs = coerceStringList(value, '_inputs')..addAll(_inputs);
-    var outputs = coerceStringList(value, '_outputs')..addAll(_outputs);
+    var inputs = coerceStringList(value, 'inputs')..addAll(_inputs);
+    var outputs = coerceStringList(value, 'outputs')..addAll(_outputs);
     return CompileDirectiveMetadata.create(
         type: element.accept(new CompileTypeMetadataVisitor(_buildStep)),
         isComponent: isComponent,

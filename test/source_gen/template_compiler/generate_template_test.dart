@@ -19,6 +19,10 @@ main() {
       await compareSummaryFileToGolden('has_directives.dart');
     });
 
+    test('core_directives', () async {
+      await compareSummaryFileToGolden('core_directives.dart');
+    });
+
     test('change_detection', () async {
       await compareSummaryFileToGolden('change_detection.dart');
     });
