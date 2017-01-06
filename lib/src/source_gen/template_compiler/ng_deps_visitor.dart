@@ -77,7 +77,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   @override
   void visitClassElement(ClassElement element) {
     CompileTypeMetadata compileType =
-        element.accept(new CompileTypeMetadataVisitor(_buildStep));
+        element.accept(new CompileTypeMetadataVisitor());
     if (compileType == null) return;
     var constructor = _constructor(element);
     if (constructor == null) return;
