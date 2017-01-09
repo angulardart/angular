@@ -56,19 +56,17 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
           new ComponentVisitor(_buildStep));
 
   List<dynamic/*=T*/ > _visitTypes/*<T>*/(
-      ClassElement element,
-      String field,
-      annotation_matcher.AnnotationMatcher annotationMatcher,
-      ElementVisitor<dynamic/*=T*/ > visitor) {
-    for (ElementAnnotation annotation in element.metadata) {
-      if (annotation_matcher.isDirective(annotation)) {
-        var value = annotation.computeConstantValue();
-        var objs = coerceList(value, field);
-        return _visitTypeObjects(objs, annotationMatcher, visitor);
-      }
-    }
-    return const [];
-  }
+          ClassElement element,
+          String field,
+          annotation_matcher.AnnotationMatcher annotationMatcher,
+          ElementVisitor<dynamic/*=T*/ > visitor) =>
+      element.metadata
+          .where(annotation_matcher.hasDirectives)
+          .expand((annotation) => _visitTypeObjects(
+              coerceList(annotation.computeConstantValue(), field),
+              annotationMatcher,
+              visitor))
+          .toList();
 
   List<dynamic/*=T*/ > _visitTypeObjects/*<T>*/(
           Iterable<DartObject> directives,
@@ -157,8 +155,10 @@ class ComponentVisitor
       ElementAnnotation annotation, ClassElement element) {
     var value = annotation.computeConstantValue();
     var isComponent = annotation_matcher.isComponent(annotation);
-    var template =
-        (isComponent && _loadTemplate) ? _createTemplateMetadata(value) : null;
+    var template = (isComponent && _loadTemplate)
+        ? _createTemplateMetadata(value,
+            view: _findView(element)?.computeConstantValue())
+        : null;
     var inputs = coerceStringList(value, 'inputs')..addAll(_inputs);
     var outputs = coerceStringList(value, 'outputs')..addAll(_outputs);
     return CompileDirectiveMetadata.create(
@@ -178,11 +178,17 @@ class ComponentVisitor
         template: template);
   }
 
-  CompileTemplateMetadata _createTemplateMetadata(DartObject value) =>
+  ElementAnnotation _findView(ClassElement element) =>
+      element.metadata.firstWhere(
+          (annotation) => annotation_matcher.matchAnnotation(View, annotation),
+          orElse: () => null);
+
+  CompileTemplateMetadata _createTemplateMetadata(DartObject component,
+          {DartObject view}) =>
       new CompileTemplateMetadata(
-          encapsulation: _encapsulation(value),
-          template: coerceString(value, 'template'),
-          templateUrl: coerceString(value, 'templateUrl'));
+          encapsulation: _encapsulation(view ?? component),
+          template: coerceString(view ?? component, 'template'),
+          templateUrl: coerceString(view ?? component, 'templateUrl'));
 
   ViewEncapsulation _encapsulation(DartObject value) => coerceEnumValue(value,
       'encapsulation', ViewEncapsulation.values, ViewEncapsulation.Emulated);

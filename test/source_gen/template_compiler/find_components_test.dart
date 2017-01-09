@@ -27,6 +27,10 @@ main() {
       await compareSummaryFileToGolden('change_detection.dart');
     });
 
+    test('view_annotation', () async {
+      await compareSummaryFileToGolden('view_annotation.dart');
+    });
+
     test('view_encapuslation', () async {
       await compareSummaryFileToGolden('view_encapsulation.dart');
     });
