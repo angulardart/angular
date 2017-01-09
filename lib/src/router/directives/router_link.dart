@@ -28,7 +28,7 @@ import "../router.dart" show Router;
   "routeParams: routerLink",
   "target: target"
 ], host: const {
-  "(click)": "onClick()",
+  "(click)": "onClick(\$event.button, \$event.ctrlKey, \$event.metaKey)",
   "[attr.href]": "visibleHref",
   "[class.router-link-active]": "isRouteActive"
 })
@@ -63,12 +63,19 @@ class RouterLink {
     this._updateLink();
   }
 
-  bool onClick() {
-    // If no target, or if target is _self, prevent default browser behavior
-    if (this.target is! String || this.target == "_self") {
-      this._router.navigateByInstruction(this._navigationInstruction);
-      return false;
+  bool onClick(num button, bool ctrlKey, bool metaKey) {
+    // If any "open in new window" modifier is present, use default browser
+    // behavior
+    if (button != 0 || ctrlKey || metaKey) {
+      return true;
     }
-    return true;
+
+    // If target is present and not _self, use default browser behavior
+    if (this.target is String && this.target != "_self") {
+      return true;
+    }
+
+    this._router.navigateByInstruction(this._navigationInstruction);
+    return false;
   }
 }
