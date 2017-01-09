@@ -102,7 +102,7 @@ class DebugAppView<T> extends AppView<T> {
     try {
       return super.injectorGet(token, nodeIndex, notFoundResult);
     } catch (e, s) {
-      this._rethrowWithContext(e, s);
+      this._rethrowWithContext(e, s, stopChangeDetection: false);
       rethrow;
     }
   }
@@ -310,9 +310,11 @@ class DebugAppView<T> extends AppView<T> {
     super.destroyViewNodes(hostElement, viewAllNodes);
   }
 
-  void _rethrowWithContext(dynamic e, dynamic stack) {
+  void _rethrowWithContext(dynamic e, dynamic stack,
+      {bool stopChangeDetection: true}) {
     if (!(e is ViewWrappedException)) {
-      if (!(e is ExpressionChangedAfterItHasBeenCheckedException)) {
+      if (stopChangeDetection &&
+          !(e is ExpressionChangedAfterItHasBeenCheckedException)) {
         this.cdState = ChangeDetectorState.Errored;
       }
       if (this._currentDebugContext != null) {
