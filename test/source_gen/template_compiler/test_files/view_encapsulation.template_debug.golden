@@ -1,0 +1,380 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+import 'view_encapsulation.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+export 'view_encapsulation.dart';
+import 'package:angular2/src/debug/debug_context.dart';
+import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/debug/debug_app_view.dart';
+import 'view_encapsulation.dart' as import3;
+import 'dart:html';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/core/linker/view_type.dart' as import6;
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/angular2.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
+
+const List<dynamic> styles_EmulatedComponent = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponent0 = const [
+  null,
+  null
+];
+RenderComponentType renderType_EmulatedComponent;
+
+class ViewEmulatedComponent0 extends DebugAppView<import3.EmulatedComponent> {
+  Element _el_0;
+  ViewEmulatedComponent0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewEmulatedComponent0,
+            renderType_EmulatedComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_EmulatedComponent0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    final Node parentRenderNode = initViewRoot(parentElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    dbgElm(_el_0, 0, 0, 0);
+    Text _text_1 = new Text('Emulated');
+    _el_0.append(_text_1);
+    dbgElm(_text_1, 1, 0, 5);
+    init([], [_el_0, _text_1], []);
+    return null;
+  }
+}
+
+AppView<import3.EmulatedComponent> viewFactory_EmulatedComponent0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_EmulatedComponent, null)) {
+    (renderType_EmulatedComponent = import9.appViewUtils.createRenderComponentType(
+        'asset:angular2/test/source_gen/template_compiler/test_files/view_encapsulation.dart class EmulatedComponent - inline template',
+        0,
+        ViewEncapsulation.None,
+        styles_EmulatedComponent));
+  }
+  return new ViewEmulatedComponent0(parentView, parentIndex, parentElement);
+}
+
+const List<dynamic> styles_EmulatedComponentHost = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = const [
+  const StaticNodeDebugInfo(const [import3.EmulatedComponent],
+      import3.EmulatedComponent, const <String, dynamic>{})
+];
+RenderComponentType renderType_EmulatedComponentHost;
+
+class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
+  Element _el_0;
+  AppView<import3.EmulatedComponent> _compView_0;
+  import3.EmulatedComponent _EmulatedComponent_0_2;
+  ViewEmulatedComponentHost0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewEmulatedComponentHost0,
+            renderType_EmulatedComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_EmulatedComponentHost0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('Emulated', rootSelector, dbg(0, 0, 0));
+    _compView_0 = viewFactory_EmulatedComponent0(this, 0, _el_0);
+    _EmulatedComponent_0_2 = new import3.EmulatedComponent();
+    _compView_0.create(_EmulatedComponent_0_2, projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return new ComponentRef(0, this, _el_0, _EmulatedComponent_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import3.EmulatedComponent) &&
+        (0 == requestNodeIndex))) {
+      return _EmulatedComponent_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_EmulatedComponentHost0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_EmulatedComponentHost, null)) {
+    (renderType_EmulatedComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_EmulatedComponentHost));
+  }
+  return new ViewEmulatedComponentHost0(parentView, parentIndex, parentElement);
+}
+
+const ComponentFactory EmulatedComponentNgFactory = const ComponentFactory(
+    'Emulated',
+    viewFactory_EmulatedComponentHost0,
+    import3.EmulatedComponent,
+    _METADATA);
+const List<dynamic> styles_NativeComponent = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponent0 = const [
+  null,
+  null
+];
+RenderComponentType renderType_NativeComponent;
+
+class ViewNativeComponent0 extends DebugAppView<import3.NativeComponent> {
+  Element _el_0;
+  ViewNativeComponent0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewNativeComponent0,
+            renderType_NativeComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NativeComponent0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    final Node parentRenderNode = createViewShadowRoot(parentElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    dbgElm(_el_0, 0, 0, 0);
+    Text _text_1 = new Text('Native');
+    _el_0.append(_text_1);
+    dbgElm(_text_1, 1, 0, 5);
+    init([], [_el_0, _text_1], []);
+    return null;
+  }
+}
+
+AppView<import3.NativeComponent> viewFactory_NativeComponent0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_NativeComponent, null)) {
+    (renderType_NativeComponent = import9.appViewUtils.createRenderComponentType(
+        'asset:angular2/test/source_gen/template_compiler/test_files/view_encapsulation.dart class NativeComponent - inline template',
+        0,
+        ViewEncapsulation.Native,
+        styles_NativeComponent));
+  }
+  return new ViewNativeComponent0(parentView, parentIndex, parentElement);
+}
+
+const List<dynamic> styles_NativeComponentHost = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponentHost0 = const [
+  const StaticNodeDebugInfo(const [import3.NativeComponent],
+      import3.NativeComponent, const <String, dynamic>{})
+];
+RenderComponentType renderType_NativeComponentHost;
+
+class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
+  Element _el_0;
+  AppView<import3.NativeComponent> _compView_0;
+  import3.NativeComponent _NativeComponent_0_2;
+  ViewNativeComponentHost0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewNativeComponentHost0,
+            renderType_NativeComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NativeComponentHost0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('Native', rootSelector, dbg(0, 0, 0));
+    _compView_0 = viewFactory_NativeComponent0(this, 0, _el_0);
+    _NativeComponent_0_2 = new import3.NativeComponent();
+    _compView_0.create(_NativeComponent_0_2, projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return new ComponentRef(0, this, _el_0, _NativeComponent_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import3.NativeComponent) &&
+        (0 == requestNodeIndex))) {
+      return _NativeComponent_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_NativeComponentHost0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_NativeComponentHost, null)) {
+    (renderType_NativeComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_NativeComponentHost));
+  }
+  return new ViewNativeComponentHost0(parentView, parentIndex, parentElement);
+}
+
+const ComponentFactory NativeComponentNgFactory = const ComponentFactory(
+    'Native',
+    viewFactory_NativeComponentHost0,
+    import3.NativeComponent,
+    _METADATA);
+const List<dynamic> styles_NoneComponent = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = const [
+  null,
+  null
+];
+RenderComponentType renderType_NoneComponent;
+
+class ViewNoneComponent0 extends DebugAppView<import3.NoneComponent> {
+  Element _el_0;
+  ViewNoneComponent0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewNoneComponent0,
+            renderType_NoneComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NoneComponent0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    final Node parentRenderNode = initViewRoot(parentElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    dbgElm(_el_0, 0, 0, 0);
+    Text _text_1 = new Text('None');
+    _el_0.append(_text_1);
+    dbgElm(_text_1, 1, 0, 5);
+    init([], [_el_0, _text_1], []);
+    return null;
+  }
+}
+
+AppView<import3.NoneComponent> viewFactory_NoneComponent0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_NoneComponent, null)) {
+    (renderType_NoneComponent = import9.appViewUtils.createRenderComponentType(
+        'asset:angular2/test/source_gen/template_compiler/test_files/view_encapsulation.dart class NoneComponent - inline template',
+        0,
+        ViewEncapsulation.None,
+        styles_NoneComponent));
+  }
+  return new ViewNoneComponent0(parentView, parentIndex, parentElement);
+}
+
+const List<dynamic> styles_NoneComponentHost = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = const [
+  const StaticNodeDebugInfo(const [import3.NoneComponent],
+      import3.NoneComponent, const <String, dynamic>{})
+];
+RenderComponentType renderType_NoneComponentHost;
+
+class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
+  Element _el_0;
+  AppView<import3.NoneComponent> _compView_0;
+  import3.NoneComponent _NoneComponent_0_2;
+  ViewNoneComponentHost0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewNoneComponentHost0,
+            renderType_NoneComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NoneComponentHost0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('None', rootSelector, dbg(0, 0, 0));
+    _compView_0 = viewFactory_NoneComponent0(this, 0, _el_0);
+    _NoneComponent_0_2 = new import3.NoneComponent();
+    _compView_0.create(_NoneComponent_0_2, projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return new ComponentRef(0, this, _el_0, _NoneComponent_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import3.NoneComponent) && (0 == requestNodeIndex))) {
+      return _NoneComponent_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_NoneComponentHost0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_NoneComponentHost, null)) {
+    (renderType_NoneComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_NoneComponentHost));
+  }
+  return new ViewNoneComponentHost0(parentView, parentIndex, parentElement);
+}
+
+const ComponentFactory NoneComponentNgFactory = const ComponentFactory(
+    'None', viewFactory_NoneComponentHost0, import3.NoneComponent, _METADATA);
+const _METADATA = const <dynamic>[
+  EmulatedComponent,
+  const <dynamic>[],
+  NativeComponent,
+  const <dynamic>[],
+  NoneComponent,
+  const <dynamic>[]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerType(
+      EmulatedComponent,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[], const [], () => new EmulatedComponent()));
+  _ngRef.reflector.registerType(
+      NativeComponent,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[], const [], () => new NativeComponent()));
+  _ngRef.reflector.registerType(
+      NoneComponent,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[], const [], () => new NoneComponent()));
+}

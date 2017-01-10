@@ -1,0 +1,185 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+import 'injectables.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+export 'injectables.dart';
+import 'package:angular2/src/debug/debug_context.dart';
+import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/debug/debug_app_view.dart';
+import 'injectables.dart' as import3;
+import 'dart:html';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/core/linker/view_type.dart' as import6;
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/angular2.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
+
+const List<dynamic> styles_InjectableComponent = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponent0 = const [
+  null,
+  null
+];
+RenderComponentType renderType_InjectableComponent;
+
+class ViewInjectableComponent0
+    extends DebugAppView<import3.InjectableComponent> {
+  Element _el_0;
+  ViewInjectableComponent0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewInjectableComponent0,
+            renderType_InjectableComponent,
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_InjectableComponent0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    final Node parentRenderNode = initViewRoot(parentElement);
+    var doc = document;
+    _el_0 = doc.createElement('div');
+    parentRenderNode.append(_el_0);
+    dbgElm(_el_0, 0, 0, 0);
+    Text _text_1 = new Text('Inject!');
+    _el_0.append(_text_1);
+    dbgElm(_text_1, 1, 0, 5);
+    init([], [_el_0, _text_1], []);
+    return null;
+  }
+}
+
+AppView<import3.InjectableComponent> viewFactory_InjectableComponent0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_InjectableComponent, null)) {
+    (renderType_InjectableComponent = import9.appViewUtils
+        .createRenderComponentType(
+            'asset:angular2/test/source_gen/template_compiler/test_files/injectables.dart class InjectableComponent - inline template',
+            0,
+            ViewEncapsulation.None,
+            styles_InjectableComponent));
+  }
+  return new ViewInjectableComponent0(parentView, parentIndex, parentElement);
+}
+
+const List<dynamic> styles_InjectableComponentHost = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 =
+    const [
+  const StaticNodeDebugInfo(const [import3.InjectableComponent],
+      import3.InjectableComponent, const <String, dynamic>{})
+];
+RenderComponentType renderType_InjectableComponentHost;
+
+class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
+  Element _el_0;
+  AppView<import3.InjectableComponent> _compView_0;
+  import3.InjectableComponent _InjectableComponent_0_2;
+  ViewInjectableComponentHost0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewInjectableComponentHost0,
+            renderType_InjectableComponentHost,
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_InjectableComponentHost0);
+  ComponentRef createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement(
+        'test-injectables', rootSelector, dbg(0, 0, 0));
+    _compView_0 = viewFactory_InjectableComponent0(this, 0, _el_0);
+    _InjectableComponent_0_2 = new import3.InjectableComponent(
+        null,
+        this.injectorGet(InjectableService, parentIndex, null),
+        this.injectorGet('OpaqueToken__test', parentIndex));
+    _compView_0.create(_InjectableComponent_0_2, projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return new ComponentRef(0, this, _el_0, _InjectableComponent_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import3.InjectableComponent) &&
+        (0 == requestNodeIndex))) {
+      return _InjectableComponent_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_InjectableComponentHost0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  if (identical(renderType_InjectableComponentHost, null)) {
+    (renderType_InjectableComponentHost = import9.appViewUtils
+        .createRenderComponentType(
+            '', 0, ViewEncapsulation.Emulated, styles_InjectableComponentHost));
+  }
+  return new ViewInjectableComponentHost0(
+      parentView, parentIndex, parentElement);
+}
+
+const ComponentFactory InjectableComponentNgFactory = const ComponentFactory(
+    'test-injectables',
+    viewFactory_InjectableComponentHost0,
+    import3.InjectableComponent,
+    _METADATA);
+const _METADATA = const <dynamic>[
+  injectableFactory,
+  const <dynamic>[const Injectable()],
+  InjectableComponent,
+  const <dynamic>[],
+  BaseService,
+  const <dynamic>[const Injectable()],
+  InjectableService,
+  const <dynamic>[const Injectable()]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerFunction(
+      injectableFactory,
+      new _ngRef.ReflectionInfo(const <dynamic>[
+        const Injectable()
+      ], const [
+        const <dynamic>[String]
+      ]));
+  _ngRef.reflector.registerType(
+      InjectableComponent,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[],
+          const [
+            const <dynamic>[BaseService, Attribute, optional],
+            const <dynamic>[InjectableService, Optional],
+            const <dynamic>[bool, Inject]
+          ],
+          (BaseService service, InjectableService injectableService,
+                  bool isTest) =>
+              new InjectableComponent(service, injectableService, isTest)));
+  _ngRef.reflector.registerType(
+      BaseService,
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
+          () => new BaseService()));
+  _ngRef.reflector.registerType(
+      InjectableService,
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
+          () => new InjectableService()));
+}
