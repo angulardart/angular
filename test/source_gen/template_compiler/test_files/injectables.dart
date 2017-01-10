@@ -12,9 +12,7 @@ class InjectableComponent {
   InjectableComponent(
       @Attribute("baseService") @optional this.service,
       @Optional() InjectableService injectableService,
-      // TODO(alorenzen): Replace bool with testToken once we can support
-      // [OpaqueToken]s.
-      @Inject(bool) this.isTest)
+      @Inject(testToken) this.isTest)
       : _injectableService = injectableService;
 
   InjectableService get injectableService => _injectableService;
