@@ -52,7 +52,7 @@ var LIFECYCLE_HOOKS_VALUES = [
 /// [docs]: docs/guide/lifecycle-hooks.html#onchanges
 /// [ex]: examples/lifecycle-hooks#onchanges
 abstract class OnChanges {
-  ngOnChanges(Map<String, SimpleChange> changes);
+  void ngOnChanges(Map<String, SimpleChange> changes);
 }
 
 /// Implement this interface to execute custom initialization logic after your
@@ -71,7 +71,7 @@ abstract class OnChanges {
 /// [docs]: docs/guide/lifecycle-hooks.html#oninit
 /// [ex]: examples/lifecycle-hooks#spy
 abstract class OnInit {
-  ngOnInit();
+  void ngOnInit();
 }
 
 /// Implement this interface to override the default change detection algorithm
@@ -105,7 +105,7 @@ abstract class OnInit {
 /// [docs]: docs/guide/lifecycle-hooks.html#docheck
 /// [ex]: examples/lifecycle-hooks#docheck
 abstract class DoCheck {
-  ngDoCheck();
+  void ngDoCheck();
 }
 
 /// Implement this interface to get notified when your directive is destroyed.
@@ -122,7 +122,7 @@ abstract class DoCheck {
 /// [docs]: docs/guide/lifecycle-hooks.html#ondestroy
 /// [ex]: examples/lifecycle-hooks#spy
 abstract class OnDestroy {
-  ngOnDestroy();
+  void ngOnDestroy();
 }
 
 /// Implement this interface to get notified when your directive's content has
@@ -139,7 +139,7 @@ abstract class OnDestroy {
 /// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: examples/lifecycle-hooks#after-content
 abstract class AfterContentInit {
-  ngAfterContentInit();
+  void ngAfterContentInit();
 }
 
 /// Implement this interface to get notified after every check of your
@@ -156,7 +156,7 @@ abstract class AfterContentInit {
 /// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: examples/lifecycle-hooks#after-content
 abstract class AfterContentChecked {
-  ngAfterContentChecked();
+  void ngAfterContentChecked();
 }
 
 /// Implement this interface to get notified when your component's view has been
@@ -173,7 +173,7 @@ abstract class AfterContentChecked {
 /// [docs]: docs/guide/lifecycle-hooks.html#afterview
 /// [ex]: examples/lifecycle-hooks#after-view
 abstract class AfterViewInit {
-  ngAfterViewInit();
+  void ngAfterViewInit();
 }
 
 /// Implement this interface to get notified after every check of your
@@ -190,5 +190,5 @@ abstract class AfterViewInit {
 /// [docs]: docs/guide/lifecycle-hooks.html#afterview
 /// [ex]: examples/lifecycle-hooks#after-view
 abstract class AfterViewChecked {
-  ngAfterViewChecked();
+  void ngAfterViewChecked();
 }
