@@ -12,11 +12,7 @@ import 'package:build/build.dart';
 
 Future<TemplateCompilerOutputs> processTemplates(
     LibraryElement element, BuildStep buildStep,
-    {String codegenMode: '',
-    bool reflectPropertiesAsAttributes: false,
-    List<String> platformDirectives,
-    List<String> platformPipes,
-    Map<String, String> resolvedIdentifiers}) async {
+    {String codegenMode: '', bool reflectPropertiesAsAttributes: false}) async {
   final templateCompiler = createTemplateCompiler(
     buildStep,
     compilerConfig: new CompilerConfig(

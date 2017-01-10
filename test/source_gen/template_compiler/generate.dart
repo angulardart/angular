@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:angular2/src/source_gen/template_compiler/generator.dart';
+import 'package:angular2/src/source_gen/template_compiler/generator_options.dart';
 import 'package:angular2/src/source_gen/template_compiler/testing/component_extractor_generator.dart';
 import 'package:args/args.dart';
 import 'package:build_runner/build_runner.dart';
@@ -31,9 +32,21 @@ Future main(List<String> args) async {
               isStandalone: true),
           inputs)
       ..addAction(
-          new GeneratorBuilder([new TemplateGenerator()],
-              generatedExtension:
-                  updateGoldens ? '.template.golden' : '.template.dart',
+          new GeneratorBuilder([
+            new TemplateGenerator(new GeneratorOptions(codegenMode: 'release'))
+          ],
+              generatedExtension: updateGoldens
+                  ? '.template_release.golden'
+                  : '.template_release.dart',
+              isStandalone: true),
+          inputs)
+      ..addAction(
+          new GeneratorBuilder([
+            new TemplateGenerator(new GeneratorOptions(codegenMode: 'debug'))
+          ],
+              generatedExtension: updateGoldens
+                  ? '.template_debug.golden'
+                  : '.template_debug.dart',
               isStandalone: true),
           inputs));
   await build(phaseGroup, deleteFilesByDefault: updateGoldens);
