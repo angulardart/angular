@@ -66,12 +66,8 @@ class CompilePipe {
     this._purePipeProxies.forEach((purePipeProxy) {
       var pipeInstanceSeenFromPureProxy =
           getPropertyInView(this.instance, purePipeProxy.view, this.view);
-      createPureProxy(
-          pipeInstanceSeenFromPureProxy.prop("transform").callMethod(
-              o.BuiltinMethod.bind, [pipeInstanceSeenFromPureProxy]),
-          purePipeProxy.argCount,
-          purePipeProxy.instance,
-          purePipeProxy.view);
+      createPureProxy(pipeInstanceSeenFromPureProxy.prop("transform"),
+          purePipeProxy.argCount, purePipeProxy.instance, purePipeProxy.view);
     });
   }
 

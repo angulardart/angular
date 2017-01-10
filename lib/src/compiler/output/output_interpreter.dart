@@ -271,9 +271,6 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
         case o.BuiltinMethod.SubscribeObservable:
           result = receiver.listen(args[0]);
           break;
-        case o.BuiltinMethod.bind:
-          result = receiver;
-          break;
         default:
           throw new BaseException('Unknown builtin method ${expr.builtin}');
       }

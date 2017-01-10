@@ -151,9 +151,10 @@ List<o.Statement> _getExpressionsStmts = [
     ],
     [
       "invokeMethodExternalInstanceViaBind",
-      o.variable("externalInstance").prop("someMethod").callMethod(
-          o.BuiltinMethod.bind,
-          [o.variable("externalInstance")]).callFn([o.literal("someParam")])
+      o
+          .variable("externalInstance")
+          .prop("someMethod")
+          .callFn([o.literal("someParam")])
     ],
     [
       "invokeMethodDynamicInstance",
@@ -163,9 +164,10 @@ List<o.Statement> _getExpressionsStmts = [
     ],
     [
       "invokeMethodDynamicInstanceViaBind",
-      o.variable("dynamicInstance").prop("dynamicMethod").callMethod(
-          o.BuiltinMethod.bind,
-          [o.variable("dynamicInstance")]).callFn([o.literal("someParam")])
+      o
+          .variable("dynamicInstance")
+          .prop("dynamicMethod")
+          .callFn([o.literal("someParam")])
     ],
     [
       "concatedArray",
