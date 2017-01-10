@@ -283,9 +283,6 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinMethod.SubscribeObservable:
         name = "listen";
         break;
-      case o.BuiltinMethod.bind:
-        name = null;
-        break;
       default:
         throw new BaseException('Unknown builtin method: ${ method}');
     }

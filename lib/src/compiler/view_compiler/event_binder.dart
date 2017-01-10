@@ -101,10 +101,8 @@ class CompileEventListener {
   }
 
   void listenToRenderer() {
-    var eventListener = new o.InvokeMemberMethodExpr('evt', [
-      new o.ReadClassMemberExpr(_methodName)
-          .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
-    ]);
+    var eventListener = new o.InvokeMemberMethodExpr(
+        'evt', [new o.ReadClassMemberExpr(_methodName)]);
 
     o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
       this.compileElement.renderNode,
@@ -121,10 +119,8 @@ class CompileEventListener {
     var subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
-    var eventListener = new o.InvokeMemberMethodExpr('evt', [
-      new o.ReadClassMemberExpr(_methodName)
-          .callMethod(o.BuiltinMethod.bind, [o.THIS_EXPR])
-    ]);
+    var eventListener = new o.InvokeMemberMethodExpr(
+        'evt', [new o.ReadClassMemberExpr(_methodName)]);
     this.compileElement.view.createMethod.addStmt(subscription
         .set(directiveInstance
             .prop(observablePropName)

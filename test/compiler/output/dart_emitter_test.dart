@@ -109,10 +109,6 @@ void main() {
               o.BuiltinMethod.SubscribeObservable,
               [o.variable("listener")]).toStmt()),
           "observable.listen(listener);");
-      expect(
-          emitStmt(o.variable("fn").callMethod(
-              o.BuiltinMethod.bind, [o.variable("someObj")]).toStmt()),
-          "fn;");
     });
     test("should support literals", () {
       expect(emitStmt(o.literal(0).toStmt()), "0;");
