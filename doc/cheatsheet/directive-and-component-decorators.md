@@ -21,7 +21,7 @@ Declares an output property that fires events that you can subscribe to with an 
 
 @cheatsheetItem
 syntax:
-`@HostBinding('[class.valid]') isValid;`|`@HostBinding('[class.valid]')`
+`@HostBinding('class.valid') isValid;`|`@HostBinding('class.valid')`
 description:
 Binds a host element property (here, the CSS class `valid`) to a directive/component property (`isValid`).
 
