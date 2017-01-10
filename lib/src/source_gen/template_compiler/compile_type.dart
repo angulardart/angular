@@ -3,12 +3,14 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
+import 'package:angular2/src/core/di.dart';
 import 'package:angular2/src/core/di/decorators.dart';
 import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';
+import 'package:source_gen/src/annotation.dart' as source_gen;
 
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
@@ -67,6 +69,9 @@ class CompileTypeMetadataVisitor
       return new CompileTokenMetadata(value: token.toDoubleValue());
     } else if (token.toTypeValue() != null) {
       return _tokenForType(token.toTypeValue());
+    } else if (_isOpaqueToken(token)) {
+      return new CompileTokenMetadata(
+          value: 'OpaqueToken__${coerceString(token, '_desc')}');
     }
     throw new ArgumentError('@Inject is not yet supported for $token.');
   }
@@ -75,6 +80,9 @@ class CompileTypeMetadataVisitor
     return new CompileTokenMetadata(
         identifier: new CompileIdentifierMetadata(name: type.name));
   }
+
+  bool _isOpaqueToken(DartObject token) =>
+      source_gen.matchTypes(OpaqueToken, token.type);
 
   ElementAnnotation _getAnnotation(Element element, Type type) =>
       element.metadata.firstWhere(
