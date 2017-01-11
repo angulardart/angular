@@ -118,7 +118,7 @@ class _PrefixScope implements Scope {
   }
 
   @override
-  Identifier identifier(String name, String importFrom) {
+  Identifier identifier(String name, [String importFrom]) {
     if (importFrom == null) {
       return Scope.identity.identifier(name, importFrom);
     }
