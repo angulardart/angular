@@ -285,6 +285,11 @@ class Control extends AbstractControl {
   bool _anyControlsHaveStatus(String status) => false;
 
   /// Register a listener for change events.
+  ///
+  /// Used internally to connect the model with the [ValueAccessor] which will
+  /// write the model value to the View.
+  /// NOTE: Should only be called internally by angular. Use [valueChanges] or
+  /// [statusChanges] to get updates on the [Control].
   void registerOnChange(Function fn) {
     _onChange = fn;
   }
