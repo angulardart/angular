@@ -43,7 +43,7 @@ class NgDepsModel {
     // Write code to prevent reentry.
     if (hasInitializationCode) {
       setUpMethod.addStatement(ifThen(reference(_visited), [returnVoid]));
-      setUpMethod.addStatement(literal(true).asAssign(_visited));
+      setUpMethod.addStatement(literal(true).asAssign(reference(_visited)));
     }
 
     reflectables.forEach((r) {
