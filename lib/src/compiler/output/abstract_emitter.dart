@@ -216,13 +216,38 @@ abstract class AbstractEmitterVisitor
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context);
 
   @override
-  dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context) {
+  dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context,
+      {bool checkForNull: false}) {
     EmitterVisitorContext ctx = context;
     var lineWasEmpty = ctx.lineIsEmpty();
     if (!lineWasEmpty) {
       ctx.print('(');
     }
-    ctx.print('${expr.name} = ');
+    if (checkForNull) {
+      ctx.print('${expr.name} ??= ');
+    } else {
+      ctx.print('${expr.name} = ');
+    }
+    expr.value.visitExpression(this, ctx);
+    if (!lineWasEmpty) {
+      ctx.print(')');
+    }
+    return null;
+  }
+
+  @override
+  dynamic visitWriteStaticMemberExpr(
+      o.WriteStaticMemberExpr expr, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    var lineWasEmpty = ctx.lineIsEmpty();
+    if (!lineWasEmpty) {
+      ctx.print('(');
+    }
+    if (expr.checkIfNull) {
+      ctx.print('${expr.name} ??= ');
+    } else {
+      ctx.print('${expr.name} = ');
+    }
     expr.value.visitExpression(this, ctx);
     if (!lineWasEmpty) {
       ctx.print(')');
@@ -350,6 +375,19 @@ abstract class AbstractEmitterVisitor
         default:
           throw new BaseException('Unknown builtin variable ${ast.builtin}');
       }
+    }
+    ctx.print(varName);
+    return null;
+  }
+
+  @override
+  dynamic visitReadStaticMemberExpr(
+      o.ReadStaticMemberExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    var varName = ast.name;
+    o.ExternalType t = ast.sourceClass;
+    if (t != null) {
+      ctx.print('${t.value.name}.');
     }
     ctx.print(varName);
     return null;

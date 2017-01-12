@@ -82,19 +82,15 @@ class ViewCompiler {
     o.Expression nodeDebugInfosVar =
         createStaticNodeDebugInfos(view, targetStatements);
 
-    // Create renderType global to hold RenderComponentType instance.
-    String renderTypeVarName = 'renderType_${view.component.type.name}';
-    o.ReadVarExpr renderCompTypeVar = o.variable(renderTypeVarName);
     // If we are compiling root view, create a render type for the component.
     // Example: RenderComponentType renderType_MaterialButtonComponent;
     bool creatingMainView = view.viewIndex == 0;
-    if (creatingMainView) {
-      targetStatements.add(new o.DeclareVarStmt(renderTypeVarName, null,
-          o.importType(Identifiers.RenderComponentType)));
-    }
-    var viewClass = createViewClass(view, renderCompTypeVar, nodeDebugInfosVar);
+
+    o.ClassStmt viewClass = createViewClass(view, nodeDebugInfosVar);
     targetStatements.add(viewClass);
-    targetStatements.add(createViewFactory(view, viewClass, renderCompTypeVar));
+
+    targetStatements.add(createViewFactory(view, viewClass));
+
     if (creatingMainView &&
         view.component.inputs != null &&
         view.component.changeDetection == ChangeDetectionStrategy.Stateful) {

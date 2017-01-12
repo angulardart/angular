@@ -648,8 +648,7 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
           Identifiers.StaticNodeDebugInfo, null, [o.TypeModifier.Const]));
 }
 
-o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
-    o.Expression nodeDebugInfosVar) {
+o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar) {
   var emptyTemplateVariableBindings = view.templateVariableBindings
       .map((List entry) => [entry[0], o.NULL_EXPR])
       .toList();
@@ -661,7 +660,6 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
   ];
   var superConstructorArgs = [
     o.variable(view.className),
-    renderCompTypeVar,
     ViewTypeEnum.fromValue(view.viewType),
     o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,
@@ -709,7 +707,60 @@ o.ClassStmt createViewClass(CompileView view, o.ReadVarExpr renderCompTypeVar,
           .where((o.ClassMethod method) =>
               method.body != null && method.body.length > 0)
           .toList() as List<o.ClassMethod>);
+
+  if (view.viewIndex == 0) {
+    var renderTypeExpr = _constructRenderType(view, viewClass, viewConstructor);
+    viewConstructor.body.add(
+        new o.InvokeMemberMethodExpr('setupComponentType', [renderTypeExpr])
+            .toStmt());
+  } else {
+    viewConstructor.body.add(new o.WriteClassMemberExpr(
+            'componentType',
+            new o.ReadStaticMemberExpr('renderType',
+                sourceClass: view.componentView.classType))
+        .toStmt());
+  }
   return viewClass;
+}
+
+// Writes code to initial RenderComponentType for component.
+o.Expression _constructRenderType(
+    CompileView view, o.ClassStmt viewClass, o.ClassMethod viewConstructor) {
+  assert(view.viewIndex == 0);
+  var templateUrlInfo;
+  if (view.component.template.templateUrl == view.component.type.moduleUrl) {
+    templateUrlInfo = '${view.component.type.moduleUrl} '
+        'class ${view.component.type.name} - inline template';
+  } else {
+    templateUrlInfo = view.component.template.templateUrl;
+  }
+
+  // renderType static to hold RenderComponentType instance.
+  String renderTypeVarName = 'renderType';
+  o.Expression renderCompTypeVar =
+      new o.ReadStaticMemberExpr(renderTypeVarName);
+
+  o.Statement initRenderTypeStatement = new o.WriteStaticMemberExpr(
+          renderTypeVarName,
+          o
+              .importExpr(Identifiers.appViewUtils)
+              .callMethod("createRenderType", [
+            o.literal(view.genConfig.genDebugInfo ? templateUrlInfo : ''),
+            o.literal(view.component.template.ngContentSelectors.length),
+            ViewEncapsulationEnum
+                .fromValue(view.component.template.encapsulation),
+            view.styles
+          ]),
+          checkIfNull: true)
+      .toStmt();
+
+  viewConstructor.body.add(initRenderTypeStatement);
+
+  viewClass.fields.add(new o.ClassField(renderTypeVarName,
+      modifiers: [o.StmtModifier.Static],
+      outputType: o.importType(Identifiers.RenderComponentType)));
+
+  return renderCompTypeVar;
 }
 
 List<o.Statement> generateDestroyMethod(CompileView view) {
@@ -729,8 +780,7 @@ o.Statement createInputUpdateFunction(
   return null;
 }
 
-o.Statement createViewFactory(
-    CompileView view, o.ClassStmt viewClass, o.ReadVarExpr renderCompTypeVar) {
+o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   var viewFactoryArgs = [
     new o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
@@ -738,30 +788,6 @@ o.Statement createViewFactory(
     new o.FnParam(ViewConstructorVars.parentElement.name, o.DYNAMIC_TYPE)
   ];
   var initRenderCompTypeStmts = [];
-  var templateUrlInfo;
-  if (view.component.template.templateUrl == view.component.type.moduleUrl) {
-    templateUrlInfo = '${view.component.type.moduleUrl} '
-        'class ${view.component.type.name} - inline template';
-  } else {
-    templateUrlInfo = view.component.template.templateUrl;
-  }
-  if (view.viewIndex == 0) {
-    initRenderCompTypeStmts = [
-      new o.IfStmt(renderCompTypeVar.identical(o.NULL_EXPR), [
-        renderCompTypeVar
-            .set(o
-                .importExpr(Identifiers.appViewUtils)
-                .callMethod("createRenderComponentType", [
-              o.literal(view.genConfig.genDebugInfo ? templateUrlInfo : ''),
-              o.literal(view.component.template.ngContentSelectors.length),
-              ViewEncapsulationEnum
-                  .fromValue(view.component.template.encapsulation),
-              view.styles
-            ]))
-            .toStmt()
-      ])
-    ];
-  }
   var factoryReturnType;
   if (view.viewType == ViewType.HOST) {
     factoryReturnType = o.importType(Identifiers.AppView);

@@ -451,52 +451,6 @@ void main() {
         });
       });
     });
-    test("should support non emulated styles", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<div class=\"redStyle\"></div>",
-                    styles: [".redStyle { color: red}"],
-                    encapsulation: ViewEncapsulation.None,
-                    directives: [OtherComp]))
-            .createAsync(MainComp)
-            .then((main) {
-          var mainEl = main.debugElement.nativeElement;
-          var div1 = DOM.firstChild(mainEl);
-          var div2 = DOM.createElement("div");
-          DOM.setAttribute(div2, "class", "redStyle");
-          DOM.appendChild(mainEl, div2);
-          expect(DOM.getComputedStyle(div1).color, "rgb(255, 0, 0)");
-          expect(DOM.getComputedStyle(div2).color, "rgb(255, 0, 0)");
-          completer.done();
-        });
-      });
-    });
-    test("should support emulated style encapsulation", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<div></div>",
-                    styles: ["div { color: red}"],
-                    encapsulation: ViewEncapsulation.Emulated))
-            .createAsync(MainComp)
-            .then((main) {
-          var mainEl = main.debugElement.nativeElement;
-          var div1 = DOM.firstChild(mainEl);
-          var div2 = DOM.createElement("div");
-          DOM.appendChild(mainEl, div2);
-          expect(DOM.getComputedStyle(div1).color, "rgb(255, 0, 0)");
-          expect(DOM.getComputedStyle(div2).color, "rgb(0, 0, 0)");
-          completer.done();
-        });
-      });
-    });
     test("should support nested conditionals that contain ng-contents",
         () async {
       return inject([TestComponentBuilder, AsyncTestCompleter],

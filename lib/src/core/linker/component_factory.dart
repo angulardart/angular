@@ -108,14 +108,16 @@ class ComponentFactory {
 
 /// Angular Component Factory signature.
 ///
-/// The compiler generates a viewFactory per component host using this signature
-/// to lazily create a RenderComponentType and create a new instance of the
-/// View class.
+/// Do not rely on parameters of this signature in your code. Instead use
+/// the typedef only and ViewContainer(sync) apis to pass this factory to
+/// construct the component.
+/// This signature will likely change over time as actual implementation
+/// of views change for further optimizations.
 ///
 /// Example:
-///     AppView<dynamic> viewFactory_MyComponent_Host0... {
-///        renderType_MyComponent = viewUtils.createRenderComponentType(....);
-///        return new _View_MyComponent_Host0(parentInjector, declElement);
-///     }
+///     const ComponentFactory MaterialFabComponentNgFactory =
+///     const ComponentFactory('material-fab',
+///         viewFactory_MaterialFabComponentHost0,
+///         import5.MaterialFabComponent,_METADATA);
 typedef AppView NgViewFactory(
     AppView parentView, int parentIndex, Node parentElement);

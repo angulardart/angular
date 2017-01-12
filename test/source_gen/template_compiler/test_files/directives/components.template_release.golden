@@ -8,31 +8,28 @@
 import 'components.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 export 'components.dart';
-import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
-import 'components.dart' as import2;
+import 'components.dart' as import1;
 import 'dart:html';
+import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/view_type.dart' as import4;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular2/angular2.dart';
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
 
 const List<dynamic> styles_TestSubComponent = const [];
-RenderComponentType renderType_TestSubComponent;
 
-class ViewTestSubComponent0 extends AppView<import2.TestSubComponent> {
+class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewTestSubComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewTestSubComponent0,
-            renderType_TestSubComponent,
-            import4.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewTestSubComponent0, import4.ViewType.COMPONENT, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_TestSubComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -45,38 +42,30 @@ class ViewTestSubComponent0 extends AppView<import2.TestSubComponent> {
   }
 }
 
-AppView<import2.TestSubComponent> viewFactory_TestSubComponent0(
+AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_TestSubComponent, null)) {
-    (renderType_TestSubComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_TestSubComponent));
-  }
   return new ViewTestSubComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_TestSubComponentHost = const [];
-RenderComponentType renderType_TestSubComponentHost;
 
 class ViewTestSubComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.TestSubComponent> _compView_0;
-  import2.TestSubComponent _TestSubComponent_0_2;
+  AppView<import1.TestSubComponent> _compView_0;
+  import1.TestSubComponent _TestSubComponent_0_2;
+  static RenderComponentType renderType;
   ViewTestSubComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewTestSubComponentHost0,
-            renderType_TestSubComponentHost,
-            import4.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewTestSubComponentHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_TestSubComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('test-bar', rootSelector, null);
     _compView_0 = viewFactory_TestSubComponent0(this, 0, _el_0);
-    _TestSubComponent_0_2 = new import2.TestSubComponent();
+    _TestSubComponent_0_2 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _TestSubComponent_0_2);
@@ -84,7 +73,7 @@ class ViewTestSubComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.TestSubComponent) &&
+    if ((identical(token, import1.TestSubComponent) &&
         (0 == requestNodeIndex))) {
       return _TestSubComponent_0_2;
     }
@@ -102,18 +91,13 @@ class ViewTestSubComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_TestSubComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_TestSubComponentHost, null)) {
-    (renderType_TestSubComponentHost = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_TestSubComponentHost));
-  }
   return new ViewTestSubComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory TestSubComponentNgFactory = const ComponentFactory(
     'test-bar',
     viewFactory_TestSubComponentHost0,
-    import2.TestSubComponent,
+    import1.TestSubComponent,
     _METADATA);
 const _METADATA = const <dynamic>[TestSubComponent, const <dynamic>[]];
 var _visited = false;

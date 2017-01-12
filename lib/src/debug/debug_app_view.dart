@@ -14,7 +14,6 @@ import 'package:angular2/src/core/linker/exceptions.dart'
 import 'package:angular2/src/core/linker/view_type.dart';
 import 'package:angular2/src/core/profile/profile.dart'
     show wtfCreateScope, wtfLeave, WtfScopeFn;
-import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular2/src/debug/debug_context.dart'
     show StaticNodeDebugInfo, DebugContext;
 import 'package:angular2/src/debug/debug_node.dart'
@@ -48,7 +47,6 @@ class DebugAppView<T> extends AppView<T> {
   DebugContext _currentDebugContext;
   DebugAppView(
       dynamic clazz,
-      RenderComponentType componentType,
       ViewType type,
       Map<String, dynamic> locals,
       AppView parentView,
@@ -56,8 +54,8 @@ class DebugAppView<T> extends AppView<T> {
       Node parentElement,
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
-      : super(clazz, componentType, type, locals, parentView, parentIndex,
-            parentElement, cdMode) {
+      : super(clazz, type, locals, parentView, parentIndex, parentElement,
+            cdMode) {
     this.cdMode = cdMode;
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;
