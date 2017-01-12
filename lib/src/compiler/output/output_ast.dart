@@ -229,6 +229,18 @@ class ReadVarExpr extends Expression {
   }
 }
 
+class ReadStaticMemberExpr extends Expression {
+  final String name;
+  final OutputType sourceClass;
+  ReadStaticMemberExpr(this.name, {OutputType type, this.sourceClass})
+      : super(type);
+
+  @override
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitReadStaticMemberExpr(this, context);
+  }
+}
+
 class ReadClassMemberExpr extends Expression {
   final String name;
   ReadClassMemberExpr(this.name, [OutputType type = null]) : super(type);
@@ -268,6 +280,31 @@ class WriteVarExpr extends Expression {
   DeclareVarStmt toDeclStmt(
       [OutputType type = null, List<StmtModifier> modifiers = null]) {
     return new DeclareVarStmt(this.name, this.value, type, modifiers);
+  }
+}
+
+class WriteIfNullExpr extends WriteVarExpr {
+  WriteIfNullExpr(String name, Expression value, [OutputType type = null])
+      : super(name, value, type ?? value.type);
+  @override
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitWriteVarExpr(this, context, checkForNull: true);
+  }
+}
+
+class WriteStaticMemberExpr extends Expression {
+  final String name;
+  final Expression value;
+  final bool checkIfNull;
+
+  WriteStaticMemberExpr(this.name, Expression value,
+      {OutputType type, this.checkIfNull: false})
+      : this.value = value,
+        super(type ?? value.type);
+
+  @override
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitWriteStaticMemberExpr(this, context);
   }
 }
 
@@ -537,7 +574,11 @@ abstract class ExpressionVisitor {
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context);
   dynamic visitReadClassMemberExpr(ReadClassMemberExpr ast, dynamic context);
   dynamic visitWriteClassMemberExpr(WriteClassMemberExpr ast, dynamic context);
-  dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context);
+  dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context,
+      {bool checkForNull: false});
+  dynamic visitReadStaticMemberExpr(ReadStaticMemberExpr ast, dynamic context);
+  dynamic visitWriteStaticMemberExpr(
+      WriteStaticMemberExpr expr, dynamic context);
   dynamic visitWriteKeyExpr(WriteKeyExpr expr, dynamic context);
   dynamic visitWritePropExpr(WritePropExpr expr, dynamic context);
   dynamic visitInvokeMethodExpr(InvokeMethodExpr ast, dynamic context);
@@ -566,7 +607,7 @@ var CATCH_STACK_VAR = new ReadVarExpr(BuiltinVar.CatchStack);
 var METADATA_MAP = new ReadVarExpr(BuiltinVar.MetadataMap);
 var NULL_EXPR = new LiteralExpr(null, null);
 //// Statements
-enum StmtModifier { Final, Private }
+enum StmtModifier { Final, Private, Static }
 
 abstract class Statement {
   List<StmtModifier> modifiers;
@@ -764,9 +805,27 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
   }
 
   @override
-  dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context) {
+  dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context,
+      {bool checkForNull: false}) {
+    if (checkForNull) {
+      return new WriteIfNullExpr(
+          expr.name, expr.value.visitExpression(this, context));
+    }
     return new WriteVarExpr(
         expr.name, expr.value.visitExpression(this, context));
+  }
+
+  @override
+  dynamic visitWriteStaticMemberExpr(
+      WriteStaticMemberExpr expr, dynamic context) {
+    return new WriteStaticMemberExpr(
+        expr.name, expr.value.visitExpression(this, context),
+        type: expr.type, checkIfNull: expr.checkIfNull);
+  }
+
+  @override
+  dynamic visitReadStaticMemberExpr(ReadStaticMemberExpr ast, dynamic context) {
+    return ast;
   }
 
   @override
@@ -973,7 +1032,20 @@ class RecursiveExpressionVisitor
   }
 
   @override
-  dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context) {
+  dynamic visitWriteVarExpr(WriteVarExpr expr, dynamic context,
+      {bool checkForNull: false}) {
+    expr.value.visitExpression(this, context);
+    return expr;
+  }
+
+  @override
+  dynamic visitReadStaticMemberExpr(ReadStaticMemberExpr ast, dynamic context) {
+    return ast;
+  }
+
+  @override
+  dynamic visitWriteStaticMemberExpr(
+      WriteStaticMemberExpr expr, dynamic context) {
     expr.value.visitExpression(this, context);
     return expr;
   }

@@ -36,6 +36,7 @@ dynamic interpretStatements(List<o.Statement> statements, String resultVar,
       null,
       new Map<String, dynamic>(),
       new Map<String, dynamic>(),
+      new Map<String, dynamic>(),
       new Map<String, Function>(),
       new Map<String, Function>(),
       instanceFactory);
@@ -64,6 +65,7 @@ class _ExecutionContext {
   dynamic superInstance;
   String className;
   Map<String, dynamic> vars;
+  Map<String, dynamic> staticVars;
   Map<String, dynamic> props;
   Map<String, Function> getters;
   Map<String, Function> methods;
@@ -74,10 +76,13 @@ class _ExecutionContext {
       this.superInstance,
       this.className,
       this.vars,
+      Map<String, dynamic> staticVars,
       this.props,
       this.getters,
       this.methods,
-      this.instanceFactory);
+      this.instanceFactory) {
+    this.staticVars = staticVars ?? <String, dynamic>{};
+  }
   _ExecutionContext createChildWithLocalVars() {
     return new _ExecutionContext(
         this,
@@ -85,6 +90,7 @@ class _ExecutionContext {
         this.superInstance,
         this.className,
         new Map<String, dynamic>(),
+        this.staticVars,
         this.props,
         this.getters,
         this.methods,
@@ -101,6 +107,7 @@ class _DynamicClass {
   o.ClassStmt _classStmt;
   _ExecutionContext _ctx;
   StatementInterpreter _visitor;
+  static Map<String, dynamic> staticVars = {};
   _DynamicClass(this._classStmt, this._ctx, this._visitor);
   DynamicInstance instantiate(List<dynamic> args) {
     var props = new Map<String, dynamic>();
@@ -114,13 +121,20 @@ class _DynamicClass {
         null,
         this._classStmt.name,
         this._ctx.vars,
+        staticVars,
         props,
         getters,
         methods,
         this._ctx.instanceFactory);
     this._classStmt.fields.forEach((o.ClassField field) {
-      props[field.name] =
-          field.initializer?.visitExpression(this._visitor, _ctx);
+      if (field.hasModifier(o.StmtModifier.Static)) {
+        String fullName = '${_classStmt.name}.${field.name}';
+        staticVars[fullName] ??=
+            field.initializer?.visitExpression(this._visitor, _ctx);
+      } else {
+        props[field.name] =
+            field.initializer?.visitExpression(this._visitor, _ctx);
+      }
     });
     this._classStmt.getters.forEach((o.ClassGetter getter) {
       getters[getter.name] = () => _executeFunctionStatements(
@@ -160,18 +174,40 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   }
 
   @override
-  dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context) {
+  dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context,
+      {bool checkForNull: false}) {
     _ExecutionContext ctx = context;
     var value = expr.value.visitExpression(this, ctx);
     var currCtx = ctx;
     while (currCtx != null) {
       if (currCtx.vars.containsKey(expr.name)) {
-        currCtx.vars[expr.name] = value;
+        if (checkForNull) {
+          if (currCtx.vars[expr.name] == null) {
+            currCtx.vars[expr.name] = value;
+          }
+        } else {
+          currCtx.vars[expr.name] = value;
+        }
         return value;
       }
       currCtx = currCtx.parent;
     }
     throw new BaseException('Not declared variable ${expr.name}');
+  }
+
+  @override
+  dynamic visitWriteStaticMemberExpr(
+      o.WriteStaticMemberExpr expr, dynamic context) {
+    _ExecutionContext ctx = context;
+    String varName = '${ctx.className}.${expr.name}';
+    if (!ctx.staticVars.containsKey(varName)) {
+      throw new BaseException('No declared static member ${expr.name}');
+    }
+    if (expr.checkIfNull == false || ctx.staticVars[varName] == null) {
+      var value = expr.value.visitExpression(this, ctx);
+      ctx.staticVars[varName] = value;
+    }
+    return ctx.staticVars[varName];
   }
 
   @override
@@ -203,6 +239,20 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
       currCtx = currCtx.parent;
     }
     throw new BaseException('Not declared variable ${varName}');
+  }
+
+  @override
+  dynamic visitReadStaticMemberExpr(
+      o.ReadStaticMemberExpr ast, dynamic context) {
+    _ExecutionContext ctx = context;
+    o.ExternalType t = ast.sourceClass;
+    String varName = (t == null)
+        ? '${ctx.className}.${ast.name}'
+        : '${t.value.name}.${ast.name}';
+    if (ctx != null && ctx.staticVars.containsKey(varName)) {
+      return ctx.staticVars[varName];
+    }
+    throw new BaseException('No declared static member $varName');
   }
 
   @override

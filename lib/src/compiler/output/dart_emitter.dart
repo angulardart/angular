@@ -106,6 +106,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
+    if (stmt.hasModifier(o.StmtModifier.Static)) {
+      ctx.print('static ');
+    }
     if (stmt.hasModifier(o.StmtModifier.Final)) {
       if (isConstType(stmt.type)) {
         ctx.print('const ');
@@ -166,6 +169,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   void _visitClassField(o.ClassField field, dynamic context) {
     EmitterVisitorContext ctx = context;
+    if (field.hasModifier(o.StmtModifier.Static)) {
+      ctx.print('static ');
+    }
     if (field.hasModifier(o.StmtModifier.Final)) {
       ctx.print('final ');
     } else if (field.type == null) {

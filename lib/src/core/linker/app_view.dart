@@ -59,14 +59,18 @@ abstract class AppView<T> {
   bool _hasExternalHostElement;
   Injector _hostInjector;
 
-  AppView(this.clazz, this.componentType, this.type, this.locals,
-      this.parentView, this.parentIndex, this.parentElement, this._cdMode) {
+  AppView(this.clazz, this.type, this.locals, this.parentView, this.parentIndex,
+      this.parentElement, this._cdMode) {
     ref = new ViewRefImpl(this);
+  }
+
+  void setupComponentType(RenderComponentType renderType) {
     sharedStylesHost ??= new DomSharedStylesHost(document);
-    if (!componentType.stylesShimmed) {
-      componentType.shimStyles(sharedStylesHost);
-      componentType.stylesShimmed = true;
+    if (!renderType.stylesShimmed) {
+      renderType.shimStyles(sharedStylesHost);
+      renderType.stylesShimmed = true;
     }
+    componentType = renderType;
   }
 
   /// Sets change detection mode for this view and caches flag to skip

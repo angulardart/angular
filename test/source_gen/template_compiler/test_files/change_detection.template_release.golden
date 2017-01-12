@@ -8,31 +8,34 @@
 import 'change_detection.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 export 'change_detection.dart';
-import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
-import 'change_detection.dart' as import2;
+import 'change_detection.dart' as import1;
 import 'dart:html';
+import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/view_type.dart' as import4;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular2/angular2.dart';
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
 
 const List<dynamic> styles_CheckOnceComponent = const [];
-RenderComponentType renderType_CheckOnceComponent;
 
-class ViewCheckOnceComponent0 extends AppView<import2.CheckOnceComponent> {
+class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewCheckOnceComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewCheckOnceComponent0,
-            renderType_CheckOnceComponent,
             import4.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
             parentElement,
-            ChangeDetectionStrategy.CheckOnce);
+            ChangeDetectionStrategy.CheckOnce) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_CheckOnceComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -45,38 +48,36 @@ class ViewCheckOnceComponent0 extends AppView<import2.CheckOnceComponent> {
   }
 }
 
-AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(
+AppView<import1.CheckOnceComponent> viewFactory_CheckOnceComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_CheckOnceComponent, null)) {
-    (renderType_CheckOnceComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_CheckOnceComponent));
-  }
   return new ViewCheckOnceComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_CheckOnceComponentHost = const [];
-RenderComponentType renderType_CheckOnceComponentHost;
 
 class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.CheckOnceComponent> _compView_0;
-  import2.CheckOnceComponent _CheckOnceComponent_0_2;
+  AppView<import1.CheckOnceComponent> _compView_0;
+  import1.CheckOnceComponent _CheckOnceComponent_0_2;
+  static RenderComponentType renderType;
   ViewCheckOnceComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewCheckOnceComponentHost0,
-            renderType_CheckOnceComponentHost,
             import4.ViewType.HOST,
             {},
             parentView,
             parentIndex,
             parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+            ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_CheckOnceComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('CheckOnce', rootSelector, null);
     _compView_0 = viewFactory_CheckOnceComponent0(this, 0, _el_0);
-    _CheckOnceComponent_0_2 = new import2.CheckOnceComponent();
+    _CheckOnceComponent_0_2 = new import1.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _CheckOnceComponent_0_2);
@@ -84,7 +85,7 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.CheckOnceComponent) &&
+    if ((identical(token, import1.CheckOnceComponent) &&
         (0 == requestNodeIndex))) {
       return _CheckOnceComponent_0_2;
     }
@@ -102,11 +103,6 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_CheckOnceComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_CheckOnceComponentHost, null)) {
-    (renderType_CheckOnceComponentHost = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_CheckOnceComponentHost));
-  }
   return new ViewCheckOnceComponentHost0(
       parentView, parentIndex, parentElement);
 }
@@ -114,24 +110,21 @@ AppView viewFactory_CheckOnceComponentHost0(
 const ComponentFactory CheckOnceComponentNgFactory = const ComponentFactory(
     'CheckOnce',
     viewFactory_CheckOnceComponentHost0,
-    import2.CheckOnceComponent,
+    import1.CheckOnceComponent,
     _METADATA);
 const List<dynamic> styles_CheckedComponent = const [];
-RenderComponentType renderType_CheckedComponent;
 
-class ViewCheckedComponent0 extends AppView<import2.CheckedComponent> {
+class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewCheckedComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewCheckedComponent0,
-            renderType_CheckedComponent,
-            import4.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckOnce);
+      : super(ViewCheckedComponent0, import4.ViewType.COMPONENT, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckOnce) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_CheckedComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -144,38 +137,30 @@ class ViewCheckedComponent0 extends AppView<import2.CheckedComponent> {
   }
 }
 
-AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(
+AppView<import1.CheckedComponent> viewFactory_CheckedComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_CheckedComponent, null)) {
-    (renderType_CheckedComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_CheckedComponent));
-  }
   return new ViewCheckedComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_CheckedComponentHost = const [];
-RenderComponentType renderType_CheckedComponentHost;
 
 class ViewCheckedComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.CheckedComponent> _compView_0;
-  import2.CheckedComponent _CheckedComponent_0_2;
+  AppView<import1.CheckedComponent> _compView_0;
+  import1.CheckedComponent _CheckedComponent_0_2;
+  static RenderComponentType renderType;
   ViewCheckedComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewCheckedComponentHost0,
-            renderType_CheckedComponentHost,
-            import4.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewCheckedComponentHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_CheckedComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Checked', rootSelector, null);
     _compView_0 = viewFactory_CheckedComponent0(this, 0, _el_0);
-    _CheckedComponent_0_2 = new import2.CheckedComponent();
+    _CheckedComponent_0_2 = new import1.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _CheckedComponent_0_2);
@@ -183,7 +168,7 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.CheckedComponent) &&
+    if ((identical(token, import1.CheckedComponent) &&
         (0 == requestNodeIndex))) {
       return _CheckedComponent_0_2;
     }
@@ -201,35 +186,33 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_CheckedComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_CheckedComponentHost, null)) {
-    (renderType_CheckedComponentHost = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_CheckedComponentHost));
-  }
   return new ViewCheckedComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory CheckedComponentNgFactory = const ComponentFactory(
     'Checked',
     viewFactory_CheckedComponentHost0,
-    import2.CheckedComponent,
+    import1.CheckedComponent,
     _METADATA);
 const List<dynamic> styles_CheckAlwaysComponent = const [];
-RenderComponentType renderType_CheckAlwaysComponent;
 
-class ViewCheckAlwaysComponent0 extends AppView<import2.CheckAlwaysComponent> {
+class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewCheckAlwaysComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewCheckAlwaysComponent0,
-            renderType_CheckAlwaysComponent,
             import4.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
             parentElement,
-            ChangeDetectionStrategy.CheckOnce);
+            ChangeDetectionStrategy.CheckOnce) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_CheckAlwaysComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -242,38 +225,36 @@ class ViewCheckAlwaysComponent0 extends AppView<import2.CheckAlwaysComponent> {
   }
 }
 
-AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
+AppView<import1.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_CheckAlwaysComponent, null)) {
-    (renderType_CheckAlwaysComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_CheckAlwaysComponent));
-  }
   return new ViewCheckAlwaysComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_CheckAlwaysComponentHost = const [];
-RenderComponentType renderType_CheckAlwaysComponentHost;
 
 class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.CheckAlwaysComponent> _compView_0;
-  import2.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
+  AppView<import1.CheckAlwaysComponent> _compView_0;
+  import1.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
+  static RenderComponentType renderType;
   ViewCheckAlwaysComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewCheckAlwaysComponentHost0,
-            renderType_CheckAlwaysComponentHost,
             import4.ViewType.HOST,
             {},
             parentView,
             parentIndex,
             parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+            ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_CheckAlwaysComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('CheckAlways', rootSelector, null);
     _compView_0 = viewFactory_CheckAlwaysComponent0(this, 0, _el_0);
-    _CheckAlwaysComponent_0_2 = new import2.CheckAlwaysComponent();
+    _CheckAlwaysComponent_0_2 = new import1.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _CheckAlwaysComponent_0_2);
@@ -281,7 +262,7 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.CheckAlwaysComponent) &&
+    if ((identical(token, import1.CheckAlwaysComponent) &&
         (0 == requestNodeIndex))) {
       return _CheckAlwaysComponent_0_2;
     }
@@ -299,11 +280,6 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_CheckAlwaysComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_CheckAlwaysComponentHost, null)) {
-    (renderType_CheckAlwaysComponentHost = import7.appViewUtils
-        .createRenderComponentType('', 0, ViewEncapsulation.Emulated,
-            styles_CheckAlwaysComponentHost));
-  }
   return new ViewCheckAlwaysComponentHost0(
       parentView, parentIndex, parentElement);
 }
@@ -311,24 +287,27 @@ AppView viewFactory_CheckAlwaysComponentHost0(
 const ComponentFactory CheckAlwaysComponentNgFactory = const ComponentFactory(
     'CheckAlways',
     viewFactory_CheckAlwaysComponentHost0,
-    import2.CheckAlwaysComponent,
+    import1.CheckAlwaysComponent,
     _METADATA);
 const List<dynamic> styles_DetachedComponent = const [];
-RenderComponentType renderType_DetachedComponent;
 
-class ViewDetachedComponent0 extends AppView<import2.DetachedComponent> {
+class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewDetachedComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewDetachedComponent0,
-            renderType_DetachedComponent,
             import4.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
             parentElement,
-            ChangeDetectionStrategy.CheckOnce);
+            ChangeDetectionStrategy.CheckOnce) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_DetachedComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -341,38 +320,30 @@ class ViewDetachedComponent0 extends AppView<import2.DetachedComponent> {
   }
 }
 
-AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(
+AppView<import1.DetachedComponent> viewFactory_DetachedComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_DetachedComponent, null)) {
-    (renderType_DetachedComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_DetachedComponent));
-  }
   return new ViewDetachedComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_DetachedComponentHost = const [];
-RenderComponentType renderType_DetachedComponentHost;
 
 class ViewDetachedComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.DetachedComponent> _compView_0;
-  import2.DetachedComponent _DetachedComponent_0_2;
+  AppView<import1.DetachedComponent> _compView_0;
+  import1.DetachedComponent _DetachedComponent_0_2;
+  static RenderComponentType renderType;
   ViewDetachedComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewDetachedComponentHost0,
-            renderType_DetachedComponentHost,
-            import4.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewDetachedComponentHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_DetachedComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Detached', rootSelector, null);
     _compView_0 = viewFactory_DetachedComponent0(this, 0, _el_0);
-    _DetachedComponent_0_2 = new import2.DetachedComponent();
+    _DetachedComponent_0_2 = new import1.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _DetachedComponent_0_2);
@@ -380,7 +351,7 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.DetachedComponent) &&
+    if ((identical(token, import1.DetachedComponent) &&
         (0 == requestNodeIndex))) {
       return _DetachedComponent_0_2;
     }
@@ -398,35 +369,27 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_DetachedComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_DetachedComponentHost, null)) {
-    (renderType_DetachedComponentHost = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_DetachedComponentHost));
-  }
   return new ViewDetachedComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory DetachedComponentNgFactory = const ComponentFactory(
     'Detached',
     viewFactory_DetachedComponentHost0,
-    import2.DetachedComponent,
+    import1.DetachedComponent,
     _METADATA);
 const List<dynamic> styles_OnPushComponent = const [];
-RenderComponentType renderType_OnPushComponent;
 
-class ViewOnPushComponent0 extends AppView<import2.OnPushComponent> {
+class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewOnPushComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewOnPushComponent0,
-            renderType_OnPushComponent,
-            import4.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckOnce);
+      : super(ViewOnPushComponent0, import4.ViewType.COMPONENT, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckOnce) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_OnPushComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -439,38 +402,30 @@ class ViewOnPushComponent0 extends AppView<import2.OnPushComponent> {
   }
 }
 
-AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(
+AppView<import1.OnPushComponent> viewFactory_OnPushComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_OnPushComponent, null)) {
-    (renderType_OnPushComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_OnPushComponent));
-  }
   return new ViewOnPushComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_OnPushComponentHost = const [];
-RenderComponentType renderType_OnPushComponentHost;
 
 class ViewOnPushComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.OnPushComponent> _compView_0;
-  import2.OnPushComponent _OnPushComponent_0_2;
+  AppView<import1.OnPushComponent> _compView_0;
+  import1.OnPushComponent _OnPushComponent_0_2;
+  static RenderComponentType renderType;
   ViewOnPushComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewOnPushComponentHost0,
-            renderType_OnPushComponentHost,
-            import4.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewOnPushComponentHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_OnPushComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('OnPush', rootSelector, null);
     _compView_0 = viewFactory_OnPushComponent0(this, 0, _el_0);
-    _OnPushComponent_0_2 = new import2.OnPushComponent();
+    _OnPushComponent_0_2 = new import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _OnPushComponent_0_2);
@@ -478,7 +433,7 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.OnPushComponent) &&
+    if ((identical(token, import1.OnPushComponent) &&
         (0 == requestNodeIndex))) {
       return _OnPushComponent_0_2;
     }
@@ -496,35 +451,33 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_OnPushComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_OnPushComponentHost, null)) {
-    (renderType_OnPushComponentHost = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_OnPushComponentHost));
-  }
   return new ViewOnPushComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory OnPushComponentNgFactory = const ComponentFactory(
     'OnPush',
     viewFactory_OnPushComponentHost0,
-    import2.OnPushComponent,
+    import1.OnPushComponent,
     _METADATA);
 const List<dynamic> styles_StatefulComponent = const [];
-RenderComponentType renderType_StatefulComponent;
 
-class ViewStatefulComponent0 extends AppView<import2.StatefulComponent> {
+class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewStatefulComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewStatefulComponent0,
-            renderType_StatefulComponent,
             import4.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
             parentElement,
-            ChangeDetectionStrategy.CheckOnce);
+            ChangeDetectionStrategy.CheckOnce) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_StatefulComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -538,38 +491,30 @@ class ViewStatefulComponent0 extends AppView<import2.StatefulComponent> {
   }
 }
 
-AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(
+AppView<import1.StatefulComponent> viewFactory_StatefulComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_StatefulComponent, null)) {
-    (renderType_StatefulComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_StatefulComponent));
-  }
   return new ViewStatefulComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_StatefulComponentHost = const [];
-RenderComponentType renderType_StatefulComponentHost;
 
 class ViewStatefulComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.StatefulComponent> _compView_0;
-  import2.StatefulComponent _StatefulComponent_0_2;
+  AppView<import1.StatefulComponent> _compView_0;
+  import1.StatefulComponent _StatefulComponent_0_2;
+  static RenderComponentType renderType;
   ViewStatefulComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewStatefulComponentHost0,
-            renderType_StatefulComponentHost,
-            import4.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewStatefulComponentHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_StatefulComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Stateful', rootSelector, null);
     _compView_0 = viewFactory_StatefulComponent0(this, 0, _el_0);
-    _StatefulComponent_0_2 = new import2.StatefulComponent();
+    _StatefulComponent_0_2 = new import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _StatefulComponent_0_2);
@@ -577,7 +522,7 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.StatefulComponent) &&
+    if ((identical(token, import1.StatefulComponent) &&
         (0 == requestNodeIndex))) {
       return _StatefulComponent_0_2;
     }
@@ -595,35 +540,27 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_StatefulComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_StatefulComponentHost, null)) {
-    (renderType_StatefulComponentHost = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_StatefulComponentHost));
-  }
   return new ViewStatefulComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory StatefulComponentNgFactory = const ComponentFactory(
     'Stateful',
     viewFactory_StatefulComponentHost0,
-    import2.StatefulComponent,
+    import1.StatefulComponent,
     _METADATA);
 const List<dynamic> styles_DefaultComponent = const [];
-RenderComponentType renderType_DefaultComponent;
 
-class ViewDefaultComponent0 extends AppView<import2.DefaultComponent> {
+class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   Element _el_0;
+  static RenderComponentType renderType;
   ViewDefaultComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewDefaultComponent0,
-            renderType_DefaultComponent,
-            import4.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewDefaultComponent0, import4.ViewType.COMPONENT, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.None, styles_DefaultComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var doc = document;
@@ -636,38 +573,30 @@ class ViewDefaultComponent0 extends AppView<import2.DefaultComponent> {
   }
 }
 
-AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(
+AppView<import1.DefaultComponent> viewFactory_DefaultComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_DefaultComponent, null)) {
-    (renderType_DefaultComponent = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.None, styles_DefaultComponent));
-  }
   return new ViewDefaultComponent0(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_DefaultComponentHost = const [];
-RenderComponentType renderType_DefaultComponentHost;
 
 class ViewDefaultComponentHost0 extends AppView<dynamic> {
   Element _el_0;
-  AppView<import2.DefaultComponent> _compView_0;
-  import2.DefaultComponent _DefaultComponent_0_2;
+  AppView<import1.DefaultComponent> _compView_0;
+  import1.DefaultComponent _DefaultComponent_0_2;
+  static RenderComponentType renderType;
   ViewDefaultComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
-      : super(
-            ViewDefaultComponentHost0,
-            renderType_DefaultComponentHost,
-            import4.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            parentElement,
-            ChangeDetectionStrategy.CheckAlways);
+      : super(ViewDefaultComponentHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_DefaultComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('Default', rootSelector, null);
     _compView_0 = viewFactory_DefaultComponent0(this, 0, _el_0);
-    _DefaultComponent_0_2 = new import2.DefaultComponent();
+    _DefaultComponent_0_2 = new import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _DefaultComponent_0_2);
@@ -675,7 +604,7 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.DefaultComponent) &&
+    if ((identical(token, import1.DefaultComponent) &&
         (0 == requestNodeIndex))) {
       return _DefaultComponent_0_2;
     }
@@ -693,18 +622,13 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_DefaultComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_DefaultComponentHost, null)) {
-    (renderType_DefaultComponentHost = import7.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_DefaultComponentHost));
-  }
   return new ViewDefaultComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory DefaultComponentNgFactory = const ComponentFactory(
     'Default',
     viewFactory_DefaultComponentHost0,
-    import2.DefaultComponent,
+    import1.DefaultComponent,
     _METADATA);
 const _METADATA = const <dynamic>[
   CheckOnceComponent,

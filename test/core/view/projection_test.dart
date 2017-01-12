@@ -68,6 +68,30 @@ void main() {
       });
       expect(element, hasTextContent('(, BC)'));
     });
+
+    test("should support non emulated styles", () async {
+      var testBed = new NgTestBed<ContainerWithStyleNotEmulated>();
+      var testFixture = await testBed.create();
+      Element mainEl = testFixture.element;
+      var div1 = mainEl.childNodes.first;
+      var div2 = document.createElement('div');
+      div2.className = 'redStyle';
+      mainEl.append(div2);
+      expect(DOM.getComputedStyle(div1).color, 'rgb(255, 0, 0)');
+      expect(DOM.getComputedStyle(div2).color, 'rgb(255, 0, 0)');
+    });
+
+    test("should support emulated style encapsulation", () async {
+      var testBed = new NgTestBed<ContainerWithStyleEmulated>();
+      var testFixture = await testBed.create();
+      Element mainEl = testFixture.element;
+      var div1 = mainEl.childNodes.first;
+      var div2 = document.createElement('div');
+      div2.className = 'blueStyle';
+      mainEl.append(div2);
+      expect(DOM.getComputedStyle(div1).color, 'rgb(0, 0, 255)');
+      expect(DOM.getComputedStyle(div2).color, 'rgb(0, 0, 0)');
+    });
   });
 }
 
@@ -153,3 +177,19 @@ class ManualViewportDirective {
     vc.clear();
   }
 }
+
+@Component(
+    selector: 'container-with-style-emu',
+    template: '<div class=\"blueStyle\"></div>',
+    styles: const [".blueStyle { color: blue}"],
+    encapsulation: ViewEncapsulation.Emulated,
+    directives: const [SimpleComponent])
+class ContainerWithStyleEmulated {}
+
+@Component(
+    selector: 'container-with-style-not-emu',
+    template: '<div class=\"redStyle\"></div>',
+    styles: const [".redStyle { color: red}"],
+    encapsulation: ViewEncapsulation.None,
+    directives: const [SimpleComponent])
+class ContainerWithStyleNotEmulated {}

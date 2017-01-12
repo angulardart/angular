@@ -11,40 +11,46 @@ export 'view_annotation.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/core/linker/template_ref.dart';
 import 'package:angular2/src/common/directives/ng_if.dart';
-import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
-import 'view_annotation.dart' as import5;
+import 'view_annotation.dart' as import4;
 import 'package:angular2/src/core/linker/view_container.dart';
+import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/view_type.dart' as import8;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import10;
 import 'package:angular2/angular2.dart';
 import 'dart:html';
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import12;
 
 const List<dynamic> styles_TestFooComponent = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
   const StaticNodeDebugInfo(
       const [TemplateRef, NgIf], null, const <String, dynamic>{})
 ];
-RenderComponentType renderType_TestFooComponent;
 
-class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
+class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
   ViewContainer _appEl_0;
   dynamic _TemplateRef_0_3;
   NgIf _NgIf_0_4;
+  static RenderComponentType renderType;
   ViewTestFooComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewTestFooComponent0,
-            renderType_TestFooComponent,
             import8.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
             parentElement,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_TestFooComponent0);
+            nodeDebugInfos_TestFooComponent0) {
+    renderType ??= import10.appViewUtils.createRenderType(
+        'asset:angular2/test/source_gen/template_compiler/test_files/view_annotation.dart class TestFooComponent - inline template',
+        0,
+        ViewEncapsulation.None,
+        styles_TestFooComponent);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     final Node parentRenderNode = initViewRoot(parentElement);
     var _anchor_0 = new Comment('template bindings={}');
@@ -75,15 +81,8 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
   }
 }
 
-AppView<import5.TestFooComponent> viewFactory_TestFooComponent0(
+AppView<import4.TestFooComponent> viewFactory_TestFooComponent0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_TestFooComponent, null)) {
-    (renderType_TestFooComponent = import12.appViewUtils.createRenderComponentType(
-        'asset:angular2/test/source_gen/template_compiler/test_files/view_annotation.dart class TestFooComponent - inline template',
-        0,
-        ViewEncapsulation.None,
-        styles_TestFooComponent));
-  }
   return new ViewTestFooComponent0(parentView, parentIndex, parentElement);
 }
 
@@ -92,20 +91,21 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = const [
   null
 ];
 
-class ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
+class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
   Element _el_0;
   ViewTestFooComponent1(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewTestFooComponent1,
-            renderType_TestFooComponent,
             import8.ViewType.EMBEDDED,
             {},
             parentView,
             parentIndex,
             parentElement,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_TestFooComponent1);
+            nodeDebugInfos_TestFooComponent1) {
+    componentType = ViewTestFooComponent0.renderType;
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -118,38 +118,41 @@ class ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
   }
 }
 
-AppView<import5.TestFooComponent> viewFactory_TestFooComponent1(
+AppView<import4.TestFooComponent> viewFactory_TestFooComponent1(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
   return new ViewTestFooComponent1(parentView, parentIndex, parentElement);
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import5.TestFooComponent],
-      import5.TestFooComponent, const <String, dynamic>{})
+  const StaticNodeDebugInfo(const [import4.TestFooComponent],
+      import4.TestFooComponent, const <String, dynamic>{})
 ];
-RenderComponentType renderType_TestFooComponentHost;
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   Element _el_0;
-  AppView<import5.TestFooComponent> _compView_0;
-  import5.TestFooComponent _TestFooComponent_0_2;
+  AppView<import4.TestFooComponent> _compView_0;
+  import4.TestFooComponent _TestFooComponent_0_2;
+  static RenderComponentType renderType;
   ViewTestFooComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
             ViewTestFooComponentHost0,
-            renderType_TestFooComponentHost,
             import8.ViewType.HOST,
             {},
             parentView,
             parentIndex,
             parentElement,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_TestFooComponentHost0);
+            nodeDebugInfos_TestFooComponentHost0) {
+    renderType ??= import10.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_TestFooComponentHost);
+    setupComponentType(renderType);
+  }
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('test-foo', rootSelector, dbg(0, 0, 0));
     _compView_0 = viewFactory_TestFooComponent0(this, 0, _el_0);
-    _TestFooComponent_0_2 = new import5.TestFooComponent();
+    _TestFooComponent_0_2 = new import4.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _TestFooComponent_0_2);
@@ -157,7 +160,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import5.TestFooComponent) &&
+    if ((identical(token, import4.TestFooComponent) &&
         (0 == requestNodeIndex))) {
       return _TestFooComponent_0_2;
     }
@@ -175,18 +178,13 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_TestFooComponentHost0(
     AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  if (identical(renderType_TestFooComponentHost, null)) {
-    (renderType_TestFooComponentHost = import12.appViewUtils
-        .createRenderComponentType(
-            '', 0, ViewEncapsulation.Emulated, styles_TestFooComponentHost));
-  }
   return new ViewTestFooComponentHost0(parentView, parentIndex, parentElement);
 }
 
 const ComponentFactory TestFooComponentNgFactory = const ComponentFactory(
     'test-foo',
     viewFactory_TestFooComponentHost0,
-    import5.TestFooComponent,
+    import4.TestFooComponent,
     _METADATA);
 const _METADATA = const <dynamic>[TestFooComponent, const <dynamic>[]];
 var _visited = false;

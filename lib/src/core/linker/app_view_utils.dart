@@ -36,8 +36,9 @@ class AppViewUtils {
 
   AppViewUtils(@Inject(APP_ID) this._appId, this.sanitizer, this.eventManager);
 
-  /// Used by the generated code.
-  RenderComponentType createRenderComponentType(
+  /// Used by the generated code to initialize and share common rendering data
+  /// such as css across instances.
+  RenderComponentType createRenderType(
       String templateUrl,
       num slotCount,
       ViewEncapsulation encapsulation,
