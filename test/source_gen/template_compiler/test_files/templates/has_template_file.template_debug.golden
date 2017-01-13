@@ -145,5 +145,7 @@ void initReflector() {
   _ngRef.reflector.registerType(
       HasTemplateFileComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new HasTemplateFileComponent()));
+          const <dynamic>[HasTemplateFileComponentNgFactory],
+          const [],
+          () => new HasTemplateFileComponent()));
 }

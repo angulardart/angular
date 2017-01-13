@@ -358,14 +358,14 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       EmulatedComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new EmulatedComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[EmulatedComponentNgFactory],
+          const [], () => new EmulatedComponent()));
   _ngRef.reflector.registerType(
       NativeComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new NativeComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[NativeComponentNgFactory],
+          const [], () => new NativeComponent()));
   _ngRef.reflector.registerType(
       NoneComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new NoneComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[NoneComponentNgFactory],
+          const [], () => new NoneComponent()));
 }

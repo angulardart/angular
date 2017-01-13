@@ -812,30 +812,30 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       CheckOnceComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new CheckOnceComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[CheckOnceComponentNgFactory],
+          const [], () => new CheckOnceComponent()));
   _ngRef.reflector.registerType(
       CheckedComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new CheckedComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[CheckedComponentNgFactory],
+          const [], () => new CheckedComponent()));
   _ngRef.reflector.registerType(
       CheckAlwaysComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new CheckAlwaysComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[CheckAlwaysComponentNgFactory],
+          const [], () => new CheckAlwaysComponent()));
   _ngRef.reflector.registerType(
       DetachedComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new DetachedComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[DetachedComponentNgFactory],
+          const [], () => new DetachedComponent()));
   _ngRef.reflector.registerType(
       OnPushComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new OnPushComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[OnPushComponentNgFactory],
+          const [], () => new OnPushComponent()));
   _ngRef.reflector.registerType(
       StatefulComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new StatefulComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[StatefulComponentNgFactory],
+          const [], () => new StatefulComponent()));
   _ngRef.reflector.registerType(
       DefaultComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new DefaultComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[DefaultComponentNgFactory],
+          const [], () => new DefaultComponent()));
 }

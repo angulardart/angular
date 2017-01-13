@@ -253,14 +253,14 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       TestFooComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new TestFooComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[TestFooComponentNgFactory],
+          const [], () => new TestFooComponent()));
   _ngRef.reflector.registerType(
       TestDirective,
       new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new TestDirective()));
   _ngRef.reflector.registerType(
       TestSubComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new TestSubComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[TestSubComponentNgFactory],
+          const [], () => new TestSubComponent()));
 }

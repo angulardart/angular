@@ -137,6 +137,6 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       TestSubComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new TestSubComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[TestSubComponentNgFactory],
+          const [], () => new TestSubComponent()));
 }

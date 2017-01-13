@@ -230,6 +230,6 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       TestFooComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new TestFooComponent()));
+      new _ngRef.ReflectionInfo(const <dynamic>[TestFooComponentNgFactory],
+          const [], () => new TestFooComponent()));
 }
