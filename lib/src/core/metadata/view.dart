@@ -21,9 +21,3 @@ enum ViewEncapsulation {
   /// Don't provide any template or style encapsulation.
   None
 }
-
-var VIEW_ENCAPSULATION_VALUES = [
-  ViewEncapsulation.Emulated,
-  ViewEncapsulation.Native,
-  ViewEncapsulation.None
-];
