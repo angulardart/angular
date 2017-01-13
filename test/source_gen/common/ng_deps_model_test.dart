@@ -13,8 +13,8 @@ void main() {
     });
 
     group('single reflection model', () {
-      var ngDepsModel =
-          new NgDepsModel(reflectables: [new ReflectionInfoModel(name: 'Foo')]);
+      var ngDepsModel = new NgDepsModel(
+          reflectables: [new ReflectionInfoModel(type: reference('Foo'))]);
       test('local metadata map', () {
         expectLocalMetadataMap(ngDepsModel,
             'const _METADATA = const <dynamic>[Foo, const <dynamic>[]];\n');
@@ -39,8 +39,8 @@ void main() {
 
     group('multiple reflection models', () {
       var ngDepsModel = new NgDepsModel(reflectables: [
-        new ReflectionInfoModel(name: 'Foo'),
-        new ReflectionInfoModel(name: 'Bar')
+        new ReflectionInfoModel(type: reference('Foo')),
+        new ReflectionInfoModel(type: reference('Bar'))
       ]);
       test('local metadata map', () {
         expectLocalMetadataMap(
@@ -72,7 +72,7 @@ void main() {
 
     group('is function', () {
       var ngDepsModel = new NgDepsModel(reflectables: [
-        new ReflectionInfoModel(name: 'Foo', isFunction: true)
+        new ReflectionInfoModel(type: reference('Foo'), isFunction: true)
       ]);
       test('local metadata map', () {
         expectLocalMetadataMap(ngDepsModel,
