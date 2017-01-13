@@ -146,8 +146,6 @@ var NG_CORE = [
   'ReflectiveDependency',
   'DependencyMetadata',
   'Directive',
-  'Provides',
-  'ProviderProperty',
   'SkipAngularInitCheck',
   'DynamicComponentLoader',
   'ElementRef',

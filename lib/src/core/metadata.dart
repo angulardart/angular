@@ -3,8 +3,8 @@ import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'metadata/di.dart';
 import 'metadata/view.dart';
 
-export './metadata/view.dart' hide VIEW_ENCAPSULATION_VALUES;
 export 'metadata/di.dart';
+export 'metadata/view.dart';
 export 'metadata/lifecycle_hooks.dart'
     show
         AfterContentInit,
@@ -1523,24 +1523,6 @@ class HostListener {
   final String eventName;
   final List<String> args;
   const HostListener(this.eventName, [this.args]);
-}
-
-/// Defines an injectable whose value is given by a property on an
-/// InjectorModule class.
-///
-/// ## Example
-///
-/// ```dart
-/// @InjectorModule()
-/// class MyModule {
-///   @Provides(SomeToken)
-///   String someProp = 'Hello World';
-/// }
-/// ```
-/// @experimental
-class Provides extends ProviderProperty {
-  const Provides(dynamic token, {bool multi: false})
-      : super(token, multi: multi);
 }
 
 /// Marks a deferred import as not needing explicit angular initialization.

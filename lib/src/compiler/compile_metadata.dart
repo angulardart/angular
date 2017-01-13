@@ -3,8 +3,7 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy;
 import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks, LIFECYCLE_HOOKS_VALUES;
-import "package:angular2/src/core/metadata/view.dart"
-    show ViewEncapsulation, VIEW_ENCAPSULATION_VALUES;
+import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compiler_utils.dart";
@@ -406,7 +405,7 @@ class CompileTypeMetadata
         value: data["value"],
         diDeps:
             _arrayFromJson(data["diDeps"], CompileDiDependencyMetadata.fromJson)
-            as List<CompileDiDependencyMetadata>);
+                as List<CompileDiDependencyMetadata>);
   }
 
   @override
@@ -450,7 +449,7 @@ class CompileQueryMetadata {
     return new CompileQueryMetadata(
         selectors:
             _arrayFromJson(data["selectors"], CompileTokenMetadata.fromJson)
-            as List<CompileTokenMetadata>,
+                as List<CompileTokenMetadata>,
         descendants: data["descendants"],
         first: data["first"],
         propertyName: data["propertyName"],
@@ -495,7 +494,7 @@ class CompileTemplateMetadata {
   static CompileTemplateMetadata fromJson(Map<String, dynamic> data) {
     return new CompileTemplateMetadata(
         encapsulation: data["encapsulation"] != null
-            ? VIEW_ENCAPSULATION_VALUES[data["encapsulation"]]
+            ? ViewEncapsulation.values[data["encapsulation"]]
             : data["encapsulation"],
         template: data["template"],
         templateUrl: data["templateUrl"],
@@ -678,7 +677,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
             as List<CompileQueryMetadata>,
         viewQueries:
             _arrayFromJson(data["viewQueries"], CompileQueryMetadata.fromJson)
-            as List<CompileQueryMetadata>);
+                as List<CompileQueryMetadata>);
   }
 
   @override
