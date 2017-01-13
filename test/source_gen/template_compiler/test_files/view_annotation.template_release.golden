@@ -20,7 +20,9 @@ import 'package:angular2/angular2.dart';
 import 'dart:html';
 import 'package:angular2/src/core/linker/template_ref.dart';
 
-const List<dynamic> styles_TestFooComponent = const [];
+const List<dynamic> styles_TestFooComponent = const [
+  'div._ngcontent-%COMP% { font-size: 10px; }'
+];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ViewContainer _appEl_0;
@@ -32,7 +34,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
       : super(ViewTestFooComponent0, import5.ViewType.COMPONENT, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.None, styles_TestFooComponent);
+        '', 0, ViewEncapsulation.Emulated, styles_TestFooComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -79,6 +81,7 @@ class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
   ComponentRef createInternal(dynamic rootSelector) {
     var doc = document;
     _el_0 = doc.createElement('div');
+    addShimC(_el_0);
     Text _text_1 = new Text('Foo');
     _el_0.append(_text_1);
     init([_el_0], [_el_0, _text_1], []);

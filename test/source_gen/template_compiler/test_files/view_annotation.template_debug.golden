@@ -22,7 +22,9 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import10;
 import 'package:angular2/angular2.dart';
 import 'dart:html';
 
-const List<dynamic> styles_TestFooComponent = const [];
+const List<dynamic> styles_TestFooComponent = const [
+  'div._ngcontent-%COMP% { font-size: 10px; }'
+];
 const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
   const StaticNodeDebugInfo(
       const [TemplateRef, NgIf], null, const <String, dynamic>{})
@@ -47,7 +49,7 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
     renderType ??= import10.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/view_annotation.dart class TestFooComponent - inline template',
         0,
-        ViewEncapsulation.None,
+        ViewEncapsulation.Emulated,
         styles_TestFooComponent);
     setupComponentType(renderType);
   }
@@ -110,6 +112,7 @@ class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
     var doc = document;
     _el_0 = doc.createElement('div');
     dbgElm(_el_0, 0, 0, 0);
+    addShimC(_el_0);
     Text _text_1 = new Text('Foo');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 18);

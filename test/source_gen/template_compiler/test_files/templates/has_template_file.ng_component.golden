@@ -35,7 +35,9 @@ final String output = """[
         "template": null,
         "templateUrl": "has_template_file.html",
         "styles": [],
-        "styleUrls": [],
+        "styleUrls": [
+          "has_template_file.css"
+        ],
         "ngContentSelectors": []
       },
       "providers": [],

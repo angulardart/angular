@@ -34,7 +34,9 @@ final String output = """[
         "encapsulation": 0,
         "template": "<div *ngIf=\"true\">Foo</div>",
         "templateUrl": null,
-        "styles": [],
+        "styles": [
+          "div { font-size: 10px; }"
+        ],
         "styleUrls": [],
         "ngContentSelectors": []
       },
