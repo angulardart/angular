@@ -8,10 +8,12 @@ import 'package:angular2/src/source_gen/common/annotation_model.dart';
 import 'package:angular2/src/source_gen/common/namespace_model.dart';
 import 'package:angular2/src/source_gen/common/ng_deps_model.dart';
 import 'package:angular2/src/source_gen/common/parameter_model.dart';
+import 'package:angular2/src/source_gen/common/references.dart';
 import 'package:angular2/src/source_gen/common/reflection_info_model.dart';
 import 'package:angular2/src/source_gen/template_compiler/compile_type.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:build/build.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:logging/logging.dart';
 
 /// Create an [NgDepsModel] for the [LibraryElement] supplied.
@@ -83,7 +85,8 @@ class ReflectableVisitor extends RecursiveElementVisitor {
     if (constructor == null) return;
     _reflectables.add(new ReflectionInfoModel(
         isFunction: false,
-        name: compileType.name,
+        // TODO(alorenzen): Add import from source file, for proper scoping.
+        type: reference(compileType.name),
         ctorName: constructor.name,
         parameters: _parameters(constructor),
         annotations: _annotations(element.metadata),
@@ -95,7 +98,8 @@ class ReflectableVisitor extends RecursiveElementVisitor {
     if (annotation_matcher.isInjectable(element)) {
       _reflectables.add(new ReflectionInfoModel(
           isFunction: true,
-          name: element.name,
+          // TODO(alorenzen): Add import from source file, for proper scoping.
+          type: reference(element.name),
           parameters: _parameters(element),
           annotations: _annotations(element.metadata)));
     }
@@ -141,8 +145,9 @@ class ReflectableVisitor extends RecursiveElementVisitor {
           .toList();
 
   // TODO(alorenzen): Verify that this works for interfaces of superclasses.
-  List<String> _interfaces(ClassElement element) =>
-      element.interfaces.map((interface) => interface.name).toList();
+  List<ReferenceBuilder> _interfaces(ClassElement element) => element.interfaces
+      .map((interface) => toBuilder(interface, element.library.imports))
+      .toList();
 
   List<AnnotationModel> _annotations(List<ElementAnnotation> metadata) =>
       metadata

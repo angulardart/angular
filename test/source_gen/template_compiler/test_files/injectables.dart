@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:angular2/angular2.dart';
 
 @Component(
@@ -29,4 +31,4 @@ class InjectableService {}
 const testToken = const OpaqueToken('test');
 
 @Injectable()
-bool injectableFactory(String value) => value != null;
+bool injectableFactory(html.Window value) => value != null;

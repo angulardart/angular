@@ -7,6 +7,7 @@
 
 import 'injectables.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'dart:html' as html;
 export 'injectables.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
@@ -156,7 +157,7 @@ void initReflector() {
       new _ngRef.ReflectionInfo(const <dynamic>[
         const Injectable()
       ], const [
-        const <dynamic>[String]
+        const <dynamic>[html.Window]
       ]));
   _ngRef.reflector.registerType(
       InjectableComponent,
