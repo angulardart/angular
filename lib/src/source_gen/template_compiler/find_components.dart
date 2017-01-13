@@ -184,11 +184,17 @@ class ComponentVisitor
           orElse: () => null);
 
   CompileTemplateMetadata _createTemplateMetadata(DartObject component,
-          {DartObject view}) =>
-      new CompileTemplateMetadata(
-          encapsulation: _encapsulation(view ?? component),
-          template: coerceString(view ?? component, 'template'),
-          templateUrl: coerceString(view ?? component, 'templateUrl'));
+      {DartObject view}) {
+    var template = view ?? component;
+    return new CompileTemplateMetadata(
+        encapsulation: _encapsulation(template),
+        template: coerceString(template, 'template'),
+        templateUrl: coerceString(template, 'templateUrl'),
+        styles: coerceStringList(template, 'styles'),
+        styleUrls: coerceStringList(template, 'styleUrls'),
+        preserveWhitespace:
+            coerceBool(component, 'preserveWhitespace', defaultValue: true));
+  }
 
   ViewEncapsulation _encapsulation(DartObject value) => coerceEnumValue(value,
       'encapsulation', ViewEncapsulation.values, ViewEncapsulation.Emulated);
