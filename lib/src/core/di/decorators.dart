@@ -186,7 +186,7 @@ class Self {
 /// expect(() => inj.get(NeedsDependency), throws);
 /// ```
 class SkipSelf {
-  const SkipSelf() : super();
+  const SkipSelf();
 }
 
 /// Specifies that an injector should retrieve a dependency from any injector
