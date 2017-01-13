@@ -142,7 +142,9 @@ void initReflector() {
   _ngRef.reflector.registerType(
       InjectableComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[],
+          const <dynamic>[
+            InjectableComponentNgFactory
+          ],
           const [
             const <dynamic>[BaseService, Attribute, optional],
             const <dynamic>[InjectableService, Optional],

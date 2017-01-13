@@ -89,7 +89,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
         type: reference(compileType.name),
         ctorName: constructor.name,
         parameters: _parameters(constructor),
-        annotations: _annotations(element.metadata),
+        annotations: _annotationsFor(element),
         interfaces: _interfaces(element)));
   }
 
@@ -148,6 +148,20 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   List<ReferenceBuilder> _interfaces(ClassElement element) => element.interfaces
       .map((interface) => toBuilder(interface, element.library.imports))
       .toList();
+
+  /// Finds all annotations for the [element] that need to be registered with
+  /// the reflector.
+  ///
+  /// Additionally, for each compiled template, add the compiled template class
+  /// as an Annotation.
+  List<AnnotationModel> _annotationsFor(ClassElement element) {
+    var annotations = _annotations(element.metadata);
+    if (element.metadata.any(annotation_matcher.isComponent)) {
+      annotations.add(new AnnotationModel(
+          name: '${element.name}NgFactory', isConstObject: true));
+    }
+    return annotations;
+  }
 
   List<AnnotationModel> _annotations(List<ElementAnnotation> metadata) =>
       metadata
