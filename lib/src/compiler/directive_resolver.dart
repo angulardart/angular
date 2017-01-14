@@ -133,7 +133,6 @@ class DirectiveResolver {
           outputs: mergedOutputs,
           host: mergedHost,
           exportAs: dm.exportAs,
-          moduleId: dm.moduleId,
           queries: mergedQueries,
           changeDetection: dm.changeDetection,
           providers: dm.providers,

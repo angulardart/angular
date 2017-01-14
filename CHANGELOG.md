@@ -56,6 +56,7 @@ class MyComponent {
   Function clickHandler;
 }
 ```
+      * Removed `Component.moduleId', which was unused.
   * Deprecations
       * `Iterable|KeyValue`Differs is deprecated. The cost of looking up to see
         if a custom differ is available is too high for almost no use. Before
