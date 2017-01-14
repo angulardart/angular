@@ -6,7 +6,9 @@ import 'compile_metadata.dart'
         CompileDirectiveMetadata,
         CompileTokenMetadata,
         CompileProviderMetadata;
-import 'expression_parser/ast.dart' show AST;
+import 'expression_parser/ast.dart'
+    show AST, ASTWithSource, ImplicitReceiver, MethodCall, PropertyRead;
+import 'view_compiler/constants.dart';
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
 abstract class TemplateAst {
@@ -65,6 +67,8 @@ class BoundElementPropertyAst implements TemplateAst {
   }
 }
 
+enum HandlerType { simpleNoArgs, simpleOneArg, notSimple }
+
 /// A binding for an element event (e.g. (event)='handler()').
 class BoundEventAst implements TemplateAst {
   String name;
@@ -73,6 +77,49 @@ class BoundEventAst implements TemplateAst {
   BoundEventAst(this.name, this.handler, this.sourceSpan);
   dynamic visit(TemplateAstVisitor visitor, dynamic context) {
     return visitor.visitEvent(this, context);
+  }
+
+  /// Classifies this event binding by it's form.
+  ///
+  /// The simple form looks like
+  ///
+  ///     (event)="handler($event)"
+  ///
+  /// or
+  ///
+  ///     (event)="handler()"
+  ///
+  /// Since these types of handlers are so common, we can optimize the code
+  /// generated for them.
+  HandlerType get handlerType {
+    var eventHandler = handler;
+    if (eventHandler is ASTWithSource) {
+      eventHandler = (eventHandler as ASTWithSource).ast;
+    }
+    if (eventHandler is! MethodCall) {
+      return HandlerType.notSimple;
+    }
+    var call = eventHandler as MethodCall;
+    if (call.receiver is! ImplicitReceiver) {
+      return HandlerType.notSimple;
+    }
+    if (call.args.isEmpty) {
+      return HandlerType.simpleNoArgs;
+    }
+    if (call.args.length != 1) {
+      return HandlerType.notSimple;
+    }
+    var singleArg = call.args.single;
+    if (singleArg is! PropertyRead) {
+      return HandlerType.notSimple;
+    }
+    var property = singleArg as PropertyRead;
+    if (property.name == EventHandlerVars.event.name &&
+        property.receiver is ImplicitReceiver) {
+      return HandlerType.simpleOneArg;
+    } else {
+      return HandlerType.notSimple;
+    }
   }
 }
 

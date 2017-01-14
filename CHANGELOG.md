@@ -45,6 +45,17 @@ set value(String value) {
 
       * Removed `NgPlural`, deprecated as-of 2.1.0
       * Removed `ObservableListDiffFactory`, deprecated as-of 2.1.0
+      * Event handlers are bound at initialization time. Therefore, the
+        following will no longer work, because `clickHandler` is `null` during
+        initialization.
+```dart
+@Component(
+    selector: 'my-component',
+    template: '<div (click)="clickHandler($event)"></div>')
+class MyComponent {
+  Function clickHandler;
+}
+```
   * Deprecations
       * `Iterable|KeyValue`Differs is deprecated. The cost of looking up to see
         if a custom differ is available is too high for almost no use. Before

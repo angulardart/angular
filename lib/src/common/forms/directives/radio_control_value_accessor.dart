@@ -73,7 +73,7 @@ class RadioButtonState {
 @Directive(
     selector:
         "input[type=radio][ngControl],input[type=radio][ngFormControl],input[type=radio][ngModel]",
-    host: const {"(change)": "onChange()", "(blur)": "onTouched()"},
+    host: const {"(change)": "changeHandler()", "(blur)": "touchHandler()"},
     providers: const [RADIO_VALUE_ACCESSOR])
 class RadioControlValueAccessor
     implements ControlValueAccessor, OnDestroy, OnInit {
@@ -85,6 +85,14 @@ class RadioControlValueAccessor
   @Input()
   String name;
   Function _fn;
+  void changeHandler() {
+    onChange();
+  }
+
+  void touchHandler() {
+    onTouched();
+  }
+
   var onChange = () {};
   var onTouched = () {};
   RadioControlValueAccessor(this._elementRef, this._registry, this._injector);

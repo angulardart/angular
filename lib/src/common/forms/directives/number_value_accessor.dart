@@ -19,7 +19,7 @@ const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     host: const {
       "(change)": "onChange(\$event.target.value)",
       "(input)": "onChange(\$event.target.value)",
-      "(blur)": "onTouched()"
+      "(blur)": "touchHandler()"
     },
     providers: const [
       NUMBER_VALUE_ACCESSOR
@@ -27,6 +27,10 @@ const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 class NumberValueAccessor implements ControlValueAccessor {
   ElementRef _elementRef;
   var onChange = (_) {};
+  void touchHandler() {
+    onTouched();
+  }
+
   var onTouched = () {};
   NumberValueAccessor(this._elementRef);
   @override

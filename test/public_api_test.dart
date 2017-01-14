@@ -84,6 +84,7 @@ var NG_COMPILER = [
   'BoundDirectivePropertyAst',
   'BoundElementPropertyAst',
   'BoundEventAst',
+  'HandlerType',
   'BoundTextAst',
   'COMPILER_PROVIDERS',
   'CompileDirectiveMetadata',
