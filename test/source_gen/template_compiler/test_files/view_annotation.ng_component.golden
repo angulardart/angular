@@ -38,7 +38,8 @@ final String output = """[
           "div { font-size: 10px; }"
         ],
         "styleUrls": [],
-        "ngContentSelectors": []
+        "ngContentSelectors": [],
+        "preserveWhitespace": false
       },
       "providers": [],
       "viewProviders": [],

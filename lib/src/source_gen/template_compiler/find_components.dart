@@ -5,12 +5,14 @@ import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/core/change_detection/constants.dart';
 import 'package:angular2/src/core/metadata.dart';
+import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular2/src/source_gen/template_compiler/compile_type.dart';
 import 'package:angular2/src/source_gen/template_compiler/pipe_visitor.dart';
 import 'package:build/build.dart';
 import 'package:logging/logging.dart';
+import 'package:source_gen/src/annotation.dart';
 
 import 'dart_object_utils.dart';
 
@@ -136,7 +138,7 @@ class ComponentVisitor
           _addPropertyToType(_outputs, annotation, element);
         } else {
           _logger.severe('@Output can only be used on a getter or a field, but '
-              'was foundon $element.');
+              'was found on $element.');
         }
       }
     }
@@ -151,6 +153,23 @@ class ComponentVisitor
         : element.displayName);
   }
 
+  List<LifecycleHooks> _extractLifecycleHooks(ClassElement clazz) {
+    const hooks = const <Type, LifecycleHooks>{
+      OnInit: LifecycleHooks.OnInit,
+      OnDestroy: LifecycleHooks.OnDestroy,
+      DoCheck: LifecycleHooks.DoCheck,
+      OnChanges: LifecycleHooks.OnChanges,
+      AfterContentInit: LifecycleHooks.AfterContentInit,
+      AfterContentChecked: LifecycleHooks.AfterContentChecked,
+      AfterViewInit: LifecycleHooks.AfterViewInit,
+      AfterViewChecked: LifecycleHooks.AfterViewChecked,
+    };
+    return hooks.keys
+        .where((hook) => clazz.interfaces.any((t) => matchTypes(hook, t)))
+        .map((t) => hooks[t])
+        .toList();
+  }
+
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
       ElementAnnotation annotation, ClassElement element) {
     var value = annotation.computeConstantValue();
@@ -159,8 +178,10 @@ class ComponentVisitor
         ? _createTemplateMetadata(value,
             view: _findView(element)?.computeConstantValue())
         : null;
-    var inputs = coerceStringList(value, 'inputs')..addAll(_inputs);
-    var outputs = coerceStringList(value, 'outputs')..addAll(_outputs);
+    var inputs = new List<String>.from(coerceStringList(value, 'inputs'))
+      ..addAll(_inputs);
+    var outputs = new List<String>.from(coerceStringList(value, 'outputs'))
+      ..addAll(_outputs);
     return CompileDirectiveMetadata.create(
         type: element.accept(new CompileTypeMetadataVisitor()),
         isComponent: isComponent,
@@ -170,7 +191,7 @@ class ComponentVisitor
         inputs: inputs,
         outputs: outputs,
         host: {},
-        lifecycleHooks: isComponent ? [] : null,
+        lifecycleHooks: _extractLifecycleHooks(element),
         providers: [],
         viewProviders: isComponent ? [] : null,
         queries: [],
@@ -193,15 +214,20 @@ class ComponentVisitor
         styles: coerceStringList(template, 'styles'),
         styleUrls: coerceStringList(template, 'styleUrls'),
         preserveWhitespace:
-            coerceBool(component, 'preserveWhitespace', defaultValue: true));
+            coerceBool(component, 'preserveWhitespace', defaultTo: true));
   }
 
-  ViewEncapsulation _encapsulation(DartObject value) => coerceEnumValue(value,
-      'encapsulation', ViewEncapsulation.values, ViewEncapsulation.Emulated);
+  ViewEncapsulation _encapsulation(DartObject value) => coerceEnum(
+        value,
+        'encapsulation',
+        ViewEncapsulation.values,
+        defaultTo: ViewEncapsulation.Emulated,
+      );
 
-  ChangeDetectionStrategy _changeDetection(DartObject value) => coerceEnumValue(
-      value,
-      'changeDetection',
-      ChangeDetectionStrategy.values,
-      ChangeDetectionStrategy.Default);
+  ChangeDetectionStrategy _changeDetection(DartObject value) => coerceEnum(
+        value,
+        'changeDetection',
+        ChangeDetectionStrategy.values,
+        defaultTo: ChangeDetectionStrategy.Default,
+      );
 }

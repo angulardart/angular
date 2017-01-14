@@ -4,5 +4,8 @@
 packages
 pubspec.lock
 
+# Created by pkg/build_runner
+.dart_tool
+
 # Directory created by dartdoc
 doc/api/
