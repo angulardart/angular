@@ -177,18 +177,15 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
   dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context,
       {bool checkForNull: false}) {
     _ExecutionContext ctx = context;
-    var value = expr.value.visitExpression(this, ctx);
     var currCtx = ctx;
     while (currCtx != null) {
       if (currCtx.vars.containsKey(expr.name)) {
-        if (checkForNull) {
-          if (currCtx.vars[expr.name] == null) {
-            currCtx.vars[expr.name] = value;
-          }
-        } else {
+        if (checkForNull == false || (currCtx.vars[expr.name] == null)) {
+          var value = expr.value.visitExpression(this, ctx);
           currCtx.vars[expr.name] = value;
+          return value;
         }
-        return value;
+        return currCtx.vars[expr.name];
       }
       currCtx = currCtx.parent;
     }
@@ -206,6 +203,7 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     if (expr.checkIfNull == false || ctx.staticVars[varName] == null) {
       var value = expr.value.visitExpression(this, ctx);
       ctx.staticVars[varName] = value;
+      return value;
     }
     return ctx.staticVars[varName];
   }
