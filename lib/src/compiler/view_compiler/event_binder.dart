@@ -1,6 +1,6 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show BoundEventAst, DirectiveAst;
+import '../template_ast.dart' show BoundEventAst, DirectiveAst, HandlerType;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
@@ -19,6 +19,9 @@ class CompileEventListener {
   String eventName;
   CompileMethod _method;
   bool _hasComponentHostListener = false;
+  bool _isSimple = true;
+  HandlerType _handlerType = HandlerType.notSimple;
+  o.Expression _simpleHandler;
   String _methodName;
   o.FnParam _eventParam;
   List<o.Expression> _actionResultExprs = <o.Expression>[];
@@ -52,6 +55,11 @@ class CompileEventListener {
 
   void addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
       o.Expression directiveInstance) {
+    if (_isSimple) {
+      _handlerType = hostEvent.handlerType;
+      _isSimple =
+          _actionResultExprs.isEmpty && _handlerType != HandlerType.notSimple;
+    }
     if (directive != null && directive.isComponent) {
       _hasComponentHostListener = true;
     }
@@ -66,6 +74,9 @@ class CompileEventListener {
     if (lastIndex >= 0) {
       var lastStatement = actionStmts[lastIndex];
       var returnExpr = convertStmtIntoExpression(lastStatement);
+      if (_isSimple) {
+        _simpleHandler = _extractFunction(returnExpr);
+      }
       var preventDefaultVar = o.variable('pd_${_actionResultExprs.length}');
       _actionResultExprs.add(preventDefaultVar);
       if (returnExpr != null) {
@@ -80,6 +91,10 @@ class CompileEventListener {
   }
 
   void finishMethod() {
+    // If this is a simple event binding, we don't need to generate a method.
+    if (_isSimple) {
+      return;
+    }
     var markPathToRootStart =
         _hasComponentHostListener ? compileElement.compViewExpr : o.THIS_EXPR;
     o.Expression resultExpr = o.literal(true);
@@ -101,8 +116,18 @@ class CompileEventListener {
   }
 
   void listenToRenderer() {
-    var eventListener = new o.InvokeMemberMethodExpr(
-        'evt', [new o.ReadClassMemberExpr(_methodName)]);
+    o.Expression eventListener;
+    if (!_isSimple) {
+      eventListener = new o.InvokeMemberMethodExpr(
+          'evt', [new o.ReadClassMemberExpr(_methodName)]);
+    } else {
+      var appView =
+          _hasComponentHostListener ? compileElement.compViewExpr : o.THIS_EXPR;
+      var handler = _simpleHandler;
+      eventListener = appView.callMethod(
+          'eventHandler${_handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
+          [handler]);
+    }
 
     o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
       this.compileElement.renderNode,
@@ -110,8 +135,7 @@ class CompileEventListener {
       eventListener
     ]);
 
-    compileElement.view.createMethod
-        .addStmt(new o.ExpressionStatement(listenExpr));
+    compileElement.view.createMethod.addStmt(listenExpr.toStmt());
   }
 
   void listenToDirective(
@@ -119,8 +143,18 @@ class CompileEventListener {
     var subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
-    var eventListener = new o.InvokeMemberMethodExpr(
-        'evt', [new o.ReadClassMemberExpr(_methodName)]);
+    o.Expression eventListener;
+    if (!_isSimple) {
+      eventListener = new o.InvokeMemberMethodExpr(
+          'evt', [new o.ReadClassMemberExpr(_methodName)]);
+    } else {
+      var appView =
+          _hasComponentHostListener ? compileElement.compViewExpr : o.THIS_EXPR;
+      var handler = _simpleHandler;
+      eventListener = appView.callMethod(
+          'eventHandler${_handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
+          [handler]);
+    }
     this.compileElement.view.createMethod.addStmt(subscription
         .set(directiveInstance
             .prop(observablePropName)
@@ -188,4 +222,10 @@ final RegExp _eventNameRegExp = new RegExp(r'[^a-zA-Z_]');
 
 String sanitizeEventName(String name) {
   return name.replaceAll(_eventNameRegExp, '_');
+}
+
+o.Expression _extractFunction(o.Expression returnExpr) {
+  assert(returnExpr is o.InvokeMethodExpr);
+  var callExpr = returnExpr as o.InvokeMethodExpr;
+  return new o.ReadPropExpr(callExpr.receiver, callExpr.name);
 }

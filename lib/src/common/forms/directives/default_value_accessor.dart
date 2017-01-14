@@ -17,7 +17,7 @@ const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
         "input:not([type=checkbox])[ngControl],textarea[ngControl],input:not([type=checkbox])[ngFormControl],textarea[ngFormControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]",
     host: const {
       "(input)": "onChange(\$event.target.value)",
-      "(blur)": "onTouched()"
+      "(blur)": "touchHandler()"
     },
     providers: const [
       DEFAULT_VALUE_ACCESSOR
@@ -25,6 +25,10 @@ const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 class DefaultValueAccessor implements ControlValueAccessor {
   ElementRef _elementRef;
   var onChange = (dynamic _) {};
+  void touchHandler() {
+    onTouched();
+  }
+
   var onTouched = () {};
   DefaultValueAccessor(this._elementRef);
   @override

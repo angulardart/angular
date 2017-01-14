@@ -2216,6 +2216,8 @@ class MyComp {
   throwError() {
     throw "boom";
   }
+
+  doNothing() {}
 }
 
 @Component(

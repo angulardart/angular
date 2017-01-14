@@ -32,7 +32,7 @@ String _extractId(String valueString) => valueString.split(":")[0];
     selector: "select[ngControl],select[ngFormControl],select[ngModel]",
     host: const {
       "(change)": "onChange(\$event.target.value)",
-      "(blur)": "onTouched()"
+      "(blur)": "touchHandler()"
     },
     providers: const [
       SELECT_VALUE_ACCESSOR
@@ -43,6 +43,11 @@ class SelectControlValueAccessor implements ControlValueAccessor {
   Map<String, dynamic> _optionMap = new Map<String, dynamic>();
   num _idCounter = 0;
   var onChange = (dynamic _) {};
+
+  void touchHandler() {
+    onTouched();
+  }
+
   var onTouched = () {};
   SelectControlValueAccessor(this._elementRef);
 

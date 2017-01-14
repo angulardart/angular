@@ -53,7 +53,7 @@ class AccessorTestComponent {
 
 @Directive(selector: "input[integer]", host: const {
   "(input)": "onChange(\$event.target.value)",
-  "(blur)": "onTouched()"
+  "(blur)": "touchHandler()"
 }, providers: const [
   const Provider(NG_VALUE_ACCESSOR, useExisting: IntValueAccessor, multi: true),
   const Provider(NG_VALIDATORS, useExisting: IntValueAccessor, multi: true)
@@ -61,6 +61,11 @@ class AccessorTestComponent {
 class IntValueAccessor implements ControlValueAccessor, Validator {
   ElementRef _elementRef;
   var onChange = (dynamic _) {};
+
+  void touchHandler() {
+    onTouched();
+  }
+
   var onTouched = () {};
   IntValueAccessor(this._elementRef);
   @override

@@ -496,6 +496,20 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
+  dynamic eventHandler0(handler) {
+    return (_) {
+      this.markPathToRootAsCheckOnce();
+      return !identical(handler() as dynamic, false);
+    };
+  }
+
+  dynamic eventHandler1(handler) {
+    return (event) {
+      this.markPathToRootAsCheckOnce();
+      return !identical(handler(event) as dynamic, false);
+    };
+  }
+
   Function listen(dynamic renderElement, String name, Function callback) {
     return appViewUtils.eventManager.addEventListener(renderElement, name,
         (Event event) {
