@@ -1,4 +1,3 @@
-import "package:angular2/src/compiler/url_resolver.dart" show getUrlScheme;
 import "package:angular2/src/core/di.dart" show Injectable, Inject, Optional;
 import "package:angular2/src/core/di/decorators.dart";
 import "package:angular2/src/core/di/provider.dart" show Provider;
@@ -15,7 +14,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show stringify;
 
 import "compile_metadata.dart" as cpl;
-import "compiler_utils.dart" show MODULE_SUFFIX, sanitizeIdentifier;
+import "compiler_utils.dart" show sanitizeIdentifier;
 import "directive_lifecycle_reflector.dart" show hasLifecycleHook;
 import "directive_resolver.dart" show DirectiveResolver;
 import "pipe_resolver.dart" show PipeResolver;
@@ -321,14 +320,5 @@ void flattenArray(
 
 bool isValidType(Object value) => value is Type;
 
-String calcModuleUrl(Type type, Component cmpMetadata) {
-  var moduleId = cmpMetadata.moduleId;
-  if (moduleId != null) {
-    var scheme = getUrlScheme(moduleId);
-    return scheme != null && scheme.length > 0
-        ? moduleId
-        : '''package:${ moduleId}${ MODULE_SUFFIX}''';
-  } else {
-    return reflector.importUri(type);
-  }
-}
+String calcModuleUrl(Type type, Component cmpMetadata) =>
+    reflector.importUri(type);

@@ -17,7 +17,6 @@ import 'package:angular2/core.dart'
         AfterViewChecked,
         SimpleChange,
         provide;
-import 'package:angular2/src/compiler/compiler_utils.dart' show MODULE_SUFFIX;
 import 'package:angular2/src/compiler/runtime_metadata.dart'
     show RuntimeMetadataResolver;
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
@@ -42,7 +41,6 @@ void main() {
         expect(meta.isComponent, isTrue);
         expect(meta.type.runtime, ComponentWithEverything);
         expect(meta.type.name, stringify(ComponentWithEverything));
-        expect(meta.type.moduleUrl, 'package:someModuleId${ MODULE_SUFFIX}');
         expect(meta.lifecycleHooks, LIFECYCLE_HOOKS_VALUES);
         expect(meta.changeDetection, ChangeDetectionStrategy.CheckAlways);
         expect(meta.inputs, {'someProp': 'someProp'});
@@ -115,7 +113,6 @@ class ComponentWithoutModuleId {}
       'someHostAttr': 'someHostAttrValue'
     },
     exportAs: 'someExportAs',
-    moduleId: 'someModuleId',
     changeDetection: ChangeDetectionStrategy.CheckAlways,
     template: 'someTemplate',
     templateUrl: 'someTemplateUrl',

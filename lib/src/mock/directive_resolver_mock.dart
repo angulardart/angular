@@ -33,7 +33,6 @@ class MockDirectiveResolver extends DirectiveResolver {
           outputs: dm.outputs,
           host: dm.host,
           exportAs: dm.exportAs,
-          moduleId: dm.moduleId,
           queries: dm.queries,
           changeDetection: dm.changeDetection,
           preserveWhitespace: dm.preserveWhitespace,
