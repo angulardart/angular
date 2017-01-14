@@ -80,13 +80,13 @@ ControlValueAccessor selectValueAccessor(
   ControlValueAccessor defaultAccessor;
   ControlValueAccessor builtinAccessor;
   ControlValueAccessor customAccessor;
-  valueAccessors.forEach((ControlValueAccessor v) {
-    if (v.runtimeType == DefaultValueAccessor) {
+  for (var v in valueAccessors) {
+    if (v is DefaultValueAccessor) {
       defaultAccessor = v;
     } else if (v.runtimeType == CheckboxControlValueAccessor ||
-        v.runtimeType == NumberValueAccessor ||
-        v.runtimeType == SelectControlValueAccessor ||
-        v.runtimeType == RadioControlValueAccessor) {
+        v is NumberValueAccessor ||
+        v is SelectControlValueAccessor ||
+        v is RadioControlValueAccessor) {
       if (builtinAccessor != null)
         _throwError(dir, "More than one built-in value accessor matches");
       builtinAccessor = v;
@@ -95,7 +95,7 @@ ControlValueAccessor selectValueAccessor(
         _throwError(dir, "More than one custom value accessor matches");
       customAccessor = v;
     }
-  });
+  }
   if (customAccessor != null) return customAccessor;
   if (builtinAccessor != null) return builtinAccessor;
   if (defaultAccessor != null) return defaultAccessor;
