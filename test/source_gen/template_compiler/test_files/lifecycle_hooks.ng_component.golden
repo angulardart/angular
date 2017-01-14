@@ -1,0 +1,58 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TestComponentExtractor
+// Target: library
+// **************************************************************************
+
+final String output = """[
+  {
+    "class": "NormalizedComponentWithViewDirectives",
+    "component": {
+      "class": "Directive",
+      "isComponent": true,
+      "selector": "lifecycle-hooks",
+      "exportAs": null,
+      "type": {
+        "class": "Type",
+        "name": "LifecycleHooksComponent",
+        "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/lifecycle_hooks.dart",
+        "prefix": null,
+        "isHost": false,
+        "value": null,
+        "diDeps": []
+      },
+      "changeDetection": 6,
+      "inputs": {},
+      "inputTypes": {},
+      "outputs": {},
+      "hostListeners": {},
+      "hostProperties": {},
+      "hostAttributes": {},
+      "lifecycleHooks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "template": {
+        "encapsulation": 0,
+        "template": "",
+        "templateUrl": null,
+        "styles": [],
+        "styleUrls": [],
+        "ngContentSelectors": []
+      },
+      "providers": [],
+      "viewProviders": [],
+      "queries": [],
+      "viewQueries": []
+    },
+    "directives": [],
+    "pipes": []
+  }
+]""";

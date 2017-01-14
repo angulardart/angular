@@ -119,6 +119,9 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
       _NgFor_3_4.ngForOf = currVal_1;
       _expr_1 = currVal_1;
     }
+    if (!import11.AppViewUtils.throwOnChanges) {
+      _NgFor_3_4.ngDoCheck();
+    }
   }
 }
 

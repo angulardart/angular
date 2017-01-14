@@ -221,7 +221,9 @@ final String output = """[
         "hostListeners": {},
         "hostProperties": {},
         "hostAttributes": {},
-        "lifecycleHooks": [],
+        "lifecycleHooks": [
+          2
+        ],
         "template": null,
         "providers": [],
         "viewProviders": [],
