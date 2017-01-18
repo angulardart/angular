@@ -1,14 +1,16 @@
+@JS()
 @TestOn('browser && !js')
 library angular2.test.common.forms.integration_test;
 
 import 'dart:async';
+import 'dart:html';
+import 'package:js/js.dart';
 
 import "package:angular2/common.dart";
 import "package:angular2/core.dart"
     show Component, Directive, Output, EventEmitter;
 import "package:angular2/core.dart" show Provider, Input;
 import "package:angular2/src/common/forms/validators.dart";
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
@@ -1040,84 +1042,6 @@ void main() {
         });
       }));
     });
-    group("setting status classes", () {
-      test("should work with single fields", () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var form = new Control("", Validators.required);
-          var t = '''<div><input type="text" [ngFormControl]="form"></div>''';
-          tcb.overrideTemplate(MyComp, t).createAsync(MyComp).then((fixture) {
-            fixture.debugElement.componentInstance.form = form;
-            fixture.detectChanges();
-            var input =
-                fixture.debugElement.query(By.css("input")).nativeElement;
-            expect(sortedClassList(input),
-                ["ng-invalid", "ng-pristine", "ng-untouched"]);
-            dispatchEvent(input, "blur");
-            fixture.detectChanges();
-            expect(sortedClassList(input),
-                ["ng-invalid", "ng-pristine", "ng-touched"]);
-            input.value = "updatedValue";
-            dispatchEvent(input, "input");
-            fixture.detectChanges();
-            expect(
-                sortedClassList(input), ["ng-dirty", "ng-touched", "ng-valid"]);
-            completer.done();
-          });
-        });
-      });
-      test("should work with complex model-driven forms", () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var form =
-              new ControlGroup({"name": new Control("", Validators.required)});
-          var t =
-              '''<form [ngFormModel]="form"><input type="text" ngControl="name"></form>''';
-          tcb.overrideTemplate(MyComp, t).createAsync(MyComp).then((fixture) {
-            fixture.debugElement.componentInstance.form = form;
-            fixture.detectChanges();
-            var input =
-                fixture.debugElement.query(By.css("input")).nativeElement;
-            expect(sortedClassList(input),
-                ["ng-invalid", "ng-pristine", "ng-untouched"]);
-            dispatchEvent(input, "blur");
-            fixture.detectChanges();
-            expect(sortedClassList(input),
-                ["ng-invalid", "ng-pristine", "ng-touched"]);
-            input.value = "updatedValue";
-            dispatchEvent(input, "input");
-            fixture.detectChanges();
-            expect(
-                sortedClassList(input), ["ng-dirty", "ng-touched", "ng-valid"]);
-            completer.done();
-          });
-        });
-      });
-      test("should work with ngModel", () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var t = '''<div><input [(ngModel)]="name" required></div>''';
-          tcb.overrideTemplate(MyComp, t).createAsync(MyComp).then((fixture) {
-            fixture.debugElement.componentInstance.name = "";
-            fixture.detectChanges();
-            var input =
-                fixture.debugElement.query(By.css("input")).nativeElement;
-            expect(sortedClassList(input),
-                ["ng-invalid", "ng-pristine", "ng-untouched"]);
-            dispatchEvent(input, "blur");
-            fixture.detectChanges();
-            expect(sortedClassList(input),
-                ["ng-invalid", "ng-pristine", "ng-touched"]);
-            input.value = "updatedValue";
-            dispatchEvent(input, "input");
-            fixture.detectChanges();
-            expect(
-                sortedClassList(input), ["ng-dirty", "ng-touched", "ng-valid"]);
-            completer.done();
-          });
-        });
-      });
-    });
     group("ngModel corner cases", () {
       test(
           "should not update the view when the value initially came from the view",
@@ -1137,8 +1061,8 @@ void main() {
 
           // of the field. This is not an issue in a new HTML document.
           if (browserDetection.isFirefox) {
-            var fakeDoc = DOM.createHtmlDocument();
-            DOM.appendChild(fakeDoc.body, fixture.debugElement.nativeElement);
+            Document fakeDoc = ngCreateDocument('');
+            fakeDoc.append(fixture.debugElement.nativeElement);
           }
           var input = fixture.debugElement.query(By.css("input")).nativeElement;
           input.value = "aa";
@@ -1286,7 +1210,6 @@ class UniqLoginValidator implements Validator {
 
 @Component(selector: "my-comp", template: "", directives: const [
   FORM_DIRECTIVES,
-  NgControlStatus,
   WrappedValue,
   MyInput,
   NgIf,
@@ -1305,4 +1228,7 @@ class MyComp {
   }
 }
 
-List sortedClassList(el) => DOM.classList(el)..sort();
+List sortedClassList(el) => el.classes.toList()..sort();
+
+@JS('document.implementation.createHTMLDocument')
+external dynamic ngCreateDocument(value);

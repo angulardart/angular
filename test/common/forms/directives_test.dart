@@ -19,7 +19,6 @@ import 'package:angular2/common.dart'
         CheckboxControlValueAccessor,
         SelectControlValueAccessor,
         Validator;
-import 'package:angular2/platform/browser.dart';
 import 'package:angular2/src/common/forms/directives/shared.dart'
     show selectValueAccessor, composeValidators;
 import 'package:angular2/src/core/change_detection.dart' show SimpleChange;
@@ -118,7 +117,6 @@ void main() {
     ControlGroup formModel;
     var loginControlDir;
     setUp(() {
-      BrowserDomAdapter.makeCurrent();
       defaultAccessor = new DefaultValueAccessor(
           new ElementRef(document.createElement('div')));
       form = new NgFormModel([], []);

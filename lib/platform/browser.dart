@@ -1,5 +1,6 @@
 library angular2.platform.browser;
 
+import 'dart:html';
 import "dart:async";
 
 import "package:angular2/compiler.dart" show COMPILER_PROVIDERS, XHR;
@@ -22,6 +23,7 @@ import "package:angular2/src/core/reflection/reflection_capabilities.dart"
 import "package:angular2/src/platform/browser/xhr_impl.dart" show XHRImpl;
 import "package:angular2/src/platform/browser_common.dart"
     show BROWSER_PROVIDERS, BROWSER_APP_COMMON_PROVIDERS;
+import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
 export "package:angular2/src/core/angular_entrypoint.dart";
 export "package:angular2/src/core/security.dart"
@@ -30,8 +32,6 @@ export "package:angular2/src/platform/browser_common.dart"
     show
         BROWSER_PROVIDERS,
         BROWSER_SANITIZATION_PROVIDERS,
-        BrowserDomAdapter,
-        Title,
         DOCUMENT,
         enableDebugTools,
         disableDebugTools;
@@ -45,10 +45,13 @@ const List RUNTIME_COMPILER_PROVIDERS = const [
 /// bootstrapping a component.
 const List<dynamic> BROWSER_APP_PROVIDERS = const [
   BROWSER_APP_COMMON_PROVIDERS,
+  const Provider(DOCUMENT, useFactory: defaultDocumentProvider, deps: const []),
   COMPILER_PROVIDERS,
   RUNTIME_COMPILER_PROVIDERS,
   const Provider(XHR, useClass: XHRImpl)
 ];
+
+defaultDocumentProvider() => document;
 
 PlatformRef browserPlatform() {
   if (getPlatform() == null) {

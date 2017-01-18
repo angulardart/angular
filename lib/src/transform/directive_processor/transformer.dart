@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:angular2/src/platform/server/html_adapter.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/options.dart';
@@ -36,7 +35,6 @@ class DirectiveProcessor extends Transformer implements LazyTransformer {
 
   @override
   Future apply(Transform transform) async {
-    Html5LibDomAdapter.makeCurrent();
     return zone.exec(() async {
       var primaryId = transform.primaryInput.id;
       var reader = new AssetReader.fromTransform(transform);

@@ -1,5 +1,7 @@
 import 'dart:html';
 import 'dart:convert';
+import 'dart:js_util' as js_util;
+import 'package:js/js.dart' as js;
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
@@ -25,7 +27,6 @@ import 'package:angular2/src/debug/debug_node.dart'
         DebugEventListener,
         removeDebugNodeFromIndex;
 import "package:angular2/src/debug/debug_node.dart" show inspectNativeElement;
-import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 
 export 'package:angular2/src/core/linker/app_view.dart';
 export 'package:angular2/src/debug/debug_context.dart'
@@ -59,7 +60,7 @@ class DebugAppView<T> extends AppView<T> {
     this.cdMode = cdMode;
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;
-      DOM.setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
+      _setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
     }
   }
 
@@ -344,4 +345,18 @@ void _appendDebugNestedViewRenderNodes(
       }
     }
   }
+}
+
+void _setGlobalVar(String path, value) {
+  var parts = path.split('.');
+  Object obj = window;
+  for (var i = 0; i < parts.length - 1; i++) {
+    var name = parts[i];
+    if (!js_util.callMethod(obj, 'hasOwnProperty', [name])) {
+      js_util.setProperty(obj, name, js_util.newObject());
+    }
+    obj = js_util.getProperty(obj, name);
+  }
+  js_util.setProperty(obj, parts[parts.length - 1],
+      (value is Function) ? js.allowInterop(value) : value);
 }

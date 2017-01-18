@@ -1,5 +1,5 @@
+import 'dart:html';
 import "package:angular2/src/debug/debug_node.dart";
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 /// Predicates for use with [DebugElement]'s query functions.
 class By {
@@ -9,9 +9,8 @@ class By {
   /// Match elements by the given CSS selector.
   static Predicate<DebugElement> css(String selector) {
     return (debugElement) {
-      return debugElement.nativeElement != null
-          ? DOM.elementMatches(debugElement.nativeElement, selector)
-          : false;
+      Node node = debugElement.nativeElement;
+      return (node is Element && node.matches(selector));
     };
   }
 

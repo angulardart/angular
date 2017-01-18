@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:angular2/src/platform/server/html_adapter.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/code/ng_deps_code.dart';
 import 'package:angular2/src/transform/common/code/source_module.dart';
@@ -37,7 +36,6 @@ class TemplateCompiler extends Transformer implements LazyTransformer {
   @override
   Future apply(Transform transform) async {
     return zone.exec(() async {
-      Html5LibDomAdapter.makeCurrent();
       var primaryId = transform.primaryInput.id;
       var reader = new AssetReader.fromTransform(transform);
       var outputs = await processTemplates(reader, primaryId,

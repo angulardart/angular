@@ -1,9 +1,10 @@
 @TestOn('browser && !js')
 library angular2.test.common.directives.ng_style_test;
 
+import 'dart:html';
+
 import "package:angular2/core.dart" show Component;
 import "package:angular2/src/common/directives/ng_style.dart" show NgStyle;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
@@ -18,10 +19,8 @@ void main() {
             .createAsync(TestComponent)
             .then((fixture) {
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "40px");
+          Element elm = fixture.debugElement.children[0].nativeElement;
+          expect(elm.style.maxWidth, "40px");
           completer.done();
         });
       });
@@ -38,18 +37,13 @@ void main() {
           Map<String, dynamic> expr;
           fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "40px");
+          Element elm = fixture.debugElement.children[0].nativeElement;
+          expect(elm.style.maxWidth, "40px");
           expr = fixture.debugElement.componentInstance.expr
               as Map<String, dynamic>;
           expr["max-width"] = "30%";
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "30%");
+          expect(elm.style.maxWidth, "30%");
           completer.done();
         });
       });
@@ -65,16 +59,11 @@ void main() {
             .then((fixture) {
           fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "40px");
+          Element elm = fixture.debugElement.children[0].nativeElement;
+          expect(elm.style.maxWidth, "40px");
           fixture.debugElement.componentInstance.expr.remove('max-width');
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "");
+          expect(elm.style.maxWidth, '');
           completer.done();
         });
       });
@@ -90,24 +79,13 @@ void main() {
             .then((fixture) {
           fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "40px");
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "font-size"),
-              "12px");
+          Element elm = fixture.debugElement.children[0].nativeElement;
+          expect(elm.style.maxWidth, "40px");
+          expect(elm.style.fontSize, "12px");
           fixture.debugElement.componentInstance.expr.remove('max-width');
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "");
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "font-size"),
-              "12px");
+          expect(elm.style.maxWidth, "");
+          expect(elm.style.fontSize, "12px");
           completer.done();
         });
       });
@@ -125,24 +103,13 @@ void main() {
             .then((fixture) {
           fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "40px");
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "font-size"),
-              "12px");
+          Element elm = fixture.debugElement.children[0].nativeElement;
+          expect(elm.style.maxWidth, "40px");
+          expect(elm.style.fontSize, "12px");
           fixture.debugElement.componentInstance.expr.remove('max-width');
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "font-size"),
-              "12px");
+          expect(elm.style.fontSize, "12px");
           fixture.detectChanges();
-          expect(
-              DOM.getStyle(
-                  fixture.debugElement.children[0].nativeElement, "max-width"),
-              "");
+          expect(elm.style.maxWidth, "");
           completer.done();
         });
       });

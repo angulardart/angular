@@ -1,14 +1,12 @@
 import 'dart:html';
 
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-
 Node _inertElement;
 bool _inertIsTemplate = false;
 
 Node _getInertElement() {
   if (_inertElement == null) {
     // Prefer using <template> element if supported.
-    TemplateElement templateEl = DOM.createTemplate('');
+    TemplateElement templateEl = new TemplateElement();
     if (templateEl != null) {
       // TODO: investigate template.children.clear and remove extra div.
       _inertElement = document.createElement('div');
@@ -65,13 +63,13 @@ void mXSSProtection(Element containerElement, String unsafeHtml) {
 ///
 /// This is undesirable since we don't want to allow any of these custom
 /// attributes. This method strips them all.
-void stripCustomNsAttrs(element) {
-  DOM.attributeMap(element).forEach((_, attrName) {
+void stripCustomNsAttrs(Element element) {
+  for (var attrName in element.attributes.keys) {
     if (attrName == 'xmlns:ns1' || attrName.startsWith('ns1:')) {
-      DOM.removeAttribute(element, attrName);
+      element.attributes.remove(attrName);
     }
-  });
-  for (var n in DOM.childNodesAsList(element)) {
-    if (DOM.isElementNode(n)) stripCustomNsAttrs(n);
+  }
+  for (var n in element.childNodes) {
+    if (n is Element) stripCustomNsAttrs(n);
   }
 }

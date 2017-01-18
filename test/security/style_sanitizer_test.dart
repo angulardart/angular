@@ -1,13 +1,10 @@
 @TestOn('browser')
 library angular2.test.security.style_sanitizer_test;
 
-import "package:angular2/src/platform/browser/browser_adapter.dart"
-    show BrowserDomAdapter;
 import 'package:angular2/src/security/style_sanitizer.dart';
 import 'package:test/test.dart';
 
 void main() {
-  BrowserDomAdapter.makeCurrent();
   group('Style sanitizer', () {
     test('sanitizes values', () {
       expect(internalSanitizeStyle('abc'), 'abc');

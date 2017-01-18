@@ -1,8 +1,9 @@
 import "package:angular2/core.dart" show Directive, ElementRef, Provider;
 
+import 'dart:js_util' as js_util;
+import 'control_value_accessor.dart';
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 
 const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: DefaultValueAccessor, multi: true);
@@ -34,7 +35,7 @@ class DefaultValueAccessor implements ControlValueAccessor {
   @override
   void writeValue(dynamic value) {
     var normalizedValue = value ?? '';
-    DOM.setProperty(_elementRef.nativeElement, 'value', normalizedValue);
+    js_util.setProperty(_elementRef.nativeElement, 'value', normalizedValue);
   }
 
   @override

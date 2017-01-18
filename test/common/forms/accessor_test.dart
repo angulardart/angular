@@ -2,6 +2,8 @@
 @TestOn('browser')
 library angular2.test.common.forms.accessor_test;
 
+import 'dart:js_util' as js_util;
+
 import 'package:angular2/angular2.dart';
 import 'package:angular2/testing_experimental.dart';
 import 'package:test/test.dart';
@@ -71,7 +73,7 @@ class IntValueAccessor implements ControlValueAccessor, Validator {
   @override
   void writeValue(dynamic value) {
     var normalizedValue = value.toString() ?? '';
-    DOM.setProperty(_elementRef.nativeElement, 'value', normalizedValue);
+    js_util.setProperty(_elementRef.nativeElement, 'value', normalizedValue);
   }
 
   @override

@@ -9,7 +9,6 @@ import 'package:angular2/src/core/linker/dynamic_component_loader.dart'
 import 'package:angular2/src/core/linker/element_ref.dart' show ElementRef;
 import 'package:angular2/src/core/metadata.dart' show Component;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
-import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:angular2/src/platform/dom/dom_tokens.dart' show DOCUMENT;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
@@ -113,7 +112,7 @@ void main() {
             tc.detectChanges();
             loader.loadNextToLocation(DynamicallyLoadedWithNgContent,
                 tc.componentInstance.viewContainerRef, null, [
-              [DOM.createTextNode('hello')]
+              [new Text('hello')]
             ]).then((ref) {
               tc.detectChanges();
               var newlyInsertedElement =
@@ -147,7 +146,7 @@ void main() {
             (AsyncTestCompleter completer, DynamicComponentLoader loader, doc,
                 Injector injector) {
           var rootEl = createRootElement(doc, 'child-cmp');
-          DOM.appendChild(doc.body, rootEl);
+          (doc as HtmlDocument).body.append(rootEl);
           loader.loadAsRoot(ChildComp, injector).then((componentRef) {
             var el = new ComponentFixture(componentRef);
             expect(rootEl.parentNode, doc.body);
@@ -168,7 +167,7 @@ void main() {
             (AsyncTestCompleter completer, DynamicComponentLoader loader, doc,
                 Injector injector) {
           var rootEl = createRootElement(doc, 'dummy');
-          DOM.appendChild(doc.body, rootEl);
+          (doc as HtmlDocument).body.append(rootEl);
           loader.loadAsRoot(DynamicallyLoadedWithNgContent, injector,
               projectableNodes: [
                 [new Text('hello')]
@@ -182,13 +181,13 @@ void main() {
   });
 }
 
-dynamic createRootElement(dynamic doc, String name) {
-  var nodes = DOM.querySelectorAll(doc, name);
+dynamic createRootElement(HtmlDocument doc, String name) {
+  var nodes = doc.querySelectorAll(name);
   for (var i = 0; i < nodes.length; i++) {
-    DOM.remove(nodes[i]);
+    nodes[i].remove();
   }
-  var rootEl = el('''<${ name}></${ name}>''');
-  DOM.appendChild(doc.body, rootEl);
+  Element rootEl = new Element.tag(name);
+  doc.body.append(rootEl);
   return rootEl;
 }
 

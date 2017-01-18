@@ -1,9 +1,9 @@
 @TestOn('browser && !js')
 library angular2.test.common.directives.non_bindable_test;
 
+import 'dart:html';
 import "package:angular2/core.dart" show Component, Directive;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
@@ -37,9 +37,9 @@ void main() {
           // We must use DOM.querySelector instead of fixture.query here
 
           // since the elements inside are not compiled.
-          var span =
-              DOM.querySelector(fixture.debugElement.nativeElement, "#child");
-          expect(DOM.hasClass(span, "compiled"), isFalse);
+          Element elm = fixture.debugElement.nativeElement;
+          var span = elm.querySelector("#child");
+          expect(span.classes.contains("compiled"), isFalse);
           completer.done();
         });
       });
@@ -54,9 +54,9 @@ void main() {
             .createAsync(TestComponent)
             .then((fixture) {
           fixture.detectChanges();
-          var span =
-              DOM.querySelector(fixture.debugElement.nativeElement, "#child");
-          expect(DOM.hasClass(span, "compiled"), isTrue);
+          Element elm = fixture.debugElement.nativeElement;
+          var span = elm.querySelector("#child");
+          expect(span.classes.contains("compiled"), isTrue);
           completer.done();
         });
       });
@@ -67,7 +67,7 @@ void main() {
 @Directive(selector: "[test-dec]")
 class TestDirective {
   TestDirective(ElementRef el) {
-    DOM.addClass(el.nativeElement, "compiled");
+    (el.nativeElement as Element).classes.add('compiled');
   }
 }
 
