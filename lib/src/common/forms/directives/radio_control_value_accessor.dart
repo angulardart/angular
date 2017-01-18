@@ -1,4 +1,4 @@
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show
         Directive,
         ElementRef,
@@ -8,10 +8,10 @@ import "package:angular2/core.dart"
         OnDestroy,
         Injector,
         Injectable;
-import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
-import "package:angular2/src/common/forms/directives/control_value_accessor.dart"
+import 'dart:js_util' as js_util;
+import 'package:angular2/src/common/forms/directives/control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
-import "package:angular2/src/common/forms/directives/ng_control.dart"
+import 'package:angular2/src/common/forms/directives/ng_control.dart'
     show NgControl;
 
 const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
@@ -72,8 +72,8 @@ class RadioButtonState {
 /// ```
 @Directive(
     selector:
-        "input[type=radio][ngControl],input[type=radio][ngFormControl],input[type=radio][ngModel]",
-    host: const {"(change)": "changeHandler()", "(blur)": "touchHandler()"},
+        'input[type=radio][ngControl],input[type=radio][ngFormControl],input[type=radio][ngModel]',
+    host: const {'(change)': 'changeHandler()', '(blur)': 'touchHandler()'},
     providers: const [RADIO_VALUE_ACCESSOR])
 class RadioControlValueAccessor
     implements ControlValueAccessor, OnDestroy, OnInit {
@@ -112,7 +112,7 @@ class RadioControlValueAccessor
   void writeValue(dynamic value) {
     _state = value;
     if (value?.checked ?? false) {
-      DOM.setProperty(_elementRef.nativeElement, 'checked', true);
+      js_util.setProperty(_elementRef.nativeElement, 'checked', true);
     }
   }
 

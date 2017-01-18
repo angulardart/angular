@@ -1,6 +1,7 @@
 library angular2.platform.browser_static;
 
 import "dart:async";
+import 'dart:html';
 
 import "package:angular2/core.dart"
     show
@@ -19,21 +20,21 @@ import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
 import "package:angular2/src/platform/browser_common.dart"
     show BROWSER_APP_COMMON_PROVIDERS, createInitDomAdapter;
+import "package:angular2/src/core/di.dart" show Provider;
 
 export "package:angular2/src/core/angular_entrypoint.dart";
 export "package:angular2/src/platform/browser_common.dart"
-    show
-        BROWSER_PROVIDERS,
-        BrowserDomAdapter,
-        Title,
-        enableDebugTools,
-        disableDebugTools;
+    show BROWSER_PROVIDERS, enableDebugTools, disableDebugTools;
+import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
 /// An array of providers that should be passed into [application()] when
 /// bootstrapping a component when all templates have been precompiled offline.
 const List<dynamic> BROWSER_APP_PROVIDERS = const [
   BROWSER_APP_COMMON_PROVIDERS,
+  const Provider(DOCUMENT, useFactory: createDoc, deps: const []),
 ];
+
+createDoc() => document;
 
 PlatformRef browserStaticPlatform() {
   var platform = getPlatform();

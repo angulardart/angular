@@ -34,3 +34,8 @@ abstract class PlatformLocation {
   void forward();
   void back();
 }
+
+typedef String BaseHRefFromDOMProvider();
+
+/// Returns base href from browser location.
+BaseHRefFromDOMProvider baseHRefFromDOM;

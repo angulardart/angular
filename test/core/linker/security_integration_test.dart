@@ -1,10 +1,10 @@
 @TestOn('browser && !js')
 library angular2.test.core.linker.security_integration_test;
 
+import 'dart:html';
+
 import 'package:angular2/core.dart' show provide, Injectable, OpaqueToken;
 import 'package:angular2/src/core/metadata.dart' show Component, View;
-import 'package:angular2/src/platform/browser/browser_adapter.dart';
-import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:angular2/src/security/dom_sanitization_service.dart';
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
@@ -21,11 +21,10 @@ class SecuredComponent {
 }
 
 void main() {
-  BrowserDomAdapter.makeCurrent();
   group('security integration tests', () {
     setUp(() {
       beforeEachProviders(
-          () => [provide(ANCHOR_ELEMENT, useValue: el('<div></div>'))]);
+          () => [provide(ANCHOR_ELEMENT, useValue: new DivElement())]);
     });
     group('safe HTML values', () {
       test('should disallow binding on*', () async {
@@ -106,19 +105,19 @@ void main() {
           var tpl = '<div [style.background]="ctxProp">Text</div>';
           tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
           tcb.createAsync(SecuredComponent).then((fixture) {
-            var e = fixture.debugElement.children[0].nativeElement;
+            Element e = fixture.debugElement.children[0].nativeElement;
             // Make sure binding harmless values works.
             fixture.debugElement.componentInstance.ctxProp = 'red';
             fixture.detectChanges();
             // In some browsers, this will contain the full background
             // specification, not just the color.
-            expect(DOM.getStyle(e, 'background'), matches(new RegExp('red.*')));
+            expect(e.style.getPropertyValue('background'),
+                matches(new RegExp('red.*')));
             fixture.debugElement.componentInstance.ctxProp =
                 'url(javascript:evil())';
             fixture.detectChanges();
             // Updated value gets rejected, no value change.
-            expect(
-                DOM.getStyle(e, 'background').contains('javascript'), isFalse);
+            expect(e.style.background.contains('javascript'), isFalse);
             completer.done();
           });
         });
@@ -142,21 +141,21 @@ void main() {
           var tpl = '<div [innerHTML]="ctxProp">Text</div>';
           tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
           tcb.createAsync(SecuredComponent).then((fixture) {
-            var e = fixture.debugElement.children[0].nativeElement;
+            Element e = fixture.debugElement.children[0].nativeElement;
             var componentInstance = fixture.debugElement.componentInstance;
             // Make sure binding harmless values works.
             componentInstance.ctxProp = 'some <p>text</p>';
             fixture.detectChanges();
-            expect(DOM.getInnerHTML(e), 'some <p>text</p>');
+            expect(e.innerHtml, 'some <p>text</p>');
 
             componentInstance.ctxProp = 'ha <script>evil()</script>';
             fixture.detectChanges();
-            expect(DOM.getInnerHTML(e), 'ha ');
+            expect(e.innerHtml, 'ha ');
 
             componentInstance.ctxProp = 'also <img src="x" '
                 'onerror="evil()"> evil';
             fixture.detectChanges();
-            expect(DOM.getInnerHTML(e), 'also <img src="x"> evil');
+            expect(e.innerHtml, 'also <img src="x"> evil');
 
             componentInstance.ctxProp = 'also <iframe srcdoc="evil"> content';
             fixture.detectChanges();
@@ -173,12 +172,12 @@ void main() {
           var tpl = '<div [innerHTML]="ctxProp">Text</div>';
           tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
           tcb.createAsync(SecuredComponent).then((fixture) {
-            var e = fixture.debugElement.children[0].nativeElement;
+            Element e = fixture.debugElement.children[0].nativeElement;
             var componentInstance = fixture.debugElement.componentInstance;
             componentInstance.ctxProp =
                 sanitizer.bypassSecurityTrustHtml('ha <script>evil()</script>');
             fixture.detectChanges();
-            expect(DOM.getInnerHTML(e), 'ha <script>evil()</script>');
+            expect(e.innerHtml, 'ha <script>evil()</script>');
             completer.done();
           });
         });

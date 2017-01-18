@@ -25,8 +25,6 @@ import 'compile_data_creator.dart';
 ///   `SourceModule`.
 /// - Uses the resulting `NgDeps` object to generate code which initializes the
 ///   Angular2 reflective system.
-///
-/// This method assumes a {@link DomAdapter} has been registered.
 Future<Outputs> processTemplates(AssetReader reader, AssetId assetId,
     {String codegenMode: '',
     bool reflectPropertiesAsAttributes: false,

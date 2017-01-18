@@ -1,8 +1,6 @@
 @TestOn('browser')
 library angular2.test.security.html_sanitizer_test;
 
-import "package:angular2/src/platform/browser/browser_adapter.dart"
-    show BrowserDomAdapter;
 import 'package:angular2/src/security/html_sanitizer.dart';
 import 'package:test/test.dart';
 
@@ -23,7 +21,6 @@ void _testSanitize(String input, String expectedOutput, bool knownFailure) {
 }
 
 void main() {
-  BrowserDomAdapter.makeCurrent();
   group('HTML sanitizer', () {
     test('serializes nested structures', () {
       String inputHtml =

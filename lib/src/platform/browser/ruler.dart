@@ -1,7 +1,6 @@
-import "dart:async";
-
-import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DomAdapter;
+import 'dart:async';
+import 'dart:html';
+import 'package:angular2/src/core/linker/element_ref.dart' show ElementRef;
 
 class Rectangle {
   var left;
@@ -21,17 +20,11 @@ class Rectangle {
 }
 
 class Ruler {
-  DomAdapter domAdapter;
-  Ruler(DomAdapter domAdapter) {
-    this.domAdapter = domAdapter;
-  }
   Future<Rectangle> measure(ElementRef el) {
-    var clntRect =
-        (this.domAdapter.getBoundingClientRect(el.nativeElement) as dynamic);
-    // even if getBoundingClientRect is synchronous we use async API in preparation for further
-
-    // changes
-    return new Future.value(new Rectangle(
-        clntRect.left, clntRect.top, clntRect.width, clntRect.height));
+    Element elm = el.nativeElement;
+    var clientRect = elm.getBoundingClientRect();
+    // even if getBoundingClientRect is synchronous we use async API in
+    // preparation for further changes
+    return new Future.value(clientRect);
   }
 }

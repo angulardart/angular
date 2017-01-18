@@ -2,7 +2,6 @@ import 'dart:html';
 import 'dart:js' as js;
 
 import 'package:angular2/di.dart';
-import 'package:angular2/platform/common_dom.dart';
 
 // Work around http://dartbug.com/17752, copied from
 // https://github.com/angular/angular.dart/blob/master/lib/introspection.dart
@@ -158,10 +157,11 @@ class BrowserGetTestability implements GetTestability {
     } else if (!findInAncestors) {
       return null;
     }
-    if (DOM.isShadowRoot(elem)) {
-      return this.findTestabilityInTree(registry, DOM.getHost(elem), true);
+    if (elem is ShadowRoot) {
+      return this.findTestabilityInTree(registry, elem.host, true);
     }
-    return this.findTestabilityInTree(registry, DOM.parentElement(elem), true);
+    return this
+        .findTestabilityInTree(registry, (elem as Node).parentNode, true);
   }
 
   js.JsObject _createRegistry(TestabilityRegistry registry) {

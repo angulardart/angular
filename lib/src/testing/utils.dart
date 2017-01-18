@@ -1,5 +1,5 @@
-import "package:angular2/di.dart" show Injectable;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
+import 'dart:html';
+import 'package:angular2/di.dart' show Injectable;
 
 typedef void LogFunction([a, b, c, d, e]);
 
@@ -26,7 +26,7 @@ class Log {
     this.logItems.clear();
   }
 
-  String result() => this.logItems.join("; ");
+  String result() => this.logItems.join('; ');
 }
 
 BrowserDetection browserDetection;
@@ -38,64 +38,60 @@ class BrowserDetection {
   }
 
   BrowserDetection(String ua) {
-    _ua = ua ?? (DOM != null ? DOM.getUserAgent() : '');
+    _ua = ua ?? (window.navigator.userAgent ?? '');
   }
-  bool get isFirefox => _ua.indexOf("Firefox") > -1;
+  bool get isFirefox => _ua.indexOf('Firefox') > -1;
 
   bool get isAndroid =>
-      _ua.indexOf("Mozilla/5.0") > -1 &&
-      _ua.indexOf("Android") > -1 &&
-      _ua.indexOf("AppleWebKit") > -1 &&
-      _ua.indexOf("Chrome") == -1;
+      _ua.indexOf('Mozilla/5.0') > -1 &&
+      _ua.indexOf('Android') > -1 &&
+      _ua.indexOf('AppleWebKit') > -1 &&
+      _ua.indexOf('Chrome') == -1;
 
-  bool get isEdge => _ua.indexOf("Edge") > -1;
+  bool get isEdge => _ua.indexOf('Edge') > -1;
 
-  bool get isIE => _ua.indexOf("Trident") > -1;
+  bool get isIE => _ua.indexOf('Trident') > -1;
 
   bool get isWebkit =>
-      _ua.indexOf("AppleWebKit") > -1 && _ua.indexOf("Edge") == -1;
+      _ua.indexOf('AppleWebKit') > -1 && _ua.indexOf('Edge') == -1;
 
   bool get isIOS7 =>
-      _ua.indexOf("iPhone OS 7") > -1 || _ua.indexOf("iPad OS 7") > -1;
+      _ua.indexOf('iPhone OS 7') > -1 || _ua.indexOf('iPad OS 7') > -1;
 
   bool get isSlow => isAndroid || isIE || isIOS7;
 
   // The Intl API is only properly supported in recent Chrome and Opera.
 
-  // Note: Edge is disguised as Chrome 42, so checking the "Edge" part is needed,
+  // Note: Edge is disguised as Chrome 42, so checking the 'Edge' part is needed,
 
   // see https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
   bool get supportsIntlApi =>
-      _ua.indexOf("Chrome/4") > -1 && _ua.indexOf("Edge") == -1;
+      _ua.indexOf('Chrome/4') > -1 && _ua.indexOf('Edge') == -1;
 }
 
-void dispatchEvent(element, eventType) {
-  DOM.dispatchEvent(element, DOM.createEvent(eventType));
-}
-
-dynamic el(String html) {
-  return (DOM.firstChild(DOM.content(DOM.createTemplate(html))) as dynamic);
+void dispatchEvent(Element element, String eventType) {
+  element.dispatchEvent(new Event(eventType, canBubble: true));
 }
 
 var _RE_SPECIAL_CHARS = [
-  "-",
-  "[",
-  "]",
-  "/",
-  "{",
-  "}",
-  "\\",
-  "(",
-  ")",
-  "*",
-  "+",
-  "?",
-  ".",
-  "^",
-  "\$",
-  "|"
+  '-',
+  '[',
+  ']',
+  '/',
+  '{',
+  '}',
+  '\\',
+  '(',
+  ')',
+  '*',
+  '+',
+  '?',
+  '.',
+  '^',
+  '\$',
+  '|'
 ];
-final _ESCAPE_RE = new RegExp('''[\\${ _RE_SPECIAL_CHARS . join ( "\\" )}]''');
+final _ESCAPE_RE = new RegExp('''[\\${ _RE_SPECIAL_CHARS . join ( '\\' )}]''');
 RegExp containsRegexp(String input) {
   return new RegExp(
       input.replaceAllMapped(_ESCAPE_RE, (match) => '''\\${ match [ 0 ]}'''));
@@ -115,53 +111,52 @@ String normalizeCSS(String css) {
   _normalizerExp4 ??= new RegExp(' }');
   _normalizerExp5 ??= new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
   _normalizerExp6 ??= new RegExp(r'\[(.+)=([^"\]]+)\]');
-  css = css.replaceAll(_normalizerExp1, " ");
-  css = css.replaceAll(_normalizerExp2, ":");
-  css = css.replaceAll(_normalizerExp3, "\"");
-  css = css.replaceAll(_normalizerExp4, "}");
+  css = css.replaceAll(_normalizerExp1, ' ');
+  css = css.replaceAll(_normalizerExp2, ':');
+  css = css.replaceAll(_normalizerExp3, '"');
+  css = css.replaceAll(_normalizerExp4, '}');
+  css = css.replaceAllMapped(_normalizerExp5, (match) => 'url("${match[2]}")');
   css = css.replaceAllMapped(
-      _normalizerExp5, (match) => '''url("${ match [ 2 ]}")''');
-  css = css.replaceAllMapped(
-      _normalizerExp6, (match) => '''[${ match [ 1 ]}="${ match [ 2 ]}"]''');
+      _normalizerExp6, (match) => '[${match[1]}="${match[2]}"]');
   return css;
 }
 
 var _singleTagWhitelist = const ['br', 'hr', 'input'];
+
 String stringifyElement(el) {
-  var result = "";
-  if (DOM.isElementNode(el)) {
-    var tagName = DOM.tagName(el).toLowerCase();
+  StringBuffer sb = new StringBuffer();
+  if (el is Element) {
+    var tagName = el.tagName.toLowerCase();
     // Opening tag
-    result += '''<${ tagName}''';
+    sb.write('<$tagName');
     // Attributes in an ordered way
-    var attributeMap = DOM.attributeMap(el);
-    var keys = [];
-    attributeMap.forEach((k, v) => keys.add(k));
+    var attributeMap = el.attributes;
+    var keys = attributeMap.keys.toList();
     keys.sort();
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
       var attValue = attributeMap[key];
       if (attValue is! String) {
-        result += ''' ${ key}''';
+        sb.write(key);
       } else {
-        result += ''' ${ key}="${ attValue}"''';
+        sb.write('$key="$attValue"');
       }
     }
-    result += ">";
+    sb.write('>');
     // Children
-    var childrenRoot = DOM.templateAwareRoot(el);
-    var children = childrenRoot != null ? DOM.childNodes(childrenRoot) : [];
+    var childrenRoot = el is TemplateElement ? el.content : el;
+    var children = childrenRoot?.childNodes ?? [];
     for (var j = 0; j < children.length; j++) {
-      result += stringifyElement(children[j]);
+      sb.write(stringifyElement(children[j]));
     }
     // Closing tag
     if (!_singleTagWhitelist.contains(tagName)) {
-      result += '''</${ tagName}>''';
+      sb.write('</$tagName>');
     }
-  } else if (DOM.isCommentNode(el)) {
-    result += '''<!--${ DOM . nodeValue ( el )}-->''';
+  } else if (el is Comment) {
+    sb.write('<!--${el.nodeValue}-->');
   } else {
-    result += DOM.getText(el);
+    sb.write(el.text);
   }
-  return result;
+  return sb.toString();
 }

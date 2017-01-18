@@ -1,5 +1,6 @@
 library angular2.platform.testing.browser_static;
 
+import 'dart:html';
 import 'package:angular2/compiler.dart' show DirectiveResolver, ViewResolver;
 import 'package:angular2/compiler.dart' show XHR;
 import 'package:angular2/core.dart'
@@ -18,18 +19,15 @@ import 'package:angular2/src/mock/mock_location_strategy.dart'
 import 'package:angular2/src/mock/ng_zone_mock.dart' show MockNgZone;
 import 'package:angular2/src/mock/view_resolver_mock.dart'
     show MockViewResolver;
-import 'package:angular2/src/platform/browser/browser_adapter.dart'
-    show BrowserDomAdapter;
 import 'package:angular2/src/platform/browser/xhr_impl.dart' show XHRImpl;
 import 'package:angular2/src/platform/browser_common.dart'
     show BROWSER_APP_COMMON_PROVIDERS;
 import 'package:angular2/src/testing/test_component_builder.dart'
     show TestComponentBuilder;
-import 'package:angular2/src/testing/utils.dart' show BrowserDetection;
-import 'package:angular2/src/testing/utils.dart' show Log;
+import 'package:angular2/src/testing/utils.dart' show BrowserDetection, Log;
+import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
 void initBrowserTests() {
-  BrowserDomAdapter.makeCurrent();
   BrowserDetection.setup();
 }
 
@@ -53,5 +51,8 @@ const List<dynamic> ADDITIONAL_TEST_BROWSER_PROVIDERS = const [
 const List<dynamic> TEST_BROWSER_STATIC_APPLICATION_PROVIDERS = const [
   BROWSER_APP_COMMON_PROVIDERS,
   const Provider(XHR, useClass: XHRImpl),
-  ADDITIONAL_TEST_BROWSER_PROVIDERS
+  ADDITIONAL_TEST_BROWSER_PROVIDERS,
+  const Provider(DOCUMENT, useFactory: createDoc, deps: const []),
 ];
+
+createDoc() => document;

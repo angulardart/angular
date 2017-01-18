@@ -6,7 +6,6 @@ import 'dart:async';
 import 'package:angular2/common.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
-import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:angular2/testing_internal.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -103,7 +102,7 @@ void main() {
     Completer completer;
     MockChangeDetectorRef ref;
     // adds longer timers for passing tests in IE
-    var timer = (DOM != null && browserDetection.isIE) ? 50 : 10;
+    var timer = (browserDetection?.isIE == true) ? 50 : 10;
     setUp(() {
       completer = new Completer();
       ref = new MockChangeDetectorRef();

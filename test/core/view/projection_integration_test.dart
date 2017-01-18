@@ -1,6 +1,7 @@
 @TestOn('browser && !js')
 library angular2.test.core.view.projection_integration_test;
 
+import 'dart:html';
 import 'package:angular2/core.dart'
     show
         Component,
@@ -11,7 +12,6 @@ import 'package:angular2/core.dart'
         ViewEncapsulation,
         View;
 import 'package:angular2/src/debug/debug_node.dart';
-import 'package:angular2/src/platform/dom/dom_adapter.dart' show DOM;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
@@ -492,7 +492,7 @@ void main() {
             .then((main) {
           main.detectChanges();
           expect(
-              DOM.getInnerHTML(main.debugElement.nativeElement),
+              main.debugElement.nativeElement.innerHtml,
               "<cmp-a><cmp-b><cmp-d><d>cmp-d</d></cmp-d></cmp-b>" +
                   "<cmp-c><c>cmp-c</c></cmp-c></cmp-a>");
           completer.done();
@@ -511,8 +511,9 @@ void main() {
             .createAsync(MainComp)
             .then((main) {
           main.detectChanges();
+          Element elm = main.debugElement.nativeElement;
           expect(
-              DOM.getInnerHTML(main.debugElement.nativeElement),
+              elm.innerHtml,
               "<cmp-a1>a1<cmp-b11>b11</cmp-b11><cmp-b12>b12</cmp-b12></cmp-a1>" +
                   "<cmp-a2>a2<cmp-b21>b21</cmp-b21><cmp-b22>b22</cmp-b22></cmp-a2>");
           completer.done();
@@ -706,7 +707,7 @@ class Tree {
 class CmpD {
   String tagName;
   CmpD(ElementRef elementRef) {
-    this.tagName = DOM.tagName(elementRef.nativeElement).toLowerCase();
+    this.tagName = (elementRef.nativeElement as Element).tagName.toLowerCase();
   }
 }
 
@@ -714,7 +715,7 @@ class CmpD {
 class CmpC {
   String tagName;
   CmpC(ElementRef elementRef) {
-    this.tagName = DOM.tagName(elementRef.nativeElement).toLowerCase();
+    this.tagName = (elementRef.nativeElement as Element).tagName.toLowerCase();
   }
 }
 

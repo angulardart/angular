@@ -254,11 +254,10 @@ var NG_PLATFORM_BROWSER = [
   'BROWSER_SANITIZATION_PROVIDERS',
   'SanitizationService',
   'TemplateSecurityContext',
-  'BrowserDomAdapter',
   'DOCUMENT',
-  'Title',
   'bootstrap',
   'browserPlatform',
+  'defaultDocumentProvider',
   'disableDebugTools',
   'enableDebugTools',
   'RUNTIME_COMPILER_PROVIDERS'
@@ -278,6 +277,8 @@ var NG_PLATFORM_COMMON = [
   'LocationStrategy',
   'PathLocationStrategy',
   'PlatformLocation',
+  'baseHRefFromDOM',
+  'BaseHRefFromDOMProvider',
 ];
 
 var NG_API = {

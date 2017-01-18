@@ -1,3 +1,4 @@
+import 'package:logging/logging.dart';
 import "package:angular2/common.dart"
     show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"
@@ -17,8 +18,6 @@ import "package:angular2/src/core/testability/testability.dart"
 import "package:angular2/src/platform/browser/testability.dart"
     show BrowserGetTestability;
 import "package:angular2/src/platform/browser/xhr_cache.dart" show CachedXHR;
-import "package:angular2/src/platform/dom/dom_adapter.dart" show DOM;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 import "package:angular2/src/platform/dom/events/dom_events.dart"
     show DomEventsPlugin;
 import "package:angular2/src/platform/dom/events/event_manager.dart"
@@ -32,14 +31,10 @@ import "package:angular2/src/platform/dom/events/key_events.dart"
 import "package:angular2/src/security/dom_sanitization_service.dart";
 import "package:angular2/src/security/dom_sanitization_service_impl.dart";
 
-import "browser/browser_adapter.dart" show BrowserDomAdapter;
-
-export "package:angular2/src/platform/browser/title.dart" show Title;
 export "package:angular2/src/platform/browser/tools/tools.dart"
     show enableDebugTools, disableDebugTools;
 export "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
-export "browser/browser_adapter.dart" show BrowserDomAdapter;
 export "dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
 
@@ -55,11 +50,7 @@ const List<dynamic> BROWSER_PROVIDERS = const [
 ];
 ExceptionHandler exceptionHandler() {
   // But must not rethrow exceptions in Dart.
-  return new ExceptionHandler(DOM, false);
-}
-
-dynamic document() {
-  return DOM.defaultDoc();
+  return new ExceptionHandler(new Logger('angular exception'), false);
 }
 
 const List BROWSER_SANITIZATION_PROVIDERS = const [
@@ -79,7 +70,6 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   const Provider(PLATFORM_DIRECTIVES, useValue: COMMON_DIRECTIVES, multi: true),
   const Provider(ExceptionHandler,
       useFactory: exceptionHandler, deps: const []),
-  const Provider(DOCUMENT, useFactory: document, deps: const []),
   DomEventsPlugin,
   KeyEventsPlugin,
   HammerGesturesPlugin,
@@ -100,7 +90,6 @@ List<EventManagerPlugin> createEventPlugins(DomEventsPlugin dom,
 
 Function createInitDomAdapter(TestabilityRegistry testabilityRegistry) {
   return () {
-    BrowserDomAdapter.makeCurrent();
     wtfInit();
     testabilityRegistry.setTestabilityGetter(new BrowserGetTestability());
   };

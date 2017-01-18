@@ -1,13 +1,10 @@
 @TestOn('browser')
 library angular2.test.security.url_sanitizer_test;
 
-import "package:angular2/src/platform/browser/browser_adapter.dart"
-    show BrowserDomAdapter;
 import 'package:angular2/src/security/url_sanitizer.dart';
 import 'package:test/test.dart';
 
 void main() {
-  BrowserDomAdapter.makeCurrent();
   group('URL sanitizer', () {
     test('valid URLs', () {
       var validUrls = <String>[

@@ -1,9 +1,9 @@
 @TestOn('browser')
 library angular2.test.core.application_ref_test;
 
-import "dart:async";
+import 'dart:async';
 
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show
         Injector,
         Provider,
@@ -16,32 +16,37 @@ import "package:angular2/core.dart"
         disposePlatform,
         ComponentResolver,
         ChangeDetectorRef;
-import "package:angular2/src/core/application_ref.dart"
+import 'package:angular2/src/core/application_ref.dart'
     show
         ApplicationRefImpl,
         ApplicationRef,
         PlatformRef,
         PLATFORM_CORE_PROVIDERS,
         APPLICATION_CORE_PROVIDERS;
-import "package:angular2/src/core/linker/app_view_utils.dart" show AppViewUtils;
-import "package:angular2/src/core/linker/component_factory.dart";
-import "package:angular2/src/facade/exception_handler.dart"
+import 'package:angular2/src/core/linker/app_view_utils.dart' show AppViewUtils;
+import 'package:angular2/src/core/linker/component_factory.dart';
+import 'package:angular2/src/facade/exception_handler.dart'
     show ExceptionHandler;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/platform/browser_common.dart";
-import "package:angular2/testing_internal.dart";
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:angular2/src/platform/browser_common.dart';
+import 'package:angular2/testing_internal.dart';
+import 'package:logging/logging.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import "core_mocks.dart";
+import 'core_mocks.dart';
 
 void main() {
-  group("bootstrap", () {
+  group('bootstrap', () {
     PlatformRef platform;
-    _ArrayLogger errorLogger;
+    Logger errorLogger;
+    List<String> errorLoggerList;
     ComponentFactory someCompFactory;
     setUp(() {
-      errorLogger = new _ArrayLogger();
+      errorLogger = new Logger('application_ref_test');
+      errorLoggerList = [];
+      errorLogger.onRecord
+          .listen((LogRecord rec) => errorLoggerList.add(rec.toString()));
       disposePlatform();
     });
     tearDown(() {
@@ -66,8 +71,8 @@ void main() {
       return appInjector.get(ApplicationRef);
     }
 
-    group("ApplicationRef", () {
-      test("should throw when reentering tick", () async {
+    group('ApplicationRef', () {
+      test('should throw when reentering tick', () async {
         return inject([], () {
           var cdRef = new MockChangeDetectorRef();
           var ref = createApplication([]);
@@ -76,26 +81,26 @@ void main() {
           });
           ref.registerChangeDetector(cdRef);
           expect(() => ref.tick(),
-              throwsWith("ApplicationRef.tick is called recursively"));
+              throwsWith('ApplicationRef.tick is called recursively'));
           ref.unregisterChangeDetector(cdRef);
         });
       });
-      test("should pass tick errors to exceptionHandler", () {
+      test('should pass tick errors to exceptionHandler', () {
         return inject([AsyncTestCompleter], (AsyncTestCompleter testCompleter) {
           var ref = createApplication([]);
           ref.waitForAsyncInitializers().whenComplete(() {
             var cdRef = new MockChangeDetectorRef();
-            when(cdRef.detectChanges()).thenThrow(new BaseException("Test"));
+            when(cdRef.detectChanges()).thenThrow(new BaseException('Test'));
             ref.registerChangeDetector(cdRef);
             try {
-              expect(errorLogger.res, isEmpty);
+              expect(errorLoggerList, isEmpty);
               try {
                 ref.zone.run(() {});
               } catch (ex) {
                 fail('Errors during tick should not be rethrown, '
                     'but caught the following: $ex');
               }
-              expect(errorLogger.res, isNotEmpty);
+              expect(errorLoggerList, isNotEmpty);
             } finally {
               ref.unregisterChangeDetector(cdRef);
               testCompleter.done();
@@ -103,35 +108,35 @@ void main() {
           });
         });
       });
-      group("run", () {
-        test("should pass errors to exceptionHandler", () {
+      group('run', () {
+        test('should pass errors to exceptionHandler', () {
           return inject([], () {
             var ref = createApplication([]);
-            expect(errorLogger.res, isEmpty);
+            expect(errorLoggerList, isEmpty);
             try {
               ref.run(() {
-                throw new BaseException("Test");
+                throw new BaseException('Test');
               });
             } catch (_) {}
-            expect(errorLogger.res, isNotEmpty);
+            expect(errorLoggerList, isNotEmpty);
           });
         });
         test(
-            "should rethrow errors even if the exceptionHandler is not rethrowing",
+            'should rethrow errors even if the exceptionHandler is not rethrowing',
             () async {
           return inject([], () {
             var ref = createApplication([]);
             expect(
                 () => ref.run(() {
-                      throw new BaseException("Test");
+                      throw new BaseException('Test');
                     }),
-                throwsWith("Test"));
+                throwsWith('Test'));
           });
         });
       });
     });
-    group("coreLoadAndBootstrap", () {
-      test("should wait for asynchronous app initializers", () async {
+    group('coreLoadAndBootstrap', () {
+      test('should wait for asynchronous app initializers', () async {
         return inject([AsyncTestCompleter, Injector],
             (AsyncTestCompleter testCompleter, Injector injector) {
           var completer = new Completer();
@@ -153,8 +158,8 @@ void main() {
         });
       });
     });
-    group("coreBootstrap", () {
-      test("should throw if an APP_INITIIALIZER is not yet resolved", () async {
+    group('coreBootstrap', () {
+      test('should throw if an APP_INITIIALIZER is not yet resolved', () async {
         return inject([Injector], (injector) {
           var app = createApplication([
             new Provider(APP_INITIALIZER,
@@ -171,25 +176,8 @@ void main() {
   });
 }
 
-@Component(selector: "my-comp", template: "")
+@Component(selector: 'my-comp', template: '')
 class MyComp {}
-
-class _ArrayLogger {
-  List<dynamic> res = [];
-  void log(dynamic s) {
-    this.res.add(s);
-  }
-
-  void logError(dynamic s) {
-    this.res.add(s);
-  }
-
-  void logGroup(dynamic s) {
-    this.res.add(s);
-  }
-
-  void logGroupEnd() {}
-}
 
 class _MockComponentFactory extends ComponentFactory {
   ComponentRef _compRef;
