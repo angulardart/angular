@@ -1,7 +1,7 @@
 ## 3.0.0-alpha
 
 This is the first _pre-release_ of AngularDart `3.0.0`. This code is considered
-"production quality", but additional breaking changes and features are planned
+production quality, but additional breaking changes and features are planned
 before releasing a final version.
 
 ### New features
