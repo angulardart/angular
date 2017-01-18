@@ -4,81 +4,83 @@ This is the first _pre-release_ of AngularDart `3.0.0`. This code is considered
 "production quality", but additional breaking changes and features are planned
 before releasing a final version.
 
-### API changes
-  * Features
-      * (Forms) `AbstractControl.markAsDirty` now emits a status change event
-  * Breaking changes
-      * DOM adapter is now completely removed from the API and generated code
-      * A `name` parameter is now _required_ for all `@Pipe(...)` definitions:
+### New features
 
-**BEFORE**
-```dart
-@Pipe(name: 'uppercase')
-```
+*   (Forms) `AbstractControl.markAsDirty` now emits a status change event.
 
-**AFTER**
-```dart
-@Pipe('uppercase')
-```
+### Breaking changes
 
-      * `DomEventsPlugin` now requires a strongly typed interface to `dart:html`
-      * `Null` is no longer propogated as an initial change value. Code should
-        be updated to either deliver a different initial value or components
-        with an `@Input()` should have an appropriate default value.
+*   DOM adapter is now completely removed from the API and generated code
+*   A `name` parameter is now _required_ for all `@Pipe(...)` definitions:
 
-**BEFORE**
-```html
-<my-component [value]="null"></my-component>
-```
+    **BEFORE:** `dart @Pipe(name: 'uppercase')`
 
-```dart
-String _value;
+    **AFTER:** `dart @Pipe('uppercase')`
 
-set value(String value) {
-  _value = value ?? 'Default name';
-}
-```
+*   `DomEventsPlugin` now requires a strongly typed interface to `dart:html`.
 
-**AFTER**
-```dart
-String _value = 'Default name';
+*   `Null` is no longer propagated as an initial change value. Code should be
+    updated to either deliver a different initial value or components with an
+    `@Input()` should have an appropriate default value.
 
-set value(String value) {
-  _value = value;
-}
-```
+    **BEFORE**
 
-      * Removed `NgPlural`, deprecated as-of 2.1.0
-      * Removed `ObservableListDiffFactory`, deprecated as-of 2.1.0
-      * Event handlers are bound at initialization time. Therefore, the
-        following will no longer work, because `clickHandler` is `null` during
-        initialization.
-```dart
-@Component(
-    selector: 'my-component',
-    template: '<div (click)="clickHandler($event)"></div>')
-class MyComponent {
-  Function clickHandler;
-}
-```
-      * Removed `Component.moduleId', which was unused.
-  * Deprecations
-      * `Iterable|KeyValue`Differs is deprecated. The cost of looking up to see
-        if a custom differ is available is too high for almost no use. Before
-        removed, we'll have other customization options
+    ```dart
+    <my-component [value]="null"></my-component>
+    ...
+    String _value;
+
+    set value(String value) {
+      _value = value ?? 'Default name';
+    }
+    ```
+
+    **AFTER**
+
+    ```dart
+    String _value = 'Default name';
+
+    set value(String value) { _value = value; }
+    ```
+
+*   Removed `NgPlural`, deprecated as of 2.1.0.
+
+*   Removed `ObservableListDiffFactory`, deprecated as of 2.1.0.
+
+*   Event handlers are bound at initialization time. Therefore, the following
+    will no longer work, because `clickHandler` is `null` during initialization.
+
+    ```dart
+    @Component(
+        selector: 'my-component',
+        template: '<div (click)="clickHandler($event)"></div>')
+    class MyComponent {
+      Function clickHandler;
+    }
+    ```
+
+*   Removed `Component.moduleId`, which was unused.
+
+### Deprecations
+
+*   `IterableDiffers` and `KeyValueDiffers` are deprecated. The cost of looking
+    up to see if a custom differ is available is too high for almost no use.
+    Before they're removed, we'll have other customization options.
 
 ### Bug fixes
-  * Fixed a bug where the router didn't work on a root path in IE11
-  * Fixed generated code that caused a strong-mode warning on `AppView<...>`
-  * Fixed a bug where DDC didn't work properly with "pure" `Pipe`s
-  * Some simple types are now propegated to the generated `.template.dart` file
+
+*   Fixed a bug where the router didn't work on a root path in IE11.
+*   Fixed generated code that caused a strong-mode warning on `AppView<...>`.
+*   Fixed a bug where DDC didn't work properly with "pure" `Pipe`s.
+*   Some simple types are now propagated to the generated `.template.dart` file.
 
 ### Refactors
-  * Removed `NgZoneImpl`, all the code exists in `NgZone` now
-  * We now generate specific code for view and content children (faster)
-  * Projectable nodes now use the visitor pattern in `AppView`
-  * In generated `.template.dart` change detected primitives are typed
-  * Moved `renderType` as a static class member in generated code
+
+*   Removed `NgZoneImpl`, all the code exists in `NgZone` now.
+*   We now generate specific code for view and content children (faster).
+*   Projectable nodes now use the visitor pattern in `AppView`.
+*   In generated `.template.dart` change detected primitives are typed.
+*   Moved `renderType` as a static class member in generated code.
 
 ## 2.2.0
 
