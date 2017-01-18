@@ -19,6 +19,7 @@ class ViewContainer implements ViewContainerRef {
   final dynamic nativeElement;
   List<AppView> nestedViews;
   ElementRef _elementRef;
+  Injector _parentInjector;
 
   ViewContainer(
       this.index, this.parentIndex, this.parentView, this.nativeElement);
@@ -42,7 +43,8 @@ class ViewContainer implements ViewContainerRef {
   ElementRef get element => elementRef;
 
   @override
-  Injector get parentInjector => parentView.injector(parentIndex);
+  Injector get parentInjector =>
+      _parentInjector ??= parentView.injector(parentIndex);
 
   @override
   Injector get injector => parentView.injector(index);
