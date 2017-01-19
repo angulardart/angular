@@ -8,9 +8,30 @@ import 'package:code_builder/code_builder.dart';
 import 'package:code_builder/src/tokens.dart';
 import 'package:quiver/strings.dart' as strings;
 
+const _ignoredProblems = const <String>[
+  'annotate_overrides',
+  'cancel_subscriptions',
+  'constant_identifier_names',
+  'non_constant_identifier_names',
+  'implementation_imports',
+  'library_prefixes',
+  'type_annotate_public_apis',
+  'STRONG_MODE_DOWN_CAST_COMPOSITE',
+  'UNUSED_IMPORT',
+  'UNUSED_SHOWN_NAME',
+  'UNUSED_LOCAL_VARIABLE',
+];
+
 String buildGeneratedCode(
-    TemplateCompilerOutputs outputs, String sourceFile, String libraryName) {
+  TemplateCompilerOutputs outputs,
+  String sourceFile,
+  String libraryName,
+) {
   StringBuffer buffer = new StringBuffer();
+  // Avoid strong-mode warnings that are not solvable quite yet.
+  for (var problem in _ignoredProblems) {
+    buffer.writeln('// @ignoreProblemForFile $problem');
+  }
   if (strings.isNotEmpty(libraryName)) {
     buffer.writeln('library $libraryName$TEMPLATE_EXTENSION;\n');
   }
