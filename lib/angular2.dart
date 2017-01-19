@@ -13,7 +13,8 @@ export 'package:angular2/src/core/angular_entrypoint.dart'
 export 'package:angular2/src/core/application_tokens.dart'
     hide APP_ID_RANDOM_PROVIDER;
 export 'package:angular2/src/platform/dom/dom_tokens.dart';
-export 'package:angular2/src/platform/dom/events/event_manager.dart';
+export 'package:angular2/src/platform/dom/events/event_manager.dart'
+    show EventManagerPlugin;
 // Attention: Don't use angular2/src/compiler/compiler.dart
 // for re exports as this will pull in the whole compiler,
 // even if only some parts are shown.
