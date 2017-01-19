@@ -64,8 +64,10 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
     _compView_0 = viewFactory_HostComponent0(this, 0, _el_0);
     _HostComponent_0_2 = new import1.HostComponent();
     _compView_0.create(_HostComponent_0_2, projectableNodes, null);
-    listen(_el_0, 'keydown', evt(_handle_keydown_0_0));
-    listen(_el_0, 'click', evt(_handle_click_0_1));
+    listen(_el_0, 'keydown',
+        _compView_0.eventHandler0(_HostComponent_0_2.onKeyDown));
+    listen(
+        _el_0, 'click', _compView_0.eventHandler1(_HostComponent_0_2.onClick));
     init([_el_0], [_el_0], []);
     return new ComponentRef(0, this, _el_0, _HostComponent_0_2);
   }
@@ -84,20 +86,6 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
 
   void destroyInternal() {
     _compView_0.destroy();
-  }
-
-  bool _handle_keydown_0_0($event) {
-    _compView_0.markPathToRootAsCheckOnce();
-    final dynamic pd_0 =
-        !identical((_HostComponent_0_2.onKeyDown() as dynamic), false);
-    return (true && pd_0);
-  }
-
-  bool _handle_click_0_1($event) {
-    _compView_0.markPathToRootAsCheckOnce();
-    final dynamic pd_0 =
-        !identical((_HostComponent_0_2.onClick($event) as dynamic), false);
-    return (true && pd_0);
   }
 }
 

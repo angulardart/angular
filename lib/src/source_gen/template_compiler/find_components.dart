@@ -89,6 +89,7 @@ class ComponentVisitor
   List<String> _inputs = [];
   List<String> _outputs = [];
   Map<String, String> _host = {};
+  List<CompileQueryMetadata> _queries = [];
 
   ComponentVisitor(this._buildStep, {bool loadTemplate: false})
       : _loadTemplate = loadTemplate;
@@ -109,17 +110,24 @@ class ComponentVisitor
   @override
   CompileDirectiveMetadata visitFieldElement(FieldElement element) {
     super.visitFieldElement(element);
-    _visitInputOutputElement(element,
-        isGetter: element.getter != null, isSetter: element.setter != null);
+    _visitClassMember(
+      element,
+      isGetter: element.getter != null,
+      isSetter: element.setter != null,
+    );
     return null;
   }
 
   @override
   CompileDirectiveMetadata visitPropertyAccessorElement(
-      PropertyAccessorElement element) {
+    PropertyAccessorElement element,
+  ) {
     super.visitPropertyAccessorElement(element);
-    _visitInputOutputElement(element,
-        isGetter: element.isGetter, isSetter: element.isSetter);
+    _visitClassMember(
+      element,
+      isGetter: element.isGetter,
+      isSetter: element.isSetter,
+    );
     return null;
   }
 
@@ -134,8 +142,11 @@ class ComponentVisitor
     return null;
   }
 
-  void _visitInputOutputElement(Element element,
-      {bool isGetter: false, isSetter: false}) {
+  void _visitClassMember(
+    Element element, {
+    bool isGetter: false,
+    isSetter: false,
+  }) {
     for (ElementAnnotation annotation in element.metadata) {
       if (annotation_matcher.matchAnnotation(Input, annotation)) {
         if (isSetter) {
@@ -144,16 +155,14 @@ class ComponentVisitor
           _logger.severe('@Input can only be used on a setter or non-final '
               'field, but was found on $element.');
         }
-      }
-      if (annotation_matcher.matchAnnotation(Output, annotation)) {
+      } else if (annotation_matcher.matchAnnotation(Output, annotation)) {
         if (isGetter) {
           _addPropertyToType(_outputs, annotation, element);
         } else {
           _logger.severe('@Output can only be used on a getter or a field, but '
               'was found on $element.');
         }
-      }
-      if (annotation_matcher.matchAnnotation(HostBinding, annotation)) {
+      } else if (annotation_matcher.matchAnnotation(HostBinding, annotation)) {
         if (isGetter) {
           _addHostBinding(annotation, element);
         } else {
@@ -161,8 +170,66 @@ class ComponentVisitor
               .severe('@HostBinding can only be used on a getter or a field, '
                   'but was found on $element.');
         }
+      } else if (annotation_matcher.matchTypes(const [
+        Query,
+        ViewQuery,
+        ContentChildren,
+        ContentChild,
+        ViewChildren,
+        ViewChild,
+      ], annotation)) {
+        if (isSetter) {
+          _queries.add(_getQuery(
+            annotation.computeConstantValue(),
+            element.name,
+          ));
+        } else {
+          _logger.severe(''
+              'Any of the @Query/ViewQuery/Content/view annotations '
+              'can only be used on a setter, but was found on $element.');
+        }
       }
     }
+  }
+
+  List<CompileTokenMetadata> _getSelectors(DartObject value) {
+    var selector = getField(value, 'selector');
+    var selectorString = selector?.toStringValue();
+    if (selectorString != null) {
+      return selectorString
+          .split(',')
+          .map((s) => new CompileTokenMetadata(value: s))
+          .toList();
+    }
+    return [
+      new CompileTokenMetadata(
+        identifier:
+            new CompileIdentifierMetadata(name: selector.toTypeValue().name),
+      ),
+    ];
+  }
+
+  CompileQueryMetadata _getQuery(
+    annotationOrObject,
+    String propertyName,
+  ) {
+    DartObject value;
+    if (annotationOrObject is ElementAnnotation) {
+      value = annotationOrObject.computeConstantValue();
+    } else {
+      value = annotationOrObject;
+    }
+    return new CompileQueryMetadata(
+      selectors: _getSelectors(value),
+      descendants: coerceBool(value, 'descendants', defaultTo: false),
+      first: coerceBool(value, 'first', defaultTo: false),
+      propertyName: propertyName,
+      read: new CompileTokenMetadata(
+        identifier: new CompileIdentifierMetadata(
+          name: propertyName,
+        ),
+      ),
+    );
   }
 
   void _addHostBinding(ElementAnnotation annotation, Element element) {
@@ -219,6 +286,10 @@ class ComponentVisitor
       ..addAll(_outputs);
     var host = new Map<String, String>.from(coerceStringMap(value, 'host'))
       ..addAll(_host);
+    var queries = new List<CompileQueryMetadata>.from(_queries);
+    coerceMap(value, 'queries').forEach((propertyName, query) {
+      queries.add(_getQuery(query, propertyName.toStringValue()));
+    });
     return CompileDirectiveMetadata.create(
         type: element.accept(new CompileTypeMetadataVisitor()),
         isComponent: isComponent,
@@ -231,7 +302,7 @@ class ComponentVisitor
         lifecycleHooks: _extractLifecycleHooks(element),
         providers: [],
         viewProviders: isComponent ? [] : null,
-        queries: [],
+        queries: queries,
         viewQueries: isComponent ? [] : null,
         template: template);
   }
