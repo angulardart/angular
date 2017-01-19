@@ -1,0 +1,56 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TestComponentExtractor
+// Target: library
+// **************************************************************************
+
+final String output = """[
+  {
+    "class": "NormalizedComponentWithViewDirectives",
+    "component": {
+      "class": "Directive",
+      "isComponent": true,
+      "selector": "host",
+      "exportAs": null,
+      "type": {
+        "class": "Type",
+        "name": "HostComponent",
+        "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/host.dart",
+        "prefix": null,
+        "isHost": false,
+        "value": null,
+        "diDeps": []
+      },
+      "changeDetection": 6,
+      "inputs": {},
+      "inputTypes": {},
+      "outputs": {},
+      "hostListeners": {
+        "keydown": "onKeyDown()",
+        "click": "onClick($event)"
+      },
+      "hostProperties": {},
+      "hostAttributes": {
+        "aria-title": "title",
+        "title": "title",
+        "class.is-disabled": "isDisabled"
+      },
+      "lifecycleHooks": [],
+      "template": {
+        "encapsulation": 0,
+        "template": "",
+        "templateUrl": null,
+        "styles": [],
+        "styleUrls": [],
+        "ngContentSelectors": []
+      },
+      "providers": [],
+      "viewProviders": [],
+      "queries": [],
+      "viewQueries": []
+    },
+    "directives": [],
+    "pipes": []
+  }
+]""";

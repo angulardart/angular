@@ -1,0 +1,148 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+import 'host.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+export 'host.dart';
+import 'package:angular2/src/debug/debug_context.dart';
+import 'package:angular2/src/debug/debug_app_view.dart';
+import 'host.dart' as import2;
+import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/core/linker/view_type.dart' as import5;
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
+import 'package:angular2/angular2.dart';
+import 'dart:html';
+
+const List<dynamic> styles_HostComponent = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_HostComponent0 = const [];
+
+class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
+  static RenderComponentType renderType;
+  ViewHostComponent0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewHostComponent0,
+            import5.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_HostComponent0) {
+    renderType ??= import7.appViewUtils.createRenderType(
+        'asset:angular2/test/source_gen/template_compiler/test_files/host.dart class HostComponent - inline template',
+        0,
+        ViewEncapsulation.None,
+        styles_HostComponent);
+    setupComponentType(renderType);
+  }
+  ComponentRef createInternal(dynamic rootSelector) {
+    final Node parentRenderNode = initViewRoot(parentElement);
+    init([], [], []);
+    return null;
+  }
+}
+
+AppView<import2.HostComponent> viewFactory_HostComponent0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  return new ViewHostComponent0(parentView, parentIndex, parentElement);
+}
+
+const List<dynamic> styles_HostComponentHost = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = const [
+  const StaticNodeDebugInfo(const [import2.HostComponent],
+      import2.HostComponent, const <String, dynamic>{})
+];
+
+class ViewHostComponentHost0 extends DebugAppView<dynamic> {
+  Element _el_0;
+  AppView<import2.HostComponent> _compView_0;
+  import2.HostComponent _HostComponent_0_2;
+  static RenderComponentType renderType;
+  ViewHostComponentHost0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewHostComponentHost0,
+            import5.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_HostComponentHost0) {
+    renderType ??= import7.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_HostComponentHost);
+    setupComponentType(renderType);
+  }
+  ComponentRef createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('host', rootSelector, dbg(0, 0, 0));
+    createAttr(_el_0, 'aria-title', 'title');
+    createAttr(_el_0, 'class.is-disabled', 'isDisabled');
+    createAttr(_el_0, 'title', 'title');
+    _compView_0 = viewFactory_HostComponent0(this, 0, _el_0);
+    _HostComponent_0_2 = new import2.HostComponent();
+    _compView_0.create(_HostComponent_0_2, projectableNodes, null);
+    listen(_el_0, 'keydown', evt(_handle_keydown_0_0));
+    listen(_el_0, 'click', evt(_handle_click_0_1));
+    init([_el_0], [_el_0], []);
+    return new ComponentRef(0, this, _el_0, _HostComponent_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.HostComponent) && (0 == requestNodeIndex))) {
+      return _HostComponent_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+
+  bool _handle_keydown_0_0($event) {
+    _compView_0.markPathToRootAsCheckOnce();
+    dbg(0, 0, 0);
+    final dynamic pd_0 =
+        !identical((_HostComponent_0_2.onKeyDown() as dynamic), false);
+    return (true && pd_0);
+  }
+
+  bool _handle_click_0_1($event) {
+    _compView_0.markPathToRootAsCheckOnce();
+    dbg(0, 0, 0);
+    final dynamic pd_0 =
+        !identical((_HostComponent_0_2.onClick($event) as dynamic), false);
+    return (true && pd_0);
+  }
+}
+
+AppView viewFactory_HostComponentHost0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  return new ViewHostComponentHost0(parentView, parentIndex, parentElement);
+}
+
+const ComponentFactory HostComponentNgFactory = const ComponentFactory(
+    'host', viewFactory_HostComponentHost0, import2.HostComponent, _METADATA);
+const _METADATA = const <dynamic>[HostComponent, const <dynamic>[]];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerType(
+      HostComponent,
+      new _ngRef.ReflectionInfo(const <dynamic>[HostComponentNgFactory],
+          const [], () => new HostComponent()));
+}

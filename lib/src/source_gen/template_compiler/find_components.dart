@@ -88,6 +88,7 @@ class ComponentVisitor
 
   List<String> _inputs = [];
   List<String> _outputs = [];
+  Map<String, String> _host = {};
 
   ComponentVisitor(this._buildStep, {bool loadTemplate: false})
       : _loadTemplate = loadTemplate;
@@ -122,6 +123,17 @@ class ComponentVisitor
     return null;
   }
 
+  @override
+  CompileDirectiveMetadata visitMethodElement(MethodElement element) {
+    super.visitMethodElement(element);
+    for (ElementAnnotation annotation in element.metadata) {
+      if (annotation_matcher.matchAnnotation(HostListener, annotation)) {
+        _addHostListener(annotation, element);
+      }
+    }
+    return null;
+  }
+
   void _visitInputOutputElement(Element element,
       {bool isGetter: false, isSetter: false}) {
     for (ElementAnnotation annotation in element.metadata) {
@@ -141,7 +153,30 @@ class ComponentVisitor
               'was found on $element.');
         }
       }
+      if (annotation_matcher.matchAnnotation(HostBinding, annotation)) {
+        if (isGetter) {
+          _addHostBinding(annotation, element);
+        } else {
+          _logger
+              .severe('@HostBinding can only be used on a getter or a field, '
+                  'but was found on $element.');
+        }
+      }
     }
+  }
+
+  void _addHostBinding(ElementAnnotation annotation, Element element) {
+    var value = annotation.computeConstantValue();
+    _host[coerceString(value, 'hostPropertyName', defaultTo: element.name)] =
+        element.name;
+  }
+
+  void _addHostListener(ElementAnnotation annotation, Element element) {
+    var value = annotation.computeConstantValue();
+    var eventName = coerceString(value, 'eventName');
+    var methodName = element.name;
+    var methodArgs = coerceStringList(value, 'args');
+    _host['($eventName)'] = '$methodName(${methodArgs.join(', ')})';
   }
 
   void _addPropertyToType(
@@ -182,6 +217,8 @@ class ComponentVisitor
       ..addAll(_inputs);
     var outputs = new List<String>.from(coerceStringList(value, 'outputs'))
       ..addAll(_outputs);
+    var host = new Map<String, String>.from(coerceStringMap(value, 'host'))
+      ..addAll(_host);
     return CompileDirectiveMetadata.create(
         type: element.accept(new CompileTypeMetadataVisitor()),
         isComponent: isComponent,
@@ -190,7 +227,7 @@ class ComponentVisitor
         changeDetection: isComponent ? _changeDetection(value) : null,
         inputs: inputs,
         outputs: outputs,
-        host: {},
+        host: host,
         lifecycleHooks: _extractLifecycleHooks(element),
         providers: [],
         viewProviders: isComponent ? [] : null,
