@@ -7,14 +7,19 @@ import 'package:source_gen/src/annotation.dart';
 /// An abstraction around comparing types statically (at compile-time).
 abstract class MetadataTypes {
   /// Creates a [MetadataTypes] that uses runtime reflection.
-  const factory MetadataTypes.withMirrors() = _MirrorsMetadataTypes;
+  const factory MetadataTypes.withMirrors({
+    bool checkSubTypes,
+  }) = _MirrorsMetadataTypes;
 
   /// Creates a [MetadataTypes] by retrieving exact types from [resolver].
   ///
   /// With _analysis summaries_ this should be a relatively cheap operation but
   /// the resulting [MetadataTypes] class should still be cached whenever
   /// possible.
-  factory MetadataTypes.fromResolver(Resolver resolver) {
+  factory MetadataTypes.fromResolver(
+    Resolver resolver, {
+    bool checkSubTypes,
+  }) {
     final srcMetadata = new AssetId('angular2', 'src/meta/core/metadata.dart');
     final libMetadata = resolver.getLibrary(srcMetadata);
     return new _LibraryMetadataTypes(libMetadata);
@@ -113,10 +118,17 @@ abstract class MetadataTypes {
 
 /// Implementation that uses runtime reflection to do type comparisons.
 class _MirrorsMetadataTypes extends MetadataTypes {
-  const _MirrorsMetadataTypes() : super._();
+  final bool _checkSubTypes;
+
+  const _MirrorsMetadataTypes({bool checkSubTypes: false})
+      : _checkSubTypes = checkSubTypes,
+        super._();
 
   @override
   bool _isA(DartType staticType, Type runtimeType) {
+    if (!_checkSubTypes) {
+      return _isExactly(staticType, runtimeType);
+    }
     final element = staticType.element;
     if (element is ClassElement) {
       return element.allSupertypes.any((t) => matchTypes(runtimeType, t));
@@ -132,12 +144,18 @@ class _MirrorsMetadataTypes extends MetadataTypes {
 
 /// Implementation that uses other [DartType]s when doing type comparisons.
 class _LibraryMetadataTypes extends MetadataTypes {
+  final bool _checkSubTypes;
   final LibraryElement _metadataLibrary;
 
-  _LibraryMetadataTypes(this._metadataLibrary) : super._();
+  _LibraryMetadataTypes(this._metadataLibrary, {bool checkSubTypes: false})
+      : _checkSubTypes = checkSubTypes,
+        super._();
 
   @override
   bool _isA(DartType staticType, Type runtimeType) {
+    if (!_checkSubTypes) {
+      return _isExactly(staticType, runtimeType);
+    }
     final comparisonType = _metadataLibrary.getType('$runtimeType').type;
     return staticType.isSubtypeOf(comparisonType);
   }
