@@ -15,8 +15,8 @@ abstract class SafeResourceUrl extends SafeValue {}
 /// DomSanitizationService helps preventing Cross Site Scripting Security bugs
 /// (XSS) by sanitizing values to be safe to use in the different DOM contexts.
 ///
-/// For example, when binding a URL in an <a [href]="someValue"> hyperlink,
-/// someValue will be sanitized so that an attacker cannot inject e.g. a
+/// For example, when binding a URL in an `<a [href]="someUrl">` hyperlink,
+/// _someUrl_ will be sanitized so that an attacker cannot inject a
 /// `javascript:` URL that would execute code on the website.
 ///
 /// In specific situations, it might be necessary to disable sanitization, for
@@ -24,7 +24,7 @@ abstract class SafeResourceUrl extends SafeValue {}
 /// style link with a dynamic value in it.
 ///
 /// Users can bypass security by constructing a value with one of the
-/// [bypassSecurityTrust...] methods, and then binding to that value from the
+/// `bypassSecurityTrust...` methods, and then binding to that value from the
 /// template.
 ///
 /// These situations should be very rare, and extraordinary care must be taken
@@ -32,10 +32,10 @@ abstract class SafeResourceUrl extends SafeValue {}
 ///
 /// When using `bypassSecurityTrust...`, make sure to call the method as
 /// early as possible and as close as possible to the source of the value,
-/// to make it easy to verify no security bug is created by its use.
+/// to make it easy to verify that no security bug is created by its use.
 ///
 /// It is not required (and not recommended) to bypass security if the value
-/// is safe, e.g. a URL that does not start with a suspicious protocol, or an
+/// is safe, for example, a URL that does not start with a suspicious protocol, or an
 /// HTML snippet that does not contain dangerous code. The sanitizer leaves
 /// safe values intact.
 abstract class DomSanitizationService implements SanitizationService {
