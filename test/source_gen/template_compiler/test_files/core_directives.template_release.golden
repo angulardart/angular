@@ -20,17 +20,19 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 import 'dart:html';
 import 'package:angular2/src/core/linker/template_ref.dart';
-import 'package:angular2/src/facade/lang.dart' as import12;
+import 'package:angular2/src/core/change_detection/differs/iterable_differs.dart'
+    as import12;
+import 'package:angular2/src/facade/lang.dart' as import13;
 
 const List<dynamic> styles_TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ViewContainer _appEl_1;
-  dynamic _TemplateRef_1_3;
-  NgIf _NgIf_1_4;
+  dynamic _TemplateRef_1_4;
+  NgIf _NgIf_1_5;
   ViewContainer _appEl_3;
-  dynamic _TemplateRef_3_3;
-  import4.NgFor _NgFor_3_4;
+  dynamic _TemplateRef_3_4;
+  import4.NgFor _NgFor_3_5;
   var _expr_1;
   static RenderComponentType renderType;
   ViewTestFooComponent0(
@@ -48,20 +50,16 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     var _anchor_1 = new Comment('template bindings={}');
     parentRenderNode?.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    _TemplateRef_1_3 = new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
-    _NgIf_1_4 = new NgIf(parentView.injectorGet(ViewContainerRef, parentIndex),
-        parentView.injectorGet(TemplateRef, parentIndex));
+    _TemplateRef_1_4 = new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
+    _NgIf_1_5 = new NgIf(_appEl_1, _TemplateRef_1_4);
     Text _text_2 = new Text('\n    ');
     parentRenderNode.append(_text_2);
     var _anchor_3 = new Comment('template bindings={}');
     parentRenderNode?.append(_anchor_3);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
-    _TemplateRef_3_3 = new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
-    _NgFor_3_4 = new import4.NgFor(
-        parentView.injectorGet(ViewContainerRef, parentIndex),
-        parentView.injectorGet(TemplateRef, parentIndex),
-        parentView.injectorGet(IterableDiffers, parentIndex),
-        parentView.injectorGet(ChangeDetectorRef, parentIndex));
+    _TemplateRef_3_4 = new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
+    _NgFor_3_5 = new import4.NgFor(_appEl_3, _TemplateRef_3_4,
+        parentView.injectorGet(import12.IterableDiffers, parentIndex), ref);
     Text _text_4 = new Text('\n    ');
     parentRenderNode.append(_text_4);
     init([], [_text_0, _anchor_1, _text_2, _anchor_3, _text_4], []);
@@ -71,30 +69,37 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, TemplateRef) && (1 == requestNodeIndex))) {
-      return _TemplateRef_1_3;
+      return _TemplateRef_1_4;
     }
     if ((identical(token, NgIf) && (1 == requestNodeIndex))) {
-      return _NgIf_1_4;
+      return _NgIf_1_5;
     }
     if ((identical(token, TemplateRef) && (3 == requestNodeIndex))) {
-      return _TemplateRef_3_3;
+      return _TemplateRef_3_4;
     }
     if ((identical(token, import4.NgFor) && (3 == requestNodeIndex))) {
-      return _NgFor_3_4;
+      return _NgFor_3_5;
     }
     return notFoundResult;
   }
 
   void detectChangesInternal() {
-    _NgIf_1_4.ngIf = ctx.foo;
+    _NgIf_1_5.ngIf = ctx.foo;
     final currVal_1 = ctx.bars;
-    if (!import12.looseIdentical(_expr_1, currVal_1)) {
-      _NgFor_3_4.ngForOf = currVal_1;
+    if (!import13.looseIdentical(_expr_1, currVal_1)) {
+      _NgFor_3_5.ngForOf = currVal_1;
       _expr_1 = currVal_1;
     }
     if (!import8.AppViewUtils.throwOnChanges) {
-      _NgFor_3_4.ngDoCheck();
+      _NgFor_3_5.ngDoCheck();
     }
+    _appEl_1.detectChangesInNestedViews();
+    _appEl_3.detectChangesInNestedViews();
+  }
+
+  void destroyInternal() {
+    _appEl_1.destroyNestedViews();
+    _appEl_3.destroyNestedViews();
   }
 }
 
@@ -160,7 +165,7 @@ class ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
 
   void detectChangesInternal() {
     final currVal_0 = import8.interpolate0(locals['\$implicit']);
-    if (!import12.looseIdentical(_expr_0, currVal_0)) {
+    if (!import13.looseIdentical(_expr_0, currVal_0)) {
       _text_3.text = currVal_0;
       _expr_0 = currVal_0;
     }

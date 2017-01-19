@@ -32,8 +32,8 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
 
 class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
   ViewContainer _appEl_0;
-  dynamic _TemplateRef_0_3;
-  NgIf _NgIf_0_4;
+  dynamic _TemplateRef_0_4;
+  NgIf _NgIf_0_5;
   static RenderComponentType renderType;
   ViewTestFooComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -59,9 +59,8 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
     parentRenderNode?.append(_anchor_0);
     dbgElm(_anchor_0, 0, 0, 0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    _TemplateRef_0_3 = new TemplateRef(_appEl_0, viewFactory_TestFooComponent1);
-    _NgIf_0_4 = new NgIf(parentView.injectorGet(ViewContainerRef, parentIndex),
-        parentView.injectorGet(TemplateRef, parentIndex));
+    _TemplateRef_0_4 = new TemplateRef(_appEl_0, viewFactory_TestFooComponent1);
+    _NgIf_0_5 = new NgIf(_appEl_0, _TemplateRef_0_4);
     init([], [_anchor_0], []);
     return null;
   }
@@ -69,17 +68,22 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
     if ((identical(token, TemplateRef) && (0 == requestNodeIndex))) {
-      return _TemplateRef_0_3;
+      return _TemplateRef_0_4;
     }
     if ((identical(token, NgIf) && (0 == requestNodeIndex))) {
-      return _NgIf_0_4;
+      return _NgIf_0_5;
     }
     return notFoundResult;
   }
 
   void detectChangesInternal() {
     dbg(0, 0, 5);
-    _NgIf_0_4.ngIf = true;
+    _NgIf_0_5.ngIf = true;
+    _appEl_0.detectChangesInNestedViews();
+  }
+
+  void destroyInternal() {
+    _appEl_0.destroyNestedViews();
   }
 }
 

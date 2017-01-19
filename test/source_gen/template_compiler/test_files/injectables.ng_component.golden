@@ -41,7 +41,7 @@ final String output = """[
               "identifier": {
                 "class": "Identifier",
                 "name": "InjectableService",
-                "moduleUrl": null,
+                "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/injectables.dart",
                 "prefix": null,
                 "value": null
               },

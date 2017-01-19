@@ -80,7 +80,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
     _compView_0 = viewFactory_InjectableComponent0(this, 0, _el_0);
     _InjectableComponent_0_2 = new import1.InjectableComponent(
         null,
-        this.injectorGet(InjectableService, parentIndex, null),
+        this.injectorGet(import1.InjectableService, parentIndex, null),
         this.injectorGet('OpaqueToken__test', parentIndex));
     _compView_0.create(_InjectableComponent_0_2, projectableNodes, null);
     init([_el_0], [_el_0], []);

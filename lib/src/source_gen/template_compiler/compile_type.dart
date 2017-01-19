@@ -26,8 +26,10 @@ class CompileTypeMetadataVisitor
               )
           : null;
 
-  String _moduleUrl(ClassElement element) =>
-      toAssetUri(fromUri(element?.source?.uri?.toString()));
+  String _moduleUrl(Element element) {
+    var uri = element?.source?.uri?.toString();
+    return uri != null ? toAssetUri(fromUri(uri)) : null;
+  }
 
   List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
           List<ParameterElement> parameters) =>
@@ -78,7 +80,8 @@ class CompileTypeMetadataVisitor
 
   CompileTokenMetadata _tokenForType(DartType type) {
     return new CompileTokenMetadata(
-        identifier: new CompileIdentifierMetadata(name: type.name));
+        identifier: new CompileIdentifierMetadata(
+            name: type.name, moduleUrl: _moduleUrl(type.element)));
   }
 
   bool _isOpaqueToken(DartObject token) =>

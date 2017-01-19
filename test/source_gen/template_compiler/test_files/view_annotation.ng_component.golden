@@ -66,7 +66,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "ViewContainerRef",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/linker/view_container_ref.dart",
                   "prefix": null,
                   "value": null
                 },
@@ -86,7 +86,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "TemplateRef",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/linker/template_ref.dart",
                   "prefix": null,
                   "value": null
                 },

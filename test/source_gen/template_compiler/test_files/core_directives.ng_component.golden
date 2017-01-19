@@ -63,7 +63,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "ViewContainerRef",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/linker/view_container_ref.dart",
                   "prefix": null,
                   "value": null
                 },
@@ -83,7 +83,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "TemplateRef",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/linker/template_ref.dart",
                   "prefix": null,
                   "value": null
                 },
@@ -134,7 +134,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "ViewContainerRef",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/linker/view_container_ref.dart",
                   "prefix": null,
                   "value": null
                 },
@@ -154,7 +154,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "TemplateRef",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/linker/template_ref.dart",
                   "prefix": null,
                   "value": null
                 },
@@ -174,7 +174,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "IterableDiffers",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/change_detection/differs/iterable_differs.dart",
                   "prefix": null,
                   "value": null
                 },
@@ -194,7 +194,7 @@ final String output = """[
                 "identifier": {
                   "class": "Identifier",
                   "name": "ChangeDetectorRef",
-                  "moduleUrl": null,
+                  "moduleUrl": "asset:angular2/lib/src/core/change_detection/change_detector_ref.dart",
                   "prefix": null,
                   "value": null
                 },
