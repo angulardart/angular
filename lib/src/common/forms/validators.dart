@@ -94,41 +94,61 @@ class Validators {
   ///  of the individual error maps.
   static ValidatorFn compose(List<ValidatorFn> validators) {
     if (validators == null) return null;
-    var presentValidators = validators.where((v) => v != null).toList();
-    if (presentValidators.length == 0) return null;
+    final presentValidators = _removeNullValidators(validators);
+    if (presentValidators.isEmpty) return null;
     return (model_module.AbstractControl control) {
-      return _mergeErrors(_executeValidators(control, presentValidators));
+      return _executeValidators(control, presentValidators);
     };
   }
 
+  ///  Compose multiple async validators into a single function that returns the
+  ///  union of the individual error maps.
   static AsyncValidatorFn composeAsync(List<AsyncValidatorFn> validators) {
     if (validators == null) return null;
-    var presentValidators = validators.where((v) => v != null).toList();
-    if (presentValidators.length == 0) return null;
+    final presentValidators = _removeNullValidators(validators);
+    if (presentValidators.isEmpty) return null;
     return (model_module.AbstractControl control) {
-      var promises =
-          _executeAsyncValidators(control, presentValidators).map(_toFuture);
-      return Future.wait(promises).then(_mergeErrors);
+      return _executeAsyncValidators(control, presentValidators);
     };
+  }
+
+  // TODO(tsander): Remove the need to filter the validation. The list of
+  // validators should not contain null values.
+  static List<T> _removeNullValidators<T>(List<T> validators) {
+    final result = new List<T>();
+    for (var i = 0, len = validators.length; i < len; i++) {
+      var validator = validators[i];
+      if (validator != null) result.add(validator);
+    }
+    return result;
   }
 }
 
-Future _toFuture(futureOrStream) =>
-    (futureOrStream is Stream) ? futureOrStream.single : futureOrStream;
+Map<String, dynamic> _executeValidators(
+    model_module.AbstractControl control, List<ValidatorFn> validators) {
+  var result = new Map<String, dynamic>();
+  for (var i = 0, len = validators.length; i < len; i++) {
+    final validator = validators[i];
+    assert(validator != null, 'Validator should be non-null');
+    final localResult = validator(control);
+    if (localResult != null) result.addAll(localResult);
+  }
+  return result.isEmpty ? null : result;
+}
 
-List<dynamic> _executeValidators(
-        model_module.AbstractControl control, List<ValidatorFn> validators) =>
-    validators.map((v) => v(control)).toList();
-
-List<dynamic> _executeAsyncValidators(model_module.AbstractControl control,
-        List<AsyncValidatorFn> validators) =>
-    validators.map((v) => v(control)).toList();
-
-Map<String, dynamic> _mergeErrors(List<dynamic> arrayOfErrors) {
-  Map<String, dynamic> res = arrayOfErrors.fold({},
-      (Map<String, dynamic> res, Map<String, dynamic> errors) {
-    res.addAll(errors ?? const {});
-    return res;
-  });
-  return res.isEmpty ? null : res;
+Future<Map<String, dynamic>> _executeAsyncValidators(
+    model_module.AbstractControl control,
+    List<AsyncValidatorFn> validators) async {
+  final result = new Map<String, dynamic>();
+  final futures = new List<Future>();
+  for (var i = 0, len = validators.length; i < len; i++) {
+    final validator = validators[i];
+    assert(validator != null, 'Validator should be non-null');
+    final localFuture = validator(control).then((localResult) {
+      if (localResult != null) result.addAll(localResult);
+    });
+    futures.add(localFuture);
+  }
+  await Future.wait(futures);
+  return result.isEmpty ? null : result;
 }

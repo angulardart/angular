@@ -4,7 +4,6 @@ library angular2.test.common.forms.validators_spec;
 import "dart:async";
 
 import "package:angular2/common.dart" show Control, Validators, AbstractControl;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
@@ -108,18 +107,8 @@ void main() {
     group("composeAsync", () {
       AsyncValidatorFunction asyncValidator(expected, response) {
         return (c) {
-          var emitter = new EventEmitter();
           var res = c.value != expected ? response : null;
-          scheduleMicrotask(() {
-            emitter.add(res);
-            // this _was_ required because of a bug in ObservableWrapper
-            // where callComplete can fire before callEmit
-            // remove this one the bug is fixed
-            Timer.run(() {
-              emitter.close();
-            });
-          });
-          return emitter;
+          return new Future.value(res);
         };
       }
 
