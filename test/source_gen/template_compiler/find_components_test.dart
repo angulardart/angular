@@ -39,6 +39,10 @@ main() {
       await compareSummaryFileToGolden('export_as.dart');
     });
 
+    test('providers', () async {
+      await compareSummaryFileToGolden('providers.dart');
+    });
+
     test('directives', () async {
       await compareSummaryFileToGolden('directives/base_component.dart');
     });

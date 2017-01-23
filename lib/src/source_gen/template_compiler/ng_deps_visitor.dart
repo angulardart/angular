@@ -10,7 +10,7 @@ import 'package:angular2/src/source_gen/common/ng_deps_model.dart';
 import 'package:angular2/src/source_gen/common/parameter_model.dart';
 import 'package:angular2/src/source_gen/common/references.dart';
 import 'package:angular2/src/source_gen/common/reflection_info_model.dart';
-import 'package:angular2/src/source_gen/template_compiler/compile_type.dart';
+import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
@@ -79,7 +79,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   @override
   void visitClassElement(ClassElement element) {
     CompileTypeMetadata compileType =
-        element.accept(new CompileTypeMetadataVisitor());
+        element.accept(new CompileTypeMetadataVisitor(_logger));
     if (compileType == null) return;
     var constructor = _constructor(element);
     if (constructor == null) return;

@@ -8,13 +8,12 @@ import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
-import 'package:angular2/src/source_gen/template_compiler/compile_type.dart';
+import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart';
+import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';
 import 'package:angular2/src/source_gen/template_compiler/pipe_visitor.dart';
 import 'package:build/build.dart';
 import 'package:logging/logging.dart';
 import 'package:source_gen/src/annotation.dart';
-
-import 'dart_object_utils.dart';
 
 List<NormalizedComponentWithViewDirectives> findComponents(
     BuildStep buildStep, Element element) {
@@ -51,7 +50,10 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   }
 
   List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
-      element, 'pipes', annotation_matcher.isPipe, new PipeVisitor());
+      element,
+      'pipes',
+      annotation_matcher.isPipe,
+      new PipeVisitor(_buildStep.logger));
 
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
       _visitTypes(element, 'directives', annotation_matcher.isDirective,
@@ -74,11 +76,14 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
           Iterable<DartObject> directives,
           annotation_matcher.AnnotationMatcher annotationMatcher,
           ElementVisitor<dynamic/*=T*/ > visitor) =>
-      visitAll/*<T>*/(
-          directives,
-          (Element element) => element.metadata.any(annotationMatcher)
-              ? element.accept(visitor)
-              : null);
+      visitAll/*<T>*/(directives, (obj) {
+        var type = obj.toTypeValue();
+        if (type != null &&
+            type.element != null &&
+            type.element.metadata.any(annotationMatcher)) {
+          return type.element.accept(visitor);
+        }
+      });
 }
 
 class ComponentVisitor
@@ -274,33 +279,36 @@ class ComponentVisitor
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
       ElementAnnotation annotation, ClassElement element) {
-    var value = annotation.computeConstantValue();
+    var componentValue = annotation.computeConstantValue();
     var isComponent = annotation_matcher.isComponent(annotation);
     var template = (isComponent && _loadTemplate)
-        ? _createTemplateMetadata(value,
+        ? _createTemplateMetadata(componentValue,
             view: _findView(element)?.computeConstantValue())
         : null;
-    var inputs = new List<String>.from(coerceStringList(value, 'inputs'))
-      ..addAll(_inputs);
-    var outputs = new List<String>.from(coerceStringList(value, 'outputs'))
-      ..addAll(_outputs);
-    var host = new Map<String, String>.from(coerceStringMap(value, 'host'))
-      ..addAll(_host);
+    var inputs =
+        new List<String>.from(coerceStringList(componentValue, 'inputs'))
+          ..addAll(_inputs);
+    var outputs =
+        new List<String>.from(coerceStringList(componentValue, 'outputs'))
+          ..addAll(_outputs);
+    var host =
+        new Map<String, String>.from(coerceStringMap(componentValue, 'host'))
+          ..addAll(_host);
     var queries = new List<CompileQueryMetadata>.from(_queries);
-    coerceMap(value, 'queries').forEach((propertyName, query) {
+    coerceMap(componentValue, 'queries').forEach((propertyName, query) {
       queries.add(_getQuery(query, propertyName.toStringValue()));
     });
     return CompileDirectiveMetadata.create(
-        type: element.accept(new CompileTypeMetadataVisitor()),
+        type: element.accept(new CompileTypeMetadataVisitor(_logger)),
         isComponent: isComponent,
-        selector: coerceString(value, 'selector'),
-        exportAs: coerceString(value, 'exportAs'),
-        changeDetection: isComponent ? _changeDetection(value) : null,
+        selector: coerceString(componentValue, 'selector'),
+        exportAs: coerceString(componentValue, 'exportAs'),
+        changeDetection: isComponent ? _changeDetection(componentValue) : null,
         inputs: inputs,
         outputs: outputs,
         host: host,
         lifecycleHooks: _extractLifecycleHooks(element),
-        providers: [],
+        providers: _extractProviders(componentValue),
         viewProviders: isComponent ? [] : null,
         queries: queries,
         viewQueries: isComponent ? [] : null,
@@ -338,4 +346,8 @@ class ComponentVisitor
         ChangeDetectionStrategy.values,
         defaultTo: ChangeDetectionStrategy.Default,
       );
+
+  List<CompileProviderMetadata> _extractProviders(DartObject component) =>
+      visitAll(coerceList(component, 'providers'),
+          new CompileTypeMetadataVisitor(_logger).createProviderMetadata);
 }

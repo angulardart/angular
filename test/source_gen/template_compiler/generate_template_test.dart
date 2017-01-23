@@ -45,6 +45,10 @@ main() {
         await compareSummaryFileToGolden('injectables.dart', codegenMode);
       });
 
+      test('providers', () async {
+        await compareSummaryFileToGolden('providers.dart', codegenMode);
+      });
+
       test('directives/base_component', () async {
         await compareSummaryFileToGolden(
             'directives/base_component.dart', codegenMode);

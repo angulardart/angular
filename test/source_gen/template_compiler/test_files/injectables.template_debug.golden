@@ -81,14 +81,17 @@ AppView<import2.InjectableComponent> viewFactory_InjectableComponent0(
 const List<dynamic> styles_InjectableComponentHost = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 =
     const [
-  const StaticNodeDebugInfo(const [import2.InjectableComponent],
-      import2.InjectableComponent, const <String, dynamic>{})
+  const StaticNodeDebugInfo(
+      const ['OpaqueToken__test', import2.InjectableComponent],
+      import2.InjectableComponent,
+      const <String, dynamic>{})
 ];
 
 class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   Element _el_0;
   AppView<import2.InjectableComponent> _compView_0;
-  import2.InjectableComponent _InjectableComponent_0_2;
+  dynamic _OpaqueToken__test_0_2;
+  import2.InjectableComponent _InjectableComponent_0_3;
   static RenderComponentType renderType;
   ViewInjectableComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -109,20 +112,25 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     _el_0 = selectOrCreateHostElement(
         'test-injectables', rootSelector, dbg(0, 0, 0));
     _compView_0 = viewFactory_InjectableComponent0(this, 0, _el_0);
-    _InjectableComponent_0_2 = new import2.InjectableComponent(
+    _OpaqueToken__test_0_2 =
+        import2.injectableFactory(this.injectorGet(Window, parentIndex));
+    _InjectableComponent_0_3 = new import2.InjectableComponent(
         null,
         this.injectorGet(import2.InjectableService, parentIndex, null),
-        this.injectorGet('OpaqueToken__test', parentIndex));
-    _compView_0.create(_InjectableComponent_0_2, projectableNodes, null);
+        _OpaqueToken__test_0_2);
+    _compView_0.create(_InjectableComponent_0_3, projectableNodes, null);
     init([_el_0], [_el_0], []);
-    return new ComponentRef(0, this, _el_0, _InjectableComponent_0_2);
+    return new ComponentRef(0, this, _el_0, _InjectableComponent_0_3);
   }
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, 'OpaqueToken__test') && (0 == requestNodeIndex))) {
+      return _OpaqueToken__test_0_2;
+    }
     if ((identical(token, import2.InjectableComponent) &&
         (0 == requestNodeIndex))) {
-      return _InjectableComponent_0_2;
+      return _InjectableComponent_0_3;
     }
     return notFoundResult;
   }

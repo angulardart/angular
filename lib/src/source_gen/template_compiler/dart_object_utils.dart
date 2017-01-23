@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
 
 /// Reads and returns [field] on [value] as a boolean.
 ///
@@ -102,7 +101,7 @@ Map<String, String> coerceStringMap(
 
 /*=T*/ _findEnumByName/*<T>*/(DartObject object, List<dynamic/*=T*/ > values) =>
     values.firstWhere(
-      (field) => !_isNull(getField(object, '$field'.split('.')[1])),
+      (field) => !isNull(getField(object, '$field'.split('.')[1])),
       orElse: () => null,
     );
 
@@ -112,41 +111,39 @@ Map<String, String> coerceStringMap(
 }
 
 /// Returns whether [object] is null or represents the value `null`.
-bool _isNull(DartObject object) => object == null || object.isNull;
+bool isNull(DartObject object) => object == null || object.isNull;
 
 /// Recursively gets the field from the [DartObject].
 ///
 /// If the field is not found in the object, then it will visit the super
 /// object.
 DartObject getField(DartObject object, String field) {
-  if (_isNull(object)) return null;
+  if (isNull(object)) return null;
   var fieldValue = object.getField(field);
-  if (fieldValue != null && !fieldValue.isNull) {
+  if (!isNull(fieldValue)) {
     return fieldValue;
   }
   return getField(object.getField('(super)'), field);
 }
 
-typedef T RecurseFn<T>(Element element);
+typedef T RecurseFn<T>(DartObject obj);
 
 /// Visits all of the [DartObject]s, accumulating the results of [RecurseFn].
 ///
-/// If the DartObject is a type, then it will call [RecurseFn] on the types's
-/// [Element]. If the DartObject is a list, then it will recursively visitAll
-/// on that list.
+/// If the DartObject is a list, then it will recursively visitAll
+/// on that list. Otherwise, then it will call [RecurseFn] on the object.
 List<dynamic/*=T*/ > visitAll/*<T>*/(
     Iterable<DartObject> objs, RecurseFn<dynamic/*=T*/ > recurseFn) {
   var metadata = /*<T>*/ [];
   for (DartObject obj in objs) {
-    var type = obj.toTypeValue();
-    if (type != null && type.element != null) {
-      var value = recurseFn(type.element);
+    var maybeList = obj.toListValue();
+    if (maybeList != null) {
+      metadata.addAll(visitAll/*<T>*/(maybeList, recurseFn));
+    } else {
+      var value = recurseFn(obj);
       if (value != null) {
         metadata.add(value);
       }
-    } else {
-      metadata.addAll(
-          visitAll/*<T>*/(obj.toListValue() ?? <DartObject>[], recurseFn));
     }
   }
   return metadata;

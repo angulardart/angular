@@ -1,0 +1,206 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+// @ignoreProblemForFile annotate_overrides
+// @ignoreProblemForFile cancel_subscriptions
+// @ignoreProblemForFile constant_identifier_names
+// @ignoreProblemForFile non_constant_identifier_names
+// @ignoreProblemForFile implementation_imports
+// @ignoreProblemForFile library_prefixes
+// @ignoreProblemForFile type_annotate_public_apis
+// @ignoreProblemForFile STRONG_MODE_DOWN_CAST_COMPOSITE
+// @ignoreProblemForFile UNUSED_IMPORT
+// @ignoreProblemForFile UNUSED_SHOWN_NAME
+// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
+import 'providers.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+export 'providers.dart';
+import 'package:angular2/src/debug/debug_context.dart';
+import 'package:angular2/src/debug/debug_app_view.dart';
+import 'providers.dart' as import2;
+import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/core/linker/view_type.dart' as import5;
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
+import 'package:angular2/angular2.dart';
+import 'dart:html';
+import 'package:angular2/src/core/zone/ng_zone.dart' as import10;
+
+const List<dynamic> styles_ProvidersComponent = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = const [
+  null
+];
+
+class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
+  static RenderComponentType renderType;
+  ViewProvidersComponent0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewProvidersComponent0,
+            import5.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_ProvidersComponent0) {
+    renderType ??= import7.appViewUtils.createRenderType(
+        'asset:angular2/test/source_gen/template_compiler/test_files/providers.dart class ProvidersComponent - inline template',
+        0,
+        ViewEncapsulation.None,
+        styles_ProvidersComponent);
+    setupComponentType(renderType);
+  }
+  ComponentRef createInternal(dynamic rootSelector) {
+    final Node parentRenderNode = initViewRoot(parentElement);
+    Text _text_0 = new Text('Hello');
+    parentRenderNode.append(_text_0);
+    dbgElm(_text_0, 0, 0, 0);
+    init([], [_text_0], []);
+    return null;
+  }
+}
+
+AppView<import2.ProvidersComponent> viewFactory_ProvidersComponent0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  return new ViewProvidersComponent0(parentView, parentIndex, parentElement);
+}
+
+const List<dynamic> styles_ProvidersComponentHost = const [];
+const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
+  const StaticNodeDebugInfo(
+      const [
+        import2.ProvidersComponent,
+        import2.MyUseFactory,
+        import2.MyUseClass,
+        import2.MyUseExisting,
+        import2.MyUseValue
+      ],
+      import2.ProvidersComponent,
+      const <String, dynamic>{})
+];
+
+class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
+  Element _el_0;
+  AppView<import2.ProvidersComponent> _compView_0;
+  import2.ProvidersComponent _ProvidersComponent_0_2;
+  dynamic __MyUseFactory_0_3;
+  import2.MyUseClass __MyUseClass_0_4;
+  dynamic __MyUseExisting_0_5;
+  dynamic __MyUseValue_0_6;
+  static RenderComponentType renderType;
+  ViewProvidersComponentHost0(
+      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+      : super(
+            ViewProvidersComponentHost0,
+            import5.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            parentElement,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_ProvidersComponentHost0) {
+    renderType ??= import7.appViewUtils.createRenderType(
+        '', 0, ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
+    setupComponentType(renderType);
+  }
+  dynamic get _MyUseFactory_0_3 {
+    dbg(0, 0, 0);
+    if ((this.__MyUseFactory_0_3 == null)) {
+      (__MyUseFactory_0_3 = import2
+          .createService(this.injectorGet(import10.NgZone, this.parentIndex)));
+    }
+    return this.__MyUseFactory_0_3;
+  }
+
+  import2.MyUseClass get _MyUseClass_0_4 {
+    dbg(0, 0, 0);
+    if ((this.__MyUseClass_0_4 == null)) {
+      (__MyUseClass_0_4 = new import2.MyUseClass());
+    }
+    return this.__MyUseClass_0_4;
+  }
+
+  dynamic get _MyUseExisting_0_5 {
+    dbg(0, 0, 0);
+    if ((this.__MyUseExisting_0_5 == null)) {
+      (__MyUseExisting_0_5 = this._MyUseClass_0_4);
+    }
+    return this.__MyUseExisting_0_5;
+  }
+
+  dynamic get _MyUseValue_0_6 {
+    dbg(0, 0, 0);
+    if ((this.__MyUseValue_0_6 == null)) {
+      (__MyUseValue_0_6 = null);
+    }
+    return this.__MyUseValue_0_6;
+  }
+
+  ComponentRef createInternal(dynamic rootSelector) {
+    _el_0 = selectOrCreateHostElement('providers', rootSelector, dbg(0, 0, 0));
+    _compView_0 = viewFactory_ProvidersComponent0(this, 0, _el_0);
+    _ProvidersComponent_0_2 = new import2.ProvidersComponent();
+    _compView_0.create(_ProvidersComponent_0_2, projectableNodes, null);
+    init([_el_0], [_el_0], []);
+    return new ComponentRef(0, this, _el_0, _ProvidersComponent_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.ProvidersComponent) &&
+        (0 == requestNodeIndex))) {
+      return _ProvidersComponent_0_2;
+    }
+    if ((identical(token, import2.MyUseFactory) && (0 == requestNodeIndex))) {
+      return _MyUseFactory_0_3;
+    }
+    if ((identical(token, import2.MyUseClass) && (0 == requestNodeIndex))) {
+      return _MyUseClass_0_4;
+    }
+    if ((identical(token, import2.MyUseExisting) && (0 == requestNodeIndex))) {
+      return _MyUseExisting_0_5;
+    }
+    if ((identical(token, import2.MyUseValue) && (0 == requestNodeIndex))) {
+      return _MyUseValue_0_6;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_ProvidersComponentHost0(
+    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
+  return new ViewProvidersComponentHost0(
+      parentView, parentIndex, parentElement);
+}
+
+const ComponentFactory ProvidersComponentNgFactory = const ComponentFactory(
+    'providers',
+    viewFactory_ProvidersComponentHost0,
+    import2.ProvidersComponent,
+    _METADATA);
+const _METADATA = const <dynamic>[ProvidersComponent, const <dynamic>[]];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerType(
+      ProvidersComponent,
+      new _ngRef.ReflectionInfo(const <dynamic>[ProvidersComponentNgFactory],
+          const [], () => new ProvidersComponent()));
+}
