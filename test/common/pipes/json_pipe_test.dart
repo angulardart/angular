@@ -1,9 +1,10 @@
 @TestOn('browser && !js')
 library angular2.test.common.pipes.json_pipe_test;
 
+import 'dart:convert';
+
 import 'package:angular2/common.dart' show JsonPipe;
 import 'package:angular2/core.dart' show Component;
-import 'package:angular2/src/facade/lang.dart' show Json;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
@@ -43,7 +44,8 @@ void main() {
       });
       test('should return JSON-formatted string similar to Json.stringify', () {
         var dream1 = normalize(pipe.transform(inceptionObj));
-        var dream2 = normalize(Json.stringify(inceptionObj));
+        var dream2 =
+            normalize(const JsonEncoder.withIndent('  ').convert(inceptionObj));
         expect(dream1, dream2);
       });
     });

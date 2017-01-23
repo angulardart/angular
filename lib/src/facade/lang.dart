@@ -1,5 +1,3 @@
-import 'dart:convert' as convert;
-
 export 'dart:core' show RegExp, print, DateTime, Uri;
 
 RegExp _fromFuncExp;
@@ -66,15 +64,6 @@ bool assertionsEnabled() {
   var k = false;
   assert((k = true));
   return k;
-}
-
-// Can't be all uppercase as our transpiler would think it is a special directive...
-class Json {
-  static dynamic parse(String s) => convert.JSON.decode(s);
-  static String stringify(data) {
-    var encoder = new convert.JsonEncoder.withIndent("  ");
-    return encoder.convert(data);
-  }
 }
 
 bool isPrimitive(Object obj) =>
