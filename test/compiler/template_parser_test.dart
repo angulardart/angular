@@ -27,7 +27,7 @@ var MOCK_SCHEMA_REGISTRY = [
           {"invalidProp": false}, {"mappedAttr": "mappedProp"}))
 ];
 void main() {
-  var ngIf;
+  CompileDirectiveMetadata ngIf;
   Func3Opt1<String, List<CompileDirectiveMetadata>, List<CompilePipeMetadata>,
       List<TemplateAst>> parse;
   ArrayConsole console = new ArrayConsole();
@@ -693,7 +693,7 @@ void main() {
           var comp = createDir("my-comp");
           ElementAst elAst =
               parse("<my-comp dir2 dir0 dir1>", [comp, dir2, dir0, dir1])[0]
-              as ElementAst;
+                  as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.directives[0].directive, comp);
           expect(elAst.directives[1].directive, dir0);

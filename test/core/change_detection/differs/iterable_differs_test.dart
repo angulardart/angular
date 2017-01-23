@@ -1,7 +1,8 @@
 @TestOn('browser')
 library angular2.test.core.change_detection.differs.iterable_differs_test;
 
-import "package:angular2/core.dart" show provide, ReflectiveInjector;
+import "package:angular2/core.dart"
+    show IterableDifferFactory, ReflectiveInjector, provide;
 import "package:angular2/src/core/change_detection/differs/iterable_differs.dart"
     show IterableDiffers;
 import "package:angular2/testing_internal.dart";
@@ -12,9 +13,9 @@ import '../../core_mocks.dart';
 
 void main() {
   group("IterableDiffers", () {
-    var factory1;
-    var factory2;
-    var factory3;
+    IterableDifferFactory factory1;
+    IterableDifferFactory factory2;
+    IterableDifferFactory factory3;
     setUp(() {
       factory1 = new MockIterableDifferFactory();
       factory2 = new MockIterableDifferFactory();

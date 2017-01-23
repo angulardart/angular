@@ -112,7 +112,8 @@ void main() {
         });
       });
       group("updateValue", () {
-        var g, c;
+        Control c;
+        ControlGroup g;
         setUp(() {
           c = new Control("oldValue");
           g = new ControlGroup({"one": c});
@@ -305,7 +306,8 @@ void main() {
         });
       });
       group("dirty", () {
-        var c, g;
+        Control c;
+        ControlGroup g;
         setUp(() {
           c = new Control("value");
           g = new ControlGroup({"one": c});
@@ -370,7 +372,8 @@ void main() {
         });
       });
       group("valueChanges", () {
-        var g, c1, c2;
+        Control c1, c2;
+        ControlGroup g;
         setUp(() {
           c1 = new Control("old1");
           c2 = new Control("old2");
@@ -574,7 +577,7 @@ void main() {
       });
       group("valueChanges", () {
         ControlArray a;
-        var c1, c2;
+        Control c1, c2;
         setUp(() {
           c1 = new Control("old1");
           c2 = new Control("old2");
