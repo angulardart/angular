@@ -8,7 +8,7 @@ import "model.dart" as model_module;
 /// ```dart
 /// @Component(
 ///   selector: 'my-app',
-///   viewBindings: const [FORM_BINDINGS]
+///   viewProviders: const [FORM_BINDINGS]
 ///   template: '''
 ///     <form [ngFormModel]="loginForm">
 ///       <p>Login <input ngControl="login"></p>

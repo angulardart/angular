@@ -738,16 +738,7 @@ class Component extends Directive {
   ///     class HelloWorld {
   ///     }
   ///
-  List get viewProviders => (_viewBindings != null && _viewBindings.isNotEmpty)
-      ? this._viewBindings
-      : this._viewProviders;
-
-  List get viewBindings {
-    return this.viewProviders;
-  }
-
-  final List _viewProviders;
-  final List _viewBindings;
+  final List viewProviders;
 
   final String templateUrl;
   final String template;
@@ -767,8 +758,7 @@ class Component extends Directive {
       Map<String, String> host,
       String exportAs,
       List providers,
-      List viewBindings,
-      List viewProviders,
+      this.viewProviders,
       this.changeDetection: ChangeDetectionStrategy.Default,
       Map<String, dynamic> queries,
       this.templateUrl,
@@ -779,9 +769,7 @@ class Component extends Directive {
       this.directives,
       this.pipes,
       this.encapsulation})
-      : _viewProviders = viewProviders,
-        _viewBindings = viewBindings,
-        super(
+      : super(
             selector: selector,
             inputs: inputs,
             outputs: outputs,

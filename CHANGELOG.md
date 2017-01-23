@@ -1,3 +1,12 @@
+### Breaking changes
+
+*  Removed `viewBindings` from `Component`. This has been interchangeable with
+   `viewProviders` for a while now.
+
+   **BEFORE:** `dart @Component(viewBindings: const [])`
+
+   **AFTER:** `dart @Component(viewProviders: const [])`
+
 ## 3.0.0-alpha
 
 This is the first _pre-release_ of AngularDart `3.0.0`. This code is considered
