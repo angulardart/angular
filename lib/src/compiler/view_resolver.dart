@@ -45,7 +45,7 @@ class ViewResolver {
           compMeta.templateUrl == null &&
           viewMeta == null) {
         throw new BaseException(
-            '''Component \'${ stringify ( component )}\' must have either \'template\' or \'templateUrl\' set.''');
+            '''Component \'$component\' must have either \'template\' or \'templateUrl\' set.''');
       } else if (compMeta.template != null && viewMeta != null) {
         this._throwMixingViewAndComponent("template", component);
       } else if (compMeta.templateUrl != null && viewMeta != null) {
@@ -75,7 +75,7 @@ class ViewResolver {
     } else {
       if (viewMeta == null) {
         throw new BaseException(
-            '''Could not compile \'${ stringify ( component )}\' because it is not a component.''');
+            '''Could not compile \'$component\' because it is not a component.''');
       } else {
         return viewMeta;
       }
@@ -86,6 +86,6 @@ class ViewResolver {
   /** @internal */
   void _throwMixingViewAndComponent(String propertyName, Type component) {
     throw new BaseException(
-        '''Component \'${ stringify ( component )}\' cannot have both \'${ propertyName}\' and \'@View\' set at the same time"''');
+        '''Component \'$component\' cannot have both \'$propertyName\' and \'@View\' set at the same time"''');
   }
 }

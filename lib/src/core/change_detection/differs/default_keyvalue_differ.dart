@@ -351,27 +351,27 @@ class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
     for (record = this._mapHead;
         !identical(record, null);
         record = record._next) {
-      items.add(stringify(record));
+      items.add(record);
     }
     for (record = this._previousMapHead;
         !identical(record, null);
         record = record._nextPrevious) {
-      previous.add(stringify(record));
+      previous.add(record);
     }
     for (record = this._changesHead;
         !identical(record, null);
         record = record._nextChanged) {
-      changes.add(stringify(record));
+      changes.add(record);
     }
     for (record = this._additionsHead;
         !identical(record, null);
         record = record._nextAdded) {
-      additions.add(stringify(record));
+      additions.add(record);
     }
     for (record = this._removalsHead;
         !identical(record, null);
         record = record._nextRemoved) {
-      removals.add(stringify(record));
+      removals.add(record);
     }
     return "map: " +
         items.join(", ") +
@@ -420,13 +420,8 @@ class KeyValueChangeRecord {
   KeyValueChangeRecord _nextChanged;
   KeyValueChangeRecord(this.key);
   String toString() {
-    return looseIdentical(this.previousValue, this.currentValue)
-        ? stringify(this.key)
-        : (stringify(this.key) +
-            "[" +
-            stringify(this.previousValue) +
-            "->" +
-            stringify(this.currentValue) +
-            "]");
+    return looseIdentical(previousValue, currentValue)
+        ? key
+        : '$key[$previousValue->$currentValue]';
   }
 }

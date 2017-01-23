@@ -4,7 +4,6 @@ library angular2.test.compiler.directive_resolver_test;
 import 'package:angular2/src/compiler/directive_resolver.dart'
     show DirectiveResolver;
 import 'package:angular2/src/core/metadata.dart';
-import 'package:angular2/src/facade/lang.dart' show stringify;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
@@ -134,11 +133,12 @@ void main() {
       expect(directiveMetadata.selector, 'someDirective');
     });
     test('should throw if not matching metadata is found', () {
-      expect(() {
-        resolver.resolve(SomeDirectiveWithoutMetadata);
-      },
-          throwsWith('No Directive annotation found on '
-              '${ stringify ( SomeDirectiveWithoutMetadata )}'));
+      expect(
+        () => resolver.resolve(SomeDirectiveWithoutMetadata),
+        throwsWith(
+          'No Directive annotation found on $SomeDirectiveWithoutMetadata',
+        ),
+      );
     });
     test('should not read parent class Directive metadata', () {
       var directiveMetadata = resolver.resolve(SomeChildDirective);

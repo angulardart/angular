@@ -23,7 +23,6 @@ import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LIFECYCLE_HOOKS_VALUES;
 import 'package:angular2/src/core/platform_directives_and_pipes.dart'
     show PLATFORM_DIRECTIVES;
-import 'package:angular2/src/facade/lang.dart' show stringify;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
@@ -40,7 +39,7 @@ void main() {
         expect(meta.exportAs, 'someExportAs');
         expect(meta.isComponent, isTrue);
         expect(meta.type.runtime, ComponentWithEverything);
-        expect(meta.type.name, stringify(ComponentWithEverything));
+        expect(meta.type.name, '$ComponentWithEverything');
         expect(meta.lifecycleHooks, LIFECYCLE_HOOKS_VALUES);
         expect(meta.changeDetection, ChangeDetectionStrategy.CheckAlways);
         expect(meta.inputs, {'someProp': 'someProp'});

@@ -44,7 +44,6 @@ import 'package:angular2/src/core/metadata.dart'
         HostListener;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
-import 'package:angular2/src/facade/lang.dart' show stringify;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
@@ -1395,10 +1394,8 @@ void main() {
                     template: '',
                     directives: [SomeDirectiveMissingAnnotation]));
             tcb.createAsync(MyComp).catchError((e) {
-              expect(
-                  e.message,
-                  '''No Directive annotation found on ${ stringify(
-                      SomeDirectiveMissingAnnotation)}''');
+              expect(e.message,
+                  '''No Directive annotation found on $SomeDirectiveMissingAnnotation''');
               completer.done();
               return null;
             });
@@ -1429,10 +1426,8 @@ void main() {
                   [null]
                 ], template: ''));
             tcb.createAsync(MyComp).catchError((e) {
-              expect(
-                  e.message,
-                  '''Unexpected directive value \'null\' on the View of component \'${ stringify(
-                      MyComp)}\'''');
+              expect(e.message,
+                  '''Unexpected directive value \'null\' on the View of component \'$MyComp\'''');
               completer.done();
               return null;
             });
@@ -1531,10 +1526,8 @@ void main() {
             tcb = tcb.overrideView(
                 MyComp, new View(directives: [undefinedValue], template: ''));
             tcb.createAsync(MyComp).catchError((e) {
-              expect(
-                  e.message,
-                  '''Unexpected directive value \'null\' on the View of component \'${ stringify(
-                      MyComp)}\'''');
+              expect(e.message,
+                  '''Unexpected directive value \'null\' on the View of component \'$MyComp\'''');
               completer.done();
               return null;
             });

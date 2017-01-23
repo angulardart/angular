@@ -4,16 +4,6 @@ export 'dart:core' show RegExp, print, DateTime, Uri;
 
 RegExp _fromFuncExp;
 
-String stringify(obj) {
-  _fromFuncExp ??= new RegExp(r"from Function '(\w+)'");
-  final str = obj.toString();
-  if (_fromFuncExp.firstMatch(str) != null) {
-    return _fromFuncExp.firstMatch(str).group(1);
-  } else {
-    return str;
-  }
-}
-
 String resolveEnumToken(enumValue, val) {
   // turn Enum.Token -> Token
   return val.toString().replaceFirst(new RegExp('^.+\\.'), '');

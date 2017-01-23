@@ -24,7 +24,6 @@ import "package:angular2/src/core/di/reflective_injector.dart"
 import "package:angular2/src/core/di/reflective_provider.dart"
     show ResolvedReflectiveProviderImpl;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show stringify;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
@@ -293,8 +292,8 @@ void main() {
     });
     test("should throw when the aliased provider does not exist", () {
       var injector = createInjector([provide("car", useExisting: SportsCar)]);
-      var e = 'No provider for ${ stringify ( SportsCar )}'
-          '! (car -> ${ stringify ( SportsCar )})';
+      var e = 'No provider for $SportsCar'
+          '! (car -> $SportsCar)';
       expect(() => injector.get("car"), throwsWith(e));
     });
     test("should handle forwardRef in useExisting", () {
@@ -361,17 +360,16 @@ void main() {
       expect(
           () => injector.get(CarWithDashboard),
           throwsWith('No provider for DashboardSoftware! '
-              '(${ stringify ( CarWithDashboard )} '
-              '-> ${ stringify ( Dashboard )} -> DashboardSoftware)'));
+              '($CarWithDashboard '
+              '-> $Dashboard -> DashboardSoftware)'));
     });
     test("should throw when trying to instantiate a cyclic dependency", () {
       var injector =
           createInjector([Car, provide(Engine, useClass: CyclicEngine)]);
       expect(
           () => injector.get(Car),
-          throwsWith(
-              'Cannot instantiate cyclic dependency! (${ stringify ( Car )} '
-              '-> ${ stringify ( Engine )} -> ${ stringify ( Car )})'));
+          throwsWith('Cannot instantiate cyclic dependency! ($Car '
+              '-> $Engine -> $Car)'));
     });
     test("should show the full path when error happens in a constructor", () {
       var providers = ReflectiveInjector
@@ -385,7 +383,7 @@ void main() {
         expect(
             e.message,
             contains('Error during instantiation of Engine!'
-                ' (${ stringify ( Car )} -> Engine)'));
+                ' ($Car -> Engine)'));
         expect(e.originalException is BaseException, isTrue);
         expect(e.causeKey.token, Engine);
       }
@@ -496,8 +494,8 @@ void main() {
           ]);
           expect(
               () => child.get(Car),
-              throwsWith('No provider for Engine! (${ stringify ( Car )} '
-                  '-> ${ stringify ( Engine )})'));
+              throwsWith('No provider for Engine! ($Car '
+                  '-> $Engine)'));
         });
       });
       group("default", () {
@@ -785,8 +783,8 @@ void main() {
     });
     test("should throw when the aliased provider does not exist", () {
       var injector = createInjector([provide("car", useExisting: SportsCar)]);
-      var e = 'No provider for ${ stringify ( SportsCar )}'
-          '! (car -> ${ stringify ( SportsCar )})';
+      var e = 'No provider for $SportsCar'
+          '! (car -> $SportsCar)';
       expect(() => injector.get("car"), throwsWith(e));
     });
     test("should handle forwardRef in useExisting", () {
@@ -853,17 +851,16 @@ void main() {
       expect(
           () => injector.get(CarWithDashboard),
           throwsWith('No provider for DashboardSoftware! '
-              '(${ stringify ( CarWithDashboard )} '
-              '-> ${ stringify ( Dashboard )} -> DashboardSoftware)'));
+              '($CarWithDashboard '
+              '-> $Dashboard -> DashboardSoftware)'));
     });
     test("should throw when trying to instantiate a cyclic dependency", () {
       var injector =
           createInjector([Car, provide(Engine, useClass: CyclicEngine)]);
       expect(
           () => injector.get(Car),
-          throwsWith(
-              'Cannot instantiate cyclic dependency! (${ stringify ( Car )} '
-              '-> ${ stringify ( Engine )} -> ${ stringify ( Car )})'));
+          throwsWith('Cannot instantiate cyclic dependency! ($Car '
+              '-> $Engine -> $Car)'));
     });
     test("should show the full path when error happens in a constructor", () {
       var providers = ReflectiveInjector
@@ -877,7 +874,7 @@ void main() {
         expect(
             e.message,
             contains('Error during instantiation of Engine!'
-                ' (${ stringify ( Car )} -> Engine)'));
+                ' ($Car -> Engine)'));
         expect(e.originalException is BaseException, isTrue);
         expect(e.causeKey.token, Engine);
       }
@@ -988,8 +985,8 @@ void main() {
           ]);
           expect(
               () => child.get(Car),
-              throwsWith('No provider for Engine! (${ stringify ( Car )} '
-                  '-> ${ stringify ( Engine )})'));
+              throwsWith('No provider for Engine! ($Car '
+                  '-> $Engine)'));
         });
       });
       group("default", () {

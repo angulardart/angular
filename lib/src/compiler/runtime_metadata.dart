@@ -38,7 +38,7 @@ class RuntimeMetadataResolver {
       @Optional() @Inject(PLATFORM_DIRECTIVES) this._platformDirectives,
       @Optional() @Inject(PLATFORM_PIPES) this._platformPipes);
   String sanitizeTokenName(dynamic token) {
-    var identifier = stringify(token);
+    var identifier = token.toString();
     if (identifier.indexOf("(") >= 0) {
       // case: anonymous functions!
       var found = this._anonymousTypes[token];
@@ -150,7 +150,7 @@ class RuntimeMetadataResolver {
     for (var i = 0; i < directives.length; i++) {
       if (!isValidType(directives[i])) {
         throw new BaseException(
-            '''Unexpected directive value \'${ stringify ( directives [ i ] )}\' on the View of component \'${ stringify ( component )}\'''');
+            '''Unexpected directive value \'${directives[i]}\' on the View of component \'$component\'''');
       }
     }
     return directives.map((type) => this.getDirectiveMetadata(type)).toList();
@@ -162,7 +162,7 @@ class RuntimeMetadataResolver {
     for (var i = 0; i < pipes.length; i++) {
       if (!isValidType(pipes[i])) {
         throw new BaseException(
-            '''Unexpected piped value \'${ stringify ( pipes [ i ] )}\' on the View of component \'${ stringify ( component )}\'''');
+            '''Unexpected piped value \'${pipes[i]}\' on the View of component \'${component}\'''');
       }
     }
     return pipes.map((type) => this.getPipeMetadata(type)).toList();
@@ -222,7 +222,7 @@ class RuntimeMetadataResolver {
         ];
       } else {
         throw new BaseException(
-            '''Invalid provider - only instances of Provider and Type are allowed, got: ${ stringify ( provider )}''');
+            '''Invalid provider - only instances of Provider and Type are allowed, got: $provider''');
       }
     }).toList();
   }

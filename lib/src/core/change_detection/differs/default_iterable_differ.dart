@@ -654,15 +654,11 @@ class CollectionChangeRecord {
 
   CollectionChangeRecord _nextIdentityChange;
   CollectionChangeRecord(this.item, this.trackById);
+
   String toString() {
-    return identical(this.previousIndex, this.currentIndex)
-        ? stringify(this.item)
-        : stringify(this.item) +
-            "[" +
-            stringify(this.previousIndex) +
-            "->" +
-            stringify(this.currentIndex) +
-            "]";
+    return identical(previousIndex, currentIndex)
+        ? item.toString()
+        : '$item[$previousIndex->$currentIndex]';
   }
 }
 
@@ -790,7 +786,7 @@ class _DuplicateMap {
   }
 
   String toString() {
-    return "_DuplicateMap(" + stringify(this.map) + ")";
+    return "_DuplicateMap($map)";
   }
 }
 

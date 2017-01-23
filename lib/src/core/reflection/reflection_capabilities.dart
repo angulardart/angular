@@ -231,7 +231,7 @@ class ReflectionCapabilities implements PlatformReflectionCapabilities {
             ]).reflectee;
     }
 
-    throw "Cannot create a factory for '${stringify(type)}' because its constructor has more than 20 arguments";
+    throw "Cannot create a factory for '$type' because its constructor has more than 20 arguments";
   }
 
   List<List> parameters(typeOrFunc) {

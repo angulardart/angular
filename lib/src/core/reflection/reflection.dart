@@ -35,7 +35,7 @@ class NoReflectionCapabilities implements PlatformReflectionCapabilities {
 
   @override
   List annotations(dynamic type) => throw new NoReflectionCapabilitiesError._(
-      "Cannot find reflection information on ${stringify(type)}");
+      "Cannot find reflection information on $type");
 
   @override
   Map<String, List> propMetadata(dynamic type) =>
@@ -70,7 +70,7 @@ class NoReflectionCapabilitiesError extends Error {
 
   factory NoReflectionCapabilitiesError._noInfo(dynamic type) =>
       new NoReflectionCapabilitiesError._(
-          "Cannot find reflection information on ${stringify(type)}");
+          "Cannot find reflection information on $type");
 
   @override
   String toString() => message;
