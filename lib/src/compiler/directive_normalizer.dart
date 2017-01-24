@@ -48,7 +48,12 @@ class DirectiveNormalizer {
   }
 
   Future<CompileTemplateMetadata> normalizeTemplate(
-      CompileTypeMetadata directiveType, CompileTemplateMetadata template) {
+    CompileTypeMetadata directiveType,
+    CompileTemplateMetadata template,
+  ) {
+    // This emulates the same behavior for interpreted mode, that is, that
+    // omitting either template: or templateUrl: results in an empty template.
+    template ??= new CompileTemplateMetadata(template: '');
     if (template.template != null) {
       return new Future.value(this.normalizeLoadedTemplate(
           directiveType,
