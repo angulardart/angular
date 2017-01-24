@@ -66,6 +66,9 @@ final Reflector reflector = new Reflector(const NoReflectionCapabilities._());
 class NoReflectionCapabilitiesError extends Error {
   final String message;
 
+  // Only to be used in assertions enabled mode.
+  NoReflectionCapabilitiesError.debug(this.message);
+
   NoReflectionCapabilitiesError._(this.message);
 
   factory NoReflectionCapabilitiesError._noInfo(dynamic type) =>

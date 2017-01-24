@@ -1,4 +1,6 @@
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
+import "package:angular2/src/core/reflection/reflection.dart"
+    show reflector, NoReflectionCapabilitiesError;
+import "package:angular2/src/facade/lang.dart" show assertionsEnabled;
 
 import '../metadata.dart';
 import "decorators.dart";
@@ -96,8 +98,33 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
     ];
   } else if (provider.useFactory != null) {
     factoryFn = provider.useFactory;
-    resolvedDeps =
-        constructDependencies(provider.useFactory, provider.dependencies);
+    if (assertionsEnabled()) {
+      try {
+        resolvedDeps = constructDependencies(
+          provider.useFactory,
+          provider.dependencies,
+        );
+      } on NoReflectionCapabilitiesError catch (e, s) {
+        // When assertions are enabled, we want to expand this error message
+        // to have lots of information about the provider so our users can debug
+        // and fix the problem.
+        var description =
+            '$Provider {${provider.token} useFactory: ${provider.useFactory}}';
+        throw new NoReflectionCapabilitiesError.debug(
+          ''
+              'Attempted to use reflection to resolve $description, and failed'
+              '\n'
+              '\n'
+              'Stack trace: $s',
+        );
+      }
+    } else {
+      // In production mode, we just directly call this and assume it will work.
+      resolvedDeps = constructDependencies(
+        provider.useFactory,
+        provider.dependencies,
+      );
+    }
   } else if (provider.useClass != null) {
     var useClass = provider.useClass;
     factoryFn = reflector.factory(useClass);
