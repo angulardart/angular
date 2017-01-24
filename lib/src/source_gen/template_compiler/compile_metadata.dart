@@ -28,7 +28,7 @@ class CompileTypeMetadataVisitor
 
   CompileProviderMetadata createProviderMetadata(DartObject provider) =>
       new CompileProviderMetadata(
-          token: _token(dart_objects.getField(provider, 'token')),
+          token: _token(dart_objects.getField(provider, 'token') ?? provider),
           useClass: _getUseClass(provider),
           useExisting: _getUseExisting(provider),
           useFactory: _getUseFactory(provider),

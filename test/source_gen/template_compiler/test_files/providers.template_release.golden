@@ -67,10 +67,11 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   AppView<import1.ProvidersComponent> _compView_0;
   import1.ProvidersComponent _ProvidersComponent_0_2;
-  dynamic __MyUseFactory_0_3;
-  import1.MyUseClass __MyUseClass_0_4;
-  dynamic __MyUseExisting_0_5;
-  dynamic __MyUseValue_0_6;
+  dynamic __MyTypeAnnotation_0_3;
+  dynamic __MyUseFactory_0_4;
+  import1.MyUseClass __MyUseClass_0_5;
+  dynamic __MyUseExisting_0_6;
+  dynamic __MyUseValue_0_7;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -86,33 +87,40 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
         '', 0, ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);
   }
-  dynamic get _MyUseFactory_0_3 {
-    if ((this.__MyUseFactory_0_3 == null)) {
-      (__MyUseFactory_0_3 = import1
+  dynamic get _MyTypeAnnotation_0_3 {
+    if ((this.__MyTypeAnnotation_0_3 == null)) {
+      (__MyTypeAnnotation_0_3 = null);
+    }
+    return this.__MyTypeAnnotation_0_3;
+  }
+
+  dynamic get _MyUseFactory_0_4 {
+    if ((this.__MyUseFactory_0_4 == null)) {
+      (__MyUseFactory_0_4 = import1
           .createService(this.injectorGet(import8.NgZone, this.parentIndex)));
     }
-    return this.__MyUseFactory_0_3;
+    return this.__MyUseFactory_0_4;
   }
 
-  import1.MyUseClass get _MyUseClass_0_4 {
-    if ((this.__MyUseClass_0_4 == null)) {
-      (__MyUseClass_0_4 = new import1.MyUseClass());
+  import1.MyUseClass get _MyUseClass_0_5 {
+    if ((this.__MyUseClass_0_5 == null)) {
+      (__MyUseClass_0_5 = new import1.MyUseClass());
     }
-    return this.__MyUseClass_0_4;
+    return this.__MyUseClass_0_5;
   }
 
-  dynamic get _MyUseExisting_0_5 {
-    if ((this.__MyUseExisting_0_5 == null)) {
-      (__MyUseExisting_0_5 = this._MyUseClass_0_4);
+  dynamic get _MyUseExisting_0_6 {
+    if ((this.__MyUseExisting_0_6 == null)) {
+      (__MyUseExisting_0_6 = this._MyUseClass_0_5);
     }
-    return this.__MyUseExisting_0_5;
+    return this.__MyUseExisting_0_6;
   }
 
-  dynamic get _MyUseValue_0_6 {
-    if ((this.__MyUseValue_0_6 == null)) {
-      (__MyUseValue_0_6 = null);
+  dynamic get _MyUseValue_0_7 {
+    if ((this.__MyUseValue_0_7 == null)) {
+      (__MyUseValue_0_7 = null);
     }
-    return this.__MyUseValue_0_6;
+    return this.__MyUseValue_0_7;
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
@@ -130,17 +138,21 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
         (0 == requestNodeIndex))) {
       return _ProvidersComponent_0_2;
     }
+    if ((identical(token, import1.MyTypeAnnotation) &&
+        (0 == requestNodeIndex))) {
+      return _MyTypeAnnotation_0_3;
+    }
     if ((identical(token, import1.MyUseFactory) && (0 == requestNodeIndex))) {
-      return _MyUseFactory_0_3;
+      return _MyUseFactory_0_4;
     }
     if ((identical(token, import1.MyUseClass) && (0 == requestNodeIndex))) {
-      return _MyUseClass_0_4;
+      return _MyUseClass_0_5;
     }
     if ((identical(token, import1.MyUseExisting) && (0 == requestNodeIndex))) {
-      return _MyUseExisting_0_5;
+      return _MyUseExisting_0_6;
     }
     if ((identical(token, import1.MyUseValue) && (0 == requestNodeIndex))) {
-      return _MyUseValue_0_6;
+      return _MyUseValue_0_7;
     }
     return notFoundResult;
   }

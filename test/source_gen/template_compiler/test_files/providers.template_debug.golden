@@ -76,6 +76,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
   const StaticNodeDebugInfo(
       const [
         import2.ProvidersComponent,
+        import2.MyTypeAnnotation,
         import2.MyUseFactory,
         import2.MyUseClass,
         import2.MyUseExisting,
@@ -89,10 +90,11 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   Element _el_0;
   AppView<import2.ProvidersComponent> _compView_0;
   import2.ProvidersComponent _ProvidersComponent_0_2;
-  dynamic __MyUseFactory_0_3;
-  import2.MyUseClass __MyUseClass_0_4;
-  dynamic __MyUseExisting_0_5;
-  dynamic __MyUseValue_0_6;
+  dynamic __MyTypeAnnotation_0_3;
+  dynamic __MyUseFactory_0_4;
+  import2.MyUseClass __MyUseClass_0_5;
+  dynamic __MyUseExisting_0_6;
+  dynamic __MyUseValue_0_7;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -109,37 +111,45 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
         '', 0, ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);
   }
-  dynamic get _MyUseFactory_0_3 {
+  dynamic get _MyTypeAnnotation_0_3 {
     dbg(0, 0, 0);
-    if ((this.__MyUseFactory_0_3 == null)) {
-      (__MyUseFactory_0_3 = import2
+    if ((this.__MyTypeAnnotation_0_3 == null)) {
+      (__MyTypeAnnotation_0_3 = null);
+    }
+    return this.__MyTypeAnnotation_0_3;
+  }
+
+  dynamic get _MyUseFactory_0_4 {
+    dbg(0, 0, 0);
+    if ((this.__MyUseFactory_0_4 == null)) {
+      (__MyUseFactory_0_4 = import2
           .createService(this.injectorGet(import10.NgZone, this.parentIndex)));
     }
-    return this.__MyUseFactory_0_3;
+    return this.__MyUseFactory_0_4;
   }
 
-  import2.MyUseClass get _MyUseClass_0_4 {
+  import2.MyUseClass get _MyUseClass_0_5 {
     dbg(0, 0, 0);
-    if ((this.__MyUseClass_0_4 == null)) {
-      (__MyUseClass_0_4 = new import2.MyUseClass());
+    if ((this.__MyUseClass_0_5 == null)) {
+      (__MyUseClass_0_5 = new import2.MyUseClass());
     }
-    return this.__MyUseClass_0_4;
+    return this.__MyUseClass_0_5;
   }
 
-  dynamic get _MyUseExisting_0_5 {
+  dynamic get _MyUseExisting_0_6 {
     dbg(0, 0, 0);
-    if ((this.__MyUseExisting_0_5 == null)) {
-      (__MyUseExisting_0_5 = this._MyUseClass_0_4);
+    if ((this.__MyUseExisting_0_6 == null)) {
+      (__MyUseExisting_0_6 = this._MyUseClass_0_5);
     }
-    return this.__MyUseExisting_0_5;
+    return this.__MyUseExisting_0_6;
   }
 
-  dynamic get _MyUseValue_0_6 {
+  dynamic get _MyUseValue_0_7 {
     dbg(0, 0, 0);
-    if ((this.__MyUseValue_0_6 == null)) {
-      (__MyUseValue_0_6 = null);
+    if ((this.__MyUseValue_0_7 == null)) {
+      (__MyUseValue_0_7 = null);
     }
-    return this.__MyUseValue_0_6;
+    return this.__MyUseValue_0_7;
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
@@ -157,17 +167,21 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
         (0 == requestNodeIndex))) {
       return _ProvidersComponent_0_2;
     }
+    if ((identical(token, import2.MyTypeAnnotation) &&
+        (0 == requestNodeIndex))) {
+      return _MyTypeAnnotation_0_3;
+    }
     if ((identical(token, import2.MyUseFactory) && (0 == requestNodeIndex))) {
-      return _MyUseFactory_0_3;
+      return _MyUseFactory_0_4;
     }
     if ((identical(token, import2.MyUseClass) && (0 == requestNodeIndex))) {
-      return _MyUseClass_0_4;
+      return _MyUseClass_0_5;
     }
     if ((identical(token, import2.MyUseExisting) && (0 == requestNodeIndex))) {
-      return _MyUseExisting_0_5;
+      return _MyUseExisting_0_6;
     }
     if ((identical(token, import2.MyUseValue) && (0 == requestNodeIndex))) {
-      return _MyUseValue_0_6;
+      return _MyUseValue_0_7;
     }
     return notFoundResult;
   }

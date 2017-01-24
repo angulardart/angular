@@ -4,6 +4,7 @@ import 'package:angular2/angular2.dart';
   selector: 'providers',
   template: 'Hello',
   providers: const [
+    MyTypeAnnotation,
     const Provider(
       MyUseFactory,
       useFactory: ProvidersComponent.createService,
@@ -25,6 +26,8 @@ import 'package:angular2/angular2.dart';
 class ProvidersComponent {
   static MyUseFactory createService(NgZone ngZone) => new MyUseFactory();
 }
+
+class MyTypeAnnotation {}
 
 class MyUseExisting {}
 
