@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular2/src/compiler/config.dart';
+import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/source_gen/common/logging.dart';
 import 'package:angular2/src/source_gen/common/ng_compiler.dart';
 import 'package:angular2/src/source_gen/template_compiler/find_components.dart';
@@ -25,14 +26,15 @@ Future<TemplateCompilerOutputs> processTemplates(
       assetId: buildStep.input.id,
       log: buildStep.logger);
 
-  final compileComponentsData = logElapsedSync(
-      () => findComponents(buildStep, element),
-      operationName: 'findComponents',
-      assetId: buildStep.input.id,
-      log: buildStep.logger);
+  final List<NormalizedComponentWithViewDirectives> compileComponentsData =
+      logElapsedSync(() => findComponents(buildStep, element),
+          operationName: 'findComponents',
+          assetId: buildStep.input.id,
+          log: buildStep.logger);
   if (compileComponentsData.isEmpty)
     return new TemplateCompilerOutputs(null, ngDepsModel);
-  await Future.forEach(compileComponentsData, (component) async {
+  await Future.forEach(compileComponentsData,
+      (NormalizedComponentWithViewDirectives component) async {
     component.component =
         await templateCompiler.normalizeDirectiveMetadata(component.component);
   });

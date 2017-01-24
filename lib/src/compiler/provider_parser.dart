@@ -22,13 +22,7 @@ class ProviderError extends ParseError {
 class ProviderViewContext {
   CompileDirectiveMetadata component;
   SourceSpan sourceSpan;
-  /**
-   * @internal
-   */
   CompileTokenMap<List<CompileQueryMetadata>> viewQueries;
-  /**
-   * @internal
-   */
   CompileTokenMap<bool> viewProviders;
   List<ProviderError> errors = [];
   ProviderViewContext(this.component, this.sourceSpan) {
@@ -86,16 +80,16 @@ class ProviderElementContext {
     this._allProviders.values().forEach((provider) {
       var eager = provider.eager || queriedTokens.get(provider.token) != null;
       if (eager) {
-        this._getOrCreateLocalProvider(
-            provider.providerType, provider.token, true);
+        this._getOrCreateLocalProvider(provider.providerType, provider.token,
+            eager: true);
       }
     });
   }
   void afterElement() {
     // collect lazy providers
     this._allProviders.values().forEach((provider) {
-      this._getOrCreateLocalProvider(
-          provider.providerType, provider.token, false);
+      this._getOrCreateLocalProvider(provider.providerType, provider.token,
+          eager: false);
     });
   }
 
@@ -154,8 +148,9 @@ class ProviderElementContext {
     return result;
   }
 
-  ProviderAst _getOrCreateLocalProvider(ProviderAstType requestingProviderType,
-      CompileTokenMetadata token, bool eager) {
+  ProviderAst _getOrCreateLocalProvider(
+      ProviderAstType requestingProviderType, CompileTokenMetadata token,
+      {bool eager}) {
     var resolvedProvider = this._allProviders.get(token);
     if (resolvedProvider == null ||
         ((identical(requestingProviderType, ProviderAstType.Directive) ||
@@ -216,8 +211,8 @@ class ProviderElementContext {
           deps: transformedDeps);
     }).toList();
     transformedProviderAst = _transformProviderAst(resolvedProvider,
-        eager: eager, providers: transformedProviders);
-    this._transformedProviders.add(token, transformedProviderAst);
+        forceEager: eager, providers: transformedProviders);
+    _transformedProviders.add(token, transformedProviderAst);
     return transformedProviderAst;
   }
 
@@ -247,7 +242,8 @@ class ProviderElementContext {
         return dep;
       }
       // access providers
-      if (_getOrCreateLocalProvider(requestingProviderType, dep.token, eager) !=
+      if (_getOrCreateLocalProvider(requestingProviderType, dep.token,
+              eager: eager) !=
           null) {
         return dep;
       }
@@ -314,10 +310,10 @@ class AppProviderParser {
     _resolveProviders(
         _normalizeProviders(providers, this._sourceSpan, this._errors),
         ProviderAstType.PublicService,
-        false,
         this._sourceSpan,
         this._errors,
-        this._allProviders);
+        this._allProviders,
+        eager: false);
   }
   List<ProviderAst> parse() {
     this._allProviders.values().forEach((provider) {
@@ -379,7 +375,7 @@ ${ errorString}''');
           deps: transformedDeps);
     }).toList();
     transformedProviderAst = _transformProviderAst(resolvedProvider,
-        eager: eager, providers: transformedProviders);
+        forceEager: eager, providers: transformedProviders);
     this._transformedProviders.add(token, transformedProviderAst);
     return transformedProviderAst;
   }
@@ -423,15 +419,18 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
       multi: provider.multi);
 }
 
+/// Creates a new provider ast node by overriding eager and providers members
+/// of existing ProviderAst.
 ProviderAst _transformProviderAst(ProviderAst provider,
-    {bool eager, List<CompileProviderMetadata> providers}) {
+    {bool forceEager, List<CompileProviderMetadata> providers}) {
   return new ProviderAst(
-      provider.token,
-      provider.multiProvider,
-      provider.eager || eager,
-      providers,
-      provider.providerType,
-      provider.sourceSpan);
+    provider.token,
+    provider.multiProvider,
+    providers,
+    provider.providerType,
+    provider.sourceSpan,
+    eager: provider.eager || forceEager,
+  );
 }
 
 List<CompileProviderMetadata> _normalizeProviders(
@@ -479,14 +478,15 @@ CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
         token: new CompileTokenMetadata(identifier: directive.type),
         useClass: directive.type);
     _resolveProviders(
-        [dirProvider],
-        directive.isComponent
-            ? ProviderAstType.Component
-            : ProviderAstType.Directive,
-        true,
-        sourceSpan,
-        targetErrors,
-        providersByToken);
+      [dirProvider],
+      directive.isComponent
+          ? ProviderAstType.Component
+          : ProviderAstType.Directive,
+      sourceSpan,
+      targetErrors,
+      providersByToken,
+      eager: true,
+    );
   });
   // Note: directives need to be able to overwrite providers of a component!
   var directivesWithComponentFirst =
@@ -496,17 +496,17 @@ CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
     _resolveProviders(
         _normalizeProviders(directive.providers, sourceSpan, targetErrors),
         ProviderAstType.PublicService,
-        false,
         sourceSpan,
         targetErrors,
-        providersByToken);
+        providersByToken,
+        eager: false);
     _resolveProviders(
         _normalizeProviders(directive.viewProviders, sourceSpan, targetErrors),
         ProviderAstType.PrivateService,
-        false,
         sourceSpan,
         targetErrors,
-        providersByToken);
+        providersByToken,
+        eager: false);
   });
   return providersByToken;
 }
@@ -514,10 +514,10 @@ CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
 void _resolveProviders(
     List<CompileProviderMetadata> providers,
     ProviderAstType providerType,
-    bool eager,
     SourceSpan sourceSpan,
     List<ParseError> targetErrors,
-    CompileTokenMap<ProviderAst> targetProvidersByToken) {
+    CompileTokenMap<ProviderAst> targetProvidersByToken,
+    {bool eager}) {
   providers.forEach((provider) {
     var resolvedProvider = targetProvidersByToken.get(provider.token);
     if (resolvedProvider != null &&
@@ -527,8 +527,9 @@ void _resolveProviders(
           sourceSpan));
     }
     if (resolvedProvider == null) {
-      resolvedProvider = new ProviderAst(provider.token, provider.multi, eager,
-          [provider], providerType, sourceSpan);
+      resolvedProvider = new ProviderAst(
+          provider.token, provider.multi, [provider], providerType, sourceSpan,
+          eager: eager);
       targetProvidersByToken.add(provider.token, resolvedProvider);
     } else {
       if (!provider.multi) {

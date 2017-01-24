@@ -162,8 +162,9 @@ class CompileElement extends CompileNode {
       _resolvedProvidersArray
         ..insert(
             0,
-            new ProviderAst(provider.token, false, true, [provider],
-                ProviderAstType.Builtin, this.sourceAst.sourceSpan));
+            new ProviderAst(provider.token, false, [provider],
+                ProviderAstType.Builtin, this.sourceAst.sourceSpan,
+                eager: true));
     }
   }
 
@@ -399,6 +400,15 @@ o.Statement createInjectInternalCondition(num nodeIndex, num childNodeCount,
       [new o.ReturnStatement(providerExpr)]);
 }
 
+/// Creates a class field and assigns the resolvedProviderValueExpr.
+///
+/// Eager Example:
+///   _TemplateRef_9_4 = new TemplateRef(_appEl_9,viewFactory_SampleComponent7);
+///
+/// Lazy:
+///
+/// TemplateRef _TemplateRef_9_4;
+///
 o.Expression createProviderProperty(
     String propName,
     ProviderAst provider,

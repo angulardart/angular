@@ -238,8 +238,9 @@ class ProviderAst implements TemplateAst {
   List<CompileProviderMetadata> providers;
   ProviderAstType providerType;
   SourceSpan sourceSpan;
-  ProviderAst(this.token, this.multiProvider, this.eager, this.providers,
-      this.providerType, this.sourceSpan);
+  ProviderAst(this.token, this.multiProvider, this.providers, this.providerType,
+      this.sourceSpan,
+      {this.eager});
   // No visit method in the visitor for now...
   dynamic visit(TemplateAstVisitor visitor, dynamic context) => null;
 }

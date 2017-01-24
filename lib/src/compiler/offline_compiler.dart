@@ -14,6 +14,7 @@ import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
+import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
 
@@ -64,14 +65,20 @@ class OfflineCompiler {
     components.forEach((componentWithDirs) {
       CompileDirectiveMetadata compMeta = componentWithDirs.component;
       _assertComponent(compMeta);
+
+      // Compile Component View and Embedded templates.
       var compViewFactoryVar = _compileComponent(compMeta,
           componentWithDirs.directives, componentWithDirs.pipes, statements);
       exportedVars.add(compViewFactoryVar);
+
+      // Compile ComponentHost to be able to use dynamic component loader at
+      // runtime.
       var hostMeta = createHostComponentMeta(compMeta.type, compMeta.selector,
           compMeta.template.preserveWhitespace);
       var hostViewFactoryVar =
           _compileComponent(hostMeta, [compMeta], [], statements);
       var compFactoryVar = '${compMeta.type.name}NgFactory';
+
       statements.add(o
           .variable(compFactoryVar)
           .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
@@ -86,7 +93,7 @@ class OfflineCompiler {
           .toDeclStmt(null, [o.StmtModifier.Final]));
       exportedVars.add(compFactoryVar);
     });
-    return _codegenSourceModule(moduleUrl, statements, exportedVars);
+    return _createSourceModule(moduleUrl, statements, exportedVars);
   }
 
   List<SourceModule> compileStylesheet(String stylesheetUrl, String cssText) {
@@ -95,9 +102,9 @@ class OfflineCompiler {
     var shimStyles =
         _styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
     return [
-      _codegenSourceModule(_stylesModuleUrl(stylesheetUrl, false),
+      _createSourceModule(_stylesModuleUrl(stylesheetUrl, false),
           _resolveStyleStatements(plainStyles), [plainStyles.stylesVar]),
-      _codegenSourceModule(_stylesModuleUrl(stylesheetUrl, true),
+      _createSourceModule(_stylesModuleUrl(stylesheetUrl, true),
           _resolveStyleStatements(shimStyles), [shimStyles.stylesVar])
     ];
   }
@@ -108,7 +115,7 @@ class OfflineCompiler {
       List<CompilePipeMetadata> pipes,
       List<o.Statement> targetStatements) {
     var styleResult = _styleCompiler.compileComponent(compMeta);
-    var parsedTemplate = _templateParser.parse(compMeta,
+    List<TemplateAst> parsedTemplate = _templateParser.parse(compMeta,
         compMeta.template.template, directives, pipes, compMeta.type.name);
     var viewResult = _viewCompiler.compileComponent(compMeta, parsedTemplate,
         styleResult, o.variable(styleResult.stylesVar), pipes);
@@ -117,28 +124,26 @@ class OfflineCompiler {
     return viewResult.viewFactoryVar;
   }
 
-  SourceModule _codegenSourceModule(String moduleUrl,
+  SourceModule _createSourceModule(String moduleUrl,
       List<o.Statement> statements, List<String> exportedVars) {
-    return new SourceModule(
-        moduleUrl,
-        this
-            ._outputEmitter
-            .emitStatements(moduleUrl, statements, exportedVars));
+    String sourceCode =
+        _outputEmitter.emitStatements(moduleUrl, statements, exportedVars);
+    return new SourceModule(moduleUrl, sourceCode);
   }
 }
 
 List<o.Statement> _resolveViewStatements(ViewCompileResult compileResult) {
-  compileResult.dependencies.forEach((dep) {
+  for (var dep in compileResult.dependencies) {
     dep.factoryPlaceholder.moduleUrl = _templateModuleUrl(dep.comp.type);
-  });
+  }
   return compileResult.statements;
 }
 
 List<o.Statement> _resolveStyleStatements(StylesCompileResult compileResult) {
-  compileResult.dependencies.forEach((dep) {
+  for (var dep in compileResult.dependencies) {
     dep.valuePlaceholder.moduleUrl =
         _stylesModuleUrl(dep.sourceUrl, dep.isShimmed);
-  });
+  }
   return compileResult.statements;
 }
 
