@@ -11,7 +11,6 @@ import "package:angular2/src/core/platform_directives_and_pipes.dart"
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show stringify;
 
 import "compile_metadata.dart" as cpl;
 import "compiler_utils.dart" show sanitizeIdentifier;

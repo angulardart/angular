@@ -4,7 +4,6 @@ import "package:angular2/src/core/metadata.dart" show View;
 import "package:angular2/src/core/reflection/reflection.dart"
     show Reflector, reflector;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show stringify;
 
 /// Resolves types to [View].
 @Injectable()

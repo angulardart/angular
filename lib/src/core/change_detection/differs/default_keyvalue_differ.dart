@@ -1,5 +1,5 @@
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show stringify, looseIdentical;
+import "package:angular2/src/facade/lang.dart" show looseIdentical;
 
 import "../change_detector_ref.dart" show ChangeDetectorRef;
 import "../differs/keyvalue_differs.dart"
