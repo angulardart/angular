@@ -63,8 +63,8 @@ class DomSharedStylesHost implements SharedStylesHost {
 
   void onStylesAdded(List<String> additions) {
     if (_nativeHosts == null) return;
-    _nativeHosts.forEach((hostNode) {
+    for (var hostNode in _nativeHosts) {
       _addStylesToHost(additions, hostNode);
-    });
+    }
   }
 }
