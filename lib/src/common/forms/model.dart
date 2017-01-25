@@ -306,14 +306,14 @@ class Control extends AbstractControl {
 /// define forms in Angular, along with [Control] and [ControlArray].
 /// [ControlArray] can also contain other controls, but is of variable length.
 class ControlGroup extends AbstractControl {
-  Map<String, AbstractControl> controls;
-  Map<String, bool> _optionals;
+  final Map<String, AbstractControl> controls;
+  final Map<String, bool> _optionals;
   ControlGroup(this.controls,
-      [Map<String, bool> optionals = null,
-      ValidatorFn validator = null,
-      AsyncValidatorFn asyncValidator = null])
-      : super(validator, asyncValidator) {
-    _optionals = optionals ?? {};
+      [Map<String, bool> optionals,
+      ValidatorFn validator,
+      AsyncValidatorFn asyncValidator])
+      : _optionals = optionals ?? {},
+        super(validator, asyncValidator) {
     _initObservables();
     _setParentForControls();
     updateValueAndValidity(onlySelf: true, emitEvent: false);

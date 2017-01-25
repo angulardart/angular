@@ -12,7 +12,9 @@ class EventManager {
   Map<String, EventManagerPlugin> _eventToPlugin;
   EventManager(@Inject(EVENT_MANAGER_PLUGINS) List<EventManagerPlugin> plugins,
       this._zone) {
-    plugins.forEach((p) => p.manager = this);
+    for (var p in plugins) {
+      p.manager = this;
+    }
     this._plugins = plugins.reversed.toList();
     _eventToPlugin = <String, EventManagerPlugin>{};
   }

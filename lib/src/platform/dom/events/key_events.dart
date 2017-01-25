@@ -124,11 +124,11 @@ class KeyEventsPlugin extends EventManagerPlugin {
     }
     var key = KeyEventsPlugin._normalizeKey(parts.removeLast());
     var fullKey = "";
-    modifierKeys.forEach((modifierName) {
+    for (var modifierName in modifierKeys) {
       if (parts.remove(modifierName)) {
         fullKey += modifierName + ".";
       }
-    });
+    }
     fullKey += key;
     if (parts.length != 0 || identical(key.length, 0)) {
       // returning null instead of throwing to let another plugin process the event
@@ -146,14 +146,14 @@ class KeyEventsPlugin extends EventManagerPlugin {
     } else if (key == ".") {
       key = "dot";
     }
-    modifierKeys.forEach((modifierName) {
+    for (var modifierName in modifierKeys) {
       if (modifierName != key) {
         var modifierGetter = modifierKeyGetters[modifierName];
         if (modifierGetter(event)) {
           fullKey += modifierName + ".";
         }
       }
-    });
+    }
     fullKey += key;
     return fullKey;
   }
