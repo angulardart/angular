@@ -7,6 +7,37 @@ import 'compile_method.dart' show CompileMethod;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show convertCdStatementToIr;
 
+/// This list was compiled from https://www.w3.org/TR/uievents/ accessed on
+/// January 24, 2017.
+const List<String> _domEvents = const <String>[
+  'load',
+  'unload',
+  'abort',
+  'error',
+  'select',
+  'blur',
+  'focus',
+  'focusin',
+  'focusout',
+  'click',
+  'dblclick',
+  'mousedown',
+  'mouseenter',
+  'mouseleave',
+  'mousemove',
+  'mouseout',
+  'mouseover',
+  'mouseup',
+  'wheel',
+  'beforeinput',
+  'input',
+  'keydown',
+  'keyup',
+  'compositionstart',
+  'compositionupdate',
+  'compositionend',
+];
+
 /// Generates code to listen to a single eventName on a [CompileElement].
 ///
 /// Since multiple directives on an element could potentially listen to the
@@ -129,11 +160,24 @@ class CompileEventListener {
           [handler]);
     }
 
-    o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
-      this.compileElement.renderNode,
-      o.literal(this.eventName),
-      eventListener
-    ]);
+    o.Expression listenExpr;
+    if (_domEvents.contains(eventName) &&
+        !compileElement.view.genConfig.genDebugInfo) {
+      listenExpr = new o.InvokeMethodExpr(
+          this.compileElement.renderNode,
+          'addEventListener',
+          [
+            o.literal(this.eventName),
+            new o.InvokeMemberMethodExpr('preventDefault', [eventListener])
+          ],
+          checked: false);
+    } else {
+      listenExpr = new o.InvokeMemberMethodExpr('listen', [
+        this.compileElement.renderNode,
+        o.literal(this.eventName),
+        eventListener
+      ]);
+    }
 
     compileElement.view.createMethod.addStmt(listenExpr.toStmt());
   }
