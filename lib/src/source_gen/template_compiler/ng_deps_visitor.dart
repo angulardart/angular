@@ -101,7 +101,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
           // TODO(alorenzen): Add import from source file, for proper scoping.
           type: reference(element.name),
           parameters: _parameters(element),
-          annotations: _annotations(element.metadata)));
+          annotations: _annotations(element.metadata, element)));
     }
   }
 
@@ -155,7 +155,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   /// Additionally, for each compiled template, add the compiled template class
   /// as an Annotation.
   List<AnnotationModel> _annotationsFor(ClassElement element) {
-    var annotations = _annotations(element.metadata);
+    var annotations = _annotations(element.metadata, element);
     if (element.metadata.any(annotation_matcher.isComponent)) {
       annotations.add(new AnnotationModel(
           name: '${element.name}NgFactory', isConstObject: true));
@@ -163,10 +163,12 @@ class ReflectableVisitor extends RecursiveElementVisitor {
     return annotations;
   }
 
-  List<AnnotationModel> _annotations(List<ElementAnnotation> metadata) =>
+  List<AnnotationModel> _annotations(
+          List<ElementAnnotation> metadata, Element element) =>
       metadata
           .where((annotation) => !annotation_matcher
               .matchTypes([Component, View, Directive], annotation))
-          .map((annotation) => new AnnotationModel.fromElement(annotation))
+          .map((annotation) =>
+              new AnnotationModel.fromElement(annotation, element))
           .toList();
 }

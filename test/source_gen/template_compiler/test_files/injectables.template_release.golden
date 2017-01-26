@@ -141,7 +141,7 @@ const _METADATA = const <dynamic>[
   BaseService,
   const <dynamic>[const Injectable()],
   InjectableService,
-  const <dynamic>[const Injectable()]
+  const <dynamic>[const Injectable(), const Deprecated()]
 ];
 var _visited = false;
 void initReflector() {
@@ -176,6 +176,8 @@ void initReflector() {
           () => new BaseService()));
   _ngRef.reflector.registerType(
       InjectableService,
-      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[const Injectable(), const Deprecated()],
+          const [],
           () => new InjectableService()));
 }

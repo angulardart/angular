@@ -26,6 +26,7 @@ const Optional optional = const Optional();
 class BaseService {}
 
 @Injectable()
+@Deprecated('Testing deprecation')
 class InjectableService {}
 
 const testToken = const OpaqueToken('test');

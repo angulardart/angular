@@ -35,7 +35,8 @@ class ParameterModel {
     return new ParameterModel._(
         paramName: element.name,
         type: references.toBuilder(element.type, element.library.imports),
-        metadata: element.metadata.map(_getMetadataType));
+        metadata: element.metadata
+            .map((annotation) => _getMetadataType(annotation, element)));
   }
 
   ExpressionBuilder get asList {
@@ -47,6 +48,7 @@ class ParameterModel {
 
   ParameterBuilder get asBuilder => parameter(paramName, _typeAsList);
 
-  static ReferenceBuilder _getMetadataType(ElementAnnotation annotation) =>
-      new AnnotationModel.fromElement(annotation).type;
+  static ReferenceBuilder _getMetadataType(
+          ElementAnnotation annotation, Element element) =>
+      new AnnotationModel.fromElement(annotation, element).type;
 }

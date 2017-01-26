@@ -1,4 +1,12 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+
+String moduleUrl(Element element) {
+  var uri = element?.source?.uri?.toString();
+  if (uri == null) return null;
+  if (Uri.parse(uri).scheme == 'dart') return uri;
+  return toAssetUri(fromUri(uri));
+}
 
 String toAssetUri(AssetId assetId) {
   if (assetId == null) throw new ArgumentError.notNull('assetId');

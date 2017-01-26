@@ -21,12 +21,13 @@ class AnnotationModel {
         _parameters = parameters,
         _namedParameters = namedParameters;
 
-  factory AnnotationModel.fromElement(ElementAnnotation annotation) {
+  factory AnnotationModel.fromElement(
+      ElementAnnotation annotation, Element hostElement) {
     var element = annotation.element;
     if (element is ConstructorElement) {
       return new AnnotationModel(
           name: element.enclosingElement.name,
-          type: toBuilder(element.type.returnType, element.library.imports),
+          type: toBuilder(element.type.returnType, hostElement.library.imports),
           isConstObject: false,
           // TODO(alorenzen): Implement.
           parameters: [],

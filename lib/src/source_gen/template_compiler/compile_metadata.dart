@@ -68,7 +68,7 @@ class CompileTypeMetadataVisitor
       if (type.element is FunctionTypedElement) {
         return new CompileFactoryMetadata(
             name: type.element.name,
-            moduleUrl: _moduleUrl(type.element),
+            moduleUrl: moduleUrl(type.element),
             prefix: prefix,
             diDeps: _getCompileDiDependencyMetadata(
                 (type.element as FunctionTypedElement).parameters));
@@ -82,7 +82,7 @@ class CompileTypeMetadataVisitor
 
   CompileTypeMetadata _getCompileTypeMetadata(ClassElement element) =>
       new CompileTypeMetadata(
-          moduleUrl: _moduleUrl(element),
+          moduleUrl: moduleUrl(element),
           name: element.name,
           diDeps: _getCompileDiDependencyMetadata(
               element.unnamedConstructor?.parameters ?? []),
@@ -98,13 +98,6 @@ class CompileTypeMetadataVisitor
       return null;
     }
     return null;
-  }
-
-  String _moduleUrl(Element element) {
-    var uri = element?.source?.uri?.toString();
-    if (uri == null) return null;
-    if (Uri.parse(uri).scheme == 'dart') return uri;
-    return toAssetUri(fromUri(uri));
   }
 
   List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
@@ -159,7 +152,7 @@ class CompileTypeMetadataVisitor
   CompileTokenMetadata _tokenForType(DartType type) {
     return new CompileTokenMetadata(
         identifier: new CompileIdentifierMetadata(
-            name: type.name, moduleUrl: _moduleUrl(type.element)));
+            name: type.name, moduleUrl: moduleUrl(type.element)));
   }
 
   bool _isOpaqueToken(DartObject token) =>

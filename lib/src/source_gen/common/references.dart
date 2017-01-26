@@ -8,19 +8,26 @@ ReferenceBuilder toBuilder(DartType type, List<ImportElement> imports) =>
 
 String _importFrom(DartType dartType, List<ImportElement> imports) {
   var definingLibrary = dartType.element.library;
-
-  for (var import in imports) {
-    if (import.importedLibrary == definingLibrary) {
+  for (final import in imports) {
+    if (_definesLibrary(import, definingLibrary)) {
       return import.uri;
     }
   }
   return null;
 }
 
+bool _definesLibrary(ImportElement import, LibraryElement library) =>
+    import.importedLibrary == library ||
+    import.importedLibrary.exportedLibraries
+        .any((exportedLibrary) => exportedLibrary == library);
+
 Iterable<TypeBuilder> _coerceTypeArgs(
     DartType type, List<ImportElement> imports) {
   if (type is! ParameterizedType) return const [];
-  return (type as ParameterizedType)
-      .typeArguments
-      .map((type) => toBuilder(type, imports));
+  var typeArgs = (type as ParameterizedType).typeArguments;
+  if (_isDynamic(typeArgs)) return const [];
+  return typeArgs.map((type) => toBuilder(type, imports));
 }
+
+bool _isDynamic(List<DartType> types) =>
+    types.length == 1 && types.first.isDynamic;
