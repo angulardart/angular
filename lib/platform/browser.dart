@@ -71,7 +71,7 @@ PlatformRef browserPlatform() {
 /// in index.html. This is mainly for security reasons, as well as architectural
 /// changes in Angular 2. This means that `index.html` can safely be processed
 /// using server-side technologies such as providers. Bindings can thus use
-/// double-curlyi syntax, `{{...}}`, without collision with Angular 2
+/// double-curly syntax, `{{...}}`, without collision with Angular 2
 /// `{{...}}` template syntax.
 ///
 /// When an app developer invokes [bootstrap] with a root component
