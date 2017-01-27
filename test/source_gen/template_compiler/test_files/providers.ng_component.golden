@@ -44,15 +44,25 @@ final String output = """[
           "token": {
             "value": null,
             "identifier": {
-              "class": "Identifier",
+              "class": "Type",
               "name": "MyTypeAnnotation",
               "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/providers.dart",
               "prefix": null,
-              "value": null
+              "isHost": false,
+              "value": null,
+              "diDeps": []
             },
             "identifierIsInstance": false
           },
-          "useClass": null,
+          "useClass": {
+            "class": "Type",
+            "name": "MyTypeAnnotation",
+            "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/providers.dart",
+            "prefix": null,
+            "isHost": false,
+            "value": null,
+            "diDeps": []
+          },
           "useExisting": null,
           "useValue": null,
           "useFactory": null,

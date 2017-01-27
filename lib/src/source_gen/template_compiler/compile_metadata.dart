@@ -26,13 +26,20 @@ class CompileTypeMetadataVisitor
           ? _getCompileTypeMetadata(element)
           : null;
 
-  CompileProviderMetadata createProviderMetadata(DartObject provider) =>
-      new CompileProviderMetadata(
-          token: _token(dart_objects.getField(provider, 'token') ?? provider),
-          useClass: _getUseClass(provider),
-          useExisting: _getUseExisting(provider),
-          useFactory: _getUseFactory(provider),
-          useValue: _getUseValue(provider));
+  CompileProviderMetadata createProviderMetadata(DartObject provider) {
+    if (provider.toTypeValue() != null) {
+      var metadata = _getCompileTypeMetadata(provider.toTypeValue().element);
+      return new CompileProviderMetadata(
+          token: new CompileTokenMetadata(identifier: metadata),
+          useClass: metadata);
+    }
+    return new CompileProviderMetadata(
+        token: _token(dart_objects.getField(provider, 'token')),
+        useClass: _getUseClass(provider),
+        useExisting: _getUseExisting(provider),
+        useFactory: _getUseFactory(provider),
+        useValue: _getUseValue(provider));
+  }
 
   CompileTypeMetadata _getUseClass(DartObject provider) {
     var maybeUseClass = provider.getField('useClass');

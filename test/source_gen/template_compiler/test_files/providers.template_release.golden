@@ -67,7 +67,7 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
   Element _el_0;
   AppView<import1.ProvidersComponent> _compView_0;
   import1.ProvidersComponent _ProvidersComponent_0_2;
-  dynamic __MyTypeAnnotation_0_3;
+  import1.MyTypeAnnotation __MyTypeAnnotation_0_3;
   dynamic __MyUseFactory_0_4;
   import1.MyUseClass __MyUseClass_0_5;
   dynamic __MyUseExisting_0_6;
@@ -87,9 +87,9 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
         '', 0, ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);
   }
-  dynamic get _MyTypeAnnotation_0_3 {
+  import1.MyTypeAnnotation get _MyTypeAnnotation_0_3 {
     if ((this.__MyTypeAnnotation_0_3 == null)) {
-      (__MyTypeAnnotation_0_3 = null);
+      (__MyTypeAnnotation_0_3 = new import1.MyTypeAnnotation());
     }
     return this.__MyTypeAnnotation_0_3;
   }
