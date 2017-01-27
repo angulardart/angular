@@ -3,7 +3,7 @@
 library angular2.test.compiler.preserve_whitespace_test;
 
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -14,19 +14,19 @@ void main() {
     test('should not remove whitespace by default', () async {
       var testBed = new NgTestBed<DefaultWhiteSpaceComponent>();
       testRoot = await testBed.create();
-      expect(testRoot.element.text, defaultWithWhitespace);
+      expect(testRoot.text, defaultWithWhitespace);
     });
     test('should not remove whitespace when explicitely requested', () async {
       var testBed = new NgTestBed<WhiteSpaceComponentExplicitTrue>();
       testRoot = await testBed.create();
-      expect(testRoot.element.text, defaultWithWhitespace);
+      expect(testRoot.text, defaultWithWhitespace);
     });
 
     test('should render ngsp entity', () async {
       var testBed = new NgTestBed<NgSpaceComponent>();
       testRoot = await testBed.create();
       expect(
-          testRoot.element.text,
+          testRoot.text,
           'V1  test1   test2V2\n'
           'test0  test1   test2\n');
     });
@@ -34,21 +34,21 @@ void main() {
     test('should remove whitespace when explicitely requested', () async {
       var testBed = new NgTestBed<WhiteSpaceComponentExplicitFalse>();
       testRoot = await testBed.create();
-      expect(testRoot.element.text, 'HelloWorldV1 V2');
+      expect(testRoot.text, 'HelloWorldV1 V2');
     });
 
     test('should remove whitespace inside interpolation on left side',
         () async {
       var testBed = new NgTestBed<Interpolate1LeftComponent>();
       testRoot = await testBed.create();
-      expect(testRoot.element.text, 'V1');
+      expect(testRoot.text, 'V1');
     });
 
     test('should remove whitespace inside interpolation on left and right side',
         () async {
       var testBed = new NgTestBed<InterpolateComponent>();
       testRoot = await testBed.create();
-      expect(testRoot.element.text, 'V1  V2');
+      expect(testRoot.text, 'V1  V2');
     });
   });
 }

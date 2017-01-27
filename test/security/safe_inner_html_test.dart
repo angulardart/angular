@@ -4,7 +4,7 @@ library angular2.test.testing.ng_test_bed_test;
 
 import 'package:angular2/angular2.dart';
 import 'package:angular2/security.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 @AngularEntrypoint()
@@ -15,13 +15,13 @@ void main() {
     test('normally, "innerHtml" should be sanitized', () async {
       var testBed = new NgTestBed<NormalInnerHtmlTest>();
       var testRoot = await testBed.create();
-      expect(testRoot.element.text, contains('Secure'));
+      expect(testRoot.text, contains('Secure'));
     });
 
     test('"safeInnerHtml" should be trusted', () async {
       var testBed = new NgTestBed<TrustedInnerHtmlTest>();
       var testRoot = await testBed.create();
-      expect(testRoot.element.text, contains('Unsafe'));
+      expect(testRoot.text, contains('Unsafe'));
     });
 
     test('unsafe HTML should throw', () async {

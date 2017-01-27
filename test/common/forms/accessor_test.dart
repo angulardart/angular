@@ -5,7 +5,7 @@ library angular2.test.common.forms.accessor_test;
 import 'dart:js_util' as js_util;
 
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {

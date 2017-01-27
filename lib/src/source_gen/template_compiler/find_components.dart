@@ -95,6 +95,7 @@ class ComponentVisitor
   List<String> _outputs = [];
   Map<String, String> _host = {};
   List<CompileQueryMetadata> _queries = [];
+  List<CompileQueryMetadata> _viewQueries = [];
 
   ComponentVisitor(this._buildStep, {bool loadTemplate: false})
       : _loadTemplate = loadTemplate;
@@ -175,16 +176,22 @@ class ComponentVisitor
               .severe('@HostBinding can only be used on a getter or a field, '
                   'but was found on $element.');
         }
-      } else if (annotation_matcher.matchTypes(const [
-        Query,
-        ViewQuery,
-        ContentChildren,
-        ContentChild,
-        ViewChildren,
-        ViewChild,
-      ], annotation)) {
+      } else if (annotation_matcher.matchTypes(
+          const [Query, ContentChildren, ContentChild], annotation)) {
         if (isSetter) {
           _queries.add(_getQuery(
+            annotation.computeConstantValue(),
+            element.name,
+          ));
+        } else {
+          _logger.severe(''
+              'Any of the @Query/ViewQuery/Content/view annotations '
+              'can only be used on a setter, but was found on $element.');
+        }
+      } else if (annotation_matcher
+          .matchTypes(const [ViewQuery, ViewChildren, ViewChild], annotation)) {
+        if (isSetter) {
+          _viewQueries.add(_getQuery(
             annotation.computeConstantValue(),
             element.name,
           ));
@@ -284,7 +291,9 @@ class ComponentVisitor
     var template = (isComponent && _loadTemplate)
         ? _createTemplateMetadata(componentValue,
             view: _findView(element)?.computeConstantValue())
-        : null;
+        : new CompileTemplateMetadata(); // Some directives won't have templates
+    // but the template parser is going to
+    // assume they have at least defaults.
     var inputs =
         new List<String>.from(coerceStringList(componentValue, 'inputs'))
           ..addAll(_inputs);
@@ -308,10 +317,10 @@ class ComponentVisitor
         outputs: outputs,
         host: host,
         lifecycleHooks: _extractLifecycleHooks(element),
-        providers: _extractProviders(componentValue),
-        viewProviders: isComponent ? [] : null,
+        providers: _extractProviders(componentValue, 'providers'),
+        viewProviders: _extractProviders(componentValue, 'viewProviders'),
         queries: queries,
-        viewQueries: isComponent ? [] : null,
+        viewQueries: _viewQueries,
         template: template);
   }
 
@@ -347,7 +356,8 @@ class ComponentVisitor
         defaultTo: ChangeDetectionStrategy.Default,
       );
 
-  List<CompileProviderMetadata> _extractProviders(DartObject component) =>
-      visitAll(coerceList(component, 'providers'),
+  List<CompileProviderMetadata> _extractProviders(
+          DartObject component, String providerField) =>
+      visitAll(coerceList(component, providerField),
           new CompileTypeMetadataVisitor(_logger).createProviderMetadata);
 }

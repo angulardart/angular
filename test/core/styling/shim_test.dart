@@ -4,7 +4,7 @@ library angular2.test.common.styling.shim_test;
 
 import 'dart:html';
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -15,7 +15,7 @@ void main() {
       var testBed = new NgTestBed<HostStyleTestComponent>();
       NgTestFixture<HostStyleTestComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element;
+      Element elm = testFixture.rootElement;
       expectColor(elm, '#40FF7F');
     });
 
@@ -23,8 +23,8 @@ void main() {
       var testBed = new NgTestBed<HostStyleContainerComponent>();
       NgTestFixture<HostStyleContainerComponent> testFixture =
           await testBed.create();
-      Element host1 = testFixture.element.querySelector('host-test');
-      Element host2 = testFixture.element.querySelector('host-test2');
+      Element host1 = testFixture.rootElement.querySelector('host-test');
+      Element host2 = testFixture.rootElement.querySelector('host-test2');
       expectColor(host1, '#40FF7F');
       expectColor(host2, '#FF0000');
     });
@@ -33,10 +33,10 @@ void main() {
       var testBed = new NgTestBed<HostElementSelectorTestComponent>();
       NgTestFixture<HostElementSelectorTestComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element.querySelector('div');
+      Element elm = testFixture.rootElement.querySelector('div');
       expectColor(elm, '#FF0000');
 
-      elm = testFixture.element.querySelector('section');
+      elm = testFixture.rootElement.querySelector('section');
       expectColor(elm, '#0000FF');
     });
 
@@ -44,10 +44,10 @@ void main() {
       var testBed = new NgTestBed<ElementSelectorTestComponent>();
       NgTestFixture<ElementSelectorTestComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element.querySelector('div');
+      Element elm = testFixture.rootElement.querySelector('div');
       expectColor(elm, '#A0B0C0');
 
-      elm = testFixture.element.querySelector('section');
+      elm = testFixture.rootElement.querySelector('section');
       expectColor(elm, '#C0B0A0');
     });
 
@@ -56,13 +56,13 @@ void main() {
       var testBed = new NgTestBed<ContentSelectorTestComponent>();
       NgTestFixture<ContentSelectorTestComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element.querySelector('#section1');
+      Element elm = testFixture.rootElement.querySelector('#section1');
       expectColor(elm, '#008000');
 
-      elm = testFixture.element.querySelector('#section2');
+      elm = testFixture.rootElement.querySelector('#section2');
       expectColor(elm, '#FF0000');
 
-      elm = testFixture.element.querySelector('#section3');
+      elm = testFixture.rootElement.querySelector('#section3');
       expectColor(elm, '#008000');
     });
 
@@ -70,7 +70,7 @@ void main() {
       var testBed = new NgTestBed<ContentSelectorTestComponent>();
       NgTestFixture<ContentSelectorTestComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element.querySelector('#sectionA');
+      Element elm = testFixture.rootElement.querySelector('#sectionA');
       expectColor(elm, '#000000');
     });
 
@@ -78,7 +78,7 @@ void main() {
       var testBed = new NgTestBed<ClassOnHostTestComponent>();
       NgTestFixture<ClassOnHostTestComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element;
+      Element elm = testFixture.rootElement;
       expect(elm.className.startsWith('customhostclass _nghost-'), isTrue);
     });
 
@@ -86,7 +86,7 @@ void main() {
       var testBed = new NgTestBed<ClassAttribBindingComponent>();
       NgTestFixture<ClassAttribBindingComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element.querySelector('#item1');
+      Element elm = testFixture.rootElement.querySelector('#item1');
       expect(elm.className.startsWith('xyz _ngcontent-'), isTrue);
     });
 
@@ -94,7 +94,7 @@ void main() {
       var testBed = new NgTestBed<ClassInterpolateComponent>();
       NgTestFixture<ClassInterpolateComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element.querySelector('#item1');
+      Element elm = testFixture.rootElement.querySelector('#item1');
       expect(
           elm.className.startsWith('prefix xyz postfix _ngcontent-'), isTrue);
     });
@@ -105,7 +105,7 @@ void main() {
       var testBed = new NgTestBed<ComponentContainerTestComponent>();
       NgTestFixture<ComponentContainerTestComponent> testFixture =
           await testBed.create();
-      Element elm = testFixture.element.querySelector('child-component1');
+      Element elm = testFixture.rootElement.querySelector('child-component1');
       expect(elm.className.contains('_ngcontent'), isTrue);
       expect(elm.className.contains('_nghost'), isTrue);
     });

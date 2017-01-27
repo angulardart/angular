@@ -109,7 +109,14 @@ final String output = """[
         "hostProperties": {},
         "hostAttributes": {},
         "lifecycleHooks": [],
-        "template": null,
+        "template": {
+          "encapsulation": 0,
+          "template": null,
+          "templateUrl": null,
+          "styles": [],
+          "styleUrls": [],
+          "ngContentSelectors": []
+        },
         "providers": [],
         "viewProviders": [],
         "queries": [],
@@ -224,7 +231,14 @@ final String output = """[
         "lifecycleHooks": [
           2
         ],
-        "template": null,
+        "template": {
+          "encapsulation": 0,
+          "template": null,
+          "templateUrl": null,
+          "styles": [],
+          "styleUrls": [],
+          "ngContentSelectors": []
+        },
         "providers": [],
         "viewProviders": [],
         "queries": [],

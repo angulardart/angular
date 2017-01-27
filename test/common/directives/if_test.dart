@@ -4,7 +4,7 @@ library angular2.test.common.directives.if_test;
 
 import 'dart:html';
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -14,7 +14,7 @@ void main() {
     test("should work in a template attribute", () async {
       var testBed = new NgTestBed<NgIfInTemplateAttributeComponent>();
       var testFixture = await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       expect(element.querySelectorAll("copy-me"), hasLength(1));
       expect(element.innerHtml, contains('hello'));
     });
@@ -22,7 +22,7 @@ void main() {
     test("should work in a template element", () async {
       var testBed = new NgTestBed<NgIfInTemplateComponent>();
       var testFixture = await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       expect(element.querySelectorAll("copy-me"), hasLength(1));
       expect(element.innerHtml, contains('hello2'));
     });
@@ -31,7 +31,7 @@ void main() {
       var testBed = new NgTestBed<NgIfToggleTestComponent>();
       NgTestFixture<NgIfToggleTestComponent> testFixture =
           await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
 
       await testFixture.update((NgIfToggleTestComponent component) {
         component.booleanCondition = false;
@@ -53,7 +53,7 @@ void main() {
       var testBed = new NgTestBed<NgIfNestedTestComponent>();
       NgTestFixture<NgIfNestedTestComponent> testFixture =
           await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.booleanCondition = false;
@@ -90,7 +90,7 @@ void main() {
       var testBed = new NgTestBed<NgIfMultiUpdateTestComponent>();
       NgTestFixture<NgIfMultiUpdateTestComponent> testFixture =
           await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       // Check startup.
       expect(element.querySelectorAll("copy-me"), hasLength(3));
       expect(element.text, "helloNumberhelloStringhelloFunction");

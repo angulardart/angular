@@ -67,29 +67,6 @@ final String output = """[
         {
           "selectors": [
             {
-              "value": "q8",
-              "identifier": null,
-              "identifierIsInstance": false
-            }
-          ],
-          "descendants": false,
-          "first": false,
-          "propertyName": "viewQueryFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewQueryFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
-        },
-        {
-          "selectors": [
-            {
               "value": "q9",
               "identifier": null,
               "identifierIsInstance": false
@@ -113,29 +90,6 @@ final String output = """[
         {
           "selectors": [
             {
-              "value": "q10",
-              "identifier": null,
-              "identifierIsInstance": false
-            }
-          ],
-          "descendants": true,
-          "first": false,
-          "propertyName": "viewChildrenFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewChildrenFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
-        },
-        {
-          "selectors": [
-            {
               "value": "q11",
               "identifier": null,
               "identifierIsInstance": false
@@ -149,58 +103,6 @@ final String output = """[
             "identifier": {
               "class": "Identifier",
               "name": "contentChildFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
-        },
-        {
-          "selectors": [
-            {
-              "value": "q12",
-              "identifier": null,
-              "identifierIsInstance": false
-            }
-          ],
-          "descendants": true,
-          "first": true,
-          "propertyName": "viewChildFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewChildFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
-        },
-        {
-          "selectors": [
-            {
-              "value": null,
-              "identifier": {
-                "class": "Identifier",
-                "name": "AnotherDirective",
-                "moduleUrl": null,
-                "prefix": null,
-                "value": null
-              },
-              "identifierIsInstance": false
-            }
-          ],
-          "descendants": true,
-          "first": false,
-          "propertyName": "usingTypeFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "usingTypeFromField",
               "moduleUrl": null,
               "prefix": null,
               "value": null
@@ -347,7 +249,106 @@ final String output = """[
           }
         }
       ],
-      "viewQueries": []
+      "viewQueries": [
+        {
+          "selectors": [
+            {
+              "value": "q8",
+              "identifier": null,
+              "identifierIsInstance": false
+            }
+          ],
+          "descendants": false,
+          "first": false,
+          "propertyName": "viewQueryFromField",
+          "read": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "viewQueryFromField",
+              "moduleUrl": null,
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          }
+        },
+        {
+          "selectors": [
+            {
+              "value": "q10",
+              "identifier": null,
+              "identifierIsInstance": false
+            }
+          ],
+          "descendants": true,
+          "first": false,
+          "propertyName": "viewChildrenFromField",
+          "read": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "viewChildrenFromField",
+              "moduleUrl": null,
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          }
+        },
+        {
+          "selectors": [
+            {
+              "value": "q12",
+              "identifier": null,
+              "identifierIsInstance": false
+            }
+          ],
+          "descendants": true,
+          "first": true,
+          "propertyName": "viewChildFromField",
+          "read": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "viewChildFromField",
+              "moduleUrl": null,
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          }
+        },
+        {
+          "selectors": [
+            {
+              "value": null,
+              "identifier": {
+                "class": "Identifier",
+                "name": "AnotherDirective",
+                "moduleUrl": null,
+                "prefix": null,
+                "value": null
+              },
+              "identifierIsInstance": false
+            }
+          ],
+          "descendants": true,
+          "first": false,
+          "propertyName": "usingTypeFromField",
+          "read": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "usingTypeFromField",
+              "moduleUrl": null,
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          }
+        }
+      ]
     },
     "directives": [
       {
@@ -372,7 +373,14 @@ final String output = """[
         "hostProperties": {},
         "hostAttributes": {},
         "lifecycleHooks": [],
-        "template": null,
+        "template": {
+          "encapsulation": 0,
+          "template": null,
+          "templateUrl": null,
+          "styles": [],
+          "styleUrls": [],
+          "ngContentSelectors": []
+        },
         "providers": [],
         "viewProviders": [],
         "queries": [],

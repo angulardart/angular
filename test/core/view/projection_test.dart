@@ -4,7 +4,7 @@ library angular2.test.core.view.projection_test;
 
 import 'dart:html';
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:angular2/src/debug/debug_node.dart';
 import 'package:angular2/src/testing/matchers.dart';
 import 'package:test/test.dart';
@@ -16,7 +16,7 @@ void main() {
     test('should support simple html elements', () async {
       var testBed = new NgTestBed<ContainerWithSimpleComponent>();
       var testFixture = await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       Element childElement = element.querySelector('simple');
       expect(childElement, hasTextContent('SIMPLE(A)'));
     });
@@ -26,7 +26,7 @@ void main() {
         'into child', () async {
       var testBed = new NgTestBed<ContainerWithProjectedInterpolation>();
       var testFixture = await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE1))END'));
     });
 
@@ -35,7 +35,7 @@ void main() {
         'into child where ng-content is nested inside an element', () async {
       var testBed = new NgTestBed<ContainerWithProjectedInterpolationNested>();
       var testFixture = await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE2))END'));
     });
 
@@ -44,17 +44,17 @@ void main() {
         'into child with bindings following ng-content', () async {
       var testBed = new NgTestBed<ContainerWithProjectedInterpolationBound>();
       var testFixture = await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE3XY))END'));
     });
 
     test('should redistribute when the shadow dom changes', () async {
       var testBed = new NgTestBed<ContainerABCWithConditionalComponent>();
       var testFixture = await testBed.create();
-      Element element = testFixture.element;
+      Element element = testFixture.rootElement;
       expect(element, hasTextContent("(, BC)"));
 
-      DebugElement debugElement = getDebugNode(testFixture.element);
+      DebugElement debugElement = getDebugNode(testFixture.rootElement);
 
       ManualViewportDirective viewportDirective = debugElement
           .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
@@ -72,7 +72,7 @@ void main() {
     test("should support non emulated styles", () async {
       var testBed = new NgTestBed<ContainerWithStyleNotEmulated>();
       var testFixture = await testBed.create();
-      Element mainEl = testFixture.element;
+      Element mainEl = testFixture.rootElement;
       Element div1 = mainEl.childNodes.first;
       Element div2 = document.createElement('div');
       div2.className = 'redStyle';
@@ -84,7 +84,7 @@ void main() {
     test("should support emulated style encapsulation", () async {
       var testBed = new NgTestBed<ContainerWithStyleEmulated>();
       var testFixture = await testBed.create();
-      Element mainEl = testFixture.element;
+      Element mainEl = testFixture.rootElement;
       Element div1 = mainEl.childNodes.first;
       Element div2 = document.createElement('div');
       div2.className = 'blueStyle';

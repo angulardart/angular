@@ -191,7 +191,29 @@ final String output = """[
           "deps": null
         }
       ],
-      "viewProviders": [],
+      "viewProviders": [
+        {
+          "class": "Provider",
+          "token": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "MyUseValue",
+              "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/providers.dart",
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          },
+          "useClass": null,
+          "useExisting": null,
+          "useValue": null,
+          "useFactory": null,
+          "useProperty": null,
+          "multi": false,
+          "deps": null
+        }
+      ],
       "queries": [],
       "viewQueries": []
     },

@@ -4,7 +4,7 @@ library angular2.test.common.directives.if_test;
 
 import 'dart:html';
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:angular2/src/debug/debug_node.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
@@ -17,7 +17,7 @@ void main() {
       var testBed = new NgTestBed<ParentComp>();
       var fixture = await testBed.create();
       // The root component has 3 elements.
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.childNodes.length, 3);
     });
 
@@ -25,14 +25,14 @@ void main() {
       var testBed = new NgTestBed<ParentCompNoWhitespace>();
       var fixture = await testBed.create();
       // The root component has 3 elements and no text node children.
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.childNodes.length, 3);
     });
 
     test("should list all component child elements", () async {
       var testBed = new NgTestBed<ParentComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       var childEls = debugElement.children;
       // The root component has 3 elements in its view.
       expect(childEls.length, 3);
@@ -63,7 +63,7 @@ void main() {
     test("should list conditional component child elements", () async {
       var testBed = new NgTestBed<ConditionalParentComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       var childEls = debugElement.children;
       // The root component has 2 elements in its view.
       expect(childEls.length, 2);
@@ -85,7 +85,7 @@ void main() {
     test("should list child elements within viewports", () async {
       var testBed = new NgTestBed<UsingFor>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       var childEls = debugElement.children;
       expect(childEls.length, 4);
       // The 4th child is the <ul>.
@@ -96,7 +96,7 @@ void main() {
     test("should list element attributes", () async {
       var testBed = new NgTestBed<BankAccountApp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       var bankElem = debugElement.children[0];
       expect(bankElem.attributes["bank"], "RBC");
       expect(bankElem.attributes["account"], "4747");
@@ -105,7 +105,7 @@ void main() {
     test("should query child elements by css", () async {
       var testBed = new NgTestBed<ParentComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       var childTestEls = debugElement.queryAll(By.css("child-comp"));
       expect(childTestEls, hasLength(1));
       expect((childTestEls[0].nativeElement as Element).classes,
@@ -115,7 +115,7 @@ void main() {
     test("should query child elements by directive", () async {
       var testBed = new NgTestBed<ParentComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       var childTestEls = debugElement.queryAll(By.directive(MessageDir));
       expect(childTestEls, hasLength(4));
       expect((childTestEls[0].nativeElement as Element).classes,
@@ -131,21 +131,21 @@ void main() {
     test("should list providerTokens", () async {
       var testBed = new NgTestBed<ParentComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.providerTokens, contains(ParentCompProvider));
     });
 
     test("should list locals", () async {
       var testBed = new NgTestBed<LocalsComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.children[0].getLocal("alice") is MyDir, isTrue);
     });
 
     test("should allow injecting from the element injector", () async {
       var testBed = new NgTestBed<ParentComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       var provider = debugElement.children[0].inject(ParentCompProvider);
       expect(provider is ParentCompProvider, isTrue);
     });
@@ -153,7 +153,7 @@ void main() {
     test("should list event listeners", () async {
       var testBed = new NgTestBed<EventsComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.children[0].listeners, hasLength(1));
       expect(debugElement.children[1].listeners, hasLength(1));
     });
@@ -161,7 +161,7 @@ void main() {
     test("should trigger event handlers", () async {
       var testBed = new NgTestBed<EventsComp>();
       var fixture = await testBed.create();
-      DebugElement debugElement = getDebugNode(fixture.element);
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.componentInstance.clicked, isFalse);
       expect(debugElement.componentInstance.customed, isFalse);
       (debugElement.children[0].nativeElement as Element)

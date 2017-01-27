@@ -5,7 +5,7 @@ library angular2.test.core.change_detection.component_state_test;
 import 'dart:html';
 
 import 'package:angular2/angular2.dart';
-import 'package:angular2/testing_experimental.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 @AngularEntrypoint()
@@ -16,7 +16,7 @@ void main() {
     test('Should update bound properties when setState is called', () async {
       var testBed = new NgTestBed<SingleBindingTest>();
       var testRoot = await testBed.create();
-      Element targetElement = testRoot.element.querySelector('.target');
+      Element targetElement = testRoot.rootElement.querySelector('.target');
       expect(targetElement.text, '');
       await testRoot.update((SingleBindingTest test) {
         test.title = 'Matan';
