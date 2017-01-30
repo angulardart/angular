@@ -65,7 +65,7 @@ class ProviderElementContext {
         directivesMeta, _sourceSpan, _viewContext.errors);
     this._contentQueries = _getContentQueries(directivesMeta);
     var queriedTokens = new CompileTokenMap<bool>();
-    this._allProviders.values().forEach((provider) {
+    this._allProviders.values.forEach((provider) {
       this._addQueryReadsTo(provider.token, queriedTokens);
     });
     refs.forEach((refAst) {
@@ -77,7 +77,7 @@ class ProviderElementContext {
       this._hasViewContainer = true;
     }
     // create the providers that we know are eager first
-    this._allProviders.values().forEach((provider) {
+    this._allProviders.values.forEach((provider) {
       var eager = provider.eager || queriedTokens.get(provider.token) != null;
       if (eager) {
         this._getOrCreateLocalProvider(provider.providerType, provider.token,
@@ -87,20 +87,20 @@ class ProviderElementContext {
   }
   void afterElement() {
     // collect lazy providers
-    this._allProviders.values().forEach((provider) {
+    this._allProviders.values.forEach((provider) {
       this._getOrCreateLocalProvider(provider.providerType, provider.token,
           eager: false);
     });
   }
 
   List<ProviderAst> get transformProviders {
-    return this._transformedProviders.values();
+    return this._transformedProviders.values;
   }
 
   List<DirectiveAst> get transformedDirectiveAsts {
     var sortedProviderTypes = this
         ._transformedProviders
-        .values()
+        .values
         .map((provider) => provider.token.identifier)
         .toList();
     var sortedDirectives = new List<DirectiveAst>.from(this._directiveAsts);
@@ -316,7 +316,7 @@ class AppProviderParser {
         eager: false);
   }
   List<ProviderAst> parse() {
-    this._allProviders.values().forEach((provider) {
+    this._allProviders.values.forEach((provider) {
       this._getOrCreateLocalProvider(provider.token, provider.eager);
     });
     if (this._errors.length > 0) {
@@ -324,7 +324,7 @@ class AppProviderParser {
       throw new BaseException('''Provider parse errors:
 ${ errorString}''');
     }
-    return this._transformedProviders.values();
+    return this._transformedProviders.values;
   }
 
   ProviderAst _getOrCreateLocalProvider(

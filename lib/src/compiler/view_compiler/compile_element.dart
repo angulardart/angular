@@ -133,7 +133,7 @@ class CompileElement extends CompileNode {
     _instances.add(
         identifierToken(Identifiers.ViewContainer), appViewContainer);
     if (hasViewContainer) {
-      view.viewContainerAppElements.add(appViewContainer);
+      view.viewContainers.add(appViewContainer);
     }
   }
 
@@ -171,16 +171,69 @@ class CompileElement extends CompileNode {
   void beforeChildren() {
     if (hasViewContainer) {
       _instances.add(
-          identifierToken(Identifiers.ViewContainerRef), this.appViewContainer);
+          identifierToken(Identifiers.ViewContainerRef), appViewContainer);
     }
-    _resolvedProviders = new CompileTokenMap<ProviderAst>();
-    _resolvedProvidersArray.forEach(
-        (provider) => _resolvedProviders.add(provider.token, provider));
 
-    // create all the provider instances, some in the view constructor,
-    // some as getters. We rely on the fact that they are already sorted
-    // topologically.
-    _resolvedProviders.values().forEach((resolvedProvider) {
+    _prepareProviderInstances();
+
+    directiveInstances = <o.Expression>[];
+    for (var directive in _directives) {
+      var directiveInstance = _instances.get(identifierToken(directive.type));
+      directiveInstances.add(directiveInstance);
+      directive.queries.forEach((queryMeta) {
+        _addQuery(queryMeta, directiveInstance);
+      });
+    }
+
+    List<_QueryWithRead> queriesWithReads = [];
+    _resolvedProviders.values.forEach((resolvedProvider) {
+      var queriesForProvider = this._getQueriesFor(resolvedProvider.token);
+      queriesWithReads.addAll(queriesForProvider
+          .map((query) => new _QueryWithRead(query, resolvedProvider.token)));
+    });
+
+    // For each reference token create CompileTokenMetadata to read query.
+    if (referenceTokens != null) {
+      referenceTokens.forEach((String varName, token) {
+        var varValue = token != null ? _instances.get(token) : renderNode;
+        view.locals[varName] = varValue;
+        var varToken = new CompileTokenMetadata(value: varName);
+        queriesWithReads.addAll(_getQueriesFor(varToken)
+            .map((query) => new _QueryWithRead(query, varToken)));
+      });
+    }
+
+    // For all @ViewChild(... read: Type) and references that map to locals,
+    // resolve value.
+    for (_QueryWithRead queryWithRead in queriesWithReads) {
+      o.Expression value;
+      if (queryWithRead.read.identifier != null) {
+        // query for an identifier
+        value = _instances.get(queryWithRead.read);
+      } else {
+        // query for a reference
+        var token = (referenceTokens != null)
+            ? referenceTokens[queryWithRead.read.value]
+            : null;
+        // elementRef contains expression of the form new ElementRef(...).
+        value = token != null ? _instances.get(token) : elementRef;
+      }
+      if (value != null) {
+        queryWithRead.query.addValue(value, this.view);
+      }
+    }
+  }
+
+  void _prepareProviderInstances() {
+    // Create a lookup map from token to provider.
+    _resolvedProviders = new CompileTokenMap<ProviderAst>();
+    for (ProviderAst provider in _resolvedProvidersArray) {
+      _resolvedProviders.add(provider.token, provider);
+    }
+    // Create all the provider instances, some in the view constructor (eager),
+    // some as getters (eager=false). We rely on the fact that they are
+    // already sorted topologically.
+    for (ProviderAst resolvedProvider in _resolvedProviders.values) {
       var providerValueExpressions = resolvedProvider.providers.map((provider) {
         o.Expression providerValue;
         if (provider.useExisting != null) {
@@ -217,56 +270,12 @@ class CompileElement extends CompileNode {
           resolvedProvider.multiProvider,
           resolvedProvider.eager,
           this);
-      this._instances.add(resolvedProvider.token, instance);
-    });
-
-    directiveInstances = <o.Expression>[];
-    for (var directive in _directives) {
-      var directiveInstance = _instances.get(identifierToken(directive.type));
-      directiveInstances.add(directiveInstance);
-      directive.queries.forEach((queryMeta) {
-        _addQuery(queryMeta, directiveInstance);
-      });
+      _instances.add(resolvedProvider.token, instance);
     }
-
-    List<_QueryWithRead> queriesWithReads = [];
-    _resolvedProviders.values().forEach((resolvedProvider) {
-      var queriesForProvider = this._getQueriesFor(resolvedProvider.token);
-      queriesWithReads.addAll(queriesForProvider
-          .map((query) => new _QueryWithRead(query, resolvedProvider.token)));
-    });
-
-    if (referenceTokens != null) {
-      referenceTokens.forEach((String varName, token) {
-        var varValue = token != null ? _instances.get(token) : renderNode;
-        view.locals[varName] = varValue;
-        var varToken = new CompileTokenMetadata(value: varName);
-        queriesWithReads.addAll(_getQueriesFor(varToken)
-            .map((query) => new _QueryWithRead(query, varToken)));
-      });
-    }
-
-    queriesWithReads.forEach((queryWithRead) {
-      o.Expression value;
-      if (queryWithRead.read.identifier != null) {
-        // query for an identifier
-        value = _instances.get(queryWithRead.read);
-      } else {
-        // query for a reference
-        var token = (referenceTokens != null)
-            ? referenceTokens[queryWithRead.read.value]
-            : null;
-        // elementRef contains expression of the form new ElementRef(...).
-        value = token != null ? _instances.get(token) : elementRef;
-      }
-      if (value != null) {
-        queryWithRead.query.addValue(value, this.view);
-      }
-    });
   }
 
   void afterChildren(num childNodeCount) {
-    _resolvedProviders.values().forEach((resolvedProvider) {
+    _resolvedProviders.values.forEach((resolvedProvider) {
       // Note: afterChildren is called after recursing into children.
       // This is good so that an injector match in an element that is closer to
       // a requesting element matches first.
@@ -284,7 +293,7 @@ class CompileElement extends CompileNode {
       view.injectorGetMethod.addStmt(createInjectInternalCondition(
           nodeIndex, providerChildNodeCount, resolvedProvider, providerExpr));
     });
-    _queries.values().forEach((queries) => queries.forEach((query) => query
+    _queries.values.forEach((queries) => queries.forEach((query) => query
         .afterChildren(view.createMethod, view.updateContentQueriesMethod)));
   }
 
@@ -297,8 +306,7 @@ class CompileElement extends CompileNode {
       : null;
 
   List<o.Expression> getProviderTokens() {
-    return _resolvedProviders
-        .values()
+    return _resolvedProviders.values
         .map((resolvedProvider) =>
             createDiTokenExpression(resolvedProvider.token))
         .toList();

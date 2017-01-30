@@ -34,8 +34,8 @@ class ViewCompiler {
       List<CompilePipeMetadata> pipes) {
     var statements = <o.Statement>[];
     var dependencies = <ViewCompileDependency>[];
-    var view = new CompileView(component, this._genConfig, pipes, styles, 0,
-        new CompileElement.root(), []);
+    var view = new CompileView(
+        component, _genConfig, pipes, styles, 0, new CompileElement.root(), []);
     buildView(view, template, stylesCompileResult, dependencies);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.

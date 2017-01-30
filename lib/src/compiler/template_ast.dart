@@ -299,15 +299,14 @@ abstract class TemplateAstVisitor {
 
 /// Visit every node in a list of [TemplateAst]s with the given
 /// [TemplateAstVisitor].
-List<dynamic> templateVisitAll(
-    TemplateAstVisitor visitor, List<TemplateAst> asts,
+List templateVisitAll(TemplateAstVisitor visitor, List<TemplateAst> asts,
     [dynamic context = null]) {
   var result = [];
-  asts.forEach((ast) {
+  for (TemplateAst ast in asts) {
     var astResult = ast.visit(visitor, context);
     if (astResult != null) {
       result.add(astResult);
     }
-  });
+  }
   return result;
 }

@@ -350,13 +350,9 @@ class CompileTokenMap<VALUE> {
     return result;
   }
 
-  List<CompileTokenMetadata> keys() {
-    return this._tokens;
-  }
+  List<CompileTokenMetadata> get keys => _tokens;
 
-  List<VALUE> values() {
-    return this._values;
-  }
+  List<VALUE> get values => _values;
 
   num get size {
     return this._values.length;

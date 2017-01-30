@@ -82,7 +82,7 @@ o.Expression injectFromViewParentInjector(
 }
 
 String getViewFactoryName(
-    CompileDirectiveMetadata component, num embeddedTemplateIndex) {
+    CompileDirectiveMetadata component, int embeddedTemplateIndex) {
   return '''viewFactory_${component.type.name}${embeddedTemplateIndex}''';
 }
 

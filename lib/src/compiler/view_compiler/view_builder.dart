@@ -53,6 +53,7 @@ var parentRenderNodeVar = o.variable("parentRenderNode");
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
+/// Component dependency and associated identifier.
 class ViewCompileDependency {
   CompileDirectiveMetadata comp;
   CompileIdentifierMetadata factoryPlaceholder;
@@ -60,12 +61,12 @@ class ViewCompileDependency {
 }
 
 class ViewBuilderVisitor implements TemplateAstVisitor {
-  CompileView view;
-  List<ViewCompileDependency> targetDependencies;
+  final CompileView view;
+  final List<ViewCompileDependency> targetDependencies;
   final StylesCompileResult stylesCompileResult;
   static Map<String, CompileIdentifierMetadata> tagNameToIdentifier;
 
-  num nestedViewCount = 0;
+  int nestedViewCount = 0;
 
   /// Local variable name used to refer to document. null if not created yet.
   static final defaultDocVarName = 'doc';
@@ -106,7 +107,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var vcAppEl = (node is CompileElement && node.hasViewContainer)
         ? node.appViewContainer
         : null;
-    if (this._isRootNode(parent)) {
+    if (_isRootNode(parent)) {
       // store appElement as root node only for ViewContainers
       if (view.viewType != ViewType.COMPONENT) {
         view.rootNodesOrViewContainers.add(vcAppEl ?? node.renderNode);
@@ -187,7 +188,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       view.createMethod.addStmt(
           createDbgElementCall(renderNode, view.nodes.length - 1, ast));
     }
-    this._addRootNodeAndProject(compileNode, ngContentIndex, parent);
+    _addRootNodeAndProject(compileNode, ngContentIndex, parent);
     return renderNode;
   }
 
@@ -239,10 +240,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         outputType: o.importType(elementType),
         modifiers: const [o.StmtModifier.Private]));
 
-    var debugContextExpr =
-        this.view.createMethod.resetDebugInfoExpr(nodeIndex, ast);
-    var createRenderNodeExpr;
+    var debugContextExpr = view.createMethod.resetDebugInfoExpr(nodeIndex, ast);
 
+    var createRenderNodeExpr;
     o.Expression tagNameExpr = o.literal(ast.name);
     bool isHtmlElement;
     if (isHostRootView) {
@@ -287,10 +287,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     var renderNode = new o.ReadClassMemberExpr(fieldName);
 
-    var directives =
-        ast.directives.map((directiveAst) => directiveAst.directive).toList();
-    var component = directives.firstWhere((directive) => directive.isComponent,
-        orElse: () => null);
+    List<CompileDirectiveMetadata> directives = _directivesFromElementAst(ast);
+    CompileDirectiveMetadata component = _componentFromDirectives(directives);
     var htmlAttrs = _readHtmlAttrs(ast.attrs);
 
     // Create statements to initialize literal attribute values.
@@ -323,7 +321,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         false,
         ast.references,
         isHtmlElement: isHtmlElement);
-    this.view.nodes.add(compileElement);
+    view.nodes.add(compileElement);
     o.Expression compViewExpr;
     if (component != null) {
       var nestedComponentIdentifier =
@@ -346,7 +344,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
           .toStmt());
     }
     compileElement.beforeChildren();
-    this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
+    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(this.view.nodes.length - nodeIndex - 1);
     if (compViewExpr != null) {
@@ -365,6 +363,22 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         codeGenContentNodes,
         o.NULL_EXPR
       ]).toStmt());
+    }
+    return null;
+  }
+
+  List<CompileDirectiveMetadata> _directivesFromElementAst(ElementAst ast) {
+    var directives = <CompileDirectiveMetadata>[];
+    for (DirectiveAst directiveAst in ast.directives) {
+      directives.add(directiveAst.directive);
+    }
+    return directives;
+  }
+
+  CompileDirectiveMetadata _componentFromDirectives(
+      List<CompileDirectiveMetadata> directives) {
+    for (CompileDirectiveMetadata directive in directives) {
+      if (directive.isComponent) return directive;
     }
     return null;
   }
@@ -504,14 +518,14 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.hasViewContainer,
         true,
         ast.references);
-    this.view.nodes.add(compileElement);
-    this.nestedViewCount++;
+    view.nodes.add(compileElement);
+    nestedViewCount++;
     var embeddedView = new CompileView(
-        this.view.component,
-        this.view.genConfig,
-        this.view.pipeMetas,
+        view.component,
+        view.genConfig,
+        view.pipeMetas,
         o.NULL_EXPR,
-        this.view.viewIndex + this.nestedViewCount,
+        view.viewIndex + nestedViewCount,
         compileElement,
         templateVariableBindings);
 
@@ -527,7 +541,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     nestedViewCount += embeddedViewVisitor.nestedViewCount;
 
     compileElement.beforeChildren();
-    this._addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
+    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     compileElement.afterChildren(0);
     return null;
   }
@@ -765,7 +779,7 @@ o.Expression _constructRenderType(
 
 List<o.Statement> generateDestroyMethod(CompileView view) {
   var statements = <o.Statement>[];
-  for (o.Expression child in view.viewContainerAppElements) {
+  for (o.Expression child in view.viewContainers) {
     statements.add(child.callMethod('destroyNestedViews', []).toStmt());
   }
   for (o.Expression child in view.viewChildren) {
@@ -875,14 +889,14 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       view.updateViewQueriesMethod.isEmpty &&
       view.afterViewLifecycleCallbacksMethod.isEmpty &&
       view.viewChildren.isEmpty &&
-      view.viewContainerAppElements.isEmpty) {
+      view.viewContainers.isEmpty) {
     return stmts;
   }
   // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
 
   // Add content child change detection calls.
-  for (o.Expression contentChild in view.viewContainerAppElements) {
+  for (o.Expression contentChild in view.viewContainers) {
     stmts.add(
         contentChild.callMethod('detectChangesInNestedViews', []).toStmt());
   }
