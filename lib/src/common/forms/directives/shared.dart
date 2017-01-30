@@ -36,7 +36,7 @@ void setUpControl(Control control, NgControl dir) {
   });
   // model -> view
   control.registerOnChange(
-      (dynamic newValue) => dir.valueAccessor.writeValue(newValue));
+      (dynamic newValue) => dir.valueAccessor?.writeValue(newValue));
   // touched
   dir.valueAccessor.registerOnTouched(() => control.markAsTouched());
 }
