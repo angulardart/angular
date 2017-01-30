@@ -1,10 +1,10 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/core/di.dart' show Injectable;
+import 'package:angular2/src/core/reflection/reflection.dart' show reflector;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "component_factory.dart" show ComponentFactory;
+import 'component_factory.dart' show ComponentFactory;
 
 /// Low-level service for loading [ComponentFactory]s, which
 /// can later be used to create and render a Component instance.

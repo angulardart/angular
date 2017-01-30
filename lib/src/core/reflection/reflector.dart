@@ -1,7 +1,7 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "platform_reflection_capabilities.dart";
-import "types.dart";
+import 'platform_reflection_capabilities.dart';
+import 'types.dart';
 
 export "platform_reflection_capabilities.dart";
 export "types.dart";

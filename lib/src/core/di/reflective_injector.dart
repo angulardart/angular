@@ -1,17 +1,17 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "injector.dart" show Injector, THROW_IF_NOT_FOUND;
-import "decorators.dart";
-import "provider.dart" show Provider;
-import "reflective_exceptions.dart"
+import 'injector.dart' show Injector, THROW_IF_NOT_FOUND;
+import 'decorators.dart';
+import 'provider.dart' show Provider;
+import 'reflective_exceptions.dart'
     show
         AbstractProviderError,
         NoProviderError,
         CyclicDependencyError,
         InstantiationError,
         OutOfBoundsError;
-import "reflective_key.dart" show ReflectiveKey;
-import "reflective_provider.dart"
+import 'reflective_key.dart' show ReflectiveKey;
+import 'reflective_provider.dart'
     show
         ResolvedReflectiveProvider,
         ReflectiveDependency,

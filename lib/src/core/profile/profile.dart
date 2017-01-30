@@ -1,4 +1,4 @@
-import "wtf_impl.dart" as impl;
+import 'wtf_impl.dart' as impl;
 
 export "wtf_impl.dart" show WtfScopeFn;
 // Change exports to const once https://github.com/angular/ts2dart/issues/150

@@ -1,4 +1,4 @@
-import "package:angular2/src/core/change_detection/change_detection_util.dart"
+import 'package:angular2/src/core/change_detection/change_detection_util.dart'
     show SimpleChange;
 
 enum LifecycleHooks {

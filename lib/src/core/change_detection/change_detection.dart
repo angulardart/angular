@@ -1,8 +1,8 @@
-import "differs/default_iterable_differ.dart" show DefaultIterableDifferFactory;
-import "differs/default_keyvalue_differ.dart" show DefaultKeyValueDifferFactory;
-import "differs/iterable_differs.dart"
+import 'differs/default_iterable_differ.dart' show DefaultIterableDifferFactory;
+import 'differs/default_keyvalue_differ.dart' show DefaultKeyValueDifferFactory;
+import 'differs/iterable_differs.dart'
     show IterableDiffers, IterableDifferFactory;
-import "differs/keyvalue_differs.dart"
+import 'differs/keyvalue_differs.dart'
     show KeyValueDiffers, KeyValueDifferFactory;
 
 export "change_detection_util.dart"

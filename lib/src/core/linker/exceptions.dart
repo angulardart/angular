@@ -1,4 +1,4 @@
-import "package:angular2/src/facade/exceptions.dart"
+import 'package:angular2/src/facade/exceptions.dart'
     show BaseException, WrappedException;
 
 /// An error thrown if application changes model breaking the top-down data flow.

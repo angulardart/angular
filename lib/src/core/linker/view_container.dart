@@ -1,12 +1,12 @@
-import "package:angular2/src/core/di.dart" show Injector;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/core/di.dart' show Injector;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "app_view.dart";
+import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
-import "element_ref.dart";
+import 'element_ref.dart';
 import 'template_ref.dart';
-import "view_container_ref.dart";
-import "view_type.dart";
+import 'view_container_ref.dart';
+import 'view_type.dart';
 import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRefImpl;
 
 /// A ViewContainer is created for elements that contain

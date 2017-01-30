@@ -1,16 +1,16 @@
-import "package:angular2/src/core/reflection/reflection.dart"
+import 'package:angular2/src/core/reflection/reflection.dart'
     show reflector, NoReflectionCapabilitiesError;
-import "package:angular2/src/facade/lang.dart" show assertionsEnabled;
+import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
 
 import '../metadata.dart';
-import "decorators.dart";
-import "provider.dart" show Provider, provide, noValueProvided;
-import "reflective_exceptions.dart"
+import 'decorators.dart';
+import 'provider.dart' show Provider, provide, noValueProvided;
+import 'reflective_exceptions.dart'
     show
         NoAnnotationError,
         MixingMultiProvidersWithRegularProvidersError,
         InvalidProviderError;
-import "reflective_key.dart";
+import 'reflective_key.dart';
 
 /// [Dependency] is used by the framework to extend DI.
 /// This is internal to Angular and should not be used directly.

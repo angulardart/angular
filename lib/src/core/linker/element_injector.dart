@@ -1,7 +1,7 @@
-import "package:angular2/src/core/di/injector.dart"
+import 'package:angular2/src/core/di/injector.dart'
     show Injector, THROW_IF_NOT_FOUND;
 
-import "app_view.dart";
+import 'app_view.dart';
 
 class ElementInjector extends Injector {
   final AppView _view;

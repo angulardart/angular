@@ -1,7 +1,7 @@
-import "package:angular2/src/core/di.dart" show Provider, SkipSelf, Optional;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/core/di.dart' show Provider, SkipSelf, Optional;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "../change_detector_ref.dart" show ChangeDetectorRef;
+import '../change_detector_ref.dart' show ChangeDetectorRef;
 
 /// A strategy for tracking changes over time to an iterable.
 ///

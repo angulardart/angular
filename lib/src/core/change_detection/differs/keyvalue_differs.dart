@@ -1,7 +1,7 @@
-import "package:angular2/src/core/di.dart" show Provider, SkipSelf, Optional;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/core/di.dart' show Provider, SkipSelf, Optional;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "../change_detector_ref.dart" show ChangeDetectorRef;
+import '../change_detector_ref.dart' show ChangeDetectorRef;
 
 /// A differ that tracks changes made to an object over time.
 @Deprecated('Extending and using injected differs no longer supported')

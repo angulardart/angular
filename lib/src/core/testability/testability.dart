@@ -1,8 +1,8 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:angular2/src/core/di.dart" show Injectable;
+import 'package:angular2/src/core/di.dart' show Injectable;
 
-import "../zone/ng_zone.dart";
+import '../zone/ng_zone.dart';
 
 /// The Testability service provides testing hooks that can be accessed from
 /// the browser and by services such as Protractor. Each bootstrapped Angular

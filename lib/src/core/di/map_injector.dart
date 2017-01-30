@@ -1,4 +1,4 @@
-import "injector.dart" show Injector, InjectorFactory, THROW_IF_NOT_FOUND;
+import 'injector.dart' show Injector, InjectorFactory, THROW_IF_NOT_FOUND;
 
 /// A simple injector based on a Map of values.
 class MapInjector implements Injector {

@@ -1,8 +1,8 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show looseIdentical;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:angular2/src/facade/lang.dart' show looseIdentical;
 
-import "../change_detector_ref.dart" show ChangeDetectorRef;
-import "../differs/iterable_differs.dart"
+import '../change_detector_ref.dart' show ChangeDetectorRef;
+import '../differs/iterable_differs.dart'
     show IterableDiffer, IterableDifferFactory, TrackByFn;
 
 typedef void DefaultIterableCallback(
