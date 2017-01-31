@@ -69,7 +69,8 @@ class AsyncPipe implements OnDestroy {
       this._latestReturnedValue = this._latestValue;
       return this._latestValue;
     }
-    if (!identical(obj, this._obj)) {
+    print('${_maybeStreamIdentical(obj, this._obj)}');
+    if(!_maybeStreamIdentical(obj, this._obj)) {
       this._dispose();
       return this.transform(obj);
     }
@@ -112,6 +113,14 @@ class AsyncPipe implements OnDestroy {
     if (identical(async, this._obj)) {
       this._latestValue = value;
       this._ref.markForCheck();
+    }
+  }
+
+  static bool _maybeStreamIdentical(dynamic a, dynamic b) {
+    if(a is Stream && b is Stream) {
+      return identical(a, b) || a == b;
+    } else {
+      return identical(a, b);
     }
   }
 }
