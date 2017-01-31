@@ -30,7 +30,7 @@ class TemplateGenerator extends Generator {
         reflectPropertiesAsAttributes: _options.reflectPropertiesAsAttributes);
     if (outputs == null) return _emptyNgDepsContents;
     return buildGeneratedCode(
-        outputs, fileName(buildStep.input.id), element.name);
+        outputs, fileName(buildStep.inputId), element.name);
   }
 }
 

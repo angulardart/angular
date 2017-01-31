@@ -23,13 +23,13 @@ Future<TemplateCompilerOutputs> processTemplates(
   final ngDepsModel = logElapsedSync(
       () => extractNgDepsModel(element, buildStep),
       operationName: 'extractNgDepsModel',
-      assetId: buildStep.input.id,
+      assetId: buildStep.inputId,
       log: buildStep.logger);
 
   final List<NormalizedComponentWithViewDirectives> compileComponentsData =
       logElapsedSync(() => findComponents(buildStep, element),
           operationName: 'findComponents',
-          assetId: buildStep.input.id,
+          assetId: buildStep.inputId,
           log: buildStep.logger);
   if (compileComponentsData.isEmpty)
     return new TemplateCompilerOutputs(null, ngDepsModel);
@@ -40,7 +40,7 @@ Future<TemplateCompilerOutputs> processTemplates(
   });
   final compiledTemplates = logElapsedSync(() {
     return templateCompiler.compile(compileComponentsData);
-  }, operationName: 'compile', assetId: buildStep.input.id);
+  }, operationName: 'compile', assetId: buildStep.inputId);
 
   return new TemplateCompilerOutputs(compiledTemplates, ngDepsModel);
 }
