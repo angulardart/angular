@@ -44,7 +44,7 @@ class ViewLifecycleHooksComponent0
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import5.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.None, styles_LifecycleHooksComponent);
+        '', ViewEncapsulation.None, styles_LifecycleHooksComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -78,7 +78,7 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import5.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_LifecycleHooksComponentHost);
+        '', ViewEncapsulation.Emulated, styles_LifecycleHooksComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

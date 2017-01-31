@@ -50,7 +50,6 @@ class ViewLifecycleHooksComponent0
             nodeDebugInfos_LifecycleHooksComponent0) {
     renderType ??= import7.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/lifecycle_hooks.dart class LifecycleHooksComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_LifecycleHooksComponent);
     setupComponentType(renderType);
@@ -92,7 +91,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_LifecycleHooksComponentHost0) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_LifecycleHooksComponentHost);
+        '', ViewEncapsulation.Emulated, styles_LifecycleHooksComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

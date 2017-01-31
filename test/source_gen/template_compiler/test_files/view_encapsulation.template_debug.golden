@@ -52,7 +52,6 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
             nodeDebugInfos_EmulatedComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/view_encapsulation.dart class EmulatedComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_EmulatedComponent);
     setupComponentType(renderType);
@@ -99,7 +98,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_EmulatedComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_EmulatedComponentHost);
+        '', ViewEncapsulation.Emulated, styles_EmulatedComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -161,7 +160,6 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
             nodeDebugInfos_NativeComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/view_encapsulation.dart class NativeComponent - inline template',
-        0,
         ViewEncapsulation.Native,
         styles_NativeComponent);
     setupComponentType(renderType);
@@ -208,7 +206,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_NativeComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_NativeComponentHost);
+        '', ViewEncapsulation.Emulated, styles_NativeComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -270,7 +268,6 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
             nodeDebugInfos_NoneComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/view_encapsulation.dart class NoneComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_NoneComponent);
     setupComponentType(renderType);
@@ -317,7 +314,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_NoneComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_NoneComponentHost);
+        '', ViewEncapsulation.Emulated, styles_NoneComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

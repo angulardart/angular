@@ -48,7 +48,6 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
             nodeDebugInfos_HostComponent0) {
     renderType ??= import7.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/host.dart class HostComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_HostComponent);
     setupComponentType(renderType);
@@ -88,7 +87,7 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HostComponentHost0) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_HostComponentHost);
+        '', ViewEncapsulation.Emulated, styles_HostComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

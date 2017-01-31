@@ -51,7 +51,6 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
             nodeDebugInfos_ProvidersComponent0) {
     renderType ??= import7.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/providers.dart class ProvidersComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_ProvidersComponent);
     setupComponentType(renderType);
@@ -108,7 +107,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProvidersComponentHost0) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
+        '', ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);
   }
   import2.MyTypeAnnotation get _MyTypeAnnotation_0_3 {

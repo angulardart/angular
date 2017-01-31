@@ -760,7 +760,6 @@ o.Expression _constructRenderType(
               .importExpr(Identifiers.appViewUtils)
               .callMethod("createRenderType", [
             o.literal(view.genConfig.genDebugInfo ? templateUrlInfo : ''),
-            o.literal(view.component.template.ngContentSelectors.length),
             ViewEncapsulationEnum
                 .fromValue(view.component.template.encapsulation),
             view.styles

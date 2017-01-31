@@ -46,7 +46,7 @@ class ViewHasTemplateFileComponent0
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_HasTemplateFileComponent);
+        '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -88,7 +88,7 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_HasTemplateFileComponentHost);
+        '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

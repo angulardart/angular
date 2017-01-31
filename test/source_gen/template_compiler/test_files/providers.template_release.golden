@@ -44,7 +44,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import5.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.None, styles_ProvidersComponent);
+        '', ViewEncapsulation.None, styles_ProvidersComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -84,7 +84,7 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import5.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
+        '', ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);
   }
   import1.MyTypeAnnotation get _MyTypeAnnotation_0_3 {

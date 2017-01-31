@@ -113,12 +113,7 @@ abstract class AppView<T> {
       dynamic /* String | Node */ rootSelectorOrNode) {
     _hasExternalHostElement = rootSelectorOrNode != null;
     ctx = context;
-    if (type == ViewType.COMPONENT) {
-      projectableNodes =
-          ensureSlotCount(givenProjectableNodes, componentType.slotCount);
-    } else {
-      projectableNodes = givenProjectableNodes;
-    }
+    projectableNodes = givenProjectableNodes;
     return createInternal(rootSelectorOrNode);
   }
 
@@ -479,6 +474,7 @@ abstract class AppView<T> {
     // If the projectable is ViewContainer we fall back to building up a list.
     if (projectableNodes == null || index >= projectableNodes.length) return;
     List projectables = projectableNodes[index];
+    if (projectables == null) return;
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];

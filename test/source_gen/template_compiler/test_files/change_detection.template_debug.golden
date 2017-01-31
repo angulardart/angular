@@ -52,7 +52,6 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
             nodeDebugInfos_CheckOnceComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class CheckOnceComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_CheckOnceComponent);
     setupComponentType(renderType);
@@ -99,7 +98,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckOnceComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_CheckOnceComponentHost);
+        '', ViewEncapsulation.Emulated, styles_CheckOnceComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -162,7 +161,6 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
             nodeDebugInfos_CheckedComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class CheckedComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_CheckedComponent);
     setupComponentType(renderType);
@@ -209,7 +207,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckedComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_CheckedComponentHost);
+        '', ViewEncapsulation.Emulated, styles_CheckedComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -272,7 +270,6 @@ class ViewCheckAlwaysComponent0
             nodeDebugInfos_CheckAlwaysComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class CheckAlwaysComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_CheckAlwaysComponent);
     setupComponentType(renderType);
@@ -320,7 +317,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckAlwaysComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_CheckAlwaysComponentHost);
+        '', ViewEncapsulation.Emulated, styles_CheckAlwaysComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -384,7 +381,6 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
             nodeDebugInfos_DetachedComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class DetachedComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_DetachedComponent);
     setupComponentType(renderType);
@@ -431,7 +427,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DetachedComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_DetachedComponentHost);
+        '', ViewEncapsulation.Emulated, styles_DetachedComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -493,7 +489,6 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
             nodeDebugInfos_OnPushComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class OnPushComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_OnPushComponent);
     setupComponentType(renderType);
@@ -540,7 +535,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_OnPushComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_OnPushComponentHost);
+        '', ViewEncapsulation.Emulated, styles_OnPushComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -602,7 +597,6 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
             nodeDebugInfos_StatefulComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class StatefulComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_StatefulComponent);
     setupComponentType(renderType);
@@ -650,7 +644,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_StatefulComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_StatefulComponentHost);
+        '', ViewEncapsulation.Emulated, styles_StatefulComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -712,7 +706,6 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
             nodeDebugInfos_DefaultComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class DefaultComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_DefaultComponent);
     setupComponentType(renderType);
@@ -759,7 +752,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DefaultComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_DefaultComponentHost);
+        '', ViewEncapsulation.Emulated, styles_DefaultComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

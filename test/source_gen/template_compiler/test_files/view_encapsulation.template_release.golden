@@ -43,8 +43,8 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
             parentIndex,
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.None, styles_EmulatedComponent);
+    renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.None, styles_EmulatedComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -76,7 +76,7 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
       : super(ViewEmulatedComponentHost0, import4.ViewType.HOST, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_EmulatedComponentHost);
+        '', ViewEncapsulation.Emulated, styles_EmulatedComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -125,8 +125,8 @@ class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(ViewNativeComponent0, import4.ViewType.COMPONENT, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Native, styles_NativeComponent);
+    renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.Native, styles_NativeComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -158,7 +158,7 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
       : super(ViewNativeComponentHost0, import4.ViewType.HOST, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_NativeComponentHost);
+        '', ViewEncapsulation.Emulated, styles_NativeComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -208,7 +208,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
       : super(ViewNoneComponent0, import4.ViewType.COMPONENT, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils
-        .createRenderType('', 0, ViewEncapsulation.None, styles_NoneComponent);
+        .createRenderType('', ViewEncapsulation.None, styles_NoneComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -240,7 +240,7 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
       : super(ViewNoneComponentHost0, import4.ViewType.HOST, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_NoneComponentHost);
+        '', ViewEncapsulation.Emulated, styles_NoneComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

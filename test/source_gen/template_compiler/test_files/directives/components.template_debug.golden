@@ -52,7 +52,6 @@ class ViewTestSubComponent0 extends DebugAppView<import2.TestSubComponent> {
             nodeDebugInfos_TestSubComponent0) {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/directives/components.dart class TestSubComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_TestSubComponent);
     setupComponentType(renderType);
@@ -99,7 +98,7 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestSubComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_TestSubComponentHost);
+        '', ViewEncapsulation.Emulated, styles_TestSubComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

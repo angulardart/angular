@@ -45,7 +45,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
       : super(ViewTestFooComponent0, import5.ViewType.COMPONENT, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_TestFooComponent);
+        '', ViewEncapsulation.Emulated, styles_TestFooComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -121,7 +121,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
       : super(ViewTestFooComponentHost0, import5.ViewType.HOST, {}, parentView,
             parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_TestFooComponentHost);
+        '', ViewEncapsulation.Emulated, styles_TestFooComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

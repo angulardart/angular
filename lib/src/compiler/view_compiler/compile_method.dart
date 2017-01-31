@@ -10,6 +10,12 @@ class _DebugState {
 
 var NULL_DEBUG_STATE = new _DebugState(null, null);
 
+/// Creates a list of statements for a method body that include debug context.
+///
+/// Use resetDebugInfo to provide an anchor to the ast node for which we are
+/// about to generate code for.
+///
+/// Use addStmt/addStmts to add statements at the current checkpoint.
 class CompileMethod {
   _DebugState _newState = NULL_DEBUG_STATE;
   _DebugState _currState = NULL_DEBUG_STATE;

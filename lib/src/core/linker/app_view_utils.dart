@@ -40,11 +40,10 @@ class AppViewUtils {
   /// such as css across instances.
   RenderComponentType createRenderType(
       String templateUrl,
-      num slotCount,
       ViewEncapsulation encapsulation,
       List<dynamic /* String | List < dynamic > */ > styles) {
-    return new RenderComponentType('${_appId}-${_nextCompTypeId++}',
-        templateUrl, slotCount, encapsulation, styles);
+    return new RenderComponentType(
+        '${_appId}-${_nextCompTypeId++}', templateUrl, encapsulation, styles);
   }
 
   /// Enters execution mode that will throw exceptions if any binding
@@ -71,23 +70,6 @@ class AppViewUtils {
     _throwOnChangesCounter = 0;
     throwOnChanges = false;
   }
-}
-
-List ensureSlotCount(List projectableNodes, int expectedSlotCount) {
-  var res;
-  if (projectableNodes == null) {
-    return const [];
-  }
-  if (projectableNodes.length < expectedSlotCount) {
-    var givenSlotCount = projectableNodes.length;
-    res = new List(expectedSlotCount);
-    for (var i = 0; i < expectedSlotCount; i++) {
-      res[i] = (i < givenSlotCount) ? projectableNodes[i] : const [];
-    }
-  } else {
-    res = projectableNodes;
-  }
-  return res;
 }
 
 dynamic interpolate0(dynamic p) {

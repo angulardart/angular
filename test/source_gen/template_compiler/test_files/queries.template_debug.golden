@@ -115,7 +115,6 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
             nodeDebugInfos_QueriesComponent0) {
     renderType ??= import9.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/queries.dart class QueriesComponent - inline template',
-        0,
         ViewEncapsulation.None,
         styles_QueriesComponent);
     setupComponentType(renderType);
@@ -357,7 +356,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_QueriesComponentHost0) {
     renderType ??= import9.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_QueriesComponentHost);
+        '', ViewEncapsulation.Emulated, styles_QueriesComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

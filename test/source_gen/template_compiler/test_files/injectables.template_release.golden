@@ -45,7 +45,7 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.None, styles_InjectableComponent);
+        '', ViewEncapsulation.None, styles_InjectableComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
@@ -84,7 +84,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
             parentElement,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_InjectableComponentHost);
+        '', ViewEncapsulation.Emulated, styles_InjectableComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

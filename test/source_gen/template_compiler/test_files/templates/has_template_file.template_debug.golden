@@ -52,7 +52,6 @@ class ViewHasTemplateFileComponent0
             nodeDebugInfos_HasTemplateFileComponent0) {
     renderType ??= import9.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/templates/has_template_file.html',
-        0,
         ViewEncapsulation.Emulated,
         styles_HasTemplateFileComponent);
     setupComponentType(renderType);
@@ -105,7 +104,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasTemplateFileComponentHost0) {
     renderType ??= import9.appViewUtils.createRenderType(
-        '', 0, ViewEncapsulation.Emulated, styles_HasTemplateFileComponentHost);
+        '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {

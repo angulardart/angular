@@ -25,7 +25,6 @@ class RenderComponentType {
   final String id;
   // Url of component template used for debug builds.
   final String templateUrl;
-  final num slotCount;
   final ViewEncapsulation encapsulation;
   List<dynamic /* String | List < dynamic > */ > templateStyles;
 
@@ -43,8 +42,8 @@ class RenderComponentType {
   List<String> _styles;
   bool stylesShimmed = false;
 
-  RenderComponentType(this.id, this.templateUrl, this.slotCount,
-      this.encapsulation, this.templateStyles);
+  RenderComponentType(
+      this.id, this.templateUrl, this.encapsulation, this.templateStyles);
 
   void shimStyles(SharedStylesHost stylesHost) {
     _styles = _flattenStyles(id, templateStyles, []);
