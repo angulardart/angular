@@ -37,7 +37,7 @@ PlatformRefImpl createPlatform(Injector injector) {
   });
   _inPlatformCreate = true;
   try {
-    _platform = injector.get(PlatformRef);
+    _platform = injector.get(PlatformRef) as PlatformRefImpl;
     _platform.init(injector);
   } finally {
     _inPlatformCreate = false;
