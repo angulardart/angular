@@ -16,6 +16,7 @@ import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
 import "control_container.dart" show ControlContainer;
 import "control_value_accessor.dart"
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
+import "form_interface.dart" show Form;
 import "ng_control.dart" show NgControl;
 import "shared.dart"
     show
@@ -139,7 +140,7 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
   @override
   List<String> get path => controlPath(name, _parent);
 
-  dynamic get formDirective => _parent.formDirective;
+  Form get formDirective => _parent.formDirective;
 
   @override
   ValidatorFn get validator => composeValidators(_validators);
