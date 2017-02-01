@@ -1,15 +1,8 @@
-import "package:angular2/core.dart"
-    show
-        DoCheck,
-        OnDestroy,
-        Directive,
-        ElementRef,
-        IterableDiffers,
-        KeyValueDiffers,
-        IterableDiffer,
-        KeyValueDiffer,
-        CollectionChangeRecord,
-        KeyValueChangeRecord;
+import 'package:angular2/core.dart'
+    show DoCheck, OnDestroy, Directive, ElementRef;
+
+import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
+import 'package:angular2/src/core/change_detection/differs/default_keyvalue_differ.dart';
 
 /// The [NgClass] directive conditionally adds and removes CSS classes on an
 /// HTML element based on an expression's evaluation result.
@@ -47,14 +40,12 @@ class NgClass implements DoCheck, OnDestroy {
   // Separator used to split string to parts - can be any number of
   // whitespaces, new lines or tabs.
   static RegExp _separator;
-  IterableDiffers _iterableDiffers;
-  KeyValueDiffers _keyValueDiffers;
   ElementRef _ngEl;
-  IterableDiffer _iterableDiffer;
-  KeyValueDiffer _keyValueDiffer;
+  DefaultIterableDiffer _iterableDiffer;
+  DefaultKeyValueDiffer _keyValueDiffer;
   List<String> _initialClasses = [];
   dynamic /* List < String > | Set< String > */ _rawClass;
-  NgClass(this._iterableDiffers, this._keyValueDiffers, this._ngEl);
+  NgClass(this._ngEl);
 
   set initialClasses(String v) {
     this._applyInitialClasses(true);
@@ -74,9 +65,9 @@ class NgClass implements DoCheck, OnDestroy {
     this._keyValueDiffer = null;
     if (v != null) {
       if (v is Iterable) {
-        _iterableDiffer = _iterableDiffers.find(v).create(null);
+        _iterableDiffer = new DefaultIterableDiffer();
       } else {
-        _keyValueDiffer = _keyValueDiffers.find(v).create(null);
+        _keyValueDiffer = new DefaultKeyValueDiffer();
       }
     }
   }

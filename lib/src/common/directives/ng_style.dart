@@ -1,10 +1,9 @@
 import 'dart:html';
 
-import "package:angular2/core.dart"
-    show DoCheck, KeyValueDiffer, KeyValueDiffers, ElementRef, Directive;
+import 'package:angular2/core.dart' show DoCheck, ElementRef, Directive;
 
-import "../../core/change_detection/differs/default_keyvalue_differ.dart"
-    show KeyValueChangeRecord;
+import '../../core/change_detection/differs/default_keyvalue_differ.dart'
+    show DefaultKeyValueDiffer, KeyValueChangeRecord;
 
 /// The `NgStyle` directive changes an element's style based on the bound style
 /// expression:
@@ -41,18 +40,16 @@ import "../../core/change_detection/differs/default_keyvalue_differ.dart"
 /// [ex]: examples/template-syntax/#ngStyle
 @Directive(selector: "[ngStyle]", inputs: const ["rawStyle: ngStyle"])
 class NgStyle implements DoCheck {
-  final KeyValueDiffers _differs;
   final Element _ngElement;
   Map<String, String> _rawStyle;
-  KeyValueDiffer _differ;
+  DefaultKeyValueDiffer _differ;
 
-  NgStyle(this._differs, ElementRef elementRef)
-      : _ngElement = elementRef.nativeElement;
+  NgStyle(ElementRef elementRef) : _ngElement = elementRef.nativeElement;
 
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;
     if (_differ == null && v != null) {
-      this._differ = this._differs.find(this._rawStyle).create(null);
+      this._differ = new DefaultKeyValueDiffer();
     }
   }
 

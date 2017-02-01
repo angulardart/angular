@@ -1,21 +1,7 @@
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/facade/lang.dart' show looseIdentical;
 
-import '../change_detector_ref.dart' show ChangeDetectorRef;
-import '../differs/keyvalue_differs.dart'
-    show KeyValueDiffer, KeyValueDifferFactory;
-
-class DefaultKeyValueDifferFactory implements KeyValueDifferFactory {
-  bool supports(dynamic obj) => obj is Map;
-
-  KeyValueDiffer create(ChangeDetectorRef cdRef) {
-    return new DefaultKeyValueDiffer();
-  }
-
-  const DefaultKeyValueDifferFactory();
-}
-
-class DefaultKeyValueDiffer implements KeyValueDiffer<Map> {
+class DefaultKeyValueDiffer {
   Map<dynamic, dynamic> _records = new Map();
   KeyValueChangeRecord _mapHead;
   KeyValueChangeRecord _previousMapHead;

@@ -6,14 +6,6 @@ export "change_detection/change_detection.dart"
         ChangeDetectorRef,
         WrappedValue,
         SimpleChange,
-        PipeTransform,
-        IterableDiffers,
-        IterableDiffer,
-        IterableDifferFactory,
-        KeyValueChangeRecord,
-        KeyValueDiffers,
-        KeyValueDiffer,
-        KeyValueDifferFactory,
-        CollectionChangeRecord,
-        TrackByFn;
+        PipeTransform;
+export "change_detection/differs/default_iterable_differ.dart" show TrackByFn;
 export "change_detection/component_state.dart";

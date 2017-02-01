@@ -4,24 +4,16 @@ library angular2.test.core.change_detection.differs.default_iterable_differ_test
 import 'dart:collection';
 
 import "package:angular2/src/core/change_detection/differs/default_iterable_differ.dart"
-    show DefaultIterableDiffer, DefaultIterableDifferFactory;
+    show DefaultIterableDiffer;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
-// todo(vicb): UnmodifiableListView / frozen object when implemented
 void main() {
   group("iterable differ", () {
     group("DefaultIterableDiffer", () {
       DefaultIterableDiffer differ;
       setUp(() {
         differ = new DefaultIterableDiffer();
-      });
-      test("should support list and iterables", () {
-        var f = new DefaultIterableDifferFactory();
-        expect(f.supports([]), isTrue);
-        expect(f.supports(new TestIterable()), isTrue);
-        expect(f.supports(new Map()), isFalse);
-        expect(f.supports(null), isFalse);
       });
       test("should support iterables", () {
         var l = new TestIterable();

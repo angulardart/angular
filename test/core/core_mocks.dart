@@ -6,6 +6,4 @@ import 'package:mockito/mockito.dart';
 
 class MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}
 
-class MockIterableDifferFactory extends Mock implements IterableDifferFactory {}
-
 class MockElementRef extends Mock implements ElementRef {}

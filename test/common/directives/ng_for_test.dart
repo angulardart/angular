@@ -175,10 +175,12 @@ void main() {
                 : e.originalException.toString();
           }
           expect(
-              msg,
-              'Cannot find a differ supporting object \'whaaa\' of'
-              ' type \'String\'. NgFor only supports binding to '
-              'Iterables such as Arrays.');
+            msg,
+            ''
+                'Cannot diff whaaa of type String. NgFor only supports binding '
+                'to something that implements the `Iterable` interface, such '
+                'as `List`.',
+          );
           completer.done();
         });
       });

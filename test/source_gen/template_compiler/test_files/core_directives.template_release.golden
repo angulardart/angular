@@ -31,9 +31,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 import 'dart:html';
 import 'package:angular2/src/core/linker/template_ref.dart';
-import 'package:angular2/src/core/change_detection/differs/iterable_differs.dart'
-    as import12;
-import 'package:angular2/src/facade/lang.dart' as import13;
+import 'package:angular2/src/facade/lang.dart' as import12;
 
 const List<dynamic> styles_TestFooComponent = const [];
 
@@ -69,8 +67,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     parentRenderNode?.append(_anchor_3);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
     _TemplateRef_3_4 = new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
-    _NgFor_3_5 = new import4.NgFor(_appEl_3, _TemplateRef_3_4,
-        parentView.injectorGet(import12.IterableDiffers, parentIndex), ref);
+    _NgFor_3_5 = new import4.NgFor(_appEl_3, _TemplateRef_3_4);
     Text _text_4 = new Text('\n    ');
     parentRenderNode.append(_text_4);
     init([], [_text_0, _anchor_1, _text_2, _anchor_3, _text_4], []);
@@ -97,7 +94,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     _NgIf_1_5.ngIf = ctx.foo;
     final currVal_1 = ctx.bars;
-    if (!import13.looseIdentical(_expr_1, currVal_1)) {
+    if (!import12.looseIdentical(_expr_1, currVal_1)) {
       _NgFor_3_5.ngForOf = currVal_1;
       _expr_1 = currVal_1;
     }
@@ -176,7 +173,7 @@ class ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
 
   void detectChangesInternal() {
     final currVal_0 = import8.interpolate0(locals['\$implicit']);
-    if (!import13.looseIdentical(_expr_0, currVal_0)) {
+    if (!import12.looseIdentical(_expr_0, currVal_0)) {
       _text_3.text = currVal_0;
       _expr_0 = currVal_0;
     }

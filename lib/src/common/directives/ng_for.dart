@@ -2,18 +2,13 @@ import "package:angular2/core.dart"
     show
         DoCheck,
         Directive,
-        ChangeDetectorRef,
-        IterableDiffer,
-        IterableDiffers,
         ViewContainerRef,
         ViewRef,
         TemplateRef,
-        EmbeddedViewRef,
-        TrackByFn;
-
+        EmbeddedViewRef;
+import 'package:angular2/src/facade/exceptions.dart';
 import "../../core/change_detection/differs/default_iterable_differ.dart"
-    show DefaultIterableDiffer, CollectionChangeRecord;
-import "../../facade/exceptions.dart" show BaseException;
+    show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
 
 /// The `NgFor` directive instantiates a template once per item from an
 /// iterable. The context for each instantiated template inherits from the outer
@@ -81,33 +76,28 @@ import "../../facade/exceptions.dart" show BaseException;
     selector: "[ngFor][ngForOf]",
     inputs: const ["ngForTrackBy", "ngForOf", "ngForTemplate"])
 class NgFor implements DoCheck {
-  ViewContainerRef _viewContainer;
-  TemplateRef _templateRef;
-  IterableDiffers _iterableDiffers;
-  ChangeDetectorRef _cdr;
-  dynamic _ngForOf;
+  final ViewContainerRef _viewContainer;
+
+  DefaultIterableDiffer _differ;
+  Iterable _ngForOf;
   TrackByFn _ngForTrackBy;
-  IterableDiffer _differ;
-  NgFor(
-      this._viewContainer, this._templateRef, this._iterableDiffers, this._cdr);
-  set ngForOf(dynamic value) {
-    this._ngForOf = value;
-    if (_differ == null && value != null) {
-      try {
-        this._differ = this
-            ._iterableDiffers
-            .find(value)
-            .create(this._cdr, this._ngForTrackBy);
-      } catch (_) {
-        assert(() {
-          throw new BaseException('Cannot find a differ supporting object'
-              ' \'${ value}\' of type'
-              ' \'${ value?.runtimeType }\''
-              '. NgFor only supports binding to Iterables '
-              'such as Arrays.');
-        });
-        rethrow;
+  TemplateRef _templateRef;
+
+  NgFor(this._viewContainer, this._templateRef);
+
+  set ngForOf(value) {
+    assert(() {
+      if (value != null && value is! Iterable) {
+        throw new BaseException(''
+            'Cannot diff $value of type ${value.runtimeType}. $NgFor only '
+            'supports binding to something that implements the `Iterable` '
+            'interface, such as `List`.');
       }
+      return true;
+    });
+    _ngForOf = value as Iterable;
+    if (_differ == null && value != null) {
+      _differ = new DefaultIterableDiffer(_ngForTrackBy);
     }
   }
 

@@ -33,8 +33,6 @@ import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import11;
 import 'package:angular2/angular2.dart';
 import 'dart:html';
-import 'package:angular2/src/core/change_detection/differs/iterable_differs.dart'
-    as import14;
 
 const List<dynamic> styles_TestFooComponent = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
@@ -92,8 +90,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     dbgElm(_anchor_3, 3, 1, 4);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
     _TemplateRef_3_4 = new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
-    _NgFor_3_5 = new import3.NgFor(_appEl_3, _TemplateRef_3_4,
-        parentView.injectorGet(import14.IterableDiffers, parentIndex), ref);
+    _NgFor_3_5 = new import3.NgFor(_appEl_3, _TemplateRef_3_4);
     Text _text_4 = new Text('\n    ');
     parentRenderNode.append(_text_4);
     dbgElm(_text_4, 4, 3, 10);
