@@ -83,7 +83,7 @@ class ReflectionInfoModel {
     var modelRef = _type;
     var params = _parameters.map((param) => reference(param.paramName));
     return strings.isNotEmpty(ctorName)
-        ? modelRef.namedNewInstance(ctorName, params)
+        ? modelRef.newInstance(params, constructor: ctorName)
         : modelRef.newInstance(params);
   }
 }

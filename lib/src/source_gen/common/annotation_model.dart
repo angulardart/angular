@@ -40,7 +40,7 @@ class AnnotationModel {
 
   ExpressionBuilder get asExpression => _isConstObject
       ? type
-      : type.constInstance(_parameters, _namedParametersAsMap);
+      : type.constInstance(_parameters, namedArguments: _namedParametersAsMap);
 
   Map<String, ExpressionBuilder> get _namedParametersAsMap =>
       new Map.fromIterable(_namedParameters,
