@@ -1,4 +1,4 @@
-import "package:angular2/src/compiler/shadow_css.dart";
+import "package:angular2/src/compiler/shadow_css.dart" show ShadowCss;
 import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
@@ -35,9 +35,9 @@ class StylesCompileResult {
 @Injectable()
 class StyleCompiler {
   UrlResolver _urlResolver;
+  ShadowCss _shadowCss = new ShadowCss();
   bool usesContentAttribute;
   bool usesHostAttribute;
-
   StyleCompiler(this._urlResolver);
 
   /// Compile styles to a set of statements that will initialize the global
@@ -91,8 +91,9 @@ class StyleCompiler {
   }
 
   String _shimIfNeeded(String style, bool shim) {
-    String result =
-        shim ? shimShadowCss(style, CONTENT_ATTR, HOST_ATTR) : style;
+    String result = shim
+        ? this._shadowCss.shimCssText(style, CONTENT_ATTR, HOST_ATTR)
+        : style;
     if (result.contains(CONTENT_ATTR_PREFIX)) {
       usesContentAttribute = true;
     }
