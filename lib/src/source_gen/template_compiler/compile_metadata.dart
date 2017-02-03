@@ -12,6 +12,7 @@ import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart'
     as dart_objects;
 import 'package:logging/logging.dart';
+import 'package:quiver/strings.dart' as strings;
 import 'package:source_gen/src/annotation.dart' as source_gen;
 
 class CompileTypeMetadataVisitor
@@ -25,6 +26,41 @@ class CompileTypeMetadataVisitor
       annotation_matcher.isInjectable(element)
           ? _getCompileTypeMetadata(element)
           : null;
+
+  /// Finds the unnamed constructor if it is present.
+  ///
+  /// Otherwise, use the first encountered.
+  ConstructorElement unnamedConstructor(ClassElement element) {
+    var constructors = element.constructors;
+    if (constructors.isEmpty) {
+      _logger.severe('Invalid @Injectable() annotation: '
+          'No constructors found for class ${element.name}.');
+      return null;
+    }
+
+    var constructor = constructors.firstWhere(
+        (constructor) => strings.isEmpty(constructor.name),
+        orElse: () => constructors.first);
+
+    if (constructor.isPrivate) {
+      _logger.severe('Invalid @Injectable() annotation: '
+          'Cannot use private constructor on class ${element.name}');
+      return null;
+    }
+    if (element.isAbstract && !constructor.isFactory) {
+      _logger.severe('Invalid @Injectable() annotation: '
+          'Found a constructor for abstract class ${element.name} but it is '
+          'not a "factory", and cannot be invoked');
+      return null;
+    }
+    if (element.constructors.length > 1 &&
+        strings.isNotEmpty(constructor.name)) {
+      _logger.warning(
+          'Found ${element.constructors.length} constructors for class '
+          '${element.name}; using constructor ${constructor.name}.');
+    }
+    return constructor;
+  }
 
   CompileProviderMetadata createProviderMetadata(DartObject provider) {
     if (provider.toTypeValue() != null) {
@@ -92,7 +128,7 @@ class CompileTypeMetadataVisitor
           moduleUrl: moduleUrl(element),
           name: element.name,
           diDeps: _getCompileDiDependencyMetadata(
-              element.unnamedConstructor?.parameters ?? []),
+              unnamedConstructor(element)?.parameters ?? []),
           runtime: null // Intentionally `null`, cannot be provided here.
           );
 

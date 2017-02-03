@@ -78,10 +78,10 @@ class ReflectableVisitor extends RecursiveElementVisitor {
 
   @override
   void visitClassElement(ClassElement element) {
-    CompileTypeMetadata compileType =
-        element.accept(new CompileTypeMetadataVisitor(_logger));
+    var visitor = new CompileTypeMetadataVisitor(_logger);
+    CompileTypeMetadata compileType = element.accept(visitor);
     if (compileType == null) return;
-    var constructor = _constructor(element);
+    var constructor = visitor.unnamedConstructor(element);
     if (constructor == null) return;
     _reflectables.add(new ReflectionInfoModel(
         isFunction: false,
@@ -103,40 +103,6 @@ class ReflectableVisitor extends RecursiveElementVisitor {
           parameters: _parameters(element),
           annotations: _annotations(element.metadata, element)));
     }
-  }
-
-  /// Finds the unnamed constructor if it is present.
-  ///
-  /// Otherwise, use the first encountered.
-  ConstructorElement _constructor(ClassElement element) {
-    var constructors = element.constructors;
-    if (constructors.isEmpty) {
-      _logger.severe('Invalid @Injectable() annotation: '
-          'No constructors found for class ${element.name}.');
-      return null;
-    }
-
-    var constructor = constructors.firstWhere(
-        (constructor) => constructor.name == null,
-        orElse: () => constructors.first);
-
-    if (constructor.isPrivate) {
-      _logger.severe('Invalid @Injectable() annotation: '
-          'Cannot use private constructor on class ${element.name}');
-      return null;
-    }
-    if (element.isAbstract && !constructor.isFactory) {
-      _logger.severe('Invalid @Injectable() annotation: '
-          'Found a constructor for abstract class ${element.name} but it is '
-          'not a "factory", and cannot be invoked');
-      return null;
-    }
-    if (element.constructors.length > 1 && constructor.name != null) {
-      _logger.warning(
-          'Found ${element.constructors.length} constructors for class '
-          '${element.name}; using constructor ${constructor.name}.');
-    }
-    return constructor;
   }
 
   List<ParameterModel> _parameters(ExecutableElement element) =>

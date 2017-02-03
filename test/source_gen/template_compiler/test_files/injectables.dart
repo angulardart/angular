@@ -23,7 +23,13 @@ class InjectableComponent {
 const Optional optional = const Optional();
 
 @Injectable()
-class BaseService {}
+class BaseService {
+  BaseService._();
+
+  factory BaseService() {
+    return new BaseService._();
+  }
+}
 
 @Injectable()
 @Deprecated('Testing deprecation')
