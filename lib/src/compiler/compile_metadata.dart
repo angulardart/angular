@@ -1,16 +1,16 @@
-import "package:angular2/src/compiler/selector.dart" show CssSelector;
-import "package:angular2/src/core/change_detection/change_detection.dart"
+import 'package:angular2/src/compiler/selector.dart' show CssSelector;
+import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
-import "package:angular2/src/core/metadata/lifecycle_hooks.dart"
+import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks, LIFECYCLE_HOOKS_VALUES;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "compiler_utils.dart";
-import "url_resolver.dart" show getUrlScheme;
+import 'compiler_utils.dart';
+import 'url_resolver.dart' show getUrlScheme;
 
-// group 1: "property" from "[property]"
-// group 2: "event" from "(event)"
+// group 1: 'property' from '[property]'
+// group 2: 'event' from '(event)'
 var HOST_REG_EXP = new RegExp(r'^(?:(?:\[([^\]]+)\])|(?:\(([^\)]+)\)))$');
 
 abstract class CompileMetadataWithIdentifier {
@@ -30,7 +30,7 @@ abstract class CompileMetadataWithType extends CompileMetadataWithIdentifier {
 }
 
 dynamic metadataFromJson(Map<String, dynamic> data) {
-  return _COMPILE_METADATA_FROM_JSON[data["class"]](data);
+  return _COMPILE_METADATA_FROM_JSON[data['class']](data);
 }
 
 class CompileIdentifierMetadata<TRuntime>
@@ -65,24 +65,23 @@ class CompileIdentifierMetadata<TRuntime>
       this.value});
 
   static CompileIdentifierMetadata fromJson(Map<String, dynamic> data) {
-    var value = data["value"] is List
-        ? _arrayFromJson(data["value"], metadataFromJson)
-        : _objFromJson(data["value"], metadataFromJson);
+    var value = data['value'] is List
+        ? _arrayFromJson(data['value'], metadataFromJson)
+        : _objFromJson(data['value'], metadataFromJson);
     return new CompileIdentifierMetadata(
-        name: data["name"],
-        prefix: data["prefix"],
-        moduleUrl: data["moduleUrl"],
+        name: data['name'],
+        prefix: data['prefix'],
+        moduleUrl: data['moduleUrl'],
         value: value);
   }
 
   @override
   Map<String, dynamic> toJson() {
-    var value =
-        this.value is List ? _arrayToJson(this.value) : _objToJson(this.value);
+    var jsonValue = value is List ? _arrayToJson(value) : _objToJson(value);
     return {
       // Note: Runtime type can't be serialized...
-      "class": "Identifier", "name": this.name, "moduleUrl": this.moduleUrl,
-      "prefix": this.prefix, "value": value
+      'class': 'Identifier', 'name': name, 'moduleUrl': moduleUrl,
+      'prefix': prefix, 'value': jsonValue
     };
   }
 
@@ -91,12 +90,12 @@ class CompileIdentifierMetadata<TRuntime>
 }
 
 class CompileDiDependencyMetadata {
-  bool isAttribute;
-  bool isSelf;
-  bool isHost;
-  bool isSkipSelf;
-  bool isOptional;
-  bool isValue;
+  final bool isAttribute;
+  final bool isSelf;
+  final bool isHost;
+  final bool isSkipSelf;
+  final bool isOptional;
+  final bool isValue;
   CompileTokenMetadata token;
   dynamic value;
   CompileDiDependencyMetadata(
@@ -106,41 +105,39 @@ class CompileDiDependencyMetadata {
       bool isSkipSelf,
       bool isOptional,
       bool isValue,
-      CompileTokenMetadata token,
-      dynamic value}) {
-    // TODO: Make the defaults of the constructor 'false' instead of doing this.
-    // This is to prevent any breaking changes while cleaning up TS facades.
-    this.isAttribute = isAttribute == true;
-    this.isSelf = isSelf == true;
-    this.isHost = isHost == true;
-    this.isSkipSelf = isSkipSelf == true;
-    this.isOptional = isOptional == true;
-    this.isValue = isValue == true;
-    this.token = token;
-    this.value = value;
-  }
+      this.token,
+      this.value})
+      :
+        // TODO: Make the defaults of the constructor 'false' instead of doing this.
+        this.isAttribute = isAttribute == true,
+        this.isSelf = isSelf == true,
+        this.isHost = isHost == true,
+        this.isSkipSelf = isSkipSelf == true,
+        this.isOptional = isOptional == true,
+        this.isValue = isValue == true;
+
   static CompileDiDependencyMetadata fromJson(Map<String, dynamic> data) {
     return new CompileDiDependencyMetadata(
-        token: _objFromJson(data["token"], CompileTokenMetadata.fromJson),
-        value: data["value"],
-        isAttribute: data["isAttribute"],
-        isSelf: data["isSelf"],
-        isHost: data["isHost"],
-        isSkipSelf: data["isSkipSelf"],
-        isOptional: data["isOptional"],
-        isValue: data["isValue"]);
+        token: _objFromJson(data['token'], CompileTokenMetadata.fromJson),
+        value: data['value'],
+        isAttribute: data['isAttribute'],
+        isSelf: data['isSelf'],
+        isHost: data['isHost'],
+        isSkipSelf: data['isSkipSelf'],
+        isOptional: data['isOptional'],
+        isValue: data['isValue']);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "token": _objToJson(this.token),
-      "value": this.value,
-      "isAttribute": this.isAttribute,
-      "isSelf": this.isSelf,
-      "isHost": this.isHost,
-      "isSkipSelf": this.isSkipSelf,
-      "isOptional": this.isOptional,
-      "isValue": this.isValue
+      'token': _objToJson(token),
+      'value': value,
+      'isAttribute': isAttribute,
+      'isSelf': isSelf,
+      'isHost': isHost,
+      'isSkipSelf': isSkipSelf,
+      'isOptional': isOptional,
+      'isValue': isValue
     };
   }
 }
@@ -155,51 +152,44 @@ class CompileProviderMetadata {
   List<CompileDiDependencyMetadata> deps;
   bool multi;
   CompileProviderMetadata(
-      {CompileTokenMetadata token,
-      CompileTypeMetadata useClass,
-      dynamic useValue,
-      CompileTokenMetadata useExisting,
-      CompileFactoryMetadata useFactory,
-      String useProperty,
-      List<CompileDiDependencyMetadata> deps,
-      bool multi}) {
-    this.token = token;
-    this.useClass = useClass;
-    this.useValue = useValue;
-    this.useExisting = useExisting;
-    this.useFactory = useFactory;
-    this.useProperty = useProperty;
-    this.deps = deps;
-    this.multi = multi == true;
-  }
+      {this.token,
+      this.useClass,
+      this.useValue,
+      this.useExisting,
+      this.useFactory,
+      this.useProperty,
+      this.deps,
+      bool multi})
+      : this.multi = multi == true;
+
   static CompileProviderMetadata fromJson(Map<String, dynamic> data) {
     return new CompileProviderMetadata(
-        token: _objFromJson(data["token"], CompileTokenMetadata.fromJson),
-        useClass: _objFromJson(data["useClass"], CompileTypeMetadata.fromJson),
+        token: _objFromJson(data['token'], CompileTokenMetadata.fromJson),
+        useClass: _objFromJson(data['useClass'], CompileTypeMetadata.fromJson),
         useExisting:
-            _objFromJson(data["useExisting"], CompileTokenMetadata.fromJson),
+            _objFromJson(data['useExisting'], CompileTokenMetadata.fromJson),
         useValue:
-            _objFromJson(data["useValue"], CompileIdentifierMetadata.fromJson),
+            _objFromJson(data['useValue'], CompileIdentifierMetadata.fromJson),
         useFactory:
-            _objFromJson(data["useFactory"], CompileFactoryMetadata.fromJson),
-        useProperty: data["useProperty"],
-        multi: data["multi"],
-        deps: _arrayFromJson(data["deps"], CompileDiDependencyMetadata.fromJson)
+            _objFromJson(data['useFactory'], CompileFactoryMetadata.fromJson),
+        useProperty: data['useProperty'],
+        multi: data['multi'],
+        deps: _arrayFromJson(data['deps'], CompileDiDependencyMetadata.fromJson)
             as List<CompileDiDependencyMetadata>);
   }
 
   Map<String, dynamic> toJson() {
     return {
       // Note: Runtime type can't be serialized...
-      "class": "Provider",
-      "token": _objToJson(this.token),
-      "useClass": _objToJson(this.useClass),
-      "useExisting": _objToJson(this.useExisting),
-      "useValue": _objToJson(this.useValue),
-      "useFactory": _objToJson(this.useFactory),
-      "useProperty": this.useProperty,
-      "multi": this.multi,
-      "deps": _arrayToJson(this.deps)
+      'class': 'Provider',
+      'token': _objToJson(token),
+      'useClass': _objToJson(useClass),
+      'useExisting': _objToJson(useExisting),
+      'useValue': _objToJson(useValue),
+      'useFactory': _objToJson(useFactory),
+      'useProperty': useProperty,
+      'multi': multi,
+      'deps': _arrayToJson(deps)
     };
   }
 }
@@ -222,42 +212,36 @@ class CompileFactoryMetadata
   dynamic value;
   List<CompileDiDependencyMetadata> diDeps;
   CompileFactoryMetadata(
-      {Function runtime,
-      String name,
-      String moduleUrl,
-      String prefix,
+      {this.runtime,
+      this.name,
+      this.moduleUrl,
+      this.prefix,
       List<CompileDiDependencyMetadata> diDeps,
-      bool value}) {
-    this.runtime = runtime;
-    this.name = name;
-    this.prefix = prefix;
-    this.moduleUrl = moduleUrl;
-    this.diDeps = diDeps ?? [];
-    this.value = value;
-  }
+      this.value})
+      : this.diDeps = diDeps ?? const [];
 
   @override
   CompileIdentifierMetadata get identifier => this;
 
   static CompileFactoryMetadata fromJson(Map<String, dynamic> data) {
     return new CompileFactoryMetadata(
-        name: data["name"],
-        prefix: data["prefix"],
-        moduleUrl: data["moduleUrl"],
-        value: data["value"],
+        name: data['name'],
+        prefix: data['prefix'],
+        moduleUrl: data['moduleUrl'],
+        value: data['value'],
         diDeps: (_arrayFromJson(
-                data["diDeps"], CompileDiDependencyMetadata.fromJson))
+                data['diDeps'], CompileDiDependencyMetadata.fromJson))
             as List<CompileDiDependencyMetadata>);
   }
 
   @override
   Map<String, dynamic> toJson() => {
-        "class": "Factory",
-        "name": this.name,
-        "prefix": this.prefix,
-        "moduleUrl": this.moduleUrl,
-        "value": this.value,
-        "diDeps": _arrayToJson(this.diDeps)
+        'class': 'Factory',
+        'name': name,
+        'prefix': prefix,
+        'moduleUrl': moduleUrl,
+        'value': value,
+        'diDeps': _arrayToJson(diDeps)
       };
 }
 
@@ -266,27 +250,23 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   @override
   CompileIdentifierMetadata identifier;
   bool identifierIsInstance;
-  CompileTokenMetadata(
-      {dynamic value,
-      CompileIdentifierMetadata identifier,
-      bool identifierIsInstance}) {
-    this.value = value;
-    this.identifier = identifier;
-    this.identifierIsInstance = identifierIsInstance == true;
-  }
+
+  CompileTokenMetadata({this.value, this.identifier, bool identifierIsInstance})
+      : this.identifierIsInstance = identifierIsInstance == true;
+
   static CompileTokenMetadata fromJson(Map<String, dynamic> data) {
     return new CompileTokenMetadata(
-        value: data["value"],
+        value: data['value'],
         identifier: _objFromJson(
-            data["identifier"], CompileIdentifierMetadata.fromJson),
-        identifierIsInstance: data["identifierIsInstance"]);
+            data['identifier'], CompileIdentifierMetadata.fromJson),
+        identifierIsInstance: data['identifierIsInstance']);
   }
 
   @override
   Map<String, dynamic> toJson() => {
-        "value": this.value,
-        "identifier": _objToJson(this.identifier),
-        "identifierIsInstance": this.identifierIsInstance
+        'value': value,
+        'identifier': _objToJson(identifier),
+        'identifierIsInstance': identifierIsInstance
       };
 
   dynamic get runtimeCacheKey =>
@@ -299,13 +279,13 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
           ? '${identifier.name}|${identifier.moduleUrl}|${identifierIsInstance}'
           : null;
     } else {
-      return this.value;
+      return value;
     }
   }
 
   bool equalsTo(CompileTokenMetadata token2) {
-    var rk = this.runtimeCacheKey;
-    var ak = this.assetCacheKey;
+    var rk = runtimeCacheKey;
+    var ak = assetCacheKey;
     return (rk != null && rk == token2.runtimeCacheKey) ||
         (ak != null && ak == token2.assetCacheKey);
   }
@@ -316,24 +296,25 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 }
 
 class CompileTokenMap<VALUE> {
-  var _valueMap = new Map<dynamic, VALUE>();
+  final _valueMap = new Map<dynamic, VALUE>();
   List<VALUE> _values = [];
   List<CompileTokenMetadata> _tokens = [];
+
   void add(CompileTokenMetadata token, VALUE value) {
-    var existing = this.get(token);
+    var existing = get(token);
     if (existing != null) {
       throw new BaseException(
-          '''Can only add to a TokenMap! Token: ${ token . name}''');
+          'Add failed. Token already exists. Token: ${token.name}');
     }
-    this._tokens.add(token);
-    this._values.add(value);
+    _tokens.add(token);
+    _values.add(value);
     var rk = token.runtimeCacheKey;
     if (rk != null) {
-      this._valueMap[rk] = value;
+      _valueMap[rk] = value;
     }
     var ak = token.assetCacheKey;
     if (ak != null) {
-      this._valueMap[ak] = value;
+      _valueMap[ak] = value;
     }
   }
 
@@ -342,10 +323,10 @@ class CompileTokenMap<VALUE> {
     var ak = token.assetCacheKey;
     VALUE result;
     if (rk != null) {
-      result = this._valueMap[rk];
+      result = _valueMap[rk];
     }
     if (result == null && ak != null) {
-      result = this._valueMap[ak];
+      result = _valueMap[ak];
     }
     return result;
   }
@@ -354,9 +335,7 @@ class CompileTokenMap<VALUE> {
 
   List<VALUE> get values => _values;
 
-  num get size {
-    return this._values.length;
-  }
+  int get size => _values.length;
 }
 
 /// Metadata regarding compilation of a type.
@@ -377,30 +356,25 @@ class CompileTypeMetadata
   dynamic value;
   List<CompileDiDependencyMetadata> diDeps;
   CompileTypeMetadata(
-      {Type runtime,
-      String name,
-      String moduleUrl,
-      String prefix,
+      {this.runtime,
+      this.name,
+      this.moduleUrl,
+      this.prefix,
       bool isHost,
-      dynamic value,
-      List<CompileDiDependencyMetadata> diDeps}) {
-    this.runtime = runtime;
-    this.name = name;
-    this.moduleUrl = moduleUrl;
-    this.prefix = prefix;
-    this.isHost = isHost == true;
-    this.value = value;
-    this.diDeps = diDeps ?? [];
-  }
+      this.value,
+      List<CompileDiDependencyMetadata> diDeps})
+      : this.isHost = isHost == true,
+        this.diDeps = diDeps ?? const [];
+
   static CompileTypeMetadata fromJson(Map<String, dynamic> data) {
     return new CompileTypeMetadata(
-        name: data["name"],
-        moduleUrl: data["moduleUrl"],
-        prefix: data["prefix"],
-        isHost: data["isHost"],
-        value: data["value"],
+        name: data['name'],
+        moduleUrl: data['moduleUrl'],
+        prefix: data['prefix'],
+        isHost: data['isHost'],
+        value: data['value'],
         diDeps:
-            _arrayFromJson(data["diDeps"], CompileDiDependencyMetadata.fromJson)
+            _arrayFromJson(data['diDeps'], CompileDiDependencyMetadata.fromJson)
                 as List<CompileDiDependencyMetadata>);
   }
 
@@ -413,52 +387,65 @@ class CompileTypeMetadata
   @override
   Map<String, dynamic> toJson() => {
         // Note: Runtime type can't be serialized...
-        "class": "Type",
-        "name": this.name,
-        "moduleUrl": this.moduleUrl,
-        "prefix": this.prefix,
-        "isHost": this.isHost,
-        "value": this.value,
-        "diDeps": _arrayToJson(this.diDeps)
+        'class': 'Type',
+        'name': name,
+        'moduleUrl': moduleUrl,
+        'prefix': prefix,
+        'isHost': isHost,
+        'value': value,
+        'diDeps': _arrayToJson(diDeps)
       };
 }
 
+/// Provides metadata for Query, ViewQuery, ViewChildren,
+/// ContentChild and ContentChildren decorators.
 class CompileQueryMetadata {
+  /// List of types or tokens to match.
   List<CompileTokenMetadata> selectors;
+
+  /// TODO: unused, deprecate.
   bool descendants;
+
+  /// Set when querying for first instance that matches selectors.
   bool first;
+
+  /// Name of class member on the component to update with query result.
   String propertyName;
+
+  /// Optional type to read for given match.
+  ///
+  /// When we match an element in the template, it typically returns the
+  /// component. Using read: parameter we can specifically query for
+  /// ViewContainer or TemplateRef for the node.
   CompileTokenMetadata read;
+
   CompileQueryMetadata(
-      {List<CompileTokenMetadata> selectors,
+      {this.selectors,
       bool descendants,
       bool first,
-      String propertyName,
-      CompileTokenMetadata read}) {
-    this.selectors = selectors;
-    this.descendants = descendants == true;
-    this.first = first == true;
-    this.propertyName = propertyName;
-    this.read = read;
-  }
+      this.propertyName,
+      this.read})
+      : this.descendants = descendants == true,
+        this.first = first == true;
+
   static CompileQueryMetadata fromJson(Map<String, dynamic> data) {
     return new CompileQueryMetadata(
         selectors:
-            _arrayFromJson(data["selectors"], CompileTokenMetadata.fromJson)
+            _arrayFromJson(data['selectors'], CompileTokenMetadata.fromJson)
                 as List<CompileTokenMetadata>,
-        descendants: data["descendants"],
-        first: data["first"],
-        propertyName: data["propertyName"],
-        read: _objFromJson(data["read"], CompileTokenMetadata.fromJson));
+        descendants: data['descendants'],
+        first: data['first'],
+        propertyName: data['propertyName'],
+        read: _objFromJson(data['read'], CompileTokenMetadata.fromJson));
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "selectors": _arrayToJson(this.selectors),
-      "descendants": this.descendants,
-      "first": this.first,
-      "propertyName": this.propertyName,
-      "read": _objToJson(this.read)
+      'selectors': _arrayToJson(selectors),
+      'descendants': descendants,
+      'first': first,
+      'propertyName': propertyName,
+      'read': _objToJson(read)
     };
   }
 }
@@ -489,27 +476,27 @@ class CompileTemplateMetadata {
 
   static CompileTemplateMetadata fromJson(Map<String, dynamic> data) {
     return new CompileTemplateMetadata(
-        encapsulation: data["encapsulation"] != null
-            ? ViewEncapsulation.values[data["encapsulation"]]
-            : data["encapsulation"],
-        template: data["template"],
-        templateUrl: data["templateUrl"],
-        preserveWhitespace: data["preserveWhitespace"] ?? true,
-        styles: data["styles"] as List<String>,
-        styleUrls: data["styleUrls"] as List<String>,
-        ngContentSelectors: data["ngContentSelectors"] as List<String>);
+        encapsulation: data['encapsulation'] != null
+            ? ViewEncapsulation.values[data['encapsulation']]
+            : data['encapsulation'],
+        template: data['template'],
+        templateUrl: data['templateUrl'],
+        preserveWhitespace: data['preserveWhitespace'] ?? true,
+        styles: data['styles'] as List<String>,
+        styleUrls: data['styleUrls'] as List<String>,
+        ngContentSelectors: data['ngContentSelectors'] as List<String>);
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> res = {
-      "encapsulation": encapsulation?.index,
-      "template": this.template,
-      "templateUrl": this.templateUrl,
-      "styles": this.styles,
-      "styleUrls": this.styleUrls,
-      "ngContentSelectors": this.ngContentSelectors
+      'encapsulation': encapsulation?.index,
+      'template': template,
+      'templateUrl': templateUrl,
+      'styles': styles,
+      'styleUrls': styleUrls,
+      'ngContentSelectors': ngContentSelectors
     };
-    if (preserveWhitespace == false) res["preserveWhitespace"] = false;
+    if (preserveWhitespace == false) res['preserveWhitespace'] = false;
     return res;
   }
 }
@@ -645,57 +632,57 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   static CompileDirectiveMetadata fromJson(Map<String, dynamic> data) {
     return new CompileDirectiveMetadata(
-        isComponent: data["isComponent"],
-        selector: data["selector"],
-        exportAs: data["exportAs"],
-        type: data["type"] != null
-            ? CompileTypeMetadata.fromJson(data["type"] as Map<String, dynamic>)
-            : data["type"],
-        changeDetection: data["changeDetection"] != null
-            ? ChangeDetectionStrategy.values[data["changeDetection"]]
+        isComponent: data['isComponent'],
+        selector: data['selector'],
+        exportAs: data['exportAs'],
+        type: data['type'] != null
+            ? CompileTypeMetadata.fromJson(data['type'] as Map<String, dynamic>)
+            : data['type'],
+        changeDetection: data['changeDetection'] != null
+            ? ChangeDetectionStrategy.values[data['changeDetection']]
             : null,
-        inputs: data["inputs"] as Map<String, String>,
-        inputTypes: data["inputTypes"] as Map<String, String>,
-        outputs: data["outputs"] as Map<String, String>,
-        hostListeners: data["hostListeners"] as Map<String, String>,
-        hostProperties: data["hostProperties"] as Map<String, String>,
-        hostAttributes: data["hostAttributes"] as Map<String, String>,
-        lifecycleHooks: ((data["lifecycleHooks"] as List<dynamic>))
+        inputs: data['inputs'] as Map<String, String>,
+        inputTypes: data['inputTypes'] as Map<String, String>,
+        outputs: data['outputs'] as Map<String, String>,
+        hostListeners: data['hostListeners'] as Map<String, String>,
+        hostProperties: data['hostProperties'] as Map<String, String>,
+        hostAttributes: data['hostAttributes'] as Map<String, String>,
+        lifecycleHooks: ((data['lifecycleHooks'] as List<dynamic>))
             .map((hookValue) => LIFECYCLE_HOOKS_VALUES[hookValue])
             .toList(),
-        template: data["template"] != null
+        template: data['template'] != null
             ? CompileTemplateMetadata
-                .fromJson(data["template"] as Map<String, dynamic>)
-            : data["template"],
-        providers: _arrayFromJson(data["providers"], metadataFromJson),
-        viewProviders: _arrayFromJson(data["viewProviders"], metadataFromJson),
-        queries: _arrayFromJson(data["queries"], CompileQueryMetadata.fromJson)
+                .fromJson(data['template'] as Map<String, dynamic>)
+            : data['template'],
+        providers: _arrayFromJson(data['providers'], metadataFromJson),
+        viewProviders: _arrayFromJson(data['viewProviders'], metadataFromJson),
+        queries: _arrayFromJson(data['queries'], CompileQueryMetadata.fromJson)
             as List<CompileQueryMetadata>,
         viewQueries:
-            _arrayFromJson(data["viewQueries"], CompileQueryMetadata.fromJson)
+            _arrayFromJson(data['viewQueries'], CompileQueryMetadata.fromJson)
                 as List<CompileQueryMetadata>);
   }
 
   @override
   Map<String, dynamic> toJson() => {
-        "class": "Directive",
-        "isComponent": isComponent,
-        "selector": selector,
-        "exportAs": exportAs,
-        "type": type?.toJson(),
-        "changeDetection": changeDetection?.index,
-        "inputs": inputs,
-        "inputTypes": inputTypes,
-        "outputs": outputs,
-        "hostListeners": hostListeners,
-        "hostProperties": hostProperties,
-        "hostAttributes": hostAttributes,
-        "lifecycleHooks": lifecycleHooks.map((hook) => hook.index).toList(),
-        "template": template?.toJson(),
-        "providers": _arrayToJson(providers),
-        "viewProviders": _arrayToJson(viewProviders),
-        "queries": _arrayToJson(queries),
-        "viewQueries": _arrayToJson(viewQueries)
+        'class': 'Directive',
+        'isComponent': isComponent,
+        'selector': selector,
+        'exportAs': exportAs,
+        'type': type?.toJson(),
+        'changeDetection': changeDetection?.index,
+        'inputs': inputs,
+        'inputTypes': inputTypes,
+        'outputs': outputs,
+        'hostListeners': hostListeners,
+        'hostProperties': hostProperties,
+        'hostAttributes': hostAttributes,
+        'lifecycleHooks': lifecycleHooks.map((hook) => hook.index).toList(),
+        'template': template?.toJson(),
+        'providers': _arrayToJson(providers),
+        'viewProviders': _arrayToJson(viewProviders),
+        'queries': _arrayToJson(queries),
+        'viewQueries': _arrayToJson(viewQueries)
       };
 }
 
@@ -715,7 +702,7 @@ CompileDirectiveMetadata createHostComponentMeta(
           isHost: true),
       template: new CompileTemplateMetadata(
           template: template,
-          templateUrl: "",
+          templateUrl: '',
           preserveWhitespace: preserveWhitespace,
           styles: [],
           styleUrls: [],
@@ -726,7 +713,7 @@ CompileDirectiveMetadata createHostComponentMeta(
       host: {},
       lifecycleHooks: [],
       isComponent: true,
-      selector: "*",
+      selector: '*',
       providers: [],
       viewProviders: [],
       queries: [],
@@ -735,44 +722,40 @@ CompileDirectiveMetadata createHostComponentMeta(
 
 class CompilePipeMetadata implements CompileMetadataWithType {
   @override
-  CompileTypeMetadata type;
-  String name;
-  bool pure;
-  List<LifecycleHooks> lifecycleHooks;
+  final CompileTypeMetadata type;
+  final String name;
+  final bool pure;
+  final List<LifecycleHooks> lifecycleHooks;
+
   CompilePipeMetadata(
-      {CompileTypeMetadata type,
-      String name,
-      bool pure,
-      List<LifecycleHooks> lifecycleHooks}) {
-    this.type = type;
-    this.name = name;
-    this.pure = pure ?? true;
-    this.lifecycleHooks = lifecycleHooks ?? [];
-  }
+      {this.type, this.name, bool pure, List<LifecycleHooks> lifecycleHooks})
+      : this.pure = pure ?? true,
+        this.lifecycleHooks = lifecycleHooks ?? const [];
+
   @override
   CompileIdentifierMetadata get identifier => this.type;
 
   static CompilePipeMetadata fromJson(Map<String, dynamic> data) {
     return new CompilePipeMetadata(
-        type: data["type"] != null
-            ? CompileTypeMetadata.fromJson(data["type"] as Map<String, dynamic>)
-            : data["type"],
-        name: data["name"],
-        pure: data["pure"]);
+        type: data['type'] != null
+            ? CompileTypeMetadata.fromJson(data['type'] as Map<String, dynamic>)
+            : data['type'],
+        name: data['name'],
+        pure: data['pure']);
   }
 
   @override
   Map<String, dynamic> toJson() =>
-      {"class": "Pipe", "type": type?.toJson(), "name": name, "pure": pure};
+      {'class': 'Pipe', 'type': type?.toJson(), 'name': name, 'pure': pure};
 }
 
 var _COMPILE_METADATA_FROM_JSON = {
-  "Directive": CompileDirectiveMetadata.fromJson,
-  "Pipe": CompilePipeMetadata.fromJson,
-  "Type": CompileTypeMetadata.fromJson,
-  "Provider": CompileProviderMetadata.fromJson,
-  "Identifier": CompileIdentifierMetadata.fromJson,
-  "Factory": CompileFactoryMetadata.fromJson,
+  'Directive': CompileDirectiveMetadata.fromJson,
+  'Pipe': CompilePipeMetadata.fromJson,
+  'Type': CompileTypeMetadata.fromJson,
+  'Provider': CompileProviderMetadata.fromJson,
+  'Identifier': CompileIdentifierMetadata.fromJson,
+  'Factory': CompileFactoryMetadata.fromJson,
 };
 
 dynamic _arrayFromJson(List<dynamic> obj, dynamic fn(Map<String, dynamic> a)) {
