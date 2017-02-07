@@ -1,5 +1,5 @@
 name: angular2
-version: 3.0.0-alpha
+version: 3.0.0-alpha+1
 author: Dart Team <web@dartlang.org>
 description: Framework for modern web applications
 homepage: 'https://webdev.dartlang.org/angular'
@@ -23,9 +23,10 @@ dependencies:
   source_span: ^1.0.0
   stack_trace: ^1.6.5
 dev_dependencies:
+  angular_test: '1.0.0-alpha+5'
   args: ^0.13.6
-  build_runner: ^0.1.1
-  build_test: ^0.3.1
+  build_runner: ^0.3.0
+  build_test: ^0.4.0+1
   code_builder: '1.0.0-beta+3'
   func: ^0.1.0
   mockito: '>=0.11.0 <2.0.0'

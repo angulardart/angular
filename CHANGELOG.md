@@ -1,3 +1,11 @@
+## 3.0.0-alpha+1
+
+### New features
+
+*  We now use the formal `<T>` generic type syntax for methods, not `/*<T>*/`.
+
+*  Re-enabled `strong-mode` analysis within the project, and fixed some errors.
+
 ### Breaking changes
 
 *  Removed `viewBindings` from `Component`. This has been interchangeable with
@@ -6,6 +14,27 @@
    **BEFORE:** `dart @Component(viewBindings: const [])`
 
    **AFTER:** `dart @Component(viewProviders: const [])`
+
+*  Removed `EventManager` from the public API. Code generation is now closer to
+   `document.addEventListener` and having this interception layer would not
+   allow further optimizations.
+
+*  Removed `IterableDifferFactory` and `KeyValueDifferFactory` from the public
+   API. We have planned compiler optimizations that will no longer allow
+   overriding our diffing implementations. Looking into alternatives before a
+   final `3.0.0` release that are lower cost.
+
+*  `ASYNC_VALIDATORS` can no longer return a `Stream` instance, only `Future`.
+
+*  The experimental `NgTestBed` was removed. Use `package:angular_test` now.
+
+*  By default, the `ExceptionHandler` is a `BrowserExceptionHandler`, which
+   prints exceptions to the console. If you don't want this behavior (i.e.
+   releasing to production), make sure to override it.
+
+### Bug fixes
+
+* When setting up a new `NgControl`, `valueAccessor` no longer can throw an NPE
 
 ## 3.0.0-alpha
 
