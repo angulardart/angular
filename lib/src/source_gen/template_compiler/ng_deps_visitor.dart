@@ -49,17 +49,23 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
     }
   }
 
-  bool _hasReflectables(LibraryElement importedLibrary) {
-    var visitor = new ReflectableVisitor(_buildStep);
-    importedLibrary.accept(visitor);
-    return visitor.reflectables.isNotEmpty;
-  }
-
   @override
   void visitExportElement(ExportElement element) {
     if (element.uri != null) {
-      exports.add(new ExportModel.fromElement(element));
+      var export = new ExportModel.fromElement(element);
+      exports.add(export);
+      if (_hasReflectables(element.exportedLibrary)) {
+        depImports.add(new ImportModel(
+            uri: export.uri.replaceFirst('\.dart', TEMPLATE_EXTENSION)));
+      }
     }
+  }
+
+  // TODO(alorenzen): Consider memoizing this to improve build performance.
+  bool _hasReflectables(LibraryElement importedLibrary) {
+    var visitor = new ReflectableVisitor(_buildStep, visitExports: true);
+    importedLibrary.accept(visitor);
+    return visitor.reflectables.isNotEmpty;
   }
 }
 
@@ -67,14 +73,24 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
 /// given element or its children.
 class ReflectableVisitor extends RecursiveElementVisitor {
   final BuildStep _buildStep;
+  final bool _visitExports;
   List<ReflectionInfoModel> _reflectables = [];
 
-  ReflectableVisitor(this._buildStep);
+  ReflectableVisitor(this._buildStep, {bool visitExports: false})
+      : _visitExports = visitExports;
 
   Logger get _logger => _buildStep.logger;
 
   List<ReflectionInfoModel> get reflectables =>
       _reflectables.where((model) => model != null).toList();
+
+  // TODO(alorenzen): Determine if we need to visit part-files as well.
+  @override
+  void visitExportElement(ExportElement element) {
+    if (_visitExports) {
+      element.exportedLibrary.accept(this);
+    }
+  }
 
   @override
   void visitClassElement(ClassElement element) {

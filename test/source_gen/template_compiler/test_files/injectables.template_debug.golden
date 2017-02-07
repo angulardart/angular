@@ -19,6 +19,7 @@
 import 'injectables.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'dart:html' as html;
+import 'package:angular2/angular2.template.dart' as _i1;
 export 'injectables.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
@@ -201,4 +202,5 @@ void initReflector() {
           const <dynamic>[const Injectable(), const Deprecated()],
           const [],
           () => new InjectableService()));
+  _i1.initReflector();
 }

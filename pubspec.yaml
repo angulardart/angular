@@ -9,7 +9,7 @@ environment:
 dependencies:
   analyzer: '>=0.29.1 <0.30.0'
   barback: ^0.15.2+2
-  build: '>=0.3.0 <0.7.0'
+  build: ^0.7.0
   collection: '^1.12.0'
   dart_style: '>=0.1.8 <0.3.0'
   glob: ^1.0.0
@@ -24,12 +24,12 @@ dependencies:
   stack_trace: ^1.6.5
 dev_dependencies:
   args: ^0.13.6
-  build_runner: ^0.1.1
-  build_test: ^0.3.1
-  code_builder: '1.0.0-beta+1'
+  build_runner: ^0.3.0
+  build_test: ^0.4.0
+  code_builder: '1.0.0-beta+3'
   func: ^0.1.0
   mockito: '>=0.11.0 <2.0.0'
-  source_gen: ^0.5.3
+  source_gen: ^0.5.4
   quiver: '>=0.21.4 <0.25.0'
   test: ^0.12.6
   transformer_test: ^0.2.0

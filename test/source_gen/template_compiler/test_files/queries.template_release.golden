@@ -18,6 +18,7 @@
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'queries.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular2/angular2.template.dart' as _i1;
 export 'queries.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'queries.dart' as import1;
@@ -373,4 +374,5 @@ void initReflector() {
       AnotherDirective,
       new _ngRef.ReflectionInfo(
           const <dynamic>[], const [], () => new AnotherDirective()));
+  _i1.initReflector();
 }

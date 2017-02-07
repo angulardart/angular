@@ -18,6 +18,7 @@
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'providers.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular2/angular2.template.dart' as _i1;
 export 'providers.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'providers.dart' as import1;
@@ -188,4 +189,5 @@ void initReflector() {
       ProvidersComponent,
       new _ngRef.ReflectionInfo(const <dynamic>[ProvidersComponentNgFactory],
           const [], () => new ProvidersComponent()));
+  _i1.initReflector();
 }
