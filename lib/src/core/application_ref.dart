@@ -184,7 +184,8 @@ abstract class ApplicationRef {
   /// selector and kicks off automatic change detection to finish initializing the component.
   ///
   /// ### Example
-  ///     {@example core/ts/platform/platform.ts region='longform'}
+  /// 
+  /// {@example core/ts/platform/platform.ts region='longform'}
   ///
   ComponentRef bootstrap(ComponentFactory componentFactory);
 
