@@ -68,13 +68,3 @@ bool assertionsEnabled() {
 
 bool isPrimitive(Object obj) =>
     obj is num || obj is bool || obj == null || obj is String;
-
-num bitWiseOr(List values) {
-  var val = values.reduce((num a, num b) => (a as int) | (b as int));
-  return val as num;
-}
-
-num bitWiseAnd(List values) {
-  var val = values.reduce((num a, num b) => (a as int) & (b as int));
-  return val as num;
-}
