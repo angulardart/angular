@@ -173,7 +173,7 @@ abstract class ApplicationRef {
   /// Runs the given [callback] in the zone and returns the result of the call.
   ///
   /// Exceptions will be forwarded to the ExceptionHandler and rethrown.
-  run/*<R>*/(/*=R*/ callback());
+  run<R>(R callback());
 
   /// Bootstrap a new component at the root level of the application.
   ///
@@ -299,7 +299,7 @@ class ApplicationRefImpl extends ApplicationRef {
   // When FutureOr<T> lands, this can be expressed as FutureOr<R>.  For now
   // leave it as dynamic, but pass a generic type so that the returned
   // Future (if any) has the correct reified type.
-  run/*<R>*/(/*=R*/ callback()) {
+  run<R>(R callback()) {
     // TODO(matanl): Remove support for futures inside of appRef.run.
     var zone = injector.get(NgZone);
     var result;
@@ -308,7 +308,7 @@ class ApplicationRefImpl extends ApplicationRef {
     //
     // Note: the completer needs to be created outside of `zone.run` as Dart
     // swallows rejected promises via the onError callback of the promise.
-    var completer = new Completer/*<R>*/();
+    var completer = new Completer<R>();
     zone.run(() {
       try {
         result = callback();

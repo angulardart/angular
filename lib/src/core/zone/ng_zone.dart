@@ -300,13 +300,13 @@ class NgZone {
   ///
   /// If a synchronous error happens it will be rethrown and not reported via
   /// `onError`.
-  dynamic/*=R*/ run/*<R>*/(/*=R*/ fn()) {
+  R run<R>(R fn()) {
     return _innerZone.run(fn);
   }
 
   /// Same as #run, except that synchronous errors are caught and forwarded
   /// via `onError` and not rethrown.
-  dynamic/*=R*/ runGuarded/*<R>*/(/*=R*/ fn()) {
+  R runGuarded<R>(R fn()) {
     return _innerZone.runGuarded(fn);
   }
 

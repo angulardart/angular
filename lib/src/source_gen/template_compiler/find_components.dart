@@ -59,11 +59,11 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       _visitTypes(element, 'directives', annotation_matcher.isDirective,
           new ComponentVisitor(_buildStep));
 
-  List<dynamic/*=T*/ > _visitTypes/*<T>*/(
+  List<T> _visitTypes<T>(
           ClassElement element,
           String field,
           annotation_matcher.AnnotationMatcher annotationMatcher,
-          ElementVisitor<dynamic/*=T*/ > visitor) =>
+          ElementVisitor<T> visitor) =>
       element.metadata
           .where(annotation_matcher.hasDirectives)
           .expand((annotation) => _visitTypeObjects(
@@ -72,11 +72,11 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               visitor))
           .toList();
 
-  List<dynamic/*=T*/ > _visitTypeObjects/*<T>*/(
+  List<T> _visitTypeObjects<T>(
           Iterable<DartObject> directives,
           annotation_matcher.AnnotationMatcher annotationMatcher,
-          ElementVisitor<dynamic/*=T*/ > visitor) =>
-      visitAll/*<T>*/(directives, (obj) {
+          ElementVisitor<T> visitor) =>
+      visitAll<T>(directives, (obj) {
         var type = obj.toTypeValue();
         if (type != null &&
             type.element != null &&

@@ -99,7 +99,7 @@ class CompileQuery {
 }
 
 List<o.Expression> createQueryValues(ViewQueryValues viewValues) {
-  return viewValues.values.map/*<o.Expression>*/((entry) {
+  return viewValues.values.map((entry) {
     if (entry is ViewQueryValues) {
       return mapNestedViews(entry.view.declarationElement.appViewContainer,
           entry.view, createQueryValues(entry));

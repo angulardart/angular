@@ -83,11 +83,11 @@ Map<String, String> coerceStringMap(
 /// Unlike `DartObject#getField`, this also traverses `super` if available.
 ///
 /// If the value is missing or not a map, returns [defaultTo].
-/*=T*/ coerceEnum/*<T>*/(
+T coerceEnum<T>(
   DartObject object,
   String field,
-  List<dynamic/*=T*/ > values, {
-  /*=T*/ defaultTo,
+  List<T> values, {
+  T defaultTo,
 }) {
   final enumField = getField(object, field);
   return _findEnumByName(enumField, values) ??
@@ -99,13 +99,12 @@ Map<String, String> coerceStringMap(
 // opposite is true when using build_runner on the command-line to generate
 // goldens - so for now we need both.
 
-/*=T*/ _findEnumByName/*<T>*/(DartObject object, List<dynamic/*=T*/ > values) =>
-    values.firstWhere(
+T _findEnumByName<T>(DartObject object, List<T> values) => values.firstWhere(
       (field) => !isNull(getField(object, '$field'.split('.')[1])),
       orElse: () => null,
     );
 
-/*=T*/ _findEnumByIndex/*<T>*/(DartObject field, List<dynamic/*=T*/ > values) {
+T _findEnumByIndex<T>(DartObject field, List<T> values) {
   final index = getField(field, 'index')?.toIntValue();
   return index != null ? values[index] : null;
 }
@@ -132,13 +131,12 @@ typedef T RecurseFn<T>(DartObject obj);
 ///
 /// If the DartObject is a list, then it will recursively visitAll
 /// on that list. Otherwise, then it will call [RecurseFn] on the object.
-List<dynamic/*=T*/ > visitAll/*<T>*/(
-    Iterable<DartObject> objs, RecurseFn<dynamic/*=T*/ > recurseFn) {
-  var metadata = /*<T>*/ [];
+List<T> visitAll<T>(Iterable<DartObject> objs, RecurseFn<T> recurseFn) {
+  var metadata = <T>[];
   for (DartObject obj in objs) {
     var maybeList = obj.toListValue();
     if (maybeList != null) {
-      metadata.addAll(visitAll/*<T>*/(maybeList, recurseFn));
+      metadata.addAll(visitAll<T>(maybeList, recurseFn));
     } else {
       var value = recurseFn(obj);
       if (value != null) {

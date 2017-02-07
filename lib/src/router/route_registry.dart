@@ -197,7 +197,7 @@ class RouteRegistry {
         possibleMatches.length == 0) {
       return new Future.value(this.generateDefault(parentComponent));
     }
-    return Future.wait/*< Instruction >*/(matchPromises).then(mostSpecific);
+    return Future.wait<Instruction>(matchPromises).then(mostSpecific);
   }
 
   Map<String, Instruction> _auxRoutesToUnresolved(

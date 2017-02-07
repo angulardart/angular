@@ -1115,8 +1115,8 @@ class PipeCollector extends RecursiveAstVisitor {
   }
 }
 
-List<dynamic/*=T*/ > removeDuplicates/*<T>*/(List<dynamic/*=T*/ > items) {
-  var res = /*<T>*/ [];
+List<T> removeDuplicates<T>(List<T> items) {
+  var res = <T>[];
   items.forEach((item) {
     var hasMatch = res.where((r) {
       if (r is CompilePipeMetadata) {

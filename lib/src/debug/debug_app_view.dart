@@ -148,7 +148,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  /*<R>*/ evt/*<E,R>*/(/*<R>*/ cb(/*<E>*/ e)) {
+  /*<R>*/ evt<E, R>(/*<R>*/ cb(/*<E>*/ e)) {
     var superHandler = super.evt(cb);
     return (/*<E>*/ event) {
       this._resetDebug();

@@ -92,8 +92,9 @@ class RuntimeCompiler implements ComponentResolver {
                 .map((dirMeta) =>
                     this._templateNormalizer.normalizeDirective(dirMeta))
                 .toList());
-      done = Future.wait(futures).then/*<Future<CompiledTemplate>>*/(
-          (List<dynamic> stylesAndNormalizedViewDirMetas) {
+      done = Future
+          .wait(futures)
+          .then((List<dynamic> stylesAndNormalizedViewDirMetas) {
         _ResolvedStyles resolvedStyles = stylesAndNormalizedViewDirMetas[0];
         var normalizedViewDirMetas = stylesAndNormalizedViewDirMetas.sublist(1)
             as List<CompileDirectiveMetadata>;

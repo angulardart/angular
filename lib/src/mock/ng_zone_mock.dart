@@ -8,7 +8,7 @@ class MockNgZone extends NgZone {
   MockNgZone() : super(enableLongStackTrace: false);
   EventEmitter get onStable => this._mockOnStable;
 
-  dynamic/*=R*/ run/*<R>*/(/*=R*/ fn()) {
+  R run<R>(R fn()) {
     return fn();
   }
 
