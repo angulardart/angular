@@ -412,8 +412,6 @@ void commonTests() {
             a = new Completer();
             b = new Completer();
             _log.add("run start");
-            a.future.then(_log.fn("a then"));
-            b.future.then(_log.fn("b then"));
           });
         });
         runNgZoneNoLog(() {
@@ -424,7 +422,7 @@ void commonTests() {
         });
         macroTask(() {
           expect(_log.result(),
-              "onUnstable; run start; onMicrotaskEmpty; onStable; onUnstable; a then; b then; onMicrotaskEmpty; onStable");
+              "onUnstable; run start; onMicrotaskEmpty; onStable; onUnstable; onMicrotaskEmpty; onStable");
           completer.done();
         }, resultTimer);
       });

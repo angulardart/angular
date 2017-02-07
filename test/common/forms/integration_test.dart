@@ -1203,7 +1203,9 @@ class LoginIsEmptyValidator {}
 class UniqLoginValidator implements Validator {
   @Input("uniq-login-validator")
   var expected;
-  validate(c) {
+
+  @override
+  validate(AbstractControl c) {
     return uniqLoginAsyncValidator(this.expected)(c);
   }
 }

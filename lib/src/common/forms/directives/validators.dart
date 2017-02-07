@@ -21,7 +21,9 @@ import "../validators.dart" show Validators, NG_VALIDATORS;
 /// }
 /// ```
 abstract class Validator {
-  Map<String, dynamic> validate(AbstractControl c);
+  // Intentionally omitting type information to migrate to AsyncValidator.
+  // https://github.com/dart-lang/angular2/issues/268.
+  /*Map<String, bool>*/ validate(AbstractControl c);
 }
 
 const REQUIRED = Validators.required;

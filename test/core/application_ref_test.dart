@@ -62,7 +62,7 @@ void main() {
         APPLICATION_CORE_PROVIDERS,
         BROWSER_APP_COMMON_PROVIDERS,
         new Provider(ExceptionHandler,
-            useValue: new ExceptionHandler(errorLogger, false)),
+            useValue: new ExceptionHandler(errorLogger)),
         new Provider(ComponentResolver,
             useValue: new _MockComponentResolver(someCompFactory)),
         providers

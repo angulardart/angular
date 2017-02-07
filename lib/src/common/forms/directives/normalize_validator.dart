@@ -1,5 +1,5 @@
 import 'package:angular2/src/common/forms/directives/validators.dart'
-    show Validator, ValidatorFn;
+    show AsyncValidatorFn, Validator, ValidatorFn;
 
 ValidatorFn normalizeValidator(dynamic validator) {
   if (validator is Validator) {
@@ -9,10 +9,10 @@ ValidatorFn normalizeValidator(dynamic validator) {
   }
 }
 
-Function normalizeAsyncValidator(dynamic validator) {
-  if (validator is Validator) {
-    return (c) => validator.validate(c);
+AsyncValidatorFn normalizeAsyncValidator(validatorOrFunction) {
+  if (validatorOrFunction is Validator) {
+    return (c) => validatorOrFunction.validate(c);
   } else {
-    return validator;
+    return validatorOrFunction;
   }
 }

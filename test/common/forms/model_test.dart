@@ -5,7 +5,6 @@ import 'dart:async';
 
 import "package:angular2/common.dart"
     show AbstractControl, ControlGroup, Control, ControlArray, Validators;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
@@ -25,12 +24,6 @@ void main() {
       return completer.future;
     };
   };
-
-  asyncValidatorReturningObservable(AbstractControl c) {
-    var e = new EventEmitter();
-    scheduleMicrotask(() => e.emit({"async": true}));
-    return e;
-  }
 
   group("Form Model", () {
     group("Control", () {
@@ -56,12 +49,6 @@ void main() {
       group("asyncValidator", () {
         test("should run validator with the initial value", fakeAsync(() {
           var c = new Control("value", null, asyncValidator("expected"));
-          tick();
-          expect(c.valid, isFalse);
-          expect(c.errors, {"async": true});
-        }));
-        test("should support validators returning observables", fakeAsync(() {
-          var c = new Control("value", null, asyncValidatorReturningObservable);
           tick();
           expect(c.valid, isFalse);
           expect(c.errors, {"async": true});

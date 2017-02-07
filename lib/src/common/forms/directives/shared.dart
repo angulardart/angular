@@ -1,3 +1,4 @@
+import 'package:angular2/angular2.dart';
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show looseIdentical;
 
@@ -60,11 +61,15 @@ ValidatorFn composeValidators(List<dynamic> validators) {
       : null;
 }
 
-AsyncValidatorFn composeAsyncValidators(List<dynamic> validators) {
-  return validators != null
-      ? Validators
-          .composeAsync(validators.map(normalizeAsyncValidator).toList())
-      : null;
+AsyncValidatorFn composeAsyncValidators<T extends AbstractControl>(
+  List validatorsOrFunctions,
+) {
+  if (validatorsOrFunctions == null) {
+    return null;
+  }
+  // ignore: strong_mode_down_cast_composite
+  return Validators.composeAsync(
+      validatorsOrFunctions.map(normalizeAsyncValidator).toList());
 }
 
 bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
