@@ -1,17 +1,16 @@
-import "package:angular2/di.dart" show Injectable, PipeTransform, Pipe;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/intl.dart"
-    show NumberFormatter, NumberFormatStyle;
+import 'package:angular2/angular2.dart';
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:intl/intl.dart';
 
-import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
+import 'invalid_pipe_argument_exception.dart';
 
-String defaultLocale = "en-US";
+const String _defaultLocale = "en-US";
 final RegExp _re = new RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 
 /// Internal base class for numeric pipes.
 @Injectable()
 class NumberPipe {
-  static String _format(num value, NumberFormatStyle style, String digits,
+  static String _format(num value, _NumberFormatStyle style, String digits,
       [String currency = null, bool currencyAsSymbol = false]) {
     if (value == null) return null;
     if (value is! num) {
@@ -22,7 +21,8 @@ class NumberPipe {
       var parts = _re.firstMatch(digits);
       if (parts == null) {
         throw new BaseException(
-            '''${ digits} is not a valid digit info for number pipes''');
+          '${ digits} is not a valid digit info for number pipes',
+        );
       }
       if (parts[1] != null) {
         minInt = int.parse(parts[1]);
@@ -34,12 +34,16 @@ class NumberPipe {
         maxFraction = int.parse(parts[5]);
       }
     }
-    return NumberFormatter.format(value, defaultLocale, style,
-        minimumIntegerDigits: minInt,
-        minimumFractionDigits: minFraction,
-        maximumFractionDigits: maxFraction,
-        currency: currency,
-        currencyAsSymbol: currencyAsSymbol);
+    return _formatNumber(
+      value,
+      _defaultLocale,
+      style,
+      minimumIntegerDigits: minInt,
+      minimumFractionDigits: minFraction,
+      maximumFractionDigits: maxFraction,
+      currency: currency,
+      currencyAsSymbol: currencyAsSymbol,
+    );
   }
 
   const NumberPipe();
@@ -68,8 +72,8 @@ class NumberPipe {
 @Pipe("number")
 @Injectable()
 class DecimalPipe extends NumberPipe implements PipeTransform {
-  String transform(dynamic value, [String digits = null]) {
-    return NumberPipe._format(value, NumberFormatStyle.Decimal, digits);
+  String transform(dynamic value, [String digits]) {
+    return NumberPipe._format(value, _NumberFormatStyle.Decimal, digits);
   }
 
   const DecimalPipe();
@@ -88,8 +92,8 @@ class DecimalPipe extends NumberPipe implements PipeTransform {
 @Pipe("percent")
 @Injectable()
 class PercentPipe extends NumberPipe implements PipeTransform {
-  String transform(dynamic value, [String digits = null]) {
-    return NumberPipe._format(value, NumberFormatStyle.Percent, digits);
+  String transform(dynamic value, [String digits]) {
+    return NumberPipe._format(value, _NumberFormatStyle.Percent, digits);
   }
 
   const PercentPipe();
@@ -112,13 +116,55 @@ class PercentPipe extends NumberPipe implements PipeTransform {
 @Pipe("currency")
 @Injectable()
 class CurrencyPipe extends NumberPipe implements PipeTransform {
-  String transform(dynamic value,
-      [String currencyCode = "USD",
-      bool symbolDisplay = false,
-      String digits = null]) {
-    return NumberPipe._format(
-        value, NumberFormatStyle.Currency, digits, currencyCode, symbolDisplay);
-  }
+  String transform(
+    dynamic value, [
+    String currencyCode = "USD",
+    bool symbolDisplay = false,
+    String digits,
+  ]) =>
+      NumberPipe._format(
+        value,
+        _NumberFormatStyle.Currency,
+        digits,
+        currencyCode,
+        symbolDisplay,
+      );
 
   const CurrencyPipe();
+}
+
+enum _NumberFormatStyle { Decimal, Percent, Currency }
+String _normalizeLocale(String locale) => locale.replaceAll('-', '_');
+String _formatNumber(
+  num number,
+  String locale,
+  _NumberFormatStyle style, {
+  int minimumIntegerDigits: 1,
+  int minimumFractionDigits: 0,
+  int maximumFractionDigits: 3,
+  String currency,
+  bool currencyAsSymbol: false,
+}) {
+  locale = _normalizeLocale(locale);
+  NumberFormat formatter;
+  switch (style) {
+    case _NumberFormatStyle.Decimal:
+      formatter = new NumberFormat.decimalPattern(locale);
+      break;
+    case _NumberFormatStyle.Percent:
+      formatter = new NumberFormat.percentPattern(locale);
+      break;
+    case _NumberFormatStyle.Currency:
+      if (currencyAsSymbol) {
+        formatter =
+            new NumberFormat.simpleCurrency(locale: locale, name: currency);
+      } else {
+        formatter = new NumberFormat.currency(locale: locale, name: currency);
+      }
+      break;
+  }
+  formatter.minimumIntegerDigits = minimumIntegerDigits;
+  formatter.minimumFractionDigits = minimumFractionDigits;
+  formatter.maximumFractionDigits = maximumFractionDigits;
+  return formatter.format(number);
 }
