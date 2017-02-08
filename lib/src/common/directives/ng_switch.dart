@@ -38,7 +38,9 @@ class SwitchView {
 ///
 /// ### Examples
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgSwitch-expanded}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgSwitch-expanded"} -->
+/// ```
 ///
 /// Try the [live example][ex].
 /// See the [Template Syntax section on `ngSwitch`][guide] for more details.

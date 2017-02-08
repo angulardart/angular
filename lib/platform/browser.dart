@@ -105,9 +105,13 @@ PlatformRef browserPlatform() {
 ///
 /// ### Examples
 ///
-/// {@example docs/quickstart/web/main.dart}
+/// ```dart
+/// // {@source "docs/quickstart/web/main.dart"}
+/// ```
 ///
-/// {@example docs/toh-6/web/main.dart}
+/// ```dart
+/// // {@source "docs/toh-6/web/main.dart"}
+/// ```
 ///
 /// For details concerning these examples see the
 /// [Quickstart](docs/quickstart.html) and

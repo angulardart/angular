@@ -47,7 +47,9 @@ var LIFECYCLE_HOOKS_VALUES = [
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/on_changes_component.dart region=ng-on-changes}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/on_changes_component.dart" region="ng-on-changes"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#onchanges
 /// [ex]: examples/lifecycle-hooks#onchanges
@@ -66,7 +68,9 @@ abstract class OnChanges {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/spy_directive.dart region=spy-directive}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#oninit
 /// [ex]: examples/lifecycle-hooks#spy
@@ -100,7 +104,9 @@ abstract class OnInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/do_check_component.dart region=ng-do-check}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/do_check_component.dart" region="ng-do-check"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#docheck
 /// [ex]: examples/lifecycle-hooks#docheck
@@ -117,7 +123,9 @@ abstract class DoCheck {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/spy_directive.dart region=spy-directive}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#ondestroy
 /// [ex]: examples/lifecycle-hooks#spy
@@ -132,9 +140,13 @@ abstract class OnDestroy {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"}
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: examples/lifecycle-hooks#after-content
@@ -149,9 +161,13 @@ abstract class AfterContentInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"}
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: examples/lifecycle-hooks#after-content
@@ -166,9 +182,13 @@ abstract class AfterContentChecked {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"}
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#afterview
 /// [ex]: examples/lifecycle-hooks#after-view
@@ -183,9 +203,13 @@ abstract class AfterViewInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"}
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"}
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#afterview
 /// [ex]: examples/lifecycle-hooks#after-view

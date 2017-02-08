@@ -61,13 +61,21 @@ import "../../core/change_detection/differs/default_iterable_differ.dart"
 ///
 /// ### Examples
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgFor-1}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgFor-1"} -->
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgFor-3}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgFor-3"} -->
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=Template-3}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="Template-3"} -->
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=Template-4}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="Template-4"} -->
+/// ```
 ///
 /// See the [Template Syntax section on `ngFor`][guide] for details.
 ///

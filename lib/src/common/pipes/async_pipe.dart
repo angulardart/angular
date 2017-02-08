@@ -39,7 +39,9 @@ Future<dynamic> ___unused;
 ///
 /// ### Example
 ///
-/// {@example common/pipes/lib/async_pipe.dart region='AsyncPipe'}
+/// ```dart
+/// // {@source "common/pipes/lib/async_pipe.dart" region="AsyncPipe"}
+/// ```
 ///
 @Pipe("async", pure: false)
 @Injectable()

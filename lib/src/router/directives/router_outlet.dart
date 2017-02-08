@@ -29,7 +29,9 @@ var _resolveToTrue = new Future.value(true);
 ///
 /// Here is an example from the [tutorial on routing][routing]:
 ///
-/// {@example docs/toh-5/lib/app_component.dart region=template}
+/// ```dart
+/// // {@source "docs/toh-5/lib/app_component.dart" region="template"}
+/// ```
 ///
 /// [routing]: docs/tutorial/toh-pt5.html#router-outlet
 @Directive(selector: "router-outlet")

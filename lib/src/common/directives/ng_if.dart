@@ -9,9 +9,13 @@ import 'package:angular2/core.dart'
 ///
 /// ### Examples
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgIf-1}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgIf-1"} -->
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=Template-2}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="Template-2"} -->
+/// ```
 ///
 /// [guide]: docs/guide/template-syntax.html#ngIf
 @Directive(selector: "[ngIf]", inputs: const ["ngIf"])

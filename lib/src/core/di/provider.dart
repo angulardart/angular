@@ -171,7 +171,9 @@ class Provider {
 ///
 /// ### Example
 ///
-/// {@example docs/toh-6/web/main.dart}
+/// ```dart
+/// // {@source "docs/toh-6/web/main.dart"}
+/// ```
 ///
 /// [di]: docs/guide/dependency-injection.html#injector-providers
 Provider provide(token,

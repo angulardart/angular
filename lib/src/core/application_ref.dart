@@ -185,7 +185,9 @@ abstract class ApplicationRef {
   ///
   /// ### Example
   /// 
-  /// {@example core/ts/platform/platform.ts region='longform'}
+/// ```dart
+/// // {@disabled-source "core/ts/platform/platform.ts" region="longform"}
+/// ```
   ///
   ComponentRef bootstrap(ComponentFactory componentFactory);
 

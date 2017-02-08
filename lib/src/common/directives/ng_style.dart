@@ -22,9 +22,13 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// the relevant excerpts from the example's template and the corresponding
 /// component class:
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgStyle}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgStyle"} -->
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.dart region=NgStyle}
+/// ```dart
+/// // {@source "docs/template-syntax/lib/app_component.dart" region="NgStyle"}
+/// ```
 ///
 /// In this example, user changes to the `<input>` elements result in updates
 /// to the corresponding style properties of the first paragraph.

@@ -24,9 +24,13 @@ import 'package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 ///
 /// ### Examples
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgClass-1}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgClass-1"} -->
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.dart region=setClasses}
+/// ```dart
+/// // {@source "docs/template-syntax/lib/app_component.dart" region="setClasses"}
+/// ```
 ///
 /// Try the [live example][ex].
 /// See the [Template Syntax section on `ngClass`][guide] for more details.

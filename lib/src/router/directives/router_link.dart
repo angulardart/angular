@@ -8,11 +8,15 @@ import "../router.dart" show Router;
 ///
 /// Consider the following route configuration:
 ///
-/// {@example docs/toh-5/lib/app_component.dart region=heroes}
+/// ```dart
+/// // {@source "docs/toh-5/lib/app_component.dart" region="heroes"}
+/// ```
 ///
 /// When linking to this `Heroes` route, you can write:
 ///
-/// {@example docs/toh-5/lib/app_component_1.dart region=template-v2}
+/// ```dart
+/// // {@source "docs/toh-5/lib/app_component_1.dart" region="template-v2"}
+/// ```
 ///
 /// RouterLink expects the value to be an array of route names, followed by the params
 /// for that level of routing. For instance `['/Team', {teamId: 1}, 'User', {userId: 2}]`
