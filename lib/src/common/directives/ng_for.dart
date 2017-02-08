@@ -63,18 +63,24 @@ import "../../core/change_detection/differs/default_iterable_differ.dart"
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgFor-1"} -->
+/// <div *ngFor="let hero of heroes">{{hero.fullName}}</div>
 /// ```
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgFor-3"} -->
+/// <div *ngFor="let hero of heroes; let i=index">{{i + 1}} - {{hero.fullName}}</div>
 /// ```
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="Template-3"} -->
+/// <hero-detail template="ngFor let hero of heroes; trackBy:trackByHeroes" [hero]="hero"></hero-detail>
 /// ```
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="Template-4"} -->
+/// <template ngFor let-hero [ngForOf]="heroes" [ngForTrackBy]="trackByHeroes">
+///   <hero-detail [hero]="hero"></hero-detail>
+/// </template>
 /// ```
 ///
 /// See the [Template Syntax section on `ngFor`][guide] for details.

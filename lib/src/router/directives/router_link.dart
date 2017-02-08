@@ -10,12 +10,19 @@ import "../router.dart" show Router;
 ///
 /// ```dart
 /// // {@source "docs/toh-5/lib/app_component.dart" region="heroes"}
+/// @RouteConfig(const [
+///   const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent)
+/// ])
 /// ```
 ///
 /// When linking to this `Heroes` route, you can write:
 ///
 /// ```dart
 /// // {@source "docs/toh-5/lib/app_component_1.dart" region="template-v2"}
+/// template: '''
+///   <h1>{{title}}</h1>
+///   <a [routerLink]="['Heroes']">Heroes</a>
+///   <router-outlet></router-outlet>''',
 /// ```
 ///
 /// RouterLink expects the value to be an array of route names, followed by the params

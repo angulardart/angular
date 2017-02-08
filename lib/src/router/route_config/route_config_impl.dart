@@ -15,6 +15,16 @@ Future<dynamic> ___make_dart_analyzer_happy;
 ///
 /// ```dart
 /// // {@source "docs/toh-5/lib/app_component.dart" region="routes"}
+/// @RouteConfig(const [
+///   const Route(
+///       path: '/dashboard',
+///       name: 'Dashboard',
+///       component: DashboardComponent,
+///       useAsDefault: true),
+///   const Route(
+///       path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent),
+///   const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent)
+/// ])
 /// ```
 ///
 /// [routing]: docs/tutorial/toh-pt5.html#configure-routes

@@ -40,6 +40,23 @@ class SwitchView {
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgSwitch-expanded"} -->
+///     <span [ngSwitch]="toeChoice">
+/// 
+///       <!-- with *NgSwitch -->
+///       <span *ngSwitchWhen="'Eenie'">Eenie</span>
+///       <span *ngSwitchWhen="'Meanie'">Meanie</span>
+///       <span *ngSwitchWhen="'Miney'">Miney</span>
+///       <span *ngSwitchWhen="'Moe'">Moe</span>
+///       <span *ngSwitchDefault>other</span>
+/// 
+///       <!-- with <template> -->
+///       <template [ngSwitchWhen]="'Eenie'"><span>Eenie</span></template>
+///       <template [ngSwitchWhen]="'Meanie'"><span>Meanie</span></template>
+///       <template [ngSwitchWhen]="'Miney'"><span>Miney</span></template>
+///       <template [ngSwitchWhen]="'Moe'"><span>Moe</span></template>
+///       <template ngSwitchDefault><span>other</span></template>
+/// 
+///     </span>
 /// ```
 ///
 /// Try the [live example][ex].
