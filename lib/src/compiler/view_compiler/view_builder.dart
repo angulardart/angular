@@ -44,6 +44,7 @@ import "view_compiler_utils.dart"
         createFlatArray,
         createDiTokenExpression,
         createSetAttributeParams,
+        componentFromDirectives,
         TEMPLATE_COMMENT_TEXT;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
@@ -287,13 +288,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     var renderNode = new o.ReadClassMemberExpr(fieldName);
 
-    List<CompileDirectiveMetadata> directives = _directivesFromElementAst(ast);
-    CompileDirectiveMetadata component = _componentFromDirectives(directives);
-    var htmlAttrs = _readHtmlAttrs(ast.attrs);
+    var directives = <CompileDirectiveMetadata>[];
+    for (var dir in ast.directives) directives.add(dir.directive);
+    CompileDirectiveMetadata component = componentFromDirectives(directives);
+    var htmlAttrs = _attribListToMap(ast.attrs);
 
     // Create statements to initialize literal attribute values.
+    // For example, a directive may have hostAttributes setting class name.
     var attrNameAndValues = _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
-    for (var i = 0; i < attrNameAndValues.length; i++) {
+    for (int i = 0, len = attrNameAndValues.length; i < len; i++) {
       o.Statement stmt = _createSetAttributeStatement(ast.name, fieldName,
           attrNameAndValues[i][0], attrNameAndValues[i][1]);
       view.createMethod.addStmt(stmt);
@@ -320,7 +323,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.hasViewContainer,
         false,
         ast.references,
-        isHtmlElement: isHtmlElement);
+        isHtmlElement: isHtmlElement,
+        hasTemplateRefQuery: parent.hasTemplateRefQuery);
     view.nodes.add(compileElement);
     o.Expression compViewExpr;
     if (component != null) {
@@ -343,10 +347,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
                   .callFn([o.THIS_EXPR, o.literal(nodeIndex), renderNode]))
           .toStmt());
     }
+
     compileElement.beforeChildren();
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(this.view.nodes.length - nodeIndex - 1);
+
     if (compViewExpr != null) {
       o.Expression codeGenContentNodes;
       if (this.view.component.type.isHost) {
@@ -363,22 +369,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         codeGenContentNodes,
         o.NULL_EXPR
       ]).toStmt());
-    }
-    return null;
-  }
-
-  List<CompileDirectiveMetadata> _directivesFromElementAst(ElementAst ast) {
-    var directives = <CompileDirectiveMetadata>[];
-    for (DirectiveAst directiveAst in ast.directives) {
-      directives.add(directiveAst.directive);
-    }
-    return directives;
-  }
-
-  CompileDirectiveMetadata _componentFromDirectives(
-      List<CompileDirectiveMetadata> directives) {
-    for (CompileDirectiveMetadata directive in directives) {
-      if (directive.isComponent) return directive;
     }
     return null;
   }
@@ -517,7 +507,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.providers,
         ast.hasViewContainer,
         true,
-        ast.references);
+        ast.references,
+        hasTemplateRefQuery: parent.hasTemplateRefQuery);
     view.nodes.add(compileElement);
     nestedViewCount++;
     var embeddedView = new CompileView(
@@ -535,9 +526,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     templateVisitAll(
         embeddedViewVisitor,
         ast.children,
-        embeddedView.declarationElement.hasRenderNode
-            ? embeddedView.declarationElement.parent
-            : embeddedView.declarationElement);
+        embeddedView.declarationElement.parent ??
+            embeddedView.declarationElement);
     nestedViewCount += embeddedViewVisitor.nestedViewCount;
 
     compileElement.beforeChildren();
@@ -576,34 +566,36 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   }
 }
 
+// Read hostAttributes from each directive and merges with declaredHtmlAttrs
+// to return a single map from name to value(expression).
 List<List<String>> _mergeHtmlAndDirectiveAttrs(
     Map<String, String> declaredHtmlAttrs,
     List<CompileDirectiveMetadata> directives) {
   Map<String, String> result = {};
   declaredHtmlAttrs.forEach((key, value) => result[key] = value);
-  directives.forEach((directiveMeta) {
+  for (CompileDirectiveMetadata directiveMeta in directives) {
     directiveMeta.hostAttributes.forEach((name, value) {
       var prevValue = result[name];
       result[name] = prevValue != null
           ? mergeAttributeValue(name, prevValue, value)
           : value;
     });
-  });
+  }
   return mapToKeyValueArray(result);
 }
 
-Map<String, String> _readHtmlAttrs(List<AttrAst> attrs) {
+Map<String, String> _attribListToMap(List<AttrAst> attrs) {
   Map<String, String> htmlAttrs = {};
-  attrs.forEach((ast) {
-    htmlAttrs[ast.name] = ast.value;
-  });
+  for (AttrAst attr in attrs) {
+    htmlAttrs[attr.name] = attr.value;
+  }
   return htmlAttrs;
 }
 
 String mergeAttributeValue(
     String attrName, String attrValue1, String attrValue2) {
   if (attrName == CLASS_ATTR || attrName == STYLE_ATTR) {
-    return '''${ attrValue1} ${ attrValue2}''';
+    return '$attrValue1 $attrValue2';
   } else {
     return attrValue2;
   }
@@ -635,7 +627,6 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
       componentToken = createDiTokenExpression(
           identifierToken(compileElement.component.type));
     }
-
     compileElement.referenceTokens?.forEach((String varName, token) {
       varTokenEntries.add([
         varName,
@@ -662,30 +653,10 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
           Identifiers.StaticNodeDebugInfo, null, [o.TypeModifier.Const]));
 }
 
+/// Generates output ast for a CompileView and returns a [ClassStmt] for the
+/// view of embedded template.
 o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar) {
-  var emptyTemplateVariableBindings = view.templateVariableBindings
-      .map((List entry) => [entry[0], o.NULL_EXPR])
-      .toList();
-  var viewConstructorArgs = [
-    new o.FnParam(ViewConstructorVars.parentView.name,
-        o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-    new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE),
-    new o.FnParam(ViewConstructorVars.parentElement.name, o.DYNAMIC_TYPE)
-  ];
-  var superConstructorArgs = [
-    o.variable(view.className),
-    ViewTypeEnum.fromValue(view.viewType),
-    o.literalMap(emptyTemplateVariableBindings),
-    ViewConstructorVars.parentView,
-    ViewConstructorVars.parentIndex,
-    ViewConstructorVars.parentElement,
-    ChangeDetectionStrategyEnum.fromValue(getChangeDetectionMode(view))
-  ];
-  if (view.genConfig.genDebugInfo) {
-    superConstructorArgs.add(nodeDebugInfosVar);
-  }
-  var viewConstructor = new o.ClassMethod(null, viewConstructorArgs,
-      [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
+  var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
   var viewMethods = (new List.from([
     new o.ClassMethod(
         "createInternal",
@@ -721,7 +692,41 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar) {
           .where((o.ClassMethod method) =>
               method.body != null && method.body.length > 0)
           .toList() as List<o.ClassMethod>);
+  _addRenderTypeCtorInitialization(view, viewClass);
+  return viewClass;
+}
 
+o.ClassMethod _createViewClassConstructor(
+    CompileView view, o.Expression nodeDebugInfosVar) {
+  var emptyTemplateVariableBindings = view.templateVariableBindings
+      .map((List entry) => [entry[0], o.NULL_EXPR])
+      .toList();
+  var viewConstructorArgs = [
+    new o.FnParam(ViewConstructorVars.parentView.name,
+        o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
+    new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE),
+    new o.FnParam(ViewConstructorVars.parentElement.name, o.DYNAMIC_TYPE)
+  ];
+  var superConstructorArgs = [
+    o.variable(view.className),
+    ViewTypeEnum.fromValue(view.viewType),
+    o.literalMap(emptyTemplateVariableBindings),
+    ViewConstructorVars.parentView,
+    ViewConstructorVars.parentIndex,
+    ViewConstructorVars.parentElement,
+    ChangeDetectionStrategyEnum.fromValue(getChangeDetectionMode(view))
+  ];
+  if (view.genConfig.genDebugInfo) {
+    superConstructorArgs.add(nodeDebugInfosVar);
+  }
+  return new o.ClassMethod(null, viewConstructorArgs,
+      [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
+}
+
+void _addRenderTypeCtorInitialization(CompileView view, o.ClassStmt viewClass) {
+  var viewConstructor = viewClass.constructorMethod;
+
+  /// Add render type.
   if (view.viewIndex == 0) {
     var renderTypeExpr = _constructRenderType(view, viewClass, viewConstructor);
     viewConstructor.body.add(
@@ -734,7 +739,6 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar) {
                 sourceClass: view.componentView.classType))
         .toStmt());
   }
-  return viewClass;
 }
 
 // Writes code to initial RenderComponentType for component.

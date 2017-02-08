@@ -82,6 +82,8 @@ void bindDirectiveAfterViewLifecycleCallbacks(
   }
 }
 
+// Create code to call ngOnDestroy for each directive that contains OnDestroy
+// lifecycle hook.
 void bindDirectiveDestroyLifecycleCallbacks(
     CompileDirectiveMetadata directiveMeta,
     o.Expression directiveInstance,

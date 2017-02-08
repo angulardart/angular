@@ -1,18 +1,18 @@
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
-import "package:angular2/src/core/di.dart" show Injectable;
+import 'package:angular2/src/core/di.dart' show Injectable;
 
-import "../compile_metadata.dart"
+import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
-import "../config.dart" show CompilerConfig;
-import "../identifiers.dart";
-import "../output/output_ast.dart" as o;
-import "../style_compiler.dart" show StylesCompileResult;
-import "../template_ast.dart" show TemplateAst, templateVisitAll;
-import "compile_element.dart" show CompileElement;
-import "compile_view.dart" show CompileView;
-import "view_binder.dart" show bindView;
-import "view_builder.dart";
+import '../config.dart' show CompilerConfig;
+import '../identifiers.dart';
+import '../output/output_ast.dart' as o;
+import '../style_compiler.dart' show StylesCompileResult;
+import '../template_ast.dart' show TemplateAst, templateVisitAll;
+import 'compile_element.dart' show CompileElement;
+import 'compile_view.dart' show CompileView;
+import 'view_binder.dart' show bindView;
+import 'view_builder.dart';
 
 class ViewCompileResult {
   List<o.Statement> statements;
@@ -21,6 +21,13 @@ class ViewCompileResult {
   ViewCompileResult(this.statements, this.viewFactoryVar, this.dependencies);
 }
 
+/// Compiles a single component to a set of CompileView(s) and generates top
+/// level statements to support debugging and view factories.
+///
+/// - Creates main CompileView
+/// - Runs ViewBuilderVisitor over template ast nodes
+///     - For each embedded template creates a child CompileView and recurses.
+/// - Builds a tree of CompileNode/Element(s)
 @Injectable()
 class ViewCompiler {
   CompilerConfig _genConfig;
@@ -53,12 +60,8 @@ class ViewCompiler {
       List<ViewCompileDependency> targetDependencies) {
     var builderVisitor =
         new ViewBuilderVisitor(view, targetDependencies, stylesCompileResult);
-    templateVisitAll(
-        builderVisitor,
-        template,
-        view.declarationElement.hasRenderNode
-            ? view.declarationElement.parent
-            : view.declarationElement);
+    templateVisitAll(builderVisitor, template,
+        view.declarationElement.parent ?? view.declarationElement);
     return builderVisitor.nestedViewCount;
   }
 

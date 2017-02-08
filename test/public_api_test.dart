@@ -92,6 +92,7 @@ var NG_COMPILER = [
   'CompileTypeMetadata',
   'DirectiveAst',
   'ElementAst',
+  'ElementProviderUsage',
   'EmbeddedTemplateAst',
   'NgContentAst',
   'PLATFORM_DIRECTIVES',

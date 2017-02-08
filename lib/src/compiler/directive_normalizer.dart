@@ -70,7 +70,7 @@ class DirectiveNormalizer {
               sourceAbsUrl, template.preserveWhitespace));
     } else {
       throw new BaseException(
-          '''No template specified for component ${ directiveType . name}''');
+          'No template specified for component ${directiveType.name}');
     }
   }
 
@@ -82,10 +82,9 @@ class DirectiveNormalizer {
       bool preserveWhitespace) {
     var rootNodesAndErrors =
         this._htmlParser.parse(template, directiveType.name);
-    if (rootNodesAndErrors.errors.length > 0) {
-      var errorString = rootNodesAndErrors.errors.join("\n");
-      throw new BaseException('Template parse errors: '
-          '${ errorString}');
+    if (rootNodesAndErrors.errors.isNotEmpty) {
+      var errorString = rootNodesAndErrors.errors.join('\n');
+      throw new BaseException('Template parse errors: $errorString');
     }
     var visitor = new TemplatePreparseVisitor();
     htmlVisitAll(visitor, rootNodesAndErrors.rootNodes);

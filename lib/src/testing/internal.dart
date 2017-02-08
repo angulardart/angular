@@ -6,7 +6,7 @@ import 'package:angular2/platform/testing/browser.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart';
 import 'package:angular2/src/core/reflection/reflection.dart';
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
-import 'package:test/test.dart';
+import 'package:matcher/matcher.dart';
 
 import "internal_injector.dart";
 

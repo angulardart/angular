@@ -38,9 +38,6 @@ class CompileNode {
   CompileNode(
       this.parent, this.view, this.nodeIndex, this.renderNode, this.sourceAst);
 
-  /// Returns true if there is a reference to this node in the view.
-  bool get hasRenderNode => renderNode != null;
-
   /// Whether node is the root of the view.
   bool get isRootElement => view != parent.view;
 }
@@ -56,6 +53,7 @@ class CompileElement extends CompileNode {
   List<ProviderAst> _resolvedProvidersArray;
   bool hasViewContainer;
   bool hasEmbeddedView;
+  bool hasTemplateRefQuery;
 
   /// Expression that contains reference to componentView.
   o.Expression compViewExpr;
@@ -69,6 +67,9 @@ class CompileElement extends CompileNode {
   CompileView embeddedView;
   List<o.Expression> directiveInstances;
   Map<String, CompileTokenMetadata> referenceTokens;
+  // If compile element is a template and has #ref resolving to TemplateRef
+  // this is set so we create a class field member for the template reference.
+  bool _publishesTemplateRef = false;
 
   CompileElement(
       CompileElement parent,
@@ -83,7 +84,8 @@ class CompileElement extends CompileNode {
       this.hasViewContainer,
       this.hasEmbeddedView,
       List<ReferenceAst> references,
-      {this.isHtmlElement: false})
+      {this.isHtmlElement: false,
+      this.hasTemplateRefQuery: false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
@@ -153,10 +155,16 @@ class CompileElement extends CompileNode {
     if (view != null) {
       var createTemplateRefExpr = o
           .importExpr(Identifiers.TemplateRef)
-          .instantiate([this.appViewContainer, view.viewFactory]);
+          .instantiate([this.appViewContainer, view.viewFactory],
+              o.importType(Identifiers.TemplateRef));
       var provider = new CompileProviderMetadata(
           token: identifierToken(Identifiers.TemplateRef),
           useValue: createTemplateRefExpr);
+
+      bool isReachable = false;
+      if (_getQueriesFor(identifierToken(Identifiers.TemplateRef)).isNotEmpty) {
+        isReachable = true;
+      }
       // Add TemplateRef as first provider as it does not have deps on other
       // providers
       _resolvedProvidersArray
@@ -164,7 +172,7 @@ class CompileElement extends CompileNode {
             0,
             new ProviderAst(provider.token, false, [provider],
                 ProviderAstType.Builtin, this.sourceAst.sourceSpan,
-                eager: true));
+                eager: true, dynamicallyReachable: isReachable));
     }
   }
 
@@ -172,6 +180,15 @@ class CompileElement extends CompileNode {
     if (hasViewContainer) {
       _instances.add(
           identifierToken(Identifiers.ViewContainerRef), appViewContainer);
+    }
+
+    if (referenceTokens != null) {
+      referenceTokens.forEach((String varName, token) {
+        if (token != null &&
+            token.equalsTo(identifierToken(Identifiers.TemplateRef))) {
+          _publishesTemplateRef = true;
+        }
+      });
     }
 
     _prepareProviderInstances();
@@ -187,7 +204,7 @@ class CompileElement extends CompileNode {
 
     List<_QueryWithRead> queriesWithReads = [];
     _resolvedProviders.values.forEach((resolvedProvider) {
-      var queriesForProvider = this._getQueriesFor(resolvedProvider.token);
+      var queriesForProvider = _getQueriesFor(resolvedProvider.token);
       queriesWithReads.addAll(queriesForProvider
           .map((query) => new _QueryWithRead(query, resolvedProvider.token)));
     });
@@ -223,6 +240,8 @@ class CompileElement extends CompileNode {
       }
     }
   }
+
+  bool get publishesTemplateRef => _publishesTemplateRef;
 
   void _prepareProviderInstances() {
     // Create a lookup map from token to provider.
@@ -275,7 +294,9 @@ class CompileElement extends CompileNode {
   }
 
   void afterChildren(num childNodeCount) {
-    _resolvedProviders.values.forEach((resolvedProvider) {
+    for (ProviderAst resolvedProvider in _resolvedProviders.values) {
+      if (!resolvedProvider.dynamicallyReachable) continue;
+
       // Note: afterChildren is called after recursing into children.
       // This is good so that an injector match in an element that is closer to
       // a requesting element matches first.
@@ -292,9 +313,13 @@ class CompileElement extends CompileNode {
               : childNodeCount;
       view.injectorGetMethod.addStmt(createInjectInternalCondition(
           nodeIndex, providerChildNodeCount, resolvedProvider, providerExpr));
-    });
-    _queries.values.forEach((queries) => queries.forEach((query) => query
-        .afterChildren(view.createMethod, view.updateContentQueriesMethod)));
+    }
+    for (List<CompileQuery> queries in _queries.values) {
+      for (CompileQuery query in queries) {
+        query.generateImmediateUpdate(view.createMethod);
+        query.generateDynamicUpdate(view.updateContentQueriesMethod);
+      }
+    }
   }
 
   void addContentNode(num ngContentIndex, o.Expression nodeExpr) {
@@ -317,7 +342,7 @@ class CompileElement extends CompileNode {
     CompileElement currentEl = this;
     var distance = 0;
     List<CompileQuery> queries;
-    while (currentEl.hasRenderNode) {
+    while (currentEl.parent != null) {
       queries = currentEl._queries.get(token);
       if (queries != null) {
         result.addAll(
@@ -377,7 +402,7 @@ class CompileElement extends CompileNode {
     }
 
     // check parent elements
-    while (result == null && currElement.parent.hasRenderNode) {
+    while (result == null && currElement.parent.parent != null) {
       currElement = currElement.parent;
       result = currElement._getLocalDependency(ProviderAstType.PublicService,
           new CompileDiDependencyMetadata(token: dep.token));
@@ -438,11 +463,22 @@ o.Expression createProviderProperty(
   type ??= o.DYNAMIC_TYPE;
 
   if (isEager) {
-    view.fields.add(new o.ClassField(propName,
-        outputType: type, modifiers: const [o.StmtModifier.Private]));
-    view.createMethod.addStmt(
-        new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
-            .toStmt());
+    if (compileElement.publishesTemplateRef ||
+        compileElement.hasTemplateRefQuery ||
+        provider.dynamicallyReachable) {
+      view.fields.add(new o.ClassField(propName,
+          outputType: type, modifiers: const [o.StmtModifier.Private]));
+      view.createMethod.addStmt(
+          new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
+              .toStmt());
+    } else {
+      // Since provider is not dynamically reachable and we only need
+      // the provider locally in createInternal, create a local var.
+      var localVar = o.variable(propName, type);
+      view.createMethod
+          .addStmt(localVar.set(resolvedProviderValueExpr).toDeclStmt());
+      return localVar;
+    }
   } else {
     var internalField = '_${propName}';
     view.fields.add(new o.ClassField(internalField,

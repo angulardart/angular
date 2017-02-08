@@ -38,10 +38,8 @@ const List<dynamic> styles_TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ViewContainer _appEl_1;
-  dynamic _TemplateRef_1_4;
   NgIf _NgIf_1_5;
   ViewContainer _appEl_3;
-  dynamic _TemplateRef_3_4;
   import4.NgFor _NgFor_3_5;
   var _expr_1;
   static RenderComponentType renderType;
@@ -60,14 +58,16 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     var _anchor_1 = new Comment('template bindings={}');
     parentRenderNode?.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    _TemplateRef_1_4 = new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
+    TemplateRef _TemplateRef_1_4 =
+        new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
     _NgIf_1_5 = new NgIf(_appEl_1, _TemplateRef_1_4);
     Text _text_2 = new Text('\n    ');
     parentRenderNode.append(_text_2);
     var _anchor_3 = new Comment('template bindings={}');
     parentRenderNode?.append(_anchor_3);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
-    _TemplateRef_3_4 = new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
+    TemplateRef _TemplateRef_3_4 =
+        new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
     _NgFor_3_5 = new import4.NgFor(_appEl_3, _TemplateRef_3_4);
     Text _text_4 = new Text('\n    ');
     parentRenderNode.append(_text_4);
@@ -77,14 +77,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, TemplateRef) && (1 == requestNodeIndex))) {
-      return _TemplateRef_1_4;
-    }
     if ((identical(token, NgIf) && (1 == requestNodeIndex))) {
       return _NgIf_1_5;
-    }
-    if ((identical(token, TemplateRef) && (3 == requestNodeIndex))) {
-      return _TemplateRef_3_4;
     }
     if ((identical(token, import4.NgFor) && (3 == requestNodeIndex))) {
       return _NgFor_3_5;

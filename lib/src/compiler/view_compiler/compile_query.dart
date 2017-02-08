@@ -63,37 +63,54 @@ class CompileQuery {
     return isStatic;
   }
 
-  void afterChildren(
-      CompileMethod targetStaticMethod, CompileMethod targetDynamicMethod) {
+  bool get _isSingleStaticQuery => meta.first && _isStatic();
+
+  /// For queries that don't change and user is querying a single element such
+  /// as ViewContainerRef, create immediate code in createMethod to
+  /// reset value.
+  ///
+  /// We don't do this for QueryLists for now as this
+  /// would break the timing when we call QueryList listeners...
+  void generateImmediateUpdate(CompileMethod targetMethod) {
+    if (!_isSingleStaticQuery) return;
     var values = createQueryValues(this._values);
-    var updateStmts = [
-      this.queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
+    var statements = [
+      queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
     ];
-    if (this.ownerDirectiveExpression != null) {
-      var valueExpr =
-          this.meta.first ? this.queryList.prop("first") : this.queryList;
-      updateStmts.add(this
-          .ownerDirectiveExpression
-          .prop(this.meta.propertyName)
+    if (ownerDirectiveExpression != null) {
+      statements.add(ownerDirectiveExpression
+          .prop(meta.propertyName)
+          .set(queryList.prop("first"))
+          .toStmt());
+    }
+    targetMethod.addStmts(statements);
+  }
+
+  void generateDynamicUpdate(CompileMethod targetMethod) {
+    if (_isSingleStaticQuery) return;
+    var values = createQueryValues(this._values);
+    var statements = [
+      queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
+    ];
+    if (ownerDirectiveExpression != null) {
+      var valueExpr = meta.first ? queryList.prop("first") : queryList;
+      statements.add(ownerDirectiveExpression
+          .prop(meta.propertyName)
           .set(valueExpr)
           .toStmt());
     }
-    if (!this.meta.first) {
-      updateStmts
-          .add(this.queryList.callMethod("notifyOnChanges", []).toStmt());
+    if (!meta.first) {
+      statements.add(queryList.callMethod("notifyOnChanges", []).toStmt());
     }
-    if (this.meta.first && this._isStatic()) {
-      // for queries that don't change and the user asked for a single element,
+    targetMethod.addStmt(new o.IfStmt(queryList.prop("dirty"), statements));
+  }
 
-      // set it immediately. That is e.g. needed for querying for ViewContainerRefs, ...
-
-      // we don't do this for QueryLists for now as this would break the timing when
-
-      // we call QueryList listeners...
-      targetStaticMethod.addStmts(updateStmts);
+  void afterChildren(
+      CompileMethod targetStaticMethod, CompileMethod targetDynamicMethod) {
+    if (_isSingleStaticQuery) {
+      generateImmediateUpdate(targetStaticMethod);
     } else {
-      targetDynamicMethod
-          .addStmt(new o.IfStmt(this.queryList.prop("dirty"), updateStmts));
+      generateDynamicUpdate(targetDynamicMethod);
     }
   }
 }

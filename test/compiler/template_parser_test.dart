@@ -11,7 +11,6 @@ import "package:angular2/src/compiler/template_parser.dart"
     show TemplateParser, splitClasses;
 import "package:angular2/src/core/di.dart" show provide;
 import "package:angular2/testing_internal.dart";
-import 'package:func/func.dart';
 import "package:logging/logging.dart";
 import 'package:test/test.dart';
 
@@ -26,6 +25,9 @@ var MOCK_SCHEMA_REGISTRY = [
       useValue: new MockSchemaRegistry(
           {"invalidProp": false}, {"mappedAttr": "mappedProp"}))
 ];
+
+typedef R Func3Opt1<A, B, C, R>(A a, B b, [C c]);
+
 void main() {
   CompileDirectiveMetadata ngIf;
   Func3Opt1<String, List<CompileDirectiveMetadata>, List<CompilePipeMetadata>,
@@ -1945,7 +1947,7 @@ class FooAstTransformer implements TemplateAstVisitor {
 
   dynamic visitElement(ElementAst ast, dynamic context) {
     if (ast.name != "div") return ast;
-    return new ElementAst("foo", [], [], [], [], [], [], false, [],
+    return new ElementAst("foo", [], [], [], [], [], [], null, [],
         ast.ngContentIndex, ast.sourceSpan);
   }
 
@@ -1990,7 +1992,7 @@ class FooAstTransformer implements TemplateAstVisitor {
 class BarAstTransformer extends FooAstTransformer {
   dynamic visitElement(ElementAst ast, dynamic context) {
     if (ast.name != "foo") return ast;
-    return new ElementAst("bar", [], [], [], [], [], [], false, [],
+    return new ElementAst("bar", [], [], [], [], [], [], null, [],
         ast.ngContentIndex, ast.sourceSpan);
   }
 }

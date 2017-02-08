@@ -1,16 +1,16 @@
-import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/core/metadata.dart" show Component;
-import "package:angular2/src/core/metadata.dart" show View;
-import "package:angular2/src/core/reflection/reflection.dart"
+import 'package:angular2/src/core/di.dart' show Injectable;
+import 'package:angular2/src/core/metadata.dart' show Component;
+import 'package:angular2/src/core/metadata.dart' show View;
+import 'package:angular2/src/core/reflection/reflection.dart'
     show Reflector, reflector;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
 /// Resolves types to [View].
 @Injectable()
 class ViewResolver {
   Reflector _reflector;
-  /** @internal */
   var _cache = new Map<Type, View>();
+
   ViewResolver([Reflector _reflector]) {
     if (_reflector != null) {
       this._reflector = _reflector;
@@ -18,6 +18,7 @@ class ViewResolver {
       this._reflector = reflector;
     }
   }
+
   View resolve(Type component) {
     var view = this._cache[component];
     if (view == null) {
@@ -27,7 +28,6 @@ class ViewResolver {
     return view;
   }
 
-  /** @internal */
   View _resolve(Type component) {
     Component compMeta;
     View viewMeta;
@@ -43,22 +43,22 @@ class ViewResolver {
       if (compMeta.template == null &&
           compMeta.templateUrl == null &&
           viewMeta == null) {
-        throw new BaseException(
-            '''Component \'$component\' must have either \'template\' or \'templateUrl\' set.''');
+        throw new BaseException("Component '$component' must have either "
+            "'template' or 'templateUrl' set.");
       } else if (compMeta.template != null && viewMeta != null) {
-        this._throwMixingViewAndComponent("template", component);
+        this._throwMixingViewAndComponent('template', component);
       } else if (compMeta.templateUrl != null && viewMeta != null) {
-        this._throwMixingViewAndComponent("templateUrl", component);
+        this._throwMixingViewAndComponent('templateUrl', component);
       } else if (compMeta.directives != null && viewMeta != null) {
-        this._throwMixingViewAndComponent("directives", component);
+        this._throwMixingViewAndComponent('directives', component);
       } else if (compMeta.pipes != null && viewMeta != null) {
-        this._throwMixingViewAndComponent("pipes", component);
+        this._throwMixingViewAndComponent('pipes', component);
       } else if (compMeta.encapsulation != null && viewMeta != null) {
-        this._throwMixingViewAndComponent("encapsulation", component);
+        this._throwMixingViewAndComponent('encapsulation', component);
       } else if (compMeta.styles != null && viewMeta != null) {
-        this._throwMixingViewAndComponent("styles", component);
+        this._throwMixingViewAndComponent('styles', component);
       } else if (compMeta.styleUrls != null && viewMeta != null) {
-        this._throwMixingViewAndComponent("styleUrls", component);
+        this._throwMixingViewAndComponent('styleUrls', component);
       } else if (viewMeta != null) {
         return viewMeta;
       } else {
@@ -73,8 +73,8 @@ class ViewResolver {
       }
     } else {
       if (viewMeta == null) {
-        throw new BaseException(
-            '''Could not compile \'$component\' because it is not a component.''');
+        throw new BaseException("Could not compile '$component' because it "
+            "is not a component.");
       } else {
         return viewMeta;
       }
@@ -82,9 +82,9 @@ class ViewResolver {
     return null;
   }
 
-  /** @internal */
   void _throwMixingViewAndComponent(String propertyName, Type component) {
     throw new BaseException(
-        '''Component \'$component\' cannot have both \'$propertyName\' and \'@View\' set at the same time"''');
+        "Component '$component' cannot have both '$propertyName' and '@View' "
+        "set at the same time");
   }
 }

@@ -167,3 +167,11 @@ void createPureProxy(o.Expression fn, num argCount,
       .set(o.importExpr(pureProxyId).callFn([fn]))
       .toStmt());
 }
+
+CompileDirectiveMetadata componentFromDirectives(
+    List<CompileDirectiveMetadata> directives) {
+  for (CompileDirectiveMetadata directive in directives) {
+    if (directive.isComponent) return directive;
+  }
+  return null;
+}

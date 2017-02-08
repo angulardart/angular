@@ -126,7 +126,7 @@ class CompileView implements NameResolver {
       locals[entry[1]] =
           new o.ReadClassMemberExpr('locals').key(o.literal(entry[0]));
     }
-    if (declarationElement.hasRenderNode) {
+    if (declarationElement.parent != null) {
       declarationElement.setEmbeddedView(this);
     }
   }
@@ -205,8 +205,10 @@ class CompileView implements NameResolver {
 
   void afterNodes() {
     this.pipes.forEach((pipe) => pipe.create());
-    this.viewQueries.values.forEach((queries) => queries.forEach((query) =>
-        query.afterChildren(this.createMethod, this.updateViewQueriesMethod)));
+    this.viewQueries.values.forEach((queries) => queries.forEach((query) {
+          query.generateImmediateUpdate(createMethod);
+          query.generateDynamicUpdate(updateContentQueriesMethod);
+        }));
   }
 }
 

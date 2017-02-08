@@ -7,7 +7,6 @@ import 'dart:js_util' as js_util;
 
 import 'package:angular2/common.dart' show NgIf, NgFor;
 import 'package:angular2/common.dart' show AsyncPipe;
-import 'package:angular2/compiler.dart' show CompilerConfig;
 import 'package:angular2/core.dart'
     show
         Injector,
@@ -44,6 +43,7 @@ import 'package:angular2/src/core/metadata.dart'
         HostListener;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
@@ -685,21 +685,6 @@ void main() {
                   .getLocal('alice');
               expect(value, isNotNull);
               expect(value.tagName.toLowerCase(), 'div');
-              completer.done();
-            });
-          });
-        });
-        test('should assign the TemplateRef to a user-defined variable',
-            () async {
-          return inject([TestComponentBuilder, AsyncTestCompleter],
-              (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-            tcb
-                .overrideView(MyComp,
-                    new View(template: '<template ref-alice></template>'))
-                .createAsync(MyComp)
-                .then((fixture) {
-              var value = fixture.debugElement.childNodes[0].getLocal('alice');
-              expect(value, new isInstanceOf<TemplateRef>());
               completer.done();
             });
           });

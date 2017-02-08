@@ -11,6 +11,7 @@ const STYLE_ELEMENT = "style";
 const SCRIPT_ELEMENT = "script";
 const NG_NON_BINDABLE_ATTR = "ngNonBindable";
 const NG_PROJECT_AS = "ngProjectAs";
+
 PreparsedElement preparseElement(HtmlElementAst ast) {
   var selectAttr;
   var hrefAttr;
@@ -55,6 +56,8 @@ class PreparsedElement {
   PreparsedElementType type;
   String selectAttr;
   String hrefAttr;
+  // Bindings or interpolations inside are ignored if nonBindable attribute
+  // is specified on an element.
   bool nonBindable;
   String projectAs;
   PreparsedElement(this.type, this.selectAttr, this.hrefAttr, this.nonBindable,

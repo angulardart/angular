@@ -45,14 +45,15 @@ class ViewBinderVisitor implements TemplateAstVisitor {
   final CompileView view;
   num _nodeIndex = 0;
   ViewBinderVisitor(this.view);
+
   dynamic visitBoundText(BoundTextAst ast, dynamic context) {
-    var node = this.view.nodes[this._nodeIndex++];
+    var node = this.view.nodes[_nodeIndex++];
     bindRenderText(ast, node, this.view);
     return null;
   }
 
   dynamic visitText(TextAst ast, dynamic context) {
-    this._nodeIndex++;
+    _nodeIndex++;
     return null;
   }
 
@@ -61,7 +62,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
   }
 
   dynamic visitElement(ElementAst ast, dynamic context) {
-    var compileElement = (this.view.nodes[this._nodeIndex++] as CompileElement);
+    var compileElement = (view.nodes[_nodeIndex++] as CompileElement);
     var eventListeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
     bindRenderInputs(ast.inputs, compileElement);

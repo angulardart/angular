@@ -1,4 +1,3 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import 'package:source_span/source_span.dart';
 
 import "compile_metadata.dart"
@@ -13,44 +12,62 @@ import "compile_metadata.dart"
 import "identifiers.dart" show Identifiers, identifierToken;
 import "parse_util.dart" show ParseError;
 import "template_ast.dart"
-    show ReferenceAst, AttrAst, DirectiveAst, ProviderAst, ProviderAstType;
+    show
+        ReferenceAst,
+        AttrAst,
+        DirectiveAst,
+        ProviderAst,
+        ProviderAstType,
+        ElementProviderUsage;
 
 class ProviderError extends ParseError {
   ProviderError(String message, SourceSpan span) : super(span, message);
 }
 
+/// Per component level context used to parse template using
+/// TemplateParseVisitor.
 class ProviderViewContext {
-  CompileDirectiveMetadata component;
-  SourceSpan sourceSpan;
+  final CompileDirectiveMetadata component;
+  final SourceSpan sourceSpan;
+
+  /// List of queries defined on the component used to detect which providers
+  /// should be eagerly created at runtime initialization.
   CompileTokenMap<List<CompileQueryMetadata>> viewQueries;
+
+  /// List of tokens provided by component.
   CompileTokenMap<bool> viewProviders;
   List<ProviderError> errors = [];
+
   ProviderViewContext(this.component, this.sourceSpan) {
-    this.viewQueries = _getViewQueries(component);
-    this.viewProviders = new CompileTokenMap<bool>();
-    _normalizeProviders(component.viewProviders, sourceSpan, this.errors)
-        .forEach((provider) {
-      if (this.viewProviders.get(provider.token) == null) {
-        this.viewProviders.add(provider.token, true);
+    viewQueries = _getViewQueries(component);
+    viewProviders = new CompileTokenMap<bool>();
+    List<CompileProviderMetadata> normalizedViewProviders =
+        _normalizeProviders(component.viewProviders, sourceSpan, errors);
+    // Deduplicate providers by token.
+    for (CompileProviderMetadata provider in normalizedViewProviders) {
+      if (viewProviders.get(provider.token) == null) {
+        viewProviders.add(provider.token, true);
       }
-    });
+    }
   }
 }
 
-class ProviderElementContext {
-  ProviderViewContext _viewContext;
-  ProviderElementContext _parent;
-  bool _isViewRoot;
-  List<DirectiveAst> _directiveAsts;
+class ProviderElementContext implements ElementProviderUsage {
+  final ProviderViewContext _rootProviderContext;
+  final ProviderElementContext _parent;
+  // True if parent is template or template has bindings.
+  final bool _isViewRoot;
+  final List<DirectiveAst> _directiveAsts;
   SourceSpan _sourceSpan;
   CompileTokenMap<List<CompileQueryMetadata>> _contentQueries;
   var _transformedProviders = new CompileTokenMap<ProviderAst>();
   var _seenProviders = new CompileTokenMap<bool>();
   CompileTokenMap<ProviderAst> _allProviders;
   Map<String, String> _attrs;
-  bool _hasViewContainer = false;
+  bool _requiresViewContainer = false;
+
   ProviderElementContext(
-      this._viewContext,
+      this._rootProviderContext,
       this._parent,
       this._isViewRoot,
       this._directiveAsts,
@@ -58,70 +75,78 @@ class ProviderElementContext {
       List<ReferenceAst> refs,
       this._sourceSpan) {
     this._attrs = {};
-    attrs.forEach((attrAst) => this._attrs[attrAst.name] = attrAst.value);
+    for (var attrAst in attrs) {
+      _attrs[attrAst.name] = attrAst.value;
+    }
     var directivesMeta =
         _directiveAsts.map((directiveAst) => directiveAst.directive).toList();
-    this._allProviders = _resolveProvidersFromDirectives(
-        directivesMeta, _sourceSpan, _viewContext.errors);
-    this._contentQueries = _getContentQueries(directivesMeta);
+    // Make a list of all providers required by union of all directives
+    // including components themselves.
+    _allProviders = _resolveProvidersFromDirectives(
+        directivesMeta, _sourceSpan, _rootProviderContext.errors);
+    // Get content queries since we need to eagerly create providers to serve
+    // values for component @Query at ngOnInit time.
+    _contentQueries = _getContentQueries(directivesMeta);
     var queriedTokens = new CompileTokenMap<bool>();
-    this._allProviders.values.forEach((provider) {
-      this._addQueryReadsTo(provider.token, queriedTokens);
-    });
-    refs.forEach((refAst) {
-      this._addQueryReadsTo(
+    for (var provider in _allProviders.values) {
+      _addQueryReadsTo(provider.token, queriedTokens);
+    }
+    // For each #ref, add the read type as a token to queries.
+    for (ReferenceAst refAst in refs) {
+      _addQueryReadsTo(
           new CompileTokenMetadata(value: refAst.name), queriedTokens);
-    });
+    }
+    // If any content query asks to read ViewContainerRef, mark
+    // ProviderElementContext to require view container.
     if (queriedTokens.get(identifierToken(Identifiers.ViewContainerRef)) !=
         null) {
-      this._hasViewContainer = true;
+      _requiresViewContainer = true;
     }
-    // create the providers that we know are eager first
-    this._allProviders.values.forEach((provider) {
+    // Create the providers that we know are eager first.
+    for (var provider in _allProviders.values) {
       var eager = provider.eager || queriedTokens.get(provider.token) != null;
       if (eager) {
-        this._getOrCreateLocalProvider(provider.providerType, provider.token,
+        _getOrCreateLocalProvider(provider.providerType, provider.token,
             eager: true);
       }
-    });
+    }
   }
+
   void afterElement() {
-    // collect lazy providers
-    this._allProviders.values.forEach((provider) {
-      this._getOrCreateLocalProvider(provider.providerType, provider.token,
+    // Collect lazy providers (provider itself not eager and not queried).
+    for (var provider in _allProviders.values) {
+      _getOrCreateLocalProvider(provider.providerType, provider.token,
           eager: false);
-    });
+    }
   }
 
   List<ProviderAst> get transformProviders {
-    return this._transformedProviders.values;
+    return _transformedProviders.values;
   }
 
   List<DirectiveAst> get transformedDirectiveAsts {
-    var sortedProviderTypes = this
-        ._transformedProviders
-        .values
+    var sortedProviderTypes = _transformedProviders.values
         .map((provider) => provider.token.identifier)
         .toList();
-    var sortedDirectives = new List<DirectiveAst>.from(this._directiveAsts);
+    var sortedDirectives = new List<DirectiveAst>.from(_directiveAsts);
     sortedDirectives.sort((dir1, dir2) =>
         sortedProviderTypes.indexOf(dir1.directive.type) -
         sortedProviderTypes.indexOf(dir2.directive.type));
     return sortedDirectives;
   }
 
-  bool get transformedHasViewContainer {
-    return this._hasViewContainer;
-  }
+  bool get requiresViewContainer => _requiresViewContainer;
+
+  bool hasNonLocalRequest(ProviderAst providerAst) => true;
 
   void _addQueryReadsTo(
       CompileTokenMetadata token, CompileTokenMap<bool> queryReadTokens) {
-    this._getQueriesFor(token).forEach((query) {
+    for (var query in _getQueriesFor(token)) {
       var queryReadToken = query.read ?? token;
       if (queryReadTokens.get(queryReadToken) == null) {
         queryReadTokens.add(queryReadToken, true);
       }
-    });
+    }
   }
 
   List<CompileQueryMetadata> _getQueriesFor(CompileTokenMetadata token) {
@@ -136,12 +161,12 @@ class ProviderElementContext {
             .where((query) => query.descendants || distance <= 1)
             .toList());
       }
-      if (currentEl._directiveAsts.length > 0) {
+      if (currentEl._directiveAsts.isNotEmpty) {
         distance++;
       }
       currentEl = currentEl._parent;
     }
-    queries = this._viewContext.viewQueries.get(token);
+    queries = _rootProviderContext.viewQueries.get(token);
     if (queries != null) {
       result.addAll(queries);
     }
@@ -151,38 +176,38 @@ class ProviderElementContext {
   ProviderAst _getOrCreateLocalProvider(
       ProviderAstType requestingProviderType, CompileTokenMetadata token,
       {bool eager}) {
-    var resolvedProvider = this._allProviders.get(token);
+    var resolvedProvider = _allProviders.get(token);
     if (resolvedProvider == null ||
-        ((identical(requestingProviderType, ProviderAstType.Directive) ||
-                identical(
-                    requestingProviderType, ProviderAstType.PublicService)) &&
-            identical(resolvedProvider.providerType,
+        (((requestingProviderType == ProviderAstType.Directive) ||
+                (requestingProviderType == ProviderAstType.PublicService)) &&
+            (resolvedProvider.providerType ==
                 ProviderAstType.PrivateService)) ||
-        ((identical(requestingProviderType, ProviderAstType.PrivateService) ||
-                identical(
-                    requestingProviderType, ProviderAstType.PublicService)) &&
-            identical(
-                resolvedProvider.providerType, ProviderAstType.Builtin))) {
+        (((requestingProviderType == ProviderAstType.PrivateService) ||
+                (requestingProviderType == ProviderAstType.PublicService)) &&
+            (resolvedProvider.providerType == ProviderAstType.Builtin))) {
       return null;
     }
-    var transformedProviderAst = this._transformedProviders.get(token);
+    var transformedProviderAst = _transformedProviders.get(token);
     if (transformedProviderAst != null) {
       return transformedProviderAst;
     }
     if (_seenProviders.get(token) != null) {
-      this._viewContext.errors.add(new ProviderError(
-          '''Cannot instantiate cyclic dependency! ${ token . name}''',
+      _rootProviderContext.errors.add(new ProviderError(
+          'Cannot instantiate cyclic dependency! ${token.name}',
           this._sourceSpan));
       return null;
     }
-    this._seenProviders.add(token, true);
-    List<CompileProviderMetadata> transformedProviders =
-        resolvedProvider.providers.map((provider) {
+    _seenProviders.add(token, true);
+
+    // For this token, transform and collect list of providers,
+    // List will have length > 1 if multi:true and we have multiple providers.
+    var transformedProviders = <CompileProviderMetadata>[];
+    for (var provider in resolvedProvider.providers) {
       var transformedUseValue = provider.useValue;
       var transformedUseExisting = provider.useExisting;
       List<CompileDiDependencyMetadata> transformedDeps;
       if (provider.useExisting != null) {
-        var existingDiDep = this._getDependency(
+        var existingDiDep = _getDependency(
             resolvedProvider.providerType,
             new CompileDiDependencyMetadata(token: provider.useExisting),
             eager);
@@ -193,23 +218,27 @@ class ProviderElementContext {
           transformedUseValue = existingDiDep.value;
         }
       } else if (provider.useFactory != null) {
-        var deps = provider.deps ?? provider.useFactory.diDeps;
-        transformedDeps = deps
-            .map((dep) =>
-                this._getDependency(resolvedProvider.providerType, dep, eager))
-            .toList();
+        var dependencies = provider.deps ?? provider.useFactory.diDeps;
+        transformedDeps = [];
+        for (var dep in dependencies) {
+          transformedDeps
+              .add(_getDependency(resolvedProvider.providerType, dep, eager));
+        }
       } else if (provider.useClass != null) {
-        var deps = provider.deps ?? provider.useClass.diDeps;
-        transformedDeps = deps
-            .map((dep) =>
-                this._getDependency(resolvedProvider.providerType, dep, eager))
-            .toList();
+        var dependencies = provider.deps ?? provider.useClass.diDeps;
+        transformedDeps = [];
+        for (var dep in dependencies) {
+          transformedDeps
+              .add(_getDependency(resolvedProvider.providerType, dep, eager));
+        }
       }
-      return _transformProvider(provider,
+      transformedProviders.add(_transformProvider(provider,
           useExisting: transformedUseExisting,
           useValue: transformedUseValue,
-          deps: transformedDeps);
-    }).toList();
+          deps: transformedDeps));
+    }
+
+    /// Create a clone of the ProviderAst using new eager parameter.
     transformedProviderAst = _transformProviderAst(resolvedProvider,
         forceEager: eager, providers: transformedProviders);
     _transformedProviders.add(token, transformedProviderAst);
@@ -224,9 +253,9 @@ class ProviderElementContext {
       return new CompileDiDependencyMetadata(isValue: true, value: attrValue);
     }
     if (dep.token != null) {
-      // access builtints
-      if ((identical(requestingProviderType, ProviderAstType.Directive) ||
-          identical(requestingProviderType, ProviderAstType.Component))) {
+      // access built-ins
+      if ((requestingProviderType == ProviderAstType.Directive ||
+          requestingProviderType == ProviderAstType.Component)) {
         if (dep.token.equalsTo(identifierToken(Identifiers.ElementRef)) ||
             dep.token
                 .equalsTo(identifierToken(Identifiers.ChangeDetectorRef)) ||
@@ -234,7 +263,7 @@ class ProviderElementContext {
           return dep;
         }
         if (dep.token.equalsTo(identifierToken(Identifiers.ViewContainerRef))) {
-          this._hasViewContainer = true;
+          _requiresViewContainer = true;
         }
       }
       // access the injector
@@ -258,7 +287,7 @@ class ProviderElementContext {
     bool currEager = eager;
     CompileDiDependencyMetadata result;
     if (!dep.isSkipSelf) {
-      result = this._getLocalDependency(requestingProviderType, dep, eager);
+      result = _getLocalDependency(requestingProviderType, dep, eager);
     }
     if (dep.isSelf) {
       if (result == null && dep.isOptional) {
@@ -278,10 +307,10 @@ class ProviderElementContext {
       // check @Host restriction
       if (result == null) {
         if (!dep.isHost ||
-            this._viewContext.component.type.isHost ||
-            identifierToken(this._viewContext.component.type)
+            _rootProviderContext.component.type.isHost ||
+            identifierToken(_rootProviderContext.component.type)
                 .equalsTo(dep.token) ||
-            this._viewContext.viewProviders.get(dep.token) != null) {
+            _rootProviderContext.viewProviders.get(dep.token) != null) {
           result = dep;
         } else {
           result = dep.isOptional
@@ -292,113 +321,8 @@ class ProviderElementContext {
       }
     }
     if (result == null) {
-      this._viewContext.errors.add(new ProviderError(
-          '''No provider for ${ dep . token . name}''', this._sourceSpan));
-    }
-    return result;
-  }
-}
-
-class AppProviderParser {
-  SourceSpan _sourceSpan;
-  var _transformedProviders = new CompileTokenMap<ProviderAst>();
-  var _seenProviders = new CompileTokenMap<bool>();
-  CompileTokenMap<ProviderAst> _allProviders;
-  List<ProviderError> _errors = [];
-  AppProviderParser(this._sourceSpan, List<dynamic> providers) {
-    this._allProviders = new CompileTokenMap<ProviderAst>();
-    _resolveProviders(
-        _normalizeProviders(providers, this._sourceSpan, this._errors),
-        ProviderAstType.PublicService,
-        this._sourceSpan,
-        this._errors,
-        this._allProviders,
-        eager: false);
-  }
-  List<ProviderAst> parse() {
-    this._allProviders.values.forEach((provider) {
-      this._getOrCreateLocalProvider(provider.token, provider.eager);
-    });
-    if (this._errors.length > 0) {
-      var errorString = this._errors.join("\n");
-      throw new BaseException('''Provider parse errors:
-${ errorString}''');
-    }
-    return this._transformedProviders.values;
-  }
-
-  ProviderAst _getOrCreateLocalProvider(
-      CompileTokenMetadata token, bool eager) {
-    var resolvedProvider = this._allProviders.get(token);
-    if (resolvedProvider == null) {
-      return null;
-    }
-    var transformedProviderAst = this._transformedProviders.get(token);
-    if (transformedProviderAst != null) {
-      return transformedProviderAst;
-    }
-    if (this._seenProviders.get(token) != null) {
-      this._errors.add(new ProviderError(
-          'Cannot instantiate cyclic dependency! ${token.name}',
-          this._sourceSpan));
-      return null;
-    }
-    this._seenProviders.add(token, true);
-    List<CompileProviderMetadata> transformedProviders =
-        resolvedProvider.providers.map((provider) {
-      var transformedUseValue = provider.useValue;
-      var transformedUseExisting = provider.useExisting;
-      List<CompileDiDependencyMetadata> transformedDeps;
-      if (provider.useExisting != null) {
-        var existingDiDep = this._getDependency(
-            new CompileDiDependencyMetadata(token: provider.useExisting),
-            eager);
-        if (existingDiDep.token != null) {
-          transformedUseExisting = existingDiDep.token;
-        } else {
-          transformedUseExisting = null;
-          transformedUseValue = existingDiDep.value;
-        }
-      } else if (provider.useFactory != null) {
-        var deps =
-            provider.deps != null ? provider.deps : provider.useFactory.diDeps;
-        transformedDeps =
-            deps.map((dep) => this._getDependency(dep, eager)).toList();
-      } else if (provider.useClass != null) {
-        var deps = provider.deps ?? provider.useClass.diDeps;
-        transformedDeps =
-            deps.map((dep) => this._getDependency(dep, eager)).toList();
-      }
-      return _transformProvider(provider,
-          useExisting: transformedUseExisting,
-          useValue: transformedUseValue,
-          deps: transformedDeps);
-    }).toList();
-    transformedProviderAst = _transformProviderAst(resolvedProvider,
-        forceEager: eager, providers: transformedProviders);
-    this._transformedProviders.add(token, transformedProviderAst);
-    return transformedProviderAst;
-  }
-
-  CompileDiDependencyMetadata _getDependency(CompileDiDependencyMetadata dep,
-      [bool eager = null]) {
-    var foundLocal = false;
-    if (!dep.isSkipSelf && dep.token != null) {
-      // access the injector
-      if (dep.token.equalsTo(identifierToken(Identifiers.Injector))) {
-        foundLocal = true;
-      } else if ((this._getOrCreateLocalProvider(dep.token, eager)) != null) {
-        foundLocal = true;
-      }
-    }
-    CompileDiDependencyMetadata result = dep;
-    if (dep.isSelf && !foundLocal) {
-      if (dep.isOptional) {
-        result = new CompileDiDependencyMetadata(isValue: true, value: null);
-      } else {
-        this._errors.add(new ProviderError(
-            '''No provider for ${ dep . token . name}''', this._sourceSpan));
-      }
+      _rootProviderContext.errors.add(new ProviderError(
+          'No provider for ${dep.token.name}', this._sourceSpan));
     }
     return result;
   }
@@ -433,6 +357,8 @@ ProviderAst _transformProviderAst(ProviderAst provider,
   );
 }
 
+// Flattens list of lists of providers and converts entries that contain Type to
+// CompileProviderMetadata with useClass.
 List<CompileProviderMetadata> _normalizeProviders(
     List<
         dynamic /* CompileProviderMetadata | CompileTypeMetadata | List < dynamic > */ > providers,
@@ -443,7 +369,7 @@ List<CompileProviderMetadata> _normalizeProviders(
     targetProviders = [];
   }
   if (providers != null) {
-    providers.forEach((provider) {
+    for (var provider in providers) {
       if (provider is List) {
         _normalizeProviders(
             provider, sourceSpan, targetErrors, targetProviders);
@@ -456,24 +382,26 @@ List<CompileProviderMetadata> _normalizeProviders(
               token: new CompileTokenMetadata(identifier: provider),
               useClass: provider);
         } else {
-          targetErrors.add(new ProviderError(
-              '''Unknown provider type ${ provider}''', sourceSpan));
+          targetErrors.add(
+              new ProviderError('Unknown provider type $provider', sourceSpan));
         }
         if (normalizeProvider != null) {
           targetProviders.add(normalizeProvider);
         }
       }
-    });
+    }
   }
   return targetProviders;
 }
 
+/// Creates a ProviderAst for each directive and then resolves
+/// each provider for the component followed by providers for directives.
 CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
     List<CompileDirectiveMetadata> directives,
     SourceSpan sourceSpan,
     List<ParseError> targetErrors) {
   var providersByToken = new CompileTokenMap<ProviderAst>();
-  directives.forEach((directive) {
+  for (CompileDirectiveMetadata directive in directives) {
     var dirProvider = new CompileProviderMetadata(
         token: new CompileTokenMetadata(identifier: directive.type),
         useClass: directive.type);
@@ -487,7 +415,7 @@ CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
       providersByToken,
       eager: true,
     );
-  });
+  }
   // Note: directives need to be able to overwrite providers of a component!
   var directivesWithComponentFirst =
       (new List.from(directives.where((dir) => dir.isComponent).toList())
@@ -511,6 +439,8 @@ CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
   return providersByToken;
 }
 
+// Updates tokenMap by creating new ProviderAst or by adding/replacing new entry
+// for existing ProviderAst.
 void _resolveProviders(
     List<CompileProviderMetadata> providers,
     ProviderAstType providerType,
@@ -518,12 +448,13 @@ void _resolveProviders(
     List<ParseError> targetErrors,
     CompileTokenMap<ProviderAst> targetProvidersByToken,
     {bool eager}) {
-  providers.forEach((provider) {
+  for (var provider in providers) {
     var resolvedProvider = targetProvidersByToken.get(provider.token);
     if (resolvedProvider != null &&
         !identical(resolvedProvider.multiProvider, provider.multi)) {
       targetErrors.add(new ProviderError(
-          '''Mixing multi and non multi provider is not possible for token ${ resolvedProvider . token . name}''',
+          'Mixing multi and non multi provider is not possible for token '
+          '${resolvedProvider.token.name}',
           sourceSpan));
     }
     if (resolvedProvider == null) {
@@ -537,15 +468,15 @@ void _resolveProviders(
       }
       resolvedProvider.providers.add(provider);
     }
-  });
+  }
 }
 
 CompileTokenMap<List<CompileQueryMetadata>> _getViewQueries(
     CompileDirectiveMetadata component) {
   var viewQueries = new CompileTokenMap<List<CompileQueryMetadata>>();
-  if (component.viewQueries != null) {
-    component.viewQueries
-        .forEach((query) => _addQueryToTokenMap(viewQueries, query));
+  if (component.viewQueries == null) return viewQueries;
+  for (CompileQueryMetadata query in component.viewQueries) {
+    _addQueryToTokenMap(viewQueries, query);
   }
   return viewQueries;
 }

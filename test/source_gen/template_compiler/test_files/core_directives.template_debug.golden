@@ -48,10 +48,8 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
 
 class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
   ViewContainer _appEl_1;
-  dynamic _TemplateRef_1_4;
   NgIf _NgIf_1_5;
   ViewContainer _appEl_3;
-  dynamic _TemplateRef_3_4;
   import3.NgFor _NgFor_3_5;
   var _expr_1;
   static RenderComponentType renderType;
@@ -81,7 +79,8 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     parentRenderNode?.append(_anchor_1);
     dbgElm(_anchor_1, 1, 0, 4);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    _TemplateRef_1_4 = new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
+    TemplateRef _TemplateRef_1_4 =
+        new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
     _NgIf_1_5 = new NgIf(_appEl_1, _TemplateRef_1_4);
     Text _text_2 = new Text('\n    ');
     parentRenderNode.append(_text_2);
@@ -90,7 +89,8 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     parentRenderNode?.append(_anchor_3);
     dbgElm(_anchor_3, 3, 1, 4);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
-    _TemplateRef_3_4 = new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
+    TemplateRef _TemplateRef_3_4 =
+        new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
     _NgFor_3_5 = new import3.NgFor(_appEl_3, _TemplateRef_3_4);
     Text _text_4 = new Text('\n    ');
     parentRenderNode.append(_text_4);
@@ -101,14 +101,8 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, TemplateRef) && (1 == requestNodeIndex))) {
-      return _TemplateRef_1_4;
-    }
     if ((identical(token, NgIf) && (1 == requestNodeIndex))) {
       return _NgIf_1_5;
-    }
-    if ((identical(token, TemplateRef) && (3 == requestNodeIndex))) {
-      return _TemplateRef_3_4;
     }
     if ((identical(token, import3.NgFor) && (3 == requestNodeIndex))) {
       return _NgFor_3_5;

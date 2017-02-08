@@ -50,7 +50,7 @@ import "lexer.dart"
 
 var _implicitReceiver = new ImplicitReceiver();
 // TODO(tbosch): Cannot make this const/final right now because of the transpiler...
-var INTERPOLATION_REGEXP = new RegExp(r'\{\{([\s\S]*?)\}\}');
+final INTERPOLATION_REGEXP = new RegExp(r'\{\{([\s\S]*?)\}\}');
 
 class ParseException extends BaseException {
   ParseException(String message, String input, String errLocation,
@@ -158,9 +158,9 @@ class Parser {
         expressions.add(part);
       } else {
         throw new ParseException(
-            "Blank expressions are not allowed in interpolated strings",
+            'Blank expressions are not allowed in interpolated strings',
             input,
-            '''at column ${ this . _findInterpolationErrorColumn ( parts , i )} in''',
+            'at column ${_findInterpolationErrorColumn(parts, i)} in',
             location);
       }
     }
