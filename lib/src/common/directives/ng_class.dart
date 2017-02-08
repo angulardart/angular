@@ -24,9 +24,26 @@ import 'package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 ///
 /// ### Examples
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgClass-1}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgClass-1"} -->
+/// <div [ngClass]="setClasses()">This div is saveable and special</div>
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.dart region=setClasses}
+/// ```dart
+/// // {@source "docs/template-syntax/lib/app_component.dart" region="setClasses"}
+///   Map<String, bool> setClasses() {
+///     final classes = {
+///       'saveable': canSave, // true
+///       'modified': !isUnchanged, // false
+///       'special': isSpecial // true
+///     };
+///     // compensate for DevMode (sigh)
+///     if (JSON.encode(_previousClasses) == JSON.encode(classes))
+///       return _previousClasses;
+///     _previousClasses = classes;
+///     return classes;
+///   }
+/// ```
 ///
 /// Try the [live example][ex].
 /// See the [Template Syntax section on `ngClass`][guide] for more details.

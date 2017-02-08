@@ -46,7 +46,9 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 ///
 /// This `ngFor` example:
 ///
-/// {@example core/pipes/ts/slice_pipe/slice_pipe_example.ts region='SlicePipe_list'}
+/// ```dart
+/// // {@disabled-source "core/pipes/ts/slice_pipe/slice_pipe_example.ts" region="SlicePipe_list"}
+/// ```
 ///
 /// produces the following:
 ///

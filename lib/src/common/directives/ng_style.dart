@@ -22,9 +22,34 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// the relevant excerpts from the example's template and the corresponding
 /// component class:
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgStyle}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgStyle"} -->
+/// <div>
+///   <p [ngStyle]="setStyle()" #styleP>Change style of this text!</p>
+/// 
+///   <label>Italic: <input type="checkbox" [(ngModel)]="isItalic"></label> |
+///   <label>Bold: <input type="checkbox" [(ngModel)]="isBold"></label> |
+///   <label>Size: <input type="text" [(ngModel)]="fontSize"></label>
+/// 
+///   <p>Style set to: <code>'{{styleP.style.cssText}}'</code></p>
+/// </div>
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.dart region=NgStyle}
+/// ```dart
+/// // {@source "docs/template-syntax/lib/app_component.dart" region="NgStyle"}
+/// bool isItalic = false;
+/// bool isBold = false;
+/// String fontSize = 'large';
+/// String fontSizePx = '14';
+/// 
+/// Map<String, String> setStyle() {
+///   return {
+///     'font-style': isItalic ? 'italic' : 'normal',
+///     'font-weight': isBold ? 'bold' : 'normal',
+///     'font-size': fontSize
+///   };
+/// }
+/// ```
 ///
 /// In this example, user changes to the `<input>` elements result in updates
 /// to the corresponding style properties of the first paragraph.

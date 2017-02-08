@@ -29,7 +29,16 @@ var _resolveToTrue = new Future.value(true);
 ///
 /// Here is an example from the [tutorial on routing][routing]:
 ///
-/// {@example docs/toh-5/lib/app_component.dart region=template}
+/// ```dart
+/// // {@source "docs/toh-5/lib/app_component.dart" region="template"}
+/// template: '''
+///   <h1>{{title}}</h1>
+///   <nav>
+///     <a [routerLink]="['Dashboard']">Dashboard</a>
+///     <a [routerLink]="['Heroes']">Heroes</a>
+///   </nav>
+///   <router-outlet></router-outlet>''',
+/// ```
 ///
 /// [routing]: docs/tutorial/toh-pt5.html#router-outlet
 @Directive(selector: "router-outlet")
