@@ -96,5 +96,6 @@ class InjectMethodVars {
 class DetectChangesVars {
   static var changes = o.variable('changes');
   static var changed = o.variable('changed');
+  static var firstCheck = o.variable('firstCheck');
   static var valUnwrapper = o.variable('valUnwrapper');
 }

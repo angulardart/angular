@@ -1262,6 +1262,12 @@ Expression replaceVarInExpression(
   return expression.visitExpression(transformer, null);
 }
 
+Statement replaceVarInStatement(
+    String varName, Expression newValue, Statement statement) {
+  var transformer = new _ReplaceVariableTransformer(varName, newValue);
+  return statement.visitStatement(transformer, null);
+}
+
 class _ReplaceVariableTransformer extends ExpressionTransformer {
   final String _varName;
   final Expression _newValue;
@@ -1269,6 +1275,10 @@ class _ReplaceVariableTransformer extends ExpressionTransformer {
 
   @override
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) =>
+      ast.name == this._varName ? this._newValue : ast;
+
+  @override
+  dynamic visitReadClassMemberExpr(ReadClassMemberExpr ast, dynamic context) =>
       ast.name == this._varName ? this._newValue : ast;
 }
 

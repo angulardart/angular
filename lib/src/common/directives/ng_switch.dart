@@ -150,6 +150,7 @@ class NgSwitchWhen {
     this._view = new SwitchView(viewContainer, templateRef);
   }
   set ngSwitchWhen(dynamic value) {
+    if (identical(value, _value)) return;
     this._switch._onWhenValueChanged(this._value, value, this._view);
     this._value = value;
   }

@@ -1,9 +1,10 @@
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
-import "package:angular2/src/core/linker/view_type.dart";
 import 'package:angular2/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
+import "package:angular2/src/core/linker/view_type.dart";
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
@@ -30,13 +31,14 @@ import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_view.dart" show CompileView;
 import "constants.dart"
     show
-        ViewConstructorVars,
-        InjectMethodVars,
-        DetectChangesVars,
-        ViewTypeEnum,
-        ViewEncapsulationEnum,
         ChangeDetectionStrategyEnum,
-        ViewProperties;
+        ChangeDetectorStateEnum,
+        DetectChangesVars,
+        InjectMethodVars,
+        ViewConstructorVars,
+        ViewEncapsulationEnum,
+        ViewProperties,
+        ViewTypeEnum;
 import 'property_binder.dart';
 import "view_compiler_utils.dart"
     show
@@ -895,6 +897,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       view.viewContainers.isEmpty) {
     return stmts;
   }
+
   // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
 
@@ -908,7 +911,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   List<o.Statement> afterContentStmts =
       (new List.from(view.updateContentQueriesMethod.finish())
         ..addAll(view.afterContentLifecycleCallbacksMethod.finish()));
-  if (afterContentStmts.length > 0) {
+  if (afterContentStmts.isNotEmpty) {
     if (view.genConfig.genDebugInfo) {
       stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
     } else {
@@ -943,6 +946,14 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   if (readVars.contains(DetectChangesVars.changes.name)) {
     varStmts.add(new o.DeclareVarStmt(DetectChangesVars.changes.name, null,
         new o.MapType(o.importType(Identifiers.SimpleChange))));
+  }
+  if (readVars.contains(DetectChangesVars.firstCheck.name)) {
+    varStmts.add(new o.DeclareVarStmt(
+        DetectChangesVars.firstCheck.name,
+        o.THIS_EXPR
+            .prop('cdState')
+            .identical(ChangeDetectorStateEnum.NeverChecked),
+        o.BOOL_TYPE));
   }
   if (readVars.contains(DetectChangesVars.valUnwrapper.name)) {
     varStmts.add(DetectChangesVars.valUnwrapper
