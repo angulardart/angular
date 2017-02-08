@@ -132,7 +132,9 @@ class NgClass implements DoCheck, OnDestroy {
   }
 
   void _applyInitialClasses(bool isCleanup) {
-    _initialClasses.forEach((className) => _toggleClass(className, !isCleanup));
+    for (var className in _initialClasses) {
+      _toggleClass(className, !isCleanup);
+    }
   }
 
   void _applyClasses(
@@ -140,8 +142,9 @@ class NgClass implements DoCheck, OnDestroy {
       bool isCleanup) {
     if (rawClassVal != null) {
       if (rawClassVal is Iterable) {
-        ((rawClassVal as Iterable<String>))
-            .forEach((className) => _toggleClass(className, !isCleanup));
+        for (var className in (rawClassVal as Iterable<String>)) {
+          _toggleClass(className, !isCleanup);
+        }
       } else {
         (rawClassVal as Map<String, dynamic>).forEach((className, expVal) {
           if (expVal != null) {

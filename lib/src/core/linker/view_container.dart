@@ -152,11 +152,11 @@ class ViewContainer implements ViewContainerRef {
   List<dynamic> mapNestedViews(dynamic nestedViewClass, Function callback) {
     var result = [];
     if (nestedViews != null) {
-      nestedViews.forEach((nestedView) {
+      for (var nestedView in nestedViews) {
         if (identical(nestedView.clazz, nestedViewClass)) {
           result.add(callback(nestedView));
         }
-      });
+      }
     }
     return result;
   }

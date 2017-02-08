@@ -134,9 +134,9 @@ class BrowserGetTestability implements GetTestability {
             callback.apply([didWork]);
           }
         });
-        testabilities.forEach((testability) {
+        for (var testability in testabilities) {
           testability.callMethod('whenStable', [decrement]);
-        });
+        }
       });
       if (js.context['frameworkStabilizers'] == null) {
         js.context['frameworkStabilizers'] = new js.JsArray();

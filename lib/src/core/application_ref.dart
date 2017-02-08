@@ -139,9 +139,13 @@ class PlatformRefImpl extends PlatformRef {
   }
 
   void dispose() {
-    _applications.forEach((app) => app.dispose());
+    for (var app in _applications) {
+      app.dispose();
+    }
     _applications.clear();
-    _disposeListeners.forEach((dispose) => dispose());
+    for (var dispose in _disposeListeners) {
+      dispose();
+    }
     _disposeListeners.clear();
     _disposed = true;
   }
@@ -356,7 +360,9 @@ class ApplicationRefImpl extends ApplicationRef {
     _changeDetectorRefs.add(componentRef.changeDetectorRef);
     tick();
     _rootComponents.add(componentRef);
-    _bootstrapListeners.forEach((listener) => listener(componentRef));
+    for (var listener in _bootstrapListeners) {
+      listener(componentRef);
+    }
   }
 
   void _unloadComponent(ComponentRef componentRef) {
@@ -399,10 +405,16 @@ class ApplicationRefImpl extends ApplicationRef {
 
   @override
   void dispose() {
-    _rootComponents.forEach((ref) => ref.destroy());
-    _disposeListeners.forEach((dispose) => dispose());
+    for (var ref in _rootComponents) {
+      ref.destroy();
+    }
+    for (var dispose in _disposeListeners) {
+      dispose();
+    }
     _disposeListeners.clear();
-    _streamSubscriptions.forEach((subscription) => subscription.cancel());
+    for (var subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
     _streamSubscriptions.clear();
     _platform._applicationDisposed(this);
   }
