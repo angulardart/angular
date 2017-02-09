@@ -63,7 +63,7 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
 
   // TODO(alorenzen): Consider memoizing this to improve build performance.
   bool _hasReflectables(LibraryElement importedLibrary) {
-    var visitor = new ReflectableVisitor(_buildStep, visitExports: true);
+    var visitor = new ReflectableVisitor(_buildStep, visitRecursive: true);
     importedLibrary.accept(visitor);
     return visitor.reflectables.isNotEmpty;
   }
@@ -73,11 +73,13 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
 /// given element or its children.
 class ReflectableVisitor extends RecursiveElementVisitor {
   final BuildStep _buildStep;
-  final bool _visitExports;
+  final bool _visitRecursive;
+  final Set<String> _visited = new Set<String>();
+
   List<ReflectionInfoModel> _reflectables = [];
 
-  ReflectableVisitor(this._buildStep, {bool visitExports: false})
-      : _visitExports = visitExports;
+  ReflectableVisitor(this._buildStep, {bool visitRecursive: false})
+      : _visitRecursive = visitRecursive;
 
   Logger get _logger => _buildStep.logger;
 
@@ -87,8 +89,15 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   // TODO(alorenzen): Determine if we need to visit part-files as well.
   @override
   void visitExportElement(ExportElement element) {
-    if (_visitExports) {
+    if (_visitRecursive && _visited.add(element.exportedLibrary.identifier)) {
       element.exportedLibrary.accept(this);
+    }
+  }
+
+  @override
+  void visitImportElement(ImportElement element) {
+    if (_visitRecursive && _visited.add(element.importedLibrary.identifier)) {
+      element.importedLibrary.accept(this);
     }
   }
 
@@ -148,8 +157,14 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   List<AnnotationModel> _annotations(
           List<ElementAnnotation> metadata, Element element) =>
       metadata
-          .where((annotation) => !annotation_matcher
-              .matchTypes([Component, View, Directive], annotation))
+          .where((annotation) => !annotation_matcher.matchTypes(const [
+                Component,
+                View,
+                Directive,
+                Deprecated,
+                Pipe,
+                Inject,
+              ], annotation))
           .map((annotation) =>
               new AnnotationModel.fromElement(annotation, element))
           .toList();

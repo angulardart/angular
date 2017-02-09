@@ -255,7 +255,7 @@ class ConditionalParentComp {
 
 @Component(
     selector: "using-for",
-    viewProviders: const [Logger],
+    viewProviders: const [],
     template: '''
         <span *ngFor="let thing of stuff" [innerHtml]="thing"></span>
         <ul message="list">

@@ -13,7 +13,7 @@ class ParameterModel {
   ParameterModel._(
       {this.paramName,
       ReferenceBuilder type,
-      Iterable<TypeBuilder> metadata: const []})
+      Iterable<ExpressionBuilder> metadata: const []})
       : _type = type,
         _metadata = metadata.toList();
 
@@ -36,7 +36,7 @@ class ParameterModel {
         paramName: element.name,
         type: references.toBuilder(element.type, element.library.imports),
         metadata: element.metadata
-            .map((annotation) => _getMetadataType(annotation, element)));
+            .map((annotation) => _getMetadataInvocation(annotation, element)));
   }
 
   ExpressionBuilder get asList {
@@ -48,7 +48,7 @@ class ParameterModel {
 
   ParameterBuilder get asBuilder => parameter(paramName, _typeAsList);
 
-  static ReferenceBuilder _getMetadataType(
+  static ReferenceBuilder _getMetadataInvocation(
           ElementAnnotation annotation, Element element) =>
-      new AnnotationModel.fromElement(annotation, element).type;
+      new AnnotationModel.fromElement(annotation, element).asExpression;
 }
