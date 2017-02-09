@@ -66,6 +66,18 @@ void main() {
           });
         });
       });
+      test('should not dispose of existing subscription when Streams are equal', () async {
+        return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
+          // See https://github.com/dart-lang/angular2/issues/260
+          StreamController _ctrl = new StreamController.broadcast();
+          expect(pipe.transform(_ctrl.stream), isNull);
+          _ctrl.add(message);
+          Timer.run(() {
+            expect(pipe.transform(_ctrl.stream), isNotNull);
+            completer.done();
+          });
+        });
+      });
       test('should request a change detection check upon receiving a new value',
           () async {
         return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
