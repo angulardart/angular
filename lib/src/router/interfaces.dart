@@ -15,7 +15,9 @@ import 'instruction.dart' show ComponentInstruction;
 /// instantiate and activate child components.
 ///
 /// ### Example
-/// {@example router/ts/on_activate/on_activate_example.ts region='routerOnActivate'}
+/// ```dart
+/// // {@disabled-source "router/ts/on_activate/on_activate_example.ts" region="routerOnActivate"}
+/// ```
 abstract class OnActivate {
   dynamic /* dynamic | Future< dynamic > */ routerOnActivate(
       ComponentInstruction nextInstruction,
@@ -34,7 +36,9 @@ abstract class OnActivate {
 /// previous route or `null`.
 ///
 /// ### Example
-/// {@example router/ts/reuse/reuse_example.ts region='reuseCmp'}
+/// ```dart
+/// // {@disabled-source "router/ts/reuse/reuse_example.ts" region="reuseCmp"}
+/// ```
 abstract class OnReuse {
   dynamic /* dynamic | Future< dynamic > */ routerOnReuse(
       ComponentInstruction nextInstruction,
@@ -53,7 +57,9 @@ abstract class OnReuse {
 /// If `routerOnDeactivate` returns a promise, the route change will wait until the promise settles.
 ///
 /// ### Example
-/// {@example router/ts/on_deactivate/on_deactivate_example.ts region='routerOnDeactivate'}
+/// ```dart
+/// // {@disabled-source "router/ts/on_deactivate/on_deactivate_example.ts" region="routerOnDeactivate"}
+/// ```
 abstract class OnDeactivate {
   dynamic /* dynamic | Future< dynamic > */ routerOnDeactivate(
       ComponentInstruction nextInstruction,
@@ -77,7 +83,9 @@ abstract class OnDeactivate {
 /// If `routerCanReuse` throws or rejects, the navigation will be cancelled.
 ///
 /// ### Example
-/// {@example router/ts/reuse/reuse_example.ts region='reuseCmp'}
+/// ```dart
+/// // {@disabled-source "router/ts/reuse/reuse_example.ts" region="reuseCmp"}
+/// ```
 abstract class CanReuse {
   dynamic /* bool | Future< bool > */ routerCanReuse(
       ComponentInstruction nextInstruction,
@@ -100,7 +108,9 @@ abstract class CanReuse {
 /// If `routerCanDeactivate` throws or rejects, the navigation is also cancelled.
 ///
 /// ### Example
-/// {@example router/ts/can_deactivate/can_deactivate_example.ts region='routerCanDeactivate'}
+/// ```dart
+/// // {@disabled-source "router/ts/can_deactivate/can_deactivate_example.ts" region="routerCanDeactivate"}
+/// ```
 abstract class CanDeactivate {
   dynamic /* bool | Future< bool > */ routerCanDeactivate(
       ComponentInstruction nextInstruction,

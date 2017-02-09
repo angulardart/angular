@@ -9,9 +9,17 @@ import 'package:angular2/core.dart'
 ///
 /// ### Examples
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=NgIf-1}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgIf-1"} -->
+/// <div *ngIf="currentHero != null">Hello, {{currentHero.firstName}}</div>
+/// ```
 ///
-/// {@example docs/template-syntax/lib/app_component.html region=Template-2}
+/// ```html
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="Template-2"} -->
+/// <template [ngIf]="currentHero != null">
+///   <hero-detail [hero]="currentHero"></hero-detail>
+/// </template>
+/// ```
 ///
 /// [guide]: docs/guide/template-syntax.html#ngIf
 @Directive(selector: "[ngIf]", inputs: const ["ngIf"])

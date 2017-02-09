@@ -47,7 +47,17 @@ var LIFECYCLE_HOOKS_VALUES = [
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/on_changes_component.dart region=ng-on-changes}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/on_changes_component.dart" region="ng-on-changes"}
+/// ngOnChanges(Map<String, SimpleChange> changes) {
+///   changes.forEach((String propName, SimpleChange change) {
+///     String cur = JSON.encode(change.currentValue);
+///     String prev =
+///         change.isFirstChange() ? "{}" : JSON.encode(change.previousValue);
+///     changeLog.add('$propName: currentValue = $cur, previousValue = $prev');
+///   });
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#onchanges
 /// [ex]: examples/lifecycle-hooks#onchanges
@@ -66,7 +76,23 @@ abstract class OnChanges {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/spy_directive.dart region=spy-directive}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"}
+/// // Spy on any element to which it is applied.
+/// // Usage: <div mySpy>...</div>
+/// @Directive(selector: '[mySpy]')
+/// class SpyDirective implements OnInit, OnDestroy {
+///   final LoggerService _logger;
+///
+///   SpyDirective(this._logger);
+///
+///   ngOnInit() => _logIt('onInit');
+///
+///   ngOnDestroy() => _logIt('onDestroy');
+///
+///   _logIt(String msg) => _logger.log('Spy #${_nextId++} $msg');
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#oninit
 /// [ex]: examples/lifecycle-hooks#spy
@@ -100,7 +126,41 @@ abstract class OnInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/do_check_component.dart region=ng-do-check}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/do_check_component.dart" region="ng-do-check"}
+/// ngDoCheck() {
+///   if (hero.name != oldHeroName) {
+///     changeDetected = true;
+///     changeLog.add(
+///         'DoCheck: Hero name changed to "${hero.name}" from "$oldHeroName"');
+///     oldHeroName = hero.name;
+///   }
+///
+///   if (power != oldPower) {
+///     changeDetected = true;
+///     changeLog.add('DoCheck: Power changed to "$power" from "$oldPower"');
+///     oldPower = power;
+///   }
+///
+///   if (changeDetected) {
+///     noChangeCount = 0;
+///   } else {
+///     // log that hook was called when there was no relevant change.
+///     var count = noChangeCount += 1;
+///     var noChangeMsg =
+///         'DoCheck called ${count}x when no change to hero or power';
+///     if (count == 1) {
+///       // add new "no change" message
+///       changeLog.add(noChangeMsg);
+///     } else {
+///       // update last "no change" message
+///       changeLog[changeLog.length - 1] = noChangeMsg;
+///     }
+///   }
+///
+///   changeDetected = false;
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#docheck
 /// [ex]: examples/lifecycle-hooks#docheck
@@ -117,7 +177,23 @@ abstract class DoCheck {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/spy_directive.dart region=spy-directive}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"}
+/// // Spy on any element to which it is applied.
+/// // Usage: <div mySpy>...</div>
+/// @Directive(selector: '[mySpy]')
+/// class SpyDirective implements OnInit, OnDestroy {
+///   final LoggerService _logger;
+///
+///   SpyDirective(this._logger);
+///
+///   ngOnInit() => _logIt('onInit');
+///
+///   ngOnDestroy() => _logIt('onDestroy');
+///
+///   _logIt(String msg) => _logger.log('Spy #${_nextId++} $msg');
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#ondestroy
 /// [ex]: examples/lifecycle-hooks#spy
@@ -132,9 +208,44 @@ abstract class OnDestroy {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"}
+/// template: '''
+///   <div>-- projected content begins --</div>
+///     <ng-content></ng-content>
+///   <div>-- projected content ends --</div>
+///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>
+/// '''
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"}
+/// class AfterContentComponent implements AfterContentChecked, AfterContentInit {
+///   String _prevHero = '';
+///   String comment = '';
+///
+///   // Query for a CONTENT child of type `ChildComponent`
+///   @ContentChild(ChildComponent) ChildComponent contentChild;
+///
+///   ngAfterContentInit() {
+///     // contentChild is set after the content has been initialized
+///     _logIt('AfterContentInit');
+///     _doSomething();
+///   }
+///
+///   ngAfterContentChecked() {
+///     // contentChild is updated after the content has been checked
+///     if (_prevHero == contentChild?.hero) {
+///       _logIt('AfterContentChecked (no change)');
+///     } else {
+///       _prevHero = contentChild?.hero;
+///       _logIt('AfterContentChecked');
+///       _doSomething();
+///     }
+///   }
+///   // ...
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: examples/lifecycle-hooks#after-content
@@ -149,9 +260,44 @@ abstract class AfterContentInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"}
+/// template: '''
+///   <div>-- projected content begins --</div>
+///     <ng-content></ng-content>
+///   <div>-- projected content ends --</div>
+///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>
+/// '''
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_content_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"}
+/// class AfterContentComponent implements AfterContentChecked, AfterContentInit {
+///   String _prevHero = '';
+///   String comment = '';
+///
+///   // Query for a CONTENT child of type `ChildComponent`
+///   @ContentChild(ChildComponent) ChildComponent contentChild;
+///
+///   ngAfterContentInit() {
+///     // contentChild is set after the content has been initialized
+///     _logIt('AfterContentInit');
+///     _doSomething();
+///   }
+///
+///   ngAfterContentChecked() {
+///     // contentChild is updated after the content has been checked
+///     if (_prevHero == contentChild?.hero) {
+///       _logIt('AfterContentChecked (no change)');
+///     } else {
+///       _prevHero = contentChild?.hero;
+///       _logIt('AfterContentChecked');
+///       _doSomething();
+///     }
+///   }
+///   // ...
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: examples/lifecycle-hooks#after-content
@@ -166,9 +312,42 @@ abstract class AfterContentChecked {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"}
+/// template: '''
+///   <div>-- child view begins --</div>
+///     <my-child-view></my-child-view>
+///   <div>-- child view ends --</div>
+///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>''',
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"}
+/// class AfterViewComponent implements AfterViewChecked, AfterViewInit {
+///   var _prevHero = '';
+///
+///   // Query for a VIEW child of type `ChildViewComponent`
+///   @ViewChild(ChildViewComponent) ChildViewComponent viewChild;
+///
+///   ngAfterViewInit() {
+///     // viewChild is set after the view has been initialized
+///     _logIt('AfterViewInit');
+///     _doSomething();
+///   }
+///
+///   ngAfterViewChecked() {
+///     // viewChild is updated after the view has been checked
+///     if (_prevHero == viewChild.hero) {
+///       _logIt('AfterViewChecked (no change)');
+///     } else {
+///       _prevHero = viewChild.hero;
+///       _logIt('AfterViewChecked');
+///       _doSomething();
+///     }
+///   }
+///   // ...
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#afterview
 /// [ex]: examples/lifecycle-hooks#after-view
@@ -183,9 +362,42 @@ abstract class AfterViewInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=template}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"}
+/// template: '''
+///   <div>-- child view begins --</div>
+///     <my-child-view></my-child-view>
+///   <div>-- child view ends --</div>
+///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>''',
+/// ```
 ///
-/// {@example docs/lifecycle-hooks/lib/after_view_component.dart region=hooks}
+/// ```dart
+/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"}
+/// class AfterViewComponent implements AfterViewChecked, AfterViewInit {
+///   var _prevHero = '';
+///
+///   // Query for a VIEW child of type `ChildViewComponent`
+///   @ViewChild(ChildViewComponent) ChildViewComponent viewChild;
+///
+///   ngAfterViewInit() {
+///     // viewChild is set after the view has been initialized
+///     _logIt('AfterViewInit');
+///     _doSomething();
+///   }
+///
+///   ngAfterViewChecked() {
+///     // viewChild is updated after the view has been checked
+///     if (_prevHero == viewChild.hero) {
+///       _logIt('AfterViewChecked (no change)');
+///     } else {
+///       _prevHero = viewChild.hero;
+///       _logIt('AfterViewChecked');
+///       _doSomething();
+///     }
+///   }
+///   // ...
+/// }
+/// ```
 ///
 /// [docs]: docs/guide/lifecycle-hooks.html#afterview
 /// [ex]: examples/lifecycle-hooks#after-view
