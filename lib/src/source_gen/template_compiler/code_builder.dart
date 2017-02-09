@@ -135,15 +135,17 @@ class _PrefixScope implements Scope {
   final Map<String, String> _prefixes = {};
 
   void addImport(String uri, String prefix) {
-    _prefixes[uri] = prefix;
+    if (prefix != null) {
+      _prefixes[uri] = prefix;
+    }
   }
 
   @override
   Identifier identifier(String name, [String importFrom]) {
-    if (importFrom == null) {
+    if (importFrom == null || !_prefixes.containsKey(importFrom)) {
       return Scope.identity.identifier(name, importFrom);
     }
-    var prefix = _prefixes.putIfAbsent(importFrom, () => '');
+    var prefix = _prefixes[importFrom];
     return astFactory.prefixedIdentifier(
       Scope.identity.identifier(prefix, null),
       $period,
