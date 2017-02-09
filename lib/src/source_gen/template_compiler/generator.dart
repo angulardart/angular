@@ -20,17 +20,29 @@ import 'package:source_gen/source_gen.dart';
 class TemplateGenerator extends Generator {
   final GeneratorOptions _options;
 
-  TemplateGenerator(this._options);
+  const TemplateGenerator(this._options);
 
   @override
   Future<String> generate(Element element, BuildStep buildStep) async {
     if (element is! LibraryElement) return null;
-    var outputs = await processTemplates(element, buildStep,
+    return runZoned(() async {
+      var outputs = await processTemplates(
+        element,
+        buildStep,
         codegenMode: _options.codegenMode,
-        reflectPropertiesAsAttributes: _options.reflectPropertiesAsAttributes);
-    if (outputs == null) return _emptyNgDepsContents;
-    return buildGeneratedCode(
-        outputs, fileName(buildStep.inputId), element.name);
+        reflectPropertiesAsAttributes: _options.reflectPropertiesAsAttributes,
+      );
+      if (outputs == null) return _emptyNgDepsContents;
+      return buildGeneratedCode(
+        outputs,
+        fileName(buildStep.inputId),
+        element.name,
+      );
+    }, zoneSpecification: new ZoneSpecification(
+      print: (_, __, ___, message) {
+        buildStep.logger.warning('(via print) $message');
+      },
+    ), zoneValues: const {'inSourceGen': true});
   }
 }
 
