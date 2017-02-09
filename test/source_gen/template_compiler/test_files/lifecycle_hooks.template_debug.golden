@@ -115,8 +115,8 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
-    if ((identical(this.cdState, ChangeDetectorState.NeverChecked) &&
-        !import7.AppViewUtils.throwOnChanges)) {
+    bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
+    if ((firstCheck && !import7.AppViewUtils.throwOnChanges)) {
       _LifecycleHooksComponent_0_2.ngOnInit();
     }
     if (!import7.AppViewUtils.throwOnChanges) {
@@ -124,7 +124,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
     }
     if (!import7.AppViewUtils.throwOnChanges) {
       dbg(0, 0, 0);
-      if (identical(this.cdState, ChangeDetectorState.NeverChecked)) {
+      if (firstCheck) {
         _LifecycleHooksComponent_0_2.ngAfterContentInit();
       }
       _LifecycleHooksComponent_0_2.ngAfterContentChecked();
@@ -132,7 +132,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
     _compView_0.detectChanges();
     if (!import7.AppViewUtils.throwOnChanges) {
       dbg(0, 0, 0);
-      if (identical(this.cdState, ChangeDetectorState.NeverChecked)) {
+      if (firstCheck) {
         _LifecycleHooksComponent_0_2.ngAfterViewInit();
       }
       _LifecycleHooksComponent_0_2.ngAfterViewChecked();
