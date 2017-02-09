@@ -2,6 +2,7 @@ import 'dart:html';
 import "package:angular2/core.dart"
     show Directive, Provider, ElementRef, Input, Host, OnDestroy, Optional;
 import "package:angular2/src/facade/lang.dart" show isPrimitive, looseIdentical;
+import 'package:func/func.dart' show Func0, VoidFunc1;
 
 import "control_value_accessor.dart"
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -42,13 +43,13 @@ class SelectControlValueAccessor implements ControlValueAccessor {
   dynamic value;
   Map<String, dynamic> _optionMap = new Map<String, dynamic>();
   num _idCounter = 0;
-  var onChange = (dynamic _) {};
+  VoidFunc1 onChange = (dynamic _) {};
 
   void touchHandler() {
     onTouched();
   }
 
-  var onTouched = () {};
+  Func0 onTouched = () {};
   SelectControlValueAccessor(this._elementRef);
 
   @override

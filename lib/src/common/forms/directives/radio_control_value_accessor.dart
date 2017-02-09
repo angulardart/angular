@@ -13,6 +13,7 @@ import 'package:angular2/src/common/forms/directives/control_value_accessor.dart
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 import 'package:angular2/src/common/forms/directives/ng_control.dart'
     show NgControl;
+import 'package:func/func.dart' show Func0, VoidFunc0;
 
 const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: RadioControlValueAccessor, multi: true);
@@ -93,8 +94,8 @@ class RadioControlValueAccessor
     onTouched();
   }
 
-  var onChange = () {};
-  var onTouched = () {};
+  VoidFunc0 onChange = () {};
+  Func0 onTouched = () {};
   RadioControlValueAccessor(this._elementRef, this._registry, this._injector);
 
   @override
