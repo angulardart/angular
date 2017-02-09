@@ -421,8 +421,17 @@ void commonTests() {
           });
         });
         macroTask(() {
-          expect(_log.result(),
-              "onUnstable; run start; onMicrotaskEmpty; onStable; onUnstable; onMicrotaskEmpty; onStable");
+          expect(
+              _log.result(),
+              const [
+                'onUnstable',
+                'run start',
+                'onMicrotaskEmpty',
+                'onStable',
+                'onUnstable',
+                'onMicrotaskEmpty',
+                'onStable',
+              ].join('; '));
           completer.done();
         }, resultTimer);
       });
