@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
@@ -39,21 +40,36 @@ class NormalizedComponentWithViewDirectives {
       };
 }
 
+// Make this `true` in order to print what is being compiled.
+const _DEBUG_PRINT_COMPILATION = false;
+
 /// Compiles a view template.
 class OfflineCompiler {
-  DirectiveNormalizer _directiveNormalizer;
+  final DirectiveNormalizer _directiveNormalizer;
   final TemplateParser _templateParser;
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
-  OutputEmitter _outputEmitter;
-  OfflineCompiler(this._directiveNormalizer, this._templateParser,
-      this._styleCompiler, this._viewCompiler, this._outputEmitter);
+  final OutputEmitter _outputEmitter;
+
+  const OfflineCompiler(
+    this._directiveNormalizer,
+    this._templateParser,
+    this._styleCompiler,
+    this._viewCompiler,
+    this._outputEmitter,
+  );
+
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
     return _directiveNormalizer.normalizeDirective(directive);
   }
 
   SourceModule compile(List<NormalizedComponentWithViewDirectives> components) {
+    if (_DEBUG_PRINT_COMPILATION) {
+      print(components.map((comp) {
+        return const JsonEncoder.withIndent('  ').convert(comp.toJson());
+      }).join('\n'));
+    }
     String moduleUrl;
     if (components.isNotEmpty) {
       moduleUrl = _templateModuleUrl(components[0].component.type);
