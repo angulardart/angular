@@ -102,7 +102,7 @@ final String output = """[
             }
           ]
         },
-        "changeDetection": null,
+        "changeDetection": 6,
         "inputs": {
           "ngIf": "ngIf"
         },

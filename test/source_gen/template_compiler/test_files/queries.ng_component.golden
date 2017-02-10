@@ -365,7 +365,7 @@ final String output = """[
           "value": null,
           "diDeps": []
         },
-        "changeDetection": null,
+        "changeDetection": 6,
         "inputs": {},
         "inputTypes": {},
         "outputs": {},
