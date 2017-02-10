@@ -58,11 +58,12 @@ abstract class AbstractRoute implements RouteDefinition {
 /// It has the following properties:
 /// - `path` is a string that uses the route matcher DSL.
 /// - `component` a component type.
-/// - `name` is an optional `CamelCase` string representing the name of the route.
-/// - `data` is an optional property of any type representing arbitrary route metadata for the given
-/// route. It is injectable via [RouteData].
-/// - `useAsDefault` is a boolean value. If `true`, the child route will be navigated to if no child
-/// route is specified during the navigation.
+/// - `name` is an optional `CamelCase` string representing the name of the
+///   route.
+/// - `data` is an optional property of any type representing arbitrary route
+///   metadata for the given route. It is injectable via [RouteData].
+/// - `useAsDefault` is a boolean value. If `true`, the child route will be
+///   navigated to if no child route is specified during the navigation.
 ///
 /// ### Example
 /// ```
@@ -100,8 +101,8 @@ class Route extends AbstractRoute {
 /// - `path` is a string that uses the route matcher DSL.
 /// - `component` a component type.
 /// - `name` is an optional `CamelCase` string representing the name of the route.
-/// - `data` is an optional property of any type representing arbitrary route metadata for the given
-/// route. It is injectable via [RouteData].
+/// - `data` is an optional property of any type representing arbitrary route
+///   metadata for the given route. It is injectable via [RouteData].
 ///
 /// ### Example
 /// ```
@@ -139,10 +140,10 @@ class AuxRoute extends AbstractRoute {
 /// - `path` is a string that uses the route matcher DSL.
 /// - `loader` is a function that returns a promise that resolves to a component.
 /// - `name` is an optional `CamelCase` string representing the name of the route.
-/// - `data` is an optional property of any type representing arbitrary route metadata for the given
-/// route. It is injectable via [RouteData].
-/// - `useAsDefault` is a boolean value. If `true`, the child route will be navigated to if no child
-/// route is specified during the navigation.
+/// - `data` is an optional property of any type representing arbitrary route
+///   metadata for the given route. It is injectable via [RouteData].
+/// - `useAsDefault` is a boolean value. If `true`, the child route will be
+///   navigated to if no child route is specified during the navigation.
 ///
 /// ### Example
 /// ```

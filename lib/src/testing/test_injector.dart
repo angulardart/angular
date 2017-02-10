@@ -107,9 +107,9 @@ void resetBaseTestProviders() {
 /// ```
 ///
 /// Notes:
-/// - inject is currently a function because of some Traceur limitation the syntax should
-/// eventually
-///   becomes `it('...', @Inject (object: AClass, async: AsyncTestCompleter) => { ... });`
+/// - Inject is currently a function because of some Traceur limitation. The
+///   syntax should eventually become `it('...', @Inject (object: AClass, async:
+///   AsyncTestCompleter) => { ... });`
 FunctionWithParamTokens inject(List<dynamic> tokens, Function fn) {
   return new FunctionWithParamTokens(tokens, fn, false);
 }
