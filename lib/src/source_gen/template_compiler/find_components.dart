@@ -40,7 +40,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   NormalizedComponentWithViewDirectives _visitClassElement(
       ClassElement element) {
-    var componentVisitor = new ComponentVisitor(_buildStep, loadTemplate: true);
+    var componentVisitor = new ComponentVisitor(_buildStep);
     CompileDirectiveMetadata directive = element.accept(componentVisitor);
     if (directive == null || !directive.isComponent) return null;
     var directives = _visitDirectives(element);
@@ -89,7 +89,6 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 class ComponentVisitor
     extends RecursiveElementVisitor<CompileDirectiveMetadata> {
   final BuildStep _buildStep;
-  final bool _loadTemplate;
 
   List<String> _inputs = [];
   List<String> _outputs = [];
@@ -97,8 +96,7 @@ class ComponentVisitor
   List<CompileQueryMetadata> _queries = [];
   List<CompileQueryMetadata> _viewQueries = [];
 
-  ComponentVisitor(this._buildStep, {bool loadTemplate: false})
-      : _loadTemplate = loadTemplate;
+  ComponentVisitor(this._buildStep);
 
   Logger get _logger => _buildStep.logger;
 
@@ -288,7 +286,7 @@ class ComponentVisitor
       ElementAnnotation annotation, ClassElement element) {
     var componentValue = annotation.computeConstantValue();
     var isComponent = annotation_matcher.isComponent(annotation);
-    var template = (isComponent && _loadTemplate)
+    var template = isComponent
         ? _createTemplateMetadata(componentValue,
             view: _findView(element)?.computeConstantValue())
         : new CompileTemplateMetadata(); // Some directives won't have templates
