@@ -310,20 +310,22 @@ class ComponentVisitor
       queries.add(_getQuery(query, propertyName.toStringValue()));
     });
     return CompileDirectiveMetadata.create(
-        type: element.accept(new CompileTypeMetadataVisitor(_logger)),
-        isComponent: isComponent,
-        selector: coerceString(componentValue, 'selector'),
-        exportAs: coerceString(componentValue, 'exportAs'),
-        changeDetection: isComponent ? _changeDetection(componentValue) : null,
-        inputs: inputs,
-        outputs: outputs,
-        host: host,
-        lifecycleHooks: _extractLifecycleHooks(element),
-        providers: _extractProviders(componentValue, 'providers'),
-        viewProviders: _extractProviders(componentValue, 'viewProviders'),
-        queries: queries,
-        viewQueries: _viewQueries,
-        template: template);
+      type: element.accept(new CompileTypeMetadataVisitor(_logger)),
+      isComponent: isComponent,
+      selector: coerceString(componentValue, 'selector'),
+      exportAs: coerceString(componentValue, 'exportAs'),
+      // Even for directives, we want change detection set to the default.
+      changeDetection: _changeDetection(componentValue),
+      inputs: inputs,
+      outputs: outputs,
+      host: host,
+      lifecycleHooks: _extractLifecycleHooks(element),
+      providers: _extractProviders(componentValue, 'providers'),
+      viewProviders: _extractProviders(componentValue, 'viewProviders'),
+      queries: queries,
+      viewQueries: _viewQueries,
+      template: template,
+    );
   }
 
   ElementAnnotation _findView(ClassElement element) =>
@@ -331,17 +333,23 @@ class ComponentVisitor
           (annotation) => annotation_matcher.matchAnnotation(View, annotation),
           orElse: () => null);
 
-  CompileTemplateMetadata _createTemplateMetadata(DartObject component,
-      {DartObject view}) {
+  CompileTemplateMetadata _createTemplateMetadata(
+    DartObject component, {
+    DartObject view,
+  }) {
     var template = view ?? component;
     return new CompileTemplateMetadata(
-        encapsulation: _encapsulation(template),
-        template: coerceString(template, 'template'),
-        templateUrl: coerceString(template, 'templateUrl'),
-        styles: coerceStringList(template, 'styles'),
-        styleUrls: coerceStringList(template, 'styleUrls'),
-        preserveWhitespace:
-            coerceBool(component, 'preserveWhitespace', defaultTo: true));
+      encapsulation: _encapsulation(template),
+      template: coerceString(template, 'template'),
+      templateUrl: coerceString(template, 'templateUrl'),
+      styles: coerceStringList(template, 'styles'),
+      styleUrls: coerceStringList(template, 'styleUrls'),
+      preserveWhitespace: coerceBool(
+        component,
+        'preserveWhitespace',
+        defaultTo: true,
+      ),
+    );
   }
 
   ViewEncapsulation _encapsulation(DartObject value) => coerceEnum(

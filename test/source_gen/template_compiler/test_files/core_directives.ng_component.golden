@@ -99,7 +99,7 @@ final String output = """[
             }
           ]
         },
-        "changeDetection": null,
+        "changeDetection": 6,
         "inputs": {
           "ngIf": "ngIf"
         },
@@ -177,7 +177,7 @@ final String output = """[
             }
           ]
         },
-        "changeDetection": null,
+        "changeDetection": 6,
         "inputs": {
           "ngForTrackBy": "ngForTrackBy",
           "ngForOf": "ngForOf",
