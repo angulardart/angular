@@ -229,16 +229,20 @@ class ComponentVisitor
     } else {
       value = annotationOrObject;
     }
+    final readType = value.getField('read')?.toTypeValue();
     return new CompileQueryMetadata(
       selectors: _getSelectors(value),
       descendants: coerceBool(value, 'descendants', defaultTo: false),
       first: coerceBool(value, 'first', defaultTo: false),
       propertyName: propertyName,
-      read: new CompileTokenMetadata(
-        identifier: new CompileIdentifierMetadata(
-          name: propertyName,
-        ),
-      ),
+      read: readType != null
+          ? new CompileTokenMetadata(
+              identifier: new CompileIdentifierMetadata(
+                name: readType.displayName,
+                moduleUrl: readType.element.library.identifier,
+              ),
+            )
+          : null,
     );
   }
 
