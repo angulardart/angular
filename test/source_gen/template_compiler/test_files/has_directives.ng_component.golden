@@ -103,7 +103,7 @@ final String output = """[
         "lifecycleHooks": [],
         "template": {
           "encapsulation": 0,
-          "template": null,
+          "template": "<div>Bar</div>",
           "templateUrl": null,
           "styles": [],
           "styleUrls": [],

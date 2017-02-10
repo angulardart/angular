@@ -31,13 +31,20 @@ Future<TemplateCompilerOutputs> processTemplates(
           operationName: 'findComponents',
           assetId: buildStep.inputId,
           log: buildStep.logger);
-  if (compileComponentsData.isEmpty)
+  if (compileComponentsData.isEmpty) {
     return new TemplateCompilerOutputs(null, ngDepsModel);
-  await Future.forEach(compileComponentsData,
-      (NormalizedComponentWithViewDirectives component) async {
-    component.component =
-        await templateCompiler.normalizeDirectiveMetadata(component.component);
-  });
+  }
+  for (final component in compileComponentsData) {
+    final normalizedComp = await templateCompiler.normalizeDirectiveMetadata(
+      component.component,
+    );
+    final normalizedDirs = await Future.wait(component.directives.map((d) {
+      return templateCompiler.normalizeDirectiveMetadata(d);
+    }));
+    component
+      ..component = normalizedComp
+      ..directives = normalizedDirs;
+  }
   final compiledTemplates = logElapsedSync(() {
     return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: buildStep.inputId);
