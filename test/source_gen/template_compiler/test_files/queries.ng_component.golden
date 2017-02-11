@@ -52,17 +52,7 @@ final String output = """[
           "descendants": false,
           "first": false,
           "propertyName": "queryFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "queryFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -75,17 +65,7 @@ final String output = """[
           "descendants": false,
           "first": false,
           "propertyName": "contentChildrenFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "contentChildrenFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -98,17 +78,7 @@ final String output = """[
           "descendants": true,
           "first": true,
           "propertyName": "contentChildFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "contentChildFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -121,17 +91,7 @@ final String output = """[
           "descendants": false,
           "first": false,
           "propertyName": "queryFromAnnotation",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "queryFromAnnotation",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -144,17 +104,7 @@ final String output = """[
           "descendants": false,
           "first": false,
           "propertyName": "viewQueryFromAnnotation",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewQueryFromAnnotation",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -167,17 +117,7 @@ final String output = """[
           "descendants": false,
           "first": false,
           "propertyName": "contentChildrenFromAnnotation",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "contentChildrenFromAnnotation",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -190,17 +130,7 @@ final String output = """[
           "descendants": true,
           "first": false,
           "propertyName": "viewChildrenFromAnnotation",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewChildrenFromAnnotation",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -213,17 +143,7 @@ final String output = """[
           "descendants": true,
           "first": true,
           "propertyName": "contentChildFromAnnotation",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "contentChildFromAnnotation",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -236,17 +156,7 @@ final String output = """[
           "descendants": true,
           "first": true,
           "propertyName": "viewChildFromAnnotation",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewChildFromAnnotation",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         }
       ],
       "viewQueries": [
@@ -261,17 +171,7 @@ final String output = """[
           "descendants": false,
           "first": false,
           "propertyName": "viewQueryFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewQueryFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -284,17 +184,7 @@ final String output = """[
           "descendants": true,
           "first": false,
           "propertyName": "viewChildrenFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewChildrenFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -307,17 +197,7 @@ final String output = """[
           "descendants": true,
           "first": true,
           "propertyName": "viewChildFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "viewChildFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         },
         {
           "selectors": [
@@ -326,7 +206,7 @@ final String output = """[
               "identifier": {
                 "class": "Identifier",
                 "name": "AnotherDirective",
-                "moduleUrl": null,
+                "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/queries.dart",
                 "prefix": null,
                 "value": null
               },
@@ -336,17 +216,7 @@ final String output = """[
           "descendants": true,
           "first": false,
           "propertyName": "usingTypeFromField",
-          "read": {
-            "value": null,
-            "identifier": {
-              "class": "Identifier",
-              "name": "usingTypeFromField",
-              "moduleUrl": null,
-              "prefix": null,
-              "value": null
-            },
-            "identifierIsInstance": false
-          }
+          "read": null
         }
       ]
     },

@@ -8,6 +8,7 @@ import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
+import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart';
 import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';
 import 'package:angular2/src/source_gen/template_compiler/pipe_visitor.dart';
@@ -53,17 +54,17 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       element,
       'pipes',
       annotation_matcher.isPipe,
-      new PipeVisitor(_buildStep.logger));
+      () => new PipeVisitor(_buildStep.logger));
 
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
       _visitTypes(element, 'directives', annotation_matcher.isDirective,
-          new ComponentVisitor(_buildStep));
+          () => new ComponentVisitor(_buildStep));
 
   List<T> _visitTypes<T>(
           ClassElement element,
           String field,
           annotation_matcher.AnnotationMatcher annotationMatcher,
-          ElementVisitor<T> visitor) =>
+          ElementVisitor<T> visitor()) =>
       element.metadata
           .where(annotation_matcher.hasDirectives)
           .expand((annotation) => _visitTypeObjects(
@@ -75,13 +76,13 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<T> _visitTypeObjects<T>(
           Iterable<DartObject> directives,
           annotation_matcher.AnnotationMatcher annotationMatcher,
-          ElementVisitor<T> visitor) =>
+          ElementVisitor<T> visitor()) =>
       visitAll<T>(directives, (obj) {
         var type = obj.toTypeValue();
         if (type != null &&
             type.element != null &&
             type.element.metadata.any(annotationMatcher)) {
-          return type.element.accept(visitor);
+          return type.element.accept(visitor());
         }
       });
 }
@@ -211,10 +212,13 @@ class ComponentVisitor
           .map((s) => new CompileTokenMetadata(value: s))
           .toList();
     }
+    var selectorType = selector.toTypeValue();
     return [
       new CompileTokenMetadata(
-        identifier:
-            new CompileIdentifierMetadata(name: selector.toTypeValue().name),
+        identifier: new CompileIdentifierMetadata(
+          name: selectorType.name,
+          moduleUrl: moduleUrl(selectorType.element),
+        ),
       ),
     ];
   }
@@ -239,7 +243,7 @@ class ComponentVisitor
           ? new CompileTokenMetadata(
               identifier: new CompileIdentifierMetadata(
                 name: readType.displayName,
-                moduleUrl: readType.element.library.identifier,
+                moduleUrl: moduleUrl(readType.element),
               ),
             )
           : null,
@@ -287,15 +291,17 @@ class ComponentVisitor
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
-      ElementAnnotation annotation, ClassElement element) {
+    ElementAnnotation annotation,
+    ClassElement element,
+  ) {
     var componentValue = annotation.computeConstantValue();
     var isComponent = annotation_matcher.isComponent(annotation);
+    // Some directives won't have templates but the template parser is going to
+    // assume they have at least defaults.
     var template = isComponent
         ? _createTemplateMetadata(componentValue,
             view: _findView(element)?.computeConstantValue())
-        : new CompileTemplateMetadata(); // Some directives won't have templates
-    // but the template parser is going to
-    // assume they have at least defaults.
+        : new CompileTemplateMetadata();
     var inputs =
         new List<String>.from(coerceStringList(componentValue, 'inputs'))
           ..addAll(_inputs);
