@@ -31,6 +31,7 @@ import 'package:angular2/src/core/linker/view_type.dart' as import7;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular2/angular2.dart';
+import 'package:angular2/src/core/linker/element_ref.dart';
 
 const List<dynamic> styles_QueriesComponent = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent0 = const [
@@ -214,7 +215,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     Text _text_24 = new Text('\n  ');
     parentRenderNode.append(_text_24);
     dbgElm(_text_24, 24, 11, 28);
-    _viewQuery_q12_2.reset([]);
+    _viewQuery_q12_2.reset([new ElementRef(_el_23)]);
     ctx.viewChildFromField = _viewQuery_q12_2.first;
     init([], [
       _text_0,
@@ -302,17 +303,30 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   void detectChangesInternal() {
     if (!import9.AppViewUtils.throwOnChanges) {
       if (_viewQuery_q8_0.dirty) {
-        _viewQuery_q8_0.reset([]);
+        _viewQuery_q8_0.reset([new ElementRef(_el_15)]);
         ctx.viewQueryFromField = _viewQuery_q8_0;
         _viewQuery_q8_0.notifyOnChanges();
       }
       if (_viewQuery_q10_1.dirty) {
-        _viewQuery_q10_1.reset([]);
+        _viewQuery_q10_1.reset([new ElementRef(_el_19)]);
         ctx.viewChildrenFromField = _viewQuery_q10_1;
         _viewQuery_q10_1.notifyOnChanges();
       }
       if (_viewQuery_AnotherDirective_3.dirty) {
-        _viewQuery_AnotherDirective_3.reset([]);
+        _viewQuery_AnotherDirective_3.reset([
+          _AnotherDirective_1_2,
+          _AnotherDirective_3_2,
+          _AnotherDirective_5_2,
+          _AnotherDirective_7_2,
+          _AnotherDirective_9_2,
+          _AnotherDirective_11_2,
+          _AnotherDirective_13_2,
+          _AnotherDirective_15_2,
+          _AnotherDirective_17_2,
+          _AnotherDirective_19_2,
+          _AnotherDirective_21_2,
+          _AnotherDirective_23_2
+        ]);
         ctx.usingTypeFromField = _viewQuery_AnotherDirective_3;
         _viewQuery_AnotherDirective_3.notifyOnChanges();
       }
