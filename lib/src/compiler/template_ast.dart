@@ -264,13 +264,21 @@ class ProviderAst implements TemplateAst {
   /// children and this flag allows injectorGetInternal to create more
   /// optimal code by skipping these.
   bool dynamicallyReachable;
+
+  /// If false, provider is only reachable on the node it is defined on.
+  /// And doesn't support injection through view hierarchy.
+  bool visibleToViewHierarchy;
+
   List<CompileProviderMetadata> providers;
   ProviderAstType providerType;
   SourceSpan sourceSpan;
 
   ProviderAst(this.token, this.multiProvider, this.providers, this.providerType,
       this.sourceSpan,
-      {this.eager, this.dynamicallyReachable: true});
+      {this.eager,
+      this.dynamicallyReachable: true,
+      this.visibleToViewHierarchy: true});
+
   // No visit method in the visitor for now...
   dynamic visit(TemplateAstVisitor visitor, dynamic context) => null;
 

@@ -59,9 +59,8 @@ class _InterpretiveAppView<T> extends DebugAppView<T>
     var m = methods['injectorGetInternal'];
     if (m != null) {
       return m(token, nodeIndex, notFoundResult);
-    } else {
-      return super.injectorGet(token, nodeIndex, notFoundResult);
     }
+    return notFoundResult;
   }
 
   @override

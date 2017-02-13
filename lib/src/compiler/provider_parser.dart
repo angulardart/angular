@@ -347,14 +347,11 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
 /// of existing ProviderAst.
 ProviderAst _transformProviderAst(ProviderAst provider,
     {bool forceEager, List<CompileProviderMetadata> providers}) {
-  return new ProviderAst(
-    provider.token,
-    provider.multiProvider,
-    providers,
-    provider.providerType,
-    provider.sourceSpan,
-    eager: provider.eager || forceEager,
-  );
+  return new ProviderAst(provider.token, provider.multiProvider, providers,
+      provider.providerType, provider.sourceSpan,
+      eager: provider.eager || forceEager,
+      dynamicallyReachable: provider.dynamicallyReachable,
+      visibleToViewHierarchy: provider.visibleToViewHierarchy);
 }
 
 // Flattens list of lists of providers and converts entries that contain Type to
@@ -458,9 +455,15 @@ void _resolveProviders(
           sourceSpan));
     }
     if (resolvedProvider == null) {
+      // Temporarily we mark NgIf/NgFor as visibility local until @Directive
+      // has parameter to mark them explicitly.
+      // TODO: Add @Directive visibility parameter.
+      bool visibleToViewHierarchy =
+          !(provider.token.equalsTo(ngIfTokenMetadata) ||
+              provider.token.equalsTo(ngForTokenMetadata));
       resolvedProvider = new ProviderAst(
           provider.token, provider.multi, [provider], providerType, sourceSpan,
-          eager: eager);
+          eager: eager, visibleToViewHierarchy: visibleToViewHierarchy);
       targetProvidersByToken.add(provider.token, resolvedProvider);
     } else {
       if (!provider.multi) {
@@ -504,3 +507,8 @@ void _addQueryToTokenMap(CompileTokenMap<List<CompileQueryMetadata>> map,
     entry.add(query);
   });
 }
+
+final CompileTokenMetadata ngIfTokenMetadata =
+    identifierToken(Identifiers.NG_IF_DIRECTIVE);
+final CompileTokenMetadata ngForTokenMetadata =
+    identifierToken(Identifiers.NG_FOR_DIRECTIVE);

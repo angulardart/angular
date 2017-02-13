@@ -295,7 +295,8 @@ class CompileElement extends CompileNode {
 
   void afterChildren(num childNodeCount) {
     for (ProviderAst resolvedProvider in _resolvedProviders.values) {
-      if (!resolvedProvider.dynamicallyReachable) continue;
+      if (!resolvedProvider.dynamicallyReachable ||
+          !resolvedProvider.visibleToViewHierarchy) continue;
 
       // Note: afterChildren is called after recursing into children.
       // This is good so that an injector match in an element that is closer to

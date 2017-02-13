@@ -10,6 +10,8 @@ import "package:angular2/src/core/linker/template_ref.dart";
 import "package:angular2/src/core/linker/view_container_ref.dart"
     show ViewContainerRef;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
+import "package:angular2/src/common/directives/ng_if.dart";
+import "package:angular2/src/common/directives/ng_for.dart";
 import "package:angular2/src/debug/debug_app_view.dart";
 import "package:angular2/src/debug/debug_context.dart"
     show StaticNodeDebugInfo, DebugContext;
@@ -681,4 +683,6 @@ void _initializeInterpreter() {
   Identifiers.HTML_DOCUMENT.runtime = document;
   Identifiers.appViewUtils.runtime = appViewUtils;
   Identifiers.ComponentRef.runtime = ComponentRef;
+  Identifiers.NG_IF_DIRECTIVE.runtime = NgIf;
+  Identifiers.NG_FOR_DIRECTIVE.runtime = NgFor;
 }
