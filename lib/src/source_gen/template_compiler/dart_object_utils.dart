@@ -90,9 +90,17 @@ T coerceEnum<T>(
   T defaultTo,
 }) {
   final enumField = getField(object, field);
-  return _findEnumByName(enumField, values) ??
-      _findEnumByIndex(enumField, values) ??
-      defaultTo;
+  if (enumField == null || enumField.isNull) {
+    return defaultTo;
+  }
+  final enumValue =
+      _findEnumByName(enumField, values) ?? _findEnumByIndex(enumField, values);
+  if (enumValue == null) {
+    throw new ArgumentError(
+      'Could not determine the enum of ${enumField} from ${values}',
+    );
+  }
+  return enumValue;
 }
 
 // TODO: For whatever reason 'ByName' works in Bazel, but not 'ByIndex', and the
