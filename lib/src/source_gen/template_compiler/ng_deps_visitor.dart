@@ -120,7 +120,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
 
   @override
   void visitFunctionElement(FunctionElement element) {
-    if (annotation_matcher.isInjectable(element)) {
+    if (annotation_matcher.safeIsInjectable(element, _logger)) {
       _reflectables.add(new ReflectionInfoModel(
           isFunction: true,
           // TODO(alorenzen): Add import from source file, for proper scoping.
@@ -147,7 +147,10 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   /// as an Annotation.
   List<AnnotationModel> _annotationsFor(ClassElement element) {
     var annotations = _annotations(element.metadata, element);
-    if (element.metadata.any(annotation_matcher.isComponent)) {
+    if (element.metadata.any(annotation_matcher.safeMatcher(
+      annotation_matcher.isComponent,
+      _logger,
+    ))) {
       annotations.add(new AnnotationModel(
           name: '${element.name}NgFactory', isConstObject: true));
     }
@@ -157,14 +160,14 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   List<AnnotationModel> _annotations(
           List<ElementAnnotation> metadata, Element element) =>
       metadata
-          .where((annotation) => !annotation_matcher.matchTypes(const [
+          .where((annotation) => !annotation_matcher.safeMatcherTypes(const [
                 Component,
                 View,
                 Directive,
                 Deprecated,
                 Pipe,
                 Inject,
-              ], annotation))
+              ], _logger)(annotation))
           .map((annotation) =>
               new AnnotationModel.fromElement(annotation, element))
           .toList();
