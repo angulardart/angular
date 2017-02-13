@@ -48,6 +48,8 @@ var APP_VIEW_UTILS_MODULE_URL =
 var CD_MODULE_URL =
     "asset:angular2/lib/src/core/change_detection/change_detection.dart";
 var ANGULAR_ROOT_URL = "package:angular2/angular2.dart";
+var NG_IF_URL = "asset:angular2/lib/src/common/directives/ng_if.dart";
+var NG_FOR_URL = "asset:angular2/lib/src/common/directives/ng_for.dart";
 
 // Reassign the imports to different variables so we can
 // define static variables with the name of the import.
@@ -204,6 +206,10 @@ class Identifiers {
       name: "EMPTY_MAP",
       moduleUrl: APP_VIEW_UTILS_MODULE_URL,
       runtime: impEMPTY_MAP);
+  static final NG_IF_DIRECTIVE =
+      new CompileIdentifierMetadata(name: "NgIf", moduleUrl: NG_IF_URL);
+  static final NG_FOR_DIRECTIVE =
+      new CompileIdentifierMetadata(name: "NgFor", moduleUrl: NG_FOR_URL);
   static final pureProxies = [
     null,
     new CompileIdentifierMetadata(

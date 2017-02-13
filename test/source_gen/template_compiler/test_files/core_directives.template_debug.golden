@@ -99,17 +99,6 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     return null;
   }
 
-  dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, NgIf) && (1 == requestNodeIndex))) {
-      return _NgIf_1_5;
-    }
-    if ((identical(token, import3.NgFor) && (3 == requestNodeIndex))) {
-      return _NgFor_3_5;
-    }
-    return notFoundResult;
-  }
-
   void detectChangesInternal() {
     dbg(1, 0, 9);
     _NgIf_1_5.ngIf = ctx.foo;

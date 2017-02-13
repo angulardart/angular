@@ -9,6 +9,7 @@ import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
+import "../provider_parser.dart" show ngIfTokenMetadata, ngForTokenMetadata;
 import "../style_compiler.dart" show StylesCompileResult;
 import "../template_ast.dart"
     show
@@ -630,10 +631,16 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
           identifierToken(compileElement.component.type));
     }
     compileElement.referenceTokens?.forEach((String varName, token) {
-      varTokenEntries.add([
-        varName,
-        token != null ? createDiTokenExpression(token) : o.NULL_EXPR
-      ]);
+      // Skip generating debug info for NgIf/NgFor since they are not
+      // reachable through injection anymore.
+      if (token == null ||
+          !(token.equalsTo(ngIfTokenMetadata) ||
+              token.equalsTo(ngForTokenMetadata))) {
+        varTokenEntries.add([
+          varName,
+          token != null ? createDiTokenExpression(token) : o.NULL_EXPR
+        ]);
+      }
     });
   }
   // Optimize StaticNodeDebugInfo(const [],null,const <String, dynamic>{}), case
