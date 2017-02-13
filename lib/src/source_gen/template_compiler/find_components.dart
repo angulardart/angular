@@ -7,6 +7,8 @@ import 'package:angular2/src/core/change_detection/constants.dart';
 import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
+    show safeMatcher, safeMatcherType, safeMatcherTypes;
+import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart';
@@ -51,37 +53,50 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   }
 
   List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
-      element,
-      'pipes',
-      annotation_matcher.isPipe,
-      () => new PipeVisitor(_buildStep.logger));
+        element,
+        'pipes',
+        safeMatcher(annotation_matcher.isPipe, _buildStep.logger),
+        () => new PipeVisitor(_buildStep.logger),
+      );
 
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
-      _visitTypes(element, 'directives', annotation_matcher.isDirective,
-          () => new ComponentVisitor(_buildStep));
+      _visitTypes(
+        element,
+        'directives',
+        safeMatcher(annotation_matcher.isDirective, _buildStep.logger),
+        () => new ComponentVisitor(_buildStep),
+      );
 
   List<T> _visitTypes<T>(
-          ClassElement element,
-          String field,
-          annotation_matcher.AnnotationMatcher annotationMatcher,
-          ElementVisitor<T> visitor()) =>
+    ClassElement element,
+    String field,
+    annotation_matcher.AnnotationMatcher annotationMatcher,
+    ElementVisitor<T> visitor(),
+  ) =>
       element.metadata
-          .where(annotation_matcher.hasDirectives)
+          .where(safeMatcher(
+            annotation_matcher.hasDirectives,
+            _buildStep.logger,
+          ))
           .expand((annotation) => _visitTypeObjects(
               coerceList(annotation.computeConstantValue(), field),
-              annotationMatcher,
+              safeMatcher(annotationMatcher, _buildStep.logger),
               visitor))
           .toList();
 
   List<T> _visitTypeObjects<T>(
-          Iterable<DartObject> directives,
-          annotation_matcher.AnnotationMatcher annotationMatcher,
-          ElementVisitor<T> visitor()) =>
+    Iterable<DartObject> directives,
+    annotation_matcher.AnnotationMatcher annotationMatcher,
+    ElementVisitor<T> visitor(),
+  ) =>
       visitAll<T>(directives, (obj) {
         var type = obj.toTypeValue();
         if (type != null &&
             type.element != null &&
-            type.element.metadata.any(annotationMatcher)) {
+            type.element.metadata.any(safeMatcher(
+              annotationMatcher,
+              _buildStep.logger,
+            ))) {
           return type.element.accept(visitor());
         }
       });
@@ -105,7 +120,7 @@ class ComponentVisitor
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
     super.visitClassElement(element);
     for (ElementAnnotation annotation in element.metadata) {
-      if (annotation_matcher.isDirective(annotation)) {
+      if (safeMatcher(annotation_matcher.isDirective, _logger)(annotation)) {
         return _createCompileDirectiveMetadata(annotation, element);
       }
     }
@@ -140,7 +155,7 @@ class ComponentVisitor
   CompileDirectiveMetadata visitMethodElement(MethodElement element) {
     super.visitMethodElement(element);
     for (ElementAnnotation annotation in element.metadata) {
-      if (annotation_matcher.matchAnnotation(HostListener, annotation)) {
+      if (safeMatcherType(HostListener, _logger)(annotation)) {
         _addHostListener(annotation, element);
       }
     }
@@ -153,21 +168,21 @@ class ComponentVisitor
     isSetter: false,
   }) {
     for (ElementAnnotation annotation in element.metadata) {
-      if (annotation_matcher.matchAnnotation(Input, annotation)) {
+      if (safeMatcherType(Input, _logger)(annotation)) {
         if (isSetter) {
           _addPropertyToType(_inputs, annotation, element);
         } else {
           _logger.severe('@Input can only be used on a setter or non-final '
               'field, but was found on $element.');
         }
-      } else if (annotation_matcher.matchAnnotation(Output, annotation)) {
+      } else if (safeMatcherType(Output, _logger)(annotation)) {
         if (isGetter) {
           _addPropertyToType(_outputs, annotation, element);
         } else {
           _logger.severe('@Output can only be used on a getter or a field, but '
               'was found on $element.');
         }
-      } else if (annotation_matcher.matchAnnotation(HostBinding, annotation)) {
+      } else if (safeMatcherType(HostBinding, _logger)(annotation)) {
         if (isGetter) {
           _addHostBinding(annotation, element);
         } else {
@@ -175,8 +190,11 @@ class ComponentVisitor
               .severe('@HostBinding can only be used on a getter or a field, '
                   'but was found on $element.');
         }
-      } else if (annotation_matcher.matchTypes(
-          const [Query, ContentChildren, ContentChild], annotation)) {
+      } else if (safeMatcherTypes(const [
+        Query,
+        ContentChildren,
+        ContentChild,
+      ], _logger)(annotation)) {
         if (isSetter) {
           _queries.add(_getQuery(
             annotation.computeConstantValue(),
@@ -187,8 +205,11 @@ class ComponentVisitor
               'Any of the @Query/ViewQuery/Content/view annotations '
               'can only be used on a setter, but was found on $element.');
         }
-      } else if (annotation_matcher
-          .matchTypes(const [ViewQuery, ViewChildren, ViewChild], annotation)) {
+      } else if (safeMatcherTypes(const [
+        ViewQuery,
+        ViewChildren,
+        ViewChild,
+      ], _logger)(annotation)) {
         if (isSetter) {
           _viewQueries.add(_getQuery(
             annotation.computeConstantValue(),
@@ -295,7 +316,10 @@ class ComponentVisitor
     ClassElement element,
   ) {
     var componentValue = annotation.computeConstantValue();
-    var isComponent = annotation_matcher.isComponent(annotation);
+    var isComponent = safeMatcher(
+      annotation_matcher.isComponent,
+      _logger,
+    )(annotation);
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     var template = isComponent
@@ -336,8 +360,9 @@ class ComponentVisitor
 
   ElementAnnotation _findView(ClassElement element) =>
       element.metadata.firstWhere(
-          (annotation) => annotation_matcher.matchAnnotation(View, annotation),
-          orElse: () => null);
+        safeMatcherType(View, _logger),
+        orElse: () => null,
+      );
 
   CompileTemplateMetadata _createTemplateMetadata(
     DartObject component, {
