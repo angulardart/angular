@@ -170,7 +170,7 @@ class MyComponent {
    * Using `@Query` in a component constructor; move to field-level
    * `Renderer`: Use `dart:html` directly
    * `NgControlStatus`: A form control should set class they are interested in
-   * `NgPlural`: Was never formally suppported in Angular Dart. Recommend using
+   * `NgPlural`: Was never formally supported in Angular Dart. Recommend using
      `package:intl` with getters on your `@Component` pointing to an
      `Intl.message` call until we have formal template support (planned)
    * `ObservableListDiff`: Not properly implemented, will re-introduce later
