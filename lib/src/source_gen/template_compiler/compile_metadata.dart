@@ -148,14 +148,27 @@ class CompileTypeMetadataVisitor
       parameters.map(_createCompileDiDependencyMetadata).toList();
 
   CompileDiDependencyMetadata _createCompileDiDependencyMetadata(
-          ParameterElement p) =>
-      new CompileDiDependencyMetadata(
-          token: _getToken(p),
-          isAttribute: _hasAnnotation(p, Attribute),
-          isSelf: _hasAnnotation(p, Self),
-          isHost: _hasAnnotation(p, Host),
-          isSkipSelf: _hasAnnotation(p, SkipSelf),
-          isOptional: _hasAnnotation(p, Optional));
+    ParameterElement p,
+  ) {
+    try {
+      return new CompileDiDependencyMetadata(
+        token: _getToken(p),
+        isAttribute: _hasAnnotation(p, Attribute),
+        isSelf: _hasAnnotation(p, Self),
+        isHost: _hasAnnotation(p, Host),
+        isSkipSelf: _hasAnnotation(p, SkipSelf),
+        isOptional: _hasAnnotation(p, Optional),
+      );
+    } on ArgumentError catch (_) {
+      // Handle cases where something is annotated with @Injectable() but does
+      // not have something annotated properly. It's likely this is either
+      // dead code or is not actually used via DI. We can ignore for now.
+      _logger.warning(''
+          'Could not resolve token for ${p} on ${p.enclosingElement} in '
+          '${p.library.identifier}');
+      return new CompileDiDependencyMetadata();
+    }
+  }
 
   CompileTokenMetadata _getToken(ParameterElement p) =>
       _hasAnnotation(p, Attribute)
@@ -169,10 +182,26 @@ class CompileTypeMetadataVisitor
           value: dart_objects.coerceString(
               _getAnnotation(p, Attribute).constantValue, 'attributeName'));
 
-  CompileTokenMetadata _tokenForInject(ParameterElement p) => _token(
-      dart_objects.getField(_getAnnotation(p, Inject).constantValue, 'token'));
+  CompileTokenMetadata _tokenForInject(ParameterElement p) {
+    final inject = _getAnnotation(p, Inject).computeConstantValue();
+    final token = dart_objects.getField(inject, 'token');
+    if (token == null) {
+      // Workaround for OpaqueToken's that are not resolvable.
+      _logger.warning(''
+          'Could not resolve an @Inject() annotation for ${p} on '
+          '"${p.enclosingElement}" in "${p.library.identifier}". Direct '
+          'dependencies are likely missing on an imported library.');
+      return new CompileTokenMetadata(
+        value: 'OpaqueToken__UNRESOLVED',
+      );
+    }
+    return _token(token);
+  }
 
   CompileTokenMetadata _token(DartObject token) {
+    if (token == null) {
+      throw new ArgumentError.notNull('token');
+    }
     if (token.toStringValue() != null) {
       return new CompileTokenMetadata(value: token.toStringValue());
     } else if (token.toBoolValue() != null) {
@@ -185,7 +214,8 @@ class CompileTypeMetadataVisitor
       return _tokenForType(token.toTypeValue());
     } else if (_isOpaqueToken(token)) {
       return new CompileTokenMetadata(
-          value: 'OpaqueToken__${dart_objects.coerceString(token, '_desc')}');
+        value: 'OpaqueToken__${dart_objects.coerceString(token, '_desc')}',
+      );
     } else if (token.type is InterfaceType) {
       return _tokenForType(token.type);
     }

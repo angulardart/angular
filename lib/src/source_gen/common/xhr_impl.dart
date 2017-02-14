@@ -20,7 +20,11 @@ class XhrImpl implements XHR {
     }
     final assetId = fromUri(url);
     if (!await _buildStep.hasInput(assetId)) {
-      throw new ArgumentError.value('Could not read asset at uri $url', 'url');
+      throw new ArgumentError.value(
+        url,
+        'url',
+        'No asset found at $url while running build on ${_buildStep.inputId}',
+      );
     }
     return _buildStep.readAsString(assetId);
   }
