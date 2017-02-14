@@ -612,9 +612,9 @@ class _DirectiveMetadataVisitor extends Object
       }
     } else {
       if (inputType != null) {
-        inputList.add('${name}; ${inputType.name.name}');
+        inputList.add('$name; ${inputType.name.name}');
       } else {
-        inputList.add('${name}');
+        inputList.add('$name');
       }
     }
   }

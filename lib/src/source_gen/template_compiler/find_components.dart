@@ -159,7 +159,13 @@ class ComponentVisitor
     for (ElementAnnotation annotation in element.metadata) {
       if (safeMatcherType(Input, log)(annotation)) {
         if (isSetter) {
-          _addPropertyToType(_inputs, annotation, element);
+          String typeName;
+          if (element is FieldElement) {
+            typeName = element.type?.name;
+          } else if (element is PropertyAccessorElement) {
+            typeName = element.parameters.first.type?.name;
+          }
+          _addPropertyToType(_inputs, annotation, element, typeName: typeName);
         } else {
           log.severe('@Input can only be used on a setter or non-final '
               'field, but was found on $element.');
@@ -276,12 +282,17 @@ class ComponentVisitor
   }
 
   void _addPropertyToType(
-      List<String> types, ElementAnnotation annotation, Element element) {
+      List<String> types, ElementAnnotation annotation, Element element,
+      {String typeName}) {
     var value = annotation.computeConstantValue();
     var bindingName = coerceString(value, 'bindingPropertyName');
-    types.add(bindingName != null
-        ? '${element.displayName}: ${bindingName}'
-        : element.displayName);
+    var entry = bindingName != null
+        ? '${element.displayName}: $bindingName'
+        : element.displayName;
+    if (typeName != null) {
+      entry += '; $typeName';
+    }
+    types.add(entry);
   }
 
   List<LifecycleHooks> _extractLifecycleHooks(ClassElement clazz) {
