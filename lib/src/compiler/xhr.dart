@@ -1,4 +1,6 @@
-// TODO: vsavkin rename it into TemplateLoader
+// This was never meant to be a user-visibile API.
+@Deprecated('If you need this, import package:angular2/reflection.dart')
+library angular2_deprecated_xhr;
 
 import "dart:async";
 
