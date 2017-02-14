@@ -1,7 +1,7 @@
 @TestOn('browser')
 library angular2.test.common.pipes.number_pipe_test;
 
-import "package:angular2/common.dart"
+import "package:angular2/angular2.dart"
     show DecimalPipe, PercentPipe, CurrencyPipe;
 import 'package:test/test.dart';
 

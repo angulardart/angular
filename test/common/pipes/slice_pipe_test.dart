@@ -1,7 +1,7 @@
 @TestOn('browser && !js')
 library angular2.test.common.pipes.slice_pipe_test;
 
-import 'package:angular2/common.dart' show SlicePipe;
+import 'package:angular2/angular2.dart' show SlicePipe;
 import 'package:angular2/core.dart' show Component;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
