@@ -258,6 +258,7 @@ var NG_PLATFORM_BROWSER_TESTING = [
 ];
 var NG_PLATFORM_COMMON = [
   'APP_BASE_HREF',
+  'BrowserPlatformLocation',
   'HashLocationStrategy',
   'Location',
   'LocationStrategy',
