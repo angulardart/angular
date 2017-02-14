@@ -33,7 +33,7 @@ import 'package:angular2/angular2.dart';
 const List<dynamic> styles_InjectableComponent = const [];
 
 class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewInjectableComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -69,7 +69,7 @@ AppView<import1.InjectableComponent> viewFactory_InjectableComponent0(
 const List<dynamic> styles_InjectableComponentHost = const [];
 
 class ViewInjectableComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.InjectableComponent> _compView_0;
   dynamic _OpaqueToken__test_0_2;
   import1.InjectableComponent _InjectableComponent_0_3;

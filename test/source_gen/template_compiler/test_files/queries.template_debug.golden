@@ -346,7 +346,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = const [
 ];
 
 class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.QueriesComponent> _compView_0;
   import1.QueriesComponent _QueriesComponent_0_2;
   import3.QueryList _query_q7_0_0;

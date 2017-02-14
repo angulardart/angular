@@ -132,7 +132,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = const [
 ];
 
 class ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
-  Element _el_0;
+  DivElement _el_0;
   ViewTestFooComponent1(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(
@@ -172,7 +172,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent2 = const [
 ];
 
 class ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
-  Element _el_0;
+  DivElement _el_0;
   Element _el_2;
   Text _text_3;
   var _expr_0;
@@ -231,7 +231,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import5.TestFooComponent> _compView_0;
   import5.TestFooComponent _TestFooComponent_0_2;
   static RenderComponentType renderType;

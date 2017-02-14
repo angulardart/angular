@@ -84,6 +84,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       'audio': Identifiers.HTML_AUDIO_ELEMENT,
       'button': Identifiers.HTML_BUTTON_ELEMENT,
       'canvas': Identifiers.HTML_CANVAS_ELEMENT,
+      'div': Identifiers.HTML_DIV_ELEMENT,
       'form': Identifiers.HTML_FORM_ELEMENT,
       'iframe': Identifiers.HTML_IFRAME_ELEMENT,
       'input': Identifiers.HTML_INPUT_ELEMENT,
@@ -226,7 +227,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
   /// Returns strongly typed html elements to improve code generation.
   CompileIdentifierMetadata identifierFromTagName(String name) {
-    var elementType = tagNameToIdentifier[name.toLowerCase()];
+    String tagName = name.toLowerCase();
+    var elementType = tagNameToIdentifier[tagName];
     elementType ??= Identifiers.HTML_ELEMENT;
     // TODO: classify as HtmlElement or SvgElement to improve further.
     return elementType;
@@ -238,7 +240,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var fieldName = '_el_${nodeIndex}';
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
     var elementType = isHostRootView
-        ? Identifiers.HTML_ELEMENT
+        ? Identifiers.HTML_HTML_ELEMENT
         : identifierFromTagName(ast.name);
     view.fields.add(new o.ClassField(fieldName,
         outputType: o.importType(elementType),
@@ -308,8 +310,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     if (!isHostRootView &&
         view.component.template.encapsulation == ViewEncapsulation.Emulated) {
       // Set ng_content class for CSS shim.
+      String shimMethod =
+          elementType != Identifiers.HTML_ELEMENT ? 'addShimC' : 'addShimE';
       o.Expression shimClassExpr = new o.InvokeMemberMethodExpr(
-          'addShimC', [new o.ReadClassMemberExpr(fieldName)]);
+          shimMethod, [new o.ReadClassMemberExpr(fieldName)]);
       view.createMethod.addStmt(shimClassExpr.toStmt());
     }
 

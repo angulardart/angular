@@ -64,7 +64,7 @@ AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(
 const List<dynamic> styles_LifecycleHooksComponentHost = const [];
 
 class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.LifecycleHooksComponent> _compView_0;
   import1.LifecycleHooksComponent _LifecycleHooksComponent_0_2;
   static RenderComponentType renderType;

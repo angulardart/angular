@@ -32,7 +32,7 @@ import 'package:angular2/angular2.dart';
 const List<dynamic> styles_EmulatedComponent = const [];
 
 class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewEmulatedComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -68,7 +68,7 @@ AppView<import1.EmulatedComponent> viewFactory_EmulatedComponent0(
 const List<dynamic> styles_EmulatedComponentHost = const [];
 
 class ViewEmulatedComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.EmulatedComponent> _compView_0;
   import1.EmulatedComponent _EmulatedComponent_0_2;
   static RenderComponentType renderType;
@@ -120,7 +120,7 @@ const ComponentFactory EmulatedComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_NativeComponent = const [];
 
 class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewNativeComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -150,7 +150,7 @@ AppView<import1.NativeComponent> viewFactory_NativeComponent0(
 const List<dynamic> styles_NativeComponentHost = const [];
 
 class ViewNativeComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.NativeComponent> _compView_0;
   import1.NativeComponent _NativeComponent_0_2;
   static RenderComponentType renderType;
@@ -202,7 +202,7 @@ const ComponentFactory NativeComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_NoneComponent = const [];
 
 class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewNoneComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -232,7 +232,7 @@ AppView<import1.NoneComponent> viewFactory_NoneComponent0(
 const List<dynamic> styles_NoneComponentHost = const [];
 
 class ViewNoneComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.NoneComponent> _compView_0;
   import1.NoneComponent _NoneComponent_0_2;
   static RenderComponentType renderType;

@@ -38,7 +38,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 =
 
 class ViewHasTemplateFileComponent0
     extends DebugAppView<import3.HasTemplateFileComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewHasTemplateFileComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -89,7 +89,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 =
 ];
 
 class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import3.HasTemplateFileComponent> _compView_0;
   import3.HasTemplateFileComponent _HasTemplateFileComponent_0_2;
   static RenderComponentType renderType;

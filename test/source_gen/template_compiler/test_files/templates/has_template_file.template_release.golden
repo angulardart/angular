@@ -34,7 +34,7 @@ const List<dynamic> styles_HasTemplateFileComponent = const [import0.styles];
 
 class ViewHasTemplateFileComponent0
     extends AppView<import2.HasTemplateFileComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewHasTemplateFileComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -74,7 +74,7 @@ AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
 const List<dynamic> styles_HasTemplateFileComponentHost = const [];
 
 class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import2.HasTemplateFileComponent> _compView_0;
   import2.HasTemplateFileComponent _HasTemplateFileComponent_0_2;
   static RenderComponentType renderType;

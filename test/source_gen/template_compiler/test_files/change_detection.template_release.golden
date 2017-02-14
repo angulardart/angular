@@ -32,7 +32,7 @@ import 'package:angular2/angular2.dart';
 const List<dynamic> styles_CheckOnceComponent = const [];
 
 class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckOnceComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -68,7 +68,7 @@ AppView<import1.CheckOnceComponent> viewFactory_CheckOnceComponent0(
 const List<dynamic> styles_CheckOnceComponentHost = const [];
 
 class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.CheckOnceComponent> _compView_0;
   import1.CheckOnceComponent _CheckOnceComponent_0_2;
   static RenderComponentType renderType;
@@ -127,7 +127,7 @@ const ComponentFactory CheckOnceComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_CheckedComponent = const [];
 
 class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckedComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -157,7 +157,7 @@ AppView<import1.CheckedComponent> viewFactory_CheckedComponent0(
 const List<dynamic> styles_CheckedComponentHost = const [];
 
 class ViewCheckedComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.CheckedComponent> _compView_0;
   import1.CheckedComponent _CheckedComponent_0_2;
   static RenderComponentType renderType;
@@ -209,7 +209,7 @@ const ComponentFactory CheckedComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_CheckAlwaysComponent = const [];
 
 class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -245,7 +245,7 @@ AppView<import1.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
 const List<dynamic> styles_CheckAlwaysComponentHost = const [];
 
 class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.CheckAlwaysComponent> _compView_0;
   import1.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
   static RenderComponentType renderType;
@@ -304,7 +304,7 @@ const ComponentFactory CheckAlwaysComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_DetachedComponent = const [];
 
 class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewDetachedComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -340,7 +340,7 @@ AppView<import1.DetachedComponent> viewFactory_DetachedComponent0(
 const List<dynamic> styles_DetachedComponentHost = const [];
 
 class ViewDetachedComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.DetachedComponent> _compView_0;
   import1.DetachedComponent _DetachedComponent_0_2;
   static RenderComponentType renderType;
@@ -392,7 +392,7 @@ const ComponentFactory DetachedComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_OnPushComponent = const [];
 
 class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewOnPushComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -422,7 +422,7 @@ AppView<import1.OnPushComponent> viewFactory_OnPushComponent0(
 const List<dynamic> styles_OnPushComponentHost = const [];
 
 class ViewOnPushComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.OnPushComponent> _compView_0;
   import1.OnPushComponent _OnPushComponent_0_2;
   static RenderComponentType renderType;
@@ -474,7 +474,7 @@ const ComponentFactory OnPushComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_StatefulComponent = const [];
 
 class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewStatefulComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -511,7 +511,7 @@ AppView<import1.StatefulComponent> viewFactory_StatefulComponent0(
 const List<dynamic> styles_StatefulComponentHost = const [];
 
 class ViewStatefulComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.StatefulComponent> _compView_0;
   import1.StatefulComponent _StatefulComponent_0_2;
   static RenderComponentType renderType;
@@ -563,7 +563,7 @@ const ComponentFactory StatefulComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles_DefaultComponent = const [];
 
 class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewDefaultComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -593,7 +593,7 @@ AppView<import1.DefaultComponent> viewFactory_DefaultComponent0(
 const List<dynamic> styles_DefaultComponentHost = const [];
 
 class ViewDefaultComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.DefaultComponent> _compView_0;
   import1.DefaultComponent _DefaultComponent_0_2;
   static RenderComponentType renderType;
