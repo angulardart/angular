@@ -781,30 +781,7 @@ class Component extends Directive {
 
 /// Metadata properties available for configuring Views.
 ///
-/// Each Angular component requires a single `@Component` and at least one
-/// `@View` annotation. The `@View` annotation specifies the HTML template to
-/// use, and lists the directives that are active within the template.
-///
-/// When a component is instantiated, the template is loaded into the
-/// component's shadow root, and the expressions and statements in the template
-/// are evaluated against the component.
-///
-/// For details on the `@Component` annotation, see [Component].
-///
-/// ## Example
-///
-/// ```
-/// @Component(
-///   selector: 'greet',
-///   template: 'Hello {{name}}!',
-///   directives: const [GreetUser, Bold]
-/// )
-/// class Greet {
-///   final String name;
-///
-///   Greet() : name = 'World';
-/// }
-/// ```
+/// This will be deprecated in the future.  Use @Component instead.
 class View {
   /// Specifies a template URL for an Angular component.
   ///
