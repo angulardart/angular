@@ -3,7 +3,7 @@ library angular2.test.common.pipes.async_pipe_test;
 
 import 'dart:async';
 
-import 'package:angular2/common.dart' show AsyncPipe;
+import 'package:angular2/angular2.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/testing_internal.dart';

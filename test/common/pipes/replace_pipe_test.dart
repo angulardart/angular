@@ -1,7 +1,7 @@
 @TestOn('browser')
 library angular2.test.common.pipes.replace_pipe_test;
 
-import "package:angular2/common.dart" show ReplacePipe;
+import "package:angular2/angular2.dart" show ReplacePipe;
 import 'package:test/test.dart';
 
 void main() {

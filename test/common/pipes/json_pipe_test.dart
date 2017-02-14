@@ -3,7 +3,7 @@ library angular2.test.common.pipes.json_pipe_test;
 
 import 'dart:convert';
 
-import 'package:angular2/common.dart' show JsonPipe;
+import 'package:angular2/angular2.dart' show JsonPipe;
 import 'package:angular2/core.dart' show Component;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
