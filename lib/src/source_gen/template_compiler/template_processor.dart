@@ -20,17 +20,16 @@ Future<TemplateCompilerOutputs> processTemplates(
         codegenMode == CODEGEN_DEBUG_MODE, reflectPropertiesAsAttributes),
   );
 
-  final ngDepsModel = logElapsedSync(
-      () => extractNgDepsModel(element, buildStep),
+  final ngDepsModel = logElapsedSync(() => extractNgDepsModel(element),
       operationName: 'extractNgDepsModel',
       assetId: buildStep.inputId,
-      log: buildStep.logger);
+      log: log);
 
   final List<NormalizedComponentWithViewDirectives> compileComponentsData =
-      logElapsedSync(() => findComponents(buildStep, element),
+      logElapsedSync(() => findComponents(element),
           operationName: 'findComponents',
           assetId: buildStep.inputId,
-          log: buildStep.logger);
+          log: log);
   if (compileComponentsData.isEmpty) {
     return new TemplateCompilerOutputs(null, ngDepsModel);
   }

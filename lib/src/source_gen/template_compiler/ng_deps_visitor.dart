@@ -14,13 +14,12 @@ import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart'
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:logging/logging.dart';
 
 /// Create an [NgDepsModel] for the [LibraryElement] supplied.
-NgDepsModel extractNgDepsModel(LibraryElement element, BuildStep buildStep) {
-  var reflectableVisitor = new ReflectableVisitor(buildStep);
+NgDepsModel extractNgDepsModel(LibraryElement element) {
+  var reflectableVisitor = new ReflectableVisitor();
   element.accept(reflectableVisitor);
-  var namespaceVisitor = new NameSpaceVisitor(buildStep);
+  var namespaceVisitor = new NameSpaceVisitor();
   element.accept(namespaceVisitor);
   return new NgDepsModel(
       reflectables: reflectableVisitor.reflectables,
@@ -30,12 +29,9 @@ NgDepsModel extractNgDepsModel(LibraryElement element, BuildStep buildStep) {
 }
 
 class NameSpaceVisitor extends RecursiveElementVisitor {
-  final BuildStep _buildStep;
   List<ImportModel> imports = [];
   List<ImportModel> depImports = [];
   List<ExportModel> exports = [];
-
-  NameSpaceVisitor(this._buildStep);
 
   @override
   void visitImportElement(ImportElement element) {
@@ -63,7 +59,7 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
 
   // TODO(alorenzen): Consider memoizing this to improve build performance.
   bool _hasReflectables(LibraryElement importedLibrary) {
-    var visitor = new ReflectableVisitor(_buildStep, visitRecursive: true);
+    var visitor = new ReflectableVisitor(visitRecursive: true);
     importedLibrary.accept(visitor);
     return visitor.reflectables.isNotEmpty;
   }
@@ -72,16 +68,13 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
 /// An [ElementVisitor] which extracts all [ReflectableInfoModel]s found in the
 /// given element or its children.
 class ReflectableVisitor extends RecursiveElementVisitor {
-  final BuildStep _buildStep;
   final bool _visitRecursive;
   final Set<String> _visited = new Set<String>();
 
   List<ReflectionInfoModel> _reflectables = [];
 
-  ReflectableVisitor(this._buildStep, {bool visitRecursive: false})
+  ReflectableVisitor({bool visitRecursive: false})
       : _visitRecursive = visitRecursive;
-
-  Logger get _logger => _buildStep.logger;
 
   List<ReflectionInfoModel> get reflectables =>
       _reflectables.where((model) => model != null).toList();
@@ -103,7 +96,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
 
   @override
   void visitClassElement(ClassElement element) {
-    var visitor = new CompileTypeMetadataVisitor(_logger);
+    var visitor = new CompileTypeMetadataVisitor(log);
     CompileTypeMetadata compileType = element.accept(visitor);
     if (compileType == null) return;
     var constructor = visitor.unnamedConstructor(element);
@@ -120,7 +113,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
 
   @override
   void visitFunctionElement(FunctionElement element) {
-    if (annotation_matcher.safeIsInjectable(element, _logger)) {
+    if (annotation_matcher.safeIsInjectable(element, log)) {
       _reflectables.add(new ReflectionInfoModel(
           isFunction: true,
           // TODO(alorenzen): Add import from source file, for proper scoping.
@@ -149,7 +142,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
     var annotations = _annotations(element.metadata, element);
     if (element.metadata.any(annotation_matcher.safeMatcher(
       annotation_matcher.isComponent,
-      _logger,
+      log,
     ))) {
       annotations.add(new AnnotationModel(
           name: '${element.name}NgFactory', isConstObject: true));
@@ -167,7 +160,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
                 Deprecated,
                 Pipe,
                 Inject,
-              ], _logger)(annotation))
+              ], log)(annotation))
           .map((annotation) =>
               new AnnotationModel.fromElement(annotation, element))
           .toList();

@@ -12,7 +12,7 @@ class TestComponentExtractor extends Generator {
   @override
   Future<String> generate(Element element, BuildStep buildStep) async {
     if (element is! LibraryElement) return null;
-    var components = findComponents(buildStep, element);
+    var components = findComponents(element);
     if (components.isEmpty)
       return 'final String output = "No components found.";';
     var output = _encoder.convert(components);

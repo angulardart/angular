@@ -40,7 +40,7 @@ class TemplateGenerator extends Generator {
       );
     }, zoneSpecification: new ZoneSpecification(
       print: (_, __, ___, message) {
-        buildStep.logger.warning('(via print) $message');
+        log.warning('(via print) $message');
       },
     ), zoneValues: const {'inSourceGen': true});
   }
