@@ -198,7 +198,8 @@ class ComponentVisitor
         if (isSetter) {
           _queries.add(_getQuery(
             annotation.computeConstantValue(),
-            element.name,
+            // Avoid emitting the '=' part of the setter.
+            element.displayName,
           ));
         } else {
           _logger.severe(''
@@ -213,7 +214,8 @@ class ComponentVisitor
         if (isSetter) {
           _viewQueries.add(_getQuery(
             annotation.computeConstantValue(),
-            element.name,
+            // Avoid emitting the '=' part of the setter.
+            element.displayName,
           ));
         } else {
           _logger.severe(''
