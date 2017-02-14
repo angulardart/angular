@@ -233,13 +233,6 @@ var NG_CORE = [
   'TrackByFn',
   'noValueProvided',
 ];
-var NG_INSTRUMENTATION = [
-  'wtfCreateScope',
-  'wtfEndTimeRange',
-  'wtfLeave',
-  'WtfScopeFn',
-  'wtfStartTimeRange'
-];
 var NG_PLATFORM_BROWSER = [
   'AngularEntrypoint',
   'BROWSER_APP_PROVIDERS',
@@ -278,7 +271,6 @@ var NG_API = {
   commonLib: NG_COMMON,
   compilerLib: NG_COMPILER,
   coreLib: NG_CORE,
-  instrumentationLib: NG_INSTRUMENTATION,
   platformBrowserLib: NG_PLATFORM_BROWSER,
   platformBrowserTestingLib: NG_PLATFORM_BROWSER_TESTING,
   platformCommonLib: NG_PLATFORM_COMMON,
@@ -290,7 +282,6 @@ void main() {
       commonLib,
       compilerLib,
       coreLib,
-      instrumentationLib,
       platformBrowserLib,
       platformBrowserTestingLib,
       platformCommonLib,

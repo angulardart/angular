@@ -14,8 +14,6 @@ import 'package:angular2/src/core/linker/component_factory.dart';
 import 'package:angular2/src/core/linker/exceptions.dart'
     show ExpressionChangedAfterItHasBeenCheckedException, ViewWrappedException;
 import 'package:angular2/src/core/linker/view_type.dart';
-import 'package:angular2/src/core/profile/profile.dart'
-    show wtfCreateScope, wtfLeave, WtfScopeFn;
 import 'package:angular2/src/debug/debug_context.dart'
     show StaticNodeDebugInfo, DebugContext;
 import 'package:angular2/src/debug/debug_node.dart'
@@ -32,8 +30,6 @@ export 'package:angular2/src/core/linker/app_view.dart';
 export 'package:angular2/src/debug/debug_context.dart'
     show StaticNodeDebugInfo, DebugContext;
 
-WtfScopeFn _scope_check = wtfCreateScope('AppView#check(ascii id)');
-
 // RegExp to match anchor comment when logging bindings for debugging.
 final RegExp _templateBindingsExp = new RegExp(r'^template bindings=(.*)$');
 final RegExp _matchNewLine = new RegExp(r'\n');
@@ -41,7 +37,6 @@ const _templateCommentText = 'template bindings={}';
 const INSPECT_GLOBAL_NAME = "ng.probe";
 
 class DebugAppView<T> extends AppView<T> {
-  static bool profilingEnabled = false;
   static bool _ngProbeInitialized = false;
 
   final List<StaticNodeDebugInfo> staticNodeDebugInfos;
@@ -120,26 +115,13 @@ class DebugAppView<T> extends AppView<T> {
   @override
   void detectChanges() {
     this._resetDebug();
-    if (profilingEnabled) {
-      var scope;
-      try {
-        var scope = _scope_check(this.clazz);
-        super.detectChanges();
-        wtfLeave(scope);
-      } catch (e, s) {
-        wtfLeave(scope);
-        this._rethrowWithContext(e, s);
-        rethrow;
+    try {
+      super.detectChanges();
+    } catch (e) {
+      if (e is! ExpressionChangedAfterItHasBeenCheckedException) {
+        cdState = ChangeDetectorState.Errored;
       }
-    } else {
-      try {
-        super.detectChanges();
-      } catch (e) {
-        if (e is! ExpressionChangedAfterItHasBeenCheckedException) {
-          cdState = ChangeDetectorState.Errored;
-        }
-        rethrow;
-      }
+      rethrow;
     }
   }
 
