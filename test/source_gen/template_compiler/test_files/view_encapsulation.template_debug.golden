@@ -38,7 +38,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponent0 = const [
 ];
 
 class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewEmulatedComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -83,7 +83,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = const [
 ];
 
 class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import2.EmulatedComponent> _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_2;
   static RenderComponentType renderType;
@@ -146,7 +146,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponent0 = const [
 ];
 
 class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewNativeComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -191,7 +191,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponentHost0 = const [
 ];
 
 class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import2.NativeComponent> _compView_0;
   import2.NativeComponent _NativeComponent_0_2;
   static RenderComponentType renderType;
@@ -254,7 +254,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = const [
 ];
 
 class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewNoneComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -299,7 +299,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = const [
 ];
 
 class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import2.NoneComponent> _compView_0;
   import2.NoneComponent _NoneComponent_0_2;
   static RenderComponentType renderType;

@@ -265,7 +265,7 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(
 const List<dynamic> styles_QueriesComponentHost = const [];
 
 class ViewQueriesComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.QueriesComponent> _compView_0;
   import1.QueriesComponent _QueriesComponent_0_2;
   import2.QueryList _query_q7_0_0;

@@ -263,8 +263,14 @@ class Identifiers {
       new CompileIdentifierMetadata(name: "document", moduleUrl: "dart:html");
   static final HTML_ELEMENT =
       new CompileIdentifierMetadata(name: "Element", moduleUrl: "dart:html");
+  static final HTML_HTML_ELEMENT = new CompileIdentifierMetadata(
+      name: "HtmlElement", moduleUrl: "dart:html");
+  static final SVG_ELEMENT =
+      new CompileIdentifierMetadata(name: "SvgElement", moduleUrl: "dart:svg");
   static final HTML_ANCHOR_ELEMENT = new CompileIdentifierMetadata(
       name: "AnchorElement", moduleUrl: "dart:html");
+  static final HTML_DIV_ELEMENT =
+      new CompileIdentifierMetadata(name: "DivElement", moduleUrl: "dart:html");
   static final HTML_AREA_ELEMENT = new CompileIdentifierMetadata(
       name: "AreaElement", moduleUrl: "dart:html");
   static final HTML_AUDIO_ELEMENT = new CompileIdentifierMetadata(

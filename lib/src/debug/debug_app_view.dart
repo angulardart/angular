@@ -243,7 +243,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  dynamic selectRootElement(dynamic /* String | dynamic */ selectorOrNode,
+  HtmlElement selectRootElement(dynamic /* String | dynamic */ selectorOrNode,
       RenderDebugInfo debugInfo) {
     var nativeEl = super.selectRootElement(selectorOrNode, debugInfo);
     var debugEl = new DebugElement(nativeEl, null, debugInfo);

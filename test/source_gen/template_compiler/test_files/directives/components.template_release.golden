@@ -32,7 +32,7 @@ import 'package:angular2/angular2.dart';
 const List<dynamic> styles_TestSubComponent = const [];
 
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewTestSubComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -62,7 +62,7 @@ AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
 const List<dynamic> styles_TestSubComponentHost = const [];
 
 class ViewTestSubComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.TestSubComponent> _compView_0;
   import1.TestSubComponent _TestSubComponent_0_2;
   static RenderComponentType renderType;

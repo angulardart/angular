@@ -56,7 +56,7 @@ AppView<import1.HostComponent> viewFactory_HostComponent0(
 const List<dynamic> styles_HostComponentHost = const [];
 
 class ViewHostComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.HostComponent> _compView_0;
   import1.HostComponent _HostComponent_0_2;
   static RenderComponentType renderType;

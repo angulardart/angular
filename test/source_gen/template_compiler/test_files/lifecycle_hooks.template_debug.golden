@@ -76,7 +76,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponentHost0 =
 ];
 
 class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import2.LifecycleHooksComponent> _compView_0;
   import2.LifecycleHooksComponent _LifecycleHooksComponent_0_2;
   static RenderComponentType renderType;

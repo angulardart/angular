@@ -76,7 +76,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
 }
 
 class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
-  Element _el_0;
+  DivElement _el_0;
   ViewTestFooComponent1(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
       : super(ViewTestFooComponent1, import5.ViewType.EMBEDDED, {}, parentView,
@@ -102,7 +102,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent1(
 const List<dynamic> styles_TestFooComponentHost = const [];
 
 class ViewTestFooComponentHost0 extends AppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import1.TestFooComponent> _compView_0;
   import1.TestFooComponent _TestFooComponent_0_2;
   static RenderComponentType renderType;

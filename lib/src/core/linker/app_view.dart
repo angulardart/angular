@@ -152,9 +152,9 @@ abstract class AppView<T> {
     }
   }
 
-  dynamic selectOrCreateHostElement(String elementName,
+  HtmlElement selectOrCreateHostElement(String elementName,
       dynamic /* String | Node */ rootSelectorOrNode, debugCtx) {
-    var hostElement;
+    HtmlElement hostElement;
     if (type == ViewType.COMPONENT || type == ViewType.HOST) {
       if (rootSelectorOrNode != null) {
         hostElement = selectRootElement(rootSelectorOrNode, debugCtx);
@@ -172,7 +172,7 @@ abstract class AppView<T> {
     return hostElement;
   }
 
-  dynamic selectRootElement(
+  HtmlElement selectRootElement(
       dynamic /* String | Node */ selectorOrNode, RenderDebugInfo debugInfo) {
     Node el;
     if (selectorOrNode is String) {
@@ -184,7 +184,9 @@ abstract class AppView<T> {
     } else {
       el = selectorOrNode;
     }
-    el.nodes = [];
+    if (el.hasChildNodes()) {
+      el.nodes.clear();
+    }
     return el;
   }
 
@@ -447,8 +449,14 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  /// Adds content shim class.
-  void addShimC(Element element) {
+  /// Adds content shim class to HtmlElement.
+  void addShimC(HtmlElement element) {
+    String contentClass = componentType.contentAttr;
+    if (contentClass != null) element.classes.add(contentClass);
+  }
+
+  /// Adds content shim class to Svg or unknown tag type.
+  void addShimE(Element element) {
     String contentClass = componentType.contentAttr;
     if (contentClass != null) element.classes.add(contentClass);
   }

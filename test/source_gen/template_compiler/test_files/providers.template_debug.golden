@@ -87,7 +87,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
 ];
 
 class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import2.ProvidersComponent> _compView_0;
   import2.ProvidersComponent _ProvidersComponent_0_2;
   import2.MyTypeAnnotation __MyTypeAnnotation_0_3;

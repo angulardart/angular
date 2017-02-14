@@ -40,7 +40,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponent0 = const [
 
 class ViewInjectableComponent0
     extends DebugAppView<import2.InjectableComponent> {
-  Element _el_0;
+  DivElement _el_0;
   static RenderComponentType renderType;
   ViewInjectableComponent0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -88,7 +88,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 =
 ];
 
 class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
-  Element _el_0;
+  HtmlElement _el_0;
   AppView<import2.InjectableComponent> _compView_0;
   dynamic _OpaqueToken__test_0_2;
   import2.InjectableComponent _InjectableComponent_0_3;
