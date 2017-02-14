@@ -7,7 +7,6 @@ import 'dart:html';
 
 export 'package:angular2/core.dart';
 export 'package:angular2/common.dart';
-export 'package:angular2/instrumentation.dart';
 export 'package:angular2/src/core/angular_entrypoint.dart'
     show AngularEntrypoint;
 export 'package:angular2/src/core/application_tokens.dart'

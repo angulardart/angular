@@ -5,7 +5,6 @@ import 'dart:mirrors';
 import 'package:angular2/common.dart' as ng2common;
 import 'package:angular2/compiler.dart' as ng2compiler;
 import 'package:angular2/core.dart' as ng2core;
-import 'package:angular2/instrumentation.dart' as ng2instrumentation;
 import 'package:angular2/platform/common.dart' as ng2platform_common;
 import 'package:angular2/platform/testing/browser.dart'
     as ng2platform_browser_testing;
@@ -13,7 +12,6 @@ import 'package:angular2/platform/testing/browser.dart'
 final commonLib = getLibrary('package:angular2/common.dart');
 final compilerLib = getLibrary('package:angular2/compiler.dart');
 final coreLib = getLibrary('package:angular2/core.dart');
-final instrumentationLib = getLibrary('package:angular2/instrumentation.dart');
 final platformBrowserLib = getLibrary('package:angular2/platform/browser.dart');
 final platformBrowserTestingLib =
     getLibrary('package:angular2/platform/testing/browser.dart');
@@ -34,7 +32,6 @@ final _ng2libSymbols = [
   ng2core.Component,
   ng2compiler.COMPILER_PROVIDERS,
   ng2common.NgIf,
-  ng2instrumentation.wtfCreateScope,
   ng2platform_browser_testing.TEST_BROWSER_PLATFORM_PROVIDERS,
   ng2platform_common.Location,
 ];

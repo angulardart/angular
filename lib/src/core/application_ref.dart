@@ -14,7 +14,6 @@ import 'package:angular2/src/facade/exceptions.dart'
 import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
 
 import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
-import 'profile/profile.dart' show wtfLeave, wtfCreateScope, WtfScopeFn;
 
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: assertionsEnabled());
@@ -224,7 +223,6 @@ class ApplicationRefImpl extends ApplicationRef {
   final PlatformRefImpl _platform;
   final NgZone _zone;
   final Injector _injector;
-  static WtfScopeFn _tickScope = wtfCreateScope('ApplicationRef#tick()');
   final List<Function> _bootstrapListeners = [];
   final List<Function> _disposeListeners = [];
   final List<ComponentRef> _rootComponents = [];
@@ -388,7 +386,6 @@ class ApplicationRefImpl extends ApplicationRef {
     if (_runningTick) {
       throw new BaseException('ApplicationRef.tick is called recursively');
     }
-    var s = ApplicationRefImpl._tickScope();
     try {
       _runningTick = true;
       int changeDetectorCount = _changeDetectorRefs.length;
@@ -402,7 +399,6 @@ class ApplicationRefImpl extends ApplicationRef {
       }
     } finally {
       _runningTick = false;
-      wtfLeave(s);
     }
   }
 

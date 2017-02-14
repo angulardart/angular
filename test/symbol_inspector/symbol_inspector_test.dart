@@ -35,8 +35,6 @@ void main() {
       expect(commonLib.uri.toString(), 'package:angular2/common.dart');
       expect(compilerLib.uri.toString(), 'package:angular2/compiler.dart');
       expect(coreLib.uri.toString(), 'package:angular2/core.dart');
-      expect(instrumentationLib.uri.toString(),
-          'package:angular2/instrumentation.dart');
       expect(platformBrowserLib.uri.toString(),
           'package:angular2/platform/browser.dart');
       expect(platformCommonLib.uri.toString(),

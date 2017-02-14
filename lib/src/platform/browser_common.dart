@@ -12,7 +12,6 @@ import "package:angular2/core.dart"
         TestabilityRegistry;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable, Provider;
-import "package:angular2/src/core/profile/wtf_init.dart" show wtfInit;
 import "package:angular2/src/core/testability/testability.dart"
     show Testability;
 import "package:angular2/src/platform/browser/testability.dart"
@@ -90,7 +89,6 @@ List<EventManagerPlugin> createEventPlugins(DomEventsPlugin dom,
 
 Function createInitDomAdapter(TestabilityRegistry testabilityRegistry) {
   return () {
-    wtfInit();
     testabilityRegistry.setTestabilityGetter(new BrowserGetTestability());
   };
 }
