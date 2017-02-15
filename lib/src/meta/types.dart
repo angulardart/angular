@@ -27,13 +27,23 @@ abstract class StaticTypes {
   }) {
     assert(resolver != null);
     final srcMetadata = new AssetId('angular2', 'lib/src/core/metadata.dart');
+    final srcDecorators = new AssetId(
+      'angular2',
+      'lib/src/core/di/decorators.dart',
+    );
     final libMetadata = resolver.getLibrary(srcMetadata);
     if (libMetadata == null) {
       throw new ArgumentError(
-        'Could not resolve metadata types. Dependencies may be missing',
+        'Could not resolve metadata types. Dependencies may be missing.',
       );
     }
-    return new _LibraryStaticTypes(libMetadata);
+    final libDecorators = resolver.getLibrary(srcDecorators);
+    if (libDecorators == null) {
+      throw new ArgumentError(
+        'Could not resolve DI metadata types. Dependencies may be missing.',
+      );
+    }
+    return new _LibraryStaticTypes([libMetadata, libDecorators]);
   }
 
   const StaticTypes._();
@@ -155,25 +165,43 @@ class _MirrorsStaticTypes extends StaticTypes {
 
 /// Implementation that uses other [DartType]s when doing type comparisons.
 class _LibraryStaticTypes extends StaticTypes {
-  final bool _checkSubTypes;
-  final LibraryElement _metadataLibrary;
+  static final _staticType = new Expando<DartType>();
 
-  _LibraryStaticTypes(this._metadataLibrary, {bool checkSubTypes: false})
+  final bool _checkSubTypes;
+  final Iterable<LibraryElement> _metaLibraries;
+
+  _LibraryStaticTypes(
+    this._metaLibraries, {
+    bool checkSubTypes: false,
+  })
       : _checkSubTypes = checkSubTypes,
         super._();
+
+  DartType _getStaticType(Type runtimeType) {
+    var staticType = _staticType[runtimeType];
+    if (staticType == null) {
+      ClassElement clazz;
+      for (final lib in _metaLibraries) {
+        clazz = lib.getType('$runtimeType');
+        if (clazz != null) break;
+      }
+      staticType = _staticType[runtimeType] = clazz.type;
+    }
+    return staticType;
+  }
 
   @override
   bool _isA(DartType staticType, Type runtimeType) {
     if (!_checkSubTypes) {
       return _isExactly(staticType, runtimeType);
     }
-    final comparisonType = _metadataLibrary.getType('$runtimeType').type;
+    final comparisonType = _getStaticType(runtimeType);
     return staticType.isSubtypeOf(comparisonType);
   }
 
   @override
   bool _isExactly(DartType staticType, Type runtimeType) {
-    final comparisonType = _metadataLibrary.getType('$runtimeType').type;
+    final comparisonType = _getStaticType(runtimeType);
     return staticType == comparisonType;
   }
 }
@@ -205,8 +233,22 @@ class AngularMetadataTypes {
   bool isComponentClass(ClassElement clazz) =>
       clazz.metadata.map(_annotationToType).any(_staticTypes.isComponent);
 
-  /// Returns whether [clazz] is annotated as a `@Directive` _or_ `@Component`.
+  /// Returns whether [clazz] is annotated as a `@Directive`-type annotation.
   bool isDirectiveClass(ClassElement clazz) => clazz.metadata
+      // This can be simplified once we turn on `checkSubTypes`.
       .map(_annotationToType)
-      .any((a) => _staticTypes.isDirective(a) || _staticTypes.isComponent(a));
+      .any((a) => _staticTypes.isComponent(a) || _staticTypes.isDirective(a));
+
+  /// Returns whether [clazz] is annotated as a `@Injectable`-type annotation.
+  bool isInjectableClass(ClassElement clazz) =>
+      // This can be simplified once we turn on `checkSubTypes`.
+      clazz.metadata.map(_annotationToType).any((a) =>
+          _staticTypes.isInjectable(a) ||
+          _staticTypes.isComponent(a) ||
+          _staticTypes.isDirective(a) ||
+          _staticTypes.isPipe(a));
+
+  /// Returns whether [clazz] is annotated specifically as `@Pipe`.
+  bool isPipeClass(ClassElement clazz) =>
+      clazz.metadata.map(_annotationToType).any(_staticTypes.isPipe);
 }
