@@ -1,31 +1,42 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/dart/element/element.dart';
 import 'package:angular2/src/core/metadata.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/src/annotation.dart';
 
 /// An abstraction around comparing types statically (at compile-time).
-abstract class MetadataTypes {
+abstract class StaticTypes {
   /// Creates a [MetadataTypes] that uses runtime reflection.
-  const factory MetadataTypes.withMirrors({
+  const factory StaticTypes.withMirrors({
     bool checkSubTypes,
-  }) = _MirrorsMetadataTypes;
+  }) = _MirrorsStaticTypes;
 
   /// Creates a [MetadataTypes] by retrieving exact types from [resolver].
   ///
   /// With _analysis summaries_ this should be a relatively cheap operation but
   /// the resulting [MetadataTypes] class should still be cached whenever
   /// possible.
-  factory MetadataTypes.fromResolver(
+  ///
+  /// Throws an [ArgumentError] if [resolver] was not able to lookup type
+  /// information for Angular's metadata classes - this is usually a sign that
+  /// dependencies or imports are missing.
+  factory StaticTypes.fromResolver(
     Resolver resolver, {
     bool checkSubTypes,
   }) {
-    final srcMetadata = new AssetId('angular2', 'src/meta/core/metadata.dart');
+    assert(resolver != null);
+    final srcMetadata = new AssetId('angular2', 'lib/src/core/metadata.dart');
     final libMetadata = resolver.getLibrary(srcMetadata);
-    return new _LibraryMetadataTypes(libMetadata);
+    if (libMetadata == null) {
+      throw new ArgumentError(
+        'Could not resolve metadata types. Dependencies may be missing',
+      );
+    }
+    return new _LibraryStaticTypes(libMetadata);
   }
 
-  const MetadataTypes._();
+  const StaticTypes._();
 
   bool _isA(DartType staticType, Type runtimeType);
 
@@ -55,7 +66,7 @@ abstract class MetadataTypes {
   /// Returns whether [type] is exactly Angular's [Host] type.
   bool isHost(DartType type) => _isExactly(type, Host);
 
-  /// Returns whether [type] is exactly Angular's [Injectable] type.
+  /// Returns whether [type] is considered to be [Injectable].
   bool isInjectable(DartType type) => _isExactly(type, Injectable);
 
   /// Returns whether [type] is exactly Angular's [Pipe] type.
@@ -117,10 +128,10 @@ abstract class MetadataTypes {
 }
 
 /// Implementation that uses runtime reflection to do type comparisons.
-class _MirrorsMetadataTypes extends MetadataTypes {
+class _MirrorsStaticTypes extends StaticTypes {
   final bool _checkSubTypes;
 
-  const _MirrorsMetadataTypes({bool checkSubTypes: false})
+  const _MirrorsStaticTypes({bool checkSubTypes: false})
       : _checkSubTypes = checkSubTypes,
         super._();
 
@@ -143,11 +154,11 @@ class _MirrorsMetadataTypes extends MetadataTypes {
 }
 
 /// Implementation that uses other [DartType]s when doing type comparisons.
-class _LibraryMetadataTypes extends MetadataTypes {
+class _LibraryStaticTypes extends StaticTypes {
   final bool _checkSubTypes;
   final LibraryElement _metadataLibrary;
 
-  _LibraryMetadataTypes(this._metadataLibrary, {bool checkSubTypes: false})
+  _LibraryStaticTypes(this._metadataLibrary, {bool checkSubTypes: false})
       : _checkSubTypes = checkSubTypes,
         super._();
 
@@ -165,4 +176,37 @@ class _LibraryMetadataTypes extends MetadataTypes {
     final comparisonType = _metadataLibrary.getType('$runtimeType').type;
     return staticType == comparisonType;
   }
+}
+
+/// A higher-level class that does metadata analysis and extraction for Angular.
+class AngularMetadataTypes {
+  static DartType _annotationToType(ElementAnnotation annotation) {
+    final constant = annotation.computeConstantValue();
+    if (constant == null || constant.type == null) {
+      if (annotation is ElementAnnotationImpl) {
+        throw new ArgumentError(''
+            'Could not resolve ${annotation.annotationAst.toSource()}. '
+            'This is a common sign that dependencies might be missing or '
+            'there are issues with your build configuration. Please file an '
+            'issue with the AngularDart team if the problem persists.');
+      }
+      throw new ArgumentError();
+    }
+    return constant.type;
+  }
+
+  final StaticTypes _staticTypes;
+
+  const AngularMetadataTypes([
+    this._staticTypes = const StaticTypes.withMirrors(),
+  ]);
+
+  /// Returns whether [clazz] is annotated specifically as `@Component`.
+  bool isComponentClass(ClassElement clazz) =>
+      clazz.metadata.map(_annotationToType).any(_staticTypes.isComponent);
+
+  /// Returns whether [clazz] is annotated as a `@Directive` _or_ `@Component`.
+  bool isDirectiveClass(ClassElement clazz) => clazz.metadata
+      .map(_annotationToType)
+      .any((a) => _staticTypes.isDirective(a) || _staticTypes.isComponent(a));
 }
