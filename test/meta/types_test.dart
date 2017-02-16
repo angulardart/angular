@@ -18,15 +18,16 @@ void main() {
   // See: https://github.com/dart-lang/build/issues/168.
   final runFiles = Platform.environment['RUNFILES'];
   const dirPackages = const String.fromEnvironment('packages-dir');
-  const metaFile = 'angular2/lib/src/core/metadata.dart';
-  const decoratorFile = 'angular2/lib/src/core/di/decorators.dart';
+  const metaFiles = const [
+    'angular2|lib/src/core/metadata.dart',
+    'angular2|lib/src/core/di/decorators.dart',
+    'angular2|lib/src/core/metadata/lifecycle_hooks.dart',
+  ];
 
   if (runFiles == null || dirPackages == null) {
     return;
   }
 
-  String libDecorators;
-  String libMetadata;
   Completer<Null> tearDownResolver;
   Completer<Resolver> waitForResolver;
 
@@ -34,11 +35,15 @@ void main() {
   setUpAll(() async {
     tearDownResolver = new Completer<Null>();
 
-    // Read the real `metadata.dart` file to use as a fake source.
-    final metaPath = p.join(runFiles, dirPackages, metaFile);
-    libMetadata = new File(metaPath).readAsStringSync();
-    final decoPath = p.join(runFiles, dirPackages, decoratorFile);
-    libDecorators = new File(decoPath).readAsStringSync();
+    // Read the real `metadata.dart` file(s) to use as a fake source.
+    final loadedMetaFiles = new Map<String, String>.fromIterable(
+      metaFiles,
+      value: (String assetPath) {
+        assetPath = assetPath.replaceFirst('|', '/');
+        assetPath = p.join(runFiles, dirPackages, assetPath);
+        return new File(assetPath).readAsStringSync();
+      },
+    );
 
     // Run our builder: we'll use it just to extract the Resolver for tests.
     //
@@ -49,15 +54,16 @@ void main() {
         waitForResolver.complete(resolver);
         return tearDownResolver.future;
       })),
-      {
-        'angular2|lib/src/core/di/decorators.dart': libDecorators,
-        'angular2|lib/src/core/metadata.dart': libMetadata,
-        'angular2|lib/angular2.dart': r'''
+      loadedMetaFiles
+        ..addAll({
+          'angular2|lib/angular2.dart': r'''
           // Not really angular2.dart, but close as far as metadata goes.
           export 'package:angular2/src/core/di/decorators.dart';
           export 'package:angular2/src/core/metadata.dart';
         ''',
-        'stub|lib/stub.dart': r'''
+          'stub|lib/stub.dart': r'''
+          import 'dart:async';
+
           import 'package:angular2/angular2.dart';
 
           // Examples of @Directive and @Component usage.
@@ -66,8 +72,66 @@ void main() {
           @Directive()
           class StubDirective {}
 
+          const someToken = const OpaqueToken('someToken');
+
           @Component()
-          class StubComponent {}
+          class StubComponent {
+            StubComponent(@Inject(someToken) String string) {}
+
+            @Input()
+            set stubInput(stubInput) {}
+
+            @Output()
+            Stream get stubOutput => new Stream.fromIterable([]);
+
+            @HostBinding()
+            String get stubHostBinding;
+
+            @HostListener()
+            void stubHostListener() {}
+
+            @Query()
+            set stubQuery(stubQuery) {}
+
+            @ViewQuery()
+            set stubViewQuery(stubViewQuery) {}
+
+            @ContentChildren()
+            set stubContentChildren(stubContentChildren) {}
+
+            @ContentChild()
+            set stubContentChild(stubContentChild) {}
+
+            @ViewChildren()
+            set stubViewChildren(stubViewChildren) {}
+
+            @ViewChild()
+            set stubViewChild(stubViewChild) {}
+          }
+
+          @Component()
+          class StubOnInit implements OnInit {}
+
+          @Component()
+          class StubOnDestroy implements OnDestroy {}
+
+          @Component()
+          class StubDoCheck implements DoCheck {}
+
+          @Component()
+          class StubOnChanges implements OnChanges {}
+
+          @Component()
+          class StubAfterContentInit implements AfterContentInit {}
+
+          @Component()
+          class StubAfterContentChecked implements AfterContentChecked {}
+
+          @Component()
+          class StubAfterViewInit implements AfterViewInit {}
+
+          @Component()
+          class StubAfterViewChecked implements AfterViewChecked {}
 
           @Injectable()
           class StubInjectable {}
@@ -91,7 +155,7 @@ void main() {
           @CustomComponent()
           class StubCustomComponent {}
         '''
-      },
+        }),
       isInput: (p) => p.startsWith('stub'),
     );
   });
@@ -152,6 +216,90 @@ void main() {
 
           test('a @Injectable', () {
             expect(types.isInjectableClass(stubComponentClass), isTrue);
+          });
+        });
+
+        test('detects @Inject() annotated parameter', () {
+          final constructor = stubComponentClass.constructors.first;
+          final parameter = constructor.parameters.first;
+          expect(types.isInjectParameter(parameter), isTrue);
+        });
+
+        test('detects @Input() annotated setters', () {
+          final stubInput = stubComponentClass.getSetter('stubInput');
+          expect(types.isInputSetter(stubInput), isTrue);
+        });
+
+        test('detects @Output() annotated getters', () {
+          final stubOutput = stubComponentClass.getGetter('stubOutput');
+          expect(types.isOutputGetter(stubOutput), isTrue);
+        });
+
+        test('detects @HostBinding() annotated getters', () {
+          final stubHostBinding = stubComponentClass.getGetter(
+            'stubHostBinding',
+          );
+          expect(types.isHostBinding(stubHostBinding), isTrue);
+        });
+
+        test('detects @HostListener() annotated methods', () {
+          final stubHostListener = stubComponentClass.getMethod(
+            'stubHostListener',
+          );
+          expect(types.isHostListener(stubHostListener), isTrue);
+        });
+
+        test('detects @Query() annotated setters', () {
+          final stubQuery = stubComponentClass.getSetter('stubQuery');
+          expect(types.isQuery(stubQuery), isTrue);
+        });
+
+        test('detects @ViewQuery() annotated setters', () {
+          final stubViewQuery = stubComponentClass.getSetter('stubViewQuery');
+          expect(types.isViewQuery(stubViewQuery), isTrue);
+        });
+
+        test('detects @ContentChildren() annotated setters', () {
+          final stubContentChildren = stubComponentClass.getSetter(
+            'stubContentChildren',
+          );
+          expect(types.isContentChildren(stubContentChildren), isTrue);
+        });
+
+        test('detects @ContentChild() annotated setters', () {
+          final stubContentChild = stubComponentClass.getSetter(
+            'stubContentChild',
+          );
+          expect(types.isContentChild(stubContentChild), isTrue);
+        });
+
+        test('detects @ViewChildren() annotated setters', () {
+          final stubViewChildren = stubComponentClass.getSetter(
+            'stubViewChildren',
+          );
+          expect(types.isViewChildren(stubViewChildren), isTrue);
+        });
+
+        test('detects @ViewChild() annotated setters', () {
+          final stubViewChild = stubComponentClass.getSetter('stubViewChild');
+          expect(types.isViewChild(stubViewChild), isTrue);
+        });
+
+        <
+            String,
+            Func0<Func1<ClassElement, bool>>>{
+          'StubOnInit': () => types.hasOnInit,
+          'StubOnDestroy': () => types.hasOnDestroy,
+          'StubDoCheck': () => types.hasDoCheck,
+          'StubOnChanges': () => types.hasOnChanges,
+          'StubAfterContentInit': () => types.hasAfterContentInit,
+          'StubAfterContentChecked': () => types.hasAfterContentChecked,
+          'StubAfterViewInit': () => types.hasAfterViewInit,
+          'StubAfterViewChecked': () => types.hasAfterViewChecked,
+        }.forEach((className, getMatcher) {
+          test('detects a lifecycle event on $className', () {
+            final stubClass = stubLibrary.getType(className);
+            expect(getMatcher()(stubClass), isTrue);
           });
         });
 
