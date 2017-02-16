@@ -7,7 +7,7 @@ documentation: 'https://angular.io/docs/dart/latest/api/'
 environment:
   sdk: '>=1.21.0 <2.0.0'
 dependencies:
-  analyzer: '>=0.29.1 <0.30.0'
+  analyzer: '>=0.29.7 <0.30.0'
   barback: ^0.15.2+2
   build: ^0.7.0
   collection: '^1.12.0'
