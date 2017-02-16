@@ -8,49 +8,6 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const contentClassPrefix = '_ngcontent-';
-  const hostClassPrefix = '_nghost-';
-
-  group('scoping', () {
-    tearDown(disposeAnyRunningTest);
-
-    test('should scope host and content elements', () async {
-      var testBed = new NgTestBed<ScopedHostScopedContentComponent>();
-      var testFixture = await testBed.create();
-      var hostElement = testFixture.rootElement;
-      var contentElement = testFixture.rootElement.querySelector('p');
-      expect(hostElement.className, contains(hostClassPrefix));
-      expect(contentElement.className, contains(contentClassPrefix));
-    });
-
-    test('should scope only host element', () async {
-      var testBed = new NgTestBed<ScopedHostUnscopedContentComponent>();
-      var testFixture = await testBed.create();
-      var hostElement = testFixture.rootElement;
-      var contentElement = testFixture.rootElement.querySelector('p');
-      expect(hostElement.className, contains(hostClassPrefix));
-      expect(contentElement.className, isNot(contains(contentClassPrefix)));
-    });
-
-    test('should scopy only content element', () async {
-      var testBed = new NgTestBed<UnscopedHostScopedContentComponent>();
-      var testFixture = await testBed.create();
-      var hostElement = testFixture.rootElement;
-      var contentElement = testFixture.rootElement.querySelector('p');
-      expect(hostElement.className, isNot(contains(hostClassPrefix)));
-      expect(contentElement.className, contains(contentClassPrefix));
-    });
-
-    test('should scope nothing', () async {
-      var testBed = new NgTestBed<UnscopedHostUnscopedContentComponent>();
-      var testFixture = await testBed.create();
-      var hostElement = testFixture.rootElement;
-      var contentElement = testFixture.rootElement.querySelector('p');
-      expect(hostElement.className, isNot(contains(hostClassPrefix)));
-      expect(contentElement.className, isNot(contains(contentClassPrefix)));
-    });
-  });
-
   group('host styling', () {
     tearDown(disposeAnyRunningTest);
 
@@ -122,7 +79,7 @@ void main() {
       NgTestFixture<ClassOnHostTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement;
-      expect(elm.className, startsWith('customhostclass $hostClassPrefix'));
+      expect(elm.className.startsWith('customhostclass _nghost-'), isTrue);
     });
 
     test('should support [attr.class] bindings', () async {
@@ -130,7 +87,7 @@ void main() {
       NgTestFixture<ClassAttribBindingComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
-      expect(elm.className, startsWith('xyz'));
+      expect(elm.className.startsWith('xyz _ngcontent-'), isTrue);
     });
 
     test('should support class interpolation', () async {
@@ -138,38 +95,22 @@ void main() {
       NgTestFixture<ClassInterpolateComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
-      expect(elm.className, startsWith('prefix xyz postfix'));
+      expect(
+          elm.className.startsWith('prefix xyz postfix _ngcontent-'), isTrue);
+    });
+
+    test(
+        'binding class on a component should add both content '
+        'and host selector', () async {
+      var testBed = new NgTestBed<ComponentContainerTestComponent>();
+      NgTestFixture<ComponentContainerTestComponent> testFixture =
+          await testBed.create();
+      Element elm = testFixture.rootElement.querySelector('child-component1');
+      expect(elm.className.contains('_ngcontent'), isTrue);
+      expect(elm.className.contains('_nghost'), isTrue);
     });
   });
 }
-
-@Component(
-    selector: 'scoped-host-scoped-content',
-    template: '<p></p>',
-    styleUrls: const [
-      'shim_test_content_styles.css',
-      'shim_test_host_styles.css',
-    ])
-class ScopedHostScopedContentComponent {}
-
-@Component(
-    selector: 'scoped-host-unscoped-content',
-    template: '<p></p>',
-    styleUrls: const [
-      'shim_test_host_styles.css',
-    ])
-class ScopedHostUnscopedContentComponent {}
-
-@Component(
-    selector: 'unscoped-host-scoped-content',
-    template: '<p></p>',
-    styleUrls: const [
-      'shim_test_content_styles.css',
-    ])
-class UnscopedHostScopedContentComponent {}
-
-@Component(selector: 'unscoped-host-unscoped-content', template: '<p></p>')
-class UnscopedHostUnscopedContentComponent {}
 
 @Component(
     selector: 'host-test',
@@ -258,6 +199,17 @@ class ClassAttribBindingComponent {
 )
 class ClassInterpolateComponent {
   String get someClass => 'xyz';
+}
+
+@Component(
+    selector: 'component-container1',
+    template: '<div><child-component1 class="{{activeClass}}">'
+        '<div class="mobile"></div>'
+        '</child-component1></div>',
+    styles: const [':host { color: rgb(0, 0, 0); }'],
+    directives: const [ChildComponent])
+class ComponentContainerTestComponent {
+  String get activeClass => 'active';
 }
 
 @Component(
