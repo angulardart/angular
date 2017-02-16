@@ -26,24 +26,18 @@ abstract class StaticTypes {
     bool checkSubTypes,
   }) {
     assert(resolver != null);
-    final srcMetadata = new AssetId('angular2', 'lib/src/core/metadata.dart');
-    final srcDecorators = new AssetId(
-      'angular2',
-      'lib/src/core/di/decorators.dart',
-    );
-    final libMetadata = resolver.getLibrary(srcMetadata);
-    if (libMetadata == null) {
-      throw new ArgumentError(
-        'Could not resolve metadata types. Dependencies may be missing.',
-      );
-    }
-    final libDecorators = resolver.getLibrary(srcDecorators);
-    if (libDecorators == null) {
-      throw new ArgumentError(
-        'Could not resolve DI metadata types. Dependencies may be missing.',
-      );
-    }
-    return new _LibraryStaticTypes([libMetadata, libDecorators]);
+    final metaLibs = const [
+      'angular2|lib/src/core/metadata.dart',
+      'angular2|lib/src/core/di/decorators.dart',
+      'angular2|lib/src/core/metadata/lifecycle_hooks.dart',
+    ].map((path) => new AssetId.parse(path)).map((asset) {
+      final lib = resolver.getLibrary(asset);
+      if (lib == null) {
+        throw new UnsupportedError('Could not resolve required "$asset".');
+      }
+      return lib;
+    });
+    return new _LibraryStaticTypes(metaLibs);
   }
 
   const StaticTypes._();
@@ -51,6 +45,22 @@ abstract class StaticTypes {
   bool _isA(DartType staticType, Type runtimeType);
 
   bool _isExactly(DartType staticType, Type runtimeType);
+
+  // More precisely matches the behavior of the transformer-based version.
+  //
+  // _isA without _checkSubTypes returns true iff either the static type is
+  // *exactly* the comparison type or if it directly implements the
+  // comparison type.
+  bool _isExactlyOrImplementsDirectly(DartType staticType, Type runtimeType) {
+    if (_isExactly(staticType, runtimeType)) {
+      return true;
+    }
+    final clazz = staticType.element;
+    if (clazz is ClassElement) {
+      return clazz.interfaces.any((type) => _isExactly(type, runtimeType));
+    }
+    return false;
+  }
 
   /// Returns whether [type] is exactly Angular's [Attribute] type.
   bool isAttribute(DartType type) => _isExactly(type, Attribute);
@@ -148,7 +158,7 @@ class _MirrorsStaticTypes extends StaticTypes {
   @override
   bool _isA(DartType staticType, Type runtimeType) {
     if (!_checkSubTypes) {
-      return _isExactly(staticType, runtimeType);
+      return _isExactlyOrImplementsDirectly(staticType, runtimeType);
     }
     final element = staticType.element;
     if (element is ClassElement) {
@@ -193,7 +203,7 @@ class _LibraryStaticTypes extends StaticTypes {
   @override
   bool _isA(DartType staticType, Type runtimeType) {
     if (!_checkSubTypes) {
-      return _isExactly(staticType, runtimeType);
+      return _isExactlyOrImplementsDirectly(staticType, runtimeType);
     }
     final comparisonType = _getStaticType(runtimeType);
     return staticType.isSubtypeOf(comparisonType);
@@ -229,6 +239,34 @@ class AngularMetadataTypes {
     this._staticTypes = const StaticTypes.withMirrors(),
   ]);
 
+  /// Returns whether [clazz] implements `OnInit`.
+  bool hasOnInit(ClassElement clazz) => _staticTypes.isOnInit(clazz.type);
+
+  /// Returns whether [clazz] implements `OnDestroy`.
+  bool hasOnDestroy(ClassElement clazz) => _staticTypes.isOnDestroy(clazz.type);
+
+  /// Returns whether [clazz] implements `DoCheck`.
+  bool hasDoCheck(ClassElement clazz) => _staticTypes.isDoCheck(clazz.type);
+
+  /// Returns whether [clazz] implements `OnChanges`.
+  bool hasOnChanges(ClassElement clazz) => _staticTypes.isOnChanges(clazz.type);
+
+  /// Returns whether [clazz] implements `AfterContentInit`.
+  bool hasAfterContentInit(ClassElement clazz) =>
+      _staticTypes.isAfterContentInit(clazz.type);
+
+  /// Returns whether [clazz] implements `AfterContentChecked`.
+  bool hasAfterContentChecked(ClassElement clazz) =>
+      _staticTypes.isAfterContentChecked(clazz.type);
+
+  /// Returns whether [clazz] implements `AfterViewInit`.
+  bool hasAfterViewInit(ClassElement clazz) =>
+      _staticTypes.isAfterViewInit(clazz.type);
+
+  /// Returns whether [clazz] implements `AfterViewChecked`.
+  bool hasAfterViewChecked(ClassElement clazz) =>
+      _staticTypes.isAfterViewChecked(clazz.type);
+
   /// Returns whether [clazz] is annotated specifically as `@Component`.
   bool isComponentClass(ClassElement clazz) =>
       clazz.metadata.map(_annotationToType).any(_staticTypes.isComponent);
@@ -251,4 +289,117 @@ class AngularMetadataTypes {
   /// Returns whether [clazz] is annotated specifically as `@Pipe`.
   bool isPipeClass(ClassElement clazz) =>
       clazz.metadata.map(_annotationToType).any(_staticTypes.isPipe);
+
+  /// Returns whether an [element] is a field or getter with `@HostBinding`.
+  bool isHostBinding(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isGetter) {
+      return element.metadata
+          .map(_annotationToType)
+          .any(_staticTypes.isHostBinding);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or getter with `@HostBinding`.
+  bool isHostListener(MethodElement element) {
+    return element.metadata
+        .map(_annotationToType)
+        .any(_staticTypes.isHostListener);
+  }
+
+  /// Returns whether an [element] is a field or setter with `@Input`.
+  bool isInputSetter(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isSetter) {
+      return element.metadata.map(_annotationToType).any(_staticTypes.isInput);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or getter with `@Output`.
+  bool isOutputGetter(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isGetter) {
+      return element.metadata.map(_annotationToType).any(_staticTypes.isOutput);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or setter with `@Query`.
+  bool isQuery(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isSetter) {
+      return element.metadata.map(_annotationToType).any(_staticTypes.isQuery);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or setter with `@ViewQuery`.
+  bool isViewQuery(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isSetter) {
+      return element.metadata
+          .map(_annotationToType)
+          .any(_staticTypes.isViewQuery);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or setter with `@ContentChildren`.
+  bool isContentChildren(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isSetter) {
+      return element.metadata
+          .map(_annotationToType)
+          .any(_staticTypes.isContentChildren);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or setter with `@ViewChildren`.
+  bool isViewChildren(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isSetter) {
+      return element.metadata
+          .map(_annotationToType)
+          .any(_staticTypes.isViewChildren);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or setter with `@ContentChild`.
+  bool isContentChild(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isSetter) {
+      return element.metadata
+          .map(_annotationToType)
+          .any(_staticTypes.isContentChild);
+    }
+    return false;
+  }
+
+  /// Returns whether an [element] is a field or setter with `@ViewChild`.
+  bool isViewChild(Element element) {
+    assert(element != null);
+    if (element is FieldElement ||
+        element is PropertyAccessorElement && element.isSetter) {
+      return element.metadata
+          .map(_annotationToType)
+          .any(_staticTypes.isViewChild);
+    }
+    return false;
+  }
+
+  /// Returns whether a [parameter] is annotated with `@Inject`.
+  bool isInjectParameter(ParameterElement parameter) =>
+      parameter.metadata.map(_annotationToType).any(_staticTypes.isInject);
 }
