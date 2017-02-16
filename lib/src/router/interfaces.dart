@@ -96,21 +96,29 @@ abstract class CanReuse {
 /// if a component can be removed as part of a navigation.
 ///
 /// The `routerCanDeactivate` hook is called with two [ComponentInstruction]s as parameters,
-/// the
-/// first representing the current route being navigated to, and the second parameter
+/// the first representing the current route being navigated to, and the second parameter
 /// representing the previous route.
 ///
 /// If `routerCanDeactivate` returns or resolves to `false`, the navigation is cancelled. If it
-/// returns or
-/// resolves to `true`, then the navigation continues, and the component will be deactivated
+/// returns or resolves to `true`, then the navigation continues, and the component will be deactivated
 /// (the [OnDeactivate] hook will be run) and removed.
 ///
 /// If `routerCanDeactivate` throws or rejects, the navigation is also cancelled.
 ///
 /// ### Example
+///
 /// ```dart
-/// // {@disabled-source "router/ts/can_deactivate/can_deactivate_example.ts" region="routerCanDeactivate"}
+/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanDeactivate"}
+/// @override
+/// /*FutureOr<bool>*/ routerCanDeactivate(next, prev) =>
+///     crisis == null || crisis.name == name
+///         ? true
+///         : _dialogService.confirm('Discard changes?');
 /// ```
+///
+/// See the [router documentation][router] for details.
+///
+/// [router]: docs/guide/router/5#candeactivate
 abstract class CanDeactivate {
   dynamic /* bool | Future< bool > */ routerCanDeactivate(
       ComponentInstruction nextInstruction,
