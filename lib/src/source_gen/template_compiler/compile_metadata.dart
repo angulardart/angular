@@ -63,6 +63,8 @@ class CompileTypeMetadataVisitor
   }
 
   CompileProviderMetadata createProviderMetadata(DartObject provider) {
+    // If `provider` is a type literal, then treat it as a `useClass` provider
+    // with the class literal itself as the token.
     if (provider.toTypeValue() != null) {
       var metadata = _getCompileTypeMetadata(provider.toTypeValue().element);
       return new CompileProviderMetadata(
@@ -103,21 +105,11 @@ class CompileTypeMetadataVisitor
   CompileFactoryMetadata _getUseFactory(DartObject provider) {
     var maybeUseFactory = provider.getField('useFactory');
     if (!dart_objects.isNull(maybeUseFactory)) {
-      var type = maybeUseFactory.type;
-      String prefix;
-      if (type.element.enclosingElement is ClassElement) {
-        prefix = type.element.enclosingElement.name;
-      }
-      if (type.element is FunctionTypedElement) {
-        return new CompileFactoryMetadata(
-            name: type.element.name,
-            moduleUrl: moduleUrl(type.element),
-            prefix: prefix,
-            diDeps: _getCompileDiDependencyMetadata(
-                (type.element as FunctionTypedElement).parameters));
+      if (maybeUseFactory.type.element is FunctionTypedElement) {
+        return _factoryForFunction(maybeUseFactory.type.element);
       } else {
         _logger.severe('Provider.useFactory can only be used with a function, '
-            'but found ${type.element}');
+            'but found ${maybeUseFactory.type.element}');
       }
     }
     return null;
@@ -136,9 +128,7 @@ class CompileTypeMetadataVisitor
     var maybeUseValue = provider.getField('useValue');
     if (!dart_objects.isNull(maybeUseValue)) {
       if (maybeUseValue.toStringValue() == noValueProvided) return null;
-      // TODO: Andrew to see how this is possible to do.
-      // return _token(maybeUseValue);
-      return null;
+      return _token(maybeUseValue);
     }
     return null;
   }
@@ -164,7 +154,7 @@ class CompileTypeMetadataVisitor
       // not have something annotated properly. It's likely this is either
       // dead code or is not actually used via DI. We can ignore for now.
       _logger.warning(''
-          'Could not resolve token for ${p} on ${p.enclosingElement} in '
+          'Could not resolve token for $p on ${p.enclosingElement} in '
           '${p.library.identifier}');
       return new CompileDiDependencyMetadata();
     }
@@ -188,7 +178,7 @@ class CompileTypeMetadataVisitor
     if (token == null) {
       // Workaround for OpaqueToken's that are not resolvable.
       _logger.warning(''
-          'Could not resolve an @Inject() annotation for ${p} on '
+          'Could not resolve an @Inject() annotation for $p on '
           '"${p.enclosingElement}" in "${p.library.identifier}". Direct '
           'dependencies are likely missing on an imported library.');
       return new CompileTokenMetadata(
@@ -218,6 +208,8 @@ class CompileTypeMetadataVisitor
       );
     } else if (token.type is InterfaceType) {
       return _tokenForType(token.type);
+    } else if (token.type.element is FunctionTypedElement) {
+      return _tokenForFunction(token.type.element);
     }
     throw new ArgumentError('@Inject is not yet supported for $token.');
   }
@@ -226,6 +218,30 @@ class CompileTypeMetadataVisitor
     return new CompileTokenMetadata(
         identifier: new CompileIdentifierMetadata(
             name: type.name, moduleUrl: moduleUrl(type.element)));
+  }
+
+  CompileTokenMetadata _tokenForFunction(FunctionTypedElement function) {
+    String prefix;
+    if (function.enclosingElement is ClassElement) {
+      prefix = function.enclosingElement.name;
+    }
+    return new CompileTokenMetadata(
+        identifier: new CompileIdentifierMetadata(
+            name: function.name,
+            moduleUrl: moduleUrl(function),
+            prefix: prefix));
+  }
+
+  CompileFactoryMetadata _factoryForFunction(FunctionTypedElement function) {
+    String prefix;
+    if (function.enclosingElement is ClassElement) {
+      prefix = function.enclosingElement.name;
+    }
+    return new CompileFactoryMetadata(
+        name: function.name,
+        moduleUrl: moduleUrl(function),
+        prefix: prefix,
+        diDeps: _getCompileDiDependencyMetadata(function.parameters));
   }
 
   bool _isOpaqueToken(DartObject token) =>

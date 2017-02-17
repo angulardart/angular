@@ -18,6 +18,10 @@ import 'package:angular2/angular2.dart';
     MyUseValue,
     useValue: const MyUseValue('Andrew'),
   ),
+  const Provider(
+    useValueString,
+    useValue: 'foo',
+  ),
 ], viewProviders: const [
   const Provider(MyUseValue, useValue: const MyUseValue('Matan'))
 ])
@@ -36,3 +40,5 @@ class MyUseFactory {}
 class MyUseValue {
   const MyUseValue(String name);
 }
+
+const useValueString = const OpaqueToken('useValueString');

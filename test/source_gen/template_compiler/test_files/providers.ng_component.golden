@@ -194,7 +194,36 @@ final String output = """[
           },
           "useClass": null,
           "useExisting": null,
-          "useValue": null,
+          "useValue": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "MyUseValue",
+              "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/providers.dart",
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          },
+          "useFactory": null,
+          "useProperty": null,
+          "multi": false,
+          "deps": null
+        },
+        {
+          "class": "Provider",
+          "token": {
+            "value": "OpaqueToken__useValueString",
+            "identifier": null,
+            "identifierIsInstance": false
+          },
+          "useClass": null,
+          "useExisting": null,
+          "useValue": {
+            "value": "foo",
+            "identifier": null,
+            "identifierIsInstance": false
+          },
           "useFactory": null,
           "useProperty": null,
           "multi": false,
@@ -217,7 +246,17 @@ final String output = """[
           },
           "useClass": null,
           "useExisting": null,
-          "useValue": null,
+          "useValue": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "MyUseValue",
+              "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/providers.dart",
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          },
           "useFactory": null,
           "useProperty": null,
           "multi": false,

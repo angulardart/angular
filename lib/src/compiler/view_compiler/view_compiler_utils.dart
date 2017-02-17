@@ -144,6 +144,8 @@ o.Expression createFlatArray(List<o.Expression> expressions) {
 o.Expression convertValueToOutputAst(dynamic value) {
   if (value is CompileIdentifierMetadata) {
     return o.importExpr(value);
+  } else if (value is CompileTokenMetadata) {
+    return createDiTokenExpression(value);
   } else if (value is o.Expression) {
     return value;
   } else {
