@@ -80,7 +80,8 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
         import2.MyUseFactory,
         import2.MyUseClass,
         import2.MyUseExisting,
-        import2.MyUseValue
+        import2.MyUseValue,
+        'OpaqueToken__useValueString'
       ],
       import2.ProvidersComponent,
       const <String, dynamic>{})
@@ -95,6 +96,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   import2.MyUseClass __MyUseClass_0_5;
   dynamic __MyUseExisting_0_6;
   dynamic __MyUseValue_0_7;
+  dynamic __OpaqueToken__useValueString_0_8;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -147,9 +149,17 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   dynamic get _MyUseValue_0_7 {
     dbg(0, 0, 0);
     if ((this.__MyUseValue_0_7 == null)) {
-      (__MyUseValue_0_7 = null);
+      (__MyUseValue_0_7 = import2.MyUseValue);
     }
     return this.__MyUseValue_0_7;
+  }
+
+  dynamic get _OpaqueToken__useValueString_0_8 {
+    dbg(0, 0, 0);
+    if ((this.__OpaqueToken__useValueString_0_8 == null)) {
+      (__OpaqueToken__useValueString_0_8 = 'foo');
+    }
+    return this.__OpaqueToken__useValueString_0_8;
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
@@ -182,6 +192,10 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     }
     if ((identical(token, import2.MyUseValue) && (0 == requestNodeIndex))) {
       return _MyUseValue_0_7;
+    }
+    if ((identical(token, 'OpaqueToken__useValueString') &&
+        (0 == requestNodeIndex))) {
+      return _OpaqueToken__useValueString_0_8;
     }
     return notFoundResult;
   }

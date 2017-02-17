@@ -33,8 +33,7 @@ dynamic metadataFromJson(Map<String, dynamic> data) {
   return _COMPILE_METADATA_FROM_JSON[data['class']](data);
 }
 
-class CompileIdentifierMetadata<TRuntime>
-    implements CompileMetadataWithIdentifier {
+class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier {
   String name;
   String prefix;
   String moduleUrl;
@@ -51,7 +50,7 @@ class CompileIdentifierMetadata<TRuntime>
   /// value for the output interpreter.
   ///
   /// Not marked final since tests modify value.
-  TRuntime runtime;
+  T runtime;
 
   /// Same as runtime but evaluates function before using value.
   final Function runtimeCallback;
@@ -295,12 +294,12 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   }
 }
 
-class CompileTokenMap<VALUE> {
-  final _valueMap = new Map<dynamic, VALUE>();
-  List<VALUE> _values = [];
+class CompileTokenMap<V> {
+  final _valueMap = new Map<dynamic, V>();
+  List<V> _values = [];
   List<CompileTokenMetadata> _tokens = [];
 
-  void add(CompileTokenMetadata token, VALUE value) {
+  void add(CompileTokenMetadata token, V value) {
     var existing = get(token);
     if (existing != null) {
       throw new BaseException(
@@ -318,10 +317,10 @@ class CompileTokenMap<VALUE> {
     }
   }
 
-  VALUE get(CompileTokenMetadata token) {
+  V get(CompileTokenMetadata token) {
     var rk = token.runtimeCacheKey;
     var ak = token.assetCacheKey;
-    VALUE result;
+    V result;
     if (rk != null) {
       result = _valueMap[rk];
     }
@@ -333,7 +332,7 @@ class CompileTokenMap<VALUE> {
 
   List<CompileTokenMetadata> get keys => _tokens;
 
-  List<VALUE> get values => _values;
+  List<V> get values => _values;
 
   int get size => _values.length;
 }
