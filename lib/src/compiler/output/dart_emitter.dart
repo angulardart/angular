@@ -61,6 +61,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   // List of packages that are public api and can be imported without prefix.
   static const List<String> whiteListedImports = const [
     'package:angular2/angular2.dart',
+    'dart:core',
     'dart:html',
     // StaticNodeDebugInfo, DebugContext.
     'asset:angular2/lib/src/debug/debug_context.dart',
