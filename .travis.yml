@@ -3,7 +3,7 @@ sudo: false
 dart:
   - stable
   - dev
-  - 1.22.0
+  - 1.22.1
 env:
   - TEST_PLATFORM=vm
   - TEST_PLATFORM=content-shell
