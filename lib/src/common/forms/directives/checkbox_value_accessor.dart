@@ -3,7 +3,7 @@ import 'dart:html';
 import "package:angular2/core.dart" show Directive, ElementRef, Provider;
 
 import "control_value_accessor.dart"
-    show NG_VALUE_ACCESSOR, ControlValueAccessor;
+    show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
 
 const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: CheckboxControlValueAccessor, multi: true);
@@ -24,12 +24,12 @@ const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     ])
 class CheckboxControlValueAccessor implements ControlValueAccessor {
   final ElementRef _elementRef;
-  var onChange = (dynamic _) {};
+  ChangeFunction onChange = (_, {String rawValue}) {};
   void touchHandler() {
     onTouched();
   }
 
-  var onTouched = () {};
+  TouchFunction onTouched = () {};
   CheckboxControlValueAccessor(this._elementRef);
   @override
   void writeValue(dynamic value) {
@@ -38,12 +38,12 @@ class CheckboxControlValueAccessor implements ControlValueAccessor {
   }
 
   @override
-  void registerOnChange(dynamic fn) {
+  void registerOnChange(ChangeFunction fn) {
     onChange = fn;
   }
 
   @override
-  void registerOnTouched(dynamic fn) {
+  void registerOnTouched(TouchFunction fn) {
     onTouched = fn;
   }
 }

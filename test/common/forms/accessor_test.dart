@@ -5,6 +5,7 @@ library angular2.test.common.forms.accessor_test;
 import 'dart:js_util' as js_util;
 
 import 'package:angular2/angular2.dart';
+import 'package:angular2/src/common/forms/directives/control_value_accessor.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
@@ -53,6 +54,8 @@ class AccessorTestComponent {
   int value = 1;
 }
 
+typedef dynamic ChangeFunctionSimple(value);
+
 @Directive(selector: "input[integer]", host: const {
   "(input)": "onChange(\$event.target.value)",
   "(blur)": "touchHandler()"
@@ -62,13 +65,13 @@ class AccessorTestComponent {
 ])
 class IntValueAccessor implements ControlValueAccessor, Validator {
   ElementRef _elementRef;
-  var onChange = (dynamic _) {};
+  ChangeFunctionSimple onChange = (_) {};
 
   void touchHandler() {
     onTouched();
   }
 
-  var onTouched = () {};
+  TouchFunction onTouched = () {};
   IntValueAccessor(this._elementRef);
   @override
   void writeValue(dynamic value) {
@@ -77,7 +80,7 @@ class IntValueAccessor implements ControlValueAccessor, Validator {
   }
 
   @override
-  void registerOnChange(void fn(dynamic _, {String rawValue})) {
+  void registerOnChange(ChangeFunction fn) {
     this.onChange = (value) {
       var result;
       try {
@@ -90,7 +93,7 @@ class IntValueAccessor implements ControlValueAccessor, Validator {
   }
 
   @override
-  void registerOnTouched(void fn()) {
+  void registerOnTouched(TouchFunction fn) {
     this.onTouched = fn;
   }
 
