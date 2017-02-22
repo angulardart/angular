@@ -2,10 +2,12 @@ import 'dart:html';
 import "package:angular2/core.dart" show Directive, ElementRef, Provider;
 
 import "control_value_accessor.dart"
-    show NG_VALUE_ACCESSOR, ControlValueAccessor;
+    show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
 
 const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: NumberValueAccessor, multi: true);
+
+typedef dynamic _SimpleChangeFn(value);
 
 /// The accessor for writing a number value and listening to changes that is used by the
 /// [NgModel], [NgFormControl], and [NgControlName] directives.
@@ -26,12 +28,12 @@ const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     ])
 class NumberValueAccessor implements ControlValueAccessor {
   ElementRef _elementRef;
-  var onChange = (_) {};
+  _SimpleChangeFn onChange = (_) {};
   void touchHandler() {
     onTouched();
   }
 
-  var onTouched = () {};
+  TouchFunction onTouched = () {};
   NumberValueAccessor(this._elementRef);
   @override
   void writeValue(value) {
@@ -40,14 +42,15 @@ class NumberValueAccessor implements ControlValueAccessor {
   }
 
   @override
-  void registerOnChange(dynamic fn) {
+  void registerOnChange(ChangeFunction fn) {
     onChange = (value) {
+      // TODO(het): also provide rawValue to fn?
       fn(value == "" ? null : double.parse(value));
     };
   }
 
   @override
-  void registerOnTouched(dynamic fn) {
+  void registerOnTouched(TouchFunction fn) {
     onTouched = fn;
   }
 }
