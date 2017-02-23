@@ -640,7 +640,7 @@ class Directive extends Injectable {
   ///         <ng-content></ng-content>
   ///       ''',
   ///       directives: const [ChildDirective, SingleChildDirective])
-  ///     class SomeDir {
+  ///     class SomeDir implements AfterContentInit, AfterViewInit {
   ///       QueryList<ChildDirective> contentChildren;
   ///       QueryList<ChildDirective> viewChildren;
   ///       SingleChildDirective contentChild;
@@ -1077,7 +1077,7 @@ class ContentChildren extends Query {
 ///
 /// ```dart
 /// @Directive(selector: 'someDir')
-/// class SomeDir {
+/// class SomeDir implements AfterContentInit {
 ///   @ContentChild(ChildDirective)
 ///   Query<ChildDirective> contentChild;
 ///
@@ -1176,11 +1176,11 @@ class ViewQuery extends Query {
 ///   ''',
 ///   directives: const [ChildCmp]
 /// )
-/// class SomeCmp {
+/// class SomeCmp implements AfterViewInit {
 ///   @ViewChildren(ChildCmp)
 ///   QueryList<ChildCmp> children;
 ///
-///  @override
+///   @override
 ///   ngAfterViewInit() {
 ///     // children are set
 ///     for ( var child in children ) {
@@ -1208,7 +1208,7 @@ class ViewQuery extends Query {
 ///     <child-cmp #child3></child-cmp>
 ///   ''',
 ///   directives: const [ChildCmp])
-/// class SomeCmp {
+/// class SomeCmp implements AfterViewInit {
 ///   @ViewChildren('child1, child2, child3')
 ///   QueryList<ChildCmp> children;
 ///
@@ -1229,7 +1229,7 @@ class ViewChildren extends ViewQuery {
 
 /// Declares a reference to a single child element.
 ///
-/// The `ViewChildren` annotation takes an argument to select elements.
+/// The `ViewChild` annotation takes an argument to select elements.
 ///
 /// - If the argument is a [Type], a directive or a component with the type will
 /// be bound.
@@ -1260,7 +1260,7 @@ class ViewChildren extends ViewQuery {
 ///   template: '<child-cmp></child-cmp>',
 ///   directives: const [ChildCmp]
 /// )
-/// class SomeCmp {
+/// class SomeCmp implements AfterViewInit {
 ///   @ViewChild(ChildCmp)
 ///   ChildCmp child;
 ///
@@ -1288,7 +1288,7 @@ class ViewChildren extends ViewQuery {
 ///   template: '<child-cmp #child></child-cmp>',
 ///   directives: const [ChildCmp]
 /// )
-/// class SomeCmp {
+/// class SomeCmp implements AfterViewInit {
 ///   @ViewChild('child')
 ///   ChildCmp child;
 ///
