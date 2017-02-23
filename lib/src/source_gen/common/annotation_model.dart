@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:angular2/src/source_gen/common/references.dart';
@@ -29,12 +30,24 @@ class AnnotationModel {
   ) {
     var element = annotation.element;
     if (element is ConstructorElement) {
-      // TODO(alorenzen): Implement properly (?) - this is a hack right now.
       var parameters = <ReferenceBuilder>[];
       var namedParameters = <NamedParameter>[];
-      parameters = annotation.annotationAst.arguments.arguments.map((e) {
-        return new ExpressionBuilder.raw((_) => e.toString());
-      }).toList();
+      annotation.annotationAst.arguments.arguments.forEach((arg) {
+        if (arg is NamedExpression) {
+          namedParameters.add(
+            new NamedParameter(
+              arg.name.label.name,
+              new ExpressionBuilder.raw(
+                (_) => arg.expression.toSource(),
+              ),
+            ),
+          );
+        } else {
+          parameters.add(
+            new ExpressionBuilder.raw((_) => arg.toSource()),
+          );
+        }
+      });
       return new AnnotationModel(
         name: element.enclosingElement.name,
         type: toBuilder(element.type.returnType, hostElement.library.imports),
