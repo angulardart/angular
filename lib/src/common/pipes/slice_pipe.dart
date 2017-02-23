@@ -4,56 +4,53 @@ import 'package:angular2/di.dart' show Injectable, PipeTransform, Pipe;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
-/// Creates a new List or String containing only a subset (slice) of the
+/// Creates a new [List] or [String] containing a subset (slice) of the
 /// elements.
-///
-/// The starting index of the subset to return is specified by the `start`
-/// parameter.
-///
-/// The ending index of the subset to return is specified by the optional `end`
-/// parameter.
 ///
 /// ### Usage
 ///
 ///     expression | slice:start[:end]
 ///
-/// All behavior is based on the expected behavior of the JavaScript API
-/// Array.prototype.slice() and String.prototype.slice()
+/// The input _expression_ must be a [List] or [String].
 ///
-/// Where the input expression is a [List] or [String], and `start` is:
-///
-/// - **a positive integer**: return the item at _start_ index and all items
-/// after in the list or string expression.
-/// - **a negative integer**: return the item at _start_ index from the end and
-/// all items after in the list or string expression.
-/// - **`|start|` greater than the size of the expression**: return an empty
-/// list or string.
-/// - **`|start|` negative greater than the size of the expression**: return
-/// entire list or string expression.
-///
-/// and where `end` is:
-///
-/// - **omitted**: return all items until the end of the input
-/// - **a positive integer**: return all items before _end_ index of the list or
-/// string expression.
-/// - **a negative integer**: return all items before _end_ index from the end
-/// of the list or string expression.
+/// - _start_: the starting index of the subset to return.
+///   - **a positive integer**: return the item at `start` index and all
+///     items after in the list or string expression.
+///   - **a negative integer**: return the item at `start` index from the end
+///     and all items after in the list or string expression.
+///   - **if positive and greater than the size of the expression**:
+///     return an empty list or string.
+///   - **if negative and greater than the size of the expression**:
+///     return entire list or string.
+/// - _end_: The ending index of the subset to return.
+///   - **omitted**: return all items until the end.
+///   - **if positive**: return all items before `end` index of the list or
+///     string.
+///   - **if negative**: return all items before `end` index
+///     from the end of the list or string.
 ///
 /// When operating on a [List], the returned list is always a copy even when all
 /// the elements are being returned.
 ///
-/// ## List Example
+/// ### Examples
 ///
-/// This `ngFor` example:
+/// ```html
+/// <!-- {@source "common/pipes/lib/app_component.html" region="slice"} -->
+/// <ul>
+///     <li *ngFor="let i of ['a', 'b', 'c', 'd'] | slice:1:3">{{i}}</li>
+/// </ul>
 ///
-/// ```dart
-/// // {@disabled-source "core/pipes/ts/slice_pipe/slice_pipe_example.ts" region="SlicePipe_list"}
+/// <pre>
+///   {{str}}[0:4]:   '{{str | slice:0:4}}' --> 'abcd'
+///   {{str}}[4:0]:   '{{str | slice:4:0}}' --> ''
+///   {{str}}[-4]:    '{{str | slice:-4}}' --> 'ghij'
+///   {{str}}[-4:-2]: '{{str | slice:-4:-2}}' --> 'gh'
+///   {{str}}[-100]:  '{{str | slice:-100}}' --> 'abcdefghij'
+///   {{str}}[100]:   '{{str | slice:100}}' --> ''
+/// </pre>
 /// ```
-///
-/// produces the following:
-///
-///     <li>b</li>
-///     <li>c</li>
+/// The first example generates two `<li>` elements with text `b` and `c`.
+/// The second example uses the string `'abcdefghij'`.
 @Pipe("slice", pure: false)
 @Injectable()
 class SlicePipe implements PipeTransform {
