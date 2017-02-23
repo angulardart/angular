@@ -1,11 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
-// **************************************************************************
-// Generator: TestComponentExtractor
-// Target: library
-// **************************************************************************
-
-final String output = """[
+[
   {
     "class": "NormalizedComponentWithViewDirectives",
     "component": {
@@ -126,4 +119,4 @@ final String output = """[
     "directives": [],
     "pipes": []
   }
-]""";
+]

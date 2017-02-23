@@ -10,7 +10,7 @@ const testFiles = 'test/source_gen/template_compiler/test_files';
 
 const _updateGoldens = 'update-goldens';
 
-/// This script runs the source_gen test generators. This is requried before the
+/// This script runs the source_gen test generators. This is required before the
 /// tests can run, since they check the output of these generators against
 /// golden files.
 ///
@@ -26,10 +26,9 @@ Future main(List<String> args) async {
   var phaseGroup = new PhaseGroup()
     ..addPhase(new Phase()
       ..addAction(
-          new GeneratorBuilder([new TestComponentExtractor()],
-              generatedExtension:
-                  updateGoldens ? '.ng_component.golden' : '.ng_component',
-              isStandalone: true),
+          new TestComponentExtractor(
+            updateGoldens ? '.ng_component.golden' : '.ng_component',
+          ),
           inputs)
       ..addAction(
           new GeneratorBuilder([
