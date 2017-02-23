@@ -36,6 +36,11 @@ dynamic metadataFromJson(Map<String, dynamic> data) {
 class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier {
   String name;
   String prefix;
+
+  // TODO(het): remove this once we switch to codegen. The transformer version
+  // includes prefixes that aren't supposed to be emitted because it can't tell
+  // if a prefix is a class name or a qualified import name.
+  bool emitPrefix;
   String moduleUrl;
   dynamic value;
 
@@ -61,6 +66,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier {
       this.name,
       this.moduleUrl,
       this.prefix,
+      this.emitPrefix: false,
       this.value});
 
   static CompileIdentifierMetadata fromJson(Map<String, dynamic> data) {
@@ -206,6 +212,8 @@ class CompileFactoryMetadata
   @override
   String prefix;
   @override
+  bool emitPrefix;
+  @override
   String moduleUrl;
   @override
   dynamic value;
@@ -215,6 +223,7 @@ class CompileFactoryMetadata
       this.name,
       this.moduleUrl,
       this.prefix,
+      this.emitPrefix: false,
       List<CompileDiDependencyMetadata> diDeps,
       this.value})
       : this.diDeps = diDeps ?? const [];
@@ -348,6 +357,8 @@ class CompileTypeMetadata
   String name;
   @override
   String prefix;
+  @override
+  bool emitPrefix = false;
   @override
   String moduleUrl;
   bool isHost;

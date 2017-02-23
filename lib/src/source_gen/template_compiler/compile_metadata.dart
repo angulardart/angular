@@ -229,7 +229,8 @@ class CompileTypeMetadataVisitor
         identifier: new CompileIdentifierMetadata(
             name: function.name,
             moduleUrl: moduleUrl(function),
-            prefix: prefix));
+            prefix: prefix,
+            emitPrefix: true));
   }
 
   CompileFactoryMetadata _factoryForFunction(FunctionTypedElement function) {
@@ -241,6 +242,7 @@ class CompileTypeMetadataVisitor
         name: function.name,
         moduleUrl: moduleUrl(function),
         prefix: prefix,
+        emitPrefix: true,
         diDeps: _getCompileDiDependencyMetadata(function.parameters));
   }
 

@@ -506,6 +506,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       }
       ctx.print(prefix.isEmpty ? '' : '${prefix}.');
     }
+    if (value.emitPrefix && value.prefix != null && value.prefix.isNotEmpty) {
+      ctx.print('${value.prefix}.');
+    }
     ctx.print(value.name);
     if (typeParams != null && typeParams.length > 0) {
       ctx.print('<');

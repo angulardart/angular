@@ -124,7 +124,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   dynamic get _MyUseFactory_0_4 {
     dbg(0, 0, 0);
     if ((this.__MyUseFactory_0_4 == null)) {
-      (__MyUseFactory_0_4 = import2
+      (__MyUseFactory_0_4 = import2.ProvidersComponent
           .createService(this.injectorGet(import10.NgZone, this.parentIndex)));
     }
     return this.__MyUseFactory_0_4;

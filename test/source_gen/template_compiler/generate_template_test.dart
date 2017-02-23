@@ -32,7 +32,7 @@ main() {
         await compareSummaryFileToGolden('view_annotation.dart', codegenMode);
       });
 
-      test('view_encapuslation', () async {
+      test('view_encapsulation', () async {
         await compareSummaryFileToGolden(
             'view_encapsulation.dart', codegenMode);
       });
