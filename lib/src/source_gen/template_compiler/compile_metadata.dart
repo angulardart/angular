@@ -269,7 +269,7 @@ class CompileTypeMetadataVisitor
   }
 
   bool _isOpaqueToken(DartObject token) =>
-      source_gen.matchTypes(OpaqueToken, token.type);
+      token != null && source_gen.matchTypes(OpaqueToken, token.type);
 
   ElementAnnotation _getAnnotation(Element element, Type type) =>
       element.metadata.firstWhere(
