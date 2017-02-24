@@ -43,7 +43,8 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
     if (element.uri != null) {
       var import = new ImportModel.fromElement(element);
       imports.add(import);
-      if (_hasReflectables(element.importedLibrary)) {
+      if (!_isGeneratedTemplate(element) &&
+          _hasReflectables(element.importedLibrary)) {
         depImports
             .add(new ImportModel(uri: _changeToTemplateExtension(import.uri)));
       }
@@ -55,12 +56,16 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
     if (element.uri != null) {
       var export = new ExportModel.fromElement(element);
       exports.add(export);
-      if (_hasReflectables(element.exportedLibrary)) {
+      if (!_isGeneratedTemplate(element) &&
+          _hasReflectables(element.exportedLibrary)) {
         depImports
             .add(new ImportModel(uri: _changeToTemplateExtension(export.uri)));
       }
     }
   }
+
+  bool _isGeneratedTemplate(UriReferencedElement element) =>
+      element.uri.endsWith(TEMPLATE_EXTENSION);
 
   // TODO(alorenzen): Consider memoizing this to improve build performance.
   bool _hasReflectables(LibraryElement importedLibrary) {
