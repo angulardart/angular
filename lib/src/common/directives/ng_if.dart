@@ -1,11 +1,10 @@
 import 'package:angular2/core.dart'
     show Directive, ViewContainerRef, TemplateRef;
 
-/// Causes an element and its contents to be added/removed from the DOM
-/// conditionally, based on the value of the supplied boolean template
-/// expression.
+/// Causes an element and its contents to be conditionally added/removed from
+/// the DOM based on the value of the given boolean template expression.
 ///
-/// See the [Template Syntax section on `ngIf`][guide] for more details.
+/// For details, see the [`ngIf` discussion in the Template Syntax][guide] page.
 ///
 /// ### Examples
 ///

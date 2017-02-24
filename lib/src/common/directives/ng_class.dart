@@ -46,7 +46,7 @@ import 'package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 /// ```
 ///
 /// Try the [live example][ex].
-/// See the [Template Syntax section on `ngClass`][guide] for more details.
+/// For details, see the [`ngClass` discussion in the Template Syntax][guide] page.
 ///
 /// [ex]: examples/template-syntax/#ngClass
 /// [guide]: docs/guide/template-syntax.html#ngClass

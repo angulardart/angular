@@ -158,16 +158,15 @@ class Provider {
   bool get multi => _multi ?? false;
 }
 
-/// Creates an injector [Provider] for the given [token] based on a given
+/// Creates a [Provider] that associates [token] with one of the following:
 ///
-/// - Class
-/// - Value
-/// - Factory function, or
+/// - A class
+/// - A value
+/// - A factory function
 /// - Another token
 ///
-/// The [token] is most commonly a class or an opaque token. More details
-/// concerning providers can be found in the [Dependency Injection][di] page
-/// of the Angular Guide.
+/// A [token] is most commonly a class. See the [Dependency Injection][di] page
+/// for more details.
 ///
 /// ### Example
 ///
