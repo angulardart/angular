@@ -1,7 +1,9 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/src/dart/element/element.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/core/di.dart';
 import 'package:angular2/src/core/di/decorators.dart';
@@ -71,6 +73,7 @@ class CompileTypeMetadataVisitor
           token: new CompileTokenMetadata(identifier: metadata),
           useClass: metadata);
     }
+    // This is always an OpaqueToken.
     return new CompileProviderMetadata(
         token: _token(dart_objects.getField(provider, 'token')),
         useClass: _getUseClass(provider),
@@ -173,24 +176,47 @@ class CompileTypeMetadataVisitor
               _getAnnotation(p, Attribute).constantValue, 'attributeName'));
 
   CompileTokenMetadata _tokenForInject(ParameterElement p) {
-    final inject = _getAnnotation(p, Inject).computeConstantValue();
-    final token = dart_objects.getField(inject, 'token');
-    if (token == null) {
-      // Workaround for OpaqueToken's that are not resolvable.
-      _logger.warning(''
-          'Could not resolve an @Inject() annotation for $p on '
-          '"${p.enclosingElement}" in "${p.library.identifier}". Direct '
-          'dependencies are likely missing on an imported library.');
-      return new CompileTokenMetadata(
-        value: 'OpaqueToken__UNRESOLVED',
-      );
+    final annotation = _getAnnotation(p, Inject);
+    final injectToken = annotation.computeConstantValue();
+    final token = dart_objects.getField(injectToken, 'token');
+    if (_isOpaqueToken(token)) {
+      // Short circuit because we need to use the AST here.
+      return _tokenForOpaqueToken(annotation as ElementAnnotationImpl);
     }
-    return _token(token);
+    return _token(token, annotation);
   }
 
-  CompileTokenMetadata _token(DartObject token) {
+  CompileTokenMetadata _tokenForOpaqueToken(ElementAnnotationImpl annotation) {
+    String name;
+    final id = annotation.annotationAst.arguments.arguments.first;
+    if (id is Identifier) {
+      if (id is PrefixedIdentifier) {
+        name = id.identifier.name;
+      } else {
+        name = id.name;
+      }
+    }
+    return new CompileTokenMetadata(
+      identifier: new CompileIdentifierMetadata(
+        name: name,
+        moduleUrl: moduleUrl((id as Identifier).staticElement.library),
+      ),
+    );
+  }
+
+  CompileTokenMetadata _token(
+    DartObject token, [
+    ElementAnnotation annotation,
+  ]) {
     if (token == null) {
-      throw new ArgumentError.notNull('token');
+      // provide(someOpaqueToken, ...) where someOpaqueToken did not resolve.
+      if (annotation == null) {
+        _logger.warning('Could not resolve an @OpaqueToken on a Provider!');
+        return new CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
+      }
+      // Assume this is an OpaqueToken and use the AST.
+      // See internal b/35636811, and we can revert this block.
+      return _tokenForOpaqueToken(annotation as ElementAnnotationImpl);
     }
     if (token.toStringValue() != null) {
       return new CompileTokenMetadata(value: token.toStringValue());
@@ -202,10 +228,6 @@ class CompileTypeMetadataVisitor
       return new CompileTokenMetadata(value: token.toDoubleValue());
     } else if (token.toTypeValue() != null) {
       return _tokenForType(token.toTypeValue());
-    } else if (_isOpaqueToken(token)) {
-      return new CompileTokenMetadata(
-        value: 'OpaqueToken__${dart_objects.coerceString(token, '_desc')}',
-      );
     } else if (token.type is InterfaceType) {
       return _tokenForType(token.type);
     } else if (token.type.element is FunctionTypedElement) {

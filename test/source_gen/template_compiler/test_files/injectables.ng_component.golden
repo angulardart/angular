@@ -50,8 +50,14 @@
           },
           {
             "token": {
-              "value": "OpaqueToken__test",
-              "identifier": null,
+              "value": null,
+              "identifier": {
+                "class": "Identifier",
+                "name": "testToken",
+                "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/injectables.dart",
+                "prefix": null,
+                "value": null
+              },
               "identifierIsInstance": false
             },
             "value": null,
@@ -84,8 +90,14 @@
         {
           "class": "Provider",
           "token": {
-            "value": "OpaqueToken__test",
-            "identifier": null,
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "OpaqueToken",
+              "moduleUrl": "asset:angular2/lib/src/core/di/opaque_token.dart",
+              "prefix": null,
+              "value": null
+            },
             "identifierIsInstance": false
           },
           "useClass": null,

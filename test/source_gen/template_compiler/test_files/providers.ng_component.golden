@@ -206,8 +206,14 @@
         {
           "class": "Provider",
           "token": {
-            "value": "OpaqueToken__useValueString",
-            "identifier": null,
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "OpaqueToken",
+              "moduleUrl": "asset:angular2/lib/src/core/di/opaque_token.dart",
+              "prefix": null,
+              "value": null
+            },
             "identifierIsInstance": false
           },
           "useClass": null,
