@@ -73,7 +73,7 @@ class CompileTypeMetadataVisitor
           token: new CompileTokenMetadata(identifier: metadata),
           useClass: metadata);
     }
-    // This is always an OpaqueToken.
+    // Then it must be an OpaqueToken.
     return new CompileProviderMetadata(
         token: _token(dart_objects.getField(provider, 'token')),
         useClass: _getUseClass(provider),
@@ -211,14 +211,16 @@ class CompileTypeMetadataVisitor
     if (token == null) {
       // provide(someOpaqueToken, ...) where someOpaqueToken did not resolve.
       if (annotation == null) {
-        _logger.warning('Could not resolve an @OpaqueToken on a Provider!');
+        _logger.warning('Could not resolve an OpaqueToken on a Provider!');
         return new CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
       }
       // Assume this is an OpaqueToken and use the AST.
       // See internal b/35636811, and we can revert this block.
       return _tokenForOpaqueToken(annotation as ElementAnnotationImpl);
-    }
-    if (token.toStringValue() != null) {
+    } else if (_isOpaqueToken(token)) {
+      // We actually resolved this an OpaqueToken.
+      return _canonicalOpaqueToken(token);
+    } else if (token.toStringValue() != null) {
       return new CompileTokenMetadata(value: token.toStringValue());
     } else if (token.toBoolValue() != null) {
       return new CompileTokenMetadata(value: token.toBoolValue());
@@ -234,6 +236,11 @@ class CompileTypeMetadataVisitor
       return _tokenForFunction(token.type.element);
     }
     throw new ArgumentError('@Inject is not yet supported for $token.');
+  }
+
+  CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
+    return new CompileTokenMetadata(
+        value: new OpaqueToken(dart_objects.coerceString(object, '_desc')));
   }
 
   CompileTokenMetadata _tokenForType(DartType type) {

@@ -11,6 +11,6 @@ List<String> splitAtColon(String input, List<String> defaultValues) {
   }
 }
 
-String sanitizeIdentifier(String name) {
-  return name.replaceAll(new RegExp(r'\W'), "_");
+String sanitizeIdentifier(name) {
+  return name.toString().replaceAll(new RegExp(r'\W'), "_");
 }

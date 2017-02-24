@@ -18,8 +18,13 @@
 /// it provides better error messages.
 class OpaqueToken {
   final String _desc;
+
   const OpaqueToken(this._desc);
+
+  // Temporary: We are using this to canonical-ize OpaqueTokens in source_gen.
+  toJson() => toString();
+
   String toString() {
-    return 'Token ${_desc}';
+    return "const OpaqueToken('${_desc}')";
   }
 }

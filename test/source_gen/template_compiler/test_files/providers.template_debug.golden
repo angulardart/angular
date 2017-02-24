@@ -30,8 +30,7 @@ import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular2/angular2.dart';
 import 'dart:html';
-import 'package:angular2/src/core/di/opaque_token.dart' as import10;
-import 'package:angular2/src/core/zone/ng_zone.dart' as import11;
+import 'package:angular2/src/core/zone/ng_zone.dart' as import10;
 
 const List<dynamic> styles_ProvidersComponent = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = const [
@@ -82,7 +81,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
         import2.MyUseClass,
         import2.MyUseExisting,
         import2.MyUseValue,
-        import10.OpaqueToken
+        const OpaqueToken('useValueString')
       ],
       import2.ProvidersComponent,
       const <String, dynamic>{})
@@ -97,7 +96,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   import2.MyUseClass __MyUseClass_0_5;
   dynamic __MyUseExisting_0_6;
   dynamic __MyUseValue_0_7;
-  dynamic __OpaqueToken_0_8;
+  dynamic __const_OpaqueToken__useValueString___0_8;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -126,7 +125,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     dbg(0, 0, 0);
     if ((this.__MyUseFactory_0_4 == null)) {
       (__MyUseFactory_0_4 = import2.ProvidersComponent
-          .createService(this.injectorGet(import11.NgZone, this.parentIndex)));
+          .createService(this.injectorGet(import10.NgZone, this.parentIndex)));
     }
     return this.__MyUseFactory_0_4;
   }
@@ -155,12 +154,12 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyUseValue_0_7;
   }
 
-  dynamic get _OpaqueToken_0_8 {
+  dynamic get _const_OpaqueToken__useValueString___0_8 {
     dbg(0, 0, 0);
-    if ((this.__OpaqueToken_0_8 == null)) {
-      (__OpaqueToken_0_8 = 'foo');
+    if ((this.__const_OpaqueToken__useValueString___0_8 == null)) {
+      (__const_OpaqueToken__useValueString___0_8 = 'foo');
     }
-    return this.__OpaqueToken_0_8;
+    return this.__const_OpaqueToken__useValueString___0_8;
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
@@ -194,8 +193,9 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, import2.MyUseValue) && (0 == requestNodeIndex))) {
       return _MyUseValue_0_7;
     }
-    if ((identical(token, import10.OpaqueToken) && (0 == requestNodeIndex))) {
-      return _OpaqueToken_0_8;
+    if ((identical(token, const OpaqueToken('useValueString')) &&
+        (0 == requestNodeIndex))) {
+      return _const_OpaqueToken__useValueString___0_8;
     }
     return notFoundResult;
   }

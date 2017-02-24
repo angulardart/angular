@@ -29,7 +29,6 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import5;
 import 'package:angular2/angular2.dart';
 import 'dart:html';
 import 'package:angular2/src/core/zone/ng_zone.dart' as import8;
-import 'package:angular2/src/core/di/opaque_token.dart' as import9;
 
 const List<dynamic> styles_ProvidersComponent = const [];
 
@@ -74,7 +73,7 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
   import1.MyUseClass __MyUseClass_0_5;
   dynamic __MyUseExisting_0_6;
   dynamic __MyUseValue_0_7;
-  dynamic __OpaqueToken_0_8;
+  dynamic __const_OpaqueToken__useValueString___0_8;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -126,11 +125,11 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     return this.__MyUseValue_0_7;
   }
 
-  dynamic get _OpaqueToken_0_8 {
-    if ((this.__OpaqueToken_0_8 == null)) {
-      (__OpaqueToken_0_8 = 'foo');
+  dynamic get _const_OpaqueToken__useValueString___0_8 {
+    if ((this.__const_OpaqueToken__useValueString___0_8 == null)) {
+      (__const_OpaqueToken__useValueString___0_8 = 'foo');
     }
-    return this.__OpaqueToken_0_8;
+    return this.__const_OpaqueToken__useValueString___0_8;
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
@@ -164,8 +163,9 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     if ((identical(token, import1.MyUseValue) && (0 == requestNodeIndex))) {
       return _MyUseValue_0_7;
     }
-    if ((identical(token, import9.OpaqueToken) && (0 == requestNodeIndex))) {
-      return _OpaqueToken_0_8;
+    if ((identical(token, const OpaqueToken('useValueString')) &&
+        (0 == requestNodeIndex))) {
+      return _const_OpaqueToken__useValueString___0_8;
     }
     return notFoundResult;
   }

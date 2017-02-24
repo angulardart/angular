@@ -30,7 +30,6 @@ import 'package:angular2/src/core/linker/view_type.dart' as import6;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
-import 'package:angular2/src/core/di/opaque_token.dart' as import10;
 
 const List<dynamic> styles_HasOpaqueTokens = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = const [null];
@@ -83,7 +82,7 @@ AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
 const List<dynamic> styles_HasOpaqueTokensHost = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = const [
   const StaticNodeDebugInfo(
-      const [import2.HasOpaqueTokens, import10.OpaqueToken],
+      const [import2.HasOpaqueTokens, const OpaqueToken('baseUrlDescription')],
       import2.HasOpaqueTokens,
       const <String, dynamic>{})
 ];
@@ -92,7 +91,7 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   HtmlElement _el_0;
   AppView<import2.HasOpaqueTokens> _compView_0;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_2;
-  dynamic __OpaqueToken_0_3;
+  dynamic __const_OpaqueToken__baseUrlDescription___0_3;
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -109,12 +108,12 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasOpaqueTokensHost);
     setupComponentType(renderType);
   }
-  dynamic get _OpaqueToken_0_3 {
+  dynamic get _const_OpaqueToken__baseUrlDescription___0_3 {
     dbg(0, 0, 0);
-    if ((this.__OpaqueToken_0_3 == null)) {
-      (__OpaqueToken_0_3 = 'https://localhost');
+    if ((this.__const_OpaqueToken__baseUrlDescription___0_3 == null)) {
+      (__const_OpaqueToken__baseUrlDescription___0_3 = 'https://localhost');
     }
-    return this.__OpaqueToken_0_3;
+    return this.__const_OpaqueToken__baseUrlDescription___0_3;
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
@@ -134,8 +133,9 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
         (0 == requestNodeIndex))) {
       return _HasOpaqueTokens_0_2;
     }
-    if ((identical(token, import10.OpaqueToken) && (0 == requestNodeIndex))) {
-      return _OpaqueToken_0_3;
+    if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
+        (0 == requestNodeIndex))) {
+      return _const_OpaqueToken__baseUrlDescription___0_3;
     }
     return notFoundResult;
   }
