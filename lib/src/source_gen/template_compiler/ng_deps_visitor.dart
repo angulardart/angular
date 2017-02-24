@@ -28,6 +28,11 @@ NgDepsModel extractNgDepsModel(LibraryElement element) {
       depImports: namespaceVisitor.depImports);
 }
 
+String _changeToTemplateExtension(String uri) {
+  assert(uri.endsWith('.dart'));
+  return uri.substring(0, uri.length - 5) + TEMPLATE_EXTENSION;
+}
+
 class NameSpaceVisitor extends RecursiveElementVisitor {
   List<ImportModel> imports = [];
   List<ImportModel> depImports = [];
@@ -39,8 +44,8 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
       var import = new ImportModel.fromElement(element);
       imports.add(import);
       if (_hasReflectables(element.importedLibrary)) {
-        depImports.add(new ImportModel(
-            uri: import.uri.replaceFirst('\.dart', TEMPLATE_EXTENSION)));
+        depImports
+            .add(new ImportModel(uri: _changeToTemplateExtension(import.uri)));
       }
     }
   }
@@ -51,8 +56,8 @@ class NameSpaceVisitor extends RecursiveElementVisitor {
       var export = new ExportModel.fromElement(element);
       exports.add(export);
       if (_hasReflectables(element.exportedLibrary)) {
-        depImports.add(new ImportModel(
-            uri: export.uri.replaceFirst('\.dart', TEMPLATE_EXTENSION)));
+        depImports
+            .add(new ImportModel(uri: _changeToTemplateExtension(export.uri)));
       }
     }
   }
