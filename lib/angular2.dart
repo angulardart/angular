@@ -25,10 +25,7 @@ export 'package:angular2/src/compiler/directive_resolver.dart';
 export 'package:angular2/src/compiler/view_resolver.dart';
 
 // Used to be package:angular2/common.dart.
-export "src/common/common_directives.dart";
-export "src/common/directives.dart";
-export "src/common/forms.dart";
-export "src/common/pipes.dart";
+export "src/common.dart";
 
 /// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
 /// This prevents unused import error in dart_analyzed_library build.
