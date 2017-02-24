@@ -81,6 +81,9 @@ before releasing a final version.
     set value(String value) { _value = value; }
     ```
 
+*   Removed the `isFirstChange()` method of `SimpleChange`.
+    Instead, check whether `previousValue` is `null`.
+
 *   Removed `NgPlural`, deprecated as of 2.1.0.
 
 *   Removed `ObservableListDiffFactory`, deprecated as of 2.1.0.
