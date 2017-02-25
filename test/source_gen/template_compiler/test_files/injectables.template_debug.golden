@@ -82,7 +82,12 @@ const List<dynamic> styles_InjectableComponentHost = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 =
     const [
   const StaticNodeDebugInfo(
-      const [import2.InjectableComponent, const OpaqueToken('test')],
+      const [
+        import2.InjectableComponent,
+        const OpaqueToken('test'),
+        import2.SomeDep,
+        import2.BaseService
+      ],
       import2.InjectableComponent,
       const <String, dynamic>{})
 ];
@@ -92,6 +97,8 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   AppView<import2.InjectableComponent> _compView_0;
   import2.InjectableComponent _InjectableComponent_0_2;
   dynamic __const_OpaqueToken__test___0_3;
+  dynamic __SomeDep_0_4;
+  dynamic __BaseService_0_5;
   static RenderComponentType renderType;
   ViewInjectableComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -117,6 +124,26 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     return this.__const_OpaqueToken__test___0_3;
   }
 
+  dynamic get _SomeDep_0_4 {
+    dbg(0, 0, 0);
+    if ((this.__SomeDep_0_4 == null)) {
+      (__SomeDep_0_4 = import2.createLinkedHashMap(
+          this.injectorGet(const OpaqueToken('test'), this.parentIndex)));
+    }
+    return this.__SomeDep_0_4;
+  }
+
+  dynamic get _BaseService_0_5 {
+    dbg(0, 0, 0);
+    if ((this.__BaseService_0_5 == null)) {
+      (__BaseService_0_5 = import2.createLinkedHashMap(
+          this._SomeDep_0_4,
+          this.injectorGet(import2.SomeDep, this.parentIndex),
+          this._SomeDep_0_4));
+    }
+    return this.__BaseService_0_5;
+  }
+
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement(
         'test-injectables', rootSelector, dbg(0, 0, 0));
@@ -139,6 +166,12 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, const OpaqueToken('test')) &&
         (0 == requestNodeIndex))) {
       return _const_OpaqueToken__test___0_3;
+    }
+    if ((identical(token, import2.SomeDep) && (0 == requestNodeIndex))) {
+      return _SomeDep_0_4;
+    }
+    if ((identical(token, import2.BaseService) && (0 == requestNodeIndex))) {
+      return _BaseService_0_5;
     }
     return notFoundResult;
   }
@@ -168,6 +201,8 @@ const _METADATA = const <dynamic>[
   const <dynamic>[const Injectable()],
   InjectableComponent,
   const <dynamic>[],
+  SomeDep,
+  const <dynamic>[const Injectable()],
   BaseService,
   const <dynamic>[const Injectable()],
   InjectableService,
@@ -204,6 +239,10 @@ void initReflector() {
           (BaseService service, InjectableService injectableService,
                   bool isTest) =>
               new InjectableComponent(service, injectableService, isTest)));
+  _ngRef.reflector.registerType(
+      SomeDep,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[const Injectable()], const [], () => new SomeDep()));
   _ngRef.reflector.registerType(
       BaseService,
       new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],

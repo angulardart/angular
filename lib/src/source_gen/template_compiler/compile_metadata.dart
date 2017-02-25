@@ -109,7 +109,10 @@ class CompileTypeMetadataVisitor
     var maybeUseFactory = provider.getField('useFactory');
     if (!dart_objects.isNull(maybeUseFactory)) {
       if (maybeUseFactory.type.element is FunctionTypedElement) {
-        return _factoryForFunction(maybeUseFactory.type.element);
+        return _factoryForFunction(
+          maybeUseFactory.type.element,
+          dart_objects.coerceList(provider, 'dependencies', defaultTo: null),
+        );
       } else {
         _logger.severe('Provider.useFactory can only be used with a function, '
             'but found ${maybeUseFactory.type.element}');
@@ -262,17 +265,63 @@ class CompileTypeMetadataVisitor
             emitPrefix: true));
   }
 
-  CompileFactoryMetadata _factoryForFunction(FunctionTypedElement function) {
+  CompileFactoryMetadata _factoryForFunction(
+    FunctionTypedElement function, [
+    List typesOrTokens,
+  ]) {
     String prefix;
     if (function.enclosingElement is ClassElement) {
       prefix = function.enclosingElement.name;
     }
     return new CompileFactoryMetadata(
-        name: function.name,
-        moduleUrl: moduleUrl(function),
-        prefix: prefix,
-        emitPrefix: true,
-        diDeps: _getCompileDiDependencyMetadata(function.parameters));
+      name: function.name,
+      moduleUrl: moduleUrl(function),
+      prefix: prefix,
+      emitPrefix: true,
+      diDeps: typesOrTokens != null
+          ? typesOrTokens.map(_factoryDiDep).toList()
+          : _getCompileDiDependencyMetadata(function.parameters),
+    );
+  }
+
+  // If deps: const [ ... ] is passed, we use that instead of the parameters.
+  CompileDiDependencyMetadata _factoryDiDep(DartObject object) {
+    // Simple case: A dependency is a dart `Type` or an Angular `OpaqueToken`.
+    if (object.toTypeValue() != null || _isOpaqueToken(object)) {
+      return new CompileDiDependencyMetadata(token: _token(object));
+    }
+
+    // Complex case: A dependency is a List, which means it might have metadata.
+    if (object.toListValue() != null) {
+      final metadata = object.toListValue();
+      final token = _token(metadata.first);
+      var isSelf = false;
+      var isHost = false;
+      var isSkipSelf = false;
+      var isOptional = false;
+      for (var i = 1; i < metadata.length; i++) {
+        if (source_gen.matchTypes(Self, metadata[i].type)) {
+          isSelf = true;
+        } else if (source_gen.matchTypes(Host, metadata[i].type)) {
+          isHost = true;
+        } else if (source_gen.matchTypes(SkipSelf, metadata[i].type)) {
+          isSkipSelf = true;
+        } else if (source_gen.matchTypes(Optional, metadata[i].type)) {
+          isOptional = true;
+        }
+      }
+      return new CompileDiDependencyMetadata(
+        token: token,
+        isSelf: isSelf,
+        isHost: isHost,
+        isSkipSelf: isSkipSelf,
+        isOptional: isOptional,
+      );
+    }
+
+    // TODO: Make this more severe/an error.
+    _logger.warning('Could not resolve dependency $object');
+    return new CompileDiDependencyMetadata();
   }
 
   bool _isOpaqueToken(DartObject token) =>
