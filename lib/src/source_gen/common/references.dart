@@ -9,17 +9,17 @@ ReferenceBuilder toBuilder(DartType type, List<ImportElement> imports) =>
 String _importFrom(DartType dartType, List<ImportElement> imports) {
   var definingLibrary = dartType.element.library;
   for (final import in imports) {
-    if (_definesLibrary(import, definingLibrary)) {
+    if (_definesLibrary(import.importedLibrary, definingLibrary)) {
       return import.uri;
     }
   }
   return null;
 }
 
-bool _definesLibrary(ImportElement import, LibraryElement library) =>
-    import.importedLibrary == library ||
-    import.importedLibrary.exportedLibraries
-        .any((exportedLibrary) => exportedLibrary == library);
+bool _definesLibrary(LibraryElement importedLibrary, LibraryElement library) =>
+    importedLibrary == library ||
+    importedLibrary.exportedLibraries
+        .any((exportedLibrary) => _definesLibrary(exportedLibrary, library));
 
 Iterable<TypeBuilder> _coerceTypeArgs(
     DartType type, List<ImportElement> imports) {
