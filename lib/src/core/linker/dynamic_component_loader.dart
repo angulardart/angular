@@ -42,13 +42,16 @@ abstract class DynamicComponentLoader {
   ///
   ///     @Component(
   ///       selector: 'my-app',
-  ///       template: 'Parent (<child id="child"></child>)'
+  ///       template: 'Parent (<div id="container"></div>)'
   ///     )
   ///     class MyApp {
-  ///       constructor(dcl: DynamicComponentLoader, injector: Injector) {
-  ///         dcl.loadAsRoot(ChildComponent, injector,
-  ///             overrideSelector: '#child');
-  ///       }
+  ///       MyApp(DynamicComponentLoader dcl, Injector injector) {
+  ///         dcl.load(ChildComponent, injector).then(
+  ///           (ComponentRef comp) {
+  ///              document.querySelector('#container').append(
+  ///                 comp.location.nativeElement);
+  ///           });
+  ///       });
   ///     }
   ///
   ///     bootstrap(MyApp);
@@ -59,19 +62,12 @@ abstract class DynamicComponentLoader {
   ///     ```
   ///     <my-app>
   ///       Parent (
-  ///         <child id="child">Child</child>
+  ///         <div id="container"><child>Child</child></div>
   ///       )
   ///     </my-app>
   ///     ```
-  Future<ComponentRef> loadAsRoot(Type type, Injector injector,
-      {String overrideSelector,
-      OnDestroyCallback onDestroy,
-      List<List> projectableNodes});
-
-  Future<ComponentRef> loadAsRootIntoNode(Type type, Injector injector,
-      {Node overrideNode,
-      OnDestroyCallback onDestroy,
-      List<List> projectableNodes});
+  Future<ComponentRef> load(Type type, Injector injector,
+      {OnDestroyCallback onDestroy, List<List> projectableNodes});
 
   /// Creates an instance of a Component and attaches it to the View Container
   /// found at the `location` specified as [ViewContainerRef].
@@ -122,38 +118,24 @@ class DynamicComponentLoaderImpl extends DynamicComponentLoader {
   DynamicComponentLoaderImpl(this._compiler);
 
   @override
-  Future<ComponentRef> loadAsRoot(Type type, Injector injector,
-      {String overrideSelector,
-      OnDestroyCallback onDestroy,
-      List<List> projectableNodes}) {
-    return this._compiler.resolveComponent(type).then((componentFactory) {
-      var componentRef = componentFactory.create(injector, projectableNodes,
-          overrideSelector ?? componentFactory.selector);
-      if (onDestroy != null) {
-        componentRef.onDestroy(onDestroy);
-      }
-      return componentRef;
-    });
-  }
-
-  @override
-  Future<ComponentRef> loadAsRootIntoNode(Type type, Injector injector,
-      {Node overrideNode,
-      OnDestroyCallback onDestroy,
-      List<List> projectableNodes}) {
-    return this._compiler.resolveComponent(type).then((componentFactory) {
-      var componentRef = componentFactory.loadIntoNode(
-          injector, projectableNodes, overrideNode);
-      if (onDestroy != null) {
-        componentRef.onDestroy(onDestroy);
-      }
+  Future<ComponentRef> load(Type type, Injector injector,
+      {OnDestroyCallback onDestroy, List<List> projectableNodes}) {
+    return _compiler.resolveComponent(type).then((componentFactory) {
+      ComponentRef componentRef =
+          componentFactory.create(injector, projectableNodes);
+      componentRef.onDestroy(() {
+        if (onDestroy != null) {
+          onDestroy();
+        }
+        (componentRef.location.nativeElement as Element).remove();
+      });
       return componentRef;
     });
   }
 
   Future<ComponentRef> loadNextToLocation(Type type, ViewContainerRef location,
       [Injector injector = null, List<List<dynamic>> projectableNodes = null]) {
-    return this._compiler.resolveComponent(type).then((componentFactory) {
+    return _compiler.resolveComponent(type).then((componentFactory) {
       return location.createComponent(
           componentFactory, location.length, injector, projectableNodes);
     });

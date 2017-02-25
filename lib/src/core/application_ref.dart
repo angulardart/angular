@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:html';
 import 'package:angular2/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular2/src/core/di.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart';
@@ -176,9 +176,18 @@ abstract class ApplicationRef {
 
   /// Bootstrap a new component at the root level of the application.
   ///
+  /// ### Bootstrap process
+  ///
   /// When bootstrapping a new root component into an application, Angular mounts the
   /// specified application component onto DOM elements identified by the [componentType]'s
   /// selector and kicks off automatic change detection to finish initializing the component.
+  ///
+  /// ### Example
+  ///
+  /// ```dart
+  /// // {@disabled-source "core/ts/platform/platform.ts" region="longform"}
+  /// ```
+  ///
   ComponentRef bootstrap(ComponentFactory componentFactory);
 
   /// Retrieve the application [Injector].
@@ -332,10 +341,28 @@ class ApplicationRefImpl extends ApplicationRef {
 
     return run(() {
       _rootComponentFactories.add(componentFactory);
-      var compRef =
-          componentFactory.create(_injector, [], componentFactory.selector);
+      var compRef = componentFactory.create(_injector, const []);
+      Element existingElement =
+          document.querySelector(componentFactory.selector);
+      Element replacement;
+      if (existingElement != null) {
+        Element newElement = compRef.location.nativeElement as Element;
+        // For app shards using bootstrapStatic, transfer element id
+        // from original node to allow hosting applications to locate loaded
+        // application root.
+        if (newElement.id == null || newElement.id.isEmpty) {
+          newElement.id = existingElement.id;
+        }
+        existingElement.replaceWith(newElement);
+        replacement = newElement;
+      } else {
+        assert(compRef.location.nativeElement != null,
+            'Could not locate node with selector ${componentFactory.selector}');
+        document.body.append(compRef.location.nativeElement);
+      }
       compRef.onDestroy(() {
         _unloadComponent(compRef);
+        replacement?.remove();
       });
       var testability = compRef.injector.get(Testability, null);
       if (testability != null) {

@@ -2,6 +2,7 @@
 library angular2.test.core.application_ref_test;
 
 import 'dart:async';
+import 'dart:html';
 
 import 'package:angular2/core.dart'
     show
@@ -11,6 +12,7 @@ import 'package:angular2/core.dart'
         Component,
         ReflectiveInjector,
         coreLoadAndBootstrap,
+        ElementRef,
         PlatformRef,
         createPlatform,
         disposePlatform,
@@ -205,6 +207,9 @@ class _MockComponentResolver implements ComponentResolver {
 class _MockComponentRef extends ComponentRef {
   Injector _injector;
   _MockComponentRef(this._injector) : super(0, null, null, null);
+
+  @override
+  ElementRef get location => new ElementRef(new DivElement());
 
   @override
   Injector get injector => _injector;

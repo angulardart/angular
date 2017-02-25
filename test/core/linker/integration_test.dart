@@ -1430,7 +1430,8 @@ void main() {
                         '<directive-throwing-error></directive-throwing-error>'));
             tcb.createAsync(MyComp).catchError((e) {
               var c = e.context;
-              expect(c.componentRenderElement.nodeName.toUpperCase(), 'DIV');
+              expect(
+                  c.componentRenderElement.nodeName.toUpperCase(), 'MY-COMP');
               expect((c.injector as Injector).get, isNotNull);
               completer.done();
               return null;

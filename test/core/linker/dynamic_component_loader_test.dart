@@ -3,7 +3,8 @@ library angular2.test.core.linker.dynamic_component_loader_test;
 
 import 'dart:html';
 
-import 'package:angular2/core.dart' show Injector, ViewContainerRef, ViewChild;
+import 'package:angular2/core.dart'
+    show Injector, ViewContainerRef, ViewChild, ComponentRef;
 import 'package:angular2/src/core/linker/dynamic_component_loader.dart'
     show DynamicComponentLoader;
 import 'package:angular2/src/core/linker/element_ref.dart' show ElementRef;
@@ -145,9 +146,9 @@ void main() {
             [AsyncTestCompleter, DynamicComponentLoader, DOCUMENT, Injector],
             (AsyncTestCompleter completer, DynamicComponentLoader loader, doc,
                 Injector injector) {
-          var rootEl = createRootElement(doc, 'child-cmp');
-          (doc as HtmlDocument).body.append(rootEl);
-          loader.loadAsRoot(ChildComp, injector).then((componentRef) {
+          loader.load(ChildComp, injector).then((componentRef) {
+            var rootEl = componentRef.location.nativeElement as Element;
+            (doc as HtmlDocument).body.append(rootEl);
             var el = new ComponentFixture(componentRef);
             expect(rootEl.parentNode, doc.body);
             el.detectChanges();
@@ -166,12 +167,12 @@ void main() {
             [AsyncTestCompleter, DynamicComponentLoader, DOCUMENT, Injector],
             (AsyncTestCompleter completer, DynamicComponentLoader loader, doc,
                 Injector injector) {
-          var rootEl = createRootElement(doc, 'dummy');
-          (doc as HtmlDocument).body.append(rootEl);
-          loader.loadAsRoot(DynamicallyLoadedWithNgContent, injector,
+          loader.load(DynamicallyLoadedWithNgContent, injector,
               projectableNodes: [
                 [new Text('hello')]
-              ]).then((_) {
+              ]).then((ComponentRef componentRef) {
+            var rootEl = componentRef.location.nativeElement as Element;
+            (doc as HtmlDocument).body.append(rootEl);
             expect(rootEl, hasTextContent('dynamic(hello)'));
             completer.done();
           });

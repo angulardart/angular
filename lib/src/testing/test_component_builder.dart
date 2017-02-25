@@ -193,10 +193,10 @@ class TestComponentBuilder {
     (doc as HtmlDocument).body.append(rootEl);
     DynamicComponentLoader loader = _injector.get(DynamicComponentLoader);
     appViewUtils = _injector.get(AppViewUtils);
-    Future<ComponentRef> promise = loader.loadAsRoot(
-        rootComponentType, _injector,
-        overrideSelector: '#${rootElId}');
+    Future<ComponentRef> promise = loader.load(rootComponentType, _injector);
     return promise.then((componentRef) {
+      querySelector('#${rootElId}')
+          .append(componentRef.location.nativeElement as Element);
       return new ComponentFixture(componentRef);
     });
   }
