@@ -74,6 +74,7 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
   dynamic __MyUseExisting_0_6;
   dynamic __MyUseValue_0_7;
   dynamic __const_OpaqueToken__useValueString___0_8;
+  List<dynamic> __MyMulti_0_9;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -132,6 +133,13 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     return this.__const_OpaqueToken__useValueString___0_8;
   }
 
+  List<dynamic> get _MyMulti_0_9 {
+    if ((this.__MyMulti_0_9 == null)) {
+      (__MyMulti_0_9 = [null]);
+    }
+    return this.__MyMulti_0_9;
+  }
+
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('providers', rootSelector, null);
     _compView_0 = viewFactory_ProvidersComponent0(this, 0, _el_0);
@@ -166,6 +174,9 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     if ((identical(token, const OpaqueToken('useValueString')) &&
         (0 == requestNodeIndex))) {
       return _const_OpaqueToken__useValueString___0_8;
+    }
+    if ((identical(token, import1.MyMulti) && (0 == requestNodeIndex))) {
+      return _MyMulti_0_9;
     }
     return notFoundResult;
   }

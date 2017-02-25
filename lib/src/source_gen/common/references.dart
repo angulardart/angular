@@ -25,9 +25,6 @@ Iterable<TypeBuilder> _coerceTypeArgs(
     DartType type, List<ImportElement> imports) {
   if (type is! ParameterizedType) return const [];
   var typeArgs = (type as ParameterizedType).typeArguments;
-  if (_isDynamic(typeArgs)) return const [];
+  if (typeArgs.every((t) => t.isDynamic)) return const [];
   return typeArgs.map((type) => toBuilder(type, imports));
 }
-
-bool _isDynamic(List<DartType> types) =>
-    types.length == 1 && types.first.isDynamic;

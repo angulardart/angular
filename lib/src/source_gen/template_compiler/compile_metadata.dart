@@ -70,16 +70,22 @@ class CompileTypeMetadataVisitor
     if (provider.toTypeValue() != null) {
       var metadata = _getCompileTypeMetadata(provider.toTypeValue().element);
       return new CompileProviderMetadata(
-          token: new CompileTokenMetadata(identifier: metadata),
-          useClass: metadata);
+        token: new CompileTokenMetadata(identifier: metadata),
+        useClass: metadata,
+      );
     }
-    // Then it must be an OpaqueToken.
     return new CompileProviderMetadata(
-        token: _token(dart_objects.getField(provider, 'token')),
-        useClass: _getUseClass(provider),
-        useExisting: _getUseExisting(provider),
-        useFactory: _getUseFactory(provider),
-        useValue: _getUseValue(provider));
+      token: _token(dart_objects.getField(provider, 'token')),
+      useClass: _getUseClass(provider),
+      useExisting: _getUseExisting(provider),
+      useFactory: _getUseFactory(provider),
+      useValue: _getUseValue(provider),
+      multi: dart_objects.coerceBool(
+        provider,
+        '_multi',
+        defaultTo: false,
+      ),
+    );
   }
 
   CompileTypeMetadata _getUseClass(DartObject provider) {
