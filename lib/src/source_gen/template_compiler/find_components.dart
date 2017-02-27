@@ -250,7 +250,7 @@ class ComponentVisitor
     } else {
       value = annotationOrObject;
     }
-    final readType = value.getField('read')?.toTypeValue();
+    final readType = getField(value, 'read')?.toTypeValue();
     return new CompileQueryMetadata(
       selectors: _getSelectors(value),
       descendants: coerceBool(value, 'descendants', defaultTo: false),

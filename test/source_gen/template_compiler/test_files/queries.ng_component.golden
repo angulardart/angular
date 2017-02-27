@@ -195,6 +195,29 @@
         {
           "selectors": [
             {
+              "value": "q12",
+              "identifier": null,
+              "identifierIsInstance": false
+            }
+          ],
+          "descendants": true,
+          "first": true,
+          "propertyName": "readDIFromElement",
+          "read": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "ElementRef",
+              "moduleUrl": "asset:angular2/lib/src/core/linker/element_ref.dart",
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          }
+        },
+        {
+          "selectors": [
+            {
               "value": null,
               "identifier": {
                 "class": "Identifier",

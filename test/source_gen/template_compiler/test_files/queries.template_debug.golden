@@ -78,7 +78,8 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   import3.QueryList _viewQuery_q8_0;
   import3.QueryList _viewQuery_q10_1;
   import3.QueryList _viewQuery_q12_2;
-  import3.QueryList _viewQuery_AnotherDirective_3;
+  import3.QueryList _viewQuery_q12_3;
+  import3.QueryList _viewQuery_AnotherDirective_4;
   Element _el_1;
   import1.AnotherDirective _AnotherDirective_1_2;
   Element _el_3;
@@ -126,7 +127,8 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     _viewQuery_q8_0 = new import3.QueryList();
     _viewQuery_q10_1 = new import3.QueryList();
     _viewQuery_q12_2 = new import3.QueryList();
-    _viewQuery_AnotherDirective_3 = new import3.QueryList();
+    _viewQuery_q12_3 = new import3.QueryList();
+    _viewQuery_AnotherDirective_4 = new import3.QueryList();
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
     dbgElm(_text_0, 0, 0, 0);
@@ -217,6 +219,8 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     dbgElm(_text_24, 24, 11, 28);
     _viewQuery_q12_2.reset([new ElementRef(_el_23)]);
     ctx.viewChildFromField = _viewQuery_q12_2.first;
+    _viewQuery_q12_3.reset([new ElementRef(_el_23)]);
+    ctx.readDIFromElement = _viewQuery_q12_3.first;
     init([], [
       _text_0,
       _el_1,
@@ -312,8 +316,8 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
         ctx.viewChildrenFromField = _viewQuery_q10_1;
         _viewQuery_q10_1.notifyOnChanges();
       }
-      if (_viewQuery_AnotherDirective_3.dirty) {
-        _viewQuery_AnotherDirective_3.reset([
+      if (_viewQuery_AnotherDirective_4.dirty) {
+        _viewQuery_AnotherDirective_4.reset([
           _AnotherDirective_1_2,
           _AnotherDirective_3_2,
           _AnotherDirective_5_2,
@@ -327,8 +331,8 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
           _AnotherDirective_21_2,
           _AnotherDirective_23_2
         ]);
-        ctx.usingTypeFromField = _viewQuery_AnotherDirective_3;
-        _viewQuery_AnotherDirective_3.notifyOnChanges();
+        ctx.usingTypeFromField = _viewQuery_AnotherDirective_4;
+        _viewQuery_AnotherDirective_4.notifyOnChanges();
       }
     }
   }

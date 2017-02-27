@@ -52,6 +52,9 @@ class QueriesComponent {
   @ViewChild('q12')
   AnotherDirective viewChildFromField;
 
+  @ViewChild('q12', read: ElementRef)
+  ElementRef readDIFromElement;
+
   @ViewChildren(AnotherDirective)
   QueryList<AnotherDirective> usingTypeFromField;
 }
