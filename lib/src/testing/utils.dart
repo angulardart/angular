@@ -1,4 +1,5 @@
 import 'dart:html';
+
 import 'package:angular2/di.dart' show Injectable;
 
 typedef void LogFunction([a, b, c, d, e]);

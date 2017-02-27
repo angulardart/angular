@@ -103,12 +103,12 @@ class _CompileDataCreator {
               .addAll(platformDirectives as Iterable<CompileDirectiveMetadata>);
           compileComponentDatum.directives.addAll(
               _resolveTypeMetadata(ngMetaMap, reflectable.directives)
-              as Iterable<CompileDirectiveMetadata>);
+                  as Iterable<CompileDirectiveMetadata>);
           compileComponentDatum.pipes
               .addAll(platformPipes as Iterable<CompilePipeMetadata>);
           compileComponentDatum.pipes.addAll(
               _resolveTypeMetadata(ngMetaMap, reflectable.pipes)
-              as Iterable<CompilePipeMetadata>);
+                  as Iterable<CompilePipeMetadata>);
           compileComponentData[reflectable] = compileComponentDatum;
         }
       }

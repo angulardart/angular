@@ -2,6 +2,7 @@
 library angular2.test.common.directives.non_bindable_test;
 
 import 'dart:html';
+
 import "package:angular2/core.dart" show Component, Directive;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
 import "package:angular2/testing_internal.dart";

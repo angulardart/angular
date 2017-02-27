@@ -1,17 +1,17 @@
 import 'dart:html';
 
+import "package:angular2/src/common/directives/ng_for.dart";
+import "package:angular2/src/common/directives/ng_if.dart";
 import "package:angular2/src/compiler/identifiers.dart";
 import "package:angular2/src/core/linker.dart" show QueryList;
-import "package:angular2/src/core/linker/view_container.dart";
 import "package:angular2/src/core/linker/app_view.dart";
 import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/core/linker/component_factory.dart";
 import "package:angular2/src/core/linker/template_ref.dart";
+import "package:angular2/src/core/linker/view_container.dart";
 import "package:angular2/src/core/linker/view_container_ref.dart"
     show ViewContainerRef;
 import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/common/directives/ng_if.dart";
-import "package:angular2/src/common/directives/ng_for.dart";
 import "package:angular2/src/debug/debug_app_view.dart";
 import "package:angular2/src/debug/debug_context.dart"
     show StaticNodeDebugInfo, DebugContext;

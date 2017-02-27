@@ -10,12 +10,10 @@ import "package:angular2/src/facade/lang.dart" show jsSplit;
 import "package:logging/logging.dart";
 import 'package:source_span/source_span.dart';
 
-import "expression_parser/ast.dart";
 import "../core/security.dart";
 import "chars.dart";
 import "compile_metadata.dart"
     show CompileDirectiveMetadata, CompilePipeMetadata;
-import "html_ast.dart";
 import "expression_parser/ast.dart"
     show
         AST,
@@ -24,7 +22,9 @@ import "expression_parser/ast.dart"
         TemplateBinding,
         RecursiveAstVisitor,
         BindingPipe;
+import "expression_parser/ast.dart";
 import "expression_parser/parser.dart" show Parser;
+import "html_ast.dart";
 import "html_parser.dart" show HtmlParser;
 import "html_tags.dart" show splitNsName, mergeNsAndName;
 import "identifiers.dart" show identifierToken, Identifiers;

@@ -1,6 +1,5 @@
 import 'package:angular2/core.dart'
     show DoCheck, OnDestroy, Directive, ElementRef;
-
 import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:angular2/src/core/change_detection/differs/default_keyvalue_differ.dart';
 

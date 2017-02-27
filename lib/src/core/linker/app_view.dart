@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'dart:js_util' as js_util;
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
@@ -8,14 +9,13 @@ import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
-import 'view_container.dart';
 import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
+import 'view_container.dart';
 import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
-import 'dart:js_util' as js_util;
 
 export 'package:angular2/src/core/change_detection/component_state.dart';
 

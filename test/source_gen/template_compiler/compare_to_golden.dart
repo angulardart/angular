@@ -3,6 +3,7 @@ library compare_to_golden;
 import 'dart:async';
 import 'dart:io';
 import 'dart:mirrors';
+
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 

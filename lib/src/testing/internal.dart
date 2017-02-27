@@ -11,10 +11,10 @@ import 'package:matcher/matcher.dart';
 import "internal_injector.dart";
 
 export "package:angular2/src/debug/debug_node.dart";
-export "matchers.dart";
 
 export "fake_async.dart";
 export "internal_injector.dart";
+export "matchers.dart";
 export "test_component_builder.dart";
 export "utils.dart";
 

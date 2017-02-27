@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:stack_trace/stack_trace.dart';
 
 /// An injectable service for executing work inside or outside of the

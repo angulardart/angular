@@ -4,7 +4,6 @@ import 'metadata/di.dart';
 import 'metadata/view.dart';
 
 export 'metadata/di.dart';
-export 'metadata/view.dart';
 export 'metadata/lifecycle_hooks.dart'
     show
         AfterContentInit,
@@ -15,6 +14,7 @@ export 'metadata/lifecycle_hooks.dart'
         OnDestroy,
         OnInit,
         DoCheck;
+export 'metadata/view.dart';
 
 /// An annotation that marks a class as an Angular directive, allowing you to
 /// attach behavior to elements in the DOM.

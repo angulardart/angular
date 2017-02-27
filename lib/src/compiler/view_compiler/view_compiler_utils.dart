@@ -1,4 +1,6 @@
+import 'package:angular2/src/core/linker/view_type.dart';
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+
 import '../compile_metadata.dart'
     show
         CompileTokenMetadata,
@@ -7,7 +9,6 @@ import '../compile_metadata.dart'
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;
-import 'package:angular2/src/core/linker/view_type.dart';
 
 // Template Anchor comment.
 const TEMPLATE_COMMENT_TEXT = 'template bindings={}';

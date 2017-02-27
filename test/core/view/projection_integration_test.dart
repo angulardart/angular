@@ -2,6 +2,7 @@
 library angular2.test.core.view.projection_integration_test;
 
 import 'dart:html';
+
 import 'package:angular2/core.dart'
     show
         Component,

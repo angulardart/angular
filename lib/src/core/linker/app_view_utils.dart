@@ -10,6 +10,7 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/facade/lang.dart' show looseIdentical;
 import 'package:angular2/src/platform/dom/events/event_manager.dart'
     show EventManager;
+
 import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 
 /// Function called when a view is destroyed.

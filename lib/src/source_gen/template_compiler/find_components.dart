@@ -7,9 +7,9 @@ import 'package:angular2/src/core/change_detection/constants.dart';
 import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
-    show safeMatcher, safeMatcherType, safeMatcherTypes;
-import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
+import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
+    show safeMatcher, safeMatcherType, safeMatcherTypes;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart';
 import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';

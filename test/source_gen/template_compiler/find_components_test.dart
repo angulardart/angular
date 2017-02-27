@@ -1,6 +1,8 @@
 @TestOn('vm')
 import 'dart:async';
+
 import 'package:test/test.dart';
+
 import 'compare_to_golden.dart' as golden;
 
 const String summaryExtension = '.ng_component';

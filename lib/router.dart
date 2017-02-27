@@ -13,8 +13,8 @@ export "package:angular2/src/router/router_providers_common.dart"
 
 export "src/router/directives/router_link.dart" show RouterLink;
 export "src/router/directives/router_outlet.dart" show RouterOutlet;
-export "src/router/instruction.dart" show RouteParams, RouteData;
-export "src/router/instruction.dart" show Instruction, ComponentInstruction;
+export "src/router/instruction.dart"
+    show Instruction, ComponentInstruction, RouteParams, RouteData;
 export "src/router/interfaces.dart"
     show OnActivate, OnDeactivate, OnReuse, CanDeactivate, CanReuse;
 export "src/router/lifecycle/lifecycle_annotations.dart" show CanActivate;

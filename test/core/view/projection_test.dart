@@ -3,10 +3,11 @@
 library angular2.test.core.view.projection_test;
 
 import 'dart:html';
+
 import 'package:angular2/angular2.dart';
-import 'package:angular_test/angular_test.dart';
 import 'package:angular2/src/debug/debug_node.dart';
 import 'package:angular2/src/testing/matchers.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {

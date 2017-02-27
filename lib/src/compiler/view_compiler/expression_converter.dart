@@ -155,7 +155,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     var input = ast.exp.visit(this, _Mode.Expression);
     var args =
         this.visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
-        as List<o.Expression>;
+            as List<o.Expression>;
     var value = this._nameResolver.callPipe(ast.name, input, args);
     this.needsValueUnwrapper = true;
     return convertToStatementIfNeeded(
@@ -257,7 +257,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         mode,
         _nameResolver.createLiteralArray(
             this.visitAll(ast.expressions as List<compiler_ast.AST>, mode)
-            as List<o.Expression>));
+                as List<o.Expression>));
   }
 
   dynamic visitLiteralMap(compiler_ast.LiteralMap ast, dynamic context) {
@@ -280,7 +280,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _Mode mode = context;
     var args =
         this.visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
-        as List<o.Expression>;
+            as List<o.Expression>;
     var result;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {

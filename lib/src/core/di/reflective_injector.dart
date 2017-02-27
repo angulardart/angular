@@ -1,7 +1,7 @@
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import 'injector.dart' show Injector, THROW_IF_NOT_FOUND;
 import 'decorators.dart';
+import 'injector.dart' show Injector, THROW_IF_NOT_FOUND;
 import 'provider.dart' show Provider;
 import 'reflective_exceptions.dart'
     show

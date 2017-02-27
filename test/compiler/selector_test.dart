@@ -2,8 +2,9 @@
 library angular2.test.compiler.selector_test;
 
 import 'dart:html';
-import 'package:angular2/src/compiler/selector.dart' show SelectorMatcher;
-import 'package:angular2/src/compiler/selector.dart' show CssSelector;
+
+import 'package:angular2/src/compiler/selector.dart'
+    show CssSelector, SelectorMatcher;
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 

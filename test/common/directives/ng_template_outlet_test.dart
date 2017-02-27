@@ -3,12 +3,13 @@
 library angular2.test.common.directives.ng_template_outlet_test;
 
 import 'dart:html';
+
 import 'package:angular2/angular2.dart';
 import "package:angular2/src/common/directives/ng_template_outlet.dart"
     show NgTemplateOutlet;
-import 'package:angular_test/angular_test.dart';
 import 'package:angular2/src/debug/debug_node.dart';
 import 'package:angular2/src/testing/matchers.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {

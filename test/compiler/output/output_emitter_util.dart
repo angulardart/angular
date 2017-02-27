@@ -2,12 +2,12 @@ library angular2.test.compiler.output.output_emitter_util;
 
 import "package:angular2/src/compiler/compile_metadata.dart"
     show CompileIdentifierMetadata;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/compiler/output/dynamic_instance.dart";
 import "package:angular2/src/compiler/compiler_utils.dart" show MODULE_SUFFIX;
+import "package:angular2/src/compiler/output/dynamic_instance.dart";
 import "package:angular2/src/compiler/output/output_ast.dart" as o;
+import "package:angular2/src/core/linker/view_type.dart" show ViewType;
+import "package:angular2/src/facade/async.dart" show EventEmitter;
+import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 class ExternalClass {
   dynamic data;

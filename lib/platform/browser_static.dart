@@ -14,18 +14,18 @@ import "package:angular2/core.dart"
         PLATFORM_INITIALIZER,
         MapInjector;
 import "package:angular2/src/core/application_ref.dart" show PlatformRefImpl;
+import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/reflection/reflection.dart"
     show Reflector, reflector;
 import "package:angular2/src/core/testability/testability.dart"
     show TestabilityRegistry;
 import "package:angular2/src/platform/browser_common.dart"
     show BROWSER_APP_COMMON_PROVIDERS, createInitDomAdapter;
-import "package:angular2/src/core/di.dart" show Provider;
+import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
 export "package:angular2/src/core/angular_entrypoint.dart";
 export "package:angular2/src/platform/browser_common.dart"
     show BROWSER_PROVIDERS, enableDebugTools, disableDebugTools;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
 /// An array of providers that should be passed into [application()] when
 /// bootstrapping a component when all templates have been precompiled offline.

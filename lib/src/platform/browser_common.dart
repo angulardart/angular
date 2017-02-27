@@ -1,4 +1,3 @@
-import 'package:logging/logging.dart';
 import "package:angular2/common.dart"
     show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"
@@ -22,13 +21,14 @@ import "package:angular2/src/platform/dom/events/dom_events.dart"
 import "package:angular2/src/platform/dom/events/event_manager.dart"
     show EventManager, EventManagerPlugin, EVENT_MANAGER_PLUGINS;
 import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
-    show HammerGesturesPlugin;
-import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
+import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
+    show HammerGesturesPlugin;
 import "package:angular2/src/platform/dom/events/key_events.dart"
     show KeyEventsPlugin;
 import "package:angular2/src/security/dom_sanitization_service.dart";
 import "package:angular2/src/security/dom_sanitization_service_impl.dart";
+import 'package:logging/logging.dart';
 
 export "package:angular2/src/platform/browser/tools/tools.dart"
     show enableDebugTools, disableDebugTools;

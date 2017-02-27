@@ -1,3 +1,5 @@
+import 'dart:js_util' as js_util;
+
 import 'package:angular2/core.dart'
     show
         Directive,
@@ -8,7 +10,6 @@ import 'package:angular2/core.dart'
         OnDestroy,
         Injector,
         Injectable;
-import 'dart:js_util' as js_util;
 import 'package:angular2/src/common/forms/directives/control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 import 'package:angular2/src/common/forms/directives/ng_control.dart'

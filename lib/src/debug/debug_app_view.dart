@@ -1,19 +1,18 @@
-import 'dart:html';
 import 'dart:convert';
+import 'dart:html';
 import 'dart:js_util' as js_util;
-import 'package:js/js.dart' as js;
 
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/core/di/injector.dart' show THROW_IF_NOT_FOUND;
-import 'package:angular2/src/core/render/api.dart';
-import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/component_factory.dart';
 import 'package:angular2/src/core/linker/exceptions.dart'
     show ExpressionChangedAfterItHasBeenCheckedException, ViewWrappedException;
+import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/view_type.dart';
+import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/debug/debug_context.dart'
     show StaticNodeDebugInfo, DebugContext;
 import 'package:angular2/src/debug/debug_node.dart'
@@ -22,9 +21,10 @@ import 'package:angular2/src/debug/debug_node.dart'
         DebugNode,
         getDebugNode,
         indexDebugNode,
+        inspectNativeElement,
         DebugEventListener,
         removeDebugNodeFromIndex;
-import "package:angular2/src/debug/debug_node.dart" show inspectNativeElement;
+import 'package:js/js.dart' as js;
 
 export 'package:angular2/src/core/linker/app_view.dart';
 export 'package:angular2/src/debug/debug_context.dart'

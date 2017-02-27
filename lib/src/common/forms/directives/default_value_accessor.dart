@@ -1,10 +1,9 @@
+import 'dart:js_util' as js_util;
+
 import "package:angular2/core.dart" show Directive, ElementRef, Provider;
 import 'package:func/func.dart' show VoidFunc0, VoidFunc1;
 
-import 'dart:js_util' as js_util;
 import 'control_value_accessor.dart';
-import "control_value_accessor.dart"
-    show NG_VALUE_ACCESSOR, ControlValueAccessor;
 
 const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: DefaultValueAccessor, multi: true);

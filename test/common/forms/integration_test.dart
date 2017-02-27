@@ -4,7 +4,6 @@ library angular2.test.common.forms.integration_test;
 
 import 'dart:async';
 import 'dart:html';
-import 'package:js/js.dart';
 
 import "package:angular2/common.dart";
 import "package:angular2/core.dart"
@@ -12,6 +11,7 @@ import "package:angular2/core.dart"
 import "package:angular2/core.dart" show Provider, Input;
 import "package:angular2/src/common/forms/validators.dart";
 import "package:angular2/testing_internal.dart";
+import 'package:js/js.dart';
 import 'package:test/test.dart';
 
 void main() {

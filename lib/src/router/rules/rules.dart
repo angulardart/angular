@@ -5,8 +5,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "../instruction.dart" show ComponentInstruction;
 import "../url_parser.dart" show Url, convertUrlParamsToArray;
 import "route_handlers/route_handler.dart" show RouteHandler;
-import "route_paths/route_path.dart" show RoutePath;
-import "route_paths/route_path.dart" show GeneratedUrl;
+import "route_paths/route_path.dart" show GeneratedUrl, RoutePath;
 
 // RouteMatch objects hold information about a match between a rule and a URL
 abstract class RouteMatch {}

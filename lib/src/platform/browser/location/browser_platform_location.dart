@@ -3,8 +3,8 @@ import "dart:html";
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/browser.dart" show History, Location;
 
-import "platform_location.dart";
 import "base_href.dart" as base_href;
+import "platform_location.dart";
 
 /// `PlatformLocation` encapsulates all of the direct calls to platform APIs.
 /// This class should not be used directly by an application developer. Instead, use

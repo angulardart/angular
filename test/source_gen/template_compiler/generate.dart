@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:angular2/src/source_gen/template_compiler/generator.dart';
 import 'package:angular2/src/source_gen/template_compiler/generator_options.dart';
 import 'package:angular2/src/source_gen/template_compiler/testing/component_extractor_generator.dart';

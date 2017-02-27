@@ -1,12 +1,11 @@
 @TestOn('browser && !js')
 library angular2.test.core.linker.integration_test;
 
-import 'dart:html';
 import 'dart:async';
+import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular2/common.dart' show NgIf, NgFor;
-import 'package:angular2/common.dart' show AsyncPipe;
+import 'package:angular2/src/common.dart' show AsyncPipe, NgIf, NgFor;
 import 'package:angular2/core.dart'
     show
         Injector,
@@ -19,6 +18,7 @@ import 'package:angular2/core.dart'
         SkipSelf,
         OnDestroy,
         ReflectiveInjector;
+import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show PipeTransform, ChangeDetectorRef, ChangeDetectionStrategy;
 import 'package:angular2/src/core/linker/component_resolver.dart'
@@ -43,7 +43,6 @@ import 'package:angular2/src/core/metadata.dart'
         HostListener;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
-import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
 
