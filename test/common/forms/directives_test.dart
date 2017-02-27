@@ -1,7 +1,7 @@
 @TestOn('browser')
 import 'dart:html';
 
-import 'package:angular2/common.dart'
+import 'package:angular2/src/common.dart'
     show
         AbstractControl,
         ControlGroup,

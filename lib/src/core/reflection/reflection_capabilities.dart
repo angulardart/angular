@@ -1,7 +1,6 @@
 import 'dart:mirrors';
 
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart';
-import 'package:angular2/src/facade/lang.dart';
 
 import 'platform_reflection_capabilities.dart';
 import 'types.dart';

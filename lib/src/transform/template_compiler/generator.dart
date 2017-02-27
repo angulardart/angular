@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
-import 'package:angular2/src/facade/lang.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/model/annotation_model.pb.dart';

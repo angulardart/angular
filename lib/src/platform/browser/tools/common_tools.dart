@@ -3,7 +3,6 @@ import 'dart:html';
 import "package:angular2/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular2/src/core/linker/component_factory.dart"
     show ComponentRef;
-import "package:angular2/src/facade/browser.dart" show window;
 
 class ChangeDetectionPerfRecord {
   num msPerTick;

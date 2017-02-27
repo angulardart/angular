@@ -1,4 +1,4 @@
-import "package:angular2/common.dart"
+import 'package:angular2/src/common.dart'
     show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"
     show

@@ -1,6 +1,5 @@
+import 'dart:async';
 import 'dart:collection';
-
-import 'package:angular2/src/facade/async.dart';
 
 /// A list of items that Angular keeps up to date when the state of the
 /// application changes.

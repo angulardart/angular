@@ -4,7 +4,7 @@ library angular2.test.core.linker.change_detection_integration_test;
 import 'dart:html';
 
 import 'package:angular2/angular2.dart';
-import "package:angular2/common.dart" show AsyncPipe, DatePipe;
+import 'package:angular2/src/common.dart' show AsyncPipe, DatePipe;
 import "package:angular2/core.dart";
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show PipeTransform, WrappedValue;
