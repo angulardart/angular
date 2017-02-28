@@ -188,14 +188,10 @@ class CompileTypeMetadataVisitor
     final annotation = _getAnnotation(p, Inject);
     final injectToken = annotation.computeConstantValue();
     final token = dart_objects.getField(injectToken, 'token');
-    if (_isOpaqueToken(token)) {
-      // Short circuit because we need to use the AST here.
-      return _tokenForOpaqueToken(annotation as ElementAnnotationImpl);
-    }
     return _token(token, annotation);
   }
 
-  CompileTokenMetadata _tokenForOpaqueToken(ElementAnnotationImpl annotation) {
+  CompileTokenMetadata _annotationToToken(ElementAnnotationImpl annotation) {
     String name;
     final id = annotation.annotationAst.arguments.arguments.first;
     if (id is Identifier) {
@@ -222,10 +218,12 @@ class CompileTypeMetadataVisitor
       if (annotation == null) {
         _logger.warning('Could not resolve an OpaqueToken on a Provider!');
         return new CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
+      } else {
+        _logger.warning(''
+            'Could not resolve a token from $annotation: '
+            'Will fall back to using a reference to the identifier.');
+        return _annotationToToken(annotation as ElementAnnotationImpl);
       }
-      // Assume this is an OpaqueToken and use the AST.
-      // See internal b/35636811, and we can revert this block.
-      return _tokenForOpaqueToken(annotation as ElementAnnotationImpl);
     } else if (_isOpaqueToken(token)) {
       // We actually resolved this an OpaqueToken.
       return _canonicalOpaqueToken(token);
@@ -249,7 +247,8 @@ class CompileTypeMetadataVisitor
 
   CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
     return new CompileTokenMetadata(
-        value: new OpaqueToken(dart_objects.coerceString(object, '_desc')));
+      value: new OpaqueToken(dart_objects.coerceString(object, '_desc')),
+    );
   }
 
   CompileTokenMetadata _tokenForType(DartType type) {

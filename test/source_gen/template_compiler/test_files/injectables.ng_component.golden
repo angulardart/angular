@@ -50,14 +50,8 @@
           },
           {
             "token": {
-              "value": null,
-              "identifier": {
-                "class": "Identifier",
-                "name": "testToken",
-                "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/injectables.dart",
-                "prefix": null,
-                "value": null
-              },
+              "value": "const OpaqueToken('test')",
+              "identifier": null,
               "identifierIsInstance": false
             },
             "value": null,

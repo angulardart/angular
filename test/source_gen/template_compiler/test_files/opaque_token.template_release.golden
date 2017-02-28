@@ -71,8 +71,8 @@ const List<dynamic> styles_HasOpaqueTokensHost = const [];
 class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   HtmlElement _el_0;
   AppView<import1.HasOpaqueTokens> _compView_0;
-  import1.HasOpaqueTokens _HasOpaqueTokens_0_2;
-  dynamic __const_OpaqueToken__baseUrlDescription___0_3;
+  dynamic _const_OpaqueToken__baseUrlDescription___0_2;
+  import1.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -82,32 +82,26 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasOpaqueTokensHost);
     setupComponentType(renderType);
   }
-  dynamic get _const_OpaqueToken__baseUrlDescription___0_3 {
-    if ((this.__const_OpaqueToken__baseUrlDescription___0_3 == null)) {
-      (__const_OpaqueToken__baseUrlDescription___0_3 = 'https://localhost');
-    }
-    return this.__const_OpaqueToken__baseUrlDescription___0_3;
-  }
-
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement('has-opaque-tokens', rootSelector, null);
     _compView_0 = viewFactory_HasOpaqueTokens0(this, 0, _el_0);
-    _HasOpaqueTokens_0_2 = new import1.HasOpaqueTokens(
-        this.injectorGet(import1.baseUrlToken, parentIndex));
-    _compView_0.create(_HasOpaqueTokens_0_2, projectableNodes, null);
+    _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
+    _HasOpaqueTokens_0_3 = new import1.HasOpaqueTokens(
+        _const_OpaqueToken__baseUrlDescription___0_2);
+    _compView_0.create(_HasOpaqueTokens_0_3, projectableNodes, null);
     init([_el_0], [_el_0], []);
-    return new ComponentRef(0, this, _el_0, _HasOpaqueTokens_0_2);
+    return new ComponentRef(0, this, _el_0, _HasOpaqueTokens_0_3);
   }
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.HasOpaqueTokens) &&
-        (0 == requestNodeIndex))) {
-      return _HasOpaqueTokens_0_2;
-    }
     if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
         (0 == requestNodeIndex))) {
-      return _const_OpaqueToken__baseUrlDescription___0_3;
+      return _const_OpaqueToken__baseUrlDescription___0_2;
+    }
+    if ((identical(token, import1.HasOpaqueTokens) &&
+        (0 == requestNodeIndex))) {
+      return _HasOpaqueTokens_0_3;
     }
     return notFoundResult;
   }

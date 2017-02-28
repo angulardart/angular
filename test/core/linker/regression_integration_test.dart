@@ -115,8 +115,8 @@ void main() {
           () async {
         return inject([TestComponentBuilder, AsyncTestCompleter],
             (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var token1 = new OpaqueToken("someToken");
-          var token2 = new OpaqueToken("someToken");
+          var token1 = const OpaqueToken("someToken1");
+          var token2 = const OpaqueToken("someToken2");
           var tokenValue1 = {"a": 1};
           var tokenValue2 = {"a": 1};
           createInjector(tcb, [

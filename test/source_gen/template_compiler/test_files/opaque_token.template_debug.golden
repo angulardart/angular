@@ -82,7 +82,7 @@ AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
 const List<dynamic> styles_HasOpaqueTokensHost = const [];
 const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = const [
   const StaticNodeDebugInfo(
-      const [import2.HasOpaqueTokens, const OpaqueToken('baseUrlDescription')],
+      const [const OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens],
       import2.HasOpaqueTokens,
       const <String, dynamic>{})
 ];
@@ -90,8 +90,8 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = const [
 class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   HtmlElement _el_0;
   AppView<import2.HasOpaqueTokens> _compView_0;
-  import2.HasOpaqueTokens _HasOpaqueTokens_0_2;
-  dynamic __const_OpaqueToken__baseUrlDescription___0_3;
+  dynamic _const_OpaqueToken__baseUrlDescription___0_2;
+  import2.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(
       AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
@@ -108,34 +108,27 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasOpaqueTokensHost);
     setupComponentType(renderType);
   }
-  dynamic get _const_OpaqueToken__baseUrlDescription___0_3 {
-    dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__baseUrlDescription___0_3 == null)) {
-      (__const_OpaqueToken__baseUrlDescription___0_3 = 'https://localhost');
-    }
-    return this.__const_OpaqueToken__baseUrlDescription___0_3;
-  }
-
   ComponentRef createInternal(dynamic rootSelector) {
     _el_0 = selectOrCreateHostElement(
         'has-opaque-tokens', rootSelector, dbg(0, 0, 0));
     _compView_0 = viewFactory_HasOpaqueTokens0(this, 0, _el_0);
-    _HasOpaqueTokens_0_2 = new import2.HasOpaqueTokens(
-        this.injectorGet(import2.baseUrlToken, parentIndex));
-    _compView_0.create(_HasOpaqueTokens_0_2, projectableNodes, null);
+    _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
+    _HasOpaqueTokens_0_3 = new import2.HasOpaqueTokens(
+        _const_OpaqueToken__baseUrlDescription___0_2);
+    _compView_0.create(_HasOpaqueTokens_0_3, projectableNodes, null);
     init([_el_0], [_el_0], []);
-    return new ComponentRef(0, this, _el_0, _HasOpaqueTokens_0_2);
+    return new ComponentRef(0, this, _el_0, _HasOpaqueTokens_0_3);
   }
 
   dynamic injectorGetInternal(
       dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.HasOpaqueTokens) &&
-        (0 == requestNodeIndex))) {
-      return _HasOpaqueTokens_0_2;
-    }
     if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
         (0 == requestNodeIndex))) {
-      return _const_OpaqueToken__baseUrlDescription___0_3;
+      return _const_OpaqueToken__baseUrlDescription___0_2;
+    }
+    if ((identical(token, import2.HasOpaqueTokens) &&
+        (0 == requestNodeIndex))) {
+      return _HasOpaqueTokens_0_3;
     }
     return notFoundResult;
   }

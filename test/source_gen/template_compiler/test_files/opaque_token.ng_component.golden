@@ -16,14 +16,8 @@
         "diDeps": [
           {
             "token": {
-              "value": null,
-              "identifier": {
-                "class": "Identifier",
-                "name": "baseUrlToken",
-                "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/opaque_token.dart",
-                "prefix": null,
-                "value": null
-              },
+              "value": "const OpaqueToken('baseUrlDescription')",
+              "identifier": null,
               "identifierIsInstance": false
             },
             "value": null,

@@ -21,6 +21,12 @@ class OpaqueToken {
 
   const OpaqueToken(this._desc);
 
+  @override
+  bool operator ==(other) => other is OpaqueToken && _desc == other._desc;
+
+  @override
+  int get hashCode => _desc.hashCode;
+
   // Temporary: We are using this to canonical-ize OpaqueTokens in source_gen.
   toJson() => toString();
 
