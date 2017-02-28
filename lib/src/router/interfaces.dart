@@ -30,62 +30,83 @@ abstract class OnActivate {
 /// For a single component's navigation, only one of either [OnActivate] or [OnReuse]
 /// will be called, depending on the result of [CanReuse].
 ///
-/// The `routerOnReuse` hook is called with two [ComponentInstruction]s as parameters, the
-/// first
-/// representing the current route being navigated to, and the second parameter representing the
-/// previous route or `null`.
+/// The `routerOnReuse` hook is called with two [ComponentInstruction]s as
+/// parameters, the first representing the current route being navigated to,
+/// and the second parameter representing the previous route or `null`.
 ///
 /// ### Example
+///
 /// ```dart
-/// // {@disabled-source "router/ts/reuse/reuse_example.ts" region="reuseCmp"}
+/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnReuse"}
+/// @override
+/// Future<Null> routerOnReuse(ComponentInstruction next, prev) =>
+///     _setCrisis(next.params['id']);
 /// ```
+///
+/// See the [router documentation][router] for details.
+///
+/// [router]: docs/guide/router/5#onreuse
 abstract class OnReuse {
   dynamic /* dynamic | Future< dynamic > */ routerOnReuse(
       ComponentInstruction nextInstruction,
       ComponentInstruction prevInstruction);
 }
 
-/// Defines route lifecycle method `routerOnDeactivate`, which is called by the router before
-/// destroying
-/// a component as part of a route change.
+/// Defines route lifecycle method `routerOnDeactivate`, which is called by the
+/// router before destroying a component as part of a route change.
 ///
-/// The `routerOnDeactivate` hook is called with two [ComponentInstruction]s as parameters, the
-/// first
-/// representing the current route being navigated to, and the second parameter representing the
-/// previous route.
+/// The `routerOnDeactivate` hook is called with two [ComponentInstruction]s as
+/// parameters, the first representing the current route being navigated to,
+/// and the second parameter representing the previous route.
 ///
-/// If `routerOnDeactivate` returns a promise, the route change will wait until the promise settles.
+/// If `routerOnDeactivate` returns a [Future], then the route change will wait
+/// until the [Future] completes.
 ///
 /// ### Example
+///
 /// ```dart
-/// // {@disabled-source "router/ts/on_deactivate/on_deactivate_example.ts" region="routerOnDeactivate"}
+/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnDeactivate"}
+/// @override
+/// void routerOnDeactivate(next, prev) {
+///   print('Deactivating CrisisDetailComponent $name');
+/// }
 /// ```
+///
+/// See the [router documentation][router] for details.
+///
+/// [router]: docs/guide/router/5#ondeactivate
 abstract class OnDeactivate {
   dynamic /* dynamic | Future< dynamic > */ routerOnDeactivate(
       ComponentInstruction nextInstruction,
       ComponentInstruction prevInstruction);
 }
 
-/// Defines route lifecycle method `routerCanReuse`, which is called by the router to determine
-/// whether a
-/// component should be reused across routes, or whether to destroy and instantiate a new component.
+/// Defines route lifecycle method `routerCanReuse`, which is called by the
+/// router to determine whether a component should be reused across routes, or
+/// whether to destroy and instantiate a new component.
 ///
-/// The `routerCanReuse` hook is called with two [ComponentInstruction]s as parameters, the
-/// first
-/// representing the current route being navigated to, and the second parameter representing the
-/// previous route.
+/// The `routerCanReuse` hook is called with two [ComponentInstruction]s as
+/// parameters, the first representing the current route being navigated to,
+/// and the second parameter representing the previous route.
 ///
-/// If `routerCanReuse` returns or resolves to `true`, the component instance will be reused and the
-/// [OnDeactivate] hook will be run. If `routerCanReuse` returns or resolves to `false`, a new
-/// component will be instantiated, and the existing component will be deactivated and removed as
-/// part of the navigation.
+/// If `routerCanReuse` returns or resolves to `true`, the component instance
+/// will be reused and the [OnDeactivate] hook will be run. If `routerCanReuse`
+/// returns or resolves to `false`, a new component will be instantiated, and the
+/// existing component will be deactivated and removed as part of the navigation.
 ///
 /// If `routerCanReuse` throws or rejects, the navigation will be cancelled.
 ///
 /// ### Example
+///
 /// ```dart
-/// // {@disabled-source "router/ts/reuse/reuse_example.ts" region="reuseCmp"}
+/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanReuse"}
+/// @override
+/// FutureOr<bool> routerCanReuse(next, prev) => true;
 /// ```
+///
+/// See the [router documentation][router] for details.
+///
+/// [router]: docs/guide/router/5#canreuse
 abstract class CanReuse {
   dynamic /* bool | Future< bool > */ routerCanReuse(
       ComponentInstruction nextInstruction,
@@ -113,9 +134,9 @@ abstract class CanReuse {
 /// ```dart
 /// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanDeactivate"}
 /// @override
-/// /*FutureOr<bool>*/ routerCanDeactivate(next, prev) =>
+/// FutureOr<bool> routerCanDeactivate(next, prev) =>
 ///     crisis == null || crisis.name == name
-///         ? true
+///         ? true as FutureOr<bool>
 ///         : _dialogService.confirm('Discard changes?');
 /// ```
 ///
