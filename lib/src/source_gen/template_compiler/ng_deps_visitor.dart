@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
@@ -14,65 +15,62 @@ import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart'
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:meta/meta.dart';
 
-/// Create an [NgDepsModel] for the [LibraryElement] supplied.
-NgDepsModel extractNgDepsModel(LibraryElement element) {
-  var reflectableVisitor = new ReflectableVisitor();
-  element.accept(reflectableVisitor);
-  var namespaceVisitor = new NameSpaceVisitor();
-  element.accept(namespaceVisitor);
+/// Resolve and return an [NgDepsModel] from a [library].
+///
+/// To determine if imports/exports are tied to Angular code generation, the
+/// functions [hasInput] (is a file part of the same build process) and
+/// [isLibrary] (is a file a dart library generated or pre-existing in the file
+/// system) are required.
+Future<NgDepsModel> resolveNgDepsFor(
+  LibraryElement library, {
+  @required Future<bool> hasInput(String uri),
+  @required bool isLibrary(String uri),
+}) async {
+  // Visit and find all 'reflectables'.
+  final reflectableVisitor = new ReflectableVisitor();
+  library.accept(reflectableVisitor);
+
+  // Collect all import and exports, and see if we need additional metadata.
+  final imports = <ImportModel>[];
+  final exports = <ExportModel>[];
+  final templateDeps = <ImportModel>[];
+  final pendingResolution = <Future>[];
+
+  Future resolveAndCheckUri(UriReferencedElement directive) async {
+    final uri = directive.uri;
+    if (uri == null) {
+      return null;
+    }
+    if (directive is ImportElement) {
+      imports.add(new ImportModel.fromElement(directive));
+    } else {
+      exports.add(new ExportModel.fromElement(directive));
+    }
+    if (uri.startsWith('dart:') || uri.endsWith(TEMPLATE_EXTENSION)) {
+      return null;
+    }
+    final template = ''
+        '${uri.substring(0, uri.length - '.dart'.length)}'
+        '${TEMPLATE_EXTENSION}';
+    if (isLibrary(template) || await hasInput(uri)) {
+      templateDeps.add(new ImportModel(uri: template));
+    }
+  }
+
+  pendingResolution
+    ..addAll(library.imports.map(resolveAndCheckUri))
+    ..addAll(library.exports.map(resolveAndCheckUri));
+
+  await Future.wait(pendingResolution);
+
   return new NgDepsModel(
-      reflectables: reflectableVisitor.reflectables,
-      imports: namespaceVisitor.imports,
-      exports: namespaceVisitor.exports,
-      depImports: namespaceVisitor.depImports);
-}
-
-String _changeToTemplateExtension(String uri) {
-  assert(uri.endsWith('.dart'));
-  return uri.substring(0, uri.length - 5) + TEMPLATE_EXTENSION;
-}
-
-class NameSpaceVisitor extends RecursiveElementVisitor {
-  List<ImportModel> imports = [];
-  List<ImportModel> depImports = [];
-  List<ExportModel> exports = [];
-
-  @override
-  void visitImportElement(ImportElement element) {
-    if (element.uri != null) {
-      var import = new ImportModel.fromElement(element);
-      imports.add(import);
-      if (!_isGeneratedTemplate(element) &&
-          _hasReflectables(element.importedLibrary)) {
-        depImports
-            .add(new ImportModel(uri: _changeToTemplateExtension(import.uri)));
-      }
-    }
-  }
-
-  @override
-  void visitExportElement(ExportElement element) {
-    if (element.uri != null) {
-      var export = new ExportModel.fromElement(element);
-      exports.add(export);
-      if (!_isGeneratedTemplate(element) &&
-          _hasReflectables(element.exportedLibrary)) {
-        depImports
-            .add(new ImportModel(uri: _changeToTemplateExtension(export.uri)));
-      }
-    }
-  }
-
-  bool _isGeneratedTemplate(UriReferencedElement element) =>
-      element.uri.endsWith(TEMPLATE_EXTENSION);
-
-  // TODO(alorenzen): Consider memoizing this to improve build performance.
-  bool _hasReflectables(LibraryElement importedLibrary) {
-    var visitor = new ReflectableVisitor(visitRecursive: true);
-    importedLibrary.accept(visitor);
-    return visitor.reflectables.isNotEmpty;
-  }
+    reflectables: reflectableVisitor.reflectables,
+    imports: imports,
+    exports: exports,
+    depImports: templateDeps,
+  );
 }
 
 /// An [ElementVisitor] which extracts all [ReflectableInfoModel]s found in the
