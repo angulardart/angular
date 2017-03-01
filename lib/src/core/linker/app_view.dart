@@ -56,7 +56,6 @@ abstract class AppView<T> {
   T ctx;
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
   bool destroyed = false;
-  bool _hasExternalHostElement;
   Injector _hostInjector;
 
   AppView(this.clazz, this.type, this.locals, this.parentView, this.parentIndex,
@@ -107,42 +106,27 @@ abstract class AppView<T> {
             identical(_cdState, ChangeDetectorState.Errored);
   }
 
-  ComponentRef create(
-      T context,
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | Node */ rootSelectorOrNode) {
-    _hasExternalHostElement = rootSelectorOrNode != null;
+  ComponentRef create(T context,
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
     ctx = context;
     projectableNodes = givenProjectableNodes;
-    return createInternal(rootSelectorOrNode);
-  }
-
-  /// Builds a nested embedded view.
-  ComponentRef createEmbedded(dynamic /* String | Node */ rootSelectorOrNode) {
-    projectableNodes = parentView.projectableNodes;
-    _hasExternalHostElement = rootSelectorOrNode != null;
-    ctx = parentView.ctx as T;
-    return createInternal(rootSelectorOrNode);
+    return build();
   }
 
   /// Builds host level view.
-  ComponentRef createHostView(
-      dynamic /* String | Node */ rootSelectorOrNode,
-      Injector hostInjector,
+  ComponentRef createHostView(Injector hostInjector,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
-    _hasExternalHostElement = rootSelectorOrNode != null;
     _hostInjector = hostInjector;
     projectableNodes = givenProjectableNodes;
-    return createInternal(rootSelectorOrNode);
+    return build();
   }
 
   /// Returns the ComponentRef for the host element for ViewType.HOST.
   ///
   /// Overwritten by implementations.
-  ComponentRef createInternal(dynamic /* String | Node */ rootSelectorOrNode) =>
-      null;
+  ComponentRef build() => null;
 
-  /// Called by createInternal once all dom nodes are available.
+  /// Called by build once all dom nodes are available.
   void init(List rootNodesOrViewContainers, List allNodes, List subscriptions) {
     this.rootNodesOrViewContainers = rootNodesOrViewContainers;
     this.allNodes = allNodes;
@@ -182,7 +166,7 @@ abstract class AppView<T> {
             token, nodeIndex, _UndefinedInjectorResult);
       }
       if (identical(result, _UndefinedInjectorResult) &&
-          identical(view.type, ViewType.HOST)) {
+          view._hostInjector != null) {
         result = view._hostInjector.get(token, notFoundValue);
       }
       nodeIndex = view.parentIndex;
@@ -200,12 +184,8 @@ abstract class AppView<T> {
   Injector injector(int nodeIndex) => new ElementInjector(this, nodeIndex);
 
   void detachAndDestroy() {
-    if (_hasExternalHostElement) {
-      detachViewNodes(flatRootNodes);
-    } else {
-      viewContainerElement
-          ?.detachView(viewContainerElement.nestedViews.indexOf(this));
-    }
+    viewContainerElement
+        ?.detachView(viewContainerElement.nestedViews.indexOf(this));
     destroy();
   }
 
@@ -219,9 +199,7 @@ abstract class AppView<T> {
   }
 
   void destroy() {
-    if (destroyed) {
-      return;
-    }
+    if (destroyed) return;
     destroyed = true;
 
     var hostElement = type == ViewType.COMPONENT ? rootEl : null;

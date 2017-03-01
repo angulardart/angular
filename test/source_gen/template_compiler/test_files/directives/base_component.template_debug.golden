@@ -60,7 +60,7 @@ class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
         styles_TestFooComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -102,20 +102,19 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_TestFooComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _TestFooComponent_0_2 = new import2.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_2, projectableNodes, null);
+    _compView_0.create(_TestFooComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.TestFooComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.TestFooComponent) && (0 == nodeIndex))) {
       return _TestFooComponent_0_2;
     }
     return notFoundResult;

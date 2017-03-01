@@ -44,7 +44,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
         .createRenderType('', ViewEncapsulation.None, styles_HasOpaqueTokens);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
@@ -80,25 +80,24 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasOpaqueTokensHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_HasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
     _HasOpaqueTokens_0_3 = new import1.HasOpaqueTokens(
         _const_OpaqueToken__baseUrlDescription___0_2);
-    _compView_0.create(_HasOpaqueTokens_0_3, projectableNodes, null);
+    _compView_0.create(_HasOpaqueTokens_0_3, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_3);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
-        (0 == requestNodeIndex))) {
+        (0 == nodeIndex))) {
       return _const_OpaqueToken__baseUrlDescription___0_2;
     }
-    if ((identical(token, import1.HasOpaqueTokens) &&
-        (0 == requestNodeIndex))) {
+    if ((identical(token, import1.HasOpaqueTokens) && (0 == nodeIndex))) {
       return _HasOpaqueTokens_0_3;
     }
     return notFoundResult;

@@ -58,13 +58,11 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  ComponentRef create(
-      T context,
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
-      dynamic /* String | Node */ rootSelectorOrNode) {
+  ComponentRef create(T context,
+      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
     _resetDebug();
     try {
-      return super.create(context, givenProjectableNodes, rootSelectorOrNode);
+      return super.create(context, givenProjectableNodes);
     } catch (e, s) {
       _rethrowWithContext(e, s);
       rethrow;
@@ -73,14 +71,11 @@ class DebugAppView<T> extends AppView<T> {
 
   /// Builds host level view.
   @override
-  ComponentRef createHostView(
-      dynamic /* String | Node */ rootSelectorOrNode,
-      Injector hostInjector,
+  ComponentRef createHostView(Injector hostInjector,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
     _resetDebug();
     try {
-      return super.createHostView(
-          rootSelectorOrNode, hostInjector, givenProjectableNodes);
+      return super.createHostView(hostInjector, givenProjectableNodes);
     } catch (e, s) {
       this._rethrowWithContext(e, s);
       rethrow;

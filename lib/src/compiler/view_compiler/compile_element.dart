@@ -420,12 +420,11 @@ o.Statement createInjectInternalCondition(num nodeIndex, num childNodeCount,
   if (childNodeCount > 0) {
     indexCondition = o
         .literal(nodeIndex)
-        .lowerEquals(InjectMethodVars.requestNodeIndex)
-        .and(InjectMethodVars.requestNodeIndex
+        .lowerEquals(InjectMethodVars.nodeIndex)
+        .and(InjectMethodVars.nodeIndex
             .lowerEquals(o.literal(nodeIndex + childNodeCount)));
   } else {
-    indexCondition =
-        o.literal(nodeIndex).equals(InjectMethodVars.requestNodeIndex);
+    indexCondition = o.literal(nodeIndex).equals(InjectMethodVars.nodeIndex);
   }
   return new o.IfStmt(
       InjectMethodVars.token
@@ -474,7 +473,7 @@ o.Expression createProviderProperty(
               .toStmt());
     } else {
       // Since provider is not dynamically reachable and we only need
-      // the provider locally in createInternal, create a local var.
+      // the provider locally in build, create a local var.
       var localVar = o.variable(propName, type);
       view.createMethod
           .addStmt(localVar.set(resolvedProviderValueExpr).toDeclStmt());

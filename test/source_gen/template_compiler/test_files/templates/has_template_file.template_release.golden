@@ -44,7 +44,7 @@ class ViewHasTemplateFileComponent0
         '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -78,19 +78,19 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_HasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HasTemplateFileComponent_0_2 = new import2.HasTemplateFileComponent();
-    _compView_0.create(_HasTemplateFileComponent_0_2, projectableNodes, null);
+    _compView_0.create(_HasTemplateFileComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.HasTemplateFileComponent) &&
-        (0 == requestNodeIndex))) {
+        (0 == nodeIndex))) {
       return _HasTemplateFileComponent_0_2;
     }
     return notFoundResult;

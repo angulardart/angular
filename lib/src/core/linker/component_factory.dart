@@ -92,7 +92,7 @@ class ComponentFactory {
     projectableNodes ??= [];
     // Note: Host views don't need a declarationViewContainer!
     AppView hostView = _viewFactory(null, null);
-    return hostView.createHostView(null, injector, projectableNodes);
+    return hostView.createHostView(injector, projectableNodes);
   }
 }
 

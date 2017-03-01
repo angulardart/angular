@@ -157,7 +157,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var fieldName = '_text_${this.view.nodes.length}';
     o.Expression renderNode;
     // If Text field is bound, we need access to the renderNode beyond
-    // createInternal method and write reference to class member.
+    // build method and write reference to class member.
     // Otherwise we can create a local variable and not balloon class prototype.
     if (isBound) {
       view.fields.add(new o.ClassField(fieldName,
@@ -392,11 +392,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             .toList());
       }
 
-      view.createMethod.addStmt(compViewExpr.callMethod('create', [
-        compileElement.getComponent(),
-        codeGenContentNodes,
-        o.NULL_EXPR
-      ]).toStmt());
+      view.createMethod.addStmt(compViewExpr.callMethod('create',
+          [compileElement.getComponent(), codeGenContentNodes]).toStmt());
     }
     return null;
   }
@@ -698,16 +695,13 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
 o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar) {
   var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
   var viewMethods = (new List.from([
-    new o.ClassMethod(
-        "createInternal",
-        [new o.FnParam(rootSelectorVar.name, o.DYNAMIC_TYPE)],
-        generateCreateMethod(view),
+    new o.ClassMethod("build", [], generateCreateMethod(view),
         o.importType(Identifiers.ComponentRef, null)),
     new o.ClassMethod(
         "injectorGetInternal",
         [
           new o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
-          new o.FnParam(InjectMethodVars.requestNodeIndex.name, o.INT_TYPE),
+          new o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
           new o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
         ],
         addReturnValuefNotEmpty(

@@ -69,7 +69,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
         styles_TestFooComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
@@ -96,7 +96,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     parentRenderNode.append(_el_6);
     dbgElm(_el_6, 6, 2, 17);
     _TestSubComponent_6_2 = new import1.TestSubComponent();
-    _compView_6.create(_TestSubComponent_6_2, [], null);
+    _compView_6.create(_TestSubComponent_6_2, []);
     Text _text_7 = new Text('\n  ');
     parentRenderNode.append(_text_7);
     dbgElm(_text_7, 7, 2, 38);
@@ -106,12 +106,11 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestDirective) && (4 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestDirective) && (4 == nodeIndex))) {
       return _TestDirective_4_2;
     }
-    if ((identical(token, import1.TestSubComponent) &&
-        (6 == requestNodeIndex))) {
+    if ((identical(token, import1.TestSubComponent) && (6 == nodeIndex))) {
       return _TestSubComponent_6_2;
     }
     return notFoundResult;
@@ -154,20 +153,19 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_TestFooComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _TestFooComponent_0_2 = new import1.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_2, projectableNodes, null);
+    _compView_0.create(_TestFooComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestFooComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
       return _TestFooComponent_0_2;
     }
     return notFoundResult;
@@ -217,7 +215,7 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
         styles_TestSubComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -259,20 +257,19 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_TestSubComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_TestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _TestSubComponent_0_2 = new import1.TestSubComponent();
-    _compView_0.create(_TestSubComponent_0_2, projectableNodes, null);
+    _compView_0.create(_TestSubComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _TestSubComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestSubComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestSubComponent) && (0 == nodeIndex))) {
       return _TestSubComponent_0_2;
     }
     return notFoundResult;

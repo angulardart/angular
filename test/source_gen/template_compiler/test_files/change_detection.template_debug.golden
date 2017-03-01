@@ -56,7 +56,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
         styles_CheckOnceComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -98,20 +98,19 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_CheckOnceComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_CheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _CheckOnceComponent_0_2 = new import2.CheckOnceComponent();
-    _compView_0.create(_CheckOnceComponent_0_2, projectableNodes, null);
+    _compView_0.create(_CheckOnceComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.CheckOnceComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.CheckOnceComponent) && (0 == nodeIndex))) {
       return _CheckOnceComponent_0_2;
     }
     return notFoundResult;
@@ -161,7 +160,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
         styles_CheckedComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -203,20 +202,19 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_CheckedComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_CheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _CheckedComponent_0_2 = new import2.CheckedComponent();
-    _compView_0.create(_CheckedComponent_0_2, projectableNodes, null);
+    _compView_0.create(_CheckedComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _CheckedComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.CheckedComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.CheckedComponent) && (0 == nodeIndex))) {
       return _CheckedComponent_0_2;
     }
     return notFoundResult;
@@ -267,7 +265,7 @@ class ViewCheckAlwaysComponent0
         styles_CheckAlwaysComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -310,20 +308,19 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_CheckAlwaysComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_CheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _CheckAlwaysComponent_0_2 = new import2.CheckAlwaysComponent();
-    _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes, null);
+    _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.CheckAlwaysComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.CheckAlwaysComponent) && (0 == nodeIndex))) {
       return _CheckAlwaysComponent_0_2;
     }
     return notFoundResult;
@@ -373,7 +370,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
         styles_DetachedComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -415,20 +412,19 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_DetachedComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_DetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _DetachedComponent_0_2 = new import2.DetachedComponent();
-    _compView_0.create(_DetachedComponent_0_2, projectableNodes, null);
+    _compView_0.create(_DetachedComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _DetachedComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.DetachedComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.DetachedComponent) && (0 == nodeIndex))) {
       return _DetachedComponent_0_2;
     }
     return notFoundResult;
@@ -478,7 +474,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
         styles_OnPushComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -520,20 +516,19 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_OnPushComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_OnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _OnPushComponent_0_2 = new import2.OnPushComponent();
-    _compView_0.create(_OnPushComponent_0_2, projectableNodes, null);
+    _compView_0.create(_OnPushComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _OnPushComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.OnPushComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.OnPushComponent) && (0 == nodeIndex))) {
       return _OnPushComponent_0_2;
     }
     return notFoundResult;
@@ -583,7 +578,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
         styles_StatefulComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -626,20 +621,19 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_StatefulComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_StatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _StatefulComponent_0_2 = new import2.StatefulComponent();
-    _compView_0.create(_StatefulComponent_0_2, projectableNodes, null);
+    _compView_0.create(_StatefulComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _StatefulComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.StatefulComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.StatefulComponent) && (0 == nodeIndex))) {
       return _StatefulComponent_0_2;
     }
     return notFoundResult;
@@ -689,7 +683,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
         styles_DefaultComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -731,20 +725,19 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_DefaultComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_DefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _DefaultComponent_0_2 = new import2.DefaultComponent();
-    _compView_0.create(_DefaultComponent_0_2, projectableNodes, null);
+    _compView_0.create(_DefaultComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _DefaultComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.DefaultComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.DefaultComponent) && (0 == nodeIndex))) {
       return _DefaultComponent_0_2;
     }
     return notFoundResult;

@@ -58,7 +58,7 @@ class ViewInjectableComponent0
         styles_InjectableComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -131,7 +131,7 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     return this.__BaseService_0_5;
   }
 
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_InjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -141,25 +141,23 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
         null,
         this.injectorGet(import2.InjectableService, parentIndex, null),
         _const_OpaqueToken__test___0_2);
-    _compView_0.create(_InjectableComponent_0_3, projectableNodes, null);
+    _compView_0.create(_InjectableComponent_0_3, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _InjectableComponent_0_3);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const OpaqueToken('test')) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, const OpaqueToken('test')) && (0 == nodeIndex))) {
       return _const_OpaqueToken__test___0_2;
     }
-    if ((identical(token, import2.InjectableComponent) &&
-        (0 == requestNodeIndex))) {
+    if ((identical(token, import2.InjectableComponent) && (0 == nodeIndex))) {
       return _InjectableComponent_0_3;
     }
-    if ((identical(token, import2.SomeDep) && (0 == requestNodeIndex))) {
+    if ((identical(token, import2.SomeDep) && (0 == nodeIndex))) {
       return _SomeDep_0_4;
     }
-    if ((identical(token, import2.BaseService) && (0 == requestNodeIndex))) {
+    if ((identical(token, import2.BaseService) && (0 == nodeIndex))) {
       return _BaseService_0_5;
     }
     return notFoundResult;

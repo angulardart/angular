@@ -121,7 +121,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
         styles_QueriesComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _viewQuery_q8_0 = new import3.QueryList();
     _viewQuery_q10_1 = new import3.QueryList();
@@ -251,53 +251,41 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) &&
-        (1 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.AnotherDirective) && (1 == nodeIndex))) {
       return _AnotherDirective_1_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (3 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (3 == nodeIndex))) {
       return _AnotherDirective_3_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (5 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (5 == nodeIndex))) {
       return _AnotherDirective_5_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (7 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (7 == nodeIndex))) {
       return _AnotherDirective_7_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (9 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (9 == nodeIndex))) {
       return _AnotherDirective_9_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (11 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (11 == nodeIndex))) {
       return _AnotherDirective_11_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (13 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (13 == nodeIndex))) {
       return _AnotherDirective_13_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (15 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (15 == nodeIndex))) {
       return _AnotherDirective_15_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (17 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (17 == nodeIndex))) {
       return _AnotherDirective_17_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (19 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (19 == nodeIndex))) {
       return _AnotherDirective_19_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (21 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (21 == nodeIndex))) {
       return _AnotherDirective_21_2;
     }
-    if ((identical(token, import1.AnotherDirective) &&
-        (23 == requestNodeIndex))) {
+    if ((identical(token, import1.AnotherDirective) && (23 == nodeIndex))) {
       return _AnotherDirective_23_2;
     }
     return notFoundResult;
@@ -374,7 +362,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_QueriesComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_QueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -394,15 +382,14 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
     _QueriesComponent_0_2.contentChildFromAnnotation = _query_q5_0_7.first;
     _query_q6_0_8.reset([]);
     _QueriesComponent_0_2.viewChildFromAnnotation = _query_q6_0_8.first;
-    _compView_0.create(_QueriesComponent_0_2, projectableNodes, null);
+    _compView_0.create(_QueriesComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _QueriesComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.QueriesComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.QueriesComponent) && (0 == nodeIndex))) {
       return _QueriesComponent_0_2;
     }
     return notFoundResult;

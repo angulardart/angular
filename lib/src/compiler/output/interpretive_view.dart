@@ -44,12 +44,12 @@ class _InterpretiveAppView<T> extends DebugAppView<T>
             args[4], args[5], args[6] as List<StaticNodeDebugInfo>);
 
   @override
-  ComponentRef createInternal(dynamic /* String | dynamic */ rootSelector) {
-    var m = methods['createInternal'];
+  ComponentRef build() {
+    var m = methods['build'];
     if (m != null) {
-      return m(rootSelector);
+      return m();
     } else {
-      return super.createInternal(rootSelector);
+      return super.build();
     }
   }
 

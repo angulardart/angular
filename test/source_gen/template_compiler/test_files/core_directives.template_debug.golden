@@ -69,7 +69,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
         styles_TestFooComponent);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
@@ -143,7 +143,7 @@ class ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
             nodeDebugInfos_TestFooComponent1) {
     componentType = ViewTestFooComponent0.renderType;
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     var doc = document;
     _el_0 = doc.createElement('div');
     dbgElm(_el_0, 0, 0, 4);
@@ -184,7 +184,7 @@ class ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
             nodeDebugInfos_TestFooComponent2) {
     componentType = ViewTestFooComponent0.renderType;
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     var doc = document;
     _el_0 = doc.createElement('div');
     dbgElm(_el_0, 0, 1, 4);
@@ -242,20 +242,19 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_TestFooComponentHost);
     setupComponentType(renderType);
   }
-  ComponentRef createInternal(dynamic rootSelector) {
+  ComponentRef build() {
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _TestFooComponent_0_2 = new import5.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_2, projectableNodes, null);
+    _compView_0.create(_TestFooComponent_0_2, projectableNodes);
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
   }
 
   dynamic injectorGetInternal(
-      dynamic token, int requestNodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import5.TestFooComponent) &&
-        (0 == requestNodeIndex))) {
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import5.TestFooComponent) && (0 == nodeIndex))) {
       return _TestFooComponent_0_2;
     }
     return notFoundResult;

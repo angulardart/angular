@@ -88,7 +88,7 @@ class InjectMethodVars {
   static var token = o.variable('token');
 
   /// Name of node index parameter used in AppView injectorGetInternal method.
-  static var requestNodeIndex = o.variable('requestNodeIndex');
+  static var nodeIndex = o.variable('nodeIndex');
   static var notFoundResult = o.variable('notFoundResult');
 }
 
