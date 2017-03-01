@@ -40,26 +40,6 @@ void main() {
       });
     });
 
-    test(
-        'should report a meaningful error when a component '
-        'is missing view annotation', () async {
-      var testBed = new NgTestBed<MyCompMissingViewTemplate>();
-      await testBed.create().catchError((e, stack) {
-        expect(e.toString(),
-            contains("must have either 'template' or 'templateUrl' set."));
-      });
-    });
-
-    test('should report a meaningful error when a directive is null', () async {
-      var testBed = new NgTestBed<MyCompWithNullDirectives>();
-      await testBed.create().catchError((e, stack) {
-        expect(
-            e.toString(),
-            contains("Unexpected directive value 'null' on the View "
-                "of component '$MyCompWithNullDirectives'"));
-      });
-    });
-
     test('should provide an error context when an error happens in DI',
         () async {
       var testBed = new NgTestBed<MyCompWithThrowingDirective>();
@@ -177,12 +157,6 @@ class MyCompWithDirectiveMissingAnnotation {
 
   doNothing() {}
 }
-
-@Component(selector: 'my-comp-missing-view-template')
-class MyCompMissingViewTemplate {}
-
-@Component(selector: 'my-comp-null-directives', directives: const [null])
-class MyCompWithNullDirectives {}
 
 @Component(
     selector: 'my-comp-with-throwing-directive',
