@@ -47,11 +47,9 @@ class DebugAppView<T> extends AppView<T> {
       Map<String, dynamic> locals,
       AppView parentView,
       int parentIndex,
-      Node parentElement,
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
-      : super(clazz, type, locals, parentView, parentIndex, parentElement,
-            cdMode) {
+      : super(clazz, type, locals, parentView, parentIndex, cdMode) {
     this.cdMode = cdMode;
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;
@@ -64,11 +62,11 @@ class DebugAppView<T> extends AppView<T> {
       T context,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes,
       dynamic /* String | Node */ rootSelectorOrNode) {
-    this._resetDebug();
+    _resetDebug();
     try {
       return super.create(context, givenProjectableNodes, rootSelectorOrNode);
     } catch (e, s) {
-      this._rethrowWithContext(e, s);
+      _rethrowWithContext(e, s);
       rethrow;
     }
   }
@@ -79,7 +77,7 @@ class DebugAppView<T> extends AppView<T> {
       dynamic /* String | Node */ rootSelectorOrNode,
       Injector hostInjector,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
-    this._resetDebug();
+    _resetDebug();
     try {
       return super.createHostView(
           rootSelectorOrNode, hostInjector, givenProjectableNodes);
@@ -92,29 +90,29 @@ class DebugAppView<T> extends AppView<T> {
   @override
   dynamic injectorGet(dynamic token, int nodeIndex,
       [dynamic notFoundResult = THROW_IF_NOT_FOUND]) {
-    this._resetDebug();
+    _resetDebug();
     try {
       return super.injectorGet(token, nodeIndex, notFoundResult);
     } catch (e, s) {
-      this._rethrowWithContext(e, s, stopChangeDetection: false);
+      _rethrowWithContext(e, s, stopChangeDetection: false);
       rethrow;
     }
   }
 
   @override
   void destroy() {
-    this._resetDebug();
+    _resetDebug();
     try {
       super.destroy();
     } catch (e, s) {
-      this._rethrowWithContext(e, s);
+      _rethrowWithContext(e, s);
       rethrow;
     }
   }
 
   @override
   void detectChanges() {
-    this._resetDebug();
+    _resetDebug();
     try {
       super.detectChanges();
     } catch (e) {
@@ -126,18 +124,18 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   void _resetDebug() {
-    this._currentDebugContext = null;
+    _currentDebugContext = null;
   }
 
   @override
   /*<R>*/ evt<E, R>(/*<R>*/ cb(/*<E>*/ e)) {
     var superHandler = super.evt(cb);
     return (/*<E>*/ event) {
-      this._resetDebug();
+      _resetDebug();
       try {
         return superHandler(event);
       } catch (e, s) {
-        this._rethrowWithContext(e, s);
+        _rethrowWithContext(e, s);
         rethrow;
       }
     };
@@ -195,6 +193,26 @@ class DebugAppView<T> extends AppView<T> {
     indexDebugNode(debugEl);
   }
 
+  /// Creates DebugElement for root element of a component.
+  void dbgIdx(element, num nodeIndex) {
+    var debugInfo = new DebugContext<T>(this, nodeIndex, 0, 0);
+    if (element is Text) return;
+    var debugEl;
+    if (element is Comment) {
+      debugEl =
+          new DebugNode(element, getDebugNode(element.parentNode), debugInfo);
+    } else {
+      debugEl = new DebugElement(
+          element,
+          element.parentNode == null ? null : getDebugNode(element.parentNode),
+          debugInfo);
+
+      debugEl.name = element is Text ? 'text' : element.tagName.toLowerCase();
+      _currentDebugContext = debugInfo;
+    }
+    indexDebugNode(debugEl);
+  }
+
   /// Projects projectableNodes at specified index. We don't use helper
   /// functions to flatten the tree since it allocates list that are not
   /// required in most cases.
@@ -243,15 +261,6 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  HtmlElement selectRootElement(dynamic /* String | dynamic */ selectorOrNode,
-      RenderDebugInfo debugInfo) {
-    var nativeEl = super.selectRootElement(selectorOrNode, debugInfo);
-    var debugEl = new DebugElement(nativeEl, null, debugInfo);
-    indexDebugNode(debugEl);
-    return nativeEl;
-  }
-
-  @override
   dynamic createElement(
       dynamic parentElement, String name, RenderDebugInfo debugInfo) {
     var nativeEl = super.createElement(parentElement, name, debugInfo);
@@ -297,10 +306,10 @@ class DebugAppView<T> extends AppView<T> {
     if (!(e is ViewWrappedException)) {
       if (stopChangeDetection &&
           !(e is ExpressionChangedAfterItHasBeenCheckedException)) {
-        this.cdState = ChangeDetectorState.Errored;
+        cdState = ChangeDetectorState.Errored;
       }
-      if (this._currentDebugContext != null) {
-        throw new ViewWrappedException(e, stack, this._currentDebugContext);
+      if (_currentDebugContext != null) {
+        throw new ViewWrappedException(e, stack, _currentDebugContext);
       }
     }
   }

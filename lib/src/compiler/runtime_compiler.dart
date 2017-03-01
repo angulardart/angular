@@ -24,6 +24,7 @@ import "style_compiler.dart"
 import "template_ast.dart" show TemplateAst;
 import "template_parser.dart" show TemplateParser;
 import "view_compiler/view_compiler.dart" show ViewCompiler;
+import 'view_compiler/view_compiler_utils.dart' show getViewFactoryName;
 import "xhr.dart" show XHR;
 
 /// An internal module of the Angular compiler that begins with component types,
@@ -155,7 +156,7 @@ class RuntimeCompiler implements ComponentResolver {
       // proxyViewFactory that will forward calls correctly after
       // initialization.
       dep.factoryPlaceholder.runtime = childComp.proxyViewFactory;
-      dep.factoryPlaceholder.name = 'viewFactory_${dep.comp.type.name}';
+      dep.factoryPlaceholder.name = getViewFactoryName(dep.comp);
       if (!childIsRecursive) {
         // Only wait for a child if it is not a cycle
         childPromises.add(this._compiledTemplateDone[childCacheKey]);
@@ -224,8 +225,8 @@ class CompiledTemplate {
   NgViewFactory proxyViewFactory;
 
   CompiledTemplate() {
-    proxyViewFactory = (AppView parentView, int parentIndex, parentElement) =>
-        viewFactory(parentView, parentIndex, parentElement);
+    proxyViewFactory = (AppView parentView, int parentIndex) =>
+        viewFactory(parentView, parentIndex);
   }
   void init(NgViewFactory factory) {
     viewFactory = factory;

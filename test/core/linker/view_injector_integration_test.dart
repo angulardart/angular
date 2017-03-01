@@ -56,7 +56,7 @@ class SimpleDirective {
 }
 
 @Component(
-    selector: "[simpleComponent]", template: "", directives: ALL_DIRECTIVES)
+    selector: "simpleComponent", template: "", directives: ALL_DIRECTIVES)
 class SimpleComponent {}
 
 class SimpleService {}
@@ -126,7 +126,7 @@ class NeedsAppService {
 }
 
 @Component(
-    selector: "[needsHostAppService]", template: "", directives: ALL_DIRECTIVES)
+    selector: "needsHostAppService", template: "", directives: ALL_DIRECTIVES)
 class NeedsHostAppService {
   dynamic service;
   NeedsHostAppService(@Host() @Inject("appService") service) {
@@ -134,7 +134,7 @@ class NeedsHostAppService {
   }
 }
 
-@Component(selector: "[needsServiceComponent]", template: "")
+@Component(selector: "needsServiceComponent", template: "")
 class NeedsServiceComponent {
   dynamic service;
   NeedsServiceComponent(@Inject("service") service) {
@@ -212,7 +212,7 @@ class DirectiveNeedsChangeDetectorRef {
 }
 
 @Component(
-    selector: "[componentNeedsChangeDetectorRef]",
+    selector: "componentNeedsChangeDetectorRef",
     template: "{{counter}}",
     directives: ALL_DIRECTIVES,
     changeDetection: ChangeDetectionStrategy.OnPush)
@@ -365,7 +365,7 @@ void main() {
               useFactory: (val) => '''${ val}-injectable2''',
               deps: ["injectable1"])
         ];
-        var el = createComp("<div simpleComponent></div>",
+        var el = createComp("<simpleComponent></simpleComponent>",
             tcb.overrideViewProviders(SimpleComponent, viewProviders));
         expect(el.children[0].inject("injectable2"), "injectable1-injectable2");
       }));
@@ -373,7 +373,7 @@ void main() {
           "should instantiate components that depend on viewProviders providers",
           fakeAsync(() {
         var el = createComp(
-            "<div needsServiceComponent></div>",
+            "<needsServiceComponent></needsServiceComponent>",
             tcb.overrideViewProviders(NeedsServiceComponent,
                 [provide("service", useValue: "service")]));
         expect(el.children[0].inject(NeedsServiceComponent).service, "service");
@@ -401,7 +401,7 @@ void main() {
       test("should instantiate view providers lazily", fakeAsync(() {
         var created = false;
         var el = createComp(
-            "<div simpleComponent></div>",
+            "<simpleComponent></simpleComponent>",
             tcb.overrideViewProviders(SimpleComponent,
                 [provide("service", useFactory: () => created = true)]));
         expect(created, isFalse);
@@ -413,7 +413,7 @@ void main() {
           fakeAsync(() {
         expect(
             () => createComp(
-                "<div simpleComponent needsService></div>",
+                "<simpleComponent needsService></simpleComponent>",
                 tcb.overrideViewProviders(SimpleComponent,
                     [provide("service", useValue: "service")])),
             throwsWith('No provider for service!'));
@@ -442,7 +442,7 @@ void main() {
           "should instantiate directives that depend on providers of a component",
           fakeAsync(() {
         var el = createComp(
-            "<div simpleComponent></div>",
+            "<simpleComponent></simpleComponent>",
             tcb
                 .overrideTemplate(SimpleComponent, "<div needsService></div>")
                 .overrideProviders(SimpleComponent,
@@ -454,7 +454,7 @@ void main() {
           "should instantiate directives that depend on view providers of a component",
           fakeAsync(() {
         var el = createComp(
-            "<div simpleComponent></div>",
+            "<simpleComponent></simpleComponent>",
             tcb
                 .overrideTemplate(SimpleComponent, "<div needsService></div>")
                 .overrideViewProviders(SimpleComponent,
@@ -466,7 +466,7 @@ void main() {
           "should instantiate directives in a root embedded view that depend on view providers of a component",
           fakeAsync(() {
         var el = createComp(
-            "<div simpleComponent></div>",
+            "<simpleComponent></simpleComponent>",
             tcb
                 .overrideTemplate(
                     SimpleComponent, "<div *ngIf=\"true\" needsService></div>")
@@ -494,11 +494,11 @@ void main() {
               " of the component", fakeAsync(() {
         expect(
             () => createComp(
-                "<div simpleComponent></div>",
+                "<simpleComponent></simpleComponent>",
                 tcb.overrideProviders(SimpleComponent, [
                   provide("service", useValue: "hostService")
                 ]).overrideTemplate(
-                    SimpleComponent, "<div needsServiceFromHost><div>")),
+                    SimpleComponent, "<div needsServiceFromHost></div>")),
             throwsWith('Template parse errors:\n'
                 'line 1, column 1 of SimpleComponent: ParseErrorLevel.FATAL: No provider for service\n'
                 '<div needsServiceFromHost>\n'));
@@ -508,11 +508,11 @@ void main() {
               " of a decorator directive", fakeAsync(() {
         expect(
             () => createComp(
-                "<div simpleComponent someOtherDirective></div>",
+                "<simpleComponent someOtherDirective></simpleComponent>",
                 tcb.overrideProviders(SomeOtherDirective, [
                   provide("service", useValue: "hostService")
                 ]).overrideTemplate(
-                    SimpleComponent, "<div needsServiceFromHost><div>")),
+                    SimpleComponent, "<div needsServiceFromHost></div>")),
             throwsWith('Template parse errors:\n'
                 'line 1, column 1 of SimpleComponent: ParseErrorLevel.FATAL: No provider for service\n'
                 '<div needsServiceFromHost>\n'));
@@ -549,7 +549,7 @@ void main() {
       test("should instantiate directives that depends on the host component",
           fakeAsync(() {
         var el = createComp(
-            "<div simpleComponent></div>",
+            "<simpleComponent></simpleComponent>",
             tcb.overrideTemplate(
                 SimpleComponent, "<div needsComponentFromHost></div>"));
         var d = el.children[0].children[0].inject(NeedsComponentFromHost);
@@ -566,7 +566,7 @@ void main() {
           fakeAsync(() {
         expect(
             () => createComp(
-                "<div simpleComponent simpleDirective></div>",
+                "<simpleComponent simpleDirective></simpleComponent>",
                 tcb.overrideTemplate(
                     SimpleComponent, "<div needsDirectiveFromHost></div>")),
             throwsWith('Template parse errors:\n'
@@ -601,7 +601,8 @@ void main() {
           "should inject ChangeDetectorRef of the component's view into the component via a proxy",
           fakeAsync(() {
         var cf = createCompFixture(
-            "<div componentNeedsChangeDetectorRef></div>", tcb);
+            "<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>",
+            tcb);
         cf.detectChanges();
         var compEl = cf.debugElement.children[0];
         var comp = compEl.inject(PushComponentNeedsChangeDetectorRef);
@@ -616,7 +617,7 @@ void main() {
           "should inject ChangeDetectorRef of the containing component into directives",
           fakeAsync(() {
         var cf = createCompFixture(
-            "<div componentNeedsChangeDetectorRef></div>",
+            "<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>",
             tcb.overrideTemplate(PushComponentNeedsChangeDetectorRef,
                 "{{counter}}<div directiveNeedsChangeDetectorRef></div>"));
         cf.detectChanges();

@@ -91,7 +91,7 @@ class ComponentFactory {
   ComponentRef create(Injector injector, [List<List> projectableNodes]) {
     projectableNodes ??= [];
     // Note: Host views don't need a declarationViewContainer!
-    AppView hostView = _viewFactory(null, null, null);
+    AppView hostView = _viewFactory(null, null);
     return hostView.createHostView(null, injector, projectableNodes);
   }
 }
@@ -109,5 +109,4 @@ class ComponentFactory {
 ///     const ComponentFactory('material-fab',
 ///         viewFactory_MaterialFabComponentHost0,
 ///         import5.MaterialFabComponent,_METADATA);
-typedef AppView NgViewFactory(
-    AppView parentView, int parentIndex, Node parentElement);
+typedef AppView NgViewFactory(AppView parentView, int parentIndex);

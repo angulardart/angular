@@ -1,52 +1,58 @@
+@Tags(const ['codegen'])
 @TestOn('browser && !js')
 library angular2.test.core.directive_lifecycle_integration_test;
 
-import "package:angular2/core.dart"
-    show
-        OnChanges,
-        OnInit,
-        DoCheck,
-        AfterContentInit,
-        AfterContentChecked,
-        AfterViewInit,
-        AfterViewChecked;
-import "package:angular2/src/core/metadata.dart"
-    show Directive, Component, View;
-import "package:angular2/testing_internal.dart";
+import 'package:angular2/angular2.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
   group("directive lifecycle integration spec", () {
+    Log log;
+    var fixture;
+
+    setUp(() async {
+      log = new Log();
+
+      var testBed = new NgTestBed<MyComp>();
+      testBed = testBed.addProviders([new Provider(Log, useValue: log)]);
+      fixture = await testBed.create();
+    });
+
     test(
         'should invoke lifecycle methods ngOnChanges > '
         'ngOnInit > ngDoCheck > ngAfterContentChecked', () async {
-      return inject([TestComponentBuilder, Log, AsyncTestCompleter],
-          (TestComponentBuilder tcb, Log log, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MyComp,
-                new View(
-                    template: "<div [field]=\"123\" lifecycle></div>",
-                    directives: [LifecycleCmp]))
-            .createAsync(MyComp)
-            .then((tc) {
-          tc.detectChanges();
-          expect(
-              log.result(),
+      String startUp = log.toString();
+      expect(
+          startUp.startsWith(
               'ngOnChanges; ngOnInit; ngDoCheck; ngAfterContentInit; '
               'ngAfterContentChecked; child_ngDoCheck; '
-              'ngAfterViewInit; ngAfterViewChecked');
-          log.clear();
-          tc.detectChanges();
-          expect(
-              log.result(),
-              'ngDoCheck; ngAfterContentChecked; child_ngDoCheck; '
-              'ngAfterViewChecked');
-          completer.done();
-        });
-      });
+              'ngAfterViewInit; ngAfterViewChecked'),
+          isTrue);
+      log.clear();
+      await fixture.update((MyComp _) {});
+      expect(
+          log.toString(),
+          'ngDoCheck; ngAfterContentChecked; child_ngDoCheck; '
+          'ngAfterViewChecked');
     });
   });
+}
+
+@Injectable()
+class Log {
+  final List logItems = new List();
+
+  void add(value) {
+    logItems.add(value);
+  }
+
+  void clear() {
+    logItems.clear();
+  }
+
+  @override
+  String toString() => logItems.join('; ');
 }
 
 @Directive(selector: "[lifecycle-dir]")
@@ -54,14 +60,14 @@ class LifecycleDir implements DoCheck {
   Log _log;
   LifecycleDir(this._log);
   ngDoCheck() {
-    this._log.add("child_ngDoCheck");
+    _log.add("child_ngDoCheck");
   }
 }
 
 @Component(
-    selector: "[lifecycle]",
+    selector: "lifecycle",
     inputs: const ["field"],
-    template: '''<div lifecycle-dir></div>''',
+    template: '<div lifecycle-dir></div>',
     directives: const [LifecycleDir])
 class LifecycleCmp
     implements
@@ -74,35 +80,40 @@ class LifecycleCmp
         AfterViewChecked {
   Log _log;
   var field;
+
   LifecycleCmp(this._log);
+
   ngOnChanges(_) {
-    this._log.add("ngOnChanges");
+    _log.add("ngOnChanges");
   }
 
   ngOnInit() {
-    this._log.add("ngOnInit");
+    _log.add("ngOnInit");
   }
 
   ngDoCheck() {
-    this._log.add("ngDoCheck");
+    _log.add("ngDoCheck");
   }
 
   ngAfterContentInit() {
-    this._log.add("ngAfterContentInit");
+    _log.add("ngAfterContentInit");
   }
 
   ngAfterContentChecked() {
-    this._log.add("ngAfterContentChecked");
+    _log.add("ngAfterContentChecked");
   }
 
   ngAfterViewInit() {
-    this._log.add("ngAfterViewInit");
+    _log.add("ngAfterViewInit");
   }
 
   ngAfterViewChecked() {
-    this._log.add("ngAfterViewChecked");
+    _log.add("ngAfterViewChecked");
   }
 }
 
-@Component(selector: "my-comp", directives: const [])
+@Component(
+    selector: "my-comp",
+    template: '<lifecycle [field]="123"></lifecycle>',
+    directives: const [LifecycleCmp])
 class MyComp {}

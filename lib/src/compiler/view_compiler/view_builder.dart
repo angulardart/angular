@@ -56,6 +56,7 @@ const STYLE_ATTR = "style";
 var parentRenderNodeVar = o.variable("parentRenderNode");
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
+const String appViewRootElementName = 'rootEl';
 
 /// Component dependency and associated identifier.
 class ViewCompileDependency {
@@ -237,54 +238,93 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   dynamic visitElement(ElementAst ast, dynamic context) {
     CompileElement parent = context;
     var nodeIndex = view.nodes.length;
-    var fieldName = '_el_${nodeIndex}';
+
+    bool isRootHostElement = nodeIndex == 0 && view.viewType == ViewType.HOST;
+    var fieldName =
+        isRootHostElement ? appViewRootElementName : '_el_${nodeIndex}';
+
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
     var elementType = isHostRootView
         ? Identifiers.HTML_HTML_ELEMENT
         : identifierFromTagName(ast.name);
-    view.fields.add(new o.ClassField(fieldName,
-        outputType: o.importType(elementType),
-        modifiers: const [o.StmtModifier.Private]));
 
-    var debugContextExpr = view.createMethod.resetDebugInfoExpr(nodeIndex, ast);
+    if (!isRootHostElement) {
+      view.fields.add(new o.ClassField(fieldName,
+          outputType: o.importType(elementType),
+          modifiers: const [o.StmtModifier.Private]));
+    }
+
+    var directives = <CompileDirectiveMetadata>[];
+    for (var dir in ast.directives) directives.add(dir.directive);
+    CompileDirectiveMetadata component = componentFromDirectives(directives);
+
+    o.Expression compViewExpr;
+    if (component != null) {
+      CompileIdentifierMetadata nestedComponentIdentifier =
+          new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));
+      targetDependencies
+          .add(new ViewCompileDependency(component, nestedComponentIdentifier));
+      String compViewName = '_compView_${nodeIndex}';
+      compViewExpr = new o.ReadClassMemberExpr(compViewName);
+      view.fields.add(new o.ClassField(compViewName,
+          outputType: o.importType(
+              Identifiers.AppView, [o.importType(component.type)])));
+      view.createMethod.addStmt(new o.WriteClassMemberExpr(
+          compViewName,
+          o
+              .importExpr(nestedComponentIdentifier)
+              .callFn([o.THIS_EXPR, o.literal(nodeIndex)])).toStmt());
+    }
 
     var createRenderNodeExpr;
     o.Expression tagNameExpr = o.literal(ast.name);
     bool isHtmlElement;
     if (isHostRootView) {
-      createRenderNodeExpr = new o.InvokeMemberMethodExpr(
-          'selectOrCreateHostElement',
-          [tagNameExpr, rootSelectorVar, debugContextExpr]);
-      view.createMethod.addStmt(
-          new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr).toStmt());
+      // Assign root element created by viewfactory call to our own root.
+      view.createMethod.addStmt(new o.WriteClassMemberExpr(
+              fieldName, compViewExpr.prop(appViewRootElementName))
+          .toStmt());
+      if (view.genConfig.genDebugInfo) {
+        view.createMethod.addStmt(createDbgIndexElementCall(
+            new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
+      }
       isHtmlElement = false;
     } else {
       isHtmlElement = detectHtmlElementFromTagName(ast.name);
       var parentRenderNodeExpr = _getParentRenderNode(parent);
-      // Create element or elementNS. AST encodes svg path element as @svg:path.
-      if (ast.name.startsWith('@') && ast.name.contains(':')) {
-        var nameParts = ast.name.substring(1).split(':');
-        String ns = NAMESPACE_URIS[nameParts[0]];
-        createRenderNodeExpr = o
-            .importExpr(Identifiers.HTML_DOCUMENT)
-            .callMethod(
-                'createElementNS', [o.literal(ns), o.literal(nameParts[1])]);
-      } else {
-        // No namespace just call [document.createElement].
-        if (docVarName == null) {
-          view.createMethod.addStmt(_createLocalDocumentVar());
+
+      if (component == null) {
+        // Create element or elementNS. AST encodes svg path element as @svg:path.
+        if (ast.name.startsWith('@') && ast.name.contains(':')) {
+          var nameParts = ast.name.substring(1).split(':');
+          String ns = NAMESPACE_URIS[nameParts[0]];
+          createRenderNodeExpr = o
+              .importExpr(Identifiers.HTML_DOCUMENT)
+              .callMethod(
+                  'createElementNS', [o.literal(ns), o.literal(nameParts[1])]);
+        } else {
+          // No namespace just call [document.createElement].
+          if (docVarName == null) {
+            view.createMethod.addStmt(_createLocalDocumentVar());
+          }
+          createRenderNodeExpr = new o.ReadVarExpr(docVarName)
+              .callMethod('createElement', [tagNameExpr]);
         }
-        createRenderNodeExpr = new o.ReadVarExpr(docVarName)
-            .callMethod('createElement', [tagNameExpr]);
+        view.createMethod.addStmt(
+            new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr)
+                .toStmt());
+      } else {
+        view.createMethod.addStmt(new o.WriteClassMemberExpr(
+                fieldName, compViewExpr.prop(appViewRootElementName))
+            .toStmt());
       }
-      view.createMethod.addStmt(
-          new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr).toStmt());
 
       if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
         // Write append code.
         view.createMethod.addStmt(parentRenderNodeExpr.callMethod(
             'append', [new o.ReadClassMemberExpr(fieldName)]).toStmt());
       }
+
       if (view.genConfig.genDebugInfo) {
         view.createMethod.addStmt(createDbgElementCall(
             new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
@@ -293,9 +333,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     var renderNode = new o.ReadClassMemberExpr(fieldName);
 
-    var directives = <CompileDirectiveMetadata>[];
-    for (var dir in ast.directives) directives.add(dir.directive);
-    CompileDirectiveMetadata component = componentFromDirectives(directives);
     var htmlAttrs = _attribListToMap(ast.attrs);
 
     // Create statements to initialize literal attribute values.
@@ -333,32 +370,16 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         isHtmlElement: isHtmlElement,
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
     view.nodes.add(compileElement);
-    o.Expression compViewExpr;
+
     if (component != null) {
-      var nestedComponentIdentifier =
-          new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));
-      this
-          .targetDependencies
-          .add(new ViewCompileDependency(component, nestedComponentIdentifier));
-      String compViewName = '_compView_${nodeIndex}';
-      compViewExpr = new o.ReadClassMemberExpr(compViewName);
-      view.fields.add(new o.ClassField(compViewName,
-          outputType: o.importType(
-              Identifiers.AppView, [o.importType(component.type)])));
       compileElement.componentView = compViewExpr;
       view.viewChildren.add(compViewExpr);
-      view.createMethod.addStmt(new o.WriteClassMemberExpr(
-              compViewName,
-              o
-                  .importExpr(nestedComponentIdentifier)
-                  .callFn([o.THIS_EXPR, o.literal(nodeIndex), renderNode]))
-          .toStmt());
     }
 
     compileElement.beforeChildren();
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
-    compileElement.afterChildren(this.view.nodes.length - nodeIndex - 1);
+    compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
 
     if (compViewExpr != null) {
       o.Expression codeGenContentNodes;
@@ -452,6 +473,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),
       sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.column)
     ]).toStmt();
+  }
+
+  o.Statement createDbgIndexElementCall(
+      o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
+    return new o.InvokeMemberMethodExpr(
+        'dbgIdx', [nodeExpr, o.literal(nodeIndex)]).toStmt();
   }
 
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
@@ -717,8 +744,7 @@ o.ClassMethod _createViewClassConstructor(
   var viewConstructorArgs = [
     new o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-    new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE),
-    new o.FnParam(ViewConstructorVars.parentElement.name, o.DYNAMIC_TYPE)
+    new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE)
   ];
   var superConstructorArgs = [
     o.variable(view.className),
@@ -726,14 +752,37 @@ o.ClassMethod _createViewClassConstructor(
     o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,
     ViewConstructorVars.parentIndex,
-    ViewConstructorVars.parentElement,
     ChangeDetectionStrategyEnum.fromValue(getChangeDetectionMode(view))
   ];
   if (view.genConfig.genDebugInfo) {
     superConstructorArgs.add(nodeDebugInfosVar);
   }
-  return new o.ClassMethod(null, viewConstructorArgs,
+  o.ClassMethod ctor = new o.ClassMethod(null, viewConstructorArgs,
       [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
+  if (view.viewType == ViewType.COMPONENT && view.viewIndex == 0) {
+    // No namespace just call [document.createElement].
+    var createRootElementExpr = o
+        .importExpr(Identifiers.HTML_DOCUMENT)
+        .callMethod('createElement', [
+      o.literal(_tagNameFromComponentSelector(view.component.selector))
+    ]);
+    ctor.body.add(new o.WriteClassMemberExpr(
+            appViewRootElementName, createRootElementExpr)
+        .toStmt());
+  }
+  return ctor;
+}
+
+String _tagNameFromComponentSelector(String selector) {
+  int pos = selector.indexOf(':');
+  if (pos != -1) selector = selector.substring(0, pos);
+  pos = selector.indexOf('[');
+  if (pos != -1) selector = selector.substring(0, pos);
+  pos = selector.indexOf('(');
+  if (pos != -1) selector = selector.substring(0, pos);
+  // Some users have invalid space before selector in @Component, trim so
+  // that document.createElement call doesn't fail.
+  return selector.trim();
 }
 
 void _addRenderTypeCtorInitialization(CompileView view, o.ClassStmt viewClass) {
@@ -815,7 +864,6 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
     new o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
     new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE),
-    new o.FnParam(ViewConstructorVars.parentElement.name, o.DYNAMIC_TYPE)
   ];
   var initRenderCompTypeStmts = [];
   var factoryReturnType;
@@ -846,15 +894,16 @@ List<o.Statement> generateCreateMethod(CompileView view) {
   if (isComponent) {
     if (view.component.template.encapsulation == ViewEncapsulation.Native) {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
-          "createViewShadowRoot", [new o.ReadClassMemberExpr('parentElement')]);
+          "createViewShadowRoot",
+          [new o.ReadClassMemberExpr(appViewRootElementName)]);
     } else {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
-          "initViewRoot", [new o.ReadClassMemberExpr('parentElement')]);
+          "initViewRoot", [new o.ReadClassMemberExpr(appViewRootElementName)]);
     }
-    parentRenderNodeStmts = [
-      parentRenderNodeVar.set(parentRenderNodeExpr).toDeclStmt(
-          o.importType(Identifiers.HTML_NODE), [o.StmtModifier.Final])
-    ];
+    parentRenderNodeStmts.add(parentRenderNodeVar
+        .set(parentRenderNodeExpr)
+        .toDeclStmt(o.importType(Identifiers.HTML_HTML_ELEMENT),
+            [o.StmtModifier.Final]));
   }
 
   var statements = <o.Statement>[];

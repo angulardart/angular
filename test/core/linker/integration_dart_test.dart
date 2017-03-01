@@ -12,26 +12,6 @@ import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Error handling', () {
-    tearDown(() => disposeAnyRunningTest());
-    test('should preserve Error stack traces thrown from components', () async {
-      var testBed = new NgTestBed<ContainerWithThrowingComponent>();
-      await testBed.create().catchError((e) {
-        expect(e.toString(), contains("MockException"));
-        expect(e.toString(), contains("functionThatThrows"));
-      });
-    });
-
-    test('should preserve non-Error stack traces thrown from components',
-        () async {
-      var testBed = new NgTestBed<ContainerWithThrowingComponent2>();
-      await testBed.create().catchError((e, stack) {
-        expect(e.toString(), contains("NonError"));
-        expect(e.toString(), contains("functionThatThrows"));
-      });
-    });
-  });
-
   group('Property access', () {
     test('should distinguish between map and property access', () async {
       var testBed = new NgTestBed<ContainerWithPropertyAccess>();
@@ -92,61 +72,6 @@ class MockException implements Error {
 
 class NonError {
   var message;
-}
-
-void functionThatThrows() {
-  try {
-    throw new MockException();
-  } catch (e, stack) {
-    // If we lose the stack trace the message will no longer match
-    // the first line in the stack
-    e.message = stack.toString().split('\n')[0];
-    e.stackTrace = stack;
-    rethrow;
-  }
-}
-
-void functionThatThrowsNonError() {
-  try {
-    throw new NonError();
-  } catch (e, stack) {
-    // If we lose the stack trace the message will no longer match
-    // the first line in the stack
-    e.message = stack.toString().split('\n')[0];
-    rethrow;
-  }
-}
-
-@Component(selector: 'throwing-component')
-@View(template: '')
-class ThrowingComponent {
-  ThrowingComponent() {
-    functionThatThrows();
-  }
-}
-
-@Component(selector: 'throwing-component2')
-@View(template: '')
-class ThrowingComponent2 {
-  ThrowingComponent2() {
-    functionThatThrowsNonError();
-  }
-}
-
-@Component(
-    selector: 'container-with-throwing',
-    template: '<throwing-component></throwing-component>',
-    directives: const [ThrowingComponent])
-class ContainerWithThrowingComponent {
-  dynamic value;
-}
-
-@Component(
-    selector: 'container-with-throwing2',
-    template: '<throwing-component></throwing-component>',
-    directives: const [ThrowingComponent2])
-class ContainerWithThrowingComponent2 {
-  dynamic value;
 }
 
 @Component(

@@ -38,17 +38,16 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   Text _text_0;
   var _expr_0;
   static RenderComponentType renderType;
-  ViewHasOpaqueTokens0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
       : super(
             ViewHasOpaqueTokens0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
-            parentElement,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasOpaqueTokens0) {
+    rootEl = document.createElement('has-opaque-tokens');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/opaque_token.dart class HasOpaqueTokens - inline template',
         ViewEncapsulation.None,
@@ -56,7 +55,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
-    final Node parentRenderNode = initViewRoot(parentElement);
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
     dbgElm(_text_0, 0, 0, 0);
@@ -75,8 +74,8 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
 }
 
 AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewHasOpaqueTokens0(parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasOpaqueTokens0(parentView, parentIndex);
 }
 
 const List<dynamic> styles_HasOpaqueTokensHost = const [];
@@ -88,20 +87,17 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = const [
 ];
 
 class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
-  HtmlElement _el_0;
   AppView<import2.HasOpaqueTokens> _compView_0;
   dynamic _const_OpaqueToken__baseUrlDescription___0_2;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
-  ViewHasOpaqueTokensHost0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             ViewHasOpaqueTokensHost0,
             import6.ViewType.HOST,
             {},
             parentView,
             parentIndex,
-            parentElement,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasOpaqueTokensHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
@@ -109,15 +105,15 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
-    _el_0 = selectOrCreateHostElement(
-        'has-opaque-tokens', rootSelector, dbg(0, 0, 0));
-    _compView_0 = viewFactory_HasOpaqueTokens0(this, 0, _el_0);
+    _compView_0 = viewFactory_HasOpaqueTokens0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
     _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
     _HasOpaqueTokens_0_3 = new import2.HasOpaqueTokens(
         _const_OpaqueToken__baseUrlDescription___0_2);
     _compView_0.create(_HasOpaqueTokens_0_3, projectableNodes, null);
-    init([_el_0], [_el_0], []);
-    return new ComponentRef(0, this, _el_0, _HasOpaqueTokens_0_3);
+    init([rootEl], [rootEl], []);
+    return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_3);
   }
 
   dynamic injectorGetInternal(
@@ -143,8 +139,8 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
 }
 
 AppView viewFactory_HasOpaqueTokensHost0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewHasOpaqueTokensHost0(parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
 const ComponentFactory HasOpaqueTokensNgFactory = const ComponentFactory(

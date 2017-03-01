@@ -82,9 +82,11 @@ o.Expression injectFromViewParentInjector(
   return viewExpr.callMethod('injectorGet', args);
 }
 
-String getViewFactoryName(
-    CompileDirectiveMetadata component, int embeddedTemplateIndex) {
-  return '''viewFactory_${component.type.name}${embeddedTemplateIndex}''';
+String getViewFactoryName(CompileDirectiveMetadata component,
+    [int embeddedTemplateIndex]) {
+  String indexPostFix =
+      embeddedTemplateIndex == null ? '' : embeddedTemplateIndex.toString();
+  return 'viewFactory_${component.type.name}$indexPostFix';
 }
 
 o.Expression createDiTokenExpression(CompileTokenMetadata token) {

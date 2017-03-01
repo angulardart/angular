@@ -1,5 +1,4 @@
 import "package:angular2/src/core/di.dart" show Injector;
-import "package:angular2/src/core/linker/view_type.dart";
 import "package:angular2/src/core/render/api.dart" show RenderDebugInfo;
 import "package:angular2/src/debug/debug_app_view.dart";
 
@@ -36,22 +35,13 @@ class DebugContext<T> implements RenderDebugInfo {
     return null;
   }
 
-  dynamic get componentRenderElement {
-    AppView componentView = _view;
-    while (componentView.parentView != null &&
-        !identical(componentView.type, ViewType.COMPONENT)) {
-      componentView = componentView.parentView;
-    }
-    return componentView.parentElement;
-  }
-
   Injector get injector => _view.injector(this._nodeIndex);
 
   dynamic get renderNode {
     if (_nodeIndex != null && _view.allNodes != null) {
       return _view.allNodes[this._nodeIndex];
     }
-    return null;
+    return _view.rootEl;
   }
 
   List<dynamic> get providerTokens {

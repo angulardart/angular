@@ -20,7 +20,7 @@ import 'view_type.dart' show ViewType;
 export 'package:angular2/src/core/change_detection/component_state.dart';
 
 const _UndefinedInjectorResult = const Object();
-
+const String appViewRootElementName = 'rootEl';
 bool domRootRendererIsDirty = false;
 
 /// Cost of making objects: http://jsperf.com/instantiate-size-of-object
@@ -31,7 +31,7 @@ abstract class AppView<T> {
   Map<String, dynamic> locals;
   final AppView parentView;
   final int parentIndex;
-  final Node parentElement;
+  Element rootEl;
 
   ChangeDetectionStrategy _cdMode;
   // Improves change detection tree traversal by caching change detection mode
@@ -60,7 +60,7 @@ abstract class AppView<T> {
   Injector _hostInjector;
 
   AppView(this.clazz, this.type, this.locals, this.parentView, this.parentIndex,
-      this.parentElement, this._cdMode) {
+      this._cdMode) {
     ref = new ViewRefImpl(this);
   }
 
@@ -152,44 +152,6 @@ abstract class AppView<T> {
     }
   }
 
-  HtmlElement selectOrCreateHostElement(String elementName,
-      dynamic /* String | Node */ rootSelectorOrNode, debugCtx) {
-    HtmlElement hostElement;
-    if (type == ViewType.COMPONENT || type == ViewType.HOST) {
-      if (rootSelectorOrNode != null) {
-        hostElement = selectRootElement(rootSelectorOrNode, debugCtx);
-      } else {
-        hostElement = createElement(null, elementName, debugCtx);
-      }
-    } else {
-      if (rootSelectorOrNode != null) {
-        hostElement =
-            parentView.selectRootElement(rootSelectorOrNode, debugCtx);
-      } else {
-        hostElement = parentView.createElement(null, elementName, debugCtx);
-      }
-    }
-    return hostElement;
-  }
-
-  HtmlElement selectRootElement(
-      dynamic /* String | Node */ selectorOrNode, RenderDebugInfo debugInfo) {
-    Node el;
-    if (selectorOrNode is String) {
-      el = querySelector(selectorOrNode);
-      if (el == null) {
-        throw new Exception(
-            'The selector "${selectorOrNode}" did not match any elements');
-      }
-    } else {
-      el = selectorOrNode;
-    }
-    if (el.hasChildNodes()) {
-      el.nodes.clear();
-    }
-    return el;
-  }
-
   dynamic createElement(
       dynamic parent, String name, RenderDebugInfo debugInfo) {
     var nsAndName = splitNamespace(name);
@@ -262,7 +224,7 @@ abstract class AppView<T> {
     }
     destroyed = true;
 
-    var hostElement = type == ViewType.COMPONENT ? parentElement : null;
+    var hostElement = type == ViewType.COMPONENT ? rootEl : null;
     for (int i = 0, len = _onDestroyCallbacks.length; i < len; i++) {
       _onDestroyCallbacks[i]();
     }
@@ -381,7 +343,7 @@ abstract class AppView<T> {
   }
 
   /// Initializes styling to enable css shim for host element.
-  Element initViewRoot(dynamic hostElement) {
+  HtmlElement initViewRoot(dynamic hostElement) {
     assert(componentType.encapsulation != ViewEncapsulation.Native);
     if (componentType.hostAttr != null) {
       Element host = hostElement;
@@ -502,14 +464,14 @@ abstract class AppView<T> {
 
   dynamic eventHandler0(handler) {
     return (_) {
-      this.markPathToRootAsCheckOnce();
+      markPathToRootAsCheckOnce();
       return !identical(handler() as dynamic, false);
     };
   }
 
   dynamic eventHandler1(handler) {
     return (event) {
-      this.markPathToRootAsCheckOnce();
+      markPathToRootAsCheckOnce();
       return !identical(handler(event) as dynamic, false);
     };
   }

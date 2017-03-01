@@ -64,16 +64,16 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   Element _el_23;
   import1.AnotherDirective _AnotherDirective_23_2;
   static RenderComponentType renderType;
-  ViewQueriesComponent0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(ViewQueriesComponent0, import5.ViewType.COMPONENT, {}, parentView,
-            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = document.createElement('queries');
     renderType ??= import7.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_QueriesComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
-    final Node parentRenderNode = initViewRoot(parentElement);
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _viewQuery_q8_0 = new import2.QueryList();
     _viewQuery_q10_1 = new import2.QueryList();
     _viewQuery_q12_2 = new import2.QueryList();
@@ -262,14 +262,13 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
 }
 
 AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewQueriesComponent0(parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewQueriesComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles_QueriesComponentHost = const [];
 
 class ViewQueriesComponentHost0 extends AppView<dynamic> {
-  HtmlElement _el_0;
   AppView<import1.QueriesComponent> _compView_0;
   import1.QueriesComponent _QueriesComponent_0_2;
   import2.QueryList _query_q7_0_0;
@@ -282,17 +281,16 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
   import2.QueryList _query_q5_0_7;
   import2.QueryList _query_q6_0_8;
   static RenderComponentType renderType;
-  ViewQueriesComponentHost0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(ViewQueriesComponentHost0, import5.ViewType.HOST, {}, parentView,
-            parentIndex, parentElement, ChangeDetectionStrategy.CheckAlways) {
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_QueriesComponentHost);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
-    _el_0 = selectOrCreateHostElement('queries', rootSelector, null);
-    _compView_0 = viewFactory_QueriesComponent0(this, 0, _el_0);
+    _compView_0 = viewFactory_QueriesComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
     _QueriesComponent_0_2 = new import1.QueriesComponent();
     _query_q7_0_0 = new import2.QueryList();
     _query_q9_0_1 = new import2.QueryList();
@@ -310,8 +308,8 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
     _query_q6_0_8.reset([]);
     _QueriesComponent_0_2.viewChildFromAnnotation = _query_q6_0_8.first;
     _compView_0.create(_QueriesComponent_0_2, projectableNodes, null);
-    init([_el_0], [_el_0], []);
-    return new ComponentRef(0, this, _el_0, _QueriesComponent_0_2);
+    init([rootEl], [rootEl], []);
+    return new ComponentRef(0, this, rootEl, _QueriesComponent_0_2);
   }
 
   dynamic injectorGetInternal(
@@ -363,8 +361,8 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
 }
 
 AppView viewFactory_QueriesComponentHost0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewQueriesComponentHost0(parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewQueriesComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory QueriesComponentNgFactory = const ComponentFactory(

@@ -27,9 +27,9 @@ import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/view_type.dart' as import5;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
-import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
-import 'package:angular2/angular2.dart';
 import 'dart:html';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/zone/ng_zone.dart' as import10;
 
 const List<dynamic> styles_ProvidersComponent = const [];
@@ -39,25 +39,24 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = const [
 
 class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
   static RenderComponentType renderType;
-  ViewProvidersComponent0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             ViewProvidersComponent0,
             import5.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
-            parentElement,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProvidersComponent0) {
-    renderType ??= import7.appViewUtils.createRenderType(
+    rootEl = document.createElement('providers');
+    renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/providers.dart class ProvidersComponent - inline template',
         ViewEncapsulation.None,
         styles_ProvidersComponent);
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
-    final Node parentRenderNode = initViewRoot(parentElement);
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('Hello');
     parentRenderNode.append(_text_0);
     dbgElm(_text_0, 0, 0, 0);
@@ -67,8 +66,8 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
 }
 
 AppView<import2.ProvidersComponent> viewFactory_ProvidersComponent0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewProvidersComponent0(parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewProvidersComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles_ProvidersComponentHost = const [];
@@ -89,7 +88,6 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
 ];
 
 class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
-  HtmlElement _el_0;
   AppView<import2.ProvidersComponent> _compView_0;
   import2.ProvidersComponent _ProvidersComponent_0_2;
   import2.MyTypeAnnotation __MyTypeAnnotation_0_3;
@@ -100,18 +98,16 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   dynamic __const_OpaqueToken__useValueString___0_8;
   List<dynamic> __MyMulti_0_9;
   static RenderComponentType renderType;
-  ViewProvidersComponentHost0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             ViewProvidersComponentHost0,
             import5.ViewType.HOST,
             {},
             parentView,
             parentIndex,
-            parentElement,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProvidersComponentHost0) {
-    renderType ??= import7.appViewUtils.createRenderType(
+    renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);
   }
@@ -173,12 +169,13 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
-    _el_0 = selectOrCreateHostElement('providers', rootSelector, dbg(0, 0, 0));
-    _compView_0 = viewFactory_ProvidersComponent0(this, 0, _el_0);
+    _compView_0 = viewFactory_ProvidersComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
     _ProvidersComponent_0_2 = new import2.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_2, projectableNodes, null);
-    init([_el_0], [_el_0], []);
-    return new ComponentRef(0, this, _el_0, _ProvidersComponent_0_2);
+    init([rootEl], [rootEl], []);
+    return new ComponentRef(0, this, rootEl, _ProvidersComponent_0_2);
   }
 
   dynamic injectorGetInternal(
@@ -223,9 +220,8 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
 }
 
 AppView viewFactory_ProvidersComponentHost0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewProvidersComponentHost0(
-      parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewProvidersComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory ProvidersComponentNgFactory = const ComponentFactory(

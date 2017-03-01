@@ -1,6 +1,6 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.common.directives.if_test;
+library angular2.test.core.debug.debug_node_test;
 
 import 'dart:html';
 
@@ -172,6 +172,14 @@ void main() {
           .dispatchEvent(new Event('myevent'));
       expect(debugElement.componentInstance.customed, isTrue);
     });
+
+    test("should list all child nodes even with malformed selector", () async {
+      var testBed = new NgTestBed<ParentCompWithBadSelector>();
+      var fixture = await testBed.create();
+      // The root component has 3 elements.
+      DebugElement debugElement = getDebugNode(fixture.rootElement);
+      expect(debugElement.childNodes.length, 3);
+    });
   });
 }
 
@@ -329,4 +337,18 @@ class EventsComp {
   void handleCustom() {
     customed = true;
   }
+}
+
+@Component(
+    selector: "    parent-comp-bad-selector",
+    viewProviders: const [ParentCompProvider],
+    template: '''
+        <div class="parent1" message="parent">
+          <span class="parentnested" message="nestedparent">Parent</span>
+        </div>
+        <span class="parent2" [innerHtml]="parentBinding"></span>
+        <child-comp class="child-comp-class"></child-comp>''',
+    directives: const [ChildComp, MessageDir])
+class ParentCompWithBadSelector {
+  final String parentBinding = "OriginalParent";
 }

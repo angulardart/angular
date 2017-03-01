@@ -42,17 +42,16 @@ class ViewInjectableComponent0
     extends DebugAppView<import2.InjectableComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
-  ViewInjectableComponent0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewInjectableComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             ViewInjectableComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
-            parentElement,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_InjectableComponent0) {
+    rootEl = document.createElement('test-injectables');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/injectables.dart class InjectableComponent - inline template',
         ViewEncapsulation.None,
@@ -60,7 +59,7 @@ class ViewInjectableComponent0
     setupComponentType(renderType);
   }
   ComponentRef createInternal(dynamic rootSelector) {
-    final Node parentRenderNode = initViewRoot(parentElement);
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
@@ -74,8 +73,8 @@ class ViewInjectableComponent0
 }
 
 AppView<import2.InjectableComponent> viewFactory_InjectableComponent0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewInjectableComponent0(parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewInjectableComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles_InjectableComponentHost = const [];
@@ -93,22 +92,19 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 =
 ];
 
 class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
-  HtmlElement _el_0;
   AppView<import2.InjectableComponent> _compView_0;
   dynamic _const_OpaqueToken__test___0_2;
   import2.InjectableComponent _InjectableComponent_0_3;
   dynamic __SomeDep_0_4;
   dynamic __BaseService_0_5;
   static RenderComponentType renderType;
-  ViewInjectableComponentHost0(
-      AppView<dynamic> parentView, num parentIndex, dynamic parentElement)
+  ViewInjectableComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             ViewInjectableComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
             parentIndex,
-            parentElement,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_InjectableComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
@@ -136,9 +132,9 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   }
 
   ComponentRef createInternal(dynamic rootSelector) {
-    _el_0 = selectOrCreateHostElement(
-        'test-injectables', rootSelector, dbg(0, 0, 0));
-    _compView_0 = viewFactory_InjectableComponent0(this, 0, _el_0);
+    _compView_0 = viewFactory_InjectableComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
     _const_OpaqueToken__test___0_2 =
         import2.injectableFactory(this.injectorGet(Window, parentIndex));
     _InjectableComponent_0_3 = new import2.InjectableComponent(
@@ -146,8 +142,8 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
         this.injectorGet(import2.InjectableService, parentIndex, null),
         _const_OpaqueToken__test___0_2);
     _compView_0.create(_InjectableComponent_0_3, projectableNodes, null);
-    init([_el_0], [_el_0], []);
-    return new ComponentRef(0, this, _el_0, _InjectableComponent_0_3);
+    init([rootEl], [rootEl], []);
+    return new ComponentRef(0, this, rootEl, _InjectableComponent_0_3);
   }
 
   dynamic injectorGetInternal(
@@ -179,9 +175,8 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
 }
 
 AppView viewFactory_InjectableComponentHost0(
-    AppView<dynamic> parentView, num parentIndex, dynamic parentElement) {
-  return new ViewInjectableComponentHost0(
-      parentView, parentIndex, parentElement);
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewInjectableComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory InjectableComponentNgFactory = const ComponentFactory(
