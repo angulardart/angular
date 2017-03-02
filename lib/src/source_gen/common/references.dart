@@ -9,7 +9,10 @@ ReferenceBuilder toBuilder(DartType type, List<ImportElement> imports) =>
 String _importFrom(DartType dartType, List<ImportElement> imports) {
   var definingLibrary = dartType.element.library;
   for (final import in imports) {
-    if (_definesLibrary(import.importedLibrary, definingLibrary)) {
+    if (_definesLibrary(import.importedLibrary, definingLibrary) &&
+        // We might have some collection of show/hide that hides this symbol.
+        // Easier to avoid then do this wrong, for now (b/35879283).
+        import.combinators.isEmpty) {
       return import.uri;
     }
   }
