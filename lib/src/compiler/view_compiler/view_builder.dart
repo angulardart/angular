@@ -7,6 +7,7 @@ import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
+import "compile_method.dart";
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
 import "../provider_parser.dart" show ngIfTokenMetadata, ngForTokenMetadata;
@@ -333,16 +334,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     var renderNode = new o.ReadClassMemberExpr(fieldName);
 
-    var htmlAttrs = _attribListToMap(ast.attrs);
-
-    // Create statements to initialize literal attribute values.
-    // For example, a directive may have hostAttributes setting class name.
-    var attrNameAndValues = _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
-    for (int i = 0, len = attrNameAndValues.length; i < len; i++) {
-      o.Statement stmt = _createSetAttributeStatement(ast.name, fieldName,
-          attrNameAndValues[i][0], attrNameAndValues[i][1]);
-      view.createMethod.addStmt(stmt);
-    }
+    _writeLiteralAttributeValues(ast, fieldName, directives, view.createMethod);
 
     if (!isHostRootView &&
         view.component.template.encapsulation == ViewEncapsulation.Emulated) {
@@ -402,52 +394,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     docVarName = defaultDocVarName;
     return new o.DeclareVarStmt(
         docVarName, o.importExpr(Identifiers.HTML_DOCUMENT));
-  }
-
-  o.Statement _createSetAttributeStatement(String astNodeName,
-      String elementFieldName, String attrName, String attrValue) {
-    var attrNs;
-    if (attrName.startsWith('@') && attrName.contains(':')) {
-      var nameParts = attrName.substring(1).split(':');
-      attrNs = NAMESPACE_URIS[nameParts[0]];
-      attrName = nameParts[1];
-    }
-
-    /// Optimization for common attributes. Call dart:html directly without
-    /// going through setAttr wrapper.
-    if (attrNs == null) {
-      switch (attrName) {
-        case 'class':
-          // Remove check below after SVGSVGElement DDC bug is fixed b2/32931607
-          bool hasNamespace =
-              astNodeName.startsWith('@') || astNodeName.contains(':');
-          if (!hasNamespace) {
-            return new o.ReadClassMemberExpr(elementFieldName)
-                .prop('className')
-                .set(o.literal(attrValue))
-                .toStmt();
-          }
-          break;
-        case 'tabindex':
-          try {
-            int tabValue = int.parse(attrValue);
-            return new o.ReadClassMemberExpr(elementFieldName)
-                .prop('tabIndex')
-                .set(o.literal(tabValue))
-                .toStmt();
-          } catch (_) {
-            // fallthrough to default handler since index is not int.
-          }
-          break;
-        default:
-          break;
-      }
-    }
-    var params = createSetAttributeParams(
-        elementFieldName, attrNs, attrName, o.literal(attrValue));
-    return new o.InvokeMemberMethodExpr(
-            attrNs == null ? "createAttr" : "setAttrNS", params)
-        .toStmt();
   }
 
   String attributeNameToDartHtmlMember(String attrName) {
@@ -597,20 +543,46 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   }
 }
 
-// Read hostAttributes from each directive and merges with declaredHtmlAttrs
+// Reads hostAttributes from each directive and merges with declaredHtmlAttrs
 // to return a single map from name to value(expression).
 List<List<String>> _mergeHtmlAndDirectiveAttrs(
     Map<String, String> declaredHtmlAttrs,
-    List<CompileDirectiveMetadata> directives) {
+    List<CompileDirectiveMetadata> directives,
+    {bool excludeComponent: false}) {
   Map<String, String> result = {};
-  declaredHtmlAttrs.forEach((key, value) => result[key] = value);
+  var mergeCount = <String, int>{};
+  declaredHtmlAttrs.forEach((name, value) {
+    result[name] = value;
+    if (mergeCount.containsKey(name)) {
+      mergeCount[name]++;
+    } else {
+      mergeCount[name] = 1;
+    }
+  });
   for (CompileDirectiveMetadata directiveMeta in directives) {
     directiveMeta.hostAttributes.forEach((name, value) {
+      if (mergeCount.containsKey(name)) {
+        mergeCount[name]++;
+      } else {
+        mergeCount[name] = 1;
+      }
+    });
+  }
+  for (CompileDirectiveMetadata directiveMeta in directives) {
+    bool isComponent = directiveMeta.isComponent;
+    for (String name in directiveMeta.hostAttributes.keys) {
+      var value = directiveMeta.hostAttributes[name];
+      if (excludeComponent &&
+          isComponent &&
+          !((name == CLASS_ATTR || name == STYLE_ATTR) &&
+              mergeCount[name] > 1)) {
+        continue;
+      }
       var prevValue = result[name];
       result[name] = prevValue != null
           ? mergeAttributeValue(name, prevValue, value)
           : value;
-    });
+    }
   }
   return mapToKeyValueArray(result);
 }
@@ -630,6 +602,71 @@ String mergeAttributeValue(
   } else {
     return attrValue2;
   }
+}
+
+/// Writes literal attribute values on the element itself and those
+/// contributed from directives on the ast node.
+///
+/// !Component level attributes are excluded since we want to avoid per
+//  call site duplication.
+void _writeLiteralAttributeValues(ElementAst ast, String elementFieldName,
+    List<CompileDirectiveMetadata> directives, CompileMethod method) {
+  var htmlAttrs = _attribListToMap(ast.attrs);
+  // Create statements to initialize literal attribute values.
+  // For example, a directive may have hostAttributes setting class name.
+  var attrNameAndValues = _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives,
+      excludeComponent: true);
+  for (int i = 0, len = attrNameAndValues.length; i < len; i++) {
+    o.Statement stmt = _createSetAttributeStatement(ast.name, elementFieldName,
+        attrNameAndValues[i][0], attrNameAndValues[i][1]);
+    method.addStmt(stmt);
+  }
+}
+
+o.Statement _createSetAttributeStatement(String astNodeName,
+    String elementFieldName, String attrName, String attrValue) {
+  var attrNs;
+  if (attrName.startsWith('@') && attrName.contains(':')) {
+    var nameParts = attrName.substring(1).split(':');
+    attrNs = NAMESPACE_URIS[nameParts[0]];
+    attrName = nameParts[1];
+  }
+
+  /// Optimization for common attributes. Call dart:html directly without
+  /// going through setAttr wrapper.
+  if (attrNs == null) {
+    switch (attrName) {
+      case 'class':
+        // Remove check below after SVGSVGElement DDC bug is fixed b2/32931607
+        bool hasNamespace =
+            astNodeName.startsWith('@') || astNodeName.contains(':');
+        if (!hasNamespace) {
+          return new o.ReadClassMemberExpr(elementFieldName)
+              .prop('className')
+              .set(o.literal(attrValue))
+              .toStmt();
+        }
+        break;
+      case 'tabindex':
+        try {
+          int tabValue = int.parse(attrValue);
+          return new o.ReadClassMemberExpr(elementFieldName)
+              .prop('tabIndex')
+              .set(o.literal(tabValue))
+              .toStmt();
+        } catch (_) {
+          // fallthrough to default handler since index is not int.
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  var params = createSetAttributeParams(
+      elementFieldName, attrNs, attrName, o.literal(attrValue));
+  return new o.InvokeMemberMethodExpr(
+          attrNs == null ? "createAttr" : "setAttrNS", params)
+      .toStmt();
 }
 
 List<List<String>> mapToKeyValueArray(Map<String, String> data) {
@@ -755,14 +792,22 @@ o.ClassMethod _createViewClassConstructor(
       [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
   if (view.viewType == ViewType.COMPONENT && view.viewIndex == 0) {
     // No namespace just call [document.createElement].
+    String tagName = _tagNameFromComponentSelector(view.component.selector);
     var createRootElementExpr = o
         .importExpr(Identifiers.HTML_DOCUMENT)
-        .callMethod('createElement', [
-      o.literal(_tagNameFromComponentSelector(view.component.selector))
-    ]);
+        .callMethod('createElement', [o.literal(tagName)]);
+
     ctor.body.add(new o.WriteClassMemberExpr(
             appViewRootElementName, createRootElementExpr)
         .toStmt());
+
+    // Write literal attribute values on element.
+    CompileDirectiveMetadata componentMeta = view.component;
+    componentMeta.hostAttributes.forEach((String name, String value) {
+      o.Statement stmt = _createSetAttributeStatement(
+          tagName, appViewRootElementName, name, value);
+      ctor.body.add(stmt);
+    });
   }
   return ctor;
 }
