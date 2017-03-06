@@ -175,14 +175,15 @@ class HtmlTreeBuilder {
 
   void _pushElement(HtmlElementAst el) {
     if (elementStack.isNotEmpty) {
-      var parentEl = elementStack.isNotEmpty ? elementStack.last : null;
+      var parentEl = elementStack.last;
       if (getHtmlTagDefinition(parentEl.name).isClosedByChild(el.name)) {
         elementStack.removeLast();
       }
     }
     var tagDef = getHtmlTagDefinition(el.name);
     var parentEl = _getParentElement();
-    if (tagDef.requireExtraParent(parentEl != null ? parentEl.name : null)) {
+    // If root we do not have to wrap elements such as tr/td.
+    if (parentEl != null && tagDef.requireExtraParent(parentEl.name)) {
       var newParent = new HtmlElementAst(tagDef.parentToAdd, [], [el],
           el.sourceSpan, el.startSourceSpan, el.endSourceSpan);
       _addToParent(newParent);

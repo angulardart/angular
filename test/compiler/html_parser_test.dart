@@ -48,6 +48,12 @@ void main() {
             [HtmlElementAst, "div", 0]
           ]);
         });
+        test("should not add the requiredParent to a template root element",
+            () {
+          expect(humanizeDom(parser.parse('<tr></tr>', 'TestComp')), [
+            [HtmlElementAst, 'tr', 0],
+          ]);
+        });
         test("should parse elements inside of regular elements", () {
           expect(
               humanizeDom(parser.parse("<div><span></span></div>", "TestComp")),
