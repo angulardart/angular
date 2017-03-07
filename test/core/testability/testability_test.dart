@@ -9,7 +9,7 @@ import "package:angular2/src/core/testability/testability.dart"
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/testing_internal.dart";
-import 'package:mockito/mockito.dart';
+import 'package:mockito/mockito_package_test.dart';
 import 'package:test/test.dart';
 
 // Schedules a microtasks (using a resolved promise .then())
