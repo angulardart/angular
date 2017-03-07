@@ -30,9 +30,8 @@ class PromiseStrategy {
   void onDestroy(dynamic subscription) {}
 }
 
-var _promiseStrategy = new PromiseStrategy();
-var _observableStrategy = new ObservableStrategy();
-Future<dynamic> ___unused;
+final _promiseStrategy = new PromiseStrategy();
+final _observableStrategy = new ObservableStrategy();
 
 /// An `async` pipe awaits for a value from a [Future] or [Stream]. When a value
 /// is received, the `async` pipe marks the component to be checked for changes.

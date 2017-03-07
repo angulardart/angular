@@ -1,4 +1,20 @@
-/// This indirection is needed for TS compilation path.
-/// See comment in lifecycle_annotations.ts.
+class RouteLifecycleHook {
+  final String name;
+  const RouteLifecycleHook(this.name);
+}
 
-export "./lifecycle_annotations_impl.dart";
+class CanActivate {
+  final Function fn;
+  const CanActivate(this.fn);
+}
+
+const RouteLifecycleHook routerCanReuse =
+    const RouteLifecycleHook("routerCanReuse");
+const RouteLifecycleHook routerCanDeactivate =
+    const RouteLifecycleHook("routerCanDeactivate");
+const RouteLifecycleHook routerOnActivate =
+    const RouteLifecycleHook("routerOnActivate");
+const RouteLifecycleHook routerOnReuse =
+    const RouteLifecycleHook("routerOnReuse");
+const RouteLifecycleHook routerOnDeactivate =
+    const RouteLifecycleHook("routerOnDeactivate");

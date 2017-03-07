@@ -1,5 +1,6 @@
 import 'package:angular2/src/router/interfaces.dart';
-import 'package:angular2/src/router/lifecycle/lifecycle_annotations_impl.dart';
+
+import 'lifecycle_annotations.dart';
 
 bool hasLifecycleHook(RouteLifecycleHook e, instance) {
   if (e == routerOnActivate) {

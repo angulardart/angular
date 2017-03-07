@@ -12,7 +12,7 @@ import "instruction.dart"
         RedirectInstruction,
         UnresolvedInstruction,
         DefaultInstruction;
-import "route_config/route_config_impl.dart"
+import "route_config/route_config_decorator.dart"
     show RouteConfig, Route, AuxRoute, RouteDefinition;
 import "route_config/route_config_normalizer.dart"
     show normalizeRouteConfig, assertComponentExists;

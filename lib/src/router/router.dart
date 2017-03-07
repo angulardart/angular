@@ -8,7 +8,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "directives/router_outlet.dart" show RouterOutlet;
 import "instruction.dart" show ComponentInstruction, Instruction;
-import "route_config/route_config_impl.dart" show RouteDefinition;
+import "route_config/route_config_decorator.dart" show RouteDefinition;
 import "route_registry.dart" show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
 import "utils.dart" show getCanActivateHook;
 

@@ -8,8 +8,6 @@ import "linker/component_resolver.dart" show ReflectorComponentResolver;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoader;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoaderImpl;
 
-Type ___unused;
-
 /// A default set of providers which should be included in any Angular
 /// application, regardless of the platform it runs onto.
 const List APPLICATION_COMMON_PROVIDERS = const [

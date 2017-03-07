@@ -3,7 +3,7 @@ import "dart:async";
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "../instruction.dart" show ComponentInstruction;
-import "../route_config/route_config_impl.dart"
+import "../route_config/route_config_decorator.dart"
     show Route, AsyncRoute, AuxRoute, Redirect, RouteDefinition;
 import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
 import "../url_parser.dart" show Url;
