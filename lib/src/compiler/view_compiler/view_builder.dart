@@ -7,7 +7,6 @@ import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
-import "compile_method.dart";
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
 import "../provider_parser.dart" show ngIfTokenMetadata, ngForTokenMetadata;
@@ -30,6 +29,7 @@ import "../template_ast.dart"
         BoundDirectivePropertyAst,
         templateVisitAll;
 import "compile_element.dart" show CompileElement, CompileNode;
+import "compile_method.dart";
 import "compile_view.dart" show CompileView;
 import "constants.dart"
     show

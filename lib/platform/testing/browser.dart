@@ -1,11 +1,11 @@
 library angular2.platform.testing.browser;
 
 import "package:angular2/di.dart";
+import "package:angular2/platform/browser.dart" show BROWSER_APP_PROVIDERS;
 import "package:angular2/platform/testing/browser_static.dart"
     show
         TEST_BROWSER_STATIC_PLATFORM_PROVIDERS,
         ADDITIONAL_TEST_BROWSER_PROVIDERS;
-import "package:angular2/platform/browser.dart" show BROWSER_APP_PROVIDERS;
 import "package:angular2/src/compiler/runtime_compiler.dart"
     show RuntimeCompiler;
 import "package:angular2/src/core/linker/component_resolver.dart"

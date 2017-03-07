@@ -1,5 +1,3 @@
-import 'package:angular2/src/common.dart'
-    show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/core.dart"
     show
         PLATFORM_INITIALIZER,
@@ -9,6 +7,8 @@ import "package:angular2/core.dart"
         APPLICATION_COMMON_PROVIDERS,
         PLATFORM_COMMON_PROVIDERS,
         TestabilityRegistry;
+import 'package:angular2/src/common.dart'
+    show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable, Provider;
 import "package:angular2/src/core/testability/testability.dart"
@@ -49,7 +49,7 @@ const List<dynamic> BROWSER_PROVIDERS = const [
 ];
 ExceptionHandler exceptionHandler() {
   // But must not rethrow exceptions in Dart.
-  return new ExceptionHandler(new Logger('angular exception'), false);
+  return new ExceptionHandler(new Logger('angular exception'));
 }
 
 const List BROWSER_SANITIZATION_PROVIDERS = const [
