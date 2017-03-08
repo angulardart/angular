@@ -28,9 +28,11 @@ class RenderComponentType {
   final ViewEncapsulation encapsulation;
   List<dynamic /* String | List < dynamic > */ > templateStyles;
 
+  static const COMPONENT_VARIABLE = '%COMP%';
   static const HOST_STYLE_PREFIX = '_nghost-';
   static const CONTENT_STYLE_PREFIX = '_ngcontent-';
-
+  static const HOST_ATTR = '${HOST_STYLE_PREFIX}$COMPONENT_VARIABLE';
+  static const CONTENT_ATTR = '${CONTENT_STYLE_PREFIX}$COMPONENT_VARIABLE';
   // Content attribute value assigned to elements in template or null if
   // no assignment is required.
   String _contentAttr;
@@ -49,18 +51,8 @@ class RenderComponentType {
       stylesHost.addStyles(this._styles);
     }
     if (encapsulation == ViewEncapsulation.Emulated) {
-      for (var i = _styles.length - 1; i >= 0; i--) {
-        if (_styles[i].contains(CONTENT_STYLE_PREFIX)) {
-          _contentAttr = CONTENT_STYLE_PREFIX + id;
-          break;
-        }
-      }
-      for (var i = styles.length - 1; i >= 0; i--) {
-        if (_styles[i].contains(HOST_STYLE_PREFIX)) {
-          _hostAttr = HOST_STYLE_PREFIX + id;
-          break;
-        }
-      }
+      _contentAttr = _shimContentAttribute(id);
+      _hostAttr = _shimHostAttribute(id);
     }
   }
 
@@ -69,6 +61,12 @@ class RenderComponentType {
   String get hostAttr => _hostAttr;
 
   List<String> get styles => _styles;
+
+  String _shimContentAttribute(String componentShortId) =>
+      CONTENT_ATTR.replaceAll(COMPONENT_REGEX, componentShortId);
+
+  String _shimHostAttribute(String componentShortId) =>
+      HOST_ATTR.replaceAll(COMPONENT_REGEX, componentShortId);
 
   List<String> _flattenStyles(
       String compId,
