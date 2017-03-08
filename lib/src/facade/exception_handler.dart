@@ -1,5 +1,4 @@
-import 'package:angular2/src/facade/base_wrapped_exception.dart'
-    show BaseWrappedException;
+import 'package:angular2/src/facade/exceptions.dart' show WrappedException;
 import 'package:logging/logging.dart';
 
 /// Provides a hook for centralized exception handling.
@@ -28,13 +27,13 @@ import 'package:logging/logging.dart';
 /// }
 /// ```
 class ExceptionHandler {
-  static String _extractMessage(exception) => exception is BaseWrappedException
+  static String _extractMessage(exception) => exception is WrappedException
       ? exception.wrapperMessage
       : exception.toString();
 
   static _findContext(exception) {
     try {
-      return exception is BaseWrappedException
+      return exception is WrappedException
           ? exception.context ?? _findContext(exception.originalException)
           : null;
     } catch (_) {
@@ -43,7 +42,7 @@ class ExceptionHandler {
   }
 
   static _findOriginalException(exception) {
-    while (exception is BaseWrappedException) {
+    while (exception is WrappedException) {
       exception = exception.originalException;
     }
     return exception;
@@ -51,7 +50,7 @@ class ExceptionHandler {
 
   static _findOriginalStackTrace(exception) {
     var stackTrace;
-    while (exception is BaseWrappedException) {
+    while (exception is WrappedException) {
       stackTrace = exception.originalStack;
       exception = exception.originalException;
     }

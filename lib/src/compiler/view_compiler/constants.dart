@@ -2,16 +2,20 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectorState, ChangeDetectionStrategy;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/facade/lang.dart" show resolveEnumToken;
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 
+String _resolveEnumToken(enumValue, val) {
+  // turn Enum.Token -> Token
+  return val.toString().replaceFirst(new RegExp('^.+\\.'), '');
+}
+
 o.Expression _enumExpression(
     CompileIdentifierMetadata classIdentifier, dynamic value) {
   if (value == null) return o.NULL_EXPR;
-  var name = resolveEnumToken(classIdentifier.runtime, value);
+  var name = _resolveEnumToken(classIdentifier.runtime, value);
   return o.importExpr(new CompileIdentifierMetadata(
       name: '${classIdentifier.name}.${name}',
       moduleUrl: classIdentifier.moduleUrl,
@@ -23,9 +27,9 @@ class ViewTypeEnum {
     return _enumExpression(Identifiers.ViewType, value);
   }
 
-  static var HOST = ViewTypeEnum.fromValue(ViewType.HOST);
-  static var COMPONENT = ViewTypeEnum.fromValue(ViewType.COMPONENT);
-  static var EMBEDDED = ViewTypeEnum.fromValue(ViewType.EMBEDDED);
+  static final HOST = ViewTypeEnum.fromValue(ViewType.HOST);
+  static final COMPONENT = ViewTypeEnum.fromValue(ViewType.COMPONENT);
+  static final EMBEDDED = ViewTypeEnum.fromValue(ViewType.EMBEDDED);
 }
 
 class ViewEncapsulationEnum {
@@ -33,10 +37,11 @@ class ViewEncapsulationEnum {
     return _enumExpression(Identifiers.ViewEncapsulation, value);
   }
 
-  static var Emulated =
+  static final Emulated =
       ViewEncapsulationEnum.fromValue(ViewEncapsulation.Emulated);
-  static var Native = ViewEncapsulationEnum.fromValue(ViewEncapsulation.Native);
-  static var None = ViewEncapsulationEnum.fromValue(ViewEncapsulation.None);
+  static final Native =
+      ViewEncapsulationEnum.fromValue(ViewEncapsulation.Native);
+  static final None = ViewEncapsulationEnum.fromValue(ViewEncapsulation.None);
 }
 
 class ChangeDetectorStateEnum {
@@ -44,11 +49,11 @@ class ChangeDetectorStateEnum {
     return _enumExpression(Identifiers.ChangeDetectorState, value);
   }
 
-  static var NeverChecked =
+  static final NeverChecked =
       ChangeDetectorStateEnum.fromValue(ChangeDetectorState.NeverChecked);
-  static var CheckedBefore =
+  static final CheckedBefore =
       ChangeDetectorStateEnum.fromValue(ChangeDetectorState.CheckedBefore);
-  static var Errored =
+  static final Errored =
       ChangeDetectorStateEnum.fromValue(ChangeDetectorState.Errored);
 }
 
@@ -57,44 +62,44 @@ class ChangeDetectionStrategyEnum {
     return _enumExpression(Identifiers.ChangeDetectionStrategy, value);
   }
 
-  static var CheckOnce =
+  static final CheckOnce =
       ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.CheckOnce);
-  static var Checked =
+  static final Checked =
       ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.Checked);
-  static var CheckAlways = ChangeDetectionStrategyEnum
+  static final CheckAlways = ChangeDetectionStrategyEnum
       .fromValue(ChangeDetectionStrategy.CheckAlways);
-  static var Detached =
+  static final Detached =
       ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.Detached);
-  static var OnPush =
+  static final OnPush =
       ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.OnPush);
-  static var Default =
+  static final Default =
       ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.Default);
 }
 
 class ViewConstructorVars {
-  static var parentView = o.variable('parentView');
-  static var parentIndex = o.variable('parentIndex');
+  static final parentView = o.variable('parentView');
+  static final parentIndex = o.variable('parentIndex');
 }
 
 class ViewProperties {
-  static var projectableNodes = new o.ReadClassMemberExpr('projectableNodes');
+  static final projectableNodes = new o.ReadClassMemberExpr('projectableNodes');
 }
 
 class EventHandlerVars {
-  static var event = o.variable('\$event');
+  static final event = o.variable('\$event');
 }
 
 class InjectMethodVars {
-  static var token = o.variable('token');
+  static final token = o.variable('token');
 
   /// Name of node index parameter used in AppView injectorGetInternal method.
-  static var nodeIndex = o.variable('nodeIndex');
-  static var notFoundResult = o.variable('notFoundResult');
+  static final nodeIndex = o.variable('nodeIndex');
+  static final notFoundResult = o.variable('notFoundResult');
 }
 
 class DetectChangesVars {
-  static var changes = o.variable('changes');
-  static var changed = o.variable('changed');
-  static var firstCheck = o.variable('firstCheck');
-  static var valUnwrapper = o.variable('valUnwrapper');
+  static final changes = o.variable('changes');
+  static final changed = o.variable('changed');
+  static final firstCheck = o.variable('firstCheck');
+  static final valUnwrapper = o.variable('valUnwrapper');
 }

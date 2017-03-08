@@ -1,4 +1,3 @@
-import 'base_wrapped_exception.dart';
 import 'exception_handler.dart';
 
 export 'exception_handler.dart';
@@ -15,7 +14,7 @@ class BaseException extends Error {
   }
 }
 
-class WrappedException extends BaseWrappedException {
+class WrappedException {
   final dynamic _context;
   final String _wrapperMessage;
   final originalException;
@@ -27,19 +26,13 @@ class WrappedException extends BaseWrappedException {
       this.originalStack,
       this._context]);
 
-  String get message {
-    return ExceptionHandler.exceptionToString(this);
-  }
+  String get message => ExceptionHandler.exceptionToString(this);
 
-  String toString() {
-    return this.message;
-  }
+  String toString() => message;
 
   dynamic get context => _context;
 
   String get wrapperMessage => _wrapperMessage;
 }
 
-Error makeTypeError([String message = ""]) {
-  return new BaseException(message);
-}
+Error makeTypeError([String message = ""]) => new BaseException(message);

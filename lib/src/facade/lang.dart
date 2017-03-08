@@ -1,10 +1,3 @@
-RegExp _fromFuncExp;
-
-String resolveEnumToken(enumValue, val) {
-  // turn Enum.Token -> Token
-  return val.toString().replaceFirst(new RegExp('^.+\\.'), '');
-}
-
 /// A [String.split] implementation that is like JS' implementation.
 ///
 /// See https://dartpad.dartlang.org/37a53b0d5d4cced6c7312b2b965ed7fd.
