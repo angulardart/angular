@@ -1,7 +1,5 @@
 import 'dart:async';
 
-export 'dart:async' show Stream, StreamController, StreamSubscription;
-
 class EventEmitter<T> extends Stream<T> {
   StreamController<T> _controller;
 

@@ -221,7 +221,6 @@ var NG_CORE = [
   'OnInit',
   'PipeTransform',
   'reflector',
-  'Stream',
   'GetterFn',
   'MethodFn',
   'NoReflectionCapabilities',

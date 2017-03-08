@@ -1,6 +1,5 @@
 import 'dart:html';
 
-import "package:angular2/src/facade/browser.dart" show document, window;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 int getIntParameter(String name) {

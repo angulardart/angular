@@ -1,5 +1,3 @@
-export 'dart:core' show RegExp, print, DateTime, Uri;
-
 RegExp _fromFuncExp;
 
 String resolveEnumToken(enumValue, val) {
