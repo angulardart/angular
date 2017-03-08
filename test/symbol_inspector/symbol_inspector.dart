@@ -2,10 +2,11 @@ library angular.symbol_inspector.symbol_inspector;
 
 import 'dart:mirrors';
 
+import 'package:angular2/angular2.dart' as ng2;
 import 'package:angular2/common.dart' as ng2common;
 import 'package:angular2/compiler.dart' as ng2compiler;
 import 'package:angular2/core.dart' as ng2core;
-import 'package:angular2/angular2.dart' as ng2;
+import 'package:angular2/di.dart' as di;
 import 'package:angular2/platform/common.dart' as ng2platform_common;
 import 'package:angular2/platform/testing/browser.dart'
     as ng2platform_browser_testing;
@@ -14,19 +15,11 @@ final angularLib = getLibrary('package:angular2/angular2.dart');
 final commonLib = getLibrary('package:angular2/common.dart');
 final compilerLib = getLibrary('package:angular2/compiler.dart');
 final coreLib = getLibrary('package:angular2/core.dart');
+final diLib = getLibrary('package:angular2/di.dart');
 final platformBrowserLib = getLibrary('package:angular2/platform/browser.dart');
 final platformBrowserTestingLib =
     getLibrary('package:angular2/platform/testing/browser.dart');
 final platformCommonLib = getLibrary('package:angular2/platform/common.dart');
-
-const IGNORE = const {
-  'runtimeType': true,
-  'toString': true,
-  'noSuchMethod': true,
-  'hashCode': true,
-  'originalException': true,
-  'originalStack': true
-};
 
 // HACK: This list is here only to make the corresponding libraries used. The
 // imports are only needed to reflect on them using mirrors.
@@ -36,7 +29,8 @@ final _ng2libSymbols = [
   ng2common.NgIf,
   ng2platform_browser_testing.TEST_BROWSER_PLATFORM_PROVIDERS,
   ng2platform_common.Location,
-  ng2.APP_ID
+  ng2.APP_ID,
+  di.Inject
 ];
 
 LibraryMirror getLibrary(String uri) {
