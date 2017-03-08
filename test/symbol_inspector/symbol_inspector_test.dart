@@ -32,6 +32,7 @@ void main() {
   });
   group('ng2libs', () {
     test('should be available via mirrors', () {
+      expect(angularLib.uri.toString(), 'package:angular2/angular2.dart');
       expect(commonLib.uri.toString(), 'package:angular2/common.dart');
       expect(compilerLib.uri.toString(), 'package:angular2/compiler.dart');
       expect(coreLib.uri.toString(), 'package:angular2/core.dart');

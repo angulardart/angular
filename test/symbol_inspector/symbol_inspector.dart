@@ -5,10 +5,12 @@ import 'dart:mirrors';
 import 'package:angular2/common.dart' as ng2common;
 import 'package:angular2/compiler.dart' as ng2compiler;
 import 'package:angular2/core.dart' as ng2core;
+import 'package:angular2/angular2.dart' as ng2;
 import 'package:angular2/platform/common.dart' as ng2platform_common;
 import 'package:angular2/platform/testing/browser.dart'
     as ng2platform_browser_testing;
 
+final angularLib = getLibrary('package:angular2/angular2.dart');
 final commonLib = getLibrary('package:angular2/common.dart');
 final compilerLib = getLibrary('package:angular2/compiler.dart');
 final coreLib = getLibrary('package:angular2/core.dart');
@@ -34,6 +36,7 @@ final _ng2libSymbols = [
   ng2common.NgIf,
   ng2platform_browser_testing.TEST_BROWSER_PLATFORM_PROVIDERS,
   ng2platform_common.Location,
+  ng2.APP_ID
 ];
 
 LibraryMirror getLibrary(String uri) {
