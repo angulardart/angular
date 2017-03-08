@@ -1,6 +1,8 @@
 @TestOn('browser && !js')
 library angular2.test.public_api_test;
 
+import 'dart:mirrors';
+
 import 'package:test/test.dart';
 
 import 'symbol_inspector/symbol_inspector.dart';
@@ -269,6 +271,7 @@ var NG_PLATFORM_COMMON = [
 ];
 
 var NG_API = {
+var NG_API = <LibraryMirror, List<String>>{
   commonLib: NG_COMMON,
   compilerLib: NG_COMPILER,
   coreLib: NG_CORE,
@@ -279,28 +282,17 @@ var NG_API = {
 
 void main() {
   group('Public API check', () {
-    var publicLibraries = [
-      commonLib,
-      compilerLib,
-      coreLib,
-      platformBrowserLib,
-      platformBrowserTestingLib,
-      platformCommonLib,
-    ];
-    for (var lib in publicLibraries) {
+    for (var lib in NG_API.keys) {
       test('for ${lib} should fail when it changes unexpectedly', () {
         var symbols = getSymbolsFromLibrary(lib);
-        expect(diff(symbols, NG_API[lib]), []);
+        var expected = NG_API[lib];
+        expect(diff(symbols, expected), isEmpty);
       });
     }
   });
 }
 
-List<String> diff(List<String> actual, List<String> expected) {
-  actual.sort();
-  expected.sort();
-  var missing =
-      actual.where((i) => expected.indexOf(i) < 0).map((s) => '+${ s}');
-  var extra = expected.where((i) => actual.indexOf(i) < 0).map((s) => '-${ s}');
-  return <String>[]..addAll(missing)..addAll(extra);
-}
+List<String> diff(List<String> actual, List<String> expected) => <String>[]
+  ..addAll(actual.where((i) => !expected.contains(i)).map((s) => '+$s'))
+  ..addAll(expected.where((i) => !actual.contains(i)).map((s) => '-$s'))
+  ..sort();
