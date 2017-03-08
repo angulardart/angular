@@ -1,6 +1,8 @@
 @TestOn('browser && !js')
 library angular2.test.public_api_test;
 
+import 'dart:mirrors';
+
 import 'package:test/test.dart';
 
 import 'symbol_inspector/symbol_inspector.dart';
@@ -12,7 +14,7 @@ import 'symbol_inspector/symbol_inspector.dart';
 // =============================================================================
 //
 // DO NOT EDIT THIS LIST OF PUBLIC APIS UNLESS YOU GET IT CLEARED BY:
-// mhevery, ferhat, or matanl!
+// ferhat or matanl!
 //
 // =============================================================================
 // =============================================================================
@@ -268,7 +270,187 @@ var NG_PLATFORM_COMMON = [
   'BaseHRefFromDOMProvider',
 ];
 
-var NG_API = {
+var angular2Apis = [
+  "APPLICATION_COMMON_PROVIDERS",
+  "APP_ID",
+  "APP_INITIALIZER",
+  "AbstractControl",
+  "AbstractControlDirective",
+  "AbstractProviderError",
+  "AfterContentChecked",
+  "AfterContentInit",
+  "AfterViewChecked",
+  "AfterViewInit",
+  "AngularEntrypoint",
+  "ApplicationRef",
+  "AsyncPipe",
+  "Attribute",
+  "COMMON_DIRECTIVES",
+  "COMMON_PIPES",
+  "CORE_DIRECTIVES",
+  "ChangeDetectionStrategy",
+  "ChangeDetectorRef",
+  "CheckboxControlValueAccessor",
+  "Component",
+  "ComponentFactory",
+  "ComponentRef",
+  "ComponentResolver",
+  "ComponentState",
+  "ComponentStateCallback",
+  "ContentChild",
+  "ContentChildren",
+  "Control",
+  "ControlArray",
+  "ControlContainer",
+  "ControlGroup",
+  "ControlValueAccessor",
+  "CurrencyPipe",
+  "CyclicDependencyError",
+  "DEFAULT_PACKAGE_URL_PROVIDER",
+  "DOCUMENT",
+  "DatePipe",
+  "DecimalPipe",
+  "DefaultValueAccessor",
+  "DependencyMetadata",
+  "Directive",
+  "DirectiveResolver",
+  "DoCheck",
+  "DynamicComponentLoader",
+  "ElementRef",
+  "EmbeddedViewRef",
+  "EventEmitter",
+  "EventManagerPlugin",
+  "ExceptionHandler",
+  "ExpressionChangedAfterItHasBeenCheckedException",
+  "FORM_BINDINGS",
+  "FORM_DIRECTIVES",
+  "FORM_PROVIDERS",
+  "Form",
+  "FormBuilder",
+  "GetTestability",
+  "GetterFn",
+  "Host",
+  "HostBinding",
+  "HostListener",
+  "Inject",
+  "Injectable",
+  "Injector",
+  "InjectorFactory",
+  "Input",
+  "InstantiationError",
+  "InvalidProviderError",
+  "JsonPipe",
+  "LowerCasePipe",
+  "MapInjector",
+  "MapInjectorFactory",
+  "MaxLengthValidator",
+  "MethodFn",
+  "MinLengthValidator",
+  "NG_ASYNC_VALIDATORS",
+  "NG_VALIDATORS",
+  "NG_VALUE_ACCESSOR",
+  "NgClass",
+  "NgControl",
+  "NgControlGroup",
+  "NgControlName",
+  "NgControlStatus",
+  "NgFor",
+  "NgForm",
+  "NgFormControl",
+  "NgFormModel",
+  "NgIf",
+  "NgModel",
+  "NgSelectOption",
+  "NgStyle",
+  "NgSwitch",
+  "NgSwitchDefault",
+  "NgSwitchWhen",
+  "NgTemplateOutlet",
+  "NgZone",
+  "NgZoneError",
+  "NoAnnotationError",
+  "NoDirectiveAnnotationError",
+  "NoProviderError",
+  "NoReflectionCapabilities",
+  "NumberPipe",
+  "OnChanges",
+  "OnDestroy",
+  "OnInit",
+  "OpaqueToken",
+  "Optional",
+  "OutOfBoundsError",
+  "Output",
+  "PACKAGE_ROOT_URL",
+  "PLATFORM_COMMON_PROVIDERS",
+  "PLATFORM_DIRECTIVES",
+  "PLATFORM_INITIALIZER",
+  "PLATFORM_PIPES",
+  "PatternValidator",
+  "PercentPipe",
+  "Pipe",
+  "PipeTransform",
+  "PlatformRef",
+  "PlatformReflectionCapabilities",
+  "Provider",
+  "Query",
+  "QueryList",
+  "RadioButtonState",
+  "ReflectionInfo",
+  "ReflectiveDependency",
+  "ReflectiveInjector",
+  "ReflectiveKey",
+  "Reflector",
+  "RenderComponentType",
+  "ReplacePipe",
+  "RequiredValidator",
+  "ResolvedReflectiveBinding",
+  "ResolvedReflectiveFactory",
+  "ResolvedReflectiveProvider",
+  "RootRenderer",
+  "SelectControlValueAccessor",
+  "Self",
+  "SetterFn",
+  "SimpleChange",
+  "SkipAngularInitCheck",
+  "SkipSelf",
+  "SlicePipe",
+  "Stream",
+  "TemplateRef",
+  "Testability",
+  "TestabilityRegistry",
+  "TrackByFn",
+  "UpperCasePipe",
+  "UrlResolver",
+  "Validator",
+  "ValidatorFn",
+  "Validators",
+  "View",
+  "ViewChild",
+  "ViewChildren",
+  "ViewContainerRef",
+  "ViewEncapsulation",
+  "ViewQuery",
+  "ViewRef",
+  "ViewResolver",
+  "WrappedException",
+  "WrappedValue",
+  "appIdRandomProviderFactory",
+  "coreBootstrap",
+  "coreLoadAndBootstrap",
+  "createNgZone",
+  "createOfflineCompileUrlResolver",
+  "createPlatform",
+  "createUrlResolverWithoutPackagePrefix",
+  "disposePlatform",
+  "getPlatform",
+  "getUrlScheme",
+  "noValueProvided",
+  "provide",
+  "reflector",
+];
+
+var NG_API = <LibraryMirror, List<String>>{
+  angularLib: angular2Apis,
   commonLib: NG_COMMON,
   compilerLib: NG_COMPILER,
   coreLib: NG_CORE,
@@ -279,28 +461,17 @@ var NG_API = {
 
 void main() {
   group('Public API check', () {
-    var publicLibraries = [
-      commonLib,
-      compilerLib,
-      coreLib,
-      platformBrowserLib,
-      platformBrowserTestingLib,
-      platformCommonLib,
-    ];
-    for (var lib in publicLibraries) {
+    for (var lib in NG_API.keys) {
       test('for ${lib} should fail when it changes unexpectedly', () {
         var symbols = getSymbolsFromLibrary(lib);
-        expect(diff(symbols, NG_API[lib]), []);
+        var expected = NG_API[lib];
+        expect(diff(symbols, expected), isEmpty);
       });
     }
   });
 }
 
-List<String> diff(List<String> actual, List<String> expected) {
-  actual.sort();
-  expected.sort();
-  var missing =
-      actual.where((i) => expected.indexOf(i) < 0).map((s) => '+${ s}');
-  var extra = expected.where((i) => actual.indexOf(i) < 0).map((s) => '-${ s}');
-  return <String>[]..addAll(missing)..addAll(extra);
-}
+List<String> diff(List<String> actual, List<String> expected) => <String>[]
+  ..addAll(actual.where((i) => !expected.contains(i)).map((s) => '+$s'))
+  ..addAll(expected.where((i) => !actual.contains(i)).map((s) => '-$s'))
+  ..sort();
