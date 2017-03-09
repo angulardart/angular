@@ -24,7 +24,7 @@ import 'package:angular2/src/common/forms/directives/shared.dart'
 import 'package:angular2/src/core/change_detection.dart' show SimpleChange;
 import 'package:angular2/src/core/linker/element_ref.dart';
 import 'package:angular2/testing_internal.dart';
-import 'package:mockito/mockito_package_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import '../control_mocks.dart';

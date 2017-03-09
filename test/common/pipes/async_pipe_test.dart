@@ -7,7 +7,7 @@ import 'package:angular2/angular2.dart' show AsyncPipe;
 import 'package:angular2/core.dart' show WrappedValue;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/testing_internal.dart';
-import 'package:mockito/mockito_package_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import '../control_mocks.dart';

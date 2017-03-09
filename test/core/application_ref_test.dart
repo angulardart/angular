@@ -33,7 +33,7 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/platform/browser_common.dart';
 import 'package:angular2/testing_internal.dart';
 import 'package:logging/logging.dart';
-import 'package:mockito/mockito_package_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import 'core_mocks.dart';
