@@ -269,8 +269,9 @@ class ComponentVisitor
 
   void _addHostBinding(ElementAnnotation annotation, Element element) {
     var value = annotation.computeConstantValue();
-    _host[coerceString(value, 'hostPropertyName', defaultTo: element.name)] =
-        element.name;
+    var property =
+        coerceString(value, 'hostPropertyName', defaultTo: element.name);
+    _host['[$property]'] = element.name;
   }
 
   void _addHostListener(ElementAnnotation annotation, Element element) {
