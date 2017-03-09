@@ -1,5 +1,4 @@
-import 'package:angular2/src/core/change_detection/change_detection.dart';
-
+import 'change_detection/change_detection.dart';
 import 'metadata/di.dart';
 import 'metadata/view.dart';
 

@@ -2,9 +2,10 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart';
-import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart';
-import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';
 import 'package:logging/logging.dart';
+
+import 'compile_metadata.dart';
+import 'dart_object_utils.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   final Logger _logger;

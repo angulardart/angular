@@ -11,11 +11,11 @@ import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
-import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart'
-    as dart_objects;
 import 'package:logging/logging.dart';
 import 'package:quiver/strings.dart' as strings;
 import 'package:source_gen/src/annotation.dart' as source_gen;
+
+import 'dart_object_utils.dart' as dart_objects;
 
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {

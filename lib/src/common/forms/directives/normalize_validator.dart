@@ -1,5 +1,4 @@
-import 'package:angular2/src/common/forms/directives/validators.dart'
-    show AsyncValidatorFn, Validator, ValidatorFn;
+import 'validators.dart' show AsyncValidatorFn, Validator, ValidatorFn;
 
 ValidatorFn normalizeValidator(dynamic validator) {
   if (validator is Validator) {

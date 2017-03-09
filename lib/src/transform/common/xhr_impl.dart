@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:angular2/src/compiler/xhr.dart' show XHR;
-import 'package:angular2/src/transform/common/asset_reader.dart';
-import 'package:angular2/src/transform/common/logging.dart';
-import 'package:angular2/src/transform/common/url_resolver.dart';
+
+import 'asset_reader.dart';
+import 'logging.dart';
+import 'url_resolver.dart';
 
 /// Transformer-specific implementation of XHR that is backed by an
 /// [AssetReader].

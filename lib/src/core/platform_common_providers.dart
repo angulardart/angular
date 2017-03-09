@@ -1,9 +1,7 @@
-import 'package:angular2/src/core/di.dart' show Provider;
-import 'package:angular2/src/core/testability/testability.dart'
-    show TestabilityRegistry;
-
 import 'application_ref.dart' show PLATFORM_CORE_PROVIDERS;
+import 'di.dart' show Provider;
 import 'reflection/reflection.dart' show Reflector, reflector;
+import 'testability/testability.dart' show TestabilityRegistry;
 
 Reflector reflectorFactory() {
   return reflector;

@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
-import 'package:angular2/src/source_gen/template_compiler/code_builder.dart';
-import 'package:angular2/src/source_gen/template_compiler/generator_options.dart';
-import 'package:angular2/src/source_gen/template_compiler/template_processor.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
+
+import 'code_builder.dart';
+import 'generator_options.dart';
+import 'template_processor.dart';
 
 /// Generates `.template.dart` files to initialize the Angular2 system.
 ///

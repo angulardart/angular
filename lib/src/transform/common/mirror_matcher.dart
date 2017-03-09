@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:angular2/src/transform/common/names.dart';
+
+import 'names.dart';
 
 /// File from which `bootstrap` is exported.
 ///

@@ -1,8 +1,9 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular2/src/source_gen/common/annotation_model.dart';
-import 'package:angular2/src/source_gen/common/references.dart' as references;
 import 'package:code_builder/code_builder.dart';
 import 'package:code_builder/dart/core.dart';
+
+import 'annotation_model.dart';
+import 'references.dart' as references;
 
 /// A parameter used in the creation of a reflection type.
 class ParameterModel {

@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:angular2/src/compiler/xhr.dart' show XHR;
-import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:build/build.dart';
+
+import 'url_resolver.dart';
 
 /// SourceGen-specific implementation of XHR that is backed by a [BuildStep].
 ///

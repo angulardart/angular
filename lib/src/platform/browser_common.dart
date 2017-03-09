@@ -13,27 +13,22 @@ import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable, Provider;
 import "package:angular2/src/core/testability/testability.dart"
     show Testability;
-import "package:angular2/src/platform/browser/testability.dart"
-    show BrowserGetTestability;
-import "package:angular2/src/platform/browser/xhr_cache.dart" show CachedXHR;
-import "package:angular2/src/platform/dom/events/dom_events.dart"
-    show DomEventsPlugin;
-import "package:angular2/src/platform/dom/events/event_manager.dart"
-    show EventManager, EventManagerPlugin, EVENT_MANAGER_PLUGINS;
-import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
-    show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
-import "package:angular2/src/platform/dom/events/hammer_gestures.dart"
-    show HammerGesturesPlugin;
-import "package:angular2/src/platform/dom/events/key_events.dart"
-    show KeyEventsPlugin;
 import "package:angular2/src/security/dom_sanitization_service.dart";
 import "package:angular2/src/security/dom_sanitization_service_impl.dart";
 import 'package:logging/logging.dart';
 
-export "package:angular2/src/platform/browser/tools/tools.dart"
-    show enableDebugTools, disableDebugTools;
-export "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+import "browser/testability.dart" show BrowserGetTestability;
+import "browser/xhr_cache.dart" show CachedXHR;
+import "dom/events/dom_events.dart" show DomEventsPlugin;
+import "dom/events/event_manager.dart"
+    show EventManager, EventManagerPlugin, EVENT_MANAGER_PLUGINS;
+import "dom/events/hammer_gestures.dart"
+    show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
+import "dom/events/hammer_gestures.dart" show HammerGesturesPlugin;
+import "dom/events/key_events.dart" show KeyEventsPlugin;
 
+export "browser/tools/tools.dart" show enableDebugTools, disableDebugTools;
+export "dom/dom_tokens.dart" show DOCUMENT;
 export "dom/events/hammer_gestures.dart"
     show HAMMER_GESTURE_CONFIG, HammerGestureConfig;
 

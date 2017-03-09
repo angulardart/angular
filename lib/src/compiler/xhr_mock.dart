@@ -1,7 +1,8 @@
 import "dart:async";
 
-import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
+
+import "xhr.dart" show XHR;
 
 /// A mock implementation of [XHR] that allows outgoing requests to be mocked
 /// and responded to within a single test, without going to the network.

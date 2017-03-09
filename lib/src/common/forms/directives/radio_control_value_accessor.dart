@@ -10,11 +10,11 @@ import 'package:angular2/core.dart'
         OnDestroy,
         Injector,
         Injectable;
-import 'package:angular2/src/common/forms/directives/control_value_accessor.dart'
-    show NG_VALUE_ACCESSOR, ControlValueAccessor;
-import 'package:angular2/src/common/forms/directives/ng_control.dart'
-    show NgControl;
 import 'package:func/func.dart' show Func0, VoidFunc0;
+
+import 'control_value_accessor.dart'
+    show NG_VALUE_ACCESSOR, ControlValueAccessor;
+import 'ng_control.dart' show NgControl;
 
 const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: RadioControlValueAccessor, multi: true);

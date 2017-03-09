@@ -7,12 +7,12 @@ import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
-import 'package:angular2/src/transform/common/annotation_matcher.dart';
-import 'package:angular2/src/transform/common/interface_matcher.dart';
-import 'package:angular2/src/transform/common/logging.dart';
 import 'package:barback/barback.dart' show AssetId;
 import 'package:logging/logging.dart';
 
+import 'annotation_matcher.dart';
+import 'interface_matcher.dart';
+import 'logging.dart';
 import 'naive_eval.dart';
 import 'url_resolver.dart';
 

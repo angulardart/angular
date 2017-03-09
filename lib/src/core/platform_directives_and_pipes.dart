@@ -1,4 +1,4 @@
-import 'package:angular2/src/core/di.dart' show OpaqueToken;
+import 'di.dart' show OpaqueToken;
 
 /// A token that can be provided when bootstraping an application to make an
 /// array of directives available in every component of the application.

@@ -11,11 +11,12 @@ import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
 import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     show safeMatcher, safeMatcherType, safeMatcherTypes;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
-import 'package:angular2/src/source_gen/template_compiler/compile_metadata.dart';
-import 'package:angular2/src/source_gen/template_compiler/dart_object_utils.dart';
-import 'package:angular2/src/source_gen/template_compiler/pipe_visitor.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/src/annotation.dart';
+
+import 'compile_metadata.dart';
+import 'dart_object_utils.dart';
+import 'pipe_visitor.dart';
 
 List<NormalizedComponentWithViewDirectives> findComponents(Element element) {
   var componentVisitor = new NormalizedComponentVisitor();

@@ -1,7 +1,6 @@
-import 'package:angular2/src/core/di.dart' show Provider;
-
 import "application_ref.dart" show APPLICATION_CORE_PROVIDERS;
 import "application_tokens.dart" show APP_ID_RANDOM_PROVIDER;
+import 'di.dart' show Provider;
 import "linker/app_view_utils.dart" show AppViewUtils;
 import "linker/component_resolver.dart" show ComponentResolver;
 import "linker/component_resolver.dart" show ReflectorComponentResolver;

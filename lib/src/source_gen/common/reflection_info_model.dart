@@ -1,9 +1,10 @@
-import 'package:angular2/src/source_gen/common/annotation_model.dart';
-import 'package:angular2/src/source_gen/common/parameter_model.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:code_builder/dart/core.dart';
 import 'package:quiver/strings.dart' as strings;
+
+import 'annotation_model.dart';
+import 'parameter_model.dart';
 
 /// Reflective information about a symbol, including annotations, interfaces,
 /// and other metadata.

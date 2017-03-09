@@ -8,18 +8,18 @@ import 'package:angular2/src/core/di/reflective_exceptions.dart'
     show NoAnnotationError;
 import 'package:angular2/src/core/reflection/reflection.dart';
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart';
-import 'package:angular2/src/testing/internal.dart'
+import 'package:test/test.dart';
+
+import 'internal.dart'
     show
         TestComponentBuilder,
         ComponentFixture,
         setBaseTestProviders,
         getTestInjector,
         inject;
-import 'package:test/test.dart';
-
 import "internal_injector.dart";
 
-export 'package:angular2/src/testing/internal.dart'
+export 'internal.dart'
     show
         TestComponentBuilder,
         ComponentFixture,

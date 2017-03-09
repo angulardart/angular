@@ -1,20 +1,18 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular2/src/core/change_detection/change_detector_ref.dart';
-import 'package:angular2/src/core/di.dart';
-import 'package:angular2/src/core/linker/app_view_utils.dart';
-import 'package:angular2/src/core/linker/component_factory.dart'
-    show ComponentRef, ComponentFactory;
-import 'package:angular2/src/core/linker/component_resolver.dart';
-import 'package:angular2/src/core/testability/testability.dart'
-    show TestabilityRegistry, Testability;
-import 'package:angular2/src/core/zone/ng_zone.dart' show NgZone, NgZoneError;
 import 'package:angular2/src/facade/exceptions.dart'
     show BaseException, ExceptionHandler;
 import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
 
 import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
+import 'change_detection/change_detector_ref.dart';
+import 'di.dart';
+import 'linker/app_view_utils.dart';
+import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
+import 'linker/component_resolver.dart';
+import 'testability/testability.dart' show TestabilityRegistry, Testability;
+import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: assertionsEnabled());

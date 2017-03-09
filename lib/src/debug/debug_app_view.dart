@@ -13,9 +13,10 @@ import 'package:angular2/src/core/linker/exceptions.dart'
 import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/view_type.dart';
 import 'package:angular2/src/core/render/api.dart';
-import 'package:angular2/src/debug/debug_context.dart'
-    show StaticNodeDebugInfo, DebugContext;
-import 'package:angular2/src/debug/debug_node.dart'
+import 'package:js/js.dart' as js;
+
+import 'debug_context.dart' show StaticNodeDebugInfo, DebugContext;
+import 'debug_node.dart'
     show
         DebugElement,
         DebugNode,
@@ -24,11 +25,10 @@ import 'package:angular2/src/debug/debug_node.dart'
         inspectNativeElement,
         DebugEventListener,
         removeDebugNodeFromIndex;
-import 'package:js/js.dart' as js;
 
 export 'package:angular2/src/core/linker/app_view.dart';
-export 'package:angular2/src/debug/debug_context.dart'
-    show StaticNodeDebugInfo, DebugContext;
+
+export 'debug_context.dart' show StaticNodeDebugInfo, DebugContext;
 
 // RegExp to match anchor comment when logging bindings for debugging.
 final RegExp _templateBindingsExp = new RegExp(r'^template bindings=(.*)$');

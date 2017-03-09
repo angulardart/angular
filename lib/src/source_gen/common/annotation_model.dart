@@ -1,8 +1,9 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/element.dart';
-import 'package:angular2/src/source_gen/common/references.dart';
 import 'package:code_builder/code_builder.dart';
+
+import 'references.dart';
 
 /// An annotation on a reflection type.
 class AnnotationModel {

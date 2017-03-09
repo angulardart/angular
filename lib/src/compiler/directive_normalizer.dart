@@ -1,7 +1,5 @@
 import "dart:async";
 
-import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
-import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -12,6 +10,8 @@ import "html_ast.dart";
 import "html_parser.dart" show HtmlParser;
 import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
+import "url_resolver.dart" show UrlResolver;
+import "xhr.dart" show XHR;
 
 @Injectable()
 class DirectiveNormalizer {

@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:angular2/src/core/di.dart' show OpaqueToken, Provider;
+import 'di.dart' show OpaqueToken, Provider;
 
 /// A DI Token representing a unique string id assigned to the application by
 /// Angular and used primarily for prefixing application attributes and CSS

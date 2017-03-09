@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import "package:angular2/src/debug/debug_node.dart";
+import "debug_node.dart";
 
 /// Predicates for use with [DebugElement]'s query functions.
 class By {

@@ -1,8 +1,4 @@
 import "package:angular2/di.dart" show Injectable;
-import "package:angular2/src/compiler/schema/element_schema_registry.dart"
-    show ElementSchemaRegistry;
-import "package:angular2/src/compiler/selector.dart"
-    show CssSelector, SelectorMatcher;
 import "package:angular2/src/core/linker/app_view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
@@ -30,6 +26,8 @@ import "html_tags.dart" show splitNsName, mergeNsAndName;
 import "identifiers.dart" show identifierToken, Identifiers;
 import "parse_util.dart" show ParseError, ParseErrorLevel;
 import "provider_parser.dart" show ProviderElementContext, ProviderViewContext;
+import "schema/element_schema_registry.dart" show ElementSchemaRegistry;
+import "selector.dart" show CssSelector, SelectorMatcher;
 import "style_url_resolver.dart" show isStyleUrlResolvable;
 import "template_ast.dart"
     show

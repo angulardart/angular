@@ -1,5 +1,6 @@
-import 'package:angular2/src/facade/exceptions.dart' show WrappedException;
 import 'package:logging/logging.dart';
+
+import 'exceptions.dart' show WrappedException;
 
 /// Provides a hook for centralized exception handling.
 ///

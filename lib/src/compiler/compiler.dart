@@ -1,31 +1,22 @@
-import "package:angular2/src/compiler/directive_normalizer.dart"
-    show DirectiveNormalizer;
-import "package:angular2/src/compiler/html_parser.dart" show HtmlParser;
-import "package:angular2/src/compiler/runtime_metadata.dart"
-    show RuntimeMetadataResolver;
-import "package:angular2/src/compiler/schema/dom_element_schema_registry.dart"
-    show DomElementSchemaRegistry;
-import "package:angular2/src/compiler/schema/element_schema_registry.dart"
-    show ElementSchemaRegistry;
-import "package:angular2/src/compiler/style_compiler.dart" show StyleCompiler;
-import "package:angular2/src/compiler/template_parser.dart" show TemplateParser;
-import "package:angular2/src/compiler/url_resolver.dart"
-    show UrlResolver, DEFAULT_PACKAGE_URL_PROVIDER;
-import "package:angular2/src/compiler/view_compiler/view_compiler.dart"
-    show ViewCompiler;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/facade/lang.dart" show assertionsEnabled;
 
 import "config.dart" show CompilerConfig;
+import "directive_normalizer.dart" show DirectiveNormalizer;
 import "directive_resolver.dart" show DirectiveResolver;
 import "expression_parser/lexer.dart" show Lexer;
 import "expression_parser/parser.dart" show Parser;
+import "html_parser.dart" show HtmlParser;
 import "pipe_resolver.dart" show PipeResolver;
+import "runtime_metadata.dart" show RuntimeMetadataResolver;
+import "schema/dom_element_schema_registry.dart" show DomElementSchemaRegistry;
+import "schema/element_schema_registry.dart" show ElementSchemaRegistry;
+import "style_compiler.dart" show StyleCompiler;
+import "template_parser.dart" show TemplateParser;
+import "url_resolver.dart" show UrlResolver, DEFAULT_PACKAGE_URL_PROVIDER;
+import "view_compiler/view_compiler.dart" show ViewCompiler;
 import "view_resolver.dart" show ViewResolver;
 
-export "package:angular2/src/compiler/template_ast.dart";
-export "package:angular2/src/compiler/url_resolver.dart";
-export "package:angular2/src/compiler/xhr.dart";
 export "package:angular2/src/core/platform_directives_and_pipes.dart"
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 
@@ -34,7 +25,10 @@ export "config.dart" show CompilerConfig;
 export "directive_resolver.dart" show DirectiveResolver;
 export "offline_compiler.dart";
 export "pipe_resolver.dart" show PipeResolver;
+export "template_ast.dart";
+export "url_resolver.dart";
 export "view_resolver.dart" show ViewResolver;
+export "xhr.dart";
 
 CompilerConfig createCompilerConfig() {
   return new CompilerConfig(assertionsEnabled(), false);
