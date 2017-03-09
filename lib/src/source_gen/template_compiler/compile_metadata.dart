@@ -50,7 +50,7 @@ class CompileTypeMetadataVisitor
       return null;
     }
     if (element.isAbstract && !constructor.isFactory) {
-      _logger.severe('Invalid @Injectable() annotation: '
+      _logger.warning('Invalid @Injectable() annotation: '
           'Found a constructor for abstract class ${element.name} but it is '
           'not a "factory", and cannot be invoked');
       return null;
