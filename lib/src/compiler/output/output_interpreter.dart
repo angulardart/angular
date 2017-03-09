@@ -670,6 +670,7 @@ var CATCH_STACK_VAR = "stack";
 /// them dynamically.
 void _initializeInterpreter() {
   Identifiers.DebugAppView.runtime = DebugAppView;
+  Identifiers.ngAnchor.runtime = ngAnchor;
   Identifiers.AppView.runtime = AppView;
   Identifiers.ViewContainer.runtime = ViewContainer;
   Identifiers.StaticNodeDebugInfo.runtime = StaticNodeDebugInfo;

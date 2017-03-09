@@ -55,7 +55,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
-    var _anchor_1 = new Comment('template bindings={}');
+    var _anchor_1 = ngAnchor.clone(false);
     parentRenderNode?.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_4 =
@@ -63,7 +63,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _NgIf_1_5 = new NgIf(_appEl_1, _TemplateRef_1_4);
     Text _text_2 = new Text('\n    ');
     parentRenderNode.append(_text_2);
-    var _anchor_3 = new Comment('template bindings={}');
+    var _anchor_3 = ngAnchor.clone(false);
     parentRenderNode?.append(_anchor_3);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
     TemplateRef _TemplateRef_3_4 =

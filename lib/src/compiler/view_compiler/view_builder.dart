@@ -48,12 +48,13 @@ import "view_compiler_utils.dart"
         createFlatArray,
         createDiTokenExpression,
         createSetAttributeParams,
-        componentFromDirectives,
-        TEMPLATE_COMMENT_TEXT;
+        componentFromDirectives;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";
 const STYLE_ATTR = "style";
+var cloneAnchorNodeExpr =
+    o.importExpr(Identifiers.ngAnchor).callMethod('clone', [o.literal(false)]);
 var parentRenderNodeVar = o.variable("parentRenderNode");
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
@@ -432,25 +433,20 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var nodeIndex = this.view.nodes.length;
     var fieldName = '_anchor_${nodeIndex}';
     o.Expression anchorVarExpr;
-    // Create a comment to serve as anchor for template.
+    // Clone template anchor.
     if (createFieldForAnchor) {
       view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(Identifiers.HTML_COMMENT_NODE),
           modifiers: const [o.StmtModifier.Private]));
       anchorVarExpr = new o.ReadClassMemberExpr(fieldName);
-      var createAnchorNodeExpr = new o.WriteClassMemberExpr(
-          fieldName,
-          o
-              .importExpr(Identifiers.HTML_COMMENT_NODE)
-              .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
-      view.createMethod.addStmt(createAnchorNodeExpr.toStmt());
+      var assignCloneAnchorNodeExpr =
+          new o.WriteClassMemberExpr(fieldName, cloneAnchorNodeExpr);
+      view.createMethod.addStmt(assignCloneAnchorNodeExpr.toStmt());
     } else {
-      var readVarExp = o.variable(fieldName);
-      anchorVarExpr = readVarExp;
-      var createAnchorNodeExpr = readVarExp.set(o
-          .importExpr(Identifiers.HTML_COMMENT_NODE)
-          .instantiate([o.literal(TEMPLATE_COMMENT_TEXT)]));
-      view.createMethod.addStmt(createAnchorNodeExpr.toDeclStmt());
+      var readVarExpr = o.variable(fieldName);
+      anchorVarExpr = readVarExpr;
+      var assignCloneAnchorNodeExpr = readVarExpr.set(cloneAnchorNodeExpr);
+      view.createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
     }
     var addCommentStmt = _getParentRenderNode(parent)
         .callMethod('append', [anchorVarExpr], checked: true)

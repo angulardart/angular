@@ -81,8 +81,9 @@ var impEMPTY_MAP = EMPTY_MAP;
 
 class Identifiers {
   static final appViewUtils = new CompileIdentifierMetadata(
-      name: "appViewUtils",
-      moduleUrl: 'asset:angular2/lib/src/core/linker/app_view_utils.dart');
+      name: "appViewUtils", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
+  static final ngAnchor = new CompileIdentifierMetadata(
+      name: 'ngAnchor', moduleUrl: APP_VIEW_MODULE_URL);
   static final AppView = new CompileIdentifierMetadata(
       name: "AppView", moduleUrl: APP_VIEW_MODULE_URL);
   static final DebugAppView = new CompileIdentifierMetadata(

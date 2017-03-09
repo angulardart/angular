@@ -19,6 +19,9 @@ import 'view_type.dart' show ViewType;
 
 export 'package:angular2/src/core/change_detection/component_state.dart';
 
+/// Template anchor comment for cloning.
+var ngAnchor = new Comment('template bindings={}');
+
 const _UndefinedInjectorResult = const Object();
 const String appViewRootElementName = 'rootEl';
 bool domRootRendererIsDirty = false;
