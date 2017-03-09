@@ -30,8 +30,9 @@ echo $THE_COMMAND
 $THE_COMMAND
 
 if [ $TEST_PLATFORM == 'content-shell' ]; then
-  echo "** Running pub tests – with codegen"
-  "$(dirname "$0")/run_codegen_tests.sh"
+  echo "** SKIPPING pub tests – with codegen - broken!"
+  echo "** See https://github.com/dart-lang/angular2/issues/272"
+  # "$(dirname "$0")/run_codegen_tests.sh"
 fi
 
 echo "** Done!!"
