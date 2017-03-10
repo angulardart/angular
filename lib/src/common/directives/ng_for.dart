@@ -84,7 +84,7 @@ import "../../core/change_detection/differs/default_iterable_differ.dart"
 /// </template>
 /// ```
 ///
-/// See the [Template Syntax section on `ngFor`][guide] for details.
+/// For details, see the [`ngFor` discussion in the Template Syntax][guide] page.
 ///
 /// [guide]: docs/guide/template-syntax.html#ngFor
 @Directive(
