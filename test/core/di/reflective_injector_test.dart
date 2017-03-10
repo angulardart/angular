@@ -1,20 +1,7 @@
 @TestOn('browser')
 library angular2.test.core.di.reflective_injector_test;
 
-import "package:angular2/core.dart"
-    show
-        provide,
-        ReflectiveKey,
-        ReflectiveInjector,
-        Injector,
-        Injectable,
-        Inject,
-        Self,
-        Optional,
-        Inject,
-        Provider;
-import "package:angular2/src/core/di/decorators.dart";
-import "package:angular2/src/core/di/reflective_exceptions.dart";
+import "package:angular2/di.dart";
 import "package:angular2/src/core/di/reflective_injector.dart"
     show
         ReflectiveInjectorImpl,

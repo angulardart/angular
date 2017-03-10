@@ -1,7 +1,4 @@
-library angular2.test.core.change_detection.change_detector_util_test;
-
-import "package:angular2/src/core/change_detection/change_detection_util.dart"
-    show devModeEqual;
+import "package:angular2/src/core/change_detection/change_detection_util.dart";
 import 'package:test/test.dart';
 
 void main() {

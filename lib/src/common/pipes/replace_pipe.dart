@@ -29,6 +29,8 @@ import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 @Pipe("replace")
 @Injectable()
 class ReplacePipe implements PipeTransform {
+  const ReplacePipe();
+
   dynamic transform(dynamic value, dynamic /* String | RegExp */ pattern,
       dynamic /* Function | String */ replacement) {
     if (value == null) {

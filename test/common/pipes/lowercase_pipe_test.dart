@@ -1,7 +1,4 @@
-@TestOn('browser')
-library angular2.test.common.pipes.lowercase_pipe_test;
-
-import "package:angular2/angular2.dart" show LowerCasePipe;
+import "package:angular2/src/common/pipes/lowercase_pipe.dart";
 import 'package:test/test.dart';
 
 void main() {

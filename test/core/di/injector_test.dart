@@ -1,7 +1,7 @@
 @TestOn('browser')
 library angular2.test.core.di.injector_test;
 
-import "package:angular2/core.dart" show Injector, InjectorFactory;
+import "package:angular2/di.dart" show Injector, InjectorFactory;
 import 'package:test/test.dart';
 
 import "../../test_util.dart";
