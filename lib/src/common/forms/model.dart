@@ -6,15 +6,19 @@ import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 
 /// Indicates that a Control is valid, i.e. that no errors exist in the input
 /// value.
-const VALID = "VALID";
+@Deprecated('Use AbstractControl.VALID instead.')
+const VALID = AbstractControl.VALID;
 
 /// Indicates that a Control is invalid, i.e. that an error exists in the input
 /// value.
-const INVALID = "INVALID";
+@Deprecated('Use AbstractControl.INVALID instead.')
+const INVALID = AbstractControl.INVALID;
 
 /// Indicates that a Control is pending, i.e. that async validation is occurring
 /// and errors are not yet available for the input value.
-const PENDING = "PENDING";
+@Deprecated('Use AbstractControl.VALID instead.')
+const PENDING = AbstractControl.PENDING;
+
 bool isControl(Object control) => control is AbstractControl;
 
 AbstractControl _find(AbstractControl control,
@@ -41,6 +45,18 @@ Stream<dynamic> _toStream(futureOrStream) {
 }
 
 abstract class AbstractControl {
+  /// Indicates that a Control is valid, i.e. that no errors exist in the input
+  /// value.
+  static const VALID = "VALID";
+
+  /// Indicates that a Control is invalid, i.e. that an error exists in the
+  /// input value.
+  static const INVALID = "INVALID";
+
+  /// Indicates that a Control is pending, i.e. that async validation is
+  /// occurring and errors are not yet available for the input value.
+  static const PENDING = "PENDING";
+
   ValidatorFn validator;
   AsyncValidatorFn asyncValidator;
   dynamic _value;
@@ -55,6 +71,9 @@ abstract class AbstractControl {
   AbstractControl(this.validator, this.asyncValidator);
   dynamic get value => _value;
 
+  /// The validation status of the control.
+  ///
+  /// One of [VALID], [INVALID], or [PENDING].
   String get status => _status;
 
   bool get valid => identical(_status, VALID);
