@@ -1,7 +1,7 @@
 @TestOn('browser && !js')
 library angular2.test.core.linker.query_integration_test;
 
-import 'package:angular2/src/common.dart' show NgIf, NgFor;
+import 'package:angular2/common.dart' show NgIf, NgFor;
 import "package:angular2/core.dart"
     show
         Component,

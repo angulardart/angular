@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular2/src/common.dart' show AsyncPipe, NgIf, NgFor;
+import 'package:angular2/common.dart' show AsyncPipe, NgIf, NgFor;
 import 'package:angular2/core.dart'
     show
         Injector,

@@ -3,8 +3,7 @@ library angular2.test.common.forms.validators_spec;
 
 import "dart:async";
 
-import 'package:angular2/src/common.dart'
-    show Control, Validators, AbstractControl;
+import 'package:angular2/common.dart' show Control, Validators, AbstractControl;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 
