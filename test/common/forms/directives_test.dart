@@ -23,7 +23,7 @@ import 'package:angular2/src/common/forms/directives/shared.dart'
     show selectValueAccessor, composeValidators;
 import 'package:angular2/src/core/change_detection.dart' show SimpleChange;
 import 'package:angular2/src/core/linker/element_ref.dart';
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 

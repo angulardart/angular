@@ -3,7 +3,7 @@ library angular2.test.core.linker.view_injector_integration_test;
 
 import "package:angular2/core.dart";
 import 'package:angular2/common.dart';
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 const ALL_DIRECTIVES = const [

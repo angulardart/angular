@@ -24,7 +24,7 @@ import "package:angular2/src/core/di/reflective_injector.dart"
 import "package:angular2/src/core/di/reflective_provider.dart"
     show ResolvedReflectiveProviderImpl;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 class CustomDependencyMetadata extends DependencyMetadata {

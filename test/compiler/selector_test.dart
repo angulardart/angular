@@ -5,7 +5,7 @@ import 'dart:html';
 
 import 'package:angular2/src/compiler/selector.dart'
     show CssSelector, SelectorMatcher;
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 void main() {

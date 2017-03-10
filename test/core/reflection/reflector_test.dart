@@ -6,7 +6,7 @@ import "package:angular2/src/core/reflection/reflection.dart"
     show Reflector, ReflectionInfo;
 import "package:angular2/src/core/reflection/reflection_capabilities.dart"
     show ReflectionCapabilities;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 import "reflector_common.dart"

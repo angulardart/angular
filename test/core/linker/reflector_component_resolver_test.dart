@@ -8,7 +8,7 @@ import "package:angular2/src/core/linker/component_resolver.dart"
     show ComponentResolver, ReflectorComponentResolver;
 import "package:angular2/src/core/reflection/reflection.dart"
     show reflector, ReflectionInfo;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 void main() {

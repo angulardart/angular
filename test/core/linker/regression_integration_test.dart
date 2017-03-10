@@ -14,7 +14,7 @@ import "package:angular2/core.dart"
         OpaqueToken,
         Injector;
 import 'package:angular2/common.dart' show NgIf, NgClass;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 void main() {

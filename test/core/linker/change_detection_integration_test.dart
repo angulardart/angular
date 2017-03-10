@@ -14,7 +14,7 @@ import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import 'package:angular2/src/testing/angular2_testing.dart';
 import 'package:angular2/testing.dart';
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 import "../../compiler/test_bindings.dart" show TEST_PROVIDERS;

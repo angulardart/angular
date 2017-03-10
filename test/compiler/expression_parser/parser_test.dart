@@ -6,7 +6,7 @@ import "package:angular2/src/compiler/expression_parser/ast.dart"
 import "package:angular2/src/compiler/expression_parser/lexer.dart" show Lexer;
 import "package:angular2/src/compiler/expression_parser/parser.dart"
     show Parser;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import "package:test/test.dart";
 
 import "unparser.dart" show Unparser;

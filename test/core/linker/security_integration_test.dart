@@ -6,7 +6,7 @@ import 'dart:html';
 import 'package:angular2/core.dart' show provide, Injectable, OpaqueToken;
 import 'package:angular2/src/core/metadata.dart' show Component, View;
 import 'package:angular2/src/security/dom_sanitization_service.dart';
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 const ANCHOR_ELEMENT = const OpaqueToken('AnchorElement');

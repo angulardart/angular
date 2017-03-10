@@ -4,7 +4,7 @@ library angular2.test.common.directives.ng_class_test;
 import "package:angular2/core.dart" show Component;
 import 'package:angular2/common.dart' show NgFor;
 import "package:angular2/src/common/directives/ng_class.dart";
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 void detectChangesAndCheckClasses(ComponentFixture fixture, String classes) {

@@ -2,7 +2,7 @@
 library angular2.test.core.linker.query_list_spec;
 
 import "package:angular2/src/core/linker/query_list.dart" show QueryList;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 void main() {

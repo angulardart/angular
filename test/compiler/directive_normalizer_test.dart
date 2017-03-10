@@ -8,7 +8,7 @@ import 'package:angular2/src/compiler/directive_normalizer.dart'
 import 'package:angular2/src/compiler/xhr.dart' show XHR;
 import 'package:angular2/src/compiler/xhr_mock.dart' show MockXHR;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 import 'test_bindings.dart' show TEST_PROVIDERS;
