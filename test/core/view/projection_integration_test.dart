@@ -13,7 +13,7 @@ import 'package:angular2/core.dart'
         ViewEncapsulation,
         View;
 import 'package:angular2/src/debug/debug_node.dart';
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 void main() {

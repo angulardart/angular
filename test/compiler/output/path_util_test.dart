@@ -3,8 +3,9 @@ library angular2.test.compiler.output.path_util_test;
 
 import 'package:angular2/src/compiler/output/path_util.dart'
     show getImportModulePath;
-import 'package:angular2/testing_internal.dart';
 import 'package:test/test.dart';
+
+import "../../test_util.dart";
 
 void main() {
   group('PathUtils getImportModulePath', () {

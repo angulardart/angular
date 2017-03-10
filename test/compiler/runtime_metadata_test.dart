@@ -23,7 +23,7 @@ import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LIFECYCLE_HOOKS_VALUES;
 import 'package:angular2/src/core/platform_directives_and_pipes.dart'
     show PLATFORM_DIRECTIVES;
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 import 'test_bindings.dart' show TEST_PROVIDERS;

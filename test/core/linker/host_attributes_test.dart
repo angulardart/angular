@@ -5,10 +5,7 @@ library angular2.test.di.integration_dart_test;
 import 'dart:html';
 
 import 'package:angular2/angular2.dart';
-//import 'package:angular2/src/debug/debug_node.dart';
-//import 'package:angular2/src/testing/matchers.dart';
 import 'package:angular_test/angular_test.dart';
-//import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
 void main() {

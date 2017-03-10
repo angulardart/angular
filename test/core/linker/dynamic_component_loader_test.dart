@@ -11,7 +11,7 @@ import 'package:angular2/src/core/linker/element_ref.dart' show ElementRef;
 import 'package:angular2/src/core/metadata.dart' show Component;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/platform/dom/dom_tokens.dart' show DOCUMENT;
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 void main() {

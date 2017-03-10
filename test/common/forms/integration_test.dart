@@ -10,7 +10,7 @@ import "package:angular2/core.dart"
     show Component, Directive, Output, EventEmitter;
 import "package:angular2/core.dart" show Provider, Input;
 import "package:angular2/src/common/forms/validators.dart";
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:js/js.dart';
 import 'package:test/test.dart';
 

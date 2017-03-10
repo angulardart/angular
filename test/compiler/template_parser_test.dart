@@ -10,10 +10,11 @@ import "package:angular2/src/compiler/template_ast.dart";
 import "package:angular2/src/compiler/template_parser.dart"
     show TemplateParser, splitClasses;
 import "package:angular2/src/core/di.dart" show provide;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import "package:logging/logging.dart";
 import 'package:test/test.dart';
 
+import "../test_util.dart";
 import "expression_parser/unparser.dart" show Unparser;
 import "schema_registry_mock.dart" show MockSchemaRegistry;
 import "test_bindings.dart" show TEST_PROVIDERS;

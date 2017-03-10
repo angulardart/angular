@@ -3,7 +3,7 @@ library angular2.test.common.pipes.date_pipe_test;
 
 import 'package:angular2/angular2.dart' show DatePipe;
 import 'package:angular2/src/compiler/pipe_resolver.dart' show PipeResolver;
-import 'package:angular2/testing_internal.dart';
+import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -2,8 +2,9 @@
 library angular2.test.core.di.injector_test;
 
 import "package:angular2/core.dart" show Injector, InjectorFactory;
-import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
+
+import "../../test_util.dart";
 
 void main() {
   group("Injector.NULL", () {

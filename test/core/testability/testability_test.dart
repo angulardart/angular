@@ -8,7 +8,7 @@ import "package:angular2/src/core/testability/testability.dart"
     show Testability;
 import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 

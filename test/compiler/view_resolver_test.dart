@@ -3,8 +3,10 @@ library angular2.test.compiler.view_resolver_test;
 
 import "package:angular2/src/compiler/view_resolver.dart" show ViewResolver;
 import "package:angular2/src/core/metadata.dart" show Component;
-import "package:angular2/testing_internal.dart";
+import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
+
+import "../test_util.dart";
 
 class SomeDir {}
 
