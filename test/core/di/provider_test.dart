@@ -1,9 +1,9 @@
-@TestOn('browser')
+@TestOn("!js")
 library angular2.test.di.provider_test;
 
 import 'dart:mirrors';
 
-import 'package:angular2/core.dart';
+import 'package:angular2/di.dart';
 import 'package:test/test.dart';
 
 void main() {

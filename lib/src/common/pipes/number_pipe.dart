@@ -1,4 +1,4 @@
-import 'package:angular2/angular2.dart';
+import "package:angular2/di.dart" show Injectable, PipeTransform, Pipe;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:intl/intl.dart';
 

@@ -1,17 +1,11 @@
-@TestOn('browser')
-library angular2.test.common.pipes.number_pipe_test;
-
-import "package:angular2/angular2.dart"
-    show DecimalPipe, PercentPipe, CurrencyPipe;
+import "package:angular2/src/common/pipes/number_pipe.dart";
 import 'package:test/test.dart';
 
 void main() {
   group("Number pipes", () {
     group("DecimalPipe", () {
-      var pipe;
-      setUp(() {
-        pipe = new DecimalPipe();
-      });
+      var pipe = new DecimalPipe();
+
       group("transform", () {
         test("should return correct value for numbers", () {
           expect(pipe.transform(12345), "12,345");
@@ -27,10 +21,8 @@ void main() {
       });
     });
     group("PercentPipe", () {
-      var pipe;
-      setUp(() {
-        pipe = new PercentPipe();
-      });
+      var pipe = new PercentPipe();
+
       group("transform", () {
         test("should return correct value for numbers", () {
           expect(pipe.transform(1.23), "123%");
@@ -42,10 +34,7 @@ void main() {
       });
     });
     group("CurrencyPipe", () {
-      var pipe;
-      setUp(() {
-        pipe = new CurrencyPipe();
-      });
+      var pipe = new CurrencyPipe();
       group("transform", () {
         test("should return correct value for numbers", () {
           expect(pipe.transform(123), "USD123");
