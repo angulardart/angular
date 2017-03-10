@@ -5,7 +5,7 @@ import 'dart:html';
 
 import 'package:angular2/angular2.dart';
 import "package:angular2/core.dart";
-import 'package:angular2/src/common.dart' show AsyncPipe, DatePipe;
+import 'package:angular2/common.dart' show AsyncPipe, DatePipe;
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show PipeTransform, WrappedValue;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
