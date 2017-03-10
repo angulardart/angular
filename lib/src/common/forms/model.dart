@@ -4,23 +4,6 @@ import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
 
-/// Indicates that a Control is valid, i.e. that no errors exist in the input
-/// value.
-@Deprecated('Use AbstractControl.VALID instead.')
-const VALID = AbstractControl.VALID;
-
-/// Indicates that a Control is invalid, i.e. that an error exists in the input
-/// value.
-@Deprecated('Use AbstractControl.INVALID instead.')
-const INVALID = AbstractControl.INVALID;
-
-/// Indicates that a Control is pending, i.e. that async validation is occurring
-/// and errors are not yet available for the input value.
-@Deprecated('Use AbstractControl.VALID instead.')
-const PENDING = AbstractControl.PENDING;
-
-bool isControl(Object control) => control is AbstractControl;
-
 AbstractControl _find(AbstractControl control,
     dynamic /* List< dynamic /* String | num */ > | String */ path) {
   if (path == null) return null;
