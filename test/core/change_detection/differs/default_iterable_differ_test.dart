@@ -5,8 +5,9 @@ import 'dart:collection';
 
 import "package:angular2/src/core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer;
-import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
+
+import "../../../test_util.dart";
 
 void main() {
   group("iterable differ", () {

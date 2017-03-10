@@ -7,6 +7,8 @@ import 'package:angular2/src/core/metadata.dart';
 import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
+import "../test_util.dart";
+
 @Directive(selector: 'someDirective')
 class SomeDirective {}
 

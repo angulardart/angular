@@ -8,6 +8,8 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
+import "../../test_util.dart";
+
 var needsLongerTimers = browserDetection.isSlow || browserDetection.isEdge;
 var resultTimer = 1000;
 // Schedules a microtask (using a timer)

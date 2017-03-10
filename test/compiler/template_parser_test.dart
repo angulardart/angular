@@ -14,6 +14,7 @@ import "package:angular2/src/testing/internal.dart";
 import "package:logging/logging.dart";
 import 'package:test/test.dart';
 
+import "../test_util.dart";
 import "expression_parser/unparser.dart" show Unparser;
 import "schema_registry_mock.dart" show MockSchemaRegistry;
 import "test_bindings.dart" show TEST_PROVIDERS;

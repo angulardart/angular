@@ -6,6 +6,8 @@ import "package:angular2/src/core/metadata.dart" show Component;
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
+import "../test_util.dart";
+
 class SomeDir {}
 
 class SomePipe {}

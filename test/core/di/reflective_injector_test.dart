@@ -27,6 +27,8 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
+import "../../test_util.dart";
+
 class CustomDependencyMetadata extends DependencyMetadata {
   @override
   get token => null;

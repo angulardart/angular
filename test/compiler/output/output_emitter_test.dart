@@ -9,6 +9,7 @@ import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/testing/internal.dart";
 import "package:test/test.dart";
 
+import "../../test_util.dart";
 import "output_emitter_codegen_typed.dart" as typed;
 import "output_emitter_util.dart"
     show codegenStmts, ExternalClass, DynamicClassInstanceFactory;

@@ -11,6 +11,7 @@ import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
+import "../test_util.dart";
 import 'test_bindings.dart' show TEST_PROVIDERS;
 
 void main() {
