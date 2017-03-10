@@ -19,9 +19,7 @@ class DomEventsPlugin extends EventManagerPlugin {
     }
 
     element.addEventListener(eventName, guardedCallback);
-    return () {
-      element.removeEventListener(eventName, guardedCallback);
-    };
+    return null;
   }
 
   // This plugin comes last in the list of plugins, it accepts all events.

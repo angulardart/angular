@@ -29,6 +29,6 @@ OfflineCompiler createTemplateCompiler(BuildStep buildStep,
       new DirectiveNormalizer(xhr, urlResolver, htmlParser),
       templateParser,
       new StyleCompiler(urlResolver),
-      new ViewCompiler(compilerConfig),
+      new ViewCompiler(compilerConfig, parser),
       new DartEmitter());
 }

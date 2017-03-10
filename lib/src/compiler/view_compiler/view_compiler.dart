@@ -13,6 +13,7 @@ import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'view_binder.dart' show bindView;
 import 'view_builder.dart';
+import '../expression_parser/parser.dart';
 
 class ViewCompileResult {
   List<o.Statement> statements;
@@ -31,7 +32,8 @@ class ViewCompileResult {
 @Injectable()
 class ViewCompiler {
   CompilerConfig _genConfig;
-  ViewCompiler(this._genConfig);
+  Parser parser;
+  ViewCompiler(this._genConfig, this.parser);
 
   ViewCompileResult compileComponent(
       CompileDirectiveMetadata component,
@@ -58,8 +60,8 @@ class ViewCompiler {
       List<TemplateAst> template,
       StylesCompileResult stylesCompileResult,
       List<ViewCompileDependency> targetDependencies) {
-    var builderVisitor =
-        new ViewBuilderVisitor(view, targetDependencies, stylesCompileResult);
+    var builderVisitor = new ViewBuilderVisitor(
+        view, parser, targetDependencies, stylesCompileResult);
     templateVisitAll(builderVisitor, template,
         view.declarationElement.parent ?? view.declarationElement);
     return builderVisitor.nestedViewCount;
@@ -89,7 +91,7 @@ class ViewCompiler {
     // Example: RenderComponentType renderType_MaterialButtonComponent;
     bool creatingMainView = view.viewIndex == 0;
 
-    o.ClassStmt viewClass = createViewClass(view, nodeDebugInfosVar);
+    o.ClassStmt viewClass = createViewClass(view, nodeDebugInfosVar, parser);
     targetStatements.add(viewClass);
 
     targetStatements.add(createViewFactory(view, viewClass));

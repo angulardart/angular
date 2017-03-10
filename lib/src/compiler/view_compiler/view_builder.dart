@@ -28,6 +28,7 @@ import "../template_ast.dart"
         DirectiveAst,
         BoundDirectivePropertyAst,
         templateVisitAll;
+import '../expression_parser/parser.dart' show Parser;
 import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_method.dart";
 import "compile_view.dart" show CompileView;
@@ -36,11 +37,15 @@ import "constants.dart"
         ChangeDetectionStrategyEnum,
         ChangeDetectorStateEnum,
         DetectChangesVars,
+        EventHandlerVars,
         InjectMethodVars,
         ViewConstructorVars,
         ViewEncapsulationEnum,
         ViewProperties,
         ViewTypeEnum;
+import 'expression_converter.dart';
+import 'event_binder.dart' show convertStmtIntoExpression;
+import 'parse_utils.dart';
 import 'property_binder.dart';
 import "view_compiler_utils.dart"
     show
@@ -69,6 +74,7 @@ class ViewCompileDependency {
 
 class ViewBuilderVisitor implements TemplateAstVisitor {
   final CompileView view;
+  final Parser parser;
   final List<ViewCompileDependency> targetDependencies;
   final StylesCompileResult stylesCompileResult;
   static Map<String, CompileIdentifierMetadata> tagNameToIdentifier;
@@ -79,8 +85,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   static final defaultDocVarName = 'doc';
   String docVarName;
 
-  ViewBuilderVisitor(
-      this.view, this.targetDependencies, this.stylesCompileResult) {
+  ViewBuilderVisitor(this.view, this.parser, this.targetDependencies,
+      this.stylesCompileResult) {
     tagNameToIdentifier ??= {
       'a': Identifiers.HTML_ANCHOR_ELEMENT,
       'area': Identifiers.HTML_AREA_ELEMENT,
@@ -495,7 +501,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     // Create a visitor for embedded view and visit all nodes.
     var embeddedViewVisitor = new ViewBuilderVisitor(
-        embeddedView, targetDependencies, stylesCompileResult);
+        embeddedView, parser, targetDependencies, stylesCompileResult);
     templateVisitAll(
         embeddedViewVisitor,
         ast.children,
@@ -725,10 +731,11 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
 
 /// Generates output ast for a CompileView and returns a [ClassStmt] for the
 /// view of embedded template.
-o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar) {
+o.ClassStmt createViewClass(
+    CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
   var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
   var viewMethods = (new List.from([
-    new o.ClassMethod("build", [], generateCreateMethod(view),
+    new o.ClassMethod("build", [], generateCreateMethod(view, parser),
         o.importType(Identifiers.ComponentRef, null)),
     new o.ClassMethod(
         "injectorGetInternal",
@@ -922,7 +929,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
       .toDeclStmt(view.viewFactory.name, [o.StmtModifier.Final]);
 }
 
-List<o.Statement> generateCreateMethod(CompileView view) {
+List<o.Statement> generateCreateMethod(CompileView view, Parser parser) {
   o.Expression parentRenderNodeExpr = o.NULL_EXPR;
   var parentRenderNodeStmts = <o.Statement>[];
   bool isComponent = view.viewType == ViewType.COMPONENT;
@@ -954,8 +961,13 @@ List<o.Statement> generateCreateMethod(CompileView view) {
     o.literalArr(view.subscriptions)
   ]).toStmt());
 
-  if (isComponent &&
-      view.viewIndex == 0 &&
+  bool isComponentRoot = isComponent && view.viewIndex == 0;
+
+  if (isComponentRoot) {
+    _writeComponentHostEventListeners(view, parser, statements);
+  }
+
+  if (isComponentRoot &&
       view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
     // Connect ComponentState callback to view.
     statements.add((new o.ReadClassMemberExpr('ctx')
@@ -978,6 +990,56 @@ List<o.Statement> generateCreateMethod(CompileView view) {
   }
   statements.add(new o.ReturnStatement(resultExpr));
   return statements;
+}
+
+/// Writes shared event handler wiring for events that are directly defined
+/// on host property of @Component annotation.
+void _writeComponentHostEventListeners(
+    CompileView view, Parser parser, List<o.Statement> statements) {
+  CompileDirectiveMetadata component = view.component;
+  for (String eventName in component.hostListeners.keys) {
+    String handlerSource = component.hostListeners[eventName];
+    var handlerAst = parser.parseAction(handlerSource, '');
+    HandlerType handlerType = handlerTypeFromExpression(handlerAst);
+
+    var context = new o.ReadClassMemberExpr('ctx');
+    var actionExpr = convertStmtIntoExpression(
+        convertCdStatementToIr(view, context, handlerAst, false).last);
+    if (handlerType == HandlerType.notSimple) {
+      List<o.Statement> stmts = <o.Statement>[
+        new o.InvokeMemberMethodExpr('markPathToRootAsCheckOnce', []).toStmt(),
+        new o.ReturnStatement(actionExpr)
+      ];
+      String methodName = '_handle_${sanitizeEventName(eventName)}__';
+      view.eventHandlerMethods.add(new o.ClassMethod(
+          methodName,
+          [new o.FnParam(EventHandlerVars.event.name, o.importType(null))],
+          stmts,
+          o.BOOL_TYPE,
+          [o.StmtModifier.Private]));
+
+      o.Expression handlerExpr = new o.InvokeMemberMethodExpr(
+          'evt', [new o.ReadClassMemberExpr(methodName)]);
+      o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
+        new o.ReadClassMemberExpr(appViewRootElementName),
+        o.literal(eventName),
+        handlerExpr
+      ]);
+      statements.add(listenExpr.toStmt());
+    } else {
+      assert(actionExpr is o.InvokeMethodExpr);
+      var callExpr = actionExpr as o.InvokeMethodExpr;
+      var eventListener = new o.InvokeMemberMethodExpr(
+          'eventHandler${handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
+          [new o.ReadPropExpr(callExpr.receiver, callExpr.name)]);
+      o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
+        new o.ReadClassMemberExpr(appViewRootElementName),
+        o.literal(eventName),
+        eventListener
+      ]);
+      statements.add(listenExpr.toStmt());
+    }
+  }
 }
 
 List<o.Statement> generateDetectChangesMethod(CompileView view) {

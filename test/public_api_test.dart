@@ -86,7 +86,6 @@ var NG_COMPILER = [
   'BoundDirectivePropertyAst',
   'BoundElementPropertyAst',
   'BoundEventAst',
-  'HandlerType',
   'BoundTextAst',
   'COMPILER_PROVIDERS',
   'CompileDirectiveMetadata',
@@ -96,6 +95,8 @@ var NG_COMPILER = [
   'ElementAst',
   'ElementProviderUsage',
   'EmbeddedTemplateAst',
+  'HandlerType',
+  'handlerTypeFromExpression',
   'NgContentAst',
   'PLATFORM_DIRECTIVES',
   'PLATFORM_PIPES',
@@ -122,6 +123,7 @@ var NG_COMPILER = [
   'PipeResolver',
   'ProviderAst',
   'ProviderAstType',
+  'sanitizeEventName',
   'ViewResolver',
   'createOfflineCompileUrlResolver'
 ];

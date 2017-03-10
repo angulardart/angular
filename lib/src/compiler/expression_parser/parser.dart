@@ -73,11 +73,13 @@ class TemplateBindingParseResult {
 
 @Injectable()
 class Parser {
-  Lexer _lexer;
+  final Lexer _lexer;
+
   Parser(this._lexer);
+
   ASTWithSource parseAction(String input, dynamic location) {
     this._checkNoInterpolation(input, location);
-    var tokens = this._lexer.tokenize(this._stripComments(input));
+    var tokens = _lexer.tokenize(this._stripComments(input));
     var ast = new _ParseAST(input, location, tokens, true).parseChain();
     return new ASTWithSource(ast, input, location);
   }

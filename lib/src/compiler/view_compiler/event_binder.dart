@@ -1,11 +1,12 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show BoundEventAst, DirectiveAst, HandlerType;
+import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show convertCdStatementToIr;
+import 'parse_utils.dart';
 
 /// Generates code to listen to a single eventName on a [CompileElement].
 ///
@@ -164,7 +165,8 @@ class CompileEventListener {
 }
 
 List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
-    List<DirectiveAst> dirs, CompileElement compileElement) {
+    List<DirectiveAst> dirs, CompileElement compileElement,
+    {bool includeComponentOutputs: true}) {
   List<CompileEventListener> eventListeners = [];
   for (var hostEvent in hostEvents) {
     compileElement.view.bindings
@@ -177,6 +179,10 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
   for (var directiveAst in dirs) {
     i++;
     var directiveInstance = compileElement.directiveInstances[i];
+    if (includeComponentOutputs == false &&
+        directiveAst.directive.isComponent) {
+      continue;
+    }
     for (var hostEvent in directiveAst.hostEvents) {
       compileElement.view.bindings
           .add(new CompileBinding(compileElement, hostEvent));
@@ -216,12 +222,6 @@ o.Expression convertStmtIntoExpression(o.Statement stmt) {
     return stmt.value;
   }
   return null;
-}
-
-final RegExp _eventNameRegExp = new RegExp(r'[^a-zA-Z_]');
-
-String sanitizeEventName(String name) {
-  return name.replaceAll(_eventNameRegExp, '_');
 }
 
 o.Expression _extractFunction(o.Expression returnExpr) {

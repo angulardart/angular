@@ -6,9 +6,9 @@ import 'compile_metadata.dart'
         CompileDirectiveMetadata,
         CompileTokenMetadata,
         CompileProviderMetadata;
-import 'expression_parser/ast.dart'
-    show AST, ASTWithSource, ImplicitReceiver, MethodCall, PropertyRead;
-import 'view_compiler/constants.dart';
+import 'expression_parser/ast.dart' show AST;
+import 'package:angular2/src/compiler/view_compiler/parse_utils.dart'
+    show handlerTypeFromExpression, HandlerType;
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
 abstract class TemplateAst {
@@ -74,8 +74,6 @@ abstract class ElementProviderUsage {
   bool hasNonLocalRequest(ProviderAst providerAst);
 }
 
-enum HandlerType { simpleNoArgs, simpleOneArg, notSimple }
-
 /// A binding for an element event (e.g. (event)='handler()').
 class BoundEventAst implements TemplateAst {
   String name;
@@ -86,48 +84,7 @@ class BoundEventAst implements TemplateAst {
     return visitor.visitEvent(this, context);
   }
 
-  /// Classifies this event binding by it's form.
-  ///
-  /// The simple form looks like
-  ///
-  ///     (event)="handler($event)"
-  ///
-  /// or
-  ///
-  ///     (event)="handler()"
-  ///
-  /// Since these types of handlers are so common, we can optimize the code
-  /// generated for them.
-  HandlerType get handlerType {
-    var eventHandler = handler;
-    if (eventHandler is ASTWithSource) {
-      eventHandler = (eventHandler as ASTWithSource).ast;
-    }
-    if (eventHandler is! MethodCall) {
-      return HandlerType.notSimple;
-    }
-    var call = eventHandler as MethodCall;
-    if (call.receiver is! ImplicitReceiver) {
-      return HandlerType.notSimple;
-    }
-    if (call.args.isEmpty) {
-      return HandlerType.simpleNoArgs;
-    }
-    if (call.args.length != 1) {
-      return HandlerType.notSimple;
-    }
-    var singleArg = call.args.single;
-    if (singleArg is! PropertyRead) {
-      return HandlerType.notSimple;
-    }
-    var property = singleArg as PropertyRead;
-    if (property.name == EventHandlerVars.event.name &&
-        property.receiver is ImplicitReceiver) {
-      return HandlerType.simpleOneArg;
-    } else {
-      return HandlerType.notSimple;
-    }
-  }
+  HandlerType get handlerType => handlerTypeFromExpression(handler);
 }
 
 /// A reference declaration on an element (e.g. let someName='expression').

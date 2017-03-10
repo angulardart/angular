@@ -63,8 +63,10 @@ class ViewBinderVisitor implements TemplateAstVisitor {
 
   dynamic visitElement(ElementAst ast, dynamic context) {
     var compileElement = (view.nodes[_nodeIndex++] as CompileElement);
-    var eventListeners =
-        collectEventListeners(ast.outputs, ast.directives, compileElement);
+    var eventListeners = collectEventListeners(
+        ast.outputs, ast.directives, compileElement,
+        includeComponentOutputs: false);
+
     bindRenderInputs(ast.inputs, compileElement);
     bindRenderOutputs(eventListeners);
     var index = -1;

@@ -30,3 +30,4 @@ export "src/compiler/compiler.dart"
         CompileDirectiveMetadata,
         CompilePipeMetadata;
 export "src/compiler/template_ast.dart";
+export "src/compiler/view_compiler/parse_utils.dart";

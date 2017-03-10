@@ -241,7 +241,7 @@ class ASTWithSource extends AST {
   }
 
   @override
-  String toString() => '''${ this . source} in ${ this . location}''';
+  String toString() => '$source in $location';
 }
 
 class TemplateBinding {

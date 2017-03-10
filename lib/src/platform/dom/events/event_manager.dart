@@ -27,9 +27,7 @@ class EventManager {
     return plugin.addEventListener(element, eventName, callback);
   }
 
-  NgZone getZone() {
-    return this._zone;
-  }
+  NgZone getZone() => _zone;
 
   EventManagerPlugin _findPluginFor(String eventName) {
     EventManagerPlugin plugin = _eventToPlugin[eventName];
