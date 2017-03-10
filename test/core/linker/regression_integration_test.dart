@@ -13,7 +13,7 @@ import "package:angular2/core.dart"
         PLATFORM_PIPES,
         OpaqueToken,
         Injector;
-import 'package:angular2/src/common.dart' show NgIf, NgClass;
+import 'package:angular2/common.dart' show NgIf, NgClass;
 import "package:angular2/testing_internal.dart";
 import 'package:test/test.dart';
 

@@ -3,7 +3,7 @@ library angular2.test.common.forms.form_builder_test;
 
 import 'dart:async';
 
-import 'package:angular2/src/common.dart' show FormBuilder, AbstractControl;
+import 'package:angular2/common.dart' show FormBuilder, AbstractControl;
 import 'package:test/test.dart';
 
 Map<String, dynamic> _syncValidator(AbstractControl c) {
