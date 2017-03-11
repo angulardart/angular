@@ -1,17 +1,13 @@
-@TestOn('browser')
-library angular2.test.common.pipes.replace_pipe_test;
-
-import "package:angular2/angular2.dart" show ReplacePipe;
+import "package:angular2/src/common/pipes/replace_pipe.dart";
 import 'package:test/test.dart';
+
+final someNumber = 42;
+final str = "Douglas Adams";
 
 void main() {
   group("ReplacePipe", () {
-    num someNumber;
-    var str;
-    var pipe;
+    ReplacePipe pipe;
     setUp(() {
-      someNumber = 42;
-      str = "Douglas Adams";
       pipe = new ReplacePipe();
     });
     group("transform", () {
