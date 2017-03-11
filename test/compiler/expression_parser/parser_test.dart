@@ -141,13 +141,9 @@ void main() {
         });
         test("should only allow identifier, string, or keyword as map key", () {
           expectActionError(
-              "{(:0}",
-              throwsWith(
-                  new RegExp("expected identifier, keyword, or string")));
-          expectActionError(
-              "{1234:0}",
-              throwsWith(
-                  new RegExp("expected identifier, keyword, or string")));
+              "{(:0}", throwsWith("expected identifier, keyword, or string"));
+          expectActionError("{1234:0}",
+              throwsWith("expected identifier, keyword, or string"));
         });
       });
       group("member access", () {
@@ -156,12 +152,9 @@ void main() {
           checkAction("a.a");
         });
         test("should only allow identifier or keyword as member names", () {
-          expectActionError(
-              "x.(", throwsWith(new RegExp("identifier or keyword")));
-          expectActionError(
-              "x. 1234", throwsWith(new RegExp("identifier or keyword")));
-          expectActionError(
-              "x.\"foo\"", throwsWith(new RegExp("identifier or keyword")));
+          expectActionError("x.(", throwsWith("identifier or keyword"));
+          expectActionError("x. 1234", throwsWith("identifier or keyword"));
+          expectActionError("x.\"foo\"", throwsWith("identifier or keyword"));
         });
         test("should parse safe field access", () {
           checkAction("a?.a");
@@ -212,16 +205,15 @@ void main() {
           checkAction("a = 123; b = 234;");
         });
         test("should throw on safe field assignments", () {
-          expectActionError("a?.a = 123",
-              throwsWith(new RegExp("cannot be used in the assignment")));
+          expectActionError(
+              "a?.a = 123", throwsWith("cannot be used in the assignment"));
         });
         test("should support array updates", () {
           checkAction("a[0] = 200");
         });
       });
       test("should error when using pipes", () {
-        expectActionError(
-            "x|blah", throwsWith(new RegExp("Cannot have a pipe")));
+        expectActionError("x|blah", throwsWith("Cannot have a pipe"));
       });
       test("should store the source in the result", () {
         expect(parseAction("someExpr").source, "someExpr");
@@ -238,8 +230,7 @@ void main() {
     });
     group("general error handling", () {
       test("should throw on an unexpected token", () {
-        expectActionError(
-            "[1,2] trac", throwsWith(new RegExp("Unexpected token 'trac'")));
+        expectActionError("[1,2] trac", throwsWith("Unexpected token 'trac'"));
       });
       test("should throw a reasonable error for unconsumed tokens", () {
         expectActionError(
@@ -268,12 +259,11 @@ void main() {
           checkBinding("a | b:(c | d)", "(a | b:(c | d))");
         });
         test("should only allow identifier or keyword as formatter names", () {
+          expectBindingError("\"Foo\"|(", throwsWith("identifier or keyword"));
           expectBindingError(
-              "\"Foo\"|(", throwsWith(new RegExp("identifier or keyword")));
+              "\"Foo\"|1234", throwsWith("identifier or keyword"));
           expectBindingError(
-              "\"Foo\"|1234", throwsWith(new RegExp("identifier or keyword")));
-          expectBindingError("\"Foo\"|\"uppercase\"",
-              throwsWith(new RegExp("identifier or keyword")));
+              "\"Foo\"|\"uppercase\"", throwsWith("identifier or keyword"));
         });
         test("should parse quoted expressions", () {
           checkBinding("a:b", "a:b");
@@ -297,11 +287,10 @@ void main() {
       });
       test("should throw on chain expressions", () {
         expect(() => parseBinding("1;2"),
-            throwsWith(new RegExp("contain chained expression")));
+            throwsWith("contain chained expression"));
       });
       test("should throw on assignment", () {
-        expect(() => parseBinding("a=2"),
-            throwsWith(new RegExp("contain assignments")));
+        expect(() => parseBinding("a=2"), throwsWith("contain assignments"));
       });
       test("should throw when encountering interpolation", () {
         expectBindingError(
@@ -369,10 +358,10 @@ void main() {
         expect(keys(bindings), ["a-b"]);
         expect(() {
           parseTemplateBindings("(:0");
-        }, throwsWith(new RegExp("expected identifier, keyword, or string")));
+        }, throwsWith("expected identifier, keyword, or string"));
         expect(() {
           parseTemplateBindings("1234:0");
-        }, throwsWith(new RegExp("expected identifier, keyword, or string")));
+        }, throwsWith("expected identifier, keyword, or string"));
       });
       test("should detect expressions as value", () {
         var bindings = parseTemplateBindings("a:b");

@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
 
-Matcher throwsWith(message) => new _ThrowsWith(message);
+Matcher throwsWith(Pattern message) => new _ThrowsWith(message);
 
 class _ThrowsWith extends Matcher {
   // RegExp or String.
-  final expected;
+  final Pattern expected;
 
   _ThrowsWith(this.expected) {
     assert(expected is RegExp || expected is String);
@@ -18,9 +18,8 @@ class _ThrowsWith extends Matcher {
       return false;
     } catch (e, s) {
       var errorString = e.toString();
-      if (expected is String && errorString.contains(expected)) {
-        return true;
-      } else if (expected is RegExp && expected.hasMatch(errorString)) {
+
+      if (errorString.contains(expected)) {
         return true;
       } else {
         addStateInfo(matchState, {'exception': errorString, 'stack': s});

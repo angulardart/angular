@@ -401,7 +401,7 @@ void main() {
         provide(Engine,
             useFactory: (() => isBroken ? new BrokenEngine() : new Engine()))
       ]);
-      expect(() => injector.get(Car), throwsWith(new RegExp("Error")));
+      expect(() => injector.get(Car), throwsWith("Error"));
       isBroken = false;
       expect(injector.get(Car), new isInstanceOf<Car>());
     });
@@ -892,7 +892,7 @@ void main() {
         provide(Engine,
             useFactory: (() => isBroken ? new BrokenEngine() : new Engine()))
       ]);
-      expect(() => injector.get(Car), throwsWith(new RegExp("Error")));
+      expect(() => injector.get(Car), throwsWith("Error"));
       isBroken = false;
       expect(injector.get(Car), new isInstanceOf<Car>());
     });
