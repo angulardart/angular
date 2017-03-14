@@ -156,7 +156,8 @@ class NgSwitch {
 ///
 /// See [NgSwitch] for more details and example.
 ///
-@Directive(selector: "[ngSwitchWhen]", inputs: const ["ngSwitchWhen"])
+@Directive(selector: "[ngSwitchWhen],[ngSwitchCase]",
+    inputs: const ["ngSwitchWhen","ngSwitchCase"])
 class NgSwitchWhen {
   // `_WHEN_DEFAULT` is used as a marker for a not yet initialized value
 
@@ -168,6 +169,11 @@ class NgSwitchWhen {
     this._switch = ngSwitch;
     this._view = new SwitchView(viewContainer, templateRef);
   }
+
+  set ngSwitchCase(dynamic value) {
+    ngSwitchWhen = value;
+  }
+
   set ngSwitchWhen(dynamic value) {
     if (identical(value, _value)) return;
     this._switch._onWhenValueChanged(this._value, value, this._view);

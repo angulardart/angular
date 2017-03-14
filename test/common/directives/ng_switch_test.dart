@@ -15,8 +15,8 @@ void main() {
             (TestComponentBuilder tcb, AsyncTestCompleter completer) {
           var template = "<div>" +
               "<ul [ngSwitch]=\"switchValue\">" +
-              "<template ngSwitchWhen=\"a\"><li>when a</li></template>" +
-              "<template ngSwitchWhen=\"b\"><li>when b</li></template>" +
+              "<template ngSwitchCase=\"a\"><li>when a</li></template>" +
+              "<template ngSwitchCase=\"b\"><li>when b</li></template>" +
               "</ul></div>";
           tcb
               .overrideTemplate(TestComponent, template)
@@ -42,7 +42,7 @@ void main() {
             (TestComponentBuilder tcb, AsyncTestCompleter completer) {
           var template = "<div>" +
               "<ul [ngSwitch]=\"switchValue\">" +
-              "<li template=\"ngSwitchWhen 'a'\">when a</li>" +
+              "<li template=\"ngSwitchCase 'a'\">when a</li>" +
               "<li template=\"ngSwitchDefault\">when default</li>" +
               "</ul></div>";
           tcb
@@ -76,10 +76,10 @@ void main() {
             (TestComponentBuilder tcb, AsyncTestCompleter completer) {
           var template = "<div>" +
               "<ul [ngSwitch]=\"switchValue\">" +
-              "<template ngSwitchWhen=\"a\"><li>when a1;</li></template>" +
-              "<template ngSwitchWhen=\"b\"><li>when b1;</li></template>" +
-              "<template ngSwitchWhen=\"a\"><li>when a2;</li></template>" +
-              "<template ngSwitchWhen=\"b\"><li>when b2;</li></template>" +
+              "<template ngSwitchCase=\"a\"><li>when a1;</li></template>" +
+              "<template ngSwitchCase=\"b\"><li>when b1;</li></template>" +
+              "<template ngSwitchCase=\"a\"><li>when a2;</li></template>" +
+              "<template ngSwitchCase=\"b\"><li>when b2;</li></template>" +
               "<template ngSwitchDefault><li>when default1;</li></template>" +
               "<template ngSwitchDefault><li>when default2;</li></template>" +
               "</ul></div>";
@@ -109,8 +109,8 @@ void main() {
             (TestComponentBuilder tcb, AsyncTestCompleter completer) {
           var template = "<div>" +
               "<ul [ngSwitch]=\"switchValue\">" +
-              "<template [ngSwitchWhen]=\"when1\"><li>when 1;</li></template>" +
-              "<template [ngSwitchWhen]=\"when2\"><li>when 2;</li></template>" +
+              "<template [ngSwitchCase]=\"when1\"><li>when 1;</li></template>" +
+              "<template [ngSwitchCase]=\"when2\"><li>when 2;</li></template>" +
               "<template ngSwitchDefault><li>when default;</li></template>" +
               "</ul></div>";
           tcb
