@@ -132,7 +132,7 @@ class Directive extends Injectable {
   ///
   /// - _directiveProperty_ specifies the component property that emits events.
   /// - _bindingProperty_ specifies the DOM property the event handler is
-  /// attached to.
+  ///   attached to.
   ///
   /// ```dart
   /// @Directive(
@@ -831,10 +831,10 @@ class ViewQuery extends Query {
 /// to be selected.
 ///
 /// - If the argument is a [Type], directives or components with the type will
-/// be bound.
+///   be bound.
 /// - If the argument is a [String], the string is interpreted as a list of
-/// comma-separated selectors.  For each selector, an element containing the
-/// matching template variable (e.g. `#child`) will be bound.
+///   comma-separated selectors.  For each selector, an element containing the
+///   matching template variable (e.g. `#child`) will be bound.
 ///
 /// View children are set before the `ngAfterViewInit` callback is called.
 ///
@@ -916,10 +916,10 @@ class ViewChildren extends ViewQuery {
 /// The `ViewChild` annotation takes an argument to select elements.
 ///
 /// - If the argument is a [Type], a directive or a component with the type will
-/// be bound.
+///   be bound.
 /// - If the argument is a [String], the string is interpreted as a selector. An
-/// element containing the matching template variable (e.g. `#child`) will be
-/// bound.
+///   element containing the matching template variable (e.g. `#child`) will be
+///   bound.
 ///
 /// In either case, `@ViewChild()` assigns the first (looking from above)
 /// element if there are multiple matches.
