@@ -43,7 +43,7 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgModel-1"} -->
-/// <input [(ngModel)]="currentHero.firstName">
+/// <input [(ngModel)]="currentHero.name">
 /// ```
 ///
 /// This is equivalent to having separate bindings:
@@ -51,8 +51,8 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgModel-3"} -->
 /// <input
-///   [ngModel]="currentHero.firstName"
-///   (ngModelChange)="currentHero.firstName=$event">
+///   [ngModel]="currentHero.name"
+///   (ngModelChange)="currentHero.name=$event">
 /// ```
 ///
 /// Try the [live example][ex].

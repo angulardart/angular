@@ -11,13 +11,23 @@ import 'package:angular2/core.dart'
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgIf-1"} -->
-/// <div *ngIf="currentHero != null">Hello, {{currentHero.firstName}}</div>
+/// <hero-detail *ngIf="isActive"></hero-detail>
 /// ```
 ///
 /// ```html
-/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="Template-2"} -->
-/// <template [ngIf]="currentHero != null">
-///   <hero-detail [hero]="currentHero"></hero-detail>
+/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="asterisk"} -->
+/// <div *ngIf="hero != null" >{{hero.name}}</div>
+/// ```
+///
+/// ```html
+/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngif-template-attr"} -->
+/// <div template="ngIf hero != null">{{hero.name}}</div>
+/// ```
+///
+/// ```html
+/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngif-template"} -->
+/// <template [ngIf]="hero != null">
+///   <div>{{hero.name}}</div>
 /// </template>
 /// ```
 ///

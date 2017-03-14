@@ -25,23 +25,19 @@ import 'package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 ///
 /// ```html
 /// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgClass-1"} -->
-/// <div [ngClass]="setClasses()">This div is saveable and special</div>
+/// <div [ngClass]="currentClasses">This div is initially saveable, unchanged, and special</div>
 /// ```
 ///
 /// ```dart
 /// // {@source "docs/template-syntax/lib/app_component.dart" region="setClasses"}
-///   Map<String, bool> setClasses() {
-///     final classes = {
-///       'saveable': canSave, // true
-///       'modified': !isUnchanged, // false
-///       'special': isSpecial // true
-///     };
-///     // Compensate for DevMode.
-///     if (JSON.encode(_previousClasses) == JSON.encode(classes))
-///       return _previousClasses;
-///     _previousClasses = classes;
-///     return classes;
-///   }
+/// Map<String, bool> currentClasses = <String, bool>{};
+/// void setCurrentClasses() {
+///   currentClasses = <String, bool>{
+///     'saveable': canSave,
+///     'modified': !isUnchanged,
+///     'special': isSpecial
+///   };
+/// }
 /// ```
 ///
 /// Try the [live example][ex].
