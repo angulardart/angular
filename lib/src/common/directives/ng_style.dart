@@ -14,7 +14,8 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// are set based on the map entries: each _key_:_value_ pair identifies a
 /// style property _name_ and its _value_.
 ///
-/// See the [Template Syntax section on `NgStyle`][guide] for more details.
+/// For details, see the [`ngStyle` discussion in the Template Syntax][guide]
+/// page.
 ///
 /// ### Examples
 ///

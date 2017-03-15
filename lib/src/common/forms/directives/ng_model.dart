@@ -36,7 +36,7 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 /// need is the `ngModel` selector to activate it. For a two-way binding, use
 /// the `[(ngModel)]` syntax to ensure the model updates in both directions.
 ///
-/// Learn more about `ngModel` in the Guide [Forms](docs/guide/forms.html#ngModel)
+/// Learn more about `ngModel` in the [Forms](docs/guide/forms.html#ngModel)
 /// and [Template Syntax](docs/guide/template-syntax.html#ngModel) pages.
 ///
 /// ### Examples

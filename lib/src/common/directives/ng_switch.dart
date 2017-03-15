@@ -60,7 +60,8 @@ class SwitchView {
 /// ```
 ///
 /// Try the [live example][ex].
-/// See the [Template Syntax section on `ngSwitch`][guide] for more details.
+/// For details, see the [`ngSwitch` discussion in the Template Syntax][guide]
+/// page.
 ///
 /// [ex]: examples/template-syntax/#ngSwitch
 /// [guide]: docs/guide/template-syntax.html#ngSwitch
