@@ -1,5 +1,6 @@
 library angular.symbol_inspector.symbol_inspector;
 
+import 'dart:collection';
 import 'dart:mirrors';
 
 import 'package:angular2/angular2.dart' as ng2;
@@ -10,16 +11,6 @@ import 'package:angular2/di.dart' as di;
 import 'package:angular2/platform/common.dart' as ng2platform_common;
 import 'package:angular2/platform/testing/browser.dart'
     as ng2platform_browser_testing;
-
-final angularLib = getLibrary('package:angular2/angular2.dart');
-final commonLib = getLibrary('package:angular2/common.dart');
-final compilerLib = getLibrary('package:angular2/compiler.dart');
-final coreLib = getLibrary('package:angular2/core.dart');
-final diLib = getLibrary('package:angular2/di.dart');
-final platformBrowserLib = getLibrary('package:angular2/platform/browser.dart');
-final platformBrowserTestingLib =
-    getLibrary('package:angular2/platform/testing/browser.dart');
-final platformCommonLib = getLibrary('package:angular2/platform/common.dart');
 
 // HACK: This list is here only to make the corresponding libraries used. The
 // imports are only needed to reflect on them using mirrors.
@@ -33,38 +24,33 @@ final _ng2libSymbols = [
   di.Inject
 ];
 
-LibraryMirror getLibrary(String uri) {
+LibraryMirror getLibrary(String uriString) {
   // HACK: this is here only to make _ng2libSymbols used.
   _ng2libSymbols.forEach((_) {});
-  var lib = currentMirrorSystem().libraries[Uri.parse(uri)];
+
+  var uri = Uri.parse('package:angular2/$uriString');
+
+  var lib = currentMirrorSystem().libraries[uri];
   if (lib == null) {
     throw 'Failed to load library ${uri}';
   }
   return lib;
 }
 
-List<String> getSymbolsFromLibrary(LibraryMirror lib) {
-  var names = <String>[];
+Set<String> getSymbolsFromLibrary(LibraryMirror lib) {
+  var names = new SplayTreeSet<String>();
   extractSymbols(lib).addTo(names);
-  names.sort();
-  // remove duplicates;
-  var lastValue;
-  names = names.where((v) {
-    var duplicate = v == lastValue;
-    lastValue = v;
-    return !duplicate;
-  }).toList();
   return names;
 }
 
 class ExportedSymbol {
-  Symbol symbol;
-  DeclarationMirror declaration;
-  LibraryMirror library;
+  final Symbol symbol;
+  final DeclarationMirror declaration;
+  final LibraryMirror library;
 
   ExportedSymbol(this.symbol, this.declaration, this.library);
 
-  void addTo(List<String> names) {
+  void addTo(Set<String> names) {
     var name = unwrapSymbol(symbol);
     if (declaration is MethodMirror) {
       names.add(name);
@@ -85,14 +71,13 @@ class ExportedSymbol {
 }
 
 class LibraryInfo {
-  List<ExportedSymbol> names;
-  Map<Symbol, List<Symbol>> symbolsUsedForName;
+  final List<ExportedSymbol> names;
+  final Map<Symbol, List<Symbol>> symbolsUsedForName;
 
   LibraryInfo(this.names, this.symbolsUsedForName);
 
-  void addTo(List<String> names) {
+  void addTo(Set<String> names) {
     this.names.forEach((ExportedSymbol es) => es.addTo(names));
-    //this.names.addAll(symbolsUsedForName.keys.map(unwrapSymbol));
   }
 }
 
@@ -153,9 +138,6 @@ LibraryInfo extractSymbols(LibraryMirror lib, [String printPrefix = ""]) {
   printPrefix += "  ";
   lib.declarations.forEach((Symbol symbol, DeclarationMirror decl) {
     if (decl.isPrivate) return;
-
-    // Work-around for dartbug.com/18271
-    if (decl is TypedefMirror && unwrapSymbol(symbol).startsWith('_')) return;
 
     exportedSymbols.add(new ExportedSymbol(symbol, decl, lib));
     used[decl.qualifiedName] = _getUsedSymbols(decl, {}, "", false);
