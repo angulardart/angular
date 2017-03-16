@@ -9,6 +9,10 @@ import 'public_apis.dart';
 void main() {
   group('Public API check', () {
     publicLibraries.forEach((lib, expected) {
+      if (expected == null) {
+        // Not storing expected libraries yet – TODO
+        return;
+      }
       test('for ${lib} should fail when it changes unexpectedly', () {
         var symbols = getSymbolsFromLibrary(getLibrary(lib));
         expect(diff(symbols, expected), isEmpty);

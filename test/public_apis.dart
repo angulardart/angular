@@ -17,8 +17,20 @@ const publicLibraries = const <String, List<String>>{
   "core.dart": NG_CORE,
   "di.dart": diApis,
   "platform/browser.dart": NG_PLATFORM_BROWSER,
+  "platform/browser_static.dart": null,
   "platform/common.dart": NG_PLATFORM_COMMON,
-  "platform/testing/browser.dart": NG_PLATFORM_BROWSER_TESTING
+  "platform/common_dom.dart": null,
+  "platform/testing/browser.dart": NG_PLATFORM_BROWSER_TESTING,
+  "platform/testing/browser_static.dart": null,
+  "reflection.dart": null,
+  "router.dart": null,
+  "router/testing.dart": null,
+  "security.dart": null,
+  "testing.dart": null,
+  "transform/codegen.dart": null,
+  "transform/deferred_rewriter.dart": null,
+  "transform/reflection_remover.dart": null,
+  "transformer.dart": null,
 };
 
 const NG_COMMON = const [

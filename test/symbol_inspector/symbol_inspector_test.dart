@@ -33,11 +33,15 @@ void main() {
   });
   group('ng2libs', () {
     test('should be available via mirrors', () {
-      for (var libPath in publicLibraries.keys) {
+      publicLibraries.forEach((libPath, expected) {
+        if (expected == null) {
+          // Not a browser library
+          return;
+        }
         var pkgPath = "package:angular2/$libPath";
 
         expect(getLibrary(libPath).uri.toString(), pkgPath);
-      }
+      });
     });
   });
 }
