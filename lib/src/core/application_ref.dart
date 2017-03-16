@@ -404,18 +404,21 @@ class ApplicationRefImpl extends ApplicationRef {
       throw new BaseException('ApplicationRef.tick is called recursively');
     }
     try {
-      _runningTick = true;
-      int changeDetectorCount = _changeDetectorRefs.length;
-      for (int c = 0; c < changeDetectorCount; c++) {
-        _changeDetectorRefs[c].detectChanges();
-      }
-      if (_enforceNoNewChanges) {
-        for (int c = 0; c < changeDetectorCount; c++) {
-          _changeDetectorRefs[c].checkNoChanges();
-        }
-      }
+      _tick();
     } finally {
       _runningTick = false;
+    }
+  }
+
+  void _tick() {
+    _runningTick = true;
+    for (int c = 0; c < _changeDetectorRefs.length; c++) {
+      _changeDetectorRefs[c].detectChanges();
+    }
+    if (_enforceNoNewChanges) {
+      for (int c = 0; c < _changeDetectorRefs.length; c++) {
+        _changeDetectorRefs[c].checkNoChanges();
+      }
     }
   }
 
