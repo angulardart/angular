@@ -465,7 +465,7 @@ void main() {
       test("should not store the instantiated object in the injector", () {
         var inj = ReflectiveInjector.resolveAndCreate([Engine]);
         inj.resolveAndInstantiate(Car);
-        expect(() => inj.get(Car), throws);
+        expect(() => inj.get(Car), throwsWith("No provider for Car!"));
       });
     });
     group("instantiate", () {
@@ -956,7 +956,7 @@ void main() {
       test("should not store the instantiated object in the injector", () {
         var inj = ReflectiveInjector.resolveAndCreate([Engine]);
         inj.resolveAndInstantiate(Car);
-        expect(() => inj.get(Car), throws);
+        expect(() => inj.get(Car), throwsWith("No provider for Car!"));
       });
     });
     group("instantiate", () {

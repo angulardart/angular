@@ -5,7 +5,7 @@ import "package:angular2/core.dart" show OnInit;
 import "package:angular2/src/core/reflection/reflection.dart"
     show Reflector, ReflectionInfo;
 import "package:angular2/src/core/reflection/reflection_capabilities.dart"
-    show ReflectionCapabilities;
+    show ReflectionCapabilities, MissingInterfaceError;
 import 'package:test/test.dart';
 
 import "../../test_util.dart";
@@ -112,7 +112,8 @@ void main() {
         expect(obj.b, 2);
       });
       test("should throw when more than 20 arguments", () {
-        expect(() => reflector.factory(TestObjWith21Args), throws);
+        expect(() => reflector.factory(TestObjWith21Args),
+            throwsA(contains("Cannot create a factory for")));
       });
       test("should return a registered factory if available", () {
         reflector.registerType(
@@ -199,13 +200,14 @@ void main() {
         expect(p, []);
       });
       test("should throw for undeclared lifecycle interfaces", () {
-        expect(() => reflector.interfaces(ClassDoesNotDeclareOnInit), throws);
+        expect(() => reflector.interfaces(ClassDoesNotDeclareOnInit),
+            throwsA(new isInstanceOf<MissingInterfaceError>()));
       });
       test(
           "should throw for class inheriting a lifecycle impl and not declaring the interface",
           () {
-        expect(
-            () => reflector.interfaces(SubClassDoesNotDeclareOnInit), throws);
+        expect(() => reflector.interfaces(SubClassDoesNotDeclareOnInit),
+            throwsA(new isInstanceOf<MissingInterfaceError>()));
       });
     });
 

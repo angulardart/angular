@@ -5,6 +5,8 @@ import "package:angular2/angular2.dart"
     show DecimalPipe, PercentPipe, CurrencyPipe;
 import 'package:test/test.dart';
 
+import '../../test_util.dart';
+
 void main() {
   group("Number pipes", () {
     group("DecimalPipe", () {
@@ -22,7 +24,7 @@ void main() {
           expect(pipe.transform(1.1234), "1.123");
         });
         test("should not support other objects", () {
-          expect(() => pipe.transform(new Object()), throws);
+          expect(() => pipe.transform(new Object()), throwsATypeError);
         });
       });
     });
@@ -37,7 +39,7 @@ void main() {
           expect(pipe.transform(1.2, ".2"), "120.00%");
         });
         test("should not support other objects", () {
-          expect(() => pipe.transform(new Object()), throws);
+          expect(() => pipe.transform(new Object()), throwsATypeError);
         });
       });
     });
@@ -52,7 +54,7 @@ void main() {
           expect(pipe.transform(12, "EUR", false, ".2"), "EUR12.00");
         });
         test("should not support other objects", () {
-          expect(() => pipe.transform(new Object()), throws);
+          expect(() => pipe.transform(new Object()), throwsATypeError);
         });
       });
     });

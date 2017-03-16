@@ -4,6 +4,8 @@ library angular2.test.common.pipes.lowercase_pipe_test;
 import "package:angular2/angular2.dart" show LowerCasePipe;
 import 'package:test/test.dart';
 
+import '../../test_util.dart';
+
 void main() {
   group("LowerCasePipe", () {
     var upper;
@@ -26,7 +28,7 @@ void main() {
         expect(val2, "wat");
       });
       test("should not support other objects", () {
-        expect(() => pipe.transform(new Object()), throws);
+        expect(() => pipe.transform(new Object()), throwsATypeError);
       });
     });
   });
