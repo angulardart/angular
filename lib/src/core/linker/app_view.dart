@@ -419,7 +419,7 @@ abstract class AppView<T> {
   /// Projects projectableNodes at specified index. We don't use helper
   /// functions to flatten the tree since it allocates list that are not
   /// required in most cases.
-  void project(Element parentElement, int index) {
+  void project(Node parentElement, int index) {
     if (parentElement == null) return;
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.

@@ -23,11 +23,12 @@
         "keydown": "onKeyDown()",
         "click": "onClick($event)"
       },
-      "hostProperties": {},
-      "hostAttributes": {
-        "aria-title": "title",
+      "hostProperties": {
         "title": "title",
         "class.is-disabled": "isDisabled"
+      },
+      "hostAttributes": {
+        "aria-title": "title"
       },
       "lifecycleHooks": [],
       "template": {

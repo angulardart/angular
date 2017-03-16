@@ -46,6 +46,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HostComponent0) {
     rootEl = document.createElement('host');
+    createAttr(this.rootEl, 'aria-title', 'title');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/host.dart class HostComponent - inline template',
         ViewEncapsulation.None,
@@ -55,6 +56,8 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init([], [], []);
+    listen(rootEl, 'keydown', eventHandler0(ctx.onKeyDown));
+    listen(rootEl, 'click', eventHandler1(ctx.onClick));
     return null;
   }
 }
@@ -73,6 +76,8 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = const [
 class ViewHostComponentHost0 extends DebugAppView<dynamic> {
   AppView<import2.HostComponent> _compView_0;
   import2.HostComponent _HostComponent_0_2;
+  var _expr_0;
+  bool _expr_1;
   static RenderComponentType renderType;
   ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -91,15 +96,8 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = viewFactory_HostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    createAttr(rootEl, 'aria-title', 'title');
-    createAttr(rootEl, 'class.is-disabled', 'isDisabled');
-    createAttr(rootEl, 'title', 'title');
     _HostComponent_0_2 = new import2.HostComponent();
     _compView_0.create(_HostComponent_0_2, projectableNodes);
-    listen(rootEl, 'keydown',
-        _compView_0.eventHandler0(_HostComponent_0_2.onKeyDown));
-    listen(
-        rootEl, 'click', _compView_0.eventHandler1(_HostComponent_0_2.onClick));
     init([rootEl], [rootEl], []);
     return new ComponentRef(0, this, rootEl, _HostComponent_0_2);
   }
@@ -113,6 +111,18 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    dbg(0, 0, 0);
+    final currVal_0 = _HostComponent_0_2.title;
+    if (import8.checkBinding(_expr_0, currVal_0)) {
+      setProp(rootEl, 'title', currVal_0);
+      _expr_0 = currVal_0;
+    }
+    dbg(0, 0, 0);
+    final currVal_1 = _HostComponent_0_2.isDisabled;
+    if (import8.checkBinding(_expr_1, currVal_1)) {
+      updateElemClass(rootEl, 'is-disabled', currVal_1);
+      _expr_1 = currVal_1;
+    }
     _compView_0.detectChanges();
   }
 

@@ -934,18 +934,20 @@ List<o.Statement> generateCreateMethod(CompileView view, Parser parser) {
   var parentRenderNodeStmts = <o.Statement>[];
   bool isComponent = view.viewType == ViewType.COMPONENT;
   if (isComponent) {
+    o.ExternalType nodeType;
     if (view.component.template.encapsulation == ViewEncapsulation.Native) {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
           "createViewShadowRoot",
           [new o.ReadClassMemberExpr(appViewRootElementName)]);
+      nodeType = o.importType(Identifiers.HTML_SHADOW_ROOT_ELEMENT);
     } else {
       parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
           "initViewRoot", [new o.ReadClassMemberExpr(appViewRootElementName)]);
+      nodeType = o.importType(Identifiers.HTML_HTML_ELEMENT);
     }
     parentRenderNodeStmts.add(parentRenderNodeVar
         .set(parentRenderNodeExpr)
-        .toDeclStmt(o.importType(Identifiers.HTML_HTML_ELEMENT),
-            [o.StmtModifier.Final]));
+        .toDeclStmt(nodeType, [o.StmtModifier.Final]));
   }
 
   var statements = <o.Statement>[];

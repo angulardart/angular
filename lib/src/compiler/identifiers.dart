@@ -266,6 +266,8 @@ class Identifiers {
       new CompileIdentifierMetadata(name: "Element", moduleUrl: "dart:html");
   static final HTML_HTML_ELEMENT = new CompileIdentifierMetadata(
       name: "HtmlElement", moduleUrl: "dart:html");
+  static final HTML_SHADOW_ROOT_ELEMENT =
+      new CompileIdentifierMetadata(name: "ShadowRoot", moduleUrl: "dart:html");
   static final SVG_ELEMENT =
       new CompileIdentifierMetadata(name: "SvgElement", moduleUrl: "dart:svg");
   static final HTML_ANCHOR_ELEMENT = new CompileIdentifierMetadata(

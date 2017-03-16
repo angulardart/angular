@@ -212,7 +212,7 @@ class DebugAppView<T> extends AppView<T> {
   /// functions to flatten the tree since it allocates list that are not
   /// required in most cases.
   @override
-  void project(Element parentElement, int index) {
+  void project(Node parentElement, int index) {
     DebugElement debugParent = getDebugNode(parentElement);
     if (debugParent == null || debugParent is! DebugElement) {
       super.project(parentElement, index);
@@ -312,7 +312,7 @@ class DebugAppView<T> extends AppView<T> {
 
 /// Recursively appends app element and nested view nodes to target element.
 void _appendDebugNestedViewRenderNodes(
-    DebugElement debugParent, Element targetElement, ViewContainer appElement) {
+    DebugElement debugParent, Node targetElement, ViewContainer appElement) {
   targetElement.append(appElement.nativeElement as Node);
   var nestedViews = appElement.nestedViews;
   if (nestedViews == null || nestedViews.isEmpty) return;

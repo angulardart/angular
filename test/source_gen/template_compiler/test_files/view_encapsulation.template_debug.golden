@@ -161,7 +161,7 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
-    final HtmlElement parentRenderNode = createViewShadowRoot(rootEl);
+    final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
     parentRenderNode.append(_el_0);
