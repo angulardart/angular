@@ -91,13 +91,6 @@ Future<Map<String, LibraryElement>> getLibraries() async {
 Future<AnalysisContext> getAnalysisContextForProjectPath(
     String projectPath, Iterable<String> foundFiles) async {
   // TODO: fail more clearly if this...fails
-
-  var keys = Platform.environment.keys.toList()..sort();
-
-  for (var k in keys) {
-    print([k, Platform.environment[k]].join('\t'));
-  }
-
   var sdkPath = cli.getSdkDir().path;
 
   var resourceProvider = PhysicalResourceProvider.INSTANCE;
