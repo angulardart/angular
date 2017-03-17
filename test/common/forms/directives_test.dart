@@ -150,13 +150,13 @@ void main() {
         var dir = new NgControlName(form, null, null, [defaultAccessor]);
         dir.name = "invalidName";
         expect(() => form.addControl(dir),
-            throwsABaseException("Cannot find control (invalidName)"));
+            throwsWith("Cannot find control (invalidName)"));
       });
       test("should throw when no value accessor", () {
         var dir = new NgControlName(form, null, null, null);
         dir.name = "login";
         expect(() => form.addControl(dir),
-            throwsABaseException("No value accessor for (login)"));
+            throwsWith("No value accessor for (login)"));
       });
       test("should set up validators", fakeAsync(() {
         form.addControl(loginControlDir);
