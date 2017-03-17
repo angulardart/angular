@@ -7,8 +7,13 @@ import 'package:angular2/security.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
-@AngularEntrypoint()
+// Not common practice, just to avoid a circular pub transformer dependency.
+// ignore: uri_has_not_been_generated
+import 'safe_inner_html_test.template.dart' as ng_codegen;
+
 void main() {
+  ng_codegen.initReflector();
+
   tearDown(() => disposeAnyRunningTest());
 
   group('$SafeInnerHtmlDirective', () {
