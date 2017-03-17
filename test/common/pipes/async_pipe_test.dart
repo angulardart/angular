@@ -11,6 +11,7 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import '../control_mocks.dart';
+import '../../test_util.dart';
 
 void main() {
   group('AsyncPipe AutoObservable', () {
@@ -206,7 +207,8 @@ void main() {
   group('other types', () {
     test('should throw when given an invalid object', () {
       var pipe = new AsyncPipe(null);
-      expect(() => pipe.transform(('some bogus object' as dynamic)), throws);
+      expect(() => pipe.transform(('some bogus object' as dynamic)),
+          throwsAnInvalidPipeArgumentException);
     });
   });
 }

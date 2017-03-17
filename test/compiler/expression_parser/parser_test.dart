@@ -285,8 +285,9 @@ void main() {
           checkBinding(" a :b", "a:b");
         });
         test("should refuse prefixes that are not single identifiers", () {
-          expectBindingError("a + b:c", throws);
-          expectBindingError("1:c", throws);
+          expectBindingError("a + b:c", throwsWith("Unexpected token"));
+          expectBindingError(
+              "1:c", throwsWith("Parser Error: Unexpected token"));
         });
       });
       test("should store the source in the result", () {

@@ -4,6 +4,8 @@ library angular2.test.common.pipes.uppercase_pipe_test;
 import "package:angular2/angular2.dart" show UpperCasePipe;
 import 'package:test/test.dart';
 
+import '../../test_util.dart';
+
 void main() {
   group("UpperCasePipe", () {
     var upper;
@@ -26,7 +28,7 @@ void main() {
         expect(val2, "WAT");
       });
       test("should not support other objects", () {
-        expect(() => pipe.transform(new Object()), throws);
+        expect(() => pipe.transform(new Object()), throwsATypeError);
       });
     });
   });

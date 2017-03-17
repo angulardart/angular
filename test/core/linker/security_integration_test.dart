@@ -93,7 +93,7 @@ void main() {
             var trusted =
                 sanitizer.bypassSecurityTrustScript('javascript:alert(1)');
             fixture.debugElement.componentInstance.ctxProp = trusted;
-            expect(() => fixture.detectChanges(), throws);
+            expect(() => fixture.detectChanges(), throwsUnsupportedError);
             completer.done();
           });
         });
