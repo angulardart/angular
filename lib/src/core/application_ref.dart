@@ -33,6 +33,17 @@ PlatformRefImpl createPlatform(Injector injector) {
     }
     return true;
   });
+  // Dartium. Otherwise will be tree-shaken out.
+  if (identical(1, 1.0)) {
+    var isCheckedMode = false;
+    assert(isCheckedMode = true);
+    if (!isCheckedMode) {
+      window.console.warn(''
+          'When using Dartium, CHECKED mode is recommended to catch valuable '
+          'type and assertion warnings. See '
+          'https://webdev.dartlang.org/tools/dartium');
+    }
+  }
   _inPlatformCreate = true;
   try {
     _platform = injector.get(PlatformRef) as PlatformRefImpl;
