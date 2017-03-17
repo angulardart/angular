@@ -50,8 +50,10 @@ void setUpControlGroup(ControlGroup control, NgControlGroup dir) {
 }
 
 void _throwError(AbstractControlDirective dir, String message) {
-  var path = dir.path.join(" -> ");
-  throw new BaseException('''${ message} \'${ path}\'''');
+  if (dir.path != null) {
+    message = "$message (${dir.path.join(" -> ")})";
+  }
+  throw new BaseException(message);
 }
 
 ValidatorFn composeValidators(List<dynamic> validators) {

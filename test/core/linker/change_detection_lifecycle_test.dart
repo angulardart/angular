@@ -14,6 +14,7 @@ import 'package:angular2/testing.dart';
 import 'package:test/test.dart';
 
 import '../../compiler/test_bindings.dart' show TEST_PROVIDERS;
+import '../../test_util.dart';
 
 const ALL_DIRECTIVES = const [
 //  TestDirective,
@@ -458,7 +459,8 @@ void main() {
                 TestChild child) {
           TestDirective.log.clear();
           container.a = "value";
-          expect(() => fixture.checkNoChanges(), throws);
+          expect(() => fixture.checkNoChanges(),
+              throwsWith("Expression has changed after it was checked."));
           fixture.detectChanges();
           expect(child.someProp, "value");
         });

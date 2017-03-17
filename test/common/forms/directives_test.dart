@@ -28,6 +28,7 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import '../control_mocks.dart';
+import '../../test_util.dart';
 
 class DummyControlValueAccessor implements ControlValueAccessor {
   var writtenValue;
@@ -60,7 +61,8 @@ void main() {
       dir = new MockNgControl();
     });
     test("should throw when given an empty array", () {
-      expect(() => selectValueAccessor(dir, []), throws);
+      expect(() => selectValueAccessor(dir, []),
+          throwsABaseException("No valid value accessor for"));
     });
     test("should return the default value accessor when no other provided", () {
       expect(selectValueAccessor(dir, [defaultAccessor]), defaultAccessor);
@@ -78,8 +80,10 @@ void main() {
     test("should throw when more than one build-in accessor is provided", () {
       var checkboxAccessor = new CheckboxControlValueAccessor(null);
       var selectAccessor = new SelectControlValueAccessor(null);
-      expect(() => selectValueAccessor(dir, [checkboxAccessor, selectAccessor]),
-          throws);
+      expect(
+          () => selectValueAccessor(dir, [checkboxAccessor, selectAccessor]),
+          throwsABaseException(
+              "More than one built-in value accessor matches"));
     });
     test("should return custom accessor when provided", () {
       var customAccessor = new MockValueAccessor();
@@ -92,7 +96,7 @@ void main() {
     test("should throw when more than one custom accessor is provided", () {
       ControlValueAccessor customAccessor = new MockValueAccessor();
       expect(() => selectValueAccessor(dir, [customAccessor, customAccessor]),
-          throws);
+          throwsABaseException("More than one custom value accessor matches"));
     });
   });
   group("Shared composeValidators", () {
@@ -145,22 +149,14 @@ void main() {
       test("should throw when no control found", () {
         var dir = new NgControlName(form, null, null, [defaultAccessor]);
         dir.name = "invalidName";
-        expect(
-            () => form.addControl(dir),
-            throwsA(allOf(
-                new isInstanceOf<Error>(),
-                predicate(
-                    (e) => e.message == "Cannot find control 'invalidName'"))));
+        expect(() => form.addControl(dir),
+            throwsABaseException("Cannot find control (invalidName)"));
       });
       test("should throw when no value accessor", () {
         var dir = new NgControlName(form, null, null, null);
         dir.name = "login";
-        expect(
-            () => form.addControl(dir),
-            throwsA(allOf(
-                new isInstanceOf<Error>(),
-                predicate(
-                    (e) => e.message == "No value accessor for 'login'"))));
+        expect(() => form.addControl(dir),
+            throwsABaseException("No value accessor for (login)"));
       });
       test("should set up validators", fakeAsync(() {
         form.addControl(loginControlDir);

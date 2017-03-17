@@ -1,6 +1,8 @@
 import "package:angular2/src/common/pipes/replace_pipe.dart";
 import 'package:test/test.dart';
 
+import '../../test_util.dart';
+
 final someNumber = 42;
 final str = "Douglas Adams";
 
@@ -9,21 +11,29 @@ void main() {
     var pipe = const ReplacePipe();
     group("transform", () {
       test("should not support input other than strings and numbers", () {
-        expect(() => pipe.transform({}, "Douglas", "Hugh"), throws);
-        expect(() => pipe.transform([1, 2, 3], "Douglas", "Hugh"), throws);
+        expect(() => pipe.transform({}, "Douglas", "Hugh"),
+            throwsAnInvalidPipeArgumentException);
+        expect(() => pipe.transform([1, 2, 3], "Douglas", "Hugh"),
+            throwsAnInvalidPipeArgumentException);
       });
       test(
           "should not support patterns other than strings and regular expressions",
           () {
-        expect(() => pipe.transform(str, {}, "Hugh"), throws);
-        expect(() => pipe.transform(str, null, "Hugh"), throws);
-        expect(() => pipe.transform(str, 123, "Hugh"), throws);
+        expect(() => pipe.transform(str, {}, "Hugh"),
+            throwsAnInvalidPipeArgumentException);
+        expect(() => pipe.transform(str, null, "Hugh"),
+            throwsAnInvalidPipeArgumentException);
+        expect(() => pipe.transform(str, 123, "Hugh"),
+            throwsAnInvalidPipeArgumentException);
       });
       test("should not support replacements other than strings and functions",
           () {
-        expect(() => pipe.transform(str, "Douglas", {}), throws);
-        expect(() => pipe.transform(str, "Douglas", null), throws);
-        expect(() => pipe.transform(str, "Douglas", 123), throws);
+        expect(() => pipe.transform(str, "Douglas", {}),
+            throwsAnInvalidPipeArgumentException);
+        expect(() => pipe.transform(str, "Douglas", null),
+            throwsAnInvalidPipeArgumentException);
+        expect(() => pipe.transform(str, "Douglas", 123),
+            throwsAnInvalidPipeArgumentException);
       });
       test("should return a new string with the pattern replaced", () {
         var result1 = pipe.transform(str, "Douglas", "Hugh");
