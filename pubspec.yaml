@@ -38,6 +38,15 @@ transformers:
   - test/pub_serve:
       $include: test/**_test.dart
   - angular2/transform/codegen:
+      # These tests fail the transformer, but don't use it yet anyway.
+      $exclude:
+          - test/compiler/runtime_**.dart
+          - test/core/linker/change_detection_integration_test.dart
+          - test/core/linker/change_detection_lifecycle_test.dart
+          - test/core/linker/integration_test.dart
+          - test/core/linker/view_injector_integration_test.dart
+          - test/core/linker/query_integration_test.dart
+          - test/source_gen/**.dart
       resolved_identifiers:
           Logger: package:logging/logging.dart
   - $dart2js:
