@@ -1,0 +1,146 @@
+[
+  {
+    "class": "NormalizedComponentWithViewDirectives",
+    "component": {
+      "class": "Directive",
+      "isComponent": true,
+      "selector": "provider-modules",
+      "exportAs": null,
+      "type": {
+        "class": "Type",
+        "name": "ProviderModulesComponent",
+        "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/provider_modules.dart",
+        "prefix": null,
+        "isHost": false,
+        "value": null,
+        "diDeps": []
+      },
+      "changeDetection": 6,
+      "inputs": {},
+      "inputTypes": {},
+      "outputs": {},
+      "hostListeners": {},
+      "hostProperties": {},
+      "hostAttributes": {},
+      "lifecycleHooks": [],
+      "template": {
+        "encapsulation": 0,
+        "template": "",
+        "templateUrl": null,
+        "styles": [],
+        "styleUrls": [],
+        "ngContentSelectors": []
+      },
+      "providers": [
+        {
+          "class": "Provider",
+          "token": {
+            "value": null,
+            "identifier": {
+              "class": "Type",
+              "name": "FooService",
+              "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/provider_modules.dart",
+              "prefix": null,
+              "isHost": false,
+              "value": null,
+              "diDeps": []
+            },
+            "identifierIsInstance": false
+          },
+          "useClass": {
+            "class": "Type",
+            "name": "FooService",
+            "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/provider_modules.dart",
+            "prefix": null,
+            "isHost": false,
+            "value": null,
+            "diDeps": []
+          },
+          "useExisting": null,
+          "useValue": null,
+          "useFactory": null,
+          "useProperty": null,
+          "multi": false,
+          "deps": null
+        },
+        {
+          "class": "Provider",
+          "token": {
+            "value": "const OpaqueToken('fooToken')",
+            "identifier": null,
+            "identifierIsInstance": false
+          },
+          "useClass": null,
+          "useExisting": null,
+          "useValue": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "Duration",
+              "moduleUrl": "dart:core",
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          },
+          "useFactory": null,
+          "useProperty": null,
+          "multi": false,
+          "deps": null
+        },
+        {
+          "class": "Provider",
+          "token": {
+            "value": "const OpaqueToken('barToken')",
+            "identifier": null,
+            "identifierIsInstance": false
+          },
+          "useClass": null,
+          "useExisting": null,
+          "useValue": {
+            "value": null,
+            "identifier": {
+              "class": "Identifier",
+              "name": "List",
+              "moduleUrl": "dart:core",
+              "prefix": null,
+              "value": null
+            },
+            "identifierIsInstance": false
+          },
+          "useFactory": null,
+          "useProperty": null,
+          "multi": false,
+          "deps": null
+        },
+        {
+          "class": "Provider",
+          "token": {
+            "value": "const OpaqueToken('bazToken')",
+            "identifier": null,
+            "identifierIsInstance": false
+          },
+          "useClass": null,
+          "useExisting": null,
+          "useValue": null,
+          "useFactory": {
+            "class": "Factory",
+            "name": "getSomeValues",
+            "prefix": null,
+            "moduleUrl": "asset:angular2/test/source_gen/template_compiler/test_files/provider_modules.dart",
+            "value": null,
+            "diDeps": []
+          },
+          "useProperty": null,
+          "multi": false,
+          "deps": null
+        }
+      ],
+      "viewProviders": [],
+      "queries": [],
+      "viewQueries": []
+    },
+    "directives": [],
+    "pipes": []
+  }
+]
