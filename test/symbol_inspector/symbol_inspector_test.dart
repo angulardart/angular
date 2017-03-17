@@ -5,6 +5,7 @@ import 'dart:mirrors';
 
 import 'package:test/test.dart';
 
+import '../public_apis.dart';
 import 'simple_library.dart';
 import 'symbol_inspector.dart';
 
@@ -32,15 +33,15 @@ void main() {
   });
   group('ng2libs', () {
     test('should be available via mirrors', () {
-      expect(angularLib.uri.toString(), 'package:angular2/angular2.dart');
-      expect(commonLib.uri.toString(), 'package:angular2/common.dart');
-      expect(compilerLib.uri.toString(), 'package:angular2/compiler.dart');
-      expect(coreLib.uri.toString(), 'package:angular2/core.dart');
-      expect(diLib.uri.toString(), 'package:angular2/di.dart');
-      expect(platformBrowserLib.uri.toString(),
-          'package:angular2/platform/browser.dart');
-      expect(platformCommonLib.uri.toString(),
-          'package:angular2/platform/common.dart');
+      publicLibraries.forEach((libPath, expected) {
+        if (expected == null) {
+          // Not a browser library
+          return;
+        }
+        var pkgPath = "package:angular2/$libPath";
+
+        expect(getLibrary(libPath).uri.toString(), pkgPath);
+      });
     });
   });
 }
