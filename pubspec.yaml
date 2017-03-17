@@ -37,7 +37,9 @@ dev_dependencies:
 transformers:
   - test/pub_serve:
       $include: test/**_test.dart
-  - angular2/transform/codegen
+  - angular2/transform/codegen:
+      resolved_identifiers:
+          Logger: package:logging/logging.dart
   - $dart2js:
       commandLineOptions:
         - '--show-package-warnings'
