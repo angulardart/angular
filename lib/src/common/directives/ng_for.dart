@@ -74,15 +74,18 @@ import "../../core/change_detection/differs/default_iterable_differ.dart"
 ///
 /// ```html
 /// <!-- {@source "docs/structural-directives/lib/app_component.html" region="inside-ngfor"} -->
-/// <div *ngFor="let hero of heroes; let i=index; let odd=odd; trackBy: trackById" [class.odd]="odd">
+/// <div *ngFor="let hero of heroes; let i=index; let odd=odd; trackBy: trackById"
+///      [class.odd]="odd">
 ///   ({{i}}) {{hero.name}}
 /// </div>
 ///
-/// <div template="ngFor let hero of heroes; let i=index; let odd=odd; trackBy: trackById" [class.odd]="odd">
+/// <div template="ngFor let hero of heroes; let i=index; let odd=odd; trackBy: trackById"
+///      [class.odd]="odd">
 ///   ({{i}}) {{hero.name}}
 /// </div>
 ///
-/// <template ngFor let-hero [ngForOf]="heroes" let-i="index" let-odd="odd" [ngForTrackBy]="trackById">
+/// <template ngFor let-hero [ngForOf]="heroes" let-i="index" let-odd="odd"
+///           [ngForTrackBy]="trackById">
 ///   <div [class.odd]="odd">({{i}}) {{hero.name}}</div>
 /// </template>
 /// ```
