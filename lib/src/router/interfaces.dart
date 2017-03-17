@@ -113,9 +113,9 @@ abstract class CanReuse {
 /// ```dart
 /// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanDeactivate"}
 /// @override
-/// /*FutureOr<bool>*/ routerCanDeactivate(next, prev) =>
+/// FutureOr<bool> routerCanDeactivate(next, prev) =>
 ///     crisis == null || crisis.name == name
-///         ? true
+///         ? true as FutureOr<bool>
 ///         : _dialogService.confirm('Discard changes?');
 /// ```
 ///

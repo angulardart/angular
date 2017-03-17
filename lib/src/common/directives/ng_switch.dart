@@ -39,31 +39,48 @@ class SwitchView {
 /// ### Examples
 ///
 /// ```html
-/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgSwitch-expanded"} -->
-///     <span [ngSwitch]="toeChoice">
+/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch"} -->
+/// <div [ngSwitch]="hero?.emotion">
+///   <happy-hero    *ngSwitchWhen="'happy'"    [hero]="hero"></happy-hero>
+///   <sad-hero      *ngSwitchWhen="'sad'"      [hero]="hero"></sad-hero>
+///   <confused-hero *ngSwitchWhen="'confused'" [hero]="hero"></confused-hero>
+///   <unknown-hero  *ngSwitchDefault           [hero]="hero"></unknown-hero>
+/// </div>
+/// ```
 ///
-///       <!-- with *NgSwitch -->
-///       <span *ngSwitchWhen="'Eenie'">Eenie</span>
-///       <span *ngSwitchWhen="'Meanie'">Meanie</span>
-///       <span *ngSwitchWhen="'Miney'">Miney</span>
-///       <span *ngSwitchWhen="'Moe'">Moe</span>
-///       <span *ngSwitchDefault>other</span>
+/// ```html
+/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch-template-attr"} -->
+/// <div [ngSwitch]="hero?.emotion">
+///   <happy-hero    template="ngSwitchWhen 'happy'"    [hero]="hero"></happy-hero>
+///   <sad-hero      template="ngSwitchWhen 'sad'"      [hero]="hero"></sad-hero>
+///   <confused-hero template="ngSwitchWhen 'confused'" [hero]="hero"></confused-hero>
+///   <unknown-hero  template="ngSwitchDefault"         [hero]="hero"></unknown-hero>
+/// </div>
+/// ```
 ///
-///       <!-- with <template> -->
-///       <template [ngSwitchWhen]="'Eenie'"><span>Eenie</span></template>
-///       <template [ngSwitchWhen]="'Meanie'"><span>Meanie</span></template>
-///       <template [ngSwitchWhen]="'Miney'"><span>Miney</span></template>
-///       <template [ngSwitchWhen]="'Moe'"><span>Moe</span></template>
-///       <template ngSwitchDefault><span>other</span></template>
-///
-///     </span>
+/// ```html
+/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch-template"} -->
+/// <div [ngSwitch]="hero?.emotion">
+///   <template [ngSwitchWhen]="'happy'">
+///     <happy-hero [hero]="hero"></happy-hero>
+///   </template>
+///   <template [ngSwitchWhen]="'sad'">
+///     <sad-hero [hero]="hero"></sad-hero>
+///   </template>
+///   <template [ngSwitchWhen]="'confused'">
+///     <confused-hero [hero]="hero"></confused-hero>
+///   </template >
+///   <template ngSwitchDefault>
+///     <unknown-hero [hero]="hero"></unknown-hero>
+///   </template>
+/// </div>
 /// ```
 ///
 /// Try the [live example][ex].
-/// See the [Template Syntax section on `ngSwitch`][guide] for more details.
+/// See the [Structural Directives section on `ngSwitch`][guide] for more details.
 ///
 /// [ex]: examples/template-syntax/#ngSwitch
-/// [guide]: docs/guide/template-syntax.html#ngSwitch
+/// [guide]: docs/guide/structural-directives.html#ngSwitch
 ///
 @Directive(selector: "[ngSwitch]", inputs: const ["ngSwitch"])
 class NgSwitch {

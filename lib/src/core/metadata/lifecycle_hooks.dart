@@ -53,7 +53,7 @@ var LIFECYCLE_HOOKS_VALUES = [
 ///   changes.forEach((String propName, SimpleChange change) {
 ///     String cur = JSON.encode(change.currentValue);
 ///     String prev =
-///         change.isFirstChange() ? "{}" : JSON.encode(change.previousValue);
+///         change.previousValue == null ? "{}" : JSON.encode(change.previousValue);
 ///     changeLog.add('$propName: currentValue = $cur, previousValue = $prev');
 ///   });
 /// }
