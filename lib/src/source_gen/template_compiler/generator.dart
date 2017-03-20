@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:angular2/src/compiler/logging.dart' show loggerKey;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
@@ -43,7 +44,10 @@ class TemplateGenerator extends Generator {
       print: (_, __, ___, message) {
         log.warning('(via print) $message');
       },
-    ), zoneValues: const {'inSourceGen': true});
+    ), zoneValues: {
+      'inSourceGen': true,
+      loggerKey: log, // [Logger] of the current build step.
+    });
   }
 }
 

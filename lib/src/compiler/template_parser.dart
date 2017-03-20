@@ -3,7 +3,6 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
     show MAX_INTERPOLATION_VALUES;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show jsSplit;
-import "package:logging/logging.dart";
 import 'package:source_span/source_span.dart';
 
 import "../core/security.dart";
@@ -24,6 +23,7 @@ import "html_ast.dart";
 import "html_parser.dart" show HtmlParser;
 import "html_tags.dart" show splitNsName, mergeNsAndName;
 import "identifiers.dart" show identifierToken, Identifiers;
+import "logging.dart" show logger;
 import "parse_util.dart" show ParseError, ParseErrorLevel;
 import "provider_parser.dart" show ProviderElementContext, ProviderViewContext;
 import "schema/element_schema_registry.dart" show ElementSchemaRegistry;
@@ -87,7 +87,6 @@ class TemplateParser {
   final Parser _exprParser;
   final ElementSchemaRegistry _schemaRegistry;
   final HtmlParser _htmlParser;
-  final Logger logger = new Logger('angulardart.templateparser');
 
   TemplateParser(this._exprParser, this._schemaRegistry, this._htmlParser);
 
