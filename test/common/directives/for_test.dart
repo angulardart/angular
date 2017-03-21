@@ -400,6 +400,29 @@ void main() {
         });
         expect(testFixture.rootElement, hasTextContent("efh"));
       });
+
+      test(
+          'should remove by index when list item or '
+          'it\'s hash changes', () async {
+        var testBed = new NgTestBed<ObjectEditorComponent>();
+        var testFixture = await testBed.create();
+        await testFixture.update((ObjectEditorComponent component) {
+          component.entities = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'];
+        });
+        await testFixture.update((ObjectEditorComponent component) {
+          component.entities = ['a1', 'c1', 'e1', 'f1', 'h1'];
+        });
+        await testFixture.update((ObjectEditorComponent component) {
+          component.entities[3] = 'moved-f1';
+        });
+        await testFixture.update((ObjectEditorComponent component) {
+          component.removeEdited(3);
+        });
+        await testFixture.update((ObjectEditorComponent component) {
+          component.entities[2] = 'moved-e1';
+          component.removeEdited(2);
+        });
+      });
     });
   });
 }
@@ -653,4 +676,35 @@ class TrackByIndexTest {
   }
 
   String colorOfItem(Map item) => item['color'];
+}
+
+@Component(
+    selector: 'object-editor',
+    template: '<div *ngFor="#entity of entities; #i=index">'
+        '<object-to-edit [objectId]="entity"></object-to-edit>'
+        '<button (click)="removeEdited(i)">remove</button>'
+        '<button (click)="mutateItem(i)">mutate</button>'
+        '</div>',
+    directives: const [ObjectToEdit, NgFor])
+class ObjectEditorComponent {
+  List<String> entities;
+
+  void removeEdited(int index) {
+    entities.removeAt(index);
+  }
+
+  void mutateItem(int index) {
+    entities[index] = 'z' + entities[index];
+  }
+}
+
+@Component(selector: 'object-to-edit', template: '<p>{{objectId}}</p>')
+class ObjectToEdit {
+  dynamic _value;
+  String get objectId => '${_value}';
+
+  @Input()
+  set objectId(dynamic value) {
+    _value = value;
+  }
 }
