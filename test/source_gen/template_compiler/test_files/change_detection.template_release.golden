@@ -35,8 +35,8 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewCheckOnceComponent0, import4.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckOnce) {
     rootEl = document.createElement('CheckOnce');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles_CheckOnceComponent);
@@ -66,8 +66,8 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   import1.CheckOnceComponent _CheckOnceComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewCheckOnceComponentHost0, import4.ViewType.HOST, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_CheckOnceComponentHost);
     setupComponentType(renderType);
@@ -114,8 +114,8 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewCheckedComponent0, import4.ViewType.COMPONENT, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckOnce) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckOnce) {
     rootEl = document.createElement('Checked');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_CheckedComponent);
@@ -145,8 +145,8 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
   import1.CheckedComponent _CheckedComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewCheckedComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_CheckedComponentHost);
     setupComponentType(renderType);
@@ -193,8 +193,8 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewCheckAlwaysComponent0, import4.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckOnce) {
     rootEl = document.createElement('CheckAlways');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles_CheckAlwaysComponent);
@@ -224,8 +224,8 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   import1.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewCheckAlwaysComponentHost0, import4.ViewType.HOST, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_CheckAlwaysComponentHost);
     setupComponentType(renderType);
@@ -272,8 +272,8 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewDetachedComponent0, import4.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckOnce) {
     rootEl = document.createElement('Detached');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_DetachedComponent);
@@ -303,8 +303,8 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
   import1.DetachedComponent _DetachedComponent_0_2;
   static RenderComponentType renderType;
   ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewDetachedComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_DetachedComponentHost);
     setupComponentType(renderType);
@@ -351,8 +351,8 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewOnPushComponent0, import4.ViewType.COMPONENT, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckOnce) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckOnce) {
     rootEl = document.createElement('OnPush');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_OnPushComponent);
@@ -382,8 +382,8 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
   import1.OnPushComponent _OnPushComponent_0_2;
   static RenderComponentType renderType;
   ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewOnPushComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_OnPushComponentHost);
     setupComponentType(renderType);
@@ -430,8 +430,8 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewStatefulComponent0, import4.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckOnce) {
     rootEl = document.createElement('Stateful');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_StatefulComponent);
@@ -462,8 +462,8 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
   import1.StatefulComponent _StatefulComponent_0_2;
   static RenderComponentType renderType;
   ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewStatefulComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_StatefulComponentHost);
     setupComponentType(renderType);
@@ -510,8 +510,8 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewDefaultComponent0, import4.ViewType.COMPONENT, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('Default');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_DefaultComponent);
@@ -541,8 +541,8 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
   import1.DefaultComponent _DefaultComponent_0_2;
   static RenderComponentType renderType;
   ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewDefaultComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_DefaultComponentHost);
     setupComponentType(renderType);

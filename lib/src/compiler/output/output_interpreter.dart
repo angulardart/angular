@@ -36,6 +36,7 @@ dynamic interpretStatements(List<o.Statement> statements, String resultVar,
       null,
       null,
       null,
+      null,
       new Map<String, dynamic>(),
       new Map<String, dynamic>(),
       new Map<String, dynamic>(),
@@ -65,6 +66,7 @@ class _ExecutionContext {
   _ExecutionContext parent;
   dynamic superClass;
   dynamic superInstance;
+  _DynamicClass clazz;
   String className;
   Map<String, dynamic> vars;
   Map<String, dynamic> staticVars;
@@ -73,6 +75,7 @@ class _ExecutionContext {
   Map<String, Function> methods;
   InstanceFactory instanceFactory;
   _ExecutionContext(
+      this.clazz,
       this.parent,
       this.superClass,
       this.superInstance,
@@ -87,6 +90,7 @@ class _ExecutionContext {
   }
   _ExecutionContext createChildWithLocalVars() {
     return new _ExecutionContext(
+        clazz,
         this,
         this.superClass,
         this.superInstance,
@@ -118,6 +122,7 @@ class _DynamicClass {
     var superClass =
         this._classStmt.parent.visitExpression(this._visitor, this._ctx);
     var instanceCtx = new _ExecutionContext(
+        this,
         this._ctx,
         superClass,
         null,
@@ -334,7 +339,11 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
       if (expr.checked && (receiver == null || receiver == o.NULL_EXPR)) {
         return null;
       }
-      result = reflector.method(expr.name)(receiver, args);
+      var methodName = expr.name;
+      if (receiver is ViewContainer && methodName == 'mapNestedViews') {
+        methodName = 'mapNestedViewsDynamic';
+      }
+      result = reflector.method(methodName)(receiver, args);
     }
     return result;
   }
@@ -367,8 +376,14 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     var fnExpr = stmt.fn;
     if (fnExpr is o.ReadVarExpr &&
         identical(fnExpr.builtin, o.BuiltinVar.Super)) {
-      ctx.superInstance = ctx.instanceFactory.createInstance(ctx.superClass,
-          ctx.className, args, ctx.props, ctx.getters, ctx.methods);
+      ctx.superInstance = ctx.instanceFactory.createInstance(
+        ctx.superClass,
+        ctx.clazz,
+        args,
+        ctx.props,
+        ctx.getters,
+        ctx.methods,
+      );
       ctx.parent.superInstance = ctx.superInstance;
       return null;
     } else {

@@ -1,5 +1,7 @@
+import 'package:angular2/src/compiler/output/dynamic_instance.dart';
 import 'package:angular2/src/core/di.dart' show Injector;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:meta/meta.dart';
 
 import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
@@ -149,11 +151,29 @@ class ViewContainer implements ViewContainerRef {
     }
   }
 
-  List<dynamic> mapNestedViews(dynamic nestedViewClass, Function callback) {
+  List<dynamic> mapNestedViews(/*Type*/ nestedViewClass, Function callback) {
+    // TODO: Once reflective compiler removed, type 'nestedViewClass'.
     var result = [];
     if (nestedViews != null) {
       for (var nestedView in nestedViews) {
-        if (identical(nestedView.clazz, nestedViewClass)) {
+        if (identical(nestedView.runtimeType, nestedViewClass)) {
+          result.add(callback(nestedView));
+        }
+      }
+    }
+    return result;
+  }
+
+  /// **INTERNAL ONLY**: Used only for the reflective runtime, deprecated.
+  ///
+  /// Should be tree-shaken in a production application (no instances of use).
+  @visibleForTesting
+  List<dynamic> mapNestedViewsDynamic(dynamicViewClass, Function callback) {
+    var result = [];
+    if (nestedViews != null) {
+      for (var nestedView in nestedViews) {
+        if (identical((nestedView as DynamicInstance).dynamicRuntimeType,
+            dynamicViewClass)) {
           result.add(callback(nestedView));
         }
       }

@@ -40,7 +40,6 @@ class ViewLifecycleHooksComponent0
   static RenderComponentType renderType;
   ViewLifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewLifecycleHooksComponent0,
             import5.ViewType.COMPONENT,
             {},
             parentView,
@@ -79,7 +78,6 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewLifecycleHooksComponentHost0,
             import5.ViewType.HOST,
             {},
             parentView,

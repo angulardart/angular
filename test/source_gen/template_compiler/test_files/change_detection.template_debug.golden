@@ -42,7 +42,6 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   static RenderComponentType renderType;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewCheckOnceComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -87,7 +86,6 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewCheckOnceComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -146,7 +144,6 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   static RenderComponentType renderType;
   ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewCheckedComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -191,7 +188,6 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewCheckedComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -251,7 +247,6 @@ class ViewCheckAlwaysComponent0
   static RenderComponentType renderType;
   ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewCheckAlwaysComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -297,7 +292,6 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewCheckAlwaysComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -356,7 +350,6 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   static RenderComponentType renderType;
   ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewDetachedComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -401,7 +394,6 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewDetachedComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -460,7 +452,6 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   static RenderComponentType renderType;
   ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewOnPushComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -505,7 +496,6 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewOnPushComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -564,7 +554,6 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   static RenderComponentType renderType;
   ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewStatefulComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -610,7 +599,6 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewStatefulComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -669,7 +657,6 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   static RenderComponentType renderType;
   ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewDefaultComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -714,7 +701,6 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewDefaultComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,

@@ -9,6 +9,8 @@ import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
+import 'package:meta/meta.dart';
+
 import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'element_injector.dart' show ElementInjector;
@@ -19,29 +21,56 @@ import 'view_type.dart' show ViewType;
 
 export 'package:angular2/src/core/change_detection/component_state.dart';
 
-/// Template anchor comment for cloning.
-var ngAnchor = new Comment('template bindings={}');
+/// **INTERNAL ONLY**: Will be made private once the reflective compiler is out.
+///
+/// Template anchor `<!-- template bindings={}` for cloning.
+@visibleForTesting
+final ngAnchor = new Comment('template bindings={}');
 
-const _UndefinedInjectorResult = const Object();
-const String appViewRootElementName = 'rootEl';
+/// Set to `true` when Angular modified the DOM.
+///
+/// May be used in order to optimize polling techniques that attempt to only
+/// process events after a significant change detection cycle (i.e. one that
+/// modified the DOM versus a no-op).
 bool domRootRendererIsDirty = false;
 
-/// Cost of making objects: http://jsperf.com/instantiate-size-of-object
+const _UndefinedInjectorResult = const Object();
+
+/// Base class for a generated templates for a given [Component] type [T].
 abstract class AppView<T> {
-  dynamic clazz;
-  RenderComponentType componentType;
-  ViewType type;
-  Map<String, dynamic> locals;
+  /// The type of view (host element, complete template, embedded template).
+  final ViewType type;
+
+  /// Local values scoped to this view.
+  final Map<String, dynamic> locals;
+
+  /// Parent generated view.
   final AppView parentView;
+
+  /// Index of this view within the [parentView].
   final int parentIndex;
+
+  /// View reference interface (user-visible API).
+  ViewRefImpl ref;
+
+  /// A representation of how the component will be rendered in the DOM.
+  ///
+  /// This is _lazily_ set via [setupComponentType] in a generated constructor.
+  RenderComponentType componentType;
+
+  /// The root element.
+  ///
+  /// This is _lazily_ initialized in a generated constructor.
   Element rootEl;
 
+  /// What type of change detection the view is using.
   ChangeDetectionStrategy _cdMode;
+
   // Improves change detection tree traversal by caching change detection mode
   // and change detection state checks. When set to true, this view doesn't need
   // to be change detected.
   bool _skipChangeDetection = false;
-  ViewRefImpl ref;
+
   List rootNodesOrViewContainers;
   List allNodes;
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
@@ -61,8 +90,13 @@ abstract class AppView<T> {
   bool destroyed = false;
   Injector _hostInjector;
 
-  AppView(this.clazz, this.type, this.locals, this.parentView, this.parentIndex,
-      this._cdMode) {
+  AppView(
+    this.type,
+    this.locals,
+    this.parentView,
+    this.parentIndex,
+    this._cdMode,
+  ) {
     ref = new ViewRefImpl(this);
   }
 
@@ -159,8 +193,8 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  dynamic injectorGet(dynamic token, int nodeIndex,
-      [dynamic notFoundValue = THROW_IF_NOT_FOUND]) {
+  dynamic injectorGet(token, int nodeIndex,
+      [notFoundValue = THROW_IF_NOT_FOUND]) {
     var result = _UndefinedInjectorResult;
     AppView view = this;
     while (identical(result, _UndefinedInjectorResult)) {

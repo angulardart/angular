@@ -35,8 +35,8 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewEmulatedComponent0, import4.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('Emulated');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_EmulatedComponent);
@@ -66,8 +66,8 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   import1.EmulatedComponent _EmulatedComponent_0_2;
   static RenderComponentType renderType;
   ViewEmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewEmulatedComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_EmulatedComponentHost);
     setupComponentType(renderType);
@@ -114,8 +114,8 @@ class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewNativeComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewNativeComponent0, import4.ViewType.COMPONENT, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('Native');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.Native, styles_NativeComponent);
@@ -145,8 +145,8 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
   import1.NativeComponent _NativeComponent_0_2;
   static RenderComponentType renderType;
   ViewNativeComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewNativeComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_NativeComponentHost);
     setupComponentType(renderType);
@@ -193,8 +193,8 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewNoneComponent0, import4.ViewType.COMPONENT, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('None');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_NoneComponent);
@@ -224,8 +224,8 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
   import1.NoneComponent _NoneComponent_0_2;
   static RenderComponentType renderType;
   ViewNoneComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewNoneComponentHost0, import4.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_NoneComponentHost);
     setupComponentType(renderType);

@@ -36,8 +36,8 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewInjectableComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewInjectableComponent0, import4.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('test-injectables');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles_InjectableComponent);
@@ -70,8 +70,8 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
   dynamic __BaseService_0_5;
   static RenderComponentType renderType;
   ViewInjectableComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewInjectableComponentHost0, import4.ViewType.HOST, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_InjectableComponentHost);
     setupComponentType(renderType);

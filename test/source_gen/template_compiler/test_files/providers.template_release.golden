@@ -35,8 +35,8 @@ const List<dynamic> styles_ProvidersComponent = const [];
 class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   static RenderComponentType renderType;
   ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewProvidersComponent0, import3.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('providers');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles_ProvidersComponent);
@@ -70,8 +70,8 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
   List<dynamic> __MyMulti_0_9;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewProvidersComponentHost0, import3.ViewType.HOST, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import3.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);

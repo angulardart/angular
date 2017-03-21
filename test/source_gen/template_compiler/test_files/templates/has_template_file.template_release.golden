@@ -37,8 +37,8 @@ class ViewHasTemplateFileComponent0
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewHasTemplateFileComponent0, import5.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('has-template-file');
     renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponent);
@@ -72,8 +72,8 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   static RenderComponentType renderType;
   ViewHasTemplateFileComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
-      : super(ViewHasTemplateFileComponentHost0, import5.ViewType.HOST, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import5.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponentHost);
     setupComponentType(renderType);

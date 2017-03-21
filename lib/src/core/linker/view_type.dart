@@ -1,13 +1,15 @@
+/// What type of generated `AppView` an instance is.
 enum ViewType {
-  // A view that contains the host element with bound component directive.
-  //
-  // Contains a COMPONENT view
+  /// A view that contains the host element with bound component directive.
+  ///
+  /// Contains a `@Component`'s root element.
   HOST,
 
-  // The view of the component that contains 0 to n EMBEDDED views.
+  /// The view of `@Component` that contains 0 to n _embedded_ views.
   COMPONENT,
 
-  // A view that is embedded into another View via a <template> element
-  // inside of a COMPONENT view.
+  /// A view that is embedded into another view via a `<template>` element.
+  ///
+  /// These are only inside a [COMPONENT] view.
   EMBEDDED
 }
