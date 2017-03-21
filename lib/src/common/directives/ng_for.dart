@@ -6,7 +6,6 @@ import "package:angular2/core.dart"
         ViewRef,
         TemplateRef,
         EmbeddedViewRef;
-import 'package:angular2/src/facade/exceptions.dart';
 
 import "../../core/change_detection/differs/default_iterable_differ.dart"
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
@@ -102,15 +101,11 @@ class NgFor implements DoCheck {
   NgFor(this._viewContainer, this._templateRef);
 
   set ngForOf(value) {
-    assert(() {
-      if (value != null && value is! Iterable) {
-        throw new BaseException(''
-            'Cannot diff $value of type ${value.runtimeType}. $NgFor only '
-            'supports binding to something that implements the `Iterable` '
-            'interface, such as `List`.');
-      }
-      return true;
-    });
+    assert(
+        value == null || value is Iterable,
+        'Cannot diff `$value` of type ${value.runtimeType}. $NgFor only '
+        'supports binding to something that implements the `Iterable` '
+        'interface, such as `List`.');
     _ngForOf = value as Iterable;
     if (_differ == null && value != null) {
       _differ = new DefaultIterableDiffer(_ngForTrackBy);
@@ -119,19 +114,19 @@ class NgFor implements DoCheck {
 
   set ngForTemplate(TemplateRef value) {
     if (value != null) {
-      this._templateRef = value;
+      _templateRef = value;
     }
   }
 
   set ngForTrackBy(TrackByFn value) {
-    this._ngForTrackBy = value;
+    _ngForTrackBy = value;
   }
 
   @override
   void ngDoCheck() {
     if (_differ != null) {
-      var changes = this._differ.diff(this._ngForOf);
-      if (changes != null) this._applyChanges(changes);
+      var changes = _differ.diff(_ngForOf);
+      if (changes != null) _applyChanges(changes);
     }
   }
 
@@ -144,47 +139,44 @@ class NgFor implements DoCheck {
         int adjustedPreviousIndex, int currentIndex) {
       if (item.previousIndex == null) {
         var view =
-            this._viewContainer.insertEmbeddedView(_templateRef, currentIndex);
+            _viewContainer.insertEmbeddedView(_templateRef, currentIndex);
         var tuple = new RecordViewTuple(item, view);
         insertTuples.add(tuple);
       } else if (currentIndex == null) {
         _viewContainer.remove(adjustedPreviousIndex);
       } else {
-        ViewRef view = this._viewContainer.get(adjustedPreviousIndex);
-        this._viewContainer.move(view, currentIndex);
+        ViewRef view = _viewContainer.get(adjustedPreviousIndex);
+        _viewContainer.move(view, currentIndex);
         RecordViewTuple tuple = new RecordViewTuple(item, view);
         insertTuples.add(tuple);
       }
     });
 
     for (var i = 0; i < insertTuples.length; i++) {
-      this._perViewChange(insertTuples[i].view, insertTuples[i].record);
+      _perViewChange(insertTuples[i].view, insertTuples[i].record);
     }
-    for (var i = 0, ilen = this._viewContainer.length; i < ilen; i++) {
+    for (var i = 0, len = _viewContainer.length; i < len; i++) {
       var viewRef = _viewContainer.get(i);
-      viewRef.setLocal("first", identical(i, 0));
-      viewRef.setLocal("last", identical(i, ilen - 1));
-      viewRef.setLocal("index", i);
-      viewRef.setLocal("count", ilen);
+      viewRef.setLocal('first', identical(i, 0));
+      viewRef.setLocal('last', identical(i, len - 1));
+      viewRef.setLocal('index', i);
+      viewRef.setLocal('count', len);
     }
     changes.forEachIdentityChange((record) {
       var viewRef = _viewContainer.get(record.currentIndex);
-      viewRef.setLocal("\$implicit", record.item);
+      viewRef.setLocal('\$implicit', record.item);
     });
   }
 
   void _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
-    view.setLocal("\$implicit", record.item);
-    view.setLocal("even", (record.currentIndex % 2 == 0));
-    view.setLocal("odd", (record.currentIndex % 2 == 1));
+    view.setLocal('\$implicit', record.item);
+    view.setLocal('even', (record.currentIndex % 2 == 0));
+    view.setLocal('odd', (record.currentIndex % 2 == 1));
   }
 }
 
 class RecordViewTuple {
-  EmbeddedViewRef view;
-  dynamic record;
-  RecordViewTuple(dynamic record, EmbeddedViewRef view) {
-    this.record = record;
-    this.view = view;
-  }
+  final EmbeddedViewRef view;
+  final dynamic record;
+  RecordViewTuple(this.record, this.view);
 }
