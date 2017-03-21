@@ -1,7 +1,6 @@
 /// A dependency Injection container.
 export "di/decorators.dart";
-export "di/injector.dart" show Injector, InjectorFactory;
-export "di/map_injector.dart" show MapInjector, MapInjectorFactory;
+export "di/injector.dart" show Injector, MapInjector;
 export "di/opaque_token.dart" show OpaqueToken;
 export "di/provider.dart" show Provider, provide, noValueProvided;
 export "di/reflective_exceptions.dart"

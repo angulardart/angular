@@ -29,8 +29,6 @@ import "package:angular2/src/core/linker/app_view_utils.dart"
         pureProxy9,
         pureProxy10;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/core/linker/injector_factory.dart"
-    show CodegenInjector, CodegenInjectorFactory;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular2/src/core/render/api.dart" show RenderComponentType;
@@ -59,8 +57,6 @@ var impChangeDetectorRef = ChangeDetectorRef;
 var impRenderComponentType = RenderComponentType;
 var impValueUnwrapper = ValueUnwrapper;
 var impInjector = Injector;
-var impCodegenInjector = CodegenInjector;
-var impCodegenInjectorFactory = CodegenInjectorFactory;
 var impViewEncapsulation = ViewEncapsulation;
 var impViewType = ViewType;
 var impChangeDetectionStrategy = ChangeDetectionStrategy;
@@ -125,15 +121,6 @@ class Identifiers {
       name: "Injector",
       moduleUrl: 'asset:angular2/lib/src/core/di/injector.dart',
       runtime: impInjector);
-  static final InjectorFactory = new CompileIdentifierMetadata(
-      name: "CodegenInjectorFactory",
-      moduleUrl: 'asset:angular2/lib/src/core/linker/'
-          'injector_factory.dart',
-      runtime: impCodegenInjectorFactory);
-  static final CodegenInjector = new CompileIdentifierMetadata(
-      name: "CodegenInjector",
-      moduleUrl: '''asset:angular2/lib/src/core/linker/injector_factory.dart''',
-      runtime: impCodegenInjector);
   static final ViewEncapsulation = new CompileIdentifierMetadata(
       name: "ViewEncapsulation",
       moduleUrl: ANGULAR_ROOT_URL,

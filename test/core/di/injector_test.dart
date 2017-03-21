@@ -1,49 +1,75 @@
 @TestOn('browser')
-library angular2.test.core.di.injector_test;
-
-import "package:angular2/di.dart" show Injector, InjectorFactory;
+import 'package:angular2/di.dart' show Injector;
 import 'package:test/test.dart';
 
-import "../../test_util.dart";
+import '../../test_util.dart';
 
 void main() {
-  group("Injector.NULL", () {
-    test("should throw if no arg is given", () {
-      expect(() => Injector.NULL.get("someToken"),
-          throwsWith("No provider for someToken!"));
-    });
-    test("should throw if THROW_IF_NOT_FOUND is given", () {
-      expect(() => Injector.NULL.get("someToken", Injector.THROW_IF_NOT_FOUND),
-          throwsWith("No provider for someToken!"));
-    });
-    test("should return the default value", () {
-      expect(Injector.NULL.get("someToken", "notFound"), "notFound");
-    });
-  });
-  group("InjectorFactory.bind", () {
-    test("should bind the context", () {
-      var factory = new MockInjectorFactory();
+  Injector injector;
+
+  group('Injector.empty', () {
+    setUp(() => injector = const Injector.empty());
+
+    test('should throw by default when `get` is invoked', () {
       expect(
-          InjectorFactory.bind(factory, "testContext").create(), Injector.NULL);
-      expect(factory.context, "testContext");
+        () => injector.get(HeroService),
+        throwsWith('No provider found for $HeroService.'),
+      );
+    });
+
+    test('should return a default value if supplied', () {
+      final defaultHeroService = new HeroService();
+      expect(
+        injector.get(HeroService, defaultHeroService),
+        defaultHeroService,
+      );
     });
   });
-  group("InjectorFactory.EMPTY", () {
-    test("should return Injector.NULL if no parent is given", () {
-      expect(InjectorFactory.EMPTY.create(), Injector.NULL);
+
+  group('Injector.map', () {
+    test('should throw by default when a key is not found', () {
+      injector = new Injector.map();
+      expect(
+        () => injector.get(HeroService),
+        throwsWith('No provider found for $HeroService.'),
+      );
     });
-    test("should be const", () {
-      expect(InjectorFactory.EMPTY, InjectorFactory.EMPTY);
+
+    test('should return a default value if supplied', () {
+      injector = new Injector.map();
+      final defaultHeroService = new HeroService();
+      expect(
+        injector.get(HeroService, defaultHeroService),
+        defaultHeroService,
+      );
+    });
+
+    test('should return a value if token present in map', () {
+      final aHeroService = new HeroService();
+      injector = new Injector.map({HeroService: aHeroService});
+      expect(injector.get(HeroService), aHeroService);
+    });
+
+    test('should return self when $Injector is the token', () {
+      injector = new Injector.map();
+      expect(injector.get(Injector), injector);
+    });
+
+    test('should ask the parent injector if the token is missing', () {
+      final aHeroService = new HeroService();
+      final parent = new Injector.map({HeroService: aHeroService});
+      final child = new Injector.map(const {}, parent);
+      expect(child.get(HeroService), aHeroService);
+    });
+
+    test('should override parent bindings with child token bindings', () {
+      final parentHeroService = new HeroService();
+      final childHeroService = new HeroService();
+      final parent = new Injector.map({HeroService: parentHeroService});
+      final child = new Injector.map({HeroService: childHeroService}, parent);
+      expect(child.get(HeroService), childHeroService);
     });
   });
 }
 
-class MockInjectorFactory implements InjectorFactory<dynamic> {
-  dynamic context;
-  Injector parent;
-  Injector create([Injector parent = null, dynamic context = null]) {
-    this.context = context;
-    this.parent = parent;
-    return Injector.NULL;
-  }
-}
+class HeroService {}

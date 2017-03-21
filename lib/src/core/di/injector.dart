@@ -1,76 +1,92 @@
-import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:meta/meta.dart';
 
-import 'decorators.dart';
+// TODO: Change `const Object()` -> `class _NotFound {}`.
+//
+// Other parts of Angular might rely on `const Object()` today, so this change
+// could not be made cleanly yet.
 
-const _THROW_IF_NOT_FOUND = const Object();
-const THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
+/// **INTERNAL ONLY**: Sentinel value for determining a missing DI instance.
+@visibleForTesting
+const THROW_IF_NOT_FOUND = const Object();
 
-class _NullInjector implements Injector {
-  dynamic get(dynamic token, [dynamic notFoundValue = _THROW_IF_NOT_FOUND]) {
-    if (identical(notFoundValue, _THROW_IF_NOT_FOUND)) {
-      throw new BaseException(
-          'No provider for ${Inject.tokenToString(token)}!');
+/// Base class for dynamic dependency injection via the [get] method.
+abstract class Injector {
+  /// An injector that always throws if [get] `notFoundValue` is not set.
+  ///
+  /// Can be used as the root injector in a hierarchy to form the default
+  /// implementation (for provider not found).
+  const factory Injector.empty() = _EmptyInjector;
+
+  /// Create a new [Injector] that uses a basic [map] of token->instance.
+  ///
+  /// Optionally specify the [parent] injector.
+  ///
+  /// It is considered _unsupported_ to provide `null` or [Injector] as a key.
+  factory Injector.map([
+    Map map,
+    Injector parent,
+  ]) =>
+      new MapInjector(parent, map);
+
+  /// Returns an instance from the injector based on the provided [token].
+  ///
+  /// ```
+  /// HeroService heroService = injector.get(HeroService);
+  /// ```
+  ///
+  /// If not found, either:
+  /// * Returns [notFoundValue] if set to a non-default value.
+  /// * Throws a [NoProviderError].
+  ///
+  /// An injector always returns itself if [Injector] is given as a [token].
+  get(token, [notFoundValue = THROW_IF_NOT_FOUND]);
+}
+
+/// Always throws or returns a default value for [get].
+class _EmptyInjector implements Injector {
+  const _EmptyInjector();
+
+  @override
+  get(token, [notFoundValue = THROW_IF_NOT_FOUND]) {
+    if (identical(token, Injector)) {
+      return this;
+    }
+    if (identical(notFoundValue, THROW_IF_NOT_FOUND)) {
+      throw new MissingProviderError(token);
     }
     return notFoundValue;
   }
 }
 
-/// The Injector interface.
+/// A simple [Injector] implementation based on a [Map] of token->instance.
 ///
-/// This class can also be used to get hold of an Injector.
-abstract class Injector {
-  static var THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
-  static Injector NULL = new _NullInjector();
+/// **DEPRECATED**: Use `Injector.map` instead.
+@Deprecated('Use Injector.map` instead')
+class MapInjector implements Injector {
+  final Map<dynamic, dynamic> _map;
+  final Injector _parent;
 
-  /// Retrieves an instance from the injector based on the provided token.
-  /// If not found:
-  /// - Throws [NoProviderError] if no `notFoundValue` that is not equal to
-  ///   Injector.THROW_IF_NOT_FOUND is given
-  /// - Returns the `notFoundValue` otherwise
-  ///
-  /// ### Example ([live demo](http://plnkr.co/edit/HeXSHg?p=preview))
-  ///
-  /// var injector = ReflectiveInjector.resolveAndCreate([
-  ///   provide("validToken", {useValue: "Value"})
-  /// ]);
-  /// expect(injector.get("validToken")).toEqual("Value");
-  /// expect(() => injector.get("invalidToken")).toThrowError();
-  ///
-  /// [Injector] returns itself when given [Injector] as a token.
-  ///
-  /// var injector = ReflectiveInjector.resolveAndCreate([]);
-  /// expect(injector.get(Injector)).toBe(injector);
-  dynamic get(dynamic token, [dynamic notFoundValue]);
+  // TODO: Make this const and use `this.` after no invocations pass null.
+  @Deprecated('Use new Injector.map` instead')
+  MapInjector([
+    Injector parent,
+    Map map,
+  ])
+      : _map = map ?? const {},
+        _parent = parent ?? const Injector.empty();
+
+  @override
+  get(token, [notFoundValue = THROW_IF_NOT_FOUND]) =>
+      _map[token] ??
+      (identical(token, Injector) ? this : _parent.get(token, notFoundValue));
 }
 
-/// Factory for creating an Injector that delegates to parent.
-class _EmptyInjectorFactory implements InjectorFactory<dynamic> {
-  Injector create([Injector parent = null, dynamic context = null]) {
-    return parent == null ? Injector.NULL : parent;
-  }
+/// Thrown when [token] was requested but no instance was found.
+class MissingProviderError extends Error {
+  final token;
 
-  const _EmptyInjectorFactory();
-}
+  MissingProviderError(this.token);
 
-/// A factory for an injector.
-abstract class InjectorFactory<CONTEXT> {
-  /// An InjectorFactory that will always delegate to the parent.
-  static InjectorFactory<dynamic> EMPTY = const _EmptyInjectorFactory();
-
-  /// Binds an InjectorFactory to a fixed context
-  static InjectorFactory<dynamic> bind(
-      InjectorFactory<dynamic> factory, dynamic context) {
-    return new _BoundInjectorFactory(factory, context);
-  }
-
-  Injector create([Injector parent, CONTEXT context]);
-}
-
-class _BoundInjectorFactory implements InjectorFactory<dynamic> {
-  InjectorFactory<dynamic> _delegate;
-  dynamic _context;
-  _BoundInjectorFactory(this._delegate, this._context);
-  Injector create([Injector parent = null, dynamic context = null]) {
-    return this._delegate.create(parent, this._context);
-  }
+  @override
+  String toString() => 'No provider found for $token.';
 }

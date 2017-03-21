@@ -1,14 +1,21 @@
 import 'package:angular2/src/core/di/injector.dart'
     show Injector, THROW_IF_NOT_FOUND;
+import 'package:meta/meta.dart';
 
 import 'app_view.dart';
 
-class ElementInjector extends Injector {
+/// **INTERNAL ONLY**: Adapts the [AppView] interface as an [Injector].
+@visibleForTesting
+class ElementInjector implements Injector {
   final AppView _view;
   final int _nodeIndex;
 
   ElementInjector(this._view, this._nodeIndex);
 
-  dynamic get(dynamic token, [dynamic notFoundValue = THROW_IF_NOT_FOUND]) =>
+  @override
+  get(
+    token, [
+    notFoundValue = THROW_IF_NOT_FOUND,
+  ]) =>
       _view.injectorGet(token, _nodeIndex, notFoundValue);
 }
