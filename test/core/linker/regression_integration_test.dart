@@ -1,19 +1,7 @@
 @TestOn('browser && !js')
-library angular2.test.core.linker.regression_integration_test;
-
 import "dart:async";
 
-import "package:angular2/core.dart"
-    show
-        Component,
-        Pipe,
-        PipeTransform,
-        provide,
-        View,
-        PLATFORM_PIPES,
-        OpaqueToken,
-        Injector;
-import 'package:angular2/common.dart' show NgIf, NgClass;
+import 'package:angular2/angular2.dart';
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 

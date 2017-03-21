@@ -1,8 +1,5 @@
 @TestOn('browser && !js')
-library angular2.test.core.linker.view_injector_integration_test;
-
-import 'package:angular2/common.dart';
-import "package:angular2/core.dart";
+import 'package:angular2/angular2.dart';
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 

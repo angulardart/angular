@@ -1,48 +1,11 @@
 @TestOn('browser && !js')
-library angular2.test.core.linker.integration_test;
-
 import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular2/common.dart' show AsyncPipe, NgIf, NgFor;
-import 'package:angular2/core.dart'
-    show
-        Injector,
-        provide,
-        Injectable,
-        Provider,
-        OpaqueToken,
-        Inject,
-        Host,
-        SkipSelf,
-        OnDestroy,
-        ReflectiveInjector;
-import 'package:angular2/src/compiler/config.dart';
-import 'package:angular2/src/core/change_detection/change_detection.dart'
-    show PipeTransform, ChangeDetectorRef, ChangeDetectionStrategy;
-import 'package:angular2/src/core/linker/component_resolver.dart'
-    show ComponentResolver;
-import 'package:angular2/src/core/linker/element_ref.dart' show ElementRef;
-import 'package:angular2/src/core/linker/query_list.dart' show QueryList;
-import 'package:angular2/src/core/linker/template_ref.dart';
-import 'package:angular2/src/core/linker/view_container_ref.dart'
-    show ViewContainerRef;
-import 'package:angular2/src/core/linker/view_ref.dart' show EmbeddedViewRef;
-import 'package:angular2/src/core/metadata.dart'
-    show
-        Directive,
-        Component,
-        View,
-        Attribute,
-        ContentChildren,
-        Pipe,
-        Input,
-        Output,
-        HostBinding,
-        HostListener;
-import 'package:angular2/src/facade/async.dart' show EventEmitter;
-import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:angular2/angular2.dart';
+import 'package:angular2/compiler.dart';
+import 'package:angular2/src/facade/exceptions.dart';
 import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 

@@ -5,10 +5,7 @@ library angular2.test.common.forms.integration_test;
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular2/common.dart';
-import "package:angular2/core.dart"
-    show Component, Directive, Output, EventEmitter;
-import "package:angular2/core.dart" show Provider, Input;
+import 'package:angular2/angular2.dart';
 import "package:angular2/src/common/forms/validators.dart";
 import "package:angular2/src/testing/internal.dart";
 import 'package:js/js.dart';

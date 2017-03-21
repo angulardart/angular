@@ -1,28 +1,9 @@
 @TestOn('browser')
 import 'dart:html';
 
-import 'package:angular2/common.dart'
-    show
-        AbstractControl,
-        ControlGroup,
-        Control,
-        NgControlName,
-        NgControlGroup,
-        NgFormModel,
-        ControlValueAccessor,
-        Validators,
-        NgForm,
-        NgModel,
-        NgFormControl,
-        NgControl,
-        DefaultValueAccessor,
-        CheckboxControlValueAccessor,
-        SelectControlValueAccessor,
-        Validator;
+import 'package:angular2/angular2.dart';
 import 'package:angular2/src/common/forms/directives/shared.dart'
     show selectValueAccessor, composeValidators;
-import 'package:angular2/src/core/change_detection.dart' show SimpleChange;
-import 'package:angular2/src/core/linker/element_ref.dart';
 import 'package:angular2/src/testing/internal.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';

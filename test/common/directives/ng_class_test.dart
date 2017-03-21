@@ -1,9 +1,5 @@
 @TestOn('browser && !js')
-library angular2.test.common.directives.ng_class_test;
-
-import "package:angular2/core.dart" show Component;
-import 'package:angular2/common.dart' show NgFor;
-import "package:angular2/src/common/directives/ng_class.dart";
+import 'package:angular2/angular2.dart';
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 

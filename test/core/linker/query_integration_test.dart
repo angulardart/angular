@@ -1,23 +1,5 @@
 @TestOn('browser && !js')
-library angular2.test.core.linker.query_integration_test;
-
-import 'package:angular2/common.dart' show NgIf, NgFor;
-import "package:angular2/core.dart"
-    show
-        Component,
-        Directive,
-        Injectable,
-        TemplateRef,
-        QueryList,
-        ContentChildren,
-        ViewChildren,
-        ContentChild,
-        ViewChild,
-        AfterContentInit,
-        AfterViewInit,
-        AfterContentChecked,
-        AfterViewChecked;
-import "package:angular2/core.dart" show ViewContainerRef;
+import 'package:angular2/angular2.dart';
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
