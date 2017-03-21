@@ -107,14 +107,7 @@ class DebugAppView<T> extends AppView<T> {
   @override
   void detectChanges() {
     _resetDebug();
-    try {
-      super.detectChanges();
-    } catch (e) {
-      if (e is! ExpressionChangedAfterItHasBeenCheckedException) {
-        cdState = ChangeDetectorState.Errored;
-      }
-      rethrow;
-    }
+    super.detectChanges();
   }
 
   void _resetDebug() {

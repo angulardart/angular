@@ -27,6 +27,22 @@ export 'package:angular2/src/core/change_detection/component_state.dart';
 @visibleForTesting
 final ngAnchor = new Comment('template bindings={}');
 
+/// ***INTERNAL ONLY**: Whether a crash was detected in change detection.
+///
+/// When non-null, change detection is re-run (synchronously), in a slow-mode
+/// that individually checks components, and disables change detection for them
+/// if there is a failure detected.
+@visibleForTesting
+AppView lastGuardedView;
+
+/// Exception caught for [lastGuardedView].
+@visibleForTesting
+dynamic caughtException;
+
+/// Stack trace caught for [lastGuardedView].
+@visibleForTesting
+dynamic caughtStack;
+
 /// Set to `true` when Angular modified the DOM.
 ///
 /// May be used in order to optimize polling techniques that attempt to only
@@ -290,19 +306,58 @@ abstract class AppView<T> {
   /// Overwritten by implementations
   void dirtyParentQueriesInternal() {}
 
+  /// Framework-visible implementation of change detection for the view.
+  @mustCallSuper
   void detectChanges() {
-    if (_skipChangeDetection) return;
-    if (destroyed) throwDestroyedError('detectChanges');
+    // Whether the CD state means change detection should be skipped.
+    // Cases: ERRORED (Crash), CHECKED (Already-run), DETACHED (inactive).
+    if (_skipChangeDetection) {
+      return;
+    }
 
-    detectChangesInternal();
+    // Sanity check in dev-mode that a destroyed view is not checked again.
+    assert(() {
+      if (destroyed) {
+        throw new ViewDestroyedException('detectChanges');
+      }
+      return true;
+    });
+
+    if (lastGuardedView != null) {
+      // Run change detection in "slow-mode" to catch thrown exceptions.
+      detectCrash();
+    } else {
+      // Normally run change detection.
+      detectChangesInternal();
+    }
+
+    // If we are a 'CheckOnce' component, we are done being checked.
     if (_cdMode == ChangeDetectionStrategy.CheckOnce) {
       _cdMode = ChangeDetectionStrategy.Checked;
       _skipChangeDetection = true;
     }
+
+    // Set the state to already checked at least once.
     cdState = ChangeDetectorState.CheckedBefore;
   }
 
-  /// Overwritten by implementations
+  /// Runs change detection with a `try { ... } catch { ...}`.
+  ///
+  /// This only is run when the framework has detected a crash previously.
+  @mustCallSuper
+  @protected
+  void detectCrash() {
+    try {
+      detectChangesInternal();
+    } catch (e, s) {
+      lastGuardedView = this;
+      caughtException = e;
+      caughtStack = s;
+    }
+  }
+
+  /// Generated code that is called internally by [detectChanges].
+  @protected
   void detectChangesInternal() {}
 
   void markContentChildAsMoved(ViewContainer renderViewContainer) {
@@ -347,10 +402,6 @@ abstract class AppView<T> {
   // subscription handlers.
   /*<R>*/ evt<E, R>(/*<R>*/ cb(/*<E>*/ e)) {
     return cb;
-  }
-
-  void throwDestroyedError(String details) {
-    throw new ViewDestroyedException(details);
   }
 
   static void initializeSharedStyleHost(document) {

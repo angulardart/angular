@@ -81,32 +81,6 @@ void main() {
         fixture.detectChanges(false);
         expect(filterLog(TestDirective.log, ['ngOnInit']), []);
       });
-
-      containerTest('should not call ngOnInit again if it throws',
-          '<div testDirective="dir" throwOn=\"ngOnInit\"></div>',
-          (ComponentFixture fixture, TestContainer container, TestChild child) {
-        TestDirective.log.clear();
-
-        bool errorLogged = false;
-        // First pass fails, but ngOnInit should be called.
-        try {
-          fixture.detectChanges(false);
-        } catch (e) {
-          errorLogged = true;
-        }
-        expect(errorLogged, isTrue);
-        expect(filterLog(TestDirective.log, ['ngOnInit']), ['dir: ngOnInit']);
-        TestDirective.log.clear();
-        // Second change detection also fails, but this time ngOnInit
-        // should not be called.
-        try {
-          fixture.detectChanges(false);
-        } catch (e) {
-          throw new Exception(
-              'Second detectChanges() should not have run detection.');
-        }
-        expect(filterLog(TestDirective.log, ['ngOnInit']), []);
-      });
     });
 
     group('ngDoCheck', () {
@@ -174,33 +148,6 @@ void main() {
         expect(filterLog(TestDirective.log, ['ngAfterContentInit']), []);
         // re-verify that changes should not call them.
         fixture.detectChanges(false);
-        expect(filterLog(TestDirective.log, ['ngAfterContentInit']), []);
-      });
-
-      containerTest('should not call ngAfterContentInit again if it throws',
-          '<div testDirective="dir" throwOn="ngAfterContentInit"></div>',
-          (ComponentFixture fixture, TestContainer container, TestChild child) {
-        TestDirective.log.clear();
-
-        var errored = false;
-        // First pass fails, but ngAfterContentInit should be called.
-        try {
-          fixture.detectChanges(false);
-        } catch (e) {
-          errored = true;
-        }
-        expect(errored, isTrue);
-        expect(filterLog(TestDirective.log, ['ngAfterContentInit']),
-            ['dir: ngAfterContentInit']);
-        TestDirective.log.clear();
-        // Second change detection also fails, but this time
-        // ngAfterContentInit should not be called.
-        try {
-          fixture.detectChanges(false);
-        } catch (e) {
-          throw new Exception(
-              'Second detectChanges() should not have run detection.');
-        }
         expect(filterLog(TestDirective.log, ['ngAfterContentInit']), []);
       });
     });
@@ -293,34 +240,6 @@ void main() {
 
         // re-verify that changes should not call them.
         fixture.detectChanges(false);
-        expect(filterLog(TestDirective.log, ['ngAfterViewInit']), []);
-      });
-
-      containerTest('should not call ngAfterViewInit again if it throws',
-          '<div testDirective="dir" throwOn="ngAfterViewInit"></div>',
-          (ComponentFixture fixture, TestContainer container, TestChild child) {
-        TestDirective.log.clear();
-
-        var errored = false;
-        // First pass fails, but ngAfterContentInit should be called.
-        try {
-          fixture.detectChanges(false);
-        } catch (e) {
-          errored = true;
-        }
-        expect(errored, isTrue);
-        expect(filterLog(TestDirective.log, ['ngAfterViewInit']),
-            ['dir: ngAfterViewInit']);
-
-        TestDirective.log.clear();
-        // Second change detection also fails, but this time ngAfterViewInit
-        // should not be called.
-        try {
-          fixture.detectChanges(false);
-        } catch (e) {
-          throw new Exception(
-              'Second detectChanges() should not have run detection.');
-        }
         expect(filterLog(TestDirective.log, ['ngAfterViewInit']), []);
       });
     });

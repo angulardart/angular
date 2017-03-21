@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:angular2/src/core/change_detection/constants.dart';
+import 'package:angular2/src/core/linker/app_view.dart'
+    show lastGuardedView, caughtException, caughtStack;
+import 'package:angular2/src/core/linker/view_ref.dart';
 import 'package:angular2/src/facade/exceptions.dart'
     show BaseException, ExceptionHandler;
 import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
@@ -400,26 +404,70 @@ class ApplicationRefImpl extends ApplicationRef {
   @override
   void tick() {
     AppViewUtils.resetChangeDetection();
-    if (_runningTick) {
-      throw new BaseException('ApplicationRef.tick is called recursively');
-    }
+
+    // Protect against tick being called recursively in development mode.
+    //
+    // This is mostly to assert valid changes to the framework, not user code.
+    assert(() {
+      if (_runningTick) {
+        throw new BaseException('ApplicationRef.tick is called recursively');
+      }
+      return true;
+    });
+
+    // Run the top-level 'tick' (i.e. detectChanges on root components).
     try {
-      _tick();
+      _runTick();
+    } catch (_) {
+      // A crash (uncaught exception) was found. That means at least one
+      // directive in the application tree is throwing. We need to re-run
+      // change detection to disable offending directives.
+      _runTickGuarded();
+
+      // Propagate the original exception/stack upwards.
+      rethrow;
     } finally {
+      // Tick is complete.
       _runningTick = false;
+      lastGuardedView = null;
     }
   }
 
-  void _tick() {
+  /// Runs `detectChanges` for all top-level components/views.
+  void _runTick() {
     _runningTick = true;
     for (int c = 0; c < _changeDetectorRefs.length; c++) {
       _changeDetectorRefs[c].detectChanges();
     }
+
+    // Only occurs in dev-mode.
     if (_enforceNoNewChanges) {
       for (int c = 0; c < _changeDetectorRefs.length; c++) {
         _changeDetectorRefs[c].checkNoChanges();
       }
     }
+  }
+
+  /// Runs `detectChanges` for all top-level components/views.
+  ///
+  /// Unlike `_runTick`, this enters a guarded mode that checks a view tree
+  /// for exceptions, trying to find the leaf-most node that throws during
+  /// change detection.
+  void _runTickGuarded() {
+    _runningTick = true;
+
+    // For all ViewRefImpls (i.e. concrete AppViews), run change detection.
+    for (int c = 0; c < _changeDetectorRefs.length; c++) {
+      var cdRef = _changeDetectorRefs[c];
+      if (cdRef is ViewRefImpl) {
+        lastGuardedView = cdRef.appView;
+        cdRef.appView.detectChanges();
+      }
+    }
+
+    // TODO: Call ExceptionHandler.onCrash(...) here for logging.
+    lastGuardedView?.cdState = ChangeDetectorState.Errored;
+    _exceptionHandler.call(caughtException, caughtStack);
   }
 
   @override

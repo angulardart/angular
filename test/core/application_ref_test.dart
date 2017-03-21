@@ -83,8 +83,10 @@ void main() {
             ref.tick();
           });
           ref.registerChangeDetector(cdRef);
-          expect(() => ref.tick(),
-              throwsWith('ApplicationRef.tick is called recursively'));
+          expect(
+            () => ref.tick(),
+            throwsWith('ApplicationRef.tick is called recursively'),
+          );
           ref.unregisterChangeDetector(cdRef);
         });
       });
