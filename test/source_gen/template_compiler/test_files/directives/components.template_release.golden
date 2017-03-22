@@ -35,8 +35,8 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   DivElement _el_0;
   static RenderComponentType renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewTestSubComponent0, import4.ViewType.COMPONENT, {}, parentView,
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('test-bar');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_TestSubComponent);
@@ -66,8 +66,8 @@ class ViewTestSubComponentHost0 extends AppView<dynamic> {
   import1.TestSubComponent _TestSubComponent_0_2;
   static RenderComponentType renderType;
   ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewTestSubComponentHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_TestSubComponentHost);
     setupComponentType(renderType);

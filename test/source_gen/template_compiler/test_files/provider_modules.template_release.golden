@@ -36,8 +36,8 @@ class ViewProviderModulesComponent0
     extends AppView<import1.ProviderModulesComponent> {
   static RenderComponentType renderType;
   ViewProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewProviderModulesComponent0, import3.ViewType.COMPONENT, {},
+            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('provider-modules');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles_ProviderModulesComponent);
@@ -67,8 +67,8 @@ class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   static RenderComponentType renderType;
   ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
-      : super(import3.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewProviderModulesComponentHost0, import3.ViewType.HOST, {},
+            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_ProviderModulesComponentHost);
     setupComponentType(renderType);

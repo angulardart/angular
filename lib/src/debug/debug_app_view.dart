@@ -42,13 +42,14 @@ class DebugAppView<T> extends AppView<T> {
   final List<StaticNodeDebugInfo> staticNodeDebugInfos;
   DebugContext _currentDebugContext;
   DebugAppView(
+      dynamic clazz,
       ViewType type,
       Map<String, dynamic> locals,
       AppView parentView,
       int parentIndex,
       ChangeDetectionStrategy cdMode,
       this.staticNodeDebugInfos)
-      : super(type, locals, parentView, parentIndex, cdMode) {
+      : super(clazz, type, locals, parentView, parentIndex, cdMode) {
     this.cdMode = cdMode;
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;

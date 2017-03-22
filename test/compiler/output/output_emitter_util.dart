@@ -319,17 +319,12 @@ class DynamicClassInstanceFactory implements InstanceFactory {
 
 class _InterpretiveDynamicClass extends ExternalClass
     implements DynamicInstance {
-  dynamic dynamicRuntimeType;
+  dynamic clazz;
   Map<String, dynamic> props;
   Map<String, Function> getters;
   Map<String, Function> methods;
   _InterpretiveDynamicClass(
-    List<dynamic> args,
-    this.dynamicRuntimeType,
-    this.props,
-    this.getters,
-    this.methods,
-  )
+      List<dynamic> args, this.clazz, this.props, this.getters, this.methods)
       : super(args[0]);
   childMethod(a) {
     return this.methods["childMethod"](a);

@@ -42,6 +42,7 @@ class ViewTestSubComponent0 extends DebugAppView<import2.TestSubComponent> {
   static RenderComponentType renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewTestSubComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -86,6 +87,7 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewTestSubComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,

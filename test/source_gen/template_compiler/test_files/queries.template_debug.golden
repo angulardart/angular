@@ -107,6 +107,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   static RenderComponentType renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewQueriesComponent0,
             import7.ViewType.COMPONENT,
             {},
             parentView,
@@ -350,6 +351,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewQueriesComponentHost0,
             import7.ViewType.HOST,
             {},
             parentView,

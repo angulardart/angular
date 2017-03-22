@@ -44,6 +44,7 @@ class ViewInjectableComponent0
   static RenderComponentType renderType;
   ViewInjectableComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewInjectableComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -99,6 +100,7 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewInjectableComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewInjectableComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,

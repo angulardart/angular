@@ -42,6 +42,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
   static RenderComponentType renderType;
   ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewEmulatedComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -86,6 +87,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewEmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewEmulatedComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -144,6 +146,7 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
   static RenderComponentType renderType;
   ViewNativeComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewNativeComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -188,6 +191,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewNativeComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewNativeComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,
@@ -246,6 +250,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
   static RenderComponentType renderType;
   ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewNoneComponent0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -290,6 +295,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewNoneComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewNoneComponentHost0,
             import6.ViewType.HOST,
             {},
             parentView,

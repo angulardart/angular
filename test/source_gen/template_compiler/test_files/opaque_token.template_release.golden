@@ -37,8 +37,8 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   var _expr_0;
   static RenderComponentType renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewHasOpaqueTokens0, import4.ViewType.COMPONENT, {}, parentView,
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('has-opaque-tokens');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_HasOpaqueTokens);
@@ -74,8 +74,8 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   import1.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewHasOpaqueTokensHost0, import4.ViewType.HOST, {}, parentView,
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_HasOpaqueTokensHost);
     setupComponentType(renderType);

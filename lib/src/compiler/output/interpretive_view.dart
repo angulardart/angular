@@ -20,9 +20,9 @@ class InterpretiveAppViewInstanceFactory implements InstanceFactory {
       // However, in prod mode we generate a constructor call that does
       // not have the argument for the debugNodeInfos.
       args = (new List.from(args)..addAll([null]));
-      return new _InterpretiveAppView(clazz, args, props, getters, methods);
+      return new _InterpretiveAppView(args, props, getters, methods);
     } else if (identical(superClass, DebugAppView)) {
-      return new _InterpretiveAppView(clazz, args, props, getters, methods);
+      return new _InterpretiveAppView(args, props, getters, methods);
     }
     throw new BaseException(
         "Can't instantiate class ${superClass} in interpretative mode");
@@ -32,9 +32,6 @@ class InterpretiveAppViewInstanceFactory implements InstanceFactory {
 class _InterpretiveAppView<T> extends DebugAppView<T>
     implements DynamicInstance {
   @override
-  final dynamicRuntimeType;
-
-  @override
   final Map<String, dynamic> props;
   @override
   final Map<String, Function> getters;
@@ -42,20 +39,9 @@ class _InterpretiveAppView<T> extends DebugAppView<T>
   final Map<String, Function> methods;
 
   _InterpretiveAppView(
-    this.dynamicRuntimeType,
-    List<dynamic> args,
-    this.props,
-    this.getters,
-    this.methods,
-  )
-      : super(
-          args[0],
-          args[1] as Map<String, dynamic>,
-          args[2],
-          args[3],
-          args[4],
-          args[5] as List<StaticNodeDebugInfo>,
-        );
+      List<dynamic> args, this.props, this.getters, this.methods)
+      : super(args[0], args[1], args[2] as Map<String, dynamic>, args[3],
+            args[4], args[5], args[6] as List<StaticNodeDebugInfo>);
 
   @override
   ComponentRef build() {

@@ -44,8 +44,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   var _expr_1;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewTestFooComponent0, import6.ViewType.COMPONENT, {}, parentView,
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('test-foo');
     renderType ??= import9.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_TestFooComponent);
@@ -103,8 +103,8 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
 class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
   DivElement _el_0;
   ViewTestFooComponent1(AppView<dynamic> parentView, num parentIndex)
-      : super(import6.ViewType.EMBEDDED, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewTestFooComponent1, import6.ViewType.EMBEDDED, {}, parentView,
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestFooComponent0.renderType;
   }
   ComponentRef build() {
@@ -128,8 +128,13 @@ class ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   Text _text_3;
   var _expr_0;
   ViewTestFooComponent2(AppView<dynamic> parentView, num parentIndex)
-      : super(import6.ViewType.EMBEDDED, {'\$implicit': null}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(
+            ViewTestFooComponent2,
+            import6.ViewType.EMBEDDED,
+            {'\$implicit': null},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestFooComponent0.renderType;
   }
   ComponentRef build() {
@@ -168,8 +173,8 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   import1.TestFooComponent _TestFooComponent_0_2;
   static RenderComponentType renderType;
   ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import6.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+      : super(ViewTestFooComponentHost0, import6.ViewType.HOST, {}, parentView,
+            parentIndex, ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import9.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_TestFooComponentHost);
     setupComponentType(renderType);

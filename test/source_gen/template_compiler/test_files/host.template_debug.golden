@@ -38,6 +38,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   static RenderComponentType renderType;
   ViewHostComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewHostComponent0,
             import5.ViewType.COMPONENT,
             {},
             parentView,
@@ -80,6 +81,7 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewHostComponentHost0,
             import5.ViewType.HOST,
             {},
             parentView,

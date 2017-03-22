@@ -48,6 +48,7 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewTestFooComponent0,
             import8.ViewType.COMPONENT,
             {},
             parentView,
@@ -99,6 +100,7 @@ class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
   DivElement _el_0;
   ViewTestFooComponent1(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewTestFooComponent1,
             import8.ViewType.EMBEDDED,
             {},
             parentView,
@@ -137,6 +139,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewTestFooComponentHost0,
             import8.ViewType.HOST,
             {},
             parentView,

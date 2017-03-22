@@ -781,6 +781,7 @@ o.ClassMethod _createViewClassConstructor(
     new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE)
   ];
   var superConstructorArgs = [
+    o.variable(view.className),
     ViewTypeEnum.fromValue(view.viewType),
     o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,

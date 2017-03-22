@@ -42,6 +42,7 @@ class ViewHasTemplateFileComponent0
   static RenderComponentType renderType;
   ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewHasTemplateFileComponent0,
             import7.ViewType.COMPONENT,
             {},
             parentView,
@@ -92,6 +93,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   ViewHasTemplateFileComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
+            ViewHasTemplateFileComponentHost0,
             import7.ViewType.HOST,
             {},
             parentView,
