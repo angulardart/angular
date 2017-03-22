@@ -24,30 +24,20 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// component class:
 ///
 /// ```html
-/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgStyle"} -->
-/// <div>
-///   <p [ngStyle]="setStyle()" #styleP>Change style of this text!</p>
-///
-///   <label>Italic: <input type="checkbox" [(ngModel)]="isItalic"></label> |
-///   <label>Bold: <input type="checkbox" [(ngModel)]="isBold"></label> |
-///   <label>Size: <input type="text" [(ngModel)]="fontSize"></label>
-///
-///   <p>Style set to: <code>'{{styleP.style.cssText}}'</code></p>
+/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgStyle-2"} -->
+/// <div [ngStyle]="currentStyles">
+///   This div is initially italic, normal weight, and extra large (24px).
 /// </div>
 /// ```
 ///
 /// ```dart
-/// // {@source "docs/template-syntax/lib/app_component.dart" region="NgStyle"}
-/// bool isItalic = false;
-/// bool isBold = false;
-/// String fontSize = 'large';
-/// String fontSizePx = '14';
-///
-/// Map<String, String> setStyle() {
-///   return {
-///     'font-style': isItalic ? 'italic' : 'normal',
-///     'font-weight': isBold ? 'bold' : 'normal',
-///     'font-size': fontSize
+/// // {@source "docs/template-syntax/lib/app_component.dart" region="setStyles"}
+/// Map<String, String> currentStyles = <String, String>{};
+/// void setCurrentStyles() {
+///   currentStyles = <String, String>{
+///     'font-style': canSave ? 'italic' : 'normal',
+///     'font-weight': !isUnchanged ? 'bold' : 'normal',
+///     'font-size': isSpecial ? '24px' : '12px'
 ///   };
 /// }
 /// ```
