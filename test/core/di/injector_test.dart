@@ -1,5 +1,5 @@
 @TestOn('browser')
-import 'package:angular2/di.dart' show Injector;
+import 'package:angular2/angular2.dart';
 import 'package:test/test.dart';
 
 import '../../test_util.dart';
@@ -69,7 +69,30 @@ void main() {
       final child = new Injector.map({HeroService: childHeroService}, parent);
       expect(child.get(HeroService), childHeroService);
     });
+
+    test('should produce good error messages within $ReflectiveInjector', () {
+      final parentInjector = new Injector.map();
+      final childInjector = ReflectiveInjector.resolveAndCreate(
+        [
+          provide(
+            HeroPanel,
+            useFactory: (HeroService service) => new HeroPanel(service),
+            deps: const [HeroService],
+          ),
+        ],
+        parentInjector,
+      );
+      // TODO(matanl): Support a key-based chain error in dev-mode.
+      expect(
+        () => childInjector.get(HeroService),
+        throwsWith('No provider found for $HeroService'),
+      );
+    });
   });
 }
 
 class HeroService {}
+
+class HeroPanel {
+  HeroPanel(HeroService heroService);
+}

@@ -1,7 +1,7 @@
-class DependencyMetadata {
+abstract class DependencyMetadata {
   const DependencyMetadata();
 
-  dynamic get token => null;
+  get token => null;
 }
 
 /// A parameter metadata that specifies a dependency.
@@ -45,16 +45,11 @@ class DependencyMetadata {
 /// ```
 class Inject {
   final token;
-  static RegExp _funcMatcher;
-  const Inject(this.token);
-  String toString() => '@Inject(${tokenToString(token)})';
 
-  static String tokenToString(token) {
-    _funcMatcher ??= new RegExp(r"from Function '(\w+)'");
-    String tokenStr = token.toString();
-    var match = _funcMatcher.firstMatch(tokenStr);
-    return (match != null) ? match.group(1) : tokenStr;
-  }
+  const Inject(this.token);
+
+  @override
+  String toString() => '@Inject($token)';
 }
 
 /// Compile-time metadata that marks a class [Type] or [Function] for injection.

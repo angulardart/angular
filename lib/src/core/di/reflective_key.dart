@@ -1,5 +1,3 @@
-import 'decorators.dart';
-
 /// A unique object used for retrieving items from the [ReflectiveInjector].
 ///
 /// Keys have:
@@ -22,7 +20,7 @@ class ReflectiveKey {
   }
 
   /// Returns a stringified token.
-  String get displayName => Inject.tokenToString(token);
+  String get displayName => '$token';
 
   /// Retrieves a [Key] for a token.
   static ReflectiveKey get(Object token) => _globalKeyRegistry.get(token);
