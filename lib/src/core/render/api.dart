@@ -98,33 +98,3 @@ abstract class RenderDebugInfo {
 
   String get source;
 }
-
-@Deprecated('Use dart:html')
-abstract class Renderer {
-  void setElementProperty(
-      dynamic renderElement, String propertyName, dynamic propertyValue);
-  @Deprecated("Use dart:html Element attributes and setAttribute.")
-  void setElementAttribute(
-      dynamic renderElement, String attributeName, String attributeValue);
-
-  void setElementClass(dynamic renderElement, String className, bool isAdd);
-  @Deprecated("Use dart:html Element.style instead")
-  void setElementStyle(
-      dynamic renderElement, String styleName, String styleValue);
-  @Deprecated("Use dart:html Text.text instead")
-  void setText(dynamic renderNode, String text);
-}
-
-/// Injectable service that provides a low-level interface for modifying the UI.
-///
-/// Use this service to bypass Angular's templating and make custom UI changes
-/// that can't be expressed declaratively. For example if you need to set a
-/// property or an attribute whose name is not statically known, use
-/// [#setElementProperty] or [#setElementAttribute] respectively.
-///
-/// If you are implementing a custom renderer, you must implement this
-/// interface.
-///
-/// The default Renderer implementation is `DomRenderer`. Also available is
-/// `WebWorkerRenderer`.
-abstract class RootRenderer {}
