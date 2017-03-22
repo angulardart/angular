@@ -65,8 +65,8 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   import1.AnotherDirective _AnotherDirective_23_2;
   static RenderComponentType renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewQueriesComponent0, import5.ViewType.COMPONENT, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('queries');
     renderType ??= import7.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles_QueriesComponent);
@@ -270,8 +270,8 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
   import2.QueryList _query_q6_0_8;
   static RenderComponentType renderType;
   ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewQueriesComponentHost0, import5.ViewType.HOST, {}, parentView,
-            parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import5.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_QueriesComponentHost);
     setupComponentType(renderType);

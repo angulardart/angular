@@ -14,5 +14,7 @@ abstract class DynamicInstance {
   Map<String, dynamic> get props;
   Map<String, Function> get getters;
   Map<String, dynamic> get methods;
-  dynamic get clazz;
+
+  /// Used instead of [runtimeType] for the output interpreter.
+  get dynamicRuntimeType;
 }

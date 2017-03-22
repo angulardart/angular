@@ -40,7 +40,6 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   static RenderComponentType renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewHasOpaqueTokens0,
             import6.ViewType.COMPONENT,
             {},
             parentView,
@@ -93,7 +92,6 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            ViewHasOpaqueTokensHost0,
             import6.ViewType.HOST,
             {},
             parentView,

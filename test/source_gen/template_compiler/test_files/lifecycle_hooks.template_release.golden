@@ -35,8 +35,8 @@ class ViewLifecycleHooksComponent0
     extends AppView<import1.LifecycleHooksComponent> {
   static RenderComponentType renderType;
   ViewLifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewLifecycleHooksComponent0, import3.ViewType.COMPONENT, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('lifecycle-hooks');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles_LifecycleHooksComponent);
@@ -61,8 +61,8 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   import1.LifecycleHooksComponent _LifecycleHooksComponent_0_2;
   static RenderComponentType renderType;
   ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(ViewLifecycleHooksComponentHost0, import3.ViewType.HOST, {},
-            parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+      : super(import3.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles_LifecycleHooksComponentHost);
     setupComponentType(renderType);

@@ -54,20 +54,39 @@ const _UndefinedInjectorResult = const Object();
 
 /// Base class for a generated templates for a given [Component] type [T].
 abstract class AppView<T> {
-  dynamic clazz;
-  RenderComponentType componentType;
-  ViewType type;
-  Map<String, dynamic> locals;
+  /// The type of view (host element, complete template, embedded template).
+  final ViewType type;
+
+  /// Local values scoped to this view.
+  final Map<String, dynamic> locals;
+
+  /// Parent generated view.
   final AppView parentView;
+
+  /// Index of this view within the [parentView].
   final int parentIndex;
+
+  /// View reference interface (user-visible API).
+  ViewRefImpl ref;
+
+  /// A representation of how the component will be rendered in the DOM.
+  ///
+  /// This is _lazily_ set via [setupComponentType] in a generated constructor.
+  RenderComponentType componentType;
+
+  /// The root element.
+  ///
+  /// This is _lazily_ initialized in a generated constructor.
   Element rootEl;
 
+  /// What type of change detection the view is using.
   ChangeDetectionStrategy _cdMode;
+
   // Improves change detection tree traversal by caching change detection mode
   // and change detection state checks. When set to true, this view doesn't need
   // to be change detected.
   bool _skipChangeDetection = false;
-  ViewRefImpl ref;
+
   List rootNodesOrViewContainers;
   List allNodes;
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
@@ -87,8 +106,13 @@ abstract class AppView<T> {
   bool destroyed = false;
   Injector _hostInjector;
 
-  AppView(this.clazz, this.type, this.locals, this.parentView, this.parentIndex,
-      this._cdMode) {
+  AppView(
+    this.type,
+    this.locals,
+    this.parentView,
+    this.parentIndex,
+    this._cdMode,
+  ) {
     ref = new ViewRefImpl(this);
   }
 
@@ -185,8 +209,8 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  dynamic injectorGet(dynamic token, int nodeIndex,
-      [dynamic notFoundValue = THROW_IF_NOT_FOUND]) {
+  dynamic injectorGet(token, int nodeIndex,
+      [notFoundValue = THROW_IF_NOT_FOUND]) {
     var result = _UndefinedInjectorResult;
     AppView view = this;
     while (identical(result, _UndefinedInjectorResult)) {
@@ -282,19 +306,58 @@ abstract class AppView<T> {
   /// Overwritten by implementations
   void dirtyParentQueriesInternal() {}
 
+  /// Framework-visible implementation of change detection for the view.
+  @mustCallSuper
   void detectChanges() {
-    if (_skipChangeDetection) return;
-    if (destroyed) throwDestroyedError('detectChanges');
+    // Whether the CD state means change detection should be skipped.
+    // Cases: ERRORED (Crash), CHECKED (Already-run), DETACHED (inactive).
+    if (_skipChangeDetection) {
+      return;
+    }
 
-    detectChangesInternal();
+    // Sanity check in dev-mode that a destroyed view is not checked again.
+    assert(() {
+      if (destroyed) {
+        throw new ViewDestroyedException('detectChanges');
+      }
+      return true;
+    });
+
+    if (lastGuardedView != null) {
+      // Run change detection in "slow-mode" to catch thrown exceptions.
+      detectCrash();
+    } else {
+      // Normally run change detection.
+      detectChangesInternal();
+    }
+
+    // If we are a 'CheckOnce' component, we are done being checked.
     if (_cdMode == ChangeDetectionStrategy.CheckOnce) {
       _cdMode = ChangeDetectionStrategy.Checked;
       _skipChangeDetection = true;
     }
+
+    // Set the state to already checked at least once.
     cdState = ChangeDetectorState.CheckedBefore;
   }
 
-  /// Overwritten by implementations
+  /// Runs change detection with a `try { ... } catch { ...}`.
+  ///
+  /// This only is run when the framework has detected a crash previously.
+  @mustCallSuper
+  @protected
+  void detectCrash() {
+    try {
+      detectChangesInternal();
+    } catch (e, s) {
+      lastGuardedView = this;
+      caughtException = e;
+      caughtStack = s;
+    }
+  }
+
+  /// Generated code that is called internally by [detectChanges].
+  @protected
   void detectChangesInternal() {}
 
   void markContentChildAsMoved(ViewContainer renderViewContainer) {
@@ -339,10 +402,6 @@ abstract class AppView<T> {
   // subscription handlers.
   /*<R>*/ evt<E, R>(/*<R>*/ cb(/*<E>*/ e)) {
     return cb;
-  }
-
-  void throwDestroyedError(String details) {
-    throw new ViewDestroyedException(details);
   }
 
   static void initializeSharedStyleHost(document) {
