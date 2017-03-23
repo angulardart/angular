@@ -1,0 +1,320 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+// @ignoreProblemForFile annotate_overrides
+// @ignoreProblemForFile cancel_subscriptions
+// @ignoreProblemForFile constant_identifier_names
+// @ignoreProblemForFile non_constant_identifier_names
+// @ignoreProblemForFile implementation_imports
+// @ignoreProblemForFile library_prefixes
+// @ignoreProblemForFile type_annotate_public_apis
+// @ignoreProblemForFile STRONG_MODE_DOWN_CAST_COMPOSITE
+// @ignoreProblemForFile UNUSED_IMPORT
+// @ignoreProblemForFile UNUSED_SHOWN_NAME
+// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
+import 'events.dart';
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'dart:async';
+import 'package:angular2/angular2.template.dart' as _i1;
+export 'events.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'events.dart' as import1;
+import 'dart:html';
+import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/core/linker/view_type.dart' as import4;
+import 'package:angular2/src/core/change_detection/change_detection.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular2/angular2.dart';
+
+const List<dynamic> styles_UsesNativeEvents = const [];
+
+class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
+  ButtonElement _el_1;
+  static RenderComponentType renderType;
+  ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    rootEl = document.createElement('uses-native-events');
+    renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.None, styles_UsesNativeEvents);
+    setupComponentType(renderType);
+  }
+  ComponentRef build() {
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    Text _text_0 = new Text('    ');
+    parentRenderNode.append(_text_0);
+    var doc = document;
+    _el_1 = doc.createElement('button');
+    parentRenderNode.append(_el_1);
+    Text _text_2 = new Text('\n  ');
+    parentRenderNode.append(_text_2);
+    listen(_el_1, 'click', this.eventHandler0(ctx.onClick));
+    init(const [], const []);
+    listen(rootEl, 'focus', eventHandler0(ctx.onFocus));
+    return null;
+  }
+}
+
+AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEvents0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewUsesNativeEvents0(parentView, parentIndex);
+}
+
+const List<dynamic> styles_UsesNativeEventsHost = const [];
+
+class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
+  AppView<import1.UsesNativeEvents> _compView_0;
+  import1.UsesNativeEvents _UsesNativeEvents_0_2;
+  static RenderComponentType renderType;
+  ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles_UsesNativeEventsHost);
+    setupComponentType(renderType);
+  }
+  ComponentRef build() {
+    _compView_0 = viewFactory_UsesNativeEvents0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesNativeEvents_0_2 = new import1.UsesNativeEvents();
+    _compView_0.create(_UsesNativeEvents_0_2, projectableNodes);
+    init([rootEl], const []);
+    return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.UsesNativeEvents) && (0 == nodeIndex))) {
+      return _UsesNativeEvents_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_UsesNativeEventsHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewUsesNativeEventsHost0(parentView, parentIndex);
+}
+
+const ComponentFactory UsesNativeEventsNgFactory = const ComponentFactory(
+    'uses-native-events',
+    viewFactory_UsesNativeEventsHost0,
+    import1.UsesNativeEvents,
+    _METADATA);
+const List<dynamic> styles_UsesAngularEvents = const [];
+
+class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
+  Element _el_1;
+  AppView<import1.HasAngularEvents> _compView_1;
+  import1.HasAngularEvents _HasAngularEvents_1_2;
+  static RenderComponentType renderType;
+  ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    rootEl = document.createElement('uses-angular-events');
+    renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.None, styles_UsesAngularEvents);
+    setupComponentType(renderType);
+  }
+  ComponentRef build() {
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    Text _text_0 = new Text('    ');
+    parentRenderNode.append(_text_0);
+    _compView_1 = viewFactory_HasAngularEvents0(this, 1);
+    _el_1 = _compView_1.rootEl;
+    parentRenderNode.append(_el_1);
+    _HasAngularEvents_1_2 = new import1.HasAngularEvents();
+    _compView_1.create(_HasAngularEvents_1_2, []);
+    Text _text_2 = new Text('\n  ');
+    parentRenderNode.append(_text_2);
+    listen(_el_1, 'foo', this.eventHandler0(ctx.onFoo));
+    final subscription_0 =
+        _HasAngularEvents_1_2.foo.listen(this.eventHandler0(ctx.onFoo));
+    init(const [], [subscription_0]);
+    return null;
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.HasAngularEvents) && (1 == nodeIndex))) {
+      return _HasAngularEvents_1_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_1.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_1.destroy();
+  }
+}
+
+AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEvents0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewUsesAngularEvents0(parentView, parentIndex);
+}
+
+const List<dynamic> styles_UsesAngularEventsHost = const [];
+
+class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
+  AppView<import1.UsesAngularEvents> _compView_0;
+  import1.UsesAngularEvents _UsesAngularEvents_0_2;
+  static RenderComponentType renderType;
+  ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles_UsesAngularEventsHost);
+    setupComponentType(renderType);
+  }
+  ComponentRef build() {
+    _compView_0 = viewFactory_UsesAngularEvents0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesAngularEvents_0_2 = new import1.UsesAngularEvents();
+    _compView_0.create(_UsesAngularEvents_0_2, projectableNodes);
+    init([rootEl], const []);
+    return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.UsesAngularEvents) && (0 == nodeIndex))) {
+      return _UsesAngularEvents_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_UsesAngularEventsHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewUsesAngularEventsHost0(parentView, parentIndex);
+}
+
+const ComponentFactory UsesAngularEventsNgFactory = const ComponentFactory(
+    'uses-angular-events',
+    viewFactory_UsesAngularEventsHost0,
+    import1.UsesAngularEvents,
+    _METADATA);
+const List<dynamic> styles_HasAngularEvents = const [];
+
+class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
+  static RenderComponentType renderType;
+  ViewHasAngularEvents0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    rootEl = document.createElement('has-angular-events');
+    renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.None, styles_HasAngularEvents);
+    setupComponentType(renderType);
+  }
+  ComponentRef build() {
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    init(const [], const []);
+    return null;
+  }
+}
+
+AppView<import1.HasAngularEvents> viewFactory_HasAngularEvents0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasAngularEvents0(parentView, parentIndex);
+}
+
+const List<dynamic> styles_HasAngularEventsHost = const [];
+
+class ViewHasAngularEventsHost0 extends AppView<dynamic> {
+  AppView<import1.HasAngularEvents> _compView_0;
+  import1.HasAngularEvents _HasAngularEvents_0_2;
+  static RenderComponentType renderType;
+  ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles_HasAngularEventsHost);
+    setupComponentType(renderType);
+  }
+  ComponentRef build() {
+    _compView_0 = viewFactory_HasAngularEvents0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _HasAngularEvents_0_2 = new import1.HasAngularEvents();
+    _compView_0.create(_HasAngularEvents_0_2, projectableNodes);
+    init([rootEl], const []);
+    return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_2);
+  }
+
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.HasAngularEvents) && (0 == nodeIndex))) {
+      return _HasAngularEvents_0_2;
+    }
+    return notFoundResult;
+  }
+
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_HasAngularEventsHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasAngularEventsHost0(parentView, parentIndex);
+}
+
+const ComponentFactory HasAngularEventsNgFactory = const ComponentFactory(
+    'has-angular-events',
+    viewFactory_HasAngularEventsHost0,
+    import1.HasAngularEvents,
+    _METADATA);
+const _METADATA = const <dynamic>[
+  UsesNativeEvents,
+  const <dynamic>[],
+  UsesAngularEvents,
+  const <dynamic>[],
+  HasAngularEvents,
+  const <dynamic>[]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerType(
+      UsesNativeEvents,
+      new _ngRef.ReflectionInfo(const <dynamic>[UsesNativeEventsNgFactory],
+          const [], () => new UsesNativeEvents()));
+  _ngRef.reflector.registerType(
+      UsesAngularEvents,
+      new _ngRef.ReflectionInfo(const <dynamic>[UsesAngularEventsNgFactory],
+          const [], () => new UsesAngularEvents()));
+  _ngRef.reflector.registerType(
+      HasAngularEvents,
+      new _ngRef.ReflectionInfo(const <dynamic>[HasAngularEventsNgFactory],
+          const [], () => new HasAngularEvents()));
+  _i1.initReflector();
+}
