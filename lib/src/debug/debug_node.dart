@@ -16,6 +16,7 @@ class DebugEventListener {
 class DebugNode {
   RenderDebugInfo _debugInfo;
   dynamic nativeNode;
+  @Deprecated('Adds runtime cost and not used outside internal tests')
   List<DebugEventListener> listeners;
   DebugElement parent;
   DebugNode(dynamic nativeNode, DebugNode parent, this._debugInfo) {
@@ -119,6 +120,7 @@ class DebugElement extends DebugNode {
     return children;
   }
 
+  @Deprecated('listeners and triggering deprecated, use DOM APIs')
   void triggerEventHandler(String eventName, dynamic eventObj) {
     listeners.forEach((listener) {
       if (listener.name == eventName) {

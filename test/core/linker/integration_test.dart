@@ -10,6 +10,7 @@ import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 const ANCHOR_ELEMENT = const OpaqueToken('AnchorElement');
+
 void main() {
   group('integration tests', () {
     setUp(() {
@@ -802,18 +803,21 @@ void main() {
               fixture.detectChanges();
               fixture.detectChanges();
               expect(cmp.numberOfChecks, 1);
-              cmpEl.children[0].triggerEventHandler('click', {});
+              (cmpEl.children[0].nativeElement as Element)
+                  .dispatchEvent(new Event('click'));
               // regular element
               fixture.detectChanges();
               fixture.detectChanges();
               expect(cmp.numberOfChecks, 2);
               // element inside of an *ngIf
-              cmpEl.children[1].triggerEventHandler('click', {});
+              (cmpEl.children[1].nativeElement as Element)
+                  .dispatchEvent(new Event('click'));
               fixture.detectChanges();
               fixture.detectChanges();
               expect(cmp.numberOfChecks, 3);
               // element inside a nested component
-              cmpEl.children[2].children[0].triggerEventHandler('click', {});
+              (cmpEl.children[2].children[0].nativeElement as Element)
+                  .dispatchEvent(new Event('click'));
               fixture.detectChanges();
               fixture.detectChanges();
               expect(cmp.numberOfChecks, 4);
@@ -1758,6 +1762,7 @@ void main() {
 @Injectable()
 class MyService {
   String greeting;
+
   MyService() {
     this.greeting = 'hello';
   }
@@ -1767,6 +1772,7 @@ class MyService {
 @Injectable()
 class SimpleImperativeViewComponent {
   var done;
+
   SimpleImperativeViewComponent(ElementRef self) {
     Element hostElement = self.nativeElement;
     hostElement.append(new Text('hello imp view'));
@@ -1777,6 +1783,7 @@ class SimpleImperativeViewComponent {
 @Injectable()
 class DynamicViewport {
   Future<dynamic> done;
+
   DynamicViewport(ViewContainerRef vc, ComponentResolver compiler) {
     var myService = new MyService();
     myService.greeting = 'dynamic greet';
@@ -1793,6 +1800,7 @@ class DynamicViewport {
 @Injectable()
 class MyDir {
   String dirProp;
+
   MyDir() {
     this.dirProp = '';
   }
@@ -1827,10 +1835,13 @@ class EventCmp {
 class PushCmp {
   num numberOfChecks;
   var prop;
+
   PushCmp() {
     this.numberOfChecks = 0;
   }
+
   void noop() {}
+
   String get field {
     this.numberOfChecks++;
     return 'fixed';
@@ -1847,10 +1858,12 @@ class PushCmpWithRef {
   num numberOfChecks;
   ChangeDetectorRef ref;
   var prop;
+
   PushCmpWithRef(ChangeDetectorRef ref) {
     this.numberOfChecks = 0;
     this.ref = ref;
   }
+
   String get field {
     this.numberOfChecks++;
     return 'fixed';
@@ -1880,10 +1893,12 @@ class PushCmpWithAsyncPipe {
   num numberOfChecks = 0;
   Future<dynamic> future;
   Completer completer;
+
   PushCmpWithAsyncPipe() {
     this.completer = new Completer();
     this.future = this.completer.future;
   }
+
   get field {
     this.numberOfChecks++;
     return this.future;
@@ -1900,11 +1915,13 @@ class MyComp {
   String ctxProp;
   num ctxNumProp;
   bool ctxBoolProp;
+
   MyComp() {
     this.ctxProp = 'initial value';
     this.ctxNumProp = 0;
     this.ctxBoolProp = false;
   }
+
   throwError() {
     throw 'boom';
   }
@@ -1922,6 +1939,7 @@ class MyComp {
 class ChildComp {
   String ctxProp;
   String dirProp;
+
   ChildComp(MyService service) {
     this.ctxProp = service.greeting;
     this.dirProp = null;
@@ -1939,6 +1957,7 @@ class ChildCompNoTemplate {
 @Injectable()
 class ChildCompUsingService {
   String ctxProp;
+
   ChildCompUsingService(MyService service) {
     this.ctxProp = service.greeting;
   }
@@ -1957,6 +1976,7 @@ class SomeDirectiveMissingAnnotation {}
 @Injectable()
 class CompWithHost {
   SomeDirective myHost;
+
   CompWithHost(@Host() SomeDirective someComp) {
     this.myHost = someComp;
   }
@@ -1967,6 +1987,7 @@ class CompWithHost {
 class ChildComp2 {
   String ctxProp;
   String dirProp;
+
   ChildComp2(MyService service) {
     this.ctxProp = service.greeting;
     this.dirProp = null;
@@ -1977,6 +1998,7 @@ class ChildComp2 {
 @Injectable()
 class SomeViewport {
   ViewContainerRef container;
+
   SomeViewport(this.container, TemplateRef templateRef) {
     container.createEmbeddedView(templateRef).setLocal('some-tmpl', 'hello');
     container.createEmbeddedView(templateRef).setLocal('some-tmpl', 'again');
@@ -1986,6 +2008,7 @@ class SomeViewport {
 @Pipe('double')
 class DoublePipe implements PipeTransform, OnDestroy {
   ngOnDestroy() {}
+
   transform(value) {
     return '''${ value}${ value}''';
   }
@@ -1996,10 +2019,12 @@ class DoublePipe implements PipeTransform, OnDestroy {
 class DirectiveEmittingEvent {
   String msg;
   EventEmitter<dynamic> event;
+
   DirectiveEmittingEvent() {
     this.msg = '';
     this.event = new EventEmitter();
   }
+
   fireEvent(String msg) {
     this.event.add(msg);
   }
@@ -2013,6 +2038,7 @@ class DirectiveUpdatingHostAttributes {}
 @Injectable()
 class DirectiveUpdatingHostProperties {
   String id;
+
   DirectiveUpdatingHostProperties() {
     this.id = 'one';
   }
@@ -2022,9 +2048,11 @@ class DirectiveUpdatingHostProperties {
 @Injectable()
 class DirectiveListeningEvent {
   String msg;
+
   DirectiveListeningEvent() {
     this.msg = '';
   }
+
   onEvent(String msg) {
     this.msg = msg;
   }
@@ -2036,6 +2064,7 @@ class DirectiveListeningEvent {
 @Injectable()
 class DirectiveListeningDomEvent {
   List<String> eventTypes = [];
+
   onEvent(String eventType) {
     this.eventTypes.add(eventType);
   }
@@ -2071,6 +2100,7 @@ class IdDir {
 class EventDir {
   @Output()
   var customEvent = new EventEmitter();
+
   doSomething() {}
 }
 
@@ -2080,6 +2110,7 @@ class NeedsAttribute {
   var typeAttribute;
   var staticAttribute;
   var fooAttribute;
+
   NeedsAttribute(
       @Attribute('type') String typeAttribute,
       @Attribute('static') String staticAttribute,
@@ -2111,6 +2142,7 @@ class NeedsPublicApi {
 @Injectable()
 class ToolbarPart {
   TemplateRef templateRef;
+
   ToolbarPart(TemplateRef templateRef) {
     this.templateRef = templateRef;
   }
@@ -2120,9 +2152,11 @@ class ToolbarPart {
 @Injectable()
 class ToolbarViewContainer {
   ViewContainerRef vc;
+
   ToolbarViewContainer(ViewContainerRef vc) {
     this.vc = vc;
   }
+
   set toolbarVc(ToolbarPart part) {
     var view = this.vc.insertEmbeddedView(part.templateRef, 0);
     view.setLocal('toolbarProp', 'From toolbar');
@@ -2139,6 +2173,7 @@ class ToolbarComponent {
   @ContentChildren(ToolbarPart)
   QueryList<ToolbarPart> query;
   String ctxProp;
+
   ToolbarComponent() {
     this.ctxProp = 'hello world';
   }
@@ -2152,6 +2187,7 @@ class ToolbarComponent {
 class DirectiveWithTwoWayBinding {
   var controlChange = new EventEmitter();
   var control;
+
   triggerChange(value) {
     this.controlChange.add(value);
   }
@@ -2204,6 +2240,7 @@ class DirectiveProvidingInjectableInHostAndView {}
 @Injectable()
 class DirectiveConsumingInjectable {
   var injectable;
+
   DirectiveConsumingInjectable(@Host() @Inject(InjectableService) injectable) {
     this.injectable = injectable;
   }
@@ -2219,6 +2256,7 @@ class DirectiveContainingDirectiveConsumingAnInjectable {
 @Injectable()
 class DirectiveConsumingInjectableUnbounded {
   var injectable;
+
   DirectiveConsumingInjectableUnbounded(InjectableService injectable,
       @SkipSelf() DirectiveContainingDirectiveConsumingAnInjectable parent) {
     this.injectable = injectable;
@@ -2229,6 +2267,7 @@ class DirectiveConsumingInjectableUnbounded {
 class EventBus {
   final EventBus parentEventBus;
   final String name;
+
   const EventBus(EventBus parentEventBus, String name)
       : parentEventBus = parentEventBus,
         name = name;
@@ -2239,6 +2278,7 @@ class EventBus {
 ])
 class GrandParentProvidingEventBus {
   EventBus bus;
+
   GrandParentProvidingEventBus(EventBus bus) {
     this.bus = bus;
   }
@@ -2262,6 +2302,7 @@ createParentBus(peb) {
 class ParentProvidingEventBus {
   EventBus bus;
   EventBus grandParentBus;
+
   ParentProvidingEventBus(EventBus bus, @SkipSelf() EventBus grandParentBus) {
     this.bus = bus;
     this.grandParentBus = grandParentBus;
@@ -2271,6 +2312,7 @@ class ParentProvidingEventBus {
 @Directive(selector: 'child-consuming-event-bus')
 class ChildConsumingEventBus {
   EventBus bus;
+
   ChildConsumingEventBus(@SkipSelf() EventBus bus) {
     this.bus = bus;
   }
@@ -2283,11 +2325,13 @@ class SomeImperativeViewport {
   TemplateRef templateRef;
   EmbeddedViewRef view;
   var anchor;
+
   SomeImperativeViewport(
       this.vc, this.templateRef, @Inject(ANCHOR_ELEMENT) anchor) {
     this.view = null;
     this.anchor = anchor;
   }
+
   set someImpvp(bool value) {
     if (view != null) {
       this.vc.clear();
@@ -2350,6 +2394,7 @@ class DirectiveWithPropDecorators {
   var event = new EventEmitter();
   @HostBinding('attr.my-attr')
   String myAttr;
+
   @HostListener('click', const ['\$event.target'])
   onClick(target) {
     this.target = target;

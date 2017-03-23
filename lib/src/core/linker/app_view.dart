@@ -10,7 +10,7 @@ import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 import 'package:meta/meta.dart';
-
+import '../zone/ng_zone.dart';
 import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'element_injector.dart' show ElementInjector;
@@ -532,8 +532,17 @@ abstract class AppView<T> {
   }
 
   dynamic eventHandler0(handler) {
-    return (_) {
+    return (event) {
       markPathToRootAsCheckOnce();
+      if (!NgZone.isInAngularZone()) {
+        appViewUtils.eventManager.getZone().runGuarded(() {
+          var res = handler();
+          if (identical(res, false)) {
+            event.preventDefault();
+          }
+        });
+        return false;
+      }
       return !identical(handler() as dynamic, false);
     };
   }
@@ -541,6 +550,15 @@ abstract class AppView<T> {
   dynamic eventHandler1(handler) {
     return (event) {
       markPathToRootAsCheckOnce();
+      if (!NgZone.isInAngularZone()) {
+        appViewUtils.eventManager.getZone().runGuarded(() {
+          var res = handler(event);
+          if (identical(res, false)) {
+            event.preventDefault();
+          }
+        });
+        return false;
+      }
       return !identical(handler(event) as dynamic, false);
     };
   }

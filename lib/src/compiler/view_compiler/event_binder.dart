@@ -128,13 +128,16 @@ class CompileEventListener {
       eventListener = appView.callMethod(
           'eventHandler${_handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
           [handler]);
+      // If native DOM event, bypass plugin system.
+      if (isNativeHtmlEvent(eventName)) {
+        o.Expression expr = compileElement.renderNode.callMethod(
+            'addEventListener', [o.literal(eventName), eventListener]);
+        compileElement.view.createMethod.addStmt(expr.toStmt());
+        return;
+      }
     }
-
-    o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
-      this.compileElement.renderNode,
-      o.literal(this.eventName),
-      eventListener
-    ]);
+    o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen',
+        [compileElement.renderNode, o.literal(eventName), eventListener]);
 
     compileElement.view.createMethod.addStmt(listenExpr.toStmt());
   }
@@ -228,4 +231,90 @@ o.Expression _extractFunction(o.Expression returnExpr) {
   assert(returnExpr is o.InvokeMethodExpr);
   var callExpr = returnExpr as o.InvokeMethodExpr;
   return new o.ReadPropExpr(callExpr.receiver, callExpr.name);
+}
+
+Set<String> _nativeEventSet;
+
+/// Returns true if event is an html event that is handled by DOM apis
+/// directly and doesn't need to go through plugin system.
+bool isNativeHtmlEvent(String eventName) {
+  const commonEvents = const <String>[
+    'abort',
+    'afterprint',
+    'animationend',
+    'animationiteration',
+    'animationstart',
+    'appinstalled',
+    'audioend',
+    'audiostart',
+    'beforeprint',
+    'beforeunload',
+    'blur',
+    'change',
+    'click',
+    'compositionend',
+    'compositionstart',
+    'compositionupdate',
+    'contextmenu',
+    'dblclick',
+    'drag',
+    'dragend',
+    'dragenter',
+    'dragleave',
+    'dragover',
+    'dragstart',
+    'drop',
+    'error',
+    'focus',
+    'fullscreenchange',
+    'fullscreenerror',
+    'gotpointercapture',
+    'lostpointercapture',
+    'input',
+    'invalid',
+    'keydown',
+    'keypress',
+    'keyup',
+    'languagechange',
+    'load',
+    'mousedown',
+    'mouseenter',
+    'mouseleave',
+    'mousemove',
+    'mouseout',
+    'mouseover',
+    'mouseup',
+    'notificationclick',
+    'orientationchange',
+    'pause',
+    'pointercancel',
+    'pointerdown',
+    'pointerenter',
+    'pointerleave',
+    'pointerlockchange',
+    'pointerlockerror',
+    'pointermove',
+    'pointerout',
+    'pointerover',
+    'pointerup',
+    'reset',
+    'resize',
+    'scroll',
+    'select',
+    'show',
+    'touchcancel',
+    'touchend',
+    'touchmove',
+    'touchstart',
+    'transitionend',
+    'unload',
+    'wheel'
+  ];
+  if (_nativeEventSet == null) {
+    _nativeEventSet = new Set<String>();
+    for (String name in commonEvents) {
+      _nativeEventSet.add(name);
+    }
+  }
+  return _nativeEventSet.contains(eventName);
 }

@@ -45,7 +45,7 @@ import "constants.dart"
         ViewProperties,
         ViewTypeEnum;
 import 'expression_converter.dart';
-import 'event_binder.dart' show convertStmtIntoExpression;
+import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
 import 'parse_utils.dart';
 import 'property_binder.dart';
 import "view_compiler_utils.dart"
@@ -1058,11 +1058,19 @@ void _writeComponentHostEventListeners(
       var eventListener = new o.InvokeMemberMethodExpr(
           'eventHandler${handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
           [new o.ReadPropExpr(callExpr.receiver, callExpr.name)]);
-      o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
-        new o.ReadClassMemberExpr(appViewRootElementName),
-        o.literal(eventName),
-        eventListener
-      ]);
+      // If native DOM event, bypass plugin system.
+      o.Expression listenExpr;
+      if (isNativeHtmlEvent(eventName)) {
+        listenExpr = new o.ReadClassMemberExpr(appViewRootElementName)
+            .callMethod(
+                'addEventListener', [o.literal(eventName), eventListener]);
+      } else {
+        listenExpr = new o.InvokeMemberMethodExpr('listen', [
+          new o.ReadClassMemberExpr(appViewRootElementName),
+          o.literal(eventName),
+          eventListener
+        ]);
+      }
       statements.add(listenExpr.toStmt());
     }
   }
@@ -1172,7 +1180,7 @@ ChangeDetectionStrategy getChangeDetectionMode(CompileView view) {
   return mode;
 }
 
-Set<String> tagNameSet;
+Set<String> _tagNameSet;
 
 /// Returns true if tag name is HtmlElement.
 ///
@@ -1306,11 +1314,13 @@ bool detectHtmlElementFromTagName(String tagName) {
     'video',
     'wbr'
   ];
-  if (tagNameSet == null) {
-    tagNameSet = new Set<String>();
-    for (String name in htmlTagNames) tagNameSet.add(name);
+  if (_tagNameSet == null) {
+    _tagNameSet = new Set<String>();
+    for (String name in htmlTagNames) {
+      _tagNameSet.add(name);
+    }
   }
-  return tagNameSet.contains(tagName);
+  return _tagNameSet.contains(tagName);
 }
 
 /// Writes proxy for setting an @Input property.

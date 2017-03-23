@@ -152,7 +152,7 @@ void main() {
     });
 
     test("should list event listeners", () async {
-      var testBed = new NgTestBed<EventsComp>();
+      var testBed = new NgTestBed<EventsCompCustom>();
       var fixture = await testBed.create();
       DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.children[0].listeners, hasLength(1));
@@ -330,6 +330,29 @@ class EventsComp {
     clicked = false;
     customed = false;
   }
+  void handleClick() {
+    clicked = true;
+  }
+
+  void handleCustom() {
+    customed = true;
+  }
+}
+
+@Component(
+    selector: "events-comp-custom",
+    template: '''
+        <button (customclick)="handleClick()"></button>
+        <custom-emitter (custommyevent)="handleCustom()"></custom-emitter>''',
+    directives: const [CustomEmitter])
+class EventsCompCustom {
+  bool clicked;
+  bool customed;
+  EventsComp() {
+    clicked = false;
+    customed = false;
+  }
+
   void handleClick() {
     clicked = true;
   }
