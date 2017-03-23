@@ -14,6 +14,7 @@ import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/view_type.dart';
 import 'package:angular2/src/core/render/api.dart';
 import 'package:js/js.dart' as js;
+import 'package:meta/meta.dart';
 
 import 'debug_context.dart' show StaticNodeDebugInfo, DebugContext;
 import 'debug_node.dart'
@@ -40,6 +41,13 @@ class DebugAppView<T> extends AppView<T> {
   static bool _ngProbeInitialized = false;
 
   final List<StaticNodeDebugInfo> staticNodeDebugInfos;
+
+  /// References to all internal nodes/elements, for debugging purposes only.
+  ///
+  /// See [DebugAppView.init].
+  @visibleForTesting
+  List allNodes;
+
   DebugContext _currentDebugContext;
   DebugAppView(
       ViewType type,
@@ -91,6 +99,16 @@ class DebugAppView<T> extends AppView<T> {
       _rethrowWithContext(e, s, stopChangeDetection: false);
       rethrow;
     }
+  }
+
+  @override
+  void init(
+    List rootNodesOrViewContainers,
+    List subscriptions, [
+    List allNodesForDebug = const [],
+  ]) {
+    super.init(rootNodesOrViewContainers, subscriptions);
+    allNodes = allNodesForDebug;
   }
 
   @override
@@ -278,14 +296,14 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  void destroyViewNodes(dynamic hostElement, List<dynamic> viewAllNodes) {
-    int nodeCount = viewAllNodes.length;
+  void destroyViewNodes(hostElement) {
+    int nodeCount = allNodes.length;
     for (int i = 0; i < nodeCount; i++) {
-      var debugNode = getDebugNode(viewAllNodes[i]);
+      var debugNode = getDebugNode(allNodes[i]);
       if (debugNode == null) continue;
       removeDebugNodeFromIndex(debugNode);
     }
-    super.destroyViewNodes(hostElement, viewAllNodes);
+    super.destroyViewNodes(hostElement);
   }
 
   void _rethrowWithContext(dynamic e, dynamic stack,

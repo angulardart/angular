@@ -49,7 +49,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('CheckOnce');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -77,7 +77,7 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _CheckOnceComponent_0_2 = new import1.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_2);
   }
 
@@ -128,7 +128,7 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('Checked');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -156,7 +156,7 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _CheckedComponent_0_2 = new import1.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _CheckedComponent_0_2);
   }
 
@@ -207,7 +207,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('CheckAlways');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -235,7 +235,7 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _CheckAlwaysComponent_0_2 = new import1.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_2);
   }
 
@@ -286,7 +286,7 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('Detached');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -314,7 +314,7 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _DetachedComponent_0_2 = new import1.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _DetachedComponent_0_2);
   }
 
@@ -365,7 +365,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('OnPush');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -393,7 +393,7 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _OnPushComponent_0_2 = new import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _OnPushComponent_0_2);
   }
 
@@ -444,7 +444,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('Stateful');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     ctx.stateChangeCallback = markStateChanged;
     return null;
   }
@@ -473,7 +473,7 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _StatefulComponent_0_2 = new import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _StatefulComponent_0_2);
   }
 
@@ -524,7 +524,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('Default');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -552,7 +552,7 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _DefaultComponent_0_2 = new import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _DefaultComponent_0_2);
   }
 

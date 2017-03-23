@@ -56,7 +56,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     TemplateRef _TemplateRef_0_4 =
         new TemplateRef(_appEl_0, viewFactory_TestFooComponent1);
     _NgIf_0_5 = new NgIf(_appEl_0, _TemplateRef_0_4);
-    init([], [_anchor_0], []);
+    init(const [], const []);
     return null;
   }
 
@@ -88,7 +88,7 @@ class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
     addShimC(_el_0);
     Text _text_1 = new Text('Foo');
     _el_0.append(_text_1);
-    init([_el_0], [_el_0, _text_1], []);
+    init([_el_0], const []);
     return null;
   }
 }
@@ -116,7 +116,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_2 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
   }
 

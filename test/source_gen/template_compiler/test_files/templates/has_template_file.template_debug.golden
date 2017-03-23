@@ -68,7 +68,7 @@ class ViewHasTemplateFileComponent0
     Text _text_2 = new Text('\n');
     parentRenderNode.append(_text_2);
     dbgElm(_text_2, 2, 0, 29);
-    init([], [_el_0, _text_1, _text_2], []);
+    init(const [], const [], [_el_0, _text_1, _text_2]);
     return null;
   }
 }
@@ -108,7 +108,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _HasTemplateFileComponent_0_2 = new import3.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_2);
   }
 

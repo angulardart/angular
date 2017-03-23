@@ -55,7 +55,7 @@ class ViewLifecycleHooksComponent0
   }
   ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init([], [], []);
+    init(const [], const [], []);
     return null;
   }
 }
@@ -94,7 +94,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _LifecycleHooksComponent_0_2 = new import2.LifecycleHooksComponent();
     _compView_0.create(_LifecycleHooksComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_2);
   }
 

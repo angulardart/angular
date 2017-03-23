@@ -146,33 +146,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     ctx.viewChildFromField = _viewQuery_q12_2.first;
     _viewQuery_q12_3.reset([new ElementRef(_el_23)]);
     ctx.readDIFromElement = _viewQuery_q12_3.first;
-    init([], [
-      _text_0,
-      _el_1,
-      _text_2,
-      _el_3,
-      _text_4,
-      _el_5,
-      _text_6,
-      _el_7,
-      _text_8,
-      _el_9,
-      _text_10,
-      _el_11,
-      _text_12,
-      _el_13,
-      _text_14,
-      _el_15,
-      _text_16,
-      _el_17,
-      _text_18,
-      _el_19,
-      _text_20,
-      _el_21,
-      _text_22,
-      _el_23,
-      _text_24
-    ], []);
+    init(const [], const []);
     return null;
   }
 
@@ -296,7 +270,7 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
     _query_q6_0_8.reset([]);
     _QueriesComponent_0_2.viewChildFromAnnotation = _query_q6_0_8.first;
     _compView_0.create(_QueriesComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _QueriesComponent_0_2);
   }
 

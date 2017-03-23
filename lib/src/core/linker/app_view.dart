@@ -87,8 +87,12 @@ abstract class AppView<T> {
   // to be change detected.
   bool _skipChangeDetection = false;
 
+  /// Tracks the root DOM elements or view containers (for `<template>`).
+  ///
+  /// **INTERNAL ONLY**: Not part of the supported public API.
+  @visibleForTesting
   List rootNodesOrViewContainers;
-  List allNodes;
+
   final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
   List subscriptions;
   ViewContainer viewContainerElement;
@@ -180,9 +184,8 @@ abstract class AppView<T> {
   ComponentRef build() => null;
 
   /// Called by build once all dom nodes are available.
-  void init(List rootNodesOrViewContainers, List allNodes, List subscriptions) {
+  void init(List rootNodesOrViewContainers, List subscriptions) {
     this.rootNodesOrViewContainers = rootNodesOrViewContainers;
-    this.allNodes = allNodes;
     this.subscriptions = subscriptions;
     if (type == ViewType.COMPONENT) {
       dirtyParentQueriesInternal();
@@ -264,10 +267,10 @@ abstract class AppView<T> {
     }
     destroyInternal();
     dirtyParentQueriesInternal();
-    destroyViewNodes(hostElement, allNodes);
+    destroyViewNodes(hostElement);
   }
 
-  void destroyViewNodes(dynamic hostElement, List<dynamic> viewAllNodes) {
+  void destroyViewNodes(hostElement) {
     if (componentType.encapsulation == ViewEncapsulation.Native &&
         hostElement != null) {
       sharedStylesHost.removeHost(hostElement.shadowRoot);

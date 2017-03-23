@@ -45,7 +45,7 @@ class ViewProviderModulesComponent0
   }
   ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init([], [], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -106,7 +106,7 @@ class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _ProviderModulesComponent_0_2 = new import1.ProviderModulesComponent();
     _compView_0.create(_ProviderModulesComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_2);
   }
 

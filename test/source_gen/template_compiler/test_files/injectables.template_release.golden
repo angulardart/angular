@@ -50,7 +50,7 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('Inject!');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -104,7 +104,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
         this.injectorGet(import1.InjectableService, parentIndex, null),
         _const_OpaqueToken__test___0_2);
     _compView_0.create(_InjectableComponent_0_3, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _InjectableComponent_0_3);
   }
 

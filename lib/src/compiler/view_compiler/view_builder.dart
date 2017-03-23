@@ -1,3 +1,4 @@
+import 'package:angular2/src/compiler/output/output_ast.dart';
 import "package:angular2/src/core/change_detection/change_detection.dart"
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular2/src/core/linker/app_view_utils.dart'
@@ -952,15 +953,39 @@ List<o.Statement> generateCreateMethod(CompileView view, Parser parser) {
   var statements = <o.Statement>[];
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
-  var renderNodes = view.nodes.map((node) {
-    return node.renderNode;
-  }).toList();
 
-  statements.add(new o.InvokeMemberMethodExpr('init', [
-    createFlatArray(view.rootNodesOrViewContainers),
-    o.literalArr(renderNodes),
-    o.literalArr(view.subscriptions)
-  ]).toStmt());
+  // In DEBUG mode we call:
+  //
+  // init(rootNodes, subscriptions, renderNodes);
+  //
+  // In RELEASE mode we call:
+  //
+  // init(rootNodes, subscriptions);
+  if (view.genConfig.genDebugInfo) {
+    var renderNodes = view.nodes.map((node) {
+      return node.renderNode;
+    }).toList();
+    statements.add(new o.InvokeMemberMethodExpr('init', [
+      createFlatArray(view.rootNodesOrViewContainers),
+      o.literalArr(
+        view.subscriptions,
+        view.subscriptions.isEmpty
+            ? new o.ArrayType(null, const [o.TypeModifier.Const])
+            : null,
+      ),
+      o.literalArr(renderNodes),
+    ]).toStmt());
+  } else {
+    statements.add(new o.InvokeMemberMethodExpr('init', [
+      createFlatArray(view.rootNodesOrViewContainers),
+      o.literalArr(
+        view.subscriptions,
+        view.subscriptions.isEmpty
+            ? new o.ArrayType(null, const [o.TypeModifier.Const])
+            : null,
+      ),
+    ]).toStmt());
+  }
 
   bool isComponentRoot = isComponent && view.viewIndex == 0;
 

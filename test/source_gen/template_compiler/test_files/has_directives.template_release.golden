@@ -70,8 +70,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _compView_6.create(_TestSubComponent_6_2, []);
     Text _text_7 = new Text('\n  ');
     parentRenderNode.append(_text_7);
-    init([], [_text_0, _el_1, _text_2, _text_3, _el_4, _text_5, _el_6, _text_7],
-        []);
+    init(const [], const []);
     return null;
   }
 
@@ -118,7 +117,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_2 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
   }
 
@@ -169,7 +168,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     parentRenderNode.append(_el_0);
     Text _text_1 = new Text('Bar');
     _el_0.append(_text_1);
-    init([], [_el_0, _text_1], []);
+    init(const [], const []);
     return null;
   }
 }
@@ -197,7 +196,7 @@ class ViewTestSubComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _TestSubComponent_0_2 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _TestSubComponent_0_2);
   }
 

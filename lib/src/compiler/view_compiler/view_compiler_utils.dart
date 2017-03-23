@@ -98,6 +98,13 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
 }
 
 o.Expression createFlatArray(List<o.Expression> expressions) {
+  // Simplify: No items.
+  if (expressions.isEmpty) {
+    return o.literalArr(
+      const [],
+      new o.ArrayType(null, const [o.TypeModifier.Const]),
+    );
+  }
   // Check for [].addAll([x,y,z]) case and optimize.
   if (expressions.length == 1) {
     if (expressions[0].type is o.ArrayType) {

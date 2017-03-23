@@ -64,7 +64,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
     Text _text_1 = new Text('CheckOnce');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
-    init([], [_el_0, _text_1], []);
+    init(const [], const [], [_el_0, _text_1]);
     return null;
   }
 }
@@ -102,7 +102,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _CheckOnceComponent_0_2 = new import2.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_2);
   }
 
@@ -166,7 +166,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
     Text _text_1 = new Text('Checked');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
-    init([], [_el_0, _text_1], []);
+    init(const [], const [], [_el_0, _text_1]);
     return null;
   }
 }
@@ -204,7 +204,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _CheckedComponent_0_2 = new import2.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _CheckedComponent_0_2);
   }
 
@@ -269,7 +269,7 @@ class ViewCheckAlwaysComponent0
     Text _text_1 = new Text('CheckAlways');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
-    init([], [_el_0, _text_1], []);
+    init(const [], const [], [_el_0, _text_1]);
     return null;
   }
 }
@@ -308,7 +308,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _CheckAlwaysComponent_0_2 = new import2.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_2);
   }
 
@@ -372,7 +372,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
     Text _text_1 = new Text('Detached');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
-    init([], [_el_0, _text_1], []);
+    init(const [], const [], [_el_0, _text_1]);
     return null;
   }
 }
@@ -410,7 +410,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _DetachedComponent_0_2 = new import2.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _DetachedComponent_0_2);
   }
 
@@ -474,7 +474,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
     Text _text_1 = new Text('OnPush');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
-    init([], [_el_0, _text_1], []);
+    init(const [], const [], [_el_0, _text_1]);
     return null;
   }
 }
@@ -512,7 +512,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _OnPushComponent_0_2 = new import2.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _OnPushComponent_0_2);
   }
 
@@ -576,7 +576,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     Text _text_1 = new Text('Stateful');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
-    init([], [_el_0, _text_1], []);
+    init(const [], const [], [_el_0, _text_1]);
     ctx.stateChangeCallback = markStateChanged;
     return null;
   }
@@ -615,7 +615,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _StatefulComponent_0_2 = new import2.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _StatefulComponent_0_2);
   }
 
@@ -679,7 +679,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
     Text _text_1 = new Text('Default');
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
-    init([], [_el_0, _text_1], []);
+    init(const [], const [], [_el_0, _text_1]);
     return null;
   }
 }
@@ -717,7 +717,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _DefaultComponent_0_2 = new import2.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_2, projectableNodes);
-    init([rootEl], [rootEl], []);
+    init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _DefaultComponent_0_2);
   }
 
