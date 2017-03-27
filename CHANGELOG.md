@@ -32,9 +32,11 @@
    prints exceptions to the console. If you don't want this behavior (i.e.
    releasing to production), make sure to override it.
 
-### Bug fixes
+### Bug fixes and deprecations
 
 * When setting up a new `NgControl`, `valueAccessor` no longer can throw an NPE
+
+* ngSwitchCase replaces soft deprecated ngSwitchWhen
 
 ## 3.0.0-alpha
 
