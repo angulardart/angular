@@ -91,6 +91,8 @@ const NG_COMMON = const [
   'ValidatorFn',
   'Validators',
   'RadioButtonState',
+  'composeValidators',
+  'composeAsyncValidators',
 ];
 const NG_COMPILER = const [
   'TemplateAst',
@@ -140,7 +142,7 @@ const NG_COMPILER = const [
   'ProviderAstType',
   'sanitizeEventName',
   'ViewResolver',
-  'createOfflineCompileUrlResolver'
+  'createOfflineCompileUrlResolver',
 ];
 const NG_CORE = const [
   'APP_INITIALIZER',
@@ -444,6 +446,8 @@ const angular2Apis = const [
   "WrappedException",
   "WrappedValue",
   "appIdRandomProviderFactory",
+  'composeValidators',
+  'composeAsyncValidators',
   "coreBootstrap",
   "coreLoadAndBootstrap",
   "createNgZone",

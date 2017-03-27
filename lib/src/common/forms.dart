@@ -30,6 +30,8 @@ export "forms/directives/ng_form_model.dart" show NgFormModel;
 export "forms/directives/ng_model.dart" show NgModel;
 export "forms/directives/select_control_value_accessor.dart"
     show NgSelectOption, SelectControlValueAccessor;
+export "forms/directives/shared.dart"
+    show composeValidators, composeAsyncValidators;
 export "forms/directives/validators.dart"
     show
         RequiredValidator,
