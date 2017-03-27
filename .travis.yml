@@ -4,18 +4,23 @@ dart:
   - stable
   - dev
   - 1.22.1
-env:
-  - TEST_PLATFORM=vm
-  - TEST_PLATFORM=content-shell
-  - TEST_PLATFORM=firefox
+before_script: ./tool/travis_before_script.sh
+dart_task:
+  - test: --platform vm -x codegen
+  - test: --platform firefox -j 1 -P safe_firefox -x codegen
+  - test: --platform dartium -x codegen
+    install_dartium: true
+matrix:
+  include:
+    # Only validate formatting using the dev release
+    # Formatted with 1.23.0-dev.10.0 which has (good) changes since 1.22.1
+    - dart: dev
+      dart_task: dartfmt
+    # Only care about being analyzer clean for dev and stable
+    - dart: dev
+      dart_task: dartanalyzer
+    - dart: stable
+      dart_task: dartanalyzer
 cache:
   directories:
     - $HOME/.pub-cache
-with_content_shell: true
-addons:
-  firefox: "latest"
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - 't=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done'
-script: ./tool/travis.sh
