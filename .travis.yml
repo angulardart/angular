@@ -23,6 +23,11 @@ matrix:
     - dart: stable
       dart_task:
         dartanalyzer: --fatal-warnings lib
+  allow_failures:
+    # TODO(kevmoo) https://github.com/dart-lang/angular2/issues/319
+    - dart: dev
+      dart_task:
+        dartanalyzer: --fatal-warnings lib
 cache:
   directories:
     - $HOME/.pub-cache
