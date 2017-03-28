@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:barback/barback.dart';
+import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
+
+import 'logging.dart' show forwardLogRecord;
 
 typedef Future _SimpleCallback();
 
@@ -15,6 +18,7 @@ final _templateCompilerKey = #templateCompilerKey;
 Future<dynamic> exec(_SimpleCallback fn,
     {TransformLogger log, OfflineCompiler templateCompiler}) async {
   return runZoned(() async {
+    var loggerSubscription = Logger.root.onRecord.listen(forwardLogRecord);
     try {
       return await fn();
     } on AnalyzerError catch (e) {
@@ -37,6 +41,8 @@ Future<dynamic> exec(_SimpleCallback fn,
         log.error('$buf');
       }
       rethrow;
+    } finally {
+      loggerSubscription.cancel();
     }
   }, zoneValues: {_loggerKey: log, _templateCompilerKey: templateCompiler});
 }
