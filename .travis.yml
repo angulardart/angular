@@ -18,9 +18,11 @@ matrix:
       dart_task: dartfmt
     # Only care about being analyzer clean for dev and stable
     - dart: dev
-      dart_task: dartanalyzer
+      dart_task:
+        dartanalyzer: --fatal-warnings lib
     - dart: stable
-      dart_task: dartanalyzer
+      dart_task:
+        dartanalyzer: --fatal-warnings lib
 cache:
   directories:
     - $HOME/.pub-cache
