@@ -679,7 +679,7 @@ class TrackByIndexTest {
 
 @Component(
     selector: 'object-editor',
-    template: '<div *ngFor="#entity of entities; #i=index">'
+    template: '<div *ngFor="let entity of entities; let i=index">'
         '<object-to-edit [objectId]="entity"></object-to-edit>'
         '<button (click)="removeEdited(i)">remove</button>'
         '<button (click)="mutateItem(i)">mutate</button>'
