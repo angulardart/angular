@@ -59,8 +59,23 @@ String buildGeneratedCode(
   return buffer.toString();
 }
 
-void _writeImportExports(StringBuffer buffer, String sourceFile,
-    NgDepsModel model, String templateCode, _NgScope scope) {
+// TODO: https://github.com/dart-lang/code_builder/issues/100.
+int _compareUri(
+  AstBuilder<UriBasedDirective> a,
+  AstBuilder<UriBasedDirective> b,
+) {
+  var uriA = a.buildAst().uriContent ?? '';
+  var uriB = b.buildAst().uriContent ?? '';
+  return uriA.compareTo(uriB);
+}
+
+void _writeImportExports(
+  StringBuffer buffer,
+  String sourceFile,
+  NgDepsModel model,
+  String templateCode,
+  _NgScope scope,
+) {
   // We need to import & export (see below) the source file.
   scope.addPrefixImport(sourceFile, '');
   List<ImportBuilder> imports = [new ImportModel(uri: sourceFile).asBuilder];
@@ -85,8 +100,8 @@ void _writeImportExports(StringBuffer buffer, String sourceFile,
   exports.addAll(model.exports.map((model) => model.asBuilder));
 
   var library = new LibraryBuilder.scope(scope: scope)
-    ..addDirectives(imports)
-    ..addDirectives(exports);
+    ..addDirectives(imports..sort(_compareUri))
+    ..addDirectives(exports..sort(_compareUri));
   buffer.write(prettyToSource(library.buildAst()));
 }
 
