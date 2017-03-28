@@ -45,8 +45,8 @@ o.Expression getPropertyInView(
           : viewProp.prop('parentView');
     }
     if (!identical(currView, definedView)) {
-      throw new BaseException(
-          '''Internal error: Could not calculate a property in a parent view: ${ property}''');
+      throw new BaseException('Internal error: Could not calculate a property '
+          'in a parent view: $property');
     }
     if (property is o.ReadClassMemberExpr) {
       o.ReadClassMemberExpr readMemberExpr = property;

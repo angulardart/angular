@@ -27,7 +27,7 @@ class CompileNode {
   /// Parent of node.
   final CompileElement parent;
   final CompileView view;
-  final num nodeIndex;
+  final int nodeIndex;
 
   /// Expression that resolves to reference to instance of of node.
   final o.Expression renderNode;
@@ -51,9 +51,9 @@ class CompileElement extends CompileNode {
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> _directives;
   List<ProviderAst> _resolvedProvidersArray;
-  bool hasViewContainer;
-  bool hasEmbeddedView;
-  bool hasTemplateRefQuery;
+  final bool hasViewContainer;
+  final bool hasEmbeddedView;
+  final bool hasTemplateRefQuery;
 
   /// Expression that contains reference to componentView.
   o.Expression compViewExpr;
@@ -74,7 +74,7 @@ class CompileElement extends CompileNode {
   CompileElement(
       CompileElement parent,
       CompileView view,
-      num nodeIndex,
+      int nodeIndex,
       o.Expression renderNode,
       this.renderNodeFieldName,
       TemplateAst sourceAst,
@@ -203,11 +203,11 @@ class CompileElement extends CompileNode {
     }
 
     List<_QueryWithRead> queriesWithReads = [];
-    _resolvedProviders.values.forEach((resolvedProvider) {
+    for (var resolvedProvider in _resolvedProviders.values) {
       var queriesForProvider = _getQueriesFor(resolvedProvider.token);
       queriesWithReads.addAll(queriesForProvider
           .map((query) => new _QueryWithRead(query, resolvedProvider.token)));
-    });
+    }
 
     // For each reference token create CompileTokenMetadata to read query.
     if (referenceTokens != null) {
@@ -293,7 +293,7 @@ class CompileElement extends CompileNode {
     }
   }
 
-  void afterChildren(num childNodeCount) {
+  void afterChildren(int childNodeCount) {
     for (ProviderAst resolvedProvider in _resolvedProviders.values) {
       if (!resolvedProvider.dynamicallyReachable ||
           !resolvedProvider.visibleToViewHierarchy) continue;
@@ -305,7 +305,7 @@ class CompileElement extends CompileNode {
 
       // Note: view providers are only visible on the injector of that element.
       // This is not fully correct as the rules during codegen don't allow a
-      // directive to get hold of a view provdier on the same element. We still
+      // directive to get hold of a view provider on the same element. We still
       // do this semantic as it simplifies our model to having only one runtime
       // injector per element.
       var providerChildNodeCount =
@@ -375,14 +375,11 @@ class CompileElement extends CompileNode {
     o.Expression result;
     if (dep.token != null) {
       // access builtins with special visibility
-      if (result == null) {
-        if (dep.token
-            .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
-          if (identical(requestingProviderType, ProviderAstType.Component)) {
-            return compViewExpr.prop("ref");
-          } else {
-            return new o.ReadClassMemberExpr('ref');
-          }
+      if (dep.token.equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
+        if (identical(requestingProviderType, ProviderAstType.Component)) {
+          return compViewExpr.prop("ref");
+        } else {
+          return new o.ReadClassMemberExpr('ref');
         }
       }
       // access regular providers on the element
@@ -414,7 +411,7 @@ class CompileElement extends CompileNode {
   }
 }
 
-o.Statement createInjectInternalCondition(num nodeIndex, num childNodeCount,
+o.Statement createInjectInternalCondition(int nodeIndex, int childNodeCount,
     ProviderAst provider, o.Expression providerExpr) {
   var indexCondition;
   if (childNodeCount > 0) {
@@ -480,7 +477,7 @@ o.Expression createProviderProperty(
       return localVar;
     }
   } else {
-    var internalField = '_${propName}';
+    var internalField = '_$propName';
     view.fields.add(new o.ClassField(internalField,
         outputType: type, modifiers: const [o.StmtModifier.Private]));
     var getter = new CompileMethod(view);
