@@ -1,5 +1,5 @@
-import "package:angular2/core.dart"
-    show Directive, Host, ViewContainerRef, TemplateRef;
+import 'package:angular2/core.dart';
+import 'package:angular2/src/facade/lang.dart';
 
 const _WHEN_DEFAULT = const Object();
 
@@ -193,7 +193,7 @@ class NgSwitchWhen {
   }
 
   set ngSwitchWhen(dynamic value) {
-    if (identical(value, _value)) return;
+    if (looseIdentical(value, _value)) return;
     this._switch._onWhenValueChanged(this._value, value, this._view);
     this._value = value;
   }
