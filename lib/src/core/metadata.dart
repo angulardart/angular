@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import 'change_detection/change_detection.dart';
 import 'metadata/di.dart';
 import 'metadata/view.dart';
@@ -342,7 +344,7 @@ class Directive extends Injectable {
   final Map<String, dynamic> queries;
 
   const Directive(
-      {String selector,
+      {@required String selector,
       this.inputs,
       this.outputs,
       Map<String, String> host,
