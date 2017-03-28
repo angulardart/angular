@@ -8,7 +8,7 @@ import 'package:angular2/src/core/linker/app_view.dart'
 import 'package:angular2/src/core/linker/view_ref.dart';
 import 'package:angular2/src/facade/exceptions.dart'
     show BaseException, ExceptionHandler;
-import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
+import 'package:angular2/src/facade/lang.dart' show assertionsEnabled, isDartVM;
 
 import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import 'change_detection/change_detector_ref.dart';
@@ -39,6 +39,13 @@ PlatformRefImpl createPlatform(Injector injector) {
     }
     return true;
   });
+  if (isDartVM && !assertionsEnabled()) {
+    window.console.warn(''
+        'When using Dartium, CHECKED mode is recommended to catch type and '
+        'assertion warnings, along with more specialized runtime checks in '
+        'Angular itself for developers.\n\n'
+        'See https://webdev.dartlang.org/tools/dartium for more information.');
+  }
   _inPlatformCreate = true;
   sharedStylesHost ??= new DomSharedStylesHost(document);
   try {
