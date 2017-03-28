@@ -55,6 +55,11 @@ class RuntimeCompiler implements ComponentResolver {
   Future<ComponentFactory> resolveComponent(Type componentType) {
     CompileDirectiveMetadata compMeta =
         this._runtimeMetadataResolver.getDirectiveMetadata(componentType);
+    if (compMeta.selector == null) {
+      // Purposefully do not make this a breaking change (i.e. throw) because
+      // the reflective compiler is deprecated anyway.
+      print('WARNING: $componentType does not have a "selector" property');
+    }
     var hostCacheKey = this._hostCacheKeys[componentType];
     if (hostCacheKey == null) {
       hostCacheKey = new Object();
