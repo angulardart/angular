@@ -121,7 +121,6 @@ abstract class AppView<T> {
   }
 
   void setupComponentType(RenderComponentType renderType) {
-    sharedStylesHost ??= new DomSharedStylesHost(document);
     if (!renderType.stylesShimmed) {
       renderType.shimStyles(sharedStylesHost);
       renderType.stylesShimmed = true;

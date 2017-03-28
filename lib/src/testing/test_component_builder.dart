@@ -11,12 +11,14 @@ import "package:angular2/core.dart"
         View,
         ElementRef,
         ChangeDetectorRef;
+import 'package:angular2/platform/common_dom.dart';
 import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/debug/debug_node.dart"
     show DebugElement, getDebugNode;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 
 import "fake_async.dart" show tick;
+import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 /// Fixture for debugging and testing a component.
 class ComponentFixture {
@@ -88,7 +90,11 @@ class TestComponentBuilder {
   var _viewBindingsOverrides = new Map<Type, List<dynamic>>();
   var _viewOverrides = new Map<Type, View>();
 
-  TestComponentBuilder(this._injector);
+  TestComponentBuilder(this._injector) {
+    // Required because reflective tests do not create a PlatformRef.
+    sharedStylesHost ??= new DomSharedStylesHost(document);
+  }
+
   TestComponentBuilder _clone() {
     var clone = new TestComponentBuilder(_injector);
     clone._viewOverrides = new Map.from(_viewOverrides);

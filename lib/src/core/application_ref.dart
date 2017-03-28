@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:angular2/platform/common_dom.dart';
 import 'package:angular2/src/core/change_detection/constants.dart';
 import 'package:angular2/src/core/linker/app_view.dart'
     show lastGuardedView, caughtException, caughtStack;
@@ -15,6 +16,7 @@ import 'di.dart';
 import 'linker/app_view_utils.dart';
 import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
 import 'linker/component_resolver.dart';
+import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
@@ -38,6 +40,7 @@ PlatformRefImpl createPlatform(Injector injector) {
     return true;
   });
   _inPlatformCreate = true;
+  sharedStylesHost ??= new DomSharedStylesHost(document);
   try {
     _platform = injector.get(PlatformRef) as PlatformRefImpl;
     _platform.init(injector);
