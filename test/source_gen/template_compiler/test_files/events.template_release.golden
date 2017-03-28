@@ -52,9 +52,9 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
     parentRenderNode.append(_el_1);
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
-    listen(_el_1, 'click', this.eventHandler0(ctx.onClick));
+    _el_1.addEventListener('click', this.eventHandler0(ctx.onClick));
     init(const [], const []);
-    listen(rootEl, 'focus', eventHandler0(ctx.onFocus));
+    rootEl.addEventListener('focus', eventHandler0(ctx.onFocus));
     return null;
   }
 }
