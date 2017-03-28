@@ -24,7 +24,7 @@ dependencies:
   source_span: ^1.0.0
   stack_trace: ^1.6.5
 dev_dependencies:
-  angular_test: '1.0.0-alpha+5'
+  angular_test: '1.0.0-alpha+6'
   args: ^0.13.6
   build_runner: ^0.3.0
   build_test: ^0.4.0+1
@@ -37,11 +37,18 @@ dev_dependencies:
 transformers:
   - test/pub_serve:
       $include: test/**_test.dart
-  - angular2/transform/codegen
-  - angular2/transform/reflection_remover:
-      $include:
-          - test/testing/ng_test_bed_test.dart
-          - test/security/safe_inner_html_test.dart
+  - angular2/transform/codegen:
+      # These tests fail the transformer, but don't use it yet anyway.
+      $exclude:
+          - test/compiler/runtime_**.dart
+          - test/core/linker/change_detection_integration_test.dart
+          - test/core/linker/change_detection_lifecycle_test.dart
+          - test/core/linker/integration_test.dart
+          - test/core/linker/view_injector_integration_test.dart
+          - test/core/linker/query_integration_test.dart
+          - test/source_gen/**.dart
+      resolved_identifiers:
+          Logger: package:logging/logging.dart
   - $dart2js:
       commandLineOptions:
         - '--show-package-warnings'

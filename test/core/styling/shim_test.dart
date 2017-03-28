@@ -8,7 +8,13 @@ import 'package:angular2/angular2.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
+// Not common practice, just to avoid a circular pub transformer dependency.
+// ignore: uri_has_not_been_generated
+import 'shim_test.template.dart' as ng_codegen;
+
 void main() {
+  ng_codegen.initReflector();
+
   group('host styling', () {
     tearDown(disposeAnyRunningTest);
 
