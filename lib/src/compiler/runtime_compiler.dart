@@ -55,6 +55,11 @@ class RuntimeCompiler implements ComponentResolver {
   Future<ComponentFactory> resolveComponent(Type componentType) {
     CompileDirectiveMetadata compMeta =
         this._runtimeMetadataResolver.getDirectiveMetadata(componentType);
+    if (compMeta.selector == null) {
+      throw new ArgumentError(
+        'Component $componentType must have a "selector" defined',
+      );
+    }
     var hostCacheKey = this._hostCacheKeys[componentType];
     if (hostCacheKey == null) {
       hostCacheKey = new Object();
