@@ -3,8 +3,6 @@
 # Fast fail the script on failures.
 set -ev
 
-# TODO(kevmoo) I'd love to only execute this when running VM tests
-# ...but it seems the only option to do that is to do a hacky grep over
-#  /home/travis/build.sh
-# ...which I don't feel like doing yet
+# NOTE: Only needed for vm tests, but no easy way to sniff the `dart_task`
+#       config from a shell script.
 dart test/source_gen/template_compiler/generate.dart
