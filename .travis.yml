@@ -6,10 +6,14 @@ dart:
   - 1.22.1
 before_script: ./tool/travis_before_script.sh
 dart_task:
-  - test: --platform vm -x codegen
-  - test: --platform firefox -j 1 -P safe_firefox -x codegen
-  - test: --platform dartium -x codegen
+  - test: -x codegen --platform vm
+  # Disable parallelism on Firefox (-j 1)
+  # Causes flakiness – need to investigate
+  - test: -x codegen --platform firefox -j 1 -P safe_firefox
+  - test: -x codegen --platform dartium
     install_dartium: true
+  # TODO(kevmoo) Enable codegen tests when issue is fixed
+  # https://github.com/dart-lang/angular2/issues/272
 matrix:
   include:
     # Only validate formatting using the dev release
@@ -25,6 +29,7 @@ matrix:
         dartanalyzer: --fatal-warnings lib
   allow_failures:
     # TODO(kevmoo) https://github.com/dart-lang/angular2/issues/319
+    # New strong-mode errors with generated protobuf code and SDK 1.23.0-dev.10
     - dart: dev
       dart_task:
         dartanalyzer: --fatal-warnings lib
