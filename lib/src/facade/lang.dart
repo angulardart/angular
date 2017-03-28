@@ -27,9 +27,8 @@ List<String> jsSplit(String s, RegExp regExp) {
 // evaluate the conditional during compilation and inline the entire function.
 //
 // See: dartbug.com/22496, dartbug.com/25270
-const _IS_DART_VM = !identical(1.0, 1); // a hack
-bool looseIdentical(a, b) =>
-    _IS_DART_VM ? _looseIdentical(a, b) : identical(a, b);
+const isDartVM = !identical(1.0, 1); // a hack
+bool looseIdentical(a, b) => isDartVM ? _looseIdentical(a, b) : identical(a, b);
 
 // This function is intentionally separated from `looseIdentical` to keep the
 // number of AST nodes low enough for `dart2js` to inline the code.
