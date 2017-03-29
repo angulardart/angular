@@ -2,8 +2,8 @@ name: angular2
 version: 3.0.0-alpha+1
 author: Dart Team <web@dartlang.org>
 description: Framework for modern web applications
-homepage: 'https://webdev.dartlang.org/angular'
-documentation: 'https://angular.io/docs/dart/latest/api/'
+homepage: https://webdev.dartlang.org/angular
+documentation: https://webdev.dartlang.org/angular/api
 environment:
   sdk: '>=1.22.0 <2.0.0'
 dependencies:
