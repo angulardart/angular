@@ -1,3 +1,36 @@
+## 3.0.0-beta
+
+### New features
+
+* `composeValidators` and `composeAsyncValidators` now part of the public API.
+* `angular2/testing.dart` includes a test-only `isDebugMode` function.
+
+
+### Breaking changes
+
+* Removed `TitleService`. To update the title, use `dart:html`:
+
+  ```dart
+  document.title = 'My title';
+  ```
+
+* `DynamicComponentLoader` now has a simplified API:
+
+  `loadAsRoot`, `loadAsRootIntoNode` replaced by a single `load` method that
+  always creates the component root node instead of hoisting into an existing
+  node.
+
+### Bug fixes and deprecations
+
+* `ngSwitchWhen` now properly compares identity in Dartium.
+* `ngSwitchCase` replaces `ngSwitchWhen` (soft deprecation).
+* `Component/Directive#selector` is now a `@required` property.
+* Angular warns in the console if using Dartium without _checked_ mode.
+* Various performance improvements for both code size and runtime.
+* Various Dart idiomatic/style guide updates to the codebase.
+* `ngIf` now throws again if the bound value changes during change detection.
+* `XHR` is deprecated, along with the runtime/reflective compiler.
+
 ## 3.0.0-alpha+1
 
 ### New features
