@@ -15,7 +15,7 @@ dependencies:
   func: ^0.1.0
   glob: ^1.0.0
   html: '>=0.12.0 <0.14.0'
-  intl: '>=0.13.0 <0.15.0'
+  intl: '>=0.13.0 <0.16.0'
   js: ^0.6.0
   logging: '>=0.9.0 <0.12.0'
   meta: ^1.0.3
@@ -28,10 +28,10 @@ dev_dependencies:
   args: ^0.13.6
   build_runner: ^0.3.0
   build_test: ^0.4.0+1
-  code_builder: '1.0.0-beta+3'
+  code_builder: '^1.0.0-beta+4'
   mockito: '>=0.11.0 <2.0.0'
   source_gen: ^0.5.4
-  quiver: '>=0.21.4 <0.25.0'
+  quiver: '>=0.21.4 <0.26.0'
   test: ^0.12.6
   transformer_test: ^0.2.0
 transformers:
