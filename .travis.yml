@@ -4,6 +4,9 @@ dart:
   - stable
   - dev
   - 1.22.1
+addons: 
+  # otherwise a number of tests in test/security/html_sanitizer_test.dart fail
+  firefox: "latest" 
 before_script: ./tool/travis_before_script.sh
 dart_task:
   - test: -x codegen --platform vm
