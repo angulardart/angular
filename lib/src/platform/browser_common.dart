@@ -13,9 +13,10 @@ import "package:angular2/src/compiler/xhr.dart" show XHR;
 import "package:angular2/src/core/di.dart" show Injectable, Provider;
 import "package:angular2/src/core/testability/testability.dart"
     show Testability;
+import "package:angular2/src/platform/browser/exceptions.dart"
+    show BrowserExceptionHandler;
 import "package:angular2/src/security/dom_sanitization_service.dart";
 import "package:angular2/src/security/dom_sanitization_service_impl.dart";
-import 'package:logging/logging.dart';
 
 import "browser/testability.dart" show BrowserGetTestability;
 import "browser/xhr_cache.dart" show CachedXHR;
@@ -42,10 +43,6 @@ const List<dynamic> BROWSER_PROVIDERS = const [
       multi: true,
       deps: const [TestabilityRegistry])
 ];
-ExceptionHandler exceptionHandler() {
-  // But must not rethrow exceptions in Dart.
-  return new ExceptionHandler(new Logger('angular exception'));
-}
 
 const List BROWSER_SANITIZATION_PROVIDERS = const [
   const Provider(SanitizationService, useExisting: DomSanitizationService),
@@ -62,8 +59,7 @@ const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   FORM_PROVIDERS,
   const Provider(PLATFORM_PIPES, useValue: COMMON_PIPES, multi: true),
   const Provider(PLATFORM_DIRECTIVES, useValue: COMMON_DIRECTIVES, multi: true),
-  const Provider(ExceptionHandler,
-      useFactory: exceptionHandler, deps: const []),
+  const Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
   DomEventsPlugin,
   KeyEventsPlugin,
   HammerGesturesPlugin,
