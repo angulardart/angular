@@ -4,18 +4,32 @@ dart:
   - stable
   - dev
   - 1.22.1
-env:
-  - TEST_PLATFORM=vm
-  - TEST_PLATFORM=content-shell
-  - TEST_PLATFORM=firefox
+addons:
+  # otherwise a number of tests in test/security/html_sanitizer_test.dart fail
+  firefox: "latest"
+before_script: ./tool/travis_before_script.sh
+dart_task:
+  - test: -x codegen --platform vm
+  # Disable parallelism on Firefox (-j 1)
+  # Causes flakiness – need to investigate
+  - test: -x codegen --platform firefox -j 1 -P safe_firefox
+  - test: -x codegen --platform dartium
+    install_dartium: true
+  # TODO(kevmoo) Enable codegen tests when issue is fixed
+  # https://github.com/dart-lang/angular2/issues/272
+matrix:
+  include:
+    # Only validate formatting using the dev release
+    # Formatted with 1.23.0-dev.10.0 which has (good) changes since 1.22.1
+    - dart: dev
+      dart_task: dartfmt
+    # Only care about being analyzer clean for dev and stable
+    - dart: dev
+      dart_task:
+        dartanalyzer: --fatal-warnings lib
+    - dart: stable
+      dart_task:
+        dartanalyzer: --fatal-warnings lib
 cache:
   directories:
     - $HOME/.pub-cache
-with_content_shell: true
-addons:
-  firefox: "latest"
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - 't=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done'
-script: ./tool/travis.sh
