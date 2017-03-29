@@ -24,7 +24,7 @@ dependencies:
   source_span: ^1.0.0
   stack_trace: ^1.6.5
 dev_dependencies:
-  angular_test: '1.0.0-alpha+5'
+  angular_test: '^1.0.0-beta'
   args: ^0.13.6
   build_runner: ^0.3.0
   build_test: ^0.4.0+1
