@@ -339,6 +339,8 @@ class CompileTokenMap<V> {
     return result;
   }
 
+  bool containsKey(CompileTokenMetadata token) => get(token) != null;
+
   List<CompileTokenMetadata> get keys => _tokens;
 
   List<V> get values => _values;

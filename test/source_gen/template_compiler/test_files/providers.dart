@@ -15,6 +15,10 @@ import 'package:angular2/angular2.dart';
     useExisting: MyUseClass,
   ),
   const Provider(
+    MyUseExistingNested,
+    useExisting: MyUseExisting,
+  ),
+  const Provider(
     MyUseValue,
     useValue: const MyUseValue('Andrew'),
   ),
@@ -38,6 +42,8 @@ class MyTypeAnnotation {}
 class MyUseExisting {}
 
 class MyUseClass implements MyUseExisting {}
+
+class MyUseExistingNested implements MyUseExisting {}
 
 class MyUseFactory {}
 

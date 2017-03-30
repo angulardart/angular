@@ -60,6 +60,12 @@ class CompileElement extends CompileNode {
   o.ReadClassMemberExpr appViewContainer;
   o.Expression elementRef;
   var _instances = new CompileTokenMap<o.Expression>();
+
+  /// We track which providers are just 'useExisting' for another provider on
+  /// this component. This way, we can detect when we don't need to generate
+  /// a getter for them.
+  var _aliases = new CompileTokenMap<List<CompileTokenMetadata>>();
+  var _aliasedProviders = new CompileTokenMap<CompileTokenMetadata>();
   CompileTokenMap<ProviderAst> _resolvedProviders;
   var _queryCount = 0;
   var _queries = new CompileTokenMap<List<CompileQuery>>();
@@ -253,9 +259,19 @@ class CompileElement extends CompileNode {
     // some as getters (eager=false). We rely on the fact that they are
     // already sorted topologically.
     for (ProviderAst resolvedProvider in _resolvedProviders.values) {
-      var providerValueExpressions = resolvedProvider.providers.map((provider) {
+      var providerValueExpressions = <o.Expression>[];
+      var isLocalAlias = false;
+      for (var provider in resolvedProvider.providers) {
         o.Expression providerValue;
         if (provider.useExisting != null) {
+          // If this provider is just an alias for another provider on this
+          // component, we don't need to generate a getter.
+          if (_instances.containsKey(provider.useExisting) &&
+              !resolvedProvider.eager &&
+              !resolvedProvider.multiProvider) {
+            isLocalAlias = true;
+            break;
+          }
           providerValue = _getDependency(resolvedProvider.providerType,
               new CompileDiDependencyMetadata(token: provider.useExisting));
         } else if (provider.useFactory != null) {
@@ -278,30 +294,47 @@ class CompileElement extends CompileNode {
         if (provider.useProperty != null) {
           providerValue = providerValue.prop(provider.useProperty);
         }
-        return providerValue;
-      }).toList();
-      var propName =
-          '_${resolvedProvider.token.name}_${nodeIndex}_${_instances.size}';
-      var instance = createProviderProperty(
-          propName,
-          resolvedProvider,
-          providerValueExpressions,
-          resolvedProvider.multiProvider,
-          resolvedProvider.eager,
-          this);
-      _instances.add(resolvedProvider.token, instance);
+        providerValueExpressions.add(providerValue);
+      }
+      if (isLocalAlias) {
+        var provider = resolvedProvider.providers.single;
+        var alias = provider.useExisting;
+        if (_aliasedProviders.containsKey(alias)) {
+          alias = _aliasedProviders.get(alias);
+        }
+        if (!_aliases.containsKey(alias)) {
+          _aliases.add(alias, <CompileTokenMetadata>[]);
+        }
+        _aliases.get(alias).add(provider.token);
+        _aliasedProviders.add(resolvedProvider.token, alias);
+        _instances.add(resolvedProvider.token, _instances.get(alias));
+      } else {
+        var propName =
+            '_${resolvedProvider.token.name}_${nodeIndex}_${_instances.size}';
+        var instance = createProviderProperty(
+            propName,
+            resolvedProvider,
+            providerValueExpressions,
+            resolvedProvider.multiProvider,
+            resolvedProvider.eager,
+            this);
+        _instances.add(resolvedProvider.token, instance);
+      }
     }
   }
 
   void afterChildren(int childNodeCount) {
     for (ProviderAst resolvedProvider in _resolvedProviders.values) {
       if (!resolvedProvider.dynamicallyReachable ||
-          !resolvedProvider.visibleToViewHierarchy) continue;
+          !resolvedProvider.visibleToViewHierarchy ||
+          _aliasedProviders.containsKey(resolvedProvider.token)) continue;
 
       // Note: afterChildren is called after recursing into children.
       // This is good so that an injector match in an element that is closer to
       // a requesting element matches first.
       var providerExpr = _instances.get(resolvedProvider.token);
+
+      var aliases = _aliases.get(resolvedProvider.token);
 
       // Note: view providers are only visible on the injector of that element.
       // This is not fully correct as the rules during codegen don't allow a
@@ -312,8 +345,8 @@ class CompileElement extends CompileNode {
           resolvedProvider.providerType == ProviderAstType.PrivateService
               ? 0
               : childNodeCount;
-      view.injectorGetMethod.addStmt(createInjectInternalCondition(
-          nodeIndex, providerChildNodeCount, resolvedProvider, providerExpr));
+      view.injectorGetMethod.addStmt(_createInjectInternalCondition(nodeIndex,
+          providerChildNodeCount, resolvedProvider, providerExpr, aliases));
     }
     for (List<CompileQuery> queries in _queries.values) {
       for (CompileQuery query in queries) {
@@ -411,8 +444,12 @@ class CompileElement extends CompileNode {
   }
 }
 
-o.Statement createInjectInternalCondition(int nodeIndex, int childNodeCount,
-    ProviderAst provider, o.Expression providerExpr) {
+o.Statement _createInjectInternalCondition(
+    int nodeIndex,
+    int childNodeCount,
+    ProviderAst provider,
+    o.Expression providerExpr,
+    List<CompileTokenMetadata> aliases) {
   var indexCondition;
   if (childNodeCount > 0) {
     indexCondition = o
@@ -423,10 +460,16 @@ o.Statement createInjectInternalCondition(int nodeIndex, int childNodeCount,
   } else {
     indexCondition = o.literal(nodeIndex).equals(InjectMethodVars.nodeIndex);
   }
-  return new o.IfStmt(
-      InjectMethodVars.token
-          .identical(createDiTokenExpression(provider.token))
-          .and(indexCondition),
+  o.Expression tokenCondition =
+      InjectMethodVars.token.identical(createDiTokenExpression(provider.token));
+  if (aliases != null) {
+    for (var alias in aliases) {
+      tokenCondition = tokenCondition
+          .or(InjectMethodVars.token.identical(createDiTokenExpression(alias)));
+    }
+  }
+
+  return new o.IfStmt(tokenCondition.and(indexCondition),
       [new o.ReturnStatement(providerExpr)]);
 }
 

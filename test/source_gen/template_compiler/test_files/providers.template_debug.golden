@@ -78,6 +78,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
         import2.MyUseFactory,
         import2.MyUseClass,
         import2.MyUseExisting,
+        import2.MyUseExistingNested,
         import2.MyUseValue,
         const OpaqueToken('useValueString'),
         import2.MyMulti
@@ -92,10 +93,9 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   import2.MyTypeAnnotation __MyTypeAnnotation_0_3;
   dynamic __MyUseFactory_0_4;
   import2.MyUseClass __MyUseClass_0_5;
-  dynamic __MyUseExisting_0_6;
-  dynamic __MyUseValue_0_7;
-  dynamic __const_OpaqueToken__useValueString___0_8;
-  List<dynamic> __MyMulti_0_9;
+  dynamic __MyUseValue_0_8;
+  dynamic __const_OpaqueToken__useValueString___0_9;
+  List<dynamic> __MyMulti_0_10;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -134,36 +134,28 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyUseClass_0_5;
   }
 
-  dynamic get _MyUseExisting_0_6 {
+  dynamic get _MyUseValue_0_8 {
     dbg(0, 0, 0);
-    if ((this.__MyUseExisting_0_6 == null)) {
-      (__MyUseExisting_0_6 = this._MyUseClass_0_5);
+    if ((this.__MyUseValue_0_8 == null)) {
+      (__MyUseValue_0_8 = import2.MyUseValue);
     }
-    return this.__MyUseExisting_0_6;
+    return this.__MyUseValue_0_8;
   }
 
-  dynamic get _MyUseValue_0_7 {
+  dynamic get _const_OpaqueToken__useValueString___0_9 {
     dbg(0, 0, 0);
-    if ((this.__MyUseValue_0_7 == null)) {
-      (__MyUseValue_0_7 = import2.MyUseValue);
+    if ((this.__const_OpaqueToken__useValueString___0_9 == null)) {
+      (__const_OpaqueToken__useValueString___0_9 = 'foo');
     }
-    return this.__MyUseValue_0_7;
+    return this.__const_OpaqueToken__useValueString___0_9;
   }
 
-  dynamic get _const_OpaqueToken__useValueString___0_8 {
+  List<dynamic> get _MyMulti_0_10 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__useValueString___0_8 == null)) {
-      (__const_OpaqueToken__useValueString___0_8 = 'foo');
+    if ((this.__MyMulti_0_10 == null)) {
+      (__MyMulti_0_10 = [null]);
     }
-    return this.__const_OpaqueToken__useValueString___0_8;
-  }
-
-  List<dynamic> get _MyMulti_0_9 {
-    dbg(0, 0, 0);
-    if ((this.__MyMulti_0_9 == null)) {
-      (__MyMulti_0_9 = [null]);
-    }
-    return this.__MyMulti_0_9;
+    return this.__MyMulti_0_10;
   }
 
   ComponentRef build() {
@@ -187,21 +179,21 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, import2.MyUseFactory) && (0 == nodeIndex))) {
       return _MyUseFactory_0_4;
     }
-    if ((identical(token, import2.MyUseClass) && (0 == nodeIndex))) {
+    if ((((identical(token, import2.MyUseClass) ||
+                identical(token, import2.MyUseExisting)) ||
+            identical(token, import2.MyUseExistingNested)) &&
+        (0 == nodeIndex))) {
       return _MyUseClass_0_5;
     }
-    if ((identical(token, import2.MyUseExisting) && (0 == nodeIndex))) {
-      return _MyUseExisting_0_6;
-    }
     if ((identical(token, import2.MyUseValue) && (0 == nodeIndex))) {
-      return _MyUseValue_0_7;
+      return _MyUseValue_0_8;
     }
     if ((identical(token, const OpaqueToken('useValueString')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken__useValueString___0_8;
+      return _const_OpaqueToken__useValueString___0_9;
     }
     if ((identical(token, import2.MyMulti) && (0 == nodeIndex))) {
-      return _MyMulti_0_9;
+      return _MyMulti_0_10;
     }
     return notFoundResult;
   }
