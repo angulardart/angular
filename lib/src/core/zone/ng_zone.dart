@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:stack_trace/stack_trace.dart';
 
+// TODO: add/fix links to:
+// - docs explaining zones and the use of zones in Angular and
+// - change-detection link to runOutsideAngular/run (throughout this file!)
+
 /// An injectable service for executing work inside or outside of the
 /// Angular zone.
 ///
@@ -11,70 +15,66 @@ import 'package:stack_trace/stack_trace.dart';
 /// kicked off via [#runOutsideAngular] and if needed, these tasks
 /// can reenter the Angular zone via [#run].
 ///
-/// <!-- TODO: add/fix links to:
-///   - docs explaining zones and the use of zones in Angular and
-///   - change-detection link to runOutsideAngular/run (throughout this file!)
-///   -->
+/// ## Example
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/lY9m8HLy7z06vDoUaSN2?p=preview))
-/// ```
-/// import {Component, View, NgZone} from 'angular2/core';
-/// import {NgIf} from 'angular2/common';
+/// ```dart
+/// // {@source "core/ngzone/lib/app_component.dart"}
+/// import 'dart:async';
 ///
-/// @Component({
-///   selector: 'ng-zone-demo'.
-///   template: `
-///     <h2>Demo: NgZone</h2>
+/// import 'package:angular2/core.dart';
 ///
-///     <p>Progress: {{progress}}%</p>
-///     <p *ngIf="progress >= 100">Done processing {{label}} of Angular zone!</p>
+/// @Component(
+///     selector: 'my-app',
+///     template: '''
+///       <h1>Demo: NgZone</h1>
+///       <p>
+///         Progress: {{progress}}%<br>
+///         <span *ngIf="progress >= 100">Done processing {{label}} of Angular zone!</span>
+///         &nbsp;
+///       </p>
+///       <button (click)="processWithinAngularZone()">Process within Angular zone</button>
+///       <button (click)="processOutsideOfAngularZone()">Process outside of Angular zone</button>
+///     ''')
+/// class AppComponent {
+///   int progress = 0;
+///   String label;
+///   final NgZone _ngZone;
 ///
-///     <button (click)="processWithinAngularZone()">Process within Angular zone
-///     </button>
-///     <button (click)="processOutsideOfAngularZone()">
-///       Process outside of Angular zone
-///     </button>
-///   `,
-///   directives: [NgIf]
-/// })
-/// export class NgZoneDemo {
-///   progress: number = 0;
-///   label: string;
-///
-///   constructor(private _ngZone: NgZone) {}
+///   AppComponent(this._ngZone);
 ///
 ///   // Loop inside the Angular zone
 ///   // so the UI DOES refresh after each setTimeout cycle
-///   processWithinAngularZone() {
-///     this.label = 'inside';
-///     this.progress = 0;
-///     this._increaseProgress(() => console.log('Inside Done!'));
+///   void processWithinAngularZone() {
+///     label = 'inside';
+///     progress = 0;
+///     _increaseProgress(() => print('Inside Done!'));
 ///   }
 ///
 ///   // Loop outside of the Angular zone
 ///   // so the UI DOES NOT refresh after each setTimeout cycle
-///   processOutsideOfAngularZone() {
-///     this.label = 'outside';
-///     this.progress = 0;
-///     this._ngZone.runOutsideAngular(() => {
-///       this._increaseProgress(() => {
-///       // reenter the Angular zone and display done
-///       this._ngZone.run(() => {console.log('Outside Done!') });
-///     }}));
+///   void processOutsideOfAngularZone() {
+///     label = 'outside';
+///     progress = 0;
+///     _ngZone.runOutsideAngular(() {
+///       _increaseProgress(() {
+///         // reenter the Angular zone and display done
+///         _ngZone.run(() => print('Outside Done!'));
+///       });
+///     });
 ///   }
 ///
-///
-///   _increaseProgress(doneCallback: () => void) {
-///     this.progress += 1;
-///     console.log(`Current progress: ${this.progress}%`);
-///
-///     if (this.progress < 100) {
-///       window.setTimeout(() => this._increaseProgress(doneCallback)), 10)
+///   void _increaseProgress(void doneCallback()) {
+///     progress += 1;
+///     print('Current progress: $progress%');
+///     if (progress < 100) {
+///       new Future<Null>.delayed(const Duration(milliseconds: 10),
+///           () => _increaseProgress(doneCallback));
 ///     } else {
 ///       doneCallback();
 ///     }
 ///   }
 /// }
+///
 /// ```
 class NgZone {
   static bool isInAngularZone() {
