@@ -27,11 +27,6 @@ Future main(List<String> args) async {
   var phaseGroup = new PhaseGroup()
     ..addPhase(new Phase()
       ..addAction(
-          new TestComponentExtractor(
-            updateGoldens ? '.ng_component.golden' : '.ng_component',
-          ),
-          inputs)
-      ..addAction(
           new GeneratorBuilder([
             new TemplateGenerator(new GeneratorOptions(codegenMode: 'release'))
           ],
