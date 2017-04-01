@@ -30,7 +30,6 @@ export 'metadata/view.dart';
 ///     el.nativeElement.style.backgroundColor = 'yellow';
 ///   }
 /// }
-///
 /// ```
 ///
 /// Use `@Directive` to mark a class as an Angular directive and provide

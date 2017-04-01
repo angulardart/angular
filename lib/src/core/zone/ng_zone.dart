@@ -74,7 +74,6 @@ import 'package:stack_trace/stack_trace.dart';
 ///     }
 ///   }
 /// }
-///
 /// ```
 class NgZone {
   static bool isInAngularZone() {
