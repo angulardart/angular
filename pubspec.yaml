@@ -11,7 +11,7 @@ dependencies:
   barback: ^0.15.2+2
   build: ^0.7.2
   collection: '^1.12.0'
-  dart_style: '>=0.1.8 <0.3.0'
+  dart_style: '>=0.1.8 <2.0.0'
   func: ^0.1.0
   glob: ^1.0.0
   html: '>=0.12.0 <0.14.0'
@@ -29,7 +29,7 @@ dev_dependencies:
   build_runner: ^0.3.0
   build_test: ^0.4.0+1
   code_builder: '^1.0.0-beta+4'
-  mockito: '>=0.11.0 <2.0.0'
+  mockito: '>=0.11.0 <3.0.0'
   source_gen: ^0.5.4
   quiver: '>=0.21.4 <0.26.0'
   test: ^0.12.6
