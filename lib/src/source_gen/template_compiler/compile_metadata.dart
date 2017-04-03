@@ -3,8 +3,10 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/src/dart/constant/value.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
+import 'package:angular2/src/compiler/output/output_ast.dart' as o;
 import 'package:angular2/src/core/di.dart';
 import 'package:angular2/src/core/di/decorators.dart';
 import 'package:angular2/src/core/metadata.dart';
@@ -136,11 +138,11 @@ class CompileTypeMetadataVisitor
           runtime: null // Intentionally `null`, cannot be provided here.
           );
 
-  CompileTokenMetadata _getUseValue(DartObject provider) {
+  _getUseValue(DartObject provider) {
     var maybeUseValue = provider.getField('useValue');
     if (!dart_objects.isNull(maybeUseValue)) {
       if (maybeUseValue.toStringValue() == noValueProvided) return null;
-      return _token(maybeUseValue);
+      return _useValueExpression(maybeUseValue);
     }
     return null;
   }
@@ -255,6 +257,32 @@ class CompileTypeMetadataVisitor
     return new CompileTokenMetadata(
         identifier: new CompileIdentifierMetadata(
             name: type.name, moduleUrl: moduleUrl(type.element)));
+  }
+
+  /* o.Expression | CompileTokenMetadata */ _useValueExpression(
+      DartObject token) {
+    if (token.toStringValue() != null) {
+      return new o.LiteralExpr(token.toStringValue(), o.STRING_TYPE);
+    } else if (token.toBoolValue() != null) {
+      return new o.LiteralExpr(token.toBoolValue(), o.BOOL_TYPE);
+    } else if (token.toIntValue() != null) {
+      return new o.LiteralExpr(token.toIntValue(), o.INT_TYPE);
+    } else if (token.toDoubleValue() != null) {
+      return new o.LiteralExpr(token.toDoubleValue(), o.DOUBLE_TYPE);
+    } else if (token.type is InterfaceType) {
+      var invocation = (token as DartObjectImpl).getInvocation();
+      if (invocation == null) return _token(token);
+      // TODO(alorenzen): Consider making this const Foo() instead of new Foo().
+      return o
+          .importExpr(new CompileIdentifierMetadata(
+              name: token.type.name,
+              moduleUrl: moduleUrl(invocation.constructor)))
+          // TODO(alorenzen): Add support for named arguments.
+          .instantiate(
+              invocation.positionalArguments.map(_useValueExpression).toList());
+    } else {
+      return _token(token);
+    }
   }
 
   CompileTokenMetadata _tokenForFunction(FunctionTypedElement function) {

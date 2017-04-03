@@ -70,7 +70,7 @@ const List<dynamic> styles_HasOpaqueTokensHost = const [];
 
 class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   AppView<import1.HasOpaqueTokens> _compView_0;
-  dynamic _const_OpaqueToken__baseUrlDescription___0_2;
+  String _const_OpaqueToken__baseUrlDescription___0_2;
   import1.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)

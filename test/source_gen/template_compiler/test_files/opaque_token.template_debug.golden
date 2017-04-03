@@ -87,7 +87,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = const [
 
 class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   AppView<import2.HasOpaqueTokens> _compView_0;
-  dynamic _const_OpaqueToken__baseUrlDescription___0_2;
+  String _const_OpaqueToken__baseUrlDescription___0_2;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)

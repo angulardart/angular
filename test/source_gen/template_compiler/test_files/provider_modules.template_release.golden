@@ -82,7 +82,7 @@ class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
 
   dynamic get _const_OpaqueToken__fooToken___0_4 {
     if ((this.__const_OpaqueToken__fooToken___0_4 == null)) {
-      (__const_OpaqueToken__fooToken___0_4 = Duration);
+      (__const_OpaqueToken__fooToken___0_4 = new Duration());
     }
     return this.__const_OpaqueToken__fooToken___0_4;
   }

@@ -65,7 +65,7 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
   dynamic __MyUseFactory_0_4;
   import1.MyUseClass __MyUseClass_0_5;
   dynamic __MyUseValue_0_8;
-  dynamic __const_OpaqueToken__useValueString___0_9;
+  String __const_OpaqueToken__useValueString___0_9;
   List<dynamic> __MyMulti_0_10;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -99,12 +99,12 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
 
   dynamic get _MyUseValue_0_8 {
     if ((this.__MyUseValue_0_8 == null)) {
-      (__MyUseValue_0_8 = import1.MyUseValue);
+      (__MyUseValue_0_8 = new import1.MyUseValue('Matan'));
     }
     return this.__MyUseValue_0_8;
   }
 
-  dynamic get _const_OpaqueToken__useValueString___0_9 {
+  String get _const_OpaqueToken__useValueString___0_9 {
     if ((this.__const_OpaqueToken__useValueString___0_9 == null)) {
       (__const_OpaqueToken__useValueString___0_9 = 'foo');
     }
