@@ -31,11 +31,9 @@ class TemplateGenerator extends Generator {
     if (element is! LibraryElement) return null;
     return runZoned(() async {
       var config = new CompilerConfig(
-        genDebugInfo: _options.codegenMode == CODEGEN_DEBUG_MODE,
-        logBindingUpdate: _options.reflectPropertiesAsAttributes,
-        // TODO(leonsenft): propagate from [_options].
-        useLegacyStyleEncapsulation: true,
-      );
+          genDebugInfo: _options.codegenMode == CODEGEN_DEBUG_MODE,
+          logBindingUpdate: _options.reflectPropertiesAsAttributes,
+          useLegacyStyleEncapsulation: _options.useLegacyStyleEncapsulation);
       var outputs = await processTemplates(element, buildStep, config);
       if (outputs == null) return _emptyNgDepsContents;
       return buildGeneratedCode(

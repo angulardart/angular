@@ -31,11 +31,9 @@ Future<Outputs> processTemplates(
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
     var config = new CompilerConfig(
-      genDebugInfo: options.codegenMode == CODEGEN_DEBUG_MODE,
-      logBindingUpdate: options.reflectPropertiesAsAttributes,
-      // TODO(leonsenft): propagate value from [options].
-      useLegacyStyleEncapsulation: true,
-    );
+        genDebugInfo: options.codegenMode == CODEGEN_DEBUG_MODE,
+        logBindingUpdate: options.reflectPropertiesAsAttributes,
+        useLegacyStyleEncapsulation: options.useLegacyStyleEncapsulation);
     templateCompiler = createTemplateCompiler(reader, config);
   }
 

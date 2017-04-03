@@ -22,8 +22,8 @@ Future<Iterable<Asset>> processStylesheet(AssetReader reader,
   final stylesheetUrl = '${stylesheetId.package}|${stylesheetId.path}';
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
-    // TODO(leonsenft): propagate value from [options].
-    var config = new CompilerConfig(useLegacyStyleEncapsulation: true);
+    var config = new CompilerConfig(
+        useLegacyStyleEncapsulation: options.useLegacyStyleEncapsulation);
     templateCompiler = createTemplateCompiler(reader, config);
   }
   final cssText = await reader.readAsString(stylesheetId);

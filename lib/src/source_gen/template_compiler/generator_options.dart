@@ -12,6 +12,20 @@ class GeneratorOptions {
   /// triggered.
   final String codegenMode;
 
-  GeneratorOptions(
-      {this.reflectPropertiesAsAttributes: false, this.codegenMode: ''});
+  /// Whether to use legacy CSS style encapsulation selectors and behavior.
+  ///
+  /// When [true], shadow host selectors prevent following selectors from being
+  /// scoped to their component much like a shadow piercing combinator. It
+  /// also allows the use of the following deprecated selectors:
+  /// * ::content
+  /// * ::shadow
+  /// * polyfill-next-selector
+  /// * polyfill-unscoped-rule
+  final bool useLegacyStyleEncapsulation;
+
+  GeneratorOptions({
+    this.reflectPropertiesAsAttributes: false,
+    this.codegenMode: '',
+    this.useLegacyStyleEncapsulation: false,
+  });
 }

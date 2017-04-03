@@ -18,7 +18,6 @@ class CompilerConfig {
   CompilerConfig({
     this.genDebugInfo: false,
     this.logBindingUpdate: false,
-    // TODO(leonsenft): default to [false].
-    this.useLegacyStyleEncapsulation: true,
+    this.useLegacyStyleEncapsulation: false,
   });
 }

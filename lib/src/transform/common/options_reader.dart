@@ -20,6 +20,8 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
   var errorOnMissingIdentifiers =
       _readBool(config, ERROR_ON_MISSING_IDENTIFIERS, defaultValue: true);
   var formatCode = _readBool(config, FORMAT_CODE_PARAM, defaultValue: false);
+  var useLegacyStyleEncapsulation =
+      _readBool(config, USE_LEGACY_STYLE_ENCAPSULATION, defaultValue: false);
   String mirrorModeVal =
       config.containsKey(MIRROR_MODE_PARAM) ? config[MIRROR_MODE_PARAM] : '';
   var mirrorMode = MirrorMode.none;
@@ -55,7 +57,8 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
       lazyTransformers:
           _readBool(config, LAZY_TRANSFORMERS, defaultValue: false),
       translations: _readAssetId(config, TRANSLATIONS),
-      formatCode: formatCode);
+      formatCode: formatCode,
+      useLegacyStyleEncapsulation: useLegacyStyleEncapsulation);
 
   _checkEntryPointsExist(transformerOptions);
   return transformerOptions;

@@ -19,6 +19,7 @@ const CODEGEN_MODE_PARAM = 'codegen_mode';
 const LAZY_TRANSFORMERS = 'lazy_transformers';
 const TRANSLATIONS = 'translations';
 const IGNORE_REAL_TEMPLATE_ISSUES_PARAM = 'ignore_real_template_issues';
+const USE_LEGACY_STYLE_ENCAPSULATION = 'use_legacy_style_encapsulation';
 
 const CODEGEN_DEBUG_MODE = 'debug';
 
@@ -107,65 +108,83 @@ class TransformerOptions {
   /// logic, instead of relying on the angular2/transform/deferred_rewriter.
   final bool checkDeferredImportInitialization;
 
-  TransformerOptions._internal(
-      this.entryPoints,
-      this.entryPointGlobs,
-      this.modeName,
-      this.mirrorMode,
-      this.initReflector,
-      this.annotationMatcher,
-      {this.formatCode,
-      this.codegenMode,
-      this.genCompiledTemplates,
-      this.inlineViews,
-      this.lazyTransformers,
-      this.platformDirectives,
-      this.platformPipes,
-      this.resolvedIdentifiers,
-      this.errorOnMissingIdentifiers,
-      this.translations,
-      this.reflectPropertiesAsAttributes,
-      this.ignoreRealTemplateIssues,
-      this.checkDeferredImportInitialization});
+  /// Whether to use legacy CSS style encapsulation selectors and behavior. When
+  /// [true], shadow host selectors prevent following selectors from being
+  /// scoped to their component much like a shadow piercing combinator. It
+  /// also allows the use of the following deprecated selectors:
+  /// * ::content
+  /// * ::shadow
+  /// * polyfill-next-selector
+  /// * polyfill-unscoped-rule
+  final bool useLegacyStyleEncapsulation;
 
-  factory TransformerOptions(List<String> entryPoints,
-      {String modeName: 'release',
-      MirrorMode mirrorMode: MirrorMode.none,
-      bool initReflector: true,
-      List<ClassDescriptor> customAnnotationDescriptors: const [],
-      bool inlineViews: false,
-      String codegenMode: '',
-      bool genCompiledTemplates: true,
-      bool reflectPropertiesAsAttributes: false,
-      bool errorOnMissingIdentifiers: true,
-      List<String> platformDirectives,
-      List<String> platformPipes,
-      Map<String, String> resolvedIdentifiers,
-      bool lazyTransformers: false,
-      AssetId translations: null,
-      bool formatCode: false,
-      bool ignoreRealTemplateIssues: false,
-      bool checkDeferredImportInitialization: false}) {
+  TransformerOptions._internal(
+    this.entryPoints,
+    this.entryPointGlobs,
+    this.modeName,
+    this.mirrorMode,
+    this.initReflector,
+    this.annotationMatcher, {
+    this.formatCode,
+    this.codegenMode,
+    this.genCompiledTemplates,
+    this.inlineViews,
+    this.lazyTransformers,
+    this.platformDirectives,
+    this.platformPipes,
+    this.resolvedIdentifiers,
+    this.errorOnMissingIdentifiers,
+    this.translations,
+    this.reflectPropertiesAsAttributes,
+    this.ignoreRealTemplateIssues,
+    this.checkDeferredImportInitialization,
+    this.useLegacyStyleEncapsulation,
+  });
+
+  factory TransformerOptions(
+    List<String> entryPoints, {
+    String modeName: 'release',
+    MirrorMode mirrorMode: MirrorMode.none,
+    bool initReflector: true,
+    List<ClassDescriptor> customAnnotationDescriptors: const [],
+    bool inlineViews: false,
+    String codegenMode: '',
+    bool genCompiledTemplates: true,
+    bool reflectPropertiesAsAttributes: false,
+    bool errorOnMissingIdentifiers: true,
+    List<String> platformDirectives,
+    List<String> platformPipes,
+    Map<String, String> resolvedIdentifiers,
+    bool lazyTransformers: false,
+    AssetId translations: null,
+    bool formatCode: false,
+    bool ignoreRealTemplateIssues: false,
+    bool checkDeferredImportInitialization: false,
+    bool useLegacyStyleEncapsulation: false,
+  }) {
     var annotationMatcher = new AnnotationMatcher()
       ..addAll(customAnnotationDescriptors);
     var entryPointGlobs = entryPoints != null
         ? entryPoints.map((path) => new Glob(path)).toList(growable: false)
         : null;
-    return new TransformerOptions._internal(entryPoints, entryPointGlobs,
-        modeName, mirrorMode, initReflector, annotationMatcher,
-        codegenMode: codegenMode,
-        genCompiledTemplates: genCompiledTemplates,
-        reflectPropertiesAsAttributes: reflectPropertiesAsAttributes,
-        platformDirectives: platformDirectives,
-        platformPipes: platformPipes,
-        resolvedIdentifiers: resolvedIdentifiers,
-        // TODO(tbosch): remove this from the options once this has landed
-        errorOnMissingIdentifiers: true,
-        inlineViews: inlineViews,
-        lazyTransformers: lazyTransformers,
-        translations: translations,
-        formatCode: formatCode,
-        ignoreRealTemplateIssues: ignoreRealTemplateIssues,
-        checkDeferredImportInitialization: checkDeferredImportInitialization);
+    return new TransformerOptions._internal(
+      entryPoints, entryPointGlobs,
+      modeName, mirrorMode, initReflector, annotationMatcher,
+      codegenMode: codegenMode,
+      genCompiledTemplates: genCompiledTemplates,
+      reflectPropertiesAsAttributes: reflectPropertiesAsAttributes,
+      platformDirectives: platformDirectives,
+      platformPipes: platformPipes,
+      resolvedIdentifiers: resolvedIdentifiers,
+      // TODO(tbosch): remove this from the options once this has landed
+      errorOnMissingIdentifiers: true,
+      inlineViews: inlineViews,
+      lazyTransformers: lazyTransformers,
+      translations: translations,
+      formatCode: formatCode,
+      ignoreRealTemplateIssues: ignoreRealTemplateIssues,
+      checkDeferredImportInitialization: checkDeferredImportInitialization,
+      useLegacyStyleEncapsulation: useLegacyStyleEncapsulation,
+    );
   }
 }
