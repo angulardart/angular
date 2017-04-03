@@ -14,8 +14,8 @@ import 'package:build/build.dart';
 
 import 'xhr_impl.dart';
 
-OfflineCompiler createTemplateCompiler(BuildStep buildStep,
-    {CompilerConfig compilerConfig}) {
+OfflineCompiler createTemplateCompiler(
+    BuildStep buildStep, CompilerConfig compilerConfig) {
   var xhr = new XhrImpl(buildStep);
   var urlResolver = createOfflineCompileUrlResolver();
 
@@ -28,7 +28,7 @@ OfflineCompiler createTemplateCompiler(BuildStep buildStep,
   return new OfflineCompiler(
       new DirectiveNormalizer(xhr, urlResolver, htmlParser),
       templateParser,
-      new StyleCompiler(urlResolver),
+      new StyleCompiler(compilerConfig, urlResolver),
       new ViewCompiler(compilerConfig, parser),
       new DartEmitter());
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/names.dart';
+import 'package:angular2/src/transform/common/options.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:barback/barback.dart';
 
@@ -9,7 +10,9 @@ import 'processor.dart';
 
 /// Pre-compiles CSS stylesheet files to Dart code for Angular 2.
 class StylesheetCompiler extends Transformer implements LazyTransformer {
-  StylesheetCompiler();
+  final TransformerOptions options;
+
+  StylesheetCompiler(this.options);
 
   @override
   bool isPrimary(AssetId id) {
@@ -30,7 +33,7 @@ class StylesheetCompiler extends Transformer implements LazyTransformer {
     final reader = new AssetReader.fromTransform(transform);
     return zone.exec(() async {
       var primaryId = transform.primaryInput.id;
-      var outputs = await processStylesheet(reader, primaryId);
+      var outputs = await processStylesheet(reader, primaryId, options);
       var expectedIds = _getExpectedOutputs(primaryId);
       outputs.forEach((Asset compiledStylesheet) {
         var id = compiledStylesheet.id;

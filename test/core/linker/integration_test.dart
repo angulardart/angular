@@ -1464,7 +1464,10 @@ void main() {
             beforeEachProviders(() => [
                   // Switch to debug mode.
                   provide(CompilerConfig,
-                      useValue: new CompilerConfig(true, true))
+                      useValue: new CompilerConfig(
+                        genDebugInfo: true,
+                        logBindingUpdate: true,
+                      ))
                 ]);
             return inject([TestComponentBuilder, AsyncTestCompleter],
                 (TestComponentBuilder tcb, AsyncTestCompleter completer) {
@@ -1488,7 +1491,10 @@ void main() {
             beforeEachProviders(() => [
                   // Switch to debug mode.
                   provide(CompilerConfig,
-                      useValue: new CompilerConfig(true, true))
+                      useValue: new CompilerConfig(
+                        genDebugInfo: true,
+                        logBindingUpdate: true,
+                      ))
                 ]);
             return inject([TestComponentBuilder, AsyncTestCompleter],
                 (TestComponentBuilder tcb, AsyncTestCompleter completer) {

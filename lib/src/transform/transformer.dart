@@ -37,7 +37,7 @@ class AngularTransformerGroup extends TransformerGroup {
         [new ReflectionRemover(options)],
         [
           new DeferredRewriter(),
-          new StylesheetCompiler(),
+          new StylesheetCompiler(options),
           new TemplateCompiler(options)
         ],
       ];

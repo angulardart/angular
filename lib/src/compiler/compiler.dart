@@ -30,9 +30,8 @@ export "url_resolver.dart";
 export "view_resolver.dart" show ViewResolver;
 export "xhr.dart";
 
-CompilerConfig createCompilerConfig() {
-  return new CompilerConfig(assertionsEnabled(), false);
-}
+CompilerConfig createCompilerConfig() =>
+    new CompilerConfig(genDebugInfo: assertionsEnabled());
 
 /// A set of providers that provide `Compiler` and its dependencies to use for
 /// template compilation.

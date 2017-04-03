@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/logging.dart' show loggerKey;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
+import 'package:angular2/src/transform/common/options.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
@@ -28,12 +30,13 @@ class TemplateGenerator extends Generator {
   Future<String> generate(Element element, BuildStep buildStep) async {
     if (element is! LibraryElement) return null;
     return runZoned(() async {
-      var outputs = await processTemplates(
-        element,
-        buildStep,
-        codegenMode: _options.codegenMode,
-        reflectPropertiesAsAttributes: _options.reflectPropertiesAsAttributes,
+      var config = new CompilerConfig(
+        genDebugInfo: _options.codegenMode == CODEGEN_DEBUG_MODE,
+        logBindingUpdate: _options.reflectPropertiesAsAttributes,
+        // TODO(leonsenft): propagate from [_options].
+        useLegacyStyleEncapsulation: true,
       );
+      var outputs = await processTemplates(element, buildStep, config);
       if (outputs == null) return _emptyNgDepsContents;
       return buildGeneratedCode(
         outputs,

@@ -3,8 +3,9 @@ import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
+import 'config.dart';
 import "output/output_ast.dart" as o;
-import "shadow_css.dart" show ShadowCss;
+import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
 import "url_resolver.dart" show UrlResolver;
 
@@ -34,11 +35,12 @@ class StylesCompileResult {
 
 @Injectable()
 class StyleCompiler {
+  CompilerConfig _config;
   UrlResolver _urlResolver;
-  ShadowCss _shadowCss = new ShadowCss();
   bool usesContentAttribute;
   bool usesHostAttribute;
-  StyleCompiler(this._urlResolver);
+
+  StyleCompiler(this._config, this._urlResolver);
 
   /// Compile styles to a set of statements that will initialize the global
   /// styles_ComponentName variable that will be passed to component factory.
@@ -92,7 +94,8 @@ class StyleCompiler {
 
   String _shimIfNeeded(String style, bool shim) {
     String result = shim
-        ? this._shadowCss.shimCssText(style, CONTENT_ATTR, HOST_ATTR)
+        ? shimShadowCss(style, CONTENT_ATTR, HOST_ATTR,
+            useLegacyEncapsulation: _config.useLegacyStyleEncapsulation)
         : style;
     if (result.contains(CONTENT_ATTR_PREFIX)) {
       usesContentAttribute = true;

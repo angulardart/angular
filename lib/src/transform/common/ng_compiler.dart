@@ -14,8 +14,8 @@ import 'asset_reader.dart';
 import 'url_resolver.dart';
 import 'xhr_impl.dart';
 
-OfflineCompiler createTemplateCompiler(AssetReader reader,
-    {CompilerConfig compilerConfig}) {
+OfflineCompiler createTemplateCompiler(
+    AssetReader reader, CompilerConfig compilerConfig) {
   var xhr = new XhrImpl(reader);
   var urlResolver = createOfflineCompileUrlResolver();
 
@@ -29,7 +29,7 @@ OfflineCompiler createTemplateCompiler(AssetReader reader,
   return new OfflineCompiler(
       new DirectiveNormalizer(xhr, urlResolver, htmlParser),
       templateParser,
-      new StyleCompiler(urlResolver),
+      new StyleCompiler(compilerConfig, urlResolver),
       new ViewCompiler(compilerConfig, parser),
       new DartEmitter());
 }

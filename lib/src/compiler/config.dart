@@ -6,5 +6,19 @@ class CompilerConfig {
   /// debugging.
   final bool logBindingUpdate;
 
-  CompilerConfig(this.genDebugInfo, this.logBindingUpdate);
+  /// If [true], shadow host selectors prevent following selectors from being
+  /// scoped to their component much like a shadow piercing combinator. It
+  /// also allows the use of the following deprecated selectors:
+  /// * ::content
+  /// * ::shadow
+  /// * polyfill-next-selector
+  /// * polyfill-unscoped-rule
+  final bool useLegacyStyleEncapsulation;
+
+  CompilerConfig({
+    this.genDebugInfo: false,
+    this.logBindingUpdate: false,
+    // TODO(leonsenft): default to [false].
+    this.useLegacyStyleEncapsulation: true,
+  });
 }

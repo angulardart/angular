@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
+import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
@@ -42,11 +43,8 @@ Future<NgMeta> createNgMeta(
 
   return logElapsedAsync(() async {
     var ngMeta = new NgMeta(ngDeps: ngDepsVisitor.model);
-
-    var templateCompiler = zone.templateCompiler;
-    if (templateCompiler == null) {
-      templateCompiler = createTemplateCompiler(reader);
-    }
+    var templateCompiler = zone.templateCompiler ??
+        createTemplateCompiler(reader, new CompilerConfig());
     var ngMetaVisitor = new _NgMetaVisitor(ngMeta, assetId,
         options.annotationMatcher, _interfaceMatcher, templateCompiler);
     parsedCode.accept(ngMetaVisitor);

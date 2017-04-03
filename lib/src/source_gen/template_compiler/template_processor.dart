@@ -5,7 +5,6 @@ import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/source_gen/common/logging.dart';
 import 'package:angular2/src/source_gen/common/ng_compiler.dart';
-import 'package:angular2/src/transform/common/options.dart';
 import 'package:build/build.dart';
 
 import 'find_components.dart';
@@ -13,17 +12,8 @@ import 'ng_deps_visitor.dart';
 import 'template_compiler_outputs.dart';
 
 Future<TemplateCompilerOutputs> processTemplates(
-  LibraryElement element,
-  BuildStep buildStep, {
-  String codegenMode: '',
-  bool reflectPropertiesAsAttributes: false,
-}) async {
-  final templateCompiler = createTemplateCompiler(
-    buildStep,
-    compilerConfig: new CompilerConfig(
-        codegenMode == CODEGEN_DEBUG_MODE, reflectPropertiesAsAttributes),
-  );
-
+    LibraryElement element, BuildStep buildStep, CompilerConfig config) async {
+  final templateCompiler = createTemplateCompiler(buildStep, config);
   final resolver = await buildStep.resolver;
   final ngDepsModel = await logElapsedAsync(
     () => resolveNgDepsFor(

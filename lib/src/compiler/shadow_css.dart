@@ -1,556 +1,662 @@
-import "package:angular2/src/facade/lang.dart" show jsSplit;
+import 'package:csslib/parser.dart';
+import 'package:csslib/visitor.dart';
+import 'package:quiver/iterables.dart' show merge;
 
-/// This file is a port of shadowCSS from webcomponents.js to Dart.
-/// Please make sure to keep to edits in sync with the source file.
+import 'logging.dart' show logger;
+
+/// This is a limited shim for Shadow DOM CSS styling.
 ///
-/// Source:
-/// https://github.com/webcomponents/webcomponentsjs/blob/4efecd7e0e/src/ShadowCSS/ShadowCSS.js
+/// Shimmed features:
 ///
-/// The original file level comment is reproduced below
+/// * Shadow Host Selectors
+///
+///   Allows styling of the shadow host element using :host, :host(), and
+///   :host-context() selectors. To shim this feature, these selectors are
+///   reformatted and scoped with a host specific class.
+///
+///     :host               =>  .host
+///     :host(div)          =>  div.host
+///     :host-context(div)  =>  div.host, div .host
+///
+/// * Encapsulation
+///
+///   Styles defined within a shadow tree apply only to its contents. To shim
+///   this feature, all selectors except those preceding or containing shadow
+///   host selectors are scoped with a host specific content class.
+///
+///     div               =>  div.content
+///     :host(.foo) .bar  =>  .foo.host .bar.content
+///
+/// * Shadow Piercing Combinators
+///
+///   The >>> combinator allows a selector to pierce shadow boundaries and
+///   target nodes within a child host's shadow tree. To shim this feature, the
+///   combinator is replaced by the descendant combinator, and the following
+///   selectors aren't scoped with the host specific content class.
+///
+///     .x >>> .y  =>  .x.content .y
+///
+/// * Polyfill Selectors - DO NOT USE, SUPPORTED FOR LEGACY ONLY
+///
+///   The 'polyfill-unscoped-rule' selector indicates that the rule set's styles
+///   should not be encapsulated.
+///
+///   For example,
+///
+///   ```css
+///   polyfill-unscoped-rule {
+///     content: '.menu > .menu-item';
+///     font-size: 12px;
+///   }
+///   ```
+///
+///   becomes
+///
+///   ```css
+///   .menu > .menu-item {
+///     font-size: 12px;
+///   }
+///   ```
+///
+///   The 'polyfill-next-selector' selector allows for application of a separate
+///   selector to a rule set only when this shim is applied. This is useful if
+///   the native Shadow DOM CSS selector is unsupported by the shim.
+///
+///   For example,
+///
+///   ```css
+///   polyfill-next-selector { content: ':host .menu'; }
+///   ::slotted(.menu) {
+///     font-size: 12px;
+///   }
+///   ```
+///
+///   becomes
+///
+///   ```css
+///   .host .menu.content {
+///     font-size: 12px;
+///   }
+///   ```
+String shimShadowCss(String css, String contentClass, String hostClass,
+    {bool useLegacyEncapsulation: false}) {
+  // Hack to replace all sequential >>> (and alias /deep/) combinators with a
+  // single >>> combinator. These sequences occur commonly in CSS generated from
+  // SASS like the example shown:
+  //
+  // SASS:
+  //  @mixin a() {
+  //    /deep/ .x {
+  //      color: red;
+  //    }
+  //  }
+  //
+  //  .y /deep/ {
+  //    @include a();
+  //  }
+  css = css.replaceAll(_consecutiveShadowPiercingCombinatorsRe, '>>> ');
 
-/*
-  This is a limited shim for ShadowDOM css styling.
-  https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/shadow/index.html#styles
+  var errors = <Message>[];
+  var styleSheet = parse(css, errors: errors);
 
-  The intention here is to support only the styling features which can be
-  relatively simply implemented. The goal is to allow users to avoid the
-  most obvious pitfalls and do so without compromising performance significantly.
-  For ShadowDOM styling that's not covered here, a set of best practices
-  can be provided that should allow users to accomplish more complex styling.
+  if (errors.isNotEmpty) {
+    logger.warning('Errors parsing CSS:\n${errors.join('\n')}');
+  }
 
-  The following is a list of specific ShadowDOM styling features and a brief
-  discussion of the approach used to shim.
+  var shadowTransformer = useLegacyEncapsulation
+      ? new LegacyShadowTransformer(contentClass, hostClass)
+      : new ShadowTransformer(contentClass, hostClass);
+  shadowTransformer.visitTree(styleSheet);
+  var printer = new CssPrinter();
+  printer.visitTree(styleSheet);
+  return printer.toString();
+}
 
-  Shimmed features:
+// Matches two or more consecutive '>>>' and '/deep/' combinators.
+final RegExp _consecutiveShadowPiercingCombinatorsRe =
+    new RegExp(r'(?:(?:/deep/|>>>)\s*){2,}');
 
-  * :host, :host-context: ShadowDOM allows styling of the shadowRoot's host
-  element using the :host rule. To shim this feature, the :host styles are
-  reformatted and prefixed with a given scope name and promoted to a
-  document level stylesheet.
-  For example, given a scope name of .foo, a rule like this:
+/// Returns the declaration for property [name] in [group].
+///
+/// Returns [null] if not found.
+Declaration getDeclaration(DeclarationGroup group, String name) {
+  for (var declaration in group.declarations) {
+    if (declaration is Declaration && declaration.property == name) {
+      return declaration;
+    }
+  }
+  return null;
+}
 
-    :host {
-        background: red;
+/// Removes all enclosing pairs of single and double quotes from a string.
+String unquote(String value) {
+  var start = 0, end = value.length - 1;
+  while (start < end &&
+      ((value[start] == '"' && value[end] == '"') ||
+          (value[start] == "'" && value[end] == "'"))) {
+    start++;
+    end--;
+  }
+  return value.substring(start, end + 1);
+}
+
+/// Parses a selector from a declaration.
+///
+/// The declaration expression must be a literal term. Returns [null] if
+/// unsuccessful.
+SelectorGroup parseSelectorGroupFrom(Declaration declaration) {
+  var expressions = (declaration.expression as Expressions).expressions;
+  if (expressions.isEmpty || expressions.first is! LiteralTerm) return null;
+  var selectorLiteral = expressions.first as LiteralTerm;
+  var selectorText = unquote(selectorLiteral.text);
+  return parseSelectorGroup(selectorText);
+}
+
+/// Parses a selector from the declaration for property [propertyName] in
+/// [declarationGroup].
+///
+/// If [remove] is [true], the declaration is removed from [declarationGroup].
+SelectorGroup selectorGroupForProperty(
+    DeclarationGroup declarationGroup, String propertyName,
+    {bool remove: false}) {
+  var declaration = getDeclaration(declarationGroup, propertyName);
+  if (declaration == null) {
+    logger.warning(
+        declarationGroup.span.message("Expected property '$propertyName'"));
+    return null;
+  }
+
+  if (remove) {
+    declarationGroup.declarations.remove(declaration);
+  }
+
+  var selectorGroup = parseSelectorGroupFrom(declaration);
+  if (selectorGroup == null) {
+    logger.warning(declaration.expression.span.message('Not a valid selector'));
+    return null;
+  }
+
+  return selectorGroup;
+}
+
+/// Returns [true] if the selector is ':host'.
+bool isHost(SimpleSelector selector) =>
+    selector is PseudoClassSelector && selector.name == 'host';
+
+/// Returns [true] if the selector is ':host()'.
+bool isHostFunction(SimpleSelector selector) =>
+    selector is PseudoClassFunctionSelector && selector.name == 'host';
+
+/// Returns [true] if the selector is ':host-context()'.
+bool isHostContextFunction(SimpleSelector selector) =>
+    selector is PseudoClassFunctionSelector && selector.name == 'host-context';
+
+/// Returns [true] if [selectorGroup] matches an element named [name].
+bool matchesElement(SelectorGroup selectorGroup, String name) {
+  if (selectorGroup.selectors.length != 1) return false;
+  var selector = selectorGroup.selectors.first;
+  if (selector.simpleSelectorSequences.length != 1) return false;
+  var simpleSelector = selector.simpleSelectorSequences.first.simpleSelector;
+  return simpleSelector is ElementSelector && simpleSelector.name == name;
+}
+
+/// Deep copies a sequence of selectors.
+Iterable<SimpleSelectorSequence> clone(Iterable<SimpleSelectorSequence> it) =>
+    it.map((selector) => selector.clone());
+
+/// Convenience function for terse construction of a class sequence.
+SimpleSelectorSequence createClassSelectorSequence(String name) {
+  var identifier = new Identifier(name, null);
+  var selector = new ClassSelector(identifier, null);
+  return new SimpleSelectorSequence(selector, null);
+}
+
+/// Convenience function for terse construction of a pseudo-class sequence.
+SimpleSelectorSequence createPseudoClassSelectorSequence(String name) {
+  var identifier = new Identifier(name, null);
+  var selector = new PseudoClassSelector(identifier, null);
+  return new SimpleSelectorSequence(selector, null);
+}
+
+/// Represents a sequence of compound selectors separated by combinators.
+///
+/// TODO(leonsenft): remove if/when csslib supports Selector Level 4 grammar.
+///
+/// Grammar:
+///   <complex-selector> =
+///     <compound-selector> [ <combinator>? <compound-selector> ]*
+class ComplexSelector {
+  List<CompoundSelector> compoundSelectors = [];
+
+  ComplexSelector();
+
+  ComplexSelector.from(Selector selector) {
+    if (selector.simpleSelectorSequences.isEmpty) return;
+    var sequences = selector.simpleSelectorSequences;
+    var start = 0;
+
+    for (var i = 1, len = sequences.length; i <= len; i++) {
+      if (i == len || !sequences[i].isCombinatorNone) {
+        var selectorSequence = sequences.getRange(start, i);
+        compoundSelectors.add(new CompoundSelector.from(selectorSequence));
+        start = i;
       }
     }
+  }
 
-  becomes:
-
-    .foo {
-      background: red;
+  bool get containsHostContext {
+    for (var compoundSelector in compoundSelectors) {
+      if (compoundSelector.containsHostContext) return true;
     }
+    return false;
+  }
 
-  * encapsultion: Styles defined within ShadowDOM, apply only to
-  dom inside the ShadowDOM. Polymer uses one of two techniques to implement
-  this feature.
-
-  By default, rules are prefixed with the host element tag name
-  as a descendant selector. This ensures styling does not leak out of the 'top'
-  of the element's ShadowDOM. For example,
-
-  div {
-      font-weight: bold;
+  Selector toSelector() {
+    var simpleSelectorSequences = <SimpleSelectorSequence>[];
+    for (var compoundSelector in compoundSelectors) {
+      simpleSelectorSequences.addAll(compoundSelector.toSequences());
     }
+    return new Selector(simpleSelectorSequences, null);
+  }
+}
 
-  becomes:
+/// Represents a sequence of simple selectors.
+///
+/// TODO(leonsenft): remove if/when csslib supports Selector Level 4 grammar.
+///
+/// Grammar:
+///   <compound-selector> = <simple-selector>+
+///
+/// The [combinator] precedes the compound selector when included in a
+/// complex selector.
+///
+/// This class abstracts composing and validating compound selectors. For
+/// example, a compound selector may contain at most one type selector and it
+/// must be the first selector in the sequence. This behavior is used to detect
+/// invalid selectors that are impossible to shim (i.e. :host(div):host(p), a
+/// valid but meaningless selector which can't be shimmed).
+class CompoundSelector {
+  int combinator;
+  List<SimpleSelectorSequence> _sequences = [];
 
-  x-foo div {
-      font-weight: bold;
+  CompoundSelector() : combinator = TokenKind.COMBINATOR_NONE;
+
+  CompoundSelector.from(Iterable<SimpleSelectorSequence> sequences) {
+    combinator = sequences.isEmpty
+        ? TokenKind.COMBINATOR_NONE
+        : sequences.first.combinator;
+    addAll(sequences);
+  }
+
+  bool get containsHost {
+    for (var sequence in _sequences) {
+      if (isHost(sequence.simpleSelector)) return true;
     }
+    return false;
+  }
 
-  becomes:
-
-
-  Alternatively, if WebComponents.ShadowCSS.strictStyling is set to true then
-  selectors are scoped by adding an attribute selector suffix to each
-  simple selector that contains the host element tag name. Each element
-  in the element's ShadowDOM template is also given the scope attribute.
-  Thus, these rules match only elements that have the scope attribute.
-  For example, given a scope name of x-foo, a rule like this:
-
-    div {
-      font-weight: bold;
+  bool get containsHostContext {
+    for (var sequence in _sequences) {
+      if (isHostContextFunction(sequence.simpleSelector)) return true;
     }
+    return false;
+  }
 
-  becomes:
+  /// Determines the ordering of two selectors in a valid compound selector.
+  ///
+  /// Returns
+  /// * a negative integer if [a] should precede [b],
+  /// * zero if the order of [a] and [b] is irrelevant, and
+  /// * a positive integer if [b] should precede [a].
+  int _compare(SimpleSelectorSequence a, SimpleSelectorSequence b) {
+    var x = a.simpleSelector;
+    var y = b.simpleSelector;
 
-    div[x-foo] {
-      font-weight: bold;
-    }
-
-  Note that elements that are dynamically added to a scope must have the scope
-  selector added to them manually.
-
-  * upper/lower bound encapsulation: Styles which are defined outside a
-  shadowRoot should not cross the ShadowDOM boundary and should not apply
-  inside a shadowRoot.
-
-  This styling behavior is not emulated. Some possible ways to do this that
-  were rejected due to complexity and/or performance concerns include: (1) reset
-  every possible property for every possible selector for a given scope name;
-  (2) re-implement css in javascript.
-
-  As an alternative, users should make sure to use selectors
-  specific to the scope in which they are working.
-
-  * ::distributed: This behavior is not emulated. It's often not necessary
-  to style the contents of a specific insertion point and instead, descendants
-  of the host element can be styled selectively. Users can also create an
-  extra node around an insertion point and style that node's contents
-  via descendent selectors. For example, with a shadowRoot like this:
-
-    <style>
-      ::content(div) {
-        background: red;
+    if (x.runtimeType == y.runtimeType) {
+      if (x is ElementSelector || x is NamespaceSelector) {
+        logger.warning('Compound selector contains multiple type selectors:\n'
+            '${x.span.message('')}\n'
+            '${y.span.message('')}');
+      } else if (x is PseudoElementSelector) {
+        logger.warning(
+            'Compound selector contains multiple pseudo element selectors:\n'
+            '${x.span.message('')}\n'
+            '${y.span.message('')}');
       }
-    </style>
-    <content></content>
+      return 0;
+    } else if (x is PseudoElementSelector ||
+        y is ElementSelector ||
+        y is NamespaceSelector) {
+      return 1;
+    } else if (y is PseudoElementSelector ||
+        x is ElementSelector ||
+        x is NamespaceSelector) {
+      return -1;
+    }
 
-  could become:
+    return 0;
+  }
 
-    <style>
-      / *@polyfill .content-container div * /
-      ::content(div) {
-        background: red;
+  void append(SimpleSelectorSequence sequence) => _sequences.add(sequence);
+
+  void add(SimpleSelectorSequence sequence) {
+    var i = 0;
+    for (var len = _sequences.length; i < len; i++) {
+      if (_compare(sequence, _sequences[i]) < 0) break;
+    }
+    _sequences.insert(i, sequence);
+  }
+
+  void addAll(Iterable<SimpleSelectorSequence> sequences) {
+    _sequences = merge([_sequences, sequences], _compare).toList();
+  }
+
+  CompoundSelector clone() {
+    var compoundSelector = new CompoundSelector()..combinator = combinator;
+    for (var sequence in _sequences) {
+      compoundSelector._sequences.add(sequence.clone());
+    }
+    return compoundSelector;
+  }
+
+  Iterable<SimpleSelectorSequence> toSequences() {
+    if (_sequences.isNotEmpty) {
+      for (var sequence in _sequences) {
+        sequence.combinator = TokenKind.COMBINATOR_NONE;
       }
-    </style>
-    <div class="content-container">
-      <content></content>
-    </div>
-
-  Note the use of @polyfill in the comment above a ShadowDOM specific style
-  declaration. This is a directive to the styling shim to use the selector
-  in comments in lieu of the next selector when running under polyfill.
-*/
-class ShadowCss {
-  bool strictStyling = true;
-
-  /// Shim some cssText with the given selector. Returns cssText that can
-  /// be included in the document via WebComponents.ShadowCSS.addCssToDocument(css).
-  ///
-  /// When strictStyling is true:
-  /// - selector is the attribute added to all elements inside the host,
-  /// - hostSelector is the attribute added to the host itself.
-  String shimCssText(String cssText, String selector,
-      [String hostSelector = '']) {
-    final String sourceMappingUrl = _extractSourceMappingUrl(cssText);
-    cssText = stripComments(cssText);
-    cssText = _insertDirectives(cssText);
-    return _scopeCssText(cssText, selector, hostSelector) + sourceMappingUrl;
-  }
-
-  String _insertDirectives(String cssText) {
-    cssText = this._insertPolyfillDirectivesInCssText(cssText);
-    return this._insertPolyfillRulesInCssText(cssText);
-  }
-
-  /// Process styles to convert native ShadowDOM rules that will trip
-  /// up the css parser; we rely on decorating the stylesheet with inert rules.
-  ///
-  /// For example, we convert this rule:
-  ///
-  /// polyfill-next-selector { content: ':host menu-item'; }
-  /// ::content menu-item {
-  ///
-  /// to this:
-  ///
-  /// scopeName menu-item {
-  ///
-  String _insertPolyfillDirectivesInCssText(String cssText) {
-    // Difference with webcomponents.js: does not handle comments
-    return cssText.replaceAllMapped(_cssContentNextSelectorRe, (m) {
-      return m[1] + '{';
-    });
-  }
-
-  /// Process styles to add rules which will only apply under the polyfill
-  ///
-  /// For example, we convert this rule:
-  ///
-  /// polyfill-rule {
-  ///   content: ':host menu-item';
-  /// ...
-  /// }
-  ///
-  /// to this:
-  ///
-  /// scopeName menu-item {...}
-  ///
-  String _insertPolyfillRulesInCssText(String cssText) {
-    // Difference with webcomponents.js: does not handle comments
-    return cssText.replaceAllMapped(_cssContentRuleRe, (m) {
-      var rule = m[0];
-      rule = rule.replaceFirst(m[1], '');
-      rule = rule.replaceFirst(m[2], '');
-      return m[3] + rule;
-    });
-  }
-
-  /// Ensure styles are scoped. Pseudo-scoping takes a rule like:
-  ///
-  ///  .foo {... }
-  ///
-  ///  and converts this to
-  ///
-  ///  scopeName .foo { ... }
-  String _scopeCssText(
-      String cssText, String scopeSelector, String hostSelector) {
-    final unscoped = this._extractUnscopedRulesFromCssText(cssText);
-    cssText = this._insertPolyfillHostInCssText(cssText);
-    cssText = this._convertColonHost(cssText);
-    cssText = this._convertColonHostContext(cssText);
-    cssText = this._convertShadowDOMSelectors(cssText);
-    if (scopeSelector != null) {
-      cssText = _scopeSelectors(cssText, scopeSelector, hostSelector);
+      _sequences.first.combinator = combinator;
     }
-    cssText = cssText + '\n' + unscoped;
-    return cssText.trim();
+    return _sequences;
+  }
+}
+
+class Indices {
+  /// Index of first compound selector following a shadow piercing combinator.
+  int deepIndex;
+
+  /// Index of last compound selector containing a shadow host selector.
+  int hostIndex;
+
+  Indices(this.deepIndex, this.hostIndex);
+}
+
+/// Shims selectors to emulate Shadow DOM CSS style encapsulation.
+class ShadowTransformer extends Visitor {
+  final String contentClass;
+  final String hostClass;
+
+  ShadowTransformer(this.contentClass, this.hostClass);
+
+  void visitTree(StyleSheet tree) {
+    tree.visit(this);
   }
 
-  /// Process styles to add rules which will only apply under the polyfill
-  /// and do not process via CSSOM. (CSSOM is destructive to rules on rare
-  /// occasions, e.g. -webkit-calc on Safari.)
-  /// For example, we convert this rule:
+  /// Shimming :host-context() requires two selectors. One which matches the
+  /// selector argument to the shadow host, and one which matches it against an
+  /// ancestor. This method creates the latter, where the shadow host is a
+  /// descendant. The former is handled by shimming the original selector
+  /// itself.
   ///
-  /// @polyfill-unscoped-rule {
-  ///   content: 'menu-item';
-  /// ... }
-  ///
-  /// to this:
-  ///
-  /// menu-item {...}
-  ///
-  String _extractUnscopedRulesFromCssText(String cssText) {
-    // Difference with webcomponents.js: does not handle comments
-    var r = '';
-    var matches = _cssContentUnscopedRuleRe.allMatches(cssText);
-    for (var m in matches) {
-      if (m == null) break;
-      var rule = m[0];
-      rule = rule.replaceFirst(m[2], '');
-      rule = rule.replaceFirst(m[1], m[3]);
-      r += rule + '\n\n';
-    }
-    return r;
-  }
+  /// Example:
+  ///   :host-context(.x) > .y  =>  .x :host > .y
+  ComplexSelector _createDescendantHostSelectorFor(ComplexSelector selector) {
+    var newSelector = new ComplexSelector();
 
-  /// convert a rule like :host(.foo) > .bar { }
-  ///
-  /// to
-  ///
-  /// scopeName.foo > .bar
-  ///
-  String _convertColonHost(String cssText) {
-    return _convertColonRule(cssText, _cssColonHostRe, _colonHostPartReplacer);
-  }
+    for (var compoundSelector in selector.compoundSelectors) {
+      if (compoundSelector.containsHostContext) {
+        var ancestor = new CompoundSelector()
+          ..combinator = compoundSelector.combinator;
+        var descendant = new CompoundSelector()
+          ..combinator = TokenKind.COMBINATOR_DESCENDANT;
+        var sequences = clone(compoundSelector.toSequences());
 
-  /// convert a rule like :host-context(.foo) > .bar { }
-  ///
-  /// to
-  ///
-  /// scopeName.foo > .bar, .foo scopeName > .bar { }
-  ///
-  /// and
-  ///
-  /// :host-context(.foo:host) .bar { ... }
-  ///
-  /// to
-  ///
-  /// scopeName.foo .bar { ... }
-  ///
-  String _convertColonHostContext(String cssText) => _convertColonRule(
-      cssText, _cssColonHostContextRe, _colonHostContextPartReplacer);
+        for (var sequence in sequences) {
+          var simpleSelector = sequence.simpleSelector;
 
-  String _convertColonRule(
-      String cssText, RegExp regExp, Function partReplacer) {
-    // p1 = :host, p2 = contents of (), p3 rest of rule
-    return cssText.replaceAllMapped(regExp, (m) {
-      if (m[2] != null) {
-        var parts = m[2].split(','), r = [];
-        for (var i = 0; i < parts.length; i++) {
-          var p = parts[i];
-          if (p == null) break;
-          p = p.trim();
-          r.add(partReplacer(_polyfillHostNoCombinator, p, m[3]));
+          if (isHostContextFunction(simpleSelector)) {
+            var hostContext = simpleSelector as PseudoClassFunctionSelector;
+            ancestor.addAll(hostContext.selector.simpleSelectorSequences);
+          } else {
+            descendant.append(sequence);
+          }
         }
-        return r.join(",");
+
+        descendant.add(createPseudoClassSelectorSequence('host'));
+        newSelector.compoundSelectors.add(ancestor);
+        newSelector.compoundSelectors.add(descendant);
       } else {
-        return _polyfillHostNoCombinator + m[3];
+        newSelector.compoundSelectors.add(compoundSelector.clone());
       }
-    });
-  }
-
-  String _colonHostContextPartReplacer(
-      String host, String part, String suffix) {
-    if (part.contains(_polyfillHost)) {
-      return _colonHostPartReplacer(host, part, suffix);
-    } else {
-      return host + part + suffix + ', ' + part + ' ' + host + suffix;
     }
+
+    return newSelector;
   }
 
-  String _colonHostPartReplacer(String host, String part, String suffix) {
-    return host + part.replaceFirst(_polyfillHost, '') + suffix;
-  }
-
-  /// Convert combinators like ::shadow and pseudo-elements like ::content
-  /// by replacing with space.
-  String _convertShadowDOMSelectors(String cssText) {
-    for (var i = 0; i < _shadowDOMSelectorsRe.length; i++) {
-      cssText = cssText.replaceAll(_shadowDOMSelectorsRe[i], ' ');
-    }
-    return cssText;
-  }
-
-  /// Change a selector like 'div' to 'name div'.
-  String _scopeSelectors(
-      String cssText, String scopeSelector, String hostSelector) {
-    return processRules(cssText, (CssRule rule) {
-      var selector = rule.selector;
-      var content = rule.content;
-      if (rule.selector[0] != "@" || rule.selector.startsWith("@page")) {
-        selector = _scopeSelector(
-            rule.selector, scopeSelector, hostSelector, strictStyling);
-      } else if (rule.selector.startsWith("@media")) {
-        content =
-            this._scopeSelectors(rule.content, scopeSelector, hostSelector);
+  /// Replaces shadow piercing combinators with descendant combinators and
+  /// records [indices].
+  void shimDeepCombinators(ComplexSelector selector, Indices indices) {
+    for (var i = selector.compoundSelectors.length - 1; i >= 0; i--) {
+      var compoundSelector = selector.compoundSelectors[i];
+      switch (compoundSelector.combinator) {
+        case TokenKind.COMBINATOR_DEEP:
+        case TokenKind.COMBINATOR_SHADOW_PIERCING_DESCENDANT:
+          // Replace shadow piercing combinator with descendant combinator.
+          compoundSelector.combinator = TokenKind.COMBINATOR_DESCENDANT;
+          indices.deepIndex = i;
+          break;
+        case TokenKind.COMBINATOR_PLUS:
+        case TokenKind.COMBINATOR_TILDE:
+          if (i > 0) {
+            var precedingSelector = selector.compoundSelectors[i - 1];
+            if (precedingSelector.containsHost ||
+                precedingSelector.containsHostContext) {
+              // Prevent scoping host siblings.
+              indices.deepIndex = i;
+              indices.hostIndex = i - 1;
+            }
+          }
+          break;
       }
-      return new CssRule(selector, content);
-    });
-  }
-
-  String _scopeSelector(String sourceSelector, String scopeSelector,
-      String hostSelector, bool strict) {
-    var r = [], parts = sourceSelector.split(",");
-    for (var i = 0; i < parts.length; i++) {
-      var p = parts[i].trim();
-      var deepParts = jsSplit(p, _shadowDeepSelectors);
-      var shallowPart = deepParts[0];
-      if (_selectorNeedsScoping(shallowPart, scopeSelector)) {
-        deepParts[0] =
-            strict && !shallowPart.contains(_polyfillHostNoCombinator)
-                ? this._applyStrictSelectorScope(shallowPart, scopeSelector)
-                : _applySelectorScope(shallowPart, scopeSelector, hostSelector);
-      }
-      // replace /deep/ with a space for child selectors
-      r.add(deepParts.join(" "));
-    }
-    return r.join(", ");
-  }
-
-  bool _selectorNeedsScoping(String selector, String scopeSelector) {
-    var re = _makeScopeMatcher(scopeSelector);
-    return re.firstMatch(selector) == null;
-  }
-
-  RegExp _makeScopeMatcher(String scopeSelector) {
-    var lre = new RegExp(r'\[');
-    var rre = new RegExp(r'\]');
-    scopeSelector = scopeSelector.replaceAll(lre, "\\[");
-    scopeSelector = scopeSelector.replaceAll(rre, "\\]");
-    return new RegExp("^(" + scopeSelector + ")" + _selectorReSuffix,
-        multiLine: true);
-  }
-
-  String _applySelectorScope(
-      String selector, String scopeSelector, String hostSelector) {
-    // Difference from webcomponentsjs: scopeSelector could not be an array
-    return this
-        ._applySimpleSelectorScope(selector, scopeSelector, hostSelector);
-  }
-
-  // scope via name and [is=name]
-  String _applySimpleSelectorScope(
-      String selector, String scopeSelector, String hostSelector) {
-    if (_polyfillHostRe.firstMatch(selector) != null) {
-      var replaceBy = strictStyling ? '.${hostSelector}' : scopeSelector;
-      selector = selector.replaceFirst(_polyfillHostNoCombinator, replaceBy);
-      return selector.replaceAll(_polyfillHostRe, replaceBy + ' ');
-    } else {
-      return '$scopeSelector $selector';
     }
   }
-  // return a selector with [name] suffix on each simple selector
 
-  // e.g. .foo.bar > .zot becomes .foo[name].bar[name] > .zot[name]  /** @internal */
-  String _applyStrictSelectorScope(String selector, String scopeSelector,
-      {String hostSelector: ''}) {
-    final isRe = new RegExp(r'\[is=([^\]]*)\]');
-    final sep = new RegExp(r'( |>|\+|~(?!=))\s*');
-    scopeSelector = scopeSelector.replaceAllMapped(isRe, (m) => m[1]);
+  /// Shims Shadow DOM CSS features to emulate style encapsulation.
+  ///
+  /// Example:
+  ///   :host(.x) > .y >>> .z  =>  .x.host > .y.content .z
+  void shimSelectors(ComplexSelector selector) {
+    var indices = new Indices(selector.compoundSelectors.length, -1);
+    shimDeepCombinators(selector, indices);
 
-    final attrName = '.$scopeSelector';
-    final scopeAfter = scopeSelector.indexOf(_polyfillHostNoCombinator);
-
-    var scopeSelectorPart = (p) {
-      // remove :host since it should be unnecessary
-      var scopedP = p.trim().replaceAll(_polyfillHostRe, "");
-      if (scopedP.isEmpty) return '';
-      if (p.indexOf(_polyfillHostNoCombinator) > -1) {
-        scopedP = _applySimpleSelectorScope(p, scopeSelector, hostSelector);
+    // Scope all selectors between the last host selector and the first shadow
+    // piercing combinator. We intentionally don't scope selectors BEFORE host
+    // selectors for two reasons. Firstly, the :host-context() shim depends on
+    // this behavior. Secondly, the shadow host could never possibly be a
+    // descendant or sibling or its own content.
+    for (var i = indices.deepIndex - 1; i > indices.hostIndex; i--) {
+      var compoundSelector = selector.compoundSelectors[i];
+      if (compoundSelector.containsHost ||
+          compoundSelector.containsHostContext) {
+        indices.hostIndex = i;
       } else {
-        // Remove :host since it is unnecessary.
-        var re = new RegExp(r'([^:]*)(:*)(.*)');
-        var m = re.firstMatch(scopedP);
-        if (m != null) {
-          scopedP = m[1] + attrName + m[2] + m[3];
+        compoundSelector.add(createClassSelectorSequence(contentClass));
+      }
+    }
+
+    // Shim all host selectors.
+    for (var i = indices.hostIndex; i >= 0; i--) {
+      var compoundSelector = selector.compoundSelectors[i];
+
+      for (var j = 0; j < compoundSelector._sequences.length; j++) {
+        var selector = compoundSelector._sequences[j].simpleSelector;
+        if (isHostFunction(selector) || isHostContextFunction(selector)) {
+          // Replace :host() or :host-context() with host class.
+          compoundSelector._sequences[j] =
+              createClassSelectorSequence(hostClass);
+
+          // Add :host() or :host-context() argument to constituent selector.
+          var hostFn = selector as PseudoClassFunctionSelector;
+          var hostArg = clone(hostFn.selector.simpleSelectorSequences);
+          compoundSelector.addAll(hostArg);
+        } else if (isHost(selector)) {
+          // Replace :host with host class.
+          compoundSelector._sequences[j] =
+              createClassSelectorSequence(hostClass);
         }
       }
-      return scopedP;
-    };
-
-    var scoped = '';
-    int startIndex = 0;
-    sep.allMatches(selector).forEach((Match m) {
-      var separator = m[1];
-      final part = selector.substring(startIndex, m.start);
-      // if a selector appears before :host-context it should not be shimmed as
-      // it matches on ancestor elements and not on elements in the host's
-      // shadow.
-      final scopedPart =
-          startIndex >= scopeAfter ? scopeSelectorPart(part) : part;
-      scoped += '$scopedPart $separator ';
-      startIndex = m.end;
-    });
-    return scoped + scopeSelectorPart(selector.substring(startIndex));
+    }
   }
 
-  String _insertPolyfillHostInCssText(String selector) {
-    selector = selector.replaceAll(_colonHostContextRe, _polyfillHostContext);
-    selector = selector.replaceAll(_colonHostRe, _polyfillHost);
-    return selector;
-  }
-}
+  visitSelectorGroup(SelectorGroup node) {
+    var complexSelectors = <ComplexSelector>[];
+    for (var selector in node.selectors) {
+      // Convert [Selector] to [ComplexSelector] to facilitate shimming
+      // transformations.
+      var complexSelector = new ComplexSelector.from(selector);
+      complexSelectors.add(complexSelector);
 
-final RegExp _cssContentNextSelectorRe = new RegExp(
-    r'polyfill-next-selector[^}]*content:[\s]*?[' +
-        "'" +
-        r'"](.*?)[' +
-        "'" +
-        r'"][;\s]*}([^{]*?){',
-    multiLine: true,
-    caseSensitive: false);
-final RegExp _cssContentRuleRe = new RegExp(
-    r'(polyfill-rule)[^}]*(content:[\s]*[' +
-        "'" +
-        r'"](.*?)[' +
-        "'" +
-        r'"])[;\s]*[^}]*}',
-    multiLine: true,
-    caseSensitive: false);
-final RegExp _cssContentUnscopedRuleRe = new RegExp(
-    r'(polyfill-unscoped-rule)[^}]*(content:[\s]*[' +
-        "'" +
-        r'"](.*?)[' +
-        "'" +
-        r'"])[;\s]*[^}]*}',
-    multiLine: true,
-    caseSensitive: false);
-const String _polyfillHost = "-shadowcsshost";
-// note: :host-context pre-processed to -shadowcsshostcontext.
-const String _polyfillHostContext = "-shadowcsscontext";
-const String _parenSuffix =
-    ")(?:\\((" + "(?:\\([^)(]*\\)|[^)(]*)+?" + ")\\))?([^,{]*)";
-final RegExp _cssColonHostRe = new RegExp("(" + _polyfillHost + _parenSuffix,
-    caseSensitive: false, multiLine: true);
-final RegExp _cssColonHostContextRe = new RegExp(
-    "(" + _polyfillHostContext + _parenSuffix,
-    caseSensitive: false,
-    multiLine: true);
-const String _polyfillHostNoCombinator = _polyfillHost + "-no-combinator";
-final List<RegExp> _shadowDOMSelectorsRe = [
-  new RegExp(r'::shadow'), new RegExp(r'::content'),
-  // Deprecated selectors
-  // TODO(vicb): see https://github.com/angular/clang-format/issues/16
-  new RegExp(r'\/shadow-deep\/'), new RegExp(r'\/shadow\/')
-];
-final RegExp _shadowDeepSelectors = new RegExp(r'(?:>>>)|(?:\/deep\/)');
-const String _selectorReSuffix = "([>\\s~+[.,{:][\\s\\S]*)?\$";
-final RegExp _polyfillHostRe =
-    new RegExp(_polyfillHost, multiLine: true, caseSensitive: false);
-final RegExp _colonHostRe =
-    new RegExp(r':host', multiLine: true, caseSensitive: false);
-final RegExp _colonHostContextRe =
-    new RegExp(r':host-context', multiLine: true, caseSensitive: false);
-final RegExp _commentRe = new RegExp(r'\/\*[\s\S]*?\*\/');
-String stripComments(String input) {
-  return input.replaceAllMapped(_commentRe, (_) => "");
-}
-
-final RegExp _ruleRe =
-    new RegExp(r'(\s*)([^;\{\}]+?)(\s*)((?:{%BLOCK%}?\s*;?)|(?:\s*;))');
-final RegExp _curlyRe = new RegExp(r'([{}])');
-const String OPEN_CURLY = "{";
-const String CLOSE_CURLY = "}";
-const String BLOCK_PLACEHOLDER = "%BLOCK%";
-
-class CssRule {
-  final String selector;
-  final String content;
-  CssRule(this.selector, this.content);
-}
-
-String processRules(String input, Function ruleCallback) {
-  var inputWithEscapedBlocks = escapeBlocks(input);
-  var nextBlockIndex = 0;
-  return inputWithEscapedBlocks.escapedString.replaceAllMapped(_ruleRe, (m) {
-    var selector = m[2];
-    var content = "";
-    var suffix = m[4];
-    var contentPrefix = "";
-    if (m[4] != null && m[4].startsWith("{" + BLOCK_PLACEHOLDER)) {
-      content = inputWithEscapedBlocks.blocks[nextBlockIndex++];
-      suffix = m[4].substring(BLOCK_PLACEHOLDER.length + 1);
-      contentPrefix = "{";
-    }
-    var rule = ruleCallback(new CssRule(selector, content));
-    return '''${ m [ 1 ]}${ rule . selector}${ m [ 3 ]}${ contentPrefix}${ rule . content}${ suffix}''';
-  });
-}
-
-class StringWithEscapedBlocks {
-  String escapedString;
-  List<String> blocks;
-  StringWithEscapedBlocks(this.escapedString, this.blocks);
-}
-
-StringWithEscapedBlocks escapeBlocks(String input) {
-  var inputParts = jsSplit(input, _curlyRe);
-  var resultParts = [];
-  var escapedBlocks = <String>[];
-  var bracketCount = 0;
-  var currentBlockParts = [];
-  for (var partIndex = 0; partIndex < inputParts.length; partIndex++) {
-    var part = inputParts[partIndex];
-    if (part == CLOSE_CURLY) {
-      bracketCount--;
-    }
-    if (bracketCount > 0) {
-      currentBlockParts.add(part);
-    } else {
-      if (currentBlockParts.length > 0) {
-        escapedBlocks.add(currentBlockParts.join(""));
-        resultParts.add(BLOCK_PLACEHOLDER);
-        currentBlockParts = [];
+      if (complexSelector.containsHostContext) {
+        // Add a new selector which matches the host as a descendant of the
+        // selector argument to :host-context().
+        complexSelectors.add(_createDescendantHostSelectorFor(complexSelector));
       }
-      resultParts.add(part);
     }
-    if (part == OPEN_CURLY) {
-      bracketCount++;
+
+    complexSelectors.forEach(shimSelectors);
+
+    // Replace original selectors with shimmed selectors.
+    node.selectors.clear();
+    for (var complexSelector in complexSelectors) {
+      node.selectors.add(complexSelector.toSelector());
     }
   }
-  if (currentBlockParts.length > 0) {
-    escapedBlocks.add(currentBlockParts.join(""));
-    resultParts.add(BLOCK_PLACEHOLDER);
-  }
-  return new StringWithEscapedBlocks(resultParts.join(""), escapedBlocks);
 }
 
-// all comments except inline source mapping
-final RegExp _sourceMappingUrlRe =
-    new RegExp(r'\*\s*#\s*sourceMappingURL=[\s\S]+?\*');
+class LegacyShadowTransformer extends ShadowTransformer {
+  LegacyShadowTransformer(String contentClass, String hostClass)
+      : super(contentClass, hostClass);
 
-String _extractSourceMappingUrl(String input) {
-  var match = _sourceMappingUrlRe.firstMatch(input);
-  return match == null ? '' : match[0];
+  final Set<SelectorGroup> _unscopedSelectorGroups = new Set<SelectorGroup>();
+
+  void shimPolyfillNextSelector(List<TreeNode> list) {
+    SelectorGroup nextSelectorGroup;
+
+    // Apply 'polyfill-next-selector' transformations.
+    for (var node in list) {
+      if (node is RuleSet) {
+        if (nextSelectorGroup != null) {
+          // Override selector.
+          node.selectorGroup.selectors
+            ..clear()
+            ..addAll(nextSelectorGroup.selectors);
+          // Consume selector so subsequent selectors aren't overwritten.
+          nextSelectorGroup = null;
+        } else if (matchesElement(
+            node.selectorGroup, 'polyfill-next-selector')) {
+          nextSelectorGroup =
+              selectorGroupForProperty(node.declarationGroup, 'content');
+        }
+      }
+    }
+
+    // Remove 'polyfill-next-selector' rule sets.
+    list.removeWhere((node) => node is RuleSet
+        ? matchesElement(node.selectorGroup, 'polyfill-next-selector')
+        : false);
+  }
+
+  void shimPolyfillUnscopedRule(RuleSet ruleSet) {
+    if (matchesElement(ruleSet.selectorGroup, 'polyfill-unscoped-rule')) {
+      var contentSelectorGroup = selectorGroupForProperty(
+          ruleSet.declarationGroup, 'content',
+          remove: true);
+      if (contentSelectorGroup != null) {
+        ruleSet.selectorGroup.selectors
+          ..clear()
+          ..addAll(contentSelectorGroup.selectors);
+      }
+      _unscopedSelectorGroups.add(ruleSet.selectorGroup);
+    }
+  }
+
+  void shimDeepCombinators(ComplexSelector selector, Indices indices) {
+    for (var i = selector.compoundSelectors.length - 1; i >= 0; i--) {
+      var compoundSelector = selector.compoundSelectors[i];
+      if (compoundSelector.containsHost ||
+          compoundSelector.containsHostContext) {
+        // Don't scope selectors following a shadow host selector.
+        indices.deepIndex = i;
+        indices.hostIndex = i;
+      }
+      if (compoundSelector.combinator == TokenKind.COMBINATOR_DEEP ||
+          compoundSelector.combinator ==
+              TokenKind.COMBINATOR_SHADOW_PIERCING_DESCENDANT) {
+        compoundSelector.combinator = TokenKind.COMBINATOR_DESCENDANT;
+        indices.deepIndex = i;
+      }
+    }
+  }
+
+  void shimSelectors(ComplexSelector selector) {
+    // Remove all ::content and ::shadow selectors. This does not correctly
+    // emulate the behavior of these selectors, however, the shim never has
+    // and we're just maintaining backwards compatibility until these are
+    // removed entirely.
+    selector.compoundSelectors.removeWhere((compoundSelector) {
+      compoundSelector._sequences.removeWhere((sequence) {
+        var selector = sequence.simpleSelector;
+        return selector is PseudoElementSelector &&
+            (selector.name == 'content' || selector.name == 'shadow');
+      });
+      return compoundSelector._sequences.isEmpty;
+    });
+
+    super.shimSelectors(selector);
+  }
+
+  void visitTree(StyleSheet tree) {
+    tree.visit(this);
+    _unscopedSelectorGroups.clear();
+  }
+
+  visitDeclarationGroup(DeclarationGroup node) {
+    shimPolyfillNextSelector(node.declarations);
+    super.visitDeclarationGroup(node);
+  }
+
+  visitHostDirective(HostDirective node) {
+    shimPolyfillNextSelector(node.rulesets);
+    super.visitHostDirective(node);
+  }
+
+  visitMediaDirective(MediaDirective node) {
+    shimPolyfillNextSelector(node.rulesets);
+    super.visitMediaDirective(node);
+  }
+
+  visitMixinRulesetDirective(MixinRulesetDirective node) {
+    shimPolyfillNextSelector(node.rulesets);
+    super.visitMixinRulesetDirective(node);
+  }
+
+  visitRuleSet(RuleSet node) {
+    shimPolyfillUnscopedRule(node);
+    super.visitRuleSet(node);
+  }
+
+  visitSelectorGroup(SelectorGroup node) {
+    if (!_unscopedSelectorGroups.contains(node)) {
+      super.visitSelectorGroup(node);
+    }
+  }
+
+  visitStyleSheet(StyleSheet node) {
+    shimPolyfillNextSelector(node.topLevels);
+    super.visitStyleSheet(node);
+  }
+
+  visitStyletDirective(StyletDirective node) {
+    shimPolyfillNextSelector(node.rulesets);
+    super.visitStyletDirective(node);
+  }
 }

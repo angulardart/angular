@@ -8,8 +8,7 @@ import 'package:angular2/src/transform/common/model/annotation_model.pb.dart';
 import 'package:angular2/src/transform/common/model/ng_deps_model.pb.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/ng_compiler.dart';
-import 'package:angular2/src/transform/common/options.dart'
-    show CODEGEN_DEBUG_MODE;
+import 'package:angular2/src/transform/common/options.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:barback/barback.dart';
 
@@ -24,20 +23,20 @@ import 'compile_data_creator.dart';
 ///   `SourceModule`.
 /// - Uses the resulting `NgDeps` object to generate code which initializes the
 ///   Angular2 reflective system.
-Future<Outputs> processTemplates(AssetReader reader, AssetId assetId,
-    {String codegenMode: '',
-    bool reflectPropertiesAsAttributes: false,
-    List<String> platformDirectives,
-    List<String> platformPipes,
-    Map<String, String> resolvedIdentifiers}) async {
+Future<Outputs> processTemplates(
+    AssetReader reader, AssetId assetId, TransformerOptions options) async {
   var compileDefs = await createCompileData(
-      reader, assetId, platformDirectives, platformPipes);
+      reader, assetId, options.platformDirectives, options.platformPipes);
   if (compileDefs == null) return null;
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
-    templateCompiler = createTemplateCompiler(reader,
-        compilerConfig: new CompilerConfig(
-            codegenMode == CODEGEN_DEBUG_MODE, reflectPropertiesAsAttributes));
+    var config = new CompilerConfig(
+      genDebugInfo: options.codegenMode == CODEGEN_DEBUG_MODE,
+      logBindingUpdate: options.reflectPropertiesAsAttributes,
+      // TODO(leonsenft): propagate value from [options].
+      useLegacyStyleEncapsulation: true,
+    );
+    templateCompiler = createTemplateCompiler(reader, config);
   }
 
   final compileComponentsData =

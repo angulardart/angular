@@ -43,7 +43,7 @@ class CodegenTransformer extends TransformerGroup {
         [new DirectiveProcessor(options)],
         [new DirectiveMetadataLinker(options)],
         [
-          new StylesheetCompiler(),
+          new StylesheetCompiler(options),
           new TemplateCompiler(options),
         ],
       ];
