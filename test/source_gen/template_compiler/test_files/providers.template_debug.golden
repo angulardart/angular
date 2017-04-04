@@ -93,7 +93,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   import2.MyTypeAnnotation __MyTypeAnnotation_0_3;
   dynamic __MyUseFactory_0_4;
   import2.MyUseClass __MyUseClass_0_5;
-  dynamic __MyUseValue_0_8;
+  import2.MyUseValue __MyUseValue_0_8;
   String __const_OpaqueToken__useValueString___0_9;
   List<dynamic> __MyMulti_0_10;
   static RenderComponentType renderType;
@@ -134,10 +134,10 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyUseClass_0_5;
   }
 
-  dynamic get _MyUseValue_0_8 {
+  import2.MyUseValue get _MyUseValue_0_8 {
     dbg(0, 0, 0);
     if ((this.__MyUseValue_0_8 == null)) {
-      (__MyUseValue_0_8 = new import2.MyUseValue('Matan'));
+      (__MyUseValue_0_8 = const import2.MyUseValue('Matan'));
     }
     return this.__MyUseValue_0_8;
   }
