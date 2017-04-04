@@ -85,7 +85,7 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   AppView<import2.ProviderModulesComponent> _compView_0;
   import2.ProviderModulesComponent _ProviderModulesComponent_0_2;
   import2.FooService __FooService_0_3;
-  dynamic __const_OpaqueToken__fooToken___0_4;
+  Duration __const_OpaqueToken__fooToken___0_4;
   dynamic __const_OpaqueToken__barToken___0_5;
   dynamic __const_OpaqueToken__bazToken___0_6;
   static RenderComponentType renderType;
@@ -110,10 +110,10 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
     return this.__FooService_0_3;
   }
 
-  dynamic get _const_OpaqueToken__fooToken___0_4 {
+  Duration get _const_OpaqueToken__fooToken___0_4 {
     dbg(0, 0, 0);
     if ((this.__const_OpaqueToken__fooToken___0_4 == null)) {
-      (__const_OpaqueToken__fooToken___0_4 = new Duration());
+      (__const_OpaqueToken__fooToken___0_4 = const Duration());
     }
     return this.__const_OpaqueToken__fooToken___0_4;
   }
