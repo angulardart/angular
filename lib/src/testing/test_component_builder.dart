@@ -7,10 +7,10 @@ import "package:angular2/core.dart"
         ComponentRef,
         DynamicComponentLoader,
         Injector,
-        Injectable,
         View,
         ElementRef,
         ChangeDetectorRef;
+import "package:angular2/di.dart" show Injectable;
 import 'package:angular2/platform/common_dom.dart';
 import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/debug/debug_node.dart"

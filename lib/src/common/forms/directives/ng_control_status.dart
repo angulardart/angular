@@ -1,5 +1,5 @@
-import "package:angular2/core.dart" show Directive, Self;
-
+import "package:angular2/core.dart" show Directive;
+import "package:angular2/di.dart" show Self;
 import "ng_control.dart" show NgControl;
 
 /// Directive automatically applied to Angular forms that sets CSS classes

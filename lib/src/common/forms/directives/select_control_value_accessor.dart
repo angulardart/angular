@@ -1,7 +1,8 @@
 import 'dart:html';
 
 import "package:angular2/core.dart"
-    show Directive, Provider, ElementRef, Input, Host, OnDestroy, Optional;
+    show Directive, Provider, ElementRef, Input, OnDestroy;
+import "package:angular2/di.dart" show Host, Optional;
 import "package:angular2/src/facade/lang.dart" show isPrimitive, looseIdentical;
 import 'package:func/func.dart' show Func0, VoidFunc1;
 
