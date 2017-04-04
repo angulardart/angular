@@ -81,7 +81,8 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
         import2.MyUseExistingNested,
         import2.MyUseValue,
         const OpaqueToken('useValueString'),
-        import2.MyMulti
+        import2.MyMulti,
+        const OpaqueToken('useValueList')
       ],
       import2.ProvidersComponent,
       const <String, dynamic>{})
@@ -96,6 +97,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   import2.MyUseValue __MyUseValue_0_8;
   String __const_OpaqueToken__useValueString___0_9;
   List<dynamic> __MyMulti_0_10;
+  List<dynamic> __const_OpaqueToken__useValueList___0_11;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -158,6 +160,17 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyMulti_0_10;
   }
 
+  List<dynamic> get _const_OpaqueToken__useValueList___0_11 {
+    dbg(0, 0, 0);
+    if ((this.__const_OpaqueToken__useValueList___0_11 == null)) {
+      (__const_OpaqueToken__useValueList___0_11 = const [
+        const import2.MyUseValue('Andrew'),
+        const import2.MyUseValue('Matan')
+      ]);
+    }
+    return this.__const_OpaqueToken__useValueList___0_11;
+  }
+
   ComponentRef build() {
     _compView_0 = viewFactory_ProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
@@ -194,6 +207,10 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     }
     if ((identical(token, import2.MyMulti) && (0 == nodeIndex))) {
       return _MyMulti_0_10;
+    }
+    if ((identical(token, const OpaqueToken('useValueList')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken__useValueList___0_11;
     }
     return notFoundResult;
   }

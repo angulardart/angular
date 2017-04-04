@@ -29,7 +29,9 @@ import 'package:angular2/angular2.dart';
   const Provider(
     MyMulti,
     multi: true,
-  )
+  ),
+  const Provider(useValueList,
+      useValue: const [const MyUseValue('Andrew'), const MyUseValue('Matan')])
 ], viewProviders: const [
   const Provider(MyUseValue, useValue: const MyUseValue('Matan'))
 ])
@@ -54,3 +56,4 @@ class MyUseValue {
 class MyMulti {}
 
 const useValueString = const OpaqueToken('useValueString');
+const useValueList = const OpaqueToken('useValueList');
