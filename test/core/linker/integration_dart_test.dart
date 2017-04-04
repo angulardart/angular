@@ -12,6 +12,8 @@ import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
 void main() {
+  tearDown(disposeAnyRunningTest);
+
   group('Property access', () {
     test('should distinguish between map and property access', () async {
       var testBed = new NgTestBed<ContainerWithPropertyAccess>();
