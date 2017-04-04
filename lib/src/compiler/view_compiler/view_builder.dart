@@ -455,11 +455,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       var assignCloneAnchorNodeExpr = readVarExpr.set(cloneAnchorNodeExpr);
       view.createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
     }
-    var addCommentStmt = _getParentRenderNode(parent)
-        .callMethod('append', [anchorVarExpr], checked: true)
-        .toStmt();
-
-    view.createMethod.addStmt(addCommentStmt);
+    var parentNode = _getParentRenderNode(parent);
+    if (parentNode != o.NULL_EXPR) {
+      var addCommentStmt =
+          parentNode.callMethod('append', [anchorVarExpr]).toStmt();
+      view.createMethod.addStmt(addCommentStmt);
+    }
 
     if (view.genConfig.genDebugInfo) {
       view.createMethod

@@ -74,7 +74,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     parentRenderNode.append(_text_0);
     dbgElm(_text_0, 0, 0, 0);
     var _anchor_1 = ngAnchor.clone(false);
-    parentRenderNode?.append(_anchor_1);
+    parentRenderNode.append(_anchor_1);
     dbgElm(_anchor_1, 1, 0, 4);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_4 =
@@ -84,7 +84,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     parentRenderNode.append(_text_2);
     dbgElm(_text_2, 2, 0, 30);
     var _anchor_3 = ngAnchor.clone(false);
-    parentRenderNode?.append(_anchor_3);
+    parentRenderNode.append(_anchor_3);
     dbgElm(_anchor_3, 3, 1, 4);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
     TemplateRef _TemplateRef_3_4 =
