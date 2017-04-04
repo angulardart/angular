@@ -30,7 +30,7 @@ import 'package:angular2/core.dart'
 /// </template>
 /// ```
 ///
-/// [guide]: docs/guide/template-syntax.html#ngIf
+/// [guide]: https://webdev.dartlang.org/angular/cheatsheet
 @Directive(selector: "[ngIf]", inputs: const ["ngIf"])
 class NgIf {
   final TemplateRef _templateRef;
