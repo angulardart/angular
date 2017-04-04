@@ -1,15 +1,8 @@
 import 'dart:js_util' as js_util;
 
 import 'package:angular2/core.dart'
-    show
-        Directive,
-        ElementRef,
-        Provider,
-        Input,
-        OnInit,
-        OnDestroy,
-        Injector,
-        Injectable;
+    show Directive, ElementRef, Provider, Input, OnInit, OnDestroy, Injector;
+import "package:angular2/di.dart" show Injectable;
 import 'package:func/func.dart' show Func0, VoidFunc0;
 
 import 'control_value_accessor.dart'

@@ -1,5 +1,6 @@
 import "package:angular2/core.dart"
-    show OnChanges, SimpleChange, Directive, Provider, Inject, Optional, Self;
+    show OnChanges, SimpleChange, Directive, Provider;
+import "package:angular2/di.dart" show Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show Control;
