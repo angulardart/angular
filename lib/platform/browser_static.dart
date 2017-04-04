@@ -12,7 +12,7 @@ import "package:angular2/core.dart"
         getPlatform,
         createPlatform,
         PLATFORM_INITIALIZER,
-        MapInjector;
+        Injector;
 import "package:angular2/src/core/application_ref.dart" show PlatformRefImpl;
 import "package:angular2/src/core/di.dart" show Provider;
 import "package:angular2/src/core/reflection/reflection.dart"
@@ -47,7 +47,7 @@ PlatformRef browserStaticPlatform() {
     var testabilityRegistry = new TestabilityRegistry();
     tokens[TestabilityRegistry] = testabilityRegistry;
     tokens[PLATFORM_INITIALIZER] = [createInitDomAdapter(testabilityRegistry)];
-    createPlatform(new MapInjector(null, tokens));
+    createPlatform(new Injector.map(tokens));
   }
   return platform;
 }
