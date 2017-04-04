@@ -162,8 +162,8 @@ class NgForm extends ControlContainer implements Form {
   @override
   void updateModel(NgControl dir, dynamic value) {
     scheduleMicrotask(() {
-      var ctrl = (form.find(dir.path) as Control);
-      ctrl.updateValue(value);
+      Control ctrl = form.find(dir.path);
+      ctrl?.updateValue(value);
     });
   }
 
