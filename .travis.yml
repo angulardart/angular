@@ -29,7 +29,7 @@ matrix:
         dartanalyzer: --fatal-warnings lib
     - dart: stable
       dart_task:
-        dartanalyzer: --fatal-warnings lib
+        dartanalyzer:
 cache:
   directories:
     - $HOME/.pub-cache
