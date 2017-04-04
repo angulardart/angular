@@ -272,14 +272,14 @@ class CompileTypeMetadataVisitor
     } else if (token.type is InterfaceType) {
       var invocation = (token as DartObjectImpl).getInvocation();
       if (invocation == null) return _token(token);
-      // TODO(alorenzen): Consider making this const Foo() instead of new Foo().
+      final id = new CompileIdentifierMetadata(
+          name: token.type.name, moduleUrl: moduleUrl(invocation.constructor));
       return o
-          .importExpr(new CompileIdentifierMetadata(
-              name: token.type.name,
-              moduleUrl: moduleUrl(invocation.constructor)))
+          .importExpr(id)
           // TODO(alorenzen): Add support for named arguments.
           .instantiate(
-              invocation.positionalArguments.map(_useValueExpression).toList());
+              invocation.positionalArguments.map(_useValueExpression).toList(),
+              o.importType(id, null, [o.TypeModifier.Const]));
     } else {
       return _token(token);
     }
