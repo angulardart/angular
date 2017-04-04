@@ -269,13 +269,18 @@ class CompileTypeMetadataVisitor
       return new o.LiteralExpr(token.toIntValue(), o.INT_TYPE);
     } else if (token.toDoubleValue() != null) {
       return new o.LiteralExpr(token.toDoubleValue(), o.DOUBLE_TYPE);
+    } else if (token.toListValue() != null) {
+      return new o.LiteralArrayExpr(
+          token.toListValue().map(_useValueExpression).toList(),
+          new o.ArrayType(null, [o.TypeModifier.Const]));
     } else if (token.type is InterfaceType) {
-      var invocation = (token as DartObjectImpl).getInvocation();
-      if (invocation == null) return _token(token);
       final id = new CompileIdentifierMetadata(
-          name: token.type.name, moduleUrl: moduleUrl(invocation.constructor));
-      return o
-          .importExpr(id)
+          name: token.type.name, moduleUrl: moduleUrl(token.type.element));
+      final type = o.importExpr(id);
+      var invocation = (token as DartObjectImpl).getInvocation();
+      if (invocation == null) return type;
+
+      return type
           // TODO(alorenzen): Add support for named arguments.
           .instantiate(
               invocation.positionalArguments.map(_useValueExpression).toList(),
