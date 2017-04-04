@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import "package:angular2/core.dart"
-    show Injectable, Inject, OpaqueToken, ComponentFactory;
+import "package:angular2/core.dart" show OpaqueToken, ComponentFactory;
+import "package:angular2/di.dart" show Injectable, Inject;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "instruction.dart"
