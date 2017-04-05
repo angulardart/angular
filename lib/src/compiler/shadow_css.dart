@@ -1,6 +1,5 @@
 import 'package:csslib/parser.dart';
 import 'package:csslib/visitor.dart';
-import 'package:quiver/iterables.dart' show merge;
 
 import 'logging.dart' show logger;
 
@@ -348,7 +347,36 @@ class CompoundSelector {
   }
 
   void addAll(Iterable<SimpleSelectorSequence> sequences) {
-    _sequences = merge([_sequences, sequences], _compare).toList();
+    var newSequences = <SimpleSelectorSequence>[];
+    var sequencesIt = _sequences.iterator;
+    var additionsIt = sequences.iterator;
+    var sequencesHasNext = sequencesIt.moveNext();
+    var additionsHasNext = additionsIt.moveNext();
+
+    // Merge sequences while both have selectors.
+    while (sequencesHasNext && additionsHasNext) {
+      if (_compare(additionsIt.current, sequencesIt.current) < 0) {
+        newSequences.add(additionsIt.current);
+        additionsHasNext = additionsIt.moveNext();
+      } else {
+        newSequences.add(sequencesIt.current);
+        sequencesHasNext = sequencesIt.moveNext();
+      }
+    }
+
+    // Append remaining selectors from original sequence.
+    while (sequencesHasNext) {
+      newSequences.add(sequencesIt.current);
+      sequencesHasNext = sequencesIt.moveNext();
+    }
+
+    // Append remaining selectors from additions.
+    while (additionsHasNext) {
+      newSequences.add(additionsIt.current);
+      additionsHasNext = additionsIt.moveNext();
+    }
+
+    _sequences = newSequences;
   }
 
   CompoundSelector clone() {
