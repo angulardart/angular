@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'source_module.dart';
 
 import 'compile_metadata.dart'
     show
@@ -18,12 +19,6 @@ import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
 import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
-
-class SourceModule {
-  final String moduleUrl;
-  final String source;
-  SourceModule(this.moduleUrl, this.source);
-}
 
 class NormalizedComponentWithViewDirectives {
   CompileDirectiveMetadata component;
@@ -51,13 +46,17 @@ class OfflineCompiler {
   final ViewCompiler _viewCompiler;
   final OutputEmitter _outputEmitter;
 
+  /// Maps a moduleUrl to a library prefix. Deferred modules have defer###
+  /// prefixes. The moduleUrl has asset: scheme or is a relative url.
+  final Map<String, String> _deferredModules;
+
   const OfflineCompiler(
-    this._directiveNormalizer,
-    this._templateParser,
-    this._styleCompiler,
-    this._viewCompiler,
-    this._outputEmitter,
-  );
+      this._directiveNormalizer,
+      this._templateParser,
+      this._styleCompiler,
+      this._viewCompiler,
+      this._outputEmitter,
+      this._deferredModules);
 
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
@@ -83,16 +82,20 @@ class OfflineCompiler {
       _assertComponent(compMeta);
 
       // Compile Component View and Embedded templates.
-      var compViewFactoryVar = _compileComponent(compMeta,
-          componentWithDirs.directives, componentWithDirs.pipes, statements);
+      var compViewFactoryVar = _compileComponent(
+          compMeta,
+          componentWithDirs.directives,
+          componentWithDirs.pipes,
+          statements,
+          _deferredModules);
       exportedVars.add(compViewFactoryVar);
 
       // Compile ComponentHost to be able to use dynamic component loader at
       // runtime.
       var hostMeta = createHostComponentMeta(compMeta.type, compMeta.selector,
           compMeta.template.preserveWhitespace);
-      var hostViewFactoryVar =
-          _compileComponent(hostMeta, [compMeta], [], statements);
+      var hostViewFactoryVar = _compileComponent(
+          hostMeta, [compMeta], [], statements, _deferredModules);
       var compFactoryVar = '${compMeta.type.name}NgFactory';
 
       statements.add(o
@@ -109,7 +112,8 @@ class OfflineCompiler {
           .toDeclStmt(null, [o.StmtModifier.Final]));
       exportedVars.add(compFactoryVar);
     });
-    return _createSourceModule(moduleUrl, statements, exportedVars);
+    return _createSourceModule(
+        moduleUrl, statements, exportedVars, _deferredModules);
   }
 
   List<SourceModule> compileStylesheet(String stylesheetUrl, String cssText) {
@@ -118,10 +122,16 @@ class OfflineCompiler {
     var shimStyles =
         _styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
     return [
-      _createSourceModule(_stylesModuleUrl(stylesheetUrl, false),
-          _resolveStyleStatements(plainStyles), [plainStyles.stylesVar]),
-      _createSourceModule(_stylesModuleUrl(stylesheetUrl, true),
-          _resolveStyleStatements(shimStyles), [shimStyles.stylesVar])
+      _createSourceModule(
+          _stylesModuleUrl(stylesheetUrl, false),
+          _resolveStyleStatements(plainStyles),
+          [plainStyles.stylesVar],
+          _deferredModules),
+      _createSourceModule(
+          _stylesModuleUrl(stylesheetUrl, true),
+          _resolveStyleStatements(shimStyles),
+          [shimStyles.stylesVar],
+          _deferredModules)
     ];
   }
 
@@ -129,22 +139,26 @@ class OfflineCompiler {
       CompileDirectiveMetadata compMeta,
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
-      List<o.Statement> targetStatements) {
+      List<o.Statement> targetStatements,
+      Map<String, String> deferredModules) {
     var styleResult = _styleCompiler.compileComponent(compMeta);
     List<TemplateAst> parsedTemplate = _templateParser.parse(compMeta,
         compMeta.template.template, directives, pipes, compMeta.type.name);
     var viewResult = _viewCompiler.compileComponent(compMeta, parsedTemplate,
-        styleResult, o.variable(styleResult.stylesVar), pipes);
+        styleResult, o.variable(styleResult.stylesVar), pipes, deferredModules);
     targetStatements.addAll(_resolveStyleStatements(styleResult));
     targetStatements.addAll(_resolveViewStatements(viewResult));
     return viewResult.viewFactoryVar;
   }
 
-  SourceModule _createSourceModule(String moduleUrl,
-      List<o.Statement> statements, List<String> exportedVars) {
-    String sourceCode =
-        _outputEmitter.emitStatements(moduleUrl, statements, exportedVars);
-    return new SourceModule(moduleUrl, sourceCode);
+  SourceModule _createSourceModule(
+      String moduleUrl,
+      List<o.Statement> statements,
+      List<String> exportedVars,
+      Map<String, String> deferredModules) {
+    String sourceCode = _outputEmitter.emitStatements(
+        moduleUrl, statements, exportedVars, deferredModules);
+    return new SourceModule(moduleUrl, sourceCode, deferredModules);
   }
 }
 

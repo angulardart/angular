@@ -142,7 +142,7 @@ class RuntimeCompiler implements ComponentResolver {
         parsedTemplate,
         stylesCompileResult,
         new ir.ExternalExpr(new CompileIdentifierMetadata(runtime: styles)),
-        pipes);
+        pipes, {});
     compileResult.dependencies.forEach((dep) {
       var childCompilingComponentsPath = new List.from(compilingComponentsPath);
       var childCacheKey = dep.comp.type.runtime;

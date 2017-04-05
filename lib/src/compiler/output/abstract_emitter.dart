@@ -7,8 +7,8 @@ var CATCH_ERROR_VAR = o.variable('error');
 var CATCH_STACK_VAR = o.variable('stack');
 
 abstract class OutputEmitter {
-  String emitStatements(
-      String moduleUrl, List<o.Statement> stmts, List<String> exportedVars);
+  String emitStatements(String moduleUrl, List<o.Statement> stmts,
+      List<String> exportedVars, Map<String, String> deferredModules);
 }
 
 class _EmittedLine {
@@ -18,6 +18,7 @@ class _EmittedLine {
 }
 
 class EmitterVisitorContext {
+  final Map<String, String> deferredModules;
   List<String> _exportedVars;
   num _indent;
   int _outputPos;
@@ -26,13 +27,15 @@ class EmitterVisitorContext {
   o.ClassMethod _activeMethod;
   bool _inSuperCall;
 
-  static EmitterVisitorContext createRoot(List<String> exportedVars) {
-    return new EmitterVisitorContext(exportedVars, 0);
+  static EmitterVisitorContext createRoot(
+      List<String> exportedVars, Map<String, String> deferredModules) {
+    return new EmitterVisitorContext(exportedVars, 0, deferredModules);
   }
 
   List<_EmittedLine> _lines;
   List<o.ClassStmt> _classes = [];
-  EmitterVisitorContext(this._exportedVars, this._indent) {
+  EmitterVisitorContext(
+      this._exportedVars, this._indent, this.deferredModules) {
     _outputPos = 0;
     this._lines = [new _EmittedLine(_indent)];
   }
