@@ -1,15 +1,15 @@
-import "package:angular2/di.dart" show Injectable;
-import "package:angular2/src/core/linker/app_view_utils.dart"
+import 'package:angular2/di.dart' show Injectable;
+import 'package:angular2/src/core/linker/app_view_utils.dart'
     show MAX_INTERPOLATION_VALUES;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
-import "package:angular2/src/facade/lang.dart" show jsSplit;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:angular2/src/facade/lang.dart' show jsSplit;
 import 'package:source_span/source_span.dart';
 
-import "../core/security.dart";
-import "chars.dart";
-import "compile_metadata.dart"
+import '../core/security.dart';
+import 'chars.dart';
+import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
-import "expression_parser/ast.dart"
+import 'expression_parser/ast.dart'
     show
         AST,
         Interpolation,
@@ -17,19 +17,19 @@ import "expression_parser/ast.dart"
         TemplateBinding,
         RecursiveAstVisitor,
         BindingPipe;
-import "expression_parser/ast.dart";
-import "expression_parser/parser.dart" show Parser;
-import "html_ast.dart";
-import "html_parser.dart" show HtmlParser;
-import "html_tags.dart" show splitNsName, mergeNsAndName;
-import "identifiers.dart" show identifierToken, Identifiers;
-import "logging.dart" show logger;
-import "parse_util.dart" show ParseError, ParseErrorLevel;
-import "provider_parser.dart" show ProviderElementContext, ProviderViewContext;
-import "schema/element_schema_registry.dart" show ElementSchemaRegistry;
-import "selector.dart" show CssSelector, SelectorMatcher;
-import "style_url_resolver.dart" show isStyleUrlResolvable;
-import "template_ast.dart"
+import 'expression_parser/ast.dart';
+import 'expression_parser/parser.dart' show Parser;
+import 'html_ast.dart';
+import 'html_parser.dart' show HtmlParser;
+import 'html_tags.dart' show splitNsName, mergeNsAndName;
+import 'identifiers.dart' show identifierToken, Identifiers;
+import 'logging.dart' show logger;
+import 'parse_util.dart' show ParseError, ParseErrorLevel;
+import 'provider_parser.dart' show ProviderElementContext, ProviderViewContext;
+import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
+import 'selector.dart' show CssSelector, SelectorMatcher;
+import 'style_url_resolver.dart' show isStyleUrlResolvable;
+import 'template_ast.dart'
     show
         ElementAst,
         BoundElementPropertyAst,
@@ -45,30 +45,31 @@ import "template_ast.dart"
         DirectiveAst,
         BoundDirectivePropertyAst,
         VariableAst;
-import "template_preparser.dart" show preparseElement, PreparsedElementType;
+import 'template_preparser.dart' show preparseElement, PreparsedElementType;
 
-// Group 1 = "bind-"
-// Group 2 = "var-"
-// Group 3 = "let-"
-// Group 4 = "ref-/#"
-// Group 5 = "on-"
-// Group 6 = "bindon-"
-// Group 7 = the identifier after "bind-", "var-/#", or "on-"
+// Group 1 = 'bind-'
+// Group 2 = 'var-'
+// Group 3 = 'let-'
+// Group 4 = 'ref-/#'
+// Group 5 = 'on-'
+// Group 6 = 'bindon-'
+// Group 7 = the identifier after 'bind-', 'var-/#', or 'on-'
 // Group 8 = identifier inside [()]
 // Group 9 = identifier inside []
 // Group 10 = identifier inside ()
 final BIND_NAME_REGEXP =
     new RegExp(r'^(?:(?:(?:(bind-)|(var-)|(let-)|(ref-|#)|(on-)|(bindon-))(.+))'
         r'|\[\(([^\)]+)\)\]|\[([^\]]+)\]|\(([^\)]+)\))$');
-const TEMPLATE_ELEMENT = "template";
-const TEMPLATE_ATTR = "template";
-const TEMPLATE_ATTR_PREFIX = "*";
-const CLASS_ATTR = "class";
-final PROPERTY_PARTS_SEPARATOR = ".";
-const ATTRIBUTE_PREFIX = "attr";
-const CLASS_PREFIX = "class";
-const STYLE_PREFIX = "style";
-final TEXT_CSS_SELECTOR = CssSelector.parse("*")[0];
+const TEMPLATE_ELEMENT = 'template';
+const TEMPLATE_ATTR = 'template';
+const TEMPLATE_ATTR_PREFIX = '*';
+const TEMPLATE_DEFERRED_ATTR = '!deferred';
+const CLASS_ATTR = 'class';
+final PROPERTY_PARTS_SEPARATOR = '.';
+const ATTRIBUTE_PREFIX = 'attr';
+const CLASS_PREFIX = 'class';
+const STYLE_PREFIX = 'style';
+final TEXT_CSS_SELECTOR = CssSelector.parse('*')[0];
 
 class TemplateParseError extends ParseError {
   TemplateParseError(String message, SourceSpan span, ParseErrorLevel level)
@@ -110,10 +111,10 @@ class TemplateParser {
       }
     }
     if (warnings.isNotEmpty) {
-      logger.warning('Template parse warnings:\n${warnings.join("\n")}');
+      logger.warning("Template parse warnings:\n${warnings.join('\n')}");
     }
     if (errors.isNotEmpty) {
-      var errorString = errors.join("\n");
+      var errorString = errors.join('\n');
       throw new BaseException('Template parse errors:\n$errorString');
     }
     return result.templateAst;
@@ -359,6 +360,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     var attrs = <AttrAst>[];
     var lcElName = splitNsName(nodeName.toLowerCase())[1];
     var isTemplateElement = lcElName == TEMPLATE_ELEMENT;
+    bool hasDeferredComponent = false;
     for (HtmlAttrAst attr in element.attrs) {
       var hasBinding = _parseAttr(isTemplateElement, attr, matchableAttrs,
           elementOrDirectiveProps, events, elementOrDirectiveRefs, elementVars);
@@ -374,6 +376,9 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       }
       if (hasTemplateBinding) {
         hasInlineTemplates = true;
+      }
+      if (attr.name == TEMPLATE_DEFERRED_ATTR) {
+        hasDeferredComponent = true;
       }
     }
     var elementCssSelector = createElementCssSelector(nodeName, matchableAttrs);
@@ -492,7 +497,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           templateProviderContext,
           [parsedElement],
           ngContentIndex,
-          element.sourceSpan);
+          element.sourceSpan,
+          hasDeferredComponent: hasDeferredComponent);
     }
     return parsedElement;
   }
@@ -503,16 +509,25 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<BoundElementOrDirectiveProperty> targetProps,
       List<VariableAst> targetVars) {
     var templateBindingsSource;
+    bool isDeferredAttr = false;
     if (attr.name == TEMPLATE_ATTR) {
       templateBindingsSource = attr.value;
     } else if (attr.name.startsWith(TEMPLATE_ATTR_PREFIX)) {
       var key = attr.name.substring(TEMPLATE_ATTR_PREFIX.length);
       templateBindingsSource =
-          (attr.value.length == 0) ? key : key + " " + attr.value;
+          (attr.value.length == 0) ? key : key + ' ' + attr.value;
+    } else if (attr.name == TEMPLATE_DEFERRED_ATTR) {
+      templateBindingsSource = attr.value;
+      isDeferredAttr = true;
     }
     if (templateBindingsSource == null) return false;
     var bindings =
         _parseTemplateBindings(templateBindingsSource, attr.sourceSpan);
+    if (isDeferredAttr && bindings != null && bindings.isNotEmpty) {
+      _reportError('"!deferred" on elements can\'t be bound to an expression.',
+          attr.sourceSpan, ParseErrorLevel.FATAL);
+      return false;
+    }
     for (var i = 0; i < bindings.length; i++) {
       var binding = bindings[i];
       if (binding.keyIsVar) {
@@ -522,7 +537,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         this._parsePropertyAst(binding.key, binding.expression, attr.sourceSpan,
             targetMatchableAttrs, targetProps);
       } else {
-        targetMatchableAttrs.add([binding.key, ""]);
+        targetMatchableAttrs.add([binding.key, '']);
         this._parseLiteralAttr(binding.key, null, attr.sourceSpan, targetProps);
       }
     }
@@ -544,11 +559,11 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     if (bindParts != null) {
       hasBinding = true;
       if (bindParts[1] != null) {
-        // Group 1 = "bind-"
+        // Group 1 = 'bind-'
         _parseProperty(bindParts[7], attrValue, attr.sourceSpan,
             targetMatchableAttrs, targetProps);
       } else if (bindParts[2] != null) {
-        // Group 2 = "var-"
+        // Group 2 = 'var-'
         var identifier = bindParts[7];
         if (isTemplateElement) {
           this._reportError(
@@ -566,7 +581,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           _parseReference(identifier, attrValue, attr.sourceSpan, targetRefs);
         }
       } else if (bindParts[3] != null) {
-        // Group 3 = "let-"
+        // Group 3 = 'let-'
         if (isTemplateElement) {
           var identifierName = bindParts[7];
           _parseVariable(
@@ -576,15 +591,15 @@ class TemplateParseVisitor implements HtmlAstVisitor {
               attr.sourceSpan);
         }
       } else if (bindParts[4] != null) {
-        // Group 4 = "ref-/#"
+        // Group 4 = 'ref-/#'
         var identifier = bindParts[7];
         _parseReference(identifier, attrValue, attr.sourceSpan, targetRefs);
       } else if (bindParts[5] != null) {
-        // Group 5 = "on-"
+        // Group 5 = 'on-'
         _parseEvent(bindParts[7], attrValue, attr.sourceSpan,
             targetMatchableAttrs, targetEvents);
       } else if (bindParts[6] != null) {
-        // Group 6 = "bindon-"
+        // Group 6 = 'bindon-'
         _parseProperty(bindParts[7], attrValue, attr.sourceSpan,
             targetMatchableAttrs, targetProps);
         _parseAssignmentEvent(bindParts[7], attrValue, attr.sourceSpan,
@@ -615,7 +630,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   String _removeDataPrefix(String attrName) {
-    return attrName.toLowerCase().startsWith("data-")
+    return attrName.toLowerCase().startsWith('data-')
         ? attrName.substring(5)
         : attrName;
   }
@@ -630,7 +645,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
 
   void _parseReference(String identifier, String value, SourceSpan sourceSpan,
       List<ElementOrDirectiveRef> targetRefs) {
-    if (identifier.indexOf("-") > -1) {
+    if (identifier.indexOf('-') > -1) {
       this._reportError('"-" is not allowed in reference names', sourceSpan);
     }
     targetRefs.add(new ElementOrDirectiveRef(identifier, value, sourceSpan));
@@ -869,7 +884,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         // attribute name.
         securityContext = _schemaRegistry.securityContext(
             elementName, _schemaRegistry.getMappedPropName(boundPropertyName));
-        var nsSeparatorIdx = boundPropertyName.indexOf(":");
+        var nsSeparatorIdx = boundPropertyName.indexOf(':');
         if (nsSeparatorIdx > -1) {
           var ns = boundPropertyName.substring(0, nsSeparatorIdx);
           var name = boundPropertyName.substring(nsSeparatorIdx + 1);
@@ -1059,7 +1074,7 @@ class ElementContext {
       var ngContentSelectors = component.directive.template.ngContentSelectors;
       for (var i = 0; i < ngContentSelectors.length; i++) {
         var selector = ngContentSelectors[i];
-        if (selector == "*") {
+        if (selector == '*') {
           wildcardNgContentIndex = i;
         } else {
           matcher.addSelectables(CssSelector.parse(ngContentSelectors[i]), i);

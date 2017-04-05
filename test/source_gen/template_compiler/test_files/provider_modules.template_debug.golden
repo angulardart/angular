@@ -33,8 +33,7 @@ import 'package:angular2/angular2.dart';
 import 'dart:core';
 
 const List<dynamic> styles_ProviderModulesComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponent0 =
-    const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponent0 = [];
 
 class ViewProviderModulesComponent0
     extends DebugAppView<import2.ProviderModulesComponent> {
@@ -67,10 +66,9 @@ AppView<import2.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
 }
 
 const List<dynamic> styles_ProviderModulesComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 =
-    const [
-  const StaticNodeDebugInfo(
-      const [
+List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [
         import2.ProviderModulesComponent,
         import2.FooService,
         const OpaqueToken('fooToken'),
@@ -78,7 +76,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 =
         const OpaqueToken('bazToken')
       ],
       import2.ProviderModulesComponent,
-      const <String, dynamic>{})
+      <String, dynamic>{})
 ];
 
 class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {

@@ -32,8 +32,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_LifecycleHooksComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponent0 =
-    const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponent0 = [];
 
 class ViewLifecycleHooksComponent0
     extends DebugAppView<import2.LifecycleHooksComponent> {
@@ -66,10 +65,9 @@ AppView<import2.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(
 }
 
 const List<dynamic> styles_LifecycleHooksComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponentHost0 =
-    const [
-  const StaticNodeDebugInfo(const [import2.LifecycleHooksComponent],
-      import2.LifecycleHooksComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponentHost0 = [
+  new StaticNodeDebugInfo([import2.LifecycleHooksComponent],
+      import2.LifecycleHooksComponent, <String, dynamic>{})
 ];
 
 class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {

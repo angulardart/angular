@@ -30,7 +30,7 @@ void main() {
     });
     String emitStmt(o.Statement stmt, [List<String> exportedVars = null]) {
       exportedVars ??= [];
-      return emitter.emitStatements(someModuleUrl, [stmt], exportedVars);
+      return emitter.emitStatements(someModuleUrl, [stmt], exportedVars, {});
     }
 
     test('should declare variables', () {

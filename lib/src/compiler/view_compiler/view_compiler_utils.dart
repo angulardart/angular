@@ -97,6 +97,18 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
   }
 }
 
+o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
+  if (token.value != null) {
+    return o.literal(token.value);
+  } else if (token.identifierIsInstance) {
+    return o
+        .importExpr(token.identifier)
+        .instantiate([], o.importType(token.identifier, []));
+  } else {
+    return o.importExpr(token.identifier);
+  }
+}
+
 o.Expression createFlatArray(List<o.Expression> expressions) {
   // Simplify: No items.
   if (expressions.isEmpty) {

@@ -33,11 +33,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_UsesNativeEvents = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = const [
-  null,
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = [null, null, null];
 
 class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
   ButtonElement _el_1;
@@ -82,9 +78,9 @@ AppView<import2.UsesNativeEvents> viewFactory_UsesNativeEvents0(
 }
 
 const List<dynamic> styles_UsesNativeEventsHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEventsHost0 = const [
-  const StaticNodeDebugInfo(const [import2.UsesNativeEvents],
-      import2.UsesNativeEvents, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEventsHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.UsesNativeEvents], import2.UsesNativeEvents, <String, dynamic>{})
 ];
 
 class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
@@ -141,10 +137,10 @@ const ComponentFactory UsesNativeEventsNgFactory = const ComponentFactory(
     import2.UsesNativeEvents,
     _METADATA);
 const List<dynamic> styles_UsesAngularEvents = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = const [
+List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = [
   null,
-  const StaticNodeDebugInfo(const [import2.HasAngularEvents],
-      import2.HasAngularEvents, const <String, dynamic>{}),
+  new StaticNodeDebugInfo([import2.HasAngularEvents], import2.HasAngularEvents,
+      <String, dynamic>{}),
   null
 ];
 
@@ -212,9 +208,9 @@ AppView<import2.UsesAngularEvents> viewFactory_UsesAngularEvents0(
 }
 
 const List<dynamic> styles_UsesAngularEventsHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEventsHost0 = const [
-  const StaticNodeDebugInfo(const [import2.UsesAngularEvents],
-      import2.UsesAngularEvents, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEventsHost0 = [
+  new StaticNodeDebugInfo([import2.UsesAngularEvents],
+      import2.UsesAngularEvents, <String, dynamic>{})
 ];
 
 class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
@@ -271,7 +267,7 @@ const ComponentFactory UsesAngularEventsNgFactory = const ComponentFactory(
     import2.UsesAngularEvents,
     _METADATA);
 const List<dynamic> styles_HasAngularEvents = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEvents0 = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEvents0 = [];
 
 class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
   static RenderComponentType renderType;
@@ -303,9 +299,9 @@ AppView<import2.HasAngularEvents> viewFactory_HasAngularEvents0(
 }
 
 const List<dynamic> styles_HasAngularEventsHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEventsHost0 = const [
-  const StaticNodeDebugInfo(const [import2.HasAngularEvents],
-      import2.HasAngularEvents, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEventsHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.HasAngularEvents], import2.HasAngularEvents, <String, dynamic>{})
 ];
 
 class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {

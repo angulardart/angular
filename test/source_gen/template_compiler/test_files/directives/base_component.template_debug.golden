@@ -36,10 +36,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_TestFooComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [null, null];
 
 class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
   DivElement _el_0;
@@ -79,9 +76,9 @@ AppView<import2.TestFooComponent> viewFactory_TestFooComponent0(
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.TestFooComponent],
-      import2.TestFooComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.TestFooComponent], import2.TestFooComponent, <String, dynamic>{})
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {

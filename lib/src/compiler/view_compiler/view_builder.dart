@@ -52,6 +52,7 @@ import "view_compiler_utils.dart"
     show
         getViewFactoryName,
         createFlatArray,
+        createDebugInfoTokenExpression,
         createDiTokenExpression,
         createSetAttributeParams,
         componentFromDirectives;
@@ -257,15 +258,23 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ? Identifiers.HTML_HTML_ELEMENT
         : identifierFromTagName(ast.name);
 
+    var directives = <CompileDirectiveMetadata>[];
+    for (var dir in ast.directives) directives.add(dir.directive);
+    CompileDirectiveMetadata component = componentFromDirectives(directives);
+
+    bool isDeferred = false;
+    if (component != null) {
+      isDeferred = nodeIndex == 0 &&
+          (view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
+          (view.declarationElement.sourceAst as EmbeddedTemplateAst)
+              .hasDeferredComponent;
+    }
+
     if (!isRootHostElement) {
       view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(elementType),
           modifiers: const [o.StmtModifier.Private]));
     }
-
-    var directives = <CompileDirectiveMetadata>[];
-    for (var dir in ast.directives) directives.add(dir.directive);
-    CompileDirectiveMetadata component = componentFromDirectives(directives);
 
     o.Expression compViewExpr;
     if (component != null) {
@@ -276,13 +285,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       String compViewName = '_compView_${nodeIndex}';
       compViewExpr = new o.ReadClassMemberExpr(compViewName);
       view.fields.add(new o.ClassField(compViewName,
-          outputType: o.importType(
-              Identifiers.AppView, [o.importType(component.type)])));
-      view.createMethod.addStmt(new o.WriteClassMemberExpr(
-          compViewName,
-          o
-              .importExpr(nestedComponentIdentifier)
-              .callFn([o.THIS_EXPR, o.literal(nodeIndex)])).toStmt());
+          outputType: o.importType(Identifiers.AppView,
+              isDeferred ? null : [o.importType(component.type)])));
+      var importExpr = o.importExpr(nestedComponentIdentifier);
+      view.createMethod.addStmt(new o.WriteClassMemberExpr(compViewName,
+          importExpr.callFn([o.THIS_EXPR, o.literal(nodeIndex)])).toStmt());
     }
 
     var createRenderNodeExpr;
@@ -376,7 +383,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       view.viewChildren.add(compViewExpr);
     }
 
-    compileElement.beforeChildren();
+    // beforeChildren() -> _prepareProviderInstances will create the actual
+    // directive and component instances.
+    compileElement.beforeChildren(isDeferred);
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
@@ -396,6 +405,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
           [compileElement.getComponent(), codeGenContentNodes]).toStmt());
     }
     return null;
+  }
+
+  String _toTemplateExtension(String moduleUrl) {
+    if (!moduleUrl.endsWith('.dart')) return moduleUrl;
+    return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
   }
 
   o.Statement _createLocalDocumentVar() {
@@ -499,7 +513,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         o.NULL_EXPR,
         view.viewIndex + nestedViewCount,
         compileElement,
-        templateVariableBindings);
+        templateVariableBindings,
+        view.deferredModules);
 
     // Create a visitor for embedded view and visit all nodes.
     var embeddedViewVisitor = new ViewBuilderVisitor(
@@ -511,9 +526,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             embeddedView.declarationElement);
     nestedViewCount += embeddedViewVisitor.nestedViewCount;
 
-    compileElement.beforeChildren();
+    compileElement.beforeChildren(false);
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     compileElement.afterChildren(0);
+    if (ast.hasDeferredComponent) {
+      var statements = <o.Statement>[];
+      compileElement.writeDeferredLoader(
+          embeddedView, compileElement.appViewContainer, statements);
+      view.createMethod.addStmts(statements);
+    }
     return null;
   }
 
@@ -696,7 +717,7 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
   if (compileElement != null) {
     providerTokens = compileElement.getProviderTokens();
     if (compileElement.component != null) {
-      componentToken = createDiTokenExpression(
+      componentToken = createDebugInfoTokenExpression(
           identifierToken(compileElement.component.type));
     }
     compileElement.referenceTokens?.forEach((String varName, token) {
@@ -707,7 +728,7 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
               token.equalsTo(ngForTokenMetadata))) {
         varTokenEntries.add([
           varName,
-          token != null ? createDiTokenExpression(token) : o.NULL_EXPR
+          token != null ? createDebugInfoTokenExpression(token) : o.NULL_EXPR
         ]);
       }
     });
@@ -719,16 +740,11 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
       varTokenEntries.isEmpty) {
     return o.NULL_EXPR;
   }
-  return o.importExpr(Identifiers.StaticNodeDebugInfo).instantiate(
-      [
-        o.literalArr(providerTokens,
-            new o.ArrayType(o.DYNAMIC_TYPE, [o.TypeModifier.Const])),
-        componentToken,
-        o.literalMap(varTokenEntries,
-            new o.MapType(o.DYNAMIC_TYPE, [o.TypeModifier.Const]))
-      ],
-      o.importType(
-          Identifiers.StaticNodeDebugInfo, null, [o.TypeModifier.Const]));
+  return o.importExpr(Identifiers.StaticNodeDebugInfo).instantiate([
+    o.literalArr(providerTokens, new o.ArrayType(o.DYNAMIC_TYPE)),
+    componentToken,
+    o.literalMap(varTokenEntries, new o.MapType(o.DYNAMIC_TYPE))
+  ], o.importType(Identifiers.StaticNodeDebugInfo, null));
 }
 
 /// Generates output ast for a CompileView and returns a [ClassStmt] for the

@@ -27,5 +27,5 @@ void main() {
     template: '<section>'
         '<my-deferred-view !deferred></my-deferred-view>'
         '</section>',
-    directives: const [DeferredViewComponent])
+    directives: const [DeferredChildComponent])
 class SimpleContainerTest {}

@@ -7,7 +7,7 @@ import 'package:angular2/angular2.dart';
     template: '<div id="titleDiv" (click)="doClick()" '
         '[attr.selected]="selected">'
         '{{title}}</div>')
-class DeferredViewComponent extends SomeBaseClass {
+class DeferredChildComponent extends SomeBaseClass {
   bool selected = false;
 
   @Input()
