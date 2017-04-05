@@ -10,11 +10,27 @@ String _importFrom(DartType dartType, List<ImportElement> imports) {
   for (final import in imports) {
     final exportedElement =
         import.importedLibrary.exportNamespace?.get(dartType.element.name);
-    if (exportedElement == dartType.element) {
+    if (exportedElement == dartType.element &&
+        _isAllowedByCombinators(dartType.element, import)) {
       return import.uri;
     }
   }
   return null;
+}
+
+bool _isAllowedByCombinators(Element element, ImportElement import) {
+  if (import.combinators.isEmpty) return true;
+  Iterable<HideElementCombinator> hideCombinators = import.combinators
+      .where((combinator) => combinator is HideElementCombinator);
+  Iterable<ShowElementCombinator> showCombinators = import.combinators
+      .where((combinator) => combinator is ShowElementCombinator);
+  var isHidden = hideCombinators
+      .any((combinator) => combinator.hiddenNames.contains(element.name));
+
+  if (isHidden) return false;
+  if (showCombinators.isEmpty) return true;
+  return showCombinators
+      .any((combinator) => combinator.shownNames.contains(element.name));
 }
 
 Iterable<TypeBuilder> _coerceTypeArgs(
