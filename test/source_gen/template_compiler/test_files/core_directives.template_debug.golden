@@ -36,13 +36,12 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import12;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_TestFooComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
   null,
-  const StaticNodeDebugInfo(
-      const [TemplateRef, NgIf], null, const <String, dynamic>{}),
+  new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{}),
   null,
-  const StaticNodeDebugInfo(
-      const [TemplateRef, import3.NgFor], null, const <String, dynamic>{}),
+  new StaticNodeDebugInfo(
+      [TemplateRef, import3.NgFor], null, <String, dynamic>{}),
   null
 ];
 
@@ -124,10 +123,7 @@ AppView<import5.TestFooComponent> viewFactory_TestFooComponent0(
   return new ViewTestFooComponent0(parentView, parentIndex);
 }
 
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = [null, null];
 
 class ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
   DivElement _el_0;
@@ -158,7 +154,7 @@ AppView<import5.TestFooComponent> viewFactory_TestFooComponent1(
   return new ViewTestFooComponent1(parentView, parentIndex);
 }
 
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent2 = const [
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent2 = [
   null,
   null,
   null,
@@ -217,9 +213,9 @@ AppView<import5.TestFooComponent> viewFactory_TestFooComponent2(
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import5.TestFooComponent],
-      import5.TestFooComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import5.TestFooComponent], import5.TestFooComponent, <String, dynamic>{})
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {

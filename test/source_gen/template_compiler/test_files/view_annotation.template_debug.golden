@@ -37,9 +37,8 @@ import 'package:angular2/angular2.dart';
 const List<dynamic> styles_TestFooComponent = const [
   'div._ngcontent-%COMP% { font-size: 10px; }'
 ];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
-  const StaticNodeDebugInfo(
-      const [TemplateRef, NgIf], null, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
+  new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{})
 ];
 
 class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
@@ -90,10 +89,7 @@ AppView<import4.TestFooComponent> viewFactory_TestFooComponent0(
   return new ViewTestFooComponent0(parentView, parentIndex);
 }
 
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = [null, null];
 
 class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
   DivElement _el_0;
@@ -126,9 +122,9 @@ AppView<import4.TestFooComponent> viewFactory_TestFooComponent1(
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import4.TestFooComponent],
-      import4.TestFooComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import4.TestFooComponent], import4.TestFooComponent, <String, dynamic>{})
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {

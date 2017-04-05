@@ -56,6 +56,15 @@ Uri toAssetScheme(Uri absoluteUri) {
   return new Uri(scheme: 'asset', pathSegments: pathSegments);
 }
 
+String packageToAssetScheme(String uri) {
+  const packagePrefix = 'package:';
+  if (!uri.startsWith(packagePrefix)) return uri;
+  String path = uri.substring(packagePrefix.length);
+  int pos = path.indexOf('/');
+  assert(pos != -1);
+  return 'asset:${path.substring(0, pos)}/lib${path.substring(pos)}';
+}
+
 bool isDartCoreUri(String uri) {
   if (uri == null) throw new ArgumentError.notNull('uri');
   if (uri.isEmpty) throw new ArgumentError.value('(empty string)', 'uri');

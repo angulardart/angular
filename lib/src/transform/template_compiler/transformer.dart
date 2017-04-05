@@ -1,8 +1,8 @@
 import 'dart:async';
-
+import 'package:angular2/src/transform/common/model/ng_deps_model.pb.dart';
+import 'package:angular2/src/compiler/source_module.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/code/ng_deps_code.dart';
-import 'package:angular2/src/transform/common/code/source_module.dart';
 import 'package:angular2/src/transform/common/formatter.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/options.dart';
@@ -54,6 +54,19 @@ class TemplateCompiler extends Transformer implements LazyTransformer {
           new Asset.fromString(templatesAssetId(primaryId), ngDepsCode));
     }, log: transform.logger);
   }
+}
+
+/// Uses `writer` to write a Dart library representing `model` and
+/// `sourceModule`.
+void writeTemplateFile(NgDepsWriterMixin writer, NgDepsModel model,
+    SourceModule sourceModule, bool ignoreRealTemplateIssues) {
+  if (model == null) return null;
+  var sourceModuleCode = '';
+  if (sourceModule != null) {
+    sourceModuleCode = sourceModule.source;
+  }
+  writer.writeNgDepsModel(model, sourceModuleCode,
+      sourceModule?.deferredModules, ignoreRealTemplateIssues);
 }
 
 const _emptyNgDepsContents = 'void initReflector() {}\n';

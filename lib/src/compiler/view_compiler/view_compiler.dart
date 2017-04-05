@@ -40,11 +40,12 @@ class ViewCompiler {
       List<TemplateAst> template,
       StylesCompileResult stylesCompileResult,
       o.Expression styles,
-      List<CompilePipeMetadata> pipes) {
+      List<CompilePipeMetadata> pipes,
+      Map<String, String> deferredModules) {
     var statements = <o.Statement>[];
     var dependencies = <ViewCompileDependency>[];
-    var view = new CompileView(
-        component, _genConfig, pipes, styles, 0, new CompileElement.root(), []);
+    var view = new CompileView(component, _genConfig, pipes, styles, 0,
+        new CompileElement.root(), [], deferredModules);
     buildView(view, template, stylesCompileResult, dependencies);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.
@@ -125,9 +126,8 @@ class ViewCompiler {
           .set(o.literalArr(
               view.nodes.map(createStaticNodeDebugInfo).toList(),
               new o.ArrayType(
-                  new o.ExternalType(Identifiers.StaticNodeDebugInfo),
-                  [o.TypeModifier.Const])))
-          .toDeclStmt(null, [o.StmtModifier.Final]));
+                  new o.ExternalType(Identifiers.StaticNodeDebugInfo))))
+          .toDeclStmt());
     }
     return nodeDebugInfosVar;
   }

@@ -10,6 +10,7 @@ import 'annotation_code.dart';
 import 'import_export_code.dart';
 import 'parameter_code.dart';
 import 'reflection_info_code.dart';
+import '../url_resolver.dart';
 
 /// Visitor responsible for parsing Dart source into [NgDepsModel] objects.
 class NgDepsVisitor extends RecursiveAstVisitor<Object> {
@@ -159,8 +160,8 @@ abstract class NgDepsWriterMixin
         ReflectionWriterMixin {
   StringBuffer get buffer;
 
-  void writeNgDepsModel(
-      NgDepsModel model, String templateCode, bool ignoreRealTemplateIssues) {
+  void writeNgDepsModel(NgDepsModel model, String templateCode,
+      Map<String, String> deferredModules, bool ignoreRealTemplateIssues) {
     // Avoid strong-mode warnings about unused imports.
     for (var problem in _ignoredProblems) {
       buffer.writeln('// @ignoreProblemForFile $problem');
@@ -204,10 +205,13 @@ abstract class NgDepsWriterMixin
       String stmt = importModelToStmt(imp);
       if (!templateCode.contains(stmt)) writeImportModel(imp);
     });
-    model.depImports.where((i) => !i.isDeferred).forEach((ImportModel imp) {
+    for (ImportModel imp in model.depImports) {
+      if (imp.isDeferred) continue;
+      if (deferredModules != null && deferredModules.containsKey(imp.uri))
+        continue;
       String stmt = importModelToStmt(imp);
       if (!templateCode.contains(stmt)) writeImportModel(imp);
-    });
+    }
 
     writeExportModel(new ExportModel()..uri = model.sourceFile);
     model.exports.forEach(writeExportModel);
@@ -248,6 +252,17 @@ abstract class NgDepsWriterMixin
 
     // Call the setup method for our dependencies.
     for (var importModel in model.depImports) {
+      String assetUri = packageToAssetScheme(importModel.uri);
+      bool isDeferred = false;
+      if (deferredModules != null) {
+        for (var deferredModule in deferredModules.keys) {
+          if (deferredModule.contains(assetUri)) {
+            isDeferred = true;
+            break;
+          }
+        }
+      }
+      if (isDeferred) continue;
       buffer.writeln('${importModel.prefix}.${SETUP_METHOD_NAME}();');
     }
 

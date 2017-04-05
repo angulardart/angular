@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
@@ -15,6 +16,7 @@ import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'element_injector.dart' show ElementInjector;
 import 'exceptions.dart' show ViewDestroyedException;
+import 'template_ref.dart';
 import 'view_container.dart';
 import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
@@ -574,6 +576,18 @@ abstract class AppView<T> {
 
   void setProp(Element element, String name, Object value) {
     js_util.setProperty(element, name, value);
+  }
+
+  void loadDeferred(
+      Future loadComponentFunction(),
+      Future loadTemplateLibFunction(),
+      ViewContainer viewContainer,
+      TemplateRef templateRef,
+      void initializer()) {
+    Future.wait([loadComponentFunction(), loadTemplateLibFunction()]).then((_) {
+      initializer();
+      viewContainer.createEmbeddedView(templateRef);
+    });
   }
 }
 

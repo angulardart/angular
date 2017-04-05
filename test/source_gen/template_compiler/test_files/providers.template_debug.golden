@@ -33,9 +33,7 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/zone/ng_zone.dart' as import10;
 
 const List<dynamic> styles_ProvidersComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = const [
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = [null];
 
 class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
   static RenderComponentType renderType;
@@ -70,9 +68,9 @@ AppView<import2.ProvidersComponent> viewFactory_ProvidersComponent0(
 }
 
 const List<dynamic> styles_ProvidersComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
-  const StaticNodeDebugInfo(
-      const [
+List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [
         import2.ProvidersComponent,
         import2.MyTypeAnnotation,
         import2.MyUseFactory,
@@ -85,7 +83,7 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
         const OpaqueToken('useValueList')
       ],
       import2.ProvidersComponent,
-      const <String, dynamic>{})
+      <String, dynamic>{})
 ];
 
 class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {

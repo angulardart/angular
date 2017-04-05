@@ -29,6 +29,7 @@ class CompileView implements NameResolver {
   final CompilerConfig genConfig;
   final List<CompilePipeMetadata> pipeMetas;
   final o.Expression styles;
+  final Map<String, String> deferredModules;
 
   int viewIndex;
   CompileElement declarationElement;
@@ -79,8 +80,15 @@ class CompileView implements NameResolver {
   var literalMapCount = 0;
   var pipeCount = 0;
 
-  CompileView(this.component, this.genConfig, this.pipeMetas, this.styles,
-      this.viewIndex, this.declarationElement, this.templateVariableBindings) {
+  CompileView(
+      this.component,
+      this.genConfig,
+      this.pipeMetas,
+      this.styles,
+      this.viewIndex,
+      this.declarationElement,
+      this.templateVariableBindings,
+      this.deferredModules) {
     this.createMethod = new CompileMethod(this);
     this.injectorGetMethod = new CompileMethod(this);
     this.updateContentQueriesMethod = new CompileMethod(this);
@@ -128,6 +136,9 @@ class CompileView implements NameResolver {
     }
     if (declarationElement.parent != null) {
       declarationElement.setEmbeddedView(this);
+    }
+    if (deferredModules == null) {
+      throw new ArgumentError();
     }
   }
 

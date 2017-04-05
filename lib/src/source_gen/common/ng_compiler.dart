@@ -30,5 +30,5 @@ OfflineCompiler createTemplateCompiler(
       templateParser,
       new StyleCompiler(compilerConfig, urlResolver),
       new ViewCompiler(compilerConfig, parser),
-      new DartEmitter());
+      new DartEmitter(), {});
 }

@@ -32,7 +32,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_HostComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HostComponent0 = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HostComponent0 = [];
 
 class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   static RenderComponentType renderType;
@@ -67,9 +67,9 @@ AppView<import2.HostComponent> viewFactory_HostComponent0(
 }
 
 const List<dynamic> styles_HostComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.HostComponent],
-      import2.HostComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.HostComponent], import2.HostComponent, <String, dynamic>{})
 ];
 
 class ViewHostComponentHost0 extends DebugAppView<dynamic> {
