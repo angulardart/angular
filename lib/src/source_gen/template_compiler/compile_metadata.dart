@@ -240,7 +240,17 @@ class CompileTypeMetadataVisitor
     } else if (token.toTypeValue() != null) {
       return _tokenForType(token.toTypeValue());
     } else if (token.type is InterfaceType) {
-      return _tokenForType(token.type);
+      // TODO(het): allow this to be any const invocation
+      var invocation = (token as DartObjectImpl).getInvocation();
+      if (invocation != null) {
+        if (invocation.positionalArguments.isNotEmpty ||
+            invocation.namedArguments.isNotEmpty) {
+          _logger.warning('Cannot use const objects with arguments as a '
+              'provider token: $annotation');
+          return new CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
+        }
+      }
+      return _tokenForType(token.type, isInstance: invocation != null);
     } else if (token.type.element is FunctionTypedElement) {
       return _tokenForFunction(token.type.element);
     }
@@ -253,10 +263,11 @@ class CompileTypeMetadataVisitor
     );
   }
 
-  CompileTokenMetadata _tokenForType(DartType type) {
+  CompileTokenMetadata _tokenForType(DartType type, {bool isInstance: false}) {
     return new CompileTokenMetadata(
         identifier: new CompileIdentifierMetadata(
-            name: type.name, moduleUrl: moduleUrl(type.element)));
+            name: type.name, moduleUrl: moduleUrl(type.element)),
+        identifierIsInstance: isInstance);
   }
 
   /* o.Expression | CompileTokenMetadata */ _useValueExpression(
