@@ -106,38 +106,50 @@ void main() {
   });
 }
 
-@Component(selector: 'keydown-listener', host: const {
-  '(keydown)': 'receivedKeydown = true',
-  '(keydown.a)': 'receivedKeydownA = true',
-  '(keydown.shift.a)': 'receivedKeydownShiftA = true',
-})
+@Component(
+    selector: 'keydown-listener',
+    host: const {
+      '(keydown)': 'receivedKeydown = true',
+      '(keydown.a)': 'receivedKeydownA = true',
+      '(keydown.shift.a)': 'receivedKeydownShiftA = true',
+    },
+    template: '<div></div>')
 class KeydownListenerComponent {
   bool receivedKeydown = false;
   bool receivedKeydownA = false;
   bool receivedKeydownShiftA = false;
 }
 
-@Component(selector: 'keypress-listener', host: const {
-  '(keypress)': 'receivedKeypress = true',
-})
+@Component(
+    selector: 'keypress-listener',
+    host: const {
+      '(keypress)': 'receivedKeypress = true',
+    },
+    template: '<div></div>')
 class KeypressListenerComponent {
   bool receivedKeypress = false;
 }
 
-@Component(selector: 'keyup-listener', host: const {
-  '(keyup)': 'receivedKeyup = true',
-  '(keyup.enter)': 'receivedKeyupEnter = true',
-  '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
-})
+@Component(
+    selector: 'keyup-listener',
+    host: const {
+      '(keyup)': 'receivedKeyup = true',
+      '(keyup.enter)': 'receivedKeyupEnter = true',
+      '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
+    },
+    template: '<div></div>')
 class KeyupListenerComponent {
   bool receivedKeyup = false;
   bool receivedKeyupEnter = false;
   bool receivedKeyupCtrlEnter = false;
 }
 
-@Component(selector: 'modifiers-listener', host: const {
-  '(keyup.alt.meta.0)': 'receivedModifiers = true',
-})
+@Component(
+    selector: 'modifiers-listener',
+    host: const {
+      '(keyup.alt.meta.0)': 'receivedModifiers = true',
+    },
+    template: '<div></div>')
 class ModifiersListener {
   bool receivedModifiers = false;
 }
