@@ -16,9 +16,9 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'has_directives.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'has_directives.dart';
 export 'has_directives.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'has_directives.dart' as import1;
@@ -32,16 +32,15 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_TestFooComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
   null,
   null,
   null,
   null,
-  const StaticNodeDebugInfo(
-      const [import1.TestDirective], null, const <String, dynamic>{}),
+  new StaticNodeDebugInfo([import1.TestDirective], null, <String, dynamic>{}),
   null,
-  const StaticNodeDebugInfo(const [import1.TestSubComponent],
-      import1.TestSubComponent, const <String, dynamic>{}),
+  new StaticNodeDebugInfo([import1.TestSubComponent], import1.TestSubComponent,
+      <String, dynamic>{}),
   null
 ];
 
@@ -130,9 +129,9 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import1.TestFooComponent],
-      import1.TestFooComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import1.TestFooComponent], import1.TestFooComponent, <String, dynamic>{})
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
@@ -189,10 +188,7 @@ const ComponentFactory TestFooComponentNgFactory = const ComponentFactory(
     import1.TestFooComponent,
     _METADATA);
 const List<dynamic> styles_TestSubComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = [null, null];
 
 class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
   DivElement _el_0;
@@ -232,9 +228,9 @@ AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
 }
 
 const List<dynamic> styles_TestSubComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import1.TestSubComponent],
-      import1.TestSubComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import1.TestSubComponent], import1.TestSubComponent, <String, dynamic>{})
 ];
 
 class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {

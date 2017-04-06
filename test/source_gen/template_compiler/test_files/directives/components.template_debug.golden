@@ -16,9 +16,9 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'components.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'components.dart';
 export 'components.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
@@ -32,10 +32,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_TestSubComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = [null, null];
 
 class ViewTestSubComponent0 extends DebugAppView<import2.TestSubComponent> {
   DivElement _el_0;
@@ -75,9 +72,9 @@ AppView<import2.TestSubComponent> viewFactory_TestSubComponent0(
 }
 
 const List<dynamic> styles_TestSubComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.TestSubComponent],
-      import2.TestSubComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.TestSubComponent], import2.TestSubComponent, <String, dynamic>{})
 ];
 
 class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {

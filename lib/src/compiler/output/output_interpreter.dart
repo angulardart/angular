@@ -1,25 +1,25 @@
 import 'dart:html';
 
-import "package:angular2/src/common/directives/ng_for.dart";
-import "package:angular2/src/common/directives/ng_if.dart";
-import "package:angular2/src/compiler/identifiers.dart";
-import "package:angular2/src/core/linker.dart" show QueryList;
-import "package:angular2/src/core/linker/app_view.dart";
-import "package:angular2/src/core/linker/app_view_utils.dart";
-import "package:angular2/src/core/linker/component_factory.dart";
-import "package:angular2/src/core/linker/template_ref.dart";
-import "package:angular2/src/core/linker/view_container.dart";
-import "package:angular2/src/core/linker/view_container_ref.dart"
+import 'package:angular2/src/common/directives/ng_for.dart';
+import 'package:angular2/src/common/directives/ng_if.dart';
+import 'package:angular2/src/compiler/identifiers.dart';
+import 'package:angular2/src/core/linker.dart' show QueryList;
+import 'package:angular2/src/core/linker/app_view.dart';
+import 'package:angular2/src/core/linker/app_view_utils.dart';
+import 'package:angular2/src/core/linker/component_factory.dart';
+import 'package:angular2/src/core/linker/template_ref.dart';
+import 'package:angular2/src/core/linker/view_container.dart';
+import 'package:angular2/src/core/linker/view_container_ref.dart'
     show ViewContainerRef;
-import "package:angular2/src/core/reflection/reflection.dart" show reflector;
-import "package:angular2/src/debug/debug_app_view.dart";
-import "package:angular2/src/debug/debug_context.dart"
+import 'package:angular2/src/core/reflection/reflection.dart' show reflector;
+import 'package:angular2/src/debug/debug_app_view.dart';
+import 'package:angular2/src/debug/debug_context.dart'
     show StaticNodeDebugInfo, DebugContext;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
-import "dart_emitter.dart" show debugOutputAstAsDart;
-import "dynamic_instance.dart";
-import "output_ast.dart" as o;
+import 'dart_emitter.dart' show debugOutputAstAsDart;
+import 'dynamic_instance.dart';
+import 'output_ast.dart' as o;
 
 bool _interpreterInitialized = false;
 
@@ -668,13 +668,13 @@ Function _declareFn(List<String> varNames, List<o.Statement> statements,
               ctx,
               visitor);
     default:
-      throw new BaseException(
-          "Declaring functions with more than 10 arguments is not supported right now");
+      throw new BaseException('Declaring functions with more than 10 arguments '
+          'is not supported right now');
   }
 }
 
-var CATCH_ERROR_VAR = "error";
-var CATCH_STACK_VAR = "stack";
+var CATCH_ERROR_VAR = 'error';
+var CATCH_STACK_VAR = 'stack';
 
 /// Initialize external identifiers that need to be interpreted.
 ///

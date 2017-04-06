@@ -42,7 +42,8 @@ String buildGeneratedCode(
 
   var scope = new _NgScope(model);
 
-  _writeImportExports(buffer, sourceFile, model, templateCode, scope);
+  _writeImportExports(buffer, sourceFile, model, templateCode, scope,
+      outputs.templatesSource?.deferredModules);
 
   buffer.write(templateCode);
 
@@ -59,23 +60,30 @@ String buildGeneratedCode(
   return buffer.toString();
 }
 
-// TODO: https://github.com/dart-lang/code_builder/issues/100.
-int _compareUri(
-  AstBuilder<UriBasedDirective> a,
-  AstBuilder<UriBasedDirective> b,
-) {
-  var uriA = a.buildAst().uriContent ?? '';
-  var uriB = b.buildAst().uriContent ?? '';
-  return uriA.compareTo(uriB);
+/// Prefixes import/export URIs with a number to ensure sorting happens
+/// in the correct order: dart:, package:, others
+String _prefixSchema(String uriStr) {
+  var uri = Uri.parse(uriStr);
+  switch (uri.scheme) {
+    case 'dart':
+      return '0-$uri';
+    case 'package':
+      return '1-$uri';
+    default:
+      return '2-$uri';
+  }
 }
 
+int _compareUri(UriDirectiveBuilder a, UriDirectiveBuilder b) =>
+    _prefixSchema(a.uri).compareTo(_prefixSchema(b.uri));
+
 void _writeImportExports(
-  StringBuffer buffer,
-  String sourceFile,
-  NgDepsModel model,
-  String templateCode,
-  _NgScope scope,
-) {
+    StringBuffer buffer,
+    String sourceFile,
+    NgDepsModel model,
+    String templateCode,
+    _NgScope scope,
+    Map<String, String> deferredModules) {
   // We need to import & export (see below) the source file.
   scope.addPrefixImport(sourceFile, '');
   List<ImportBuilder> imports = [new ImportModel(uri: sourceFile).asBuilder];
@@ -88,10 +96,14 @@ void _writeImportExports(
 
   // TODO(alorenzen): Once templateCompiler uses code_builder, handle this
   // completely in scope.
-  imports.addAll(model.imports
-      .where((import) =>
-          !import.isDeferred && !templateCode.contains(import.asStatement))
-      .map((imp) => imp.asBuilder));
+  for (var import in model.imports) {
+    if (import.isDeferred ||
+        templateCode.contains(import.asStatement) ||
+        (deferredModules != null && deferredModules.containsKey(import.uri))) {
+      continue;
+    }
+    imports.add(import.asBuilder);
+  }
 
   // This is primed with model.depImports, and sets the prefix accordingly.
   imports.addAll(scope.incrementingScope.toImports());
@@ -99,9 +111,11 @@ void _writeImportExports(
   List<ExportBuilder> exports = [new ExportModel(uri: sourceFile).asBuilder];
   exports.addAll(model.exports.map((model) => model.asBuilder));
 
+  imports.sort(_compareUri);
+  exports.sort(_compareUri);
   var library = new LibraryBuilder.scope(scope: scope)
-    ..addDirectives(imports..sort(_compareUri))
-    ..addDirectives(exports..sort(_compareUri));
+    ..addDirectives(imports)
+    ..addDirectives(exports);
   buffer.write(prettyToSource(library.buildAst()));
 }
 

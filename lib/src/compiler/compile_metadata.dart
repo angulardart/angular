@@ -34,13 +34,13 @@ dynamic metadataFromJson(Map<String, dynamic> data) {
 }
 
 class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier {
-  String name;
-  String prefix;
-
   // TODO(het): remove this once we switch to codegen. The transformer version
   // includes prefixes that aren't supposed to be emitted because it can't tell
   // if a prefix is a class name or a qualified import name.
-  bool emitPrefix;
+  final bool emitPrefix;
+  final String prefix;
+
+  String name;
   String moduleUrl;
   dynamic value;
 

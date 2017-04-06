@@ -16,9 +16,9 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'opaque_token.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'opaque_token.dart';
 export 'opaque_token.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
@@ -32,7 +32,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_HasOpaqueTokens = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = const [null];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = [null];
 
 class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   Text _text_0;
@@ -78,11 +78,11 @@ AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
 }
 
 const List<dynamic> styles_HasOpaqueTokensHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = const [
-  const StaticNodeDebugInfo(
-      const [const OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens],
+List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
+  new StaticNodeDebugInfo(
+      [const OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens],
       import2.HasOpaqueTokens,
-      const <String, dynamic>{})
+      <String, dynamic>{})
 ];
 
 class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {

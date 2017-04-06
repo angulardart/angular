@@ -1,6 +1,6 @@
 import "dart:async";
 
-import "package:angular2/core.dart" show Inject, Injectable;
+import "package:angular2/di.dart" show Inject, Injectable;
 import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
 import "package:angular2/src/facade/async.dart" show EventEmitter;

@@ -1,11 +1,11 @@
 name: angular2
-version: 3.0.0-beta
+version: 3.0.0-beta+1
 author: Dart Team <web@dartlang.org>
 description: Framework for modern web applications
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
-  sdk: '>=1.22.0 <2.0.0'
+  sdk: '>=1.23.0-dev.7.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.30.0'
   barback: ^0.15.2+2
@@ -29,7 +29,7 @@ dev_dependencies:
   args: ^0.13.6
   build_runner: ^0.3.0
   build_test: ^0.4.0+1
-  code_builder: '^1.0.0-beta+4'
+  code_builder: '^1.0.0'
   mockito: '>=0.11.0 <3.0.0'
   source_gen: ^0.5.4
   quiver: '>=0.21.4 <0.26.0'

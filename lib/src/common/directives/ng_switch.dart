@@ -1,4 +1,5 @@
 import 'package:angular2/core.dart';
+import 'package:angular2/src/core/di/decorators.dart' show Host;
 import 'package:angular2/src/facade/lang.dart';
 
 const _WHEN_DEFAULT = const Object();

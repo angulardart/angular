@@ -16,10 +16,10 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'injectables.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'dart:html' as html;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'injectables.dart';
 export 'injectables.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
@@ -33,10 +33,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_InjectableComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponent0 = [null, null];
 
 class ViewInjectableComponent0
     extends DebugAppView<import2.InjectableComponent> {
@@ -77,17 +74,16 @@ AppView<import2.InjectableComponent> viewFactory_InjectableComponent0(
 }
 
 const List<dynamic> styles_InjectableComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 =
-    const [
-  const StaticNodeDebugInfo(
-      const [
+List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [
         const OpaqueToken('test'),
         import2.InjectableComponent,
         import2.SomeDep,
         import2.BaseService
       ],
       import2.InjectableComponent,
-      const <String, dynamic>{})
+      <String, dynamic>{})
 ];
 
 class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {

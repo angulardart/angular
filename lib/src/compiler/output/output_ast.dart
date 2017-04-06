@@ -413,7 +413,9 @@ class LiteralExpr extends Expression {
 class ExternalExpr extends Expression {
   final CompileIdentifierMetadata value;
   final List<OutputType> typeParams;
-  ExternalExpr(this.value, [OutputType type, this.typeParams]) : super(type);
+  final bool deferred;
+  ExternalExpr(this.value, {OutputType type, this.typeParams, this.deferred})
+      : super(type);
 
   @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -1304,7 +1306,12 @@ ReadVarExpr variable(String name, [OutputType type = null]) {
 
 ExternalExpr importExpr(CompileIdentifierMetadata id,
     [List<OutputType> typeParams = null]) {
-  return new ExternalExpr(id, null, typeParams);
+  return new ExternalExpr(id, typeParams: typeParams);
+}
+
+ExternalExpr importDeferred(CompileIdentifierMetadata id,
+    [List<OutputType> typeParams = null]) {
+  return new ExternalExpr(id, typeParams: typeParams, deferred: true);
 }
 
 ExternalType importType(CompileIdentifierMetadata id,

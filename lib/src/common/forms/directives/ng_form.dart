@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import "package:angular2/core.dart"
-    show Directive, Provider, Optional, Inject, Self;
+import "package:angular2/core.dart" show Directive, Provider;
+import "package:angular2/di.dart" show Optional, Inject, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show AbstractControl, ControlGroup, Control;
@@ -162,8 +162,8 @@ class NgForm extends ControlContainer implements Form {
   @override
   void updateModel(NgControl dir, dynamic value) {
     scheduleMicrotask(() {
-      var ctrl = (form.find(dir.path) as Control);
-      ctrl.updateValue(value);
+      Control ctrl = form.find(dir.path);
+      ctrl?.updateValue(value);
     });
   }
 

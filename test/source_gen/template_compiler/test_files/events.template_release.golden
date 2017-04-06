@@ -16,10 +16,10 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'events.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'dart:async';
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'events.dart';
 export 'events.dart';
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'events.dart' as import1;

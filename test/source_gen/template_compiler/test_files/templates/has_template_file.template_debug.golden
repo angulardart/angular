@@ -16,9 +16,9 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'has_template_file.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'has_template_file.dart';
 export 'has_template_file.dart';
 import 'has_template_file.css.shim.dart' as import0;
 import 'package:angular2/src/debug/debug_context.dart';
@@ -33,8 +33,11 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_HasTemplateFileComponent = const [import0.styles];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 =
-    const [null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [
+  null,
+  null,
+  null
+];
 
 class ViewHasTemplateFileComponent0
     extends DebugAppView<import3.HasTemplateFileComponent> {
@@ -79,10 +82,9 @@ AppView<import3.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
 }
 
 const List<dynamic> styles_HasTemplateFileComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 =
-    const [
-  const StaticNodeDebugInfo(const [import3.HasTemplateFileComponent],
-      import3.HasTemplateFileComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
+  new StaticNodeDebugInfo([import3.HasTemplateFileComponent],
+      import3.HasTemplateFileComponent, <String, dynamic>{})
 ];
 
 class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {

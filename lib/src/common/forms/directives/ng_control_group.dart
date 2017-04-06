@@ -1,13 +1,5 @@
-import "package:angular2/core.dart"
-    show
-        OnInit,
-        OnDestroy,
-        Directive,
-        Optional,
-        Inject,
-        SkipSelf,
-        Provider,
-        Self;
+import "package:angular2/core.dart" show OnInit, OnDestroy, Directive, Provider;
+import "package:angular2/di.dart" show Optional, Inject, SkipSelf, Self;
 
 import "../model.dart" show ControlGroup;
 import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;

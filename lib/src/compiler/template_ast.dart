@@ -154,6 +154,7 @@ class EmbeddedTemplateAst implements TemplateAst {
   List<ProviderAst> providers;
   List<TemplateAst> children;
   final ElementProviderUsage elementProviderUsage;
+  final bool hasDeferredComponent;
   num ngContentIndex;
   SourceSpan sourceSpan;
 
@@ -167,7 +168,8 @@ class EmbeddedTemplateAst implements TemplateAst {
       this.elementProviderUsage,
       this.children,
       this.ngContentIndex,
-      this.sourceSpan);
+      this.sourceSpan,
+      {this.hasDeferredComponent: false});
 
   bool get hasViewContainer => elementProviderUsage.requiresViewContainer;
 

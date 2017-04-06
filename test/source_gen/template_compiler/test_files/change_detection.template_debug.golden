@@ -16,9 +16,9 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'change_detection.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'change_detection.dart';
 export 'change_detection.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
@@ -32,10 +32,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_CheckOnceComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponent0 = [null, null];
 
 class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   DivElement _el_0;
@@ -75,9 +72,9 @@ AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(
 }
 
 const List<dynamic> styles_CheckOnceComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.CheckOnceComponent],
-      import2.CheckOnceComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
+  new StaticNodeDebugInfo([import2.CheckOnceComponent],
+      import2.CheckOnceComponent, <String, dynamic>{})
 ];
 
 class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
@@ -134,10 +131,7 @@ const ComponentFactory CheckOnceComponentNgFactory = const ComponentFactory(
     import2.CheckOnceComponent,
     _METADATA);
 const List<dynamic> styles_CheckedComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = [null, null];
 
 class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   DivElement _el_0;
@@ -177,9 +171,9 @@ AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(
 }
 
 const List<dynamic> styles_CheckedComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.CheckedComponent],
-      import2.CheckedComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.CheckedComponent], import2.CheckedComponent, <String, dynamic>{})
 ];
 
 class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
@@ -236,10 +230,7 @@ const ComponentFactory CheckedComponentNgFactory = const ComponentFactory(
     import2.CheckedComponent,
     _METADATA);
 const List<dynamic> styles_CheckAlwaysComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
 
 class ViewCheckAlwaysComponent0
     extends DebugAppView<import2.CheckAlwaysComponent> {
@@ -280,10 +271,9 @@ AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
 }
 
 const List<dynamic> styles_CheckAlwaysComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 =
-    const [
-  const StaticNodeDebugInfo(const [import2.CheckAlwaysComponent],
-      import2.CheckAlwaysComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
+  new StaticNodeDebugInfo([import2.CheckAlwaysComponent],
+      import2.CheckAlwaysComponent, <String, dynamic>{})
 ];
 
 class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
@@ -340,10 +330,7 @@ const ComponentFactory CheckAlwaysComponentNgFactory = const ComponentFactory(
     import2.CheckAlwaysComponent,
     _METADATA);
 const List<dynamic> styles_DetachedComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = [null, null];
 
 class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   DivElement _el_0;
@@ -383,9 +370,9 @@ AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(
 }
 
 const List<dynamic> styles_DetachedComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.DetachedComponent],
-      import2.DetachedComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
+  new StaticNodeDebugInfo([import2.DetachedComponent],
+      import2.DetachedComponent, <String, dynamic>{})
 ];
 
 class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
@@ -442,10 +429,7 @@ const ComponentFactory DetachedComponentNgFactory = const ComponentFactory(
     import2.DetachedComponent,
     _METADATA);
 const List<dynamic> styles_OnPushComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
 
 class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   DivElement _el_0;
@@ -485,9 +469,9 @@ AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(
 }
 
 const List<dynamic> styles_OnPushComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.OnPushComponent],
-      import2.OnPushComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.OnPushComponent], import2.OnPushComponent, <String, dynamic>{})
 ];
 
 class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
@@ -544,10 +528,7 @@ const ComponentFactory OnPushComponentNgFactory = const ComponentFactory(
     import2.OnPushComponent,
     _METADATA);
 const List<dynamic> styles_StatefulComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
 
 class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   DivElement _el_0;
@@ -588,9 +569,9 @@ AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(
 }
 
 const List<dynamic> styles_StatefulComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.StatefulComponent],
-      import2.StatefulComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
+  new StaticNodeDebugInfo([import2.StatefulComponent],
+      import2.StatefulComponent, <String, dynamic>{})
 ];
 
 class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
@@ -647,10 +628,7 @@ const ComponentFactory StatefulComponentNgFactory = const ComponentFactory(
     import2.StatefulComponent,
     _METADATA);
 const List<dynamic> styles_DefaultComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
 
 class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   DivElement _el_0;
@@ -690,9 +668,9 @@ AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(
 }
 
 const List<dynamic> styles_DefaultComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.DefaultComponent],
-      import2.DefaultComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.DefaultComponent], import2.DefaultComponent, <String, dynamic>{})
 ];
 
 class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
