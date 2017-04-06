@@ -16,12 +16,12 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'base_component.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
-import 'components.dart';
-import 'directives.dart' as directive;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'base_component.dart';
+import 'components.dart';
 import 'components.template.dart' as _i2;
+import 'directives.dart' as directive;
 import 'directives.template.dart' as _i3;
 export 'base_component.dart';
 import 'package:angular2/src/core/linker/app_view.dart';

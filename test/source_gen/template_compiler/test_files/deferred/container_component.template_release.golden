@@ -16,10 +16,10 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'container_component.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
-import 'deferred_component.dart';
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'container_component.dart';
+import 'deferred_component.dart';
 import 'deferred_component.template.dart' as _i2;
 export 'container_component.dart';
 import 'package:angular2/src/core/linker/app_view.dart';

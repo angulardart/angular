@@ -16,10 +16,10 @@
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
-import 'injectables.dart';
-import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'dart:html' as html;
 import 'package:angular2/angular2.template.dart' as _i1;
+import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'injectables.dart';
 export 'injectables.dart';
 import 'package:angular2/src/debug/debug_context.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';

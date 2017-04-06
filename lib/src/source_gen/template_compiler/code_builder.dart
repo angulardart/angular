@@ -60,15 +60,22 @@ String buildGeneratedCode(
   return buffer.toString();
 }
 
-// TODO: https://github.com/dart-lang/code_builder/issues/100.
-int _compareUri(
-  AstBuilder<UriBasedDirective> a,
-  AstBuilder<UriBasedDirective> b,
-) {
-  var uriA = a.buildAst().uriContent ?? '';
-  var uriB = b.buildAst().uriContent ?? '';
-  return uriA.compareTo(uriB);
+/// Prefixes import/export URIs with a number to ensure sorting happens
+/// in the correct order: dart:, package:, others
+String _prefixSchema(String uriStr) {
+  var uri = Uri.parse(uriStr);
+  switch (uri.scheme) {
+    case 'dart':
+      return '0-$uri';
+    case 'package':
+      return '1-$uri';
+    default:
+      return '2-$uri';
+  }
 }
+
+int _compareUri(UriDirectiveBuilder a, UriDirectiveBuilder b) =>
+    _prefixSchema(a.uri).compareTo(_prefixSchema(b.uri));
 
 void _writeImportExports(
     StringBuffer buffer,
