@@ -59,7 +59,6 @@ const NG_COMMON = const [
   'LowerCasePipe',
   'MaxLengthValidator',
   'MinLengthValidator',
-  'NG_ASYNC_VALIDATORS',
   'NG_VALIDATORS',
   'NG_VALUE_ACCESSOR',
   'NgClass',
@@ -92,7 +91,6 @@ const NG_COMMON = const [
   'Validators',
   'RadioButtonState',
   'composeValidators',
-  'composeAsyncValidators',
 ];
 const NG_COMPILER = const [
   'TemplateAst',
@@ -359,7 +357,6 @@ const angular2Apis = const [
   "MaxLengthValidator",
   "MethodFn",
   "MinLengthValidator",
-  "NG_ASYNC_VALIDATORS",
   "NG_VALIDATORS",
   "NG_VALUE_ACCESSOR",
   "NgClass",
@@ -447,7 +444,6 @@ const angular2Apis = const [
   "WrappedValue",
   "appIdRandomProviderFactory",
   'composeValidators',
-  'composeAsyncValidators',
   "coreBootstrap",
   "coreLoadAndBootstrap",
   "createNgZone",

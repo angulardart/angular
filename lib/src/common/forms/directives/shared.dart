@@ -11,12 +11,11 @@ import 'control_value_accessor.dart' show ControlValueAccessor;
 import 'default_value_accessor.dart' show DefaultValueAccessor;
 import 'ng_control.dart' show NgControl;
 import 'ng_control_group.dart' show NgControlGroup;
-import 'normalize_validator.dart'
-    show normalizeValidator, normalizeAsyncValidator;
+import 'normalize_validator.dart' show normalizeValidator;
 import 'number_value_accessor.dart' show NumberValueAccessor;
 import 'radio_control_value_accessor.dart' show RadioControlValueAccessor;
 import 'select_control_value_accessor.dart' show SelectControlValueAccessor;
-import 'validators.dart' show ValidatorFn, AsyncValidatorFn;
+import 'validators.dart' show ValidatorFn;
 
 List<String> controlPath(String name, ControlContainer parent) =>
     parent.path.toList()..add(name);
@@ -29,8 +28,6 @@ void setUpControl(Control control, NgControl dir) {
       '(${dir.path.join(' -> ')}) or you may be missing FORM_DIRECTIVES in '
       'your directives list.');
   control.validator = Validators.compose([control.validator, dir.validator]);
-  control.asyncValidator =
-      Validators.composeAsync([control.asyncValidator, dir.asyncValidator]);
   dir.valueAccessor.writeValue(control.value);
   // view -> model
   dir.valueAccessor.registerOnChange((dynamic newValue, {String rawValue}) {
@@ -49,8 +46,6 @@ void setUpControl(Control control, NgControl dir) {
 void setUpControlGroup(ControlGroup control, NgControlGroup dir) {
   if (control == null) _throwError(dir, 'Cannot find control');
   control.validator = Validators.compose([control.validator, dir.validator]);
-  control.asyncValidator =
-      Validators.composeAsync([control.asyncValidator, dir.asyncValidator]);
 }
 
 void _throwError(AbstractControlDirective dir, String message) {
@@ -65,17 +60,6 @@ ValidatorFn composeValidators(List<dynamic> validators) {
       ? Validators
           .compose(validators.map<ValidatorFn>(normalizeValidator).toList())
       : null;
-}
-
-AsyncValidatorFn composeAsyncValidators<T extends AbstractControl>(
-  List validatorsOrFunctions,
-) {
-  if (validatorsOrFunctions == null) {
-    return null;
-  }
-  // ignore: strong_mode_down_cast_composite
-  return Validators.composeAsync(
-      validatorsOrFunctions.map(normalizeAsyncValidator).toList());
 }
 
 bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {

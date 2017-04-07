@@ -31,7 +31,7 @@ import "model.dart" as model_module;
 ///       "login": ["", Validators.required],
 ///       "passwordRetry": builder.group({
 ///         "password": ["", Validators.required],
-///         "passwordConfirmation": ["", Validators.required, asyncValidator]
+///         "passwordConfirmation": ["", Validators.required]
 ///       })
 ///     });
 ///   }
@@ -54,25 +54,20 @@ class FormBuilder {
         ((extra != null ? extra['optionals'] : null) as Map<String, bool>);
     ValidatorFn validator =
         extra != null ? extra['validator'] as ValidatorFn : null;
-    AsyncValidatorFn asyncValidator =
-        extra != null ? extra['asyncValidator'] as AsyncValidatorFn : null;
-    return new model_module.ControlGroup(
-        controls, optionals, validator, asyncValidator);
+    return new model_module.ControlGroup(controls, optionals, validator);
   }
 
-  /// Construct a new [Control] with the given [value], [validator], and
-  /// [asyncValidator].
-  model_module.Control control(Object value,
-      [ValidatorFn validator = null, AsyncValidatorFn asyncValidator = null]) {
-    return new model_module.Control(value, validator, asyncValidator);
+  /// Construct a new [Control] with the given [value], and [validator].
+  model_module.Control control(Object value, [ValidatorFn validator = null]) {
+    return new model_module.Control(value, validator);
   }
 
   /// Construct an array of [Control]s from the given [controlsConfig] array of
-  /// configuration, with the given optional [validator] and [asyncValidator].
+  /// configuration, with the given optional [validator].
   model_module.ControlArray array(List<dynamic> controlsConfig,
-      [ValidatorFn validator = null, AsyncValidatorFn asyncValidator = null]) {
+      [ValidatorFn validator = null]) {
     var controls = controlsConfig.map((c) => _createControl(c)).toList();
-    return new model_module.ControlArray(controls, validator, asyncValidator);
+    return new model_module.ControlArray(controls, validator);
   }
 
   Map<String, model_module.AbstractControl> _reduceControls(
@@ -93,10 +88,7 @@ class FormBuilder {
       var value = controlConfig[0];
       ValidatorFn validator =
           controlConfig.length > 1 ? controlConfig[1] as ValidatorFn : null;
-      AsyncValidatorFn asyncValidator = controlConfig.length > 2
-          ? controlConfig[2] as AsyncValidatorFn
-          : null;
-      return control(value, validator, asyncValidator);
+      return control(value, validator);
     } else {
       return control(controlConfig);
     }

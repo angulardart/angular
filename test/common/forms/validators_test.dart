@@ -1,11 +1,6 @@
 @TestOn('browser')
-import "dart:async";
-
 import 'package:angular2/angular2.dart';
-import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
-
-typedef Future AsyncValidatorFunction(AbstractControl ac);
 
 void main() {
   var validator = (String key, dynamic error) {
@@ -101,47 +96,6 @@ void main() {
         var c = Validators.compose([null, Validators.required]);
         expect(c(new Control("")), {"required": true});
       });
-    });
-    group("composeAsync", () {
-      AsyncValidatorFunction asyncValidator(expected, response) {
-        return (c) {
-          var res = c.value != expected ? response : null;
-          return new Future.value(res);
-        };
-      }
-
-      test("should return null when given null", () {
-        expect(Validators.composeAsync(null), null);
-      });
-      test("should collect errors from all the validators", fakeAsync(() {
-        var c = Validators.composeAsync([
-          asyncValidator("expected", {"one": true}),
-          asyncValidator("expected", {"two": true})
-        ]);
-        var value;
-        ((c(new Control("invalid")))).then((v) => value = v);
-        tick(1);
-        expect(value, {"one": true, "two": true});
-      }));
-      test("should return null when no errors", fakeAsync(() {
-        var c = Validators.composeAsync([
-          asyncValidator("expected", {"one": true})
-        ]);
-        var value;
-        c(new Control("expected")).then((v) => value = v);
-        tick(1);
-        expect(value, null);
-      }));
-      test("should ignore nulls", fakeAsync(() {
-        var c = Validators.composeAsync([
-          asyncValidator("expected", {"one": true}),
-          null
-        ]);
-        var value;
-        c(new Control("invalid")).then((v) => value = v);
-        tick(1);
-        expect(value, {"one": true});
-      }));
     });
   });
 }
