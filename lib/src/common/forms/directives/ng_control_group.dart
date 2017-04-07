@@ -2,12 +2,11 @@ import "package:angular2/core.dart" show OnInit, OnDestroy, Directive, Provider;
 import "package:angular2/di.dart" show Optional, Inject, SkipSelf, Self;
 
 import "../model.dart" show ControlGroup;
-import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import "../validators.dart" show NG_VALIDATORS;
 import "control_container.dart" show ControlContainer;
 import "form_interface.dart" show Form;
-import "shared.dart"
-    show controlPath, composeValidators, composeAsyncValidators;
-import "validators.dart" show AsyncValidatorFn, ValidatorFn;
+import "shared.dart" show controlPath, composeValidators;
+import "validators.dart" show ValidatorFn;
 
 const controlGroupProvider =
     const Provider(ControlContainer, useExisting: NgControlGroup);
@@ -63,12 +62,9 @@ const controlGroupProvider =
     exportAs: "ngForm")
 class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
   final List<dynamic> _validators;
-  final List<dynamic> _asyncValidators;
   final ControlContainer _parent;
-  NgControlGroup(
-      @SkipSelf() this._parent,
-      @Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
-      @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators);
+  NgControlGroup(@SkipSelf() this._parent,
+      @Optional() @Self() @Inject(NG_VALIDATORS) this._validators);
 
   @override
   void ngOnInit() {
@@ -93,7 +89,4 @@ class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
   Form get formDirective => _parent.formDirective;
 
   ValidatorFn get validator => composeValidators(_validators);
-
-  AsyncValidatorFn get asyncValidator =>
-      composeAsyncValidators(_asyncValidators);
 }

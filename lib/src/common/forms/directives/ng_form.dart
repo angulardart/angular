@@ -5,17 +5,12 @@ import "package:angular2/di.dart" show Optional, Inject, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show AbstractControl, ControlGroup, Control;
-import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import "../validators.dart" show NG_VALIDATORS;
 import "control_container.dart" show ControlContainer;
 import "form_interface.dart" show Form;
 import "ng_control.dart" show NgControl;
 import "ng_control_group.dart" show NgControlGroup;
-import "shared.dart"
-    show
-        setUpControl,
-        setUpControlGroup,
-        composeValidators,
-        composeAsyncValidators;
+import "shared.dart" show setUpControl, setUpControlGroup, composeValidators;
 
 const formDirectiveProvider =
     const Provider(ControlContainer, useExisting: NgForm);
@@ -85,17 +80,8 @@ class NgForm extends ControlContainer implements Form {
   ControlGroup form;
   var ngSubmit = new EventEmitter<ControlGroup>(false);
   var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);
-  NgForm(
-      @Optional()
-      @Self()
-      @Inject(NG_VALIDATORS)
-          List<dynamic> validators,
-      @Optional()
-      @Self()
-      @Inject(NG_ASYNC_VALIDATORS)
-          List<dynamic> asyncValidators) {
-    form = new ControlGroup({}, null, composeValidators(validators),
-        composeAsyncValidators(asyncValidators));
+  NgForm(@Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators) {
+    form = new ControlGroup({}, null, composeValidators(validators));
   }
   @override
   Form get formDirective => this;

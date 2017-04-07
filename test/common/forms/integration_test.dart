@@ -703,30 +703,6 @@ void main() {
           });
         });
       });
-      test("should use async validators defined in the html", fakeAsync(() {
-        inject([TestComponentBuilder], (TestComponentBuilder tcb) {
-          var form = new ControlGroup({"login": new Control("")});
-          var t = '''<div [ngFormModel]="form">
-                      <input type="text" ngControl="login" uniq-login-validator="expected">
-                   </div>''';
-          var rootTC;
-          tcb
-              .overrideTemplate(MyComp, t)
-              .createAsync(MyComp)
-              .then((root) => rootTC = root);
-          tick();
-          rootTC.debugElement.componentInstance.form = form;
-          rootTC.detectChanges();
-          expect(form.pending, isTrue);
-          tick(100);
-          expect(form.hasError("uniqLogin", ["login"]), isTrue);
-          var input = rootTC.debugElement.query(By.css("input"));
-          input.nativeElement.value = "expected";
-          dispatchEvent(input.nativeElement, "input");
-          tick(100);
-          expect(form.valid, isTrue);
-        });
-      }));
       test("should use sync validators defined in the model", () async {
         return inject([TestComponentBuilder, AsyncTestCompleter],
             (TestComponentBuilder tcb, AsyncTestCompleter completer) {
@@ -747,35 +723,6 @@ void main() {
           });
         });
       });
-      test("should use async validators defined in the model", fakeAsync(() {
-        inject([TestComponentBuilder], (TestComponentBuilder tcb) {
-          var control = new Control(
-              "", Validators.required, uniqLoginAsyncValidator("expected"));
-          var form = new ControlGroup({"login": control});
-          var t = '''<div [ngFormModel]="form">
-                    <input type="text" ngControl="login">
-                   </div>''';
-          var fixture;
-          tcb
-              .overrideTemplate(MyComp, t)
-              .createAsync(MyComp)
-              .then((root) => fixture = root);
-          tick();
-          fixture.debugElement.componentInstance.form = form;
-          fixture.detectChanges();
-          expect(form.hasError("required", ["login"]), isTrue);
-          var input = fixture.debugElement.query(By.css("input"));
-          input.nativeElement.value = "wrong value";
-          dispatchEvent(input.nativeElement, "input");
-          expect(form.pending, isTrue);
-          tick();
-          expect(form.hasError("uniqLogin", ["login"]), isTrue);
-          input.nativeElement.value = "expected";
-          dispatchEvent(input.nativeElement, "input");
-          tick();
-          expect(form.valid, isTrue);
-        });
-      }));
     });
     group("nested forms", () {
       test("should init DOM with the given form object", () async {
@@ -1172,17 +1119,6 @@ class MyInput implements ControlValueAccessor {
   }
 }
 
-typedef Future AsyncValidatorFunction(AbstractControl ac);
-
-AsyncValidatorFunction uniqLoginAsyncValidator(String expectedValue) {
-  return (AbstractControl c) {
-    var completer = new Completer<Map<String, dynamic>>();
-    var res = (c.value == expectedValue) ? null : {"uniqLogin": true};
-    completer.complete(res);
-    return completer.future;
-  };
-}
-
 Map loginIsEmptyGroupValidator(ControlGroup c) {
   return c.controls["login"].value == "" ? {"loginIsEmpty": true} : null;
 }
@@ -1193,28 +1129,13 @@ Map loginIsEmptyGroupValidator(ControlGroup c) {
 ])
 class LoginIsEmptyValidator {}
 
-@Directive(selector: "[uniq-login-validator]", providers: const [
-  const Provider(NG_ASYNC_VALIDATORS,
-      useExisting: UniqLoginValidator, multi: true)
-])
-class UniqLoginValidator implements Validator {
-  @Input("uniq-login-validator")
-  var expected;
-
-  @override
-  validate(AbstractControl c) {
-    return uniqLoginAsyncValidator(this.expected)(c);
-  }
-}
-
 @Component(selector: "my-comp", template: "", directives: const [
   FORM_DIRECTIVES,
   WrappedValue,
   MyInput,
   NgIf,
   NgFor,
-  LoginIsEmptyValidator,
-  UniqLoginValidator
+  LoginIsEmptyValidator
 ])
 class MyComp {
   dynamic form;

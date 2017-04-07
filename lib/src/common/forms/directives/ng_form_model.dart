@@ -5,17 +5,12 @@ import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
 import '../model.dart' show Control, ControlGroup;
-import '../validators.dart' show Validators, NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import '../validators.dart' show Validators, NG_VALIDATORS;
 import 'control_container.dart' show ControlContainer;
 import 'form_interface.dart' show Form;
 import 'ng_control.dart' show NgControl;
 import 'ng_control_group.dart';
-import 'shared.dart'
-    show
-        setUpControl,
-        setUpControlGroup,
-        composeValidators,
-        composeAsyncValidators;
+import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
 
 const formDirectiveProvider =
     const Provider(ControlContainer, useExisting: NgFormModel);
@@ -99,14 +94,12 @@ const formDirectiveProvider =
     exportAs: 'ngForm')
 class NgFormModel extends ControlContainer implements Form, OnChanges {
   List<dynamic> _validators;
-  List<dynamic> _asyncValidators;
   ControlGroup form;
   List<NgControl> directives = [];
   var ngSubmit = new EventEmitter<ControlGroup>(false);
   var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);
 
-  NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) this._validators,
-      @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) this._asyncValidators);
+  NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) this._validators);
 
   @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
@@ -114,9 +107,6 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     if (changes.containsKey('form')) {
       var sync = composeValidators(_validators);
       form.validator = Validators.compose([form.validator, sync]);
-      var async = composeAsyncValidators(_asyncValidators);
-      form.asyncValidator =
-          Validators.composeAsync([form.asyncValidator, async]);
       form.updateValueAndValidity(onlySelf: true, emitEvent: false);
     }
     _updateDomValue();
