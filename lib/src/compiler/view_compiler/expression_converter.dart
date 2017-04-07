@@ -358,10 +358,6 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _Mode mode = context;
     return asts.map((ast) => ast.visit(this, mode)).toList();
   }
-
-  dynamic visitQuote(compiler_ast.Quote ast, dynamic context) {
-    throw new BaseException("Quotes are not supported for evaluation!");
-  }
 }
 
 void flattenStatements(dynamic arg, List<o.Statement> output) {

@@ -265,15 +265,6 @@ void main() {
           expectBindingError(
               "\"Foo\"|\"uppercase\"", throwsWith("identifier or keyword"));
         });
-        test("should parse quoted expressions", () {
-          checkBinding("a:b", "a:b");
-        });
-        test("should not crash when prefix part is not tokenizable", () {
-          checkBinding("\"a:b\"", "\"a:b\"");
-        });
-        test("should ignore whitespace around quote prefix", () {
-          checkBinding(" a :b", "a:b");
-        });
         test("should refuse prefixes that are not single identifiers", () {
           expectBindingError("a + b:c", throwsWith("Unexpected token"));
           expectBindingError(
@@ -308,9 +299,6 @@ void main() {
       test("should retain // in string literals", () {
         checkBinding(
             '''"http://www.google.com"''', '''"http://www.google.com"''');
-      });
-      test("should retain // in : microsyntax", () {
-        checkBinding("one:a//b", "one:a//b");
       });
     });
     group("parseTemplateBindings", () {
