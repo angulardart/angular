@@ -163,7 +163,8 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     if ((this.__const_OpaqueToken__useValueList___0_11 == null)) {
       (__const_OpaqueToken__useValueList___0_11 = const [
         const import2.MyUseValue('Andrew'),
-        const import2.MyUseValue('Matan')
+        const import2.MyUseValue('Matan'),
+        const import2.MyUseValue.named()
       ]);
     }
     return this.__const_OpaqueToken__useValueList___0_11;
