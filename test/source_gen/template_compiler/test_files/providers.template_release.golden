@@ -123,7 +123,8 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     if ((this.__const_OpaqueToken__useValueList___0_11 == null)) {
       (__const_OpaqueToken__useValueList___0_11 = const [
         const import1.MyUseValue('Andrew'),
-        const import1.MyUseValue('Matan')
+        const import1.MyUseValue('Matan'),
+        const import1.MyUseValue.named()
       ]);
     }
     return this.__const_OpaqueToken__useValueList___0_11;

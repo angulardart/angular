@@ -5,6 +5,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/constant/value.dart';
 import 'package:analyzer/src/dart/element/element.dart';
+import 'package:analyzer/src/generated/utilities_dart.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/compiler/output/output_ast.dart' as o;
 import 'package:angular2/src/core/di.dart';
@@ -134,11 +135,11 @@ class CompileTypeMetadataVisitor
           moduleUrl: moduleUrl(element),
           name: element.name,
           diDeps: _getCompileDiDependencyMetadata(
-              unnamedConstructor(element)?.parameters ?? []),
+              unnamedConstructor(element)?.parameters ?? [], element),
           runtime: null // Intentionally `null`, cannot be provided here.
           );
 
-  _getUseValue(DartObject provider) {
+  o.Expression _getUseValue(DartObject provider) {
     var maybeUseValue = provider.getField('useValue');
     if (!dart_objects.isNull(maybeUseValue)) {
       if (maybeUseValue.toStringValue() == noValueProvided) return null;
@@ -148,8 +149,18 @@ class CompileTypeMetadataVisitor
   }
 
   List<CompileDiDependencyMetadata> _getCompileDiDependencyMetadata(
-          List<ParameterElement> parameters) =>
-      parameters.map(_createCompileDiDependencyMetadata).toList();
+      List<ParameterElement> parameters, Element element) {
+    List<CompileDiDependencyMetadata> deps = [];
+    for (final param in parameters) {
+      if (param.parameterKind != ParameterKind.REQUIRED) {
+        _logger.warning('For class ${element.name}, we are skipping '
+            'non-required parameter $param');
+        continue;
+      }
+      deps.add(_createCompileDiDependencyMetadata(param));
+    }
+    return deps;
+  }
 
   CompileDiDependencyMetadata _createCompileDiDependencyMetadata(
     ParameterElement p,
@@ -252,7 +263,8 @@ class CompileTypeMetadataVisitor
       }
       return _tokenForType(token.type, isInstance: invocation != null);
     } else if (token.type.element is FunctionTypedElement) {
-      return _tokenForFunction(token.type.element);
+      return new CompileTokenMetadata(
+          identifier: _identifierForFunction(token.type.element));
     }
     throw new ArgumentError('@Inject is not yet supported for $token.');
   }
@@ -270,8 +282,7 @@ class CompileTypeMetadataVisitor
         identifierIsInstance: isInstance);
   }
 
-  /* o.Expression | CompileTokenMetadata */ _useValueExpression(
-      DartObject token) {
+  o.Expression _useValueExpression(DartObject token) {
     if (token.toStringValue() != null) {
       return new o.LiteralExpr(token.toStringValue(), o.STRING_TYPE);
     } else if (token.toBoolValue() != null) {
@@ -285,33 +296,49 @@ class CompileTypeMetadataVisitor
           token.toListValue().map(_useValueExpression).toList(),
           new o.ArrayType(null, [o.TypeModifier.Const]));
     } else if (token.type is InterfaceType) {
-      final id = new CompileIdentifierMetadata(
-          name: token.type.name, moduleUrl: moduleUrl(token.type.element));
-      final type = o.importExpr(id);
-      var invocation = (token as DartObjectImpl).getInvocation();
-      if (invocation == null) return type;
-
-      return type
-          // TODO(alorenzen): Add support for named arguments.
-          .instantiate(
-              invocation.positionalArguments.map(_useValueExpression).toList(),
-              o.importType(id, null, [o.TypeModifier.Const]));
+      return _expressionForType(token);
+    } else if (token.type.element is FunctionTypedElement) {
+      return o.importExpr(_identifierForFunction(token.type.element));
     } else {
-      return _token(token);
+      throw new ArgumentError(
+          'Could not create useValue expression for $token');
     }
   }
 
-  CompileTokenMetadata _tokenForFunction(FunctionTypedElement function) {
+  o.Expression _expressionForType(DartObject token) {
+    final id = _idFor(token.type);
+    final type = o.importExpr(id);
+
+    final invocation = (token as DartObjectImpl).getInvocation();
+    if (invocation == null) return type;
+
+    // TODO(alorenzen): Add support for named arguments.
+    var params =
+        invocation.positionalArguments.map(_useValueExpression).toList();
+    var importType = o.importType(id, null, [o.TypeModifier.Const]);
+
+    if (invocation.constructor.name.isNotEmpty) {
+      return new o.InstantiateExpr(
+          type.prop(invocation.constructor.name), params, importType);
+    }
+    return type.instantiate(params, importType);
+  }
+
+  CompileIdentifierMetadata _idFor(ParameterizedType type) =>
+      new CompileIdentifierMetadata(
+          name: type.name, moduleUrl: moduleUrl(type.element));
+
+  CompileIdentifierMetadata _identifierForFunction(
+      FunctionTypedElement function) {
     String prefix;
     if (function.enclosingElement is ClassElement) {
       prefix = function.enclosingElement.name;
     }
-    return new CompileTokenMetadata(
-        identifier: new CompileIdentifierMetadata(
-            name: function.name,
-            moduleUrl: moduleUrl(function),
-            prefix: prefix,
-            emitPrefix: true));
+    return new CompileIdentifierMetadata(
+        name: function.name,
+        moduleUrl: moduleUrl(function),
+        prefix: prefix,
+        emitPrefix: true);
   }
 
   CompileFactoryMetadata _factoryForFunction(
@@ -329,7 +356,7 @@ class CompileTypeMetadataVisitor
       emitPrefix: true,
       diDeps: typesOrTokens != null
           ? typesOrTokens.map(_factoryDiDep).toList()
-          : _getCompileDiDependencyMetadata(function.parameters),
+          : _getCompileDiDependencyMetadata(function.parameters, function),
     );
   }
 
