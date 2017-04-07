@@ -7,31 +7,6 @@ class AST {
   String toString() => "AST";
 }
 
-/// Represents a quoted expression of the form:
-///
-/// quote = prefix `:` uninterpretedExpression
-/// prefix = identifier
-/// uninterpretedExpression = arbitrary string
-///
-/// A quoted expression is meant to be pre-processed by an AST transformer that
-/// converts it into another AST that no longer contains quoted expressions.
-/// It is meant to allow third-party developers to extend Angular template
-/// expression language. The `uninterpretedExpression` part of the quote is
-/// therefore not interpreted by the Angular's own expression parser.
-class Quote extends AST {
-  String prefix;
-  String uninterpretedExpression;
-  dynamic location;
-  Quote(this.prefix, this.uninterpretedExpression, this.location);
-
-  @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
-      visitor.visitQuote(this, context);
-
-  @override
-  String toString() => "Quote";
-}
-
 class EmptyExpr extends AST {
   @override
   void visit(AstVisitor visitor, [dynamic context = null]) {}
@@ -270,7 +245,6 @@ abstract class AstVisitor {
   dynamic visitPrefixNot(PrefixNot ast, dynamic context);
   dynamic visitPropertyRead(PropertyRead ast, dynamic context);
   dynamic visitPropertyWrite(PropertyWrite ast, dynamic context);
-  dynamic visitQuote(Quote ast, dynamic context);
   dynamic visitSafeMethodCall(SafeMethodCall ast, dynamic context);
   dynamic visitSafePropertyRead(SafePropertyRead ast, dynamic context);
 }
@@ -398,9 +372,6 @@ class RecursiveAstVisitor implements AstVisitor {
     asts.forEach((ast) => ast.visit(this, context));
     return null;
   }
-
-  @override
-  dynamic visitQuote(Quote ast, dynamic context) => null;
 }
 
 class AstTransformer implements AstVisitor {
@@ -481,10 +452,6 @@ class AstTransformer implements AstVisitor {
   @override
   AST visitChain(Chain ast, dynamic context) =>
       new Chain(this._visitAll(ast.expressions));
-
-  @override
-  AST visitQuote(Quote ast, dynamic context) =>
-      new Quote(ast.prefix, ast.uninterpretedExpression, ast.location);
 
   List<dynamic> _visitAll(List<dynamic> asts) {
     var res = new List(asts.length);

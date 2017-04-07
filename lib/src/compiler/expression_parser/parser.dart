@@ -33,7 +33,6 @@ import "lexer.dart"
     show
         Lexer,
         EOF,
-        isIdentifier,
         isQuote,
         Token,
         $PERIOD,
@@ -101,26 +100,9 @@ class Parser {
   }
 
   AST _parseBindingAst(String input, String location) {
-    // Quotes expressions use 3rd-party expression language. We don't want to use
-
-    // our lexer or parser for that, so we check for that ahead of time.
-    var quote = this._parseQuote(input, location);
-    if (quote != null) {
-      return quote;
-    }
     this._checkNoInterpolation(input, location);
     var tokens = this._lexer.tokenize(this._stripComments(input));
     return new _ParseAST(input, location, tokens, false).parseChain();
-  }
-
-  AST _parseQuote(String input, dynamic location) {
-    if (input == null) return null;
-    var prefixSeparatorIndex = input.indexOf(":");
-    if (prefixSeparatorIndex == -1) return null;
-    var prefix = input.substring(0, prefixSeparatorIndex).trim();
-    if (!isIdentifier(prefix)) return null;
-    var uninterpretedExpression = input.substring(prefixSeparatorIndex + 1);
-    return new Quote(prefix, uninterpretedExpression, location);
   }
 
   TemplateBindingParseResult parseTemplateBindings(
@@ -771,11 +753,6 @@ class SimpleExpressionChecker implements AstVisitor {
 
   @override
   void visitChain(Chain ast, dynamic context) {
-    this.simple = false;
-  }
-
-  @override
-  void visitQuote(Quote ast, dynamic context) {
     this.simple = false;
   }
 
