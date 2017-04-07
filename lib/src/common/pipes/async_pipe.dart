@@ -77,7 +77,6 @@ final _observableStrategy = new ObservableStrategy();
 ///   final Stream<DateTime> time =
 ///       new Stream.periodic(_delay, (_) => new DateTime.now());
 /// }
-///
 /// ```
 ///
 @Pipe("async", pure: false)
