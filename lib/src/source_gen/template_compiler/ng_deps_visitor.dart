@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analyzer/analyzer.dart' hide Directive;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
@@ -39,6 +40,10 @@ Future<NgDepsModel> resolveNgDepsFor(
   final exports = <ExportModel>[];
   final templateDeps = <ImportModel>[];
   final pendingResolution = <Future>[];
+
+  if (reflectableVisitor.hasPositionalParams) {
+    imports.add(new ImportModel(uri: optionalPackage));
+  }
 
   Future resolveAndCheckUri(UriReferencedElement directive) async {
     final uri = directive.uri;
@@ -80,6 +85,8 @@ Future<NgDepsModel> resolveNgDepsFor(
 class ReflectableVisitor extends RecursiveElementVisitor {
   final bool _visitRecursive;
   final Set<String> _visited = new Set<String>();
+
+  bool hasPositionalParams = false;
 
   List<ReflectionInfoModel> _reflectables = [];
 
@@ -133,10 +140,16 @@ class ReflectableVisitor extends RecursiveElementVisitor {
     }
   }
 
-  List<ParameterModel> _parameters(ExecutableElement element) =>
-      element.parameters
-          .map((parameter) => new ParameterModel.fromElement(parameter))
-          .toList();
+  List<ParameterModel> _parameters(ExecutableElement element) {
+    final parameters = <ParameterModel>[];
+    for (ParameterElement parameter in element.parameters) {
+      if (parameter.parameterKind == ParameterKind.POSITIONAL) {
+        hasPositionalParams = true;
+      }
+      parameters.add(new ParameterModel.fromElement(parameter));
+    }
+    return parameters;
+  }
 
   // TODO(alorenzen): Verify that this works for interfaces of superclasses.
   List<ReferenceBuilder> _interfaces(ClassElement element) => element.interfaces
@@ -163,14 +176,15 @@ class ReflectableVisitor extends RecursiveElementVisitor {
   List<AnnotationModel> _annotations(
           List<ElementAnnotation> metadata, Element element) =>
       metadata
-          .where((annotation) => !annotation_matcher.safeMatcherTypes(const [
-                Component,
-                View,
-                Directive,
-                Deprecated,
-                Pipe,
-                Inject,
-              ], log)(annotation))
+          .where(
+              (annotation) => !annotation_matcher.safeMatcherTypes(const <Type>[
+                    Component,
+                    View,
+                    Directive,
+                    Deprecated,
+                    Pipe,
+                    Inject,
+                  ], log)(annotation))
           .map((annotation) =>
               new AnnotationModel.fromElement(annotation, element))
           .toList();

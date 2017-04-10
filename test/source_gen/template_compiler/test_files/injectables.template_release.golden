@@ -18,6 +18,7 @@
 // @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'injectables.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular2/src/core/di/decorators.dart';
 import 'dart:html' as html;
 import 'package:angular2/angular2.template.dart' as _i1;
 export 'injectables.dart';
@@ -29,6 +30,7 @@ import 'package:angular2/src/core/linker/view_type.dart' as import4;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular2/angular2.dart';
+import 'dart:core';
 
 const List<dynamic> styles_InjectableComponent = const [];
 
@@ -102,7 +104,8 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
     _InjectableComponent_0_3 = new import1.InjectableComponent(
         null,
         this.injectorGet(import1.InjectableService, parentIndex, null),
-        _const_OpaqueToken__test___0_2);
+        _const_OpaqueToken__test___0_2,
+        this.injectorGet(String, parentIndex, null));
     _compView_0.create(_InjectableComponent_0_3, projectableNodes);
     init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _InjectableComponent_0_3);
@@ -182,11 +185,13 @@ void initReflector() {
               optional
             ],
             const <dynamic>[InjectableService, const Optional()],
-            const <dynamic>[bool, const Inject(testToken)]
+            const <dynamic>[bool, const Inject(testToken)],
+            const <dynamic>[String, const Optional()]
           ],
           (BaseService service, InjectableService injectableService,
-                  bool isTest) =>
-              new InjectableComponent(service, injectableService, isTest)));
+                  bool isTest, String foo) =>
+              new InjectableComponent(
+                  service, injectableService, isTest, foo)));
   _ngRef.reflector.registerType(
       SomeDep,
       new _ngRef.ReflectionInfo(
