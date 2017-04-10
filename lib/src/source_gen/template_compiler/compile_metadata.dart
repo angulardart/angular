@@ -277,10 +277,12 @@ class CompileTypeMetadataVisitor
 
   CompileTokenMetadata _tokenForType(DartType type, {bool isInstance: false}) {
     return new CompileTokenMetadata(
-        identifier: new CompileIdentifierMetadata(
-            name: type.name, moduleUrl: moduleUrl(type.element)),
-        identifierIsInstance: isInstance);
+        identifier: _idFor(type), identifierIsInstance: isInstance);
   }
+
+  CompileIdentifierMetadata _idFor(ParameterizedType type) =>
+      new CompileIdentifierMetadata(
+          name: type.name, moduleUrl: moduleUrl(type.element));
 
   o.Expression _useValueExpression(DartObject token) {
     if (token.toStringValue() != null) {
@@ -295,6 +297,10 @@ class CompileTypeMetadataVisitor
       return new o.LiteralArrayExpr(
           token.toListValue().map(_useValueExpression).toList(),
           new o.ArrayType(null, [o.TypeModifier.Const]));
+    } else if (token.toTypeValue() != null) {
+      return o.importExpr(_idFor(token.toTypeValue()));
+    } else if (_isEnum(token.type)) {
+      return _expressionForEnum(token);
     } else if (token.type is InterfaceType) {
       return _expressionForType(token);
     } else if (token.type.element is FunctionTypedElement) {
@@ -323,10 +329,6 @@ class CompileTypeMetadataVisitor
     }
     return type.instantiate(params, importType);
   }
-
-  CompileIdentifierMetadata _idFor(ParameterizedType type) =>
-      new CompileIdentifierMetadata(
-          name: type.name, moduleUrl: moduleUrl(type.element));
 
   CompileIdentifierMetadata _identifierForFunction(
       FunctionTypedElement function) {
@@ -409,4 +411,21 @@ class CompileTypeMetadataVisitor
 
   bool _hasAnnotation(Element element, Type type) => element.metadata.any(
       (annotation) => annotation_matcher.matchAnnotation(type, annotation));
+
+  o.Expression _expressionForEnum(DartObject token) {
+    final field =
+        _enumValues(token).singleWhere((field) => field.constantValue == token);
+    return o.importExpr(_idFor(token.type)).prop(field.name);
+  }
+
+  Iterable<FieldElement> _enumValues(DartObject token) {
+    final clazz = token.type.element as ClassElement;
+    // Due to https://github.com/dart-lang/sdk/issues/29306, isEnumConstant is
+    // not enough, so we also need to skip synthetic fields 'index' and 'value'.
+    return clazz.fields
+        .where((field) => field.isEnumConstant && !field.isSynthetic);
+  }
+
+  bool _isEnum(ParameterizedType type) =>
+      type is InterfaceType && type.element.isEnum;
 }
