@@ -136,8 +136,10 @@ PlatformRef browserPlatform() {
 /// ```
 ///
 /// For details concerning these examples see the
-/// [Quickstart](docs/quickstart.html) and
-/// [Tour of Heros Part 6](docs/tutorial/toh-pt6.html) documents, respectively.
+/// [Quickstart](https://webdev.dartlang.org/angular/quickstart) and
+/// [Tour of Heros Part 6][toh] documents, respectively.
+///
+/// [toh]: https://webdev.dartlang.org/angular/tutorial/toh-pt6
 ///
 /// ### API
 ///
@@ -148,7 +150,6 @@ PlatformRef browserPlatform() {
 ///   app injector to override default injection behavior.
 ///
 /// Returns a [Future] of [ComponentRef].
-///
 Future<ComponentRef> bootstrap(Type appComponentType,
     [List<dynamic> customProviders]) {
   reflector.reflectionCapabilities = new ReflectionCapabilities();
