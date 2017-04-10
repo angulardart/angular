@@ -45,7 +45,7 @@ abstract class OnActivate {
 ///
 /// See the [router documentation][router] for details.
 ///
-/// [router]: docs/guide/router/5#onreuse
+/// [router]: https://webdev.dartlang.org/angular/guide/router/5#onreuse
 abstract class OnReuse {
   dynamic /* dynamic | Future< dynamic > */ routerOnReuse(
       ComponentInstruction nextInstruction,
@@ -74,7 +74,7 @@ abstract class OnReuse {
 ///
 /// See the [router documentation][router] for details.
 ///
-/// [router]: docs/guide/router/5#ondeactivate
+/// [router]: https://webdev.dartlang.org/angular/guide/router/5#ondeactivate
 abstract class OnDeactivate {
   dynamic /* dynamic | Future< dynamic > */ routerOnDeactivate(
       ComponentInstruction nextInstruction,
@@ -106,7 +106,7 @@ abstract class OnDeactivate {
 ///
 /// See the [router documentation][router] for details.
 ///
-/// [router]: docs/guide/router/5#canreuse
+/// [router]: https://webdev.dartlang.org/angular/guide/router/5#canreuse
 abstract class CanReuse {
   dynamic /* bool | Future< bool > */ routerCanReuse(
       ComponentInstruction nextInstruction,
@@ -142,7 +142,7 @@ abstract class CanReuse {
 ///
 /// See the [router documentation][router] for details.
 ///
-/// [router]: docs/guide/router/5#candeactivate
+/// [router]: https://webdev.dartlang.org/angular/guide/router/5#candeactivate
 abstract class CanDeactivate {
   dynamic /* bool | Future< bool > */ routerCanDeactivate(
       ComponentInstruction nextInstruction,
