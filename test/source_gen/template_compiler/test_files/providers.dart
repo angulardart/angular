@@ -34,7 +34,8 @@ import 'package:angular2/angular2.dart';
     const MyUseValue('Andrew'),
     const MyUseValue('Matan'),
     const MyUseValue.named(optional: true)
-  ])
+  ]),
+  const Provider(const OpaqueToken('useEnums'), useValue: MyEnum.first),
 ], viewProviders: const [
   const Provider(MyUseValue, useValue: const MyUseValue('Matan'))
 ])
@@ -63,3 +64,5 @@ class MyMulti {}
 
 const useValueString = const OpaqueToken('useValueString');
 const useValueList = const OpaqueToken('useValueList');
+
+enum MyEnum { first, second }

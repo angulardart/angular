@@ -80,7 +80,8 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
         import2.MyUseValue,
         const OpaqueToken('useValueString'),
         import2.MyMulti,
-        const OpaqueToken('useValueList')
+        const OpaqueToken('useValueList'),
+        const OpaqueToken('useEnums')
       ],
       import2.ProvidersComponent,
       <String, dynamic>{})
@@ -96,6 +97,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   String __const_OpaqueToken__useValueString___0_9;
   List<dynamic> __MyMulti_0_10;
   List<dynamic> __const_OpaqueToken__useValueList___0_11;
+  dynamic __const_OpaqueToken__useEnums___0_12;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -170,6 +172,14 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__const_OpaqueToken__useValueList___0_11;
   }
 
+  dynamic get _const_OpaqueToken__useEnums___0_12 {
+    dbg(0, 0, 0);
+    if ((this.__const_OpaqueToken__useEnums___0_12 == null)) {
+      (__const_OpaqueToken__useEnums___0_12 = import2.MyEnum.first);
+    }
+    return this.__const_OpaqueToken__useEnums___0_12;
+  }
+
   ComponentRef build() {
     _compView_0 = viewFactory_ProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
@@ -210,6 +220,9 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, const OpaqueToken('useValueList')) &&
         (0 == nodeIndex))) {
       return _const_OpaqueToken__useValueList___0_11;
+    }
+    if ((identical(token, const OpaqueToken('useEnums')) && (0 == nodeIndex))) {
+      return _const_OpaqueToken__useEnums___0_12;
     }
     return notFoundResult;
   }
