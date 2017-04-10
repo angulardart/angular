@@ -1,9 +1,7 @@
 language: dart
 sudo: false
 dart:
-  - stable
   - dev
-  - 1.22.1
 addons:
   # otherwise a number of tests in test/security/html_sanitizer_test.dart fail
   firefox: "latest"
@@ -27,9 +25,6 @@ matrix:
         dartanalyzer: --fatal-warnings lib
     # Fail on errors on dev and stable
     - dart: dev
-      dart_task:
-        dartanalyzer:
-    - dart: stable
       dart_task:
         dartanalyzer:
   allow_failures:
