@@ -189,18 +189,10 @@ abstract class ApplicationRef {
 
   /// Bootstrap a new component at the root level of the application.
   ///
-  /// ### Bootstrap process
-  ///
-  /// When bootstrapping a new root component into an application, Angular mounts the
-  /// specified application component onto DOM elements identified by the [componentType]'s
-  /// selector and kicks off automatic change detection to finish initializing the component.
-  ///
-  /// ### Example
-  ///
-  /// ```dart
-  /// // {@disabled-source "core/ts/platform/platform.ts" region="longform"}
-  /// ```
-  ///
+  /// When bootstrapping a new root component into an application,
+  /// Angular mounts the specified application component onto DOM elements
+  /// identified by the [ComponentFactory.componentType]'s selector and kicks
+  /// off automatic change detection to finish initializing the component.
   ComponentRef bootstrap(ComponentFactory componentFactory);
 
   /// Retrieve the application [Injector].
