@@ -53,7 +53,6 @@ import "view_compiler_utils.dart"
         getViewFactoryName,
         createFlatArray,
         createDebugInfoTokenExpression,
-        createDiTokenExpression,
         createSetAttributeParams,
         componentFromDirectives;
 
@@ -405,11 +404,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
           [compileElement.getComponent(), codeGenContentNodes]).toStmt());
     }
     return null;
-  }
-
-  String _toTemplateExtension(String moduleUrl) {
-    if (!moduleUrl.endsWith('.dart')) return moduleUrl;
-    return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
   }
 
   o.Statement _createLocalDocumentVar() {
