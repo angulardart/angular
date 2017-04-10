@@ -25,7 +25,7 @@ export "../route_definition.dart" show RouteDefinition;
 /// ])
 /// ```
 ///
-/// [routing]: docs/tutorial/toh-pt5.html#configure-routes
+/// [routing]: https://webdev.dartlang.org/angular/tutorial/toh-pt5.html#configure-routes
 class RouteConfig {
   final List<RouteDefinition> configs;
   const RouteConfig(this.configs);
