@@ -152,9 +152,9 @@ class CompileTypeMetadataVisitor
       List<ParameterElement> parameters, Element element) {
     List<CompileDiDependencyMetadata> deps = [];
     for (final param in parameters) {
-      if (param.parameterKind != ParameterKind.REQUIRED) {
+      if (param.parameterKind == ParameterKind.NAMED) {
         _logger.warning('For class ${element.name}, we are skipping '
-            'non-required parameter $param');
+            'named parameter $param');
         continue;
       }
       deps.add(_createCompileDiDependencyMetadata(param));
@@ -172,7 +172,7 @@ class CompileTypeMetadataVisitor
         isSelf: _hasAnnotation(p, Self),
         isHost: _hasAnnotation(p, Host),
         isSkipSelf: _hasAnnotation(p, SkipSelf),
-        isOptional: _hasAnnotation(p, Optional),
+        isOptional: _hasAnnotation(p, Optional) || _isPositional(p),
       );
     } on ArgumentError catch (_) {
       // Handle cases where something is annotated with @Injectable() but does
@@ -428,4 +428,7 @@ class CompileTypeMetadataVisitor
 
   bool _isEnum(ParameterizedType type) =>
       type is InterfaceType && type.element.isEnum;
+
+  bool _isPositional(ParameterElement param) =>
+      param.parameterKind == ParameterKind.POSITIONAL;
 }

@@ -31,7 +31,8 @@ class InjectableComponent {
   InjectableComponent(
       @Attribute("baseService") @optional this.service,
       @Optional() InjectableService injectableService,
-      @Inject(testToken) this.isTest)
+      @Inject(testToken) this.isTest,
+      [String foo])
       : _injectableService = injectableService;
 
   InjectableService get injectableService => _injectableService;

@@ -1,3 +1,4 @@
+import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:code_builder/dart/core.dart';
@@ -9,7 +10,7 @@ import 'references.dart' as references;
 class ParameterModel {
   final String paramName;
   final ReferenceBuilder _type;
-  final List<ReferenceBuilder> _metadata;
+  final List<ExpressionBuilder> _metadata;
 
   ParameterModel._(
       {this.paramName,
@@ -36,8 +37,7 @@ class ParameterModel {
     return new ParameterModel._(
         paramName: element.name,
         type: references.toBuilder(element.type, element.library.imports),
-        metadata: element.metadata
-            .map((annotation) => _getMetadataInvocation(annotation, element)));
+        metadata: _metadataFor(element));
   }
 
   ExpressionBuilder get asList {
@@ -45,11 +45,24 @@ class ParameterModel {
     return list(params, type: lib$core.$dynamic, asConst: true);
   }
 
-  List<ReferenceBuilder> get _typeAsList => _type != null ? [_type] : [];
+  List<ExpressionBuilder> get _typeAsList => _type != null ? [_type] : [];
 
   ParameterBuilder get asBuilder => parameter(paramName, _typeAsList);
 
-  static ReferenceBuilder _getMetadataInvocation(
+  static List<ExpressionBuilder> _metadataFor(ParameterElement element) {
+    final metadata = <ExpressionBuilder>[];
+    for (ElementAnnotation annotation in element.metadata) {
+      metadata.add(_getMetadataInvocation(annotation, element));
+    }
+    if (element.parameterKind == ParameterKind.POSITIONAL) {
+      metadata.add(reference('Optional', optionalPackage).constInstance([]));
+    }
+    return metadata;
+  }
+
+  static ExpressionBuilder _getMetadataInvocation(
           ElementAnnotation annotation, Element element) =>
       new AnnotationModel.fromElement(annotation, element).asExpression;
 }
+
+const optionalPackage = 'package:angular2/src/core/di/decorators.dart';
