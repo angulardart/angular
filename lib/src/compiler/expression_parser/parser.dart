@@ -27,8 +27,7 @@ import "ast.dart"
         FunctionCall,
         TemplateBinding,
         ASTWithSource,
-        AstVisitor,
-        Quote;
+        AstVisitor;
 import "lexer.dart"
     show
         Lexer,
