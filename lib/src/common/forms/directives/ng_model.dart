@@ -59,7 +59,7 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 ///
 /// Try the [live example][ex].
 ///
-/// [ex]: examples/template-syntax/#ngModel
+/// [ex]: http://angular-examples.github.io/template-syntax/#ngModel
 @Directive(
     selector: "[ngModel]:not([ngControl]):not([ngFormControl])",
     providers: const [formControlBinding],

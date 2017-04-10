@@ -60,7 +60,7 @@ var LIFECYCLE_HOOKS_VALUES = [
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#onchanges
-/// [ex]: examples/lifecycle-hooks#onchanges
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#onchanges
 abstract class OnChanges {
   ngOnChanges(Map<String, SimpleChange> changes);
 }
@@ -95,7 +95,7 @@ abstract class OnChanges {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#oninit
-/// [ex]: examples/lifecycle-hooks#spy
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#spy
 abstract class OnInit {
   ngOnInit();
 }
@@ -163,7 +163,7 @@ abstract class OnInit {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#docheck
-/// [ex]: examples/lifecycle-hooks#docheck
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#docheck
 abstract class DoCheck {
   ngDoCheck();
 }
@@ -196,7 +196,7 @@ abstract class DoCheck {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#ondestroy
-/// [ex]: examples/lifecycle-hooks#spy
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#spy
 abstract class OnDestroy {
   ngOnDestroy();
 }
@@ -248,7 +248,7 @@ abstract class OnDestroy {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#aftercontent
-/// [ex]: examples/lifecycle-hooks#after-content
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-content
 abstract class AfterContentInit {
   ngAfterContentInit();
 }
@@ -300,7 +300,7 @@ abstract class AfterContentInit {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#aftercontent
-/// [ex]: examples/lifecycle-hooks#after-content
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-content
 abstract class AfterContentChecked {
   ngAfterContentChecked();
 }
@@ -350,7 +350,7 @@ abstract class AfterContentChecked {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#afterview
-/// [ex]: examples/lifecycle-hooks#after-view
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-view
 abstract class AfterViewInit {
   ngAfterViewInit();
 }
@@ -400,7 +400,7 @@ abstract class AfterViewInit {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#afterview
-/// [ex]: examples/lifecycle-hooks#after-view
+/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-view
 abstract class AfterViewChecked {
   ngAfterViewChecked();
 }
