@@ -2,6 +2,18 @@
 
 * Require at least Dart SDK `1.23.0-dev.7.0`. Required for a JS-interop fix.
 
+### Breaking changes
+
+* Removed forms async validators. Alternative:
+
+  ```dart
+  control.valueChange((value) {
+    rpc.validate(change).then((errors) {
+      if (errors != null) control.setErrors(errors);
+    });
+  });
+  ```
+
 ## 3.0.0-beta
 
 ### New features
