@@ -26,7 +26,8 @@ import "model.dart" as model_module;
 /// class App {
 ///   ControlGroup loginForm;
 ///
-///   App(FormBuilder builder) {
+///   App() {
+///     final builder = new FormBuilder();
 ///     loginForm = builder.group({
 ///       "login": ["", Validators.required],
 ///       "passwordRetry": builder.group({
