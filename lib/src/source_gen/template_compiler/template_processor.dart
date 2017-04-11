@@ -27,16 +27,7 @@ Future<TemplateCompilerOutputs> processTemplates(
           // a.dart, and a.dart imports b.dart, we can assume that there will be
           // a generated b.template.dart that we need to import/initReflector().
           hasInput: (uri) async {
-            // Resolve is not functioning properly and/or the URI we get
-            // from import/export elements sometimes includes lib/ and other
-            // times does not.
-            //
-            // TODO: Investigate.
             var asset = new AssetId.resolve(uri, from: buildStep.inputId);
-            if (!asset.path.startsWith('lib/') &&
-                !asset.path.startsWith('test/')) {
-              asset = new AssetId(asset.package, 'lib/${asset.path}');
-            }
             return buildStep.hasInput(asset);
           },
           // For a given import or export directive, return whether a generated
@@ -44,9 +35,6 @@ Future<TemplateCompilerOutputs> processTemplates(
           // to it and call initReflector().
           isLibrary: (uri) {
             var asset = new AssetId.resolve(uri, from: buildStep.inputId);
-            if (!asset.path.startsWith('lib/')) {
-              asset = new AssetId(asset.package, 'lib/${asset.path}');
-            }
             return resolver.isLibrary(asset);
           },
         ),
