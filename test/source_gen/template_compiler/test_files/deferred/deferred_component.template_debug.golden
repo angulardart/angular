@@ -54,6 +54,7 @@ class ViewDeferredChildComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.DeferredChildComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -95,6 +96,7 @@ class ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_DeferredChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -114,6 +116,7 @@ class ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

@@ -47,6 +47,7 @@ class ViewInterpolationComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.InterpolationComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -60,7 +61,8 @@ class ViewInterpolationComponent0
   }
 
   void detectChangesInternal() {
-    final currVal_0 = import6.interpolate1('\n  ', ctx.foo, '\n');
+    final import1.InterpolationComponent _ctx = ctx;
+    final currVal_0 = import6.interpolate1('\n  ', _ctx.foo, '\n');
     if (!import8.looseIdentical(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
@@ -87,6 +89,7 @@ class ViewInterpolationComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_InterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationComponent_0_2 = new import1.InterpolationComponent();
@@ -105,6 +108,7 @@ class ViewInterpolationComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -141,6 +145,7 @@ class ViewInterpolationComponentNoWhitespace0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.InterpolationComponentNoWhitespace _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -152,7 +157,8 @@ class ViewInterpolationComponentNoWhitespace0
   }
 
   void detectChangesInternal() {
-    final currVal_0 = import6.interpolate0(ctx.foo);
+    final import1.InterpolationComponentNoWhitespace _ctx = ctx;
+    final currVal_0 = import6.interpolate0(_ctx.foo);
     if (!import8.looseIdentical(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
@@ -184,6 +190,7 @@ class ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_InterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationComponentNoWhitespace_0_2 =
@@ -205,6 +212,7 @@ class ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

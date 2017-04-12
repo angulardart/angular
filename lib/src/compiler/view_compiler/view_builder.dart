@@ -354,7 +354,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         view.component.template.encapsulation == ViewEncapsulation.Emulated) {
       // Set ng_content class for CSS shim.
       String shimMethod =
-          elementType != Identifiers.HTML_ELEMENT ? 'addShimC' : 'addShimE';
+          elementType != Identifiers.HTML_ELEMENT || (component != null)
+              ? 'addShimC'
+              : 'addShimE';
       o.Expression shimClassExpr = new o.InvokeMemberMethodExpr(
           shimMethod, [new o.ReadClassMemberExpr(fieldName)]);
       view.createMethod.addStmt(shimClassExpr.toStmt());
@@ -747,7 +749,7 @@ o.ClassStmt createViewClass(
     CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
   var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
   var viewMethods = (new List.from([
-    new o.ClassMethod("build", [], generateCreateMethod(view, parser),
+    new o.ClassMethod("build", [], generateBuildMethod(view, parser),
         o.importType(Identifiers.ComponentRef, null)),
     new o.ClassMethod(
         "injectorGetInternal",
@@ -940,7 +942,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
       .toDeclStmt(view.viewFactory.name, [o.StmtModifier.Final]);
 }
 
-List<o.Statement> generateCreateMethod(CompileView view, Parser parser) {
+List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   o.Expression parentRenderNodeExpr = o.NULL_EXPR;
   var parentRenderNodeStmts = <o.Statement>[];
   bool isComponent = view.viewType == ViewType.COMPONENT;
@@ -962,6 +964,15 @@ List<o.Statement> generateCreateMethod(CompileView view, Parser parser) {
   }
 
   var statements = <o.Statement>[];
+  // Cache ctx class field member as typed _ctx local for change detection
+  // code to consume.
+  var contextType =
+      view.viewType != ViewType.HOST ? o.importType(view.component.type) : null;
+  statements.add(o
+      .variable('_ctx')
+      .set(new o.ReadClassMemberExpr('ctx'))
+      .toDeclStmt(contextType, [o.StmtModifier.Final]));
+
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
 
@@ -1007,7 +1018,8 @@ List<o.Statement> generateCreateMethod(CompileView view, Parser parser) {
   if (isComponentRoot &&
       view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
     // Connect ComponentState callback to view.
-    statements.add((new o.ReadClassMemberExpr('ctx')
+    statements.add((o
+            .variable('_ctx')
             .prop('stateChangeCallback')
             .set(new o.ReadClassMemberExpr('markStateChanged')))
         .toStmt());
@@ -1099,6 +1111,15 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
       view.viewContainers.isEmpty) {
     return stmts;
   }
+
+  // Cache ctx class field member as typed _ctx local for change detection
+  // code to consume.
+  var contextType =
+      view.viewType != ViewType.HOST ? o.importType(view.component.type) : null;
+  stmts.add(o
+      .variable('_ctx')
+      .set(new o.ReadClassMemberExpr('ctx'))
+      .toDeclStmt(contextType, [o.StmtModifier.Final]));
 
   // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());

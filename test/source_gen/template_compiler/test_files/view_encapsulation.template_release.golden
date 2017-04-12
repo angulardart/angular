@@ -43,6 +43,7 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -73,6 +74,7 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_EmulatedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmulatedComponent_0_2 = new import1.EmulatedComponent();
@@ -90,6 +92,7 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -122,6 +125,7 @@ class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -152,6 +156,7 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_NativeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _NativeComponent_0_2 = new import1.NativeComponent();
@@ -169,6 +174,7 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -201,6 +207,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -231,6 +238,7 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_NoneComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _NoneComponent_0_2 = new import1.NoneComponent();
@@ -248,6 +256,7 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

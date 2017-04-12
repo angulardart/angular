@@ -46,6 +46,7 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.InjectableComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -97,6 +98,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
   }
 
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_InjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _const_OpaqueToken__test___0_2 =
@@ -129,6 +131,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

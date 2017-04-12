@@ -60,6 +60,7 @@ class ViewInterpolationComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.InterpolationComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -76,8 +77,9 @@ class ViewInterpolationComponent0
   }
 
   void detectChangesInternal() {
+    final import2.InterpolationComponent _ctx = ctx;
     dbg(1, 0, 5);
-    final currVal_0 = import8.interpolate1('\n  ', ctx.foo, '\n');
+    final currVal_0 = import8.interpolate1('\n  ', _ctx.foo, '\n');
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
@@ -113,6 +115,7 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_InterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -132,6 +135,7 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -179,6 +183,7 @@ class ViewInterpolationComponentNoWhitespace0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.InterpolationComponentNoWhitespace _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -192,8 +197,9 @@ class ViewInterpolationComponentNoWhitespace0
   }
 
   void detectChangesInternal() {
+    final import2.InterpolationComponentNoWhitespace _ctx = ctx;
     dbg(1, 0, 5);
-    final currVal_0 = import8.interpolate0(ctx.foo);
+    final currVal_0 = import8.interpolate0(_ctx.foo);
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
@@ -236,6 +242,7 @@ class ViewInterpolationComponentNoWhitespaceHost0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_InterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -258,6 +265,7 @@ class ViewInterpolationComponentNoWhitespaceHost0
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

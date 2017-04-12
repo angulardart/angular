@@ -13,7 +13,7 @@ import "../template_ast.dart"
     show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst;
 import "compile_method.dart" show CompileMethod;
 import "compile_query.dart"
-    show CompileQuery, createQueryList, addQueryToTokenMap;
+    show CompileQuery, createQueryListField, addQueryToTokenMap;
 import "compile_view.dart" show CompileView;
 import "constants.dart" show InjectMethodVars;
 import "view_compiler_utils.dart"
@@ -470,7 +470,7 @@ class CompileElement extends CompileNode {
     var propName =
         '_query_${queryMeta.selectors[0].name}_${nodeIndex}_${_queryCount++}';
     var queryList =
-        createQueryList(queryMeta, directiveInstance, propName, view);
+        createQueryListField(queryMeta, directiveInstance, propName, view);
     var query = new CompileQuery(queryMeta, queryList, directiveInstance, view);
     addQueryToTokenMap(this._queries, query);
     return query;

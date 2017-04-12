@@ -68,6 +68,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
@@ -115,6 +116,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   }
 
   void detectChangesInternal() {
+    final import1.TestFooComponent _ctx = ctx;
     _compView_6.detectChanges();
   }
 
@@ -151,6 +153,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -169,6 +172,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -209,6 +213,7 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.TestSubComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -250,6 +255,7 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_TestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -268,6 +274,7 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

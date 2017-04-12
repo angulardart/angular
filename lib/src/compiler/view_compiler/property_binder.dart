@@ -143,7 +143,7 @@ void bindRenderText(
       currValExpr,
       valueField,
       boundText.value,
-      new o.ReadClassMemberExpr('ctx'),
+      o.variable('_ctx'),
       [compileNode.renderNode.prop('text').set(currValExpr).toStmt()],
       dynamicRenderMethod,
       constantRenderMethod);
@@ -343,8 +343,7 @@ o.Expression sanitizedValue(
 
 void bindRenderInputs(
     List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {
-  bindAndWriteToRenderer(
-      boundProps, new o.ReadClassMemberExpr('ctx'), compileElement);
+  bindAndWriteToRenderer(boundProps, o.variable('_ctx'), compileElement);
 }
 
 void bindDirectiveHostProps(DirectiveAst directiveAst,
@@ -397,7 +396,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         input.directiveName == 'ngIf') {
       var checkExpression = convertCdExpressionToIr(
           view,
-          new o.ReadClassMemberExpr('ctx'),
+          o.variable('_ctx'),
           input.value,
           DetectChangesVars.valUnwrapper,
           view.component.template.preserveWhitespace);
@@ -464,18 +463,11 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         : null;
     if (isStatefulComp) {
       bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
-          new o.ReadClassMemberExpr('ctx'), statements, dynamicInputsMethod,
+          o.variable('_ctx'), statements, dynamicInputsMethod,
           fieldType: inputType);
     } else {
-      bind(
-          view,
-          currValExpr,
-          fieldExpr,
-          input.value,
-          new o.ReadClassMemberExpr('ctx'),
-          statements,
-          dynamicInputsMethod,
-          constantInputsMethod,
+      bind(view, currValExpr, fieldExpr, input.value, o.variable('_ctx'),
+          statements, dynamicInputsMethod, constantInputsMethod,
           fieldType: inputType);
     }
   }

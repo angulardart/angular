@@ -138,7 +138,7 @@ o.Expression mapNestedViews(o.Expression declarationViewContainer,
   ]);
 }
 
-o.Expression createQueryList(
+o.Expression createQueryListField(
     CompileQueryMetadata query,
     o.Expression directiveInstance,
     String propertyName,

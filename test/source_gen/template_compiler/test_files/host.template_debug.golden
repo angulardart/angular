@@ -53,6 +53,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.HostComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     rootEl.addEventListener('keydown', eventHandler0(ctx.onKeyDown));
@@ -91,6 +92,7 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_HostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -109,6 +111,7 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     dbg(0, 0, 0);
     final currVal_0 = _HostComponent_0_2.title;
     if (import8.checkBinding(_expr_0, currVal_0)) {

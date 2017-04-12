@@ -53,6 +53,7 @@ class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -94,6 +95,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -112,6 +114,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

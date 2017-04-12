@@ -43,6 +43,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.CheckOnceComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -73,6 +74,7 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_CheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckOnceComponent_0_2 = new import1.CheckOnceComponent();
@@ -90,6 +92,7 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -122,6 +125,7 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.CheckedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -152,6 +156,7 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_CheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckedComponent_0_2 = new import1.CheckedComponent();
@@ -169,6 +174,7 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -201,6 +207,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.CheckAlwaysComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -231,6 +238,7 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_CheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckAlwaysComponent_0_2 = new import1.CheckAlwaysComponent();
@@ -248,6 +256,7 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -280,6 +289,7 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.DetachedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -310,6 +320,7 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_DetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _DetachedComponent_0_2 = new import1.DetachedComponent();
@@ -327,6 +338,7 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -359,6 +371,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.OnPushComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -389,6 +402,7 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_OnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _OnPushComponent_0_2 = new import1.OnPushComponent();
@@ -406,6 +420,7 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -438,6 +453,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.StatefulComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -445,7 +461,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     Text _text_1 = new Text('Stateful');
     _el_0.append(_text_1);
     init(const [], const []);
-    ctx.stateChangeCallback = markStateChanged;
+    _ctx.stateChangeCallback = markStateChanged;
     return null;
   }
 }
@@ -469,6 +485,7 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_StatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _StatefulComponent_0_2 = new import1.StatefulComponent();
@@ -486,6 +503,7 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -518,6 +536,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.DefaultComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -548,6 +567,7 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_DefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _DefaultComponent_0_2 = new import1.DefaultComponent();
@@ -565,6 +585,7 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

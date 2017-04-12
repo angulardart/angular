@@ -45,6 +45,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.HasOpaqueTokens _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
@@ -53,7 +54,8 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   }
 
   void detectChangesInternal() {
-    final currVal_0 = import6.interpolate0(ctx.baseUrl);
+    final import1.HasOpaqueTokens _ctx = ctx;
+    final currVal_0 = import6.interpolate0(_ctx.baseUrl);
     if (!import8.looseIdentical(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
@@ -81,6 +83,7 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_HasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
@@ -104,6 +107,7 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

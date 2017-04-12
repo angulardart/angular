@@ -62,6 +62,7 @@ class ViewTestContainerComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import3.TestContainerComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
@@ -106,6 +107,7 @@ class ViewTestContainerComponent1
     componentType = ViewTestContainerComponent0.renderType;
   }
   ComponentRef build() {
+    final import3.TestContainerComponent _ctx = ctx;
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     dbgElm(_el_0, 0, 0, 0);
@@ -127,6 +129,7 @@ class ViewTestContainerComponent1
   }
 
   void detectChangesInternal() {
+    final import3.TestContainerComponent _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -163,6 +166,7 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_TestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -182,6 +186,7 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
