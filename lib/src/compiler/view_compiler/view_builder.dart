@@ -1051,10 +1051,10 @@ void _writeComponentHostEventListeners(
     var handlerAst = parser.parseAction(handlerSource, '');
     HandlerType handlerType = handlerTypeFromExpression(handlerAst);
 
-    var context = new o.ReadClassMemberExpr('ctx');
-    var actionExpr = convertStmtIntoExpression(
-        convertCdStatementToIr(view, context, handlerAst, false).last);
     if (handlerType == HandlerType.notSimple) {
+      var context = new o.ReadClassMemberExpr('ctx');
+      var actionExpr = convertStmtIntoExpression(
+          convertCdStatementToIr(view, context, handlerAst, false).last);
       List<o.Statement> stmts = <o.Statement>[
         new o.InvokeMemberMethodExpr('markPathToRootAsCheckOnce', []).toStmt(),
         new o.ReturnStatement(actionExpr)
@@ -1076,6 +1076,9 @@ void _writeComponentHostEventListeners(
       ]);
       statements.add(listenExpr.toStmt());
     } else {
+      var context = o.variable('_ctx');
+      var actionExpr = convertStmtIntoExpression(
+          convertCdStatementToIr(view, context, handlerAst, false).last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;
       var eventListener = new o.InvokeMemberMethodExpr(
