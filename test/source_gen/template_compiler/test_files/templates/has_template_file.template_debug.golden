@@ -59,6 +59,7 @@ class ViewHasTemplateFileComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import3.HasTemplateFileComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -105,6 +106,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_HasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -124,6 +126,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

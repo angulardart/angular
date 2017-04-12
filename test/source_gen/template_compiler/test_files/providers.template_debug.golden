@@ -53,6 +53,7 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.ProvidersComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('Hello');
     parentRenderNode.append(_text_0);
@@ -181,6 +182,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   }
 
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_ProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -228,6 +230,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

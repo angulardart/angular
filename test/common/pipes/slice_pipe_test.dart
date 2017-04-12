@@ -1,9 +1,10 @@
-@TestOn('browser && !js')
+@Tags(const ['codegen'])
+@TestOn('browser')
 library angular2.test.common.pipes.slice_pipe_test;
 
-import 'package:angular2/angular2.dart' show SlicePipe;
-import 'package:angular2/core.dart' show Component;
-import 'package:angular2/src/testing/internal.dart';
+import 'package:angular2/angular2.dart';
+import "package:angular2/src/testing/internal.dart";
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -76,19 +77,18 @@ void main() {
     });
     group('integration', () {
       test('should work with mutable arrays', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          tcb.createAsync(TestComp).then((fixture) {
-            List<num> mutable = [1, 2];
-            fixture.debugElement.componentInstance.data = mutable;
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement, hasTextContent('2'));
-            mutable.add(3);
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement, hasTextContent('2,3'));
-            completer.done();
-          });
+        var testBed = new NgTestBed<TestComp>();
+        var testFixture = await testBed.create();
+        var el = testFixture.rootElement;
+        List<num> mutable = [1, 2];
+        await testFixture.update((TestComp comp) {
+          comp.data = mutable;
         });
+        expect(el, hasTextContent('2'));
+        await testFixture.update((TestComp comp) {
+          mutable.add(3);
+        });
+        expect(el, hasTextContent('2,3'));
       });
     });
   });
@@ -99,5 +99,5 @@ void main() {
     template: '{{(data | slice:1).join(\',\') }}',
     pipes: const [SlicePipe])
 class TestComp {
-  dynamic data;
+  dynamic data = [];
 }

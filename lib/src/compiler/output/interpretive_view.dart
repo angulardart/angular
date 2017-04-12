@@ -57,6 +57,8 @@ class _InterpretiveAppView<T> extends DebugAppView<T>
           args[5] as List<StaticNodeDebugInfo>,
         );
 
+  T get _ctx => ctx;
+
   @override
   ComponentRef build() {
     var m = methods['build'];

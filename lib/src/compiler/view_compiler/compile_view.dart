@@ -15,7 +15,7 @@ import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart'
-    show CompileQuery, createQueryList, addQueryToTokenMap;
+    show CompileQuery, createQueryListField, addQueryToTokenMap;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show NameResolver;
 import 'view_compiler_utils.dart'
@@ -123,7 +123,7 @@ class CompileView implements NameResolver {
         var propName =
             '_viewQuery_${queryMeta.selectors[0].name}_${queryIndex}';
         var queryList =
-            createQueryList(queryMeta, directiveInstance, propName, this);
+            createQueryListField(queryMeta, directiveInstance, propName, this);
         var query =
             new CompileQuery(queryMeta, queryList, directiveInstance, this);
         addQueryToTokenMap(viewQueries, query);

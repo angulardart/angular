@@ -57,6 +57,7 @@ class ViewInjectableComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.InjectableComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -128,6 +129,7 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   }
 
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_InjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -161,6 +163,7 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

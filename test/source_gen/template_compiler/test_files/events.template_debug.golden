@@ -54,6 +54,7 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.UsesNativeEvents _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
@@ -100,6 +101,7 @@ class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_UsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -118,6 +120,7 @@ class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -165,6 +168,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.UsesAngularEvents _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
@@ -194,6 +198,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
   }
 
   void detectChangesInternal() {
+    final import2.UsesAngularEvents _ctx = ctx;
     _compView_1.detectChanges();
   }
 
@@ -230,6 +235,7 @@ class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_UsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -248,6 +254,7 @@ class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -287,6 +294,7 @@ class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.HasAngularEvents _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     return null;
@@ -321,6 +329,7 @@ class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_HasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -339,6 +348,7 @@ class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

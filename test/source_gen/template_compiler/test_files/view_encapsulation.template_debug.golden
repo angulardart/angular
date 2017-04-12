@@ -53,6 +53,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -94,6 +95,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_EmulatedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -112,6 +114,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -152,6 +155,7 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -193,6 +197,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_NativeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -211,6 +216,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -251,6 +257,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -292,6 +299,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_NoneComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -310,6 +318,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

@@ -413,11 +413,10 @@ abstract class AppView<T> {
   }
 
   /// Initializes styling to enable css shim for host element.
-  HtmlElement initViewRoot(dynamic hostElement) {
+  HtmlElement initViewRoot(HtmlElement hostElement) {
     assert(componentType.encapsulation != ViewEncapsulation.Native);
     if (componentType.hostAttr != null) {
-      Element host = hostElement;
-      host.classes.add(componentType.hostAttr);
+      hostElement.classes.add(componentType.hostAttr);
     }
     return hostElement;
   }

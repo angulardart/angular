@@ -53,6 +53,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.CheckOnceComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -94,6 +95,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_CheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -112,6 +114,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -152,6 +155,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.CheckedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -193,6 +197,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_CheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -211,6 +216,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -252,6 +258,7 @@ class ViewCheckAlwaysComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.CheckAlwaysComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -293,6 +300,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_CheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -311,6 +319,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -351,6 +360,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.DetachedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -392,6 +402,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_DetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -410,6 +421,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -450,6 +462,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.OnPushComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -491,6 +504,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_OnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -509,6 +523,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -549,6 +564,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.StatefulComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -558,7 +574,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     _el_0.append(_text_1);
     dbgElm(_text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
-    ctx.stateChangeCallback = markStateChanged;
+    _ctx.stateChangeCallback = markStateChanged;
     return null;
   }
 }
@@ -591,6 +607,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_StatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -609,6 +626,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -649,6 +667,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.DefaultComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -690,6 +709,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_DefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -708,6 +728,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

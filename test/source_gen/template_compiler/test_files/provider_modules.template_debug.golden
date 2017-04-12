@@ -54,6 +54,7 @@ class ViewProviderModulesComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.ProviderModulesComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     return null;
@@ -133,6 +134,7 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   }
 
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_ProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -164,6 +166,7 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
