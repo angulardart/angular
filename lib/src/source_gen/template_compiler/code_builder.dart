@@ -60,16 +60,6 @@ String buildGeneratedCode(
   return buffer.toString();
 }
 
-// TODO: https://github.com/dart-lang/code_builder/issues/100.
-int _compareUri(
-  AstBuilder<UriBasedDirective> a,
-  AstBuilder<UriBasedDirective> b,
-) {
-  var uriA = a.buildAst().uriContent ?? '';
-  var uriB = b.buildAst().uriContent ?? '';
-  return uriA.compareTo(uriB);
-}
-
 void _writeImportExports(
     StringBuffer buffer,
     String sourceFile,
@@ -104,8 +94,6 @@ void _writeImportExports(
   List<ExportBuilder> exports = [new ExportModel(uri: sourceFile).asBuilder];
   exports.addAll(model.exports.map((model) => model.asBuilder));
 
-  imports.sort(_compareUri);
-  exports.sort(_compareUri);
   var library = new LibraryBuilder.scope(scope: scope)
     ..addDirectives(imports)
     ..addDirectives(exports);
