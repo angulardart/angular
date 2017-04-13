@@ -33,7 +33,7 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/linker/template_ref.dart';
 
 const List<dynamic> styles_TestFooComponent = const [
-  'div._ngcontent-%COMP% { font-size: 10px; }'
+  'div._ngcontent-%COMP% { font-size:10px; }'
 ];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {

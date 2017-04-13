@@ -35,7 +35,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import11;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_TestFooComponent = const [
-  'div._ngcontent-%COMP% { font-size: 10px; }'
+  'div._ngcontent-%COMP% { font-size:10px; }'
 ];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
   new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{})
