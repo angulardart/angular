@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import "package:angular2/src/facade/async.dart" show EventEmitter;
+import 'package:meta/meta.dart';
 
 import "directives/validators.dart" show ValidatorFn;
 
@@ -101,7 +102,7 @@ abstract class AbstractControl {
   void updateValueAndValidity({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
     emitEvent = emitEvent ?? true;
-    _updateValue();
+    onUpdate();
     _errors = _runValidator();
     _status = _calculateStatus();
     if (emitEvent) {
@@ -196,7 +197,12 @@ abstract class AbstractControl {
     return VALID;
   }
 
-  void _updateValue();
+  /// Callback when control is asked to update it's value.
+  ///
+  /// Allows controls to calculate their value. For example control groups
+  /// to calculate it's value based on their children.
+  @protected
+  void onUpdate();
   bool _anyControlsHaveStatus(String status);
 }
 
@@ -255,7 +261,7 @@ class Control extends AbstractControl {
   String get rawValue => _rawValue;
 
   @override
-  void _updateValue() {}
+  void onUpdate() {}
 
   @override
   bool _anyControlsHaveStatus(String status) => false;
@@ -327,7 +333,7 @@ class ControlGroup extends AbstractControl {
   }
 
   @override
-  void _updateValue() {
+  void onUpdate() {
     _value = _reduceValue();
   }
 
@@ -418,7 +424,7 @@ class ControlArray extends AbstractControl {
   num get length => controls.length;
 
   @override
-  void _updateValue() {
+  void onUpdate() {
     _value = controls.map((control) => control.value).toList();
   }
 
