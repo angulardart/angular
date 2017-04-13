@@ -766,7 +766,8 @@ o.ClassStmt createViewClass(
     new o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish()),
     new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view))
-  ])..addAll(view.eventHandlerMethods));
+  ])
+    ..addAll(view.eventHandlerMethods));
   var superClass = view.genConfig.genDebugInfo
       ? Identifiers.DebugAppView
       : Identifiers.AppView;

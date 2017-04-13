@@ -357,8 +357,8 @@ ProviderAst _transformProviderAst(ProviderAst provider,
 // Flattens list of lists of providers and converts entries that contain Type to
 // CompileProviderMetadata with useClass.
 List<CompileProviderMetadata> _normalizeProviders(
-    List<
-        dynamic /* CompileProviderMetadata | CompileTypeMetadata | List < dynamic > */ > providers,
+    List<dynamic /* CompileProviderMetadata | CompileTypeMetadata | List < dynamic > */ >
+        providers,
     SourceSpan sourceSpan,
     List<ParseError> targetErrors,
     [List<CompileProviderMetadata> targetProviders = null]) {

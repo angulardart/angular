@@ -27,8 +27,9 @@ matrix:
     - dart: dev
       dart_task:
         dartanalyzer:
-  allow_failures:
-    - dart_task: dartfmt
+    # There are formatting changes specific to 1.23.x
+    - dart: dev
+      dartfmt
 cache:
   directories:
     - $HOME/.pub-cache

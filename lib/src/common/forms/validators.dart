@@ -29,8 +29,8 @@ class Validators {
 
   ///  Validator that requires controls to have a value of a minimum length.
   static ValidatorFn minLength(num minLength) {
-    return /* Map < String , dynamic > */ (model_module
-        .AbstractControl control) {
+    return /* Map < String , dynamic > */ (model_module.AbstractControl
+        control) {
       if (Validators.required(control) != null) return null;
       String v = control.value;
       return v.length < minLength
@@ -46,8 +46,8 @@ class Validators {
 
   ///  Validator that requires controls to have a value of a maximum length.
   static ValidatorFn maxLength(num maxLength) {
-    return /* Map < String , dynamic > */ (model_module
-        .AbstractControl control) {
+    return /* Map < String , dynamic > */ (model_module.AbstractControl
+        control) {
       if (Validators.required(control) != null) return null;
       String v = control.value;
       return v.length > maxLength
@@ -63,8 +63,8 @@ class Validators {
 
   ///  Validator that requires a control to match a regex to its value.
   static ValidatorFn pattern(String pattern) {
-    return /* Map < String , dynamic > */ (model_module
-        .AbstractControl control) {
+    return /* Map < String , dynamic > */ (model_module.AbstractControl
+        control) {
       if (Validators.required(control) != null) return null;
       var regex = new RegExp('^${pattern}\$');
       String v = control.value;
