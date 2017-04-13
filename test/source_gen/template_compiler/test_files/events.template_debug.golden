@@ -68,7 +68,7 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
     dbgElm(_text_2, 2, 0, 41);
     _el_1.addEventListener('click', this.eventHandler0(ctx.onClick));
     init(const [], const [], [_text_0, _el_1, _text_2]);
-    rootEl.addEventListener('focus', eventHandler0(ctx.onFocus));
+    rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
   }
 }

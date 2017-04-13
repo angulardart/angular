@@ -47,8 +47,8 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     final import1.HostComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const []);
-    rootEl.addEventListener('keydown', eventHandler0(ctx.onKeyDown));
-    rootEl.addEventListener('click', eventHandler1(ctx.onClick));
+    rootEl.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
+    rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
     return null;
   }
 }
