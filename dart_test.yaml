@@ -1,6 +1,10 @@
 presets:
-  safe_firefox:
-    platforms: [firefox]
-    exclude_tags: known_ff_failure
+  travis:
+    exclude_tags: codegen || failing_i302 || known_ff_failure
 tags:
+  # See https://github.com/dart-lang/angular2/issues/272
+  codegen:
+  # See https://github.com/dart-lang/angular2/issues/302
+  failing_i302:
+  # TODO(kevmoo): Need note here
   known_ff_failure:
