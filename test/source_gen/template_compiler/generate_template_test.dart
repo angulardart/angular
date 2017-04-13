@@ -1,4 +1,5 @@
 @TestOn('vm')
+@Tags(const ['failing_i302'])
 import 'dart:async';
 
 import 'package:test/test.dart';
