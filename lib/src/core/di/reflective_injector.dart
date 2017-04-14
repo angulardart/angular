@@ -750,7 +750,7 @@ class ReflectiveInjectorImpl implements ReflectiveInjector {
     } catch (e, e_stack) {
       throw new InstantiationError(this, e, e_stack, provider.key);
     }
-    return resolvedFactory.postProcess(obj);
+    return obj;
   }
 
   dynamic _getByReflectiveDependency(

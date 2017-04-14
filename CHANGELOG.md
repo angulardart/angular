@@ -4,6 +4,11 @@
 
 ### Breaking changes
 
+* Injecting null no longer supported.
+* Remove unused `useProperty` argument in DI `Provider` api.
+* `ReflectionCapabilities.isReflectionEnabled` renamed to `reflectionEnabled`.
+* Malformed CSS warnings are errors now.
+
 * Removed forms async validators. Alternative:
 
   ```dart

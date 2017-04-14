@@ -153,7 +153,6 @@ class CompileProviderMetadata {
   dynamic useValue;
   CompileTokenMetadata useExisting;
   CompileFactoryMetadata useFactory;
-  String useProperty;
   List<CompileDiDependencyMetadata> deps;
   bool multi;
   CompileProviderMetadata(
@@ -162,7 +161,6 @@ class CompileProviderMetadata {
       this.useValue,
       this.useExisting,
       this.useFactory,
-      this.useProperty,
       this.deps,
       bool multi})
       : this.multi = multi == true;
@@ -177,7 +175,6 @@ class CompileProviderMetadata {
             _objFromJson(data['useValue'], CompileIdentifierMetadata.fromJson),
         useFactory:
             _objFromJson(data['useFactory'], CompileFactoryMetadata.fromJson),
-        useProperty: data['useProperty'],
         multi: data['multi'],
         deps: _arrayFromJson(data['deps'], CompileDiDependencyMetadata.fromJson)
             as List<CompileDiDependencyMetadata>);
@@ -192,7 +189,6 @@ class CompileProviderMetadata {
       'useExisting': _objToJson(useExisting),
       'useValue': _objToJson(useValue),
       'useFactory': _objToJson(useFactory),
-      'useProperty': useProperty,
       'multi': multi,
       'deps': _arrayToJson(deps)
     };

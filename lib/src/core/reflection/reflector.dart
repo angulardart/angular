@@ -27,17 +27,16 @@ class ReflectionInfo {
 /// Used internally by Angular to power dependency injection and compilation.
 class Reflector {
   var _injectableInfo = new Map<dynamic, ReflectionInfo>();
-  var _getters = new Map<String, GetterFn>();
-  var _setters = new Map<String, SetterFn>();
-  var _methods = new Map<String, MethodFn>();
+  final _getters = new Map<String, GetterFn>();
+  final _setters = new Map<String, SetterFn>();
+  final _methods = new Map<String, MethodFn>();
   Set<dynamic> _usedKeys;
   PlatformReflectionCapabilities reflectionCapabilities;
-  Reflector(PlatformReflectionCapabilities reflectionCapabilities) : super() {
-    this._usedKeys = null;
+  Reflector(PlatformReflectionCapabilities reflectionCapabilities) {
     this.reflectionCapabilities = reflectionCapabilities;
   }
 
-  bool isReflectionEnabled() => reflectionCapabilities.isReflectionEnabled();
+  bool get reflectionEnabled => reflectionCapabilities.reflectionEnabled;
 
   /// Causes this reflector to track keys used to access [ReflectionInfo]
   /// objects.
@@ -49,7 +48,7 @@ class Reflector {
   /// [#trackUsage] was called. This list could later be audited as
   /// potential dead code.
   List listUnusedKeys() {
-    if (this._usedKeys == null) {
+    if (_usedKeys == null) {
       throw new BaseException("Usage tracking is disabled");
     }
     var allTypes = _injectableInfo.keys;
@@ -87,11 +86,12 @@ class Reflector {
   }
 
   List<List<dynamic>> parameters(dynamic typeOrFunc) {
-    if (this._injectableInfo.containsKey(typeOrFunc)) {
-      var res = this._getReflectionInfo(typeOrFunc).parameters;
-      return res ?? [];
+    var res = _injectableInfo[typeOrFunc];
+    if (res != null) {
+      _usedKeys?.add(typeOrFunc);
+      return res.parameters ?? const [];
     } else {
-      return this.reflectionCapabilities.parameters(typeOrFunc);
+      return reflectionCapabilities.parameters(typeOrFunc);
     }
   }
 
@@ -100,7 +100,7 @@ class Reflector {
       var res = this._getReflectionInfo(typeOrFunc).annotations;
       return res ?? [];
     } else {
-      return this.reflectionCapabilities.annotations(typeOrFunc);
+      return reflectionCapabilities.annotations(typeOrFunc);
     }
   }
 
@@ -109,7 +109,7 @@ class Reflector {
       var res = this._getReflectionInfo(typeOrFunc).propMetadata;
       return res ?? {};
     } else {
-      return this.reflectionCapabilities.propMetadata(typeOrFunc);
+      return reflectionCapabilities.propMetadata(typeOrFunc);
     }
   }
 
@@ -118,32 +118,26 @@ class Reflector {
       var res = this._getReflectionInfo(type).interfaces;
       return res ?? [];
     } else {
-      return this.reflectionCapabilities.interfaces(type);
+      return reflectionCapabilities.interfaces(type);
     }
   }
 
   GetterFn getter(String name) {
-    if (this._getters.containsKey(name)) {
-      return this._getters[name];
-    } else {
-      return this.reflectionCapabilities.getter(name);
-    }
+    var res = _getters[name];
+    if (res != null) return res;
+    return reflectionCapabilities.getter(name);
   }
 
   SetterFn setter(String name) {
-    if (this._setters.containsKey(name)) {
-      return this._setters[name];
-    } else {
-      return this.reflectionCapabilities.setter(name);
-    }
+    var res = _setters[name];
+    if (res != null) return res;
+    return reflectionCapabilities.setter(name);
   }
 
   MethodFn method(String name) {
-    if (this._methods.containsKey(name)) {
-      return this._methods[name];
-    } else {
-      return this.reflectionCapabilities.method(name);
-    }
+    var m = _methods[name];
+    if (m != null) return m;
+    return reflectionCapabilities.method(name);
   }
 
   ReflectionInfo _getReflectionInfo(dynamic typeOrFunc) {

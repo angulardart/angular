@@ -338,7 +338,6 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
       useExisting: useExisting,
       useFactory: provider.useFactory,
       useValue: useValue,
-      useProperty: provider.useProperty,
       deps: deps,
       multi: provider.multi);
 }

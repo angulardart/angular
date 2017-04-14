@@ -293,9 +293,6 @@ class CompileElement extends CompileNode {
         } else {
           providerValue = convertValueToOutputAst(provider.useValue);
         }
-        if (provider.useProperty != null) {
-          providerValue = providerValue.prop(provider.useProperty);
-        }
         providerValueExpressions.add(providerValue);
       }
       if (isLocalAlias) {

@@ -249,7 +249,6 @@ class RuntimeMetadataResolver {
         useExisting: provider.useExisting != null
             ? this.getTokenMetadata(provider.useExisting)
             : null,
-        useProperty: provider.useProperty,
         deps: compileDeps,
         multi: provider.multi);
   }
