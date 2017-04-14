@@ -7,28 +7,20 @@ addons:
   firefox: "latest"
 before_script: ./tool/travis_before_script.sh
 dart_task:
-  - test: -x codegen --platform vm
+  - test: -P travis -p vm
+    xvfb: false
   # Disable parallelism on Firefox (-j 1)
   # Causes flakiness – need to investigate
-  - test: -x codegen --platform firefox -j 1 -P safe_firefox
-  - test: -x codegen --platform dartium
+  - test: -P travis -p firefox -j 1
+  - test: -P travis -p dartium
     install_dartium: true
   - dartfmt
+  # Treat warnings in lib directory as fatal
+  - dartanalyzer: --fatal-warnings lib
+  # Otherwise, errors in any directory are fatal
+  - dartanalyzer
   # TODO(kevmoo) Enable codegen tests when issue is fixed
   # https://github.com/dart-lang/angular2/issues/272
-matrix:
-  include:
-    # Only care about being analyzer clean for dev and stable
-    # Be very strict in the lib directory on dev
-    - dart: dev
-      dart_task:
-        dartanalyzer: --fatal-warnings lib
-    # Fail on errors on dev and stable
-    - dart: dev
-      dart_task:
-        dartanalyzer:
-  allow_failures:
-    - dart_task: dartfmt
 cache:
   directories:
     - $HOME/.pub-cache
