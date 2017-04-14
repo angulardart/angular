@@ -172,11 +172,6 @@ class Unparser implements AstVisitor {
     this._expression += ")";
   }
 
-  visitQuote(Quote ast, dynamic context) {
-    this._expression +=
-        '''${ ast . prefix}:${ ast . uninterpretedExpression}''';
-  }
-
   _visit(AST ast) {
     ast.visit(this);
   }

@@ -17,7 +17,7 @@ class NoReflectionCapabilities implements PlatformReflectionCapabilities {
   const NoReflectionCapabilities._();
 
   @override
-  bool isReflectionEnabled() => true;
+  bool get reflectionEnabled => true;
 
   @override
   Function factory(Type type) =>

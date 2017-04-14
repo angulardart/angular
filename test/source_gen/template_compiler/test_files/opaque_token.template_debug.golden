@@ -32,7 +32,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_HasOpaqueTokens = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = const [null];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = [null];
 
 class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   Text _text_0;
@@ -54,6 +54,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.HasOpaqueTokens _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
@@ -63,8 +64,9 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   }
 
   void detectChangesInternal() {
+    final import2.HasOpaqueTokens _ctx = ctx;
     dbg(0, 0, 0);
-    final currVal_0 = import8.interpolate0(ctx.baseUrl);
+    final currVal_0 = import8.interpolate0(_ctx.baseUrl);
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
@@ -78,11 +80,11 @@ AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
 }
 
 const List<dynamic> styles_HasOpaqueTokensHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = const [
-  const StaticNodeDebugInfo(
-      const [const OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens],
+List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
+  new StaticNodeDebugInfo(
+      [const OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens],
       import2.HasOpaqueTokens,
-      const <String, dynamic>{})
+      <String, dynamic>{})
 ];
 
 class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
@@ -103,6 +105,7 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_HasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -127,6 +130,7 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

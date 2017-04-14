@@ -2,6 +2,7 @@ import "../compile_metadata.dart"
     show
         CompileTokenMap,
         CompileDirectiveMetadata,
+        CompileIdentifierMetadata,
         CompileTokenMetadata,
         CompileQueryMetadata,
         CompileProviderMetadata,
@@ -12,12 +13,13 @@ import "../template_ast.dart"
     show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst;
 import "compile_method.dart" show CompileMethod;
 import "compile_query.dart"
-    show CompileQuery, createQueryList, addQueryToTokenMap;
+    show CompileQuery, createQueryListField, addQueryToTokenMap;
 import "compile_view.dart" show CompileView;
 import "constants.dart" show InjectMethodVars;
 import "view_compiler_utils.dart"
     show
         getPropertyInView,
+        getViewFactoryName,
         createDiTokenExpression,
         injectFromViewParentInjector,
         convertValueToOutputAst;
@@ -182,7 +184,7 @@ class CompileElement extends CompileNode {
     }
   }
 
-  void beforeChildren() {
+  void beforeChildren(bool componentIsDeferred) {
     if (hasViewContainer) {
       _instances.add(
           identifierToken(Identifiers.ViewContainerRef), appViewContainer);
@@ -197,7 +199,7 @@ class CompileElement extends CompileNode {
       });
     }
 
-    _prepareProviderInstances();
+    _prepareProviderInstances(componentIsDeferred);
 
     directiveInstances = <o.Expression>[];
     for (var directive in _directives) {
@@ -249,7 +251,7 @@ class CompileElement extends CompileNode {
 
   bool get publishesTemplateRef => _publishesTemplateRef;
 
-  void _prepareProviderInstances() {
+  void _prepareProviderInstances(bool componentIsDeferred) {
     // Create a lookup map from token to provider.
     _resolvedProviders = new CompileTokenMap<ProviderAst>();
     for (ProviderAst provider in _resolvedProvidersArray) {
@@ -291,9 +293,6 @@ class CompileElement extends CompileNode {
         } else {
           providerValue = convertValueToOutputAst(provider.useValue);
         }
-        if (provider.useProperty != null) {
-          providerValue = providerValue.prop(provider.useProperty);
-        }
         providerValueExpressions.add(providerValue);
       }
       if (isLocalAlias) {
@@ -317,7 +316,10 @@ class CompileElement extends CompileNode {
             providerValueExpressions,
             resolvedProvider.multiProvider,
             resolvedProvider.eager,
-            this);
+            this,
+            forceDynamic:
+                (resolvedProvider.providerType == ProviderAstType.Component) &&
+                    componentIsDeferred);
         _instances.add(resolvedProvider.token, instance);
       }
     }
@@ -354,6 +356,74 @@ class CompileElement extends CompileNode {
         query.generateDynamicUpdate(view.updateContentQueriesMethod);
       }
     }
+  }
+
+  void writeDeferredLoader(CompileView embeddedView,
+      o.Expression viewContainerExpr, List<o.Statement> stmts) {
+    CompileElement deferredElement = embeddedView.nodes[0] as CompileElement;
+    CompileDirectiveMetadata deferredMeta = deferredElement.component;
+    String deferredModuleUrl = deferredMeta.identifier.moduleUrl;
+    String prefix = deferredMeta.identifier.prefix ??
+        embeddedView.deferredModules[deferredModuleUrl];
+    String templatePrefix;
+    if (prefix == null) {
+      prefix = 'deflib${embeddedView.deferredModules.length}';
+      embeddedView.deferredModules[deferredModuleUrl] = prefix;
+      templatePrefix = 'deflib${view.deferredModules.length}';
+      embeddedView.deferredModules[_toTemplateExtension(deferredModuleUrl)] =
+          templatePrefix;
+    }
+
+    CompileIdentifierMetadata componentId = deferredMeta.identifier;
+    CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
+        runtime: componentId.runtime,
+        runtimeCallback: componentId.runtimeCallback,
+        name: '',
+        moduleUrl: componentId.moduleUrl,
+        prefix: prefix,
+        emitPrefix: true,
+        value: componentId.value);
+
+    CompileIdentifierMetadata nestedComponentId = new CompileIdentifierMetadata(
+        name: getViewFactoryName(deferredElement.component, 0));
+    CompileIdentifierMetadata templatePrefixId = new CompileIdentifierMetadata(
+        runtime: nestedComponentId.runtime,
+        runtimeCallback: nestedComponentId.runtimeCallback,
+        name: 'loadLibrary',
+        moduleUrl: nestedComponentId.moduleUrl,
+        prefix: templatePrefix,
+        emitPrefix: true,
+        value: nestedComponentId.value);
+
+    CompileIdentifierMetadata templateInitializer =
+        new CompileIdentifierMetadata(
+            runtime: nestedComponentId.runtime,
+            runtimeCallback: nestedComponentId.runtimeCallback,
+            name: 'initReflector',
+            moduleUrl: nestedComponentId.moduleUrl,
+            prefix: templatePrefix,
+            emitPrefix: true,
+            value: nestedComponentId.value);
+
+    var templateRefExpr =
+        _instances.get(identifierToken(Identifiers.TemplateRef));
+
+    var initializerExpr = new o.FunctionExpr(const [], <o.Statement>[
+      o.importDeferred(templateInitializer).callFn(const []).toStmt()
+    ], null);
+
+    stmts.add(new o.InvokeMemberMethodExpr('loadDeferred', [
+      o.importDeferred(prefixedId).prop('loadLibrary'),
+      o.importDeferred(templatePrefixId),
+      viewContainerExpr,
+      templateRefExpr,
+      initializerExpr
+    ]).toStmt());
+  }
+
+  String _toTemplateExtension(String moduleUrl) {
+    if (!moduleUrl.endsWith('.dart')) return moduleUrl;
+    return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
   }
 
   void addContentNode(num ngContentIndex, o.Expression nodeExpr) {
@@ -397,7 +467,7 @@ class CompileElement extends CompileNode {
     var propName =
         '_query_${queryMeta.selectors[0].name}_${nodeIndex}_${_queryCount++}';
     var queryList =
-        createQueryList(queryMeta, directiveInstance, propName, view);
+        createQueryListField(queryMeta, directiveInstance, propName, view);
     var query = new CompileQuery(queryMeta, queryList, directiveInstance, view);
     addQueryToTokenMap(this._queries, query);
     return query;
@@ -488,7 +558,8 @@ o.Expression createProviderProperty(
     List<o.Expression> providerValueExpressions,
     bool isMulti,
     bool isEager,
-    CompileElement compileElement) {
+    CompileElement compileElement,
+    {bool forceDynamic: false}) {
   var view = compileElement.view;
   var resolvedProviderValueExpr;
   var type;
@@ -507,14 +578,15 @@ o.Expression createProviderProperty(
         compileElement.hasTemplateRefQuery ||
         provider.dynamicallyReachable) {
       view.fields.add(new o.ClassField(propName,
-          outputType: type, modifiers: const [o.StmtModifier.Private]));
+          outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
+          modifiers: const [o.StmtModifier.Private]));
       view.createMethod.addStmt(
           new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
               .toStmt());
     } else {
       // Since provider is not dynamically reachable and we only need
       // the provider locally in build, create a local var.
-      var localVar = o.variable(propName, type);
+      var localVar = o.variable(propName, forceDynamic ? o.DYNAMIC_TYPE : type);
       view.createMethod
           .addStmt(localVar.set(resolvedProviderValueExpr).toDeclStmt());
       return localVar;
@@ -522,7 +594,8 @@ o.Expression createProviderProperty(
   } else {
     var internalField = '_$propName';
     view.fields.add(new o.ClassField(internalField,
-        outputType: type, modifiers: const [o.StmtModifier.Private]));
+        outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
+        modifiers: const [o.StmtModifier.Private]));
     var getter = new CompileMethod(view);
     getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
     // Note: Equals is important for JS so that it also checks the undefined case!
@@ -533,7 +606,8 @@ o.Expression createProviderProperty(
     ]));
     getter.addStmt(
         new o.ReturnStatement(new o.ReadClassMemberExpr(internalField)));
-    view.getters.add(new o.ClassGetter(propName, getter.finish(), type));
+    view.getters.add(new o.ClassGetter(
+        propName, getter.finish(), forceDynamic ? o.DYNAMIC_TYPE : type));
   }
   return new o.ReadClassMemberExpr(propName);
 }

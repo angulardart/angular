@@ -43,6 +43,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.ProvidersComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('Hello');
     parentRenderNode.append(_text_0);
@@ -64,9 +65,11 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
   import1.MyTypeAnnotation __MyTypeAnnotation_0_3;
   dynamic __MyUseFactory_0_4;
   import1.MyUseClass __MyUseClass_0_5;
-  dynamic __MyUseValue_0_8;
+  import1.MyUseValue __MyUseValue_0_8;
   String __const_OpaqueToken__useValueString___0_9;
   List<dynamic> __MyMulti_0_10;
+  List<dynamic> __const_OpaqueToken__useValueList___0_11;
+  dynamic __const_OpaqueToken__useEnums___0_12;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
@@ -97,9 +100,9 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     return this.__MyUseClass_0_5;
   }
 
-  dynamic get _MyUseValue_0_8 {
+  import1.MyUseValue get _MyUseValue_0_8 {
     if ((this.__MyUseValue_0_8 == null)) {
-      (__MyUseValue_0_8 = new import1.MyUseValue('Matan'));
+      (__MyUseValue_0_8 = const import1.MyUseValue('Matan'));
     }
     return this.__MyUseValue_0_8;
   }
@@ -118,7 +121,26 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     return this.__MyMulti_0_10;
   }
 
+  List<dynamic> get _const_OpaqueToken__useValueList___0_11 {
+    if ((this.__const_OpaqueToken__useValueList___0_11 == null)) {
+      (__const_OpaqueToken__useValueList___0_11 = const [
+        const import1.MyUseValue('Andrew'),
+        const import1.MyUseValue('Matan'),
+        const import1.MyUseValue.named()
+      ]);
+    }
+    return this.__const_OpaqueToken__useValueList___0_11;
+  }
+
+  dynamic get _const_OpaqueToken__useEnums___0_12 {
+    if ((this.__const_OpaqueToken__useEnums___0_12 == null)) {
+      (__const_OpaqueToken__useEnums___0_12 = import1.MyEnum.first);
+    }
+    return this.__const_OpaqueToken__useEnums___0_12;
+  }
+
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_ProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProvidersComponent_0_2 = new import1.ProvidersComponent();
@@ -154,10 +176,18 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     if ((identical(token, import1.MyMulti) && (0 == nodeIndex))) {
       return _MyMulti_0_10;
     }
+    if ((identical(token, const OpaqueToken('useValueList')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken__useValueList___0_11;
+    }
+    if ((identical(token, const OpaqueToken('useEnums')) && (0 == nodeIndex))) {
+      return _const_OpaqueToken__useEnums___0_12;
+    }
     return notFoundResult;
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

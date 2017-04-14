@@ -16,8 +16,16 @@ import 'instruction.dart' show ComponentInstruction;
 ///
 /// ### Example
 /// ```dart
-/// // {@disabled-source "router/ts/on_activate/on_activate_example.ts" region="routerOnActivate"}
+/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnActivate"}
+/// @override
+/// void routerOnActivate(next, prev) {
+///   print('Activating ${next.routeName} ${next.urlPath}');
+/// }
 /// ```
+///
+/// See the [router documentation][router] for details.
+///
+/// [router]: https://webdev.dartlang.org/angular/guide/router/5#onactivate
 abstract class OnActivate {
   dynamic /* dynamic | Future< dynamic > */ routerOnActivate(
       ComponentInstruction nextInstruction,
@@ -68,7 +76,7 @@ abstract class OnReuse {
 /// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnDeactivate"}
 /// @override
 /// void routerOnDeactivate(next, prev) {
-///   print('Deactivating CrisisDetailComponent $name');
+///   print('Deactivating ${prev.routeName} ${prev.urlPath}');
 /// }
 /// ```
 ///

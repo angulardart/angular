@@ -1,27 +1,9 @@
 @TestOn('browser')
-import 'dart:async';
-
 import 'package:angular2/angular2.dart';
 import "package:angular2/src/testing/internal.dart";
 import 'package:test/test.dart';
 
 void main() {
-  var asyncValidator = (expected, [timeouts = const {}]) {
-    return (AbstractControl c) {
-      var completer = new Completer();
-      var t = timeouts[c.value] ?? 0;
-      var res = c.value != expected ? {"async": true} : null;
-      if (t == 0) {
-        completer.complete(res);
-      } else {
-        new Timer(new Duration(milliseconds: t), () {
-          completer.complete(res);
-        });
-      }
-      return completer.future;
-    };
-  };
-
   group("Form Model", () {
     group("Control", () {
       test("should default the value to null", () {
@@ -42,47 +24,6 @@ void main() {
           var c = new Control(null, Validators.required);
           expect(c.errors, {"required": true});
         });
-      });
-      group("asyncValidator", () {
-        test("should run validator with the initial value", fakeAsync(() {
-          var c = new Control("value", null, asyncValidator("expected"));
-          tick();
-          expect(c.valid, isFalse);
-          expect(c.errors, {"async": true});
-        }));
-        test("should rerun the validator when the value changes", fakeAsync(() {
-          var c = new Control("value", null, asyncValidator("expected"));
-          c.updateValue("expected");
-          tick();
-          expect(c.valid, isTrue);
-        }));
-        test(
-            "should run the async validator only when the sync validator passes",
-            fakeAsync(() {
-          var c =
-              new Control("", Validators.required, asyncValidator("expected"));
-          tick();
-          expect(c.errors, {"required": true});
-          c.updateValue("some value");
-          tick();
-          expect(c.errors, {"async": true});
-        }));
-        test(
-            "should mark the control as pending while running the async validation",
-            fakeAsync(() {
-          var c = new Control("", null, asyncValidator("expected"));
-          expect(c.pending, isTrue);
-          tick();
-          expect(c.pending, isFalse);
-        }));
-        test("should only use the latest async validation run", fakeAsync(() {
-          var c = new Control("", null,
-              asyncValidator("expected", {"long": 200, "expected": 100}));
-          c.updateValue("long");
-          c.updateValue("expected");
-          tick(300);
-          expect(c.valid, isTrue);
-        }));
       });
       group("dirty", () {
         test("should be false after creating a control", () {
@@ -171,32 +112,6 @@ void main() {
           });
           c.updateValue("");
           tick();
-        }));
-        test(
-            "should fire an event after the status has been updated to pending",
-            fakeAsync(() {
-          var c = new Control(
-              "old", Validators.required, asyncValidator("expected"));
-          var log = [];
-          c.valueChanges.listen((value) => log.add('''value: \'${ value}\''''));
-          c.statusChanges
-              .listen((status) => log.add('''status: \'${ status}\''''));
-          c.updateValue("");
-          tick();
-          c.updateValue("nonEmpty");
-          tick();
-          c.updateValue("expected");
-          tick();
-          expect(log, [
-            "" + "value: ''",
-            "status: 'INVALID'",
-            "value: 'nonEmpty'",
-            "status: 'PENDING'",
-            "status: 'INVALID'",
-            "value: 'expected'",
-            "status: 'PENDING'",
-            "status: 'VALID'"
-          ]);
         }));
         // TODO: remove the if statement after making observable delivery sync
         test("should return a cold observable", () async {
@@ -440,34 +355,6 @@ void main() {
           expect(g.getError("required", ["invalid"]), null);
         });
       });
-      group("asyncValidator", () {
-        test("should run the async validator", fakeAsync(() {
-          var c = new Control("value");
-          var g = new ControlGroup(
-              {"one": c}, null, null, asyncValidator("expected"));
-          expect(g.pending, isTrue);
-          tick(1);
-          expect(g.errors, {"async": true});
-          expect(g.pending, isFalse);
-        }));
-        test("should set the parent group's status to pending", fakeAsync(() {
-          var c = new Control("value", null, asyncValidator("expected"));
-          var g = new ControlGroup({"one": c});
-          expect(g.pending, isTrue);
-          tick(1);
-          expect(g.pending, isFalse);
-        }));
-        test(
-            "should run the parent group's async validator when children are pending",
-            fakeAsync(() {
-          var c = new Control("value", null, asyncValidator("expected"));
-          var g = new ControlGroup(
-              {"one": c}, null, null, asyncValidator("expected"));
-          tick(1);
-          expect(g.errors, {"async": true});
-          expect(g.find(["one"]).errors, {"async": true});
-        }));
-      });
     });
     group("ControlArray", () {
       group("adding/removing", () {
@@ -641,16 +528,6 @@ void main() {
           });
           expect(g.find(["array", 0]).value, "111");
         });
-      });
-      group("asyncValidator", () {
-        test("should run the async validator", fakeAsync(() {
-          var c = new Control("value");
-          var g = new ControlArray([c], null, asyncValidator("expected"));
-          expect(g.pending, isTrue);
-          tick(1);
-          expect(g.errors, {"async": true});
-          expect(g.pending, isFalse);
-        }));
       });
     });
   });

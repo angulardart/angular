@@ -33,8 +33,11 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_HasTemplateFileComponent = const [import0.styles];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 =
-    const [null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [
+  null,
+  null,
+  null
+];
 
 class ViewHasTemplateFileComponent0
     extends DebugAppView<import3.HasTemplateFileComponent> {
@@ -56,6 +59,7 @@ class ViewHasTemplateFileComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import3.HasTemplateFileComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -79,10 +83,9 @@ AppView<import3.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
 }
 
 const List<dynamic> styles_HasTemplateFileComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 =
-    const [
-  const StaticNodeDebugInfo(const [import3.HasTemplateFileComponent],
-      import3.HasTemplateFileComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
+  new StaticNodeDebugInfo([import3.HasTemplateFileComponent],
+      import3.HasTemplateFileComponent, <String, dynamic>{})
 ];
 
 class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
@@ -103,6 +106,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_HasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -122,6 +126,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

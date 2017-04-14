@@ -193,9 +193,7 @@ void main() {
     });
 
     // Run the same test cases with different implementations.
-    <
-        String,
-        Func0<StaticTypes>>{
+    <String, Func0<StaticTypes>>{
       'StaticTypes.withMirrors': () => const StaticTypes.withMirrors(),
       'StaticTypes.fromResolver': () => new StaticTypes.fromResolver(resolver),
     }.forEach((name, createStaticTypeResolver) {
@@ -286,9 +284,7 @@ void main() {
           expect(types.isViewChild(stubViewChild), isTrue);
         });
 
-        <
-            String,
-            Func0<Func1<ClassElement, bool>>>{
+        <String, Func0<Func1<ClassElement, bool>>>{
           'StubOnInit': () => types.hasOnInit,
           'StubOnDestroy': () => types.hasOnDestroy,
           'StubDoCheck': () => types.hasDoCheck,

@@ -49,7 +49,7 @@ void main() {
   test('should handle media rules', () {
     var css = '@media screen and (max-width:800px) {div {font-size:50px;}}';
     var expected =
-        '@media screen AND (max-width:800px) {div.$content {font-size:50px;}}';
+        '@media screen AND (max-width:800px){div.$content {font-size:50px;}}';
     shimAndExpect(css, expected);
   });
 
@@ -59,9 +59,9 @@ void main() {
   });
 
   test('should handle media rules with simple rules', () {
-    var css = '@media screen and (max-width: 800px) '
+    var css = '@media screen and (max-width: 800px)'
         '{div {font-size: 50px;}} div {}';
-    var expected = '@media screen AND (max-width:800px) '
+    var expected = '@media screen AND (max-width:800px)'
         '{div.$content {font-size:50px;}} div.$content {}';
     shimAndExpect(css, expected);
   });

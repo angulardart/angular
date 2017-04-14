@@ -1,31 +1,19 @@
 import "package:angular2/core.dart"
-    show
-        OnChanges,
-        OnDestroy,
-        SimpleChange,
-        Directive,
-        SkipSelf,
-        Provider,
-        Inject,
-        Optional,
-        Self;
+    show OnChanges, OnDestroy, SimpleChange, Directive, Provider;
+
+import "package:angular2/di.dart" show SkipSelf, Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show Control;
-import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import "../validators.dart" show NG_VALIDATORS;
 import "control_container.dart" show ControlContainer;
 import "control_value_accessor.dart"
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import "form_interface.dart" show Form;
 import "ng_control.dart" show NgControl;
 import "shared.dart"
-    show
-        controlPath,
-        composeValidators,
-        composeAsyncValidators,
-        isPropertyUpdated,
-        selectValueAccessor;
-import "validators.dart" show ValidatorFn, AsyncValidatorFn;
+    show controlPath, composeValidators, isPropertyUpdated, selectValueAccessor;
+import "validators.dart" show ValidatorFn;
 
 const controlNameBinding =
     const Provider(NgControl, useExisting: NgControlName);
@@ -92,7 +80,6 @@ const controlNameBinding =
 class NgControlName extends NgControl implements OnChanges, OnDestroy {
   ControlContainer _parent;
   /* Array<Validator|Function> */ List<dynamic> _validators;
-  /* Array<Validator|Function> */ List<dynamic> _asyncValidators;
   var update = new EventEmitter();
   dynamic model;
   dynamic viewModel;
@@ -104,10 +91,6 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
       @Self()
       @Inject(NG_VALIDATORS)
           this._validators,
-      @Optional()
-      @Self()
-      @Inject(NG_ASYNC_VALIDATORS)
-          this._asyncValidators,
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
@@ -144,10 +127,6 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
 
   @override
   ValidatorFn get validator => composeValidators(_validators);
-
-  @override
-  AsyncValidatorFn get asyncValidator =>
-      composeAsyncValidators(_asyncValidators);
 
   @override
   Control get control => formDirective.getControl(this);

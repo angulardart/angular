@@ -114,7 +114,6 @@ PlatformRef browserPlatform() {
 /// void main() {
 ///   bootstrap(AppComponent);
 /// }
-///
 /// ```
 ///
 /// ```dart

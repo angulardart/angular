@@ -99,8 +99,8 @@ void _bootstrapInternalTests() {
 /// These should be providers common to every test in the suite.
 void setBaseTestProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > platformProviders,
-    List<
-        dynamic /* Type | Provider | List < dynamic > */ > applicationProviders) {
+    List<dynamic /* Type | Provider | List < dynamic > */ >
+        applicationProviders) {
   var testInjector = TestInjector.singleton();
   if (testInjector.platformProviders.length > 0 ||
       testInjector.applicationProviders.length > 0) {

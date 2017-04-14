@@ -34,43 +34,43 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/linker/element_ref.dart';
 
 const List<dynamic> styles_QueriesComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent0 = const [
+List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent0 = [
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q1': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q1': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q2': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q2': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q3': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q3': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q4': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q4': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q5': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q5': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q6': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q6': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q7': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q7': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q8': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q8': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q9': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q9': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q10': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q10': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q11': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q11': null}),
   null,
-  const StaticNodeDebugInfo(const [import1.AnotherDirective], null,
-      const <String, dynamic>{'q12': null}),
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q12': null}),
   null
 ];
 
@@ -121,6 +121,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.QueriesComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _viewQuery_q8_0 = new import3.QueryList();
     _viewQuery_q10_1 = new import3.QueryList();
@@ -291,6 +292,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   }
 
   void detectChangesInternal() {
+    final import1.QueriesComponent _ctx = ctx;
     if (!import9.AppViewUtils.throwOnChanges) {
       if (_viewQuery_q8_0.dirty) {
         _viewQuery_q8_0.reset([new ElementRef(_el_15)]);
@@ -330,9 +332,9 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(
 }
 
 const List<dynamic> styles_QueriesComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import1.QueriesComponent],
-      import1.QueriesComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import1.QueriesComponent], import1.QueriesComponent, <String, dynamic>{})
 ];
 
 class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
@@ -361,6 +363,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_QueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -394,6 +397,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     if (!import9.AppViewUtils.throwOnChanges) {
       if (_query_q7_0_0.dirty) {
         _query_q7_0_0.reset([]);

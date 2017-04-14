@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:angular2/core.dart';
 
 import '../model.dart' show AbstractControl;
@@ -42,9 +40,7 @@ abstract class Validator {
   /// information used by the component to display the error. For instance a
   /// length validator could provide information about how long the current
   /// invalid string is and the max string length for the input to display.
-  // Intentionally omitting type information to migrate to AsyncValidator.
-  // https://github.com/dart-lang/angular2/issues/268.
-  /*Map<String, dynamic>*/ validate(AbstractControl control);
+  Map<String, dynamic> validate(AbstractControl control);
 }
 
 /// Returns a map of the errors associated with this control.
@@ -55,56 +51,6 @@ abstract class Validator {
 /// length validator could provide information about how long the current
 /// invalid string is and the max string length for the input to display.
 typedef Map<String, dynamic> ValidatorFn(AbstractControl c);
-
-/// An interface to be implemented as classes acting as asynchronous validators.
-///
-/// ## Usage
-///
-/// ```dart
-/// @Directive(
-///   selector: '[custom-validator]',
-///   providers: const [
-///     const Provider(
-///       NG_ASYNC_VALIDATORS,
-///       useExisting: AsyncValidatorDirective,
-///       multi: true,
-///     ),
-///   ]
-/// )
-/// class AsyncValidatorDirective implements Validator {
-///   @override
-///   Future<Map<String, dynamic>> validate(Control c) async {
-///     final value = c.value;
-///     if (value is String && !await checkIfNameAvailableOnServer(value)) {
-///       return {
-///         'available': 'Name is either reserved or already taken',
-///       };
-///     }
-///     return null;
-///   }
-/// }
-/// ```
-abstract class AsyncValidator {
-  /// Returns a future map of the errors associated with this control.
-  ///
-  /// Each entry in the map is a separate error associated with the control.
-  /// The key is an identifier for the error while the value is additional
-  /// information used by the component to display the error. For instance a
-  /// length validator could provide information about how long the current
-  /// invalid string is and the max string length for the input to display.
-  Future /*~Map~*/ validate(AbstractControl control);
-}
-
-// TODO: Enable typing for validate and AsyncValidatorFn after internally clean.
-
-/// Returns a map of the errors associated with this control.
-///
-/// Each entry in the map is a separate error associated with the control.
-/// The key is an identifier for the error while the value is additional
-/// information used by the component to display the error. For instance a
-/// length validator could provide information about how long the current
-/// invalid string is and the max string length for the input to display.
-typedef Future /*~Map~*/ AsyncValidatorFn<T extends AbstractControl>(T c);
 
 /// Validator that requires controls to have a non-empty value.
 const ValidatorFn REQUIRED = Validators.required;

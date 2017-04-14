@@ -16,7 +16,7 @@ var _METADATA_MAP_VAR = '_METADATA';
 String debugOutputAstAsDart(
     dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
   var converter = new _DartEmitterVisitor(_debugModuleUrl);
-  var ctx = EmitterVisitorContext.createRoot([]);
+  var ctx = EmitterVisitorContext.createRoot([], {});
   List<dynamic> asts;
   if (ast is! List) {
     asts = [ast];
@@ -37,19 +37,21 @@ String debugOutputAstAsDart(
 
 class DartEmitter implements OutputEmitter {
   @override
-  String emitStatements(
-      String moduleUrl, List<o.Statement> stmts, List<String> exportedVars) {
+  String emitStatements(String moduleUrl, List<o.Statement> stmts,
+      List<String> exportedVars, Map<String, String> deferredModules) {
     var srcParts = [];
     // Note: We are not creating a library here as Dart does not need it.
     // Dart analzyer might complain about it though.
     var converter = new _DartEmitterVisitor(moduleUrl);
-    var ctx = EmitterVisitorContext.createRoot(exportedVars);
+    var ctx = EmitterVisitorContext.createRoot(exportedVars, deferredModules);
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
       String importPath = getImportModulePath(moduleUrl, importedModuleUrl);
       srcParts.add(prefix.isEmpty
           ? "import '$importPath';"
-          : "import '$importPath' as ${prefix};");
+          : (deferredModules.containsKey(importedModuleUrl)
+              ? "import '$importPath' deferred as ${prefix};"
+              : "import '$importPath' as ${prefix};"));
     });
     srcParts.add(ctx.toSource());
     return srcParts.join("\n");
@@ -270,7 +272,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     } else {
       ctx.print('void');
     }
-    ctx.print(' ${ stmt . name}(');
+    ctx.print(' ${stmt.name}(');
     this._visitParams(stmt.params, ctx);
     ctx.println(') {');
     ctx.incIndent();
@@ -494,20 +496,36 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void _visitIdentifier(CompileIdentifierMetadata value,
       List<o.OutputType> typeParams, dynamic context) {
     EmitterVisitorContext ctx = context;
+    String prefix = '';
+    bool isDeferred = false;
     if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
-      var prefix = importsWithPrefixes[value.moduleUrl];
+      prefix = importsWithPrefixes[value.moduleUrl];
       if (prefix == null) {
         if (whiteListedImports.contains(value.moduleUrl)) {
           prefix = '';
         } else {
           prefix = 'import${importsWithPrefixes.length}';
+          if (ctx.deferredModules.containsKey(value.moduleUrl)) {
+            isDeferred = true;
+            prefix = ctx.deferredModules[value.moduleUrl];
+          }
         }
         importsWithPrefixes[value.moduleUrl] = prefix;
       }
-      ctx.print(prefix.isEmpty ? '' : '${prefix}.');
+    } else if (value.emitPrefix) {
+      prefix = value.prefix ?? '';
     }
-    if (value.emitPrefix && value.prefix != null && value.prefix.isNotEmpty) {
-      ctx.print('${value.prefix}.');
+    if (isDeferred) {
+      if (prefix.isNotEmpty) {
+        ctx.print(value.name.isEmpty ? prefix : '$prefix.');
+      }
+    } else {
+      if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
+        ctx.print(prefix.isEmpty ? '' : '${prefix}.');
+      }
+      if (value.emitPrefix && value.prefix != null && value.prefix.isNotEmpty) {
+        ctx.print('${value.prefix}.');
+      }
     }
     ctx.print(value.name);
     if (typeParams != null && typeParams.length > 0) {

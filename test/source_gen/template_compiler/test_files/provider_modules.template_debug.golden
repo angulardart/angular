@@ -33,8 +33,7 @@ import 'package:angular2/angular2.dart';
 import 'dart:core';
 
 const List<dynamic> styles_ProviderModulesComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponent0 =
-    const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponent0 = [];
 
 class ViewProviderModulesComponent0
     extends DebugAppView<import2.ProviderModulesComponent> {
@@ -55,6 +54,7 @@ class ViewProviderModulesComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.ProviderModulesComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     return null;
@@ -67,10 +67,9 @@ AppView<import2.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
 }
 
 const List<dynamic> styles_ProviderModulesComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 =
-    const [
-  const StaticNodeDebugInfo(
-      const [
+List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [
         import2.ProviderModulesComponent,
         import2.FooService,
         const OpaqueToken('fooToken'),
@@ -78,15 +77,15 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 =
         const OpaqueToken('bazToken')
       ],
       import2.ProviderModulesComponent,
-      const <String, dynamic>{})
+      <String, dynamic>{})
 ];
 
 class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   AppView<import2.ProviderModulesComponent> _compView_0;
   import2.ProviderModulesComponent _ProviderModulesComponent_0_2;
   import2.FooService __FooService_0_3;
-  dynamic __const_OpaqueToken__fooToken___0_4;
-  dynamic __const_OpaqueToken__barToken___0_5;
+  Duration __const_OpaqueToken__fooToken___0_4;
+  List<dynamic> __const_OpaqueToken__barToken___0_5;
   dynamic __const_OpaqueToken__bazToken___0_6;
   static RenderComponentType renderType;
   ViewProviderModulesComponentHost0(
@@ -110,18 +109,18 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
     return this.__FooService_0_3;
   }
 
-  dynamic get _const_OpaqueToken__fooToken___0_4 {
+  Duration get _const_OpaqueToken__fooToken___0_4 {
     dbg(0, 0, 0);
     if ((this.__const_OpaqueToken__fooToken___0_4 == null)) {
-      (__const_OpaqueToken__fooToken___0_4 = new Duration());
+      (__const_OpaqueToken__fooToken___0_4 = const Duration());
     }
     return this.__const_OpaqueToken__fooToken___0_4;
   }
 
-  dynamic get _const_OpaqueToken__barToken___0_5 {
+  List<dynamic> get _const_OpaqueToken__barToken___0_5 {
     dbg(0, 0, 0);
     if ((this.__const_OpaqueToken__barToken___0_5 == null)) {
-      (__const_OpaqueToken__barToken___0_5 = List);
+      (__const_OpaqueToken__barToken___0_5 = const ['a', 'b', 'c']);
     }
     return this.__const_OpaqueToken__barToken___0_5;
   }
@@ -135,6 +134,7 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   }
 
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_ProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -166,6 +166,7 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

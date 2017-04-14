@@ -1,17 +1,10 @@
 import "package:angular2/core.dart"
-    show
-        OnChanges,
-        OnInit,
-        SimpleChange,
-        Directive,
-        Provider,
-        Inject,
-        Optional,
-        Self;
+    show OnChanges, OnInit, SimpleChange, Directive, Provider;
+import "package:angular2/di.dart" show Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show Control;
-import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import "../validators.dart" show NG_VALIDATORS;
 import "control_value_accessor.dart"
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import "ng_control.dart" show NgControl;
@@ -20,9 +13,8 @@ import "shared.dart"
         setUpControl,
         isPropertyUpdated,
         selectValueAccessor,
-        composeValidators,
-        composeAsyncValidators;
-import "validators.dart" show ValidatorFn, AsyncValidatorFn;
+        composeValidators;
+import "validators.dart" show ValidatorFn;
 
 const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 
@@ -68,7 +60,6 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
     exportAs: "ngForm")
 class NgModel extends NgControl implements OnChanges, OnInit {
   List<dynamic> _validators;
-  List<dynamic> _asyncValidators;
   var _control = new Control();
   var update = new EventEmitter(false);
   dynamic model;
@@ -78,10 +69,6 @@ class NgModel extends NgControl implements OnChanges, OnInit {
       @Self()
       @Inject(NG_VALIDATORS)
           this._validators,
-      @Optional()
-      @Self()
-      @Inject(NG_ASYNC_VALIDATORS)
-          this._asyncValidators,
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
@@ -111,10 +98,6 @@ class NgModel extends NgControl implements OnChanges, OnInit {
 
   @override
   ValidatorFn get validator => composeValidators(_validators);
-
-  @override
-  AsyncValidatorFn get asyncValidator =>
-      composeAsyncValidators(_asyncValidators);
 
   @override
   void viewToModelUpdate(dynamic newValue) {

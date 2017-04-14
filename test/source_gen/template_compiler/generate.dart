@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:angular2/src/source_gen/template_compiler/generator.dart';
 import 'package:angular2/src/source_gen/template_compiler/generator_options.dart';
-import 'package:angular2/src/source_gen/template_compiler/testing/component_extractor_generator.dart';
 import 'package:args/args.dart';
 import 'package:build_runner/build_runner.dart';
 import 'package:source_gen/source_gen.dart';
@@ -28,7 +27,8 @@ Future main(List<String> args) async {
     ..addPhase(new Phase()
       ..addAction(
           new GeneratorBuilder([
-            new TemplateGenerator(new GeneratorOptions(codegenMode: 'release'))
+            new TemplateGenerator(new GeneratorOptions(
+                codegenMode: 'release', collectAssets: false))
           ],
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
@@ -37,7 +37,8 @@ Future main(List<String> args) async {
           inputs)
       ..addAction(
           new GeneratorBuilder([
-            new TemplateGenerator(new GeneratorOptions(codegenMode: 'debug'))
+            new TemplateGenerator(new GeneratorOptions(
+                codegenMode: 'debug', collectAssets: false))
           ],
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'

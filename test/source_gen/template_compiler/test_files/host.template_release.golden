@@ -44,10 +44,11 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.HostComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const []);
-    rootEl.addEventListener('keydown', eventHandler0(ctx.onKeyDown));
-    rootEl.addEventListener('click', eventHandler1(ctx.onClick));
+    rootEl.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
+    rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
     return null;
   }
 }
@@ -73,6 +74,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_HostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HostComponent_0_2 = new import1.HostComponent();
@@ -90,6 +92,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     final currVal_0 = _HostComponent_0_2.title;
     if (!import8.looseIdentical(_expr_0, currVal_0)) {
       setProp(rootEl, 'title', currVal_0);

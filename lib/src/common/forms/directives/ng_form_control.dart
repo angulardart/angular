@@ -1,9 +1,10 @@
 import "package:angular2/core.dart"
-    show OnChanges, SimpleChange, Directive, Provider, Inject, Optional, Self;
+    show OnChanges, SimpleChange, Directive, Provider;
+import "package:angular2/di.dart" show Inject, Optional, Self;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 
 import "../model.dart" show Control;
-import "../validators.dart" show NG_VALIDATORS, NG_ASYNC_VALIDATORS;
+import "../validators.dart" show NG_VALIDATORS;
 import "control_value_accessor.dart"
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import "ng_control.dart" show NgControl;
@@ -11,10 +12,9 @@ import "shared.dart"
     show
         setUpControl,
         composeValidators,
-        composeAsyncValidators,
         isPropertyUpdated,
         selectValueAccessor;
-import "validators.dart" show ValidatorFn, AsyncValidatorFn;
+import "validators.dart" show ValidatorFn;
 
 const formControlBinding =
     const Provider(NgControl, useExisting: NgFormControl);
@@ -73,7 +73,6 @@ const formControlBinding =
     exportAs: "ngForm")
 class NgFormControl extends NgControl implements OnChanges {
   /* Array<Validator|Function> */ List<dynamic> _validators;
-  /* Array<Validator|Function> */ List<dynamic> _asyncValidators;
   Control form;
   var update = new EventEmitter();
   dynamic model;
@@ -83,10 +82,6 @@ class NgFormControl extends NgControl implements OnChanges {
       @Self()
       @Inject(NG_VALIDATORS)
           this._validators,
-      @Optional()
-      @Self()
-      @Inject(NG_ASYNC_VALIDATORS)
-          this._asyncValidators,
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
@@ -110,10 +105,6 @@ class NgFormControl extends NgControl implements OnChanges {
 
   @override
   ValidatorFn get validator => composeValidators(_validators);
-
-  @override
-  AsyncValidatorFn get asyncValidator =>
-      composeAsyncValidators(_asyncValidators);
 
   @override
   Control get control => form;

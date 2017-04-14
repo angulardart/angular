@@ -65,8 +65,8 @@ TestInjector getTestInjector() {
 /// 'angular2/platform/testing/<platform_name>'.
 void setBaseTestProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > platformProviders,
-    List<
-        dynamic /* Type | Provider | List < dynamic > */ > applicationProviders) {
+    List<dynamic /* Type | Provider | List < dynamic > */ >
+        applicationProviders) {
   var testInjector = getTestInjector();
   if (testInjector.platformProviders.length > 0 ||
       testInjector.applicationProviders.length > 0) {

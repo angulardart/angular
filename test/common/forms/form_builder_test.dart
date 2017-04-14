@@ -1,6 +1,4 @@
 @TestOn('browser')
-import 'dart:async';
-
 import 'package:angular2/angular2.dart';
 import 'package:test/test.dart';
 
@@ -8,11 +6,8 @@ Map<String, dynamic> _syncValidator(AbstractControl c) {
   return null;
 }
 
-dynamic _asyncValidator(AbstractControl c) => new Future.value(null);
-
 void main() {
   var syncValidator = _syncValidator;
-  var asyncValidator = _asyncValidator;
 
   group("Form Builder", () {
     var b;
@@ -26,19 +21,16 @@ void main() {
     test("should create controls from an array", () {
       var g = b.group({
         "login": ["some value"],
-        "password": ["some value", syncValidator, asyncValidator]
+        "password": ["some value", syncValidator]
       });
       expect(g.controls["login"].value, "some value");
       expect(g.controls["password"].value, "some value");
       expect(g.controls["password"].validator == syncValidator, isTrue);
-      expect(g.controls["password"].asyncValidator == asyncValidator, isTrue);
     });
     test("should use controls", () {
-      var g = b.group(
-          {"login": b.control("some value", syncValidator, asyncValidator)});
+      var g = b.group({"login": b.control("some value", syncValidator)});
       expect(g.controls["login"].value, "some value");
       expect(g.controls["login"].validator == syncValidator, isTrue);
-      expect(g.controls["login"].asyncValidator == asyncValidator, isTrue);
     });
     test("should create groups with optional controls", () {
       var g = b.group({
@@ -49,10 +41,8 @@ void main() {
       expect(g.contains("login"), isFalse);
     });
     test("should create groups with a custom validator", () {
-      var g = b.group({"login": "some value"},
-          {"validator": syncValidator, "asyncValidator": asyncValidator});
+      var g = b.group({"login": "some value"}, {"validator": syncValidator});
       expect(g.validator == syncValidator, isTrue);
-      expect(g.asyncValidator == asyncValidator, isTrue);
     });
     test("should create control arrays", () {
       var c = b.control("three");
@@ -61,7 +51,7 @@ void main() {
         ["two", syncValidator],
         c,
         b.array(["four"])
-      ], syncValidator, asyncValidator);
+      ], syncValidator);
       expect(a.value, [
         "one",
         "two",
@@ -69,7 +59,6 @@ void main() {
         ["four"]
       ]);
       expect(a.validator == syncValidator, isTrue);
-      expect(a.asyncValidator == asyncValidator, isTrue);
     });
   });
 }

@@ -1,7 +1,8 @@
 import "dart:async";
 
 import "package:angular2/core.dart"
-    show Pipe, Injectable, ChangeDetectorRef, OnDestroy, WrappedValue;
+    show Pipe, ChangeDetectorRef, OnDestroy, WrappedValue;
+import "package:angular2/di.dart" show Injectable;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 
@@ -76,7 +77,6 @@ final _observableStrategy = new ObservableStrategy();
 ///   final Stream<DateTime> time =
 ///       new Stream.periodic(_delay, (_) => new DateTime.now());
 /// }
-///
 /// ```
 ///
 @Pipe("async", pure: false)

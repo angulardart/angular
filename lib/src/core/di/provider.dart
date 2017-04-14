@@ -100,11 +100,6 @@ class Provider {
   /// Used in conjunction with dependencies.
   final Function useFactory;
 
-  /// Specifies the property of the configuration class to use as value.
-  ///
-  /// Only used in conjunction with the @Injector class.
-  final String useProperty;
-
   /// Specifies a set of dependencies
   /// (as `token`s) which should be injected into the factory function.
   ///
@@ -126,7 +121,6 @@ class Provider {
       this.useValue: noValueProvided,
       this.useExisting,
       this.useFactory,
-      this.useProperty,
       List<Object> deps,
       bool multi})
       : dependencies = deps,

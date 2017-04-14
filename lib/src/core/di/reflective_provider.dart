@@ -4,7 +4,7 @@ import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
 
 import '../metadata.dart';
 import 'decorators.dart';
-import 'provider.dart' show Provider, provide, noValueProvided;
+import 'provider.dart' show Provider, noValueProvided;
 import 'reflective_exceptions.dart'
     show
         NoAnnotationError,
@@ -15,20 +15,16 @@ import 'reflective_key.dart';
 /// [Dependency] is used by the framework to extend DI.
 /// This is internal to Angular and should not be used directly.
 class ReflectiveDependency {
-  ReflectiveKey key;
-  bool optional;
-  dynamic lowerBoundVisibility;
-  dynamic upperBoundVisibility;
-  List<dynamic> properties;
+  final ReflectiveKey key;
+  final bool optional;
+  final dynamic lowerBoundVisibility;
+  final dynamic upperBoundVisibility;
+  final List properties;
   ReflectiveDependency(this.key, this.optional, this.lowerBoundVisibility,
       this.upperBoundVisibility, this.properties);
   static ReflectiveDependency fromKey(ReflectiveKey key) {
-    return new ReflectiveDependency(key, false, null, null, []);
+    return new ReflectiveDependency(key, false, null, null, const []);
   }
-}
-
-dynamic _identityPostProcess(obj) {
-  return obj;
 }
 
 /// An internal resolved representation of a [Provider] used by the [Injector].
@@ -62,19 +58,18 @@ class ResolvedReflectiveProviderImpl implements ResolvedReflectiveBinding {
   ReflectiveKey key;
   List<ResolvedReflectiveFactory> resolvedFactories;
   bool multiProvider;
+
   ResolvedReflectiveProviderImpl(
       this.key, this.resolvedFactories, this.multiProvider);
-  ResolvedReflectiveFactory get resolvedFactory {
-    return this.resolvedFactories[0];
-  }
+
+  ResolvedReflectiveFactory get resolvedFactory => resolvedFactories.first;
 }
 
 /// An internal resolved representation of a factory function created by
 /// resolving [Provider].
 class ResolvedReflectiveFactory {
-  Function factory;
-  List<ReflectiveDependency> dependencies;
-  Function postProcess;
+  final Function factory;
+  final List<ReflectiveDependency> dependencies;
 
   /// Constructs a resolved factory.
   ///
@@ -82,9 +77,7 @@ class ResolvedReflectiveFactory {
   ///
   /// [dependencies] is a list of dependencies passed to [factory] as
   /// parameters.
-  ///
-  /// [postProcess] function is applied to the value constructed by [factory].
-  ResolvedReflectiveFactory(this.factory, this.dependencies, this.postProcess);
+  ResolvedReflectiveFactory(this.factory, this.dependencies);
 }
 
 /// Resolve a single provider.
@@ -125,26 +118,27 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
         provider.dependencies,
       );
     }
-  } else if (provider.useClass != null) {
-    var useClass = provider.useClass;
-    factoryFn = reflector.factory(useClass);
-    resolvedDeps = _dependenciesFor(useClass);
-  } else if (provider.useValue != noValueProvided) {
-    factoryFn = () => provider.useValue;
-    resolvedDeps = const <ReflectiveDependency>[];
-  } else if (provider.token is Type) {
-    var useClass = provider.token;
-    factoryFn = reflector.factory(useClass);
-    resolvedDeps = _dependenciesFor(useClass);
   } else {
-    throw new InvalidProviderError.withCustomMessage(
-        provider, 'token is not a Type and no factory was specified');
+    var useClass = provider.useClass;
+    if (useClass != null) {
+      factoryFn = reflector.factory(useClass);
+      resolvedDeps = _dependenciesFor(useClass);
+    } else {
+      var useValue = provider.useValue;
+      if (useValue != noValueProvided) {
+        factoryFn = () => useValue;
+        resolvedDeps = const <ReflectiveDependency>[];
+      } else if (provider.token is Type) {
+        var useClass = provider.token;
+        factoryFn = reflector.factory(useClass);
+        resolvedDeps = _dependenciesFor(useClass);
+      } else {
+        throw new InvalidProviderError.withCustomMessage(
+            provider, 'token is not a Type and no factory was specified');
+      }
+    }
   }
-
-  var postProcess = provider.useProperty != null
-      ? reflector.getter(provider.useProperty)
-      : _identityPostProcess;
-  return new ResolvedReflectiveFactory(factoryFn, resolvedDeps, postProcess);
+  return new ResolvedReflectiveFactory(factoryFn, resolvedDeps);
 }
 
 /// Converts the [Provider] into [ResolvedProvider].
@@ -160,33 +154,35 @@ ResolvedReflectiveProvider resolveReflectiveProvider(Provider provider) {
 List<ResolvedReflectiveProvider> resolveReflectiveProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
   var normalized = _normalizeProviders(providers, []);
-  var resolved = normalized.map(resolveReflectiveProvider).toList();
-  return mergeResolvedReflectiveProviders(
-          resolved, new Map<num, ResolvedReflectiveProvider>())
-      .values
-      .toList();
+  var resolved = <ResolvedReflectiveProvider>[];
+  for (int i = 0, len = normalized.length; i < len; i++) {
+    resolved.add(resolveReflectiveProvider(normalized[i]));
+  }
+  return mergeResolvedReflectiveProviders(resolved);
 }
 
 /// Merges a list of ResolvedProviders into a list where
 /// each key is contained exactly once and multi providers
 /// have been merged.
-Map<num, ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
-    List<ResolvedReflectiveProvider> providers,
-    Map<num, ResolvedReflectiveProvider> normalizedProvidersMap) {
-  for (var i = 0; i < providers.length; i++) {
+List<ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
+    List<ResolvedReflectiveProvider> providers) {
+  // Map used to dedup by provider key id.
+  var idToProvider = <num, ResolvedReflectiveProvider>{};
+  for (var i = 0, len = providers.length; i < len; i++) {
     var provider = providers[i];
-    var existing = normalizedProvidersMap[provider.key.id];
+    var existing = idToProvider[provider.key.id];
     if (existing != null) {
       if (!identical(provider.multiProvider, existing.multiProvider)) {
         throw new MixingMultiProvidersWithRegularProvidersError(
             existing, provider);
       }
       if (provider.multiProvider) {
-        for (var j = 0; j < provider.resolvedFactories.length; j++) {
+        var factories = provider.resolvedFactories;
+        for (var j = 0, len = factories.length; j < len; j++) {
           existing.resolvedFactories.add(provider.resolvedFactories[j]);
         }
       } else {
-        normalizedProvidersMap[provider.key.id] = provider;
+        idToProvider[provider.key.id] = provider;
       }
     } else {
       var resolvedProvider;
@@ -196,28 +192,31 @@ Map<num, ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
       } else {
         resolvedProvider = provider;
       }
-      normalizedProvidersMap[provider.key.id] = resolvedProvider;
+      idToProvider[provider.key.id] = resolvedProvider;
     }
   }
-  return normalizedProvidersMap;
+  return idToProvider.values.toList();
 }
 
+// Flattens list of lists of providers into a flat list. If any entry is a
+// Type it converts it to a useClass provider.
 List<Provider> _normalizeProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > providers,
     List<Provider> res) {
-  providers.forEach((b) {
+  for (int i = 0, len = providers.length; i < len; i++) {
+    var b = providers[i];
     if (b is Type) {
-      res.add(provide(b, useClass: b));
-      _normalizeProviders(const [], res);
+      // If user listed a Type in provider list create Provide useClass: for it.
+      // This is a shortcut to make provider lists easier to create.
+      res.add(new Provider(b, useClass: b));
     } else if (b is Provider) {
-      _normalizeProviders(const [], res);
       res.add(b);
     } else if (b is List) {
       _normalizeProviders(b, res);
     } else {
       throw new InvalidProviderError(b);
     }
-  });
+  }
   return res;
 }
 
@@ -226,10 +225,12 @@ List<ReflectiveDependency> constructDependencies(
   if (dependencies == null) {
     return _dependenciesFor(typeOrFunc);
   } else {
-    List<List<dynamic>> params = dependencies.map((t) => [t]).toList();
-    return dependencies
-        .map((t) => _extractToken(typeOrFunc, t, params))
-        .toList();
+    var deps = <ReflectiveDependency>[];
+    for (int i = 0, len = dependencies.length; i < len; i++) {
+      deps.add(_extractTokenUnwrappedParameters(
+          typeOrFunc, dependencies[i], dependencies));
+    }
+    return deps;
   }
 }
 
@@ -284,6 +285,56 @@ ReflectiveDependency _extractToken(
     }
   }
   if (token == null) throw new NoAnnotationError(typeOrFunc, params);
+  return _createDependency(
+      token, optional, lowerBoundVisibility, upperBoundVisibility, depProps);
+}
+
+// Same as _extractToken but doesn't expect list wrapped parameters. This is
+// to reduce GC by eliminating list allocations for each parameter.
+ReflectiveDependency _extractTokenUnwrappedParameters(
+    typeOrFunc, metadata, List<dynamic> params) {
+  var depProps = [];
+  var token;
+  var optional = false;
+  if (metadata is! List) {
+    if (metadata is Inject) {
+      return _createDependency(metadata.token, optional, null, null, depProps);
+    } else {
+      return _createDependency(metadata, optional, null, null, depProps);
+    }
+  }
+  var lowerBoundVisibility;
+  var upperBoundVisibility;
+  for (var i = 0; i < metadata.length; ++i) {
+    var paramMetadata = metadata[i];
+    if (paramMetadata is Type) {
+      token = paramMetadata;
+    } else if (paramMetadata is Inject) {
+      token = paramMetadata.token;
+    } else if (paramMetadata is Optional) {
+      optional = true;
+    } else if (paramMetadata is Self) {
+      upperBoundVisibility = paramMetadata;
+    } else if (paramMetadata is Host) {
+      upperBoundVisibility = paramMetadata;
+    } else if (paramMetadata is SkipSelf) {
+      lowerBoundVisibility = paramMetadata;
+    } else if (paramMetadata is DependencyMetadata) {
+      if (paramMetadata.token != null) {
+        token = paramMetadata.token;
+      }
+      depProps.add(paramMetadata);
+    }
+  }
+  if (token == null) {
+    // Since we have rare failure, wrap parameter types into a format that
+    // NoAnnotationError expects in reflective mode.
+    var paramList = <List<dynamic>>[];
+    for (var param in params) {
+      paramList.add([param]);
+    }
+    throw new NoAnnotationError(typeOrFunc, params);
+  }
   return _createDependency(
       token, optional, lowerBoundVisibility, upperBoundVisibility, depProps);
 }

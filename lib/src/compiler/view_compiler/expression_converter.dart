@@ -199,26 +199,31 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     ensureExpressionMode(mode, ast);
 
     /// Handle most common case where prefix and postfix are empty.
-    if (ast.expressions.length == 1 &&
-        ast.strings[0].isEmpty &&
-        ast.strings[1].isEmpty) {
-      var args = <o.Expression>[
-        ast.expressions[0].visit(this, _Mode.Expression)
-      ];
-      return o.importExpr(Identifiers.interpolate0).callFn(args);
-    } else if (ast.expressions.length <= 2) {
-      var args = <o.Expression>[];
-      for (var i = 0, len = ast.strings.length - 1; i < len; i++) {
-        String literalStr = compressWhitespace(replaceNgSpace(ast.strings[i]));
-        args.add(o.literal(literalStr));
-        args.add(ast.expressions[i].visit(this, _Mode.Expression));
-      }
-      args.add(
-          o.literal(compressWhitespace(ast.strings[ast.strings.length - 1])));
-      if (ast.expressions.length == 1)
+    if (ast.expressions.length == 1) {
+      String firstArg = compressWhitespace(ast.strings[0]);
+      String secondArg = compressWhitespace(ast.strings[1]);
+      if (firstArg.isEmpty && secondArg.isEmpty) {
+        var args = <o.Expression>[
+          ast.expressions[0].visit(this, _Mode.Expression)
+        ];
+        return o.importExpr(Identifiers.interpolate0).callFn(args);
+      } else {
+        var args = <o.Expression>[
+          o.literal(firstArg),
+          ast.expressions[0].visit(this, _Mode.Expression),
+          o.literal(secondArg),
+        ];
         return o.importExpr(Identifiers.interpolate1).callFn(args);
-      else
-        return o.importExpr(Identifiers.interpolate2).callFn(args);
+      }
+    } else if (ast.expressions.length == 2) {
+      var args = <o.Expression>[
+        o.literal(compressWhitespace(ast.strings[0])),
+        ast.expressions[0].visit(this, _Mode.Expression),
+        o.literal(compressWhitespace(ast.strings[1])),
+        ast.expressions[1].visit(this, _Mode.Expression),
+        o.literal(compressWhitespace(ast.strings[2])),
+      ];
+      return o.importExpr(Identifiers.interpolate2).callFn(args);
     } else {
       var args = [o.literal(ast.expressions.length)];
       for (var i = 0; i < ast.strings.length - 1; i++) {
@@ -357,10 +362,6 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   dynamic visitAll(List<compiler_ast.AST> asts, dynamic context) {
     _Mode mode = context;
     return asts.map((ast) => ast.visit(this, mode)).toList();
-  }
-
-  dynamic visitQuote(compiler_ast.Quote ast, dynamic context) {
-    throw new BaseException("Quotes are not supported for evaluation!");
   }
 }
 

@@ -28,13 +28,22 @@ class TemplateGenerator extends Generator {
 
   @override
   Future<String> generate(Element element, BuildStep buildStep) async {
+    // Because buildStep.hasInput() does not currently work as needed, we
+    // instead track the inputs ourselves. Thus, we await for all of the inputs
+    // to be collected, before continuing. This only works because of
+    // implementation details in package:build which will probably change, so it
+    // is recommended that you do not copy this.
+    assets.add(buildStep.inputId);
+    await new Future(() {});
+
     if (element is! LibraryElement) return null;
     return runZoned(() async {
       var config = new CompilerConfig(
           genDebugInfo: _options.codegenMode == CODEGEN_DEBUG_MODE,
           logBindingUpdate: _options.reflectPropertiesAsAttributes,
           useLegacyStyleEncapsulation: _options.useLegacyStyleEncapsulation);
-      var outputs = await processTemplates(element, buildStep, config);
+      var outputs = await processTemplates(element, buildStep, config,
+          collectAssets: _options.collectAssets);
       if (outputs == null) return _emptyNgDepsContents;
       return buildGeneratedCode(
         outputs,

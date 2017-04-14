@@ -32,9 +32,8 @@ class KeyRegistry {
   var _allKeys = <Object, ReflectiveKey>{};
   ReflectiveKey get(Object token) {
     if (token is ReflectiveKey) return token;
-    if (_allKeys.containsKey(token)) {
-      return _allKeys[token];
-    }
+    var res = _allKeys[token];
+    if (res != null) return res;
     var newKey = new ReflectiveKey(token, ReflectiveKey.numberOfKeys);
     _allKeys[token] = newKey;
     return newKey;

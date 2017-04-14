@@ -1,35 +1,26 @@
 language: dart
 sudo: false
 dart:
-  - stable
   - dev
-  - 1.22.1
 addons:
   # otherwise a number of tests in test/security/html_sanitizer_test.dart fail
   firefox: "latest"
 before_script: ./tool/travis_before_script.sh
 dart_task:
-  - test: -x codegen --platform vm
+  - test: -P travis -p vm
+    xvfb: false
   # Disable parallelism on Firefox (-j 1)
   # Causes flakiness – need to investigate
-  - test: -x codegen --platform firefox -j 1 -P safe_firefox
-  - test: -x codegen --platform dartium
+  - test: -P travis -p firefox -j 1
+  - test: -P travis -p dartium
     install_dartium: true
+  - dartfmt
+  # Treat warnings in lib directory as fatal
+  - dartanalyzer: --fatal-warnings lib
+  # Otherwise, errors in any directory are fatal
+  - dartanalyzer
   # TODO(kevmoo) Enable codegen tests when issue is fixed
   # https://github.com/dart-lang/angular2/issues/272
-matrix:
-  include:
-    # Only validate formatting using the dev release
-    # Formatted with 1.23.0-dev.10.0 which has (good) changes since 1.22.1
-    - dart: dev
-      dart_task: dartfmt
-    # Only care about being analyzer clean for dev and stable
-    - dart: dev
-      dart_task:
-        dartanalyzer: --fatal-warnings lib
-    - dart: stable
-      dart_task:
-        dartanalyzer:
 cache:
   directories:
     - $HOME/.pub-cache

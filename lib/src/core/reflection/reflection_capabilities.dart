@@ -10,9 +10,7 @@ var DOT_REGEX = new RegExp('\\.');
 class ReflectionCapabilities implements PlatformReflectionCapabilities {
   ReflectionCapabilities([metadataReader]);
 
-  bool isReflectionEnabled() {
-    return true;
-  }
+  bool get reflectionEnabled => true;
 
   Function factory(Type type) {
     ClassMirror classMirror = reflectType(type);

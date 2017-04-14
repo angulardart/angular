@@ -33,9 +33,7 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/zone/ng_zone.dart' as import10;
 
 const List<dynamic> styles_ProvidersComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = const [
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = [null];
 
 class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
   static RenderComponentType renderType;
@@ -55,6 +53,7 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.ProvidersComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('Hello');
     parentRenderNode.append(_text_0);
@@ -70,9 +69,9 @@ AppView<import2.ProvidersComponent> viewFactory_ProvidersComponent0(
 }
 
 const List<dynamic> styles_ProvidersComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
-  const StaticNodeDebugInfo(
-      const [
+List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [
         import2.ProvidersComponent,
         import2.MyTypeAnnotation,
         import2.MyUseFactory,
@@ -81,10 +80,12 @@ const List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = const [
         import2.MyUseExistingNested,
         import2.MyUseValue,
         const OpaqueToken('useValueString'),
-        import2.MyMulti
+        import2.MyMulti,
+        const OpaqueToken('useValueList'),
+        const OpaqueToken('useEnums')
       ],
       import2.ProvidersComponent,
-      const <String, dynamic>{})
+      <String, dynamic>{})
 ];
 
 class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
@@ -93,9 +94,11 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   import2.MyTypeAnnotation __MyTypeAnnotation_0_3;
   dynamic __MyUseFactory_0_4;
   import2.MyUseClass __MyUseClass_0_5;
-  dynamic __MyUseValue_0_8;
+  import2.MyUseValue __MyUseValue_0_8;
   String __const_OpaqueToken__useValueString___0_9;
   List<dynamic> __MyMulti_0_10;
+  List<dynamic> __const_OpaqueToken__useValueList___0_11;
+  dynamic __const_OpaqueToken__useEnums___0_12;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -134,10 +137,10 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyUseClass_0_5;
   }
 
-  dynamic get _MyUseValue_0_8 {
+  import2.MyUseValue get _MyUseValue_0_8 {
     dbg(0, 0, 0);
     if ((this.__MyUseValue_0_8 == null)) {
-      (__MyUseValue_0_8 = new import2.MyUseValue('Matan'));
+      (__MyUseValue_0_8 = const import2.MyUseValue('Matan'));
     }
     return this.__MyUseValue_0_8;
   }
@@ -158,7 +161,28 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyMulti_0_10;
   }
 
+  List<dynamic> get _const_OpaqueToken__useValueList___0_11 {
+    dbg(0, 0, 0);
+    if ((this.__const_OpaqueToken__useValueList___0_11 == null)) {
+      (__const_OpaqueToken__useValueList___0_11 = const [
+        const import2.MyUseValue('Andrew'),
+        const import2.MyUseValue('Matan'),
+        const import2.MyUseValue.named()
+      ]);
+    }
+    return this.__const_OpaqueToken__useValueList___0_11;
+  }
+
+  dynamic get _const_OpaqueToken__useEnums___0_12 {
+    dbg(0, 0, 0);
+    if ((this.__const_OpaqueToken__useEnums___0_12 == null)) {
+      (__const_OpaqueToken__useEnums___0_12 = import2.MyEnum.first);
+    }
+    return this.__const_OpaqueToken__useEnums___0_12;
+  }
+
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_ProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -195,10 +219,18 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, import2.MyMulti) && (0 == nodeIndex))) {
       return _MyMulti_0_10;
     }
+    if ((identical(token, const OpaqueToken('useValueList')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken__useValueList___0_11;
+    }
+    if ((identical(token, const OpaqueToken('useEnums')) && (0 == nodeIndex))) {
+      return _const_OpaqueToken__useEnums___0_12;
+    }
     return notFoundResult;
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

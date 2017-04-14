@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import "package:angular2/src/facade/async.dart" show EventEmitter;
+import 'package:meta/meta.dart';
 
-import "directives/validators.dart" show ValidatorFn, AsyncValidatorFn;
+import "directives/validators.dart" show ValidatorFn;
 
 AbstractControl _find(AbstractControl control,
     dynamic /* List< dynamic /* String | num */ > | String */ path) {
@@ -23,10 +24,6 @@ AbstractControl _find(AbstractControl control,
   });
 }
 
-Stream<dynamic> _toStream(futureOrStream) {
-  return futureOrStream is Future ? futureOrStream.asStream() : futureOrStream;
-}
-
 abstract class AbstractControl {
   /// Indicates that a Control is valid, i.e. that no errors exist in the input
   /// value.
@@ -41,7 +38,6 @@ abstract class AbstractControl {
   static const PENDING = "PENDING";
 
   ValidatorFn validator;
-  AsyncValidatorFn asyncValidator;
   dynamic _value;
   EventEmitter<dynamic> _valueChanges;
   EventEmitter<dynamic> _statusChanges;
@@ -50,13 +46,12 @@ abstract class AbstractControl {
   bool _pristine = true;
   bool _touched = false;
   dynamic /* ControlGroup | ControlArray */ _parent;
-  dynamic _asyncValidationSubscription;
-  AbstractControl(this.validator, this.asyncValidator);
+  AbstractControl(this.validator);
   dynamic get value => _value;
 
   /// The validation status of the control.
   ///
-  /// One of [VALID], [INVALID], or [PENDING].
+  /// One of [VALID], or [INVALID].
   String get status => _status;
 
   bool get valid => identical(_status, VALID);
@@ -107,12 +102,9 @@ abstract class AbstractControl {
   void updateValueAndValidity({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
     emitEvent = emitEvent ?? true;
-    _updateValue();
+    onUpdate();
     _errors = _runValidator();
     _status = _calculateStatus();
-    if (_status == VALID || _status == PENDING) {
-      _runAsyncValidator(emitEvent);
-    }
     if (emitEvent) {
       _valueChanges.add(_value);
       _statusChanges.add(_status);
@@ -126,20 +118,6 @@ abstract class AbstractControl {
 
   Map<String, dynamic> _runValidator() =>
       validator != null ? validator(this) : null;
-
-  void _runAsyncValidator(bool emitEvent) {
-    if (asyncValidator != null) {
-      _status = PENDING;
-      _cancelExistingSubscription();
-      var obs = _toStream(asyncValidator(this));
-      _asyncValidationSubscription = obs.listen(
-          (Map<String, dynamic> res) => setErrors(res, emitEvent: emitEvent));
-    }
-  }
-
-  void _cancelExistingSubscription() {
-    _asyncValidationSubscription?.cancel();
-  }
 
   /// Sets errors on a control.
   ///
@@ -219,7 +197,12 @@ abstract class AbstractControl {
     return VALID;
   }
 
-  void _updateValue();
+  /// Callback when control is asked to update it's value.
+  ///
+  /// Allows controls to calculate their value. For example control groups
+  /// to calculate it's value based on their children.
+  @protected
+  void onUpdate();
   bool _anyControlsHaveStatus(String status);
 }
 
@@ -240,11 +223,8 @@ abstract class AbstractControl {
 class Control extends AbstractControl {
   Function _onChange;
   String _rawValue;
-  Control(
-      [dynamic value = null,
-      ValidatorFn validator = null,
-      AsyncValidatorFn asyncValidator = null])
-      : super(validator, asyncValidator) {
+  Control([dynamic value = null, ValidatorFn validator = null])
+      : super(validator) {
     //// super call moved to initializer */;
     _value = value;
     updateValueAndValidity(onlySelf: true, emitEvent: false);
@@ -281,7 +261,7 @@ class Control extends AbstractControl {
   String get rawValue => _rawValue;
 
   @override
-  void _updateValue() {}
+  void onUpdate() {}
 
   @override
   bool _anyControlsHaveStatus(String status) => false;
@@ -311,11 +291,9 @@ class ControlGroup extends AbstractControl {
   final Map<String, AbstractControl> controls;
   final Map<String, bool> _optionals;
   ControlGroup(this.controls,
-      [Map<String, bool> optionals,
-      ValidatorFn validator,
-      AsyncValidatorFn asyncValidator])
+      [Map<String, bool> optionals, ValidatorFn validator])
       : _optionals = optionals ?? {},
-        super(validator, asyncValidator) {
+        super(validator) {
     _initObservables();
     _setParentForControls();
     updateValueAndValidity(onlySelf: true, emitEvent: false);
@@ -355,7 +333,7 @@ class ControlGroup extends AbstractControl {
   }
 
   @override
-  void _updateValue() {
+  void onUpdate() {
     _value = _reduceValue();
   }
 
@@ -412,9 +390,8 @@ class ControlGroup extends AbstractControl {
 /// detection.
 class ControlArray extends AbstractControl {
   List<AbstractControl> controls;
-  ControlArray(this.controls,
-      [ValidatorFn validator = null, AsyncValidatorFn asyncValidator = null])
-      : super(validator, asyncValidator) {
+  ControlArray(this.controls, [ValidatorFn validator = null])
+      : super(validator) {
     _initObservables();
     _setParentForControls();
     updateValueAndValidity(onlySelf: true, emitEvent: false);
@@ -447,7 +424,7 @@ class ControlArray extends AbstractControl {
   num get length => controls.length;
 
   @override
-  void _updateValue() {
+  void onUpdate() {
     _value = controls.map((control) => control.value).toList();
   }
 

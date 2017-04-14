@@ -33,7 +33,7 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/linker/template_ref.dart';
 
 const List<dynamic> styles_TestFooComponent = const [
-  'div._ngcontent-%COMP% { font-size: 10px; }'
+  'div._ngcontent-%COMP% { font-size:10px; }'
 ];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
@@ -49,6 +49,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
@@ -61,6 +62,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
 
   void detectChangesInternal() {
+    final import1.TestFooComponent _ctx = ctx;
     _NgIf_0_5.ngIf = true;
     _appEl_0.detectChangesInNestedViews();
   }
@@ -83,6 +85,7 @@ class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
     componentType = ViewTestFooComponent0.renderType;
   }
   ComponentRef build() {
+    final import1.TestFooComponent _ctx = ctx;
     var doc = document;
     _el_0 = doc.createElement('div');
     addShimC(_el_0);
@@ -112,6 +115,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_2 = new import1.TestFooComponent();
@@ -129,6 +133,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

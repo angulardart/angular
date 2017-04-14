@@ -1,10 +1,30 @@
+## 3.0.0-beta+1
+
+* Require at least Dart SDK `1.23.0-dev.7.0`. Required for a JS-interop fix.
+
+### Breaking changes
+
+* Injecting null no longer supported.
+* Remove unused `useProperty` argument in DI `Provider` api.
+* `ReflectionCapabilities.isReflectionEnabled` renamed to `reflectionEnabled`.
+* Malformed CSS warnings are errors now.
+
+* Removed forms async validators. Alternative:
+
+  ```dart
+  control.valueChange((value) {
+    rpc.validate(change).then((errors) {
+      if (errors != null) control.setErrors(errors);
+    });
+  });
+  ```
+
 ## 3.0.0-beta
 
 ### New features
 
 * `composeValidators` and `composeAsyncValidators` now part of the public API.
 * `angular2/testing.dart` includes a test-only `isDebugMode` function.
-
 
 ### Breaking changes
 

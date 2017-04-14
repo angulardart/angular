@@ -43,6 +43,7 @@ class ViewLifecycleHooksComponent0
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import1.LifecycleHooksComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const []);
     return null;
@@ -68,6 +69,7 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_LifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _LifecycleHooksComponent_0_2 = new import1.LifecycleHooksComponent();
@@ -87,6 +89,7 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
 
   void detectChangesInternal() {
     bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
+    final _ctx = ctx;
     if ((firstCheck && !import6.AppViewUtils.throwOnChanges)) {
       _LifecycleHooksComponent_0_2.ngOnInit();
     }

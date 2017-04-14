@@ -32,10 +32,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_EmulatedComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponent0 = [null, null];
 
 class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
   DivElement _el_0;
@@ -56,6 +53,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -75,9 +73,9 @@ AppView<import2.EmulatedComponent> viewFactory_EmulatedComponent0(
 }
 
 const List<dynamic> styles_EmulatedComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.EmulatedComponent],
-      import2.EmulatedComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = [
+  new StaticNodeDebugInfo([import2.EmulatedComponent],
+      import2.EmulatedComponent, <String, dynamic>{})
 ];
 
 class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
@@ -97,6 +95,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_EmulatedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -115,6 +114,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -134,10 +134,7 @@ const ComponentFactory EmulatedComponentNgFactory = const ComponentFactory(
     import2.EmulatedComponent,
     _METADATA);
 const List<dynamic> styles_NativeComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponent0 = [null, null];
 
 class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
   DivElement _el_0;
@@ -158,6 +155,7 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -177,9 +175,9 @@ AppView<import2.NativeComponent> viewFactory_NativeComponent0(
 }
 
 const List<dynamic> styles_NativeComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.NativeComponent],
-      import2.NativeComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.NativeComponent], import2.NativeComponent, <String, dynamic>{})
 ];
 
 class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
@@ -199,6 +197,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_NativeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -217,6 +216,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -236,10 +236,7 @@ const ComponentFactory NativeComponentNgFactory = const ComponentFactory(
     import2.NativeComponent,
     _METADATA);
 const List<dynamic> styles_NoneComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = [null, null];
 
 class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
   DivElement _el_0;
@@ -260,6 +257,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -279,9 +277,9 @@ AppView<import2.NoneComponent> viewFactory_NoneComponent0(
 }
 
 const List<dynamic> styles_NoneComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.NoneComponent],
-      import2.NoneComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.NoneComponent], import2.NoneComponent, <String, dynamic>{})
 ];
 
 class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
@@ -301,6 +299,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_NoneComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -319,6 +318,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

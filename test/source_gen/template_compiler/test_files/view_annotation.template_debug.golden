@@ -35,11 +35,10 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import11;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_TestFooComponent = const [
-  'div._ngcontent-%COMP% { font-size: 10px; }'
+  'div._ngcontent-%COMP% { font-size:10px; }'
 ];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
-  const StaticNodeDebugInfo(
-      const [TemplateRef, NgIf], null, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
+  new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{})
 ];
 
 class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
@@ -62,6 +61,7 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import4.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
@@ -75,6 +75,7 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
   }
 
   void detectChangesInternal() {
+    final import4.TestFooComponent _ctx = ctx;
     dbg(0, 0, 5);
     _NgIf_0_5.ngIf = true;
     _appEl_0.detectChangesInNestedViews();
@@ -90,10 +91,7 @@ AppView<import4.TestFooComponent> viewFactory_TestFooComponent0(
   return new ViewTestFooComponent0(parentView, parentIndex);
 }
 
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = [null, null];
 
 class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
   DivElement _el_0;
@@ -108,6 +106,7 @@ class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
     componentType = ViewTestFooComponent0.renderType;
   }
   ComponentRef build() {
+    final import4.TestFooComponent _ctx = ctx;
     var doc = document;
     _el_0 = doc.createElement('div');
     dbgElm(_el_0, 0, 0, 0);
@@ -126,9 +125,9 @@ AppView<import4.TestFooComponent> viewFactory_TestFooComponent1(
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import4.TestFooComponent],
-      import4.TestFooComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import4.TestFooComponent], import4.TestFooComponent, <String, dynamic>{})
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
@@ -148,6 +147,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -166,6 +166,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

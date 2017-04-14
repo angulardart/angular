@@ -36,10 +36,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
 const List<dynamic> styles_TestFooComponent = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = const [
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [null, null];
 
 class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
   DivElement _el_0;
@@ -60,6 +57,7 @@ class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final import2.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = doc.createElement('div');
@@ -79,9 +77,9 @@ AppView<import2.TestFooComponent> viewFactory_TestFooComponent0(
 }
 
 const List<dynamic> styles_TestFooComponentHost = const [];
-const List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = const [
-  const StaticNodeDebugInfo(const [import2.TestFooComponent],
-      import2.TestFooComponent, const <String, dynamic>{})
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import2.TestFooComponent], import2.TestFooComponent, <String, dynamic>{})
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
@@ -101,6 +99,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     setupComponentType(renderType);
   }
   ComponentRef build() {
+    final _ctx = ctx;
     _compView_0 = viewFactory_TestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -119,6 +118,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
 
   void detectChangesInternal() {
+    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

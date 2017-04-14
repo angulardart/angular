@@ -1,7 +1,7 @@
 import 'types.dart';
 
 abstract class PlatformReflectionCapabilities {
-  bool isReflectionEnabled();
+  bool get reflectionEnabled;
   Function factory(Type type);
   List interfaces(Type type);
   List<List> parameters(type);

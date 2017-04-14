@@ -15,7 +15,7 @@ import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart'
-    show CompileQuery, createQueryList, addQueryToTokenMap;
+    show CompileQuery, createQueryListField, addQueryToTokenMap;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show NameResolver;
 import 'view_compiler_utils.dart'
@@ -29,6 +29,7 @@ class CompileView implements NameResolver {
   final CompilerConfig genConfig;
   final List<CompilePipeMetadata> pipeMetas;
   final o.Expression styles;
+  final Map<String, String> deferredModules;
 
   int viewIndex;
   CompileElement declarationElement;
@@ -79,8 +80,15 @@ class CompileView implements NameResolver {
   var literalMapCount = 0;
   var pipeCount = 0;
 
-  CompileView(this.component, this.genConfig, this.pipeMetas, this.styles,
-      this.viewIndex, this.declarationElement, this.templateVariableBindings) {
+  CompileView(
+      this.component,
+      this.genConfig,
+      this.pipeMetas,
+      this.styles,
+      this.viewIndex,
+      this.declarationElement,
+      this.templateVariableBindings,
+      this.deferredModules) {
     this.createMethod = new CompileMethod(this);
     this.injectorGetMethod = new CompileMethod(this);
     this.updateContentQueriesMethod = new CompileMethod(this);
@@ -115,7 +123,7 @@ class CompileView implements NameResolver {
         var propName =
             '_viewQuery_${queryMeta.selectors[0].name}_${queryIndex}';
         var queryList =
-            createQueryList(queryMeta, directiveInstance, propName, this);
+            createQueryListField(queryMeta, directiveInstance, propName, this);
         var query =
             new CompileQuery(queryMeta, queryList, directiveInstance, this);
         addQueryToTokenMap(viewQueries, query);
@@ -128,6 +136,9 @@ class CompileView implements NameResolver {
     }
     if (declarationElement.parent != null) {
       declarationElement.setEmbeddedView(this);
+    }
+    if (deferredModules == null) {
+      throw new ArgumentError();
     }
   }
 

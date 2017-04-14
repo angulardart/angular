@@ -23,9 +23,18 @@ class GeneratorOptions {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
+  /// Wheter to use the global set of visible assets instead of
+  /// buildStep.hasInput().
+  ///
+  /// For bazel workspaces, this should be [true] (default), since
+  /// buildStep.hasInput() doesn't work in all cases. In other workspaces, like
+  /// with build_runner, this should be [false].
+  final bool collectAssets;
+
   GeneratorOptions({
     this.reflectPropertiesAsAttributes: false,
     this.codegenMode: '',
     this.useLegacyStyleEncapsulation: false,
+    this.collectAssets: true,
   });
 }
