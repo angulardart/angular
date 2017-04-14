@@ -27,7 +27,8 @@ Future main(List<String> args) async {
     ..addPhase(new Phase()
       ..addAction(
           new GeneratorBuilder([
-            new TemplateGenerator(new GeneratorOptions(codegenMode: 'release'))
+            new TemplateGenerator(new GeneratorOptions(
+                codegenMode: 'release', collectAssets: false))
           ],
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
@@ -36,7 +37,8 @@ Future main(List<String> args) async {
           inputs)
       ..addAction(
           new GeneratorBuilder([
-            new TemplateGenerator(new GeneratorOptions(codegenMode: 'debug'))
+            new TemplateGenerator(new GeneratorOptions(
+                codegenMode: 'debug', collectAssets: false))
           ],
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'
