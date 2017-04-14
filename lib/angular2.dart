@@ -1,6 +1,4 @@
-/// An all-in-one place to import Angular 2 stuff.
-///
-/// This library does not include `bootstrap`. Import `bootstrap.dart` instead.
+/// The primary library for Angular Dart.
 library angular2;
 
 export 'package:angular2/core.dart';
