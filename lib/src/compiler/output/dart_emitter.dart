@@ -93,7 +93,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     'package:angular2/src/core/render/api.dart',
   ];
 
-  String _moduleUrl;
+  final String _moduleUrl;
 
   var importsWithPrefixes = new Map<String, String>();
 

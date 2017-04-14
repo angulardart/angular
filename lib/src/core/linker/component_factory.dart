@@ -18,7 +18,7 @@ class ComponentRef<C> {
   final AppView _parentView;
   final int _nodeIndex;
   final Element _nativeElement;
-  C _component;
+  final C _component;
 
   ComponentRef(
       this._nodeIndex, this._parentView, this._nativeElement, this._component);

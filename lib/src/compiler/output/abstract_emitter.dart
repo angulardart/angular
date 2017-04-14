@@ -19,7 +19,7 @@ class _EmittedLine {
 
 class EmitterVisitorContext {
   final Map<String, String> deferredModules;
-  List<String> _exportedVars;
+  final List<String> _exportedVars;
   num _indent;
   int _outputPos;
   // Current method being emitted. Allows expressions access to method

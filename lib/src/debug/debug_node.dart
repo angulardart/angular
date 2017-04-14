@@ -14,7 +14,7 @@ class DebugEventListener {
 }
 
 class DebugNode {
-  RenderDebugInfo _debugInfo;
+  final RenderDebugInfo _debugInfo;
   dynamic nativeNode;
   @Deprecated('Adds runtime cost and not used outside internal tests')
   List<DebugEventListener> listeners;

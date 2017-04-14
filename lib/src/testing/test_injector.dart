@@ -115,7 +115,7 @@ FunctionWithParamTokens inject(List<dynamic> tokens, Function fn) {
 }
 
 class InjectSetupWrapper {
-  dynamic /* () => any */ _providers;
+  final /* () => any */ _providers;
   InjectSetupWrapper(this._providers);
   FunctionWithParamTokens inject(List<dynamic> tokens, Function fn) {
     return new FunctionWithParamTokens(tokens, fn, false, this._providers);
@@ -180,7 +180,7 @@ List<dynamic> emptyArray() {
 }
 
 class FunctionWithParamTokens {
-  List<dynamic> _tokens;
+  final List<dynamic> _tokens;
   Function fn;
   bool isAsync;
   dynamic /* () => any */ additionalProviders;

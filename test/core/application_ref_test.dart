@@ -185,7 +185,7 @@ void main() {
 class MyComp {}
 
 class _MockComponentFactory extends ComponentFactory {
-  ComponentRef _compRef;
+  final ComponentRef _compRef;
   _MockComponentFactory(this._compRef) : super(null, null, null);
   ComponentRef create(Injector injector,
       [List<List<dynamic>> projectableNodes = null,
@@ -195,7 +195,7 @@ class _MockComponentFactory extends ComponentFactory {
 }
 
 class _MockComponentResolver implements ComponentResolver {
-  ComponentFactory _compFactory;
+  final ComponentFactory _compFactory;
   _MockComponentResolver(this._compFactory);
 
   @override
@@ -208,7 +208,7 @@ class _MockComponentResolver implements ComponentResolver {
 }
 
 class _MockComponentRef extends ComponentRef {
-  Injector _injector;
+  final Injector _injector;
   _MockComponentRef(this._injector) : super(0, null, null, null);
 
   @override

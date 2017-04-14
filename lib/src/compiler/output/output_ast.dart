@@ -1250,7 +1250,7 @@ Expression replaceReadClassMemberInExpression(
 }
 
 class _ReplaceReadClassMemberTransformer extends ExpressionTransformer {
-  Expression _newValue;
+  final Expression _newValue;
   _ReplaceReadClassMemberTransformer(this._newValue);
 
   @override
