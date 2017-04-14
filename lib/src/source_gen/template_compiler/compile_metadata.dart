@@ -15,6 +15,7 @@ import 'package:angular2/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:logging/logging.dart';
+import 'package:protobuf/protobuf.dart';
 import 'package:quiver/strings.dart' as strings;
 import 'package:source_gen/src/annotation.dart' as source_gen;
 
@@ -301,6 +302,8 @@ class CompileTypeMetadataVisitor
       return o.importExpr(_idFor(token.toTypeValue()));
     } else if (_isEnum(token.type)) {
       return _expressionForEnum(token);
+    } else if (_isProtobufEnum(token.type)) {
+      return _expressionForProtobufEnum(token);
     } else if (token.type is InterfaceType) {
       return _expressionForType(token);
     } else if (token.type.element is FunctionTypedElement) {
@@ -431,4 +434,20 @@ class CompileTypeMetadataVisitor
 
   bool _isPositional(ParameterElement param) =>
       param.parameterKind == ParameterKind.POSITIONAL;
+
+  bool _isProtobufEnum(ParameterizedType type) {
+    return type is InterfaceType &&
+        source_gen.matchTypes(ProtobufEnum, type.superclass);
+  }
+
+  /// Creates an expression for protobuf enums.
+  ///
+  /// We can't just call the const constructor directly, because protobuf enums
+  /// use a private constructor. Instead, we can look up the name, which is
+  /// stored in a field, and use that to generate the code instead.
+  o.Expression _expressionForProtobufEnum(DartObject token) {
+    return o
+        .importExpr(_idFor(token.type))
+        .prop(dart_objects.coerceString(token, 'name'));
+  }
 }
