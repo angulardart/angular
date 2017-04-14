@@ -3,8 +3,6 @@
 /// This library does not include `bootstrap`. Import `bootstrap.dart` instead.
 library angular2;
 
-import 'dart:html';
-
 export 'package:angular2/core.dart';
 export 'package:angular2/src/core/angular_entrypoint.dart'
     show AngularEntrypoint;
@@ -29,7 +27,3 @@ export "src/common/common_directives.dart";
 export "src/common/directives.dart";
 export "src/common/forms.dart";
 export "src/common/pipes.dart";
-
-/// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
-/// This prevents unused import error in dart_analyzed_library build.
-Element __tempElement;
