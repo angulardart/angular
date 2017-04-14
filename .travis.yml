@@ -21,12 +21,6 @@ dart_task:
   - dartanalyzer
   # TODO(kevmoo) Enable codegen tests when issue is fixed
   # https://github.com/dart-lang/angular2/issues/272
-matrix:
-  allow_failures:
-    # Need to figure out how to exclude generated code in with known errors
-    # in test directory
-    - dart_task:
-        dartanalyzer
 cache:
   directories:
     - $HOME/.pub-cache
