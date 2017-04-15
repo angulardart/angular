@@ -206,7 +206,6 @@ class Router {
     });
   }
 
-  /** @internal */
   Future<dynamic> _settleInstruction(Instruction instruction) {
     return instruction.resolveComponent().then((_) {
       List<Future<dynamic>> unsettledInstructions = [];
@@ -223,7 +222,6 @@ class Router {
     });
   }
 
-  /** @internal */
   Future<dynamic> _navigate(
       Instruction instruction, bool _skipLocationChange, bool _replaceState) {
     return this
@@ -251,7 +249,6 @@ class Router {
     _subject.add(url);
   }
 
-  /** @internal */
   void _emitNavigationFail(url) {
     _subject.addError(url);
   }
@@ -266,7 +263,6 @@ class Router {
    * Recursively set reuse flags
    */
 
-  /** @internal */
   Future<dynamic> _routerCanReuse(Instruction instruction) {
     if (_outlet == null) {
       return _resolveToFalse;
@@ -348,13 +344,11 @@ class Router {
     return next.then((_) => Future.wait(promises));
   }
 
-  /** @internal */
   void _startNavigating(String url) {
     this.navigating = true;
     _startNavigationEvent.add(url);
   }
 
-  /** @internal */
   void _finishNavigating() {
     this.navigating = false;
   }

@@ -295,7 +295,6 @@ class SelectorMatcher {
     return result;
   }
 
-  /** @internal */
   bool _matchTerminal(Map<String, List<SelectorContext>> map, name,
       CssSelector cssSelector, void matchedCallback(CssSelector c, dynamic a)) {
     if (map == null || name == null) {
@@ -318,7 +317,6 @@ class SelectorMatcher {
     return result;
   }
 
-  /** @internal */
   bool _matchPartial(Map<String, SelectorMatcher> map, name,
       CssSelector cssSelector, void matchedCallback(CssSelector c, dynamic a)) {
     if (map == null || name == null) {

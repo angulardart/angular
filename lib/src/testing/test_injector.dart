@@ -121,7 +121,7 @@ class InjectSetupWrapper {
     return new FunctionWithParamTokens(tokens, fn, false, this._providers);
   }
 
-  /** @Deprecated {use async(withProviders().inject())} */
+  @Deprecated("Use `async(withProviders().inject())`")
   FunctionWithParamTokens injectAsync(List<dynamic> tokens, Function fn) {
     return new FunctionWithParamTokens(tokens, fn, true, this._providers);
   }
@@ -131,7 +131,7 @@ InjectSetupWrapper withProviders(dynamic providers()) {
   return new InjectSetupWrapper(providers);
 }
 
-/// @Deprecated {use async(inject())}
+/// Deprecated: use `async(inject())`.
 ///
 /// Allows injecting dependencies in `beforeEach()` and `it()`. The test must return
 /// a promise which will resolve when all asynchronous activity is complete.
@@ -145,6 +145,7 @@ InjectSetupWrapper withProviders(dynamic providers()) {
 ///   });
 /// })
 /// ```
+@Deprecated("Use `async(inject())`")
 FunctionWithParamTokens injectAsync(List<dynamic> tokens, Function fn) {
   return new FunctionWithParamTokens(tokens, fn, true);
 }
