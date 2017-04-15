@@ -16,9 +16,9 @@ var _EMPTY_REF_TOKENS = <String, dynamic>{};
 
 class DebugContext<T> implements RenderDebugInfo {
   DebugAppView<T> _view;
-  num _nodeIndex;
-  num _tplRow;
-  num _tplCol;
+  final num _nodeIndex;
+  final num _tplRow;
+  final num _tplCol;
 
   DebugContext(this._view, this._nodeIndex, this._tplRow, this._tplCol);
 

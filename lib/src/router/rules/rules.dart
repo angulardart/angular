@@ -66,7 +66,7 @@ class RedirectRule implements AbstractRule {
 class RouteRule implements AbstractRule {
   RoutePath _routePath;
   RouteHandler handler;
-  String _routeName;
+  final String _routeName;
   String specificity;
   bool terminal;
   String hash;

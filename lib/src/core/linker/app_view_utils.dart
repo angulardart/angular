@@ -23,7 +23,7 @@ AppViewUtils appViewUtils;
 /// provide access to root dom renderer.
 @Injectable()
 class AppViewUtils {
-  String _appId;
+  final String _appId;
   EventManager eventManager;
   static int _nextCompTypeId = 0;
 

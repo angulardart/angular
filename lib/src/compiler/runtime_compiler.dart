@@ -33,7 +33,7 @@ import "xhr.dart" show XHR;
 @Injectable()
 class RuntimeCompiler implements ComponentResolver {
   RuntimeMetadataResolver _runtimeMetadataResolver;
-  DirectiveNormalizer _templateNormalizer;
+  final DirectiveNormalizer _templateNormalizer;
   final TemplateParser _templateParser;
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;

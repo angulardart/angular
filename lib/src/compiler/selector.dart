@@ -151,8 +151,8 @@ class SelectorMatcher {
   var _elementPartialMap = new Map<String, SelectorMatcher>();
   var _classMap = new Map<String, List<SelectorContext>>();
   var _classPartialMap = new Map<String, SelectorMatcher>();
-  var _attrValueMap = new Map<String, Map<String, List<SelectorContext>>>();
-  var _attrValuePartialMap = new Map<String, Map<String, SelectorMatcher>>();
+  final _attrValueMap = new Map<String, Map<String, List<SelectorContext>>>();
+  final _attrValuePartialMap = new Map<String, Map<String, SelectorMatcher>>();
   List<SelectorListContext> _listContexts = [];
   void addSelectables(List<CssSelector> cssSelectors, [dynamic callbackCtxt]) {
     var listContext;
@@ -295,7 +295,6 @@ class SelectorMatcher {
     return result;
   }
 
-  /** @internal */
   bool _matchTerminal(Map<String, List<SelectorContext>> map, name,
       CssSelector cssSelector, void matchedCallback(CssSelector c, dynamic a)) {
     if (map == null || name == null) {
@@ -318,7 +317,6 @@ class SelectorMatcher {
     return result;
   }
 
-  /** @internal */
   bool _matchPartial(Map<String, SelectorMatcher> map, name,
       CssSelector cssSelector, void matchedCallback(CssSelector c, dynamic a)) {
     if (map == null || name == null) {
