@@ -29,6 +29,7 @@ dev_dependencies:
   args: ^0.13.6
   build_runner: ^0.3.0
   build_test: ^0.4.0+1
+  cli_util: ^0.0.1+2
   code_builder: '^1.0.0-beta+4'
   mockito: '>=0.11.0 <3.0.0'
   source_gen: ^0.5.4
