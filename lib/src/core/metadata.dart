@@ -377,9 +377,11 @@ class Directive extends Injectable {
 ///
 /// ### Lifecycle hooks
 ///
-/// When the component class implements some [lifecycle-hooks](docs/guide/lifecycle-hooks.html)
+/// When the component class implements some [lifecycle-hooks][LCH]
 /// the callbacks are called by the change detection at defined points in time
 /// during the life of the component.
+///
+/// [LCH]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks
 class Component extends Directive {
   /// Defines the used change detection strategy.
   ///

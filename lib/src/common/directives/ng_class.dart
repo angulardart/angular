@@ -44,8 +44,8 @@ import 'package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 /// For details, see the [`ngClass` discussion in the Template Syntax][guide]
 /// page.
 ///
-/// [ex]: examples/template-syntax/#ngClass
-/// [guide]: docs/guide/template-syntax.html#ngClass
+/// [ex]: http://angular-examples.github.io/template-syntax/#ngClass
+/// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngClass
 @Directive(
     selector: "[ngClass]",
     inputs: const ["rawClass: ngClass", "initialClasses: class"])
