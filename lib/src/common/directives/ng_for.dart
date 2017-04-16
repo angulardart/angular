@@ -92,7 +92,7 @@ import "../../core/change_detection/differs/default_iterable_differ.dart"
 /// For details, see the [`ngFor` discussion in the Template Syntax][guide]
 /// page.
 ///
-/// [guide]: docs/guide/template-syntax.html#ngFor
+/// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngFor
 @Directive(
     selector: "[ngFor][ngForOf]",
     inputs: const ["ngForTrackBy", "ngForOf", "ngForTemplate"])

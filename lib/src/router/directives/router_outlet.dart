@@ -40,7 +40,7 @@ var _resolveToTrue = new Future.value(true);
 ///   <router-outlet></router-outlet>''',
 /// ```
 ///
-/// [routing]: docs/tutorial/toh-pt5.html#router-outlet
+/// [routing]: https://webdev.dartlang.org/angular/tutorial/toh-pt5.html#router-outlet
 @Directive(selector: "router-outlet")
 class RouterOutlet implements OnDestroy {
   ViewContainerRef _viewContainerRef;
