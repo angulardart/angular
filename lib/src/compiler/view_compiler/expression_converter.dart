@@ -72,7 +72,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   final NameResolver _nameResolver;
   final o.Expression _implicitReceiver;
   final bool preserveWhitespace;
-  o.ReadVarExpr _valueUnwrapper;
+  final o.ReadVarExpr _valueUnwrapper;
   bool needsValueUnwrapper = false;
   _AstToIrVisitor(this._nameResolver, this._implicitReceiver,
       this._valueUnwrapper, this.preserveWhitespace);

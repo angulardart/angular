@@ -78,9 +78,9 @@ const controlNameBinding =
     outputs: const ["update: ngModelChange"],
     exportAs: "ngForm")
 class NgControlName extends NgControl implements OnChanges, OnDestroy {
-  ControlContainer _parent;
-  /* Array<Validator|Function> */ List<dynamic> _validators;
-  var update = new EventEmitter();
+  final ControlContainer _parent;
+  final /* Array<Validator|Function> */ List<dynamic> _validators;
+  final update = new EventEmitter();
   dynamic model;
   dynamic viewModel;
   var _added = false;

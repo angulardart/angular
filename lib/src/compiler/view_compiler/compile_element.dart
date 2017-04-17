@@ -51,7 +51,7 @@ class CompileElement extends CompileNode {
   // so we can create code for more exact type HtmlElement.
   final bool isHtmlElement;
   CompileDirectiveMetadata component;
-  List<CompileDirectiveMetadata> _directives;
+  final List<CompileDirectiveMetadata> _directives;
   List<ProviderAst> _resolvedProvidersArray;
   final bool hasViewContainer;
   final bool hasEmbeddedView;

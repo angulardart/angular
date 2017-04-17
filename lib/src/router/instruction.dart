@@ -210,9 +210,9 @@ class DefaultInstruction extends ResolvedInstruction {
 /// Represents a component that may need to do some redirection or lazy loading
 /// at a later time.
 class UnresolvedInstruction extends Instruction {
-  dynamic /* () => Promise<Instruction> */ _resolver;
-  String _urlPath;
-  List<String> _urlParams;
+  final /* () => Promise<Instruction> */ _resolver;
+  final String _urlPath;
+  final List<String> _urlParams;
 
   UnresolvedInstruction(this._resolver,
       [this._urlPath = "", this._urlParams = const []])
@@ -241,7 +241,7 @@ class UnresolvedInstruction extends Instruction {
 }
 
 class RedirectInstruction extends ResolvedInstruction {
-  String _specificity;
+  final String _specificity;
   RedirectInstruction(ComponentInstruction component, Instruction child,
       Map<String, Instruction> auxInstruction, this._specificity)
       : super(component, child, auxInstruction);

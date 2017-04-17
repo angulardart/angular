@@ -57,7 +57,7 @@ class TestInjector {
 }
 
 class FunctionWithParamTokens {
-  List _tokens;
+  final List _tokens;
   Function fn;
   bool _isAsync = false;
   AsyncTestCompleter _completer;

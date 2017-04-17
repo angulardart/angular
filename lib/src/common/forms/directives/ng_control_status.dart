@@ -16,7 +16,7 @@ import "ng_control.dart" show NgControl;
     "This adds overhead for every form control whether the class is "
     "used or not.")
 class NgControlStatus {
-  NgControl _cd;
+  final NgControl _cd;
   NgControlStatus(@Self() this._cd);
 
   bool get ngClassUntouched =>

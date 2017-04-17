@@ -7,7 +7,7 @@ const OpaqueToken EVENT_MANAGER_PLUGINS =
 
 @Injectable()
 class EventManager {
-  NgZone _zone;
+  final NgZone _zone;
   List<EventManagerPlugin> _plugins;
   Map<String, EventManagerPlugin> _eventToPlugin;
   EventManager(@Inject(EVENT_MANAGER_PLUGINS) List<EventManagerPlugin> plugins,

@@ -21,11 +21,11 @@ import "view_resolver.dart" show ViewResolver;
 
 @Injectable()
 class RuntimeMetadataResolver {
-  DirectiveResolver _directiveResolver;
-  PipeResolver _pipeResolver;
-  ViewResolver _viewResolver;
-  List<Type> _platformDirectives;
-  List<Type> _platformPipes;
+  final DirectiveResolver _directiveResolver;
+  final PipeResolver _pipeResolver;
+  final ViewResolver _viewResolver;
+  final List<Type> _platformDirectives;
+  final List<Type> _platformPipes;
   var _directiveCache = new Map<Type, cpl.CompileDirectiveMetadata>();
   var _pipeCache = new Map<Type, cpl.CompilePipeMetadata>();
   var _anonymousTypes = new Map<Object, num>();

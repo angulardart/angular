@@ -31,7 +31,7 @@ class ViewCompileResult {
 /// - Builds a tree of CompileNode/Element(s)
 @Injectable()
 class ViewCompiler {
-  CompilerConfig _genConfig;
+  final CompilerConfig _genConfig;
   Parser parser;
   ViewCompiler(this._genConfig, this.parser);
 
