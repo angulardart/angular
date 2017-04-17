@@ -28,7 +28,7 @@ typedef dynamic _SimpleChangeFn(value);
       NUMBER_VALUE_ACCESSOR
     ])
 class NumberValueAccessor implements ControlValueAccessor {
-  ElementRef _elementRef;
+  final ElementRef _elementRef;
   _SimpleChangeFn onChange = (_) {};
   void touchHandler() {
     onTouched();

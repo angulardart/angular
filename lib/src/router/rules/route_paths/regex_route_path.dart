@@ -5,7 +5,7 @@ typedef GeneratedUrl RegexSerializer(Map<String, dynamic> params);
 
 class RegexRoutePath implements RoutePath {
   String _reString;
-  RegexSerializer _serializer;
+  final RegexSerializer _serializer;
   String hash;
   bool terminal = true;
   String specificity = "2";

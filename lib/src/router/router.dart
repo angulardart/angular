@@ -206,7 +206,6 @@ class Router {
     });
   }
 
-  /** @internal */
   Future<dynamic> _settleInstruction(Instruction instruction) {
     return instruction.resolveComponent().then((_) {
       List<Future<dynamic>> unsettledInstructions = [];
@@ -223,7 +222,6 @@ class Router {
     });
   }
 
-  /** @internal */
   Future<dynamic> _navigate(
       Instruction instruction, bool _skipLocationChange, bool _replaceState) {
     return this
@@ -251,7 +249,6 @@ class Router {
     _subject.add(url);
   }
 
-  /** @internal */
   void _emitNavigationFail(url) {
     _subject.addError(url);
   }
@@ -266,7 +263,6 @@ class Router {
    * Recursively set reuse flags
    */
 
-  /** @internal */
   Future<dynamic> _routerCanReuse(Instruction instruction) {
     if (_outlet == null) {
       return _resolveToFalse;
@@ -348,13 +344,11 @@ class Router {
     return next.then((_) => Future.wait(promises));
   }
 
-  /** @internal */
   void _startNavigating(String url) {
     this.navigating = true;
     _startNavigationEvent.add(url);
   }
 
-  /** @internal */
   void _finishNavigating() {
     this.navigating = false;
   }
@@ -422,15 +416,12 @@ class Router {
 
 @Injectable()
 class RootRouter extends Router {
-  /** @internal */
-  Location _location;
-  /** @internal */
+  final Location _location;
   var _locationSub;
-  RootRouter(RouteRegistry registry, Location location,
+  RootRouter(RouteRegistry registry, this._location,
       @Inject(ROUTER_PRIMARY_COMPONENT) dynamic primaryComponent)
       : super(registry, null, primaryComponent) {
     this.root = this;
-    this._location = location;
     this._locationSub = this._location.subscribe((change) {
       // we call recognize ourselves
       this.recognize(change["url"]).then((instruction) {
@@ -474,7 +465,7 @@ class RootRouter extends Router {
       });
     });
     this.registry.configFromComponent(primaryComponent);
-    this.navigateByUrl(location.path());
+    this.navigateByUrl(_location.path());
   }
   Future<dynamic> commit(Instruction instruction,
       [bool _skipLocationChange = false, bool _replaceState = false]) {

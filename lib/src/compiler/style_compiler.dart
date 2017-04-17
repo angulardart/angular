@@ -35,8 +35,8 @@ class StylesCompileResult {
 
 @Injectable()
 class StyleCompiler {
-  CompilerConfig _config;
-  UrlResolver _urlResolver;
+  final CompilerConfig _config;
+  final UrlResolver _urlResolver;
   bool usesContentAttribute;
   bool usesHostAttribute;
 

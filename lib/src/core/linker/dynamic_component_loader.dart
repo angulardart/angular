@@ -114,7 +114,7 @@ abstract class DynamicComponentLoader {
 
 @Injectable()
 class DynamicComponentLoaderImpl extends DynamicComponentLoader {
-  ComponentResolver _compiler;
+  final ComponentResolver _compiler;
   DynamicComponentLoaderImpl(this._compiler);
 
   @override

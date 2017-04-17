@@ -15,9 +15,9 @@ import "xhr.dart" show XHR;
 
 @Injectable()
 class DirectiveNormalizer {
-  XHR _xhr;
-  UrlResolver _urlResolver;
-  HtmlParser _htmlParser;
+  final XHR _xhr;
+  final UrlResolver _urlResolver;
+  final HtmlParser _htmlParser;
   DirectiveNormalizer(this._xhr, this._urlResolver, this._htmlParser);
   Future<CompileDirectiveMetadata> normalizeDirective(
       CompileDirectiveMetadata directive) {

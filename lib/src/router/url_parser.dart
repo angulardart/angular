@@ -35,7 +35,6 @@ class Url {
     return this.path + this._matrixParamsToString();
   }
 
-  /** @internal */
   String _auxToString() {
     return this.auxiliary.length > 0
         ? ("(" +
@@ -56,7 +55,6 @@ class Url {
     return "";
   }
 
-  /** @internal */
   String _childString() {
     return this.child != null ? ("/" + this.child.toString()) : "";
   }
