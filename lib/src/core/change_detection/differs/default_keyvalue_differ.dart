@@ -4,13 +4,20 @@ import 'package:angular2/src/facade/lang.dart' show looseIdentical;
 class DefaultKeyValueDiffer {
   Map<dynamic, dynamic> _records = new Map();
   KeyValueChangeRecord _mapHead;
+
+  KeyValueChangeRecord _appendAfter;
+
   KeyValueChangeRecord _previousMapHead;
+
   KeyValueChangeRecord _changesHead;
   KeyValueChangeRecord _changesTail;
+
   KeyValueChangeRecord _additionsHead;
   KeyValueChangeRecord _additionsTail;
+
   KeyValueChangeRecord _removalsHead;
   KeyValueChangeRecord _removalsTail;
+
   bool get isDirty {
     return !identical(this._additionsHead, null) ||
         !identical(this._changesHead, null) ||
@@ -74,219 +81,134 @@ class DefaultKeyValueDiffer {
     }
   }
 
-  void onDestroy() {}
+  /// Check for differences in [map] since the previous invocation.
+  ///
+  /// Optimized for no key changes.
   bool check(Map<dynamic, dynamic> map) {
-    this._reset();
-    var records = this._records;
-    KeyValueChangeRecord oldSeqRecord = this._mapHead;
-    KeyValueChangeRecord lastOldSeqRecord;
-    KeyValueChangeRecord lastNewSeqRecord;
-    bool seqChanged = false;
-    this._forEach(map, (value, key) {
-      var newSeqRecord;
-      if (!identical(oldSeqRecord, null) && identical(key, oldSeqRecord.key)) {
-        newSeqRecord = oldSeqRecord;
-        if (!looseIdentical(value, oldSeqRecord.currentValue)) {
-          oldSeqRecord.previousValue = oldSeqRecord.currentValue;
-          oldSeqRecord.currentValue = value;
-          this._addToChanges(oldSeqRecord);
-        }
+    _reset();
+
+    var insertBefore = _mapHead;
+    _appendAfter = null;
+
+    _forEach(map, (value, key) {
+      if (insertBefore?.key == key) {
+        _maybeAddToChanges(insertBefore, value);
+        _appendAfter = insertBefore;
+        insertBefore = insertBefore._next;
       } else {
-        seqChanged = true;
-        if (!identical(oldSeqRecord, null)) {
-          oldSeqRecord._next = null;
-          this._removeFromSeq(lastOldSeqRecord, oldSeqRecord);
-          this._addToRemovals(oldSeqRecord);
-        }
-        if (records.containsKey(key)) {
-          newSeqRecord = records[key];
-        } else {
-          newSeqRecord = new KeyValueChangeRecord(key);
-          records[key] = newSeqRecord;
-          newSeqRecord.currentValue = value;
-          this._addToAdditions(newSeqRecord);
-        }
+        var record = _getOrCreateRecord(key, value);
+        insertBefore = _insertBeforeOrAppend(insertBefore, record);
       }
-      if (seqChanged) {
-        if (this._isInRemovals(newSeqRecord)) {
-          this._removeFromRemovals(newSeqRecord);
-        }
-        if (lastNewSeqRecord == null) {
-          this._mapHead = newSeqRecord;
-        } else {
-          lastNewSeqRecord._next = newSeqRecord;
-        }
-      }
-      lastOldSeqRecord = oldSeqRecord;
-      lastNewSeqRecord = newSeqRecord;
-      oldSeqRecord = identical(oldSeqRecord, null) ? null : oldSeqRecord._next;
     });
-    this._truncate(lastOldSeqRecord, oldSeqRecord);
-    return this.isDirty;
+
+    // Items remaining at the end of the list have been removed.
+    if (insertBefore != null) {
+      // Truncate end of list.
+      insertBefore._prev?._next = null;
+
+      _removalsHead = insertBefore;
+      _removalsTail = insertBefore;
+
+      if (_removalsHead == _mapHead) {
+        _mapHead = null;
+      }
+
+      for (var record = insertBefore;
+          record != null;
+          record = record._nextRemoved) {
+        _records.remove(record.key);
+        record._nextRemoved = record._next;
+        record.previousValue = record.currentValue;
+        record.currentValue = null;
+        record._prev = null;
+        record._next = null;
+      }
+    }
+
+    return isDirty;
+  }
+
+  /// Inserts a record before [before] or appends if [before] is null.
+  ///
+  /// Returns the new insertion pointer.
+  KeyValueChangeRecord _insertBeforeOrAppend(
+      KeyValueChangeRecord before, KeyValueChangeRecord record) {
+    if (before != null) {
+      record._next = before;
+      record._prev = before._prev;
+      before._prev?._next = record;
+      before._prev = record;
+      if (before == _mapHead) {
+        _mapHead = record;
+      }
+
+      _appendAfter = before;
+      return before;
+    }
+
+    if (_appendAfter != null) {
+      _appendAfter._next = record;
+      record._prev = _appendAfter;
+    } else {
+      _mapHead = record;
+    }
+
+    _appendAfter = record;
+    return null;
+  }
+
+  KeyValueChangeRecord _getOrCreateRecord(key, value) {
+    if (_records.containsKey(key)) {
+      var record = _records[key];
+      _maybeAddToChanges(record, value);
+      record._prev?._next = record._next;
+      record._next?._prev = record._prev;
+      record._prev = null;
+      record._next = null;
+      return record;
+    }
+
+    var record = new KeyValueChangeRecord(key)..currentValue = value;
+    _records[key] = record;
+    _addToAdditions(record);
+    return record;
+  }
+
+  void _maybeAddToChanges(KeyValueChangeRecord record, dynamic value) {
+    if (!looseIdentical(value, record.currentValue)) {
+      record.previousValue = record.currentValue;
+      record.currentValue = value;
+      _addToChanges(record);
+    }
   }
 
   void _reset() {
     if (this.isDirty) {
-      KeyValueChangeRecord record;
-      // Record the state of the mapping
-      for (record = this._previousMapHead = this._mapHead;
-          !identical(record, null);
+      // Map state before changes.
+      _previousMapHead = _mapHead;
+
+      for (var record = this._previousMapHead;
+          record != null;
           record = record._next) {
         record._nextPrevious = record._next;
       }
-      for (record = this._changesHead;
-          !identical(record, null);
+
+      for (var record = this._changesHead;
+          record != null;
           record = record._nextChanged) {
         record.previousValue = record.currentValue;
       }
-      for (record = this._additionsHead;
+
+      for (var record = this._additionsHead;
           record != null;
           record = record._nextAdded) {
         record.previousValue = record.currentValue;
       }
-      // todo(vicb) once assert is supported
 
-      // assert(() {
-
-      //  var r = _changesHead;
-
-      //  while (r != null) {
-
-      //    var nextRecord = r._nextChanged;
-
-      //    r._nextChanged = null;
-
-      //    r = nextRecord;
-
-      //  }
-
-      //
-
-      //  r = _additionsHead;
-
-      //  while (r != null) {
-
-      //    var nextRecord = r._nextAdded;
-
-      //    r._nextAdded = null;
-
-      //    r = nextRecord;
-
-      //  }
-
-      //
-
-      //  r = _removalsHead;
-
-      //  while (r != null) {
-
-      //    var nextRecord = r._nextRemoved;
-
-      //    r._nextRemoved = null;
-
-      //    r = nextRecord;
-
-      //  }
-
-      //
-
-      //  return true;
-
-      //});
       this._changesHead = this._changesTail = null;
       this._additionsHead = this._additionsTail = null;
       this._removalsHead = this._removalsTail = null;
     }
-  }
-
-  void _truncate(KeyValueChangeRecord lastRecord, KeyValueChangeRecord record) {
-    while (!identical(record, null)) {
-      if (identical(lastRecord, null)) {
-        this._mapHead = null;
-      } else {
-        lastRecord._next = null;
-      }
-      var nextRecord = record._next;
-      // todo(vicb) assert
-
-      // assert((() {
-
-      //  record._next = null;
-
-      //  return true;
-
-      //}));
-      this._addToRemovals(record);
-      lastRecord = record;
-      record = nextRecord;
-    }
-    for (KeyValueChangeRecord rec = this._removalsHead;
-        !identical(rec, null);
-        rec = rec._nextRemoved) {
-      rec.previousValue = rec.currentValue;
-      rec.currentValue = null;
-      (this._records.containsKey(rec.key) &&
-          (this._records.remove(rec.key) != null || true));
-    }
-  }
-
-  bool _isInRemovals(KeyValueChangeRecord record) {
-    return identical(record, this._removalsHead) ||
-        !identical(record._nextRemoved, null) ||
-        !identical(record._prevRemoved, null);
-  }
-
-  void _addToRemovals(KeyValueChangeRecord record) {
-    // todo(vicb) assert
-
-    // assert(record._next == null);
-
-    // assert(record._nextAdded == null);
-
-    // assert(record._nextChanged == null);
-
-    // assert(record._nextRemoved == null);
-
-    // assert(record._prevRemoved == null);
-    if (identical(this._removalsHead, null)) {
-      this._removalsHead = this._removalsTail = record;
-    } else {
-      this._removalsTail._nextRemoved = record;
-      record._prevRemoved = this._removalsTail;
-      this._removalsTail = record;
-    }
-  }
-
-  void _removeFromSeq(KeyValueChangeRecord prev, KeyValueChangeRecord record) {
-    var next = record._next;
-    if (identical(prev, null)) {
-      this._mapHead = next;
-    } else {
-      prev._next = next;
-    }
-  }
-
-  void _removeFromRemovals(KeyValueChangeRecord record) {
-    // todo(vicb) assert
-
-    // assert(record._next == null);
-
-    // assert(record._nextAdded == null);
-
-    // assert(record._nextChanged == null);
-    var prev = record._prevRemoved;
-    var next = record._nextRemoved;
-    if (identical(prev, null)) {
-      this._removalsHead = next;
-    } else {
-      prev._nextRemoved = next;
-    }
-    if (identical(next, null)) {
-      this._removalsTail = prev;
-    } else {
-      next._prevRemoved = prev;
-    }
-    record._prevRemoved = record._nextRemoved = null;
   }
 
   void _addToAdditions(KeyValueChangeRecord record) {
@@ -397,11 +319,11 @@ class KeyValueChangeRecord {
 
   KeyValueChangeRecord _next;
 
+  KeyValueChangeRecord _prev;
+
   KeyValueChangeRecord _nextAdded;
 
   KeyValueChangeRecord _nextRemoved;
-
-  KeyValueChangeRecord _prevRemoved;
 
   KeyValueChangeRecord _nextChanged;
   KeyValueChangeRecord(this.key);

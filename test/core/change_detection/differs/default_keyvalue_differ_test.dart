@@ -115,6 +115,19 @@ void main() {
         expect(differ.toString(),
             kvChangesAsString(map: ["foo"], previous: ["foo"]));
       }, tags: ['known_ff_failure']);
+
+      test('should detect removals when first item is moved', () {
+        differ.check({'a': 1, 'b': 2});
+        differ.check({'c': 3, 'a': 1});
+
+        expect(
+            differ.toString(),
+            kvChangesAsString(
+                map: ['c[null->3]', 'a'],
+                previous: ['a', 'b[2->null]'],
+                additions: ['c[null->3]'],
+                removals: ['b[2->null]']));
+      });
     });
   });
 }
