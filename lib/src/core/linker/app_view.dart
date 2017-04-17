@@ -523,6 +523,10 @@ abstract class AppView<T> {
         } else {
           _appendNestedViewRenderNodes(parentElement, projectable);
         }
+      } else if (projectable is List) {
+        for (int n = 0, len = projectable.length; n < len; n++) {
+          parentElement.append(projectable[n]);
+        }
       } else {
         Node child = projectable;
         parentElement.append(child);
