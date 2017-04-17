@@ -93,6 +93,12 @@ void main() {
       expect(div1.getComputedStyle().color, 'rgb(0, 0, 255)');
       expect(div2.getComputedStyle().color, 'rgb(0, 0, 0)');
     });
+
+    test('should project ng-content using select query', () async {
+      var testBed = new NgTestBed<MyListUserProjectionTest>();
+      var testFixture = await testBed.create();
+      expect(testFixture.rootElement, hasTextContent('item1item2TheEnd'));
+    });
   });
 }
 
@@ -194,3 +200,29 @@ class ContainerWithStyleEmulated {}
     encapsulation: ViewEncapsulation.None,
     directives: const [SimpleComponent])
 class ContainerWithStyleNotEmulated {}
+
+@Component(
+    selector: 'mylist-user',
+    template: '<mylist>'
+        '<span list-item>item1</span>'
+        '<span list-item>item2</span>'
+        '</mylist>',
+    directives: const [MyListComponent, MyListItemComponent],
+    preserveWhitespace: false)
+class MyListUserProjectionTest {}
+
+@Component(
+    selector: 'mylist',
+    template: '<mylist-item>'
+        '<ng-content select="[list-item]"></ng-content>'
+        '</mylist-item>'
+        '<div>TheEnd</div>',
+    directives: const [MyListItemComponent],
+    preserveWhitespace: false)
+class MyListComponent {}
+
+@Component(
+    selector: 'mylist-item',
+    template: '<ng-content></ng-content>',
+    preserveWhitespace: false)
+class MyListItemComponent {}
