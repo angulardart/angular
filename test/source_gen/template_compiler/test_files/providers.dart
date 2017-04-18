@@ -2,6 +2,7 @@ import 'package:angular2/angular2.dart';
 
 @Component(selector: 'providers', template: 'Hello', providers: const [
   MyTypeAnnotation,
+  MyInjectableTypeAnnotation,
   const Provider(
     MyUseFactory,
     useFactory: ProvidersComponent.createService,
@@ -49,6 +50,9 @@ class ProvidersComponent {
 }
 
 class MyTypeAnnotation {}
+
+@Injectable()
+class MyInjectableTypeAnnotation {}
 
 class MyUseExisting {}
 

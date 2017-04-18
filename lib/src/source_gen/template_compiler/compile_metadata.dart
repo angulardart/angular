@@ -72,7 +72,18 @@ class CompileTypeMetadataVisitor
     // If `provider` is a type literal, then treat it as a `useClass` provider
     // with the class literal itself as the token.
     if (provider.toTypeValue() != null) {
-      var metadata = _getCompileTypeMetadata(provider.toTypeValue().element);
+      var element = provider.toTypeValue().element;
+      if (element is! ClassElement) {
+        _logger.warning('Expected to find class in provider list, but instead '
+            'found $provider');
+        return null;
+      }
+      var metadata = visitClassElement(element as ClassElement);
+      if (metadata == null) {
+        _logger.warning(
+            'Skipping non-injectable element $provider in provider list.');
+        return null;
+      }
       return new CompileProviderMetadata(
         token: new CompileTokenMetadata(identifier: metadata),
         useClass: metadata,
