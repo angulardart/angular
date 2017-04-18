@@ -144,7 +144,16 @@ class CompileTypeMetadataVisitor
     var maybeUseValue = provider.getField('useValue');
     if (!dart_objects.isNull(maybeUseValue)) {
       if (maybeUseValue.toStringValue() == noValueProvided) return null;
-      return _useValueExpression(maybeUseValue);
+      try {
+        return _useValueExpression(maybeUseValue);
+      } on _PrivateConstructorException catch (e) {
+        _logger.severe(
+            'Could not link provider "${provider.getField('token')}" to '
+            '"${e.constructorName}". You may have valid Dart code but the '
+            'angular2 compiler has limited support for `useValue` that '
+            'eventually uses a private constructor. As a workaround we '
+            'recommend `useFactory`.');
+      }
     }
     return null;
   }
@@ -327,6 +336,10 @@ class CompileTypeMetadataVisitor
     var importType = o.importType(id, null, [o.TypeModifier.Const]);
 
     if (invocation.constructor.name.isNotEmpty) {
+      if (invocation.constructor.name.startsWith('_')) {
+        throw new _PrivateConstructorException(
+            '${id.name}.${invocation.constructor.name}');
+      }
       return new o.InstantiateExpr(
           type.prop(invocation.constructor.name), params, importType);
     }
@@ -450,4 +463,9 @@ class CompileTypeMetadataVisitor
         .importExpr(_idFor(token.type))
         .prop(dart_objects.coerceString(token, 'name'));
   }
+}
+
+class _PrivateConstructorException {
+  final String constructorName;
+  _PrivateConstructorException(this.constructorName);
 }
