@@ -58,6 +58,7 @@ class _InterpretiveAppView<T> extends DebugAppView<T>
         );
 
   // This getter is accessed by reflective tests
+  // ignore: unused_element
   T get _ctx => ctx;
 
   @override

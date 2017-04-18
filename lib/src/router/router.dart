@@ -12,8 +12,8 @@ import "route_config/route_config_decorator.dart" show RouteDefinition;
 import "route_registry.dart" show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
 import "utils.dart" show getCanActivateHook;
 
-var _resolveToTrue = new Future.value(true);
-var _resolveToFalse = new Future.value(false);
+final _resolveToTrue = new Future<bool>.value(true);
+final _resolveToFalse = new Future<bool>.value(false);
 
 /// The `Router` is responsible for mapping URLs to components.
 ///

@@ -80,7 +80,7 @@ const controlNameBinding =
 class NgControlName extends NgControl implements OnChanges, OnDestroy {
   final ControlContainer _parent;
   final /* Array<Validator|Function> */ List<dynamic> _validators;
-  final update = new EventEmitter();
+  final update = new EventEmitter<dynamic>();
   dynamic model;
   dynamic viewModel;
   var _added = false;

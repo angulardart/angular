@@ -20,21 +20,21 @@ class ExternalClass {
   }
 }
 
-var testDataIdentifier = new CompileIdentifierMetadata(
+var testDataIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ExternalClass",
     moduleUrl:
         '''asset:angular2/test/compiler/output/output_emitter_util${ MODULE_SUFFIX}''',
     runtime: ExternalClass);
-var eventEmitterIdentifier = new CompileIdentifierMetadata(
+var eventEmitterIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "EventEmitter",
     moduleUrl: '''asset:angular2/lib/src/facade/async${ MODULE_SUFFIX}''',
     runtime: EventEmitter);
-var enumIdentifier = new CompileIdentifierMetadata(
+var enumIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ViewType.HOST",
     moduleUrl:
         '''asset:angular2/lib/src/core/linker/view_type${ MODULE_SUFFIX}''',
     runtime: ViewType.HOST);
-var baseExceptionIdentifier = new CompileIdentifierMetadata(
+var baseExceptionIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "BaseException",
     moduleUrl: '''asset:angular2/lib/src/facade/exceptions${ MODULE_SUFFIX}''',
     runtime: BaseException);
