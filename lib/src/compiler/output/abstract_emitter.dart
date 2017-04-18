@@ -569,7 +569,11 @@ abstract class AbstractEmitterVisitor
     ctx.print('{', useNewLine);
     ctx.incIndent();
     this.visitAllObjects((entry) {
-      ctx.print(escapeSingleQuoteString(entry[0], _escapeDollarInStrings));
+      if (entry[0] is o.Expression) {
+        entry[0].visitExpression(this, ctx);
+      } else {
+        ctx.print(escapeSingleQuoteString(entry[0], _escapeDollarInStrings));
+      }
       ctx.print(': ');
       entry[1].visitExpression(this, ctx);
     }, ast.entries, ctx, ',', newLine: useNewLine, keepOnSameLine: false);

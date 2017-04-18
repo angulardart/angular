@@ -307,6 +307,9 @@ class CompileTypeMetadataVisitor
       return new o.LiteralArrayExpr(
           token.toListValue().map(_useValueExpression).toList(),
           new o.ArrayType(null, [o.TypeModifier.Const]));
+    } else if (token.toMapValue() != null) {
+      return new o.LiteralMapExpr(_toMapEntities(token.toMapValue()),
+          new o.MapType(null, [o.TypeModifier.Const]));
     } else if (token.toTypeValue() != null) {
       return o.importExpr(_idFor(token.toTypeValue()));
     } else if (_isEnum(token.type)) {
@@ -321,6 +324,15 @@ class CompileTypeMetadataVisitor
       throw new ArgumentError(
           'Could not create useValue expression for $token');
     }
+  }
+
+  List<List> _toMapEntities(Map<DartObject, DartObject> tokens) {
+    final entities = <List>[];
+    for (DartObject key in tokens.keys) {
+      entities
+          .add([_useValueExpression(key), _useValueExpression(tokens[key])]);
+    }
+    return entities;
   }
 
   o.Expression _expressionForType(DartObject token) {

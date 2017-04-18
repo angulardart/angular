@@ -82,6 +82,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
         const OpaqueToken('useValueString'),
         import2.MyMulti,
         const OpaqueToken('useValueList'),
+        const OpaqueToken('useValueMap'),
         const OpaqueToken('useEnums')
       ],
       import2.ProvidersComponent,
@@ -98,7 +99,8 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   String __const_OpaqueToken__useValueString___0_9;
   List<dynamic> __MyMulti_0_10;
   List<dynamic> __const_OpaqueToken__useValueList___0_11;
-  dynamic __const_OpaqueToken__useEnums___0_12;
+  Map<String, dynamic> __const_OpaqueToken__useValueMap___0_12;
+  dynamic __const_OpaqueToken__useEnums___0_13;
   static RenderComponentType renderType;
   ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -173,12 +175,23 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__const_OpaqueToken__useValueList___0_11;
   }
 
-  dynamic get _const_OpaqueToken__useEnums___0_12 {
+  Map<String, dynamic> get _const_OpaqueToken__useValueMap___0_12 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__useEnums___0_12 == null)) {
-      (__const_OpaqueToken__useEnums___0_12 = import2.MyEnum.first);
+    if ((this.__const_OpaqueToken__useValueMap___0_12 == null)) {
+      (__const_OpaqueToken__useValueMap___0_12 = const {
+        'Andrew': const import2.MyUseValue('Andrew'),
+        'Matan': const import2.MyUseValue('Matan')
+      });
     }
-    return this.__const_OpaqueToken__useEnums___0_12;
+    return this.__const_OpaqueToken__useValueMap___0_12;
+  }
+
+  dynamic get _const_OpaqueToken__useEnums___0_13 {
+    dbg(0, 0, 0);
+    if ((this.__const_OpaqueToken__useEnums___0_13 == null)) {
+      (__const_OpaqueToken__useEnums___0_13 = import2.MyEnum.first);
+    }
+    return this.__const_OpaqueToken__useEnums___0_13;
   }
 
   ComponentRef build() {
@@ -223,8 +236,12 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
         (0 == nodeIndex))) {
       return _const_OpaqueToken__useValueList___0_11;
     }
+    if ((identical(token, const OpaqueToken('useValueMap')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken__useValueMap___0_12;
+    }
     if ((identical(token, const OpaqueToken('useEnums')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__useEnums___0_12;
+      return _const_OpaqueToken__useEnums___0_13;
     }
     return notFoundResult;
   }
