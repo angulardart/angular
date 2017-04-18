@@ -62,7 +62,7 @@ const List<dynamic> styles_ProvidersComponentHost = const [];
 class ViewProvidersComponentHost0 extends AppView<dynamic> {
   AppView<import1.ProvidersComponent> _compView_0;
   import1.ProvidersComponent _ProvidersComponent_0_2;
-  import1.MyTypeAnnotation __MyTypeAnnotation_0_3;
+  import1.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_3;
   dynamic __MyUseFactory_0_4;
   import1.MyUseClass __MyUseClass_0_5;
   import1.MyUseValue __MyUseValue_0_8;
@@ -79,11 +79,12 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_ProvidersComponentHost);
     setupComponentType(renderType);
   }
-  import1.MyTypeAnnotation get _MyTypeAnnotation_0_3 {
-    if ((this.__MyTypeAnnotation_0_3 == null)) {
-      (__MyTypeAnnotation_0_3 = new import1.MyTypeAnnotation());
+  import1.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_3 {
+    if ((this.__MyInjectableTypeAnnotation_0_3 == null)) {
+      (__MyInjectableTypeAnnotation_0_3 =
+          new import1.MyInjectableTypeAnnotation());
     }
-    return this.__MyTypeAnnotation_0_3;
+    return this.__MyInjectableTypeAnnotation_0_3;
   }
 
   dynamic get _MyUseFactory_0_4 {
@@ -165,8 +166,9 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
     if ((identical(token, import1.ProvidersComponent) && (0 == nodeIndex))) {
       return _ProvidersComponent_0_2;
     }
-    if ((identical(token, import1.MyTypeAnnotation) && (0 == nodeIndex))) {
-      return _MyTypeAnnotation_0_3;
+    if ((identical(token, import1.MyInjectableTypeAnnotation) &&
+        (0 == nodeIndex))) {
+      return _MyInjectableTypeAnnotation_0_3;
     }
     if ((identical(token, import1.MyUseFactory) && (0 == nodeIndex))) {
       return _MyUseFactory_0_4;
@@ -221,7 +223,12 @@ const ComponentFactory ProvidersComponentNgFactory = const ComponentFactory(
     viewFactory_ProvidersComponentHost0,
     import1.ProvidersComponent,
     _METADATA);
-const _METADATA = const <dynamic>[ProvidersComponent, const <dynamic>[]];
+const _METADATA = const <dynamic>[
+  ProvidersComponent,
+  const <dynamic>[],
+  MyInjectableTypeAnnotation,
+  const <dynamic>[const Injectable()]
+];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -232,5 +239,9 @@ void initReflector() {
       ProvidersComponent,
       new _ngRef.ReflectionInfo(const <dynamic>[ProvidersComponentNgFactory],
           const [], () => new ProvidersComponent()));
+  _ngRef.reflector.registerType(
+      MyInjectableTypeAnnotation,
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
+          () => new MyInjectableTypeAnnotation()));
   _i1.initReflector();
 }
