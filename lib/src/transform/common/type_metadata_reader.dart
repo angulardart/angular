@@ -943,7 +943,8 @@ class _CompileTemplateMetadataVisitor
   }
 
   static final _viewEncapsulationMap =
-      new Map.fromIterable(ViewEncapsulation.values, key: (v) => v.toString());
+      new Map<String, ViewEncapsulation>.fromIterable(ViewEncapsulation.values,
+          key: (v) => v.toString());
 }
 
 /// Visitor responsible for processing a [Pipe] annotated

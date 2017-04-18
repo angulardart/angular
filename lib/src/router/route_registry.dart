@@ -22,7 +22,7 @@ import "rules/rules.dart" show PathMatch, RedirectMatch, RouteMatch;
 import "url_parser.dart" show parser, Url, convertUrlParamsToArray;
 import "utils.dart" show getComponentAnnotations, getComponentType;
 
-var _resolveToNull = new Future.value();
+var _resolveToNull = new Future<Null>.value(null);
 // A LinkItemArray is an array, which describes a set of routes
 
 // The items in the array are found in groups:

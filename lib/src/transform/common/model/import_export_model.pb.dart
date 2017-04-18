@@ -63,7 +63,7 @@ class ImportModel extends GeneratedMessage {
   void clearIsDeferred() => clearField(5);
 }
 
-class _ReadonlyImportModel extends ImportModel with ReadonlyMessageMixin {}
+class _ReadonlyImportModel extends ImportModel {}
 
 class ExportModel extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('ExportModel')
@@ -105,7 +105,7 @@ class ExportModel extends GeneratedMessage {
   List<String> get hideCombinators => $_get(2, 3, null);
 }
 
-class _ReadonlyExportModel extends ExportModel with ReadonlyMessageMixin {}
+class _ReadonlyExportModel extends ExportModel {}
 
 const ImportModel$json = const {
   '1': 'ImportModel',

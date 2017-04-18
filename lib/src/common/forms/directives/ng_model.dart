@@ -61,7 +61,7 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 class NgModel extends NgControl implements OnChanges, OnInit {
   final List<dynamic> _validators;
   final _control = new Control();
-  final update = new EventEmitter(false);
+  final update = new EventEmitter<dynamic>(false);
   dynamic model;
   dynamic viewModel;
   NgModel(

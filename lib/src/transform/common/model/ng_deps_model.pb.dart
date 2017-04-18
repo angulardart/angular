@@ -70,7 +70,7 @@ class NgDepsModel extends GeneratedMessage {
   List<ImportModel> get depImports => $_get(6, 7, null);
 }
 
-class _ReadonlyNgDepsModel extends NgDepsModel with ReadonlyMessageMixin {}
+class _ReadonlyNgDepsModel extends NgDepsModel {}
 
 const NgDepsModel$json = const {
   '1': 'NgDepsModel',

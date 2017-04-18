@@ -50,8 +50,7 @@ class NamedParameter extends GeneratedMessage {
   void clearValue() => clearField(2);
 }
 
-class _ReadonlyNamedParameter extends NamedParameter with ReadonlyMessageMixin {
-}
+class _ReadonlyNamedParameter extends NamedParameter {}
 
 class AnnotationModel extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('AnnotationModel')
@@ -105,8 +104,7 @@ class AnnotationModel extends GeneratedMessage {
   void clearIsConstObject() => clearField(4);
 }
 
-class _ReadonlyAnnotationModel extends AnnotationModel
-    with ReadonlyMessageMixin {}
+class _ReadonlyAnnotationModel extends AnnotationModel {}
 
 const NamedParameter$json = const {
   '1': 'NamedParameter',

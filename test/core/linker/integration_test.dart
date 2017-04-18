@@ -2105,7 +2105,7 @@ class IdDir {
 @Injectable()
 class EventDir {
   @Output()
-  var customEvent = new EventEmitter();
+  var customEvent = new EventEmitter<String>();
 
   doSomething() {}
 }
@@ -2191,11 +2191,11 @@ class ToolbarComponent {
     outputs: const ['controlChange'])
 @Injectable()
 class DirectiveWithTwoWayBinding {
-  var controlChange = new EventEmitter();
+  var controlChange = new EventEmitter<String>();
   var control;
 
-  triggerChange(value) {
-    this.controlChange.add(value);
+  triggerChange(String value) {
+    controlChange.add(value);
   }
 }
 
@@ -2394,10 +2394,13 @@ class ComponentWithTemplate {
 @Directive(selector: 'with-prop-decorators')
 class DirectiveWithPropDecorators {
   var target;
+
   @Input('elProp')
   String dirProp;
+
   @Output('elEvent')
-  var event = new EventEmitter();
+  var event = new EventEmitter<String>();
+
   @HostBinding('attr.my-attr')
   String myAttr;
 

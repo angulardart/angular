@@ -92,7 +92,7 @@ class FunctionWithParamTokens {
 class AsyncTestCompleter {
   static Future currentTestFuture;
 
-  final _completer = new Completer();
+  final _completer = new Completer<dynamic>();
 
   AsyncTestCompleter() {
     currentTestFuture = this.future;

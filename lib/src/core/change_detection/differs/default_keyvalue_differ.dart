@@ -16,6 +16,8 @@ class DefaultKeyValueDiffer {
   KeyValueChangeRecord _additionsTail;
 
   KeyValueChangeRecord _removalsHead;
+
+  // ignore: unused_field
   KeyValueChangeRecord _removalsTail;
 
   bool get isDirty {

@@ -63,8 +63,7 @@ class ParameterModel extends GeneratedMessage {
   void clearParamName() => clearField(4);
 }
 
-class _ReadonlyParameterModel extends ParameterModel with ReadonlyMessageMixin {
-}
+class _ReadonlyParameterModel extends ParameterModel {}
 
 const ParameterModel$json = const {
   '1': 'ParameterModel',

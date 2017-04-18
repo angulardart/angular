@@ -9,9 +9,9 @@ import 'package:test/test.dart';
 
 var someModuleUrl = 'asset:somePackage/lib/somePath';
 var anotherModuleUrl = 'asset:somePackage/lib/someOtherPath';
-var sameModuleIdentifier = new CompileIdentifierMetadata(
+var sameModuleIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: 'someLocalId', moduleUrl: someModuleUrl);
-var externalModuleIdentifier = new CompileIdentifierMetadata(
+var externalModuleIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: 'someExternalId', moduleUrl: anotherModuleUrl);
 
 void main() {

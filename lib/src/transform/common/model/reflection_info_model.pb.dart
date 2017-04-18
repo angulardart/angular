@@ -53,7 +53,7 @@ class PrefixedType extends GeneratedMessage {
   void clearName() => clearField(2);
 }
 
-class _ReadonlyPrefixedType extends PrefixedType with ReadonlyMessageMixin {}
+class _ReadonlyPrefixedType extends PrefixedType {}
 
 class ReflectionInfoModel extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('ReflectionInfoModel')
@@ -129,8 +129,7 @@ class ReflectionInfoModel extends GeneratedMessage {
   List<PrefixedType> get pipes => $_get(7, 8, null);
 }
 
-class _ReadonlyReflectionInfoModel extends ReflectionInfoModel
-    with ReadonlyMessageMixin {}
+class _ReadonlyReflectionInfoModel extends ReflectionInfoModel {}
 
 const PrefixedType$json = const {
   '1': 'PrefixedType',

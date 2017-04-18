@@ -69,7 +69,7 @@ final PROPERTY_PARTS_SEPARATOR = '.';
 const ATTRIBUTE_PREFIX = 'attr';
 const CLASS_PREFIX = 'class';
 const STYLE_PREFIX = 'style';
-final TEXT_CSS_SELECTOR = CssSelector.parse('*')[0];
+final CssSelector TEXT_CSS_SELECTOR = CssSelector.parse('*')[0];
 
 class TemplateParseError extends ParseError {
   TemplateParseError(String message, SourceSpan span, ParseErrorLevel level)

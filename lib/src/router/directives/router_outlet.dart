@@ -21,7 +21,7 @@ import "../lifecycle/lifecycle_annotations.dart" as hook_mod;
 import "../lifecycle/route_lifecycle_reflector.dart" show hasLifecycleHook;
 import "../router.dart" as router_mod;
 
-var _resolveToTrue = new Future.value(true);
+var _resolveToTrue = new Future<bool>.value(true);
 
 /// A router outlet is a placeholder that Angular dynamically fills based on the application's route.
 ///
