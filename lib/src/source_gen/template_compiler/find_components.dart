@@ -100,7 +100,8 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
 class ComponentVisitor
     extends RecursiveElementVisitor<CompileDirectiveMetadata> {
-  List<String> _inputs = [];
+  List<String> _fieldInputs = [];
+  List<String> _setterInputs = [];
   List<String> _outputs = [];
   Map<String, String> _host = {};
   List<CompileQueryMetadata> _queries = [];
@@ -161,12 +162,16 @@ class ComponentVisitor
       if (safeMatcherType(Input, log)(annotation)) {
         if (isSetter) {
           String typeName;
+          bool isField = false;
           if (element is FieldElement) {
             typeName = element.type?.name;
+            isField = true;
           } else if (element is PropertyAccessorElement) {
             typeName = element.parameters.first.type?.name;
           }
-          _addPropertyToType(_inputs, annotation, element, typeName: typeName);
+          _addPropertyToType(
+              isField ? _fieldInputs : _setterInputs, annotation, element,
+              typeName: typeName);
         } else {
           log.severe('@Input can only be used on a setter or non-final '
               'field, but was found on $element.');
@@ -331,7 +336,8 @@ class ComponentVisitor
         : new CompileTemplateMetadata();
     var inputs =
         new List<String>.from(coerceStringList(componentValue, 'inputs'))
-          ..addAll(_inputs);
+          ..addAll(_fieldInputs)
+          ..addAll(_setterInputs);
     var outputs =
         new List<String>.from(coerceStringList(componentValue, 'outputs'))
           ..addAll(_outputs);
