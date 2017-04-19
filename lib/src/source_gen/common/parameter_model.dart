@@ -36,7 +36,8 @@ class ParameterModel {
   factory ParameterModel.fromElement(ParameterElement element) {
     return new ParameterModel._(
         paramName: element.name,
-        type: references.toBuilder(element.type, element.library.imports),
+        type: references.toBuilder(element.type, element.library.imports,
+            includeGenerics: false),
         metadata: _metadataFor(element));
   }
 
