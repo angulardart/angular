@@ -203,16 +203,20 @@ void functionThatThrowsNonError() {
   }
 }
 
-@Component(selector: 'throwing-component')
-@View(template: '')
+@Component(
+  selector: 'throwing-component',
+  template: '',
+)
 class ThrowingComponent {
   ThrowingComponent() {
     functionThatThrows();
   }
 }
 
-@Component(selector: 'throwing-component2')
-@View(template: '')
+@Component(
+  selector: 'throwing-component2',
+  template: '',
+)
 class ThrowingComponent2 {
   ThrowingComponent2() {
     functionThatThrowsNonError();
