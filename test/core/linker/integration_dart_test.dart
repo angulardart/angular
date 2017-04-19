@@ -111,20 +111,27 @@ class PropModel implements Map {
   }
 }
 
-@Component(selector: 'property-access')
-@View(template: '''prop:{{model.foo}};map:{{model['foo']}}''')
+@Component(
+  selector: 'property-access',
+  template: '''prop:{{model.foo}};map:{{model['foo']}}''',
+)
 class PropertyAccess {
   final model = new PropModel();
 }
 
-@Component(selector: 'no-property-access')
-@View(template: '''{{model.doesNotExist}}''')
+@Component(
+  selector: 'no-property-access',
+  template: '''{{model.doesNotExist}}''',
+)
 class NoPropertyAccess {
   final model = new PropModel();
 }
 
-@Component(selector: 'on-change', inputs: const ['prop'])
-@View(template: '')
+@Component(
+  selector: 'on-change',
+  inputs: const ['prop'],
+  template: '',
+)
 class OnChangeComponent implements OnChanges {
   Map changes;
   String prop;
