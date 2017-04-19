@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'package:angular2/src/compiler/compile_metadata.dart';
 
 import 'logging.dart';
@@ -45,8 +46,10 @@ class NgMeta {
       {Map<String, List<String>> aliases,
       Map<String, dynamic> identifiers,
       this.ngDeps: null})
-      : this.aliases = aliases != null ? aliases : {},
-        this.identifiers = identifiers != null ? identifiers : {};
+      : this.aliases =
+            new SplayTreeMap<String, List<String>>.from(aliases ?? {}),
+        this.identifiers =
+            new SplayTreeMap<String, dynamic>.from(identifiers ?? {});
 
   NgMeta.empty() : this();
 
@@ -116,17 +119,11 @@ class NgMeta {
   }
 
   /// Serialized representation of this instance.
-  Map toJson() {
-    var result = {};
-    result[_NG_DEPS_KEY] = isNgDepsEmpty ? null : ngDeps.writeToJsonMap();
-
-    result[_TYPE_VALUE] = {};
-    identifiers.forEach((k, v) {
-      result[_TYPE_VALUE][k] = v.toJson();
-    });
-    result[_ALIAS_VALUE] = aliases;
-    return result;
-  }
+  Map toJson() => <String, Object>{
+        _NG_DEPS_KEY: isNgDepsEmpty ? null : ngDeps.writeToJsonMap(),
+        _TYPE_VALUE: identifiers,
+        _ALIAS_VALUE: aliases,
+      };
 
   /// Merge into this instance all information from [other].
   /// This does not include `ngDeps`.
