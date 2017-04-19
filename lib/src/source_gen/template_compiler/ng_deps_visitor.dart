@@ -42,7 +42,7 @@ Future<NgDepsModel> resolveNgDepsFor(
   final pendingResolution = <Future>[];
 
   if (reflectableVisitor.hasPositionalParams) {
-    imports.add(new ImportModel(uri: optionalPackage));
+    imports.add(new ImportModel(uri: optionalPackage, prefix: '_di'));
   }
 
   Future resolveAndCheckUri(UriReferencedElement directive) async {
