@@ -3,9 +3,10 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/resolver/scope.dart';
 import 'package:code_builder/code_builder.dart';
 
-ReferenceBuilder toBuilder(DartType type, List<ImportElement> imports) =>
+ReferenceBuilder toBuilder(DartType type, List<ImportElement> imports,
+        {bool includeGenerics: true}) =>
     reference(type.name, _importFrom(type, imports))
-        .toTyped(_coerceTypeArgs(type, imports));
+        .toTyped(includeGenerics ? _coerceTypeArgs(type, imports) : const []);
 
 String _importFrom(DartType dartType, List<ImportElement> imports) {
   final NamespaceBuilder builder = new NamespaceBuilder();
