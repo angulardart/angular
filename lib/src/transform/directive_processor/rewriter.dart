@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:analyzer/analyzer.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart'
@@ -125,14 +126,14 @@ class _NgMetaVisitor extends Object with SimpleAstVisitor<Object> {
 
       var initializer = variable.initializer;
       if (initializer != null && initializer is ListLiteral) {
-        var otherNames = <String>[];
+        var otherNames = new SplayTreeSet<String>();
         for (var exp in initializer.elements) {
           // Only simple identifiers are supported for now.
           // TODO(sigmund): add support for prefixes (see issue #3232).
           if (exp is! SimpleIdentifier) continue outer;
           otherNames.add((exp as SimpleIdentifier).name);
         }
-        ngMeta.aliases[variable.name.name] = otherNames;
+        ngMeta.aliases[variable.name.name] = otherNames.toList(growable: false);
       }
     }
     return null;
