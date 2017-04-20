@@ -1,6 +1,7 @@
 import 'package:angular2/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
 import 'package:angular2/src/core/di.dart' show Injectable;
+import 'package:logging/logging.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
@@ -33,6 +34,8 @@ class ViewCompileResult {
 class ViewCompiler {
   final CompilerConfig _genConfig;
   Parser parser;
+  Logger _logger;
+
   ViewCompiler(this._genConfig, this.parser);
 
   ViewCompileResult compileComponent(
@@ -54,6 +57,8 @@ class ViewCompiler {
     return new ViewCompileResult(
         statements, view.viewFactory.name, dependencies);
   }
+
+  Logger get logger => _logger ??= new Logger('View Compiler');
 
   /// Builds the view and returns number of nested views generated.
   int buildView(
@@ -92,7 +97,8 @@ class ViewCompiler {
     // Example: RenderComponentType renderType_MaterialButtonComponent;
     bool creatingMainView = view.viewIndex == 0;
 
-    o.ClassStmt viewClass = createViewClass(view, nodeDebugInfosVar, parser);
+    o.ClassStmt viewClass =
+        createViewClass(view, nodeDebugInfosVar, parser, logger);
     targetStatements.add(viewClass);
 
     targetStatements.add(createViewFactory(view, viewClass));

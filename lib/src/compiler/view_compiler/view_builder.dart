@@ -5,6 +5,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
 import "package:angular2/src/core/linker/view_type.dart";
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import 'package:logging/logging.dart';
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
@@ -745,9 +746,10 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
 
 /// Generates output ast for a CompileView and returns a [ClassStmt] for the
 /// view of embedded template.
-o.ClassStmt createViewClass(
-    CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
-  var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
+o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
+    Parser parser, Logger logger) {
+  var viewConstructor =
+      _createViewClassConstructor(view, nodeDebugInfosVar, logger);
   var viewMethods = (new List.from([
     new o.ClassMethod("build", [], generateBuildMethod(view, parser),
         o.importType(Identifiers.ComponentRef, null)),
@@ -786,7 +788,7 @@ o.ClassStmt createViewClass(
 }
 
 o.ClassMethod _createViewClassConstructor(
-    CompileView view, o.Expression nodeDebugInfosVar) {
+    CompileView view, o.Expression nodeDebugInfosVar, Logger logger) {
   var emptyTemplateVariableBindings = view.templateVariableBindings
       .map((List entry) => [entry[0], o.NULL_EXPR])
       .toList();
@@ -810,6 +812,11 @@ o.ClassMethod _createViewClassConstructor(
   if (view.viewType == ViewType.COMPONENT && view.viewIndex == 0) {
     // No namespace just call [document.createElement].
     String tagName = _tagNameFromComponentSelector(view.component.selector);
+    if (tagName.isEmpty) {
+      logger.severe('Component selector is missing tag name in '
+          '${view.component.identifier.name} '
+          'selector:${view.component.selector}');
+    }
     var createRootElementExpr = o
         .importExpr(Identifiers.HTML_DOCUMENT)
         .callMethod('createElement', [o.literal(tagName)]);
