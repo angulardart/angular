@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 
 import 'invalid_pipe_argument_exception.dart';
 
-const String _defaultLocale = "en-US";
 final RegExp _re = new RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 
 /// Internal base class for numeric pipes.
@@ -36,7 +35,7 @@ class NumberPipe {
     }
     return _formatNumber(
       value,
-      _defaultLocale,
+      Intl.defaultLocale,
       style,
       minimumIntegerDigits: minInt,
       minimumFractionDigits: minFraction,
@@ -134,7 +133,7 @@ class CurrencyPipe extends NumberPipe implements PipeTransform {
 }
 
 enum _NumberFormatStyle { Decimal, Percent, Currency }
-String _normalizeLocale(String locale) => locale.replaceAll('-', '_');
+String _normalizeLocale(String locale) => locale?.replaceAll('-', '_');
 String _formatNumber(
   num number,
   String locale,

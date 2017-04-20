@@ -3,9 +3,6 @@ import 'package:intl/intl.dart';
 
 import 'invalid_pipe_argument_exception.dart';
 
-// TODO: move to a global configurable location along with other i18n components.
-const String _defaultLocale = "en-US";
-
 /// Formats a date value to a string based on the requested format.
 ///
 /// WARNINGS:
@@ -93,7 +90,7 @@ class DatePipe implements PipeTransform {
     if (DatePipe._ALIASES.containsKey(pattern)) {
       pattern = DatePipe._ALIASES[pattern];
     }
-    return _formatDate(value, _defaultLocale, pattern);
+    return _formatDate(value, Intl.defaultLocale, pattern);
   }
 
   bool supports(dynamic obj) {
@@ -104,7 +101,7 @@ class DatePipe implements PipeTransform {
 }
 
 final RegExp _multiPartRegExp = new RegExp(r'^([yMdE]+)([Hjms]+)$');
-String _normalizeLocale(String locale) => locale.replaceAll('-', '_');
+String _normalizeLocale(String locale) => locale?.replaceAll('-', '_');
 String _formatDate(DateTime date, String locale, String pattern) {
   locale = _normalizeLocale(locale);
   var formatter = new DateFormat(null, locale);
