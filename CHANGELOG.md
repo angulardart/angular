@@ -1,3 +1,7 @@
+## 3.0.0-beta+2
+
+* Removed `MapInjector`. Instead use `new Injector.map(map, parentInjector)`.
+
 ## 3.0.0-beta+1
 
 * Require at least Dart SDK `1.23.0-dev.7.0`. Required for a JS-interop fix.

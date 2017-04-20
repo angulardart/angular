@@ -10,7 +10,7 @@ import "package:angular2/core.dart"
         ViewContainerRef,
         OnDestroy,
         Output,
-        MapInjector;
+        Injector;
 import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:collection/collection.dart" show MapEquality;
 
@@ -73,7 +73,7 @@ class RouterOutlet implements OnDestroy {
     providers[RouteParams] = new RouteParams(nextInstruction.params);
     providers[router_mod.Router] = childRouter;
     var injector =
-        new MapInjector(this._viewContainerRef.parentInjector, providers);
+        new Injector.map(providers, _viewContainerRef.parentInjector);
     Future<ComponentFactory> componentFactoryPromise;
     if (componentType is ComponentFactory) {
       componentFactoryPromise = new Future.value(componentType);
