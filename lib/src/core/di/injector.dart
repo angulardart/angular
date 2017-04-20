@@ -25,8 +25,7 @@ abstract class Injector {
   factory Injector.map([
     Map map,
     Injector parent,
-  ]) =>
-      new MapInjector(parent, map);
+  ]) = _MapInjector;
 
   /// Returns an instance from the injector based on the provided [token].
   ///
@@ -59,21 +58,14 @@ class _EmptyInjector implements Injector {
 }
 
 /// A simple [Injector] implementation based on a [Map] of token->instance.
-///
-/// **DEPRECATED**: Use `Injector.map` instead.
-@Deprecated('Use Injector.map` instead')
-class MapInjector implements Injector {
+class _MapInjector implements Injector {
   final Map<dynamic, dynamic> _map;
   final Injector _parent;
 
-  // TODO: Make this const and use `this.` after no invocations pass null.
-  @Deprecated('Use new Injector.map` instead')
-  MapInjector([
-    Injector parent,
-    Map map,
-  ])
-      : _map = map ?? const {},
-        _parent = parent ?? const Injector.empty();
+  const _MapInjector([
+    this._map = const {},
+    this._parent = const Injector.empty(),
+  ]);
 
   @override
   get(token, [notFoundValue = THROW_IF_NOT_FOUND]) =>
