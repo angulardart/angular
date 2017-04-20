@@ -1,7 +1,7 @@
 import 'package:angular2/core.dart'
     show DoCheck, OnDestroy, Directive, ElementRef;
 import 'package:angular2/src/core/change_detection/differs/default_iterable_differ.dart';
-import 'package:angular2/src/core/change_detection/differs/default_keyvalue_differ.dart';
+import 'package:angular2/src/core/change_detection/differs/map_differ.dart';
 
 /// The [NgClass] directive conditionally adds and removes CSS classes on an
 /// HTML element based on an expression's evaluation result.
@@ -55,7 +55,7 @@ class NgClass implements DoCheck, OnDestroy {
   static RegExp _separator;
   ElementRef _ngEl;
   DefaultIterableDiffer _iterableDiffer;
-  DefaultKeyValueDiffer _keyValueDiffer;
+  MapDiffer _mapDiffer;
   List<String> _initialClasses = [];
   dynamic /* List < String > | Set< String > */ _rawClass;
   NgClass(this._ngEl);
@@ -75,12 +75,12 @@ class NgClass implements DoCheck, OnDestroy {
     }
     this._rawClass = (v as dynamic /* List < String > | Set< String > */);
     this._iterableDiffer = null;
-    this._keyValueDiffer = null;
+    this._mapDiffer = null;
     if (v != null) {
       if (v is Iterable) {
         _iterableDiffer = new DefaultIterableDiffer();
       } else {
-        _keyValueDiffer = new DefaultKeyValueDiffer();
+        _mapDiffer = new MapDiffer<String, bool>();
       }
     }
   }
@@ -93,11 +93,9 @@ class NgClass implements DoCheck, OnDestroy {
         _applyIterableChanges(changes);
       }
     }
-    if (_keyValueDiffer != null) {
-      var changes = _keyValueDiffer.diff(_rawClass);
-      if (changes != null) {
-        _applyKeyValueChanges(changes);
-      }
+    if (_mapDiffer != null && _mapDiffer.diff(_rawClass)) {
+      _mapDiffer.forEachChange(_toggleClass);
+      _mapDiffer.forEachRemoval((key) => _toggleClass(key, false));
     }
   }
 
@@ -110,20 +108,6 @@ class NgClass implements DoCheck, OnDestroy {
       dynamic /* List < String > | Set< String > | Map < String , dynamic > */ rawClassVal) {
     _applyClasses(rawClassVal, true);
     _applyInitialClasses(false);
-  }
-
-  void _applyKeyValueChanges(dynamic changes) {
-    changes.forEachAddedItem((KeyValueChangeRecord record) {
-      _toggleClass(record.key, record.currentValue);
-    });
-    changes.forEachChangedItem((KeyValueChangeRecord record) {
-      _toggleClass(record.key, record.currentValue);
-    });
-    changes.forEachRemovedItem((KeyValueChangeRecord record) {
-      if (record.previousValue) {
-        _toggleClass(record.key, false);
-      }
-    });
   }
 
   void _applyIterableChanges(dynamic changes) {

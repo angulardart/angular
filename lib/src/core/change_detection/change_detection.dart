@@ -12,5 +12,4 @@ export "constants.dart"
         ChangeDetectorState,
         isDefaultChangeDetectionStrategy;
 export "differs/default_iterable_differ.dart" show CollectionChangeRecord;
-export "differs/default_keyvalue_differ.dart" show KeyValueChangeRecord;
 export "pipe_transform.dart" show PipeTransform;
