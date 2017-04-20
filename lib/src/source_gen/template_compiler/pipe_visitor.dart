@@ -5,6 +5,7 @@ import 'package:angular2/src/source_gen/common/annotation_matcher.dart';
 import 'package:logging/logging.dart';
 
 import 'compile_metadata.dart';
+import 'find_components.dart';
 import 'dart_object_utils.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
@@ -23,12 +24,15 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   }
 
   CompilePipeMetadata _createPipeMetadata(
-      ElementAnnotation annotation, ClassElement element) {
+    ElementAnnotation annotation,
+    ClassElement element,
+  ) {
     var value = annotation.computeConstantValue();
     return new CompilePipeMetadata(
-        type: element.accept(new CompileTypeMetadataVisitor(_logger)),
-        name: coerceString(value, 'name'),
-        pure: coerceBool(value, 'pure', defaultTo: true),
-        lifecycleHooks: []);
+      type: element.accept(new CompileTypeMetadataVisitor(_logger)),
+      name: coerceString(value, 'name'),
+      pure: coerceBool(value, '_pure', defaultTo: true),
+      lifecycleHooks: extractLifecycleHooks(element),
+    );
   }
 }

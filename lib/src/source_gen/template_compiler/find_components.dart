@@ -302,23 +302,6 @@ class ComponentVisitor
     types.add(entry);
   }
 
-  List<LifecycleHooks> _extractLifecycleHooks(ClassElement clazz) {
-    const hooks = const <Type, LifecycleHooks>{
-      OnInit: LifecycleHooks.OnInit,
-      OnDestroy: LifecycleHooks.OnDestroy,
-      DoCheck: LifecycleHooks.DoCheck,
-      OnChanges: LifecycleHooks.OnChanges,
-      AfterContentInit: LifecycleHooks.AfterContentInit,
-      AfterContentChecked: LifecycleHooks.AfterContentChecked,
-      AfterViewInit: LifecycleHooks.AfterViewInit,
-      AfterViewChecked: LifecycleHooks.AfterViewChecked,
-    };
-    return hooks.keys
-        .where((hook) => clazz.interfaces.any((t) => matchTypes(hook, t)))
-        .map((t) => hooks[t])
-        .toList();
-  }
-
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
     ElementAnnotation annotation,
     ClassElement element,
@@ -358,7 +341,7 @@ class ComponentVisitor
       inputs: inputs,
       outputs: outputs,
       host: host,
-      lifecycleHooks: _extractLifecycleHooks(element),
+      lifecycleHooks: extractLifecycleHooks(element),
       providers: _extractProviders(componentValue, 'providers'),
       viewProviders: _extractProviders(componentValue, 'viewProviders'),
       queries: queries,
@@ -420,4 +403,21 @@ class ComponentVisitor
           DartObject component, String providerField) =>
       visitAll(coerceList(component, providerField),
           new CompileTypeMetadataVisitor(log).createProviderMetadata);
+}
+
+List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
+  const hooks = const <Type, LifecycleHooks>{
+    OnInit: LifecycleHooks.OnInit,
+    OnDestroy: LifecycleHooks.OnDestroy,
+    DoCheck: LifecycleHooks.DoCheck,
+    OnChanges: LifecycleHooks.OnChanges,
+    AfterContentInit: LifecycleHooks.AfterContentInit,
+    AfterContentChecked: LifecycleHooks.AfterContentChecked,
+    AfterViewInit: LifecycleHooks.AfterViewInit,
+    AfterViewChecked: LifecycleHooks.AfterViewChecked,
+  };
+  return hooks.keys
+      .where((hook) => clazz.interfaces.any((t) => matchTypes(hook, t)))
+      .map((t) => hooks[t])
+      .toList();
 }
