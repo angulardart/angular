@@ -2,8 +2,7 @@ import 'dart:html';
 
 import 'package:angular2/core.dart' show DoCheck, ElementRef, Directive;
 
-import '../../core/change_detection/differs/default_keyvalue_differ.dart'
-    show DefaultKeyValueDiffer, KeyValueChangeRecord;
+import '../../core/change_detection/differs/map_differ.dart';
 
 /// The `NgStyle` directive changes an element's style based on the bound style
 /// expression:
@@ -56,32 +55,24 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// [ex]: http://angular-examples.github.io/template-syntax/#ngStyle
 @Directive(selector: "[ngStyle]", inputs: const ["rawStyle: ngStyle"])
 class NgStyle implements DoCheck {
-  final Element _ngElement;
+  final Element _element;
   Map<String, String> _rawStyle;
-  DefaultKeyValueDiffer _differ;
+  MapDiffer<String, String> _differ;
 
-  NgStyle(ElementRef elementRef) : _ngElement = elementRef.nativeElement;
+  NgStyle(ElementRef elementRef) : _element = elementRef.nativeElement;
 
-  set rawStyle(Map<String, String> v) {
-    this._rawStyle = v;
-    if (_differ == null && v != null) {
-      this._differ = new DefaultKeyValueDiffer();
+  set rawStyle(Map<String, String> value) {
+    _rawStyle = value;
+    if (_differ == null && value != null) {
+      _differ = new MapDiffer<String, String>();
     }
   }
 
   @override
   void ngDoCheck() {
-    if (_differ == null) return;
-    var changes = _differ.diff(_rawStyle);
-    if (changes == null) return;
-    changes.forEachAddedItem((KeyValueChangeRecord record) {
-      _ngElement.style.setProperty(record.key, record.currentValue);
-    });
-    changes.forEachChangedItem((KeyValueChangeRecord record) {
-      _ngElement.style.setProperty(record.key, record.currentValue);
-    });
-    changes.forEachRemovedItem((KeyValueChangeRecord record) {
-      _ngElement.style.setProperty(record.key, record.currentValue);
-    });
+    if (_differ != null && _differ.diff(_rawStyle)) {
+      _differ.forEachChange(_element.style.setProperty);
+      _differ.forEachRemoval(_element.style.removeProperty);
+    }
   }
 }
