@@ -720,14 +720,14 @@ class _DuplicateItemRecordList {
 }
 
 class _DuplicateMap {
-  var map = new Map<dynamic, _DuplicateItemRecordList>();
+  final _map = new Map<dynamic, _DuplicateItemRecordList>();
   void put(CollectionChangeRecord record) {
     // todo(vicb) handle corner cases
     var key = record.trackById;
-    var duplicates = this.map[key];
+    var duplicates = this._map[key];
     if (duplicates == null) {
       duplicates = new _DuplicateItemRecordList();
-      this.map[key] = duplicates;
+      this._map[key] = duplicates;
     }
     duplicates.add(record);
   }
@@ -740,7 +740,7 @@ class _DuplicateMap {
   /// then asking if we have any more `a`s needs to return the last `a` not the
   /// first or second.
   CollectionChangeRecord get(dynamic trackById, [num afterIndex = null]) {
-    var recordList = this.map[trackById];
+    var recordList = this._map[trackById];
     return recordList == null ? null : recordList.get(trackById, afterIndex);
   }
 
@@ -751,24 +751,24 @@ class _DuplicateMap {
     var key = record.trackById;
     // todo(vicb)
     // assert(this.map.containsKey(key));
-    _DuplicateItemRecordList recordList = this.map[key];
+    _DuplicateItemRecordList recordList = this._map[key];
     // Remove the list of duplicates when it gets empty
     if (recordList.remove(record)) {
-      (this.map.containsKey(key) && (this.map.remove(key) != null || true));
+      (this._map.containsKey(key) && (this._map.remove(key) != null || true));
     }
     return record;
   }
 
   bool get isEmpty {
-    return identical(this.map.length, 0);
+    return identical(this._map.length, 0);
   }
 
   void clear() {
-    this.map.clear();
+    this._map.clear();
   }
 
   String toString() {
-    return "_DuplicateMap($map)";
+    return "_DuplicateMap($_map)";
   }
 }
 
