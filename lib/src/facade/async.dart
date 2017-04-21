@@ -1,5 +1,23 @@
 import 'dart:async';
 
+/// **DEPRECATED**: Use [StreamController] and [Stream] instead.
+///
+/// **BEFORE**:
+/// ```
+/// @Output()
+/// final touch = new EventEmitter();
+/// ```
+///
+/// **AFTER**:
+/// ```
+/// final _onTouch = new StreamController.broadcast();
+///
+/// @Output()
+/// Stream get touch => _onTouch.stream;
+/// ```
+///
+/// This avoids leaking details about how your [Stream] is implemented.
+@Deprecated('Only expose a Stream for your component @Output')
 class EventEmitter<T> extends Stream<T> {
   StreamController<T> _controller;
 

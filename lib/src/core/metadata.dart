@@ -465,8 +465,7 @@ class Component extends Directive {
 }
 
 /// Metadata properties available for configuring Views.
-///
-/// This will be deprecated in the future.  Use @Component instead.
+@Deprecated('Move all properties into your accompanying @Component instead')
 class View {
   /// Specifies a template URL for an Angular component.
   ///
