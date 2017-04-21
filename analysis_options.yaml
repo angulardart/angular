@@ -1,6 +1,7 @@
 analyzer:
  strong-mode: true
  errors:
+   unused_element: error
    unused_import: error
    unused_local_variable: error
    dead_code: error
