@@ -2,6 +2,8 @@ language: dart
 sudo: false
 dart:
   - dev
+  - stable
+  - 1.23.0
 addons:
   # otherwise a number of tests in test/security/html_sanitizer_test.dart fail
   firefox: "latest"
