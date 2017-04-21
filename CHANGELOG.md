@@ -1,6 +1,13 @@
 ## 3.0.0-beta+2
 
-* Removed `MapInjector`. Instead use `new Injector.map(map, parentInjector)`.
+* `@View` will be removed in `3.0.0` final, only use `@Component` instead.
+* `EventEmitter` is now `@Deprecated`: Use `Stream` and `StreamController`.
+* `ElementRef.nativeElement` is now `final` (no setter).
+* Updated various documentation to make cleaner and use Dart, not TS, samples.
+* Perf: Added performance improvments around generated code and type inference.
+* Fix: Key-value differ now detects removals when first key moves.
+* Fix: `<ng-content select="...">` does not emit incorrect code (regression).
+* Perf: Optimized how reflective providers are resolved on application startup.
 
 ## 3.0.0-beta+1
 
