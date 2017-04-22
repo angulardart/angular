@@ -295,7 +295,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   }
 
   String get name {
-    return value != null ? sanitizeIdentifier(value) : identifier.name;
+    return value != null ? sanitizeIdentifier(value) : identifier?.name;
   }
 }
 
