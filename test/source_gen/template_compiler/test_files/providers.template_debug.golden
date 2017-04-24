@@ -57,7 +57,7 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('Hello');
     parentRenderNode.append(_text_0);
-    dbgElm(_text_0, 0, 0, 0);
+    dbgElm(this, _text_0, 0, 0, 0);
     init(const [], const [], [_text_0]);
     return null;
   }

@@ -56,12 +56,10 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
     final import2.CheckOnceComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('CheckOnce');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }
@@ -158,12 +156,10 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
     final import2.CheckedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Checked');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }
@@ -261,12 +257,10 @@ class ViewCheckAlwaysComponent0
     final import2.CheckAlwaysComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('CheckAlways');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }
@@ -363,12 +357,10 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
     final import2.DetachedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Detached');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }
@@ -465,12 +457,10 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
     final import2.OnPushComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('OnPush');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }
@@ -567,12 +557,10 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     final import2.StatefulComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Stateful');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     _ctx.stateChangeCallback = markStateChanged;
     return null;
@@ -670,12 +658,10 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
     final import2.DefaultComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Default');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }

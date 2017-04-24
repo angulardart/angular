@@ -48,8 +48,7 @@ class ViewHasTemplateFileComponent0
     final import2.HasTemplateFileComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     addShimC(_el_0);
     Text _text_1 = new Text('Has Template File!');
     _el_0.append(_text_1);

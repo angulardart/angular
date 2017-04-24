@@ -58,7 +58,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
-    dbgElm(_text_0, 0, 0, 0);
+    dbgElm(this, _text_0, 0, 0, 0);
     init(const [], const [], [_text_0]);
     return null;
   }

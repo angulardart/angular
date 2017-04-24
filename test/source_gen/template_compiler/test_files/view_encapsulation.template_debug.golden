@@ -56,12 +56,10 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
     final import2.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Emulated');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }
@@ -158,12 +156,11 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
     final import2.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendToShadowRootDbg(
+        this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Native');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }
@@ -260,12 +257,10 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
     final import2.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('None');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }

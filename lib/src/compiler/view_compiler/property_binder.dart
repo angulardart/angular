@@ -36,6 +36,21 @@ o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
 o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
     o.variable('currVal_${exprIndex}');
 
+/// Generates code to bind template expression.
+///
+/// Called from:
+///   bindRenderInputs, bindDirectiveHostProps
+///       bindAndWriteToRenderer
+///   Element/EmbeddedTemplate visitor
+///       bindDirectiveInputs
+///   ViewBinderVisitor
+///       bindRenderText
+///
+/// If expression result is a literal/const/final code
+/// is added to literalMethod as output to be executed only
+/// once when component is created.
+/// Otherwise statements are added to method to be executed on
+/// each change detection cycle.
 void bind(
     CompileView view,
     o.ReadVarExpr currValExpr,

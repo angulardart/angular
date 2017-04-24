@@ -46,8 +46,7 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
     final import1.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Emulated');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -128,8 +127,7 @@ class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
     final import1.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppendToShadowRoot(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Native');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -210,8 +208,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
     final import1.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('None');
     _el_0.append(_text_1);
     init(const [], const []);

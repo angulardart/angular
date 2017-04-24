@@ -58,14 +58,12 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
-    dbgElm(_text_0, 0, 0, 0);
+    dbgElm(this, _text_0, 0, 0, 0);
     var doc = document;
-    _el_1 = doc.createElement('button');
-    parentRenderNode.append(_el_1);
-    dbgElm(_el_1, 1, 0, 4);
+    _el_1 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 1, 0, 4);
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
-    dbgElm(_text_2, 2, 0, 41);
+    dbgElm(this, _text_2, 2, 0, 41);
     _el_1.addEventListener('click', this.eventHandler0(ctx.onClick));
     init(const [], const [], [_text_0, _el_1, _text_2]);
     rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
@@ -172,16 +170,16 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
-    dbgElm(_text_0, 0, 0, 0);
+    dbgElm(this, _text_0, 0, 0, 0);
     _compView_1 = viewFactory_HasAngularEvents0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    dbgElm(_el_1, 1, 0, 4);
+    dbgElm(this, _el_1, 1, 0, 4);
     _HasAngularEvents_1_2 = new import2.HasAngularEvents();
     _compView_1.create(_HasAngularEvents_1_2, []);
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
-    dbgElm(_text_2, 2, 0, 61);
+    dbgElm(this, _text_2, 2, 0, 61);
     listen(_el_1, 'foo', this.eventHandler0(ctx.onFoo));
     final subscription_0 =
         _HasAngularEvents_1_2.foo.listen(this.eventHandler0(ctx.onFoo));

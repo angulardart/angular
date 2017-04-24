@@ -65,7 +65,7 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
-    dbgElm(_anchor_0, 0, 0, 0);
+    dbgElm(this, _anchor_0, 0, 0, 0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_4 =
         new TemplateRef(_appEl_0, viewFactory_TestFooComponent1);
@@ -109,11 +109,11 @@ class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
     final import4.TestFooComponent _ctx = ctx;
     var doc = document;
     _el_0 = doc.createElement('div');
-    dbgElm(_el_0, 0, 0, 0);
+    dbgElm(this, _el_0, 0, 0, 0);
     addShimC(_el_0);
     Text _text_1 = new Text('Foo');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 18);
+    dbgElm(this, _text_1, 1, 0, 18);
     init([_el_0], const [], [_el_0, _text_1]);
     return null;
   }

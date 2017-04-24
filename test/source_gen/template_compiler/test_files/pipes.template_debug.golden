@@ -58,7 +58,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
-    dbgElm(_text_0, 0, 0, 0);
+    dbgElm(this, _text_0, 0, 0, 0);
     _pipe_pure_0 = new import2.PurePipe();
     this._pipe_pure_0_0 = import8.pureProxy1(_pipe_pure_0.transform);
     _pipe_dirty_1 = new import2.DirtyPipe();

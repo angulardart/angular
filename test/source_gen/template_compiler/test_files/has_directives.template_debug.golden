@@ -72,33 +72,30 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
-    dbgElm(_text_0, 0, 0, 0);
+    dbgElm(this, _text_0, 0, 0, 0);
     var doc = document;
-    _el_1 = doc.createElement('div');
-    parentRenderNode.append(_el_1);
-    dbgElm(_el_1, 1, 0, 4);
+    _el_1 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 1, 0, 4);
     Text _text_2 = new Text('My own template');
     _el_1.append(_text_2);
-    dbgElm(_text_2, 2, 0, 9);
+    dbgElm(this, _text_2, 2, 0, 9);
     Text _text_3 = new Text('\n    A directive: ');
     parentRenderNode.append(_text_3);
-    dbgElm(_text_3, 3, 0, 30);
-    _el_4 = doc.createElement('directive');
-    parentRenderNode.append(_el_4);
-    dbgElm(_el_4, 4, 1, 17);
+    dbgElm(this, _text_3, 3, 0, 30);
+    _el_4 =
+        createAndAppendDbg(this, doc, 'directive', parentRenderNode, 4, 1, 17);
     _TestDirective_4_2 = new import1.TestDirective();
     Text _text_5 = new Text('\n    A component: ');
     parentRenderNode.append(_text_5);
-    dbgElm(_text_5, 5, 1, 40);
+    dbgElm(this, _text_5, 5, 1, 40);
     _compView_6 = viewFactory_TestSubComponent0(this, 6);
     _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
-    dbgElm(_el_6, 6, 2, 17);
+    dbgElm(this, _el_6, 6, 2, 17);
     _TestSubComponent_6_2 = new import1.TestSubComponent();
     _compView_6.create(_TestSubComponent_6_2, []);
     Text _text_7 = new Text('\n  ');
     parentRenderNode.append(_text_7);
-    dbgElm(_text_7, 7, 2, 38);
+    dbgElm(this, _text_7, 7, 2, 38);
     init(const [], const [],
         [_text_0, _el_1, _text_2, _text_3, _el_4, _text_5, _el_6, _text_7]);
     return null;
@@ -216,12 +213,10 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
     final import1.TestSubComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Bar');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }

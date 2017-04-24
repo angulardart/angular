@@ -20,6 +20,7 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'dart_emitter.dart' show debugOutputAstAsDart;
 import 'dynamic_instance.dart';
 import 'output_ast.dart' as o;
+import "package:angular2/src/core/linker/app_view_utils.dart" as appviewutils;
 
 bool _interpreterInitialized = false;
 
@@ -701,4 +702,36 @@ void _initializeInterpreter() {
   Identifiers.ComponentRef.runtime = ComponentRef;
   Identifiers.NG_IF_DIRECTIVE.runtime = NgIf;
   Identifiers.NG_FOR_DIRECTIVE.runtime = NgFor;
+
+  Identifiers.interpolate.runtime = appviewutils.interpolate;
+  Identifiers.interpolate0.runtime = appviewutils.interpolate0;
+  Identifiers.interpolate1.runtime = appviewutils.interpolate1;
+  Identifiers.interpolate2.runtime = appviewutils.interpolate2;
+  Identifiers.throwOnChanges.runtimeCallback =
+      () => appviewutils.AppViewUtils.throwOnChanges;
+  Identifiers.checkBinding.runtime = appviewutils.checkBinding;
+  Identifiers.castByValue.runtime = appviewutils.castByValue;
+  Identifiers.dbgElm.runtime = dbgElm;
+  Identifiers.EMPTY_ARRAY.runtime = appviewutils.EMPTY_ARRAY;
+  Identifiers.EMPTY_MAP.runtime = appviewutils.EMPTY_MAP;
+  Identifiers.pureProxies[1].runtime = (f(p0)) => pureProxy1(f);
+  Identifiers.pureProxies[2].runtime = (f(p0, p1)) => pureProxy2(f);
+  Identifiers.pureProxies[3].runtime = (f(p0, p1, p2)) => pureProxy3(f);
+  Identifiers.pureProxies[4].runtime = (f(p0, p1, p2, p3)) => pureProxy4(f);
+  Identifiers.pureProxies[5].runtime = (f(p0, p1, p2, p3, p4)) => pureProxy5(f);
+  Identifiers.pureProxies[6].runtime =
+      (f(p0, p1, p2, p3, p4, p5)) => pureProxy6(f);
+  Identifiers.pureProxies[7].runtime =
+      (f(p0, p1, p2, p3, p4, p5, p6)) => pureProxy7(f);
+  Identifiers.pureProxies[8].runtime =
+      (f(p0, p1, p2, p3, p4, p5, p6, p7)) => pureProxy8(f);
+  Identifiers.pureProxies[9].runtime =
+      (f(p0, p1, p2, p3, p4, p5, p6, p7, p8)) => pureProxy9(f);
+  Identifiers.pureProxies[10].runtime =
+      (f(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9)) => pureProxy10(f);
+  Identifiers.createAndAppend.runtime = createAndAppend;
+  Identifiers.createAndAppendDbg.runtime = createAndAppendDbg;
+  Identifiers.createAndAppendToShadowRoot.runtime = createAndAppendToShadowRoot;
+  Identifiers.createAndAppendToShadowRootDbg.runtime =
+      createAndAppendToShadowRootDbg;
 }

@@ -50,8 +50,7 @@ class ViewInterpolationComponent0
     final import1.InterpolationComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     _text_1 = new Text('');
     _el_0.append(_text_1);
     Text _text_2 = new Text('\n');
@@ -148,8 +147,7 @@ class ViewInterpolationComponentNoWhitespace0
     final import1.InterpolationComponentNoWhitespace _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     _text_1 = new Text('');
     _el_0.append(_text_1);
     init(const [], const []);

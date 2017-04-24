@@ -1,3 +1,4 @@
+// @ignoreProblemForFile DEAD_CODE
 import 'dart:convert';
 import 'dart:html';
 import 'dart:js_util' as js_util;
@@ -36,6 +37,7 @@ final RegExp _templateBindingsExp = new RegExp(r'^template bindings=(.*)$');
 final RegExp _matchNewLine = new RegExp(r'\n');
 const _templateCommentText = 'template bindings={}';
 const INSPECT_GLOBAL_NAME = "ng.probe";
+DebugContext _currentDebugContext;
 
 class DebugAppView<T> extends AppView<T> {
   static bool _ngProbeInitialized = false;
@@ -48,7 +50,6 @@ class DebugAppView<T> extends AppView<T> {
   @visibleForTesting
   List allNodes;
 
-  DebugContext _currentDebugContext;
   DebugAppView(
       ViewType type,
       Map<String, dynamic> locals,
@@ -176,27 +177,6 @@ class DebugAppView<T> extends AppView<T> {
   /// with template source location and DebugElement.
   DebugContext dbg(num nodeIndex, num rowNum, num colNum) =>
       _currentDebugContext = new DebugContext(this, nodeIndex, rowNum, colNum);
-
-  /// Registers dom node in global debug index.
-  void dbgElm(element, num nodeIndex, num rowNum, num colNum) {
-    var debugInfo = new DebugContext<T>(this, nodeIndex, rowNum, colNum);
-    if (element is Text) return;
-    var debugEl;
-    if (element is Comment) {
-      debugEl =
-          new DebugNode(element, getDebugNode(element.parentNode), debugInfo);
-    } else {
-      debugEl = new DebugElement(
-          element,
-          element.parentNode == null ? null : getDebugNode(element.parentNode),
-          debugInfo);
-
-      debugEl.name = element is Text ? 'text' : element.tagName.toLowerCase();
-
-      _currentDebugContext = debugInfo;
-    }
-    indexDebugNode(debugEl);
-  }
 
   /// Creates DebugElement for root element of a component.
   void dbgIdx(element, num nodeIndex) {
@@ -362,4 +342,53 @@ void _setGlobalVar(String path, value) {
   }
   js_util.setProperty(obj, parts[parts.length - 1],
       (value is Function) ? js.allowInterop(value) : value);
+}
+
+/// Registers dom node in global debug index.
+void dbgElm(DebugAppView view, element, num nodeIndex, num rowNum, num colNum) {
+  var debugInfo = new DebugContext(view, nodeIndex, rowNum, colNum);
+  if (element is Text) return;
+  var debugEl;
+  if (element is Comment) {
+    debugEl =
+        new DebugNode(element, getDebugNode(element.parentNode), debugInfo);
+  } else {
+    debugEl = new DebugElement(
+        element,
+        element.parentNode == null ? null : getDebugNode(element.parentNode),
+        debugInfo);
+
+    debugEl.name = element is Text ? 'text' : element.tagName.toLowerCase();
+
+    _currentDebugContext = debugInfo;
+  }
+  indexDebugNode(debugEl);
+}
+
+/// Helper function called by DebugAppView.build to reduce code size.
+Element createAndAppendDbg(AppView view, Document doc, String tagName,
+    Element parent, int nodeIndex, int line, int column) {
+  var elm = doc.createElement(tagName);
+  parent.append(elm);
+  dbgElm(view, elm, nodeIndex, line, column);
+  return elm;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+}
+
+/// Helper function called by DebugAppView.build to reduce code size.
+Element createAndAppendToShadowRootDbg(AppView view, Document doc,
+    String tagName, ShadowRoot parent, int nodeIndex, int line, int column) {
+  var elm = doc.createElement(tagName);
+  dbgElm(view, elm, nodeIndex, line, column);
+  parent.append(elm);
+  return elm;
 }

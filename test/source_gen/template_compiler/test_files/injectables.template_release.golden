@@ -49,8 +49,7 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
     final import1.InjectableComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Inject!');
     _el_0.append(_text_1);
     init(const [], const []);

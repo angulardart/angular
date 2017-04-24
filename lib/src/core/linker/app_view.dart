@@ -1,3 +1,4 @@
+// @ignoreProblemForFile DEAD_CODE
 import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;
@@ -79,7 +80,7 @@ abstract class AppView<T> {
   /// The root element.
   ///
   /// This is _lazily_ initialized in a generated constructor.
-  Element rootEl;
+  HtmlElement rootEl;
 
   /// What type of change detection the view is using.
   ChangeDetectionStrategy _cdMode;
@@ -297,9 +298,6 @@ abstract class AppView<T> {
         : null;
     return _findLastRenderNode(lastNode);
   }
-
-  // TODO: remove when all tests use codegen=debug.
-  void dbgElm(element, num nodeIndex, num rowNum, num colNum) {}
 
   bool hasLocal(String contextName) => locals.containsKey(contextName);
 
@@ -575,6 +573,17 @@ abstract class AppView<T> {
         event.preventDefault();
       }
     });
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
   }
 
   void setProp(Element element, String name, Object value) {
@@ -679,6 +688,28 @@ void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
       }
     }
   }
+}
+
+/// Helper function called by AppView.build to reduce code size.
+Element createAndAppend(Document doc, String tagName, Element parent) {
+  return parent.append(doc.createElement(tagName));
+  // Workaround since package expect/@NoInline not available outside sdk.
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+  return null;
+}
+
+/// Helper function called by AppView.build to reduce code size.
+Element createAndAppendToShadowRoot(
+    Document doc, String tagName, ShadowRoot parent) {
+  return parent.append(doc.createElement(tagName));
 }
 
 /// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.

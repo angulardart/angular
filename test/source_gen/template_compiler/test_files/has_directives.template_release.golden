@@ -53,14 +53,12 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
     var doc = document;
-    _el_1 = doc.createElement('div');
-    parentRenderNode.append(_el_1);
+    _el_1 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_2 = new Text('My own template');
     _el_1.append(_text_2);
     Text _text_3 = new Text('\n    A directive: ');
     parentRenderNode.append(_text_3);
-    _el_4 = doc.createElement('directive');
-    parentRenderNode.append(_el_4);
+    _el_4 = createAndAppend(doc, 'directive', parentRenderNode);
     _TestDirective_4_2 = new import1.TestDirective();
     Text _text_5 = new Text('\n    A component: ');
     parentRenderNode.append(_text_5);
@@ -169,8 +167,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     final import1.TestSubComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Bar');
     _el_0.append(_text_1);
     init(const [], const []);

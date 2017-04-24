@@ -33,6 +33,10 @@ import "property_binder.dart"
         bindDirectiveInputs,
         bindDirectiveHostProps;
 
+/// Visits view nodes to generate code for bindings.
+///
+/// Called by ViewCompiler for each top level CompileView and the
+/// ViewBinderVisitor recursively for each embedded template.
 void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
   var visitor = new ViewBinderVisitor(view);
   templateVisitAll(visitor, parsedTemplate);

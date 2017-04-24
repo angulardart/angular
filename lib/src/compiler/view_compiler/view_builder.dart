@@ -6,6 +6,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart'
 import "package:angular2/src/core/linker/view_type.dart";
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:logging/logging.dart';
+import 'package:source_span/source_span.dart';
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
@@ -258,26 +259,24 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ? Identifiers.HTML_HTML_ELEMENT
         : identifierFromTagName(ast.name);
 
-    var directives = <CompileDirectiveMetadata>[];
-    for (var dir in ast.directives) directives.add(dir.directive);
-    CompileDirectiveMetadata component = componentFromDirectives(directives);
-
-    bool isDeferred = false;
-    if (component != null) {
-      isDeferred = nodeIndex == 0 &&
-          (view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
-          (view.declarationElement.sourceAst as EmbeddedTemplateAst)
-              .hasDeferredComponent;
-    }
-
     if (!isRootHostElement) {
       view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(elementType),
           modifiers: const [o.StmtModifier.Private]));
     }
 
+    var directives = <CompileDirectiveMetadata>[];
+    for (var dir in ast.directives) directives.add(dir.directive);
+    CompileDirectiveMetadata component = componentFromDirectives(directives);
+
     o.Expression compViewExpr;
+    bool isDeferred = false;
     if (component != null) {
+      isDeferred = nodeIndex == 0 &&
+          (view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
+          (view.declarationElement.sourceAst as EmbeddedTemplateAst)
+              .hasDeferredComponent;
+
       CompileIdentifierMetadata nestedComponentIdentifier =
           new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));
       targetDependencies
@@ -308,42 +307,60 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     } else {
       isHtmlElement = detectHtmlElementFromTagName(ast.name);
       var parentRenderNodeExpr = _getParentRenderNode(parent);
-
+      final generateDebugInfo = view.genConfig.genDebugInfo;
       if (component == null) {
-        // Create element or elementNS. AST encodes svg path element as @svg:path.
-        if (ast.name.startsWith('@') && ast.name.contains(':')) {
+        // Create element or elementNS. AST encodes svg path element as
+        // @svg:path.
+        bool isNamespacedElement =
+            ast.name.startsWith('@') && ast.name.contains(':');
+        if (isNamespacedElement) {
           var nameParts = ast.name.substring(1).split(':');
           String ns = NAMESPACE_URIS[nameParts[0]];
           createRenderNodeExpr = o
               .importExpr(Identifiers.HTML_DOCUMENT)
               .callMethod(
                   'createElementNS', [o.literal(ns), o.literal(nameParts[1])]);
-        } else {
-          // No namespace just call [document.createElement].
-          if (docVarName == null) {
-            view.createMethod.addStmt(_createLocalDocumentVar());
+          view.createMethod.addStmt(
+              new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr)
+                  .toStmt());
+          if (parentRenderNodeExpr != null &&
+              parentRenderNodeExpr != o.NULL_EXPR) {
+            // Write code to append to parent node.
+            view.createMethod.addStmt(parentRenderNodeExpr.callMethod(
+                'append', [new o.ReadClassMemberExpr(fieldName)]).toStmt());
           }
-          createRenderNodeExpr = new o.ReadVarExpr(docVarName)
-              .callMethod('createElement', [tagNameExpr]);
+          if (generateDebugInfo) {
+            view.createMethod.addStmt(createDbgElementCall(
+                new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
+          }
+        } else {
+          // Generate code to create Html element, append to parent and
+          // optionally add dbg info in single call.
+          _createElementAndAppend(
+              tagNameExpr,
+              parentRenderNodeExpr,
+              fieldName,
+              view.component.template.encapsulation ==
+                      ViewEncapsulation.Native &&
+                  (nodeIndex == 0),
+              generateDebugInfo,
+              ast.sourceSpan,
+              nodeIndex);
         }
-        view.createMethod.addStmt(
-            new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr)
-                .toStmt());
       } else {
         view.createMethod.addStmt(new o.WriteClassMemberExpr(
                 fieldName, compViewExpr.prop(appViewRootElementName))
             .toStmt());
-      }
-
-      if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-        // Write append code.
-        view.createMethod.addStmt(parentRenderNodeExpr.callMethod(
-            'append', [new o.ReadClassMemberExpr(fieldName)]).toStmt());
-      }
-
-      if (view.genConfig.genDebugInfo) {
-        view.createMethod.addStmt(createDbgElementCall(
-            new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
+        if (parentRenderNodeExpr != null &&
+            parentRenderNodeExpr != o.NULL_EXPR) {
+          // Write code to append to parent node.
+          view.createMethod.addStmt(parentRenderNodeExpr.callMethod(
+              'append', [new o.ReadClassMemberExpr(fieldName)]).toStmt());
+        }
+        if (generateDebugInfo) {
+          view.createMethod.addStmt(createDbgElementCall(
+              new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
+        }
       }
     }
 
@@ -409,6 +426,70 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return null;
   }
 
+  void _createElementAndAppend(
+      o.Expression tagName,
+      o.Expression parent,
+      String targetFieldName,
+      bool parentIsShadowRoot,
+      bool generateDebugInfo,
+      SourceSpan debugSpan,
+      int debugNodeIndex) {
+    // No namespace just call [document.createElement].
+    if (docVarName == null) {
+      view.createMethod.addStmt(_createLocalDocumentVar());
+    }
+    if (parent != null && parent != o.NULL_EXPR) {
+      o.Expression createExpr;
+      if (generateDebugInfo) {
+        createExpr = o
+            .importExpr(parentIsShadowRoot
+                ? Identifiers.createAndAppendToShadowRootDbg
+                : Identifiers.createAndAppendDbg)
+            .callFn([
+          o.THIS_EXPR,
+          new o.ReadVarExpr(docVarName),
+          tagName,
+          parent,
+          o.literal(debugNodeIndex),
+          debugSpan?.start == null
+              ? o.NULL_EXPR
+              : o.literal(debugSpan.start.line),
+          debugSpan?.start == null
+              ? o.NULL_EXPR
+              : o.literal(debugSpan.start.column)
+        ]);
+      } else {
+        createExpr = o
+            .importExpr(parentIsShadowRoot
+                ? Identifiers.createAndAppendToShadowRoot
+                : Identifiers.createAndAppend)
+            .callFn([new o.ReadVarExpr(docVarName), tagName, parent]);
+      }
+      view.createMethod.addStmt(
+          new o.WriteClassMemberExpr(targetFieldName, createExpr).toStmt());
+    } else {
+      // No parent node, just create element and assign.
+      var createRenderNodeExpr =
+          new o.ReadVarExpr(docVarName).callMethod('createElement', [tagName]);
+      view.createMethod.addStmt(
+          new o.WriteClassMemberExpr(targetFieldName, createRenderNodeExpr)
+              .toStmt());
+      if (generateDebugInfo) {
+        view.createMethod.addStmt(o.importExpr(Identifiers.dbgElm).callFn([
+          o.THIS_EXPR,
+          new o.ReadClassMemberExpr(targetFieldName),
+          o.literal(debugNodeIndex),
+          debugSpan?.start == null
+              ? o.NULL_EXPR
+              : o.literal(debugSpan.start.line),
+          debugSpan?.start == null
+              ? o.NULL_EXPR
+              : o.literal(debugSpan.start.column)
+        ]).toStmt());
+      }
+    }
+  }
+
   o.Statement _createLocalDocumentVar() {
     docVarName = defaultDocVarName;
     return new o.DeclareVarStmt(
@@ -429,7 +510,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   o.Statement createDbgElementCall(
       o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
     var sourceLocation = ast?.sourceSpan?.start;
-    return new o.InvokeMemberMethodExpr('dbgElm', [
+    return o.importExpr(Identifiers.dbgElm).callFn([
+      o.THIS_EXPR,
       nodeExpr,
       o.literal(nodeIndex),
       sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),

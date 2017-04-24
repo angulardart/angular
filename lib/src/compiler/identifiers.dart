@@ -7,27 +7,6 @@ import "package:angular2/src/core/change_detection/change_detection.dart"
         ChangeDetectorState,
         ChangeDetectionStrategy;
 import "package:angular2/src/core/di/injector.dart" show Injector;
-import "package:angular2/src/core/linker/app_view_utils.dart"
-    show
-        AppViewUtils,
-        interpolate,
-        interpolate0,
-        interpolate1,
-        interpolate2,
-        checkBinding,
-        castByValue,
-        EMPTY_ARRAY,
-        EMPTY_MAP,
-        pureProxy1,
-        pureProxy2,
-        pureProxy3,
-        pureProxy4,
-        pureProxy5,
-        pureProxy6,
-        pureProxy7,
-        pureProxy8,
-        pureProxy9,
-        pureProxy10;
 import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
 import "package:angular2/src/core/linker/view_type.dart" show ViewType;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
@@ -63,17 +42,8 @@ var impChangeDetectionStrategy = ChangeDetectionStrategy;
 var impSimpleChange = SimpleChange;
 var impChangeDetectorState = ChangeDetectorState;
 var impDevModeEqual = devModeEqual;
-var impInterpolate0 = interpolate0;
-var impInterpolate1 = interpolate1;
-var impInterpolate2 = interpolate2;
-var impThrowOnChanges = () => AppViewUtils.throwOnChanges;
-var impInterpolate = interpolate;
-var impCheckBinding = checkBinding;
 var impLooseIdentical = looseIdentical;
-var impCastByValue = castByValue;
 var impTemplateSecurityContext = TemplateSecurityContext;
-var impEMPTY_ARRAY = EMPTY_ARRAY;
-var impEMPTY_MAP = EMPTY_MAP;
 
 class Identifiers {
   static final appViewUtils = new CompileIdentifierMetadata<dynamic>(
@@ -150,9 +120,20 @@ class Identifiers {
       moduleUrl: CD_MODULE_URL,
       runtime: impChangeDetectorState);
   static final checkBinding = new CompileIdentifierMetadata<dynamic>(
-      name: "checkBinding",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impCheckBinding);
+      name: "checkBinding", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
+  static final createAndAppend = new CompileIdentifierMetadata<dynamic>(
+      name: "createAndAppend", moduleUrl: APP_VIEW_MODULE_URL);
+  static final createAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
+      name: "createAndAppendDbg", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
+  static final createAndAppendToShadowRoot =
+      new CompileIdentifierMetadata<dynamic>(
+          name: "createAndAppendToShadowRoot", moduleUrl: APP_VIEW_MODULE_URL);
+  static final createAndAppendToShadowRootDbg =
+      new CompileIdentifierMetadata<dynamic>(
+          name: "createAndAppendToShadowRootDbg",
+          moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
+  static final dbgElm = new CompileIdentifierMetadata<dynamic>(
+      name: "dbgElm", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(
       name: "devModeEqual", moduleUrl: CD_MODULE_URL, runtime: impDevModeEqual);
   static final looseIdentical = new CompileIdentifierMetadata<dynamic>(
@@ -164,36 +145,21 @@ class Identifiers {
   /// (most common case).
   static final throwOnChanges = new CompileIdentifierMetadata<dynamic>(
       name: "AppViewUtils.throwOnChanges",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtimeCallback: impThrowOnChanges);
+      moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final interpolate0 = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate0",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impInterpolate0);
+      name: "interpolate0", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final interpolate1 = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate1",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impInterpolate1);
+      name: "interpolate1", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final interpolate2 = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate2",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impInterpolate2);
+      name: "interpolate2", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final interpolate = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impInterpolate);
+      name: "interpolate", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final castByValue = new CompileIdentifierMetadata<dynamic>(
-      name: "castByValue",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impCastByValue);
+      name: "castByValue", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final EMPTY_ARRAY = new CompileIdentifierMetadata<dynamic>(
-      name: "EMPTY_ARRAY",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impEMPTY_ARRAY);
+      name: "EMPTY_ARRAY", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final EMPTY_MAP = new CompileIdentifierMetadata<dynamic>(
-      name: "EMPTY_MAP",
-      moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-      runtime: impEMPTY_MAP);
+      name: "EMPTY_MAP", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final NG_IF_DIRECTIVE = new CompileIdentifierMetadata<dynamic>(
       name: "NgIf", moduleUrl: NG_IF_URL);
   static final NG_FOR_DIRECTIVE = new CompileIdentifierMetadata<dynamic>(
@@ -201,45 +167,25 @@ class Identifiers {
   static final pureProxies = [
     null,
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy1",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0)) => pureProxy1(f)),
+        name: "pureProxy1", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy2",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1)) => pureProxy2(f)),
+        name: "pureProxy2", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy3",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2)) => pureProxy3(f)),
+        name: "pureProxy3", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy4",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2, p3)) => pureProxy4(f)),
+        name: "pureProxy4", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy5",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2, p3, p4)) => pureProxy5(f)),
+        name: "pureProxy5", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy6",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2, p3, p4, p5)) => pureProxy6(f)),
+        name: "pureProxy6", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy7",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2, p3, p4, p5, p6)) => pureProxy7(f)),
+        name: "pureProxy7", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy8",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2, p3, p4, p5, p6, p7)) => pureProxy8(f)),
+        name: "pureProxy8", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy9",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2, p3, p4, p5, p6, p7, p8)) => pureProxy9(f)),
+        name: "pureProxy9", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
     new CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy10",
-        moduleUrl: APP_VIEW_UTILS_MODULE_URL,
-        runtime: (f(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9)) => pureProxy10(f))
+        name: "pureProxy10", moduleUrl: APP_VIEW_UTILS_MODULE_URL)
   ];
   // Runtime is initialized by output interpreter. Compiler executes in VM and
   // can't import dart:html to initialize here.

@@ -58,7 +58,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier {
   T runtime;
 
   /// Same as runtime but evaluates function before using value.
-  final Function runtimeCallback;
+  Function runtimeCallback;
 
   CompileIdentifierMetadata(
       {this.runtime,

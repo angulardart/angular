@@ -66,7 +66,7 @@ class ViewTestContainerComponent0
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
-    dbgElm(_anchor_0, 0, 0, 0);
+    dbgElm(this, _anchor_0, 0, 0, 0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_3 =
         new TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
@@ -110,10 +110,10 @@ class ViewTestContainerComponent1
     final import3.TestContainerComponent _ctx = ctx;
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    dbgElm(_el_0, 0, 0, 0);
+    dbgElm(this, _el_0, 0, 0, 0);
     _DeferredChildComponent_0_2 = new deflib0.DeferredChildComponent();
     Text _text_1 = new Text('Foo');
-    dbgElm(_text_1, 1, 0, 30);
+    dbgElm(this, _text_1, 1, 0, 30);
     _compView_0.create(_DeferredChildComponent_0_2, []);
     init([_el_0], const [], [_el_0, _text_1]);
     return null;

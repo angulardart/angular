@@ -60,12 +60,10 @@ class ViewInjectableComponent0
     final import2.InjectableComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
-    dbgElm(_el_0, 0, 0, 0);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     Text _text_1 = new Text('Inject!');
     _el_0.append(_text_1);
-    dbgElm(_text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
   }

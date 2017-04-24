@@ -46,8 +46,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
     final import1.CheckOnceComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('CheckOnce');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -128,8 +127,7 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
     final import1.CheckedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Checked');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -210,8 +208,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
     final import1.CheckAlwaysComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('CheckAlways');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -292,8 +289,7 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
     final import1.DetachedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Detached');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -374,8 +370,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     final import1.OnPushComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('OnPush');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -456,8 +451,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     final import1.StatefulComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Stateful');
     _el_0.append(_text_1);
     init(const [], const []);
@@ -539,8 +533,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
     final import1.DefaultComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
-    _el_0 = doc.createElement('div');
-    parentRenderNode.append(_el_0);
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     Text _text_1 = new Text('Default');
     _el_0.append(_text_1);
     init(const [], const []);

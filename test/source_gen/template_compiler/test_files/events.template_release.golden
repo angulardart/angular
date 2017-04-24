@@ -49,8 +49,7 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
     var doc = document;
-    _el_1 = doc.createElement('button');
-    parentRenderNode.append(_el_1);
+    _el_1 = createAndAppend(doc, 'button', parentRenderNode);
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
     _el_1.addEventListener('click', this.eventHandler0(ctx.onClick));

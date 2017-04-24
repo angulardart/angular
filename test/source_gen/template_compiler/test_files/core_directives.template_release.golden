@@ -141,8 +141,7 @@ class ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     _el_0 = doc.createElement('div');
     Text _text_1 = new Text('\n      ');
     _el_0.append(_text_1);
-    _el_2 = doc.createElement('span');
-    _el_0.append(_el_2);
+    _el_2 = createAndAppend(doc, 'span', _el_0);
     _text_3 = new Text('');
     _el_2.append(_text_3);
     Text _text_4 = new Text('\n    ');

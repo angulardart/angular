@@ -1,3 +1,4 @@
+// @ignoreProblemForFile DEAD_CODE
 /// A unique object used for retrieving items from the [ReflectiveInjector].
 ///
 /// Keys have:
@@ -12,8 +13,9 @@
 /// automatically when resolving providers.
 ///
 class ReflectiveKey {
+  static final _globalKeyRegistry = new KeyRegistry();
   final Object token;
-  final num id;
+  final int id;
 
   ReflectiveKey(this.token, this.id) {
     assert(token != null);
@@ -23,7 +25,20 @@ class ReflectiveKey {
   String get displayName => '$token';
 
   /// Retrieves a [Key] for a token.
-  static ReflectiveKey get(Object token) => _globalKeyRegistry.get(token);
+  static ReflectiveKey get(Object token) {
+    return _globalKeyRegistry.get(token);
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+    return null;
+  }
 
   static num get numberOfKeys => _globalKeyRegistry.numberOfKeys;
 }
@@ -39,7 +54,5 @@ class KeyRegistry {
     return newKey;
   }
 
-  num get numberOfKeys => _allKeys.length;
+  int get numberOfKeys => _allKeys.length;
 }
-
-var _globalKeyRegistry = new KeyRegistry();
