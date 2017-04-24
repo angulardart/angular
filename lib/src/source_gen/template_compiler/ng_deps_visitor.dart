@@ -48,21 +48,26 @@ Future<NgDepsModel> resolveNgDepsFor(
   Future resolveAndCheckUri(UriReferencedElement directive) async {
     final uri = directive.uri;
     if (uri == null) {
-      return null;
+      return;
     }
-    if (directive is ImportElement) {
-      imports.add(new ImportModel.fromElement(directive));
-    } else {
+    if (directive is ExportElement) {
       exports.add(new ExportModel.fromElement(directive));
+      return;
     }
-    if (uri.startsWith('dart:') || uri.endsWith(TEMPLATE_EXTENSION)) {
-      return null;
-    }
-    final template = ''
-        '${uri.substring(0, uri.length - '.dart'.length)}'
-        '${TEMPLATE_EXTENSION}';
-    if (isLibrary(template) || await hasInput(uri)) {
-      templateDeps.add(new ImportModel(uri: template));
+    imports.add(new ImportModel.fromElement(directive));
+    if (uri.startsWith('dart:')) {
+      return;
+    } else if (uri.endsWith(TEMPLATE_EXTENSION)) {
+      if (!(directive as ImportElement).isDeferred) {
+        templateDeps.add(new ImportModel.fromElement(directive));
+      }
+    } else {
+      final template = ''
+          '${uri.substring(0, uri.length - '.dart'.length)}'
+          '${TEMPLATE_EXTENSION}';
+      if (isLibrary(template) || await hasInput(uri)) {
+        templateDeps.add(new ImportModel(uri: template));
+      }
     }
   }
 

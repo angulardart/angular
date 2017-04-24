@@ -116,7 +116,7 @@ class _NgScope implements Scope {
 
     for (var import in model.imports) {
       _prefixScope.addImport(import.uri, import.prefix);
-      _delegateScope[import.uri] = _prefixScope;
+      _delegateScope.putIfAbsent(import.uri, () => _prefixScope);
     }
   }
 
