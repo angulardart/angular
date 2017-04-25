@@ -17,7 +17,8 @@ See: [Template Syntax](/angular/guide/template-syntax),
 
 @cheatsheetItem
 syntax:
-`@Output() myEvent = new EventEmitter();`|`@Output()`
+`final _myEvent = new StreamController<T>();
+!@Output() Stream<T> get myEvent => _myEvent.stream;`|`@Output()`
 description:
 Declares an output property that fires events that you can subscribe to with an event binding (example: `<my-cmp (myEvent)="doSomething()">`).
 
@@ -36,7 +37,8 @@ See: [HostBinding class](/angular/api/angular2.core/HostBinding-class)
 
 @cheatsheetItem
 syntax:
-`@HostListener('click', ['$event']) onClick(e) {...}`|`@HostListener('click', ['$event'])`
+`@HostListener('click', ['$event'])
+onClick(e) {...}`|`@HostListener('click', ['$event'])`
 description:
 Subscribes to a host element event (`click`) with a directive/component method (`onClick`), optionally passing an argument (`$event`).
 
