@@ -347,5 +347,5 @@ class _GetResolver implements Builder {
   }
 
   @override
-  List<AssetId> declareOutputs(_) => const [];
+  Map<String, List<String>> get buildExtensions => const {'': const []};
 }
