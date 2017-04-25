@@ -50,15 +50,15 @@ Future<NgDepsModel> resolveNgDepsFor(
     if (uri == null) {
       return;
     }
-    if (directive is ExportElement) {
+    if (directive is ImportElement) {
+      imports.add(new ImportModel.fromElement(directive));
+    } else {
       exports.add(new ExportModel.fromElement(directive));
-      return;
     }
-    imports.add(new ImportModel.fromElement(directive));
     if (uri.startsWith('dart:')) {
       return;
     } else if (uri.endsWith(TEMPLATE_EXTENSION)) {
-      if (!(directive as ImportElement).isDeferred) {
+      if (!_isDeferred(directive)) {
         templateDeps.add(new ImportModel.fromElement(directive));
       }
     } else {
@@ -84,6 +84,9 @@ Future<NgDepsModel> resolveNgDepsFor(
     depImports: templateDeps,
   );
 }
+
+bool _isDeferred(UriReferencedElement directive) =>
+    directive is ImportElement && directive.isDeferred;
 
 /// An [ElementVisitor] which extracts all [ReflectableInfoModel]s found in the
 /// given element or its children.
