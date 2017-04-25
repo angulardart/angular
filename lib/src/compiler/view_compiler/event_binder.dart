@@ -96,16 +96,11 @@ class CompileEventListener {
     if (_isSimple) {
       return;
     }
-    var markPathToRootStart =
-        _hasComponentHostListener ? compileElement.compViewExpr : o.THIS_EXPR;
     o.Expression resultExpr = o.literal(true);
     for (var i = 0, len = _actionResultExprs.length; i < len; i++) {
       resultExpr = resultExpr.and(_actionResultExprs[i]);
     }
-    List<o.Statement> stmts = <o.Statement>[
-      markPathToRootStart.callMethod('markPathToRootAsCheckOnce', []).toStmt()
-    ]
-      ..addAll(_method.finish())
+    List<o.Statement> stmts = new List<o.Statement>.from(_method.finish())
       ..add(new o.ReturnStatement(resultExpr));
 
     compileElement.view.eventHandlerMethods.add(new o.ClassMethod(
@@ -117,27 +112,16 @@ class CompileEventListener {
   }
 
   void listenToRenderer() {
-    o.Expression eventListener;
-    if (!_isSimple) {
-      eventListener = new o.InvokeMemberMethodExpr(
-          'evt', [new o.ReadClassMemberExpr(_methodName)]);
+    final handlerExpr = _createEventHandlerExpr();
+    var listenExpr;
+
+    if (isNativeHtmlEvent(eventName)) {
+      listenExpr = compileElement.renderNode
+          .callMethod('addEventListener', [o.literal(eventName), handlerExpr]);
     } else {
-      var appView =
-          _hasComponentHostListener ? compileElement.compViewExpr : o.THIS_EXPR;
-      var handler = _simpleHandler;
-      eventListener = appView.callMethod(
-          'eventHandler${_handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
-          [handler]);
-      // If native DOM event, bypass plugin system.
-      if (isNativeHtmlEvent(eventName)) {
-        o.Expression expr = compileElement.renderNode.callMethod(
-            'addEventListener', [o.literal(eventName), eventListener]);
-        compileElement.view.createMethod.addStmt(expr.toStmt());
-        return;
-      }
+      listenExpr = new o.InvokeMemberMethodExpr('listen',
+          [compileElement.renderNode, o.literal(eventName), handlerExpr]);
     }
-    o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen',
-        [compileElement.renderNode, o.literal(eventName), eventListener]);
 
     compileElement.view.createMethod.addStmt(listenExpr.toStmt());
   }
@@ -147,23 +131,32 @@ class CompileEventListener {
     var subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
-    o.Expression eventListener;
-    if (!_isSimple) {
-      eventListener = new o.InvokeMemberMethodExpr(
-          'evt', [new o.ReadClassMemberExpr(_methodName)]);
-    } else {
-      var appView =
-          _hasComponentHostListener ? compileElement.compViewExpr : o.THIS_EXPR;
-      var handler = _simpleHandler;
-      eventListener = appView.callMethod(
-          'eventHandler${_handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
-          [handler]);
-    }
+    final handlerExpr = _createEventHandlerExpr();
     this.compileElement.view.createMethod.addStmt(subscription
         .set(directiveInstance
             .prop(observablePropName)
-            .callMethod(o.BuiltinMethod.SubscribeObservable, [eventListener]))
+            .callMethod(o.BuiltinMethod.SubscribeObservable, [handlerExpr]))
         .toDeclStmt(null, [o.StmtModifier.Final]));
+  }
+
+  o.Expression _createEventHandlerExpr() {
+    var handlerExpr;
+    var numArgs;
+
+    if (_isSimple) {
+      handlerExpr = _simpleHandler;
+      numArgs = _handlerType == HandlerType.simpleNoArgs ? 0 : 1;
+    } else {
+      handlerExpr = new o.ReadClassMemberExpr(_methodName);
+      numArgs = 1;
+    }
+
+    final wrapperName = 'eventHandler$numArgs';
+    if (_hasComponentHostListener) {
+      return compileElement.compViewExpr.callMethod(wrapperName, [handlerExpr]);
+    } else {
+      return new o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
+    }
   }
 }
 
