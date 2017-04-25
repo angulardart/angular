@@ -27,16 +27,16 @@ See: [Template Syntax](/angular/guide/template-syntax),
 @cheatsheetItem
 syntax:
 `<div [ngSwitch]="conditionExpression">
-  <template [ngSwitchWhen]="case1Exp">...</template>
-  <template ngSwitchWhen="case2LiteralString">...</template>
+  <template [ngSwitchCase]="case1Exp">...</template>
+  <template ngSwitchCase="case2LiteralString">...</template>
   <template ngSwitchDefault>...</template>
-</div>`|`[ngSwitch]`|`[ngSwitchWhen]`|`ngSwitchWhen`|`ngSwitchDefault`
+</div>`|`[ngSwitch]`|`[ngSwitchCase]`|`ngSwitchCase`|`ngSwitchDefault`
 description:
 Conditionally swaps the contents of the div by selecting one of the embedded templates based on the current value of conditionExpression.
 
 See: [Template Syntax](/angular/guide/template-syntax),
 [NgSwitch class](/angular/api/angular2.common/NgSwitch-class),
-[NgSwitchWhen class](/angular/api/angular2.common/NgSwitchWhen-class),
+[NgSwitchCase class](/angular/api/angular2.common/NgSwitchWhen-class),
 [NgSwitchDefault class](/angular/api/angular2.common/NgSwitchDefault-class)
 
 @cheatsheetItem
