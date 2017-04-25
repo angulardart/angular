@@ -36,7 +36,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   Element _el_4;
   import1.TestDirective _TestDirective_4_2;
   Element _el_6;
-  AppView<import1.TestSubComponent> _compView_6;
+  ViewTestSubComponent0 _compView_6;
   import1.TestSubComponent _TestSubComponent_6_2;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
@@ -62,7 +62,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _TestDirective_4_2 = new import1.TestDirective();
     Text _text_5 = new Text('\n    A component: ');
     parentRenderNode.append(_text_5);
-    _compView_6 = viewFactory_TestSubComponent0(this, 6);
+    _compView_6 = new ViewTestSubComponent0(this, 6);
     _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     _TestSubComponent_6_2 = new import1.TestSubComponent();
@@ -102,7 +102,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
 const List<dynamic> styles_TestFooComponentHost = const [];
 
 class ViewTestFooComponentHost0 extends AppView<dynamic> {
-  AppView<import1.TestFooComponent> _compView_0;
+  ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_2;
   static RenderComponentType renderType;
   ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -114,7 +114,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_TestFooComponent0(this, 0);
+    _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_2 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_2, projectableNodes);
@@ -183,7 +183,7 @@ AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
 const List<dynamic> styles_TestSubComponentHost = const [];
 
 class ViewTestSubComponentHost0 extends AppView<dynamic> {
-  AppView<import1.TestSubComponent> _compView_0;
+  ViewTestSubComponent0 _compView_0;
   import1.TestSubComponent _TestSubComponent_0_2;
   static RenderComponentType renderType;
   ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -195,7 +195,7 @@ class ViewTestSubComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_TestSubComponent0(this, 0);
+    _compView_0 = new ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestSubComponent_0_2 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_2, projectableNodes);

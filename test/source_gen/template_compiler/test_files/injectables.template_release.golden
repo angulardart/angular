@@ -65,7 +65,7 @@ AppView<import1.InjectableComponent> viewFactory_InjectableComponent0(
 const List<dynamic> styles_InjectableComponentHost = const [];
 
 class ViewInjectableComponentHost0 extends AppView<dynamic> {
-  AppView<import1.InjectableComponent> _compView_0;
+  ViewInjectableComponent0 _compView_0;
   dynamic _const_OpaqueToken__test___0_2;
   import1.InjectableComponent _InjectableComponent_0_3;
   dynamic __SomeDep_0_4;
@@ -98,7 +98,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
 
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_InjectableComponent0(this, 0);
+    _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _const_OpaqueToken__test___0_2 =
         import1.injectableFactory(this.injectorGet(Window, parentIndex));

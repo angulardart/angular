@@ -24,8 +24,8 @@ import 'package:angular2/src/debug/debug_context.dart';
 import 'has_directives.dart' as import1;
 import 'package:angular2/src/debug/debug_app_view.dart';
 import 'dart:html';
-import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/render/api.dart';
+import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/view_type.dart' as import6;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
@@ -49,7 +49,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   Element _el_4;
   import1.TestDirective _TestDirective_4_2;
   Element _el_6;
-  AppView<import1.TestSubComponent> _compView_6;
+  ViewTestSubComponent0 _compView_6;
   import1.TestSubComponent _TestSubComponent_6_2;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
@@ -87,7 +87,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     Text _text_5 = new Text('\n    A component: ');
     parentRenderNode.append(_text_5);
     dbgElm(this, _text_5, 5, 1, 40);
-    _compView_6 = viewFactory_TestSubComponent0(this, 6);
+    _compView_6 = new ViewTestSubComponent0(this, 6);
     _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     dbgElm(this, _el_6, 6, 2, 17);
@@ -134,7 +134,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
 ];
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import1.TestFooComponent> _compView_0;
+  ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_2;
   static RenderComponentType renderType;
   ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -151,7 +151,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_TestFooComponent0(this, 0);
+    _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _TestFooComponent_0_2 = new import1.TestFooComponent();
@@ -234,7 +234,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
 ];
 
 class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import1.TestSubComponent> _compView_0;
+  ViewTestSubComponent0 _compView_0;
   import1.TestSubComponent _TestSubComponent_0_2;
   static RenderComponentType renderType;
   ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -251,7 +251,7 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_TestSubComponent0(this, 0);
+    _compView_0 = new ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _TestSubComponent_0_2 = new import1.TestSubComponent();

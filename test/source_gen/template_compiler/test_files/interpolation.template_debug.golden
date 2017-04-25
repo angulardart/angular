@@ -97,7 +97,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentHost0 = [
 ];
 
 class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.InterpolationComponent> _compView_0;
+  ViewInterpolationComponent0 _compView_0;
   import2.InterpolationComponent _InterpolationComponent_0_2;
   static RenderComponentType renderType;
   ViewInterpolationComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -114,7 +114,7 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_InterpolationComponent0(this, 0);
+    _compView_0 = new ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _InterpolationComponent_0_2 = new import2.InterpolationComponent();
@@ -218,7 +218,7 @@ List<StaticNodeDebugInfo>
 
 class ViewInterpolationComponentNoWhitespaceHost0
     extends DebugAppView<dynamic> {
-  AppView<import2.InterpolationComponentNoWhitespace> _compView_0;
+  ViewInterpolationComponentNoWhitespace0 _compView_0;
   import2.InterpolationComponentNoWhitespace
       _InterpolationComponentNoWhitespace_0_2;
   static RenderComponentType renderType;
@@ -239,7 +239,7 @@ class ViewInterpolationComponentNoWhitespaceHost0
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_InterpolationComponentNoWhitespace0(this, 0);
+    _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _InterpolationComponentNoWhitespace_0_2 =

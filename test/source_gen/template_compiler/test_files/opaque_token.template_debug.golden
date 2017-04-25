@@ -88,7 +88,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
 ];
 
 class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
-  AppView<import2.HasOpaqueTokens> _compView_0;
+  ViewHasOpaqueTokens0 _compView_0;
   String _const_OpaqueToken__baseUrlDescription___0_2;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
@@ -106,7 +106,7 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_HasOpaqueTokens0(this, 0);
+    _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';

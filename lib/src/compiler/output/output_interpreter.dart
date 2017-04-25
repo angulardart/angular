@@ -455,7 +455,11 @@ class StatementInterpreter implements o.StatementVisitor, o.ExpressionVisitor {
     if (clazz is _DynamicClass) {
       return clazz.instantiate(args);
     } else {
-      return Function.apply(reflector.factory(clazz), args);
+      if (clazz is Type) {
+        return Function.apply(reflector.factory(clazz), args);
+      } else {
+        return Function.apply(clazz, args);
+      }
     }
   }
 

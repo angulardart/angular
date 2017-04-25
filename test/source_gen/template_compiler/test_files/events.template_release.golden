@@ -67,7 +67,7 @@ AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEvents0(
 const List<dynamic> styles_UsesNativeEventsHost = const [];
 
 class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
-  AppView<import1.UsesNativeEvents> _compView_0;
+  ViewUsesNativeEvents0 _compView_0;
   import1.UsesNativeEvents _UsesNativeEvents_0_2;
   static RenderComponentType renderType;
   ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
@@ -79,7 +79,7 @@ class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_UsesNativeEvents0(this, 0);
+    _compView_0 = new ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesNativeEvents_0_2 = new import1.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_2, projectableNodes);
@@ -119,7 +119,7 @@ const List<dynamic> styles_UsesAngularEvents = const [];
 
 class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   Element _el_1;
-  AppView<import1.HasAngularEvents> _compView_1;
+  ViewHasAngularEvents0 _compView_1;
   import1.HasAngularEvents _HasAngularEvents_1_2;
   static RenderComponentType renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
@@ -135,7 +135,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
-    _compView_1 = viewFactory_HasAngularEvents0(this, 1);
+    _compView_1 = new ViewHasAngularEvents0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _HasAngularEvents_1_2 = new import1.HasAngularEvents();
@@ -175,7 +175,7 @@ AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEvents0(
 const List<dynamic> styles_UsesAngularEventsHost = const [];
 
 class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
-  AppView<import1.UsesAngularEvents> _compView_0;
+  ViewUsesAngularEvents0 _compView_0;
   import1.UsesAngularEvents _UsesAngularEvents_0_2;
   static RenderComponentType renderType;
   ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
@@ -187,7 +187,7 @@ class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_UsesAngularEvents0(this, 0);
+    _compView_0 = new ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesAngularEvents_0_2 = new import1.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_2, projectableNodes);
@@ -251,7 +251,7 @@ AppView<import1.HasAngularEvents> viewFactory_HasAngularEvents0(
 const List<dynamic> styles_HasAngularEventsHost = const [];
 
 class ViewHasAngularEventsHost0 extends AppView<dynamic> {
-  AppView<import1.HasAngularEvents> _compView_0;
+  ViewHasAngularEvents0 _compView_0;
   import1.HasAngularEvents _HasAngularEvents_0_2;
   static RenderComponentType renderType;
   ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
@@ -263,7 +263,7 @@ class ViewHasAngularEventsHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_HasAngularEvents0(this, 0);
+    _compView_0 = new ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     _HasAngularEvents_0_2 = new import1.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_2, projectableNodes);

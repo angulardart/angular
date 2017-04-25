@@ -88,7 +88,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
 ];
 
 class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.InjectableComponent> _compView_0;
+  ViewInjectableComponent0 _compView_0;
   dynamic _const_OpaqueToken__test___0_2;
   import2.InjectableComponent _InjectableComponent_0_3;
   dynamic __SomeDep_0_4;
@@ -128,7 +128,7 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
 
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_InjectableComponent0(this, 0);
+    _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _const_OpaqueToken__test___0_2 =

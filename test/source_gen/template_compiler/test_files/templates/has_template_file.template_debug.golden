@@ -87,7 +87,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
 ];
 
 class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import3.HasTemplateFileComponent> _compView_0;
+  ViewHasTemplateFileComponent0 _compView_0;
   import3.HasTemplateFileComponent _HasTemplateFileComponent_0_2;
   static RenderComponentType renderType;
   ViewHasTemplateFileComponentHost0(
@@ -105,7 +105,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_HasTemplateFileComponent0(this, 0);
+    _compView_0 = new ViewHasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _HasTemplateFileComponent_0_2 = new import3.HasTemplateFileComponent();

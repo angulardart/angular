@@ -321,7 +321,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = [
 ];
 
 class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import1.QueriesComponent> _compView_0;
+  ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_2;
   import3.QueryList _query_q7_0_0;
   import3.QueryList _query_q9_0_1;
@@ -347,7 +347,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_QueriesComponent0(this, 0);
+    _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _QueriesComponent_0_2 = new import1.QueriesComponent();

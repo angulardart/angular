@@ -62,7 +62,7 @@ AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
 const List<dynamic> styles_TestSubComponentHost = const [];
 
 class ViewTestSubComponentHost0 extends AppView<dynamic> {
-  AppView<import1.TestSubComponent> _compView_0;
+  ViewTestSubComponent0 _compView_0;
   import1.TestSubComponent _TestSubComponent_0_2;
   static RenderComponentType renderType;
   ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -74,7 +74,7 @@ class ViewTestSubComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_TestSubComponent0(this, 0);
+    _compView_0 = new ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestSubComponent_0_2 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_2, projectableNodes);

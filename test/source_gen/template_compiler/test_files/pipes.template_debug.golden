@@ -107,7 +107,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CompHost0 = [
 ];
 
 class ViewCompHost0 extends DebugAppView<dynamic> {
-  AppView<import2.Comp> _compView_0;
+  ViewComp0 _compView_0;
   import2.Comp _Comp_0_2;
   static RenderComponentType renderType;
   ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
@@ -119,7 +119,7 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_Comp0(this, 0);
+    _compView_0 = new ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _Comp_0_2 = new import2.Comp();

@@ -71,7 +71,7 @@ AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
 const List<dynamic> styles_HasOpaqueTokensHost = const [];
 
 class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
-  AppView<import1.HasOpaqueTokens> _compView_0;
+  ViewHasOpaqueTokens0 _compView_0;
   String _const_OpaqueToken__baseUrlDescription___0_2;
   import1.HasOpaqueTokens _HasOpaqueTokens_0_3;
   static RenderComponentType renderType;
@@ -84,7 +84,7 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_HasOpaqueTokens0(this, 0);
+    _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
     _HasOpaqueTokens_0_3 = new import1.HasOpaqueTokens(

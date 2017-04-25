@@ -77,7 +77,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = [
 ];
 
 class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.EmulatedComponent> _compView_0;
+  ViewEmulatedComponent0 _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_2;
   static RenderComponentType renderType;
   ViewEmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -94,7 +94,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_EmulatedComponent0(this, 0);
+    _compView_0 = new ViewEmulatedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _EmulatedComponent_0_2 = new import2.EmulatedComponent();
@@ -178,7 +178,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponentHost0 = [
 ];
 
 class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.NativeComponent> _compView_0;
+  ViewNativeComponent0 _compView_0;
   import2.NativeComponent _NativeComponent_0_2;
   static RenderComponentType renderType;
   ViewNativeComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -195,7 +195,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_NativeComponent0(this, 0);
+    _compView_0 = new ViewNativeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _NativeComponent_0_2 = new import2.NativeComponent();
@@ -278,7 +278,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = [
 ];
 
 class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.NoneComponent> _compView_0;
+  ViewNoneComponent0 _compView_0;
   import2.NoneComponent _NoneComponent_0_2;
   static RenderComponentType renderType;
   ViewNoneComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -295,7 +295,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_NoneComponent0(this, 0);
+    _compView_0 = new ViewNoneComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _NoneComponent_0_2 = new import2.NoneComponent();

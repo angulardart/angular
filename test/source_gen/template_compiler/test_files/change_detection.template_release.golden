@@ -62,7 +62,7 @@ AppView<import1.CheckOnceComponent> viewFactory_CheckOnceComponent0(
 const List<dynamic> styles_CheckOnceComponentHost = const [];
 
 class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
-  AppView<import1.CheckOnceComponent> _compView_0;
+  ViewCheckOnceComponent0 _compView_0;
   import1.CheckOnceComponent _CheckOnceComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -74,7 +74,7 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_CheckOnceComponent0(this, 0);
+    _compView_0 = new ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckOnceComponent_0_2 = new import1.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_2, projectableNodes);
@@ -143,7 +143,7 @@ AppView<import1.CheckedComponent> viewFactory_CheckedComponent0(
 const List<dynamic> styles_CheckedComponentHost = const [];
 
 class ViewCheckedComponentHost0 extends AppView<dynamic> {
-  AppView<import1.CheckedComponent> _compView_0;
+  ViewCheckedComponent0 _compView_0;
   import1.CheckedComponent _CheckedComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -155,7 +155,7 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_CheckedComponent0(this, 0);
+    _compView_0 = new ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckedComponent_0_2 = new import1.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_2, projectableNodes);
@@ -224,7 +224,7 @@ AppView<import1.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
 const List<dynamic> styles_CheckAlwaysComponentHost = const [];
 
 class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
-  AppView<import1.CheckAlwaysComponent> _compView_0;
+  ViewCheckAlwaysComponent0 _compView_0;
   import1.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -236,7 +236,7 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_CheckAlwaysComponent0(this, 0);
+    _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckAlwaysComponent_0_2 = new import1.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes);
@@ -305,7 +305,7 @@ AppView<import1.DetachedComponent> viewFactory_DetachedComponent0(
 const List<dynamic> styles_DetachedComponentHost = const [];
 
 class ViewDetachedComponentHost0 extends AppView<dynamic> {
-  AppView<import1.DetachedComponent> _compView_0;
+  ViewDetachedComponent0 _compView_0;
   import1.DetachedComponent _DetachedComponent_0_2;
   static RenderComponentType renderType;
   ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -317,7 +317,7 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_DetachedComponent0(this, 0);
+    _compView_0 = new ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _DetachedComponent_0_2 = new import1.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_2, projectableNodes);
@@ -386,7 +386,7 @@ AppView<import1.OnPushComponent> viewFactory_OnPushComponent0(
 const List<dynamic> styles_OnPushComponentHost = const [];
 
 class ViewOnPushComponentHost0 extends AppView<dynamic> {
-  AppView<import1.OnPushComponent> _compView_0;
+  ViewOnPushComponent0 _compView_0;
   import1.OnPushComponent _OnPushComponent_0_2;
   static RenderComponentType renderType;
   ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -398,7 +398,7 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_OnPushComponent0(this, 0);
+    _compView_0 = new ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _OnPushComponent_0_2 = new import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_2, projectableNodes);
@@ -468,7 +468,7 @@ AppView<import1.StatefulComponent> viewFactory_StatefulComponent0(
 const List<dynamic> styles_StatefulComponentHost = const [];
 
 class ViewStatefulComponentHost0 extends AppView<dynamic> {
-  AppView<import1.StatefulComponent> _compView_0;
+  ViewStatefulComponent0 _compView_0;
   import1.StatefulComponent _StatefulComponent_0_2;
   static RenderComponentType renderType;
   ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -480,7 +480,7 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_StatefulComponent0(this, 0);
+    _compView_0 = new ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _StatefulComponent_0_2 = new import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_2, projectableNodes);
@@ -549,7 +549,7 @@ AppView<import1.DefaultComponent> viewFactory_DefaultComponent0(
 const List<dynamic> styles_DefaultComponentHost = const [];
 
 class ViewDefaultComponentHost0 extends AppView<dynamic> {
-  AppView<import1.DefaultComponent> _compView_0;
+  ViewDefaultComponent0 _compView_0;
   import1.DefaultComponent _DefaultComponent_0_2;
   static RenderComponentType renderType;
   ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -561,7 +561,7 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_DefaultComponent0(this, 0);
+    _compView_0 = new ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _DefaultComponent_0_2 = new import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_2, projectableNodes);

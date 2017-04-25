@@ -277,18 +277,41 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
           (view.declarationElement.sourceAst as EmbeddedTemplateAst)
               .hasDeferredComponent;
 
-      CompileIdentifierMetadata nestedComponentIdentifier =
-          new CompileIdentifierMetadata(name: getViewFactoryName(component, 0));
-      targetDependencies
-          .add(new ViewCompileDependency(component, nestedComponentIdentifier));
       String compViewName = '_compView_${nodeIndex}';
       compViewExpr = new o.ReadClassMemberExpr(compViewName);
-      view.fields.add(new o.ClassField(compViewName,
-          outputType: o.importType(Identifiers.AppView,
-              isDeferred ? null : [o.importType(component.type)])));
-      var importExpr = o.importExpr(nestedComponentIdentifier);
-      view.createMethod.addStmt(new o.WriteClassMemberExpr(compViewName,
-          importExpr.callFn([o.THIS_EXPR, o.literal(nodeIndex)])).toStmt());
+
+      CompileIdentifierMetadata componentViewIdentifier =
+          new CompileIdentifierMetadata(name: 'View${component.type.name}0');
+      targetDependencies
+          .add(new ViewCompileDependency(component, componentViewIdentifier));
+
+      var viewType = isDeferred
+          ? o.importType(Identifiers.AppView, null)
+          : o.importType(componentViewIdentifier);
+      view.fields.add(new o.ClassField(compViewName, outputType: viewType));
+
+      if (isDeferred) {
+        // When deferred, we use AppView<dynamic> as type to store instance
+        // of component and create the instance using:
+        // deferredLibName.viewFactory_SomeComponent(...)
+        CompileIdentifierMetadata nestedComponentIdentifier =
+            new CompileIdentifierMetadata(
+                name: getViewFactoryName(component, 0));
+        targetDependencies.add(
+            new ViewCompileDependency(component, nestedComponentIdentifier));
+
+        var importExpr = o.importExpr(nestedComponentIdentifier);
+        view.createMethod.addStmt(new o.WriteClassMemberExpr(compViewName,
+            importExpr.callFn([o.THIS_EXPR, o.literal(nodeIndex)])).toStmt());
+      } else {
+        // Create instance of component using ViewSomeComponent0 AppView.
+        var createComponentInstanceExpr = o
+            .importExpr(componentViewIdentifier)
+            .instantiate([o.THIS_EXPR, o.literal(nodeIndex)]);
+        view.createMethod.addStmt(new o.WriteClassMemberExpr(
+                compViewName, createComponentInstanceExpr)
+            .toStmt());
+      }
     }
 
     var createRenderNodeExpr;

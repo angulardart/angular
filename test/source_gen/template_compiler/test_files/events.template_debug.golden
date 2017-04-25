@@ -83,7 +83,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEventsHost0 = [
 ];
 
 class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
-  AppView<import2.UsesNativeEvents> _compView_0;
+  ViewUsesNativeEvents0 _compView_0;
   import2.UsesNativeEvents _UsesNativeEvents_0_2;
   static RenderComponentType renderType;
   ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
@@ -100,7 +100,7 @@ class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_UsesNativeEvents0(this, 0);
+    _compView_0 = new ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _UsesNativeEvents_0_2 = new import2.UsesNativeEvents();
@@ -147,7 +147,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = [
 
 class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
   Element _el_1;
-  AppView<import2.HasAngularEvents> _compView_1;
+  ViewHasAngularEvents0 _compView_1;
   import2.HasAngularEvents _HasAngularEvents_1_2;
   static RenderComponentType renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
@@ -171,7 +171,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
-    _compView_1 = viewFactory_HasAngularEvents0(this, 1);
+    _compView_1 = new ViewHasAngularEvents0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     dbgElm(this, _el_1, 1, 0, 4);
@@ -217,7 +217,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEventsHost0 = [
 ];
 
 class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
-  AppView<import2.UsesAngularEvents> _compView_0;
+  ViewUsesAngularEvents0 _compView_0;
   import2.UsesAngularEvents _UsesAngularEvents_0_2;
   static RenderComponentType renderType;
   ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
@@ -234,7 +234,7 @@ class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_UsesAngularEvents0(this, 0);
+    _compView_0 = new ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _UsesAngularEvents_0_2 = new import2.UsesAngularEvents();
@@ -311,7 +311,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEventsHost0 = [
 ];
 
 class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
-  AppView<import2.HasAngularEvents> _compView_0;
+  ViewHasAngularEvents0 _compView_0;
   import2.HasAngularEvents _HasAngularEvents_0_2;
   static RenderComponentType renderType;
   ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
@@ -328,7 +328,7 @@ class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_HasAngularEvents0(this, 0);
+    _compView_0 = new ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _HasAngularEvents_0_2 = new import2.HasAngularEvents();

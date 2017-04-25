@@ -61,7 +61,7 @@ AppView<import1.HostComponent> viewFactory_HostComponent0(
 const List<dynamic> styles_HostComponentHost = const [];
 
 class ViewHostComponentHost0 extends AppView<dynamic> {
-  AppView<import1.HostComponent> _compView_0;
+  ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_2;
   var _expr_0;
   bool _expr_1;
@@ -75,7 +75,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_HostComponent0(this, 0);
+    _compView_0 = new ViewHostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HostComponent_0_2 = new import1.HostComponent();
     _compView_0.create(_HostComponent_0_2, projectableNodes);

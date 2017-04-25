@@ -59,7 +59,7 @@ AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
 const List<dynamic> styles_ProviderModulesComponentHost = const [];
 
 class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
-  AppView<import1.ProviderModulesComponent> _compView_0;
+  ViewProviderModulesComponent0 _compView_0;
   import1.ProviderModulesComponent _ProviderModulesComponent_0_2;
   import1.FooService __FooService_0_3;
   Duration __const_OpaqueToken__fooToken___0_4;
@@ -104,7 +104,7 @@ class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
 
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_ProviderModulesComponent0(this, 0);
+    _compView_0 = new ViewProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProviderModulesComponent_0_2 = new import1.ProviderModulesComponent();
     _compView_0.create(_ProviderModulesComponent_0_2, projectableNodes);

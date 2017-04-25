@@ -77,7 +77,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
 ];
 
 class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.TestSubComponent> _compView_0;
+  ViewTestSubComponent0 _compView_0;
   import2.TestSubComponent _TestSubComponent_0_2;
   static RenderComponentType renderType;
   ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -94,7 +94,7 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_TestSubComponent0(this, 0);
+    _compView_0 = new ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _TestSubComponent_0_2 = new import2.TestSubComponent();

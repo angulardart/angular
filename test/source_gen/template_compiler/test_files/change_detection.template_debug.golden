@@ -77,7 +77,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
 ];
 
 class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.CheckOnceComponent> _compView_0;
+  ViewCheckOnceComponent0 _compView_0;
   import2.CheckOnceComponent _CheckOnceComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -94,7 +94,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_CheckOnceComponent0(this, 0);
+    _compView_0 = new ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _CheckOnceComponent_0_2 = new import2.CheckOnceComponent();
@@ -177,7 +177,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
 ];
 
 class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.CheckedComponent> _compView_0;
+  ViewCheckedComponent0 _compView_0;
   import2.CheckedComponent _CheckedComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -194,7 +194,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_CheckedComponent0(this, 0);
+    _compView_0 = new ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _CheckedComponent_0_2 = new import2.CheckedComponent();
@@ -278,7 +278,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
 ];
 
 class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.CheckAlwaysComponent> _compView_0;
+  ViewCheckAlwaysComponent0 _compView_0;
   import2.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -295,7 +295,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_CheckAlwaysComponent0(this, 0);
+    _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _CheckAlwaysComponent_0_2 = new import2.CheckAlwaysComponent();
@@ -378,7 +378,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
 ];
 
 class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.DetachedComponent> _compView_0;
+  ViewDetachedComponent0 _compView_0;
   import2.DetachedComponent _DetachedComponent_0_2;
   static RenderComponentType renderType;
   ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -395,7 +395,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_DetachedComponent0(this, 0);
+    _compView_0 = new ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _DetachedComponent_0_2 = new import2.DetachedComponent();
@@ -478,7 +478,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
 ];
 
 class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.OnPushComponent> _compView_0;
+  ViewOnPushComponent0 _compView_0;
   import2.OnPushComponent _OnPushComponent_0_2;
   static RenderComponentType renderType;
   ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -495,7 +495,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_OnPushComponent0(this, 0);
+    _compView_0 = new ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _OnPushComponent_0_2 = new import2.OnPushComponent();
@@ -579,7 +579,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
 ];
 
 class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.StatefulComponent> _compView_0;
+  ViewStatefulComponent0 _compView_0;
   import2.StatefulComponent _StatefulComponent_0_2;
   static RenderComponentType renderType;
   ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -596,7 +596,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_StatefulComponent0(this, 0);
+    _compView_0 = new ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _StatefulComponent_0_2 = new import2.StatefulComponent();
@@ -679,7 +679,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
 ];
 
 class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
-  AppView<import2.DefaultComponent> _compView_0;
+  ViewDefaultComponent0 _compView_0;
   import2.DefaultComponent _DefaultComponent_0_2;
   static RenderComponentType renderType;
   ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
@@ -696,7 +696,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   }
   ComponentRef build() {
     final _ctx = ctx;
-    _compView_0 = viewFactory_DefaultComponent0(this, 0);
+    _compView_0 = new ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _DefaultComponent_0_2 = new import2.DefaultComponent();
