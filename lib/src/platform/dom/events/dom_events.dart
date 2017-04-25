@@ -13,12 +13,7 @@ class DomEventsPlugin extends EventManagerPlugin {
     String eventName,
     @checked void callback(Event event),
   ) {
-    final zone = manager.getZone();
-    guardedCallback(Event event) {
-      return zone.runGuarded(() => callback(event));
-    }
-
-    element.addEventListener(eventName, guardedCallback);
+    element.addEventListener(eventName, callback);
     return null;
   }
 

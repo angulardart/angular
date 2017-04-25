@@ -62,10 +62,8 @@ class HammerGesturesPlugin extends HammerGesturesPluginCommon {
       subscription = mc.callMethod('on', [
         eventName,
         (eventObj) {
-          zone.runGuarded(() {
-            var dartEvent = new HammerEvent._fromJsEvent(eventObj);
-            handler(dartEvent);
-          });
+          var dartEvent = new HammerEvent._fromJsEvent(eventObj);
+          handler(dartEvent);
         }
       ]);
     });

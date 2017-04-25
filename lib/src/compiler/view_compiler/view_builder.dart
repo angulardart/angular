@@ -1163,13 +1163,13 @@ void _writeComponentHostEventListeners(
     String handlerSource = component.hostListeners[eventName];
     var handlerAst = parser.parseAction(handlerSource, '');
     HandlerType handlerType = handlerTypeFromExpression(handlerAst);
-
+    var handlerExpr;
+    var numArgs;
     if (handlerType == HandlerType.notSimple) {
       var context = new o.ReadClassMemberExpr('ctx');
       var actionExpr = convertStmtIntoExpression(
           convertCdStatementToIr(view, context, handlerAst, false).last);
       List<o.Statement> stmts = <o.Statement>[
-        new o.InvokeMemberMethodExpr('markPathToRootAsCheckOnce', []).toStmt(),
         new o.ReturnStatement(actionExpr)
       ];
       String methodName = '_handle_${sanitizeEventName(eventName)}__';
@@ -1179,39 +1179,31 @@ void _writeComponentHostEventListeners(
           stmts,
           o.BOOL_TYPE,
           [o.StmtModifier.Private]));
-
-      o.Expression handlerExpr = new o.InvokeMemberMethodExpr(
-          'evt', [new o.ReadClassMemberExpr(methodName)]);
-      o.Expression listenExpr = new o.InvokeMemberMethodExpr('listen', [
-        new o.ReadClassMemberExpr(appViewRootElementName),
-        o.literal(eventName),
-        handlerExpr
-      ]);
-      statements.add(listenExpr.toStmt());
+      handlerExpr = new o.ReadClassMemberExpr(methodName);
+      numArgs = 1;
     } else {
       var context = o.variable('_ctx');
       var actionExpr = convertStmtIntoExpression(
           convertCdStatementToIr(view, context, handlerAst, false).last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;
-      var eventListener = new o.InvokeMemberMethodExpr(
-          'eventHandler${handlerType == HandlerType.simpleNoArgs ? 0 : 1}',
-          [new o.ReadPropExpr(callExpr.receiver, callExpr.name)]);
-      // If native DOM event, bypass plugin system.
-      o.Expression listenExpr;
-      if (isNativeHtmlEvent(eventName)) {
-        listenExpr = new o.ReadClassMemberExpr(appViewRootElementName)
-            .callMethod(
-                'addEventListener', [o.literal(eventName), eventListener]);
-      } else {
-        listenExpr = new o.InvokeMemberMethodExpr('listen', [
-          new o.ReadClassMemberExpr(appViewRootElementName),
-          o.literal(eventName),
-          eventListener
-        ]);
-      }
-      statements.add(listenExpr.toStmt());
+      handlerExpr = new o.ReadPropExpr(callExpr.receiver, callExpr.name);
+      numArgs = handlerType == HandlerType.simpleNoArgs ? 0 : 1;
     }
+
+    final wrappedHandlerExpr =
+        new o.InvokeMemberMethodExpr('eventHandler$numArgs', [handlerExpr]);
+    final rootElExpr = new o.ReadClassMemberExpr(appViewRootElementName);
+
+    var listenExpr;
+    if (isNativeHtmlEvent(eventName)) {
+      listenExpr = rootElExpr.callMethod(
+          'addEventListener', [o.literal(eventName), wrappedHandlerExpr]);
+    } else {
+      listenExpr = new o.InvokeMemberMethodExpr(
+          'listen', [rootElExpr, o.literal(eventName), wrappedHandlerExpr]);
+    }
+    statements.add(listenExpr.toStmt());
   }
 }
 

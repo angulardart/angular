@@ -134,14 +134,26 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  /*<R>*/ evt<E, R>(/*<R>*/ cb(/*<E>*/ e)) {
-    var superHandler = super.evt(cb);
-    return (/*<E>*/ event) {
+  dynamic eventHandler0(handler) {
+    return (event) {
       _resetDebug();
       try {
-        return superHandler(event);
-      } catch (e, s) {
-        _rethrowWithContext(e, s);
+        return super.eventHandler0(handler)(event);
+      } catch (exception, stack) {
+        _rethrowWithContext(exception, stack);
+        rethrow;
+      }
+    };
+  }
+
+  @override
+  dynamic eventHandler1(handler) {
+    return (event) {
+      _resetDebug();
+      try {
+        return super.eventHandler1(handler)(event);
+      } catch (exception, stack) {
+        _rethrowWithContext(exception, stack);
         rethrow;
       }
     };

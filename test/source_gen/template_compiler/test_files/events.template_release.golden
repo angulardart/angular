@@ -52,7 +52,7 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
     _el_1 = createAndAppend(doc, 'button', parentRenderNode);
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
-    _el_1.addEventListener('click', this.eventHandler0(ctx.onClick));
+    _el_1.addEventListener('click', eventHandler0(ctx.onClick));
     init(const [], const []);
     rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
@@ -142,9 +142,9 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     _compView_1.create(_HasAngularEvents_1_2, []);
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
-    listen(_el_1, 'foo', this.eventHandler0(ctx.onFoo));
+    listen(_el_1, 'foo', eventHandler0(ctx.onFoo));
     final subscription_0 =
-        _HasAngularEvents_1_2.foo.listen(this.eventHandler0(ctx.onFoo));
+        _HasAngularEvents_1_2.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
     return null;
   }

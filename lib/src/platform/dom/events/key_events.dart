@@ -1,7 +1,6 @@
 import "dart:html";
 
 import "package:angular2/src/core/di.dart" show Injectable;
-import "package:angular2/src/core/zone/ng_zone.dart" show NgZone;
 
 import "event_manager.dart" show EventManagerPlugin;
 
@@ -106,8 +105,8 @@ class KeyEventsPlugin extends EventManagerPlugin {
   Function addEventListener(
       dynamic element, String eventName, Function handler) {
     var parsedEvent = KeyEventsPlugin.parseEventName(eventName);
-    var outsideHandler = KeyEventsPlugin.eventCallback(
-        element, parsedEvent['fullKey'], handler, this.manager.getZone());
+    var outsideHandler =
+        KeyEventsPlugin.eventCallback(element, parsedEvent['fullKey'], handler);
     return this.manager.getZone().runOutsideAngular(() {
       return element.on[parsedEvent['domEventName']]
           .listen(outsideHandler)
@@ -167,10 +166,10 @@ class KeyEventsPlugin extends EventManagerPlugin {
   }
 
   static Function eventCallback(
-      dynamic element, dynamic fullKey, Function handler, NgZone zone) {
+      dynamic element, dynamic fullKey, Function handler) {
     return (event) {
       if (KeyEventsPlugin.getEventFullKey(event) == fullKey) {
-        zone.runGuarded(() => handler(event));
+        handler(event);
       }
     };
   }
