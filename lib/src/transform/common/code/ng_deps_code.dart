@@ -201,13 +201,18 @@ abstract class NgDepsWriterMixin
     // TODO: Needs to check every import as XYZ for XYZ in AppView member names,
     // otherwise imports such as import 'something' as renderer, causes
     // generated code for renderer.createElement/etc to fail.
+    bool flag = false;
     model.imports.where((i) => !i.isDeferred).forEach((ImportModel imp) {
-      String stmt = importModelToStmt(imp);
-      if (!templateCode.contains(stmt)) writeImportModel(imp);
+      String assetName = packageToAssetScheme(imp.uri);
+      if (deferredModules == null || !deferredModules.containsKey(assetName)) {
+        String stmt = importModelToStmt(imp);
+        if (!templateCode.contains(stmt)) writeImportModel(imp);
+      }
     });
     for (ImportModel imp in model.depImports) {
       if (imp.isDeferred) continue;
-      if (deferredModules != null && deferredModules.containsKey(imp.uri))
+      String assetName = packageToAssetScheme(imp.uri);
+      if (deferredModules != null && deferredModules.containsKey(assetName))
         continue;
       String stmt = importModelToStmt(imp);
       if (!templateCode.contains(stmt)) writeImportModel(imp);
