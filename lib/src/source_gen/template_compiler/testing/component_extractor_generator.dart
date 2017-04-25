@@ -32,7 +32,7 @@ class TestComponentExtractor implements Builder {
   }
 
   @override
-  List<AssetId> declareOutputs(AssetId inputId) {
-    return [inputId.changeExtension(_extension)];
-  }
+  Map<String, List<String>> get buildExtensions => {
+        '.dart': [_extension]
+      };
 }

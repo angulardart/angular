@@ -20,7 +20,7 @@ class XhrImpl implements XHR {
       log.warning('XhrImpl received unexpected url: $url');
     }
     final assetId = fromUri(url);
-    if (!await _buildStep.hasInput(assetId)) {
+    if (!await _buildStep.canRead(assetId)) {
       throw new ArgumentError.value(
         url,
         'url',

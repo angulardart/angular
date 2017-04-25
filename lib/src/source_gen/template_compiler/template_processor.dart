@@ -11,7 +11,7 @@ import 'find_components.dart';
 import 'ng_deps_visitor.dart';
 import 'template_compiler_outputs.dart';
 
-// Because buildStep.hasInput() does not currently work as needed, we instead
+// Because buildStep.canRead() does not currently work as needed, we instead
 // track the inputs ourselves. Thus, we await for all of the inputs to be
 // collected, before continuing. This only works because of implementation
 // details in package:build which will probably change, so it is recommended
@@ -37,7 +37,7 @@ Future<TemplateCompilerOutputs> processTemplates(
           final asset = new AssetId.resolve(uri, from: buildStep.inputId);
           return collectAssets
               ? assets.contains(asset)
-              : await buildStep.hasInput(asset);
+              : await buildStep.canRead(asset);
         },
         // For a given import or export directive, return whether a generated
         // .template.dart file already exists. If it does we will need to link
