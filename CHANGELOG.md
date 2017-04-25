@@ -1,23 +1,21 @@
-## 3.0.0-beta+2
+## 3.0.0
 
-* `@View` will be removed in `3.0.0` final, only use `@Component` instead.
-* `EventEmitter` is now `@Deprecated`: Use `Stream` and `StreamController`.
-* `ElementRef.nativeElement` is now `final` (no setter).
-* Updated various documentation to make cleaner and use Dart, not TS, samples.
-* Perf: Added performance improvments around generated code and type inference.
-* Fix: Key-value differ now detects removals when first key moves.
-* Fix: `<ng-content select="...">` does not emit incorrect code (regression).
-* Perf: Optimized how reflective providers are resolved on application startup.
+### New features
 
-## 3.0.0-beta+1
-
-* Require at least Dart SDK `1.23.0-dev.7.0`. Required for a JS-interop fix.
+* `composeValidators` and `composeAsyncValidators` now part of the public API.
+* `angular2/testing.dart` includes a test-only `isDebugMode` function.
+*  (Forms) `AbstractControl.markAsDirty` now emits a status change event.
 
 ### Breaking changes
 
-* Injecting null no longer supported.
+* Requires at least Dart SDK `1.23.0`.
+
+* Injecting `null` is no longer supported.
+
 * Remove unused `useProperty` argument in DI `Provider` api.
+
 * `ReflectionCapabilities.isReflectionEnabled` renamed to `reflectionEnabled`.
+
 * Malformed CSS warnings are errors now.
 
 * Removed forms async validators. Alternative:
@@ -30,15 +28,6 @@
   });
   ```
 
-## 3.0.0-beta
-
-### New features
-
-* `composeValidators` and `composeAsyncValidators` now part of the public API.
-* `angular2/testing.dart` includes a test-only `isDebugMode` function.
-
-### Breaking changes
-
 * Removed `TitleService`. To update the title, use `dart:html`:
 
   ```dart
@@ -50,27 +39,6 @@
   `loadAsRoot`, `loadAsRootIntoNode` replaced by a single `load` method that
   always creates the component root node instead of hoisting into an existing
   node.
-
-### Bug fixes and deprecations
-
-* `ngSwitchWhen` now properly compares identity in Dartium.
-* `ngSwitchCase` replaces `ngSwitchWhen` (soft deprecation).
-* `Component/Directive#selector` is now a `@required` property.
-* Angular warns in the console if using Dartium without _checked_ mode.
-* Various performance improvements for both code size and runtime.
-* Various Dart idiomatic/style guide updates to the codebase.
-* `ngIf` now throws again if the bound value changes during change detection.
-* `XHR` is deprecated, along with the runtime/reflective compiler.
-
-## 3.0.0-alpha+1
-
-### New features
-
-*  We now use the formal `<T>` generic type syntax for methods, not `/*<T>*/`.
-
-*  Re-enabled `strong-mode` analysis within the project, and fixed some errors.
-
-### Breaking changes
 
 *  Removed `viewBindings` from `Component`. This has been interchangeable with
    `viewProviders` for a while now.
@@ -96,25 +64,10 @@
    prints exceptions to the console. If you don't want this behavior (i.e.
    releasing to production), make sure to override it.
 
-### Bug fixes and deprecations
-
-* When setting up a new `NgControl`, `valueAccessor` no longer can throw an NPE
-
-* ngSwitchCase replaces soft deprecated ngSwitchWhen
-
-## 3.0.0-alpha
-
-This is the first _pre-release_ of AngularDart `3.0.0`. This code is considered
-production quality, but additional breaking changes and features are planned
-before releasing a final version.
-
-### New features
-
-*   (Forms) `AbstractControl.markAsDirty` now emits a status change event.
-
-### Breaking changes
+* `ElementRef.nativeElement` is now `final` (no setter).
 
 *   DOM adapter is now completely removed from the API and generated code
+
 *   A `name` parameter is now _required_ for all `@Pipe(...)` definitions:
 
     **BEFORE:** `dart @Pipe(name: 'uppercase')`
@@ -170,24 +123,43 @@ before releasing a final version.
 
 ### Deprecations
 
-*   `IterableDiffers` and `KeyValueDiffers` are deprecated. The cost of looking
-    up to see if a custom differ is available is too high for almost no use.
-    Before they're removed, we'll have other customization options.
+* `@View` will be removed in `4.0`, only use `@Component` instead.
+* `EventEmitter` is now `@Deprecated`: Use `Stream` and `StreamController`.
+* `ngSwitchCase` replaces `ngSwitchWhen` (soft deprecation).
+* `XHR` is deprecated, along with the runtime/reflective compiler.
+*  `IterableDiffers` and `KeyValueDiffers` are deprecated. The cost of looking
+   up to see if a custom differ is available is too high for almost no use.
+   Before they're removed, we'll have other customization options.
+* `ngSwitchCase` replaces soft deprecated `ngSwitchWhen`
 
 ### Bug fixes
 
-*   Fixed a bug where the router didn't work on a root path in IE11.
-*   Fixed generated code that caused a strong-mode warning on `AppView<...>`.
-*   Fixed a bug where DDC didn't work properly with "pure" `Pipe`s.
-*   Some simple types are now propagated to the generated `.template.dart` file.
+* Updated various documentation to make cleaner and use Dart, not TS, samples.
+* Perf: Added performance improvements around generated code and type inference.
+* Fix: Key-value differ now detects removals when first key moves.
+* Fix: `<ng-content select="...">` does not emit incorrect code (regression).
+* Perf: Optimized how reflective providers are resolved on application startup.
+* `ngSwitchWhen` now properly compares identity in Dartium.
+* `Component/Directive#selector` is now a `@required` property.
+* Angular warns in the console if using Dartium without _checked_ mode.
+* Various performance improvements for both code size and runtime.
+* Various Dart idiomatic/style guide updates to the codebase.
+* `ngIf` now throws again if the bound value changes during change detection.
+* Fixed a bug where the router didn't work on a root path in IE11.
+* Fixed generated code that caused a strong-mode warning on `AppView<...>`.
+* Fixed a bug where DDC didn't work properly with "pure" `Pipe`s.
+* Some simple types are now propagated to the generated `.template.dart` file.
+* When setting up a new `NgControl`, `valueAccessor` no longer can throw an NPE
+*  Re-enabled `strong-mode` analysis within the project, and fixed some errors.
 
-### Refactors
+### Refactoring
 
-*   Removed `NgZoneImpl`, all the code exists in `NgZone` now.
-*   We now generate specific code for view and content children (faster).
-*   Projectable nodes now use the visitor pattern in `AppView`.
-*   In generated `.template.dart` change detected primitives are typed.
-*   Moved `renderType` as a static class member in generated code.
+* We now use the formal `<T>` generic type syntax for methods, not `/*<T>*/`.
+* Removed `NgZoneImpl`, all the code exists in `NgZone` now.
+* We now generate specific code for view and content children (faster).
+* Projectable nodes now use the visitor pattern in `AppView`.
+* In generated `.template.dart` change detected primitives are typed.
+* Moved `renderType` as a static class member in generated code.
 
 ## 2.2.0
 
