@@ -29,7 +29,7 @@ class InjectableComponent {
   final bool isTest;
 
   InjectableComponent(
-      @Attribute("baseService") @optional this.service,
+      @Attribute('baseService') @optional this.service,
       @Optional() InjectableService injectableService,
       @Inject(testToken) this.isTest,
       [String foo])
