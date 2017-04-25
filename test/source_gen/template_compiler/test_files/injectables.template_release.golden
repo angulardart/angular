@@ -183,7 +183,7 @@ void initReflector() {
           const [
             const <dynamic>[
               BaseService,
-              const Attribute("baseService"),
+              const Attribute('baseService'),
               optional
             ],
             const <dynamic>[InjectableService, const Optional()],
