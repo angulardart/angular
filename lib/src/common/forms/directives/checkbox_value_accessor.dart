@@ -1,8 +1,8 @@
 import 'dart:html';
 
-import "package:angular2/core.dart" show Directive, ElementRef, Provider;
+import 'package:angular2/core.dart' show Directive, ElementRef, Provider;
 
-import "control_value_accessor.dart"
+import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
 
 const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
@@ -11,13 +11,14 @@ const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 /// The accessor for writing a value and listening to changes on a checkbox input element.
 ///
 /// ### Example
-///     <input type="checkbox" ngControl="rememberLogin">
+///     <input type='checkbox" ngControl="rememberLogin">
 @Directive(
-    selector:
-        "input[type=checkbox][ngControl],input[type=checkbox][ngFormControl],input[type=checkbox][ngModel]",
+    selector: 'input[type=checkbox][ngControl],'
+        'input[type=checkbox][ngFormControl],'
+        'input[type=checkbox][ngModel]',
     host: const {
-      "(change)": "onChange(\$event.target.checked)",
-      "(blur)": "touchHandler()"
+      '(change)': 'onChange(\$event.target.checked)',
+      '(blur)': 'touchHandler()'
     },
     providers: const [
       CHECKBOX_VALUE_ACCESSOR

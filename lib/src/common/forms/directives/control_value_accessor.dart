@@ -1,4 +1,4 @@
-import "package:angular2/di.dart" show OpaqueToken;
+import 'package:angular2/di.dart' show OpaqueToken;
 
 /// A bridge between a control and a native element.
 ///
@@ -20,7 +20,7 @@ abstract class ControlValueAccessor<T> {
 /// Used to provide a [ControlValueAccessor] for form controls.
 ///
 /// See [DefaultValueAccessor] for how to implement one.
-const OpaqueToken NG_VALUE_ACCESSOR = const OpaqueToken("NgValueAccessor");
+const OpaqueToken NG_VALUE_ACCESSOR = const OpaqueToken('NgValueAccessor');
 
 /// Type of the function to be called when the control receives a change event.
 typedef dynamic ChangeFunction<T>(T value, {String rawValue});

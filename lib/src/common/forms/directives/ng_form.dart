@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import "package:angular2/core.dart" show Directive, Provider;
-import "package:angular2/di.dart" show Optional, Inject, Self;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
+import 'package:angular2/core.dart' show Directive, Provider;
+import 'package:angular2/di.dart' show Optional, Inject, Self;
+import 'package:angular2/src/facade/async.dart' show EventEmitter;
 
-import "../model.dart" show AbstractControl, ControlGroup, Control;
-import "../validators.dart" show NG_VALIDATORS;
-import "control_container.dart" show ControlContainer;
-import "form_interface.dart" show Form;
-import "ng_control.dart" show NgControl;
-import "ng_control_group.dart" show NgControlGroup;
-import "shared.dart" show setUpControl, setUpControlGroup, composeValidators;
+import '../model.dart' show AbstractControl, ControlGroup, Control;
+import '../validators.dart' show NG_VALIDATORS;
+import 'control_container.dart' show ControlContainer;
+import 'form_interface.dart' show Form;
+import 'ng_control.dart' show NgControl;
+import 'ng_control_group.dart' show NgControlGroup;
+import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
 
 const formDirectiveProvider =
     const Provider(ControlContainer, useExisting: NgForm);
@@ -71,11 +71,11 @@ const formDirectiveProvider =
 /// }
 /// ```
 @Directive(
-    selector: "form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]",
+    selector: 'form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]',
     providers: const [formDirectiveProvider],
-    host: const {"(submit)": "onSubmit()"},
-    outputs: const ["ngSubmit", "ngBeforeSubmit"],
-    exportAs: "ngForm")
+    host: const {'(submit)': 'onSubmit()'},
+    outputs: const ['ngSubmit', 'ngBeforeSubmit'],
+    exportAs: 'ngForm')
 class NgForm extends ControlContainer implements Form {
   ControlGroup form;
   var ngSubmit = new EventEmitter<ControlGroup>(false);

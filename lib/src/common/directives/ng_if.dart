@@ -31,7 +31,7 @@ import 'package:angular2/core.dart'
 /// ```
 ///
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngIf
-@Directive(selector: "[ngIf]", inputs: const ["ngIf"])
+@Directive(selector: '[ngIf]', inputs: const ['ngIf'])
 class NgIf {
   final TemplateRef _templateRef;
   final ViewContainerRef _viewContainer;

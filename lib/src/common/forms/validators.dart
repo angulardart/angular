@@ -1,12 +1,12 @@
-import "package:angular2/di.dart" show OpaqueToken;
+import 'package:angular2/di.dart' show OpaqueToken;
 
-import "directives/validators.dart" show ValidatorFn;
-import "model.dart" as model_module;
+import 'directives/validators.dart' show ValidatorFn;
+import 'model.dart' as model_module;
 
 ///  Providers for validators to be used for [Control]s in a form.
 ///
 ///  Provide this using `multi: true` to add validators.
-const OpaqueToken NG_VALIDATORS = const OpaqueToken("NgValidators");
+const OpaqueToken NG_VALIDATORS = const OpaqueToken('NgValidators');
 
 ///  Provides a set of validators used by form controls.
 ///
@@ -23,7 +23,7 @@ class Validators {
   ///  Validator that requires controls to have a non-empty value.
   static Map<String, bool> required(model_module.AbstractControl control) {
     return control.value == null || control.value == ''
-        ? {"required": true}
+        ? {'required': true}
         : null;
   }
 
@@ -35,9 +35,9 @@ class Validators {
       String v = control.value;
       return v.length < minLength
           ? {
-              "minlength": {
-                "requiredLength": minLength,
-                "actualLength": v.length
+              'minlength': {
+                'requiredLength': minLength,
+                'actualLength': v.length
               }
             }
           : null;
@@ -52,9 +52,9 @@ class Validators {
       String v = control.value;
       return v.length > maxLength
           ? {
-              "maxlength": {
-                "requiredLength": maxLength,
-                "actualLength": v.length
+              'maxlength': {
+                'requiredLength': maxLength,
+                'actualLength': v.length
               }
             }
           : null;
@@ -71,7 +71,7 @@ class Validators {
       return regex.hasMatch(v)
           ? null
           : {
-              "pattern": {"requiredPattern": '^${ pattern}\$', "actualValue": v}
+              'pattern': {'requiredPattern': '^${ pattern}\$', 'actualValue': v}
             };
     };
   }

@@ -1,20 +1,20 @@
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show OnChanges, SimpleChange, Directive, Provider;
-import "package:angular2/di.dart" show Inject, Optional, Self;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
+import 'package:angular2/di.dart' show Inject, Optional, Self;
+import 'package:angular2/src/facade/async.dart' show EventEmitter;
 
-import "../model.dart" show Control;
-import "../validators.dart" show NG_VALIDATORS;
-import "control_value_accessor.dart"
+import '../model.dart' show Control;
+import '../validators.dart' show NG_VALIDATORS;
+import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
-import "ng_control.dart" show NgControl;
-import "shared.dart"
+import 'ng_control.dart' show NgControl;
+import 'shared.dart'
     show
         setUpControl,
         composeValidators,
         isPropertyUpdated,
         selectValueAccessor;
-import "validators.dart" show ValidatorFn;
+import 'validators.dart' show ValidatorFn;
 
 const formControlBinding =
     const Provider(NgControl, useExisting: NgFormControl);
@@ -66,11 +66,11 @@ const formControlBinding =
 /// }
 /// ```
 @Directive(
-    selector: "[ngFormControl]",
+    selector: '[ngFormControl]',
     providers: const [formControlBinding],
-    inputs: const ["form: ngFormControl", "model: ngModel"],
-    outputs: const ["update: ngModelChange"],
-    exportAs: "ngForm")
+    inputs: const ['form: ngFormControl', 'model: ngModel'],
+    outputs: const ['update: ngModelChange'],
+    exportAs: 'ngForm')
 class NgFormControl extends NgControl implements OnChanges {
   final /* Array<Validator|Function> */ List<dynamic> _validators;
   Control form;

@@ -1,6 +1,6 @@
 import 'package:angular2/core.dart'
     show SimpleChange, OnChanges, Directive, Provider;
-import "package:angular2/di.dart" show Optional, Inject, Self;
+import 'package:angular2/di.dart' show Optional, Inject, Self;
 import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
@@ -28,7 +28,7 @@ const formDirectiveProvider =
 ///   template: '''
 ///     <div>
 ///       <h2>NgFormModel Example</h2>
-///       <form [ngFormModel]="loginForm">
+///       <form [ngFormModel]='loginForm">
 ///         <p>Login: <input type="text" ngControl="login"></p>
 ///         <p>Password: <input type="password" ngControl="password"></p>
 ///       </form>

@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import "package:angular2/src/facade/async.dart" show EventEmitter;
+import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:meta/meta.dart';
 
-import "directives/validators.dart" show ValidatorFn;
+import 'directives/validators.dart' show ValidatorFn;
 
 AbstractControl _find(AbstractControl control,
     dynamic /* List< dynamic /* String | num */ > | String */ path) {
   if (path == null) return null;
   if (!(path is List)) {
-    path = ((path as String)).split("/");
+    path = ((path as String)).split('/');
   }
   if (path is List && path.isEmpty) return null;
   return ((path as List<dynamic /* String | num */ >)).fold(control, (v, name) {
@@ -27,15 +27,15 @@ AbstractControl _find(AbstractControl control,
 abstract class AbstractControl {
   /// Indicates that a Control is valid, i.e. that no errors exist in the input
   /// value.
-  static const VALID = "VALID";
+  static const VALID = 'VALID';
 
   /// Indicates that a Control is invalid, i.e. that an error exists in the
   /// input value.
-  static const INVALID = "INVALID";
+  static const INVALID = 'INVALID';
 
   /// Indicates that a Control is pending, i.e. that async validation is
   /// occurring and errors are not yet available for the input value.
-  static const PENDING = "PENDING";
+  static const PENDING = 'PENDING';
 
   ValidatorFn validator;
   dynamic _value;

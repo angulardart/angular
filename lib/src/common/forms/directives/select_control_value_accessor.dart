@@ -1,19 +1,19 @@
 import 'dart:html';
 
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show Directive, Provider, ElementRef, Input, OnDestroy;
-import "package:angular2/di.dart" show Host, Optional;
-import "package:angular2/src/facade/lang.dart" show isPrimitive, looseIdentical;
+import 'package:angular2/di.dart' show Host, Optional;
+import 'package:angular2/src/facade/lang.dart' show isPrimitive, looseIdentical;
 import 'package:func/func.dart' show Func0, VoidFunc1;
 
-import "control_value_accessor.dart"
+import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 
 const SELECT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: SelectControlValueAccessor, multi: true);
 String _buildValueString(String id, dynamic value) {
   if (id == null) return '${value}';
-  if (!isPrimitive(value)) value = "Object";
+  if (!isPrimitive(value)) value = 'Object';
   var s = '${id}: ${value}';
   // TODO: Fix this magic maximum 50 characters (from TS-transpile).
   if (s.length > 50) {
@@ -22,7 +22,7 @@ String _buildValueString(String id, dynamic value) {
   return s;
 }
 
-String _extractId(String valueString) => valueString.split(":")[0];
+String _extractId(String valueString) => valueString.split(':')[0];
 
 /// The accessor for writing a value and listening to changes on a select
 /// element.
@@ -32,10 +32,10 @@ String _extractId(String valueString) => valueString.split(":")[0];
 /// https://bugzilla.mozilla.org/show_bug.cgi?id=1024350
 /// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4660045
 @Directive(
-    selector: "select[ngControl],select[ngFormControl],select[ngModel]",
+    selector: 'select[ngControl],select[ngFormControl],select[ngModel]',
     host: const {
-      "(change)": "onChange(\$event.target.value)",
-      "(blur)": "touchHandler()"
+      '(change)': 'onChange(\$event.target.value)',
+      '(blur)': 'touchHandler()'
     },
     providers: const [
       SELECT_VALUE_ACCESSOR
@@ -96,7 +96,7 @@ class SelectControlValueAccessor implements ControlValueAccessor {
 ///     <select ngControl="city">
 ///       <option *ngFor="let c of cities" [value]="c"></option>
 ///     </select>
-@Directive(selector: "option")
+@Directive(selector: 'option')
 class NgSelectOption implements OnDestroy {
   final ElementRef _element;
   SelectControlValueAccessor _select;
@@ -105,7 +105,7 @@ class NgSelectOption implements OnDestroy {
     if (_select != null) id = _select._registerOption();
   }
 
-  @Input("ngValue")
+  @Input('ngValue')
   set ngValue(dynamic value) {
     if (_select == null) return;
     _select._optionMap[id] = value;
@@ -113,7 +113,7 @@ class NgSelectOption implements OnDestroy {
     _select.writeValue(_select.value);
   }
 
-  @Input("value")
+  @Input('value')
   set value(dynamic value) {
     _setElementValue(value);
     if (_select != null) _select.writeValue(_select.value);

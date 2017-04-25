@@ -1,4 +1,4 @@
-import "../model.dart" show AbstractControl;
+import '../model.dart' show AbstractControl;
 
 /// Base class for control directives.
 ///

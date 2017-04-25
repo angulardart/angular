@@ -1,6 +1,6 @@
-import "../model.dart" show AbstractControl;
-import "abstract_control_directive.dart" show AbstractControlDirective;
-import "form_interface.dart" show Form;
+import '../model.dart' show AbstractControl;
+import 'abstract_control_directive.dart' show AbstractControlDirective;
+import 'form_interface.dart' show Form;
 
 /// A directive that contains multiple [NgControl]s.
 ///

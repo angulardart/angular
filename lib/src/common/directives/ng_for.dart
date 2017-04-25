@@ -1,4 +1,4 @@
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show
         DoCheck,
         Directive,
@@ -7,7 +7,7 @@ import "package:angular2/core.dart"
         TemplateRef,
         EmbeddedViewRef;
 
-import "../../core/change_detection/differs/default_iterable_differ.dart"
+import '../../core/change_detection/differs/default_iterable_differ.dart'
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
 
 /// The `NgFor` directive instantiates a template once per item from an
@@ -94,8 +94,8 @@ import "../../core/change_detection/differs/default_iterable_differ.dart"
 ///
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngFor
 @Directive(
-    selector: "[ngFor][ngForOf]",
-    inputs: const ["ngForTrackBy", "ngForOf", "ngForTemplate"])
+    selector: '[ngFor][ngForOf]',
+    inputs: const ['ngForTrackBy', 'ngForOf', 'ngForTemplate'])
 class NgFor implements DoCheck {
   final ViewContainerRef _viewContainer;
 

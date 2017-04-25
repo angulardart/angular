@@ -1,8 +1,8 @@
 import 'dart:html';
 
-import "package:angular2/core.dart" show Directive, ElementRef, Provider;
+import 'package:angular2/core.dart' show Directive, ElementRef, Provider;
 
-import "control_value_accessor.dart"
+import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
 
 const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
@@ -17,12 +17,13 @@ typedef dynamic _SimpleChangeFn(value);
 ///
 ///  <input type="number" [(ngModel)]="age">
 @Directive(
-    selector:
-        "input[type=number][ngControl],input[type=number][ngFormControl],input[type=number][ngModel]",
+    selector: 'input[type=number][ngControl],'
+        'input[type=number][ngFormControl],'
+        'input[type=number][ngModel]',
     host: const {
-      "(change)": "onChange(\$event.target.value)",
-      "(input)": "onChange(\$event.target.value)",
-      "(blur)": "touchHandler()"
+      '(change)': 'onChange(\$event.target.value)',
+      '(input)': 'onChange(\$event.target.value)',
+      '(blur)': 'touchHandler()'
     },
     providers: const [
       NUMBER_VALUE_ACCESSOR
@@ -46,7 +47,7 @@ class NumberValueAccessor implements ControlValueAccessor {
   void registerOnChange(ChangeFunction fn) {
     onChange = (value) {
       // TODO(het): also provide rawValue to fn?
-      fn(value == "" ? null : double.parse(value));
+      fn(value == '' ? null : double.parse(value));
     };
   }
 

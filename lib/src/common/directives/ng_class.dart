@@ -47,8 +47,8 @@ import 'package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 /// [ex]: http://angular-examples.github.io/template-syntax/#ngClass
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngClass
 @Directive(
-    selector: "[ngClass]",
-    inputs: const ["rawClass: ngClass", "initialClasses: class"])
+    selector: '[ngClass]',
+    inputs: const ['rawClass: ngClass', 'initialClasses: class'])
 class NgClass implements DoCheck, OnDestroy {
   // Separator used to split string to parts - can be any number of
   // whitespaces, new lines or tabs.
@@ -62,7 +62,7 @@ class NgClass implements DoCheck, OnDestroy {
 
   set initialClasses(String v) {
     this._applyInitialClasses(true);
-    this._initialClasses = v is String ? v.split(" ") : [];
+    this._initialClasses = v is String ? v.split(' ') : [];
     this._applyInitialClasses(false);
     this._applyClasses(this._rawClass, false);
   }
@@ -162,7 +162,7 @@ class NgClass implements DoCheck, OnDestroy {
   void _toggleClass(String className, bool enabled) {
     className = className.trim();
     if (className.length > 0) {
-      if (className.indexOf(" ") > -1) {
+      if (className.indexOf(' ') > -1) {
         _separator ??= new RegExp(r'\s+');
         var classes = className.split(_separator);
         for (var i = 0, len = classes.length; i < len; i++) {

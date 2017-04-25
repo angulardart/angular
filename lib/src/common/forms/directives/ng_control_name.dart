@@ -1,19 +1,19 @@
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show OnChanges, OnDestroy, SimpleChange, Directive, Provider;
 
-import "package:angular2/di.dart" show SkipSelf, Inject, Optional, Self;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
+import 'package:angular2/di.dart' show SkipSelf, Inject, Optional, Self;
+import 'package:angular2/src/facade/async.dart' show EventEmitter;
 
-import "../model.dart" show Control;
-import "../validators.dart" show NG_VALIDATORS;
-import "control_container.dart" show ControlContainer;
-import "control_value_accessor.dart"
+import '../model.dart' show Control;
+import '../validators.dart' show NG_VALIDATORS;
+import 'control_container.dart' show ControlContainer;
+import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
-import "form_interface.dart" show Form;
-import "ng_control.dart" show NgControl;
-import "shared.dart"
+import 'form_interface.dart' show Form;
+import 'ng_control.dart' show NgControl;
+import 'shared.dart'
     show controlPath, composeValidators, isPropertyUpdated, selectValueAccessor;
-import "validators.dart" show ValidatorFn;
+import 'validators.dart' show ValidatorFn;
 
 const controlNameBinding =
     const Provider(NgControl, useExisting: NgControlName);
@@ -72,11 +72,11 @@ const controlNameBinding =
 /// }
 /// ```
 @Directive(
-    selector: "[ngControl]",
+    selector: '[ngControl]',
     providers: const [controlNameBinding],
-    inputs: const ["name: ngControl", "model: ngModel"],
-    outputs: const ["update: ngModelChange"],
-    exportAs: "ngForm")
+    inputs: const ['name: ngControl', 'model: ngModel'],
+    outputs: const ['update: ngModelChange'],
+    exportAs: 'ngForm')
 class NgControlName extends NgControl implements OnChanges, OnDestroy {
   final ControlContainer _parent;
   final /* Array<Validator|Function> */ List<dynamic> _validators;

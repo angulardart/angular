@@ -1,7 +1,7 @@
 /// Starting point to import all compiler APIs.
 library angular2.compiler;
 
-export "src/compiler/compiler.dart"
+export 'src/compiler/compiler.dart'
     show
         PLATFORM_DIRECTIVES,
         PLATFORM_PIPES,
@@ -29,5 +29,5 @@ export "src/compiler/compiler.dart"
         CompileTemplateMetadata,
         CompileDirectiveMetadata,
         CompilePipeMetadata;
-export "src/compiler/template_ast.dart";
-export "src/compiler/view_compiler/parse_utils.dart";
+export 'src/compiler/template_ast.dart';
+export 'src/compiler/view_compiler/parse_utils.dart';

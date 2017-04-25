@@ -9,16 +9,16 @@ import 'package:angular2/src/core/linker/view_ref.dart';
 import 'package:angular2/src/debug/debug_app_view.dart';
 import 'package:meta/meta.dart';
 
-export "src/compiler/xhr_mock.dart" show MockXHR;
-export "src/debug/debug_node.dart" show DebugElement, By;
-export "src/mock/directive_resolver_mock.dart" show MockDirectiveResolver;
-export "src/mock/mock_application_ref.dart" show MockApplicationRef;
-export "src/mock/ng_zone_mock.dart" show MockNgZone;
-export "src/mock/view_resolver_mock.dart" show MockViewResolver;
-export "src/testing/fake_async.dart";
-export "src/testing/test_component_builder.dart"
+export 'src/compiler/xhr_mock.dart' show MockXHR;
+export 'src/debug/debug_node.dart' show DebugElement, By;
+export 'src/mock/directive_resolver_mock.dart' show MockDirectiveResolver;
+export 'src/mock/mock_application_ref.dart' show MockApplicationRef;
+export 'src/mock/ng_zone_mock.dart' show MockNgZone;
+export 'src/mock/view_resolver_mock.dart' show MockViewResolver;
+export 'src/testing/fake_async.dart';
+export 'src/testing/test_component_builder.dart'
     show ComponentFixture, TestComponentBuilder;
-export "src/testing/test_injector.dart";
+export 'src/testing/test_injector.dart';
 
 /// Returns whether [ChangeDetectorRef] was generated in debug mode.
 ///

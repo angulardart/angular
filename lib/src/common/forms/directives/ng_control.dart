@@ -1,6 +1,6 @@
-import "abstract_control_directive.dart" show AbstractControlDirective;
-import "control_value_accessor.dart" show ControlValueAccessor;
-import "validators.dart" show ValidatorFn;
+import 'abstract_control_directive.dart' show AbstractControlDirective;
+import 'control_value_accessor.dart' show ControlValueAccessor;
+import 'validators.dart' show ValidatorFn;
 
 /// A base class that all control directive extend.
 /// It binds a [Control] object to a DOM element.

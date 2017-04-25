@@ -23,7 +23,7 @@ import 'package:angular2/src/mock/view_resolver_mock.dart'
 import 'package:angular2/src/platform/browser/xhr_impl.dart' show XHRImpl;
 import 'package:angular2/src/platform/browser_common.dart'
     show BROWSER_APP_COMMON_PROVIDERS;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+import 'package:angular2/src/platform/dom/dom_tokens.dart' show DOCUMENT;
 import 'package:angular2/src/testing/test_component_builder.dart'
     show TestComponentBuilder;
 import 'package:angular2/src/testing/utils.dart' show BrowserDetection, Log;

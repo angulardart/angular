@@ -1,7 +1,7 @@
-import "package:angular2/di.dart" show Injectable;
+import 'package:angular2/di.dart' show Injectable;
 
-import "directives/validators.dart";
-import "model.dart" as model_module;
+import 'directives/validators.dart';
+import 'model.dart' as model_module;
 
 /// Creates a form object from a user-specified configuration.
 ///

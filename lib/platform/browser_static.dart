@@ -1,9 +1,9 @@
 library angular2.platform.browser_static;
 
-import "dart:async";
+import 'dart:async';
 import 'dart:html';
 
-import "package:angular2/core.dart"
+import 'package:angular2/core.dart'
     show
         ComponentRef,
         coreLoadAndBootstrap,
@@ -13,18 +13,18 @@ import "package:angular2/core.dart"
         createPlatform,
         PLATFORM_INITIALIZER,
         Injector;
-import "package:angular2/src/core/application_ref.dart" show PlatformRefImpl;
-import "package:angular2/src/core/di.dart" show Provider;
-import "package:angular2/src/core/reflection/reflection.dart"
+import 'package:angular2/src/core/application_ref.dart' show PlatformRefImpl;
+import 'package:angular2/src/core/di.dart' show Provider;
+import 'package:angular2/src/core/reflection/reflection.dart'
     show Reflector, reflector;
-import "package:angular2/src/core/testability/testability.dart"
+import 'package:angular2/src/core/testability/testability.dart'
     show TestabilityRegistry;
-import "package:angular2/src/platform/browser_common.dart"
+import 'package:angular2/src/platform/browser_common.dart'
     show BROWSER_APP_COMMON_PROVIDERS, createInitDomAdapter;
-import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+import 'package:angular2/src/platform/dom/dom_tokens.dart' show DOCUMENT;
 
-export "package:angular2/src/core/angular_entrypoint.dart";
-export "package:angular2/src/platform/browser_common.dart"
+export 'package:angular2/src/core/angular_entrypoint.dart';
+export 'package:angular2/src/platform/browser_common.dart'
     show BROWSER_PROVIDERS, enableDebugTools, disableDebugTools;
 
 /// An array of providers that should be passed into [application()] when

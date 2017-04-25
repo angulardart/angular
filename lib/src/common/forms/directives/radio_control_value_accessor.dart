@@ -2,7 +2,7 @@ import 'dart:js_util' as js_util;
 
 import 'package:angular2/core.dart'
     show Directive, ElementRef, Provider, Input, OnInit, OnDestroy, Injector;
-import "package:angular2/di.dart" show Injectable;
+import 'package:angular2/di.dart' show Injectable;
 import 'package:func/func.dart' show Func0, VoidFunc0;
 
 import 'control_value_accessor.dart'
@@ -66,8 +66,9 @@ class RadioButtonState {
 /// }
 /// ```
 @Directive(
-    selector:
-        'input[type=radio][ngControl],input[type=radio][ngFormControl],input[type=radio][ngModel]',
+    selector: 'input[type=radio][ngControl],'
+        'input[type=radio][ngFormControl],'
+        'input[type=radio][ngModel]',
     host: const {'(change)': 'changeHandler()', '(blur)': 'touchHandler()'},
     providers: const [RADIO_VALUE_ACCESSOR])
 class RadioControlValueAccessor

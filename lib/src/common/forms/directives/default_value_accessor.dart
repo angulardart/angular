@@ -1,6 +1,6 @@
 import 'dart:js_util' as js_util;
 
-import "package:angular2/core.dart" show Directive, ElementRef, Provider;
+import 'package:angular2/core.dart' show Directive, ElementRef, Provider;
 import 'package:func/func.dart' show VoidFunc0, VoidFunc1;
 
 import 'control_value_accessor.dart';
@@ -14,11 +14,15 @@ const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 /// ### Example
 ///     <input type="text" ngControl="searchQuery">
 @Directive(
-    selector:
-        "input:not([type=checkbox])[ngControl],textarea[ngControl],input:not([type=checkbox])[ngFormControl],textarea[ngFormControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]",
+    selector: 'input:not([type=checkbox])[ngControl],'
+        'textarea[ngControl],'
+        'input:not([type=checkbox])[ngFormControl],'
+        'textarea[ngFormControl],'
+        'input:not([type=checkbox])[ngModel],'
+        'textarea[ngModel],[ngDefaultControl]',
     host: const {
-      "(input)": "onChange(\$event.target.value)",
-      "(blur)": "touchHandler()"
+      '(input)': 'onChange(\$event.target.value)',
+      '(blur)': 'touchHandler()'
     },
     providers: const [
       DEFAULT_VALUE_ACCESSOR
