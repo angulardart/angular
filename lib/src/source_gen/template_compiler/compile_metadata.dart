@@ -174,7 +174,7 @@ class CompileTypeMetadataVisitor
     List<CompileDiDependencyMetadata> deps = [];
     for (final param in parameters) {
       if (param.parameterKind == ParameterKind.NAMED) {
-        _logger.warning('For class ${element.name}, we are skipping '
+        _logger.warning('For dependency ${element.name}, we are skipping '
             'named parameter $param');
         continue;
       }

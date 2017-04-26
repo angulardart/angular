@@ -707,10 +707,16 @@ void _initializeInterpreter() {
   Identifiers.NG_IF_DIRECTIVE.runtime = NgIf;
   Identifiers.NG_FOR_DIRECTIVE.runtime = NgFor;
 
-  Identifiers.interpolate.runtime = appviewutils.interpolate;
-  Identifiers.interpolate0.runtime = appviewutils.interpolate0;
-  Identifiers.interpolate1.runtime = appviewutils.interpolate1;
-  Identifiers.interpolate2.runtime = appviewutils.interpolate2;
+  Identifiers.interpolate[0].runtime = appviewutils.interpolate0;
+  Identifiers.interpolate[1].runtime = appviewutils.interpolate1;
+  Identifiers.interpolate[2].runtime = appviewutils.interpolate2;
+  Identifiers.interpolate[3].runtime = appviewutils.interpolate3;
+  Identifiers.interpolate[4].runtime = appviewutils.interpolate4;
+  Identifiers.interpolate[5].runtime = appviewutils.interpolate5;
+  Identifiers.interpolate[6].runtime = appviewutils.interpolate6;
+  Identifiers.interpolate[7].runtime = appviewutils.interpolate7;
+  Identifiers.interpolate[8].runtime = appviewutils.interpolate8;
+  Identifiers.interpolate[9].runtime = appviewutils.interpolate9;
   Identifiers.throwOnChanges.runtimeCallback =
       () => appviewutils.AppViewUtils.throwOnChanges;
   Identifiers.checkBinding.runtime = appviewutils.checkBinding;
