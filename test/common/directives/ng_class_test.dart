@@ -1,523 +1,490 @@
-@TestOn('browser && !js')
+@Tags(const ['codegen'])
+@TestOn('browser')
+
 import 'package:angular2/angular2.dart';
-import "package:angular2/src/testing/internal.dart";
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
-void detectChangesAndCheckClasses(ComponentFixture fixture, String classes) {
-  fixture.detectChanges();
-  expect(fixture.debugElement.children[0].nativeElement.className, classes);
+void main() {
+  group('ngClass', () {
+    tearDown(() => disposeAnyRunningTest());
+
+    test('should clean up when the directive is destroyed', () async {
+      var testBed = new NgTestBed<DestroyClassTest>();
+      var testFixture = await testBed.create();
+      await testFixture.update((DestroyClassTest component) {
+        component.items = [
+          ['0']
+        ];
+      });
+      await testFixture.update((DestroyClassTest component) {
+        component.items = [
+          ['1']
+        ];
+      });
+      expect(
+          testFixture.rootElement.querySelector('div').classes, equals(['1']));
+    });
+    test('should add classes specified in a map literal', () async {
+      var testBed = new NgTestBed<MapLiteralTest>();
+      var testFixture = await testBed.create();
+      expect(testFixture.rootElement.querySelector('div').classes,
+          equals(['foo']));
+    });
+    test('should add classes specified in map without change in class names',
+        () async {
+      var testBed = new NgTestBed<ClassWithNames>();
+      var testFixture = await testBed.create();
+      expect(testFixture.rootElement.querySelector('div').classes,
+          equals(['foo-bar', 'fooBar']));
+    });
+    test('should update classes based on changes in map values', () async {
+      var testBed = new NgTestBed<ConditionMapTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((ConditionMapTest component) {
+        component.condition = false;
+      });
+      expect(content.classes, equals(['bar']));
+    });
+    test('should update classes based on changes to the map', () async {
+      var testBed = new NgTestBed<MapUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((MapUpdateTest component) {
+        component.map['bar'] = true;
+      });
+      expect(content.classes, equals(['foo', 'bar']));
+      await testFixture.update((MapUpdateTest component) {
+        component.map['baz'] = true;
+      });
+      expect(content.classes, equals(['foo', 'bar', 'baz']));
+      await testFixture.update((MapUpdateTest component) {
+        component.map.remove('bar');
+      });
+      expect(content.classes, equals(['foo', 'baz']));
+    });
+    test('should update classes based on reference changes to the map',
+        () async {
+      var testBed = new NgTestBed<MapUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((MapUpdateTest component) {
+        component.map = <String, bool>{'foo': true, 'bar': true};
+      });
+      expect(content.classes, equals(['foo', 'bar']));
+      await testFixture.update((MapUpdateTest component) {
+        component.map = <String, bool>{'baz': true};
+      });
+      expect(content.classes, equals(['baz']));
+    });
+    test('should remove classes when expression is null', () async {
+      var testBed = new NgTestBed<MapUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((MapUpdateTest component) {
+        component.map = null;
+      });
+      expect(content.classes, isEmpty);
+      await testFixture.update((MapUpdateTest component) {
+        component.map = <String, bool>{'foo': false, 'bar': true};
+      });
+      expect(content.classes, equals(['bar']));
+    });
+    test('should allow multiple classes per expression', () async {
+      var testBed = new NgTestBed<MapUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateTest component) {
+        component.map = <String, bool>{'bar baz': true, 'bar1 baz1': true};
+      });
+      expect(content.classes, equals(['bar', 'baz', 'bar1', 'baz1']));
+      await testFixture.update((MapUpdateTest component) {
+        component.map = <String, bool>{'bar baz': false, 'bar1 baz1': true};
+      });
+      expect(content.classes, equals(['bar1', 'baz1']));
+    });
+    test('should split by one or more spaces between classes', () async {
+      var testBed = new NgTestBed<MapUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateTest component) {
+        component.map = <String, bool>{'foo bar     baz': true};
+      });
+      expect(content.classes, equals(['foo', 'bar', 'baz']));
+    });
+    test('should add classes specified in a list literal', () async {
+      var testBed = new NgTestBed<ListLiteralTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo', 'bar', 'foo-bar', 'fooBar']));
+    });
+    test('should update classes based on changes to the list', () async {
+      var testBed = new NgTestBed<ListUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((ListUpdateTest component) {
+        component.list.add('bar');
+      });
+      expect(content.classes, equals(['foo', 'bar']));
+      await testFixture.update((ListUpdateTest component) {
+        component.list[1] = 'baz';
+      });
+      expect(content.classes, equals(['foo', 'baz']));
+      await testFixture.update((ListUpdateTest component) {
+        component.list.remove('baz');
+      });
+      expect(content.classes, equals(['foo']));
+    });
+    test('should update classes when list reference changes', () async {
+      var testBed = new NgTestBed<ListUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((ListUpdateTest component) {
+        component.list = ['bar'];
+      });
+      expect(content.classes, equals(['bar']));
+    });
+    test('should take initial classes into account when a reference changes',
+        () async {
+      var testBed = new NgTestBed<ListUpdateWithInitialTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((ListUpdateWithInitialTest component) {
+        component.list = ['bar'];
+      });
+      expect(content.classes, equals(['foo', 'bar']));
+    });
+    test('should ignore empty or blank class names', () async {
+      var testBed = new NgTestBed<ListUpdateWithInitialTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((ListUpdateWithInitialTest component) {
+        component.list = ['', '  '];
+      });
+      expect(content.classes, equals(['foo']));
+    });
+    test('should trim blanks from class names', () async {
+      var testBed = new NgTestBed<ListUpdateWithInitialTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((ListUpdateWithInitialTest component) {
+        component.list = [' bar  '];
+      });
+      expect(content.classes, equals(['foo', 'bar']));
+    });
+    test('should allow multiple classes per item in lists', () async {
+      var testBed = new NgTestBed<ListUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((ListUpdateTest component) {
+        component.list = ['foo bar baz', 'foo1 bar1   baz1'];
+      });
+      expect(content.classes,
+          equals(['foo', 'bar', 'baz', 'foo1', 'bar1', 'baz1']));
+      await testFixture.update((ListUpdateTest component) {
+        component.list = ['foo bar   baz foobar'];
+      });
+      expect(content.classes, equals(['foo', 'bar', 'baz', 'foobar']));
+    });
+    test('should update classes if the set instance changes', () async {
+      var testBed = new NgTestBed<SetUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      var set = new Set<String>();
+      set.add('bar');
+      await testFixture.update((SetUpdateTest component) {
+        component.set = set;
+      });
+      expect(content.classes, equals(['bar']));
+      set = new Set<String>();
+      set.add('baz');
+      await testFixture.update((SetUpdateTest component) {
+        component.set = set;
+      });
+      expect(content.classes, equals(['baz']));
+    });
+    test('should add classes specified in a string literal', () async {
+      var testBed = new NgTestBed<StringLiteralTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo', 'bar', 'foo-bar', 'fooBar']));
+    });
+    test('should update classes based on changes to the string', () async {
+      var testBed = new NgTestBed<StringUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((StringUpdateTest component) {
+        component.string = 'foo bar';
+      });
+      expect(content.classes, equals(['foo', 'bar']));
+      await testFixture.update((StringUpdateTest component) {
+        component.string = 'baz';
+      });
+      expect(content.classes, equals(['baz']));
+    });
+    test('should remove active classes when switching from string to null',
+        () async {
+      var testBed = new NgTestBed<StringUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((StringUpdateTest component) {
+        component.string = null;
+      });
+      expect(content.classes, isEmpty);
+    });
+    test(
+        'should take initial classes into account when '
+        'switching from string to null', () async {
+      var testBed = new NgTestBed<StringUpdateWithInitialTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo']));
+      await testFixture.update((StringUpdateWithInitialTest component) {
+        component.string = null;
+      });
+      expect(content.classes, equals(['foo']));
+    });
+    test('should ignore empty and blank strings', () async {
+      var testBed = new NgTestBed<StringUpdateWithInitialTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((StringUpdateWithInitialTest component) {
+        component.string = '';
+      });
+      expect(content.classes, equals(['foo']));
+    });
+    test('should cooperate with the class attribute', () async {
+      var testBed = new NgTestBed<MapUpdateWithInitialTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateWithInitialTest component) {
+        component.map['bar'] = true;
+      });
+      expect(content.classes, equals(['init', 'foo', 'bar']));
+      await testFixture.update((MapUpdateWithInitialTest component) {
+        component.map['foo'] = false;
+      });
+      expect(content.classes, equals(['init', 'bar']));
+      await testFixture.update((MapUpdateWithInitialTest component) {
+        component.map = null;
+      });
+      expect(content.classes, equals(['init', 'foo']));
+    });
+    test('should cooperate with interpolated class attribute', () async {
+      var testBed = new NgTestBed<MapUpdateWithInitialInterpolationTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture
+          .update((MapUpdateWithInitialInterpolationTest component) {
+        component.map['bar'] = true;
+      });
+      expect(content.classes, equals(['init', 'foo', 'bar']));
+      await testFixture
+          .update((MapUpdateWithInitialInterpolationTest component) {
+        component.map['foo'] = false;
+      });
+      expect(content.classes, equals(['init', 'bar']));
+      await testFixture
+          .update((MapUpdateWithInitialInterpolationTest component) {
+        component.map = null;
+      });
+      expect(content.classes, equals(['init', 'foo']));
+    });
+    test('should cooperate with class attribute and binding to it', () async {
+      var testBed = new NgTestBed<MapUpdateWithInitialBindingTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateWithInitialBindingTest component) {
+        component.map['bar'] = true;
+      });
+      expect(content.classes, equals(['init', 'foo', 'bar']));
+      await testFixture.update((MapUpdateWithInitialBindingTest component) {
+        component.map['foo'] = false;
+      });
+      expect(content.classes, equals(['init', 'bar']));
+      await testFixture.update((MapUpdateWithInitialBindingTest component) {
+        component.map = null;
+      });
+      expect(content.classes, equals(['init', 'foo']));
+    });
+    test('should cooperate with class attribute and class.name binding',
+        () async {
+      var testBed = new NgTestBed<MapUpdateWithConditionBindingTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['init', 'foo', 'baz']));
+      await testFixture.update((MapUpdateWithConditionBindingTest component) {
+        component.map['bar'] = true;
+      });
+      expect(content.classes, equals(['init', 'foo', 'baz', 'bar']));
+      await testFixture.update((MapUpdateWithConditionBindingTest component) {
+        component.map['foo'] = false;
+      });
+      expect(content.classes, equals(['init', 'baz', 'bar']));
+      await testFixture.update((MapUpdateWithConditionBindingTest component) {
+        component.condition = false;
+      });
+      expect(content.classes, equals(['init', 'bar']));
+    });
+    test(
+        'should cooperate with initial class and class '
+        'attribute binding when binding changes', () async {
+      var testBed = new NgTestBed<MapUpdateWithStringBindingTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['init', 'foo']));
+      await testFixture.update((MapUpdateWithStringBindingTest component) {
+        component.map['bar'] = true;
+      });
+      expect(content.classes, equals(['init', 'foo', 'bar']));
+      await testFixture.update((MapUpdateWithStringBindingTest component) {
+        component.string = 'baz';
+      });
+      expect(content.classes, equals(['init', 'bar', 'baz', 'foo']));
+      await testFixture.update((MapUpdateWithStringBindingTest component) {
+        component.map = null;
+      });
+      expect(content.classes, equals(['init', 'baz']));
+    });
+  });
 }
 
-void main() {
-  group("binding to CSS class list", () {
-    test("should clean up when the directive is destroyed", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            "<div *ngFor=\"let item of items\" [ngClass]=\"item\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          assert(fixture.debugElement != null);
-          fixture.debugElement.componentInstance.items = [
-            ["0"]
-          ];
-          fixture.detectChanges();
-          fixture.debugElement.componentInstance.items = [
-            ["1"]
-          ];
-          detectChangesAndCheckClasses(fixture, "1");
-          completer.done();
-        });
-      });
-    });
-  });
-  group("expressions evaluating to objects", () {
-    test("should add classes specified in an object literal", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"{foo: true, bar: false}\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          completer.done();
-        });
-      });
-    });
-    test(
-        'should add classes specified in an object literal '
-        ' without change in class names', () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            '''<div [ngClass]="{\'foo-bar\': true, \'fooBar\': true}"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo-bar fooBar");
-          completer.done();
-        });
-      });
-    });
-    test(
-        "should add and remove classes based on changes in object literal values",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            "<div [ngClass]=\"{foo: condition, bar: !condition}\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.condition = false;
-          detectChangesAndCheckClasses(fixture, "bar");
-          completer.done();
-        });
-      });
-    });
-    test(
-        "should add and remove classes based on changes to the expression object",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"objExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.objExpr['bar'] = true;
-          detectChangesAndCheckClasses(fixture, "foo bar");
-          fixture.debugElement.componentInstance.objExpr['baz'] = true;
-          detectChangesAndCheckClasses(fixture, "foo bar baz");
-          fixture.debugElement.componentInstance.objExpr.remove('bar');
-          detectChangesAndCheckClasses(fixture, "foo baz");
-          completer.done();
-        });
-      });
-    });
-    test(
-        "should add and remove classes based on reference changes to the expression object",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"objExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.objExpr = {
-            "foo": true,
-            "bar": true
-          };
-          detectChangesAndCheckClasses(fixture, "foo bar");
-          fixture.debugElement.componentInstance.objExpr = {"baz": true};
-          detectChangesAndCheckClasses(fixture, "baz");
-          completer.done();
-        });
-      });
-    });
-    test("should remove active classes when expression evaluates to null",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"objExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.objExpr = null;
-          detectChangesAndCheckClasses(fixture, "");
-          fixture.debugElement.componentInstance.objExpr = {
-            "foo": false,
-            "bar": true
-          };
-          detectChangesAndCheckClasses(fixture, "bar");
-          completer.done();
-        });
-      });
-    });
-    test("should allow multiple classes per expression", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"objExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.objExpr = {
-            "bar baz": true,
-            "bar1 baz1": true
-          };
-          detectChangesAndCheckClasses(fixture, "bar baz bar1 baz1");
-          fixture.debugElement.componentInstance.objExpr = {
-            "bar baz": false,
-            "bar1 baz1": true
-          };
-          detectChangesAndCheckClasses(fixture, "bar1 baz1");
-          completer.done();
-        });
-      });
-    });
-    test("should split by one or more spaces between classes", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"objExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.objExpr = {
-            "foo bar     baz": true
-          };
-          detectChangesAndCheckClasses(fixture, "foo bar baz");
-          completer.done();
-        });
-      });
-    });
-  });
-  group("expressions evaluating to lists", () {
-    test("should add classes specified in a list literal", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            '''<div [ngClass]="[\'foo\', \'bar\', \'foo-bar\', \'fooBar\']"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo bar foo-bar fooBar");
-          completer.done();
-        });
-      });
-    });
-    test("should add and remove classes based on changes to the expression",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"arrExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          List<String> arrExpr =
-              fixture.debugElement.componentInstance.arrExpr as List<String>;
-          detectChangesAndCheckClasses(fixture, "foo");
-          arrExpr.add("bar");
-          detectChangesAndCheckClasses(fixture, "foo bar");
-          arrExpr[1] = "baz";
-          detectChangesAndCheckClasses(fixture, "foo baz");
-          fixture.debugElement.componentInstance.arrExpr.remove('baz');
-          detectChangesAndCheckClasses(fixture, "foo");
-          completer.done();
-        });
-      });
-    });
-    test("should add and remove classes when a reference changes", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"arrExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.arrExpr = ["bar"];
-          detectChangesAndCheckClasses(fixture, "bar");
-          completer.done();
-        });
-      });
-    });
-    test("should take initial classes into account when a reference changes",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div class=\"foo\" [ngClass]=\"arrExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.arrExpr = ["bar"];
-          detectChangesAndCheckClasses(fixture, "foo bar");
-          completer.done();
-        });
-      });
-    });
-    test("should ignore empty or blank class names", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div class=\"foo\" [ngClass]=\"arrExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.arrExpr = ["", "  "];
-          detectChangesAndCheckClasses(fixture, "foo");
-          completer.done();
-        });
-      });
-    });
-    test("should trim blanks from class names", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div class=\"foo\" [ngClass]=\"arrExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.arrExpr = [" bar  "];
-          detectChangesAndCheckClasses(fixture, "foo bar");
-          completer.done();
-        });
-      });
-    });
-    test("should allow multiple classes per item in arrays", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"arrExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.arrExpr = [
-            "foo bar baz",
-            "foo1 bar1   baz1"
-          ];
-          detectChangesAndCheckClasses(fixture, "foo bar baz foo1 bar1 baz1");
-          fixture.debugElement.componentInstance.arrExpr = [
-            "foo bar   baz foobar"
-          ];
-          detectChangesAndCheckClasses(fixture, "foo bar baz foobar");
-          completer.done();
-        });
-      });
-    });
-  });
-  group("expressions evaluating to sets", () {
-    test("should add and remove classes if the set instance changed", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"setExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          var setExpr = new Set<String>();
-          setExpr.add("bar");
-          fixture.debugElement.componentInstance.setExpr = setExpr;
-          detectChangesAndCheckClasses(fixture, "bar");
-          setExpr = new Set<String>();
-          setExpr.add("baz");
-          fixture.debugElement.componentInstance.setExpr = setExpr;
-          detectChangesAndCheckClasses(fixture, "baz");
-          completer.done();
-        });
-      });
-    });
-  });
-  group("expressions evaluating to string", () {
-    test("should add classes specified in a string literal", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = '''<div [ngClass]="\'foo bar foo-bar fooBar\'"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo bar foo-bar fooBar");
-          completer.done();
-        });
-      });
-    });
-    test("should add and remove classes based on changes to the expression",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"strExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.strExpr = "foo bar";
-          detectChangesAndCheckClasses(fixture, "foo bar");
-          fixture.debugElement.componentInstance.strExpr = "baz";
-          detectChangesAndCheckClasses(fixture, "baz");
-          completer.done();
-        });
-      });
-    });
-    test("should remove active classes when switching from string to null",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = '''<div [ngClass]="strExpr"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.strExpr = null;
-          detectChangesAndCheckClasses(fixture, "");
-          completer.done();
-        });
-      });
-    });
-    test(
-        "should take initial classes into account when switching from string to null",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = '''<div class="foo" [ngClass]="strExpr"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "foo");
-          fixture.debugElement.componentInstance.strExpr = null;
-          detectChangesAndCheckClasses(fixture, "foo");
-          completer.done();
-        });
-      });
-    });
-    test("should ignore empty and blank strings", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = '''<div class="foo" [ngClass]="strExpr"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.strExpr = "";
-          detectChangesAndCheckClasses(fixture, "foo");
-          completer.done();
-        });
-      });
-    });
-  });
-  group("cooperation with other class-changing constructs", () {
-    test("should co-operate with the class attribute", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div [ngClass]=\"objExpr\" class=\"init foo\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.objExpr['bar'] = true;
-          detectChangesAndCheckClasses(fixture, "init foo bar");
-          fixture.debugElement.componentInstance.objExpr['foo'] = false;
-          detectChangesAndCheckClasses(fixture, "init bar");
-          fixture.debugElement.componentInstance.objExpr = null;
-          detectChangesAndCheckClasses(fixture, "init foo");
-          completer.done();
-        });
-      });
-    });
-    test("should co-operate with the interpolated class attribute", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            '''<div [ngClass]="objExpr" class="{{\'init foo\'}}"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.objExpr['bar'] = true;
-          detectChangesAndCheckClasses(fixture, '''init foo bar''');
-          fixture.debugElement.componentInstance.objExpr['foo'] = false;
-          detectChangesAndCheckClasses(fixture, '''init bar''');
-          fixture.debugElement.componentInstance.objExpr = null;
-          detectChangesAndCheckClasses(fixture, '''init foo''');
-          completer.done();
-        });
-      });
-    });
-    test("should co-operate with the class attribute and binding to it",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            '''<div [ngClass]="objExpr" class="init" [class]="\'foo\'"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.objExpr['bar'] = true;
-          detectChangesAndCheckClasses(fixture, '''init foo bar''');
-          fixture.debugElement.componentInstance.objExpr['foo'] = false;
-          detectChangesAndCheckClasses(fixture, '''init bar''');
-          fixture.debugElement.componentInstance.objExpr = null;
-          detectChangesAndCheckClasses(fixture, '''init foo''');
-          completer.done();
-        });
-      });
-    });
-    test("should co-operate with the class attribute and class.name binding",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            "<div class=\"init foo\" [ngClass]=\"objExpr\" [class.baz]=\"condition\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "init foo baz");
-          fixture.debugElement.componentInstance.objExpr['bar'] = true;
-          detectChangesAndCheckClasses(fixture, "init foo baz bar");
-          fixture.debugElement.componentInstance.objExpr['foo'] = false;
-          detectChangesAndCheckClasses(fixture, "init baz bar");
-          fixture.debugElement.componentInstance.condition = false;
-          detectChangesAndCheckClasses(fixture, "init bar");
-          completer.done();
-        });
-      });
-    });
-    test(
-        "should co-operate with initial class and class attribute binding when binding changes",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            "<div class=\"init\" [ngClass]=\"objExpr\" [class]=\"strExpr\"></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          detectChangesAndCheckClasses(fixture, "init foo");
-          fixture.debugElement.componentInstance.objExpr['bar'] = true;
-          detectChangesAndCheckClasses(fixture, "init foo bar");
-          fixture.debugElement.componentInstance.strExpr = "baz";
-          detectChangesAndCheckClasses(fixture, "init bar baz foo");
-          fixture.debugElement.componentInstance.objExpr = null;
-          detectChangesAndCheckClasses(fixture, "init baz");
-          completer.done();
-        });
-      });
-    });
-  });
+class Base {
+  bool condition = true;
+  Map<String, bool> map = {'foo': true, 'bar': false};
+  List<String> list = ['foo'];
+  Set<String> set = new Set<String>();
+  String string = 'foo';
 }
 
 @Component(
-    selector: "test-cmp", directives: const [NgClass, NgFor], template: "")
-class TestComponent {
-  bool condition = true;
-  List<dynamic> items;
-  List<String> arrExpr = ["foo"];
-  Set<String> setExpr = new Set<String>();
-  var objExpr = {"foo": true, "bar": false};
-  var strExpr = "foo";
-  TestComponent() {
-    this.setExpr.add("foo");
-  }
+    selector: 'ngclass-destroy',
+    directives: const [NgClass, NgFor],
+    template: '<div *ngFor="let item of items" [ngClass]="item"></div>')
+class DestroyClassTest {
+  List<List<String>> items;
 }
+
+@Component(
+  selector: 'map-literal-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="{foo: true, bar: false}"></div>',
+)
+class MapLiteralTest {}
+
+@Component(
+  selector: 'class-with-names',
+  directives: const [NgClass],
+  template: '<div [ngClass]="{\'foo-bar\': true, \'fooBar\': true}"></div>',
+)
+class ClassWithNames {}
+
+@Component(
+  selector: 'condition-map-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="{foo: condition, bar: !condition}"></div>',
+)
+class ConditionMapTest extends Base {}
+
+@Component(
+  selector: 'map-update-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="map"></div>',
+)
+class MapUpdateTest extends Base {}
+
+@Component(
+  selector: 'string-literal-test',
+  directives: const [NgClass],
+  template:
+      '<div [ngClass]="[\'foo\', \'bar\', \'foo-bar\', \'fooBar\']"></div>',
+)
+class ListLiteralTest {}
+
+@Component(
+  selector: 'list-update-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="list"></div>',
+)
+class ListUpdateTest extends Base {}
+
+@Component(
+  selector: 'list-update-with-initial-test',
+  directives: const [NgClass],
+  template: '<div class="foo" [ngClass]="list"></div>',
+)
+class ListUpdateWithInitialTest extends Base {}
+
+@Component(
+  selector: 'list-update-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="set"></div>',
+)
+class SetUpdateTest extends Base {}
+
+@Component(
+  selector: 'string-literal-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="\'foo bar foo-bar fooBar\'"></div>',
+)
+class StringLiteralTest {}
+
+@Component(
+  selector: 'string-update-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="string"></div>',
+)
+class StringUpdateTest extends Base {}
+
+@Component(
+  selector: 'string-update-with-initial-test',
+  directives: const [NgClass],
+  template: '<div class="foo" [ngClass]="string"></div>',
+)
+class StringUpdateWithInitialTest extends Base {}
+
+@Component(
+  selector: 'map-update-with-initial-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="map" class="init foo"></div>',
+)
+class MapUpdateWithInitialTest extends Base {}
+
+@Component(
+  selector: 'map-update-with-initial-interpolation-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="map" class="{{\'init foo\'}}"></div>',
+)
+class MapUpdateWithInitialInterpolationTest extends Base {}
+
+@Component(
+  selector: 'map-update-with-initial-binding-test',
+  directives: const [NgClass],
+  template: '<div [ngClass]="map" class="init" [class]="\'foo\'"></div>',
+)
+class MapUpdateWithInitialBindingTest extends Base {}
+
+@Component(
+  selector: 'map-update-with-condition-binding-test',
+  directives: const [NgClass],
+  template:
+      '<div class="init foo" [ngClass]="map" [class.baz]="condition"></div>',
+)
+class MapUpdateWithConditionBindingTest extends Base {}
+
+@Component(
+  selector: 'map-update-with-string-binding-test',
+  directives: const [NgClass],
+  template: '<div class="init" [ngClass]="map" [class]="string"></div>',
+)
+class MapUpdateWithStringBindingTest extends Base {}
