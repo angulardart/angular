@@ -146,14 +146,28 @@ class Identifiers {
   static final throwOnChanges = new CompileIdentifierMetadata<dynamic>(
       name: "AppViewUtils.throwOnChanges",
       moduleUrl: APP_VIEW_UTILS_MODULE_URL);
-  static final interpolate0 = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate0", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
-  static final interpolate1 = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate1", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
-  static final interpolate2 = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate2", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
-  static final interpolate = new CompileIdentifierMetadata<dynamic>(
-      name: "interpolate", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
+  static final interpolate = <CompileIdentifierMetadata>[
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate0", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate1", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate2", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate3", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate4", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate5", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate6", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate7", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate8", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+    new CompileIdentifierMetadata<dynamic>(
+        name: "interpolate9", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
+  ];
   static final castByValue = new CompileIdentifierMetadata<dynamic>(
       name: "castByValue", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final EMPTY_ARRAY = new CompileIdentifierMetadata<dynamic>(

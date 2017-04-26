@@ -6,7 +6,6 @@ import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular2/src/core/security.dart' show SafeValue;
 import 'package:angular2/src/core/security.dart';
-import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/facade/lang.dart' show looseIdentical;
 import 'package:angular2/src/platform/dom/events/event_manager.dart'
     show EventManager;
@@ -75,142 +74,221 @@ class AppViewUtils {
 
 dynamic interpolate0(dynamic p) {
   if (p is SafeValue) return p;
-  return p == null ? '' : (p is String ? p : p.toString());
+  return p == null ? '' : '$p';
 }
 
-dynamic interpolate1(String c0, dynamic a1, String c1) =>
-    c0 + (a1 == null ? '' : (a1 is String ? a1 : a1.toString())) + c1;
+String interpolate1(String c0, dynamic a1, String c1) =>
+    c0 + (a1 == null ? '' : '$a1') + c1;
 
-dynamic interpolate2(String c0, dynamic a1, String c1, dynamic a2, String c2) =>
+String interpolate2(String c0, dynamic a1, String c1, dynamic a2, String c2) =>
     c0 + _toStringWithNull(a1) + c1 + _toStringWithNull(a2) + c2;
 
-const MAX_INTERPOLATION_VALUES = 9;
-String interpolate(num valueCount, String c0, dynamic a1, String c1,
-    [dynamic a2,
-    String c2,
-    dynamic a3,
-    String c3,
-    dynamic a4,
-    String c4,
-    dynamic a5,
-    String c5,
-    dynamic a6,
-    String c6,
-    dynamic a7,
-    String c7,
-    dynamic a8,
-    String c8,
-    dynamic a9,
-    String c9]) {
-  switch (valueCount) {
-    case 1:
-      return c0 + _toStringWithNull(a1) + c1;
-    case 2:
-      return c0 + _toStringWithNull(a1) + c1 + _toStringWithNull(a2) + c2;
-    case 3:
-      return c0 +
-          _toStringWithNull(a1) +
-          c1 +
-          _toStringWithNull(a2) +
-          c2 +
-          _toStringWithNull(a3) +
-          c3;
-    case 4:
-      return c0 +
-          _toStringWithNull(a1) +
-          c1 +
-          _toStringWithNull(a2) +
-          c2 +
-          _toStringWithNull(a3) +
-          c3 +
-          _toStringWithNull(a4) +
-          c4;
-    case 5:
-      return c0 +
-          _toStringWithNull(a1) +
-          c1 +
-          _toStringWithNull(a2) +
-          c2 +
-          _toStringWithNull(a3) +
-          c3 +
-          _toStringWithNull(a4) +
-          c4 +
-          _toStringWithNull(a5) +
-          c5;
-    case 6:
-      return c0 +
-          _toStringWithNull(a1) +
-          c1 +
-          _toStringWithNull(a2) +
-          c2 +
-          _toStringWithNull(a3) +
-          c3 +
-          _toStringWithNull(a4) +
-          c4 +
-          _toStringWithNull(a5) +
-          c5 +
-          _toStringWithNull(a6) +
-          c6;
-    case 7:
-      return c0 +
-          _toStringWithNull(a1) +
-          c1 +
-          _toStringWithNull(a2) +
-          c2 +
-          _toStringWithNull(a3) +
-          c3 +
-          _toStringWithNull(a4) +
-          c4 +
-          _toStringWithNull(a5) +
-          c5 +
-          _toStringWithNull(a6) +
-          c6 +
-          _toStringWithNull(a7) +
-          c7;
-    case 8:
-      return c0 +
-          _toStringWithNull(a1) +
-          c1 +
-          _toStringWithNull(a2) +
-          c2 +
-          _toStringWithNull(a3) +
-          c3 +
-          _toStringWithNull(a4) +
-          c4 +
-          _toStringWithNull(a5) +
-          c5 +
-          _toStringWithNull(a6) +
-          c6 +
-          _toStringWithNull(a7) +
-          c7 +
-          _toStringWithNull(a8) +
-          c8;
-    case 9:
-      return c0 +
-          _toStringWithNull(a1) +
-          c1 +
-          _toStringWithNull(a2) +
-          c2 +
-          _toStringWithNull(a3) +
-          c3 +
-          _toStringWithNull(a4) +
-          c4 +
-          _toStringWithNull(a5) +
-          c5 +
-          _toStringWithNull(a6) +
-          c6 +
-          _toStringWithNull(a7) +
-          c7 +
-          _toStringWithNull(a8) +
-          c8 +
-          _toStringWithNull(a9) +
-          c9;
-    default:
-      throw new BaseException('''Does not support more than 9 expressions''');
-  }
-}
+String interpolate3(
+  String c0,
+  dynamic a1,
+  String c1,
+  dynamic a2,
+  String c2,
+  dynamic a3,
+  String c3,
+) =>
+    c0 +
+    _toStringWithNull(a1) +
+    c1 +
+    _toStringWithNull(a2) +
+    c2 +
+    _toStringWithNull(a3) +
+    c3;
 
-String _toStringWithNull(dynamic v) => v?.toString() ?? '';
+String interpolate4(
+  String c0,
+  dynamic a1,
+  String c1,
+  dynamic a2,
+  String c2,
+  dynamic a3,
+  String c3,
+  dynamic a4,
+  String c4,
+) =>
+    c0 +
+    _toStringWithNull(a1) +
+    c1 +
+    _toStringWithNull(a2) +
+    c2 +
+    _toStringWithNull(a3) +
+    c3 +
+    _toStringWithNull(a4) +
+    c4;
+
+String interpolate5(
+  String c0,
+  dynamic a1,
+  String c1,
+  dynamic a2,
+  String c2,
+  dynamic a3,
+  String c3,
+  dynamic a4,
+  String c4,
+  dynamic a5,
+  String c5,
+) =>
+    c0 +
+    _toStringWithNull(a1) +
+    c1 +
+    _toStringWithNull(a2) +
+    c2 +
+    _toStringWithNull(a3) +
+    c3 +
+    _toStringWithNull(a4) +
+    c4 +
+    _toStringWithNull(a5) +
+    c5;
+
+String interpolate6(
+  String c0,
+  dynamic a1,
+  String c1,
+  dynamic a2,
+  String c2,
+  dynamic a3,
+  String c3,
+  dynamic a4,
+  String c4,
+  dynamic a5,
+  String c5,
+  dynamic a6,
+  String c6,
+) =>
+    c0 +
+    _toStringWithNull(a1) +
+    c1 +
+    _toStringWithNull(a2) +
+    c2 +
+    _toStringWithNull(a3) +
+    c3 +
+    _toStringWithNull(a4) +
+    c4 +
+    _toStringWithNull(a5) +
+    c5 +
+    _toStringWithNull(a6) +
+    c6;
+
+String interpolate7(
+  String c0,
+  dynamic a1,
+  String c1,
+  dynamic a2,
+  String c2,
+  dynamic a3,
+  String c3,
+  dynamic a4,
+  String c4,
+  dynamic a5,
+  String c5,
+  dynamic a6,
+  String c6,
+  dynamic a7,
+  String c7,
+) =>
+    c0 +
+    _toStringWithNull(a1) +
+    c1 +
+    _toStringWithNull(a2) +
+    c2 +
+    _toStringWithNull(a3) +
+    c3 +
+    _toStringWithNull(a4) +
+    c4 +
+    _toStringWithNull(a5) +
+    c5 +
+    _toStringWithNull(a6) +
+    c6 +
+    _toStringWithNull(a7) +
+    c7;
+
+String interpolate8(
+  String c0,
+  dynamic a1,
+  String c1,
+  dynamic a2,
+  String c2,
+  dynamic a3,
+  String c3,
+  dynamic a4,
+  String c4,
+  dynamic a5,
+  String c5,
+  dynamic a6,
+  String c6,
+  dynamic a7,
+  String c7,
+  dynamic a8,
+  String c8,
+) =>
+    c0 +
+    _toStringWithNull(a1) +
+    c1 +
+    _toStringWithNull(a2) +
+    c2 +
+    _toStringWithNull(a3) +
+    c3 +
+    _toStringWithNull(a4) +
+    c4 +
+    _toStringWithNull(a5) +
+    c5 +
+    _toStringWithNull(a6) +
+    c6 +
+    _toStringWithNull(a7) +
+    c7 +
+    _toStringWithNull(a8) +
+    c8;
+
+String interpolate9(
+  String c0,
+  dynamic a1,
+  String c1,
+  dynamic a2,
+  String c2,
+  dynamic a3,
+  String c3,
+  dynamic a4,
+  String c4,
+  dynamic a5,
+  String c5,
+  dynamic a6,
+  String c6,
+  dynamic a7,
+  String c7,
+  dynamic a8,
+  String c8,
+  dynamic a9,
+  String c9,
+) =>
+    c0 +
+    _toStringWithNull(a1) +
+    c1 +
+    _toStringWithNull(a2) +
+    c2 +
+    _toStringWithNull(a3) +
+    c3 +
+    _toStringWithNull(a4) +
+    c4 +
+    _toStringWithNull(a5) +
+    c5 +
+    _toStringWithNull(a6) +
+    c6 +
+    _toStringWithNull(a7) +
+    c7 +
+    _toStringWithNull(a8) +
+    c8 +
+    _toStringWithNull(a9) +
+    c9;
+
+const MAX_INTERPOLATION_VALUES = 9;
+
+String _toStringWithNull(dynamic v) => v == null ? '' : '$v';
 
 bool checkBinding(dynamic oldValue, dynamic newValue) {
   if (AppViewUtils.throwOnChanges) {

@@ -206,36 +206,26 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         var args = <o.Expression>[
           ast.expressions[0].visit(this, _Mode.Expression)
         ];
-        return o.importExpr(Identifiers.interpolate0).callFn(args);
+        return o.importExpr(Identifiers.interpolate[0]).callFn(args);
       } else {
         var args = <o.Expression>[
           o.literal(firstArg),
           ast.expressions[0].visit(this, _Mode.Expression),
           o.literal(secondArg),
         ];
-        return o.importExpr(Identifiers.interpolate1).callFn(args);
+        return o.importExpr(Identifiers.interpolate[1]).callFn(args);
       }
-    } else if (ast.expressions.length == 2) {
-      var args = <o.Expression>[
-        o.literal(compressWhitespace(ast.strings[0])),
-        ast.expressions[0].visit(this, _Mode.Expression),
-        o.literal(compressWhitespace(ast.strings[1])),
-        ast.expressions[1].visit(this, _Mode.Expression),
-        o.literal(compressWhitespace(ast.strings[2])),
-      ];
-      return o.importExpr(Identifiers.interpolate2).callFn(args);
     } else {
-      var args = [o.literal(ast.expressions.length)];
+      var args = <o.Expression>[];
       for (var i = 0; i < ast.strings.length - 1; i++) {
-        String literalStr = i == 0
-            ? compressWhitespace(ast.strings[i])
-            : replaceNgSpace(ast.strings[i]);
-        args.add(o.literal(literalStr));
+        args.add(o.literal(compressWhitespace(ast.strings[i])));
         args.add(ast.expressions[i].visit(this, _Mode.Expression));
       }
       args.add(
           o.literal(compressWhitespace(ast.strings[ast.strings.length - 1])));
-      return o.importExpr(Identifiers.interpolate).callFn(args);
+      return o
+          .importExpr(Identifiers.interpolate[ast.expressions.length])
+          .callFn(args);
     }
   }
 
