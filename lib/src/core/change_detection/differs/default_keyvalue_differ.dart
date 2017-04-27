@@ -17,9 +17,6 @@ class DefaultKeyValueDiffer {
 
   KeyValueChangeRecord _removalsHead;
 
-  // ignore: unused_field
-  KeyValueChangeRecord _removalsTail;
-
   bool get isDirty {
     return !identical(this._additionsHead, null) ||
         !identical(this._changesHead, null) ||
@@ -66,7 +63,7 @@ class DefaultKeyValueDiffer {
     KeyValueChangeRecord record;
     for (record = this._removalsHead;
         !identical(record, null);
-        record = record._nextRemoved) {
+        record = record._next) {
       fn(record);
     }
   }
@@ -89,8 +86,27 @@ class DefaultKeyValueDiffer {
   bool check(Map<dynamic, dynamic> map) {
     _reset();
 
+    if (_mapHead == null) {
+      // Optimize initial add.
+      _forEach(map, (value, key) {
+        var record = new KeyValueChangeRecord(key)..currentValue = value;
+        _records[key] = record;
+        _addToAdditions(record);
+
+        if (_appendAfter == null) {
+          _mapHead = record;
+        } else {
+          record._prev = _appendAfter;
+          _appendAfter._next = record;
+        }
+
+        _appendAfter = record;
+      });
+
+      return _mapHead != null;
+    }
+
     var insertBefore = _mapHead;
-    _appendAfter = null;
 
     _forEach(map, (value, key) {
       if (insertBefore?.key == key) {
@@ -103,27 +119,22 @@ class DefaultKeyValueDiffer {
       }
     });
 
-    // Items remaining at the end of the list have been removed.
     if (insertBefore != null) {
-      // Truncate end of list.
-      insertBefore._prev?._next = null;
-
+      // Remaining records that weren't seen are the removals.
       _removalsHead = insertBefore;
-      _removalsTail = insertBefore;
 
-      if (_removalsHead == _mapHead) {
-        _mapHead = null;
-      }
-
-      for (var record = insertBefore;
-          record != null;
-          record = record._nextRemoved) {
+      for (var record = insertBefore; record != null; record = record._next) {
         _records.remove(record.key);
-        record._nextRemoved = record._next;
         record.previousValue = record.currentValue;
         record.currentValue = null;
-        record._prev = null;
-        record._next = null;
+      }
+
+      if (_removalsHead == _mapHead) {
+        // Remove the head record reference.
+        _mapHead = null;
+      } else {
+        // Truncate removals from end of record list.
+        _removalsHead._prev._next = null;
       }
     }
 
@@ -185,6 +196,8 @@ class DefaultKeyValueDiffer {
   }
 
   void _reset() {
+    _appendAfter = null;
+
     if (this.isDirty) {
       // Map state before changes.
       _previousMapHead = _mapHead;
@@ -209,7 +222,7 @@ class DefaultKeyValueDiffer {
 
       this._changesHead = this._changesTail = null;
       this._additionsHead = this._additionsTail = null;
-      this._removalsHead = this._removalsTail = null;
+      this._removalsHead = null;
     }
   }
 
@@ -280,7 +293,7 @@ class DefaultKeyValueDiffer {
     }
     for (record = this._removalsHead;
         !identical(record, null);
-        record = record._nextRemoved) {
+        record = record._next) {
       removals.add(record);
     }
     return "map: " +
@@ -325,9 +338,8 @@ class KeyValueChangeRecord {
 
   KeyValueChangeRecord _nextAdded;
 
-  KeyValueChangeRecord _nextRemoved;
-
   KeyValueChangeRecord _nextChanged;
+
   KeyValueChangeRecord(this.key);
   String toString() {
     return looseIdentical(previousValue, currentValue)
