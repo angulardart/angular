@@ -142,7 +142,6 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     _compView_1.create(_HasAngularEvents_1_2, []);
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
-    listen(_el_1, 'foo', eventHandler0(ctx.onFoo));
     final subscription_0 =
         _HasAngularEvents_1_2.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);

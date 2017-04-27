@@ -161,8 +161,7 @@ class CompileEventListener {
 }
 
 List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
-    List<DirectiveAst> dirs, CompileElement compileElement,
-    {bool includeComponentOutputs: true}) {
+    List<DirectiveAst> dirs, CompileElement compileElement) {
   List<CompileEventListener> eventListeners = [];
   for (var hostEvent in hostEvents) {
     compileElement.view.bindings
@@ -171,20 +170,18 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
         compileElement, hostEvent.name, eventListeners);
     listener.addAction(hostEvent, null, null);
   }
-  var i = -1;
-  for (var directiveAst in dirs) {
-    i++;
-    var directiveInstance = compileElement.directiveInstances[i];
-    if (includeComponentOutputs == false &&
-        directiveAst.directive.isComponent) {
-      continue;
-    }
+  for (var i = 0, len = dirs.length; i < len; i++) {
+    final directiveAst = dirs[i];
+    // Don't collect component host event listeners because they're registered
+    // by the component implementation.
+    if (directiveAst.directive.isComponent) continue;
     for (var hostEvent in directiveAst.hostEvents) {
       compileElement.view.bindings
           .add(new CompileBinding(compileElement, hostEvent));
       var listener = CompileEventListener.getOrCreate(
           compileElement, hostEvent.name, eventListeners);
-      listener.addAction(hostEvent, directiveAst.directive, directiveInstance);
+      listener.addAction(hostEvent, directiveAst.directive,
+          compileElement.directiveInstances[i]);
     }
   }
   for (int i = 0, len = eventListeners.length; i < len; i++) {

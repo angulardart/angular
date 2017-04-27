@@ -18,7 +18,11 @@ import "../template_ast.dart"
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
 import "event_binder.dart"
-    show bindRenderOutputs, collectEventListeners, bindDirectiveOutputs;
+    show
+        bindRenderOutputs,
+        collectEventListeners,
+        CompileEventListener,
+        bindDirectiveOutputs;
 import "lifecycle_binder.dart"
     show
         bindDirectiveAfterContentLifecycleCallbacks,
@@ -67,9 +71,26 @@ class ViewBinderVisitor implements TemplateAstVisitor {
 
   dynamic visitElement(ElementAst ast, dynamic context) {
     var compileElement = (view.nodes[_nodeIndex++] as CompileElement);
-    var eventListeners = collectEventListeners(
-        ast.outputs, ast.directives, compileElement,
-        includeComponentOutputs: false);
+    var listeners =
+        collectEventListeners(ast.outputs, ast.directives, compileElement);
+
+    // Collect directive output names.
+    final directiveOutputs = new Set<String>();
+    for (var directiveAst in ast.directives) {
+      directiveOutputs.addAll(directiveAst.directive.outputs.values);
+    }
+
+    // Determine which listeners must be registered as stream subscriptions,
+    // and which must be registered as event handlers.
+    final eventListeners = <CompileEventListener>[];
+    final streamListeners = <CompileEventListener>[];
+    for (var listener in listeners) {
+      if (directiveOutputs.contains(listener.eventName)) {
+        streamListeners.add(listener);
+      } else {
+        eventListeners.add(listener);
+      }
+    }
 
     bindRenderInputs(ast.inputs, compileElement);
     bindRenderOutputs(eventListeners);
@@ -81,11 +102,10 @@ class ViewBinderVisitor implements TemplateAstVisitor {
       bindDirectiveDetectChangesLifecycleCallbacks(
           directiveAst, directiveInstance, compileElement);
       bindDirectiveHostProps(directiveAst, directiveInstance, compileElement);
-      bindDirectiveOutputs(directiveAst, directiveInstance, eventListeners);
+      bindDirectiveOutputs(directiveAst, directiveInstance, streamListeners);
     });
     templateVisitAll(this, ast.children, compileElement);
     // afterContent and afterView lifecycles need to be called bottom up
-
     // so that children are notified before parents
     index = -1;
     ast.directives.forEach((directiveAst) {
@@ -103,6 +123,8 @@ class ViewBinderVisitor implements TemplateAstVisitor {
 
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
     var compileElement = (this.view.nodes[this._nodeIndex++] as CompileElement);
+    // The template parser ensures these listeners are for directive outputs,
+    // so they all must be registered as stream subscriptions.
     var eventListeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
     var index = -1;
