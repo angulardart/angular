@@ -347,5 +347,7 @@ class _GetResolver implements Builder {
   }
 
   @override
-  Map<String, List<String>> get buildExtensions => const {'': const []};
+  final buildExtensions = const {
+    '': const ['.unused']
+  };
 }
