@@ -159,18 +159,14 @@ void main() {
       expect(debugElement.children[1].listeners, hasLength(1));
     });
 
-    test("should trigger event handlers", () async {
+    test("should trigger event handler", () async {
       var testBed = new NgTestBed<EventsComp>();
       var fixture = await testBed.create();
       DebugElement debugElement = getDebugNode(fixture.rootElement);
       expect(debugElement.componentInstance.clicked, isFalse);
-      expect(debugElement.componentInstance.customed, isFalse);
       (debugElement.children[0].nativeElement as Element)
           .dispatchEvent(new MouseEvent('click'));
       expect(debugElement.componentInstance.clicked, isTrue);
-      (debugElement.children[1].nativeElement as Element)
-          .dispatchEvent(new Event('myevent'));
-      expect(debugElement.componentInstance.customed, isTrue);
     });
 
     test("should list all child nodes even with malformed selector", () async {
@@ -320,22 +316,15 @@ class CustomEmitter {
 @Component(
     selector: "events-comp",
     template: '''
-        <button (click)="handleClick()"></button>
-        <custom-emitter (myevent)="handleCustom()"></custom-emitter>''',
-    directives: const [CustomEmitter])
+        <button (click)="handleClick()"></button>''')
 class EventsComp {
   bool clicked;
   bool customed;
   EventsComp() {
     clicked = false;
-    customed = false;
   }
   void handleClick() {
     clicked = true;
-  }
-
-  void handleCustom() {
-    customed = true;
   }
 }
 
