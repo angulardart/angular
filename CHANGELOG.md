@@ -130,7 +130,6 @@
 *  `IterableDiffers` and `KeyValueDiffers` are deprecated. The cost of looking
    up to see if a custom differ is available is too high for almost no use.
    Before they're removed, we'll have other customization options.
-* `ngSwitchCase` replaces soft deprecated `ngSwitchWhen`
 
 ### Bug fixes
 
