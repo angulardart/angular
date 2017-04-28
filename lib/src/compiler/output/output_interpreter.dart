@@ -7,6 +7,7 @@ import 'package:angular2/src/core/linker.dart' show QueryList;
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart';
 import 'package:angular2/src/core/linker/component_factory.dart';
+import 'package:angular2/src/core/linker/focus_service.dart';
 import 'package:angular2/src/core/linker/template_ref.dart';
 import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/view_container_ref.dart'
@@ -706,6 +707,7 @@ void _initializeInterpreter() {
   Identifiers.ComponentRef.runtime = ComponentRef;
   Identifiers.NG_IF_DIRECTIVE.runtime = NgIf;
   Identifiers.NG_FOR_DIRECTIVE.runtime = NgFor;
+  Identifiers.focusService.runtime = focusService;
 
   Identifiers.interpolate[0].runtime = appviewutils.interpolate0;
   Identifiers.interpolate[1].runtime = appviewutils.interpolate1;

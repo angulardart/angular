@@ -1,9 +1,11 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
+import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
+import 'compile_view.dart' show CompileView;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show convertCdStatementToIr;
 import 'parse_utils.dart';
@@ -113,17 +115,21 @@ class CompileEventListener {
 
   void listenToRenderer() {
     final handlerExpr = _createEventHandlerExpr();
-    var listenExpr;
-
-    if (isNativeHtmlEvent(eventName)) {
-      listenExpr = compileElement.renderNode
-          .callMethod('addEventListener', [o.literal(eventName), handlerExpr]);
+    if (eventName == 'blur') {
+      compileElement.blurHandlerExpr = handlerExpr;
+    } else if (eventName == 'focus') {
+      compileElement.focusHandlerExpr = handlerExpr;
     } else {
-      listenExpr = new o.InvokeMemberMethodExpr('listen',
-          [compileElement.renderNode, o.literal(eventName), handlerExpr]);
+      var listenExpr;
+      if (isNativeHtmlEvent(eventName)) {
+        listenExpr = compileElement.renderNode.callMethod(
+            'addEventListener', [o.literal(eventName), handlerExpr]);
+      } else {
+        listenExpr = new o.InvokeMemberMethodExpr('listen',
+            [compileElement.renderNode, o.literal(eventName), handlerExpr]);
+      }
+      compileElement.view.createMethod.addStmt(listenExpr.toStmt());
     }
-
-    compileElement.view.createMethod.addStmt(listenExpr.toStmt());
   }
 
   void listenToDirective(
@@ -206,6 +212,34 @@ void bindRenderOutputs(List<CompileEventListener> eventListeners) {
     CompileEventListener listener = eventListeners[i];
     listener.listenToRenderer();
   }
+
+  if (eventListeners.isNotEmpty) {
+    final compileElement = eventListeners.first.compileElement;
+    if (compileElement.focusHandlerExpr != null ||
+        compileElement.blurHandlerExpr != null) {
+      bindFocusEventListeners(compileElement.view, compileElement.renderNode,
+          compileElement.focusHandlerExpr, compileElement.blurHandlerExpr);
+    }
+  }
+}
+
+void bindFocusEventListeners(
+    CompileView compileView,
+    o.Expression eventTargetExpr,
+    o.Expression focusHandlerExpr,
+    o.Expression blurHandlerExpr) {
+  assert(focusHandlerExpr != null || blurHandlerExpr != null);
+  final focusServiceExpr = o.importExpr(Identifiers.focusService);
+  final registerExpr = focusServiceExpr.callMethod('register', [
+    eventTargetExpr,
+    focusHandlerExpr ?? o.NULL_EXPR,
+    blurHandlerExpr ?? o.NULL_EXPR,
+  ]);
+  compileView.createMethod.addStmt(registerExpr.toStmt());
+  final unregisterExpr = focusServiceExpr.callMethod('unregister', [
+    eventTargetExpr,
+  ]);
+  compileView.destroyMethod.addStmt(unregisterExpr.toStmt());
 }
 
 o.Expression convertStmtIntoExpression(o.Statement stmt) {

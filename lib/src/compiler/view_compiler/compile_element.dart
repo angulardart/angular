@@ -79,6 +79,12 @@ class CompileElement extends CompileNode {
   // this is set so we create a class field member for the template reference.
   bool _publishesTemplateRef = false;
 
+  /// Handler for 'blur' event to be registered with [FocusService].
+  o.Expression blurHandlerExpr;
+
+  /// Handler for 'focus' event to be registered with [FocusService].
+  o.Expression focusHandlerExpr;
+
   CompileElement(
       CompileElement parent,
       CompileView view,

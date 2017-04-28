@@ -262,6 +262,9 @@ class Identifiers {
       name: "Event", moduleUrl: "dart:html");
   static final HTML_NODE = new CompileIdentifierMetadata<dynamic>(
       name: "Node", moduleUrl: "dart:html");
+  static final focusService = new CompileIdentifierMetadata(
+      name: 'focusService',
+      moduleUrl: 'asset:angular2/lib/src/core/linker/focus_service.dart');
 }
 
 CompileTokenMetadata identifierToken(CompileIdentifierMetadata identifier) {

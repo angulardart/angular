@@ -55,9 +55,9 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   ComponentRef build() {
     final import2.HostComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init(const [], const [], []);
     rootEl.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
     rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
+    init(const [], const [], []);
     return null;
   }
 }

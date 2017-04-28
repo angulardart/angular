@@ -47,7 +47,8 @@ import "constants.dart"
         ViewProperties,
         ViewTypeEnum;
 import 'expression_converter.dart';
-import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
+import 'event_binder.dart'
+    show bindFocusEventListeners, convertStmtIntoExpression, isNativeHtmlEvent;
 import 'parse_utils.dart';
 import 'property_binder.dart';
 import "view_compiler_utils.dart"
@@ -1087,6 +1088,13 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
       .toDeclStmt(contextType, [o.StmtModifier.Final]));
 
   statements.addAll(parentRenderNodeStmts);
+
+  bool isComponentRoot = isComponent && view.viewIndex == 0;
+
+  if (isComponentRoot) {
+    _writeComponentHostEventListeners(view, parser, statements);
+  }
+
   statements.addAll(view.createMethod.finish());
 
   // In DEBUG mode we call:
@@ -1122,12 +1130,6 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     ]).toStmt());
   }
 
-  bool isComponentRoot = isComponent && view.viewIndex == 0;
-
-  if (isComponentRoot) {
-    _writeComponentHostEventListeners(view, parser, statements);
-  }
-
   if (isComponentRoot &&
       view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
     // Connect ComponentState callback to view.
@@ -1158,6 +1160,9 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
 /// on host property of @Component annotation.
 void _writeComponentHostEventListeners(
     CompileView view, Parser parser, List<o.Statement> statements) {
+  var blurEventHandlerExpr;
+  var focusEventHandlerExpr;
+  final rootElExpr = new o.ReadClassMemberExpr(appViewRootElementName);
   CompileDirectiveMetadata component = view.component;
   for (String eventName in component.hostListeners.keys) {
     String handlerSource = component.hostListeners[eventName];
@@ -1193,17 +1198,27 @@ void _writeComponentHostEventListeners(
 
     final wrappedHandlerExpr =
         new o.InvokeMemberMethodExpr('eventHandler$numArgs', [handlerExpr]);
-    final rootElExpr = new o.ReadClassMemberExpr(appViewRootElementName);
 
-    var listenExpr;
-    if (isNativeHtmlEvent(eventName)) {
-      listenExpr = rootElExpr.callMethod(
-          'addEventListener', [o.literal(eventName), wrappedHandlerExpr]);
+    if (eventName == 'focus') {
+      focusEventHandlerExpr = wrappedHandlerExpr;
+    } else if (eventName == 'blur') {
+      blurEventHandlerExpr = wrappedHandlerExpr;
     } else {
-      listenExpr = new o.InvokeMemberMethodExpr(
-          'listen', [rootElExpr, o.literal(eventName), wrappedHandlerExpr]);
+      var listenExpr;
+      if (isNativeHtmlEvent(eventName)) {
+        listenExpr = rootElExpr.callMethod(
+            'addEventListener', [o.literal(eventName), wrappedHandlerExpr]);
+      } else {
+        listenExpr = new o.InvokeMemberMethodExpr(
+            'listen', [rootElExpr, o.literal(eventName), wrappedHandlerExpr]);
+      }
+      statements.add(listenExpr.toStmt());
     }
-    statements.add(listenExpr.toStmt());
+  }
+
+  if (focusEventHandlerExpr != null || blurEventHandlerExpr != null) {
+    bindFocusEventListeners(
+        view, rootElExpr, focusEventHandlerExpr, blurEventHandlerExpr);
   }
 }
 
