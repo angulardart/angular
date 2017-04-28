@@ -53,6 +53,11 @@ class ExportModel extends _NamespaceModel {
       showCombinators: _showCombinators(element.combinators),
       hideCombinators: _hideCombinators(element.combinators));
 
+  ImportModel get asImport => new ImportModel(
+      uri: uri,
+      showCombinators: showCombinators,
+      hideCombinators: hideCombinators);
+
   ExportBuilder get asBuilder => new ExportBuilder(uri)
     ..showAll(showCombinators)
     ..hideAll(hideCombinators);
