@@ -59,7 +59,9 @@ Future<NgDepsModel> resolveNgDepsFor(
       return;
     } else if (uri.endsWith(TEMPLATE_EXTENSION)) {
       if (!_isDeferred(directive)) {
-        templateDeps.add(new ImportModel.fromElement(directive));
+        templateDeps.add(directive is ImportElement
+            ? new ImportModel.fromElement(directive)
+            : new ExportModel.fromElement(directive).asImport);
       }
     } else {
       final template = ''
