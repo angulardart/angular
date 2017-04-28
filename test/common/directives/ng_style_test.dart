@@ -1,123 +1,105 @@
-@TestOn('browser && !js')
-library angular2.test.common.directives.ng_style_test;
-
-import 'dart:html';
-
-import "package:angular2/core.dart" show Component;
-import "package:angular2/src/common/directives/ng_style.dart" show NgStyle;
-import "package:angular2/src/testing/internal.dart";
+@Tags(const ['codegen'])
+@TestOn('browser')
+import 'package:angular2/angular2.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("binding to CSS styles", () {
-    test("should add styles specified in an object literal", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = '''<div [ngStyle]="{\'max-width\': \'40px\'}"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.detectChanges();
-          Element elm = fixture.debugElement.children[0].nativeElement;
-          expect(elm.style.maxWidth, "40px");
-          completer.done();
-        });
-      });
+  group("ngStyle", () {
+    tearDown(() => disposeAnyRunningTest());
+
+    test("should add styles specified in an map literal", () async {
+      var testBed = new NgTestBed<MapLiteralTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.style.maxWidth, '40px');
     });
-    test("should add and change styles specified in an object expression",
+    test("should update styles specified in an map literal", () async {
+      var testBed = new NgTestBed<MapUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateTest component) {
+        component.map = {'max-width': '40px'};
+      });
+      expect(content.style.maxWidth, '40px');
+      await testFixture.update((MapUpdateTest component) {
+        component.map['max-width'] = '30%';
+      });
+      expect(content.style.maxWidth, '30%');
+    });
+    test("should remove styles when deleting a key in a map literal", () async {
+      var testBed = new NgTestBed<MapUpdateTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateTest component) {
+        component.map = {'max-width': '40px'};
+      });
+      expect(content.style.maxWidth, '40px');
+      await testFixture.update((MapUpdateTest component) {
+        component.map.remove('max-width');
+      });
+      expect(content.style.maxWidth, '');
+    });
+    test("should cooperate with the style attribute", () async {
+      var testBed = new NgTestBed<MapUpdateWithDefaultTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateWithDefaultTest component) {
+        component.map = {'max-width': '40px'};
+      });
+      expect(content.style.maxWidth, '40px');
+      expect(content.style.fontSize, '12px');
+      await testFixture.update((MapUpdateWithDefaultTest component) {
+        component.map.remove('max-width');
+      });
+      expect(content.style.maxWidth, '');
+      expect(content.style.fontSize, '12px');
+    });
+    test('should cooperate with the style.[styleName]="expr" special-case',
         () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = '''<div [ngStyle]="expr"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((ComponentFixture fixture) {
-          Map<String, dynamic> expr;
-          fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
-          fixture.detectChanges();
-          Element elm = fixture.debugElement.children[0].nativeElement;
-          expect(elm.style.maxWidth, "40px");
-          expr = fixture.debugElement.componentInstance.expr
-              as Map<String, dynamic>;
-          expr["max-width"] = "30%";
-          fixture.detectChanges();
-          expect(elm.style.maxWidth, "30%");
-          completer.done();
-        });
+      var testBed = new NgTestBed<MapUpdateWithStyleExprTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      await testFixture.update((MapUpdateWithStyleExprTest component) {
+        component.map = {'max-width': '40px'};
       });
-    });
-    test("should remove styles when deleting a key in an object expression",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = '''<div [ngStyle]="expr"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
-          fixture.detectChanges();
-          Element elm = fixture.debugElement.children[0].nativeElement;
-          expect(elm.style.maxWidth, "40px");
-          fixture.debugElement.componentInstance.expr.remove('max-width');
-          fixture.detectChanges();
-          expect(elm.style.maxWidth, '');
-          completer.done();
-        });
+      expect(content.style.maxWidth, '40px');
+      expect(content.style.fontSize, '12px');
+      await testFixture.update((MapUpdateWithStyleExprTest component) {
+        component.map.remove('max-width');
       });
-    });
-    test("should co-operate with the style attribute", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            '''<div style="font-size: 12px" [ngStyle]="expr"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
-          fixture.detectChanges();
-          Element elm = fixture.debugElement.children[0].nativeElement;
-          expect(elm.style.maxWidth, "40px");
-          expect(elm.style.fontSize, "12px");
-          fixture.debugElement.componentInstance.expr.remove('max-width');
-          fixture.detectChanges();
-          expect(elm.style.maxWidth, "");
-          expect(elm.style.fontSize, "12px");
-          completer.done();
-        });
-      });
-    });
-    test(
-        'should co-operate with the style.[styleName]="expr" special-case '
-        'in the compiler', () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            '''<div [style.font-size.px]="12" [ngStyle]="expr"></div>''';
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.debugElement.componentInstance.expr = {"max-width": "40px"};
-          fixture.detectChanges();
-          Element elm = fixture.debugElement.children[0].nativeElement;
-          expect(elm.style.maxWidth, "40px");
-          expect(elm.style.fontSize, "12px");
-          fixture.debugElement.componentInstance.expr.remove('max-width');
-          expect(elm.style.fontSize, "12px");
-          fixture.detectChanges();
-          expect(elm.style.maxWidth, "");
-          completer.done();
-        });
-      });
+      expect(content.style.maxWidth, '');
+      expect(content.style.fontSize, '12px');
     });
   });
 }
 
-@Component(selector: "test-cmp", directives: const [NgStyle], template: "")
-class TestComponent {
-  var expr;
+@Component(
+    selector: 'map-literal-test',
+    directives: const [NgStyle],
+    template: '<div [ngStyle]="{\'max-width\': \'40px\'}"></div>')
+class MapLiteralTest {}
+
+@Component(
+    selector: 'map-update-test',
+    directives: const [NgStyle],
+    template: '<div [ngStyle]="map"></div>')
+class MapUpdateTest {
+  Map<String, String> map;
+}
+
+@Component(
+    selector: 'map-update-with-default-test',
+    directives: const [NgStyle],
+    template: '<div style="font-size: 12px" [ngStyle]="map"></div>')
+class MapUpdateWithDefaultTest {
+  Map<String, String> map;
+}
+
+@Component(
+    selector: 'map-update-with-style-expr-test',
+    directives: const [NgStyle],
+    template: '<div [style.font-size.px]="12" [ngStyle]="map"></div>')
+class MapUpdateWithStyleExprTest {
+  Map<String, String> map;
 }
