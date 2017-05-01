@@ -1,71 +1,37 @@
-@TestOn('browser && !js')
-library angular2.test.common.directives.non_bindable_test;
+@Tags(const ['codegen'])
+@TestOn('browser')
 
 import 'dart:html';
 
-import "package:angular2/core.dart" show Component, Directive;
-import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/testing/internal.dart";
+import 'package:angular2/angular2.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("non-bindable", () {
-    test("should not interpolate children", () async {
-      inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template = "<div>{{text}}<span ngNonBindable>{{text}}</span></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.detectChanges();
-          expect(fixture.debugElement.nativeElement,
-              hasTextContent("foo{{text}}"));
-          completer.done();
-        });
-      });
-    });
-    test("should ignore directives on child nodes", () async {
-      inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            "<div ngNonBindable><span id=child test-dec>{{text}}</span></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.detectChanges();
-          // We must use DOM.querySelector instead of fixture.query here
+  group('ngNonBindable', () {
+    tearDown(() => disposeAnyRunningTest());
 
-          // since the elements inside are not compiled.
-          Element elm = fixture.debugElement.nativeElement;
-          var span = elm.querySelector("#child");
-          expect(span.classes.contains("compiled"), isFalse);
-          completer.done();
-        });
-      });
+    test('should not interpolate children', () async {
+      var testBed = new NgTestBed<NoInterpolationTest>();
+      var testFixture = await testBed.create();
+      expect(testFixture.text, 'foo{{text}}');
     });
-    test("should trigger directives on the same node", () async {
-      inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        var template =
-            "<div><span id=child ngNonBindable test-dec>{{text}}</span></div>";
-        tcb
-            .overrideTemplate(TestComponent, template)
-            .createAsync(TestComponent)
-            .then((fixture) {
-          fixture.detectChanges();
-          Element elm = fixture.debugElement.nativeElement;
-          var span = elm.querySelector("#child");
-          expect(span.classes.contains("compiled"), isTrue);
-          completer.done();
-        });
-      });
+    test('should ignore directives on child nodes', () async {
+      var testBed = new NgTestBed<IgnoreDirectivesTest>();
+      var testFixture = await testBed.create();
+      var span = testFixture.rootElement.querySelector('#child');
+      expect(span.classes, isNot(contains('compiled')));
+    });
+    test('should trigger directives on the same node', () async {
+      var testBed = new NgTestBed<DirectiveSameNodeTest>();
+      var testFixture = await testBed.create();
+      var span = testFixture.rootElement.querySelector('#child');
+      expect(span.classes, contains('compiled'));
     });
   });
 }
 
-@Directive(selector: "[test-dec]")
+@Directive(selector: '[test-dec]')
 class TestDirective {
   TestDirective(ElementRef el) {
     (el.nativeElement as Element).classes.add('compiled');
@@ -73,10 +39,27 @@ class TestDirective {
 }
 
 @Component(
-    selector: "test-cmp", directives: const [TestDirective], template: "")
-class TestComponent {
-  String text;
-  TestComponent() {
-    this.text = "foo";
-  }
+  selector: 'no-interpolation-test',
+  template: '<div>{{text}}<span ngNonBindable>{{text}}</span></div>',
+)
+class NoInterpolationTest {
+  String text = 'foo';
+}
+
+@Component(
+  selector: 'ignore-directives-test',
+  directives: const [TestDirective],
+  template: '<div ngNonBindable><span id=child test-dec>{{text}}</span></div>',
+)
+class IgnoreDirectivesTest {
+  String text = 'foo';
+}
+
+@Component(
+  selector: 'directive-same-node-test',
+  directives: const [TestDirective],
+  template: '<div><span id=child ngNonBindable test-dec>{{text}}</span></div>',
+)
+class DirectiveSameNodeTest {
+  String text = 'foo';
 }
