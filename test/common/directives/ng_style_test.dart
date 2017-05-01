@@ -1,20 +1,21 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
+
 import 'package:angular2/angular2.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("ngStyle", () {
+  group('ngStyle', () {
     tearDown(() => disposeAnyRunningTest());
 
-    test("should add styles specified in an map literal", () async {
+    test('should add styles specified in an map literal', () async {
       var testBed = new NgTestBed<MapLiteralTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       expect(content.style.maxWidth, '40px');
     });
-    test("should update styles specified in an map literal", () async {
+    test('should update styles specified in an map literal', () async {
       var testBed = new NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
@@ -27,7 +28,7 @@ void main() {
       });
       expect(content.style.maxWidth, '30%');
     });
-    test("should remove styles when deleting a key in a map literal", () async {
+    test('should remove styles when deleting a key in a map literal', () async {
       var testBed = new NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
@@ -40,7 +41,7 @@ void main() {
       });
       expect(content.style.maxWidth, '');
     });
-    test("should cooperate with the style attribute", () async {
+    test('should cooperate with the style attribute', () async {
       var testBed = new NgTestBed<MapUpdateWithDefaultTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
