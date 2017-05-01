@@ -29,7 +29,6 @@ import 'package:angular2/src/core/linker/view_type.dart' as import4;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular2/angular2.dart';
-import 'package:angular2/src/core/linker/focus_service.dart' as import8;
 
 const List<dynamic> styles_UsesNativeEvents = const [];
 
@@ -54,13 +53,9 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
     Text _text_2 = new Text('\n  ');
     parentRenderNode.append(_text_2);
     _el_1.addEventListener('click', eventHandler0(ctx.onClick));
-    import8.focusService.register(rootEl, eventHandler0(_ctx.onFocus), null);
     init(const [], const []);
+    rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
-  }
-
-  void destroyInternal() {
-    import8.focusService.unregister(rootEl);
   }
 }
 

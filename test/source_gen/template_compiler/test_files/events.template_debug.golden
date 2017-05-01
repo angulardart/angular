@@ -31,7 +31,6 @@ import 'package:angular2/src/core/linker/view_type.dart' as import6;
 import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
-import 'package:angular2/src/core/linker/focus_service.dart' as import10;
 
 const List<dynamic> styles_UsesNativeEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = [null, null, null];
@@ -66,13 +65,9 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 41);
     _el_1.addEventListener('click', eventHandler0(ctx.onClick));
-    import10.focusService.register(rootEl, eventHandler0(_ctx.onFocus), null);
     init(const [], const [], [_text_0, _el_1, _text_2]);
+    rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
-  }
-
-  void destroyInternal() {
-    import10.focusService.unregister(rootEl);
   }
 }
 
