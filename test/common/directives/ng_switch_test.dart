@@ -1,163 +1,140 @@
-@TestOn('browser && !js')
-library angular2.test.common.directives.ng_switch_test;
+@Tags(const ['codegen'])
+@TestOn('browser')
 
-import "package:angular2/core.dart" show Component;
-import "package:angular2/src/common/directives/ng_switch.dart"
-    show NgSwitch, NgSwitchWhen, NgSwitchDefault;
-import "package:angular2/src/testing/internal.dart";
+import 'package:angular2/angular2.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("switch", () {
-    group("switch value changes", () {
-      test("should switch amongst when values", () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var template = "<div>" +
-              "<ul [ngSwitch]=\"switchValue\">" +
-              "<template ngSwitchCase=\"a\"><li>when a</li></template>" +
-              "<template ngSwitchCase=\"b\"><li>when b</li></template>" +
-              "</ul></div>";
-          tcb
-              .overrideTemplate(TestComponent, template)
-              .createAsync(TestComponent)
-              .then((fixture) {
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement, hasTextContent(""));
-            fixture.debugElement.componentInstance.switchValue = "a";
-            fixture.detectChanges();
-            expect(
-                fixture.debugElement.nativeElement, hasTextContent("when a"));
-            fixture.debugElement.componentInstance.switchValue = "b";
-            fixture.detectChanges();
-            expect(
-                fixture.debugElement.nativeElement, hasTextContent("when b"));
-            completer.done();
-          });
-        });
+  group('ngSwitch', () {
+    tearDown(() => disposeAnyRunningTest());
+
+    test('should switch amongst when values', () async {
+      var testBed = new NgTestBed<SwitchWhenTest>();
+      var testFixture = await testBed.create();
+      expect(testFixture.text.trim(), '');
+      await testFixture.update((SwitchWhenTest component) {
+        component.switchValue = 'a';
       });
-      test("should switch amongst when values with fallback to default",
-          () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var template = "<div>" +
-              "<ul [ngSwitch]=\"switchValue\">" +
-              "<li template=\"ngSwitchCase 'a'\">when a</li>" +
-              "<li template=\"ngSwitchDefault\">when default</li>" +
-              "</ul></div>";
-          tcb
-              .overrideTemplate(TestComponent, template)
-              .createAsync(TestComponent)
-              .then((fixture) {
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when default"));
-            // Set to a.
-            fixture.debugElement.componentInstance.switchValue = "a";
-            fixture.detectChanges();
-            expect(
-                fixture.debugElement.nativeElement, hasTextContent("when a"));
-            // Set to b.
-            fixture.debugElement.componentInstance.switchValue = "b";
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when default"));
-            // Set it again to default using c.
-            fixture.debugElement.componentInstance.switchValue = "c";
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when default"));
-            completer.done();
-          });
-        });
+      expect(testFixture.text.trim(), 'when a');
+      await testFixture.update((SwitchWhenTest component) {
+        component.switchValue = 'b';
       });
-      test("should support multiple whens with the same value", () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var template = "<div>" +
-              "<ul [ngSwitch]=\"switchValue\">" +
-              "<template ngSwitchCase=\"a\"><li>when a1;</li></template>" +
-              "<template ngSwitchCase=\"b\"><li>when b1;</li></template>" +
-              "<template ngSwitchCase=\"a\"><li>when a2;</li></template>" +
-              "<template ngSwitchCase=\"b\"><li>when b2;</li></template>" +
-              "<template ngSwitchDefault><li>when default1;</li></template>" +
-              "<template ngSwitchDefault><li>when default2;</li></template>" +
-              "</ul></div>";
-          tcb
-              .overrideTemplate(TestComponent, template)
-              .createAsync(TestComponent)
-              .then((fixture) {
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when default1;when default2;"));
-            fixture.debugElement.componentInstance.switchValue = "a";
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when a1;when a2;"));
-            fixture.debugElement.componentInstance.switchValue = "b";
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when b1;when b2;"));
-            completer.done();
-          });
-        });
-      });
+      expect(testFixture.text.trim(), 'when b');
     });
-    group("when values changes", () {
-      test("should switch amongst when values", () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var template = "<div>" +
-              "<ul [ngSwitch]=\"switchValue\">" +
-              "<template [ngSwitchCase]=\"when1\"><li>when 1;</li></template>" +
-              "<template [ngSwitchCase]=\"when2\"><li>when 2;</li></template>" +
-              "<template ngSwitchDefault><li>when default;</li></template>" +
-              "</ul></div>";
-          tcb
-              .overrideTemplate(TestComponent, template)
-              .createAsync(TestComponent)
-              .then((fixture) {
-            fixture.debugElement.componentInstance.when1 = "a";
-            fixture.debugElement.componentInstance.when2 = "b";
-            fixture.debugElement.componentInstance.switchValue = "a";
-            fixture.detectChanges();
-            expect(
-                fixture.debugElement.nativeElement, hasTextContent("when 1;"));
-            fixture.debugElement.componentInstance.switchValue = "b";
-            fixture.detectChanges();
-            expect(
-                fixture.debugElement.nativeElement, hasTextContent("when 2;"));
-            fixture.debugElement.componentInstance.switchValue = "c";
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when default;"));
-            fixture.debugElement.componentInstance.when1 = "c";
-            fixture.detectChanges();
-            expect(
-                fixture.debugElement.nativeElement, hasTextContent("when 1;"));
-            fixture.debugElement.componentInstance.when1 = "d";
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent("when default;"));
-            completer.done();
-          });
-        });
+    test('should switch among when-values with fallback to default', () async {
+      var testBed = new NgTestBed<SwitchDefaultTest>();
+      var testFixture = await testBed.create();
+      expect(testFixture.text.trim(), 'when default');
+      await testFixture.update((SwitchDefaultTest component) {
+        component.switchValue = 'a';
       });
+      expect(testFixture.text.trim(), 'when a');
+      await testFixture.update((SwitchDefaultTest component) {
+        component.switchValue = 'b';
+      });
+      expect(testFixture.text.trim(), 'when default');
+      await testFixture.update((SwitchDefaultTest component) {
+        component.switchValue = 'c';
+      });
+      expect(testFixture.text.trim(), 'when default');
+    });
+    test('should support multiple whens with the same value', () async {
+      var testBed = new NgTestBed<SwitchMultipleWhenTest>();
+      var testFixture = await testBed.create();
+      expect(testFixture.text,
+          allOf(contains('when default1;'), contains('when default2;')));
+      await testFixture.update((SwitchMultipleWhenTest component) {
+        component.switchValue = 'a';
+      });
+      expect(
+          testFixture.text, allOf(contains('when a1;'), contains('when a2;')));
+      await testFixture.update((SwitchMultipleWhenTest component) {
+        component.switchValue = 'b';
+      });
+      expect(
+          testFixture.text, allOf(contains('when b1;'), contains('when b2;')));
+    });
+    test('should change after when-values change', () async {
+      var testBed = new NgTestBed<SwitchWhenValueTest>();
+      var testFixture = await testBed.create();
+      await testFixture.update((SwitchWhenValueTest component) {
+        component.when1 = 'a';
+        component.when2 = 'b';
+        component.switchValue = 'a';
+      });
+      expect(testFixture.text.trim(), 'when 1;');
+      await testFixture.update((SwitchWhenValueTest component) {
+        component.switchValue = 'b';
+      });
+      expect(testFixture.text.trim(), 'when 2;');
+      await testFixture.update((SwitchWhenValueTest component) {
+        component.switchValue = 'c';
+      });
+      expect(testFixture.text.trim(), 'when default;');
+      await testFixture.update((SwitchWhenValueTest component) {
+        component.when1 = 'c';
+      });
+      expect(testFixture.text.trim(), 'when 1;');
+      await testFixture.update((SwitchWhenValueTest component) {
+        component.when1 = 'd';
+      });
+      expect(testFixture.text.trim(), 'when default;');
     });
   });
 }
 
 @Component(
-    selector: "test-cmp",
+    selector: 'switch-when-test',
+    directives: const [NgSwitch, NgSwitchWhen],
+    template: '''<div>
+  <ul [ngSwitch]="switchValue">
+    <template ngSwitchCase="a"><li>when a</li></template>
+    <template ngSwitchCase="b"><li>when b</li></template>
+  </ul></div>''')
+class SwitchWhenTest {
+  String switchValue;
+}
+
+@Component(
+    selector: 'switch-default-test',
     directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
-    template: "")
-class TestComponent {
-  dynamic switchValue;
-  dynamic when1;
-  dynamic when2;
-  TestComponent() {
-    this.switchValue = null;
-    this.when1 = null;
-    this.when2 = null;
-  }
+    template: '''<div>
+  <ul [ngSwitch]="switchValue">
+    <li template="ngSwitchCase 'a'">when a</li>
+    <li template="ngSwitchDefault">when default</li>
+  </ul></div>''')
+class SwitchDefaultTest {
+  String switchValue;
+}
+
+@Component(
+    selector: 'switch-multiple-when-test',
+    directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
+    template: '''<div>
+  <ul [ngSwitch]="switchValue">
+    <template ngSwitchCase="a"><li>when a1;</li></template>
+    <template ngSwitchCase="b"><li>when b1;</li></template>
+    <template ngSwitchCase="a"><li>when a2;</li></template>
+    <template ngSwitchCase="b"><li>when b2;</li></template>
+    <template ngSwitchDefault><li>when default1;</li></template>
+    <template ngSwitchDefault><li>when default2;</li></template>
+  </ul></div>''')
+class SwitchMultipleWhenTest {
+  String switchValue;
+}
+
+@Component(
+    selector: 'switch-when-value-test',
+    directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
+    template: '''<div>
+  <ul [ngSwitch]="switchValue">
+    <template [ngSwitchCase]="when1"><li>when 1;</li></template>
+    <template [ngSwitchCase]="when2"><li>when 2;</li></template>
+    <template ngSwitchDefault><li>when default;</li></template>
+  </ul></div>''')
+class SwitchWhenValueTest {
+  String switchValue;
+  String when1;
+  String when2;
 }
