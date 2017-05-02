@@ -1,23 +1,20 @@
+@Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.common.pipes.date_pipe_test;
 
-import 'package:angular2/angular2.dart' show DatePipe;
+import 'package:angular2/angular2.dart';
 import 'package:angular2/src/compiler/pipe_resolver.dart' show PipeResolver;
-import 'package:angular2/src/testing/internal.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('DatePipe', () {
-    var date;
-    var pipe;
+    DateTime date;
+    DatePipe pipe;
     setUp(() {
       date = new DateTime(2015, 6, 15, 21, 43, 11);
       pipe = new DatePipe();
     });
-    test('should be marked as pure', () async {
-      return inject([], () {
-        expect(new PipeResolver().resolve(DatePipe).pure, isTrue);
-      });
+    test('should be marked as pure', () {
+      expect(new PipeResolver().resolve(DatePipe).pure, isTrue);
     });
     group('supports', () {
       test('should support date', () {
