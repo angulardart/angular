@@ -568,16 +568,16 @@ abstract class AppView<T> {
       }
     });
     // Workaround since package expect/@NoInline not available outside sdk.
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
   }
 
   void setProp(Element element, String name, Object value) {
@@ -688,16 +688,16 @@ void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
 Element createAndAppend(Document doc, String tagName, Element parent) {
   return parent.append(doc.createElement(tagName));
   // Workaround since package expect/@NoInline not available outside sdk.
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
 }
 
 /// Helper function called by AppView.build to reduce code size.

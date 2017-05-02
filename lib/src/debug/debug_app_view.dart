@@ -384,16 +384,17 @@ Element createAndAppendDbg(AppView view, Document doc, String tagName,
   parent.append(elm);
   dbgElm(view, elm, nodeIndex, line, column);
   return elm;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
-  return null;
+  // Workaround since package expect/@NoInline not available outside sdk.
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
+  return null; // ignore: dead_code
 }
 
 /// Helper function called by DebugAppView.build to reduce code size.

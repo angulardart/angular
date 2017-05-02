@@ -528,16 +528,16 @@ class ReflectiveInjectorImpl implements ReflectiveInjector {
   dynamic get(dynamic token, [dynamic notFoundValue = THROW_IF_NOT_FOUND]) {
     return this._getByKey(ReflectiveKey.get(token), null, null, notFoundValue);
     // Workaround since package expect/@NoInline not available outside sdk.
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
   }
 
   dynamic getAt(num index) {
