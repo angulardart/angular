@@ -28,23 +28,23 @@ class ReflectiveKey {
   static ReflectiveKey get(Object token) {
     return _globalKeyRegistry.get(token);
     // Workaround since package expect/@NoInline not available outside sdk.
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
   }
 
   static num get numberOfKeys => _globalKeyRegistry.numberOfKeys;
 }
 
 class KeyRegistry {
-  var _allKeys = <Object, ReflectiveKey>{};
+  final _allKeys = <Object, ReflectiveKey>{};
   ReflectiveKey get(Object token) {
     if (token is ReflectiveKey) return token;
     var res = _allKeys[token];
