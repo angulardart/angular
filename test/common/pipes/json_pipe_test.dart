@@ -1,21 +1,20 @@
-@TestOn('browser && !js')
-library angular2.test.common.pipes.json_pipe_test;
+@Tags(const ['codegen'])
+@TestOn('browser')
 
 import 'dart:convert';
 
-import 'package:angular2/angular2.dart' show JsonPipe;
-import 'package:angular2/core.dart' show Component;
-import 'package:angular2/src/testing/internal.dart';
+import 'package:angular2/angular2.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('JsonPipe', () {
-    var regNewLine = '\n';
-    var inceptionObj;
-    var inceptionObjString;
-    var pipe;
+    Map inceptionObj;
+    String inceptionObjString;
+    JsonPipe pipe;
+
     String normalize(String obj) {
-      return obj.replaceFirst(regNewLine, '');
+      return obj.replaceFirst('\n', '');
     }
 
     setUp(() {
@@ -25,14 +24,17 @@ void main() {
         }
       };
       inceptionObjString = '{\n'
-          '  \"dream\": {\n'
-          '    \"dream\": {\n'
-          '      \"dream\": \"Limbo\"\n'
+          '  "dream": {\n'
+          '    "dream": {\n'
+          '      "dream": "Limbo"\n'
           '    }\n'
           '  }\n'
           '}';
       pipe = new JsonPipe();
     });
+
+    tearDown(() => disposeAnyRunningTest());
+
     group('transform', () {
       test('should return JSON-formatted string', () {
         expect(pipe.transform(inceptionObj), inceptionObjString);
@@ -51,21 +53,16 @@ void main() {
     });
     group('integration', () {
       test('should work with mutable objects', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          tcb.createAsync(TestComp).then((fixture) {
-            List<num> mutable = [1];
-            fixture.debugElement.componentInstance.data = mutable;
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent('[\n  1\n]'));
-            mutable.add(2);
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement,
-                hasTextContent('[\n  1,\n  2\n]'));
-            completer.done();
-          });
+        var testBed = new NgTestBed<TestComp>();
+        var fixture = await testBed.create();
+        List<num> mutable = [1];
+        await fixture.update((TestComp component) {
+          component.data = mutable;
         });
+        expect(fixture.text, contains('[\n  1\n]'));
+        mutable.add(2);
+        await fixture.update();
+        expect(fixture.text, contains('[\n  1,\n  2\n]'));
       });
     });
   });
