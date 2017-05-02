@@ -537,7 +537,7 @@ abstract class AppView<T> {
             event.preventDefault();
           }
         });
-        return false;
+        return true;
       }
       return !identical(handler() as dynamic, false);
     };
@@ -553,7 +553,7 @@ abstract class AppView<T> {
             event.preventDefault();
           }
         });
-        return false;
+        return true;
       }
       return !identical(handler(event) as dynamic, false);
     };
