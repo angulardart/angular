@@ -6,11 +6,11 @@ import 'package:angular2/src/transform/common/names.dart';
 import 'package:barback/barback.dart' show AssetId;
 import 'package:path/path.dart' as path;
 
+import '../url_resolver.dart';
 import 'annotation_code.dart';
 import 'import_export_code.dart';
 import 'parameter_code.dart';
 import 'reflection_info_code.dart';
-import '../url_resolver.dart';
 
 /// Visitor responsible for parsing Dart source into [NgDepsModel] objects.
 class NgDepsVisitor extends RecursiveAstVisitor<Object> {
@@ -201,7 +201,6 @@ abstract class NgDepsWriterMixin
     // TODO: Needs to check every import as XYZ for XYZ in AppView member names,
     // otherwise imports such as import 'something' as renderer, causes
     // generated code for renderer.createElement/etc to fail.
-    bool flag = false;
     model.imports.where((i) => !i.isDeferred).forEach((ImportModel imp) {
       String assetName = packageToAssetScheme(imp.uri);
       if (deferredModules == null || !deferredModules.containsKey(assetName)) {
