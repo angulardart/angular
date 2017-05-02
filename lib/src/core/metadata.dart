@@ -1140,9 +1140,9 @@ class HostBinding {
 /// class CountClicks {
 ///   int numberOfClicks = 0;
 ///
-///   @HostListener('click', const ['$event.target'])
+///   @HostListener('click', const [r'$event.target'])
 ///   void onClick(btn) {
-///     print("Button $btn, number of clicks: ${numberOfClicks++}.);
+///     print("Button $btn, number of clicks: ${numberOfClicks++}.");
 ///   }
 /// }
 ///
