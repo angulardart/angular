@@ -39,8 +39,8 @@ class SwitchView {
 ///
 /// ### Examples
 ///
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html" region="ngswitch"?>
 /// ```html
-/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch"} -->
 /// <div [ngSwitch]="hero?.emotion">
 ///   <happy-hero    *ngSwitchCase="'happy'"    [hero]="hero"></happy-hero>
 ///   <sad-hero      *ngSwitchCase="'sad'"      [hero]="hero"></sad-hero>
@@ -49,8 +49,8 @@ class SwitchView {
 /// </div>
 /// ```
 ///
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html" region="ngswitch-template-attr"?>
 /// ```html
-/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch-template-attr"} -->
 /// <div [ngSwitch]="hero?.emotion">
 ///   <happy-hero    template="ngSwitchCase 'happy'"    [hero]="hero"></happy-hero>
 ///   <sad-hero      template="ngSwitchCase 'sad'"      [hero]="hero"></sad-hero>
@@ -59,8 +59,8 @@ class SwitchView {
 /// </div>
 /// ```
 ///
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html" region="ngswitch-template"?>
 /// ```html
-/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch-template"} -->
 /// <div [ngSwitch]="hero?.emotion">
 ///   <template [ngSwitchCase]="'happy'">
 ///     <happy-hero [hero]="hero"></happy-hero>

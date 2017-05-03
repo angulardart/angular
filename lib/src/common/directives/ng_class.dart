@@ -23,13 +23,13 @@ import 'package:angular2/src/core/change_detection/differs/default_keyvalue_diff
 ///
 /// ### Examples
 ///
+/// <?code-excerpt "docs/template-syntax/lib/app_component.html" region="NgClass-1"?>
 /// ```html
-/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgClass-1"} -->
 /// <div [ngClass]="currentClasses">This div is initially saveable, unchanged, and special</div>
 /// ```
 ///
+/// <?code-excerpt "docs/template-syntax/lib/app_component.dart" region="setClasses"?>
 /// ```dart
-/// // {@source "docs/template-syntax/lib/app_component.dart" region="setClasses"}
 /// Map<String, bool> currentClasses = <String, bool>{};
 /// void setCurrentClasses() {
 ///   currentClasses = <String, bool>{

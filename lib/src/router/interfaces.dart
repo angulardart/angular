@@ -15,8 +15,9 @@ import 'instruction.dart' show ComponentInstruction;
 /// instantiate and activate child components.
 ///
 /// ### Example
+///
+/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnActivate"?>
 /// ```dart
-/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnActivate"}
 /// @override
 /// void routerOnActivate(next, prev) {
 ///   print('Activating ${next.routeName} ${next.urlPath}');
@@ -44,8 +45,8 @@ abstract class OnActivate {
 ///
 /// ### Example
 ///
+/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnReuse"?>
 /// ```dart
-/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnReuse"}
 /// @override
 /// Future<Null> routerOnReuse(ComponentInstruction next, prev) =>
 ///     _setCrisis(next.params['id']);
@@ -72,8 +73,8 @@ abstract class OnReuse {
 ///
 /// ### Example
 ///
+/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnDeactivate"?>
 /// ```dart
-/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerOnDeactivate"}
 /// @override
 /// void routerOnDeactivate(next, prev) {
 ///   print('Deactivating ${prev.routeName} ${prev.urlPath}');
@@ -106,8 +107,8 @@ abstract class OnDeactivate {
 ///
 /// ### Example
 ///
+/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanReuse"?>
 /// ```dart
-/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanReuse"}
 /// @override
 /// FutureOr<bool> routerCanReuse(next, prev) => true;
 /// ```
@@ -139,8 +140,8 @@ abstract class CanReuse {
 ///
 /// ### Example
 ///
+/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanDeactivate"?>
 /// ```dart
-/// // {@source "docs/router/lib/crisis_center/crisis_detail_component.dart" region="routerCanDeactivate"}
 /// @override
 /// FutureOr<bool> routerCanDeactivate(next, prev) =>
 ///     crisis == null || crisis.name == name

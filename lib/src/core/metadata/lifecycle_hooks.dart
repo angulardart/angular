@@ -47,8 +47,8 @@ var LIFECYCLE_HOOKS_VALUES = [
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/on_changes_component.dart" region="ng-on-changes"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/on_changes_component.dart" region="ng-on-changes"}
 /// ngOnChanges(Map<String, SimpleChange> changes) {
 ///   changes.forEach((String propName, SimpleChange change) {
 ///     String cur = JSON.encode(change.currentValue);
@@ -76,8 +76,8 @@ abstract class OnChanges {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"}
 /// // Spy on any element to which it is applied.
 /// // Usage: <div mySpy>...</div>
 /// @Directive(selector: '[mySpy]')
@@ -126,8 +126,8 @@ abstract class OnInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/do_check_component.dart" region="ng-do-check"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/do_check_component.dart" region="ng-do-check"}
 /// ngDoCheck() {
 ///   if (hero.name != oldHeroName) {
 ///     changeDetected = true;
@@ -177,8 +177,8 @@ abstract class DoCheck {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/spy_directive.dart" region="spy-directive"}
 /// // Spy on any element to which it is applied.
 /// // Usage: <div mySpy>...</div>
 /// @Directive(selector: '[mySpy]')
@@ -208,8 +208,8 @@ abstract class OnDestroy {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"}
 /// template: '''
 ///   <div>-- projected content begins --</div>
 ///     <ng-content></ng-content>
@@ -218,8 +218,8 @@ abstract class OnDestroy {
 /// '''
 /// ```
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"}
 /// class AfterContentComponent implements AfterContentChecked, AfterContentInit {
 ///   String _prevHero = '';
 ///   String comment = '';
@@ -260,8 +260,8 @@ abstract class AfterContentInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="template"}
 /// template: '''
 ///   <div>-- projected content begins --</div>
 ///     <ng-content></ng-content>
@@ -270,8 +270,8 @@ abstract class AfterContentInit {
 /// '''
 /// ```
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_content_component.dart" region="hooks"}
 /// class AfterContentComponent implements AfterContentChecked, AfterContentInit {
 ///   String _prevHero = '';
 ///   String comment = '';
@@ -312,8 +312,8 @@ abstract class AfterContentChecked {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"}
 /// template: '''
 ///   <div>-- child view begins --</div>
 ///     <my-child-view></my-child-view>
@@ -321,8 +321,8 @@ abstract class AfterContentChecked {
 ///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>''',
 /// ```
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"}
 /// class AfterViewComponent implements AfterViewChecked, AfterViewInit {
 ///   var _prevHero = '';
 ///
@@ -362,8 +362,8 @@ abstract class AfterViewInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="template"}
 /// template: '''
 ///   <div>-- child view begins --</div>
 ///     <my-child-view></my-child-view>
@@ -371,8 +371,8 @@ abstract class AfterViewInit {
 ///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>''',
 /// ```
 ///
+/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"?>
 /// ```dart
-/// // {@source "docs/lifecycle-hooks/lib/after_view_component.dart" region="hooks"}
 /// class AfterViewComponent implements AfterViewChecked, AfterViewInit {
 ///   var _prevHero = '';
 ///

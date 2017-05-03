@@ -34,8 +34,8 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 ///
 /// ### Examples
 ///
+/// <?code-excerpt "common/pipes/lib/app_component.html" region="slice"?>
 /// ```html
-/// <!-- {@source "common/pipes/lib/app_component.html" region="slice"} -->
 /// <ul>
 ///     <li *ngFor="let i of ['a', 'b', 'c', 'd'] | slice:1:3">{{i}}</li>
 /// </ul>

@@ -17,8 +17,8 @@ import 'package:stack_trace/stack_trace.dart';
 ///
 /// ## Example
 ///
+/// <?code-excerpt "core/ngzone/lib/app_component.dart"?>
 /// ```dart
-/// // {@source "core/ngzone/lib/app_component.dart"}
 /// import 'dart:async';
 ///
 /// import 'package:angular2/core.dart';

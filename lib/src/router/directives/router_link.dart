@@ -8,8 +8,8 @@ import "../router.dart" show Router;
 ///
 /// Consider the following route configuration:
 ///
+/// <?code-excerpt "docs/toh-5/lib/app_component.dart" region="heroes"?>
 /// ```dart
-/// // {@source "docs/toh-5/lib/app_component.dart" region="heroes"}
 /// @RouteConfig(const [
 ///   const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent)
 /// ])
@@ -17,8 +17,8 @@ import "../router.dart" show Router;
 ///
 /// When linking to this `Heroes` route, you can write:
 ///
+/// <?code-excerpt "docs/toh-5/lib/app_component_1.dart" region="template-v2"?>
 /// ```dart
-/// // {@source "docs/toh-5/lib/app_component_1.dart" region="template-v2"}
 /// template: '''
 ///   <h1>{{title}}</h1>
 ///   <a [routerLink]="['Heroes']">Heroes</a>

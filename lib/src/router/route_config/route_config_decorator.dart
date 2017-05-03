@@ -11,8 +11,8 @@ export "../route_definition.dart" show RouteDefinition;
 ///
 /// Here is an example from the [tutorial on routing][routing]:
 ///
+/// <?code-excerpt "docs/toh-5/lib/app_component.dart" region="routes"?>
 /// ```dart
-/// // {@source "docs/toh-5/lib/app_component.dart" region="routes"}
 /// @RouteConfig(const [
 ///   const Route(
 ///       path: '/dashboard',
