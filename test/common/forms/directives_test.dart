@@ -8,8 +8,8 @@ import 'package:angular2/src/testing/internal.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import '../control_mocks.dart';
 import '../../test_util.dart';
+import '../control_mocks.dart';
 
 class DummyControlValueAccessor implements ControlValueAccessor {
   var writtenValue;

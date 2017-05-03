@@ -301,8 +301,8 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 
 class CompileTokenMap<V> {
   final _valueMap = new Map<dynamic, V>();
-  List<V> _values = [];
-  List<CompileTokenMetadata> _tokens = [];
+  final List<V> _values = [];
+  final List<CompileTokenMetadata> _tokens = [];
 
   void add(CompileTokenMetadata token, V value) {
     var existing = get(token);

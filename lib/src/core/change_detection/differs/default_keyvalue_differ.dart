@@ -2,7 +2,7 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/facade/lang.dart' show looseIdentical;
 
 class DefaultKeyValueDiffer {
-  Map<dynamic, dynamic> _records = new Map();
+  final Map<dynamic, dynamic> _records = new Map<dynamic, dynamic>();
   KeyValueChangeRecord _mapHead;
 
   KeyValueChangeRecord _appendAfter;

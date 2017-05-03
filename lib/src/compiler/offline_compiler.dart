@@ -2,19 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
-import 'source_module.dart';
 
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompilePipeMetadata,
-        createHostComponentMeta,
-        CompileTypeMetadata;
+        CompileTypeMetadata,
+        createHostComponentMeta;
 import 'compiler_utils.dart' show MODULE_SUFFIX;
 import 'directive_normalizer.dart' show DirectiveNormalizer;
 import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
+import 'source_module.dart';
 import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
 import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;

@@ -10,6 +10,7 @@ import 'package:source_span/source_span.dart';
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
+import '../expression_parser/parser.dart' show Parser;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
 import "../provider_parser.dart" show ngIfTokenMetadata, ngForTokenMetadata;
@@ -31,7 +32,6 @@ import "../template_ast.dart"
         DirectiveAst,
         BoundDirectivePropertyAst,
         templateVisitAll;
-import '../expression_parser/parser.dart' show Parser;
 import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_method.dart";
 import "compile_view.dart" show CompileView;
@@ -46,8 +46,8 @@ import "constants.dart"
         ViewEncapsulationEnum,
         ViewProperties,
         ViewTypeEnum;
-import 'expression_converter.dart';
 import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
+import 'expression_converter.dart';
 import 'parse_utils.dart';
 import 'property_binder.dart';
 import "view_compiler_utils.dart"

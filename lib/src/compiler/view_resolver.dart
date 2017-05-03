@@ -9,7 +9,7 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 @Injectable()
 class ViewResolver {
   Reflector _reflector;
-  var _cache = new Map<Type, View>();
+  final _cache = new Map<Type, View>();
 
   ViewResolver([Reflector _reflector]) {
     if (_reflector != null) {

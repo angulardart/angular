@@ -98,7 +98,7 @@ class ReflectableVisitor extends RecursiveElementVisitor {
 
   bool hasPositionalParams = false;
 
-  List<ReflectionInfoModel> _reflectables = [];
+  final _reflectables = <ReflectionInfoModel>[];
 
   ReflectableVisitor({bool visitRecursive: false})
       : _visitRecursive = visitRecursive;

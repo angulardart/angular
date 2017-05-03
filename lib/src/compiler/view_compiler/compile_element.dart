@@ -61,16 +61,16 @@ class CompileElement extends CompileNode {
   o.Expression compViewExpr;
   o.ReadClassMemberExpr appViewContainer;
   o.Expression elementRef;
-  var _instances = new CompileTokenMap<o.Expression>();
+  final _instances = new CompileTokenMap<o.Expression>();
 
   /// We track which providers are just 'useExisting' for another provider on
   /// this component. This way, we can detect when we don't need to generate
   /// a getter for them.
-  var _aliases = new CompileTokenMap<List<CompileTokenMetadata>>();
-  var _aliasedProviders = new CompileTokenMap<CompileTokenMetadata>();
+  final _aliases = new CompileTokenMap<List<CompileTokenMetadata>>();
+  final _aliasedProviders = new CompileTokenMap<CompileTokenMetadata>();
   CompileTokenMap<ProviderAst> _resolvedProviders;
   var _queryCount = 0;
-  var _queries = new CompileTokenMap<List<CompileQuery>>();
+  final _queries = new CompileTokenMap<List<CompileQuery>>();
   List<List<o.Expression>> contentNodesByNgContentIndex;
   CompileView embeddedView;
   List<o.Expression> directiveInstances;

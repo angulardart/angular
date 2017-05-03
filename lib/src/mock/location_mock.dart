@@ -8,7 +8,7 @@ class SpyLocation implements Location {
   List<String> urlChanges = [];
   String _path = "";
   String _query = "";
-  EventEmitter<dynamic> _subject = new EventEmitter();
+  final _subject = new EventEmitter<dynamic>();
   String _baseHref = "";
   String _hash = "";
 

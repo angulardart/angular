@@ -60,8 +60,8 @@ class ProviderElementContext implements ElementProviderUsage {
   final List<DirectiveAst> _directiveAsts;
   SourceSpan _sourceSpan;
   CompileTokenMap<List<CompileQueryMetadata>> _contentQueries;
-  var _transformedProviders = new CompileTokenMap<ProviderAst>();
-  var _seenProviders = new CompileTokenMap<bool>();
+  final _transformedProviders = new CompileTokenMap<ProviderAst>();
+  final _seenProviders = new CompileTokenMap<bool>();
   CompileTokenMap<ProviderAst> _allProviders;
   Map<String, String> _attrs;
   bool _requiresViewContainer = false;

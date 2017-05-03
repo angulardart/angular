@@ -1,3 +1,6 @@
+import 'package:angular2/src/compiler/view_compiler/parse_utils.dart'
+    show handlerTypeFromExpression, HandlerType;
+
 import 'package:source_span/source_span.dart';
 
 import '../core/security.dart';
@@ -7,8 +10,6 @@ import 'compile_metadata.dart'
         CompileTokenMetadata,
         CompileProviderMetadata;
 import 'expression_parser/ast.dart' show AST;
-import 'package:angular2/src/compiler/view_compiler/parse_utils.dart'
-    show handlerTypeFromExpression, HandlerType;
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
 abstract class TemplateAst {

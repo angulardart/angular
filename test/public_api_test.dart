@@ -3,8 +3,8 @@ library angular2.test.public_api_test;
 
 import 'package:test/test.dart';
 
-import 'symbol_inspector/symbol_inspector.dart';
 import 'public_apis.dart';
+import 'symbol_inspector/symbol_inspector.dart';
 
 void main() {
   group('Public API check', () {

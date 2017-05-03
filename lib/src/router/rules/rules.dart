@@ -70,8 +70,7 @@ class RouteRule implements AbstractRule {
   String specificity;
   bool terminal;
   String hash;
-  Map<String, ComponentInstruction> _cache =
-      new Map<String, ComponentInstruction>();
+  final _cache = new Map<String, ComponentInstruction>();
   // TODO: cache component instruction instances by params and by ParsedUrl instance
   RouteRule(this._routePath, this.handler, this._routeName) {
     this.specificity = this._routePath.specificity;

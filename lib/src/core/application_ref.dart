@@ -9,6 +9,7 @@ import 'package:angular2/src/core/linker/view_ref.dart';
 import 'package:angular2/src/facade/exceptions.dart'
     show BaseException, ExceptionHandler;
 import 'package:angular2/src/facade/lang.dart' show assertionsEnabled, isDartVM;
+import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import 'change_detection/change_detector_ref.dart';
@@ -16,7 +17,6 @@ import 'di.dart';
 import 'linker/app_view_utils.dart';
 import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
 import 'linker/component_resolver.dart';
-import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 

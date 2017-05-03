@@ -25,10 +25,10 @@ export 'config.dart' show CompilerConfig;
 export 'directive_resolver.dart' show DirectiveResolver;
 export 'offline_compiler.dart';
 export 'pipe_resolver.dart' show PipeResolver;
+export 'source_module.dart' show SourceModule;
 export 'template_ast.dart';
 export 'url_resolver.dart';
 export 'view_resolver.dart' show ViewResolver;
-export 'source_module.dart' show SourceModule;
 export 'xhr.dart';
 
 CompilerConfig createCompilerConfig() => new CompilerConfig(

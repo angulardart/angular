@@ -8,7 +8,7 @@ import "../core/metadata.dart" show Directive, Component;
 /// various properties of directives.
 @Injectable()
 class MockDirectiveResolver extends DirectiveResolver {
-  var _providerOverrides = new Map<Type, List<dynamic>>();
+  final _providerOverrides = new Map<Type, List<dynamic>>();
   var viewProviderOverrides = new Map<Type, List<dynamic>>();
   Directive resolve(Type type) {
     var dm = super.resolve(type);

@@ -112,7 +112,7 @@ class NgZone {
 
   // Number of microtasks pending from _innerZone (& descendants)
   int _pendingMicrotasks = 0;
-  List<Timer> _pendingTimers = [];
+  final List<Timer> _pendingTimers = <Timer>[];
 
   /// enabled in development mode as they significantly impact perf.
   NgZone({enableLongStackTrace: false}) {

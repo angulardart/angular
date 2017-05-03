@@ -6,10 +6,10 @@ import "../core/metadata.dart" show View;
 
 @Injectable()
 class MockViewResolver extends ViewResolver {
-  var _views = new Map<Type, View>();
-  var _inlineTemplates = new Map<Type, String>();
-  var _viewCache = new Map<Type, View>();
-  var _directiveOverrides = new Map<Type, Map<Type, Type>>();
+  final _views = new Map<Type, View>();
+  final _inlineTemplates = new Map<Type, String>();
+  final _viewCache = new Map<Type, View>();
+  final _directiveOverrides = new Map<Type, Map<Type, Type>>();
 
   MockViewResolver();
 

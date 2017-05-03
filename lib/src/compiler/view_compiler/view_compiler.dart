@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import '../config.dart' show CompilerConfig;
+import '../expression_parser/parser.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../style_compiler.dart' show StylesCompileResult;
@@ -14,7 +15,6 @@ import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'view_binder.dart' show bindView;
 import 'view_builder.dart';
-import '../expression_parser/parser.dart';
 
 class ViewCompileResult {
   List<o.Statement> statements;

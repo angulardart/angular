@@ -3,7 +3,7 @@ library angular2.test.compiler.expression_parser.unparser;
 import "package:angular2/src/compiler/expression_parser/ast.dart";
 
 class Unparser implements AstVisitor {
-  static var _quoteRegExp = new RegExp(r'"');
+  static final _quoteRegExp = new RegExp(r'"');
   String _expression;
   unparse(AST ast) {
     this._expression = "";

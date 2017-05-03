@@ -16,7 +16,7 @@ const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 /// name.
 @Injectable()
 class RadioControlRegistry {
-  List<dynamic> _accessors = [];
+  final List<dynamic> _accessors = [];
   void add(NgControl control, RadioControlValueAccessor accessor) {
     _accessors.add([control, accessor]);
   }

@@ -100,12 +100,12 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
 class ComponentVisitor
     extends RecursiveElementVisitor<CompileDirectiveMetadata> {
-  List<String> _fieldInputs = [];
-  List<String> _setterInputs = [];
-  List<String> _outputs = [];
-  Map<String, String> _host = {};
-  List<CompileQueryMetadata> _queries = [];
-  List<CompileQueryMetadata> _viewQueries = [];
+  final _fieldInputs = <String>[];
+  final _setterInputs = <String>[];
+  final _outputs = <String>[];
+  final _host = <String, String>{};
+  final _queries = <CompileQueryMetadata>[];
+  final _viewQueries = <CompileQueryMetadata>[];
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {

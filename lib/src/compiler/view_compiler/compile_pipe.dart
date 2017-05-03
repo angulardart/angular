@@ -39,7 +39,7 @@ class CompilePipe {
   }
 
   o.ReadClassMemberExpr instance;
-  List<_PurePipeProxy> _purePipeProxies = [];
+  final _purePipeProxies = <_PurePipeProxy>[];
   CompilePipe(this.view, this.meta) {
     this.instance = new o.ReadClassMemberExpr(
         '_pipe_${ meta . name}_${ view . pipeCount ++}');
