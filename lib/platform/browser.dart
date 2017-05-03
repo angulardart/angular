@@ -1,7 +1,7 @@
 library angular2.platform.browser;
 
-import 'dart:html';
 import 'dart:async';
+import 'dart:html';
 
 import 'package:angular2/compiler.dart' show COMPILER_PROVIDERS, XHR;
 import 'package:angular2/core.dart'

@@ -18,7 +18,7 @@ class Testability {
   /// component while it is stabilizing.
   bool _didWork = false;
 
-  List<Function> _callbacks = [];
+  final List<Function> _callbacks = <Function>[];
   Testability(this._ngZone) {
     _watchAngularEvents();
   }
@@ -95,7 +95,7 @@ class Testability {
 /// A global registry of [Testability] instances for specific elements.
 @Injectable()
 class TestabilityRegistry {
-  var _applications = new Map<dynamic, Testability>();
+  final _applications = new Map<dynamic, Testability>();
   GetTestability _testabilityGetter = new _NoopGetTestability();
 
   /// Set the [GetTestability] implementation used by the Angular testing

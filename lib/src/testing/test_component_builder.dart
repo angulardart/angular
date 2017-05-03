@@ -16,9 +16,9 @@ import "package:angular2/src/core/linker/app_view_utils.dart";
 import "package:angular2/src/debug/debug_node.dart"
     show DebugElement, getDebugNode;
 import "package:angular2/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 import "fake_async.dart" show tick;
-import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
 /// Fixture for debugging and testing a component.
 class ComponentFixture {

@@ -26,7 +26,7 @@ class ReflectionInfo {
 ///
 /// Used internally by Angular to power dependency injection and compilation.
 class Reflector {
-  var _injectableInfo = new Map<dynamic, ReflectionInfo>();
+  final _injectableInfo = new Map<dynamic, ReflectionInfo>();
   final _getters = new Map<String, GetterFn>();
   final _setters = new Map<String, SetterFn>();
   final _methods = new Map<String, MethodFn>();

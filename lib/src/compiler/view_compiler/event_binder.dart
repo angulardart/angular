@@ -25,7 +25,7 @@ class CompileEventListener {
   o.Expression _simpleHandler;
   String _methodName;
   o.FnParam _eventParam;
-  List<o.Expression> _actionResultExprs = <o.Expression>[];
+  final _actionResultExprs = <o.Expression>[];
 
   /// Helper function to search for an event in [targetEventListeners] list and
   /// add a new one if it doesn't exist yet.

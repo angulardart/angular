@@ -26,9 +26,9 @@ class RuntimeMetadataResolver {
   final ViewResolver _viewResolver;
   final List<Type> _platformDirectives;
   final List<Type> _platformPipes;
-  var _directiveCache = new Map<Type, cpl.CompileDirectiveMetadata>();
-  var _pipeCache = new Map<Type, cpl.CompilePipeMetadata>();
-  var _anonymousTypes = new Map<Object, num>();
+  final _directiveCache = new Map<Type, cpl.CompileDirectiveMetadata>();
+  final _pipeCache = new Map<Type, cpl.CompilePipeMetadata>();
+  final _anonymousTypes = new Map<Object, num>();
   var _anonymousTypeIndex = 0;
   RuntimeMetadataResolver(
       this._directiveResolver,

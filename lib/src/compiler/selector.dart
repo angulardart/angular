@@ -147,13 +147,13 @@ class SelectorMatcher {
     return notMatcher;
   }
 
-  var _elementMap = new Map<String, List<SelectorContext>>();
-  var _elementPartialMap = new Map<String, SelectorMatcher>();
-  var _classMap = new Map<String, List<SelectorContext>>();
-  var _classPartialMap = new Map<String, SelectorMatcher>();
+  final _elementMap = new Map<String, List<SelectorContext>>();
+  final _elementPartialMap = new Map<String, SelectorMatcher>();
+  final _classMap = new Map<String, List<SelectorContext>>();
+  final _classPartialMap = new Map<String, SelectorMatcher>();
   final _attrValueMap = new Map<String, Map<String, List<SelectorContext>>>();
   final _attrValuePartialMap = new Map<String, Map<String, SelectorMatcher>>();
-  List<SelectorListContext> _listContexts = [];
+  final _listContexts = <SelectorListContext>[];
   void addSelectables(List<CssSelector> cssSelectors, [dynamic callbackCtxt]) {
     var listContext;
     if (cssSelectors.length > 1) {

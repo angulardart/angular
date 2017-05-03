@@ -73,7 +73,7 @@ const OpaqueToken ROUTER_PRIMARY_COMPONENT =
 @Injectable()
 class RouteRegistry {
   dynamic /* Type | ComponentFactory */ _rootComponent;
-  var _rules = new Map<dynamic, RuleSet>();
+  final _rules = new Map<dynamic, RuleSet>();
   RouteRegistry(@Inject(ROUTER_PRIMARY_COMPONENT) this._rootComponent);
 
   /// Given a component and a configuration object, add the route to this registry

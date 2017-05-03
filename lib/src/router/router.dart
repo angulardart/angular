@@ -43,10 +43,10 @@ class Router {
   Instruction currentInstruction;
   Future<dynamic> _currentNavigation = _resolveToTrue;
   RouterOutlet _outlet;
-  var _auxRouters = new Map<String, Router>();
+  final _auxRouters = new Map<String, Router>();
   Router _childRouter;
-  EventEmitter<dynamic> _subject = new EventEmitter();
-  EventEmitter<String> _startNavigationEvent = new EventEmitter<String>();
+  final _subject = new EventEmitter<dynamic>();
+  final _startNavigationEvent = new EventEmitter<String>();
   Router(this.registry, this.parent, this.hostComponent, [this.root]);
 
   /// Constructs a child router. You probably don't need to use this unless you're writing a reusable

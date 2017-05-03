@@ -1,6 +1,6 @@
 export 'src/compiler/url_resolver.dart' show UrlResolver;
-export 'src/core/di.dart';
 export 'src/core/change_detection/pipe_transform.dart';
+export 'src/core/di.dart';
 export 'src/core/metadata.dart' show Component, Directive, Input, Output;
 // TODO: move pipes into separate library target.
 export 'src/core/metadata.dart' show Pipe;

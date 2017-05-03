@@ -87,7 +87,7 @@ class SwitchView {
 class NgSwitch {
   dynamic _switchValue;
   bool _useDefault = false;
-  var _valueViews = new Map<dynamic, List<SwitchView>>();
+  final _valueViews = new Map<dynamic, List<SwitchView>>();
 
   List<SwitchView> _activeViews = [];
   set ngSwitch(dynamic value) {

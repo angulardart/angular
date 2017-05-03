@@ -6,6 +6,7 @@ import 'package:angular2/src/compiler/identifiers.dart';
 import 'package:angular2/src/core/linker.dart' show QueryList;
 import 'package:angular2/src/core/linker/app_view.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart';
+import "package:angular2/src/core/linker/app_view_utils.dart" as appviewutils;
 import 'package:angular2/src/core/linker/component_factory.dart';
 import 'package:angular2/src/core/linker/template_ref.dart';
 import 'package:angular2/src/core/linker/view_container.dart';
@@ -20,7 +21,6 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'dart_emitter.dart' show debugOutputAstAsDart;
 import 'dynamic_instance.dart';
 import 'output_ast.dart' as o;
-import "package:angular2/src/core/linker/app_view_utils.dart" as appviewutils;
 
 bool _interpreterInitialized = false;
 

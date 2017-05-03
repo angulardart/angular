@@ -20,7 +20,7 @@ class CompileMethod {
   _DebugState _newState = NULL_DEBUG_STATE;
   _DebugState _currState = NULL_DEBUG_STATE;
   bool _debugEnabled;
-  List<o.Statement> _bodyStatements = [];
+  final _bodyStatements = <o.Statement>[];
 
   CompileMethod(CompileView view) {
     _debugEnabled = view.genConfig.genDebugInfo;

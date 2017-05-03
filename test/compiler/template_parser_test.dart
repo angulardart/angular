@@ -16,8 +16,8 @@ import 'package:test/test.dart';
 
 import "../test_util.dart";
 import "schema_registry_mock.dart" show MockSchemaRegistry;
-import "test_bindings.dart" show TEST_PROVIDERS;
 import "template_humanizer_util.dart";
+import "test_bindings.dart" show TEST_PROVIDERS;
 
 var someModuleUrl = "package:someModule";
 var MOCK_SCHEMA_REGISTRY = [

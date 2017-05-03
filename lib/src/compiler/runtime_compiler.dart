@@ -38,10 +38,10 @@ class RuntimeCompiler implements ComponentResolver {
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
   XHR _xhr;
-  Map<String, Future<String>> _styleCache = new Map<String, Future<String>>();
-  var _hostCacheKeys = new Map<Type, dynamic>();
-  var _compiledTemplateCache = new Map<dynamic, CompiledTemplate>();
-  var _compiledTemplateDone = new Map<dynamic, Future<CompiledTemplate>>();
+  final _styleCache = new Map<String, Future<String>>();
+  final _hostCacheKeys = new Map<Type, dynamic>();
+  final _compiledTemplateCache = new Map<dynamic, CompiledTemplate>();
+  final _compiledTemplateDone = new Map<dynamic, Future<CompiledTemplate>>();
 
   RuntimeCompiler(
     this._runtimeMetadataResolver,

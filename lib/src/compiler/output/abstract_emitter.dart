@@ -33,7 +33,7 @@ class EmitterVisitorContext {
   }
 
   List<_EmittedLine> _lines;
-  List<o.ClassStmt> _classes = [];
+  final List<o.ClassStmt> _classes = [];
   EmitterVisitorContext(
       this._exportedVars, this._indent, this.deferredModules) {
     _outputPos = 0;

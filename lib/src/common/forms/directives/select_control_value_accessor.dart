@@ -43,7 +43,7 @@ String _extractId(String valueString) => valueString.split(':')[0];
 class SelectControlValueAccessor implements ControlValueAccessor {
   final ElementRef _elementRef;
   dynamic value;
-  Map<String, dynamic> _optionMap = new Map<String, dynamic>();
+  final Map<String, dynamic> _optionMap = new Map<String, dynamic>();
   num _idCounter = 0;
   VoidFunc1 onChange = (dynamic _) {};
 

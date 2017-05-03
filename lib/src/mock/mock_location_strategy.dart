@@ -12,7 +12,7 @@ class MockLocationStrategy extends LocationStrategy {
   String internalHash = "";
   List<String> urlChanges = [];
 
-  EventEmitter<dynamic> _subject = new EventEmitter();
+  final _subject = new EventEmitter<dynamic>();
   MockLocationStrategy();
   void simulatePopState(String url) {
     this.internalPath = url;
