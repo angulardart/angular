@@ -99,7 +99,7 @@ String shimShadowCss(String css, String contentClass, String hostClass,
   var styleSheet = parse(css, errors: errors);
 
   if (errors.isNotEmpty) {
-    logger.severe('Errors parsing CSS:\n${errors.join('\n')}');
+    logger.warning('Errors parsing CSS:\n${errors.join('\n')}');
   }
 
   var shadowTransformer = useLegacyEncapsulation
@@ -160,7 +160,7 @@ SelectorGroup selectorGroupForProperty(
     {bool remove: false}) {
   var declaration = getDeclaration(declarationGroup, propertyName);
   if (declaration == null) {
-    logger.severe(
+    logger.warning(
         declarationGroup.span.message("Expected property '$propertyName'"));
     return null;
   }
@@ -171,7 +171,7 @@ SelectorGroup selectorGroupForProperty(
 
   var selectorGroup = parseSelectorGroupFrom(declaration);
   if (selectorGroup == null) {
-    logger.severe(declaration.expression.span.message('Not a valid selector'));
+    logger.warning(declaration.expression.span.message('Not a valid selector'));
     return null;
   }
 
@@ -313,11 +313,11 @@ class CompoundSelector {
 
     if (x.runtimeType == y.runtimeType) {
       if (x is ElementSelector || x is NamespaceSelector) {
-        logger.severe('Compound selector contains multiple type selectors:\n'
+        logger.warning('Compound selector contains multiple type selectors:\n'
             '${x.span.message('')}\n'
             '${y.span.message('')}');
       } else if (x is PseudoElementSelector) {
-        logger.severe(
+        logger.warning(
             'Compound selector contains multiple pseudo element selectors:\n'
             '${x.span.message('')}\n'
             '${y.span.message('')}');
