@@ -23,14 +23,14 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// the relevant excerpts from the example's template and the corresponding
 /// component class:
 ///
-/// <?code-excerpt "docs/template-syntax/lib/app_component.html" region="NgStyle-2"?>
+/// <?code-excerpt "docs/template-syntax/lib/app_component.html (NgStyle-2)"?>
 /// ```html
 /// <div [ngStyle]="currentStyles">
 ///   This div is initially italic, normal weight, and extra large (24px).
 /// </div>
 /// ```
 ///
-/// <?code-excerpt "docs/template-syntax/lib/app_component.dart" region="setStyles"?>
+/// <?code-excerpt "docs/template-syntax/lib/app_component.dart (setStyles)"?>
 /// ```dart
 /// Map<String, String> currentStyles = <String, String>{};
 /// void setCurrentStyles() {

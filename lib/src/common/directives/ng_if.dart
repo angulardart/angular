@@ -8,22 +8,22 @@ import 'package:angular2/core.dart'
 ///
 /// ### Examples
 ///
-/// <?code-excerpt "docs/template-syntax/lib/app_component.html" region="NgIf-1"?>
+/// <?code-excerpt "docs/template-syntax/lib/app_component.html (NgIf-1)"?>
 /// ```html
 /// <hero-detail *ngIf="isActive"></hero-detail>
 /// ```
 ///
-/// <?code-excerpt "docs/structural-directives/lib/app_component.html" region="asterisk"?>
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html (asterisk)"?>
 /// ```html
 /// <div *ngIf="hero != null" >{{hero.name}}</div>
 /// ```
 ///
-/// <?code-excerpt "docs/structural-directives/lib/app_component.html" region="ngif-template-attr"?>
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngif-template-attr)"?>
 /// ```html
 /// <div template="ngIf hero != null">{{hero.name}}</div>
 /// ```
 ///
-/// <?code-excerpt "docs/structural-directives/lib/app_component.html" region="ngif-template"?>
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngif-template)"?>
 /// ```html
 /// <template [ngIf]="hero != null">
 ///   <div>{{hero.name}}</div>

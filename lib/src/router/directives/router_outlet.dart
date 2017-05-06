@@ -29,7 +29,7 @@ var _resolveToTrue = new Future<bool>.value(true);
 ///
 /// Here is an example from the [tutorial on routing][routing]:
 ///
-/// <?code-excerpt "docs/toh-5/lib/app_component.dart" region="template"?>
+/// <?code-excerpt "docs/toh-5/lib/app_component.dart (template)"?>
 /// ```dart
 /// template: '''
 ///   <h1>{{title}}</h1>
