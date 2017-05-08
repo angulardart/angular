@@ -4,9 +4,9 @@ import 'package:angular2/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular2/src/core/security.dart';
 
 class MockSchemaRegistry implements ElementSchemaRegistry {
-  Map<String, bool> existingProperties;
-  Map<String, String> attrPropMapping;
-  MockSchemaRegistry(this.existingProperties, this.attrPropMapping);
+  final Map<String, bool> existingProperties;
+  final Map<String, String> attrPropMapping;
+  const MockSchemaRegistry(this.existingProperties, this.attrPropMapping);
 
   @override
   bool hasProperty(String tagName, String property) =>
