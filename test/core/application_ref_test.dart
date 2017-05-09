@@ -1,3 +1,4 @@
+@Tags(const ['codegen'])
 @TestOn('browser')
 library angular2.test.core.application_ref_test;
 
@@ -31,7 +32,6 @@ import 'package:angular2/src/facade/exception_handler.dart'
     show ExceptionHandler;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 import 'package:angular2/src/platform/browser_common.dart';
-import 'package:angular2/src/testing/internal.dart';
 import 'package:logging/logging.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -49,7 +49,7 @@ void main() {
       errorLogger = new Logger('application_ref_test');
       errorLoggerList = [];
       errorLogger.onRecord
-          .listen((LogRecord rec) => errorLoggerList.add(rec.toString()));
+          .listen((LogRecord rec) => errorLoggerList.add('$rec'));
       disposePlatform();
     });
     tearDown(() {
@@ -76,106 +76,91 @@ void main() {
 
     group('ApplicationRef', () {
       test('should throw when reentering tick', () async {
-        return inject([], () {
-          var cdRef = new MockChangeDetectorRef();
-          var ref = createApplication([]);
-          when(cdRef.detectChanges()).thenAnswer((_) {
-            ref.tick();
-          });
-          ref.registerChangeDetector(cdRef);
-          expect(
-            () => ref.tick(),
-            throwsWith('ApplicationRef.tick is called recursively'),
-          );
-          ref.unregisterChangeDetector(cdRef);
+        var cdRef = new MockChangeDetectorRef();
+        var ref = createApplication([]);
+        when(cdRef.detectChanges()).thenAnswer((_) {
+          ref.tick();
         });
+        ref.registerChangeDetector(cdRef);
+        expect(
+          () => ref.tick(),
+          throwsWith('ApplicationRef.tick is called recursively'),
+        );
+        ref.unregisterChangeDetector(cdRef);
       });
-      test('should pass tick errors to exceptionHandler', () {
-        return inject([AsyncTestCompleter], (AsyncTestCompleter testCompleter) {
-          var ref = createApplication([]);
-          ref.waitForAsyncInitializers().whenComplete(() {
-            var cdRef = new MockChangeDetectorRef();
-            when(cdRef.detectChanges()).thenThrow(new BaseException('Test'));
-            ref.registerChangeDetector(cdRef);
+      test('should pass tick errors to exceptionHandler', () async {
+        var ref = createApplication([]);
+        await ref.waitForAsyncInitializers().whenComplete(expectAsync0(() {
+          var cdRef = new MockChangeDetectorRef();
+          when(cdRef.detectChanges()).thenThrow(new BaseException('Test'));
+          ref.registerChangeDetector(cdRef);
+          try {
+            expect(errorLoggerList, isEmpty);
             try {
-              expect(errorLoggerList, isEmpty);
-              try {
-                ref.zone.run(() {});
-              } catch (ex) {
-                fail('Errors during tick should not be rethrown, '
-                    'but caught the following: $ex');
-              }
-              expect(errorLoggerList, isNotEmpty);
-            } finally {
-              ref.unregisterChangeDetector(cdRef);
-              testCompleter.done();
+              ref.zone.run(() {});
+            } catch (ex) {
+              fail('Errors during tick should not be rethrown, '
+                  'but caught the following: $ex');
             }
-          });
-        });
+            expect(errorLoggerList, isNotEmpty);
+          } finally {
+            ref.unregisterChangeDetector(cdRef);
+          }
+        }));
       });
       group('run', () {
         test('should pass errors to exceptionHandler', () {
-          return inject([], () {
-            var ref = createApplication([]);
-            expect(errorLoggerList, isEmpty);
-            try {
-              ref.run(() {
-                throw new BaseException('Test');
-              });
-            } catch (_) {}
-            expect(errorLoggerList, isNotEmpty);
-          });
+          var ref = createApplication([]);
+          expect(errorLoggerList, isEmpty);
+          try {
+            ref.run(() {
+              throw new BaseException('Test');
+            });
+          } catch (_) {}
+          expect(errorLoggerList, isNotEmpty);
         });
         test(
             'should rethrow errors even if the exceptionHandler is not rethrowing',
             () async {
-          return inject([], () {
-            var ref = createApplication([]);
-            expect(
-                () => ref.run(() {
-                      throw new BaseException('Test');
-                    }),
-                throwsWith('Test'));
-          });
+          var ref = createApplication([]);
+          expect(
+              () => ref.run(() {
+                    throw new BaseException('Test');
+                  }),
+              throwsWith('Test'));
         });
       });
     });
     group('coreLoadAndBootstrap', () {
       test('should wait for asynchronous app initializers', () async {
-        return inject([AsyncTestCompleter, Injector],
-            (AsyncTestCompleter testCompleter, Injector injector) {
-          var completer = new Completer();
-          var initializerDone = false;
-          new Timer(const Duration(milliseconds: 1), () {
-            completer.complete(true);
-            initializerDone = true;
-          });
-          var app = createApplication([
-            new Provider(APP_INITIALIZER,
-                useValue: () => completer.future, multi: true)
-          ]);
-          completer.future.then((_) {
-            coreLoadAndBootstrap(app.injector, MyComp).then((compRef) {
-              expect(initializerDone, isTrue);
-              testCompleter.done();
-            });
-          });
+        var completer = new Completer();
+        var initializerDone = false;
+        new Timer(const Duration(milliseconds: 1), () {
+          completer.complete(true);
+          initializerDone = true;
         });
+        var app = createApplication([
+          new Provider(APP_INITIALIZER,
+              useValue: () => completer.future, multi: true)
+        ]);
+        await completer.future.then(expectAsync1((_) {
+          coreLoadAndBootstrap(app.injector, MyComp).then((compRef) {
+            expect(initializerDone, isTrue);
+          });
+        }));
       });
     });
     group('coreBootstrap', () {
       test('should throw if an APP_INITIIALIZER is not yet resolved', () async {
-        return inject([Injector], (injector) {
-          var app = createApplication([
-            new Provider(APP_INITIALIZER,
-                useValue: () => new Completer().future, multi: true)
-          ]);
-          expect(
-              () => app.bootstrap(someCompFactory),
-              throwsWith('Cannot bootstrap as there are still '
-                  'asynchronous initializers running. Wait for them using '
-                  'waitForAsyncInitializers().'));
-        });
+        var app = createApplication([
+          new Provider(APP_INITIALIZER,
+              useValue: () => new Completer().future, multi: true)
+        ]);
+        expect(
+            () => app.bootstrap(someCompFactory),
+            throwsWith('Cannot bootstrap as there are still '
+                'asynchronous initializers running. Wait for them using '
+                'waitForAsyncInitializers().'));
       });
     });
   });
@@ -218,9 +203,7 @@ class _MockComponentRef extends ComponentRef {
   Injector get injector => _injector;
 
   @override
-  ChangeDetectorRef get changeDetectorRef {
-    return (new MockChangeDetectorRef());
-  }
+  ChangeDetectorRef get changeDetectorRef => new MockChangeDetectorRef();
 
   @override
   void onDestroy(Function cb) {}
