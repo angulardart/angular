@@ -339,9 +339,7 @@ void initReflector() {
       QueriesComponent,
       new _ngRef.ReflectionInfo(const <dynamic>[QueriesComponentNgFactory],
           const [], () => new QueriesComponent()));
-  _ngRef.reflector.registerType(
-      AnotherDirective,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new AnotherDirective()));
+  _ngRef.reflector
+      .registerSimpleType(AnotherDirective, () => new AnotherDirective());
   _i1.initReflector();
 }

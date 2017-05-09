@@ -63,6 +63,16 @@ class Reflector {
 
   void registerType(Type type, ReflectionInfo typeInfo) {
     _injectableInfo[type] = typeInfo;
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+  }
+
+  void registerSimpleType(Type type, Function factory) {
+    registerType(type, new ReflectionInfo(const [], const [], factory));
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
   }
 
   void registerGetters(Map<String, GetterFn> getters) {

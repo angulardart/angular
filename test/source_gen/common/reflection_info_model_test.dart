@@ -20,8 +20,7 @@ void main() {
         expectRegistration(
             reflectionModel,
             r'''
-            _i1.reflector.registerType(_i2.Foo, new _i1.ReflectionInfo(
-              const <dynamic> [], const [], () => new _i2.Foo()));
+            _i1.reflector.registerSimpleType(_i2.Foo, () => new _i2.Foo());
             ''');
       });
     });

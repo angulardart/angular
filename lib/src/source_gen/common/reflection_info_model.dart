@@ -38,10 +38,22 @@ class ReflectionInfoModel {
   StatementBuilder get asRegistration {
     var reflectionInfo = reference('ReflectionInfo', REFLECTOR_IMPORT)
         .newInstance(_reflectionInfoParams);
-    return reference(REFLECTOR_VAR_NAME, REFLECTOR_IMPORT).invoke(
-        isFunction ? 'registerFunction' : 'registerType',
-        [_type, reflectionInfo]);
+
+    var reflector = reference(REFLECTOR_VAR_NAME, REFLECTOR_IMPORT);
+    if (isFunction) {
+      return reflector.invoke('registerFunction', [_type, reflectionInfo]);
+    } else if (_isSimpleType) {
+      return reflector.invoke('registerSimpleType', [_type, _factoryClosure]);
+    } else {
+      return reflector.invoke('registerType', [_type, reflectionInfo]);
+    }
   }
+
+  bool get _isSimpleType =>
+      !isFunction &&
+      _annotations.isEmpty &&
+      _parameters.isEmpty &&
+      _interfaces.isEmpty;
 
   List<ExpressionBuilder> get _reflectionInfoParams {
     var reflectionInfoParams = <ExpressionBuilder>[
