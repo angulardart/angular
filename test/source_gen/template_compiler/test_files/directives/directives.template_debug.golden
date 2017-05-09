@@ -28,9 +28,6 @@ void initReflector() {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      TestDirective,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[], const [], () => new TestDirective()));
+  _ngRef.reflector.registerSimpleType(TestDirective, () => new TestDirective());
   _i1.initReflector();
 }

@@ -30,8 +30,7 @@ void main() {
                 return;
               }
               _visited = true;
-              reflector.registerType(Foo, new ReflectionInfo(
-                const <dynamic> [], const [], () => new Foo()));
+              reflector.registerSimpleType(Foo, () => new Foo());
             }
             ''');
       });
@@ -61,10 +60,8 @@ void main() {
                 return;
               }
               _visited = true;
-              reflector.registerType(Foo, new ReflectionInfo(
-                const <dynamic> [], const [], () => new Foo()));
-              reflector.registerType(Bar, new ReflectionInfo(
-                const <dynamic> [], const [], () => new Bar()));
+              reflector.registerSimpleType(Foo, () => new Foo());
+              reflector.registerSimpleType(Bar, () => new Bar());
             }
             ''');
       });
