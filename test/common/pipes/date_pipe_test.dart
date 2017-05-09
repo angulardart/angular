@@ -2,7 +2,6 @@
 @TestOn('browser')
 
 import 'package:angular2/angular2.dart';
-import 'package:angular2/src/compiler/pipe_resolver.dart' show PipeResolver;
 import 'package:test/test.dart';
 
 void main() {
@@ -12,9 +11,6 @@ void main() {
     setUp(() {
       date = new DateTime(2015, 6, 15, 21, 43, 11);
       pipe = new DatePipe();
-    });
-    test('should be marked as pure', () {
-      expect(new PipeResolver().resolve(DatePipe).pure, isTrue);
     });
     group('supports', () {
       test('should support date', () {
