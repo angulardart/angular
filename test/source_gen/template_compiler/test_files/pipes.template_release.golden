@@ -67,8 +67,7 @@ class ViewComp0 extends AppView<import1.Comp> {
     final valUnwrapper = new ValueUnwrapper();
     final import1.Comp _ctx = ctx;
     valUnwrapper.reset();
-    final currVal_0 = import6.interpolate(
-        3,
+    final currVal_0 = import6.interpolate3(
         '    ',
         valUnwrapper.unwrap(
             import6.castByValue(_pipe_pure_0_0, _pipe_pure_0.transform)('foo')),

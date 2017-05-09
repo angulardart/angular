@@ -15,12 +15,12 @@ String goldenExtension(String codegenMode) => '.template_$codegenMode.golden';
 main() {
   for (String codegenMode in ['release', 'debug']) {
     group('Test Components in $codegenMode', () {
-      test('core_directives', () async {
-        await compareSummaryFileToGolden('core_directives.dart', codegenMode);
-      });
-
       test('change_detection', () async {
         await compareSummaryFileToGolden('change_detection.dart', codegenMode);
+      });
+
+      test('core_directives', () async {
+        await compareSummaryFileToGolden('core_directives.dart', codegenMode);
       });
 
       test('events', () async {
@@ -53,6 +53,10 @@ main() {
 
       test('opaque_token', () async {
         await compareSummaryFileToGolden('opaque_token.dart', codegenMode);
+      });
+
+      test('pipes', () async {
+        await compareSummaryFileToGolden('pipes.dart', codegenMode);
       });
 
       test('provider_modules', () async {
