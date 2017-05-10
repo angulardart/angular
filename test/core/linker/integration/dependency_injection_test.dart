@@ -1,3 +1,4 @@
+@Tags(const ['codegen'])
 @TestOn('browser')
 
 import 'package:angular2/angular2.dart';
