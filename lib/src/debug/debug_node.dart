@@ -7,17 +7,9 @@ export "by.dart";
 
 typedef bool Predicate<T>(T item);
 
-class DebugEventListener {
-  String name;
-  Function callback;
-  DebugEventListener(this.name, this.callback);
-}
-
 class DebugNode {
   final RenderDebugInfo _debugInfo;
   dynamic nativeNode;
-  @Deprecated('Adds runtime cost and not used outside internal tests')
-  List<DebugEventListener> listeners;
   DebugElement parent;
   DebugNode(dynamic nativeNode, DebugNode parent, this._debugInfo) {
     this.nativeNode = nativeNode;
@@ -26,7 +18,6 @@ class DebugNode {
     } else {
       this.parent = null;
     }
-    this.listeners = [];
   }
   Injector get injector => _debugInfo?.injector;
 
@@ -118,15 +109,6 @@ class DebugElement extends DebugNode {
       }
     });
     return children;
-  }
-
-  @Deprecated('listeners and triggering deprecated, use DOM APIs')
-  void triggerEventHandler(String eventName, dynamic eventObj) {
-    listeners.forEach((listener) {
-      if (listener.name == eventName) {
-        listener.callback(eventObj);
-      }
-    });
   }
 }
 
