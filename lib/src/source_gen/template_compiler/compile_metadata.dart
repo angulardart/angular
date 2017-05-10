@@ -306,7 +306,9 @@ class CompileTypeMetadataVisitor
           name: type.name, moduleUrl: moduleUrl(type.element));
 
   o.Expression _useValueExpression(DartObject token) {
-    if (token.toStringValue() != null) {
+    if (token.isNull) {
+      return o.NULL_EXPR;
+    } else if (token.toStringValue() != null) {
       return new o.LiteralExpr(token.toStringValue(), o.STRING_TYPE);
     } else if (token.toBoolValue() != null) {
       return new o.LiteralExpr(token.toBoolValue(), o.BOOL_TYPE);
