@@ -1200,8 +1200,10 @@ void _writeComponentHostEventListeners(
       listenExpr = rootElExpr.callMethod(
           'addEventListener', [o.literal(eventName), wrappedHandlerExpr]);
     } else {
-      listenExpr = new o.InvokeMemberMethodExpr(
-          'listen', [rootElExpr, o.literal(eventName), wrappedHandlerExpr]);
+      final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
+      final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
+      listenExpr = eventManagerExpr.callMethod('addEventListener',
+          [rootElExpr, o.literal(eventName), wrappedHandlerExpr]);
     }
     statements.add(listenExpr.toStmt());
   }

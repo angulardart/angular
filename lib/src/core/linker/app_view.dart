@@ -11,6 +11,7 @@ import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular2/src/core/render/api.dart';
 import 'package:angular2/src/platform/dom/shared_styles_host.dart';
 
+import 'package:func/func.dart';
 import 'package:meta/meta.dart';
 import '../zone/ng_zone.dart';
 import 'app_view_utils.dart';
@@ -527,57 +528,56 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  dynamic eventHandler0(handler) {
+  VoidFunc1<Event> eventHandler0(Function handler) {
     return (event) {
       markPathToRootAsCheckOnce();
-      if (!NgZone.isInAngularZone()) {
+      if (NgZone.isInAngularZone()) {
+        var result = handler();
+        if (identical(result, false)) {
+          event.preventDefault();
+        }
+      } else {
         appViewUtils.eventManager.getZone().runGuarded(() {
-          var res = handler();
-          if (identical(res, false)) {
+          var result = handler();
+          if (identical(result, false)) {
             event.preventDefault();
           }
         });
-        return true;
       }
-      return !identical(handler() as dynamic, false);
     };
   }
 
-  dynamic eventHandler1(handler) {
+  VoidFunc1<Event> eventHandler1(Function handler) {
     return (event) {
       markPathToRootAsCheckOnce();
-      if (!NgZone.isInAngularZone()) {
+      if (NgZone.isInAngularZone()) {
+        var result = handler(event);
+        if (identical(result, false)) {
+          event.preventDefault();
+        }
+      } else {
         appViewUtils.eventManager.getZone().runGuarded(() {
-          var res = handler(event);
-          if (identical(res, false)) {
+          var result = handler(event);
+          if (identical(result, false)) {
             event.preventDefault();
           }
         });
-        return true;
       }
-      return !identical(handler(event) as dynamic, false);
     };
   }
 
-  Function listen(dynamic renderElement, String name, Function callback) {
-    return appViewUtils.eventManager.addEventListener(renderElement, name,
-        (Event event) {
-      var result = callback(event);
-      if (identical(result, false)) {
-        event.preventDefault();
-      }
-    });
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
+  VoidFunc1<dynamic> streamHandler0(Function handler) {
+    return (_) {
+      markPathToRootAsCheckOnce();
+      handler();
+    };
+  }
+
+  VoidFunc1<dynamic> streamHandler1(Function handler) {
+    return (data) {
+      markPathToRootAsCheckOnce();
+      handler(data);
+    };
   }
 
   void setProp(Element element, String name, Object value) {

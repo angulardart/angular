@@ -1,4 +1,5 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
+import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_binding.dart' show CompileBinding;
@@ -119,7 +120,9 @@ class CompileEventListener {
       listenExpr = compileElement.renderNode
           .callMethod('addEventListener', [o.literal(eventName), handlerExpr]);
     } else {
-      listenExpr = new o.InvokeMemberMethodExpr('listen',
+      final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
+      final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
+      listenExpr = eventManagerExpr.callMethod('addEventListener',
           [compileElement.renderNode, o.literal(eventName), handlerExpr]);
     }
 
@@ -131,7 +134,7 @@ class CompileEventListener {
     var subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
-    final handlerExpr = _createEventHandlerExpr();
+    final handlerExpr = _createEventHandlerExpr(forStream: true);
     this.compileElement.view.createMethod.addStmt(subscription
         .set(directiveInstance
             .prop(observablePropName)
@@ -139,7 +142,7 @@ class CompileEventListener {
         .toDeclStmt(null, [o.StmtModifier.Final]));
   }
 
-  o.Expression _createEventHandlerExpr() {
+  o.Expression _createEventHandlerExpr({bool forStream: false}) {
     var handlerExpr;
     var numArgs;
 
@@ -151,7 +154,7 @@ class CompileEventListener {
       numArgs = 1;
     }
 
-    final wrapperName = 'eventHandler$numArgs';
+    final wrapperName = '${forStream ? 'stream' : 'event'}Handler$numArgs';
     if (_hasComponentHostListener) {
       return compileElement.compViewExpr.callMethod(wrapperName, [handlerExpr]);
     } else {
@@ -303,11 +306,6 @@ bool isNativeHtmlEvent(String eventName) {
     'unload',
     'wheel'
   ];
-  if (_nativeEventSet == null) {
-    _nativeEventSet = new Set<String>();
-    for (String name in commonEvents) {
-      _nativeEventSet.add(name);
-    }
-  }
+  _nativeEventSet ??= new Set<String>.from(commonEvents);
   return _nativeEventSet.contains(eventName);
 }

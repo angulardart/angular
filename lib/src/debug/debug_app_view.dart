@@ -14,6 +14,7 @@ import 'package:angular2/src/core/linker/exceptions.dart'
 import 'package:angular2/src/core/linker/view_container.dart';
 import 'package:angular2/src/core/linker/view_type.dart';
 import 'package:angular2/src/core/render/api.dart';
+import 'package:func/func.dart';
 import 'package:js/js.dart' as js;
 import 'package:meta/meta.dart';
 
@@ -25,7 +26,6 @@ import 'debug_node.dart'
         getDebugNode,
         indexDebugNode,
         inspectNativeElement,
-        DebugEventListener,
         removeDebugNodeFromIndex;
 
 export 'package:angular2/src/core/linker/app_view.dart';
@@ -134,7 +134,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  dynamic eventHandler0(handler) {
+  VoidFunc1<Event> eventHandler0(Function handler) {
     return (event) {
       _resetDebug();
       try {
@@ -147,7 +147,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  dynamic eventHandler1(handler) {
+  VoidFunc1<Event> eventHandler1(Function handler) {
     return (event) {
       _resetDebug();
       try {
@@ -160,12 +160,29 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  Function listen(dynamic renderElement, String name, Function callback) {
-    var debugEl = getDebugNode(renderElement);
-    if (debugEl != null) {
-      debugEl.listeners.add(new DebugEventListener(name, callback));
-    }
-    return super.listen(renderElement, name, callback);
+  VoidFunc1<dynamic> streamHandler0(Function handler) {
+    return (data) {
+      _resetDebug();
+      try {
+        return super.streamHandler0(handler)(data);
+      } catch (exception, stack) {
+        _rethrowWithContext(exception, stack);
+        rethrow;
+      }
+    };
+  }
+
+  @override
+  VoidFunc1<dynamic> streamHandler1(Function handler) {
+    return (data) {
+      _resetDebug();
+      try {
+        return super.streamHandler1(handler)(data);
+      } catch (exception, stack) {
+        _rethrowWithContext(exception, stack);
+        rethrow;
+      }
+    };
   }
 
   /// Used only in debug mode to serialize property changes to dom nodes as
