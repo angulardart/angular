@@ -14,7 +14,10 @@ linter:
     - avoid_empty_else
     - avoid_init_to_null
     #- avoid_return_types_on_setters
-    - await_only_futures
+
+    # https://github.com/dart-lang/linter/issues/465
+    #- await_only_futures
+
     - camel_case_types
     - cancel_subscriptions
     #- close_sinks

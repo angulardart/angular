@@ -20,6 +20,7 @@ const LAZY_TRANSFORMERS = 'lazy_transformers';
 const TRANSLATIONS = 'translations';
 const IGNORE_REAL_TEMPLATE_ISSUES_PARAM = 'ignore_real_template_issues';
 const USE_LEGACY_STYLE_ENCAPSULATION = 'use_legacy_style_encapsulation';
+const USE_ANALYZER = 'use_analyzer';
 
 const CODEGEN_DEBUG_MODE = 'debug';
 
@@ -118,6 +119,13 @@ class TransformerOptions {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
+  /// Whether to use the new analyzer-based codegen.
+  ///
+  /// When [true], this will use the analyzer to resolve types before running
+  /// the angular template compiler, resulting in sounder and better performing
+  /// code.
+  final bool useAnalyzer;
+
   TransformerOptions._internal(
     this.entryPoints,
     this.entryPointGlobs,
@@ -139,6 +147,7 @@ class TransformerOptions {
     this.ignoreRealTemplateIssues,
     this.checkDeferredImportInitialization,
     this.useLegacyStyleEncapsulation,
+    this.useAnalyzer,
   });
 
   factory TransformerOptions(
@@ -161,6 +170,7 @@ class TransformerOptions {
     bool ignoreRealTemplateIssues: false,
     bool checkDeferredImportInitialization: false,
     bool useLegacyStyleEncapsulation: false,
+    bool useAnalyzer: false,
   }) {
     var annotationMatcher = new AnnotationMatcher()
       ..addAll(customAnnotationDescriptors);
@@ -185,6 +195,7 @@ class TransformerOptions {
       ignoreRealTemplateIssues: ignoreRealTemplateIssues,
       checkDeferredImportInitialization: checkDeferredImportInitialization,
       useLegacyStyleEncapsulation: useLegacyStyleEncapsulation,
+      useAnalyzer: useAnalyzer,
     );
   }
 }
