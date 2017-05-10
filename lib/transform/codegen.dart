@@ -1,5 +1,6 @@
 library angular2.transform.codegen.dart;
 
+import 'package:angular2/source_gen.dart';
 import 'package:angular2/src/transform/asset_consumer/transformer.dart';
 import 'package:angular2/src/transform/common/eager_transformer_wrapper.dart';
 import 'package:angular2/src/transform/common/formatter.dart' as formatter;
@@ -11,6 +12,7 @@ import 'package:angular2/src/transform/inliner_for_test/transformer.dart';
 import 'package:angular2/src/transform/stylesheet_compiler/transformer.dart';
 import 'package:angular2/src/transform/template_compiler/transformer.dart';
 import 'package:barback/barback.dart';
+import 'package:build_barback/build_barback.dart';
 import 'package:dart_style/dart_style.dart';
 
 export 'package:angular2/src/transform/common/options.dart';
@@ -33,7 +35,19 @@ class CodegenTransformer extends TransformerGroup {
 
   factory CodegenTransformer(TransformerOptions options) {
     Iterable<Iterable> phases;
-    if (options.inlineViews) {
+    if (options.useAnalyzer) {
+      phases = [
+        [new AssetConsumer()],
+        [
+          new BuilderTransformer(createSourceGenTemplateCompiler(
+              new GeneratorOptions(
+                  codegenMode: options.codegenMode,
+                  useLegacyStyleEncapsulation:
+                      options.useLegacyStyleEncapsulation,
+                  collectAssets: false)))
+        ]
+      ];
+    } else if (options.inlineViews) {
       phases = [
         [new InlinerForTest(options)]
       ];
