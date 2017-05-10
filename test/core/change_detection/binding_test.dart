@@ -108,6 +108,10 @@ void main() {
     await new _GetValue<TestChainedPropertyAccess>().runTest();
   });
 
+  test('should support a function call', () async {
+    await new _GetValue<TestFunctionCall>().runTest();
+  });
+
   test('should support assigning explicitly to null', () async {
     await new _GetValue<TestAssignNull>().runTest();
   });
@@ -500,6 +504,22 @@ class TestPropertyAccess implements ValueTest {
   template: r'''<child [value]="list.length.isEven"></child>''',
 )
 class TestChainedPropertyAccess implements ValueTest {
+  @ViewChild(ChildComponent)
+  @override
+  ChildComponent child;
+
+  get list => const ['foo', 'bar'];
+
+  @override
+  get expected => isTrue;
+}
+
+@Component(
+  selector: 'test',
+  directives: const [ChildComponent],
+  template: r'''<child [value]="list.toList().length.isEven"></child>''',
+)
+class TestFunctionCall implements ValueTest {
   @ViewChild(ChildComponent)
   @override
   ChildComponent child;
