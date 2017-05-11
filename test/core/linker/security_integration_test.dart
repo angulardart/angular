@@ -1,188 +1,114 @@
-@TestOn('browser && !js')
-library angular2.test.core.linker.security_integration_test;
+@Tags(const ['codegen'])
+@TestOn('browser')
 
 import 'dart:html';
 
-import 'package:angular2/core.dart' show provide, OpaqueToken;
-import "package:angular2/di.dart" show Injectable;
-import 'package:angular2/src/core/metadata.dart' show Component, View;
-import 'package:angular2/src/security/dom_sanitization_service.dart';
-import 'package:angular2/src/testing/internal.dart';
+import 'package:angular2/angular2.dart';
+import 'package:angular2/security.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
-const ANCHOR_ELEMENT = const OpaqueToken('AnchorElement');
+void main() {
+  tearDown(disposeAnyRunningTest);
 
-@Component(selector: 'my-comp', directives: const [])
-@Injectable()
-class SecuredComponent {
-  dynamic ctxProp;
-  SecuredComponent() {
-    ctxProp = 'some value';
+  test('should escape unsafe attributes', () async {
+    final testBed = new NgTestBed<UnsafeAttributeComponent>();
+    final testFixture = await testBed.create();
+    final a = testFixture.rootElement.querySelector('a') as AnchorElement;
+    expect(a.href, matches(r'.*/hello$'));
+    await testFixture.update((component) {
+      component.href = 'javascript:alert(1)';
+    });
+    expect(a.href, 'unsafe:javascript:alert(1)');
+  });
+
+  test('should not escape values marked as trusted', () async {
+    final testBed = new NgTestBed<TrustedValueComponent>();
+    final testFixture = await testBed.create();
+    final a = testFixture.rootElement.querySelector('a') as AnchorElement;
+    expect(a.href, 'javascript:alert(1)');
+  });
+
+  test('should throw error when using the wrong trusted value', () async {
+    final testBed = new NgTestBed<WrongTrustedValueComponent>();
+    expect(testBed.create(), throwsInAngular(isUnsupportedError));
+  });
+
+  test('should escape unsafe styles', () async {
+    final testBed = new NgTestBed<UnsafeStyleComponent>();
+    final testFixture = await testBed.create();
+    final div = testFixture.rootElement.querySelector('div');
+    expect(div.style.background, matches('red'));
+    await testFixture.update((component) {
+      component.backgroundStyle = 'url(javascript:evil())';
+    });
+    expect(div.style.background, isNot(contains('javascript')));
+  });
+
+  test('should escape unsafe HTML', () async {
+    final testBed = new NgTestBed<UnsafeHtmlComponent>();
+    final testFixture = await testBed.create();
+    final div = testFixture.rootElement.querySelector('div');
+    expect(div.innerHtml, 'some <p>text</p>');
+    await testFixture.update((component) {
+      component.html = 'ha <script>evil()</script>';
+    });
+    expect(div.innerHtml, 'ha ');
+    await testFixture.update((component) {
+      component.html = 'also <img src="x" onerror="evil()"> evil';
+    });
+    expect(div.innerHtml, 'also <img src="x"> evil');
+    await testFixture.update((component) {
+      component.html = 'also <iframe srcdoc="evil"> content';
+    });
+    expect(div.innerHtml, 'also <iframe> content</iframe>');
+  });
+}
+
+@Component(
+  selector: 'unsafe-attribute',
+  template: '<a [href]="href">Link Title</a>',
+)
+class UnsafeAttributeComponent {
+  String href = 'hello';
+}
+
+@Component(
+  selector: 'trusted-value',
+  template: '<a [href]="href">Link Title</a>',
+)
+class TrustedValueComponent {
+  SafeUrl href;
+
+  TrustedValueComponent(DomSanitizationService sanitizer) {
+    href = sanitizer.bypassSecurityTrustUrl('javascript:alert(1)');
   }
 }
 
-void main() {
-  group('security integration tests', () {
-    setUp(() {
-      beforeEachProviders(
-          () => [provide(ANCHOR_ELEMENT, useValue: new DivElement())]);
-    });
-    group('safe HTML values', () {
-      test('should disallow binding on*', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var tpl = '<div [attr.onclick]="ctxProp"></div>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
+@Component(
+  selector: 'wrong-trusted-value',
+  template: '<a [href]="href">Link Title</a>',
+)
+class WrongTrustedValueComponent {
+  SafeScript href;
 
-          tcb.createAsync(SecuredComponent).catchError((e) {
-            expect(
-                e.message,
-                contains(
-                    'Binding to event attribute \'onclick\' is disallowed'));
-            completer.done();
-          });
-        });
-      });
+  WrongTrustedValueComponent(DomSanitizationService sanitizer) {
+    href = sanitizer.bypassSecurityTrustScript('javascript:alert(1)');
+  }
+}
 
-      test('should escape unsafe attributes', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var tpl = '<a [href]="ctxProp">Link Title</a>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
-          tcb.createAsync(SecuredComponent).then((fixture) {
-            var e = fixture.debugElement.children[0].nativeElement;
-            fixture.debugElement.componentInstance.ctxProp = 'hello';
-            fixture.detectChanges();
-            // In the browser, reading href returns an absolute URL. On the
-            // server side, it just echoes back the property.
-            expect(e.href, matches(new RegExp('.*\/?hello\$')));
-            fixture.debugElement.componentInstance.ctxProp =
-                'javascript:alert(1)';
-            fixture.detectChanges();
-            expect(e.href, 'unsafe:javascript:alert(1)');
-            completer.done();
-          });
-        });
-      });
-      test('should not escape values marked as trusted', () async {
-        return inject(
-            [DomSanitizationService, TestComponentBuilder, AsyncTestCompleter],
-            (DomSanitizationService sanitizer, TestComponentBuilder tcb,
-                AsyncTestCompleter completer) {
-          var tpl = '<a [href]="ctxProp">Link Title</a>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
-          tcb.createAsync(SecuredComponent).then((fixture) {
-            var e = fixture.debugElement.children[0].nativeElement;
-            var trusted =
-                sanitizer.bypassSecurityTrustUrl('javascript:alert(1)');
-            fixture.debugElement.componentInstance.ctxProp = trusted;
-            fixture.detectChanges();
-            expect(e.href, 'javascript:alert(1)');
-            completer.done();
-          });
-        });
-      });
+@Component(
+  selector: 'unsafe-style',
+  template: '<div [style.background]="backgroundStyle"></div>',
+)
+class UnsafeStyleComponent {
+  String backgroundStyle = 'red';
+}
 
-      test('should error when using the wrong trusted value', () async {
-        return inject(
-            [DomSanitizationService, TestComponentBuilder, AsyncTestCompleter],
-            (DomSanitizationService sanitizer, TestComponentBuilder tcb,
-                AsyncTestCompleter completer) {
-          var tpl = '<a [href]="ctxProp">Link Title</a>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
-          tcb.createAsync(SecuredComponent).then((fixture) {
-            var trusted =
-                sanitizer.bypassSecurityTrustScript('javascript:alert(1)');
-            fixture.debugElement.componentInstance.ctxProp = trusted;
-            expect(() => fixture.detectChanges(), throwsUnsupportedError);
-            completer.done();
-          });
-        });
-      });
-
-      test('should escape unsafe style values', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var tpl = '<div [style.background]="ctxProp">Text</div>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
-          tcb.createAsync(SecuredComponent).then((fixture) {
-            Element e = fixture.debugElement.children[0].nativeElement;
-            // Make sure binding harmless values works.
-            fixture.debugElement.componentInstance.ctxProp = 'red';
-            fixture.detectChanges();
-            // In some browsers, this will contain the full background
-            // specification, not just the color.
-            expect(e.style.getPropertyValue('background'),
-                matches(new RegExp('red.*')));
-            fixture.debugElement.componentInstance.ctxProp =
-                'url(javascript:evil())';
-            fixture.detectChanges();
-            // Updated value gets rejected, no value change.
-            expect(e.style.background.contains('javascript'), isFalse);
-            completer.done();
-          });
-        });
-      });
-
-      test('should escape unsafe SVG attributes', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var tpl = '<svg:circle [xlink:href]="ctxProp">Text</svg:circle>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
-          tcb.createAsync(SecuredComponent).catchError((e) {
-            expect(e.message, contains('Can\'t bind to \'xlink:href\''));
-            completer.done();
-          });
-        });
-      });
-
-      test('should escape unsafe HTML values', () async {
-        return inject([TestComponentBuilder, AsyncTestCompleter],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-          var tpl = '<div [innerHTML]="ctxProp">Text</div>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
-          tcb.createAsync(SecuredComponent).then((fixture) {
-            Element e = fixture.debugElement.children[0].nativeElement;
-            var componentInstance = fixture.debugElement.componentInstance;
-            // Make sure binding harmless values works.
-            componentInstance.ctxProp = 'some <p>text</p>';
-            fixture.detectChanges();
-            expect(e.innerHtml, 'some <p>text</p>');
-
-            componentInstance.ctxProp = 'ha <script>evil()</script>';
-            fixture.detectChanges();
-            expect(e.innerHtml, 'ha ');
-
-            componentInstance.ctxProp = 'also <img src="x" '
-                'onerror="evil()"> evil';
-            fixture.detectChanges();
-            expect(e.innerHtml, 'also <img src="x"> evil');
-
-            componentInstance.ctxProp = 'also <iframe srcdoc="evil"> content';
-            fixture.detectChanges();
-            componentInstance.ctxProp = 'also <iframe> content</iframe>';
-            completer.done();
-          });
-        });
-      });
-      test('should allow bypassing html', () async {
-        return inject(
-            [TestComponentBuilder, AsyncTestCompleter, DomSanitizationService],
-            (TestComponentBuilder tcb, AsyncTestCompleter completer,
-                DomSanitizationService sanitizer) {
-          var tpl = '<div [innerHTML]="ctxProp">Text</div>';
-          tcb = tcb.overrideView(SecuredComponent, new View(template: tpl));
-          tcb.createAsync(SecuredComponent).then((fixture) {
-            Element e = fixture.debugElement.children[0].nativeElement;
-            var componentInstance = fixture.debugElement.componentInstance;
-            componentInstance.ctxProp =
-                sanitizer.bypassSecurityTrustHtml('ha <script>evil()</script>');
-            fixture.detectChanges();
-            expect(e.innerHtml, 'ha <script>evil()</script>');
-            completer.done();
-          });
-        });
-      });
-    });
-  });
+@Component(
+  selector: 'unsafe-html',
+  template: '<div [innerHtml]="html"></div>',
+)
+class UnsafeHtmlComponent {
+  String html = 'some <p>text</p>';
 }

@@ -45,8 +45,7 @@ Future<dynamic> inject(List<dynamic> tokens, Function fn) async {
     _testInjector.addProviders([funcWithParams.completer]);
   }
   if (_extraPerTestProviders != null) {
-    if (_extraPerTestProviders != null)
-      _testInjector.addProviders(_extraPerTestProviders);
+    _testInjector.addProviders(_extraPerTestProviders);
   }
   _inTest = true;
   _testInjector
