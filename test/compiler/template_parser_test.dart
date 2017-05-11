@@ -6,6 +6,7 @@ import "package:angular2/src/compiler/identifiers.dart"
     show identifierToken, Identifiers;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
     show ElementSchemaRegistry;
+import 'package:angular2/src/compiler/schema/dom_element_schema_registry.dart';
 import "package:angular2/src/compiler/template_ast.dart";
 import "package:angular2/src/compiler/template_parser.dart"
     show TemplateParser, splitClasses;
@@ -1507,6 +1508,38 @@ void main() {
                 '<div *a="b">\n'
                 '^^^^^^^^^^^^'));
       });
+      test('should prevent binding event attributes', () async {
+        final template = '<div [attr.onclick]="onClick()"></div>';
+        expect(
+            () => parse(template, []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: '
+                'Binding to event attribute \'onclick\' is disallowed for '
+                'security reasons, please use (click)=...\n'
+                '[attr.onclick]="onClick()"\n'
+                '^^^^^^^^^^^^^^^^^^^^^^^^^^'));
+      });
+      test('should prevent binding to unsafe SVG attributes', () async {
+        // This test requires that DomElementSchemaRegistry is provided instead
+        // of a mock implementation of ElementSchemaRegistry.
+        beforeEachProviders(() => [
+              provide(ElementSchemaRegistry,
+                  useValue: new DomElementSchemaRegistry())
+            ]);
+        await inject([TemplateParser], (TemplateParser parser) {
+          final component = CompileDirectiveMetadata.create();
+          final template = '<svg:circle [xlink:href]="url"></svg:circle>';
+          expect(
+              () => parser.parse(component, template, [], [], "TestComp"),
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 13 of TestComp: ParseErrorLevel.FATAL: '
+                  "Can't bind to 'xlink:href' since it isn't a known native "
+                  'property or known directive. Please fix typo or add to '
+                  'directives list.\n'
+                  '[xlink:href]="url"\n'
+                  '^^^^^^^^^^^^^^^^^^'));
+        });
+      });
     });
     group("ignore elements", () {
       test("should ignore <script> elements", () {
@@ -1776,7 +1809,6 @@ void main() {
                 '^^^^^^^^^^^^'));
       });
     });
-
     group("deferred", () {
       test("should successfully parse", () {
         expect(
@@ -1786,13 +1818,13 @@ void main() {
               [EmbeddedTemplateAst, '<component !deferred>'],
               [ElementAst, 'component', '<component !deferred>']
             ]);
-        test("should report invalid binding", () {
-          expect(
-              () => parse('<component !deferred="true"></component>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 16 of TestComp: ParseErrorLevel.FATAL: '
-                  '"!deferred" on elements can\'t be bound to an expression.'));
-        });
+      });
+      test("should report invalid binding", () {
+        expect(
+            () => parse('<component !deferred="true"></component>', []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 12 of TestComp: ParseErrorLevel.FATAL: '
+                '"!deferred" on elements can\'t be bound to an expression.'));
       });
     });
   });
