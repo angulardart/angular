@@ -172,6 +172,8 @@ void main() {
         final fullStackTrace = traces.map((t) => t.toString()).join('');
         expect(fullStackTrace, contains('bar'));
         expect(fullStackTrace, isNot(contains('foo')));
+      }, onPlatform: {
+        'firefox': new Skip('Strack trace appears differently'),
       });
     });
 
@@ -205,6 +207,8 @@ void main() {
         if (!fullStackTrace.contains('ng_zone_test_library.js')) {
           expect(fullStackTrace, contains('foo'));
         }
+      }, onPlatform: {
+        'firefox': new Skip('Strack trace appears differently'),
       });
     });
   });
