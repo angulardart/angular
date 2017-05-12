@@ -1,4 +1,4 @@
-@TestOn('browser && !js')
+@TestOn('browser')
 library angular2.test.core.view.projection_integration_test;
 
 import 'dart:html';
@@ -8,615 +8,515 @@ import 'package:angular2/core.dart'
         Component,
         Directive,
         ElementRef,
+        QueryList,
         TemplateRef,
-        ViewContainerRef,
-        ViewEncapsulation,
-        View;
-import 'package:angular2/src/debug/debug_node.dart';
-import 'package:angular2/src/testing/internal.dart';
+        ViewChild,
+        ViewChildren,
+        ViewContainerRef;
+import 'package:angular2/src/debug/debug_node.dart' show getAllDebugNodes;
+import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('projection', () {
-    // TODO: move remaining tests to projection_test.dart.
+    tearDown(disposeAnyRunningTest);
+
     test(
-        "should support projecting text interpolation to a non bound element with other bound elements after it",
+        'should support projecting text interpolation to a non bound '
+        'element with other bound elements after it', () async {
+      var testBed = new NgTestBed<NonBoundInterpolationTest>();
+      var fixture = await testBed.create();
+      await fixture.update((NonBoundInterpolationTest component) {
+        component.text = 'A';
+      });
+      expect(fixture.text, 'SIMPLE(AEL)');
+    });
+    test('should project content components', () async {
+      var testBed = new NgTestBed<ProjectComponentTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'SIMPLE(0|1|2)');
+    });
+    test('should not show the light dom even if there is no content tag',
         () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                Simple,
-                new View(
-                    template:
-                        "SIMPLE(<div><ng-content></ng-content></div><div [tabIndex]=\"0\">EL</div>)",
-                    directives: []))
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<simple>{{text}}</simple>",
-                    directives: [Simple]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.debugElement.componentInstance.text = "A";
-          main.detectChanges();
-          expect(
-              main.debugElement.nativeElement, hasTextContent("SIMPLE(AEL)"));
-          completer.done();
-        });
-      });
+      var testBed = new NgTestBed<NoLightDomTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, isEmpty);
     });
-    test("should project content components", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                Simple,
-                new View(
-                    template: "SIMPLE({{0}}|<ng-content></ng-content>|{{2}})",
-                    directives: []))
-            .overrideView(
-                OtherComp, new View(template: "{{1}}", directives: []))
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<simple><other></other></simple>",
-                    directives: [Simple, OtherComp]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.detectChanges();
-          expect(
-              main.debugElement.nativeElement, hasTextContent("SIMPLE(0|1|2)"));
-          completer.done();
-        });
-      });
+    test('should support multiple content tags', () async {
+      var testBed = new NgTestBed<MultipleContentTagsTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, '(A, BC)');
     });
-    test("should not show the light dom even if there is no content tag",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(MainComp,
-                new View(template: "<empty>A</empty>", directives: [Empty]))
-            .createAsync(MainComp)
-            .then((main) {
-          expect(main.debugElement.nativeElement, hasTextContent(""));
-          completer.done();
-        });
-      });
-    });
-    test("should support multiple content tags", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<multiple-content-tags>" +
-                        "<div>B</div>" +
-                        "<div>C</div>" +
-                        "<div class=\"left\">A</div>" +
-                        "</multiple-content-tags>",
-                    directives: [MultipleContentTagsComponent]))
-            .createAsync(MainComp)
-            .then((main) {
-          expect(main.debugElement.nativeElement, hasTextContent("(A, BC)"));
-          completer.done();
-        });
-      });
-    });
-    test("should redistribute only direct children", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<multiple-content-tags>" +
-                        "<div>B<div class=\"left\">A</div></div>" +
-                        "<div>C</div>" +
-                        "</multiple-content-tags>",
-                    directives: [MultipleContentTagsComponent]))
-            .createAsync(MainComp)
-            .then((main) {
-          expect(main.debugElement.nativeElement, hasTextContent("(, BAC)"));
-          completer.done();
-        });
-      });
+    test('should redistribute only direct children', () async {
+      var testBed = new NgTestBed<OnlyDirectChildrenTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, '(, BAC)');
     });
     test(
-        "should redistribute direct child viewcontainers when the light dom changes",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<multiple-content-tags>" +
-                        "<template manual class=\"left\"><div>A1</div></template>" +
-                        "<div>B</div>" +
-                        "</multiple-content-tags>",
-                    directives: [
-                      MultipleContentTagsComponent,
-                      ManualViewportDirective
-                    ]))
-            .createAsync(MainComp)
-            .then((main) {
-          var viewportDirectives = main.debugElement.children[0].childNodes
-              .where(By.nodeDirective(ManualViewportDirective))
-              .toList()
-              .map((de) => de.inject(ManualViewportDirective))
-              .toList();
-          expect(main.debugElement.nativeElement, hasTextContent("(, B)"));
-          viewportDirectives.forEach((d) => d.show());
-          expect(main.debugElement.nativeElement, hasTextContent("(A1, B)"));
-          viewportDirectives.forEach((d) => d.hide());
-          expect(main.debugElement.nativeElement, hasTextContent("(, B)"));
-          completer.done();
-        });
+        'should redistribute direct child viewcontainers '
+        'when the light dom changes', () async {
+      var testBed = new NgTestBed<LightDomChangeTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, '(, B)');
+      await fixture.update((LightDomChangeTest component) {
+        component.viewports.forEach((d) => d.show());
       });
+      expect(fixture.text, '(A1, B)');
+      await fixture.update((LightDomChangeTest component) {
+        component.viewports.forEach((d) => d.hide());
+      });
+      expect(fixture.text, '(, B)');
     });
-    test("should support nested components", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<outer-with-indirect-nested>" +
-                        "<div>A</div>" +
-                        "<div>B</div>" +
-                        "</outer-with-indirect-nested>",
-                    directives: [OuterWithIndirectNestedComponent]))
-            .createAsync(MainComp)
-            .then((main) {
-          expect(main.debugElement.nativeElement,
-              hasTextContent("OUTER(SIMPLE(AB))"));
-          completer.done();
-        });
-      });
+    test('should support nested components', () async {
+      var testBed = new NgTestBed<NestedComponentTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'OUTER(SIMPLE(AB))');
     });
     test(
-        "should support nesting with content being direct child of a nested "
-        "component", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<outer>" +
-                        "<template manual class=\"left\"><div>A</div></template>" +
-                        "<div>B</div>" +
-                        "<div>C</div>" +
-                        "</outer>",
-                    directives: [OuterComponent, ManualViewportDirective]))
-            .createAsync(MainComp)
-            .then((main) {
-          var viewportDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          expect(main.debugElement.nativeElement,
-              hasTextContent("OUTER(INNER(INNERINNER(,BC)))"));
-          viewportDirective.show();
-          expect(main.debugElement.nativeElement,
-              hasTextContent("OUTER(INNER(INNERINNER(A,BC)))"));
-          completer.done();
-        });
+        'should support nesting with content being '
+        'direct child of a nested component', () async {
+      var testBed = new NgTestBed<NestedDirectChildTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'OUTER(INNER(INNERINNER(,BC)))');
+      await fixture.update((NestedDirectChildTest component) {
+        component.viewport.show();
       });
+      expect(fixture.text, 'OUTER(INNER(INNERINNER(A,BC)))');
     });
-    test("should redistribute when the shadow dom changes", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<conditional-content>" +
-                        "<div class=\"left\">A</div>" +
-                        "<div>B</div>" +
-                        "<div>C</div>" +
-                        "</conditional-content>",
-                    directives: [ConditionalContentComponent]))
-            .createAsync(MainComp)
-            .then((main) {
-          var viewportDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          expect(main.debugElement.nativeElement, hasTextContent("(, BC)"));
-          viewportDirective.show();
-          expect(main.debugElement.nativeElement, hasTextContent("(A, BC)"));
-          viewportDirective.hide();
-          expect(main.debugElement.nativeElement, hasTextContent("(, BC)"));
-          completer.done();
-        });
+    test('should redistribute when the shadow dom changes', () async {
+      var testBed = new NgTestBed<ShadowDomChangeTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, '(, BC)');
+      await fixture.update((ShadowDomChangeTest component) {
+        component.conditional.viewport.show();
       });
-    });
-    // GH-2095 - https://github.com/angular/angular/issues/2095
-    // important as we are removing the ng-content element during compilation,
-    // which could skrew up text node indices.
-    test("should support text nodes after content tags", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<simple stringProp=\"text\"></simple>",
-                    directives: [Simple]))
-            .overrideTemplate(
-                Simple, "<ng-content></ng-content><p>P,</p>{{stringProp}}")
-            .createAsync(MainComp)
-            .then((ComponentFixture main) {
-          main.detectChanges();
-          expect(main.debugElement.nativeElement, hasTextContent("P,text"));
-          completer.done();
-        });
+      expect(fixture.text, '(A, BC)');
+      await fixture.update((ShadowDomChangeTest component) {
+        component.conditional.viewport.hide();
       });
+      expect(fixture.text, '(, BC)');
     });
-    // important as we are moving style tags around during compilation,
-    // which could skrew up text node indices.
-    test("should support text nodes after style tags", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<simple stringProp=\"text\"></simple>",
-                    directives: [Simple]))
-            .overrideTemplate(Simple, "<style></style><p>P,</p>{{stringProp}}")
-            .createAsync(MainComp)
-            .then((ComponentFixture main) {
-          main.detectChanges();
-          expect(main.debugElement.nativeElement, hasTextContent("P,text"));
-          completer.done();
-        });
-      });
+    test('should support text nodes after content tags', () async {
+      var testBed = new NgTestBed<TextNodeAfterContentTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'P,text');
     });
-    test("should support moving non projected light dom around", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<empty>" +
-                        "  <template manual><div>A</div></template>" +
-                        "</empty>" +
-                        "START(<div project></div>)END",
-                    directives: [
-                      Empty,
-                      ProjectDirective,
-                      ManualViewportDirective
-                    ]))
-            .createAsync(MainComp)
-            .then((main) {
-          var sourceDirective;
-          // We can't use the child nodes to get a hold of this because it's not in the dom at
+    test('should support text nodes after style tags', () async {
+      var testBed = new NgTestBed<TextNodeAfterStyleTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'P,text');
+    });
+    test('should support moving non projected light dom around', () async {
+      var testBed = new NgTestBed<MoveLightDomTest>();
+      var fixture = await testBed.create();
 
-          // all.
-          getAllDebugNodes().forEach((debug) {
-            if (!identical(
-                debug.providerTokens.indexOf(ManualViewportDirective), -1)) {
-              sourceDirective = debug.inject(ManualViewportDirective);
-            }
-          });
-          ProjectDirective projectDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ProjectDirective))[0]
-              .inject(ProjectDirective);
-          expect(main.debugElement.nativeElement, hasTextContent("START()END"));
-          projectDirective.show(sourceDirective.templateRef);
-          expect(
-              main.debugElement.nativeElement, hasTextContent("START(A)END"));
-          completer.done();
-        });
+      // Have to search for the directive because it's not in the DOM at all.
+      ManualViewportDirective sourceDirective;
+      getAllDebugNodes().forEach((debug) {
+        if (debug.providerTokens.contains(ManualViewportDirective)) {
+          sourceDirective = debug.inject(ManualViewportDirective);
+        }
       });
-    });
-    test("should support moving projected light dom around", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template:
-                        "<simple><template manual><div>A</div></template></simple>" +
-                            "START(<div project></div>)END",
-                    directives: [
-                      Simple,
-                      ProjectDirective,
-                      ManualViewportDirective
-                    ]))
-            .createAsync(MainComp)
-            .then((main) {
-          ManualViewportDirective sourceDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          ProjectDirective projectDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ProjectDirective))[0]
-              .inject(ProjectDirective);
-          expect(main.debugElement.nativeElement,
-              hasTextContent("SIMPLE()START()END"));
-          projectDirective.show(sourceDirective.templateRef);
-          expect(main.debugElement.nativeElement,
-              hasTextContent("SIMPLE()START(A)END"));
-          completer.done();
-        });
-      });
-    });
-    test("should support moving ng-content around", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<conditional-content>" +
-                        "<div class=\"left\">A</div>" +
-                        "<div>B</div>" +
-                        "</conditional-content>" +
-                        "START(<div project></div>)END",
-                    directives: [
-                      ConditionalContentComponent,
-                      ProjectDirective,
-                      ManualViewportDirective
-                    ]))
-            .createAsync(MainComp)
-            .then((main) {
-          ManualViewportDirective sourceDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          ProjectDirective projectDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ProjectDirective))[0]
-              .inject(ProjectDirective);
-          expect(main.debugElement.nativeElement,
-              hasTextContent("(, B)START()END"));
-          projectDirective.show(sourceDirective.templateRef);
-          expect(main.debugElement.nativeElement,
-              hasTextContent("(, B)START(A)END"));
-          // Stamping ng-content multiple times should not produce the content multiple
 
-          // times...
-          projectDirective.show(sourceDirective.templateRef);
-          expect(main.debugElement.nativeElement,
-              hasTextContent("(, B)START(A)END"));
-          completer.done();
-        });
+      expect(fixture.text, 'START()END');
+      await fixture.update((MoveLightDomTest component) {
+        component.projectDirective.show(sourceDirective.templateRef);
       });
+      expect(fixture.text, 'START(A)END');
+    });
+    test('should support moving project light dom around', () async {
+      var testBed = new NgTestBed<MoveProjectedLightDomTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'SIMPLE()START()END');
+      await fixture.update((MoveProjectedLightDomTest component) {
+        component.projectDirective.show(component.viewport.templateRef);
+      });
+      expect(fixture.text, 'SIMPLE()START(A)END');
+    });
+    test('should support moving ng-content around', () async {
+      var testBed = new NgTestBed<MoveNgContentTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, '(, B)START()END');
+      await fixture.update((MoveNgContentTest component) {
+        component.projectDirective
+            .show(component.conditional.viewport.templateRef);
+      });
+      expect(fixture.text, '(, B)START(A)END');
+      // Stamping ng-content multiple times should not produce the content
+      // multiple times.
+      await fixture.update((MoveNgContentTest component) {
+        component.projectDirective
+            .show(component.conditional.viewport.templateRef);
+      });
+      expect(fixture.text, '(, B)START(A)END');
     });
 
-    // Note: This does not use a ng-content element, but
-    // is still important as we are merging proto views independent of
-    // the presence of ng-content elements!
-    test("should still allow to implement a recursive trees", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(MainComp,
-                new View(template: "<tree></tree>", directives: [Tree]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.detectChanges();
-          ManualViewportDirective manualDirective = main.debugElement
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          expect(main.debugElement.nativeElement, hasTextContent("TREE(0:)"));
-          manualDirective.show();
-          main.detectChanges();
-          expect(main.debugElement.nativeElement,
-              hasTextContent("TREE(0:TREE(1:))"));
-          completer.done();
-        });
+    // Note: This does not use a ng-content element, but is still important as
+    // we are merging proto views independent of the presence of ng-content.
+    test('should still allow to implement recursive trees', () async {
+      var testBed = new NgTestBed<RecursiveTreeTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'TREE(0:)');
+      await fixture.update((RecursiveTreeTest component) {
+        component.tree.viewport.show();
       });
+      expect(fixture.text, 'TREE(0:TREE(1:))');
     });
-    // Note: This does not use a ng-content element, but
-    // is still important as we are merging proto views independent of
-    // the presence of ng-content elements!
     test(
-        "should still allow to implement a recursive trees via multiple components",
-        () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(MainComp,
-                new View(template: "<tree></tree>", directives: [Tree]))
-            .overrideView(
-                Tree,
-                new View(
-                    template:
-                        "TREE({{depth}}:<tree2 *manual [depth]=\"depth+1\"></tree2>)",
-                    directives: [Tree2, ManualViewportDirective]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.detectChanges();
-          expect(main.debugElement.nativeElement, hasTextContent("TREE(0:)"));
-          var tree = main.debugElement.query(By.directive(Tree));
-          ManualViewportDirective manualDirective = tree
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          manualDirective.show();
-          main.detectChanges();
-          expect(main.debugElement.nativeElement,
-              hasTextContent("TREE(0:TREE2(1:))"));
-          var tree2 = main.debugElement.query(By.directive(Tree2));
-          manualDirective = tree2
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          manualDirective.show();
-          main.detectChanges();
-          expect(main.debugElement.nativeElement,
-              hasTextContent("TREE(0:TREE2(1:TREE(2:)))"));
-          completer.done();
-        });
+        'should still allow to implement a recursive '
+        'tree via multiple components', () async {
+      var testBed = new NgTestBed<RecursiveTreeMultipleComponentTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'TREE(0:)');
+      await fixture.update((RecursiveTreeMultipleComponentTest component) {
+        component.tree.viewport.show();
       });
+      expect(fixture.text, 'TREE(0:TREE2(1:))');
+      await fixture.update((RecursiveTreeMultipleComponentTest component) {
+        component.tree.tree2.viewport.show();
+      });
+      expect(fixture.text, 'TREE(0:TREE2(1:TREE(2:)))');
     });
-    test("should support nested conditionals that contain ng-contents",
+    test('should support nested conditionals that contain ng-contents',
         () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: '<conditional-text>a</conditional-text>',
-                    directives: [ConditionalTextComponent]))
-            .createAsync(MainComp)
-            .then((main) {
-          expect(main.debugElement.nativeElement, hasTextContent("MAIN()"));
-          var viewportElement = main.debugElement
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0];
-          viewportElement.inject(ManualViewportDirective).show();
-          expect(
-              main.debugElement.nativeElement, hasTextContent("MAIN(FIRST())"));
-          viewportElement = main.debugElement
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[1];
-          viewportElement.inject(ManualViewportDirective).show();
-          expect(main.debugElement.nativeElement,
-              hasTextContent("MAIN(FIRST(SECOND(a)))"));
-          completer.done();
-        });
+      var testBed = new NgTestBed<NestedConditionalTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'MAIN()');
+      await fixture.update((NestedConditionalTest component) {
+        component.conditional.viewports.first.show();
       });
+      expect(fixture.text, 'MAIN(FIRST())');
+      await fixture.update((NestedConditionalTest component) {
+        // WARNING: this is assuming that once the first viewport is shown, the
+        // new viewport becomes the first viewport in the query list.
+        component.conditional.viewports.first.show();
+      });
+      expect(fixture.text, 'MAIN(FIRST(SECOND(a)))');
     });
-    test("should allow to switch the order of nested components via ng-content",
+    test('should allow to switch the order of nested components via ng-content',
         () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: '''<cmp-a><cmp-b></cmp-b></cmp-a>''',
-                    directives: [CmpA, CmpB]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.detectChanges();
-          expect(
-              main.debugElement.nativeElement.innerHtml,
-              "<cmp-a><cmp-b><cmp-d><d>cmp-d</d></cmp-d></cmp-b>" +
-                  "<cmp-c><c>cmp-c</c></cmp-c></cmp-a>");
-          completer.done();
-        });
-      });
+      var testBed = new NgTestBed<SwitchOrderTest>();
+      var fixture = await testBed.create();
+      expect(
+          fixture.rootElement.innerHtml,
+          '<cmp-a><cmp-b><cmp-d><d>cmp-d</d></cmp-d></cmp-b>'
+          '<cmp-c><c>cmp-c</c></cmp-c></cmp-a>');
     });
-    test("should create nested components in the right order", () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: '''<cmp-a1></cmp-a1><cmp-a2></cmp-a2>''',
-                    directives: [CmpA1, CmpA2]))
-            .createAsync(MainComp)
-            .then((main) {
-          main.detectChanges();
-          Element elm = main.debugElement.nativeElement;
-          expect(
-              elm.innerHtml,
-              "<cmp-a1>a1<cmp-b11>b11</cmp-b11><cmp-b12>b12</cmp-b12></cmp-a1>" +
-                  "<cmp-a2>a2<cmp-b21>b21</cmp-b21><cmp-b22>b22</cmp-b22></cmp-a2>");
-          completer.done();
-        });
-      });
+    test('should create nested components in the right order', () async {
+      var testBed = new NgTestBed<CorrectOrderTest>();
+      var fixture = await testBed.create();
+      expect(
+          fixture.rootElement.innerHtml,
+          '<cmp-a1>a1<cmp-b11>b11</cmp-b11><cmp-b12>b12</cmp-b12></cmp-a1>'
+          '<cmp-a2>a2<cmp-b21>b21</cmp-b21><cmp-b22>b22</cmp-b22></cmp-a2>');
     });
-    test("should project filled view containers into a view container",
+    test('should project filled view containers into a view container',
         () async {
-      return inject([TestComponentBuilder, AsyncTestCompleter],
-          (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-        tcb
-            .overrideView(
-                MainComp,
-                new View(
-                    template: "<conditional-content>" +
-                        "<div class=\"left\">A</div>" +
-                        "<template manual class=\"left\">B</template>" +
-                        "<div class=\"left\">C</div>" +
-                        "<div>D</div>" +
-                        "</conditional-content>",
-                    directives: [
-                      ConditionalContentComponent,
-                      ManualViewportDirective
-                    ]))
-            .createAsync(MainComp)
-            .then((main) {
-          var conditionalComp = main.debugElement
-              .query(By.directive(ConditionalContentComponent));
-          var viewViewportDir = conditionalComp
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-              .inject(ManualViewportDirective);
-          expect(main.debugElement.nativeElement, hasTextContent("(, D)"));
-          expect(main.debugElement.nativeElement, hasTextContent("(, D)"));
-          viewViewportDir.show();
-          expect(main.debugElement.nativeElement, hasTextContent("(AC, D)"));
-          var contentViewportDir = conditionalComp
-              .queryAllNodes(By.nodeDirective(ManualViewportDirective))[1]
-              .inject(ManualViewportDirective);
-          contentViewportDir.show();
-          expect(main.debugElement.nativeElement, hasTextContent("(ABC, D)"));
-          // hide view viewport, and test that it also hides
-
-          // the content viewport's views
-          viewViewportDir.hide();
-          expect(main.debugElement.nativeElement, hasTextContent("(, D)"));
-          completer.done();
-        });
+      var testBed = new NgTestBed<NestedProjectionTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, '(, D)');
+      await fixture.update((NestedProjectionTest component) {
+        component.conditional.viewport.show();
       });
+      expect(fixture.text, '(AC, D)');
+      await fixture.update((NestedProjectionTest component) {
+        component.viewport.show();
+      });
+      expect(fixture.text, '(ABC, D)');
+      await fixture.update((NestedProjectionTest component) {
+        component.conditional.viewport.hide();
+      });
+      expect(fixture.text, '(, D)');
     });
   });
 }
 
-@Component(selector: "main", template: "", directives: const [])
-class MainComp {
-  String text = "";
-}
-
-@Component(selector: "other", template: "", directives: const [])
-class OtherComp {
-  String text = "";
+@Component(
+  selector: 'non-bound-interpolation-test',
+  template: '<simple>{{text}}</simple>',
+  directives: const [NonBoundInterpolationChild],
+)
+class NonBoundInterpolationTest {
+  String text = '';
 }
 
 @Component(
-    selector: "simple",
-    inputs: const ["stringProp"],
-    template: "SIMPLE(<ng-content></ng-content>)",
+  selector: 'simple',
+  template: 'SIMPLE('
+      '<div><ng-content></ng-content></div>'
+      '<div [tabIndex]="0">EL</div>)',
+)
+class NonBoundInterpolationChild {
+  String text = '';
+}
+
+@Component(
+  selector: 'project-component-test',
+  template: '<simple><other></other></simple>',
+  directives: const [ProjectComponentSimple, ProjectComponentOther],
+)
+class ProjectComponentTest {}
+
+@Component(
+  selector: 'simple',
+  template: 'SIMPLE({{0}}|<ng-content></ng-content>|{{2}})',
+)
+class ProjectComponentSimple {}
+
+@Component(
+  selector: 'other',
+  template: '{{1}}',
+)
+class ProjectComponentOther {}
+
+@Component(
+  selector: 'no-light-dom-test',
+  template: '<empty>A</empty>',
+  directives: const [Empty],
+)
+class NoLightDomTest {}
+
+@Component(
+  selector: 'multiple-content-tags-test',
+  template: '<multiple-content-tags>'
+      '<div>B</div>'
+      '<div>C</div>'
+      '<div class="left">A</div>'
+      '</multiple-content-tags>',
+  directives: const [MultipleContentTagsComponent],
+)
+class MultipleContentTagsTest {}
+
+@Component(
+  selector: 'only-direct-children-test',
+  template: '<multiple-content-tags>'
+      '<div>B<div class="left">A</div></div>'
+      '<div>C</div>'
+      '</multiple-content-tags>',
+  directives: const [MultipleContentTagsComponent],
+)
+class OnlyDirectChildrenTest {}
+
+@Component(
+  selector: 'light-dom-change-test',
+  template: '<multiple-content-tags>'
+      '<template manual class="left"><div>A1</div></template>'
+      '<div>B</div>'
+      '</multiple-content-tags>',
+  directives: const [ManualViewportDirective, MultipleContentTagsComponent],
+)
+class LightDomChangeTest {
+  @ViewChildren(ManualViewportDirective)
+  QueryList<ManualViewportDirective> viewports;
+}
+
+@Component(
+  selector: 'nested-component-test',
+  template: '<outer-with-indirect-nested>'
+      '<div>A</div>'
+      '<div>B</div>'
+      '</outer-with-indirect-nested>',
+  directives: const [OuterWithIndirectNestedComponent],
+)
+class NestedComponentTest {}
+
+@Component(
+  selector: 'nested-direct-child-test',
+  template: '<outer>'
+      '<template manual class="left"><div>A</div></template>'
+      '<div>B</div>'
+      '<div>C</div>'
+      '</outer>',
+  directives: const [OuterComponent, ManualViewportDirective],
+)
+class NestedDirectChildTest {
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective viewport;
+}
+
+@Component(
+  selector: 'shadow-dom-change-test',
+  template: '<conditional-content>'
+      '<div class="left">A</div>'
+      '<div>B</div>'
+      '<div>C</div>'
+      '</conditional-content>',
+  directives: const [ConditionalContentComponent],
+)
+class ShadowDomChangeTest {
+  @ViewChild(ConditionalContentComponent)
+  ConditionalContentComponent conditional;
+}
+
+@Component(
+  selector: 'text-node-after-content-test',
+  template: '<simple stringProp="text"></simple>',
+  directives: const [TextNodeAfterContentComponent],
+)
+class TextNodeAfterContentTest {}
+
+@Component(
+  selector: 'simple',
+  template: '<ng-content></ng-content><p>P,</p>{{stringProp}}',
+  inputs: const ['stringProp'],
+)
+class TextNodeAfterContentComponent {
+  String stringProp = '';
+}
+
+@Component(
+  selector: 'text-node-after-style-test',
+  template: '<simple stringProp="text"></simple>',
+  directives: const [TextNodeAfterStyleComponent],
+)
+class TextNodeAfterStyleTest {}
+
+@Component(
+  selector: 'simple',
+  template: '<style></style><p>P,</p>{{stringProp}}',
+  inputs: const ['stringProp'],
+)
+class TextNodeAfterStyleComponent {
+  String stringProp = '';
+}
+
+@Component(
+  selector: 'move-light-dom-test',
+  template: '<empty>'
+      '  <template manual><div>A</div></template>'
+      '</empty>'
+      'START(<div project></div>)END',
+  directives: const [Empty, ProjectDirective, ManualViewportDirective],
+)
+class MoveLightDomTest {
+  @ViewChild(ProjectDirective)
+  ProjectDirective projectDirective;
+}
+
+@Component(
+  selector: 'move-projected-light-dom-test',
+  template: '<simple><template manual><div>A</div></template></simple>'
+      'START(<div project></div>)END',
+  directives: const [Simple, ManualViewportDirective, ProjectDirective],
+)
+class MoveProjectedLightDomTest {
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective viewport;
+
+  @ViewChild(ProjectDirective)
+  ProjectDirective projectDirective;
+}
+
+@Component(
+  selector: 'move-ng-content-test',
+  template: '<conditional-content>'
+      '<div class="left">A</div>'
+      '<div>B</div>'
+      '</conditional-content>'
+      'START(<div project></div>)END',
+  directives: const [ConditionalContentComponent, ProjectDirective],
+)
+class MoveNgContentTest {
+  @ViewChild(ProjectDirective)
+  ProjectDirective projectDirective;
+
+  @ViewChild(ConditionalContentComponent)
+  ConditionalContentComponent conditional;
+}
+
+@Component(
+  selector: 'recursive-tree-test',
+  template: '<tree></tree>',
+  directives: const [Tree],
+)
+class RecursiveTreeTest {
+  @ViewChild(Tree)
+  Tree tree;
+}
+
+@Component(
+  selector: 'recursive-tree-multiple-component-test',
+  template: '<tree></tree>',
+  directives: const [RecursiveTree],
+)
+class RecursiveTreeMultipleComponentTest {
+  @ViewChild(RecursiveTree)
+  RecursiveTree tree;
+}
+
+@Component(
+  selector: 'nested-conditional-test',
+  template: '<conditional-text>a</conditional-text>',
+  directives: const [ConditionalTextComponent],
+)
+class NestedConditionalTest {
+  @ViewChild(ConditionalTextComponent)
+  ConditionalTextComponent conditional;
+}
+
+@Component(
+  selector: 'switch-order-test',
+  template: '<cmp-a><cmp-b></cmp-b></cmp-a>',
+  directives: const [CmpA, CmpB],
+)
+class SwitchOrderTest {}
+
+@Component(
+  selector: 'correct-order-test',
+  template: '<cmp-a1></cmp-a1><cmp-a2></cmp-a2>',
+  directives: const [CmpA1, CmpA2],
+)
+class CorrectOrderTest {}
+
+@Component(
+  selector: 'nested-projection-test',
+  template: '<conditional-content>'
+      '<div class="left">A</div>'
+      '<template manual class="left">B</template>'
+      '<div class="left">C</div>'
+      '<div>D</div>'
+      '</conditional-content>',
+  directives: const [ConditionalContentComponent, ManualViewportDirective],
+)
+class NestedProjectionTest {
+  @ViewChild(ConditionalContentComponent)
+  ConditionalContentComponent conditional;
+
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective viewport;
+}
+
+@Component(
+    selector: 'simple',
+    inputs: const ['stringProp'],
+    template: 'SIMPLE(<ng-content></ng-content>)',
     directives: const [])
 class Simple {
-  String stringProp = "";
+  String stringProp = '';
 }
 
 @Component(
-    selector: "simple-native1",
-    template: "SIMPLE1(<content></content>)",
-    directives: const [],
-    encapsulation: ViewEncapsulation.Native,
-    styles: const ["div {color: red}"])
-class SimpleNative1 {}
-
-@Component(
-    selector: "simple-native2",
-    template: "SIMPLE2(<content></content>)",
-    directives: const [],
-    encapsulation: ViewEncapsulation.Native,
-    styles: const ["div {color: blue}"])
-class SimpleNative2 {}
-
-@Component(selector: "empty", template: "", directives: const [])
+  selector: 'empty',
+  template: '',
+  directives: const [],
+)
 class Empty {}
 
 @Component(
-    selector: "multiple-content-tags",
-    template:
-        "(<ng-content SELECT=\".left\"></ng-content>, <ng-content></ng-content>)",
-    directives: const [])
+  selector: 'multiple-content-tags',
+  template:
+      '(<ng-content select=".left"></ng-content>, <ng-content></ng-content>)',
+  directives: const [],
+)
 class MultipleContentTagsComponent {}
 
-@Directive(selector: "[manual]")
+@Directive(selector: '[manual]')
 class ManualViewportDirective {
   ViewContainerRef vc;
   TemplateRef templateRef;
+
   ManualViewportDirective(this.vc, this.templateRef);
+
   void show() {
     this.vc.insertEmbeddedView(this.templateRef, 0);
   }
@@ -626,7 +526,7 @@ class ManualViewportDirective {
   }
 }
 
-@Directive(selector: "[project]")
+@Directive(selector: '[project]')
 class ProjectDirective {
   ViewContainerRef vc;
   ProjectDirective(this.vc);
@@ -640,71 +540,102 @@ class ProjectDirective {
 }
 
 @Component(
-    selector: "outer-with-indirect-nested",
-    template: "OUTER(<simple><div><ng-content></ng-content></div></simple>)",
+    selector: 'outer-with-indirect-nested',
+    template: 'OUTER(<simple><div><ng-content></ng-content></div></simple>)',
     directives: const [Simple])
 class OuterWithIndirectNestedComponent {}
 
 @Component(
-    selector: "outer",
-    template:
-        "OUTER(<inner><ng-content select=\".left\" class=\"left\"></ng-content><ng-content></ng-content></inner>)",
+    selector: 'outer',
+    template: 'OUTER(<inner>'
+        '<ng-content select=".left" class="left"></ng-content>'
+        '<ng-content></ng-content>'
+        '</inner>)',
     directives: const [InnerComponent])
 class OuterComponent {}
 
 @Component(
-    selector: "inner",
-    template:
-        "INNER(<innerinner><ng-content select=\".left\" class=\"left\"></ng-content><ng-content></ng-content></innerinner>)",
+    selector: 'inner',
+    template: 'INNER(<innerinner>'
+        '<ng-content select=".left" class="left"></ng-content>'
+        '<ng-content></ng-content></innerinner>)',
     directives: const [InnerInnerComponent])
 class InnerComponent {}
 
 @Component(
-    selector: "innerinner",
-    template:
-        "INNERINNER(<ng-content select=\".left\"></ng-content>,<ng-content></ng-content>)",
+    selector: 'innerinner',
+    template: 'INNERINNER('
+        '<ng-content select=".left"></ng-content>,'
+        '<ng-content></ng-content>)',
     directives: const [])
 class InnerInnerComponent {}
 
 @Component(
-    selector: "conditional-content",
-    template:
-        "<div>(<div *manual><ng-content select=\".left\"></ng-content></div>, <ng-content></ng-content>)</div>",
+    selector: 'conditional-content',
+    template: '<div>(<div *manual>'
+        '<ng-content select=".left"></ng-content></div>, '
+        '<ng-content></ng-content>)</div>',
     directives: const [ManualViewportDirective])
-class ConditionalContentComponent {}
+class ConditionalContentComponent {
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective viewport;
+}
 
 @Component(
-    selector: "conditional-text",
-    template:
-        "MAIN(<template manual>FIRST(<template manual>SECOND(<ng-content></ng-content>)</template>)</template>)",
+    selector: 'conditional-text',
+    template: 'MAIN(<template manual>'
+        'FIRST(<template manual>SECOND(<ng-content></ng-content>)</template>)'
+        '</template>)',
     directives: const [ManualViewportDirective])
-class ConditionalTextComponent {}
+class ConditionalTextComponent {
+  @ViewChildren(ManualViewportDirective)
+  QueryList<ManualViewportDirective> viewports;
+}
 
 @Component(
-    selector: "tab",
-    template: "<div><div *manual>TAB(<ng-content></ng-content>)</div></div>",
-    directives: const [ManualViewportDirective])
-class Tab {}
-
-@Component(
-    selector: "tree2",
-    inputs: const ["depth"],
-    template: "TREE2({{depth}}:<tree *manual [depth]=\"depth+1\"></tree>)",
-    directives: const [ManualViewportDirective, Tree])
+    selector: 'tree2',
+    inputs: const ['depth'],
+    template: 'TREE2({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
+    directives: const [ManualViewportDirective, RecursiveTree])
 class Tree2 {
   var depth = 0;
+
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective viewport;
 }
 
 @Component(
-    selector: "tree",
-    inputs: const ["depth"],
-    template: "TREE({{depth}}:<tree *manual [depth]=\"depth+1\"></tree>)",
-    directives: const [ManualViewportDirective, Tree, Tree])
+    selector: 'tree',
+    inputs: const ['depth'],
+    template: 'TREE({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
+    directives: const [ManualViewportDirective, Tree])
 class Tree {
   var depth = 0;
+
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective viewport;
 }
 
-@Component(selector: "cmp-d", template: '''<d>{{tagName}}</d>''')
+@Component(
+  selector: 'tree',
+  inputs: const ['depth'],
+  template: 'TREE({{depth}}:<tree2 *manual [depth]="depth+1"></tree2>)',
+  directives: const [ManualViewportDirective, Tree2],
+)
+class RecursiveTree {
+  var depth = 0;
+
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective viewport;
+
+  @ViewChild(Tree2)
+  Tree2 tree2;
+}
+
+@Component(
+  selector: 'cmp-d',
+  template: '<d>{{tagName}}</d>',
+)
 class CmpD {
   String tagName;
   CmpD(ElementRef elementRef) {
@@ -712,7 +643,10 @@ class CmpD {
   }
 }
 
-@Component(selector: "cmp-c", template: '''<c>{{tagName}}</c>''')
+@Component(
+  selector: 'cmp-c',
+  template: '<c>{{tagName}}</c>',
+)
 class CmpC {
   String tagName;
   CmpC(ElementRef elementRef) {
@@ -721,41 +655,57 @@ class CmpC {
 }
 
 @Component(
-    selector: "cmp-b",
-    template: '''<ng-content></ng-content><cmp-d></cmp-d>''',
-    directives: const [CmpD])
+  selector: 'cmp-b',
+  template: '<ng-content></ng-content><cmp-d></cmp-d>',
+  directives: const [CmpD],
+)
 class CmpB {}
 
 @Component(
-    selector: "cmp-a",
-    template: '''<ng-content></ng-content><cmp-c></cmp-c>''',
-    directives: const [CmpC])
+  selector: 'cmp-a',
+  template: '<ng-content></ng-content><cmp-c></cmp-c>',
+  directives: const [CmpC],
+)
 class CmpA {}
 
 @Component(
-    selector: "cmp-b11", template: '''{{\'b11\'}}''', directives: const [])
+  selector: 'cmp-b11',
+  template: '{{\'b11\'}}',
+  directives: const [],
+)
 class CmpB11 {}
 
 @Component(
-    selector: "cmp-b12", template: '''{{\'b12\'}}''', directives: const [])
+  selector: 'cmp-b12',
+  template: '{{\'b12\'}}',
+  directives: const [],
+)
 class CmpB12 {}
 
 @Component(
-    selector: "cmp-b21", template: '''{{\'b21\'}}''', directives: const [])
+  selector: 'cmp-b21',
+  template: '{{\'b21\'}}',
+  directives: const [],
+)
 class CmpB21 {}
 
 @Component(
-    selector: "cmp-b22", template: '''{{\'b22\'}}''', directives: const [])
+  selector: 'cmp-b22',
+  template: '{{\'b22\'}}',
+  directives: const [],
+)
 class CmpB22 {}
 
 @Component(
-    selector: "cmp-a1",
-    template: '''{{\'a1\'}}<cmp-b11></cmp-b11><cmp-b12></cmp-b12>''',
-    directives: const [CmpB11, CmpB12])
+  selector: 'cmp-a1',
+  template: '{{\'a1\'}}<cmp-b11></cmp-b11><cmp-b12></cmp-b12>',
+  directives: const [CmpB11, CmpB12],
+)
 class CmpA1 {}
 
 @Component(
-    selector: "cmp-a2",
-    template: '''{{\'a2\'}}<cmp-b21></cmp-b21><cmp-b22></cmp-b22>''',
-    directives: const [CmpB21, CmpB22])
+  selector: 'cmp-a2',
+  template: '{{\'a2\'}}<cmp-b21></cmp-b21><cmp-b22></cmp-b22>',
+  directives: const [CmpB21, CmpB22],
+)
 class CmpA2 {}
