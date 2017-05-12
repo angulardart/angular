@@ -33,7 +33,8 @@ Future<Outputs> processTemplates(
     var config = new CompilerConfig(
         genDebugInfo: options.codegenMode == CODEGEN_DEBUG_MODE,
         logBindingUpdate: options.reflectPropertiesAsAttributes,
-        useLegacyStyleEncapsulation: options.useLegacyStyleEncapsulation);
+        useLegacyStyleEncapsulation: options.useLegacyStyleEncapsulation,
+        profileType: codegenModeToProfileType(options.codegenMode));
     templateCompiler = createTemplateCompiler(reader, config);
   }
 

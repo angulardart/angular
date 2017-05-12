@@ -29,6 +29,8 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
   var codegenMode;
   if (settings.mode == BarbackMode.DEBUG) {
     codegenMode = CODEGEN_DEBUG_MODE;
+  } else if (settings.mode.toString() == 'profile') {
+    codegenMode = settings.mode.toString();
   } else {
     codegenMode = config[CODEGEN_MODE_PARAM];
   }

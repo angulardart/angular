@@ -27,6 +27,8 @@ var CD_MODULE_URL =
 var ANGULAR_ROOT_URL = "package:angular2/angular2.dart";
 var NG_IF_URL = "asset:angular2/lib/src/common/directives/ng_if.dart";
 var NG_FOR_URL = "asset:angular2/lib/src/common/directives/ng_for.dart";
+var PROFILE_RUNTIME_MODULE_URL =
+    "asset:angular2/lib/src/debug/profile_runtime.dart";
 
 // Reassign the imports to different variables so we can
 // define static variables with the name of the import.
@@ -140,6 +142,12 @@ class Identifiers {
       name: "looseIdentical",
       moduleUrl: 'asset:angular2/lib/src/facade/lang.dart',
       runtime: impLooseIdentical);
+  static final profileSetup = new CompileIdentifierMetadata<dynamic>(
+      name: "profileSetup", moduleUrl: PROFILE_RUNTIME_MODULE_URL);
+  static final profileMarkStart = new CompileIdentifierMetadata<dynamic>(
+      name: "profileMarkStart", moduleUrl: PROFILE_RUNTIME_MODULE_URL);
+  static final profileMarkEnd = new CompileIdentifierMetadata<dynamic>(
+      name: "profileMarkEnd", moduleUrl: PROFILE_RUNTIME_MODULE_URL);
 
   /// String interpolation where prefix,suffix are empty
   /// (most common case).
