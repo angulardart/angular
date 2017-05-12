@@ -1,6 +1,6 @@
-import 'dart:async';
 @Tags(const ['codegen'])
 @TestOn('browser')
+import 'dart:async';
 import 'dart:html';
 
 import 'package:angular2/angular2.dart';

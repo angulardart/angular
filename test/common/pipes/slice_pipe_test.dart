@@ -1,4 +1,3 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
 library angular2.test.common.pipes.slice_pipe_test;
 
