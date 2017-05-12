@@ -1,5 +1,5 @@
 name: angular2
-version: 3.0.0
+version: 3.1.0
 author: Dart Team <web@dartlang.org>
 description: Framework for modern web applications
 homepage: https://webdev.dartlang.org/angular
@@ -10,6 +10,7 @@ dependencies:
   analyzer: '>=0.29.10 <0.30.0'
   barback: ^0.15.2+2
   build: ^0.9.0
+  build_barback: ^0.2.0
   collection: '^1.12.0'
   csslib: ^0.13.4
   dart_style: '>=0.1.8 <2.0.0'

@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:html";
 
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/linker/app_view.dart";
@@ -50,7 +51,14 @@ class RuntimeCompiler implements ComponentResolver {
     this._styleCompiler,
     this._viewCompiler,
     this._xhr,
-  );
+  ) {
+    window.console.warn(
+        'Reflective mode (i.e. without using code generation) is DEPRECATED. '
+        'Ensure you are using the AngularDart transformer - in 4.0 there will '
+        'no longer be support for using dart:mirrors and the runtime compiler.'
+        '\n\n'
+        'See our skeleton app for an example: https://goo.gl/rRHqO7.');
+  }
 
   Future<ComponentFactory> resolveComponent(Type componentType) {
     CompileDirectiveMetadata compMeta =
