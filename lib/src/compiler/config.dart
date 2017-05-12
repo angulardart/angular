@@ -15,9 +15,36 @@ class CompilerConfig {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
+  /// Performance profiling mode to generates code for component and
+  /// binding performance.
+  final ProfileType profileType;
+
   CompilerConfig({
     this.genDebugInfo: false,
     this.logBindingUpdate: false,
     this.useLegacyStyleEncapsulation: false,
+    this.profileType: ProfileType.None,
   });
+}
+
+enum ProfileType {
+  /// No profiling.
+  None,
+
+  /// Profile component view construction performance.
+  Build,
+
+  /// Profile component bindings (getters in component).
+  Binding
+}
+
+/// Converts codegen_mode build option to profiler type.
+ProfileType codegenModeToProfileType(String codeGenMode) {
+  switch (codeGenMode) {
+    case 'profile':
+      return ProfileType.Build;
+    case 'profilebind':
+      return ProfileType.Binding;
+  }
+  return ProfileType.None;
 }

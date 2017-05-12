@@ -10,6 +10,7 @@ import 'package:source_span/source_span.dart';
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
+import '../config.dart';
 import '../expression_parser/parser.dart' show Parser;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
@@ -34,7 +35,7 @@ import "../template_ast.dart"
         templateVisitAll;
 import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_method.dart";
-import "compile_view.dart" show CompileView;
+import "compile_view.dart";
 import "constants.dart"
     show
         ChangeDetectionStrategyEnum,
@@ -49,6 +50,7 @@ import "constants.dart"
 import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
 import 'expression_converter.dart';
 import 'parse_utils.dart';
+import 'perf_profiler.dart';
 import 'property_binder.dart';
 import "view_compiler_utils.dart"
     show
@@ -937,6 +939,9 @@ o.ClassMethod _createViewClassConstructor(
           tagName, appViewRootElementName, name, value);
       ctor.body.add(stmt);
     });
+    if (view.genConfig.profileType != ProfileType.None) {
+      genProfileSetup(ctor.body);
+    }
   }
   return ctor;
 }
@@ -1077,6 +1082,10 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   }
 
   var statements = <o.Statement>[];
+  if (view.genConfig.profileType == ProfileType.Build) {
+    genProfileBuildStart(view, statements);
+  }
+
   // Cache ctx class field member as typed _ctx local for change detection
   // code to consume.
   var contextType =
@@ -1150,6 +1159,9 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   } else {
     resultExpr = o.NULL_EXPR;
   }
+  if (view.genConfig.profileType == ProfileType.Build) {
+    genProfileBuildEnd(view, statements);
+  }
   statements.add(new o.ReturnStatement(resultExpr));
   return statements;
 }
@@ -1222,6 +1234,10 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     return stmts;
   }
 
+  if (view.genConfig.profileType == ProfileType.Build) {
+    genProfileCdStart(view, stmts);
+  }
+
   // Cache ctx class field member as typed _ctx local for change detection
   // code to consume.
   var contextType =
@@ -1292,6 +1308,9 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     varStmts.add(DetectChangesVars.valUnwrapper
         .set(o.importExpr(Identifiers.ValueUnwrapper).instantiate([]))
         .toDeclStmt(null, [o.StmtModifier.Final]));
+  }
+  if (view.genConfig.profileType == ProfileType.Build) {
+    genProfileCdEnd(view, stmts);
   }
   return (new List.from(varStmts)..addAll(stmts));
 }
