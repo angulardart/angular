@@ -843,6 +843,40 @@ void main() {
           expect(elAst.providers[0].providers[0].deps[0].isValue, isTrue);
           expect(elAst.providers[0].providers[0].deps[0].value, isNull);
         });
+        test('should report cyclic dependencies as errors', () {
+          var cycle =
+              createDir('[cycleDirective]', deps: ['type:[cycleDirective]']);
+          expect(
+              () => parse('<div cycleDirective></div>', [cycle]),
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: '
+                  'Cannot instantiate cyclic dependency! [cycleDirective]\n'
+                  '<div cycleDirective>\n'));
+        });
+        test('should report missing @Host() deps in providers as errors', () {
+          var needsHost = createDir('[needsHost]', deps: ['host:service']);
+          expect(
+              () => parse('<div needsHost></div>', [needsHost]),
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 1 of TestComp: '
+                  'ParseErrorLevel.FATAL: No provider for service\n'
+                  '<div needsHost>\n'));
+        });
+        test('should report missing @Self() deps as errors', () {
+          var needsDirectiveFromSelf = createDir('[needsDirectiveFromSelf]',
+              deps: ['self:type:[simpleDirective]']);
+          var simpleDirective = createDir('[simpleDirective]');
+          expect(
+              () => parse(
+                  '<div simpleDirective>'
+                  '<div needsDirectiveFromSelf></div>'
+                  '</div>',
+                  [needsDirectiveFromSelf, simpleDirective]),
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 22 of TestComp: '
+                  'ParseErrorLevel.FATAL: No provider for [simpleDirective]\n'
+                  '<div needsDirectiveFromSelf>\n'));
+        });
       });
       group("references", () {
         test(
