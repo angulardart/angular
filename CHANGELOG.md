@@ -1,3 +1,42 @@
+## 3.1.0
+
+### New features
+
+* Exposed `TouchFunction` and `ChangeFunction` typedefs to make the transition
+  to strong-mode easier for teams relying on these function definitions. We
+  might remove them in a future release when they are no longer needed.
+
+* Added a flag to use an experimental new compiler that uses the Dart analyzer
+  to gather metadata information. This flag will be turned on by default in
+  `4.0`:
+
+```yaml
+transformers:
+    angular2/transform/codegen:
+        use_analyzer: true
+```
+
+### Deprecations
+
+* Using `dart:mirrors` (i.e. running AngularDart without code generation) is
+  now formally deprecated. In `4.0+` code generation will be the only way to
+  run an AngularDart application, even in development mode. Please ensure you
+  are using our transformer: https://goo.gl/rRHqO7.
+
+### Bug fixes
+
+* CSS errors are now just warnings, and can be ignored. This is due to using
+  a CSS parser for encapsulation - and the AngularDart transformer aggressively
+  runs on all CSS files in a given package. We hope to make this smoother in a
+  future release.
+
+### Performance
+
+* Bypasses the deprecated event plugin system for all native DOM events.
+* At runtime `interpolate` is now represented by multiple functions (faster).
+* `KeyValueDiffer` (`NgClass`, `NgStyle`) optimized for initial add/removals.
+* No longer generates event handler registrations for directive outputs.
+
 ## 3.0.0
 
 ### New features

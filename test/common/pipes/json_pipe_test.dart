@@ -1,5 +1,5 @@
 @TestOn('browser')
-
+@Tags(const ['codegen'])
 import 'dart:convert';
 
 import 'package:angular2/angular2.dart';

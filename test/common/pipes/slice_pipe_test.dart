@@ -1,4 +1,5 @@
 @TestOn('browser')
+@Tags(const ['codegen'])
 library angular2.test.common.pipes.slice_pipe_test;
 
 import 'package:angular2/angular2.dart';

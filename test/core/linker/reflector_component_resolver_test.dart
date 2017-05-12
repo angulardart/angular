@@ -1,3 +1,4 @@
+@TestOn('browser')
 import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/linker/component_resolver.dart';
 import 'package:test/test.dart';

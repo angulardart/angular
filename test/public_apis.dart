@@ -26,6 +26,7 @@ const publicLibraries = const <String, List<String>>{
   "router.dart": null,
   "router/testing.dart": null,
   "security.dart": null,
+  "source_gen.dart": null,
   "testing.dart": null,
   "transform/codegen.dart": null,
   "transform/deferred_rewriter.dart": null,
