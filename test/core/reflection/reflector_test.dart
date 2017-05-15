@@ -8,7 +8,6 @@ import "package:angular2/src/core/reflection/reflection_capabilities.dart"
     show ReflectionCapabilities, MissingInterfaceError;
 import 'package:test/test.dart';
 
-import "../../test_util.dart";
 import "reflector_common.dart"
     show
         ClassDecorator,
@@ -82,28 +81,6 @@ void main() {
     var reflector;
     setUp(() {
       reflector = new Reflector(new ReflectionCapabilities());
-    });
-    group("usage tracking", () {
-      setUp(() {
-        reflector = new Reflector(null);
-      });
-      test("should be disabled by default", () {
-        expect(() => reflector.listUnusedKeys(),
-            throwsWith("Usage tracking is disabled"));
-      });
-      test("should report unused keys", () {
-        reflector.trackUsage();
-        expect(reflector.listUnusedKeys(), []);
-        reflector.registerType(
-            AType, new ReflectionInfo(null, null, () => "AType"));
-        reflector.registerType(
-            TestObj, new ReflectionInfo(null, null, () => "TestObj"));
-        expect(reflector.listUnusedKeys(), [AType, TestObj]);
-        reflector.factory(AType);
-        expect(reflector.listUnusedKeys(), [TestObj]);
-        reflector.factory(TestObj);
-        expect(reflector.listUnusedKeys(), []);
-      });
     });
     group("factory", () {
       test("should create a factory for the given type", () {
