@@ -1,6 +1,6 @@
+import '../../debug/profile_keys.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
-import '../../debug/profile_keys.dart';
 
 import 'compile_view.dart';
 
