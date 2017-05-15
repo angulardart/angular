@@ -78,7 +78,7 @@ void main() {
 @Directive(selector: '[emitter]', outputs: const ['event'])
 class EventEmitterDirective {
   String msg;
-  StreamController _streamController = new StreamController();
+  final _streamController = new StreamController<String>();
 
   Stream get event => _streamController.stream;
 
@@ -118,7 +118,7 @@ class TemplateWithEventDirectivesComponent {
   outputs: const ['controlChange'],
 )
 class DirectiveWithTwoWayBinding {
-  StreamController<String> _streamController = new StreamController<String>();
+  final _streamController = new StreamController<String>();
   var control;
 
   get controlChange => _streamController.stream;
