@@ -98,9 +98,7 @@ class DefaultIterableDiffer {
           addRemoveOffset++;
         } else {
           // INVARIANT:  currentIndex < previousIndex
-          if (moveOffsets == null) {
-            moveOffsets = [];
-          }
+          moveOffsets ??= <int>[];
 
           int localMovePreviousIndex = adjPreviousIndex - addRemoveOffset;
           int localCurrentIndex = currentIndex - addRemoveOffset;

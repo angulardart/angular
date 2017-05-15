@@ -339,7 +339,7 @@ class _Scanner {
     String input = this.input;
     while (this.peek != quote) {
       if (this.peek == $BACKSLASH) {
-        if (buffer == null) buffer = <String>[];
+        buffer ??= <String>[];
         buffer.add(input.substring(marker, this.index));
         this.advance();
         num unescapedCode;

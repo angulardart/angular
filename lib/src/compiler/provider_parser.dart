@@ -361,9 +361,7 @@ List<CompileProviderMetadata> _normalizeProviders(
     SourceSpan sourceSpan,
     List<ParseError> targetErrors,
     [List<CompileProviderMetadata> targetProviders = null]) {
-  if (targetProviders == null) {
-    targetProviders = [];
-  }
+  targetProviders ??= <CompileProviderMetadata>[];
   if (providers != null) {
     for (var provider in providers) {
       if (provider is List) {

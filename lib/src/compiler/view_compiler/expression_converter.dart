@@ -286,9 +286,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         receiver = this._implicitReceiver;
       }
     }
-    if (result == null) {
-      result = receiver.callMethod(ast.name, args);
-    }
+    result ??= receiver.callMethod(ast.name, args);
+
     return convertToStatementIfNeeded(mode, result);
   }
 
@@ -308,9 +307,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         receiver = this._implicitReceiver;
       }
     }
-    if (result == null) {
-      result = receiver.prop(ast.name);
-    }
+    result ??= receiver.prop(ast.name);
     return convertToStatementIfNeeded(mode, result);
   }
 

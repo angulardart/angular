@@ -99,9 +99,7 @@ class _PerfProfile {
       //print('${data.name} \t Type: ${data.type} ${data.ts}');
       if (data.type == _ProfileData.typeMarkStart) {
         List<_ProfileData> startList = startTime[data.key];
-        if (startList == null) {
-          startList = startTime[data.key] = [];
-        }
+        startList ??= startTime[data.key] = [];
         startList.add(data);
         continue;
       } else if (data.type == _ProfileData.typeMarkEnd) {

@@ -47,12 +47,7 @@ class TestInjector {
 }
 
 TestInjector _testInjector;
-TestInjector getTestInjector() {
-  if (_testInjector == null) {
-    _testInjector = new TestInjector();
-  }
-  return _testInjector;
-}
+TestInjector getTestInjector() => _testInjector ??= new TestInjector();
 
 /// Set the providers that the test injector should use. These should be providers
 /// common to every test in the suite.

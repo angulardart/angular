@@ -24,10 +24,8 @@ class ImportModel extends GeneratedMessage {
   BuilderInfo get info_ => _i;
   static ImportModel create() => new ImportModel();
   static PbList<ImportModel> createRepeated() => new PbList<ImportModel>();
-  static ImportModel getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyImportModel();
-    return _defaultInstance;
-  }
+  static ImportModel getDefault() =>
+      _defaultInstance ??= new _ReadonlyImportModel();
 
   static ImportModel _defaultInstance;
   static void $checkItem(ImportModel v) {
@@ -82,10 +80,8 @@ class ExportModel extends GeneratedMessage {
   BuilderInfo get info_ => _i;
   static ExportModel create() => new ExportModel();
   static PbList<ExportModel> createRepeated() => new PbList<ExportModel>();
-  static ExportModel getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyExportModel();
-    return _defaultInstance;
-  }
+  static ExportModel getDefault() =>
+      _defaultInstance ??= new _ReadonlyExportModel();
 
   static ExportModel _defaultInstance;
   static void $checkItem(ExportModel v) {

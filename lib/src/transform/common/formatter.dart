@@ -6,12 +6,8 @@ void init(DartFormatter formatter) {
   _formatter = new _RealFormatter(formatter);
 }
 
-AngularDartFormatter get formatter {
-  if (_formatter == null) {
-    _formatter = new _PassThroughFormatter();
-  }
-  return _formatter;
-}
+AngularDartFormatter get formatter =>
+    _formatter ??= new _PassThroughFormatter();
 
 abstract class AngularDartFormatter {
   String format(String source, {uri});
