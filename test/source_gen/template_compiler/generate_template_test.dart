@@ -22,6 +22,7 @@ main() {
         'export_as',
         'has_directives',
         'host',
+        'inherited_lifecycle_hooks',
         'injectables',
         'interpolation',
         'lifecycle_hooks',

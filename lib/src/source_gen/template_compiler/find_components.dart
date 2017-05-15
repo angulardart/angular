@@ -417,7 +417,7 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
     AfterViewChecked: LifecycleHooks.AfterViewChecked,
   };
   return hooks.keys
-      .where((hook) => clazz.interfaces.any((t) => matchTypes(hook, t)))
+      .where((hook) => clazz.allSupertypes.any((t) => matchTypes(hook, t)))
       .map((t) => hooks[t])
       .toList();
 }
