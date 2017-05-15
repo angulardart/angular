@@ -30,6 +30,8 @@ transformers:
   runs on all CSS files in a given package. We hope to make this smoother in a
   future release.
 
+* Do not generate `throwOnChanges` checks outside of dev-mode.
+
 ### Performance
 
 * Bypasses the deprecated event plugin system for all native DOM events.

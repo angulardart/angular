@@ -5,7 +5,7 @@ description: Framework for modern web applications
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
-  sdk: '>=1.23.0-dev.7.0 <2.0.0'
+  sdk: '>=1.23.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.31.0'
   barback: ^0.15.2+2
@@ -24,6 +24,7 @@ dependencies:
   meta: ^1.0.3
   path: ^1.0.0
   protobuf: ^0.5.1
+  quiver: '>=0.21.4 <0.26.0'
   source_gen: ^0.5.5
   source_span: ^1.0.0
   stack_trace: ^1.6.5
@@ -34,7 +35,6 @@ dev_dependencies:
   build_test: ^0.6.0
   cli_util: ^0.0.1+2
   mockito: '>=0.11.0 <3.0.0'
-  quiver: '>=0.21.4 <0.26.0'
   test: ^0.12.6
   transformer_test: ^0.2.0
 transformers:
