@@ -97,9 +97,11 @@ abstract class AppView<T> {
   @visibleForTesting
   List rootNodesOrViewContainers;
 
-  final List<OnDestroyCallback> _onDestroyCallbacks = <OnDestroyCallback>[];
+  final _onDestroyCallbacks = <OnDestroyCallback>[];
   List subscriptions;
-  ViewContainer viewContainerElement;
+
+  /// Container that is set when this view is attached to a container.
+  ViewContainer _viewContainerElement;
 
   // The names of the below fields must be kept in sync with codegen_name_util.ts or
   // change detection will fail.
@@ -110,8 +112,13 @@ abstract class AppView<T> {
   ///
   /// This is always a component instance.
   T ctx;
+
   List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
+
+  /// Whether the view has been destroyed.
   bool destroyed = false;
+
+  /// Host DI interface.
   Injector _hostInjector;
 
   AppView(
@@ -243,8 +250,8 @@ abstract class AppView<T> {
   Injector injector(int nodeIndex) => new ElementInjector(this, nodeIndex);
 
   void detachAndDestroy() {
-    viewContainerElement
-        ?.detachView(viewContainerElement.nestedViews.indexOf(this));
+    _viewContainerElement
+        ?.detachView(_viewContainerElement.nestedViews.indexOf(this));
     destroy();
   }
 
@@ -368,13 +375,13 @@ abstract class AppView<T> {
   }
 
   void addToContentChildren(ViewContainer renderViewContainer) {
-    viewContainerElement = renderViewContainer;
+    _viewContainerElement = renderViewContainer;
     dirtyParentQueriesInternal();
   }
 
   void removeFromContentChildren(ViewContainer renderViewContainer) {
     dirtyParentQueriesInternal();
-    viewContainerElement = null;
+    _viewContainerElement = null;
   }
 
   void markAsCheckOnce() {
@@ -397,7 +404,7 @@ abstract class AppView<T> {
       }
       view = view.type == ViewType.COMPONENT
           ? view.parentView
-          : view.viewContainerElement?.parentView;
+          : view._viewContainerElement?.parentView;
     }
   }
 
