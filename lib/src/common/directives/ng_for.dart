@@ -61,18 +61,18 @@ import '../../core/change_detection/differs/default_iterable_differ.dart'
 ///
 /// ### Examples
 ///
+/// <?code-excerpt "docs/template-syntax/lib/app_component.html (NgFor-1)"?>
 /// ```html
-/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgFor-1"} -->
 /// <div *ngFor="let hero of heroes">{{hero.name}}</div>
 /// ```
 ///
+/// <?code-excerpt "docs/template-syntax/lib/app_component.html (NgFor-2)"?>
 /// ```html
-/// <!-- {@source "docs/template-syntax/lib/app_component.html" region="NgFor-2"} -->
 /// <hero-detail *ngFor="let hero of heroes" [hero]="hero"></hero-detail>
 /// ```
 ///
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html (inside-ngfor)"?>
 /// ```html
-/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="inside-ngfor"} -->
 /// <div *ngFor="let hero of heroes; let i=index; let odd=odd; trackBy: trackById"
 ///      [class.odd]="odd">
 ///   ({{i}}) {{hero.name}}
