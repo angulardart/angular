@@ -190,7 +190,7 @@ class OverrideNativePropertyComponent {
 
 @Directive(selector: '[customEvent]')
 class EventDir {
-  StreamController<String> _streamController = new StreamController<String>();
+  final _streamController = new StreamController<String>();
 
   @Output()
   Stream<String> get customEvent => _streamController.stream;
