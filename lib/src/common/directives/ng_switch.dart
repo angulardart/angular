@@ -39,36 +39,36 @@ class SwitchView {
 ///
 /// ### Examples
 ///
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngswitch)"?>
 /// ```html
-/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch"} -->
 /// <div [ngSwitch]="hero?.emotion">
-///   <happy-hero    *ngSwitchWhen="'happy'"    [hero]="hero"></happy-hero>
-///   <sad-hero      *ngSwitchWhen="'sad'"      [hero]="hero"></sad-hero>
-///   <confused-hero *ngSwitchWhen="'confused'" [hero]="hero"></confused-hero>
+///   <happy-hero    *ngSwitchCase="'happy'"    [hero]="hero"></happy-hero>
+///   <sad-hero      *ngSwitchCase="'sad'"      [hero]="hero"></sad-hero>
+///   <confused-hero *ngSwitchCase="'confused'" [hero]="hero"></confused-hero>
 ///   <unknown-hero  *ngSwitchDefault           [hero]="hero"></unknown-hero>
 /// </div>
 /// ```
 ///
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngswitch-template-attr)"?>
 /// ```html
-/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch-template-attr"} -->
 /// <div [ngSwitch]="hero?.emotion">
-///   <happy-hero    template="ngSwitchWhen 'happy'"    [hero]="hero"></happy-hero>
-///   <sad-hero      template="ngSwitchWhen 'sad'"      [hero]="hero"></sad-hero>
-///   <confused-hero template="ngSwitchWhen 'confused'" [hero]="hero"></confused-hero>
+///   <happy-hero    template="ngSwitchCase 'happy'"    [hero]="hero"></happy-hero>
+///   <sad-hero      template="ngSwitchCase 'sad'"      [hero]="hero"></sad-hero>
+///   <confused-hero template="ngSwitchCase 'confused'" [hero]="hero"></confused-hero>
 ///   <unknown-hero  template="ngSwitchDefault"         [hero]="hero"></unknown-hero>
 /// </div>
 /// ```
 ///
+/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngswitch-template)"?>
 /// ```html
-/// <!-- {@source "docs/structural-directives/lib/app_component.html" region="ngswitch-template"} -->
 /// <div [ngSwitch]="hero?.emotion">
-///   <template [ngSwitchWhen]="'happy'">
+///   <template [ngSwitchCase]="'happy'">
 ///     <happy-hero [hero]="hero"></happy-hero>
 ///   </template>
-///   <template [ngSwitchWhen]="'sad'">
+///   <template [ngSwitchCase]="'sad'">
 ///     <sad-hero [hero]="hero"></sad-hero>
 ///   </template>
-///   <template [ngSwitchWhen]="'confused'">
+///   <template [ngSwitchCase]="'confused'">
 ///     <confused-hero [hero]="hero"></confused-hero>
 ///   </template >
 ///   <template ngSwitchDefault>

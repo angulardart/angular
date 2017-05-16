@@ -39,8 +39,8 @@ final _observableStrategy = new ObservableStrategy();
 ///
 /// ### Example
 ///
+/// <?code-excerpt "common/pipes/lib/async_pipe.dart (AsyncPipe)"?>
 /// ```dart
-/// // {@source "common/pipes/lib/async_pipe.dart" region="AsyncPipe"}
 /// @Component(
 ///     selector: 'async-greeter',
 ///     template: '''

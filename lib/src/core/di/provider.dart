@@ -164,8 +164,8 @@ class Provider {
 ///
 /// ### Example
 ///
+/// <?code-excerpt "docs/toh-6/web/main.dart"?>
 /// ```dart
-/// // {@source "docs/toh-6/web/main.dart"}
 /// import 'package:angular2/core.dart';
 /// import 'package:angular2/platform/browser.dart';
 /// import 'package:angular_tour_of_heroes/app_component.dart';
