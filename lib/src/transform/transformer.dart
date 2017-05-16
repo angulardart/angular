@@ -29,6 +29,14 @@ class AngularTransformerGroup extends TransformerGroup {
   factory AngularTransformerGroup(TransformerOptions options) {
     Iterable<Iterable> phases;
     if (options.useAnalyzer) {
+      if (options.platformDirectives?.isNotEmpty == true ||
+          options.platformPipes?.isNotEmpty == true) {
+        throw new UnsupportedError(''
+            'Transformer option "${USE_ANALYZER}" cannot be used alongside '
+            '"${PLATFORM_DIRECTIVES}" or "${PLATFORM_PIPES}", as the new '
+            'compiler needs to be able to resolve all directives and pipes '
+            'using the Dart analyzer. See https://goo.gl/68VhMa for details.');
+      }
       phases = [
         [
           new BuilderTransformer(createSourceGenTemplateCompiler(
