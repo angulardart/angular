@@ -18,7 +18,7 @@ View our [milestones][] for the most up-to-date information.
 ## Performance
 
 - Compilation emits idiomatic and performant Dart code with static types.
-- Change detection is be cheap by default, and moving towards a reactive model.
+- Change detection is cheap by default, and moving towards a reactive model.
 - Avoids checking values that are immutable or constant literals.
 - Most hooks into the framework feel idiomatic and are lightweight.
 
