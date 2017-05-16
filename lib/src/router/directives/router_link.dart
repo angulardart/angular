@@ -1,3 +1,5 @@
+import 'dart:html' show MouseEvent;
+
 import "package:angular2/core.dart" show Directive;
 import "package:angular2/platform/common.dart" show Location;
 
@@ -39,7 +41,7 @@ import "../router.dart" show Router;
   "routeParams: routerLink",
   "target: target"
 ], host: const {
-  "(click)": "onClick(\$event.button, \$event.ctrlKey, \$event.metaKey)",
+  "(click)": "onClick(\$event)",
   "[attr.href]": "visibleHref",
   "[class.router-link-active]": "isRouteActive"
 })
@@ -74,19 +76,19 @@ class RouterLink {
     this._updateLink();
   }
 
-  bool onClick(num button, bool ctrlKey, bool metaKey) {
+  void onClick(MouseEvent event) {
     // If any "open in new window" modifier is present, use default browser
     // behavior
-    if (button != 0 || ctrlKey || metaKey) {
-      return true;
+    if (event.button != 0 || event.ctrlKey || event.metaKey) {
+      return;
     }
 
     // If target is present and not _self, use default browser behavior
     if (this.target is String && this.target != "_self") {
-      return true;
+      return;
     }
 
     this._router.navigateByInstruction(this._navigationInstruction);
-    return false;
+    event.preventDefault();
   }
 }
