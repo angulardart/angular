@@ -16,6 +16,13 @@ transformers:
         use_analyzer: true
 ```
 
+**WARNING**: Using `use_analyzer: true` requires discontinuing use of the
+`platform_*` options, and fails-fast if both flags are used. See
+https://goo.gl/68VhMa for details.
+
+**WARNING**: Using `use_analyser: true` doesn't yet work with most third-party
+packages [due to a bug](https://github.com/dart-lang/angular2/issues/390).
+
 ### Deprecations
 
 * Using `dart:mirrors` (i.e. running AngularDart without code generation) is
