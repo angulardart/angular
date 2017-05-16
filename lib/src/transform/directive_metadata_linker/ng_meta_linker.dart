@@ -24,7 +24,7 @@ Future<NgMeta> linkDirectiveMetadata(AssetReader reader, AssetId summaryAssetId,
     AssetId metaAssetId, Map<String, String> resolvedIdentifiers,
     [bool errorOnMissingIdentifiers = true,
     Map<AssetId, NgMeta> ngMetas]) async {
-  if (ngMetas == null) ngMetas = {};
+  ngMetas ??= <AssetId, NgMeta>{};
 
   var ngMeta = await _readNgMeta(reader, summaryAssetId, ngMetas);
   if (ngMeta == null || ngMeta.isEmpty) return null;

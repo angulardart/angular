@@ -653,7 +653,7 @@ class _ParseAST {
   }
 
   void error(String message, [num index = null]) {
-    if (index == null) index = this.index;
+    index ??= this.index;
     var location = (index < this.tokens.length)
         ? '''at column ${ this . tokens [ index ] . index + 1} in'''
         : '''at the end of the expression''';
