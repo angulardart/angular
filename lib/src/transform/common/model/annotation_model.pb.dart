@@ -22,11 +22,8 @@ class NamedParameter extends GeneratedMessage {
   static NamedParameter create() => new NamedParameter();
   static PbList<NamedParameter> createRepeated() =>
       new PbList<NamedParameter>();
-  static NamedParameter getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyNamedParameter();
-    return _defaultInstance;
-  }
+  static NamedParameter getDefault() =>
+      _defaultInstance ??= new _ReadonlyNamedParameter();
 
   static NamedParameter _defaultInstance;
   static void $checkItem(NamedParameter v) {
@@ -72,11 +69,8 @@ class AnnotationModel extends GeneratedMessage {
   static AnnotationModel create() => new AnnotationModel();
   static PbList<AnnotationModel> createRepeated() =>
       new PbList<AnnotationModel>();
-  static AnnotationModel getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyAnnotationModel();
-    return _defaultInstance;
-  }
+  static AnnotationModel getDefault() =>
+      _defaultInstance ??= new _ReadonlyAnnotationModel();
 
   static AnnotationModel _defaultInstance;
   static void $checkItem(AnnotationModel v) {
