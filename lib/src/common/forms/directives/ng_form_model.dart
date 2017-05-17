@@ -1,3 +1,5 @@
+import 'dart:html' show Event;
+
 import 'package:angular2/core.dart'
     show SimpleChange, OnChanges, Directive, Provider;
 import 'package:angular2/di.dart' show Optional, Inject, Self;
@@ -89,7 +91,7 @@ const formDirectiveProvider =
     selector: '[ngFormModel]',
     providers: const [formDirectiveProvider],
     inputs: const ['form: ngFormModel'],
-    host: const {'(submit)': 'onSubmit()'},
+    host: const {'(submit)': 'onSubmit(\$event)'},
     outputs: const ['ngSubmit', 'ngBeforeSubmit'],
     exportAs: 'ngForm')
 class NgFormModel extends ControlContainer implements Form, OnChanges {
@@ -157,10 +159,10 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
     ctrl.updateValue(value);
   }
 
-  bool onSubmit() {
+  void onSubmit(Event event) {
     ngBeforeSubmit.add(form);
     ngSubmit.add(form);
-    return false;
+    event.preventDefault();
   }
 
   void _updateDomValue() {
