@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html' show Event;
 
 import 'package:angular2/core.dart' show Directive, Provider;
 import 'package:angular2/di.dart' show Optional, Inject, Self;
@@ -73,7 +74,7 @@ const formDirectiveProvider =
 @Directive(
     selector: 'form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]',
     providers: const [formDirectiveProvider],
-    host: const {'(submit)': 'onSubmit()'},
+    host: const {'(submit)': 'onSubmit(\$event)'},
     outputs: const ['ngSubmit', 'ngBeforeSubmit'],
     exportAs: 'ngForm')
 class NgForm extends ControlContainer implements Form {
@@ -153,10 +154,10 @@ class NgForm extends ControlContainer implements Form {
     });
   }
 
-  bool onSubmit() {
+  void onSubmit(Event event) {
     ngBeforeSubmit.add(form);
     ngSubmit.add(form);
-    return false;
+    event.preventDefault();
   }
 
   ControlGroup _findContainer(List<String> path) {
