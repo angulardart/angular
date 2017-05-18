@@ -52,8 +52,9 @@ var LIFECYCLE_HOOKS_VALUES = [
 /// ngOnChanges(Map<String, SimpleChange> changes) {
 ///   changes.forEach((String propName, SimpleChange change) {
 ///     String cur = JSON.encode(change.currentValue);
-///     String prev =
-///         change.previousValue == null ? "{}" : JSON.encode(change.previousValue);
+///     String prev = change.previousValue == null
+///         ? "{}"
+///         : JSON.encode(change.previousValue);
 ///     changeLog.add('$propName: currentValue = $cur, previousValue = $prev');
 ///   });
 /// }
@@ -215,7 +216,7 @@ abstract class OnDestroy {
 ///     <ng-content></ng-content>
 ///   <div>-- projected content ends --</div>
 ///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>
-/// '''
+///   ''',
 /// ```
 ///
 /// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart (hooks)"?>
@@ -225,7 +226,8 @@ abstract class OnDestroy {
 ///   String comment = '';
 ///
 ///   // Query for a CONTENT child of type `ChildComponent`
-///   @ContentChild(ChildComponent) ChildComponent contentChild;
+///   @ContentChild(ChildComponent)
+///   ChildComponent contentChild;
 ///
 ///   ngAfterContentInit() {
 ///     // contentChild is set after the content has been initialized
@@ -243,6 +245,7 @@ abstract class OnDestroy {
 ///       _doSomething();
 ///     }
 ///   }
+///
 ///   // ...
 /// }
 /// ```
@@ -267,7 +270,7 @@ abstract class AfterContentInit {
 ///     <ng-content></ng-content>
 ///   <div>-- projected content ends --</div>
 ///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>
-/// '''
+///   ''',
 /// ```
 ///
 /// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart (hooks)"?>
@@ -277,7 +280,8 @@ abstract class AfterContentInit {
 ///   String comment = '';
 ///
 ///   // Query for a CONTENT child of type `ChildComponent`
-///   @ContentChild(ChildComponent) ChildComponent contentChild;
+///   @ContentChild(ChildComponent)
+///   ChildComponent contentChild;
 ///
 ///   ngAfterContentInit() {
 ///     // contentChild is set after the content has been initialized
@@ -295,6 +299,7 @@ abstract class AfterContentInit {
 ///       _doSomething();
 ///     }
 ///   }
+///
 ///   // ...
 /// }
 /// ```
@@ -327,7 +332,8 @@ abstract class AfterContentChecked {
 ///   var _prevHero = '';
 ///
 ///   // Query for a VIEW child of type `ChildViewComponent`
-///   @ViewChild(ChildViewComponent) ChildViewComponent viewChild;
+///   @ViewChild(ChildViewComponent)
+///   ChildViewComponent viewChild;
 ///
 ///   ngAfterViewInit() {
 ///     // viewChild is set after the view has been initialized
@@ -377,7 +383,8 @@ abstract class AfterViewInit {
 ///   var _prevHero = '';
 ///
 ///   // Query for a VIEW child of type `ChildViewComponent`
-///   @ViewChild(ChildViewComponent) ChildViewComponent viewChild;
+///   @ViewChild(ChildViewComponent)
+///   ChildViewComponent viewChild;
 ///
 ///   ngAfterViewInit() {
 ///     // viewChild is set after the view has been initialized
