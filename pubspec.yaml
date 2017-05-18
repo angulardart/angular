@@ -33,7 +33,7 @@ dev_dependencies:
   args: ^0.13.6
   build_runner: ^0.3.2
   build_test: ^0.6.0
-  cli_util: ^0.0.1+2
+  cli_util: '>=0.0.1+2 <0.1.0'
   mockito: '>=0.11.0 <3.0.0'
   test: ^0.12.6
   transformer_test: ^0.2.0
