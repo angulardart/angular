@@ -22,7 +22,7 @@ export 'metadata/view.dart';
 ///
 /// <?code-excerpt "docs/attribute-directives/lib/highlight_directive_1.dart"?>
 /// ```dart
-/// import 'package:angular2/core.dart';
+/// import 'package:angular2/angular2.dart';
 ///
 /// @Directive(selector: '[myHighlight]')
 /// class HighlightDirective {
