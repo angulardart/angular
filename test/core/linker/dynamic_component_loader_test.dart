@@ -86,18 +86,17 @@ void main() {
     test('should allow to pass projectable nodes', () async {
       var testBed = new NgTestBed<MyComp>();
       var fixture = await testBed.create();
-      ComponentRef loadedComponent;
       await fixture.update((MyComp component) async {
-        loadedComponent = await component.loader.loadNextToLocation(
+        await component.loader.loadNextToLocation(
             DynamicallyLoadedWithNgContent, component.viewContainerRef, null, [
           [new Text('hello')]
         ]);
-        var newlyInsertedElement =
-            (getDebugNode(fixture.rootElement) as DebugElement)
-                .children[1]
-                .nativeNode;
-        expect(newlyInsertedElement, hasTextContent('dynamic(hello)'));
       });
+      var newlyInsertedElement =
+          (getDebugNode(fixture.rootElement) as DebugElement)
+              .children[1]
+              .nativeNode;
+      expect(newlyInsertedElement, hasTextContent('dynamic(hello)'));
     });
   });
 
