@@ -23,7 +23,7 @@ class GeneratorOptions {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
-  /// Wheter to use the global set of visible assets instead of
+  /// Whether to use the global set of visible assets instead of
   /// buildStep.hasInput().
   ///
   /// For bazel workspaces, this should be [true] (default), since
