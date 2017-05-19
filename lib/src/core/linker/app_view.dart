@@ -1,4 +1,3 @@
-// @ignoreProblemForFile DEAD_CODE
 import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;

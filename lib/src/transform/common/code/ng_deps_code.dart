@@ -115,42 +115,6 @@ class NgDepsWriter extends Object
       : this.buffer = buffer != null ? buffer : new StringBuffer();
 }
 
-const _ignoredProblems = const <String>[
-  'annotate_overrides',
-  'cancel_subscriptions',
-  'constant_identifier_names',
-  'non_constant_identifier_names',
-  'implementation_imports',
-  'library_prefixes',
-  'type_annotate_public_apis',
-  'STRONG_MODE_DOWN_CAST_COMPOSITE',
-  'UNUSED_IMPORT',
-  'UNUSED_SHOWN_NAME',
-  'UNUSED_LOCAL_VARIABLE',
-];
-
-// These are only enabled if `ignore_real_template_issues` is set to true.
-// TODO(jakemac): Remove this once it is no longer necessary
-const _ignoredRealTemplateIssues = const <String>[
-  'AMBIGUOUS_EXPORT',
-  'CONFLICTING_DART_IMPORT',
-  'CONST_INITIALIZED_WITH_NON_CONSTANT_VALUE',
-  'EXTRA_POSITIONAL_ARGUMENTS',
-  'IMPORT_DUPLICATED_LIBRARY_NAMED',
-  'IMPORT_OF_NON_LIBRARY',
-  'INVALID_ASSIGNMENT',
-  'NEW_WITH_ABSTRACT_CLASS',
-  'NEW_WITH_UNDEFINED_CONSTRUCTOR',
-  'NON_CONSTANT_LIST_ELEMENT',
-  'NOT_ENOUGH_REQUIRED_ARGUMENTS',
-  'UNDEFINED_GETTER',
-  'UNDEFINED_SETTER',
-  'UNDEFINED_HIDDEN_NAME',
-  'UNDEFINED_IDENTIFIER',
-  'UNDEFINED_METHOD',
-  'URI_DOES_NOT_EXIST',
-];
-
 abstract class NgDepsWriterMixin
     implements
         AnnotationWriterMixin,
@@ -162,20 +126,6 @@ abstract class NgDepsWriterMixin
 
   void writeNgDepsModel(NgDepsModel model, String templateCode,
       Map<String, String> deferredModules, bool ignoreRealTemplateIssues) {
-    // Avoid strong-mode warnings about unused imports.
-    for (var problem in _ignoredProblems) {
-      buffer.writeln('// @ignoreProblemForFile $problem');
-    }
-
-    // Avoid other common errors that result from bad templates. This option
-    // should only be used to fix failing builds while a proper fix is put in
-    // place.
-    if (ignoreRealTemplateIssues) {
-      for (var problem in _ignoredRealTemplateIssues) {
-        buffer.writeln('// @ignoreProblemForFile $problem');
-      }
-    }
-
     if (model.libraryUri.isNotEmpty) {
       buffer.writeln('library ${model.libraryUri}${TEMPLATE_EXTENSION};\n');
     }

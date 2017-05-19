@@ -1,4 +1,3 @@
-// @ignoreProblemForFile DEAD_CODE
 /// A unique object used for retrieving items from the [ReflectiveInjector].
 ///
 /// Keys have:
