@@ -1,3 +1,5 @@
+import 'package:angular2/src/compiler/compile_metadata.dart';
+
 class AST {
   dynamic visit(AstVisitor visitor, [dynamic context = null]) {
     return null;
@@ -10,6 +12,15 @@ class AST {
 class EmptyExpr extends AST {
   @override
   void visit(AstVisitor visitor, [dynamic context = null]) {}
+}
+
+class StaticRead extends AST {
+  CompileIdentifierMetadata id;
+  StaticRead(this.id);
+
+  @override
+  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+      visitor.visitStaticRead(this, context);
 }
 
 class ImplicitReceiver extends AST {
@@ -247,6 +258,7 @@ abstract class AstVisitor {
   dynamic visitPropertyWrite(PropertyWrite ast, dynamic context);
   dynamic visitSafeMethodCall(SafeMethodCall ast, dynamic context);
   dynamic visitSafePropertyRead(SafePropertyRead ast, dynamic context);
+  dynamic visitStaticRead(StaticRead ast, dynamic context);
 }
 
 class RecursiveAstVisitor implements AstVisitor {
@@ -368,6 +380,11 @@ class RecursiveAstVisitor implements AstVisitor {
     return this.visitAll(ast.args as List<AST>, context);
   }
 
+  @override
+  dynamic visitStaticRead(StaticRead ast, dynamic context) {
+    return null;
+  }
+
   dynamic visitAll(List<AST> asts, dynamic context) {
     asts.forEach((ast) => ast.visit(this, context));
     return null;
@@ -377,6 +394,9 @@ class RecursiveAstVisitor implements AstVisitor {
 class AstTransformer implements AstVisitor {
   @override
   AST visitImplicitReceiver(ImplicitReceiver ast, dynamic context) => ast;
+
+  @override
+  AST visitStaticRead(StaticRead ast, dynamic context) => ast;
 
   @override
   AST visitInterpolation(Interpolation ast, dynamic context) =>

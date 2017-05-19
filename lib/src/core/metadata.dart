@@ -425,6 +425,23 @@ class Component extends Directive {
   ///
   final List viewProviders;
 
+  /// A list of identifiers that may be referenced in the template.
+  ///
+  /// ## Small Example
+  ///
+  /// Suppose you want to use an enum value in your template:
+  ///
+  ///     enum MyEnum { foo, bar, baz }
+  ///
+  ///     @Component(
+  ///       selector: 'example',
+  ///       exports: const [MyEnum],
+  ///       template: '<p>{{MyEnum.bar}}</p>',
+  ///     )
+  ///     class Example {}
+  ///
+  final List exports;
+
   final String templateUrl;
   final String template;
 
@@ -444,6 +461,7 @@ class Component extends Directive {
       String exportAs,
       List providers,
       this.viewProviders,
+      this.exports,
       this.changeDetection: ChangeDetectionStrategy.Default,
       Map<String, dynamic> queries,
       this.templateUrl,

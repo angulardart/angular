@@ -2,13 +2,14 @@ import 'package:source_span/source_span.dart';
 
 import "compile_metadata.dart"
     show
-        CompileTypeMetadata,
-        CompileTokenMap,
-        CompileQueryMetadata,
-        CompileTokenMetadata,
-        CompileProviderMetadata,
+        CompileDiDependencyMetadata,
         CompileDirectiveMetadata,
-        CompileDiDependencyMetadata;
+        CompileIdentifierMetadata,
+        CompileProviderMetadata,
+        CompileQueryMetadata,
+        CompileTokenMap,
+        CompileTokenMetadata,
+        CompileTypeMetadata;
 import "identifiers.dart" show Identifiers, identifierToken;
 import "parse_util.dart" show ParseError;
 import "template_ast.dart"
@@ -63,6 +64,7 @@ class ProviderElementContext implements ElementProviderUsage {
   final _transformedProviders = new CompileTokenMap<ProviderAst>();
   final _seenProviders = new CompileTokenMap<bool>();
   CompileTokenMap<ProviderAst> _allProviders;
+  Map<String, CompileIdentifierMetadata> _exports;
   Map<String, String> _attrs;
   bool _requiresViewContainer = false;
 
@@ -138,6 +140,8 @@ class ProviderElementContext implements ElementProviderUsage {
   bool get requiresViewContainer => _requiresViewContainer;
 
   bool hasNonLocalRequest(ProviderAst providerAst) => true;
+
+  Map<String, CompileIdentifierMetadata> get exports => _exports;
 
   void _addQueryReadsTo(
       CompileTokenMetadata token, CompileTokenMap<bool> queryReadTokens) {

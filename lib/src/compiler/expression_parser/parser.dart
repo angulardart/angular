@@ -1,3 +1,4 @@
+import 'package:angular2/src/compiler/compile_metadata.dart';
 import "package:angular2/src/core/di/decorators.dart" show Injectable;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 import "package:angular2/src/facade/lang.dart" show jsSplit;
@@ -5,29 +6,30 @@ import "package:angular2/src/facade/lang.dart" show jsSplit;
 import "ast.dart"
     show
         AST,
-        EmptyExpr,
-        ImplicitReceiver,
-        PropertyRead,
-        PropertyWrite,
-        SafePropertyRead,
-        LiteralPrimitive,
+        ASTWithSource,
+        AstVisitor,
         Binary,
-        PrefixNot,
-        Conditional,
-        IfNull,
         BindingPipe,
         Chain,
+        Conditional,
+        EmptyExpr,
+        FunctionCall,
+        IfNull,
+        ImplicitReceiver,
+        Interpolation,
         KeyedRead,
         KeyedWrite,
         LiteralArray,
         LiteralMap,
-        Interpolation,
+        LiteralPrimitive,
         MethodCall,
+        PrefixNot,
+        PropertyRead,
+        PropertyWrite,
         SafeMethodCall,
-        FunctionCall,
-        TemplateBinding,
-        ASTWithSource,
-        AstVisitor;
+        SafePropertyRead,
+        StaticRead,
+        TemplateBinding;
 import "lexer.dart"
     show
         Lexer,
@@ -75,20 +77,24 @@ class Parser {
 
   Parser(this._lexer);
 
-  ASTWithSource parseAction(String input, dynamic location) {
+  ASTWithSource parseAction(String input, dynamic location,
+      Map<String, CompileIdentifierMetadata> exports) {
     this._checkNoInterpolation(input, location);
     var tokens = _lexer.tokenize(this._stripComments(input));
-    var ast = new _ParseAST(input, location, tokens, true).parseChain();
+    var ast =
+        new _ParseAST(input, location, tokens, true, exports).parseChain();
     return new ASTWithSource(ast, input, location);
   }
 
-  ASTWithSource parseBinding(String input, dynamic location) {
-    var ast = this._parseBindingAst(input, location);
+  ASTWithSource parseBinding(String input, dynamic location,
+      Map<String, CompileIdentifierMetadata> exports) {
+    var ast = this._parseBindingAst(input, location, exports);
     return new ASTWithSource(ast, input, location);
   }
 
-  ASTWithSource parseSimpleBinding(String input, String location) {
-    var ast = this._parseBindingAst(input, location);
+  ASTWithSource parseSimpleBinding(String input, String location,
+      Map<String, CompileIdentifierMetadata> exports) {
+    var ast = this._parseBindingAst(input, location, exports);
     if (!SimpleExpressionChecker.check(ast)) {
       throw new ParseException(
           "Host binding expression can only contain field access and constants",
@@ -98,27 +104,30 @@ class Parser {
     return new ASTWithSource(ast, input, location);
   }
 
-  AST _parseBindingAst(String input, String location) {
+  AST _parseBindingAst(String input, String location,
+      Map<String, CompileIdentifierMetadata> exports) {
     this._checkNoInterpolation(input, location);
     var tokens = this._lexer.tokenize(this._stripComments(input));
-    return new _ParseAST(input, location, tokens, false).parseChain();
+    return new _ParseAST(input, location, tokens, false, exports).parseChain();
   }
 
-  TemplateBindingParseResult parseTemplateBindings(
-      String input, dynamic location) {
+  TemplateBindingParseResult parseTemplateBindings(String input,
+      dynamic location, Map<String, CompileIdentifierMetadata> exports) {
     var tokens = this._lexer.tokenize(input);
-    return new _ParseAST(input, location, tokens, false)
+    return new _ParseAST(input, location, tokens, false, exports)
         .parseTemplateBindings();
   }
 
-  ASTWithSource parseInterpolation(String input, dynamic location) {
+  ASTWithSource parseInterpolation(String input, dynamic location,
+      Map<String, CompileIdentifierMetadata> exports) {
     var split = this.splitInterpolation(input, location);
     if (split == null) return null;
     var expressions = [];
     for (var i = 0; i < split.expressions.length; ++i) {
       var tokens =
           this._lexer.tokenize(this._stripComments(split.expressions[i]));
-      var ast = new _ParseAST(input, location, tokens, false).parseChain();
+      var ast =
+          new _ParseAST(input, location, tokens, false, exports).parseChain();
       expressions.add(ast);
     }
     return new ASTWithSource(
@@ -200,8 +209,12 @@ class _ParseAST {
   dynamic location;
   List<dynamic> tokens;
   bool parseAction;
+  Map<String, CompileIdentifierMetadata> exports;
   num index = 0;
-  _ParseAST(this.input, this.location, this.tokens, this.parseAction);
+
+  _ParseAST(
+      this.input, this.location, this.tokens, this.parseAction, this.exports);
+
   Token peek(num offset) {
     var i = this.index + offset;
     return i < this.tokens.length ? this.tokens[i] : EOF;
@@ -485,7 +498,15 @@ class _ParseAST {
     } else if (this.next.isCharacter($LBRACE)) {
       return this.parseLiteralMap();
     } else if (this.next.isIdentifier()) {
-      return this.parseAccessMemberOrMethodCall(_implicitReceiver, false);
+      AST receiver = _implicitReceiver;
+      if (exports != null) {
+        var identifier = this.next.strValue;
+        if (exports.containsKey(identifier)) {
+          this.advance();
+          return new StaticRead(exports[identifier]);
+        }
+      }
+      return this.parseAccessMemberOrMethodCall(receiver, false);
     } else if (this.next.isNumber()) {
       var value = this.next.toNumber();
       this.advance();
@@ -671,6 +692,8 @@ class SimpleExpressionChecker implements AstVisitor {
   var simple = true;
   @override
   void visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {}
+  @override
+  void visitStaticRead(StaticRead ast, dynamic context) {}
   @override
   void visitInterpolation(Interpolation ast, dynamic context) {
     this.simple = false;

@@ -1,6 +1,8 @@
+import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/src/dart/element/element.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart';
 import 'package:angular2/src/compiler/offline_compiler.dart';
 import 'package:angular2/src/core/change_detection/constants.dart';
@@ -344,6 +346,7 @@ class ComponentVisitor
       lifecycleHooks: extractLifecycleHooks(element),
       providers: _extractProviders(componentValue, 'providers'),
       viewProviders: _extractProviders(componentValue, 'viewProviders'),
+      exports: _extractExports(annotation),
       queries: queries,
       viewQueries: _viewQueries,
       template: template,
@@ -403,6 +406,35 @@ class ComponentVisitor
           DartObject component, String providerField) =>
       visitAll(coerceList(component, providerField),
           new CompileTypeMetadataVisitor(log).createProviderMetadata);
+
+  List<CompileIdentifierMetadata> _extractExports(
+      ElementAnnotationImpl annotation) {
+    var arguments = annotation.annotationAst.arguments.arguments;
+    NamedExpression exportsArg = arguments.firstWhere(
+        (arg) => arg is NamedExpression && arg.name.label.name == 'exports',
+        orElse: () => null);
+    if (exportsArg == null || exportsArg.expression is! ListLiteral) return [];
+    var staticNames = (exportsArg.expression as ListLiteral).elements;
+    if (!staticNames.every((name) => name is SimpleIdentifier)) {
+      log.severe(
+          'Every item in the "exports" field must be a simple identifier');
+      return [];
+    }
+    var exports = <CompileIdentifierMetadata>[];
+    for (Identifier id in staticNames) {
+      String name;
+      if (id is PrefixedIdentifier) {
+        name = id.identifier.name;
+      } else {
+        name = id.name;
+      }
+      exports.add(new CompileIdentifierMetadata(
+        name: name,
+        moduleUrl: moduleUrl(id.staticElement.library),
+      ));
+    }
+    return exports;
+  }
 }
 
 List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {

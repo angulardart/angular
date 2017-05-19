@@ -17,25 +17,24 @@ void main() {
   }
 
   dynamic parseAction(text, [location = null]) {
-    return createParser().parseAction(text, location);
+    return createParser().parseAction(text, location, {});
   }
 
   dynamic parseBinding(text, [location = null]) {
-    return createParser().parseBinding(text, location);
+    return createParser().parseBinding(text, location, {});
   }
 
   dynamic parseTemplateBindings(text, [location = null]) {
     return createParser()
-        .parseTemplateBindings(text, location)
-        .templateBindings;
+        .parseTemplateBindings(text, location, {}).templateBindings;
   }
 
   dynamic parseInterpolation(text, [location = null]) {
-    return createParser().parseInterpolation(text, location);
+    return createParser().parseInterpolation(text, location, {});
   }
 
   dynamic parseSimpleBinding(text, [location = null]) {
-    return createParser().parseSimpleBinding(text, location);
+    return createParser().parseSimpleBinding(text, location, {});
   }
 
   String unparse(AST ast) {
@@ -385,14 +384,14 @@ void main() {
         expect(bindings[0].expression.location, "location");
       });
       test("should support var notation with a deprecation warning", () {
-        var bindings = createParser().parseTemplateBindings("var i", null);
+        var bindings = createParser().parseTemplateBindings("var i", null, {});
         expect(keyValues(bindings.templateBindings), ["let i=\$implicit"]);
         expect(bindings.warnings, [
           "\"var\" inside of expressions is deprecated. Use \"let\" instead!"
         ]);
       });
       test("should support # notation with a deprecation warning", () {
-        var bindings = createParser().parseTemplateBindings("#i", null);
+        var bindings = createParser().parseTemplateBindings("#i", null, {});
         expect(keyValues(bindings.templateBindings), ["let i=\$implicit"]);
         expect(bindings.warnings, [
           "\"#\" inside of expressions is deprecated. Use \"let\" instead!"
