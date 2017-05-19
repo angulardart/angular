@@ -527,6 +527,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       // CompileProviderMetadata | CompileTypeMetadata |
       // CompileIdentifierMetadata | List
       List viewProviders,
+      List<CompileIdentifierMetadata> exports,
       List<CompileQueryMetadata> queries,
       List<CompileQueryMetadata> viewQueries,
       CompileTemplateMetadata template}) {
@@ -582,6 +583,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         lifecycleHooks: lifecycleHooks ?? <LifecycleHooks>[],
         providers: providers,
         viewProviders: viewProviders,
+        exports: exports,
         queries: queries,
         viewQueries: viewQueries,
         template: template);
@@ -602,6 +604,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   List<LifecycleHooks> lifecycleHooks;
   List<CompileProviderMetadata> providers;
   List<CompileProviderMetadata> viewProviders;
+  List<CompileIdentifierMetadata> exports;
   List<CompileQueryMetadata> queries;
   List<CompileQueryMetadata> viewQueries;
   CompileTemplateMetadata template;
@@ -624,12 +627,14 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       // CompileProviderMetadata | CompileTypeMetadata |
       // CompileIdentifierMetadata | List
       List viewProviders,
+      List exports,
       List<CompileQueryMetadata> queries,
       List<CompileQueryMetadata> viewQueries,
       CompileTemplateMetadata template}) {
     this.lifecycleHooks = lifecycleHooks ?? [];
     this.providers = providers as List<CompileProviderMetadata> ?? [];
     this.viewProviders = viewProviders as List<CompileProviderMetadata> ?? [];
+    this.exports = exports as List<CompileIdentifierMetadata> ?? [];
     this.queries = queries ?? [];
     this.viewQueries = viewQueries ?? [];
     this.template = template;
@@ -664,6 +669,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
             : data['template'],
         providers: _arrayFromJson(data['providers'], metadataFromJson),
         viewProviders: _arrayFromJson(data['viewProviders'], metadataFromJson),
+        exports:
+            _arrayFromJson(data['exports'], CompileIdentifierMetadata.fromJson)
+                as List<CompileIdentifierMetadata>,
         queries: _arrayFromJson(data['queries'], CompileQueryMetadata.fromJson)
             as List<CompileQueryMetadata>,
         viewQueries:
@@ -689,6 +697,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         'template': template?.toJson(),
         'providers': _arrayToJson(providers),
         'viewProviders': _arrayToJson(viewProviders),
+        'exports': _arrayToJson(exports),
         'queries': _arrayToJson(queries),
         'viewQueries': _arrayToJson(viewQueries)
       };
@@ -724,6 +733,7 @@ CompileDirectiveMetadata createHostComponentMeta(
       selector: '*',
       providers: [],
       viewProviders: [],
+      exports: [],
       queries: [],
       viewQueries: []);
 }

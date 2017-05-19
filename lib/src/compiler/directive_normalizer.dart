@@ -42,6 +42,7 @@ class DirectiveNormalizer {
                 lifecycleHooks: directive.lifecycleHooks,
                 providers: directive.providers,
                 viewProviders: directive.viewProviders,
+                exports: directive.exports,
                 queries: directive.queries,
                 viewQueries: directive.viewQueries,
                 template: normalizedTemplate));

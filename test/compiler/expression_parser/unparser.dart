@@ -172,6 +172,10 @@ class Unparser implements AstVisitor {
     this._expression += ")";
   }
 
+  visitStaticRead(StaticRead ast, dynamic context) {
+    this._expression += ast.id.name;
+  }
+
   _visit(AST ast) {
     ast.visit(this);
   }
