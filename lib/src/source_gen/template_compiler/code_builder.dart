@@ -16,8 +16,6 @@ const _ignoredProblems = const <String>[
   'non_constant_identifier_names',
   'implementation_imports',
   'library_prefixes',
-  'type_annotate_public_apis',
-  'STRONG_MODE_DOWN_CAST_COMPOSITE',
   'UNUSED_IMPORT',
   'UNUSED_SHOWN_NAME',
   'UNUSED_LOCAL_VARIABLE',

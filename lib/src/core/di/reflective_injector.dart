@@ -1,4 +1,3 @@
-// @ignoreProblemForFile DEAD_CODE
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
 import 'decorators.dart';
