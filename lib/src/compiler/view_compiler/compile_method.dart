@@ -1,3 +1,5 @@
+import 'package:source_span/source_span.dart';
+
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show TemplateAst;
 import "compile_view.dart" show CompileView;
@@ -21,6 +23,8 @@ class CompileMethod {
   _DebugState _currState = NULL_DEBUG_STATE;
   bool _debugEnabled;
   final _bodyStatements = <o.Statement>[];
+  int _curNodeIndex;
+  SourceLocation _curSourceLocation;
 
   CompileMethod(CompileView view) {
     _debugEnabled = view.genConfig.genDebugInfo;
@@ -41,6 +45,13 @@ class CompileMethod {
       var sourceLocation = newState.sourceAst != null
           ? newState.sourceAst.sourceSpan.start
           : null;
+      if (_curNodeIndex == newState.nodeIndex &&
+          sourceLocation?.line == _curSourceLocation?.line &&
+          sourceLocation?.column == _curSourceLocation?.column) {
+        return null;
+      }
+      _curNodeIndex = newState.nodeIndex;
+      _curSourceLocation = sourceLocation;
       return new o.InvokeMemberMethodExpr('dbg', [
         o.literal(newState.nodeIndex),
         sourceLocation != null ? o.literal(sourceLocation.line) : o.NULL_EXPR,
