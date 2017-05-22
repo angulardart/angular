@@ -179,7 +179,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 61);
     final subscription_0 =
-        _HasAngularEvents_1_2.foo.listen(streamHandler0(ctx.onFoo));
+        _HasAngularEvents_1_2.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0], [_text_0, _el_1, _text_2]);
     return null;
   }

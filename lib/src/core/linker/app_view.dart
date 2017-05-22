@@ -534,55 +534,25 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  VoidFunc1<Event> eventHandler0(Function handler) {
+  VoidFunc1 eventHandler0(VoidFunc0 handler) {
     return (event) {
       markPathToRootAsCheckOnce();
       if (NgZone.isInAngularZone()) {
-        var result = handler();
-        if (identical(result, false)) {
-          event.preventDefault();
-        }
+        handler();
       } else {
-        appViewUtils.eventManager.getZone().runGuarded(() {
-          var result = handler();
-          if (identical(result, false)) {
-            event.preventDefault();
-          }
-        });
+        appViewUtils.eventManager.getZone().runGuarded(handler);
       }
     };
   }
 
-  VoidFunc1<Event> eventHandler1(Function handler) {
+  VoidFunc1 eventHandler1(VoidFunc1 handler) {
     return (event) {
       markPathToRootAsCheckOnce();
       if (NgZone.isInAngularZone()) {
-        var result = handler(event);
-        if (identical(result, false)) {
-          event.preventDefault();
-        }
+        handler(event);
       } else {
-        appViewUtils.eventManager.getZone().runGuarded(() {
-          var result = handler(event);
-          if (identical(result, false)) {
-            event.preventDefault();
-          }
-        });
+        appViewUtils.eventManager.getZone().runGuarded(() => handler(event));
       }
-    };
-  }
-
-  VoidFunc1<dynamic> streamHandler0(Function handler) {
-    return (_) {
-      markPathToRootAsCheckOnce();
-      handler();
-    };
-  }
-
-  VoidFunc1<dynamic> streamHandler1(Function handler) {
-    return (data) {
-      markPathToRootAsCheckOnce();
-      handler(data);
     };
   }
 

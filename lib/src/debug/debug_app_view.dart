@@ -134,7 +134,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  VoidFunc1<Event> eventHandler0(Function handler) {
+  VoidFunc1 eventHandler0(VoidFunc0 handler) {
     return (event) {
       _resetDebug();
       try {
@@ -147,37 +147,11 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  VoidFunc1<Event> eventHandler1(Function handler) {
+  VoidFunc1 eventHandler1(VoidFunc1 handler) {
     return (event) {
       _resetDebug();
       try {
         return super.eventHandler1(handler)(event);
-      } catch (exception, stack) {
-        _rethrowWithContext(exception, stack);
-        rethrow;
-      }
-    };
-  }
-
-  @override
-  VoidFunc1<dynamic> streamHandler0(Function handler) {
-    return (data) {
-      _resetDebug();
-      try {
-        return super.streamHandler0(handler)(data);
-      } catch (exception, stack) {
-        _rethrowWithContext(exception, stack);
-        rethrow;
-      }
-    };
-  }
-
-  @override
-  VoidFunc1<dynamic> streamHandler1(Function handler) {
-    return (data) {
-      _resetDebug();
-      try {
-        return super.streamHandler1(handler)(data);
       } catch (exception, stack) {
         _rethrowWithContext(exception, stack);
         rethrow;

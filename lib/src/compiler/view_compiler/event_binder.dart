@@ -26,7 +26,6 @@ class CompileEventListener {
   o.Expression _simpleHandler;
   String _methodName;
   o.FnParam _eventParam;
-  final _actionResultExprs = <o.Expression>[];
 
   /// Helper function to search for an event in [targetEventListeners] list and
   /// add a new one if it doesn't exist yet.
@@ -59,8 +58,7 @@ class CompileEventListener {
       o.Expression directiveInstance) {
     if (_isSimple) {
       _handlerType = hostEvent.handlerType;
-      _isSimple =
-          _actionResultExprs.isEmpty && _handlerType != HandlerType.notSimple;
+      _isSimple = _method.isEmpty && _handlerType != HandlerType.notSimple;
     }
     if (directive != null && directive.isComponent) {
       _hasComponentHostListener = true;
@@ -72,44 +70,19 @@ class CompileEventListener {
         context,
         hostEvent.handler,
         this.compileElement.view.component.template.preserveWhitespace);
-    var lastIndex = actionStmts.length - 1;
-    if (lastIndex >= 0) {
-      var lastStatement = actionStmts[lastIndex];
-      var returnExpr = convertStmtIntoExpression(lastStatement);
-      if (_isSimple) {
-        _simpleHandler = _extractFunction(returnExpr);
-      }
-      var preventDefaultVar = o.variable('pd_${_actionResultExprs.length}');
-      _actionResultExprs.add(preventDefaultVar);
-      if (returnExpr != null) {
-        // Note: We need to cast the result of the method call to dynamic,
-        // as it might be a void method!
-        actionStmts[lastIndex] = preventDefaultVar
-            .set(returnExpr.cast(o.DYNAMIC_TYPE).notIdentical(o.literal(false)))
-            .toDeclStmt(null, [o.StmtModifier.Final]);
-      }
-    }
     _method.addStmts(actionStmts);
   }
 
-  void finishMethod() {
-    // If this is a simple event binding, we don't need to generate a method.
+  void finish() {
+    final stmts = _method.finish();
     if (_isSimple) {
-      return;
+      // If debug info is enabled, the first statement is a call to [dbg], so
+      // retrieve last statement to ensure it's the handler invocation.
+      _simpleHandler = _extractFunction(convertStmtIntoExpression(stmts.last));
+    } else {
+      compileElement.view.eventHandlerMethods.add(new o.ClassMethod(
+          _methodName, [_eventParam], stmts, null, [o.StmtModifier.Private]));
     }
-    o.Expression resultExpr = o.literal(true);
-    for (var i = 0, len = _actionResultExprs.length; i < len; i++) {
-      resultExpr = resultExpr.and(_actionResultExprs[i]);
-    }
-    List<o.Statement> stmts = new List<o.Statement>.from(_method.finish())
-      ..add(new o.ReturnStatement(resultExpr));
-
-    compileElement.view.eventHandlerMethods.add(new o.ClassMethod(
-        this._methodName,
-        [this._eventParam],
-        stmts,
-        o.BOOL_TYPE,
-        [o.StmtModifier.Private]));
   }
 
   void listenToRenderer() {
@@ -134,7 +107,7 @@ class CompileEventListener {
     var subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
     this.compileElement.view.subscriptions.add(subscription);
-    final handlerExpr = _createEventHandlerExpr(forStream: true);
+    final handlerExpr = _createEventHandlerExpr();
     this.compileElement.view.createMethod.addStmt(subscription
         .set(directiveInstance
             .prop(observablePropName)
@@ -142,7 +115,7 @@ class CompileEventListener {
         .toDeclStmt(null, [o.StmtModifier.Final]));
   }
 
-  o.Expression _createEventHandlerExpr({bool forStream: false}) {
+  o.Expression _createEventHandlerExpr() {
     var handlerExpr;
     var numArgs;
 
@@ -154,7 +127,7 @@ class CompileEventListener {
       numArgs = 1;
     }
 
-    final wrapperName = '${forStream ? 'stream' : 'event'}Handler$numArgs';
+    final wrapperName = 'eventHandler$numArgs';
     if (_hasComponentHostListener) {
       return compileElement.compViewExpr.callMethod(wrapperName, [handlerExpr]);
     } else {
@@ -188,7 +161,7 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
     }
   }
   for (int i = 0, len = eventListeners.length; i < len; i++) {
-    eventListeners[i].finishMethod();
+    eventListeners[i].finish();
   }
   return eventListeners;
 }

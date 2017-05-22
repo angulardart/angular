@@ -1,3 +1,10 @@
+## 4.0.0
+
+### Breaking changes
+
+* Returning `false` from an event handler will no longer cancel the event. See
+  [#387](https://github.com/dart-lang/angular2/issues/387) for details.
+
 ## 3.1.0
 
 ### New features
