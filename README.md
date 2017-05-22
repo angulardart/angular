@@ -1,7 +1,11 @@
-![AngularDart](https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.png)
-
 [AngularDart][angular_dart] is a productive web application framework that
 powers some of Google's most critical applications.
+
+<!-- Badges -->
+
+[![Pub Package](https://img.shields.io/pub/v/angular2.svg)](https://pub.dartlang.org/packages/angular2)
+[![Build Status](https://travis-ci.org/dart-lang/angular2.svg?branch=master)](https://travis-ci.org/dart-lang/angular2)
+[![Gitter](https://img.shields.io/gitter/room/dart-lang/angular2.svg)](https://gitter.im/dart-lang/angular2)
 
 ![AngularDart 3.0.0](https://3.bp.blogspot.com/-Pypqb322bLc/WQpchgDAsKI/AAAAAAAAPI4/eBaQwnDkACYglJhBuinr5YzE9x_mQ-EGgCLcB/s640/angulardart-3.0-release.jpg)
 
@@ -10,11 +14,7 @@ It's built on [Dart][dart_web] and is used extensively by Google
 
 [![Built with AngularDart](https://2.bp.blogspot.com/-T50YZP5hlW4/Vv07k1PPVmI/AAAAAAAAM_Q/kVo8eImMOFUWLYqXg_xGzaWPvvlO7lhng/s0/adwords-dart.png)][ad_words]
 
-<!-- Badges -->
-
-[![Pub Package](https://img.shields.io/pub/v/angular2.svg)](https://pub.dartlang.org/packages/angular2)
-[![Build Status](https://travis-ci.org/dart-lang/angular2.svg?branch=master)](https://travis-ci.org/dart-lang/angular2)
-[![Gitter](https://img.shields.io/gitter/room/dart-lang/angular2.svg)](https://gitter.im/dart-lang/angular2)
+## Overview
 
  * [Pub package][pub]
  * [Source code](https://github.com/dart-lang/angular2)
