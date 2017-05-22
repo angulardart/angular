@@ -163,8 +163,8 @@ class ElementWithDomEventComponent {}
   host: const {'(click)': 'onEvent(\$event)'},
 )
 class DirectiveListeningDomEventPrevent {
-  onEvent(event) {
-    return false;
+  onEvent(Event event) {
+    event.preventDefault();
   }
 }
 
@@ -173,9 +173,7 @@ class DirectiveListeningDomEventPrevent {
   host: const {'(click)': 'onEvent(\$event)'},
 )
 class DirectiveListeningDomEventNoPrevent {
-  onEvent(event) {
-    return true;
-  }
+  onEvent(Event event) {}
 }
 
 @Component(
