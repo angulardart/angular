@@ -1,5 +1,5 @@
-import "package:angular2/src/core/di/decorators.dart" show Injectable;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import '../../core/di/decorators.dart' show Injectable;
+import '../../facade/exceptions.dart' show BaseException;
 
 enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
@@ -18,145 +18,119 @@ class Lexer {
 }
 
 class Token {
-  num index;
-  TokenType type;
-  num numValue;
-  String strValue;
+  final num index;
+  final TokenType type;
+  final num numValue;
+  final String strValue;
+
   Token(this.index, this.type, this.numValue, this.strValue);
-  bool isCharacter(num code) {
-    return (this.type == TokenType.Character && this.numValue == code);
-  }
 
-  bool isNumber() {
-    return (this.type == TokenType.Number);
-  }
+  bool isCharacter(num code) => type == TokenType.Character && numValue == code;
 
-  bool isString() {
-    return (this.type == TokenType.String);
-  }
+  bool get isNumber => type == TokenType.Number;
 
-  bool isOperator(String operator) {
-    return (this.type == TokenType.Operator && this.strValue == operator);
-  }
+  bool get isString => type == TokenType.String;
 
-  bool isIdentifier() {
-    return (this.type == TokenType.Identifier);
-  }
+  bool isOperator(String operator) =>
+      type == TokenType.Operator && strValue == operator;
 
-  bool isKeyword() {
-    return (this.type == TokenType.Keyword);
-  }
+  bool get isIdentifier => type == TokenType.Identifier;
 
-  bool isKeywordDeprecatedVar() {
-    return (this.type == TokenType.Keyword && this.strValue == "var");
-  }
+  bool get isKeyword => type == TokenType.Keyword;
 
-  bool isKeywordLet() {
-    return (this.type == TokenType.Keyword && this.strValue == "let");
-  }
+  bool get isKeywordDeprecatedVar =>
+      type == TokenType.Keyword && strValue == 'var';
 
-  bool isKeywordNull() {
-    return (this.type == TokenType.Keyword && this.strValue == "null");
-  }
+  bool get isKeywordLet => type == TokenType.Keyword && strValue == 'let';
 
-  bool isKeywordUndefined() {
-    return (this.type == TokenType.Keyword && this.strValue == "undefined");
-  }
+  bool get isKeywordNull => type == TokenType.Keyword && strValue == 'null';
 
-  bool isKeywordTrue() {
-    return (this.type == TokenType.Keyword && this.strValue == "true");
-  }
+  bool get isKeywordUndefined =>
+      type == TokenType.Keyword && strValue == 'undefined';
 
-  bool isKeywordFalse() {
-    return (this.type == TokenType.Keyword && this.strValue == "false");
-  }
+  bool get isKeywordTrue => type == TokenType.Keyword && strValue == 'true';
 
-  num toNumber() {
-    // -1 instead of NULL ok?
-    return (this.type == TokenType.Number) ? this.numValue : -1;
-  }
+  bool get isKeywordFalse => type == TokenType.Keyword && strValue == 'false';
+
+  /// Returns numeric value or -1 if not a number token type. -1 is parsed as
+  /// unaryminus(1) so it is ok to use here.
+  num toNumber() => type == TokenType.Number ? numValue : -1;
 
   @override
   String toString() {
-    switch (this.type) {
+    switch (type) {
       case TokenType.Character:
       case TokenType.Identifier:
       case TokenType.Keyword:
       case TokenType.Operator:
       case TokenType.String:
-        return this.strValue;
+        return strValue;
       case TokenType.Number:
-        return this.numValue.toString();
+        return numValue.toString();
       default:
         return null;
     }
   }
 }
 
-Token newCharacterToken(num index, num code) {
-  return new Token(
-      index, TokenType.Character, code, new String.fromCharCode(code));
-}
+Token newCharacterToken(num index, num code) =>
+    new Token(index, TokenType.Character, code, new String.fromCharCode(code));
 
-Token newIdentifierToken(num index, String text) {
-  return new Token(index, TokenType.Identifier, 0, text);
-}
+Token newIdentifierToken(num index, String text) =>
+    new Token(index, TokenType.Identifier, 0, text);
 
-Token newKeywordToken(num index, String text) {
-  return new Token(index, TokenType.Keyword, 0, text);
-}
+Token newKeywordToken(num index, String text) =>
+    new Token(index, TokenType.Keyword, 0, text);
 
-Token newOperatorToken(num index, String text) {
-  return new Token(index, TokenType.Operator, 0, text);
-}
+Token newOperatorToken(num index, String text) =>
+    new Token(index, TokenType.Operator, 0, text);
 
-Token newStringToken(num index, String text) {
-  return new Token(index, TokenType.String, 0, text);
-}
+Token newStringToken(num index, String text) =>
+    new Token(index, TokenType.String, 0, text);
 
-Token newNumberToken(num index, num n) {
-  return new Token(index, TokenType.Number, n, "");
-}
+Token newNumberToken(num index, num n) =>
+    new Token(index, TokenType.Number, n, '');
 
-Token EOF = new Token(-1, TokenType.Character, 0, "");
-const $EOF = 0;
-const $TAB = 9;
-const $LF = 10;
-const $VTAB = 11;
-const $FF = 12;
-const $CR = 13;
-const $SPACE = 32;
-const $BANG = 33;
-const $DQ = 34;
-const $HASH = 35;
-const $$ = 36;
-const $PERCENT = 37;
-const $AMPERSAND = 38;
-const $SQ = 39;
-const $LPAREN = 40;
-const $RPAREN = 41;
-const $STAR = 42;
-const $PLUS = 43;
-const $COMMA = 44;
-const $MINUS = 45;
-const $PERIOD = 46;
-const $SLASH = 47;
-const $COLON = 58;
-const $SEMICOLON = 59;
-const $LT = 60;
-const $EQ = 61;
-const $GT = 62;
-const $QUESTION = 63;
-const $0 = 48;
-const $9 = 57;
-const $A = 65, $E = 69, $Z = 90;
-const $LBRACKET = 91;
-const $BACKSLASH = 92;
-const $RBRACKET = 93;
-const $CARET = 94;
-const $_ = 95;
-const $BT = 96;
-const $a = 97,
+final Token EOF = new Token(-1, TokenType.Character, 0, '');
+
+const int $EOF = 0;
+const int $TAB = 9;
+const int $LF = 10;
+const int $VTAB = 11;
+const int $FF = 12;
+const int $CR = 13;
+const int $SPACE = 32;
+const int $BANG = 33;
+const int $DQ = 34;
+const int $HASH = 35;
+const int $$ = 36;
+const int $PERCENT = 37;
+const int $AMPERSAND = 38;
+const int $SQ = 39;
+const int $LPAREN = 40;
+const int $RPAREN = 41;
+const int $STAR = 42;
+const int $PLUS = 43;
+const int $COMMA = 44;
+const int $MINUS = 45;
+const int $PERIOD = 46;
+const int $SLASH = 47;
+const int $COLON = 58;
+const int $SEMICOLON = 59;
+const int $LT = 60;
+const int $EQ = 61;
+const int $GT = 62;
+const int $QUESTION = 63;
+const int $0 = 48;
+const int $9 = 57;
+const int $A = 65, $E = 69, $Z = 90;
+const int $LBRACKET = 91;
+const int $BACKSLASH = 92;
+const int $RBRACKET = 93;
+const int $CARET = 94;
+const int $_ = 95;
+const int $BT = 96;
+const int $a = 97,
     $e = 101,
     $f = 102,
     $n = 110,
@@ -165,10 +139,10 @@ const $a = 97,
     $u = 117,
     $v = 118,
     $z = 122;
-const $LBRACE = 123;
-const $BAR = 124;
-const $RBRACE = 125;
-const $NBSP = 160;
+const int $LBRACE = 123;
+const int $BAR = 124;
+const int $RBRACE = 125;
+const int $NBSP = 160;
 
 class ScannerError extends BaseException {
   @override
@@ -177,53 +151,53 @@ class ScannerError extends BaseException {
   ScannerError(this.message);
 
   @override
-  String toString() {
-    return this.message;
-  }
+  String toString() => message;
 }
 
 class _Scanner {
   String input;
   num length;
-  num peek = 0;
-  num index = -1;
+  int peek = 0;
+  int index = -1;
+
   _Scanner(this.input) {
     this.length = input.length;
     this.advance();
   }
   void advance() {
-    this.peek =
-        ++this.index >= this.length ? $EOF : this.input.codeUnitAt(this.index);
+    peek = ++index >= length ? $EOF : input.codeUnitAt(index);
   }
 
   Token scanToken() {
     var input = this.input,
         length = this.length,
-        peek = this.peek,
-        index = this.index;
+        charAfterWhitespace = peek,
+        indexAfterWhitespace = index;
     // Skip whitespace.
-    while (peek <= $SPACE) {
-      if (++index >= length) {
-        peek = $EOF;
+    while (charAfterWhitespace <= $SPACE) {
+      if (++indexAfterWhitespace >= length) {
+        charAfterWhitespace = $EOF;
         break;
       } else {
-        peek = input.codeUnitAt(index);
+        charAfterWhitespace = input.codeUnitAt(indexAfterWhitespace);
       }
     }
-    this.peek = peek;
-    this.index = index;
+    peek = charAfterWhitespace;
+    index = indexAfterWhitespace;
+
     if (index >= length) {
       return null;
     }
+
     // Handle identifiers and numbers.
-    if (isIdentifierStart(peek)) return this.scanIdentifier();
-    if (isDigit(peek)) return this.scanNumber(index);
+    if (isIdentifierStart(peek)) return scanIdentifier();
+    if (isDigit(peek)) return scanNumber(index);
     num start = index;
     switch (peek) {
       case $PERIOD:
-        this.advance();
-        return isDigit(this.peek)
-            ? this.scanNumber(start)
+        advance();
+        return isDigit(peek)
+            ? scanNumber(start)
             : newCharacterToken(start, $PERIOD);
       case $LPAREN:
       case $RPAREN:
@@ -234,10 +208,10 @@ class _Scanner {
       case $COMMA:
       case $COLON:
       case $SEMICOLON:
-        return this.scanCharacter(start, peek);
+        return scanCharacter(start, peek);
       case $SQ:
       case $DQ:
-        return this.scanString();
+        return scanString();
       case $HASH:
       case $PLUS:
       case $MINUS:
@@ -245,129 +219,126 @@ class _Scanner {
       case $SLASH:
       case $PERCENT:
       case $CARET:
-        return this.scanOperator(start, new String.fromCharCode(peek));
+        return scanOperator(start, new String.fromCharCode(peek));
       case $QUESTION:
-        return this
-            .scanComplexOperator(start, "?", $PERIOD, ".", $QUESTION, "?");
+        return scanComplexOperator(start, '?', $PERIOD, '.', $QUESTION, '?');
       case $LT:
       case $GT:
-        return this.scanComplexOperator(
-            start, new String.fromCharCode(peek), $EQ, "=");
+        return scanComplexOperator(
+            start, new String.fromCharCode(peek), $EQ, '=');
       case $BANG:
       case $EQ:
-        return this.scanComplexOperator(
-            start, new String.fromCharCode(peek), $EQ, "=", $EQ, "=");
+        return scanComplexOperator(
+            start, new String.fromCharCode(peek), $EQ, '=', $EQ, '=');
       case $AMPERSAND:
-        return this.scanComplexOperator(start, "&", $AMPERSAND, "&");
+        return scanComplexOperator(start, '&', $AMPERSAND, '&');
       case $BAR:
-        return this.scanComplexOperator(start, "|", $BAR, "|");
+        return scanComplexOperator(start, '|', $BAR, '|');
       case $NBSP:
-        while (isWhitespace(this.peek)) this.advance();
-        return this.scanToken();
+        while (isWhitespace(this.peek)) advance();
+        return scanToken();
     }
-    this.error(
-        '''Unexpected character [${ new String . fromCharCode ( peek )}]''', 0);
+    error('Unexpected character [${ new String.fromCharCode(peek)}]', 0);
     return null;
   }
 
   Token scanCharacter(num start, num code) {
-    this.advance();
+    advance();
     return newCharacterToken(start, code);
   }
 
   Token scanOperator(num start, String str) {
-    this.advance();
+    advance();
     return newOperatorToken(start, str);
   }
 
   /// Tokenize a 2/3 char long operator
   Token scanComplexOperator(num start, String one, num twoCode, String two,
       [num threeCode, String three]) {
-    this.advance();
+    advance();
     String str = one;
-    if (this.peek == twoCode) {
-      this.advance();
+    if (peek == twoCode) {
+      advance();
       str += two;
     }
-    if (threeCode != null && this.peek == threeCode) {
-      this.advance();
+    if (threeCode != null && peek == threeCode) {
+      advance();
       str += three;
     }
     return newOperatorToken(start, str);
   }
 
   Token scanIdentifier() {
-    num start = this.index;
-    this.advance();
-    while (isIdentifierPart(this.peek)) this.advance();
-    String str = this.input.substring(start, this.index);
+    num startIndex = index;
+    advance();
+    while (isIdentifierPart(peek)) advance();
+    String str = input.substring(startIndex, index);
     if (KEYWORDS.contains(str)) {
-      return newKeywordToken(start, str);
+      return newKeywordToken(startIndex, str);
     } else {
-      return newIdentifierToken(start, str);
+      return newIdentifierToken(startIndex, str);
     }
   }
 
-  Token scanNumber(num start) {
-    bool simple = (identical(this.index, start));
-    this.advance();
+  Token scanNumber(int start) {
+    bool simple = index == start;
+    advance();
     while (true) {
-      if (isDigit(this.peek)) {} else if (this.peek == $PERIOD) {
+      if (isDigit(peek)) {} else if (peek == $PERIOD) {
         simple = false;
-      } else if (isExponentStart(this.peek)) {
-        this.advance();
-        if (isExponentSign(this.peek)) this.advance();
-        if (!isDigit(this.peek)) this.error("Invalid exponent", -1);
+      } else if (isExponentStart(peek)) {
+        advance();
+        if (isExponentSign(peek)) advance();
+        if (!isDigit(this.peek)) error('Invalid exponent', -1);
         simple = false;
       } else {
         break;
       }
-      this.advance();
+      advance();
     }
-    String str = this.input.substring(start, this.index);
-    // TODO
+    String str = input.substring(start, index);
     num value = simple ? int.parse(str) : double.parse(str);
     return newNumberToken(start, value);
   }
 
   Token scanString() {
-    num start = this.index;
-    num quote = this.peek;
+    num start = index;
+    num quote = peek;
     this.advance();
     List<String> buffer;
-    num marker = this.index;
+    num marker = index;
     String input = this.input;
-    while (this.peek != quote) {
-      if (this.peek == $BACKSLASH) {
+    while (peek != quote) {
+      if (peek == $BACKSLASH) {
         buffer ??= <String>[];
-        buffer.add(input.substring(marker, this.index));
-        this.advance();
+        buffer.add(input.substring(marker, index));
+        advance();
         num unescapedCode;
-        if (this.peek == $u) {
+        if (peek == $u) {
           // 4 character hex code for unicode character.
-          String hex = input.substring(this.index + 1, this.index + 5);
+          String hex = input.substring(index + 1, index + 5);
           try {
             unescapedCode = int.parse(hex, radix: 16);
           } catch (e) {
-            this.error('''Invalid unicode escape [\\u${ hex}]''', 0);
+            this.error('Invalid unicode escape [\\u$hex]', 0);
           }
           for (num i = 0; i < 5; i++) {
-            this.advance();
+            advance();
           }
         } else {
-          unescapedCode = unescape(this.peek);
-          this.advance();
+          unescapedCode = unescape(peek);
+          advance();
         }
         buffer.add(new String.fromCharCode(unescapedCode));
-        marker = this.index;
-      } else if (this.peek == $EOF) {
-        this.error("Unterminated quote", 0);
+        marker = index;
+      } else if (peek == $EOF) {
+        error('Unterminated quote', 0);
       } else {
-        this.advance();
+        advance();
       }
     }
-    String last = input.substring(marker, this.index);
-    this.advance();
+    String last = input.substring(marker, index);
+    advance();
     // Compute the unescaped string value.
     String unescaped = last;
     if (buffer != null) {
@@ -377,23 +348,21 @@ class _Scanner {
     return newStringToken(start, unescaped);
   }
 
-  void error(String message, num offset) {
-    num position = this.index + offset;
+  void error(String message, int offset) {
+    int position = this.index + offset;
     throw new ScannerError(
-        '''Lexer Error: ${ message} at column ${ position} in expression [${ this . input}]''');
+        'Lexer Error: $message at column $position in expression [$input]');
   }
 }
 
-bool isWhitespace(num code) {
-  return (code >= $TAB && code <= $SPACE) || (code == $NBSP);
-}
+bool isWhitespace(num code) =>
+    (code >= $TAB && code <= $SPACE) || (code == $NBSP);
 
-bool isIdentifierStart(num code) {
-  return ($a <= code && code <= $z) ||
-      ($A <= code && code <= $Z) ||
-      (code == $_) ||
-      (code == $$);
-}
+bool isIdentifierStart(num code) =>
+    ($a <= code && code <= $z) ||
+    ($A <= code && code <= $Z) ||
+    (code == $_) ||
+    (code == $$);
 
 bool isIdentifier(String input) {
   if (input.length == 0) return false;
@@ -407,31 +376,23 @@ bool isIdentifier(String input) {
   return true;
 }
 
-bool isIdentifierPart(num code) {
-  return ($a <= code && code <= $z) ||
-      ($A <= code && code <= $Z) ||
-      ($0 <= code && code <= $9) ||
-      (code == $_) ||
-      (code == $$);
-}
+bool isIdentifierPart(int code) =>
+    ($a <= code && code <= $z) ||
+    ($A <= code && code <= $Z) ||
+    ($0 <= code && code <= $9) ||
+    (code == $_) ||
+    (code == $$);
 
-bool isDigit(num code) {
-  return $0 <= code && code <= $9;
-}
+bool isDigit(int code) => $0 <= code && code <= $9;
 
-bool isExponentStart(num code) {
-  return code == $e || code == $E;
-}
+bool isExponentStart(int code) => code == $e || code == $E;
 
-bool isExponentSign(num code) {
-  return code == $MINUS || code == $PLUS;
-}
+bool isExponentSign(num code) => code == $MINUS || code == $PLUS;
 
-bool isQuote(num code) {
-  return identical(code, $SQ) || identical(code, $DQ) || identical(code, $BT);
-}
+bool isQuote(int code) =>
+    identical(code, $SQ) || identical(code, $DQ) || identical(code, $BT);
 
-num unescape(num code) {
+num unescape(int code) {
   switch (code) {
     case $n:
       return $LF;
@@ -448,39 +409,40 @@ num unescape(num code) {
   }
 }
 
-var OPERATORS = new Set<String>.from(const [
-  "+",
-  "-",
-  "*",
-  "/",
-  "%",
-  "^",
-  "=",
-  "==",
-  "!=",
-  "===",
-  "!==",
-  "<",
-  ">",
-  "<=",
-  ">=",
-  "&&",
-  "||",
-  "&",
-  "|",
-  "!",
-  "?",
-  "#",
-  "?.",
-  "??",
+final OPERATORS = new Set<String>.from(const [
+  '+',
+  '-',
+  '*',
+  '/',
+  '%',
+  '^',
+  '=',
+  '==',
+  '!=',
+  '===',
+  '!==',
+  '<',
+  '>',
+  '<=',
+  '>=',
+  '&&',
+  '||',
+  '&',
+  '|',
+  '!',
+  '?',
+  '#',
+  '?.',
+  '??',
 ]);
-var KEYWORDS = new Set<String>.from(const [
-  "var",
-  "let",
-  "null",
-  "undefined",
-  "true",
-  "false",
-  "if",
-  "else",
+
+final KEYWORDS = new Set<String>.from(const [
+  'var',
+  'let',
+  'null',
+  'undefined',
+  'true',
+  'false',
+  'if',
+  'else',
 ]);

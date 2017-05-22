@@ -6,7 +6,7 @@ class AST {
   }
 
   @override
-  String toString() => "AST";
+  String toString() => 'AST';
 }
 
 class EmptyExpr extends AST {
