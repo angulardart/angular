@@ -116,7 +116,6 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
       setProp(rootEl, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
-    dbg(0, 0, 0);
     final currVal_1 = _HostComponent_0_2.isDisabled;
     if (import8.checkBinding(_expr_1, currVal_1)) {
       updateElemClass(rootEl, 'is-disabled', currVal_1);
