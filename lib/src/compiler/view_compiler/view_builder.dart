@@ -859,7 +859,7 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
       _createViewClassConstructor(view, nodeDebugInfosVar, logger);
   var viewMethods = (new List.from([
     new o.ClassMethod("build", [], generateBuildMethod(view, parser),
-        o.importType(Identifiers.ComponentRef, null)),
+        o.importType(Identifiers.ComponentRef, null), null, ['override']),
     new o.ClassMethod(
         "injectorGetInternal",
         [
@@ -869,12 +869,15 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
         ],
         addReturnValuefNotEmpty(
             view.injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
-        o.DYNAMIC_TYPE),
-    new o.ClassMethod(
-        "detectChangesInternal", [], generateDetectChangesMethod(view)),
+        o.DYNAMIC_TYPE,
+        null,
+        ['override']),
+    new o.ClassMethod("detectChangesInternal", [],
+        generateDetectChangesMethod(view), null, null, ['override']),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
-        view.dirtyParentQueriesMethod.finish()),
-    new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view))
+        view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
+    new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view), null,
+        null, ['override'])
   ])
     ..addAll(view.eventHandlerMethods));
   var superClass = view.genConfig.genDebugInfo

@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -41,6 +40,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
         .createRenderType('', ViewEncapsulation.None, styles_HostComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.HostComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -71,6 +71,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HostComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewHostComponent0(this, 0);
@@ -81,6 +82,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _HostComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.HostComponent) && (0 == nodeIndex))) {
@@ -89,6 +91,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _HostComponent_0_2.title;
@@ -104,6 +107,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

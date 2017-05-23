@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -50,6 +49,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
         styles_EmulatedComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -90,6 +90,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_EmulatedComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewEmulatedComponent0(this, 0);
@@ -101,6 +102,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _EmulatedComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.EmulatedComponent) && (0 == nodeIndex))) {
@@ -109,11 +111,13 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -150,6 +154,7 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
         styles_NativeComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
@@ -191,6 +196,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_NativeComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewNativeComponent0(this, 0);
@@ -202,6 +208,7 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _NativeComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.NativeComponent) && (0 == nodeIndex))) {
@@ -210,11 +217,13 @@ class ViewNativeComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -251,6 +260,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
         styles_NoneComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -291,6 +301,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_NoneComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewNoneComponent0(this, 0);
@@ -302,6 +313,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _NoneComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.NoneComponent) && (0 == nodeIndex))) {
@@ -310,11 +322,13 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -56,6 +55,7 @@ class ViewHasTemplateFileComponent0
         styles_HasTemplateFileComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import3.HasTemplateFileComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -101,6 +101,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasTemplateFileComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewHasTemplateFileComponent0(this, 0);
@@ -112,6 +113,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import3.HasTemplateFileComponent) &&
@@ -121,11 +123,13 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

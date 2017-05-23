@@ -10,7 +10,6 @@ import 'package:quiver/strings.dart' as strings;
 import 'template_compiler_outputs.dart';
 
 const _ignoredProblems = const <String>[
-  'annotate_overrides',
   'cancel_subscriptions',
   'constant_identifier_names',
   'non_constant_identifier_names',

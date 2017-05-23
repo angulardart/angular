@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -40,6 +39,7 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
         .createRenderType('', ViewEncapsulation.None, styles_EmulatedComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -70,6 +70,7 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_EmulatedComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewEmulatedComponent0(this, 0);
@@ -80,6 +81,7 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _EmulatedComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.EmulatedComponent) && (0 == nodeIndex))) {
@@ -88,11 +90,13 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -121,6 +125,7 @@ class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
         .createRenderType('', ViewEncapsulation.Native, styles_NativeComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
@@ -151,6 +156,7 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_NativeComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewNativeComponent0(this, 0);
@@ -161,6 +167,7 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _NativeComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.NativeComponent) && (0 == nodeIndex))) {
@@ -169,11 +176,13 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -202,6 +211,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
         .createRenderType('', ViewEncapsulation.None, styles_NoneComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -232,6 +242,7 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_NoneComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewNoneComponent0(this, 0);
@@ -242,6 +253,7 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _NoneComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.NoneComponent) && (0 == nodeIndex))) {
@@ -250,11 +262,13 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

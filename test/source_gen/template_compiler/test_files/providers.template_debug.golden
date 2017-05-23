@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -50,6 +49,7 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
         styles_ProvidersComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.ProvidersComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -193,6 +193,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__const_OpaqueToken__useEnums___0_13;
   }
 
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewProvidersComponent0(this, 0);
@@ -204,6 +205,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _ProvidersComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.ProvidersComponent) && (0 == nodeIndex))) {
@@ -246,11 +248,13 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

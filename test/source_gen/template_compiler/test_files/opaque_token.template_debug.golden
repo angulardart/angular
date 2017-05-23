@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -51,6 +50,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
         styles_HasOpaqueTokens);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.HasOpaqueTokens _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -61,6 +61,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
     return null;
   }
 
+  @override
   void detectChangesInternal() {
     final import2.HasOpaqueTokens _ctx = ctx;
     dbg(0, 0, 0);
@@ -102,6 +103,7 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasOpaqueTokensHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
@@ -115,6 +117,7 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_3);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
@@ -127,11 +130,13 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

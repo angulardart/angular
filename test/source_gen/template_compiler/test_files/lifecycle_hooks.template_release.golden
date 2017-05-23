@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -40,6 +39,7 @@ class ViewLifecycleHooksComponent0
         '', ViewEncapsulation.None, styles_LifecycleHooksComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.LifecycleHooksComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -66,6 +66,7 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_LifecycleHooksComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);
@@ -76,6 +77,7 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.LifecycleHooksComponent) &&
@@ -85,6 +87,7 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
     final _ctx = ctx;
@@ -103,6 +106,7 @@ class ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
     _LifecycleHooksComponent_0_2.ngAfterViewChecked();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
     _LifecycleHooksComponent_0_2.ngOnDestroy();

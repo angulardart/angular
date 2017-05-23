@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -70,6 +69,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
         .createRenderType('', ViewEncapsulation.None, styles_QueriesComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.QueriesComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -137,6 +137,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     return null;
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.AnotherDirective) && (1 == nodeIndex))) {
@@ -178,6 +179,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final import1.QueriesComponent _ctx = ctx;
     if (_viewQuery_q8_0.dirty) {
@@ -238,6 +240,7 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_QueriesComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewQueriesComponent0(this, 0);
@@ -263,6 +266,7 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _QueriesComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.QueriesComponent) && (0 == nodeIndex))) {
@@ -271,6 +275,7 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     if (_query_q7_0_0.dirty) {
@@ -306,6 +311,7 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

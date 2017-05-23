@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -59,6 +58,7 @@ class ViewTestContainerComponent0
         styles_TestContainerComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import3.TestContainerComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -104,6 +104,7 @@ class ViewTestContainerComponent1
             nodeDebugInfos_TestContainerComponent1) {
     componentType = ViewTestContainerComponent0.renderType;
   }
+  @override
   ComponentRef build() {
     final import3.TestContainerComponent _ctx = ctx;
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
@@ -117,6 +118,7 @@ class ViewTestContainerComponent1
     return null;
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, deflib0.DeferredChildComponent) &&
@@ -126,11 +128,13 @@ class ViewTestContainerComponent1
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final import3.TestContainerComponent _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -163,6 +167,7 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_TestContainerComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewTestContainerComponent0(this, 0);
@@ -174,6 +179,7 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _TestContainerComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import3.TestContainerComponent) &&
@@ -183,11 +189,13 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
