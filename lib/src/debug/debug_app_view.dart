@@ -134,8 +134,8 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  VoidFunc1 eventHandler0(VoidFunc0 handler) {
-    return (event) {
+  VoidFunc1<E> eventHandler0<E>(VoidFunc0 handler) {
+    return (E event) {
       _resetDebug();
       try {
         return super.eventHandler0(handler)(event);
@@ -147,8 +147,8 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  VoidFunc1 eventHandler1(VoidFunc1 handler) {
-    return (event) {
+  VoidFunc1<E> eventHandler1<E, F extends E>(VoidFunc1<F> handler) {
+    return (E event) {
       _resetDebug();
       try {
         return super.eventHandler1(handler)(event);

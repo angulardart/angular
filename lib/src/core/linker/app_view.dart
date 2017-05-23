@@ -534,8 +534,8 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  VoidFunc1 eventHandler0(VoidFunc0 handler) {
-    return (event) {
+  VoidFunc1<E> eventHandler0<E>(VoidFunc0 handler) {
+    return (E event) {
       markPathToRootAsCheckOnce();
       if (NgZone.isInAngularZone()) {
         handler();
@@ -545,13 +545,23 @@ abstract class AppView<T> {
     };
   }
 
-  VoidFunc1 eventHandler1(VoidFunc1 handler) {
-    return (event) {
+  // When registering an event listener for a native DOM event, the return value
+  // of this method is passed to EventTarget.addEventListener() which expects a
+  // function that accepts an Event parameter. This means you can't directly
+  // register an event listener for a specific subclass of Event, such as a
+  // MouseEvent for the 'click' event. A workaround is possible by ensuring the
+  // parameter of the event listener is a subclass of Event. The Event passed in
+  // from EventTarget.addEventListener() can then be safely coerced back to its
+  // known type.
+  VoidFunc1<E> eventHandler1<E, F extends E>(VoidFunc1<F> handler) {
+    return (E event) {
       markPathToRootAsCheckOnce();
       if (NgZone.isInAngularZone()) {
-        handler(event);
+        handler(event as F);
       } else {
-        appViewUtils.eventManager.getZone().runGuarded(() => handler(event));
+        appViewUtils.eventManager
+            .getZone()
+            .runGuarded(() => handler(event as F));
       }
     };
   }
