@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -51,6 +50,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
         styles_Comp);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.Comp _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -66,6 +66,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
     return null;
   }
 
+  @override
   void detectChangesInternal() {
     final valUnwrapper = new ValueUnwrapper();
     final import2.Comp _ctx = ctx;
@@ -88,6 +89,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
     }
   }
 
+  @override
   void destroyInternal() {
     _pipe_lifecycle_2.ngOnDestroy();
   }
@@ -114,6 +116,7 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
         .createRenderType('', ViewEncapsulation.Emulated, styles_CompHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewComp0(this, 0);
@@ -125,6 +128,7 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _Comp_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.Comp) && (0 == nodeIndex))) {
@@ -133,11 +137,13 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

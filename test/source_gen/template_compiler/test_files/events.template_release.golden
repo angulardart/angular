@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -41,6 +40,7 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
         .createRenderType('', ViewEncapsulation.None, styles_UsesNativeEvents);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.UsesNativeEvents _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -75,6 +75,7 @@ class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_UsesNativeEventsHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewUsesNativeEvents0(this, 0);
@@ -85,6 +86,7 @@ class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.UsesNativeEvents) && (0 == nodeIndex))) {
@@ -93,11 +95,13 @@ class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -128,6 +132,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
         .createRenderType('', ViewEncapsulation.None, styles_UsesAngularEvents);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.UsesAngularEvents _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -146,6 +151,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     return null;
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.HasAngularEvents) && (1 == nodeIndex))) {
@@ -154,11 +160,13 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final import1.UsesAngularEvents _ctx = ctx;
     _compView_1.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_1.destroy();
   }
@@ -182,6 +190,7 @@ class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_UsesAngularEventsHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewUsesAngularEvents0(this, 0);
@@ -192,6 +201,7 @@ class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.UsesAngularEvents) && (0 == nodeIndex))) {
@@ -200,11 +210,13 @@ class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -232,6 +244,7 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
         .createRenderType('', ViewEncapsulation.None, styles_HasAngularEvents);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.HasAngularEvents _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -258,6 +271,7 @@ class ViewHasAngularEventsHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_HasAngularEventsHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewHasAngularEvents0(this, 0);
@@ -268,6 +282,7 @@ class ViewHasAngularEventsHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.HasAngularEvents) && (0 == nodeIndex))) {
@@ -276,11 +291,13 @@ class ViewHasAngularEventsHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -43,6 +42,7 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
         '', ViewEncapsulation.None, styles_InjectableComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import1.InjectableComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -94,6 +94,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
     return this.__BaseService_0_5;
   }
 
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewInjectableComponent0(this, 0);
@@ -110,6 +111,7 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _InjectableComponent_0_3);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, const OpaqueToken('test')) && (0 == nodeIndex))) {
@@ -127,11 +129,13 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

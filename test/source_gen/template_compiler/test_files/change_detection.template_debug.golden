@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -50,6 +49,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
         styles_CheckOnceComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.CheckOnceComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -90,6 +90,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_CheckOnceComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
@@ -101,6 +102,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckOnceComponent) && (0 == nodeIndex))) {
@@ -109,11 +111,13 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -150,6 +154,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
         styles_CheckedComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.CheckedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -190,6 +195,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_CheckedComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewCheckedComponent0(this, 0);
@@ -201,6 +207,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _CheckedComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckedComponent) && (0 == nodeIndex))) {
@@ -209,11 +216,13 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -251,6 +260,7 @@ class ViewCheckAlwaysComponent0
         styles_CheckAlwaysComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.CheckAlwaysComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -291,6 +301,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_CheckAlwaysComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
@@ -302,6 +313,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckAlwaysComponent) && (0 == nodeIndex))) {
@@ -310,11 +322,13 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -351,6 +365,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
         styles_DetachedComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.DetachedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -391,6 +406,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_DetachedComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewDetachedComponent0(this, 0);
@@ -402,6 +418,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _DetachedComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DetachedComponent) && (0 == nodeIndex))) {
@@ -410,11 +427,13 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -451,6 +470,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
         styles_OnPushComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.OnPushComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -491,6 +511,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_OnPushComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewOnPushComponent0(this, 0);
@@ -502,6 +523,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _OnPushComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.OnPushComponent) && (0 == nodeIndex))) {
@@ -510,11 +532,13 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -551,6 +575,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
         styles_StatefulComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.StatefulComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -592,6 +617,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_StatefulComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewStatefulComponent0(this, 0);
@@ -603,6 +629,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _StatefulComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.StatefulComponent) && (0 == nodeIndex))) {
@@ -611,11 +638,13 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -652,6 +681,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
         styles_DefaultComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.DefaultComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -692,6 +722,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_DefaultComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewDefaultComponent0(this, 0);
@@ -703,6 +734,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _DefaultComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DefaultComponent) && (0 == nodeIndex))) {
@@ -711,11 +743,13 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

@@ -235,6 +235,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void _visitClassMethod(o.ClassMethod method, dynamic context) {
     EmitterVisitorContext ctx = context;
     ctx.enterMethod(method);
+    for (var annotation in method.annotations) {
+      ctx.print('@$annotation ');
+    }
     if (method.type != null) {
       method.type.visitType(this, ctx);
     } else {

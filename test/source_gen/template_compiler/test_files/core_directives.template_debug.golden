@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -65,6 +64,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
         styles_TestFooComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import5.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -95,6 +95,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     return null;
   }
 
+  @override
   void detectChangesInternal() {
     final import5.TestFooComponent _ctx = ctx;
     dbg(1, 0, 9);
@@ -112,6 +113,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     _appEl_3.detectChangesInNestedViews();
   }
 
+  @override
   void destroyInternal() {
     _appEl_1.destroyNestedViews();
     _appEl_3.destroyNestedViews();
@@ -137,6 +139,7 @@ class ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
             nodeDebugInfos_TestFooComponent1) {
     componentType = ViewTestFooComponent0.renderType;
   }
+  @override
   ComponentRef build() {
     final import5.TestFooComponent _ctx = ctx;
     var doc = document;
@@ -178,6 +181,7 @@ class ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
             nodeDebugInfos_TestFooComponent2) {
     componentType = ViewTestFooComponent0.renderType;
   }
+  @override
   ComponentRef build() {
     final import5.TestFooComponent _ctx = ctx;
     var doc = document;
@@ -197,6 +201,7 @@ class ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
     return null;
   }
 
+  @override
   void detectChangesInternal() {
     final import5.TestFooComponent _ctx = ctx;
     dbg(3, 2, 12);
@@ -235,6 +240,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_TestFooComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewTestFooComponent0(this, 0);
@@ -246,6 +252,7 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import5.TestFooComponent) && (0 == nodeIndex))) {
@@ -254,11 +261,13 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }

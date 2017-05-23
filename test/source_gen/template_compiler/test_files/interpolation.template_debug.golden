@@ -5,7 +5,6 @@
 // Target: library
 // **************************************************************************
 
-// @ignoreProblemForFile annotate_overrides
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
@@ -57,6 +56,7 @@ class ViewInterpolationComponent0
         styles_InterpolationComponent);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.InterpolationComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -72,6 +72,7 @@ class ViewInterpolationComponent0
     return null;
   }
 
+  @override
   void detectChangesInternal() {
     final import2.InterpolationComponent _ctx = ctx;
     dbg(1, 0, 5);
@@ -110,6 +111,7 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles_InterpolationComponentHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewInterpolationComponent0(this, 0);
@@ -121,6 +123,7 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
     return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.InterpolationComponent) &&
@@ -130,11 +133,13 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
@@ -178,6 +183,7 @@ class ViewInterpolationComponentNoWhitespace0
         styles_InterpolationComponentNoWhitespace);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final import2.InterpolationComponentNoWhitespace _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
@@ -190,6 +196,7 @@ class ViewInterpolationComponentNoWhitespace0
     return null;
   }
 
+  @override
   void detectChangesInternal() {
     final import2.InterpolationComponentNoWhitespace _ctx = ctx;
     dbg(1, 0, 5);
@@ -235,6 +242,7 @@ class ViewInterpolationComponentNoWhitespaceHost0
         styles_InterpolationComponentNoWhitespaceHost);
     setupComponentType(renderType);
   }
+  @override
   ComponentRef build() {
     final _ctx = ctx;
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
@@ -249,6 +257,7 @@ class ViewInterpolationComponentNoWhitespaceHost0
         0, this, rootEl, _InterpolationComponentNoWhitespace_0_2);
   }
 
+  @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.InterpolationComponentNoWhitespace) &&
@@ -258,11 +267,13 @@ class ViewInterpolationComponentNoWhitespaceHost0
     return notFoundResult;
   }
 
+  @override
   void detectChangesInternal() {
     final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
+  @override
   void destroyInternal() {
     _compView_0.destroy();
   }
