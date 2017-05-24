@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 import 'package:angular_test/angular_test.dart';
 
 import 'exports_statics.dart';
+import 'exports_statics.dart' as lib;
 
 void main() {
   group('exports', () {
@@ -54,6 +55,39 @@ void main() {
         div.click();
       });
       expect(clickHandled, true);
+    });
+
+    test('can be assigned in an event handler', () async {
+      var testBed = new NgTestBed<StaticEventHandlerTargetTest>();
+      var fixture = await testBed.create();
+      var div = fixture.rootElement.querySelector('div');
+      MyClass.clickHandled = false;
+      await fixture.update((_) {
+        div.click();
+      });
+      expect(MyClass.clickHandled, true);
+    });
+
+    test('can be used as event handler arguments', () async {
+      var testBed = new NgTestBed<StaticEventHandlerArgTest>();
+      var fixture = await testBed.create();
+      var div = fixture.rootElement.querySelector('div');
+      var listArg;
+      await fixture.update((StaticEventHandlerArgTest component) {
+        component.clickHandler = (list) {
+          listArg = list;
+        };
+        div.click();
+      });
+      expect(listArg, myList);
+    });
+
+    group('can be prefixed', () {
+      test('with library prefix', () async {
+        var testBed = new NgTestBed<StaticLibraryPrefixTest>();
+        var fixture = await testBed.create();
+        expect(fixture.text, 'hello');
+      });
     });
   });
 }
@@ -107,3 +141,30 @@ class StaticNgForTest {}
   exports: const [staticClickHandler],
 )
 class StaticEventHandlerTest {}
+
+@Component(
+  selector: 'static-event-handler-target-test',
+  template: '<div (click)="MyClass.clickHandled = true"></div>',
+  exports: const [MyClass],
+)
+class StaticEventHandlerTargetTest {}
+
+@Component(
+  selector: 'static-event-handle-arg-test',
+  template: '<div (click)="handleClick(myList)"></div>',
+  exports: const [myList],
+)
+class StaticEventHandlerArgTest {
+  Function clickHandler;
+
+  handleClick(List list) {
+    clickHandler(list);
+  }
+}
+
+@Component(
+  selector: 'static-library-prefix-test',
+  template: '<p>{{lib.myConst}}</p>',
+  exports: const [lib.myConst],
+)
+class StaticLibraryPrefixTest {}
