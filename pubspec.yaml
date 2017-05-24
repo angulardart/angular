@@ -37,6 +37,9 @@ dev_dependencies:
   mockito: '>=0.11.0 <3.0.0'
   test: ^0.12.6
   transformer_test: ^0.2.0
+# Remove before publishing 4.0.0-alpha.
+dependency_overrides:
+  angular_test: '1.0.0-beta+2'
 transformers:
   - test/pub_serve:
       $include: test/**_test.dart
