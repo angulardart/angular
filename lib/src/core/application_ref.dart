@@ -133,8 +133,7 @@ class PlatformRefImpl extends PlatformRef {
     });
     _injector = injector;
 
-    List<Function> initializers =
-        (injector.get(PLATFORM_INITIALIZER, null) as List<Function>);
+    List initializers = injector.get(PLATFORM_INITIALIZER, null);
     initializers?.forEach((init) => init());
   }
 
