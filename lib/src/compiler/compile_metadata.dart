@@ -44,26 +44,8 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier {
   String moduleUrl;
   dynamic value;
 
-  /// [runtime] and [runtimeCallback] are used for Identifiers based access.
-  ///
-  /// Angular creates code from output ast(s) and at the same time provides
-  /// a dynamic interpreter. The Interpreter is used for tests that need to
-  /// override templates at runtime.
-  ///
-  /// To allow the interpreter to access values that are not
-  /// available through reflection, [runtime] is used as a way to provide this
-  /// value for the output interpreter.
-  ///
-  /// Not marked final since tests modify value.
-  T runtime;
-
-  /// Same as runtime but evaluates function before using value.
-  Function runtimeCallback;
-
   CompileIdentifierMetadata(
-      {this.runtime,
-      this.runtimeCallback,
-      this.name,
+      {this.name,
       this.moduleUrl,
       this.prefix,
       this.emitPrefix: false,
@@ -200,10 +182,6 @@ class CompileFactoryMetadata
         CompileIdentifierMetadata<Function>,
         CompileMetadataWithIdentifier {
   @override
-  Function runtime;
-  @override
-  Function runtimeCallback;
-  @override
   String name;
   @override
   String prefix;
@@ -215,8 +193,7 @@ class CompileFactoryMetadata
   dynamic value;
   List<CompileDiDependencyMetadata> diDeps;
   CompileFactoryMetadata(
-      {this.runtime,
-      this.name,
+      {this.name,
       this.moduleUrl,
       this.prefix,
       this.emitPrefix: false,
@@ -273,9 +250,6 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
         'identifierIsInstance': identifierIsInstance
       };
 
-  dynamic get runtimeCacheKey =>
-      identifier != null ? identifier.runtime : value;
-
   dynamic get assetCacheKey {
     if (identifier != null) {
       return identifier.moduleUrl != null &&
@@ -288,10 +262,8 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   }
 
   bool equalsTo(CompileTokenMetadata token2) {
-    var rk = runtimeCacheKey;
     var ak = assetCacheKey;
-    return (rk != null && rk == token2.runtimeCacheKey) ||
-        (ak != null && ak == token2.assetCacheKey);
+    return (ak != null && ak == token2.assetCacheKey);
   }
 
   String get name {
@@ -312,10 +284,6 @@ class CompileTokenMap<V> {
     }
     _tokens.add(token);
     _values.add(value);
-    var rk = token.runtimeCacheKey;
-    if (rk != null) {
-      _valueMap[rk] = value;
-    }
     var ak = token.assetCacheKey;
     if (ak != null) {
       _valueMap[ak] = value;
@@ -323,12 +291,8 @@ class CompileTokenMap<V> {
   }
 
   V get(CompileTokenMetadata token) {
-    var rk = token.runtimeCacheKey;
     var ak = token.assetCacheKey;
     V result;
-    if (rk != null) {
-      result = _valueMap[rk];
-    }
     if (result == null && ak != null) {
       result = _valueMap[ak];
     }
@@ -348,10 +312,6 @@ class CompileTokenMap<V> {
 class CompileTypeMetadata
     implements CompileIdentifierMetadata<Type>, CompileMetadataWithType {
   @override
-  Type runtime;
-  @override
-  Function runtimeCallback;
-  @override
   String name;
   @override
   String prefix;
@@ -364,8 +324,7 @@ class CompileTypeMetadata
   dynamic value;
   List<CompileDiDependencyMetadata> diDeps;
   CompileTypeMetadata(
-      {this.runtime,
-      this.name,
+      {this.name,
       this.moduleUrl,
       this.prefix,
       bool isHost,
@@ -713,7 +672,6 @@ CompileDirectiveMetadata createHostComponentMeta(
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
   return CompileDirectiveMetadata.create(
       type: new CompileTypeMetadata(
-          runtime: Object,
           name: '${componentType.name}Host',
           moduleUrl: componentType.moduleUrl,
           isHost: true),

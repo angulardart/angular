@@ -376,8 +376,6 @@ class CompileElement extends CompileNode {
 
     CompileIdentifierMetadata componentId = deferredMeta.identifier;
     CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
-        runtime: componentId.runtime,
-        runtimeCallback: componentId.runtimeCallback,
         name: '',
         moduleUrl: componentId.moduleUrl,
         prefix: prefix,
@@ -387,8 +385,6 @@ class CompileElement extends CompileNode {
     CompileIdentifierMetadata nestedComponentId = new CompileIdentifierMetadata(
         name: getViewFactoryName(deferredElement.component, 0));
     CompileIdentifierMetadata templatePrefixId = new CompileIdentifierMetadata(
-        runtime: nestedComponentId.runtime,
-        runtimeCallback: nestedComponentId.runtimeCallback,
         name: 'loadLibrary',
         moduleUrl: nestedComponentId.moduleUrl,
         prefix: templatePrefix,
@@ -397,8 +393,6 @@ class CompileElement extends CompileNode {
 
     CompileIdentifierMetadata templateInitializer =
         new CompileIdentifierMetadata(
-            runtime: nestedComponentId.runtime,
-            runtimeCallback: nestedComponentId.runtimeCallback,
             name: 'initReflector',
             moduleUrl: nestedComponentId.moduleUrl,
             prefix: templatePrefix,

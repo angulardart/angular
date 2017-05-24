@@ -8,7 +8,6 @@ import 'expression_parser/lexer.dart' show Lexer;
 import 'expression_parser/parser.dart' show Parser;
 import 'html_parser.dart' show HtmlParser;
 import 'pipe_resolver.dart' show PipeResolver;
-import 'runtime_metadata.dart' show RuntimeMetadataResolver;
 import 'schema/dom_element_schema_registry.dart' show DomElementSchemaRegistry;
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'style_compiler.dart' show StyleCompiler;
@@ -43,7 +42,6 @@ const List<dynamic /* Type | Provider | List < dynamic > */ >
   HtmlParser,
   TemplateParser,
   DirectiveNormalizer,
-  RuntimeMetadataResolver,
   DEFAULT_PACKAGE_URL_PROVIDER,
   StyleCompiler,
   ViewCompiler,

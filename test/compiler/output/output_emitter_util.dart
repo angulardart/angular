@@ -3,11 +3,7 @@ library angular2.test.compiler.output.output_emitter_util;
 import "package:angular2/src/compiler/compile_metadata.dart"
     show CompileIdentifierMetadata;
 import "package:angular2/src/compiler/compiler_utils.dart" show MODULE_SUFFIX;
-import "package:angular2/src/compiler/output/dynamic_instance.dart";
 import "package:angular2/src/compiler/output/output_ast.dart" as o;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 class ExternalClass {
   dynamic data;
@@ -23,21 +19,17 @@ class ExternalClass {
 var testDataIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ExternalClass",
     moduleUrl:
-        '''asset:angular2/test/compiler/output/output_emitter_util${ MODULE_SUFFIX}''',
-    runtime: ExternalClass);
+        '''asset:angular2/test/compiler/output/output_emitter_util${ MODULE_SUFFIX}''');
 var eventEmitterIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "EventEmitter",
-    moduleUrl: '''asset:angular2/lib/src/facade/async${ MODULE_SUFFIX}''',
-    runtime: EventEmitter);
+    moduleUrl: '''asset:angular2/lib/src/facade/async${ MODULE_SUFFIX}''');
 var enumIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ViewType.HOST",
     moduleUrl:
-        '''asset:angular2/lib/src/core/linker/view_type${ MODULE_SUFFIX}''',
-    runtime: ViewType.HOST);
+        '''asset:angular2/lib/src/core/linker/view_type${ MODULE_SUFFIX}''');
 var baseExceptionIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "BaseException",
-    moduleUrl: '''asset:angular2/lib/src/facade/exceptions${ MODULE_SUFFIX}''',
-    runtime: BaseException);
+    moduleUrl: '''asset:angular2/lib/src/facade/exceptions${ MODULE_SUFFIX}''');
 var codegenExportsVars = ["getExpressions"];
 List<o.Statement> _getExpressionsStmts = [
   o.variable("readVar").set(o.literal("someValue")).toDeclStmt(),
@@ -298,40 +290,4 @@ createOperatorFn(o.BinaryOperator op) {
     new o.ReturnStatement(
         new o.BinaryOperatorExpr(op, o.variable("a"), o.variable("b")))
   ], o.DYNAMIC_TYPE);
-}
-
-class DynamicClassInstanceFactory implements InstanceFactory {
-  DynamicInstance createInstance(
-      dynamic superClass,
-      dynamic clazz,
-      List<dynamic> args,
-      Map<String, dynamic> props,
-      Map<String, Function> getters,
-      Map<String, Function> methods) {
-    if (identical(superClass, ExternalClass)) {
-      return new _InterpretiveDynamicClass(
-          args, clazz, props, getters, methods);
-    }
-    throw new BaseException(
-        '''Can\'t instantiate class ${ superClass} in interpretative mode''');
-  }
-}
-
-class _InterpretiveDynamicClass extends ExternalClass
-    implements DynamicInstance {
-  dynamic dynamicRuntimeType;
-  Map<String, dynamic> props;
-  Map<String, Function> getters;
-  Map<String, Function> methods;
-  _InterpretiveDynamicClass(
-    List<dynamic> args,
-    this.dynamicRuntimeType,
-    this.props,
-    this.getters,
-    this.methods,
-  )
-      : super(args[0]);
-  childMethod(a) {
-    return this.methods["childMethod"](a);
-  }
 }

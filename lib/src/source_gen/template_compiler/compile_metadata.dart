@@ -147,9 +147,7 @@ class CompileTypeMetadataVisitor
           moduleUrl: moduleUrl(element),
           name: element.name,
           diDeps: _getCompileDiDependencyMetadata(
-              unnamedConstructor(element)?.parameters ?? [], element),
-          runtime: null // Intentionally `null`, cannot be provided here.
-          );
+              unnamedConstructor(element)?.parameters ?? [], element));
 
   o.Expression _getUseValue(DartObject provider) {
     var maybeUseValue = provider.getField('useValue');
