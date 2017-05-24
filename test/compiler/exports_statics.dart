@@ -14,5 +14,6 @@ bool clickHandled = false;
 
 class MyClass {
   static final String staticField = 'static field';
+  static bool clickHandled = false;
   static String staticFunc(String x) => '$x???';
 }

@@ -215,7 +215,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   ASTWithSource _parseInterpolation(String value, SourceSpan sourceSpan,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var ast = _exprParser.parseInterpolation(value, sourceInfo, exports);
@@ -236,7 +236,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   ASTWithSource _parseAction(String value, SourceSpan sourceSpan,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var ast = _exprParser.parseAction(value, sourceInfo, exports);
@@ -249,7 +249,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   ASTWithSource _parseBinding(String value, SourceSpan sourceSpan,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var ast = _exprParser.parseBinding(value, sourceInfo, exports);
@@ -262,7 +262,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   List<TemplateBinding> _parseTemplateBindings(String value,
-      SourceSpan sourceSpan, Map<String, CompileIdentifierMetadata> exports) {
+      SourceSpan sourceSpan, List<CompileIdentifierMetadata> exports) {
     var sourceInfo = sourceSpan.start.toString();
     try {
       var bindingsResult =
@@ -369,11 +369,6 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     var isTemplateElement = lcElName == TEMPLATE_ELEMENT;
     bool hasDeferredComponent = false;
 
-    // A list of exported identifiers that can be referenced in the template.
-    var exports = <String, CompileIdentifierMetadata>{};
-    for (var export in providerViewContext.component.exports) {
-      exports[export.name] = export;
-    }
     for (HtmlAttrAst attr in element.attrs) {
       var hasBinding = _parseAttr(
           isTemplateElement,
@@ -383,13 +378,13 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           events,
           elementOrDirectiveRefs,
           elementVars,
-          exports);
+          providerViewContext.component.exports);
       var hasTemplateBinding = _parseInlineTemplateBinding(
           attr,
           templateMatchableAttrs,
           templateElementOrDirectiveProps,
           templateElementVars,
-          exports);
+          providerViewContext.component.exports);
       if (!hasBinding && !hasTemplateBinding) {
         // don't include the bindings as attributes as well in the AST
         attrs.add(visitAttr(attr, null));
@@ -413,7 +408,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         elementOrDirectiveRefs,
         element.sourceSpan,
         references,
-        exports);
+        providerViewContext.component.exports);
     List<BoundElementPropertyAst> elementProps = this
         ._createElementPropertyAsts(
             element.name, elementOrDirectiveProps, directiveAsts);
@@ -433,7 +428,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
             isTemplateElement,
             directiveAsts,
             isTemplateElement ? parent.providerContext : providerContext,
-            exports)) as List<TemplateAst>;
+            providerViewContext.component.exports)) as List<TemplateAst>;
     providerContext.afterElement();
     // Override the actual selector when the `ngProjectAs` attribute is provided
     var projectionSelector = preparsedElement.projectAs != null
@@ -497,7 +492,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           [],
           element.sourceSpan,
           [],
-          exports);
+          providerViewContext.component.exports);
       List<BoundElementPropertyAst> templateElementProps =
           _createElementPropertyAsts(element.name,
               templateElementOrDirectiveProps, templateDirectiveAsts);
@@ -533,7 +528,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<List<String>> targetMatchableAttrs,
       List<BoundElementOrDirectiveProperty> targetProps,
       List<VariableAst> targetVars,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var templateBindingsSource;
     bool isDeferredAttr = false;
     if (attr.name == TEMPLATE_ATTR) {
@@ -578,7 +573,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<BoundEventAst> targetEvents,
       List<ElementOrDirectiveRef> targetRefs,
       List<VariableAst> targetVars,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     String attrName = _removeDataPrefix(attr.name);
     var attrValue = attr.value;
     var bindParts = BIND_NAME_REGEXP.firstMatch(attrName);
@@ -684,7 +679,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundElementOrDirectiveProperty> targetProps,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     _parsePropertyAst(name, _parseBinding(expression, sourceSpan, exports),
         sourceSpan, targetMatchableAttrs, targetProps);
   }
@@ -695,7 +690,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundElementOrDirectiveProperty> targetProps,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var expr = _parseInterpolation(value, sourceSpan, exports);
     if (expr == null) return false;
     _parsePropertyAst(
@@ -720,7 +715,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundEventAst> targetEvents,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     _parseEvent('${name}Change', '$expression=\$event', sourceSpan,
         targetMatchableAttrs, targetEvents, exports);
   }
@@ -731,7 +726,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       SourceSpan sourceSpan,
       List<List<String>> targetMatchableAttrs,
       List<BoundEventAst> targetEvents,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     if (name.contains(':')) {
       _reportError('":" is not allowed in event names: ${name}', sourceSpan);
     }
@@ -770,7 +765,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<ElementOrDirectiveRef> elementOrDirectiveRefs,
       SourceSpan sourceSpan,
       List<ReferenceAst> targetReferences,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var matchedReferences = new Set<String>();
     CompileDirectiveMetadata component;
     var directiveAsts = <DirectiveAst>[];
@@ -821,7 +816,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       String elementName,
       Map<String, String> hostProps,
       SourceSpan sourceSpan,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     if (hostProps == null) return const [];
     var targetPropertyAsts = <BoundElementPropertyAst>[];
     hostProps.forEach((String propName, String expression) {
@@ -835,7 +830,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   List<BoundEventAst> _createDirectiveHostEventAsts(
       Map<String, String> hostListeners,
       SourceSpan sourceSpan,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var targetEventAsts = <BoundEventAst>[];
     if (hostListeners == null) return const [];
     hostListeners.forEach((String propName, String expression) {
@@ -1099,13 +1094,13 @@ class ElementContext {
   SelectorMatcher _ngContentIndexMatcher;
   int _wildcardNgContentIndex;
   ProviderElementContext providerContext;
-  Map<String, CompileIdentifierMetadata> exports;
+  List<CompileIdentifierMetadata> exports;
 
   static ElementContext create(
       bool isTemplateElement,
       List<DirectiveAst> directives,
       ProviderElementContext providerContext,
-      Map<String, CompileIdentifierMetadata> exports) {
+      List<CompileIdentifierMetadata> exports) {
     var matcher = new SelectorMatcher();
     int wildcardNgContentIndex;
     var component = directives.firstWhere(
@@ -1161,7 +1156,7 @@ CssSelector createElementCssSelector(
 }
 
 var EMPTY_ELEMENT_CONTEXT =
-    new ElementContext(true, new SelectorMatcher(), null, null, {});
+    new ElementContext(true, new SelectorMatcher(), null, null, []);
 var NON_BINDABLE_VISITOR = new NonBindableVisitor();
 
 class PipeCollector extends RecursiveAstVisitor {

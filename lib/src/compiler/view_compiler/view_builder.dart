@@ -1174,13 +1174,9 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
 void _writeComponentHostEventListeners(
     CompileView view, Parser parser, List<o.Statement> statements) {
   CompileDirectiveMetadata component = view.component;
-  var exports = <String, CompileIdentifierMetadata>{};
-  for (var export in component.exports) {
-    exports[export.name] = export;
-  }
   for (String eventName in component.hostListeners.keys) {
     String handlerSource = component.hostListeners[eventName];
-    var handlerAst = parser.parseAction(handlerSource, '', exports);
+    var handlerAst = parser.parseAction(handlerSource, '', component.exports);
     HandlerType handlerType = handlerTypeFromExpression(handlerAst);
     var handlerExpr;
     var numArgs;

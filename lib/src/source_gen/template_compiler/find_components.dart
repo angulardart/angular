@@ -415,21 +415,29 @@ class ComponentVisitor
         orElse: () => null);
     if (exportsArg == null || exportsArg.expression is! ListLiteral) return [];
     var staticNames = (exportsArg.expression as ListLiteral).elements;
-    if (!staticNames.every((name) => name is SimpleIdentifier)) {
-      log.severe(
-          'Every item in the "exports" field must be a simple identifier');
+    if (!staticNames.every((name) => name is Identifier)) {
+      log.severe('Every item in the "exports" field must be an identifier');
       return [];
     }
     var exports = <CompileIdentifierMetadata>[];
     for (Identifier id in staticNames) {
       String name;
+      String prefix;
       if (id is PrefixedIdentifier) {
+        // We only allow prefixed identifiers to have library prefixes.
+        if (id.prefix.staticElement is! PrefixElement) {
+          log.severe('Every item in the "exports" field must be either '
+              'a simple identifier or an identifier with a library prefix');
+          return [];
+        }
         name = id.identifier.name;
+        prefix = id.prefix.name;
       } else {
         name = id.name;
       }
       exports.add(new CompileIdentifierMetadata(
         name: name,
+        prefix: prefix,
         moduleUrl: moduleUrl(id.staticElement.library),
       ));
     }
