@@ -1,9 +1,69 @@
-## 4.0.0
+## 4.0.0-alpha
+
+**NOTE**: Some of the features are not yet usable @ HEAD, as they require use of
+the new AngularDart compiler, which is not yet enabled by default, and work is
+ongoing. You can [track our progress](https://goo.gl/tFYsO3).
+
+### New features
+
+* Added `exports: [ ... ]` to `@Component`, which allows the limited use of
+  top-level fields and static methods/fields in a template without making an
+  alias getter in your class. Partially implements https://goo.gl/8mTMUH.
+
+```dart
+import 'dart:math' show max;
+
+@Component(
+  selector: 'comp',
+  exports: const [
+    max,
+  ],
+  // Should write '20'
+  template: '{{max(20, 10)}}',
+)
+class Comp {}
+```
+
+* _Limitations_:
+  * Only top-level fields that are `const` (not `final`) can be exported.
+
+* Added `!deferred` as the first "compile-time" directive (it has no specific
+  runtime code nor is it listed in a `directives: [ ... ]` list. Implements
+  https://goo.gl/Cq3Uy1.
+
+```dart
+import 'package:angular2/angular2.dart';
+import 'expensive_comp.dart' show ExpensiveComp;
+
+@Component(
+  selector: 'my-comp',
+  directives: const [ExpensiveComp],
+  template: r'''
+    <expensive-comp !deferred></expensive-comp>
+  ''',
+)
+class MyComp {}
+```
 
 ### Breaking changes
 
+* Removed the runtime (`dart:mirrors`-based) interpreter. It is now required to
+  always use the AngularDart transformer to pre-compile the code, even during
+  development time in Dartium.
+
 * Returning `false` from an event handler will no longer cancel the event. See
   [#387](https://github.com/dart-lang/angular2/issues/387) for details.
+
+### Bug fixes
+
+* Properly annotate methods in generated `.template.dart` code with `@override`.
+
+### Performance
+
+* Remove redundant calls to `dbg(...)` in dev-mode. This reduces the amount of
+  work done and speeds up developer runtimes, such as those using the
+  [DartDevCompiler (DDC)](https://github.com/dart-lang/sdk/tree/master/pkg/dev_compiler).
+
 
 ## 3.1.0
 
