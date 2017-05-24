@@ -7,19 +7,14 @@ import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 
-String _resolveEnumToken(enumValue, val) {
-  // turn Enum.Token -> Token
-  return val.toString().replaceFirst(new RegExp('^.+\\.'), '');
-}
-
 o.Expression _enumExpression(
     CompileIdentifierMetadata classIdentifier, dynamic value) {
   if (value == null) return o.NULL_EXPR;
-  var name = _resolveEnumToken(classIdentifier.runtime, value);
+  String enumStr = value.toString();
+  var name = enumStr.substring(enumStr.lastIndexOf('.') + 1);
   return o.importExpr(new CompileIdentifierMetadata(
       name: '${classIdentifier.name}.${name}',
-      moduleUrl: classIdentifier.moduleUrl,
-      runtime: value));
+      moduleUrl: classIdentifier.moduleUrl));
 }
 
 class ViewTypeEnum {

@@ -1182,14 +1182,12 @@ List<T> removeDuplicates<T>(List<T> items) {
         CompilePipeMetadata rMeta = r;
         CompilePipeMetadata itemMeta = item as CompilePipeMetadata;
         return rMeta.type.name == itemMeta.type.name &&
-            rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
-            rMeta.type.runtime == itemMeta.type.runtime;
+            rMeta.type.moduleUrl == itemMeta.type.moduleUrl;
       } else if (r is CompileDirectiveMetadata) {
         CompileDirectiveMetadata rMeta = r;
         CompileDirectiveMetadata itemMeta = item as CompileDirectiveMetadata;
         return rMeta.type.name == itemMeta.type.name &&
-            rMeta.type.moduleUrl == itemMeta.type.moduleUrl &&
-            rMeta.type.runtime == itemMeta.type.runtime;
+            rMeta.type.moduleUrl == itemMeta.type.moduleUrl;
       } else
         throw new ArgumentError();
     }).isNotEmpty;

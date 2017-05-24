@@ -262,8 +262,7 @@ const NG_PLATFORM_BROWSER = const [
   'browserPlatform',
   'defaultDocumentProvider',
   'disableDebugTools',
-  'enableDebugTools',
-  'RUNTIME_COMPILER_PROVIDERS'
+  'enableDebugTools'
 ];
 const NG_PLATFORM_BROWSER_TESTING = const [
   'inspectNativeElement',

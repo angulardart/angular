@@ -1,19 +1,3 @@
-import "package:angular2/src/core/change_detection/change_detection.dart"
-    show
-        devModeEqual,
-        SimpleChange,
-        ValueUnwrapper,
-        ChangeDetectorRef,
-        ChangeDetectorState,
-        ChangeDetectionStrategy;
-import "package:angular2/src/core/di/injector.dart" show Injector;
-import "package:angular2/src/core/linker/element_ref.dart" show ElementRef;
-import "package:angular2/src/core/linker/view_type.dart" show ViewType;
-import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular2/src/core/render/api.dart" show RenderComponentType;
-import "package:angular2/src/core/security.dart" show TemplateSecurityContext;
-import "package:angular2/src/facade/lang.dart" show looseIdentical;
-
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileTokenMetadata;
 
@@ -30,23 +14,6 @@ var NG_FOR_URL = "asset:angular2/lib/src/common/directives/ng_for.dart";
 var PROFILE_RUNTIME_MODULE_URL =
     "asset:angular2/lib/src/debug/profile_runtime.dart";
 
-// Reassign the imports to different variables so we can
-// define static variables with the name of the import.
-
-var impElementRef = ElementRef;
-var impChangeDetectorRef = ChangeDetectorRef;
-var impRenderComponentType = RenderComponentType;
-var impValueUnwrapper = ValueUnwrapper;
-var impInjector = Injector;
-var impViewEncapsulation = ViewEncapsulation;
-var impViewType = ViewType;
-var impChangeDetectionStrategy = ChangeDetectionStrategy;
-var impSimpleChange = SimpleChange;
-var impChangeDetectorState = ChangeDetectorState;
-var impDevModeEqual = devModeEqual;
-var impLooseIdentical = looseIdentical;
-var impTemplateSecurityContext = TemplateSecurityContext;
-
 class Identifiers {
   static final appViewUtils = new CompileIdentifierMetadata<dynamic>(
       name: "appViewUtils", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
@@ -61,22 +28,19 @@ class Identifiers {
       moduleUrl: "asset:angular2/lib/src/core/linker/view_container.dart");
   static final ElementRef = new CompileIdentifierMetadata<dynamic>(
       name: "ElementRef",
-      moduleUrl: "asset:angular2/lib/src/core/linker/element_ref.dart",
-      runtime: impElementRef);
+      moduleUrl: "asset:angular2/lib/src/core/linker/element_ref.dart");
   static final ViewContainerRef = new CompileIdentifierMetadata<dynamic>(
       name: "ViewContainerRef",
       moduleUrl: "asset:angular2/lib/src/core/linker/view_container_ref.dart");
   static final ChangeDetectorRef = new CompileIdentifierMetadata<dynamic>(
       name: "ChangeDetectorRef",
       moduleUrl: 'asset:angular2/lib/src/core/change_detection/'
-          'change_detector_ref.dart',
-      runtime: impChangeDetectorRef);
+          'change_detector_ref.dart');
   static final ComponentFactory = new CompileIdentifierMetadata<dynamic>(
       name: 'ComponentFactory', moduleUrl: ANGULAR_ROOT_URL);
   static final RenderComponentType = new CompileIdentifierMetadata<dynamic>(
       name: "RenderComponentType",
-      moduleUrl: "asset:angular2/lib/src/core/render/api.dart",
-      runtime: impRenderComponentType);
+      moduleUrl: "asset:angular2/lib/src/core/render/api.dart");
   static final ComponentRef = new CompileIdentifierMetadata<dynamic>(
       name: "ComponentRef", moduleUrl: ANGULAR_ROOT_URL);
   static final QueryList = new CompileIdentifierMetadata<dynamic>(
@@ -86,25 +50,17 @@ class Identifiers {
       name: "TemplateRef",
       moduleUrl: "asset:angular2/lib/src/core/linker/template_ref.dart");
   static final ValueUnwrapper = new CompileIdentifierMetadata<dynamic>(
-      name: "ValueUnwrapper",
-      moduleUrl: CD_MODULE_URL,
-      runtime: impValueUnwrapper);
+      name: "ValueUnwrapper", moduleUrl: CD_MODULE_URL);
   static final Injector = new CompileIdentifierMetadata<dynamic>(
       name: "Injector",
-      moduleUrl: 'asset:angular2/lib/src/core/di/injector.dart',
-      runtime: impInjector);
+      moduleUrl: 'asset:angular2/lib/src/core/di/injector.dart');
   static final ViewEncapsulation = new CompileIdentifierMetadata<dynamic>(
-      name: "ViewEncapsulation",
-      moduleUrl: ANGULAR_ROOT_URL,
-      runtime: impViewEncapsulation);
+      name: "ViewEncapsulation", moduleUrl: ANGULAR_ROOT_URL);
   static final ViewType = new CompileIdentifierMetadata<dynamic>(
       name: "ViewType",
-      moduleUrl: 'asset:angular2/lib/src/core/linker/view_type.dart',
-      runtime: impViewType);
+      moduleUrl: 'asset:angular2/lib/src/core/linker/view_type.dart');
   static final ChangeDetectionStrategy = new CompileIdentifierMetadata<dynamic>(
-      name: "ChangeDetectionStrategy",
-      moduleUrl: CD_MODULE_URL,
-      runtime: impChangeDetectionStrategy);
+      name: "ChangeDetectionStrategy", moduleUrl: CD_MODULE_URL);
   static final StaticNodeDebugInfo = new CompileIdentifierMetadata<dynamic>(
       name: "StaticNodeDebugInfo",
       moduleUrl: 'asset:angular2/lib/src/debug/debug_context.dart');
@@ -113,14 +69,11 @@ class Identifiers {
       moduleUrl: 'asset:angular2/lib/src/debug/debug_context.dart');
   static final TemplateSecurityContext = new CompileIdentifierMetadata<dynamic>(
       name: 'TemplateSecurityContext',
-      moduleUrl: 'asset:angular2/lib/src/core/security.dart',
-      runtime: impTemplateSecurityContext);
+      moduleUrl: 'asset:angular2/lib/src/core/security.dart');
   static final SimpleChange = new CompileIdentifierMetadata<dynamic>(
-      name: "SimpleChange", moduleUrl: CD_MODULE_URL, runtime: impSimpleChange);
+      name: "SimpleChange", moduleUrl: CD_MODULE_URL);
   static final ChangeDetectorState = new CompileIdentifierMetadata<dynamic>(
-      name: "ChangeDetectorState",
-      moduleUrl: CD_MODULE_URL,
-      runtime: impChangeDetectorState);
+      name: "ChangeDetectorState", moduleUrl: CD_MODULE_URL);
   static final checkBinding = new CompileIdentifierMetadata<dynamic>(
       name: "checkBinding", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final createAndAppend = new CompileIdentifierMetadata<dynamic>(
@@ -137,11 +90,10 @@ class Identifiers {
   static final dbgElm = new CompileIdentifierMetadata<dynamic>(
       name: "dbgElm", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(
-      name: "devModeEqual", moduleUrl: CD_MODULE_URL, runtime: impDevModeEqual);
+      name: "devModeEqual", moduleUrl: CD_MODULE_URL);
   static final looseIdentical = new CompileIdentifierMetadata<dynamic>(
       name: "looseIdentical",
-      moduleUrl: 'asset:angular2/lib/src/facade/lang.dart',
-      runtime: impLooseIdentical);
+      moduleUrl: 'asset:angular2/lib/src/facade/lang.dart');
   static final profileSetup = new CompileIdentifierMetadata<dynamic>(
       name: "profileSetup", moduleUrl: PROFILE_RUNTIME_MODULE_URL);
   static final profileMarkStart = new CompileIdentifierMetadata<dynamic>(

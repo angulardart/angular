@@ -231,9 +231,7 @@ class _CompileTypeMetadataVisitor extends Object
       _type = new CompileTypeMetadata(
           moduleUrl: toAssetUri(_assetId),
           name: node.name.toString(),
-          diDeps: diDeps,
-          runtime: null // Intentionally `null`, cannot be provided here.
-          );
+          diDeps: diDeps);
     }
     if (node.withClause != null) {
       List<String> mixins = node.withClause.accept(_mixinVisitor);
@@ -303,9 +301,7 @@ class _CompileFactoryMetadataVisitor extends Object
           moduleUrl: toAssetUri(_assetId),
           name: node.name.toString(),
           diDeps: _getCompileDiDependencyMetadata(
-              null, node.functionExpression.parameters, {}),
-          runtime: null // Intentionally `null`, cannot be provided here.
-          );
+              null, node.functionExpression.parameters, {}));
     }
     return null;
   }

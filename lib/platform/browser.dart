@@ -13,11 +13,7 @@ import 'package:angular2/core.dart'
         PlatformRef,
         getPlatform,
         createPlatform;
-import 'package:angular2/src/compiler/runtime_compiler.dart'
-    show RuntimeCompiler;
 import 'package:angular2/src/core/di.dart' show Provider;
-import 'package:angular2/src/core/linker/component_resolver.dart'
-    show ComponentResolver;
 import 'package:angular2/src/core/reflection/reflection_capabilities.dart'
     show ReflectionCapabilities;
 import 'package:angular2/src/platform/browser/xhr_impl.dart' show XHRImpl;
@@ -36,18 +32,12 @@ export 'package:angular2/src/platform/browser_common.dart'
         enableDebugTools,
         disableDebugTools;
 
-const List RUNTIME_COMPILER_PROVIDERS = const [
-  RuntimeCompiler,
-  const Provider(ComponentResolver, useExisting: RuntimeCompiler),
-];
-
 /// An array of providers that should be passed into [application()] when
 /// bootstrapping a component.
 const List<dynamic> BROWSER_APP_PROVIDERS = const [
   BROWSER_APP_COMMON_PROVIDERS,
   const Provider(DOCUMENT, useFactory: defaultDocumentProvider, deps: const []),
   COMPILER_PROVIDERS,
-  RUNTIME_COMPILER_PROVIDERS,
   const Provider(XHR, useClass: XHRImpl)
 ];
 
