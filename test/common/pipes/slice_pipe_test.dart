@@ -19,14 +19,14 @@ void main() {
     });
     group('supports', () {
       test('should support strings', () {
-        expect(pipe.supports(str), isTrue);
+        expect(pipe.supports(str), true);
       });
       test('should support lists', () {
-        expect(pipe.supports(list), isTrue);
+        expect(pipe.supports(list), true);
       });
       test('should not support other objects', () {
-        expect(pipe.supports(new Object()), isFalse);
-        expect(pipe.supports(null), isFalse);
+        expect(pipe.supports(new Object()), false);
+        expect(pipe.supports(null), false);
       });
     });
     group('transform', () {

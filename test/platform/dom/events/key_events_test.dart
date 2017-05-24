@@ -18,9 +18,9 @@ void main() {
     var event = new KeyboardEvent('keydown');
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedKeydown, isTrue);
-      expect(component.receivedKeydownA, isFalse);
-      expect(component.receivedKeydownShiftA, isFalse);
+      expect(component.receivedKeydown, true);
+      expect(component.receivedKeydownA, false);
+      expect(component.receivedKeydownShiftA, false);
     });
   });
 
@@ -30,9 +30,9 @@ void main() {
     var event = createKeyboardEvent('keydown', KeyCode.A);
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedKeydown, isTrue);
-      expect(component.receivedKeydownA, isTrue);
-      expect(component.receivedKeydownShiftA, isFalse);
+      expect(component.receivedKeydown, true);
+      expect(component.receivedKeydownA, true);
+      expect(component.receivedKeydownShiftA, false);
     });
   });
 
@@ -42,9 +42,9 @@ void main() {
     var event = createKeyboardEvent('keydown', KeyCode.A, shiftKey: true);
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedKeydown, isTrue);
-      expect(component.receivedKeydownA, isFalse);
-      expect(component.receivedKeydownShiftA, isTrue);
+      expect(component.receivedKeydown, true);
+      expect(component.receivedKeydownA, false);
+      expect(component.receivedKeydownShiftA, true);
     });
   });
 
@@ -54,7 +54,7 @@ void main() {
     var event = new KeyboardEvent('keypress');
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedKeypress, isTrue);
+      expect(component.receivedKeypress, true);
     });
   });
 
@@ -64,9 +64,9 @@ void main() {
     var event = new KeyboardEvent('keyup');
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedKeyup, isTrue);
-      expect(component.receivedKeyupEnter, isFalse);
-      expect(component.receivedKeyupCtrlEnter, isFalse);
+      expect(component.receivedKeyup, true);
+      expect(component.receivedKeyupEnter, false);
+      expect(component.receivedKeyupCtrlEnter, false);
     });
   });
 
@@ -76,9 +76,9 @@ void main() {
     var event = createKeyboardEvent('keyup', KeyCode.ENTER);
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedKeyup, isTrue);
-      expect(component.receivedKeyupEnter, isTrue);
-      expect(component.receivedKeyupCtrlEnter, isFalse);
+      expect(component.receivedKeyup, true);
+      expect(component.receivedKeyupEnter, true);
+      expect(component.receivedKeyupCtrlEnter, false);
     });
   });
 
@@ -88,9 +88,9 @@ void main() {
     var event = createKeyboardEvent('keyup', KeyCode.ENTER, ctrlKey: true);
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedKeyup, isTrue);
-      expect(component.receivedKeyupEnter, isFalse);
-      expect(component.receivedKeyupCtrlEnter, isTrue);
+      expect(component.receivedKeyup, true);
+      expect(component.receivedKeyupEnter, false);
+      expect(component.receivedKeyupCtrlEnter, true);
     });
   });
 
@@ -101,7 +101,7 @@ void main() {
         altKey: true, metaKey: true);
     testFixture.rootElement.dispatchEvent(event);
     await testFixture.update((component) {
-      expect(component.receivedModifiers, isTrue);
+      expect(component.receivedModifiers, true);
     });
   });
 }

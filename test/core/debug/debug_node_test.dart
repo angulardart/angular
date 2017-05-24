@@ -140,7 +140,7 @@ void main() {
       var testBed = new NgTestBed<LocalsComp>();
       var fixture = await testBed.create();
       DebugElement debugElement = getDebugNode(fixture.rootElement);
-      expect(debugElement.children[0].getLocal("alice") is MyDir, isTrue);
+      expect(debugElement.children[0].getLocal("alice") is MyDir, true);
     });
 
     test("should allow injecting from the element injector", () async {
@@ -148,17 +148,17 @@ void main() {
       var fixture = await testBed.create();
       DebugElement debugElement = getDebugNode(fixture.rootElement);
       var provider = debugElement.children[0].inject(ParentCompProvider);
-      expect(provider is ParentCompProvider, isTrue);
+      expect(provider is ParentCompProvider, true);
     });
 
     test("should trigger event handler", () async {
       var testBed = new NgTestBed<EventsComp>();
       var fixture = await testBed.create();
       DebugElement debugElement = getDebugNode(fixture.rootElement);
-      expect(debugElement.componentInstance.clicked, isFalse);
+      expect(debugElement.componentInstance.clicked, false);
       (debugElement.children[0].nativeElement as Element)
           .dispatchEvent(new MouseEvent('click'));
-      expect(debugElement.componentInstance.clicked, isTrue);
+      expect(debugElement.componentInstance.clicked, true);
     });
 
     test("should list all child nodes even with malformed selector", () async {

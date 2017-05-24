@@ -60,31 +60,31 @@ void main() {
         component.booleanCondition = false;
       });
       expect(element.querySelectorAll("copy-me"), hasLength(0));
-      expect(element.innerHtml.contains('hello'), isFalse);
+      expect(element.innerHtml.contains('hello'), false);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.booleanCondition = true;
       });
       expect(element.querySelectorAll("copy-me"), hasLength(1));
-      expect(element.innerHtml.contains('hello'), isTrue);
+      expect(element.innerHtml.contains('hello'), true);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.nestedBooleanCondition = false;
       });
       expect(element.querySelectorAll("copy-me"), hasLength(0));
-      expect(element.innerHtml.contains('hello'), isFalse);
+      expect(element.innerHtml.contains('hello'), false);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.nestedBooleanCondition = true;
       });
       expect(element.querySelectorAll("copy-me"), hasLength(1));
-      expect(element.innerHtml.contains('hello'), isTrue);
+      expect(element.innerHtml.contains('hello'), true);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.booleanCondition = false;
       });
       expect(element.querySelectorAll("copy-me"), hasLength(0));
-      expect(element.innerHtml.contains('hello'), isFalse);
+      expect(element.innerHtml.contains('hello'), false);
     });
 
     test("should work in a template attribute", () async {

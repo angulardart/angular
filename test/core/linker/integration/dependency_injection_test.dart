@@ -56,9 +56,9 @@ void main() {
     final testFixture = await testBed.create();
     final debugNode = getDebugNode(testFixture.rootElement.children.first);
     final providing = debugNode.getLocal('providing');
-    expect(providing.created, isFalse);
+    expect(providing.created, false);
     await testFixture.update((component) => component.visible = true);
-    expect(providing.created, isTrue);
+    expect(providing.created, true);
   });
 
   test('should inject @Host', () async {

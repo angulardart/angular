@@ -68,10 +68,10 @@ void main() {
     inputPrevent.dispatchEvent(clickPrevent);
     inputNoPrevent.dispatchEvent(clickNoPrevent);
     await testFixture.update();
-    expect(clickPrevent.defaultPrevented, isTrue);
-    expect(clickNoPrevent.defaultPrevented, isFalse);
-    expect(inputPrevent.checked, isFalse);
-    expect(inputNoPrevent.checked, isTrue);
+    expect(clickPrevent.defaultPrevented, true);
+    expect(clickNoPrevent.defaultPrevented, false);
+    expect(inputPrevent.checked, false);
+    expect(inputNoPrevent.checked, true);
   });
 }
 

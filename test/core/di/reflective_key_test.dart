@@ -11,7 +11,7 @@ void main() {
       expect(registry.get("car"), registry.get("car"));
     });
     test("should not be equal to another key if types are different", () {
-      expect(registry.get("car") != registry.get("porsche"), isTrue);
+      expect(registry.get("car") != registry.get("porsche"), true);
     });
     test("should return the passed in key", () {
       expect(registry.get(registry.get("car")), registry.get("car"));

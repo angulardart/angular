@@ -25,12 +25,12 @@ void main() {
       });
       expect(g.controls["login"].value, "some value");
       expect(g.controls["password"].value, "some value");
-      expect(g.controls["password"].validator == syncValidator, isTrue);
+      expect(g.controls["password"].validator == syncValidator, true);
     });
     test("should use controls", () {
       var g = b.group({"login": b.control("some value", syncValidator)});
       expect(g.controls["login"].value, "some value");
-      expect(g.controls["login"].validator == syncValidator, isTrue);
+      expect(g.controls["login"].validator == syncValidator, true);
     });
     test("should create groups with optional controls", () {
       var g = b.group({
@@ -38,11 +38,11 @@ void main() {
       }, {
         "optionals": {"login": false}
       });
-      expect(g.contains("login"), isFalse);
+      expect(g.contains("login"), false);
     });
     test("should create groups with a custom validator", () {
       var g = b.group({"login": "some value"}, {"validator": syncValidator});
-      expect(g.validator == syncValidator, isTrue);
+      expect(g.validator == syncValidator, true);
     });
     test("should create control arrays", () {
       var c = b.control("three");
@@ -58,7 +58,7 @@ void main() {
         "three",
         ["four"]
       ]);
-      expect(a.validator == syncValidator, isTrue);
+      expect(a.validator == syncValidator, true);
     });
   });
 }

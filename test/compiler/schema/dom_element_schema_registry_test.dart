@@ -12,7 +12,7 @@ void main() {
       registry = new DomElementSchemaRegistry();
     });
     test("should detect properties on regular elements", () {
-      expect(registry.hasProperty("div", "id"), isTrue);
+      expect(registry.hasProperty("div", "id"), true);
       expect(registry.hasProperty("div", "title"), isTrue);
       expect(registry.hasProperty("h1", "align"), isTrue);
       expect(registry.hasProperty("h2", "align"), isTrue);
@@ -20,10 +20,10 @@ void main() {
       expect(registry.hasProperty("h4", "align"), isTrue);
       expect(registry.hasProperty("h5", "align"), isTrue);
       expect(registry.hasProperty("h6", "align"), isTrue);
-      expect(registry.hasProperty("h7", "align"), isFalse);
+      expect(registry.hasProperty("h7", "align"), false);
       expect(registry.hasProperty("textarea", "disabled"), isTrue);
       expect(registry.hasProperty("input", "disabled"), isTrue);
-      expect(registry.hasProperty("div", "unknown"), isFalse);
+      expect(registry.hasProperty("div", "unknown"), false);
     });
     test("should detect different kinds of types", () {
       // inheritance: video => media => *
@@ -34,7 +34,7 @@ void main() {
       expect(registry.hasProperty("video", "autoplay"), isTrue);
       expect(registry.hasProperty("video", "classList"), isTrue);
       // from *; but events are not properties
-      expect(registry.hasProperty("video", "click"), isFalse);
+      expect(registry.hasProperty("video", "click"), false);
     });
     test("should return true for custom-like elements", () {
       expect(registry.hasProperty("custom-like", "unknown"), isTrue);

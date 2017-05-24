@@ -147,7 +147,7 @@ void main() {
                 'interface, such as `List`.'));
         didThrowException = true;
       });
-      expect(didThrowException, isTrue);
+      expect(didThrowException, true);
     });
 
     test("should work with duplicates", () async {

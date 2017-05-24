@@ -13,14 +13,14 @@ void main() {
     });
     group('supports', () {
       test('should support date', () {
-        expect(pipe.supports(date), isTrue);
+        expect(pipe.supports(date), true);
       });
       test('should support int', () {
-        expect(pipe.supports(123456789), isTrue);
+        expect(pipe.supports(123456789), true);
       });
       test('should not support other objects', () {
-        expect(pipe.supports(new Object()), isFalse);
-        expect(pipe.supports(null), isFalse);
+        expect(pipe.supports(new Object()), false);
+        expect(pipe.supports(null), false);
       });
     });
     group('transform', () {

@@ -156,7 +156,7 @@ void main() {
     });
     group("Pipe", () {
       test("should be pure by default", () {
-        expect(new CompilePipeMetadata().pure, isTrue);
+        expect(new CompilePipeMetadata().pure, true);
       });
     });
   });

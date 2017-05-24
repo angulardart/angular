@@ -100,7 +100,7 @@ void main() {
       }).catchError((e) {
         expect(e.toString(), contains('exceptionOnEventSample'));
       });
-      expect(comp.eventHandlerCalled, isTrue);
+      expect(comp.eventHandlerCalled, true);
     });
     test(
         'should specify a location of an error that happened '

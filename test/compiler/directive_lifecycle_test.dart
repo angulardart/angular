@@ -21,7 +21,7 @@ void main() {
 
       test("should be false otherwise", () {
         expect(hasLifecycleHook(LifecycleHooks.OnChanges, DirectiveNoHooks),
-            isFalse);
+            false);
       });
     });
 
@@ -35,7 +35,7 @@ void main() {
 
       test("should be false otherwise", () {
         expect(hasLifecycleHook(LifecycleHooks.OnDestroy, DirectiveNoHooks),
-            isFalse);
+            false);
       });
     });
 
@@ -49,7 +49,7 @@ void main() {
 
       test("should be false otherwise", () {
         expect(
-            hasLifecycleHook(LifecycleHooks.OnInit, DirectiveNoHooks), isFalse);
+            hasLifecycleHook(LifecycleHooks.OnInit, DirectiveNoHooks), false);
       });
     });
 
@@ -62,8 +62,8 @@ void main() {
       });
 
       test("should be false otherwise", () {
-        expect(hasLifecycleHook(LifecycleHooks.DoCheck, DirectiveNoHooks),
-            isFalse);
+        expect(
+            hasLifecycleHook(LifecycleHooks.DoCheck, DirectiveNoHooks), false);
       });
     });
 
@@ -80,7 +80,7 @@ void main() {
       test("should be false otherwise", () {
         expect(
             hasLifecycleHook(LifecycleHooks.AfterContentInit, DirectiveNoHooks),
-            isFalse);
+            false);
       });
     });
 
@@ -98,7 +98,7 @@ void main() {
         expect(
             hasLifecycleHook(
                 LifecycleHooks.AfterContentChecked, DirectiveNoHooks),
-            isFalse);
+            false);
       });
     });
 
@@ -113,7 +113,7 @@ void main() {
 
       test("should be false otherwise", () {
         expect(hasLifecycleHook(LifecycleHooks.AfterViewInit, DirectiveNoHooks),
-            isFalse);
+            false);
       });
     });
 
@@ -130,7 +130,7 @@ void main() {
       test("should be false otherwise", () {
         expect(
             hasLifecycleHook(LifecycleHooks.AfterViewChecked, DirectiveNoHooks),
-            isFalse);
+            false);
       });
     });
   });
