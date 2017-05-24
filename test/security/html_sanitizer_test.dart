@@ -107,7 +107,7 @@ void main() {
       });
       test('swallows frame entirely', () {
         String testInput = '<frame>evil!</frame>';
-        expect(sanitizeHtmlInternal(testInput).contains('<frame>'), isFalse);
+        expect(sanitizeHtmlInternal(testInput).contains('<frame>'), false);
       });
     });
     test('should strip style attribute', () {

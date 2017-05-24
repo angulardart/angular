@@ -31,11 +31,11 @@ void main() {
       expect(
           matcher.match(
               CssSelector.parse('SOMEOTHERTAG')[0], selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(CssSelector.parse('SOMETAG')[0], selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(CssSelector.parse('someTag')[0], selectableCollector),
@@ -48,7 +48,7 @@ void main() {
       expect(
           matcher.match(
               CssSelector.parse('.SOMEOTHERCLASS')[0], selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(
@@ -70,17 +70,17 @@ void main() {
       expect(
           matcher.match(
               CssSelector.parse('[SOMEOTHERATTR]')[0], selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(
               CssSelector.parse('[SOMEATTR]')[0], selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(CssSelector.parse('[SOMEATTR=someValue]')[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(CssSelector.parse('[someAttr][someAttr2]')[0],
@@ -123,12 +123,12 @@ void main() {
       expect(
           matcher.match(CssSelector.parse('[SOMEATTR=SOMEOTHERATTR]')[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(CssSelector.parse('[SOMEATTR=SOMEVALUE]')[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(CssSelector.parse('[someAttr=SOMEVALUE]')[0],
@@ -146,24 +146,24 @@ void main() {
               CssSelector
                   .parse("someOtherTag.someOtherClass[someOtherAttr]")[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(
               CssSelector.parse("someTag.someOtherClass[someOtherAttr]")[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(
               CssSelector.parse("someTag.someClass[someOtherAttr]")[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(CssSelector.parse("someTag.someClass[someAttr]")[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
       expect(
           matcher.match(
@@ -220,7 +220,7 @@ void main() {
       expect(
           matcher.match(CssSelector.parse("p.someClass[someAttr]")[0],
               selectableCollector),
-          isFalse);
+          false);
       expect(matched, []);
     });
     test("should select with a non matching :not selector", () {
@@ -240,9 +240,9 @@ void main() {
       matcher.addSelectables(
           s1 = CssSelector.parse("div:not([a]):not([b])"), 1);
       expect(matcher.match(CssSelector.parse("div[a]")[0], selectableCollector),
-          isFalse);
+          false);
       expect(matcher.match(CssSelector.parse("div[b]")[0], selectableCollector),
-          isFalse);
+          false);
       expect(matcher.match(CssSelector.parse("div[c]")[0], selectableCollector),
           isTrue);
     });

@@ -87,7 +87,7 @@ void main() {
             });
             c.future.then((_) {
               expect(_traces, hasLength(1));
-              expect(_traces[0].length > 1, isTrue);
+              expect(_traces[0].length > 1, true);
               completer.done();
             });
           });
@@ -108,7 +108,7 @@ void main() {
             });
             c.future.then((_) {
               expect(_traces, hasLength(1));
-              expect(_traces[0].length > 1, isTrue);
+              expect(_traces[0].length > 1, true);
               completer.done();
             });
           });
@@ -154,41 +154,41 @@ void main() {
 void commonTests() {
   group("hasPendingMicrotasks", () {
     test("should be false", () {
-      expect(_zone.hasPendingMicrotasks, isFalse);
+      expect(_zone.hasPendingMicrotasks, false);
     });
     test("should be true", () {
       runNgZoneNoLog(() {
         scheduleMicrotask(() {});
       });
-      expect(_zone.hasPendingMicrotasks, isTrue);
+      expect(_zone.hasPendingMicrotasks, true);
     });
   });
   group("hasPendingTimers", () {
     test("should be false", () {
-      expect(_zone.hasPendingMacrotasks, isFalse);
+      expect(_zone.hasPendingMacrotasks, false);
     });
     test("should be true", () {
       runNgZoneNoLog(() {
         Timer.run(() {});
       });
-      expect(_zone.hasPendingMacrotasks, isTrue);
+      expect(_zone.hasPendingMacrotasks, true);
     });
   });
   group("hasPendingAsyncTasks", () {
     test("should be false", () {
-      expect(_zone.hasPendingMicrotasks, isFalse);
+      expect(_zone.hasPendingMicrotasks, false);
     });
     test("should be true when microtask is scheduled", () {
       runNgZoneNoLog(() {
         scheduleMicrotask(() {});
       });
-      expect(_zone.hasPendingMicrotasks, isTrue);
+      expect(_zone.hasPendingMicrotasks, true);
     });
     test("should be true when timer is scheduled", () {
       runNgZoneNoLog(() {
         Timer.run(() {});
       });
-      expect(_zone.hasPendingMacrotasks, isTrue);
+      expect(_zone.hasPendingMacrotasks, true);
     });
   });
   group("isInInnerZone", () {

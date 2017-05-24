@@ -46,7 +46,7 @@ void main() {
       setUp(() => createNgZone(enableLongStackTrace: false));
 
       test('should initially be false', () {
-        expect(zone.hasPendingMicrotasks, isFalse);
+        expect(zone.hasPendingMicrotasks, false);
       });
 
       test('should be true when a microtask is queued', () async {
@@ -58,9 +58,9 @@ void main() {
             onCompleter.complete();
           });
         });
-        expect(zone.hasPendingMicrotasks, isTrue);
+        expect(zone.hasPendingMicrotasks, true);
         await onCompleter.future;
-        expect(zone.hasPendingMicrotasks, isFalse);
+        expect(zone.hasPendingMicrotasks, false);
         expect(log, [
           'onTurnStart',
           '--- entered zone ---',
@@ -76,7 +76,7 @@ void main() {
       setUp(() => createNgZone(enableLongStackTrace: false));
 
       test('should initially be false', () {
-        expect(zone.hasPendingMacrotasks, isFalse);
+        expect(zone.hasPendingMacrotasks, false);
       });
 
       test('should be true when a timer is queued', () async {
@@ -88,9 +88,9 @@ void main() {
             onCompleter.complete();
           });
         });
-        expect(zone.hasPendingMacrotasks, isTrue);
+        expect(zone.hasPendingMacrotasks, true);
         await onCompleter.future;
-        expect(zone.hasPendingMacrotasks, isFalse);
+        expect(zone.hasPendingMacrotasks, false);
         expect(log, [
           'onTurnStart',
           '--- entered zone ---',
@@ -111,13 +111,13 @@ void main() {
 
       test('should be false outside of the zone', () {
         zone.runOutsideAngular(() {
-          expect(NgZone.isInAngularZone(), isFalse);
+          expect(NgZone.isInAngularZone(), false);
         });
       });
 
       test('should be true inside of the zone', () {
         zone.run(() {
-          expect(NgZone.isInAngularZone(), isTrue);
+          expect(NgZone.isInAngularZone(), true);
         });
       });
     });

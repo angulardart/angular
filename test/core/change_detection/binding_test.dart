@@ -276,7 +276,7 @@ class TestEqualityOperation implements ValueTest {
   ChildComponent child;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -304,7 +304,7 @@ class TestIdentityOperation implements ValueTest {
   ChildComponent child;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -332,7 +332,7 @@ class TestLessThanOperation implements ValueTest {
   ChildComponent child;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -346,7 +346,7 @@ class TestGreaterThanOperation implements ValueTest {
   ChildComponent child;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -360,7 +360,7 @@ class TestLessThanOrEqualsOperation implements ValueTest {
   ChildComponent child;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -374,7 +374,7 @@ class TestGreaterThanOrEqualsOperation implements ValueTest {
   ChildComponent child;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -406,7 +406,7 @@ class TestOrOperation implements ValueTest {
   bool get val2 => false;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -434,7 +434,7 @@ class TestDoubleNegationOperation implements ValueTest {
   ChildComponent child;
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -512,7 +512,7 @@ class TestChainedPropertyAccess implements ValueTest {
   get list => const ['foo', 'bar'];
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(
@@ -528,7 +528,7 @@ class TestFunctionCall implements ValueTest {
   get list => const ['foo', 'bar'];
 
   @override
-  get expected => isTrue;
+  get expected => true;
 }
 
 @Component(

@@ -12,42 +12,42 @@ List<Token> lex(String text) {
 }
 
 void expectToken(token, index) {
-  expect(token is Token, isTrue);
+  expect(token is Token, true);
   expect(token.index, index);
 }
 
 void expectCharacterToken(token, index, character) {
   expect(character, hasLength(1));
   expectToken(token, index);
-  expect(token.isCharacter(character.codeUnitAt(0)), isTrue);
+  expect(token.isCharacter(character.codeUnitAt(0)), true);
 }
 
 void expectOperatorToken(token, index, operator) {
   expectToken(token, index);
-  expect(token.isOperator(operator), isTrue);
+  expect(token.isOperator(operator), true);
 }
 
 void expectNumberToken(token, index, n) {
   expectToken(token, index);
-  expect(token.isNumber, isTrue);
+  expect(token.isNumber, true);
   expect(token.toNumber(), n);
 }
 
 void expectStringToken(token, index, str) {
   expectToken(token, index);
-  expect(token.isString, isTrue);
+  expect(token.isString, true);
   expect(token.toString(), str);
 }
 
 void expectIdentifierToken(Token token, int index, identifier) {
   expectToken(token, index);
-  expect(token.isIdentifier, isTrue);
+  expect(token.isIdentifier, true);
   expect(token.toString(), identifier);
 }
 
 void expectKeywordToken(token, index, keyword) {
   expectToken(token, index);
-  expect(token.isKeyword, isTrue);
+  expect(token.isKeyword, true);
   expect(token.toString(), keyword);
 }
 
@@ -113,7 +113,7 @@ void main() {
       test("should tokenize undefined", () {
         List<Token> tokens = lex("undefined");
         expectKeywordToken(tokens[0], 0, "undefined");
-        expect(tokens[0].isKeywordUndefined, isTrue);
+        expect(tokens[0].isKeywordUndefined, true);
       });
       test("should ignore whitespace", () {
         List<Token> tokens = lex("a \t \n \r b");

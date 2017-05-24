@@ -135,12 +135,12 @@ void main() {
           beforeChangeDetection: (InputFormTest component) {
         component.form = form;
       });
-      expect(login.touched, isFalse);
+      expect(login.touched, false);
       await fixture.update((_) {
         var input = fixture.rootElement.querySelector('input');
         dispatchEvent(input, 'blur');
       });
-      expect(login.touched, isTrue);
+      expect(login.touched, true);
     });
     test('should support <input type=text>', () async {
       var testBed = new NgTestBed<InputFormTest>();
@@ -196,7 +196,7 @@ void main() {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
-      expect(input.checked, isTrue);
+      expect(input.checked, true);
       await fixture.update((_) {
         input.checked = false;
         dispatchEvent(input, 'change');
@@ -231,13 +231,13 @@ void main() {
         input.value = '';
         dispatchEvent(input, 'input');
       });
-      expect(form.valid, isFalse);
+      expect(form.valid, false);
       expect(form.value, equals({'num': null}));
       await fixture.update((_) {
         input.value = '0';
         dispatchEvent(input, 'input');
       });
-      expect(form.valid, isTrue);
+      expect(form.valid, true);
       expect(form.value, equals({'num': 0}));
     });
     test('should support <type=number> when value is cleared programmatically',
@@ -263,13 +263,13 @@ void main() {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
-      expect(input.checked, isFalse);
+      expect(input.checked, false);
       await fixture.update((_) {
         dispatchEvent(input, 'change');
       });
       var value = form.value;
-      expect(value['foodChicken'].checked, isTrue);
-      expect(value['foodFish'].checked, isFalse);
+      expect(value['foodChicken'].checked, true);
+      expect(value['foodFish'].checked, false);
     });
 
     group('should support select', () {
@@ -281,7 +281,7 @@ void main() {
         var sfOption =
             fixture.rootElement.querySelector('option') as OptionElement;
         expect(select.value, 'SF');
-        expect(sfOption.selected, isTrue);
+        expect(sfOption.selected, true);
       });
       test('with basic selection and value bindings', () async {
         var testBed = new NgTestBed<SelectForTest>();
@@ -306,13 +306,13 @@ void main() {
         var sfOption =
             fixture.rootElement.querySelector('option') as OptionElement;
         expect(select.value, 'SF');
-        expect(sfOption.selected, isTrue);
+        expect(sfOption.selected, true);
         await fixture.update((_) {
           select.value = 'NYC';
           dispatchEvent(select, 'change');
         });
         expect(form.value, equals({'city': 'NYC'}));
-        expect(sfOption.selected, isFalse);
+        expect(sfOption.selected, false);
       });
       test('with a dynamic list of options', () async {
         var testBed = new NgTestBed<SelectControlDynamicDataTest>();
@@ -332,7 +332,7 @@ void main() {
         var nycOption =
             fixture.rootElement.querySelectorAll('option')[1] as OptionElement;
         expect(select.value, '1: Object');
-        expect(nycOption.selected, isTrue);
+        expect(nycOption.selected, true);
         await fixture.update((_) {
           select.value = '2: Object';
           dispatchEvent(select, 'change');
@@ -360,7 +360,7 @@ void main() {
         var buffalo =
             fixture.rootElement.querySelectorAll('option')[2] as OptionElement;
         expect(select.value, '2: Object');
-        expect(buffalo.selected, isTrue);
+        expect(buffalo.selected, true);
       });
       test('when options are removed', () async {
         var testBed = new NgTestBed<SelectOptionValueMapTest>();
@@ -396,7 +396,7 @@ void main() {
         var buffalo =
             fixture.rootElement.querySelectorAll('option')[1] as OptionElement;
         expect(select.value, '1: Buffalo');
-        expect(buffalo.selected, isTrue);
+        expect(buffalo.selected, true);
       });
       test('with duplicate option values', () async {
         var testBed = new NgTestBed<SelectOptionValueMapTest>();
@@ -417,7 +417,7 @@ void main() {
         var firstSF =
             fixture.rootElement.querySelectorAll('option')[1] as OptionElement;
         expect(select.value, '1: Object');
-        expect(firstSF.selected, isTrue);
+        expect(firstSF.selected, true);
       });
       test('when option values have same content, but different identities',
           () async {
@@ -439,7 +439,7 @@ void main() {
         var secondNYC =
             fixture.rootElement.querySelectorAll('option')[2] as OptionElement;
         expect(select.value, '2: Object');
-        expect(secondNYC.selected, isTrue);
+        expect(secondNYC.selected, true);
       });
     });
     test('should support custom value accessors', () async {
@@ -500,10 +500,10 @@ void main() {
           dispatchEvent(minLength, 'input');
           dispatchEvent(maxLength, 'input');
         });
-        expect(form.hasError('required', ['login']), isTrue);
-        expect(form.hasError('minlength', ['min']), isTrue);
-        expect(form.hasError('maxlength', ['max']), isTrue);
-        expect(form.hasError('loginIsEmpty'), isTrue);
+        expect(form.hasError('required', ['login']), true);
+        expect(form.hasError('minlength', ['min']), true);
+        expect(form.hasError('maxlength', ['max']), true);
+        expect(form.hasError('loginIsEmpty'), true);
         await fixture.update((_) {
           required.value = '1';
           minLength.value = '123';
@@ -512,7 +512,7 @@ void main() {
           dispatchEvent(minLength, 'input');
           dispatchEvent(maxLength, 'input');
         });
-        expect(form.valid, isTrue);
+        expect(form.valid, true);
       });
       test('should use sync validators defined in the model', () async {
         var testBed = new NgTestBed<InputFormTest>();
@@ -522,14 +522,14 @@ void main() {
             beforeChangeDetection: (InputFormTest component) {
           component.form = form;
         });
-        expect(form.valid, isTrue);
+        expect(form.valid, true);
         await fixture.update((_) {
           var input =
               fixture.rootElement.querySelector('input') as InputElement;
           input.value = '';
           dispatchEvent(input, 'input');
         });
-        expect(form.valid, isFalse);
+        expect(form.valid, false);
       });
     });
     group('nested forms', () {
@@ -695,17 +695,17 @@ void main() {
           component.data = data;
         });
         var input = fixture.rootElement.querySelector('input') as InputElement;
-        expect(input.checked, isFalse);
+        expect(input.checked, false);
         await fixture.update((_) {
           dispatchEvent(input, 'change');
         });
-        expect(data['chicken1'].checked, isTrue);
+        expect(data['chicken1'].checked, true);
         expect(data['chicken1'].value, 'chicken');
-        expect(data['fish1'].checked, isFalse);
+        expect(data['fish1'].checked, false);
         expect(data['fish1'].value, 'fish');
-        expect(data['chicken2'].checked, isFalse);
+        expect(data['chicken2'].checked, false);
         expect(data['chicken2'].value, 'chicken');
-        expect(data['fish2'].checked, isTrue);
+        expect(data['fish2'].checked, true);
         expect(data['fish2'].value, 'fish');
       });
     });

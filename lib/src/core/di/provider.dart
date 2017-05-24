@@ -38,11 +38,11 @@ class Provider {
   ///       new Provider(Vehicle, useExisting: Car)
   ///     ]);
   ///
-  ///     expect(injectorClass.get(Vehicle) == injectorClass.get(Car), isFalse);
-  ///     expect(injectorClass.get(Vehicle) is Car, isTrue);
+  ///     expect(injectorClass.get(Vehicle) == injectorClass.get(Car), false);
+  ///     expect(injectorClass.get(Vehicle) is Car, true);
   ///
-  ///     expect(injectorAlias.get(Vehicle) == injectorAlias.get(Car), isTrue);
-  ///     expect(injectorAlias.get(Vehicle) is Car, isTrue);
+  ///     expect(injectorAlias.get(Vehicle) == injectorAlias.get(Car), true);
+  ///     expect(injectorAlias.get(Vehicle) is Car, true);
   ///
   final Type useClass;
 
@@ -78,11 +78,11 @@ class Provider {
   ///       new Provider(Vehicle, useClass: Car)
   ///     ]);
   ///
-  ///     expect(injectorAlias.get(Vehicle) == injectorAlias.get(Car), isTrue);
-  ///     expect(injectorAlias.get(Vehicle) is Car, isTrue);
+  ///     expect(injectorAlias.get(Vehicle) == injectorAlias.get(Car), true);
+  ///     expect(injectorAlias.get(Vehicle) is Car, true);
   ///
-  ///     expect(injectorClass.get(Vehicle) != injectorClass.get(Car), isTrue);
-  ///     expect(injectorClass.get(Vehicle) is Car, isTrue);
+  ///     expect(injectorClass.get(Vehicle) != injectorClass.get(Car), true);
+  ///     expect(injectorClass.get(Vehicle) is Car, true);
   ///
   final useExisting;
 

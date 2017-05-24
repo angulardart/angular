@@ -145,7 +145,7 @@ void main() {
         ]);
         await completer.future.then(expectAsync1((_) {
           coreLoadAndBootstrap(app.injector, MyComp).then((compRef) {
-            expect(initializerDone, isTrue);
+            expect(initializerDone, true);
           });
         }));
       });

@@ -206,82 +206,82 @@ void main() {
 
         group('detects StubComponent as', () {
           test('a @Directive', () {
-            expect(types.isDirectiveClass(stubComponentClass), isTrue);
+            expect(types.isDirectiveClass(stubComponentClass), true);
           });
 
           test('a @Component', () {
-            expect(types.isComponentClass(stubComponentClass), isTrue);
+            expect(types.isComponentClass(stubComponentClass), true);
           });
 
           test('a @Injectable', () {
-            expect(types.isInjectableClass(stubComponentClass), isTrue);
+            expect(types.isInjectableClass(stubComponentClass), true);
           });
         });
 
         test('detects @Inject() annotated parameter', () {
           final constructor = stubComponentClass.constructors.first;
           final parameter = constructor.parameters.first;
-          expect(types.isInjectParameter(parameter), isTrue);
+          expect(types.isInjectParameter(parameter), true);
         });
 
         test('detects @Input() annotated setters', () {
           final stubInput = stubComponentClass.getSetter('stubInput');
-          expect(types.isInputSetter(stubInput), isTrue);
+          expect(types.isInputSetter(stubInput), true);
         });
 
         test('detects @Output() annotated getters', () {
           final stubOutput = stubComponentClass.getGetter('stubOutput');
-          expect(types.isOutputGetter(stubOutput), isTrue);
+          expect(types.isOutputGetter(stubOutput), true);
         });
 
         test('detects @HostBinding() annotated getters', () {
           final stubHostBinding = stubComponentClass.getGetter(
             'stubHostBinding',
           );
-          expect(types.isHostBinding(stubHostBinding), isTrue);
+          expect(types.isHostBinding(stubHostBinding), true);
         });
 
         test('detects @HostListener() annotated methods', () {
           final stubHostListener = stubComponentClass.getMethod(
             'stubHostListener',
           );
-          expect(types.isHostListener(stubHostListener), isTrue);
+          expect(types.isHostListener(stubHostListener), true);
         });
 
         test('detects @Query() annotated setters', () {
           final stubQuery = stubComponentClass.getSetter('stubQuery');
-          expect(types.isQuery(stubQuery), isTrue);
+          expect(types.isQuery(stubQuery), true);
         });
 
         test('detects @ViewQuery() annotated setters', () {
           final stubViewQuery = stubComponentClass.getSetter('stubViewQuery');
-          expect(types.isViewQuery(stubViewQuery), isTrue);
+          expect(types.isViewQuery(stubViewQuery), true);
         });
 
         test('detects @ContentChildren() annotated setters', () {
           final stubContentChildren = stubComponentClass.getSetter(
             'stubContentChildren',
           );
-          expect(types.isContentChildren(stubContentChildren), isTrue);
+          expect(types.isContentChildren(stubContentChildren), true);
         });
 
         test('detects @ContentChild() annotated setters', () {
           final stubContentChild = stubComponentClass.getSetter(
             'stubContentChild',
           );
-          expect(types.isContentChild(stubContentChild), isTrue);
+          expect(types.isContentChild(stubContentChild), true);
         });
 
         test('detects @ViewChildren() annotated setters', () {
           final stubViewChildren = stubComponentClass.getSetter(
             'stubViewChildren',
           );
-          expect(types.isViewChildren(stubViewChildren), isTrue);
+          expect(types.isViewChildren(stubViewChildren), true);
         });
 
         test('detects @ViewChild() annotated setters', () {
           final stubViewChild = stubComponentClass.getSetter('stubViewChild');
-          expect(types.isViewChild(stubViewChild), isTrue);
+          expect(types.isViewChild(stubViewChild), true);
         });
 
         <String, Func0<Func1<ClassElement, bool>>>{
@@ -296,40 +296,40 @@ void main() {
         }.forEach((className, getMatcher) {
           test('detects a lifecycle event on $className', () {
             final stubClass = stubLibrary.getType(className);
-            expect(getMatcher()(stubClass), isTrue);
+            expect(getMatcher()(stubClass), true);
           });
         });
 
         group('detects StubDirective as', () {
           test('a @Directive', () {
-            expect(types.isDirectiveClass(stubDirectiveClass), isTrue);
+            expect(types.isDirectiveClass(stubDirectiveClass), true);
           });
 
           test('not a @Component', () {
-            expect(types.isComponentClass(stubDirectiveClass), isFalse);
+            expect(types.isComponentClass(stubDirectiveClass), false);
           });
 
           test('a @Injectable', () {
-            expect(types.isInjectableClass(stubDirectiveClass), isTrue);
+            expect(types.isInjectableClass(stubDirectiveClass), true);
           });
         });
 
         group('detects StubPipe as', () {
           test('a @Pipe', () {
-            expect(types.isPipeClass(stubPipeClass), isTrue);
+            expect(types.isPipeClass(stubPipeClass), true);
           });
 
           test('a @Injectable', () {
-            expect(types.isInjectableClass(stubPipeClass), isTrue);
+            expect(types.isInjectableClass(stubPipeClass), true);
           });
         });
 
         test('should not allow sub-typing @Directive', () {
-          expect(types.isDirectiveClass(stubCustomDirectiveClass), isFalse);
+          expect(types.isDirectiveClass(stubCustomDirectiveClass), false);
         });
 
         test('should not allow sub-typing @Component', () {
-          expect(types.isComponentClass(stubCustomComponentClass), isFalse);
+          expect(types.isComponentClass(stubCustomComponentClass), false);
         });
       });
     });

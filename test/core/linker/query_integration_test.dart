@@ -235,7 +235,7 @@ void main() {
         expect(divIt.current.nativeElement.text, itemIt.current);
       }
 
-      expect(itemIt.moveNext(), isFalse);
+      expect(itemIt.moveNext(), false);
     });
   });
 }

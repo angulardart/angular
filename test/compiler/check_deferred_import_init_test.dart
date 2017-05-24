@@ -35,10 +35,10 @@ void runTest(String name, String code, bool expectError) {
     var hasError = logger.entries.any((e) =>
         e.level == LogLevel.ERROR && e.message.contains("initReflector"));
     if (expectError) {
-      expect(hasError, isTrue,
+      expect(hasError, true,
           reason: 'Expected an error for uninitialized deferred imports.');
     } else {
-      expect(hasError, isFalse,
+      expect(hasError, false,
           reason: 'Didn\'t expect an error about unitialized deferred imports');
     }
   });

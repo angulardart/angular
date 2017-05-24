@@ -373,7 +373,7 @@ void main() {
             e.message,
             contains('Error during instantiation of Engine!'
                 ' ($Car -> Engine)'));
-        expect(e.originalException is BaseException, isTrue);
+        expect(e.originalException is BaseException, true);
         expect(e.causeKey.token, Engine);
       }
     });
@@ -433,7 +433,7 @@ void main() {
             .resolveAndCreateChild([provide(Engine, useClass: TurboEngine)]);
         var engineFromParent = parent.get(Engine);
         var engineFromChild = child.get(Engine);
-        expect(engineFromParent != engineFromChild, isTrue);
+        expect(engineFromParent != engineFromChild, true);
         expect(engineFromChild, new isInstanceOf<TurboEngine>());
       });
       test("should give access to parent", () {
@@ -513,7 +513,7 @@ void main() {
       test("should default to token type", () {
         var obj =
             ReflectiveInjector.resolveAndCreate([provide(Engine)]).get(Engine);
-        expect(obj.runtimeType == Engine, isTrue);
+        expect(obj.runtimeType == Engine, true);
       });
       test("should resolve and flatten", () {
         var providers = ReflectiveInjector.resolve([
@@ -522,7 +522,7 @@ void main() {
         ]);
         providers.forEach((b) {
           if (b == null) return;
-          expect(b is ResolvedReflectiveProviderImpl, isTrue);
+          expect(b is ResolvedReflectiveProviderImpl, true);
         });
       });
       test("should support multi providers", () {
@@ -565,9 +565,9 @@ void main() {
         var engineProvider = providers[0];
         var brokenEngineProvider = providers[1];
         var stringProvider = providers[2];
-        expect(engineProvider.resolvedFactories[0].factory() is Engine, isTrue);
+        expect(engineProvider.resolvedFactories[0].factory() is Engine, true);
         expect(brokenEngineProvider.resolvedFactories[0].factory() is Engine,
-            isTrue);
+            true);
         expect(stringProvider.resolvedFactories[0].dependencies[0].key,
             ReflectiveKey.get(Engine));
       });
@@ -864,7 +864,7 @@ void main() {
             e.message,
             contains('Error during instantiation of Engine!'
                 ' ($Car -> Engine)'));
-        expect(e.originalException is BaseException, isTrue);
+        expect(e.originalException is BaseException, true);
         expect(e.causeKey.token, Engine);
       }
     });
@@ -924,7 +924,7 @@ void main() {
             .resolveAndCreateChild([provide(Engine, useClass: TurboEngine)]);
         var engineFromParent = parent.get(Engine);
         var engineFromChild = child.get(Engine);
-        expect(engineFromParent != engineFromChild, isTrue);
+        expect(engineFromParent != engineFromChild, true);
         expect(engineFromChild, new isInstanceOf<TurboEngine>());
       });
       test("should give access to parent", () {
@@ -997,7 +997,7 @@ void main() {
         ]);
         providers.forEach((b) {
           if (b == null) return;
-          expect(b is ResolvedReflectiveProviderImpl, isTrue);
+          expect(b is ResolvedReflectiveProviderImpl, true);
         });
       });
       test("should support multi providers", () {
@@ -1040,9 +1040,9 @@ void main() {
         var engineProvider = providers[0];
         var brokenEngineProvider = providers[1];
         var stringProvider = providers[2];
-        expect(engineProvider.resolvedFactories[0].factory() is Engine, isTrue);
+        expect(engineProvider.resolvedFactories[0].factory() is Engine, true);
         expect(brokenEngineProvider.resolvedFactories[0].factory() is Engine,
-            isTrue);
+            true);
         expect(stringProvider.resolvedFactories[0].dependencies[0].key,
             ReflectiveKey.get(Engine));
       });

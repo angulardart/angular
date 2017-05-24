@@ -33,7 +33,7 @@ void main() {
       var bindings = mirror.metadata[0].reflectee.bindings;
       expect(bindings, hasLength(5));
       bindings.forEach((b) {
-        expect(b is Provider, isTrue);
+        expect(b is Provider, true);
       });
     });
   });

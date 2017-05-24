@@ -80,7 +80,7 @@ void main() {
       NgTestFixture<ClassOnHostTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement;
-      expect(elm.className.startsWith('customhostclass _nghost-'), isTrue);
+      expect(elm.className.startsWith('customhostclass _nghost-'), true);
     });
 
     test('should support [attr.class] bindings', () async {
@@ -88,7 +88,7 @@ void main() {
       NgTestFixture<ClassAttribBindingComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
-      expect(elm.className.startsWith('xyz _ngcontent-'), isTrue);
+      expect(elm.className.startsWith('xyz _ngcontent-'), true);
     });
 
     test('should support class interpolation', () async {
@@ -96,8 +96,7 @@ void main() {
       NgTestFixture<ClassInterpolateComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
-      expect(
-          elm.className.startsWith('prefix xyz postfix _ngcontent-'), isTrue);
+      expect(elm.className.startsWith('prefix xyz postfix _ngcontent-'), true);
     });
 
     test(
@@ -107,8 +106,8 @@ void main() {
       NgTestFixture<ComponentContainerTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('child-component1');
-      expect(elm.className.contains('_ngcontent'), isTrue);
-      expect(elm.className.contains('_nghost'), isTrue);
+      expect(elm.className.contains('_ngcontent'), true);
+      expect(elm.className.contains('_nghost'), true);
     });
 
     test('Should support native encapsulation', () async {

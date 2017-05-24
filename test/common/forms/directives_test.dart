@@ -137,7 +137,7 @@ void main() {
       test("should set up validators", fakeAsync(() {
         form.addControl(loginControlDir);
         // sync validators are set
-        expect(formModel.hasError("required", ["login"]), isTrue);
+        expect(formModel.hasError("required", ["login"]), true);
         ((formModel.find(["login"]) as Control)).updateValue("invalid value");
       }));
       test("should write value to the DOM", () {
@@ -306,10 +306,10 @@ void main() {
         checkProperties(newControl);
       });
       test("should set up validator", () {
-        expect(control.valid, isTrue);
+        expect(control.valid, true);
         // this will add the required validator and recalculate the validity
         controlDir.ngOnChanges({"form": new SimpleChange(null, control)});
-        expect(control.valid, isFalse);
+        expect(control.valid, false);
       });
     });
     group("NgModel", () {

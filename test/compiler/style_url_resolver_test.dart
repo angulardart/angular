@@ -76,24 +76,24 @@ void main() {
   });
   group("isStyleUrlResolvable", () {
     test("should resolve relative urls", () {
-      expect(isStyleUrlResolvable("someUrl.css"), isTrue);
+      expect(isStyleUrlResolvable("someUrl.css"), true);
     });
     test("should resolve package: urls", () {
-      expect(isStyleUrlResolvable("package:someUrl.css"), isTrue);
+      expect(isStyleUrlResolvable("package:someUrl.css"), true);
     });
     test("should resolve asset: urls", () {
-      expect(isStyleUrlResolvable("asset:someUrl.css"), isTrue);
+      expect(isStyleUrlResolvable("asset:someUrl.css"), true);
     });
     test("should not resolve empty urls", () {
-      expect(isStyleUrlResolvable(null), isFalse);
-      expect(isStyleUrlResolvable(""), isFalse);
+      expect(isStyleUrlResolvable(null), false);
+      expect(isStyleUrlResolvable(""), false);
     });
     test("should not resolve urls with other schema", () {
-      expect(isStyleUrlResolvable("http://otherurl"), isFalse);
+      expect(isStyleUrlResolvable("http://otherurl"), false);
     });
     test("should not resolve urls with absolute paths", () {
-      expect(isStyleUrlResolvable("/otherurl"), isFalse);
-      expect(isStyleUrlResolvable("//otherurl"), isFalse);
+      expect(isStyleUrlResolvable("/otherurl"), false);
+      expect(isStyleUrlResolvable("//otherurl"), false);
     });
   });
 }

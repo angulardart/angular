@@ -14,12 +14,12 @@ void main() {
       group('validator', () {
         test('should run validator with the initial value', () {
           var c = new Control('value', Validators.required);
-          expect(c.valid, isTrue);
+          expect(c.valid, true);
         });
         test('should rerun the validator when the value changes', () {
           var c = new Control('value', Validators.required);
           c.updateValue(null);
-          expect(c.valid, isFalse);
+          expect(c.valid, false);
         });
         test('should return errors', () {
           var c = new Control(null, Validators.required);
@@ -29,12 +29,12 @@ void main() {
       group('dirty', () {
         test('should be false after creating a control', () {
           var c = new Control('value');
-          expect(c.dirty, isFalse);
+          expect(c.dirty, false);
         });
         test('should be true after changing the value of the control', () {
           var c = new Control('value');
           c.markAsDirty();
-          expect(c.dirty, isTrue);
+          expect(c.dirty, true);
         });
       });
       group('updateValue', () {
@@ -117,7 +117,7 @@ void main() {
         test('should set errors on a control', () {
           var c = new Control('someValue');
           c.setErrors({'someError': true});
-          expect(c.valid, isFalse);
+          expect(c.valid, false);
           expect(c.errors, {'someError': true});
         });
         test('should reset the errors and validity when the value changes', () {
@@ -129,9 +129,9 @@ void main() {
         test("should update the parent group's validity", () {
           var c = new Control('someValue');
           var g = new ControlGroup({'one': c});
-          expect(g.valid, isTrue);
+          expect(g.valid, true);
           c.setErrors({'someError': true});
-          expect(g.valid, isFalse);
+          expect(g.valid, false);
         });
         test("should not reset parent's errors", () {
           var c = new Control('someValue');
@@ -185,10 +185,10 @@ void main() {
           var c = new Control(null);
           var g = new ControlGroup({'one': c}, null, simpleValidator);
           c.updateValue('correct');
-          expect(g.valid, isTrue);
+          expect(g.valid, true);
           expect(g.errors, null);
           c.updateValue('incorrect');
-          expect(g.valid, isFalse);
+          expect(g.valid, false);
           expect(g.errors, {'broken': true});
         });
       });
@@ -200,11 +200,11 @@ void main() {
           g = new ControlGroup({'one': c});
         });
         test('should be false after creating a control', () {
-          expect(g.dirty, isFalse);
+          expect(g.dirty, false);
         });
         test('should be false after changing the value of the control', () {
           c.markAsDirty();
-          expect(g.dirty, isTrue);
+          expect(g.dirty, true);
         });
       });
       group('optional components', () {
@@ -220,17 +220,17 @@ void main() {
           });
           // rename contains into has
           test('should return false when the component is not included', () {
-            expect(group.contains('optional'), isFalse);
+            expect(group.contains('optional'), false);
           });
           test(
               'should return false when there is no component '
               'with the given name', () {
-            expect(group.contains('something else'), isFalse);
+            expect(group.contains('something else'), false);
           });
           test('should return true when the component is included', () {
-            expect(group.contains('required'), isTrue);
+            expect(group.contains('required'), true);
             group.include('optional');
-            expect(group.contains('optional'), isTrue);
+            expect(group.contains('optional'), true);
           });
         });
         test('should not include an inactive component into the group value',
@@ -253,9 +253,9 @@ void main() {
           }, {
             'optional': false
           });
-          expect(group.valid, isTrue);
+          expect(group.valid, true);
           group.include('optional');
-          expect(group.valid, isFalse);
+          expect(group.valid, false);
         });
       });
       group('valueChanges', () {
@@ -281,7 +281,7 @@ void main() {
             controlCallbackIsCalled = true;
           }));
           g.valueChanges.listen(expectAsync1((value) {
-            expect(controlCallbackIsCalled, isTrue);
+            expect(controlCallbackIsCalled, true);
           }));
           c1.updateValue('new1');
         });
@@ -317,8 +317,8 @@ void main() {
         test('should return the error when it is present', () {
           var c = new Control('', Validators.required);
           var g = new ControlGroup({'one': c});
-          expect(c.getError('required'), isTrue);
-          expect(g.getError('required', ['one']), isTrue);
+          expect(c.getError('required'), true);
+          expect(g.getError('required', ['one']), true);
         });
         test('should return null otherwise', () {
           var c = new Control('not empty', Validators.required);
@@ -375,10 +375,10 @@ void main() {
           var c = new Control(null);
           var g = new ControlArray([c], simpleValidator);
           c.updateValue('correct');
-          expect(g.valid, isTrue);
+          expect(g.valid, true);
           expect(g.errors, isNull);
           c.updateValue('incorrect');
-          expect(g.valid, isFalse);
+          expect(g.valid, false);
           expect(g.errors, {'broken': true});
         });
       });
@@ -390,11 +390,11 @@ void main() {
           a = new ControlArray([c]);
         });
         test('should be false after creating a control', () {
-          expect(a.dirty, isFalse);
+          expect(a.dirty, false);
         });
         test('should be false after changing the value of the control', () {
           c.markAsDirty();
-          expect(a.dirty, isTrue);
+          expect(a.dirty, true);
         });
       });
       group('pending', () {
@@ -405,18 +405,18 @@ void main() {
           a = new ControlArray([c]);
         });
         test('should be false after creating a control', () {
-          expect(c.pending, isFalse);
-          expect(a.pending, isFalse);
+          expect(c.pending, false);
+          expect(a.pending, false);
         });
         test('should be true after changing the value of the control', () {
           c.markAsPending();
-          expect(c.pending, isTrue);
-          expect(a.pending, isTrue);
+          expect(c.pending, true);
+          expect(a.pending, true);
         });
         test('should not update the parent when onlySelf = true', () {
           c.markAsPending(onlySelf: true);
-          expect(c.pending, isTrue);
-          expect(a.pending, isFalse);
+          expect(c.pending, true);
+          expect(a.pending, false);
         });
       });
       group('valueChanges', () {
@@ -442,7 +442,7 @@ void main() {
             controlCallbackIsCalled = true;
           }));
           a.valueChanges.listen(expectAsync1((value) {
-            expect(controlCallbackIsCalled, isTrue);
+            expect(controlCallbackIsCalled, true);
           }));
           c1.updateValue('new1');
         });

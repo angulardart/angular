@@ -70,18 +70,18 @@ void main() {
         var testBed = new NgTestBed<LazyInitializationTest>();
         var fixture = await testBed.create();
         var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(_lazilyCreated, isFalse);
+        expect(_lazilyCreated, false);
         el.children[0].inject('service');
-        expect(_lazilyCreated, isTrue);
+        expect(_lazilyCreated, true);
       });
       test('should instantiate view providers lazily', () async {
         _lazilyCreated = false;
         var testBed = new NgTestBed<ViewProviderLazyInitializationTest>();
         var fixture = await testBed.create();
         var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(_lazilyCreated, isFalse);
+        expect(_lazilyCreated, false);
         el.children[0].inject('service');
-        expect(_lazilyCreated, isTrue);
+        expect(_lazilyCreated, true);
       });
       test(
           'should not instantiate other directives '
