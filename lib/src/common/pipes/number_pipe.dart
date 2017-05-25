@@ -20,7 +20,7 @@ class NumberPipe {
       var parts = _re.firstMatch(digits);
       if (parts == null) {
         throw new BaseException(
-          '${ digits} is not a valid digit info for number pipes',
+          '$digits is not a valid digit info for number pipes',
         );
       }
       if (parts[1] != null) {

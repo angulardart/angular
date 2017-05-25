@@ -114,7 +114,7 @@ class DirectiveResolver {
       dm.outputs.forEach((String propName) {
         if (outputs.contains(propName)) {
           throw new BaseException(
-              "Output event '${ propName}' defined multiple times "
+              "Output event '$propName' defined multiple times "
               "in '${directiveType}'");
         }
       });

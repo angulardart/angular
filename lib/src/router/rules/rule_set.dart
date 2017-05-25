@@ -36,7 +36,9 @@ class RuleSet {
       var suggestedName =
           config.name[0].toUpperCase() + config.name.substring(1);
       throw new BaseException(
-          '''Route "${ config . path}" with name "${ config . name}" does not begin with an uppercase letter. Route names should be CamelCase like "${ suggestedName}".''');
+          'Route "${config.path}" with name "${config.name}" does not '
+          'begin with an uppercase letter. Route names should be CamelCase '
+          'like "$suggestedName".');
     }
     if (config is AuxRoute) {
       handler = new SyncRouteHandler(
@@ -71,7 +73,7 @@ class RuleSet {
     this._assertNoHashCollision(newRule.hash, config.path);
     if (useAsDefault) {
       if (defaultRule != null) {
-        throw new BaseException('''Only one route can be default''');
+        throw new BaseException('Only one route can be default');
       }
       this.defaultRule = newRule;
     }
@@ -82,7 +84,8 @@ class RuleSet {
     return newRule.terminal;
   }
 
-  /// Given a URL, returns a list of `RouteMatch`es, which are partial recognitions for some route.
+  /// Given a URL, returns a list of `RouteMatch`es, which are partial
+  /// recognitions for some route.
   List<Future<RouteMatch>> recognize(Url urlParse) {
     var solutions = <Future<RouteMatch>>[];
     this.rules.forEach((AbstractRule routeRecognizer) {
@@ -91,7 +94,7 @@ class RuleSet {
         solutions.add(pathMatch);
       }
     });
-    // handle cases where we are routing just to an aux route
+    // Handle cases where we are routing just to an aux route.
     if (solutions.length == 0 &&
         urlParse != null &&
         urlParse.auxiliary.length > 0) {
@@ -135,7 +138,8 @@ class RuleSet {
     this.rules.forEach((rule) {
       if (hash == rule.hash) {
         throw new BaseException(
-            '''Configuration \'${ path}\' conflicts with existing route \'${ rule . path}\'''');
+            "Configuration '$path' conflicts with existing route "
+            "'${rule.path}'");
       }
     });
   }
@@ -147,17 +151,18 @@ class RuleSet {
             config.regex, config.serializer as RegexSerializer);
       } else {
         throw new BaseException(
-            '''Route provides a regex property, \'${ config . regex}\', but no serializer property''');
+            "Route provides a regex property, '${config.regex}', but no "
+            "serializer property");
       }
     }
     if (config.path != null) {
-      // Auxiliary routes do not have a slash at the start
+      // Auxiliary routes do not have a slash at the start.
       var path = (config is AuxRoute && config.path.startsWith("/"))
           ? config.path.substring(1)
           : config.path;
       return new ParamRoutePath(path);
     }
     throw new BaseException(
-        "Route must provide either a path or regex property");
+        'Route must provide either a path or regex property');
   }
 }

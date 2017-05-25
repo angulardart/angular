@@ -54,8 +54,7 @@ class MockXHR extends XHR {
       var expectation = this._expectations[i];
       urls.add(expectation.url);
     }
-    throw new BaseException(
-        '''Unsatisfied requests: ${ urls . join ( ", " )}''');
+    throw new BaseException('Unsatisfied requests: ${urls.join( ", " )}');
   }
 
   void _processRequest(_PendingRequest request) {
@@ -73,7 +72,7 @@ class MockXHR extends XHR {
       request.complete(response);
       return;
     }
-    throw new BaseException('''Unexpected request ${ url}''');
+    throw new BaseException('Unexpected request $url');
   }
 }
 
@@ -86,7 +85,7 @@ class _PendingRequest {
   }
   void complete(String response) {
     if (response == null) {
-      this.completer.completeError('''Failed to load ${ this . url}''');
+      this.completer.completeError('Failed to load ${this.url}');
     } else {
       this.completer.complete(response);
     }

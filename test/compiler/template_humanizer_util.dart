@@ -175,7 +175,7 @@ class TemplateContentProjectionHumanizer implements TemplateAstVisitor {
   }
 
   dynamic visitText(TextAst ast, dynamic context) {
-    this.result.add(['''#text(${ ast . value})''', ast.ngContentIndex]);
+    this.result.add(['#text(${ast.value})', ast.ngContentIndex]);
     return null;
   }
 

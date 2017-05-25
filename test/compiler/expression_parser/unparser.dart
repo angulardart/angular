@@ -13,22 +13,20 @@ class Unparser implements AstVisitor {
 
   void visitPropertyRead(PropertyRead ast, dynamic context) {
     this._visit(ast.receiver);
-    this._expression += ast.receiver is ImplicitReceiver
-        ? '''${ ast . name}'''
-        : '''.${ ast . name}''';
+    this._expression +=
+        ast.receiver is ImplicitReceiver ? '${ast.name}' : '.${ast.name}';
   }
 
   void visitPropertyWrite(PropertyWrite ast, dynamic context) {
     this._visit(ast.receiver);
-    this._expression += ast.receiver is ImplicitReceiver
-        ? '''${ ast . name} = '''
-        : '''.${ ast . name} = ''';
+    this._expression +=
+        ast.receiver is ImplicitReceiver ? '${ast.name} = ' : '.${ast.name} = ';
     this._visit(ast.value);
   }
 
   void visitBinary(Binary ast, dynamic context) {
     this._visit(ast.left);
-    this._expression += ''' ${ ast . operation} ''';
+    this._expression += ' ${ast.operation} ';
     this._visit(ast.right);
   }
 
@@ -57,7 +55,7 @@ class Unparser implements AstVisitor {
   void visitPipe(BindingPipe ast, dynamic context) {
     this._expression += "(";
     this._visit(ast.exp);
-    this._expression += ''' | ${ ast . name}''';
+    this._expression += ' | ${ast.name}';
     ast.args.forEach((arg) {
       this._expression += ":";
       this._visit(arg);
@@ -121,7 +119,7 @@ class Unparser implements AstVisitor {
     for (var i = 0; i < ast.keys.length; i++) {
       if (!isFirst) this._expression += ", ";
       isFirst = false;
-      this._expression += '''${ ast . keys [ i ]}: ''';
+      this._expression += '${ast.keys[i]}: ';
       this._visit(ast.values[i]);
     }
     this._expression += "}";
@@ -130,17 +128,16 @@ class Unparser implements AstVisitor {
   void visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {
     if (ast.value is String) {
       this._expression +=
-          '''"${ ast.value.replaceAll ( Unparser . _quoteRegExp , "\"" )}"''';
+          '"${ast.value.replaceAll(Unparser._quoteRegExp, '"')}"';
     } else {
-      this._expression += '''${ ast . value}''';
+      this._expression += '${ast.value}';
     }
   }
 
   void visitMethodCall(MethodCall ast, dynamic context) {
     this._visit(ast.receiver);
-    this._expression += ast.receiver is ImplicitReceiver
-        ? '''${ ast . name}('''
-        : '''.${ ast . name}(''';
+    this._expression +=
+        ast.receiver is ImplicitReceiver ? '${ast.name}(' : '.${ast.name}(';
     var isFirst = true;
     ast.args.forEach((arg) {
       if (!isFirst) this._expression += ", ";
@@ -157,12 +154,12 @@ class Unparser implements AstVisitor {
 
   visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
     this._visit(ast.receiver);
-    this._expression += '''?.${ ast . name}''';
+    this._expression += '?.${ast.name}';
   }
 
   visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
     this._visit(ast.receiver);
-    this._expression += '''?.${ ast . name}(''';
+    this._expression += '?.${ast.name}(';
     var isFirst = true;
     ast.args.forEach((arg) {
       if (!isFirst) this._expression += ", ";

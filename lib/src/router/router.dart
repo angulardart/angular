@@ -49,28 +49,29 @@ class Router {
   final _startNavigationEvent = new EventEmitter<String>();
   Router(this.registry, this.parent, this.hostComponent, [this.root]);
 
-  /// Constructs a child router. You probably don't need to use this unless you're writing a reusable
-  /// component.
+  /// Constructs a child router. You probably don't need to use this unless
+  /// you're writing a reusable component.
   Router childRouter(dynamic hostComponent) {
     return this._childRouter = new ChildRouter(this, hostComponent);
   }
 
-  /// Constructs a child router. You probably don't need to use this unless you're writing a reusable
-  /// component.
+  /// Constructs a child router. You probably don't need to use this unless
+  /// you're writing a reusable component.
   Router auxRouter(dynamic hostComponent) {
     return new ChildRouter(this, hostComponent);
   }
 
   /// Register an outlet to be notified of primary route changes.
   ///
-  /// You probably don't need to use this unless you're writing a reusable component.
+  /// You probably don't need to use this unless you're writing a reusable
+  /// component.
   Future<dynamic> registerPrimaryOutlet(RouterOutlet outlet) {
     if (outlet.name != null) {
       throw new BaseException(
-          '''registerPrimaryOutlet expects to be called with an unnamed outlet.''');
+          'registerPrimaryOutlet expects to be called with an unnamed outlet.');
     }
     if (_outlet != null) {
-      throw new BaseException('''Primary outlet is already registered.''');
+      throw new BaseException('Primary outlet is already registered.');
     }
     this._outlet = outlet;
     if (currentInstruction != null) {
@@ -81,23 +82,25 @@ class Router {
 
   /// Unregister an outlet (because it was destroyed, etc).
   ///
-  /// You probably don't need to use this unless you're writing a custom outlet implementation.
+  /// You probably don't need to use this unless you're writing a custom outlet
+  /// implementation.
   void unregisterPrimaryOutlet(RouterOutlet outlet) {
     if (outlet.name != null) {
       throw new BaseException(
-          '''registerPrimaryOutlet expects to be called with an unnamed outlet.''');
+          'registerPrimaryOutlet expects to be called with an unnamed outlet.');
     }
     this._outlet = null;
   }
 
   /// Register an outlet to notified of auxiliary route changes.
   ///
-  /// You probably don't need to use this unless you're writing a reusable component.
+  /// You probably don't need to use this unless you're writing a reusable
+  /// component.
   Future<dynamic> registerAuxOutlet(RouterOutlet outlet) {
     var outletName = outlet.name;
     if (outletName == null) {
       throw new BaseException(
-          '''registerAuxOutlet expects to be called with an outlet with a name.''');
+          'registerAuxOutlet expects to be called with an outlet with a name.');
     }
     var router = this.auxRouter(this.hostComponent);
     this._auxRouters[outletName] = router;
@@ -111,8 +114,8 @@ class Router {
     return _resolveToTrue;
   }
 
-  /// Given an instruction, returns `true` if the instruction is currently active,
-  /// otherwise `false`.
+  /// Given an instruction, returns `true` if the instruction is currently
+  /// active, otherwise `false`.
   bool isRouteActive(Instruction instruction) {
     Router router = this;
     if (currentInstruction == null) {

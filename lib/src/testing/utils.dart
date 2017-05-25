@@ -92,10 +92,10 @@ var _RE_SPECIAL_CHARS = [
   '\$',
   '|'
 ];
-final _ESCAPE_RE = new RegExp('''[\\${ _RE_SPECIAL_CHARS . join ( '\\' )}]''');
+final _ESCAPE_RE = new RegExp('[\\${_RE_SPECIAL_CHARS.join('\\')}]');
 RegExp containsRegexp(String input) {
   return new RegExp(
-      input.replaceAllMapped(_ESCAPE_RE, (match) => '''\\${ match [ 0 ]}'''));
+      input.replaceAllMapped(_ESCAPE_RE, (match) => '\\${match[0]}'));
 }
 
 RegExp _normalizerExp1,

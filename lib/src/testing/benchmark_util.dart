@@ -32,7 +32,7 @@ void bindAction(String selector, Function callback) {
 }
 
 void microBenchmark(name, iterationCount, callback) {
-  var durationName = '''${ name}/${ iterationCount}''';
+  var durationName = '$name/$iterationCount';
   window.console.time(durationName);
   callback();
   window.console.timeEnd(durationName);

@@ -65,7 +65,8 @@ class DynamicPathSegment implements PathSegment {
   String generate(TouchMap params) {
     if (!params.map.containsKey(name)) {
       throw new BaseException(
-          '''Route generator for \'${name}\' was not included in parameters passed.''');
+          "Route generator for '${name}' was not included in parameters "
+          "passed.");
     }
     return encodeDynamicSegment(normalizeString(params.get(name)));
   }
@@ -89,7 +90,8 @@ class StarPathSegment implements PathSegment {
   }
 }
 
-/// Parses a URL string using a given matcher DSL, and generates URLs from param maps
+/// Parses a URL string using a given matcher DSL, and generates URLs from param
+/// maps.
 class ParamRoutePath implements RoutePath {
   String routePath;
   String specificity;
@@ -97,7 +99,7 @@ class ParamRoutePath implements RoutePath {
   String hash;
   List<PathSegment> _segments;
 
-  /// Takes a string representing the matcher DSL
+  /// Takes a string representing the matcher DSL.
   ParamRoutePath(this.routePath) {
     this._assertValidPath(routePath);
     this._parsePathString(routePath);
@@ -118,7 +120,8 @@ class ParamRoutePath implements RoutePath {
         break;
       }
       if (currentUrlSegment != null) {
-        // the star segment consumes all of the remaining URL, including matrix params
+        // The star segment consumes all of the remaining URL, including matrix
+        // params.
         if (pathSegment is StarPathSegment) {
           positionalParams[pathSegment.name] = currentUrlSegment.toString();
           captured.add(currentUrlSegment.toString());
@@ -145,7 +148,8 @@ class ParamRoutePath implements RoutePath {
     var urlParams = <String>[];
     var allParams = positionalParams;
     if (currentUrlSegment != null) {
-      // If this is the root component, read query params. Otherwise, read matrix params.
+      // If this is the root component, read query params. Otherwise, read
+      // matrix params.
       var paramsSegment = url is RootUrl ? url : currentUrlSegment;
       if (paramsSegment.params != null) {
         allParams = new Map<String, dynamic>.from(paramsSegment.params)
@@ -183,9 +187,8 @@ class ParamRoutePath implements RoutePath {
   }
 
   void _parsePathString(String routePath) {
-    // normalize route as not starting with a "/". Recognition will
-
-    // also normalize.
+    // Normalize route as not starting with a "/". Recognition will also
+    // normalize.
     if (routePath.startsWith("/")) {
       routePath = routePath.substring(1);
     }
@@ -204,7 +207,7 @@ class ParamRoutePath implements RoutePath {
       } else if (segment == "...") {
         if (i < limit) {
           throw new BaseException(
-              '''Unexpected "..." before the end of the path for "${ routePath}".''');
+              'Unexpected "..." before the end of the path for "$routePath".');
         }
         this._segments.add(new ContinuationPathSegment());
       } else {
@@ -214,27 +217,16 @@ class ParamRoutePath implements RoutePath {
   }
 
   String _calculateSpecificity() {
-    // The "specificity" of a path is used to determine which route is used when multiple routes
-
-    // match
-
-    // a URL. Static segments (like "/foo") are the most specific, followed by dynamic segments
-
-    // (like
-
-    // "/:id"). Star segments add no specificity. Segments at the start of the path are more
-
-    // specific
-
+    // The "specificity" of a path is used to determine which route is used when
+    // multiple routes match a URL. Static segments (like "/foo") are the most
+    // specific, followed by dynamic segments (like "/:id"). Star segments
+    // add no specificity. Segments at the start of the path are more specific
     // than proceeding ones.
-
     //
-
-    // The code below uses place values to combine the different types of segments into a single
-
-    // string that we can sort later. Each static segment is marked as a specificity of "2," each
-
-    // dynamic segment is worth "1" specificity, and stars are worth "0" specificity.
+    // The code below uses place values to combine the different types of
+    // segments into a single string that we can sort later. Each static segment
+    // is marked as a specificity of "2," each dynamic segment is worth "1"
+    // specificity, and stars are worth "0" specificity.
     var i, length = this._segments.length, specificity;
     if (length == 0) {
       // a single slash (or "empty segment" is as specific as a static segment
@@ -249,9 +241,8 @@ class ParamRoutePath implements RoutePath {
   }
 
   String _calculateHash() {
-    // this function is used to determine whether a route config path like `/foo/:id` collides with
-
-    // `/foo/:name`
+    // this function is used to determine whether a route config path like
+    // `/foo/:id` collides with `/foo/:name`.
     var i, length = this._segments.length;
     var hashParts = [];
     for (i = 0; i < length; i++) {
@@ -263,12 +254,14 @@ class ParamRoutePath implements RoutePath {
   void _assertValidPath(String path) {
     if (path.contains("#")) {
       throw new BaseException(
-          '''Path "${ path}" should not include "#". Use "HashLocationStrategy" instead.''');
+          'Path "$path" should not include "#". Use "HashLocationStrategy" '
+          'instead.');
     }
     var illegalCharacter = ParamRoutePath.RESERVED_CHARS.firstMatch(path);
     if (illegalCharacter != null) {
       throw new BaseException(
-          '''Path "${ path}" contains "${ illegalCharacter [ 0 ]}" which is not allowed in a route config.''');
+          'Path "$path" contains "${ illegalCharacter [ 0 ]}" which is not '
+          'allowed in a route config.');
     }
   }
 

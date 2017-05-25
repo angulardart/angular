@@ -181,7 +181,7 @@ void createPureProxy(o.Expression fn, num argCount,
       : null;
   if (pureProxyId == null) {
     throw new BaseException(
-        '''Unsupported number of argument for pure functions: ${ argCount}''');
+        'Unsupported number of argument for pure functions: $argCount');
   }
   view.createMethod.addStmt(o.THIS_EXPR
       .prop(pureProxyProp.name)

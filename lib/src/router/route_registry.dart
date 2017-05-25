@@ -67,16 +67,17 @@ var _resolveToNull = new Future<Null>.value(null);
 const OpaqueToken ROUTER_PRIMARY_COMPONENT =
     const OpaqueToken("RouterPrimaryComponent");
 
-/// The RouteRegistry holds route configurations for each component in an Angular app.
-/// It is responsible for creating Instructions from URLs, and generating URLs based on route and
-/// parameters.
+/// The RouteRegistry holds route configurations for each component in an
+/// Angular app. It is responsible for creating Instructions from URLs, and
+/// generating URLs based on route and parameters.
 @Injectable()
 class RouteRegistry {
   dynamic /* Type | ComponentFactory */ _rootComponent;
   final _rules = new Map<dynamic, RuleSet>();
   RouteRegistry(@Inject(ROUTER_PRIMARY_COMPONENT) this._rootComponent);
 
-  /// Given a component and a configuration object, add the route to this registry
+  /// Given a component and a configuration object, add the route to this
+  /// registry.
   void config(dynamic parentComponent, RouteDefinition config) {
     config = normalizeRouteConfig(config, this);
     // this is here because Dart type guard reasons
@@ -100,13 +101,13 @@ class RouteRegistry {
     }
   }
 
-  /// Reads the annotations of a component and configures the registry based on them
+  /// Reads the annotations of a component and configures the registry based on
+  /// them.
   void configFromComponent(dynamic component) {
     if (component is! Type && !(component is ComponentFactory)) {
       return;
     }
     // Don't read the annotations from a type more than once –
-
     // this prevents an infinite loop if a component routes recursively.
     if (this._rules.containsKey(component)) {
       return;
@@ -123,15 +124,16 @@ class RouteRegistry {
     }
   }
 
-  /// Given a URL and a parent component, return the most specific instruction for navigating
-  /// the application into the state specified by the url
+  /// Given a URL and a parent component, return the most specific instruction
+  /// for navigating the application into the state specified by the url.
   Future<Instruction> recognize(
       String url, List<Instruction> ancestorInstructions) {
     var parsedUrl = parser.parse(url);
     return this._recognize(parsedUrl, []);
   }
 
-  /// Recognizes all parent-child routes, but creates unresolved auxiliary routes
+  /// Recognizes all parent-child routes, but creates unresolved auxiliary
+  /// routes.
   Future<Instruction> _recognize(
       Url parsedUrl, List<Instruction> ancestorInstructions,
       [_aux = false]) {
@@ -211,18 +213,20 @@ class RouteRegistry {
     return unresolvedAuxInstructions;
   }
 
-  /// Given a normalized list with component names and params like: `['user', {id: 3 }]`
-  /// generates a url with a leading slash relative to the provided `parentComponent`.
+  /// Given a normalized list with component names and params like:
+  /// `['user', {id: 3 }]` generates a url with a leading slash relative to the
+  /// provided `parentComponent`.
   ///
-  /// If the optional param `_aux` is `true`, then we generate starting at an auxiliary
-  /// route boundary.
+  /// If the optional param `_aux` is `true`, then we generate starting at an
+  /// auxiliary route boundary.
   Instruction generate(
       List<dynamic> linkParams, List<Instruction> ancestorInstructions,
       [_aux = false]) {
     var params = splitAndFlattenLinkParams(linkParams);
     var prevInstruction;
-    // The first segment should be either '.' (generate from parent) or '' (generate from root).
-    // When we normalize above, we strip all the slashes, './' becomes '.' and '/' becomes ''.
+    // The first segment should be either '.' (generate from parent) or ''
+    // (generate from root). When we normalize above, we strip all the slashes,
+    // './' becomes '.' and '/' becomes ''.
     if (params.first == "") {
       params.removeAt(0);
       prevInstruction = ancestorInstructions.first;
@@ -237,7 +241,7 @@ class RouteRegistry {
         while (params.first == "..") {
           if (ancestorInstructions.length <= 0) {
             throw new BaseException(
-                '''Link "$linkParams" has too many "../" segments.''');
+                'Link "$linkParams" has too many "../" segments.');
           }
           prevInstruction = ancestorInstructions.removeLast();
           params = params.sublist(1);
@@ -260,15 +264,15 @@ class RouteRegistry {
           parentComponentType = ancestorInstructions[0].component.componentType;
           grandparentComponentType = this._rootComponent;
         }
-        // For a link with no leading `./`, `/`, or `../`, we look for a sibling and child.
-
+        // For a link with no leading `./`, `/`, or `../`, we look for a sibling
+        // and child.
         // If both exist, we throw. Otherwise, we prefer whichever exists.
         var childRouteExists = this.hasRoute(routeName, parentComponentType);
         var parentRouteExists = grandparentComponentType != null &&
             this.hasRoute(routeName, grandparentComponentType);
         if (parentRouteExists && childRouteExists) {
-          var msg =
-              '''Link "$linkParams" is ambiguous, use "./" or "../" to disambiguate.''';
+          var msg = 'Link "$linkParams" is ambiguous, use "./" or "../" to '
+              'disambiguate.';
           throw new BaseException(msg);
         }
         if (parentRouteExists) {
@@ -283,12 +287,12 @@ class RouteRegistry {
       params.removeAt(0);
     }
     if (params.length < 1) {
-      var msg = '''Link "$linkParams" must include a route name.''';
+      var msg = 'Link "$linkParams" must include a route name.';
       throw new BaseException(msg);
     }
     var generatedInstruction = this._generate(
         params, ancestorInstructions, prevInstruction, _aux, linkParams);
-    // we don't clone the first (root) element
+    // We don't clone the first (root) element.
     for (var i = ancestorInstructions.length - 1; i >= 0; i--) {
       var ancestorInstruction = ancestorInstructions[i];
       if (ancestorInstruction == null) {
@@ -300,12 +304,10 @@ class RouteRegistry {
     return generatedInstruction;
   }
 
-  /*
-   * Internal helper that does not make any assertions about the beginning of the link DSL.
-   * `ancestorInstructions` are parents that will be cloned.
-   * `prevInstruction` is the existing instruction that would be replaced, but which might have
-   * aux routes that need to be cloned.
-   */
+  /// Internal helper that does not make any assertions about the beginning of the
+  /// link DSL. `ancestorInstructions` are parents that will be cloned.
+  /// `prevInstruction` is the existing instruction that would be replaced, but
+  /// which might have aux routes that need to be cloned.
   Instruction _generate(List<dynamic> linkParams,
       List<Instruction> ancestorInstructions, Instruction prevInstruction,
       [_aux = false, List<dynamic> _originalLink]) {
@@ -321,13 +323,14 @@ class RouteRegistry {
       var defaultInstruction = this.generateDefault(parentComponentType);
       if (defaultInstruction == null) {
         throw new BaseException(
-            '''Link "$_originalLink" does not resolve to a terminal instruction.''');
+            'Link "$_originalLink" does not resolve to a terminal '
+            'instruction.');
       }
       return defaultInstruction;
     }
-    // for non-aux routes, we want to reuse the predecessor's existing primary and aux routes
-
-    // and only override routes for which the given link DSL provides
+    // For non-aux routes, we want to reuse the predecessor's existing primary
+    // and aux routes and only override routes for which the given link DSL
+    // provides.
     if (prevInstruction != null && !_aux) {
       auxInstructions =
           new Map<String, Instruction>.from(prevInstruction.auxInstruction)
@@ -337,17 +340,18 @@ class RouteRegistry {
     var rules = this._rules[parentComponentType];
     if (rules == null) {
       throw new BaseException(
-          '''Component "${getComponentType(parentComponentType)}" has no route config.''');
+          'Component "${getComponentType(parentComponentType)}" has no route '
+          'config.');
     }
     var linkParamIndex = 0;
     Map<String, dynamic> routeParams = {};
-    // first, recognize the primary route if one is provided
+    // First, recognize the primary route if one is provided.
     if (linkParamIndex < linkParams.length &&
         linkParams[linkParamIndex] is String) {
       var routeName = linkParams[linkParamIndex];
       if (routeName == "" || routeName == "." || routeName == "..") {
         throw new BaseException(
-            '''"${ routeName}/" is only allowed at the beginning of a link DSL.''');
+            '"$routeName/" is only allowed at the beginning of a link DSL.');
       }
       linkParamIndex += 1;
       if (linkParamIndex < linkParams.length) {
@@ -361,13 +365,12 @@ class RouteRegistry {
           (_aux ? rules.auxRulesByName : rules.rulesByName)[routeName];
       if (routeRecognizer == null) {
         throw new BaseException(
-            '''Component "${getComponentType(parentComponentType)}" has no route named "${ routeName}".''');
+            'Component "${getComponentType(parentComponentType)}" has no route '
+            'named "$routeName".');
       }
-      // Create an "unresolved instruction" for async routes
-
-      // we'll figure out the rest of the route when we resolve the instruction and
-
-      // perform a navigation
+      // Create an "unresolved instruction" for async routes. We'll figure out
+      // the rest of the route when we resolve the instruction and perform a
+      // navigation.
       if (routeRecognizer.handler.componentType == null) {
         GeneratedUrl generatedUrl =
             routeRecognizer.generateComponentPathValues(routeParams);
@@ -385,21 +388,24 @@ class RouteRegistry {
     }
     // Next, recognize auxiliary instructions.
 
-    // If we have an ancestor instruction, we preserve whatever aux routes are active from it.
+    // If we have an ancestor instruction, we preserve whatever aux routes are
+    // active from it.
     while (linkParamIndex < linkParams.length &&
         linkParams[linkParamIndex] is List) {
       List<Instruction> auxParentInstruction = [parentInstruction];
       var auxInstruction = this._generate(linkParams[linkParamIndex],
           auxParentInstruction, null, true, _originalLink);
-      // TODO: this will not work for aux routes with parameters or multiple segments
+      // TODO: this will not work for aux routes with parameters or multiple
+      // segments.
       auxInstructions[auxInstruction.component.urlPath] = auxInstruction;
       linkParamIndex += 1;
     }
     var instruction =
         new ResolvedInstruction(componentInstruction, null, auxInstructions);
-    // If the component is sync, we can generate resolved child route instructions
+    // If the component is sync, we can generate resolved child route
+    // instructions.
 
-    // If not, we'll resolve the instructions at navigation time
+    // If not, we'll resolve the instructions at navigation time.
     if (componentInstruction?.componentType != null) {
       Instruction childInstruction;
       if (componentInstruction.terminal) {
@@ -450,10 +456,8 @@ class RouteRegistry {
   }
 }
 
-/*
- * Given: ['/a/b', {c: 2}]
- * Returns: ['', 'a', 'b', {c: 2}]
- */
+/// Given: ['/a/b', {c: 2}]
+/// Returns: ['', 'a', 'b', {c: 2}]
 List<dynamic> splitAndFlattenLinkParams(List<dynamic> linkParams) {
   var accumulation = [];
   linkParams.forEach((dynamic item) {
@@ -466,9 +470,7 @@ List<dynamic> splitAndFlattenLinkParams(List<dynamic> linkParams) {
   return accumulation;
 }
 
-/*
- * Given a list of instructions, returns the most specific instruction
- */
+/// Given a list of instructions, returns the most specific instruction
 Instruction mostSpecific(List<Instruction> instructions) {
   instructions =
       instructions.where((instruction) => instruction != null).toList();
@@ -490,11 +492,9 @@ Instruction mostSpecific(List<Instruction> instructions) {
   });
 }
 
-/*
- * Expects strings to be in the form of "[0-2]+"
- * Returns -1 if string A should be sorted above string B, 1 if it should be sorted after,
- * or 0 if they are the same.
- */
+/// Expects strings to be in the form of "[0-2]+".
+/// Returns -1 if string A should be sorted above string B, 1 if it should be
+/// sorted after, or 0 if they are the same.
 num compareSpecificityStrings(String a, String b) {
   var l = math.min(a.length, b.length);
   for (var i = 0; i < l; i += 1) {
@@ -518,7 +518,8 @@ void assertTerminalComponent(component, path) {
       var annotation = annotations[i];
       if (annotation is RouteConfig) {
         throw new BaseException(
-            '''Child routes are not allowed for "${ path}". Use "..." on the parent\'s route path.''');
+            'Child routes are not allowed for "$path". Use "..." on the '
+            'parent\'s route path.');
       }
     }
   }

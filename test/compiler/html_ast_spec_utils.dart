@@ -17,8 +17,7 @@ import 'package:source_span/source_span.dart';
 List<dynamic> humanizeDom(HtmlParseTreeResult parseResult) {
   if (parseResult.errors.length > 0) {
     var errorString = parseResult.errors.join("\n");
-    throw new BaseException('''Unexpected parse errors:
-${ errorString}''');
+    throw new BaseException('Unexpected parse errors:\n$errorString');
   }
   var humanizer = new _Humanizer(false);
   htmlVisitAll(humanizer, parseResult.rootNodes);
@@ -28,8 +27,7 @@ ${ errorString}''');
 List<dynamic> humanizeDomSourceSpans(HtmlParseTreeResult parseResult) {
   if (parseResult.errors.length > 0) {
     var errorString = parseResult.errors.join("\n");
-    throw new BaseException('''Unexpected parse errors:
-${ errorString}''');
+    throw new BaseException('Unexpected parse errors:\n$errorString');
   }
   var humanizer = new _Humanizer(true);
   htmlVisitAll(humanizer, parseResult.rootNodes);

@@ -236,7 +236,7 @@ class NoAnnotationError extends BaseException {
 /// expect(() => injector.getAt(100), throws);
 ///
 class OutOfBoundsError extends BaseException {
-  OutOfBoundsError(index) : super('''Index ${ index} is out-of-bounds.''');
+  OutOfBoundsError(index) : super('Index $index is out-of-bounds.');
 }
 // TODO: add a working example after alpha38 is released
 

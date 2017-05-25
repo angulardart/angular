@@ -415,7 +415,7 @@ class ItemWithId {
   final String id;
   ItemWithId(this.id);
   String toString() {
-    return '''{id: ${ this . id}}''';
+    return '{id: ${this.id}}';
   }
 }
 
@@ -424,7 +424,7 @@ class ComplexItem {
   final String color;
   ComplexItem(this.id, this.color);
   String toString() {
-    return '''{id: ${ this . id}, color: ${ this . color}}''';
+    return '{id: ${this.id}, color: ${this.color}}';
   }
 }
 

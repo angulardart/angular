@@ -53,13 +53,13 @@ enum _Mode { Statement, Expression }
 
 void ensureStatementMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Statement)) {
-    throw new BaseException('''Expected a statement, but saw ${ ast}''');
+    throw new BaseException('Expected a statement, but saw $ast');
   }
 }
 
 void ensureExpressionMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Expression)) {
-    throw new BaseException('''Expected an expression, but saw ${ ast}''');
+    throw new BaseException('Expected an expression, but saw $ast');
   }
 }
 
@@ -135,8 +135,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         op = o.BinaryOperator.BiggerEquals;
         break;
       default:
-        throw new BaseException(
-            '''Unsupported operation ${ ast . operation}''');
+        throw new BaseException('Unsupported operation ${ast.operation}');
     }
     return convertToStatementIfNeeded(
         mode,
