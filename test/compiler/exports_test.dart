@@ -82,6 +82,16 @@ void main() {
       expect(listArg, myList);
     });
 
+    test('can refer to own statics automatically', () async {
+      var testBed = new NgTestBed<SelfReferTest>();
+      var fixture = await testBed.create();
+      expect(fixture.text, 'hello');
+      await fixture.update((_) {
+        SelfReferTest.staticField = 'goodbye';
+      });
+      expect(fixture.text, 'goodbye');
+    });
+
     group('can be prefixed', () {
       test('with library prefix', () async {
         var testBed = new NgTestBed<StaticLibraryPrefixTest>();
@@ -168,3 +178,11 @@ class StaticEventHandlerArgTest {
   exports: const [lib.myConst],
 )
 class StaticLibraryPrefixTest {}
+
+@Component(
+  selector: 'self-refer-test',
+  template: '<p>{{SelfReferTest.staticField}}</p>',
+)
+class SelfReferTest {
+  static String staticField = 'hello';
+}
