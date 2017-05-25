@@ -346,7 +346,7 @@ class ComponentVisitor
       lifecycleHooks: extractLifecycleHooks(element),
       providers: _extractProviders(componentValue, 'providers'),
       viewProviders: _extractProviders(componentValue, 'viewProviders'),
-      exports: _extractExports(annotation),
+      exports: _extractExports(annotation, element),
       queries: queries,
       viewQueries: _viewQueries,
       template: template,
@@ -408,18 +408,27 @@ class ComponentVisitor
           new CompileTypeMetadataVisitor(log).createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
-      ElementAnnotationImpl annotation) {
+      ElementAnnotationImpl annotation, ClassElement element) {
+    var exports = <CompileIdentifierMetadata>[];
+
+    // There is an implicit "export" for the directive class itself
+    exports.add(new CompileIdentifierMetadata(
+        name: element.name, moduleUrl: moduleUrl(element.library)));
+
     var arguments = annotation.annotationAst.arguments.arguments;
     NamedExpression exportsArg = arguments.firstWhere(
         (arg) => arg is NamedExpression && arg.name.label.name == 'exports',
         orElse: () => null);
-    if (exportsArg == null || exportsArg.expression is! ListLiteral) return [];
+    if (exportsArg == null || exportsArg.expression is! ListLiteral) {
+      return exports;
+    }
+
     var staticNames = (exportsArg.expression as ListLiteral).elements;
     if (!staticNames.every((name) => name is Identifier)) {
       log.severe('Every item in the "exports" field must be an identifier');
-      return [];
+      return exports;
     }
-    var exports = <CompileIdentifierMetadata>[];
+
     for (Identifier id in staticNames) {
       String name;
       String prefix;
@@ -428,7 +437,7 @@ class ComponentVisitor
         if (id.prefix.staticElement is! PrefixElement) {
           log.severe('Every item in the "exports" field must be either '
               'a simple identifier or an identifier with a library prefix');
-          return [];
+          return exports;
         }
         name = id.identifier.name;
         prefix = id.prefix.name;
