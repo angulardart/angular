@@ -47,7 +47,7 @@ Is this your first time using AngularDart?
 You may also be interested in a set of [community contributed tutorials][comm].
 
 [tutorial]: https://webdev.dartlang.org/angular/tutorial
-[code_lab]: https://codelabs.developers.google.com/codelabs/your-first-angulardart-web-app
+[code_lab]: https://codelabs.developers.google.com/codelabs/your-first-angulardart-web-app/
 [comm]: https://dart.academy/tag/angular2/
 
 ## Installation
