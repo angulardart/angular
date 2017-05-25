@@ -58,7 +58,7 @@ class RedirectRule implements AbstractRule {
   }
 
   ComponentInstruction generate(Map<String, dynamic> params) {
-    throw new BaseException('''Tried to generate a redirect.''');
+    throw new BaseException('Tried to generate a redirect.');
   }
 }
 
@@ -113,7 +113,7 @@ class RouteRule implements AbstractRule {
       String urlPath, List<String> urlParams, Map<String, String> params) {
     if (handler.componentType == null) {
       throw new BaseException(
-          '''Tried to get instruction before the type was loaded.''');
+          'Tried to get instruction before the type was loaded.');
     }
     var hashKey = urlPath + "?" + urlParams.join("&");
     if (this._cache.containsKey(hashKey)) {

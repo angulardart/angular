@@ -198,7 +198,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       getter.type.visitType(this, ctx);
       ctx.print(' ');
     }
-    ctx.println('get ${ getter . name} {');
+    ctx.println('get ${getter.name} {');
     ctx.incIndent();
     this.visitAllStatements(getter.body, ctx);
     ctx.decIndent();
@@ -207,7 +207,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   void _visitClassConstructor(o.ClassStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('${ stmt . name}(');
+    ctx.print('${stmt.name}(');
     this._visitParams(stmt.constructorMethod.params, ctx);
     ctx.print(')');
     var ctorStmts = stmt.constructorMethod.body;
@@ -296,7 +296,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         name = "listen";
         break;
       default:
-        throw new BaseException('Unknown builtin method: ${ method}');
+        throw new BaseException('Unknown builtin method: $method');
     }
     return name;
   }
@@ -348,8 +348,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     ctx.incIndent();
     this.visitAllStatements(stmt.bodyStmts, ctx);
     ctx.decIndent();
-    ctx.println(
-        '} catch (${ CATCH_ERROR_VAR . name}, ${ CATCH_STACK_VAR . name}) {');
+    ctx.println('} catch (${CATCH_ERROR_VAR.name}, ${CATCH_STACK_VAR.name}) {');
     ctx.incIndent();
     this.visitAllStatements(stmt.catchStmts, ctx);
     ctx.decIndent();
@@ -446,7 +445,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         typeStr = "String";
         break;
       default:
-        throw new BaseException('Unsupported builtin type ${ type . name}');
+        throw new BaseException('Unsupported builtin type ${type.name}');
     }
     ctx.print(typeStr);
     return null;

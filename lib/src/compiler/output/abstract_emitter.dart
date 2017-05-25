@@ -301,7 +301,7 @@ abstract class AbstractEmitterVisitor
       ctx.print('(');
     }
     o.THIS_EXPR.visitExpression(this, ctx);
-    ctx.print('.${ expr . name} = ');
+    ctx.print('.${expr.name} = ');
     expr.value.visitExpression(this, ctx);
     if (!lineWasEmpty) {
       ctx.print(')');

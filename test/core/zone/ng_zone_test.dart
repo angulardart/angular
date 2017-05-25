@@ -223,14 +223,14 @@ void commonTests() {
     });
     test("should call onStable once at the end of event", () async {
       return inject([AsyncTestCompleter], (AsyncTestCompleter completer) {
-        // The test is set up in a way that causes the zone loop to run onMicrotaskEmpty twice
-
-        // then verified that onStable is only called once at the end
+        // The test is set up in a way that causes the zone loop to run
+        // onMicrotaskEmpty twice then verified that onStable is only called
+        // once at the end.
         runNgZoneNoLog(() => macroTask(_log.fn("run")));
         var times = 0;
         _zone.onMicrotaskEmpty.listen((_) {
           times++;
-          _log.add('''onMicrotaskEmpty ${ times}''');
+          _log.add('onMicrotaskEmpty $times');
           if (times < 2) {
             // Scheduling a microtask causes a second digest
             runNgZoneNoLog(() {

@@ -41,8 +41,8 @@ class CompilePipe {
   o.ReadClassMemberExpr instance;
   final _purePipeProxies = <_PurePipeProxy>[];
   CompilePipe(this.view, this.meta) {
-    this.instance = new o.ReadClassMemberExpr(
-        '_pipe_${ meta . name}_${ view . pipeCount ++}');
+    this.instance =
+        new o.ReadClassMemberExpr('_pipe_${meta.name}_${view.pipeCount++}');
   }
   bool get pure {
     return this.meta.pure;
@@ -106,8 +106,8 @@ CompilePipeMetadata _findPipeMeta(CompileView view, String name) {
     }
   }
   if (pipeMeta == null) {
-    throw new BaseException(
-        '''Illegal state: Could not find pipe ${ name} although the parser should have detected this error!''');
+    throw new BaseException('Illegal state: Could not find pipe $name '
+        'although the parser should have detected this error!');
   }
   return pipeMeta;
 }

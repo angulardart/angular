@@ -71,7 +71,7 @@ class DefaultKeyValueDiffer {
   dynamic diff(Map map) {
     map ??= {};
     if (map is! Map) {
-      throw new BaseException('''Error trying to diff \'${ map}\'''');
+      throw new BaseException("Error trying to diff '$map'");
     }
     if (this.check(map)) {
       return this;

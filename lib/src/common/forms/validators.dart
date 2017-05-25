@@ -71,7 +71,7 @@ class Validators {
       return regex.hasMatch(v)
           ? null
           : {
-              'pattern': {'requiredPattern': '^${ pattern}\$', 'actualValue': v}
+              'pattern': {'requiredPattern': '^$pattern\$', 'actualValue': v}
             };
     };
   }

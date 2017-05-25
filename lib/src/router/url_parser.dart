@@ -109,7 +109,7 @@ class UrlParser {
 
   void capture(String str) {
     if (!this._remaining.startsWith(str)) {
-      throw new BaseException('''Expected "${ str}".''');
+      throw new BaseException('Expected "$str".');
     }
     this._remaining = this._remaining.substring(str.length);
   }

@@ -178,7 +178,7 @@ class CompileView implements NameResolver {
     List<o.FnParam> proxyParams = [];
     List<o.Expression> proxyReturnEntries = [];
     for (var i = 0; i < values.length; i++) {
-      var paramName = 'p${ i}';
+      var paramName = 'p$i';
       proxyParams.add(new o.FnParam(paramName));
       proxyReturnEntries.add(o.variable(paramName));
     }

@@ -313,9 +313,7 @@ void main() {
                 (binding.name == null ? "=null" : "=" + binding.name);
           } else {
             return binding.key +
-                (binding.expression == null
-                    ? ""
-                    : '''=${ binding . expression}''');
+                (binding.expression == null ? "" : '=${binding.expression}');
           }
         }).toList();
       }
@@ -469,15 +467,15 @@ void main() {
           checkInterpolation("{{a //comment}}", "{{ a }}");
         });
         test("should retain // in single quote strings", () {
-          checkInterpolation('''{{ \'http://www.google.com\' }}''',
-              '''{{ "http://www.google.com" }}''');
+          checkInterpolation("{{ \'http://www.google.com\' }}",
+              '{{ "http://www.google.com" }}');
         });
         test("should retain // in double quote strings", () {
-          checkInterpolation('''{{ "http://www.google.com" }}''',
-              '''{{ "http://www.google.com" }}''');
+          checkInterpolation(
+              '{{ "http://www.google.com" }}', '{{ "http://www.google.com" }}');
         });
         test("should ignore comments after string literals", () {
-          checkInterpolation('''{{ "a//b" //comment }}''', '''{{ "a//b" }}''');
+          checkInterpolation('{{ "a//b" //comment }}', '{{ "a//b" }}');
         });
         test("should retain // in complex strings", () {
           checkInterpolation('''{{"//a\'//b`//c`//d\'//e" //comment}}''',

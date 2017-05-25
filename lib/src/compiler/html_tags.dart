@@ -413,5 +413,5 @@ String getNsPrefix(String elementName) {
 }
 
 String mergeNsAndName(String prefix, String localName) {
-  return prefix != null ? '''@${ prefix}:${ localName}''' : localName;
+  return prefix != null ? '@$prefix:$localName' : localName;
 }

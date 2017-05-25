@@ -83,17 +83,17 @@ class CssSelector {
   String getMatchingElementTemplate() {
     var tagName = element ?? "div";
     var classAttr = this.classNames.length > 0
-        ? ''' class="${ this . classNames . join ( " " )}"'''
+        ? ' class="${ this . classNames . join ( " " )}"'
         : "";
     var attrs = "";
     for (var i = 0; i < this.attrs.length; i += 2) {
       var attrName = this.attrs[i];
       var attrValue = !identical(this.attrs[i + 1], "")
-          ? '''="${ this . attrs [ i + 1 ]}"'''
+          ? '="${ this . attrs [ i + 1 ]}"'
           : "";
-      attrs += ''' ${ attrName}${ attrValue}''';
+      attrs += ' $attrName$attrValue';
     }
-    return '''<${ tagName}${ classAttr}${ attrs}></${ tagName}>''';
+    return '<$tagName$classAttr$attrs></$tagName>';
   }
 
   void addAttribute(String name, [String value = _EMPTY_ATTR_VALUE]) {
@@ -131,9 +131,7 @@ class CssSelector {
         res += "]";
       }
     }
-    this
-        .notSelectors
-        .forEach((notSelector) => res += ''':not(${ notSelector})''');
+    this.notSelectors.forEach((notSelector) => res += ':not($notSelector)');
     return res;
   }
 }

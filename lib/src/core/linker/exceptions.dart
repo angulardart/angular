@@ -35,8 +35,8 @@ import 'package:angular2/src/facade/exceptions.dart'
 class ExpressionChangedAfterItHasBeenCheckedException extends BaseException {
   ExpressionChangedAfterItHasBeenCheckedException(
       dynamic oldValue, dynamic currValue, dynamic context)
-      : super('''Expression has changed after it was checked. ''' +
-            '''Previous value: \'${ oldValue}\'. Current value: \'${ currValue}\'''');
+      : super("Expression has changed after it was checked. "
+            "Previous value: '$oldValue'. Current value: '$currValue'");
 }
 
 /// Thrown when an exception was raised during view creation, change detection or destruction.
@@ -46,8 +46,8 @@ class ExpressionChangedAfterItHasBeenCheckedException extends BaseException {
 class ViewWrappedException extends WrappedException {
   ViewWrappedException(
       dynamic originalException, dynamic originalStack, dynamic context)
-      : super('''Error in ${ context . source}''', originalException,
-            originalStack, context);
+      : super('Error in ${context.source}', originalException, originalStack,
+            context);
 }
 
 /// Thrown when a destroyed view is used.
@@ -57,5 +57,5 @@ class ViewWrappedException extends WrappedException {
 /// This is an internal Angular error.
 class ViewDestroyedException extends BaseException {
   ViewDestroyedException(String details)
-      : super('''Attempt to use a destroyed view: ${ details}''');
+      : super('Attempt to use a destroyed view: $details');
 }

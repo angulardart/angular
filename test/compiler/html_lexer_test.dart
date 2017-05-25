@@ -645,8 +645,7 @@ List<HtmlToken> tokenizeWithoutErrors(String input,
   var tokenizeResult = tokenizeHtml(input, "someUrl", tokenizeExpansionForms);
   if (tokenizeResult.errors.length > 0) {
     var errorString = tokenizeResult.errors.join("\n");
-    throw new BaseException('''Unexpected parse errors:
-${ errorString}''');
+    throw new BaseException('Unexpected parse errors:\n$errorString');
   }
   return tokenizeResult.tokens;
 }
