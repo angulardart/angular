@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'container_component.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'deferred_component.dart';
@@ -60,7 +59,6 @@ class ViewTestContainerComponent0
   }
   @override
   ComponentRef build() {
-    final import3.TestContainerComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
@@ -106,7 +104,6 @@ class ViewTestContainerComponent1
   }
   @override
   ComponentRef build() {
-    final import3.TestContainerComponent _ctx = ctx;
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     dbgElm(this, _el_0, 0, 0, 0);
@@ -130,7 +127,6 @@ class ViewTestContainerComponent1
 
   @override
   void detectChangesInternal() {
-    final import3.TestContainerComponent _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -169,7 +165,6 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewTestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -191,7 +186,6 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

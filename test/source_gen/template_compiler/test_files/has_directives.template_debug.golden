@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'has_directives.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -66,7 +65,6 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
@@ -113,7 +111,6 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.TestFooComponent _ctx = ctx;
     _compView_6.detectChanges();
   }
 
@@ -152,7 +149,6 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -173,7 +169,6 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -216,7 +211,6 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.TestSubComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -257,7 +251,6 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -278,7 +271,6 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

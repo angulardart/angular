@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'view_encapsulation.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -41,7 +40,6 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.EmulatedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -72,7 +70,6 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewEmulatedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmulatedComponent_0_2 = new import1.EmulatedComponent();
@@ -92,7 +89,6 @@ class ViewEmulatedComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -127,7 +123,6 @@ class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.NativeComponent _ctx = ctx;
     final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendToShadowRoot(doc, 'div', parentRenderNode);
@@ -158,7 +153,6 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewNativeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _NativeComponent_0_2 = new import1.NativeComponent();
@@ -178,7 +172,6 @@ class ViewNativeComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -213,7 +206,6 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.NoneComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -244,7 +236,6 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewNoneComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _NoneComponent_0_2 = new import1.NoneComponent();
@@ -264,7 +255,6 @@ class ViewNoneComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

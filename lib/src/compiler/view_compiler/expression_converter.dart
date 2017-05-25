@@ -17,9 +17,11 @@ abstract class NameResolver {
 }
 
 class ExpressionWithWrappedValueInfo {
-  o.Expression expression;
-  bool needsValueUnwrapper;
-  ExpressionWithWrappedValueInfo(this.expression, this.needsValueUnwrapper);
+  final o.Expression expression;
+  final bool needsValueUnwrapper;
+  final bool anyExplicit;
+  ExpressionWithWrappedValueInfo(
+      this.expression, this.needsValueUnwrapper, this.anyExplicit);
 }
 
 ExpressionWithWrappedValueInfo convertCdExpressionToIr(
@@ -31,7 +33,8 @@ ExpressionWithWrappedValueInfo convertCdExpressionToIr(
   var visitor = new _AstToIrVisitor(
       nameResolver, implicitReceiver, valueUnwrapper, preserveWhitespace);
   o.Expression irAst = expression.visit(visitor, _Mode.Expression);
-  return new ExpressionWithWrappedValueInfo(irAst, visitor.needsValueUnwrapper);
+  return new ExpressionWithWrappedValueInfo(
+      irAst, visitor.needsValueUnwrapper, visitor.anyExplicit);
 }
 
 List<o.Statement> convertCdStatementToIr(
@@ -47,6 +50,7 @@ List<o.Statement> convertCdStatementToIr(
 }
 
 enum _Mode { Statement, Expression }
+
 void ensureStatementMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Statement)) {
     throw new BaseException('''Expected a statement, but saw ${ ast}''');
@@ -74,8 +78,13 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   final bool preserveWhitespace;
   final o.ReadVarExpr _valueUnwrapper;
   bool needsValueUnwrapper = false;
+
+  // Whether the [_implicitReceiver] is ever referred to explicitly.
+  bool anyExplicit = false;
+
   _AstToIrVisitor(this._nameResolver, this._implicitReceiver,
       this._valueUnwrapper, this.preserveWhitespace);
+
   dynamic visitBinary(compiler_ast.Binary ast, dynamic context) {
     _Mode mode = context;
     var op;
@@ -283,6 +292,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
       if (varExpr != null) {
         result = varExpr.callFn(args);
       } else {
+        anyExplicit = true;
         receiver = this._implicitReceiver;
       }
     }
@@ -305,6 +315,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
       result = this._nameResolver.getLocal(ast.name);
       if (result == null) {
         receiver = this._implicitReceiver;
+        anyExplicit = true;
       }
     }
     result ??= receiver.prop(ast.name);
@@ -320,6 +331,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         throw new BaseException("Cannot assign to a reference or variable!");
       }
       receiver = this._implicitReceiver;
+      anyExplicit = true;
     }
     return convertToStatementIfNeeded(mode,
         receiver.prop(ast.name).set(ast.value.visit(this, _Mode.Expression)));

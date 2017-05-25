@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'lifecycle_hooks.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -51,7 +50,6 @@ class ViewLifecycleHooksComponent0
   }
   @override
   ComponentRef build() {
-    final import2.LifecycleHooksComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     return null;
@@ -87,7 +85,6 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -110,7 +107,6 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   @override
   void detectChangesInternal() {
     bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
-    final _ctx = ctx;
     if ((firstCheck && !import8.AppViewUtils.throwOnChanges)) {
       _LifecycleHooksComponent_0_2.ngOnInit();
     }

@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'change_detection.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -51,7 +50,6 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   }
   @override
   ComponentRef build() {
-    final import2.CheckOnceComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -92,7 +90,6 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -113,7 +110,6 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -156,7 +152,6 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   }
   @override
   ComponentRef build() {
-    final import2.CheckedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -197,7 +192,6 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -218,7 +212,6 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -262,7 +255,6 @@ class ViewCheckAlwaysComponent0
   }
   @override
   ComponentRef build() {
-    final import2.CheckAlwaysComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -303,7 +295,6 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -324,7 +315,6 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -367,7 +357,6 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   }
   @override
   ComponentRef build() {
-    final import2.DetachedComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -408,7 +397,6 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -429,7 +417,6 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -472,7 +459,6 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   }
   @override
   ComponentRef build() {
-    final import2.OnPushComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -513,7 +499,6 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -534,7 +519,6 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -619,7 +603,6 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -640,7 +623,6 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
@@ -683,7 +665,6 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   }
   @override
   ComponentRef build() {
-    final import2.DefaultComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -724,7 +705,6 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -745,7 +725,6 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

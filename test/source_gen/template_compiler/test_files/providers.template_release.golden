@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'providers.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -41,7 +40,6 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.ProvidersComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('Hello');
     parentRenderNode.append(_text_0);
@@ -151,7 +149,6 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
 
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProvidersComponent_0_2 = new import1.ProvidersComponent();
@@ -205,7 +202,6 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'pipes.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -52,7 +51,6 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   }
   @override
   ComponentRef build() {
-    final import2.Comp _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
@@ -69,7 +67,6 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   @override
   void detectChangesInternal() {
     final valUnwrapper = new ValueUnwrapper();
-    final import2.Comp _ctx = ctx;
     dbg(0, 0, 0);
     valUnwrapper.reset();
     final currVal_0 = import8.interpolate3(
@@ -118,7 +115,6 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -139,7 +135,6 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'core_directives.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -66,7 +65,6 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final import5.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
@@ -141,7 +139,6 @@ class ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final import5.TestFooComponent _ctx = ctx;
     var doc = document;
     _el_0 = doc.createElement('div');
     dbgElm(this, _el_0, 0, 0, 4);
@@ -183,7 +180,6 @@ class ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final import5.TestFooComponent _ctx = ctx;
     var doc = document;
     _el_0 = doc.createElement('div');
     dbgElm(this, _el_0, 0, 1, 4);
@@ -203,7 +199,6 @@ class ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
-    final import5.TestFooComponent _ctx = ctx;
     dbg(3, 2, 12);
     final currVal_0 = import12.interpolate0(locals['\$implicit']);
     if (import12.checkBinding(_expr_0, currVal_0)) {
@@ -242,7 +237,6 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -263,7 +257,6 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'injectables.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/src/core/di/decorators.dart' as _di;
@@ -44,7 +43,6 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.InjectableComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -96,7 +94,6 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
 
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _const_OpaqueToken__test___0_2 =
@@ -131,7 +128,6 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
