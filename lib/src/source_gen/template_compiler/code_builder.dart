@@ -17,7 +17,6 @@ const _ignoredProblems = const <String>[
   'library_prefixes',
   'UNUSED_IMPORT',
   'UNUSED_SHOWN_NAME',
-  'UNUSED_LOCAL_VARIABLE',
 ];
 
 String buildGeneratedCode(

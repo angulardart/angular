@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'host.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -91,7 +90,6 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewHostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -112,7 +110,6 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     dbg(0, 0, 0);
     final currVal_0 = _HostComponent_0_2.title;
     if (import8.checkBinding(_expr_0, currVal_0)) {

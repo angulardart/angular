@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'directives.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.dart';

@@ -18,20 +18,20 @@ import "../provider_parser.dart" show ngIfTokenMetadata, ngForTokenMetadata;
 import "../style_compiler.dart" show StylesCompileResult;
 import "../template_ast.dart"
     show
+        AttrAst,
+        BoundDirectivePropertyAst,
+        BoundElementPropertyAst,
+        BoundEventAst,
+        BoundTextAst,
+        DirectiveAst,
+        ElementAst,
+        EmbeddedTemplateAst,
+        NgContentAst,
+        ReferenceAst,
         TemplateAst,
         TemplateAstVisitor,
-        NgContentAst,
-        EmbeddedTemplateAst,
-        ElementAst,
-        ReferenceAst,
         VariableAst,
-        BoundEventAst,
-        BoundElementPropertyAst,
-        AttrAst,
-        BoundTextAst,
         TextAst,
-        DirectiveAst,
-        BoundDirectivePropertyAst,
         templateVisitAll;
 import "compile_element.dart" show CompileElement, CompileNode;
 import "compile_method.dart";
@@ -867,7 +867,7 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
           new o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
           new o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
         ],
-        addReturnValuefNotEmpty(
+        addReturnValueIfNotEmpty(
             view.injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
         o.DYNAMIC_TYPE,
         null,
@@ -1089,14 +1089,21 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     genProfileBuildStart(view, statements);
   }
 
-  // Cache ctx class field member as typed _ctx local for change detection
-  // code to consume.
-  var contextType =
-      view.viewType != ViewType.HOST ? o.importType(view.component.type) : null;
-  statements.add(o
-      .variable('_ctx')
-      .set(new o.ReadClassMemberExpr('ctx'))
-      .toDeclStmt(contextType, [o.StmtModifier.Final]));
+  bool isComponentRoot = isComponent && view.viewIndex == 0;
+
+  if (isComponentRoot &&
+      (view.component.changeDetection == ChangeDetectionStrategy.Stateful ||
+          view.component.hostListeners.isNotEmpty)) {
+    // Cache [ctx] class field member as typed [_ctx] local for change detection
+    // code to consume.
+    var contextType = view.viewType != ViewType.HOST
+        ? o.importType(view.component.type)
+        : null;
+    statements.add(o
+        .variable('_ctx')
+        .set(new o.ReadClassMemberExpr('ctx'))
+        .toDeclStmt(contextType, [o.StmtModifier.Final]));
+  }
 
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
@@ -1133,8 +1140,6 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
       ),
     ]).toStmt());
   }
-
-  bool isComponentRoot = isComponent && view.viewIndex == 0;
 
   if (isComponentRoot) {
     _writeComponentHostEventListeners(view, parser, statements);
@@ -1241,14 +1246,17 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     genProfileCdStart(view, stmts);
   }
 
-  // Cache ctx class field member as typed _ctx local for change detection
-  // code to consume.
-  var contextType =
-      view.viewType != ViewType.HOST ? o.importType(view.component.type) : null;
-  stmts.add(o
-      .variable('_ctx')
-      .set(new o.ReadClassMemberExpr('ctx'))
-      .toDeclStmt(contextType, [o.StmtModifier.Final]));
+  if (view.cacheCtxInDetectChangesMethod) {
+    // Cache [ctx] class field member as typed [_ctx] local for change detection
+    // code to consume.
+    var contextType = view.viewType != ViewType.HOST
+        ? o.importType(view.component.type)
+        : null;
+    stmts.add(o
+        .variable('_ctx')
+        .set(new o.ReadClassMemberExpr('ctx'))
+        .toDeclStmt(contextType, [o.StmtModifier.Final]));
+  }
 
   // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
@@ -1318,7 +1326,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   return (new List.from(varStmts)..addAll(stmts));
 }
 
-List<o.Statement> addReturnValuefNotEmpty(
+List<o.Statement> addReturnValueIfNotEmpty(
     List<o.Statement> statements, o.Expression value) {
   if (statements.length > 0) {
     return (new List.from(statements)..addAll([new o.ReturnStatement(value)]));

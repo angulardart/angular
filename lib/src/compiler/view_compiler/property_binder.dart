@@ -67,6 +67,11 @@ void bind(
       parsedExpression,
       DetectChangesVars.valUnwrapper,
       view.component.template.preserveWhitespace);
+  if (context is o.ReadVarExpr &&
+      context.name == '_ctx' &&
+      checkExpression.anyExplicit) {
+    view.cacheCtxInDetectChangesMethod = true;
+  }
   if (checkExpression.expression is o.LiteralExpr) {
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
@@ -415,6 +420,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           input.value,
           DetectChangesVars.valUnwrapper,
           view.component.template.preserveWhitespace);
+      if (checkExpression.anyExplicit) {
+        view.cacheCtxInDetectChangesMethod = true;
+      }
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
           .set(checkExpression.expression)
@@ -516,6 +524,11 @@ void bindToUpdateMethod(
       parsedExpression,
       DetectChangesVars.valUnwrapper,
       view.component.template.preserveWhitespace);
+  if (context is o.ReadVarExpr &&
+      context.name == '_ctx' &&
+      checkExpression.anyExplicit) {
+    view.cacheCtxInDetectChangesMethod = true;
+  }
   if (checkExpression.expression == null) {
     // e.g. an empty expression was given
     return;

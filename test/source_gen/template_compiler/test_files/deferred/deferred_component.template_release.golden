@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'deferred_component.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -42,7 +41,6 @@ class ViewDeferredChildComponent0
   }
   @override
   ComponentRef build() {
-    final import1.DeferredChildComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -73,7 +71,6 @@ class ViewDeferredChildComponentHost0 extends AppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewDeferredChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _DeferredChildComponent_0_2 = new import1.DeferredChildComponent();
@@ -94,7 +91,6 @@ class ViewDeferredChildComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

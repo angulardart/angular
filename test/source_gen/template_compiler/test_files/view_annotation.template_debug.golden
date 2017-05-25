@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'view_annotation.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -59,7 +58,6 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final import4.TestFooComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
@@ -74,7 +72,6 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
-    final import4.TestFooComponent _ctx = ctx;
     dbg(0, 0, 5);
     _NgIf_0_5.ngIf = true;
     _appEl_0.detectChangesInNestedViews();
@@ -107,7 +104,6 @@ class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final import4.TestFooComponent _ctx = ctx;
     var doc = document;
     _el_0 = doc.createElement('div');
     dbgElm(this, _el_0, 0, 0, 0);
@@ -149,7 +145,6 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -170,7 +165,6 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 

@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'queries.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -119,7 +118,6 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   }
   @override
   ComponentRef build() {
-    final import1.QueriesComponent _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _viewQuery_q8_0 = new import3.QueryList();
     _viewQuery_q10_1 = new import3.QueryList();
@@ -275,7 +273,6 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.QueriesComponent _ctx = ctx;
     if (!import9.AppViewUtils.throwOnChanges) {
       if (_viewQuery_q8_0.dirty) {
         _viewQuery_q8_0.reset([new ElementRef(_el_15)]);
@@ -347,7 +344,6 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
@@ -383,7 +379,6 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     if (!import9.AppViewUtils.throwOnChanges) {
       if (_query_q7_0_0.dirty) {
         _query_q7_0_0.reset([]);

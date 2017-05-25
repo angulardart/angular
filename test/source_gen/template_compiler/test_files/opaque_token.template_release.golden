@@ -12,7 +12,6 @@
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
-// @ignoreProblemForFile UNUSED_LOCAL_VARIABLE
 import 'opaque_token.dart';
 import 'package:angular2/src/core/reflection/reflection.dart' as _ngRef;
 import 'package:angular2/angular2.template.dart' as _i1;
@@ -43,7 +42,6 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   }
   @override
   ComponentRef build() {
-    final import1.HasOpaqueTokens _ctx = ctx;
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new Text('');
     parentRenderNode.append(_text_0);
@@ -83,7 +81,6 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   }
   @override
   ComponentRef build() {
-    final _ctx = ctx;
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
@@ -109,7 +106,6 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
     _compView_0.detectChanges();
   }
 
