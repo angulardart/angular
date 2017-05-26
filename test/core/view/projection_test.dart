@@ -99,6 +99,70 @@ void main() {
       var testFixture = await testBed.create();
       expect(testFixture.rootElement, hasTextContent('item1item2TheEnd'));
     });
+
+    test('should support exact attribute selector', () async {
+      final testBed = new NgTestBed<SelectExactAttributeTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
+
+    test('should support hypen attribute selector', () async {
+      final testBed = new NgTestBed<SelectHyphenAttributeTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
+
+    test('should support list attribute selector', () async {
+      final testBed = new NgTestBed<SelectListAttributeTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
+
+    test('should support prefix attribute selector', () async {
+      final testBed = new NgTestBed<SelectPrefixAttributeTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
+
+    test('should support set attribute selector', () async {
+      final testBed = new NgTestBed<SelectSetAttributeTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
+
+    test('should support substring attribute selector', () async {
+      final testBed = new NgTestBed<SelectSubstringAttributeTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
+
+    test('should support suffix attribute selector', () async {
+      final testBed = new NgTestBed<SelectSuffixAttributeTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
+
+    test('should support multiple levels with ngProjectAs', () async {
+      final testBed = new NgTestBed<NgProjectAsTestComponent>();
+      final testFixture = await testBed.create();
+      final select = testFixture.rootElement.querySelector;
+      expect(select('.selected').text.trim(), 'Should be selected.');
+      expect(select('.rejected').text.trim(), "Shouldn't be selected.");
+    });
   });
 }
 
@@ -226,3 +290,200 @@ class MyListComponent {}
     template: '<ng-content></ng-content>',
     preserveWhitespace: false)
 class MyListItemComponent {}
+
+@Component(
+  selector: 'select-exact-attribute',
+  template: '''
+<div class="selected">
+  <ng-content select="[id=foo]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class SelectExactAttributeComponent {}
+
+@Component(
+  selector: 'select-exact-attribute-test',
+  template: '''
+<select-exact-attribute>
+  <div id="food">Shouldn't be selected.</div>
+  <div id="foo">Should be selected.</div>
+</select-exact-attribute>''',
+  directives: const [SelectExactAttributeComponent],
+)
+class SelectExactAttributeTestComponent {}
+
+@Component(
+  selector: 'select-hyphen-attribute',
+  template: '''
+<div class="selected">
+  <ng-content select="[id|=foo]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class SelectHyphenAttributeComponent {}
+
+@Component(
+  selector: 'select-hyphen-attribute-test',
+  template: '''
+<select-hyphen-attribute>
+  <div id="food-bar-baz-qux">Shouldn't be selected.</div>
+  <div id="foo-bar-baz-qux">Should be selected.</div>
+</select-hyphen-attribute>''',
+  directives: const [SelectHyphenAttributeComponent],
+)
+class SelectHyphenAttributeTestComponent {}
+
+@Component(
+  selector: 'select-list-attribute',
+  template: '''
+<div class="selected">
+  <ng-content select="[id~=baz]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class SelectListAttributeComponent {}
+
+@Component(
+  selector: 'select-list-attribute-test',
+  template: '''
+<select-list-attribute>
+  <div id="foobarbazqux">Shouldn't be selected.</div>
+  <div id="foo bar baz qux">Should be selected.</div>
+</select-list-attribute>''',
+  directives: const [SelectListAttributeComponent],
+)
+class SelectListAttributeTestComponent {}
+
+@Component(
+  selector: 'select-prefix-attribute',
+  template: '''
+<div class="selected">
+  <ng-content select="[id^=foo]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class SelectPrefixAttributeComponent {}
+
+@Component(
+  selector: 'select-prefix-attribute-test',
+  template: '''
+<select-prefix-attribute>
+  <div id="bar foo baz qux">Shouldn't be selected.</div>
+  <div id="foo bar baz qux">Should be selected.</div>
+</select-prefix-attribute>''',
+  directives: const [SelectPrefixAttributeComponent],
+)
+class SelectPrefixAttributeTestComponent {}
+
+@Component(
+  selector: 'select-set-attribute',
+  template: '''
+<div class="selected">
+  <ng-content select="[id]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class SelectSetAttributeComponent {}
+
+@Component(
+  selector: 'select-set-attribute-test',
+  template: '''
+<select-set-attribute>
+  <div>Shouldn't be selected.</div>
+  <div id="bar baz qux">Should be selected.</div>
+</select-set-attribute>''',
+  directives: const [SelectSetAttributeComponent],
+)
+class SelectSetAttributeTestComponent {}
+
+@Component(
+  selector: 'select-substring-attribute',
+  template: '''
+<div class="selected">
+  <ng-content select="[id*=bar]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class SelectSubstringAttributeComponent {}
+
+@Component(
+  selector: 'select-substring-attribute-test',
+  template: '''
+<select-substring-attribute>
+  <div id ="foobazqux">Shouldn't be selected.</div>
+  <div id="foobarbazqux">Should be selected.</div>
+</select-substring-attribute>''',
+  directives: const [SelectSubstringAttributeComponent],
+)
+class SelectSubstringAttributeTestComponent {}
+
+@Component(
+  selector: 'select-suffix-attribute',
+  template: '''
+<div class="selected">
+  <ng-content select="[id\$=qux]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class SelectSuffixAttributeComponent {}
+
+@Component(
+  selector: 'select-suffix-attribute-test',
+  template: '''
+<select-suffix-attribute>
+  <div id="bar foo qux baz">Shouldn't be selected.</div>
+  <div id="foo bar baz qux">Should be selected.</div>
+</select-suffix-attribute>''',
+  directives: const [SelectSuffixAttributeComponent],
+)
+class SelectSuffixAttributeTestComponent {}
+
+@Component(
+  selector: 'ng-content-select',
+  template: '''
+<div class="selected">
+  <ng-content select="[id^=ng][title*=baz]"></ng-content>
+</div>
+<div class="rejected">
+  <ng-content></ng-content>
+</div>''',
+)
+class NgContentSelectComponent {}
+
+@Component(
+  selector: 'ng-project-as',
+  template: '''
+<ng-content-select>
+  <ng-content
+    select="[id^=ng][title*=baz]"
+    ngProjectAs="[id=ng][title=baz]"></ng-content>
+  <ng-content></ng-content>
+</ng-content-select>''',
+  directives: const [NgContentSelectComponent],
+)
+class NgProjectAsComponent {}
+
+@Component(
+  selector: 'ng-project-as-test',
+  template: '''
+<ng-project-as>
+  <div>Shouldn't be selected.</div>
+  <div id="ng-id" title="foo bar baz qux">Should be selected.</div>
+</ng-project-as>''',
+  directives: const [NgProjectAsComponent],
+)
+class NgProjectAsTestComponent {}

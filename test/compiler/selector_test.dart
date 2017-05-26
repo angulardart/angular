@@ -3,6 +3,7 @@ library angular2.test.compiler.selector_test;
 
 import 'dart:html';
 
+import 'package:angular2/src/compiler/attribute_matcher.dart';
 import 'package:angular2/src/compiler/selector.dart'
     show CssSelector, SelectorMatcher;
 import 'package:test/test.dart';
@@ -113,7 +114,7 @@ void main() {
       var element = new DivElement();
       element.attributes['attr'] = '';
       var empty = element.attributes['attr'];
-      elementSelector.addAttribute('some-decor', empty);
+      elementSelector.addAttribute('some-decor', '=', empty);
       matcher.match(elementSelector, selectableCollector);
       expect(matched, [s1[0], 1]);
     });
@@ -177,8 +178,8 @@ void main() {
           s1 = CssSelector.parse("input[type=text][control]"), 1);
       var cssSelector = new CssSelector();
       cssSelector.setElement("input");
-      cssSelector.addAttribute("type", "text");
-      cssSelector.addAttribute("control", "one");
+      cssSelector.addAttribute("type", "=", "text");
+      cssSelector.addAttribute("control", "=", "one");
       expect(matcher.match(cssSelector, selectableCollector), true);
       expect(matched, [s1[0], 1]);
     });
@@ -283,27 +284,42 @@ void main() {
     });
     test("should detect attr names", () {
       var cssSelector = CssSelector.parse("[attrname]")[0];
-      expect(cssSelector.attrs, ["attrname", ""]);
+      expect(cssSelector.attrs, hasLength(1));
+      expect(cssSelector.attrs[0], new isInstanceOf<SetAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'attrname');
+      expect(cssSelector.attrs[0].value, isNull);
       expect(cssSelector.toString(), "[attrname]");
     });
     test("should detect attr values", () {
       var cssSelector = CssSelector.parse("[attrname=attrvalue]")[0];
-      expect(cssSelector.attrs, ["attrname", "attrvalue"]);
-      expect(cssSelector.toString(), "[attrname=attrvalue]");
+      expect(cssSelector.attrs, hasLength(1));
+      expect(cssSelector.attrs[0], new isInstanceOf<ExactAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'attrname');
+      expect(cssSelector.attrs[0].value, 'attrvalue');
+      expect(cssSelector.toString(), '[attrname="attrvalue"]');
     });
     test("should detect multiple parts", () {
       var cssSelector =
           CssSelector.parse("sometag[attrname=attrvalue].someclass")[0];
       expect(cssSelector.element, "sometag");
-      expect(cssSelector.attrs, ["attrname", "attrvalue"]);
+      expect(cssSelector.attrs, hasLength(1));
+      expect(cssSelector.attrs[0], new isInstanceOf<ExactAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'attrname');
+      expect(cssSelector.attrs[0].value, 'attrvalue');
       expect(cssSelector.classNames, ["someclass"]);
-      expect(cssSelector.toString(), "sometag.someclass[attrname=attrvalue]");
+      expect(cssSelector.toString(), 'sometag.someclass[attrname="attrvalue"]');
     });
     test("should detect multiple attributes", () {
       var cssSelector = CssSelector.parse("input[type=text][control]")[0];
       expect(cssSelector.element, "input");
-      expect(cssSelector.attrs, ["type", "text", "control", ""]);
-      expect(cssSelector.toString(), "input[type=text][control]");
+      expect(cssSelector.attrs, hasLength(2));
+      expect(cssSelector.attrs[0], new isInstanceOf<ExactAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'type');
+      expect(cssSelector.attrs[0].value, 'text');
+      expect(cssSelector.attrs[1], new isInstanceOf<SetAttributeMatcher>());
+      expect(cssSelector.attrs[1].name, 'control');
+      expect(cssSelector.attrs[1].value, isNull);
+      expect(cssSelector.toString(), 'input[type="text"][control]');
     });
     test("should detect :not", () {
       var cssSelector =
@@ -313,19 +329,25 @@ void main() {
       expect(cssSelector.classNames.length, 0);
       var notSelector = cssSelector.notSelectors[0];
       expect(notSelector.element, null);
-      expect(notSelector.attrs, ["attrname", "attrvalue"]);
+      expect(notSelector.attrs, hasLength(1));
+      expect(notSelector.attrs[0], new isInstanceOf<ExactAttributeMatcher>());
+      expect(notSelector.attrs[0].name, 'attrname');
+      expect(notSelector.attrs[0].value, 'attrvalue');
       expect(notSelector.classNames, ["someclass"]);
       expect(cssSelector.toString(),
-          "sometag:not(.someclass[attrname=attrvalue])");
+          'sometag:not(.someclass[attrname="attrvalue"])');
     });
     test("should detect :not without truthy", () {
       var cssSelector =
           CssSelector.parse(":not([attrname=attrvalue].someclass)")[0];
       expect(cssSelector.element, "*");
       var notSelector = cssSelector.notSelectors[0];
-      expect(notSelector.attrs, ["attrname", "attrvalue"]);
+      expect(notSelector.attrs, hasLength(1));
+      expect(notSelector.attrs[0], new isInstanceOf<ExactAttributeMatcher>());
+      expect(notSelector.attrs[0].name, 'attrname');
+      expect(notSelector.attrs[0].value, 'attrvalue');
       expect(notSelector.classNames, ["someclass"]);
-      expect(cssSelector.toString(), "*:not(.someclass[attrname=attrvalue])");
+      expect(cssSelector.toString(), '*:not(.someclass[attrname="attrvalue"])');
     });
     test("should throw when nested :not", () {
       expect(() {
@@ -343,7 +365,11 @@ void main() {
           CssSelector.parse(".someclass,[attrname=attrvalue], sometag");
       expect(cssSelectors.length, 3);
       expect(cssSelectors[0].classNames, ["someclass"]);
-      expect(cssSelectors[1].attrs, ["attrname", "attrvalue"]);
+      expect(cssSelectors[1].attrs, hasLength(1));
+      expect(
+          cssSelectors[1].attrs[0], new isInstanceOf<ExactAttributeMatcher>());
+      expect(cssSelectors[1].attrs[0].name, 'attrname');
+      expect(cssSelectors[1].attrs[0].value, 'attrvalue');
       expect(cssSelectors[2].element, "sometag");
     });
     test("should detect lists of selectors with :not", () {
@@ -351,11 +377,66 @@ void main() {
           .parse("input[type=text], :not(textarea), textbox:not(.special)");
       expect(cssSelectors.length, 3);
       expect(cssSelectors[0].element, "input");
-      expect(cssSelectors[0].attrs, ["type", "text"]);
+      expect(cssSelectors[0].attrs, hasLength(1));
+      expect(
+          cssSelectors[0].attrs[0], new isInstanceOf<ExactAttributeMatcher>());
+      expect(cssSelectors[0].attrs[0].name, 'type');
+      expect(cssSelectors[0].attrs[0].value, 'text');
       expect(cssSelectors[1].element, "*");
       expect(cssSelectors[1].notSelectors[0].element, "textarea");
       expect(cssSelectors[2].element, "textbox");
       expect(cssSelectors[2].notSelectors[0].classNames, ["special"]);
+    });
+    test('should detect hyphen attribute selector', () {
+      final cssSelector = CssSelector.parse('[foo|="bar"]').single;
+      expect(cssSelector.element, isNull);
+      expect(cssSelector.classNames, isEmpty);
+      expect(cssSelector.attrs, hasLength(1));
+      expect(cssSelector.attrs[0], new isInstanceOf<HyphenAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'foo');
+      expect(cssSelector.attrs[0].value, 'bar');
+      expect(cssSelector.toString(), '[foo|="bar"]');
+    });
+    test('should detect list attribute selector', () {
+      final cssSelector = CssSelector.parse('[foo~="bar"]').single;
+      expect(cssSelector.element, isNull);
+      expect(cssSelector.classNames, isEmpty);
+      expect(cssSelector.attrs, hasLength(1));
+      expect(cssSelector.attrs[0], new isInstanceOf<ListAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'foo');
+      expect(cssSelector.attrs[0].value, 'bar');
+      expect(cssSelector.toString(), '[foo~="bar"]');
+    });
+    test('should detect prefix attribute selector', () {
+      final cssSelector = CssSelector.parse('[foo^="bar"]').single;
+      expect(cssSelector.element, isNull);
+      expect(cssSelector.classNames, isEmpty);
+      expect(cssSelector.attrs, hasLength(1));
+      expect(cssSelector.attrs[0], new isInstanceOf<PrefixAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'foo');
+      expect(cssSelector.attrs[0].value, 'bar');
+      expect(cssSelector.toString(), '[foo^="bar"]');
+    });
+    test('should detect substring attribute selector', () {
+      final cssSelector = CssSelector.parse('[foo*="bar"]').single;
+      expect(cssSelector.element, isNull);
+      expect(cssSelector.classNames, isEmpty);
+      expect(cssSelector.attrs, hasLength(1));
+      expect(
+          cssSelector.attrs[0], new isInstanceOf<SubstringAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'foo');
+      expect(cssSelector.attrs[0].value, 'bar');
+      expect(cssSelector.toString(), '[foo*="bar"]');
+    });
+    test('should detect suffix attribute selector', () {
+      final cssSelector = CssSelector.parse(r'[foo$="bar"]').single;
+      expect(cssSelector.element, isNull);
+      expect(cssSelector.classNames, isEmpty);
+      expect(cssSelector.attrs, hasLength(1));
+      expect(cssSelector.attrs[0], new isInstanceOf<SuffixAttributeMatcher>());
+      expect(cssSelector.attrs[0].name, 'foo');
+      expect(cssSelector.attrs[0].value, 'bar');
+      expect(cssSelector.toString(), r'[foo$="bar"]');
     });
   });
   group("CssSelector.getMatchingElementTemplate", () {

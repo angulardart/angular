@@ -1,10 +1,16 @@
-import "package:angular2/src/facade/exceptions.dart" show BaseException;
+import 'package:angular2/src/facade/exceptions.dart' show BaseException;
+import 'package:tuple/tuple.dart';
+
+import 'attribute_matcher.dart';
 
 const _EMPTY_ATTR_VALUE = '';
 final _SELECTOR_REGEXP = new RegExp(r'(:not\()|' + // ":not("
         r'([-\w]+)|' + // "tag-name"
         r'(?:\.([-\w]+))|' + // ".class"
-        r'(?:\[([-\w*]+)(?:=([^\]]*))?\])|' + // "[name]", "[name=value]"
+        // <attr-matcher> := [ '~' | '|' | '^' | '$' | '*' ]? '='
+        // <attr-selector> := '[' <name> ']' |
+        //                    '[' <name> <attr-matcher> <value> ']'
+        '(?:\\[([-\\w]+)(?:([~|^\$*]?=)([\'"]?)([^\\]\'"]*)\\6)?\\])|' +
         r'(\))|' + // ")"
         r'(\s*,\s*)' // ","
     );
@@ -14,9 +20,9 @@ final _SELECTOR_REGEXP = new RegExp(r'(:not\()|' + // ":not("
 /// of selecting subsets out of them.
 class CssSelector {
   String element;
-  List<String> classNames = [];
-  List<String> attrs = [];
-  List<CssSelector> notSelectors = [];
+  final List<String> classNames = [];
+  final List<AttributeMatcher> attrs = [];
+  final List<CssSelector> notSelectors = [];
   static List<CssSelector> parse(String selector) {
     List<CssSelector> results = [];
     var _addResult = (List<CssSelector> res, cssSel) {
@@ -49,13 +55,13 @@ class CssSelector {
         current.addClassName(match[3]);
       }
       if (match[4] != null) {
-        current.addAttribute(match[4], match[5]);
+        current.addAttribute(match[4], match[5], match[7]);
       }
-      if (match[6] != null) {
+      if (match[8] != null) {
         inNot = false;
         current = cssSelector;
       }
-      if (match[7] != null) {
+      if (match[9] != null) {
         if (inNot) {
           throw new BaseException(
               "Multiple selectors in :not are not supported");
@@ -81,29 +87,53 @@ class CssSelector {
 
   /// Gets a template string for an element that matches the selector.
   String getMatchingElementTemplate() {
-    var tagName = element ?? "div";
-    var classAttr = this.classNames.length > 0
-        ? ' class="${ this . classNames . join ( " " )}"'
-        : "";
-    var attrs = "";
-    for (var i = 0; i < this.attrs.length; i += 2) {
-      var attrName = this.attrs[i];
-      var attrValue = !identical(this.attrs[i + 1], "")
-          ? '="${ this . attrs [ i + 1 ]}"'
-          : "";
-      attrs += ' $attrName$attrValue';
+    final attributeBuffer = new StringBuffer();
+    final tagName = element ?? 'div';
+
+    if (classNames.isNotEmpty) {
+      attributeBuffer
+        ..write(' class="')
+        ..write(classNames.join(' '))
+        ..write('"');
     }
-    return '<$tagName$classAttr$attrs></$tagName>';
+
+    for (var attr in attrs) {
+      attributeBuffer..write(' ')..write(attr.name);
+      if (attr.value != null) {
+        attributeBuffer..write('="')..write(attr.value)..write('"');
+      }
+    }
+
+    return '<$tagName$attributeBuffer></$tagName>';
   }
 
-  void addAttribute(String name, [String value = _EMPTY_ATTR_VALUE]) {
-    this.attrs.add(name);
-    if (value != null) {
-      value = value.toLowerCase();
-    } else {
-      value = _EMPTY_ATTR_VALUE;
+  void addAttribute(String name, String matcher, String value) {
+    value = value?.toLowerCase();
+    if (matcher == null) {
+      attrs.add(new SetAttributeMatcher(name));
+    } else if (matcher == '=') {
+      attrs.add(new ExactAttributeMatcher(name, value));
+    } else if (value.isNotEmpty) {
+      // The following attribute selectors match nothing if the attribute value
+      // is the empty string, so we only add them if they can match.
+      switch (matcher) {
+        case '~=':
+          attrs.add(new ListAttributeMatcher(name, value));
+          break;
+        case '|=':
+          attrs.add(new HyphenAttributeMatcher(name, value));
+          break;
+        case '^=':
+          attrs.add(new PrefixAttributeMatcher(name, value));
+          break;
+        case r'$=':
+          attrs.add(new SuffixAttributeMatcher(name, value));
+          break;
+        case '*=':
+          attrs.add(new SubstringAttributeMatcher(name, value));
+          break;
+      }
     }
-    this.attrs.add(value);
   }
 
   void addClassName(String name) {
@@ -111,28 +141,23 @@ class CssSelector {
   }
 
   String toString() {
-    var res = "";
+    final sb = new StringBuffer();
     if (element != null) {
-      res += element;
+      sb.write(element);
     }
-    if (classNames != null) {
-      for (var i = 0; i < this.classNames.length; i++) {
-        res += "." + this.classNames[i];
-      }
+    for (var className in classNames) {
+      sb.write('.');
+      sb.write(className);
     }
-    if (attrs != null) {
-      for (var i = 0; i < this.attrs.length;) {
-        var attrName = this.attrs[i++];
-        var attrValue = this.attrs[i++];
-        res += "[" + attrName;
-        if (attrValue.length > 0) {
-          res += "=" + attrValue;
-        }
-        res += "]";
-      }
+    for (var attr in attrs) {
+      sb.write(attr);
     }
-    this.notSelectors.forEach((notSelector) => res += ':not($notSelector)');
-    return res;
+    for (var notSelector in notSelectors) {
+      sb.write(':not(');
+      sb.write(notSelector);
+      sb.write(')');
+    }
+    return sb.toString();
   }
 }
 
@@ -149,9 +174,12 @@ class SelectorMatcher {
   final _elementPartialMap = new Map<String, SelectorMatcher>();
   final _classMap = new Map<String, List<SelectorContext>>();
   final _classPartialMap = new Map<String, SelectorMatcher>();
-  final _attrValueMap = new Map<String, Map<String, List<SelectorContext>>>();
-  final _attrValuePartialMap = new Map<String, Map<String, SelectorMatcher>>();
+  final _attrMatchers =
+      <String, List<Tuple2<AttributeMatcher, SelectorContext>>>{};
+  final _attrPartialMatchers =
+      <String, List<Tuple2<AttributeMatcher, SelectorMatcher>>>{};
   final _listContexts = <SelectorListContext>[];
+
   void addSelectables(List<CssSelector> cssSelectors, [dynamic callbackCtxt]) {
     var listContext;
     if (cssSelectors.length > 1) {
@@ -181,40 +209,27 @@ class SelectorMatcher {
         matcher = this._addPartial(matcher._elementPartialMap, element);
       }
     }
-    if (classNames != null) {
-      for (var index = 0; index < classNames.length; index++) {
-        var isTerminal = identical(attrs.length, 0) &&
-            identical(index, classNames.length - 1);
-        var className = classNames[index];
-        if (isTerminal) {
-          this._addTerminal(matcher._classMap, className, selectable);
-        } else {
-          matcher = this._addPartial(matcher._classPartialMap, className);
-        }
+    for (var index = 0; index < classNames.length; index++) {
+      var isTerminal =
+          identical(attrs.length, 0) && identical(index, classNames.length - 1);
+      var className = classNames[index];
+      if (isTerminal) {
+        this._addTerminal(matcher._classMap, className, selectable);
+      } else {
+        matcher = this._addPartial(matcher._classPartialMap, className);
       }
     }
-    if (attrs != null) {
-      for (var index = 0; index < attrs.length;) {
-        var isTerminal = identical(index, attrs.length - 2);
-        var attrName = attrs[index++];
-        var attrValue = attrs[index++];
-        if (isTerminal) {
-          var terminalMap = matcher._attrValueMap;
-          var terminalValuesMap = terminalMap[attrName];
-          if (terminalValuesMap == null) {
-            terminalValuesMap = new Map<String, List<SelectorContext>>();
-            terminalMap[attrName] = terminalValuesMap;
-          }
-          this._addTerminal(terminalValuesMap, attrValue, selectable);
-        } else {
-          var parttialMap = matcher._attrValuePartialMap;
-          var partialValuesMap = parttialMap[attrName];
-          if (partialValuesMap == null) {
-            partialValuesMap = new Map<String, SelectorMatcher>();
-            parttialMap[attrName] = partialValuesMap;
-          }
-          matcher = this._addPartial(partialValuesMap, attrValue);
-        }
+    for (var attrMatcher in attrs) {
+      if (identical(attrMatcher, attrs.last)) {
+        final matchers = matcher._attrMatchers[attrMatcher.name] ??= [];
+        matchers.add(new Tuple2<AttributeMatcher, SelectorContext>(
+            attrMatcher, selectable));
+      } else {
+        final matchers = matcher._attrPartialMatchers[attrMatcher.name] ??= [];
+        final newMatcher = new SelectorMatcher();
+        matchers.add(new Tuple2<AttributeMatcher, SelectorMatcher>(
+            attrMatcher, newMatcher));
+        matcher = newMatcher;
       }
     }
   }
@@ -245,7 +260,6 @@ class SelectorMatcher {
     var result = false;
     var element = cssSelector.element;
     var classNames = cssSelector.classNames;
-    var attrs = cssSelector.attrs;
     for (var i = 0; i < this._listContexts.length; i++) {
       this._listContexts[i].alreadyMatched = false;
     }
@@ -255,39 +269,32 @@ class SelectorMatcher {
     result = this._matchPartial(
             this._elementPartialMap, element, cssSelector, matchedCallback) ||
         result;
-    if (classNames != null) {
-      for (var index = 0; index < classNames.length; index++) {
-        var className = classNames[index];
-        result = this._matchTerminal(
-                this._classMap, className, cssSelector, matchedCallback) ||
-            result;
-        result = this._matchPartial(this._classPartialMap, className,
-                cssSelector, matchedCallback) ||
-            result;
-      }
+    for (var index = 0; index < classNames.length; index++) {
+      var className = classNames[index];
+      result = this._matchTerminal(
+              this._classMap, className, cssSelector, matchedCallback) ||
+          result;
+      result = this._matchPartial(
+              this._classPartialMap, className, cssSelector, matchedCallback) ||
+          result;
     }
-    if (attrs != null) {
-      for (var index = 0; index < attrs.length;) {
-        var attrName = attrs[index++];
-        var attrValue = attrs[index++];
-        var terminalValuesMap = this._attrValueMap[attrName];
-        if (attrValue != _EMPTY_ATTR_VALUE) {
-          result = this._matchTerminal(terminalValuesMap, _EMPTY_ATTR_VALUE,
-                  cssSelector, matchedCallback) ||
-              result;
+    for (var attr in cssSelector.attrs) {
+      final attrMatchers = _attrMatchers[attr.name];
+      if (attrMatchers != null) {
+        for (var pair in attrMatchers) {
+          if (pair.item1.matches(attr.value)) {
+            result =
+                pair.item2.finalize(cssSelector, matchedCallback) || result;
+          }
         }
-        result = this._matchTerminal(
-                terminalValuesMap, attrValue, cssSelector, matchedCallback) ||
-            result;
-        var partialValuesMap = this._attrValuePartialMap[attrName];
-        if (attrValue != _EMPTY_ATTR_VALUE) {
-          result = this._matchPartial(partialValuesMap, _EMPTY_ATTR_VALUE,
-                  cssSelector, matchedCallback) ||
-              result;
+      }
+      final attrPartialMatchers = _attrPartialMatchers[attr.name];
+      if (attrPartialMatchers != null) {
+        for (var pair in attrPartialMatchers) {
+          if (pair.item1.matches(attr.value)) {
+            result = pair.item2.match(cssSelector, matchedCallback) || result;
+          }
         }
-        result = this._matchPartial(
-                partialValuesMap, attrValue, cssSelector, matchedCallback) ||
-            result;
       }
     }
     return result;
