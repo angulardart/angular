@@ -1146,7 +1146,12 @@ CssSelector createElementCssSelector(
     var attrName = matchableAttrs[i][0];
     var attrNameNoNs = splitNsName(attrName)[1];
     var attrValue = matchableAttrs[i][1];
-    cssSelector.addAttribute(attrNameNoNs, attrValue);
+    // [CssSelector] is used both to define selectors, and to describe an
+    // element. This is unfortunate as certain attribute selectors don't make
+    // sense in context of defining an element. Since we're defining the
+    // attributes of an element here, we use exact match ('=') to specify that
+    // the element has this attribute value.
+    cssSelector.addAttribute(attrNameNoNs, '=', attrValue);
     if (attrName.toLowerCase() == CLASS_ATTR) {
       var classes = splitClasses(attrValue);
       classes.forEach((className) => cssSelector.addClassName(className));
