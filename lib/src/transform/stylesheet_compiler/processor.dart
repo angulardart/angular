@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:angular2/src/compiler/config.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/compiler/source_module.dart';
+import 'package:angular2/src/source_gen/common/url_resolver.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/names.dart';
 import 'package:angular2/src/transform/common/options.dart';
@@ -10,6 +11,19 @@ import 'package:angular2/src/transform/common/ng_compiler.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:analyzer/dart/ast/token.dart' show Keyword;
 import 'package:barback/barback.dart';
+import 'package:build/build.dart' as build;
+
+/// Converts a Barback asset ID to an asset URL.
+String _assetIdToUrl(AssetId assetId) {
+  final buildAssetId = new build.AssetId(assetId.package, assetId.path);
+  return toAssetUri(buildAssetId);
+}
+
+/// Converts an asset URL to a Barback asset ID.
+AssetId _urlToAssetId(String url) {
+  final buildAssetId = new build.AssetId.resolve(url);
+  return new AssetId(buildAssetId.package, buildAssetId.path);
+}
 
 AssetId shimmedStylesheetAssetId(AssetId cssAssetId) => new AssetId(
     cssAssetId.package, toShimmedStylesheetExtension(cssAssetId.path));
@@ -19,7 +33,7 @@ AssetId nonShimmedStylesheetAssetId(AssetId cssAssetId) => new AssetId(
 
 Future<Iterable<Asset>> processStylesheet(AssetReader reader,
     AssetId stylesheetId, TransformerOptions options) async {
-  final stylesheetUrl = '${stylesheetId.package}|${stylesheetId.path}';
+  final stylesheetUrl = _assetIdToUrl(stylesheetId);
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
     var config = new CompilerConfig(
@@ -32,7 +46,7 @@ Future<Iterable<Asset>> processStylesheet(AssetReader reader,
         templateCompiler.compileStylesheet(stylesheetUrl, cssText);
 
     return sourceModules.map((SourceModule module) => new Asset.fromString(
-        new AssetId.parse('${module.moduleUrl}'), writeSourceModule(module)));
+        _urlToAssetId(module.moduleUrl), writeSourceModule(module)));
   }, operationName: 'processStylesheet', assetId: stylesheetId);
 }
 
