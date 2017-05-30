@@ -66,7 +66,7 @@ final BIND_NAME_REGEXP =
 const TEMPLATE_ELEMENT = 'template';
 const TEMPLATE_ATTR = 'template';
 const TEMPLATE_ATTR_PREFIX = '*';
-const TEMPLATE_DEFERRED_ATTR = '!deferred';
+const TEMPLATE_DEFERRED_ATTR = '@deferred';
 const CLASS_ATTR = 'class';
 final PROPERTY_PARTS_SEPARATOR = '.';
 const ATTRIBUTE_PREFIX = 'attr';
@@ -545,7 +545,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     var bindings = _parseTemplateBindings(
         templateBindingsSource, attr.sourceSpan, exports);
     if (isDeferredAttr && bindings != null && bindings.isNotEmpty) {
-      _reportError('"!deferred" on elements can\'t be bound to an expression.',
+      _reportError('"@deferred" on elements can\'t be bound to an expression.',
           attr.sourceSpan, ParseErrorLevel.FATAL);
       return false;
     }

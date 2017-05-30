@@ -579,6 +579,7 @@ abstract class AppView<T> {
     Future.wait([loadComponentFunction(), loadTemplateLibFunction()]).then((_) {
       initializer();
       viewContainer.createEmbeddedView(templateRef);
+      viewContainer.detectChangesInNestedViews();
     });
   }
 }

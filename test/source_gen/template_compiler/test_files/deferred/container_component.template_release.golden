@@ -28,8 +28,8 @@ import 'dart:html';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/linker/template_ref.dart';
-import 'deferred_component.dart' deferred as deflib0;
 import 'deferred_component.template.dart' deferred as deflib1;
+import 'deferred_component.dart' deferred as deflib0;
 
 const List<dynamic> styles_TestContainerComponent = const [];
 
