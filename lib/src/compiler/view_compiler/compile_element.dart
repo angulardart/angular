@@ -363,8 +363,7 @@ class CompileElement extends CompileNode {
     CompileElement deferredElement = embeddedView.nodes[0] as CompileElement;
     CompileDirectiveMetadata deferredMeta = deferredElement.component;
     String deferredModuleUrl = deferredMeta.identifier.moduleUrl;
-    String prefix = deferredMeta.identifier.prefix ??
-        embeddedView.deferredModules[deferredModuleUrl];
+    String prefix = embeddedView.deferredModules[deferredModuleUrl];
     String templatePrefix;
     if (prefix == null) {
       prefix = 'deflib${embeddedView.deferredModules.length}';
@@ -372,24 +371,18 @@ class CompileElement extends CompileNode {
       templatePrefix = 'deflib${view.deferredModules.length}';
       embeddedView.deferredModules[_toTemplateExtension(deferredModuleUrl)] =
           templatePrefix;
+    } else {
+      templatePrefix =
+          embeddedView.deferredModules[_toTemplateExtension(deferredModuleUrl)];
     }
 
     CompileIdentifierMetadata componentId = deferredMeta.identifier;
     CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
-        name: '',
-        moduleUrl: componentId.moduleUrl,
-        prefix: prefix,
-        emitPrefix: true,
-        value: componentId.value);
-
+        name: 'loadLibrary', prefix: prefix, emitPrefix: true);
     CompileIdentifierMetadata nestedComponentId = new CompileIdentifierMetadata(
         name: getViewFactoryName(deferredElement.component, 0));
     CompileIdentifierMetadata templatePrefixId = new CompileIdentifierMetadata(
-        name: 'loadLibrary',
-        moduleUrl: nestedComponentId.moduleUrl,
-        prefix: templatePrefix,
-        emitPrefix: true,
-        value: nestedComponentId.value);
+        name: 'loadLibrary', prefix: templatePrefix, emitPrefix: true);
 
     CompileIdentifierMetadata templateInitializer =
         new CompileIdentifierMetadata(
@@ -407,7 +400,7 @@ class CompileElement extends CompileNode {
     ], null);
 
     stmts.add(new o.InvokeMemberMethodExpr('loadDeferred', [
-      o.importDeferred(prefixedId).prop('loadLibrary'),
+      o.importDeferred(prefixedId),
       o.importDeferred(templatePrefixId),
       viewContainerExpr,
       templateRefExpr,

@@ -27,7 +27,7 @@ class Comp {}
 * _Limitations_:
   * Only top-level fields that are `const` (not `final`) can be exported.
 
-* Added `!deferred` as the first "compile-time" directive (it has no specific
+* Added `@deferred` as the first "compile-time" directive (it has no specific
   runtime code nor is it listed in a `directives: [ ... ]` list. Implements
   https://goo.gl/Cq3Uy1.
 
@@ -39,7 +39,7 @@ import 'expensive_comp.dart' show ExpensiveComp;
   selector: 'my-comp',
   directives: const [ExpensiveComp],
   template: r'''
-    <expensive-comp !deferred></expensive-comp>
+    <expensive-comp @deferred></expensive-comp>
   ''',
 )
 class MyComp {}
