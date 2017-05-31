@@ -1,7 +1,6 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.core.debug.debug_node_test;
-
+import 'dart:async';
 import 'dart:html';
 
 import 'package:angular2/angular2.dart';
@@ -299,10 +298,8 @@ class LocalsComp {}
 
 @Directive(selector: "custom-emitter", outputs: const ["myevent"])
 class CustomEmitter {
-  EventEmitter<dynamic> myevent;
-  CustomEmitter() {
-    myevent = new EventEmitter();
-  }
+  final _myEvent = new StreamController<dynamic>.broadcast();
+  Stream<dynamic> get myevent => _myEvent.stream;
 }
 
 @Component(

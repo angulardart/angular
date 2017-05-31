@@ -3,7 +3,6 @@ import "dart:async";
 import "package:angular2/di.dart" show Inject, Injectable;
 import "package:angular2/platform/common.dart"
     show Location, PathLocationStrategy;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "directives/router_outlet.dart" show RouterOutlet;
@@ -45,8 +44,8 @@ class Router {
   RouterOutlet _outlet;
   final _auxRouters = new Map<String, Router>();
   Router _childRouter;
-  final _subject = new EventEmitter<dynamic>();
-  final _startNavigationEvent = new EventEmitter<String>();
+  final _subject = new StreamController<dynamic>.broadcast();
+  final _startNavigationEvent = new StreamController<String>.broadcast();
   Router(this.registry, this.parent, this.hostComponent, [this.root]);
 
   /// Constructs a child router. You probably don't need to use this unless
@@ -358,11 +357,11 @@ class Router {
 
   /// Stream on router publishes URL it has starting navigating to.
   /// Use subscribe method below to be informed if navigation was successful.
-  Stream<String> get onStartNavigation => _startNavigationEvent;
+  Stream<String> get onStartNavigation => _startNavigationEvent.stream;
 
   /// Subscribe to URL updates from the router
   Object subscribe(void onNext(dynamic value), [void onError(dynamic value)]) {
-    return _subject.listen(onNext, onError: onError);
+    return _subject.stream.listen(onNext, onError: onError);
   }
 
   /// Removes the contents of this router's outlet and all descendant outlets

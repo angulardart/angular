@@ -11,7 +11,6 @@ import "package:angular2/core.dart"
         OnDestroy,
         Output,
         Injector;
-import "package:angular2/src/facade/async.dart" show EventEmitter;
 import "package:collection/collection.dart" show MapEquality;
 
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
@@ -49,8 +48,11 @@ class RouterOutlet implements OnDestroy {
   String name;
   Future<ComponentRef> _componentRef;
   ComponentInstruction _currentInstruction;
-  @Output("activate")
-  var activateEvents = new EventEmitter<dynamic>();
+
+  @Output('activate')
+  Stream<dynamic> get onActivate => _activateEvents.stream;
+  final _activateEvents = new StreamController<dynamic>.broadcast();
+
   RouterOutlet(this._viewContainerRef, this._loader, this._parentRouter,
       @Attribute("name") String nameAttr) {
     if (nameAttr != null) {
@@ -83,7 +85,7 @@ class RouterOutlet implements OnDestroy {
     this._componentRef = componentFactoryPromise.then((componentFactory) =>
         this._viewContainerRef.createComponent(componentFactory, 0, injector));
     return this._componentRef.then((componentRef) {
-      this.activateEvents.emit(componentRef.instance);
+      _activateEvents.add(componentRef.instance);
       if (hasLifecycleHook(hook_mod.routerOnActivate, componentRef.instance)) {
         return ((componentRef.instance as OnActivate))
             .routerOnActivate(nextInstruction, previousInstruction);

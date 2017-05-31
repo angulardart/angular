@@ -1,13 +1,10 @@
 @TestOn('browser')
-library angular2.test.core.testability.testability_test;
-
 import 'dart:async';
 
 import 'package:angular2/src/core/di.dart' show Injectable;
 import 'package:angular2/src/core/testability/testability.dart'
     show Testability;
 import 'package:angular2/src/core/zone/ng_zone.dart' show NgZone;
-import 'package:angular2/src/facade/async.dart' show EventEmitter;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -28,19 +25,19 @@ class MockCallback extends Mock implements TestabilityCallback {}
 
 @Injectable()
 class TestZone extends NgZone {
-  EventEmitter<dynamic> _onUnstableStream;
-  EventEmitter get onTurnStart {
-    return _onUnstableStream;
+  StreamController<dynamic> _onUnstableStream;
+  Stream get onTurnStart {
+    return _onUnstableStream.stream;
   }
 
-  EventEmitter<dynamic> _onStableStream;
-  EventEmitter get onTurnDone {
-    return _onStableStream;
+  StreamController<dynamic> _onStableStream;
+  Stream get onTurnDone {
+    return _onStableStream.stream;
   }
 
   TestZone() : super(enableLongStackTrace: false) {
-    _onUnstableStream = new EventEmitter(false);
-    _onStableStream = new EventEmitter(false);
+    _onUnstableStream = new StreamController.broadcast(sync: true);
+    _onStableStream = new StreamController.broadcast(sync: true);
   }
   void unstable() {
     this._onUnstableStream.add(null);

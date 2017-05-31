@@ -1,7 +1,6 @@
 @Tags(const ['codegen'])
 @TestOn('browser && !js')
-library angular2.test.di.integration_dart_test;
-
+import 'dart:async';
 import 'dart:html';
 
 import 'package:angular2/angular2.dart';
@@ -293,10 +292,12 @@ class MyCompWithEventException {
 @Directive(selector: '[emitter]', outputs: const ['event'])
 class DirectiveEmittingEvent {
   String msg = '';
-  EventEmitter event = new EventEmitter();
+
+  final _onEvent = new StreamController<String>.broadcast();
+  Stream<String> get event => _onEvent.stream;
 
   void fireEvent(String msg) {
-    event.add(msg);
+    _onEvent.add(msg);
   }
 }
 
