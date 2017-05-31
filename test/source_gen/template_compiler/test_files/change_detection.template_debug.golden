@@ -8,7 +8,6 @@
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
-// @ignoreProblemForFile implementation_imports
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
@@ -27,7 +26,7 @@ import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
-const List<dynamic> styles_CheckOnceComponent = const [];
+const List<dynamic> styles$CheckOnceComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponent0 = [null, null];
 
 class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
@@ -45,7 +44,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class CheckOnceComponent - inline template',
         ViewEncapsulation.None,
-        styles_CheckOnceComponent);
+        styles$CheckOnceComponent);
     setupComponentType(renderType);
   }
   @override
@@ -66,7 +65,7 @@ AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(
   return new ViewCheckOnceComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_CheckOnceComponentHost = const [];
+const List<dynamic> styles$CheckOnceComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
   new StaticNodeDebugInfo([import2.CheckOnceComponent],
       import2.CheckOnceComponent, <String, dynamic>{})
@@ -85,7 +84,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckOnceComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_CheckOnceComponentHost);
+        '', ViewEncapsulation.Emulated, styles$CheckOnceComponentHost);
     setupComponentType(renderType);
   }
   @override
@@ -129,7 +128,7 @@ const ComponentFactory CheckOnceComponentNgFactory = const ComponentFactory(
     viewFactory_CheckOnceComponentHost0,
     import2.CheckOnceComponent,
     _METADATA);
-const List<dynamic> styles_CheckedComponent = const [];
+const List<dynamic> styles$CheckedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = [null, null];
 
 class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
@@ -147,7 +146,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class CheckedComponent - inline template',
         ViewEncapsulation.None,
-        styles_CheckedComponent);
+        styles$CheckedComponent);
     setupComponentType(renderType);
   }
   @override
@@ -168,7 +167,7 @@ AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(
   return new ViewCheckedComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_CheckedComponentHost = const [];
+const List<dynamic> styles$CheckedComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
   new StaticNodeDebugInfo(
       [import2.CheckedComponent], import2.CheckedComponent, <String, dynamic>{})
@@ -187,7 +186,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckedComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_CheckedComponentHost);
+        '', ViewEncapsulation.Emulated, styles$CheckedComponentHost);
     setupComponentType(renderType);
   }
   @override
@@ -231,7 +230,7 @@ const ComponentFactory CheckedComponentNgFactory = const ComponentFactory(
     viewFactory_CheckedComponentHost0,
     import2.CheckedComponent,
     _METADATA);
-const List<dynamic> styles_CheckAlwaysComponent = const [];
+const List<dynamic> styles$CheckAlwaysComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
 
 class ViewCheckAlwaysComponent0
@@ -250,7 +249,7 @@ class ViewCheckAlwaysComponent0
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class CheckAlwaysComponent - inline template',
         ViewEncapsulation.None,
-        styles_CheckAlwaysComponent);
+        styles$CheckAlwaysComponent);
     setupComponentType(renderType);
   }
   @override
@@ -271,7 +270,7 @@ AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
   return new ViewCheckAlwaysComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_CheckAlwaysComponentHost = const [];
+const List<dynamic> styles$CheckAlwaysComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
   new StaticNodeDebugInfo([import2.CheckAlwaysComponent],
       import2.CheckAlwaysComponent, <String, dynamic>{})
@@ -290,7 +289,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckAlwaysComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_CheckAlwaysComponentHost);
+        '', ViewEncapsulation.Emulated, styles$CheckAlwaysComponentHost);
     setupComponentType(renderType);
   }
   @override
@@ -334,7 +333,7 @@ const ComponentFactory CheckAlwaysComponentNgFactory = const ComponentFactory(
     viewFactory_CheckAlwaysComponentHost0,
     import2.CheckAlwaysComponent,
     _METADATA);
-const List<dynamic> styles_DetachedComponent = const [];
+const List<dynamic> styles$DetachedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = [null, null];
 
 class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
@@ -352,7 +351,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class DetachedComponent - inline template',
         ViewEncapsulation.None,
-        styles_DetachedComponent);
+        styles$DetachedComponent);
     setupComponentType(renderType);
   }
   @override
@@ -373,7 +372,7 @@ AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(
   return new ViewDetachedComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_DetachedComponentHost = const [];
+const List<dynamic> styles$DetachedComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
   new StaticNodeDebugInfo([import2.DetachedComponent],
       import2.DetachedComponent, <String, dynamic>{})
@@ -392,7 +391,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DetachedComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_DetachedComponentHost);
+        '', ViewEncapsulation.Emulated, styles$DetachedComponentHost);
     setupComponentType(renderType);
   }
   @override
@@ -436,7 +435,7 @@ const ComponentFactory DetachedComponentNgFactory = const ComponentFactory(
     viewFactory_DetachedComponentHost0,
     import2.DetachedComponent,
     _METADATA);
-const List<dynamic> styles_OnPushComponent = const [];
+const List<dynamic> styles$OnPushComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
 
 class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
@@ -454,7 +453,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class OnPushComponent - inline template',
         ViewEncapsulation.None,
-        styles_OnPushComponent);
+        styles$OnPushComponent);
     setupComponentType(renderType);
   }
   @override
@@ -475,7 +474,7 @@ AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(
   return new ViewOnPushComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_OnPushComponentHost = const [];
+const List<dynamic> styles$OnPushComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
   new StaticNodeDebugInfo(
       [import2.OnPushComponent], import2.OnPushComponent, <String, dynamic>{})
@@ -494,7 +493,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_OnPushComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_OnPushComponentHost);
+        '', ViewEncapsulation.Emulated, styles$OnPushComponentHost);
     setupComponentType(renderType);
   }
   @override
@@ -538,7 +537,7 @@ const ComponentFactory OnPushComponentNgFactory = const ComponentFactory(
     viewFactory_OnPushComponentHost0,
     import2.OnPushComponent,
     _METADATA);
-const List<dynamic> styles_StatefulComponent = const [];
+const List<dynamic> styles$StatefulComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
 
 class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
@@ -556,7 +555,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class StatefulComponent - inline template',
         ViewEncapsulation.None,
-        styles_StatefulComponent);
+        styles$StatefulComponent);
     setupComponentType(renderType);
   }
   @override
@@ -579,7 +578,7 @@ AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(
   return new ViewStatefulComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_StatefulComponentHost = const [];
+const List<dynamic> styles$StatefulComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
   new StaticNodeDebugInfo([import2.StatefulComponent],
       import2.StatefulComponent, <String, dynamic>{})
@@ -598,7 +597,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_StatefulComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_StatefulComponentHost);
+        '', ViewEncapsulation.Emulated, styles$StatefulComponentHost);
     setupComponentType(renderType);
   }
   @override
@@ -642,7 +641,7 @@ const ComponentFactory StatefulComponentNgFactory = const ComponentFactory(
     viewFactory_StatefulComponentHost0,
     import2.StatefulComponent,
     _METADATA);
-const List<dynamic> styles_DefaultComponent = const [];
+const List<dynamic> styles$DefaultComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
 
 class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
@@ -660,7 +659,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/change_detection.dart class DefaultComponent - inline template',
         ViewEncapsulation.None,
-        styles_DefaultComponent);
+        styles$DefaultComponent);
     setupComponentType(renderType);
   }
   @override
@@ -681,7 +680,7 @@ AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(
   return new ViewDefaultComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_DefaultComponentHost = const [];
+const List<dynamic> styles$DefaultComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
   new StaticNodeDebugInfo(
       [import2.DefaultComponent], import2.DefaultComponent, <String, dynamic>{})
@@ -700,7 +699,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DefaultComponentHost0) {
     renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_DefaultComponentHost);
+        '', ViewEncapsulation.Emulated, styles$DefaultComponentHost);
     setupComponentType(renderType);
   }
   @override

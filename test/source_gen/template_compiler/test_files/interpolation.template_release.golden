@@ -8,7 +8,6 @@
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
-// @ignoreProblemForFile implementation_imports
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
@@ -26,7 +25,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular2/angular2.dart';
 import 'package:angular2/src/facade/lang.dart' as import8;
 
-const List<dynamic> styles_InterpolationComponent = const [];
+const List<dynamic> styles$InterpolationComponent = const [];
 
 class ViewInterpolationComponent0
     extends AppView<import1.InterpolationComponent> {
@@ -39,7 +38,7 @@ class ViewInterpolationComponent0
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('interpolation');
     renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.None, styles_InterpolationComponent);
+        '', ViewEncapsulation.None, styles$InterpolationComponent);
     setupComponentType(renderType);
   }
   @override
@@ -71,7 +70,7 @@ AppView<import1.InterpolationComponent> viewFactory_InterpolationComponent0(
   return new ViewInterpolationComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_InterpolationComponentHost = const [];
+const List<dynamic> styles$InterpolationComponentHost = const [];
 
 class ViewInterpolationComponentHost0 extends AppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
@@ -81,7 +80,7 @@ class ViewInterpolationComponentHost0 extends AppView<dynamic> {
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_InterpolationComponentHost);
+        '', ViewEncapsulation.Emulated, styles$InterpolationComponentHost);
     setupComponentType(renderType);
   }
   @override
@@ -125,7 +124,7 @@ const ComponentFactory InterpolationComponentNgFactory = const ComponentFactory(
     viewFactory_InterpolationComponentHost0,
     import1.InterpolationComponent,
     _METADATA);
-const List<dynamic> styles_InterpolationComponentNoWhitespace = const [];
+const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0
     extends AppView<import1.InterpolationComponentNoWhitespace> {
@@ -139,7 +138,7 @@ class ViewInterpolationComponentNoWhitespace0
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('interpolation');
     renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.None, styles_InterpolationComponentNoWhitespace);
+        '', ViewEncapsulation.None, styles$InterpolationComponentNoWhitespace);
     setupComponentType(renderType);
   }
   @override
@@ -170,7 +169,7 @@ AppView<import1.InterpolationComponentNoWhitespace>
   return new ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_InterpolationComponentNoWhitespaceHost = const [];
+const List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 
 class ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
@@ -184,7 +183,7 @@ class ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
     renderType ??= import6.appViewUtils.createRenderType(
         '',
         ViewEncapsulation.Emulated,
-        styles_InterpolationComponentNoWhitespaceHost);
+        styles$InterpolationComponentNoWhitespaceHost);
     setupComponentType(renderType);
   }
   @override
