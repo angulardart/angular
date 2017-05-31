@@ -376,7 +376,6 @@ class CompileElement extends CompileNode {
           embeddedView.deferredModules[_toTemplateExtension(deferredModuleUrl)];
     }
 
-    CompileIdentifierMetadata componentId = deferredMeta.identifier;
     CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
         name: 'loadLibrary', prefix: prefix, emitPrefix: true);
     CompileIdentifierMetadata nestedComponentId = new CompileIdentifierMetadata(
