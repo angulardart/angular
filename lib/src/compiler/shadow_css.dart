@@ -652,19 +652,9 @@ class LegacyShadowTransformer extends ShadowTransformer {
     super.visitDeclarationGroup(node);
   }
 
-  visitHostDirective(HostDirective node) {
-    shimPolyfillNextSelector(node.rulesets);
-    super.visitHostDirective(node);
-  }
-
   visitMediaDirective(MediaDirective node) {
     shimPolyfillNextSelector(node.rulesets);
     super.visitMediaDirective(node);
-  }
-
-  visitMixinRulesetDirective(MixinRulesetDirective node) {
-    shimPolyfillNextSelector(node.rulesets);
-    super.visitMixinRulesetDirective(node);
   }
 
   visitRuleSet(RuleSet node) {
@@ -681,10 +671,5 @@ class LegacyShadowTransformer extends ShadowTransformer {
   visitStyleSheet(StyleSheet node) {
     shimPolyfillNextSelector(node.topLevels);
     super.visitStyleSheet(node);
-  }
-
-  visitStyletDirective(StyletDirective node) {
-    shimPolyfillNextSelector(node.rulesets);
-    super.visitStyletDirective(node);
   }
 }
