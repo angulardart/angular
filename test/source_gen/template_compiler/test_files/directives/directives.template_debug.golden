@@ -8,7 +8,6 @@
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
-// @ignoreProblemForFile implementation_imports
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME

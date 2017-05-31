@@ -113,4 +113,4 @@ class StyleCompiler {
 /// Styles are assigned to style_componentTypeName variables and
 /// passed onto ViewUtils.createRenderComponentType for creating the prototype.
 String getStylesVarName(CompileDirectiveMetadata component) =>
-    component != null ? 'styles_${component.type.name}' : 'styles';
+    component != null ? 'styles\$${component.type.name}' : 'styles';

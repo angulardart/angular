@@ -13,7 +13,6 @@ const _ignoredProblems = const <String>[
   'cancel_subscriptions',
   'constant_identifier_names',
   'non_constant_identifier_names',
-  'implementation_imports',
   'library_prefixes',
   'UNUSED_IMPORT',
   'UNUSED_SHOWN_NAME',

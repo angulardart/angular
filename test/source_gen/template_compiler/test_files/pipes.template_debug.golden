@@ -8,7 +8,6 @@
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
-// @ignoreProblemForFile implementation_imports
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
@@ -27,7 +26,7 @@ import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular2/angular2.dart';
 
-const List<dynamic> styles_Comp = const [];
+const List<dynamic> styles$Comp = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_Comp0 = [null];
 
 class ViewComp0 extends DebugAppView<import2.Comp> {
@@ -46,7 +45,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/pipes.dart class Comp - inline template',
         ViewEncapsulation.None,
-        styles_Comp);
+        styles$Comp);
     setupComponentType(renderType);
   }
   @override
@@ -97,7 +96,7 @@ AppView<import2.Comp> viewFactory_Comp0(
   return new ViewComp0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_CompHost = const [];
+const List<dynamic> styles$CompHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CompHost0 = [
   new StaticNodeDebugInfo([import2.Comp], import2.Comp, <String, dynamic>{})
 ];
@@ -110,7 +109,7 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
       : super(import6.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompHost0) {
     renderType ??= import8.appViewUtils
-        .createRenderType('', ViewEncapsulation.Emulated, styles_CompHost);
+        .createRenderType('', ViewEncapsulation.Emulated, styles$CompHost);
     setupComponentType(renderType);
   }
   @override

@@ -8,7 +8,6 @@
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
-// @ignoreProblemForFile implementation_imports
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
@@ -29,7 +28,7 @@ import 'package:angular2/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular2/angular2.dart';
 import 'package:angular2/src/core/linker/element_ref.dart';
 
-const List<dynamic> styles_QueriesComponent = const [];
+const List<dynamic> styles$QueriesComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent0 = [
   null,
   new StaticNodeDebugInfo(
@@ -113,7 +112,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     renderType ??= import9.appViewUtils.createRenderType(
         'asset:angular2/test/source_gen/template_compiler/test_files/queries.dart class QueriesComponent - inline template',
         ViewEncapsulation.None,
-        styles_QueriesComponent);
+        styles$QueriesComponent);
     setupComponentType(renderType);
   }
   @override
@@ -311,7 +310,7 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(
   return new ViewQueriesComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_QueriesComponentHost = const [];
+const List<dynamic> styles$QueriesComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = [
   new StaticNodeDebugInfo(
       [import1.QueriesComponent], import1.QueriesComponent, <String, dynamic>{})
@@ -339,7 +338,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_QueriesComponentHost0) {
     renderType ??= import9.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_QueriesComponentHost);
+        '', ViewEncapsulation.Emulated, styles$QueriesComponentHost);
     setupComponentType(renderType);
   }
   @override

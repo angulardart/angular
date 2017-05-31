@@ -8,7 +8,6 @@
 // @ignoreProblemForFile cancel_subscriptions
 // @ignoreProblemForFile constant_identifier_names
 // @ignoreProblemForFile non_constant_identifier_names
-// @ignoreProblemForFile implementation_imports
 // @ignoreProblemForFile library_prefixes
 // @ignoreProblemForFile UNUSED_IMPORT
 // @ignoreProblemForFile UNUSED_SHOWN_NAME
@@ -26,7 +25,7 @@ import 'package:angular2/src/core/change_detection/change_detection.dart';
 import 'package:angular2/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular2/angular2.dart';
 
-const List<dynamic> styles_UsesNativeEvents = const [];
+const List<dynamic> styles$UsesNativeEvents = const [];
 
 class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   ButtonElement _el_1;
@@ -36,7 +35,7 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('uses-native-events');
     renderType ??= import6.appViewUtils
-        .createRenderType('', ViewEncapsulation.None, styles_UsesNativeEvents);
+        .createRenderType('', ViewEncapsulation.None, styles$UsesNativeEvents);
     setupComponentType(renderType);
   }
   @override
@@ -61,7 +60,7 @@ AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEvents0(
   return new ViewUsesNativeEvents0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_UsesNativeEventsHost = const [];
+const List<dynamic> styles$UsesNativeEventsHost = const [];
 
 class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
   ViewUsesNativeEvents0 _compView_0;
@@ -71,7 +70,7 @@ class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_UsesNativeEventsHost);
+        '', ViewEncapsulation.Emulated, styles$UsesNativeEventsHost);
     setupComponentType(renderType);
   }
   @override
@@ -114,7 +113,7 @@ const ComponentFactory UsesNativeEventsNgFactory = const ComponentFactory(
     viewFactory_UsesNativeEventsHost0,
     import1.UsesNativeEvents,
     _METADATA);
-const List<dynamic> styles_UsesAngularEvents = const [];
+const List<dynamic> styles$UsesAngularEvents = const [];
 
 class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   Element _el_1;
@@ -126,7 +125,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('uses-angular-events');
     renderType ??= import6.appViewUtils
-        .createRenderType('', ViewEncapsulation.None, styles_UsesAngularEvents);
+        .createRenderType('', ViewEncapsulation.None, styles$UsesAngularEvents);
     setupComponentType(renderType);
   }
   @override
@@ -172,7 +171,7 @@ AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEvents0(
   return new ViewUsesAngularEvents0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_UsesAngularEventsHost = const [];
+const List<dynamic> styles$UsesAngularEventsHost = const [];
 
 class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
   ViewUsesAngularEvents0 _compView_0;
@@ -182,7 +181,7 @@ class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_UsesAngularEventsHost);
+        '', ViewEncapsulation.Emulated, styles$UsesAngularEventsHost);
     setupComponentType(renderType);
   }
   @override
@@ -225,7 +224,7 @@ const ComponentFactory UsesAngularEventsNgFactory = const ComponentFactory(
     viewFactory_UsesAngularEventsHost0,
     import1.UsesAngularEvents,
     _METADATA);
-const List<dynamic> styles_HasAngularEvents = const [];
+const List<dynamic> styles$HasAngularEvents = const [];
 
 class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
   static RenderComponentType renderType;
@@ -234,7 +233,7 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = document.createElement('has-angular-events');
     renderType ??= import6.appViewUtils
-        .createRenderType('', ViewEncapsulation.None, styles_HasAngularEvents);
+        .createRenderType('', ViewEncapsulation.None, styles$HasAngularEvents);
     setupComponentType(renderType);
   }
   @override
@@ -250,7 +249,7 @@ AppView<import1.HasAngularEvents> viewFactory_HasAngularEvents0(
   return new ViewHasAngularEvents0(parentView, parentIndex);
 }
 
-const List<dynamic> styles_HasAngularEventsHost = const [];
+const List<dynamic> styles$HasAngularEventsHost = const [];
 
 class ViewHasAngularEventsHost0 extends AppView<dynamic> {
   ViewHasAngularEvents0 _compView_0;
@@ -260,7 +259,7 @@ class ViewHasAngularEventsHost0 extends AppView<dynamic> {
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles_HasAngularEventsHost);
+        '', ViewEncapsulation.Emulated, styles$HasAngularEventsHost);
     setupComponentType(renderType);
   }
   @override
