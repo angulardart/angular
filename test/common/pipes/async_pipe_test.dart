@@ -11,47 +11,47 @@ import '../control_mocks.dart';
 
 void main() {
   group('AsyncPipe AutoObservable', () {
-    EventEmitter emitter;
+    StreamController emitter;
     AsyncPipe pipe;
     ChangeDetectorRef ref;
     var message = new Object();
     setUp(() {
-      emitter = new EventEmitter();
+      emitter = new StreamController.broadcast();
       ref = new MockChangeDetectorRef();
       pipe = new AsyncPipe(ref);
     });
     group('transform', () {
       test('should return null when subscribing to an observable', () {
-        expect(pipe.transform(emitter), isNull);
+        expect(pipe.transform(emitter.stream), isNull);
       });
       test('should return the latest available value wrapped', () async {
-        pipe.transform(emitter);
+        pipe.transform(emitter.stream);
         emitter.add(message);
         Timer.run(expectAsync0(() {
-          WrappedValue res = pipe.transform(emitter);
+          WrappedValue res = pipe.transform(emitter.stream);
           expect(res.wrapped, message);
         }));
       });
       test(
           'should return same value when nothing has changed '
           'since the last call', () async {
-        pipe.transform(emitter);
+        pipe.transform(emitter.stream);
         emitter.add(message);
         Timer.run(expectAsync0(() {
-          pipe.transform(emitter);
-          expect(pipe.transform(emitter), message);
+          pipe.transform(emitter.stream);
+          expect(pipe.transform(emitter.stream), message);
         }));
       });
       test(
           'should dispose of the existing subscription when '
           'subscribing to a new observable', () async {
-        pipe.transform(emitter);
-        var newEmitter = new EventEmitter();
-        expect(pipe.transform(newEmitter), isNull);
+        pipe.transform(emitter.stream);
+        var newEmitter = new StreamController.broadcast();
+        expect(pipe.transform(newEmitter.stream), isNull);
         // this should not affect the pipe
         emitter.add(message);
         Timer.run(expectAsync0(() {
-          expect(pipe.transform(newEmitter), isNull);
+          expect(pipe.transform(newEmitter.stream), isNull);
         }));
       });
       test('should not dispose of existing subscription when Streams are equal',
@@ -66,7 +66,7 @@ void main() {
       });
       test('should request a change detection check upon receiving a new value',
           () async {
-        pipe.transform(emitter);
+        pipe.transform(emitter.stream);
         emitter.add(message);
         new Timer(const Duration(milliseconds: 10), expectAsync0(() {
           verify(ref.markForCheck()).called(1);
@@ -79,11 +79,11 @@ void main() {
         pipe.ngOnDestroy();
       });
       test('should dispose of the existing subscription', () async {
-        pipe.transform(emitter);
+        pipe.transform(emitter.stream);
         pipe.ngOnDestroy();
         emitter.add(message);
         Timer.run(expectAsync0(() {
-          expect(pipe.transform(emitter), isNull);
+          expect(pipe.transform(emitter.stream), isNull);
         }));
       });
     });
