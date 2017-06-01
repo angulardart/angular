@@ -94,6 +94,7 @@ const NG_COMMON = const [
   'Validators',
   'RadioButtonState',
   'composeValidators',
+  'setUpControlGroup',
 ];
 const NG_COMPILER = const [
   'TemplateAst',
@@ -443,6 +444,7 @@ const angular2Apis = const [
   "WrappedValue",
   "appIdRandomProviderFactory",
   'composeValidators',
+  'setUpControlGroup',
   "coreBootstrap",
   "coreLoadAndBootstrap",
   "createNgZone",
