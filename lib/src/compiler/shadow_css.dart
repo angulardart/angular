@@ -653,7 +653,7 @@ class LegacyShadowTransformer extends ShadowTransformer {
   }
 
   visitMediaDirective(MediaDirective node) {
-    shimPolyfillNextSelector(node.rulesets);
+    shimPolyfillNextSelector(node.rules);
     super.visitMediaDirective(node);
   }
 
