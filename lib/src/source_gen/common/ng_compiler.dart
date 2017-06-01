@@ -8,7 +8,7 @@ import 'package:angular2/src/compiler/output/dart_emitter.dart';
 import 'package:angular2/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular2/src/compiler/style_compiler.dart';
 import 'package:angular2/src/compiler/template_parser.dart';
-import 'package:angular2/src/compiler/url_resolver.dart';
+import 'package:angular2/src/core/url_resolver.dart';
 import 'package:angular2/src/compiler/view_compiler/view_compiler.dart';
 import 'package:build/build.dart';
 

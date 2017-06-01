@@ -7,7 +7,7 @@ import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
 import 'compiler_utils.dart';
 import 'selector.dart' show CssSelector;
-import 'url_resolver.dart' show getUrlScheme;
+import 'package:angular2/src/core/url_resolver.dart' show getUrlScheme;
 
 // group 1: 'property' from '[property]'
 // group 2: 'event' from '(event)'

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:angular2/compiler.dart' show UrlResolver;
+import 'package:angular2/src/core/url_resolver.dart' show UrlResolver;
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/model/import_export_model.pb.dart';

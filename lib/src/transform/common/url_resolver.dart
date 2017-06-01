@@ -1,6 +1,6 @@
 import 'package:barback/barback.dart';
 
-export 'package:angular2/src/compiler/url_resolver.dart'
+export 'package:angular2/src/core/url_resolver.dart'
     show createOfflineCompileUrlResolver;
 
 String toAssetUri(AssetId assetId) {

@@ -98,8 +98,6 @@ const NG_COMMON = const [
 const NG_COMPILER = const [
   'TemplateAst',
   'TemplateAstVisitor',
-  'DEFAULT_PACKAGE_URL_PROVIDER',
-  'UrlResolver',
   'AttrAst',
   'BoundDirectivePropertyAst',
   'BoundElementPropertyAst',
@@ -143,7 +141,6 @@ const NG_COMPILER = const [
   'ProviderAstType',
   'sanitizeEventName',
   'ViewResolver',
-  'createOfflineCompileUrlResolver',
 ];
 const NG_CORE = const [
   'APP_INITIALIZER',
@@ -498,7 +495,6 @@ const diApis = const [
   "SkipSelf",
   "Testability",
   "TestabilityRegistry",
-  "UrlResolver",
   "WrappedException",
   "WrappedTimer",
   "ZeroArgFunction",

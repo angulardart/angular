@@ -2,7 +2,7 @@ library angular2.test.compiler.style_url_resolver_test;
 
 import "package:angular2/src/compiler/style_url_resolver.dart"
     show extractStyleUrls, isStyleUrlResolvable;
-import "package:angular2/src/compiler/url_resolver.dart" show UrlResolver;
+import "package:angular2/src/core/url_resolver.dart" show UrlResolver;
 import 'package:test/test.dart';
 
 void main() {
