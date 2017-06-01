@@ -1,4 +1,6 @@
 import 'package:angular2/src/core/di.dart' show Provider;
+import 'package:angular2/src/core/url_resolver.dart'
+    show UrlResolver, DEFAULT_PACKAGE_URL_PROVIDER;
 import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
 
 import 'config.dart' show CompilerConfig;
@@ -12,7 +14,6 @@ import 'schema/dom_element_schema_registry.dart' show DomElementSchemaRegistry;
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'style_compiler.dart' show StyleCompiler;
 import 'template_parser.dart' show TemplateParser;
-import 'url_resolver.dart' show UrlResolver, DEFAULT_PACKAGE_URL_PROVIDER;
 import 'view_compiler/view_compiler.dart' show ViewCompiler;
 import 'view_resolver.dart' show ViewResolver;
 
@@ -26,7 +27,6 @@ export 'offline_compiler.dart';
 export 'pipe_resolver.dart' show PipeResolver;
 export 'source_module.dart' show SourceModule;
 export 'template_ast.dart';
-export 'url_resolver.dart';
 export 'view_resolver.dart' show ViewResolver;
 export 'xhr.dart';
 

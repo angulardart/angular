@@ -3,7 +3,7 @@
 
 import 'package:angular2/angular2.dart';
 import 'package:angular2/compiler.dart';
-import 'package:angular2/src/compiler/url_resolver.dart'
+import 'package:angular2/src/core/url_resolver.dart'
     show UrlResolver, createOfflineCompileUrlResolver;
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';

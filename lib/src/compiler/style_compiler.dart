@@ -7,7 +7,7 @@ import 'config.dart';
 import "output/output_ast.dart" as o;
 import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
-import "url_resolver.dart" show UrlResolver;
+import "package:angular2/src/core/url_resolver.dart" show UrlResolver;
 
 const COMPONENT_VARIABLE = "%COMP%";
 final HOST_ATTR_PREFIX = '_nghost-';

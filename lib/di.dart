@@ -1,4 +1,3 @@
-export 'src/compiler/url_resolver.dart' show UrlResolver;
 export 'src/core/change_detection/pipe_transform.dart';
 export 'src/core/di.dart';
 export 'src/core/metadata.dart' show Component, Directive, Input, Output;

@@ -1,3 +1,11 @@
+// This was originally only supposed to be used in the compiler and reflective
+// runtime, but it is being used by clients as a utility class. We should make
+// a specialized version for the compiler (i.e. we know that _packagePrefix is
+// always going to be 'asset:' so we can avoid the if-statement) and a utility
+// version that doesn't know about 'asset:'.
+@Deprecated('This may move in a future version of Angular.')
+library angular2.core.url_resolver;
+
 import 'package:angular2/src/core/application_tokens.dart'
     show PACKAGE_ROOT_URL;
 import 'package:angular2/src/core/di.dart' show Injectable, Inject, Provider;
