@@ -20,6 +20,8 @@ import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
 
+const String _directivesProperty = 'directives';
+
 List<NormalizedComponentWithViewDirectives> findComponents(Element element) {
   var componentVisitor = new NormalizedComponentVisitor();
   element.accept(componentVisitor);
@@ -60,7 +62,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
       _visitTypes(
         element,
-        'directives',
+        _directivesProperty,
         safeMatcher(annotation_matcher.isDirective, log),
         () => new ComponentVisitor(),
       );
@@ -70,34 +72,84 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     String field,
     annotation_matcher.AnnotationMatcher annotationMatcher,
     ElementVisitor<T> visitor(),
-  ) =>
-      element.metadata
-          .where(safeMatcher(
-            annotation_matcher.hasDirectives,
-            log,
-          ))
-          .expand((annotation) => _visitTypeObjects(
+  ) {
+    return element.metadata
+        .where(safeMatcher(
+          annotation_matcher.hasDirectives,
+          log,
+        ))
+        .expand((annotation) => _visitTypeObjects(
               coerceList(annotation.computeConstantValue(), field),
               safeMatcher(annotationMatcher, log),
-              visitor))
-          .toList();
+              visitor,
+              // Only pass the annotation for directives: [ ... ], not other
+              // elements. They also can cause problems if not resolved but it
+              // is missing directives that blow up in a non-actionable way.
+              annotation: field == _directivesProperty ? annotation : null,
+              element: element,
+            ))
+        .toList();
+  }
+
+  void _failFastOnUnresolvedTypes(
+    NodeList<Expression> expressions,
+    ClassElement componentType,
+  ) {
+    // TODO: Throw an exception type that is specifically handled by the builder
+    // and doesn't print a stack trace.
+    throw new StateError(''
+        'Failed to parse @Component annotation for ${componentType.name}:\n'
+        'One or more of the following arguments were unresolvable: \n'
+        '* ${expressions.join('\n* ')}'
+        '\n'
+        'The root cause could be a mispelling, or an import statement that \n'
+        'looks valid but is not resolvable at build time. Bazel users should \n'
+        'check their BUILD file to ensure all dependencies are listed.\n\n');
+  }
 
   List<T> _visitTypeObjects<T>(
     Iterable<DartObject> directives,
     annotation_matcher.AnnotationMatcher annotationMatcher,
-    ElementVisitor<T> visitor(),
-  ) =>
-      visitAll<T>(directives, (obj) {
-        var type = obj.toTypeValue();
-        if (type != null &&
-            type.element != null &&
-            type.element.metadata.any(safeMatcher(
-              annotationMatcher,
-              log,
-            ))) {
-          return type.element.accept(visitor());
+    ElementVisitor<T> visitor(), {
+    ElementAnnotationImpl annotation,
+    ClassElement element,
+  }) {
+    if (directives.isEmpty && annotation != null) {
+      // Two reasons we got to this point:
+      // 1. The directives: const [ ... ] list was empty or omitted.
+      // 2. One or more identifiers in the list were not resolved, potentially
+      //    due to missing imports or dependencies.
+      //
+      // The latter is specifically tricky to debug, because it ends up failing
+      // template parsing in a similar way to #1, but a user will look at the
+      // code and not see a problem potentially.
+      for (final argument in annotation.annotationAst.arguments.arguments) {
+        if (argument is NamedExpression &&
+            argument.name.label.name == _directivesProperty) {
+          final values = argument.expression as ListLiteral;
+          if (values.elements.isNotEmpty &&
+              // Avoid an edge case where all of your directives: ... entries
+              // are just empty lists. Not likely to happen, but might as well
+              // check anyway at this point.
+              values.elements.every((e) => e.staticType?.isDynamic != false)) {
+            // We didn't resolve something.
+            _failFastOnUnresolvedTypes(values.elements, element);
+          }
         }
-      });
+      }
+    }
+    return visitAll<T>(directives, (obj) {
+      var type = obj.toTypeValue();
+      if (type != null &&
+          type.element != null &&
+          type.element.metadata.any(safeMatcher(
+            annotationMatcher,
+            log,
+          ))) {
+        return type.element.accept(visitor());
+      }
+    });
+  }
 }
 
 class ComponentVisitor
