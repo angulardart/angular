@@ -2,6 +2,9 @@
 library angular2.test.compiler.template_parser_test;
 
 import "package:angular2/src/compiler/compile_metadata.dart";
+import "package:angular2/src/compiler/expression_parser/lexer.dart";
+import "package:angular2/src/compiler/expression_parser/parser.dart";
+import "package:angular2/src/compiler/html_parser.dart";
 import "package:angular2/src/compiler/identifiers.dart"
     show identifierToken, Identifiers;
 import "package:angular2/src/compiler/schema/element_schema_registry.dart"
@@ -10,24 +13,20 @@ import 'package:angular2/src/compiler/schema/dom_element_schema_registry.dart';
 import "package:angular2/src/compiler/template_ast.dart";
 import "package:angular2/src/compiler/template_parser.dart"
     show TemplateParser, splitClasses;
-import "package:angular2/src/core/di.dart" show provide;
-import "package:angular2/src/testing/internal.dart";
 import "package:logging/logging.dart";
 import 'package:test/test.dart';
 
 import "../test_util.dart";
 import "schema_registry_mock.dart" show MockSchemaRegistry;
 import "template_humanizer_util.dart";
-import "test_bindings.dart" show TEST_PROVIDERS;
 
-var someModuleUrl = "package:someModule";
-var MOCK_SCHEMA_REGISTRY = [
-  provide(ElementSchemaRegistry,
-      useValue: new MockSchemaRegistry(
-          {"invalidProp": false}, {"mappedAttr": "mappedProp"}))
-];
+const someModuleUrl = "package:someModule";
 
-typedef R Func3Opt1<A, B, C, R>(A a, B b, [C c]);
+typedef List<TemplateAst> ParseTemplate(
+  String template,
+  List<CompileDirectiveMetadata> directives, [
+  List<CompilePipeMetadata> pipes,
+]);
 
 class ArrayConsole {
   List<String> logs = [];
@@ -70,39 +69,30 @@ bool compareProviderList(List a, List b) {
 }
 
 void main() {
-  CompileDirectiveMetadata ngIf;
-  Func3Opt1<String, List<CompileDirectiveMetadata>, List<CompilePipeMetadata>,
-      List<TemplateAst>> parse;
-  ArrayConsole console = new ArrayConsole();
+  final console = new ArrayConsole();
+  final ngIf = CompileDirectiveMetadata.create(
+      selector: '[ngIf]',
+      type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'NgIf'),
+      inputs: ['ngIf']);
+  final component = CompileDirectiveMetadata.create(
+      selector: 'root',
+      type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Root'),
+      isComponent: true);
 
-  var commonSetup = () async {
-    await inject([TemplateParser], (TemplateParser parser) {
-      var component = CompileDirectiveMetadata.create(
-          selector: "root",
-          type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "Root"),
-          isComponent: true);
-      ngIf = CompileDirectiveMetadata.create(
-          selector: "[ngIf]",
-          type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "NgIf"),
-          inputs: ["ngIf"]);
-      parse = /* List < TemplateAst > */ (String template,
-          List<CompileDirectiveMetadata> directives,
-          [List<CompilePipeMetadata> pipes = null]) {
-        if (identical(pipes, null)) {
-          pipes = [];
-        }
-        return parser.parse(component, template, directives, pipes, "TestComp");
-      };
-    });
-  };
+  ParseTemplate parse;
+
+  void setUpParser({ElementSchemaRegistry elementSchemaRegistry}) {
+    elementSchemaRegistry ??= new MockSchemaRegistry(
+        {'invalidProp': false}, {'mappedAttr': 'mappedProp'});
+    final parser = new TemplateParser(
+        new Parser(new Lexer()), elementSchemaRegistry, new HtmlParser());
+    parse = (template, directives, [pipes]) =>
+        parser.parse(component, template, directives, pipes ?? [], 'TestComp');
+  }
 
   group("TemplateParser", () {
-    setUp(() async {
-      beforeEachProviders(() => [
-            TEST_PROVIDERS,
-            MOCK_SCHEMA_REGISTRY,
-          ]);
-      await commonSetup();
+    setUp(() {
+      setUpParser();
     });
     tearDown(() {
       console.clear();
@@ -1554,25 +1544,19 @@ void main() {
                 '^^^^^^^^^^^^^^^^^^^^^^^^^^'));
       });
       test('should prevent binding to unsafe SVG attributes', () async {
-        // This test requires that DomElementSchemaRegistry is provided instead
+        // This test requires that DomElementSchemaRegistry is used instead
         // of a mock implementation of ElementSchemaRegistry.
-        beforeEachProviders(() => [
-              provide(ElementSchemaRegistry,
-                  useValue: new DomElementSchemaRegistry())
-            ]);
-        await inject([TemplateParser], (TemplateParser parser) {
-          final component = CompileDirectiveMetadata.create();
-          final template = '<svg:circle [xlink:href]="url"></svg:circle>';
-          expect(
-              () => parser.parse(component, template, [], [], "TestComp"),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 13 of TestComp: ParseErrorLevel.FATAL: '
-                  "Can't bind to 'xlink:href' since it isn't a known native "
-                  'property or known directive. Please fix typo or add to '
-                  'directives list.\n'
-                  '[xlink:href]="url"\n'
-                  '^^^^^^^^^^^^^^^^^^'));
-        });
+        setUpParser(elementSchemaRegistry: new DomElementSchemaRegistry());
+        final template = '<svg:circle [xlink:href]="url"></svg:circle>';
+        expect(
+            () => parse(template, []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 13 of TestComp: ParseErrorLevel.FATAL: '
+                "Can't bind to 'xlink:href' since it isn't a known native "
+                'property or known directive. Please fix typo or add to '
+                'directives list.\n'
+                '[xlink:href]="url"\n'
+                '^^^^^^^^^^^^^^^^^^'));
       });
     });
     group("ignore elements", () {

@@ -1,9 +1,7 @@
-import '../../core/di/decorators.dart' show Injectable;
 import '../../facade/exceptions.dart' show BaseException;
 
 enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
-@Injectable()
 class Lexer {
   List<Token> tokenize(String text) {
     var scanner = new _Scanner(text);

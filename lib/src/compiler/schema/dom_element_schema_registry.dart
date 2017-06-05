@@ -1,4 +1,3 @@
-import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/security.dart";
 
 import "element_schema_registry.dart" show ElementSchemaRegistry;
@@ -202,7 +201,6 @@ const Map<String, String> attrToPropMap = const {
   "tabindex": "tabIndex"
 };
 
-@Injectable()
 class DomElementSchemaRegistry extends ElementSchemaRegistry {
   var schema = <String, Map<String, String>>{};
   DomElementSchemaRegistry() {
