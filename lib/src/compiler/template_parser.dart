@@ -1,4 +1,3 @@
-import 'package:angular2/di.dart' show Injectable;
 import 'package:angular2/src/core/linker/app_view_utils.dart'
     show MAX_INTERPOLATION_VALUES;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
@@ -86,7 +85,6 @@ class TemplateParseResult {
 }
 
 /// Converts Html AST to TemplateAST nodes.
-@Injectable()
 class TemplateParser {
   final Parser _exprParser;
   final ElementSchemaRegistry _schemaRegistry;

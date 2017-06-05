@@ -1,5 +1,4 @@
 import '../../compiler/compile_metadata.dart';
-import '../../core/di/decorators.dart' show Injectable;
 import '../../facade/exceptions.dart' show BaseException;
 import '../../facade/lang.dart' show jsSplit;
 
@@ -69,7 +68,6 @@ class TemplateBindingParseResult {
   TemplateBindingParseResult(this.templateBindings, this.warnings);
 }
 
-@Injectable()
 class Parser {
   final Lexer _lexer;
 

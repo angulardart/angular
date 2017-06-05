@@ -6,14 +6,8 @@ import 'package:angular2/src/facade/lang.dart' show assertionsEnabled;
 import 'config.dart' show CompilerConfig;
 import 'directive_normalizer.dart' show DirectiveNormalizer;
 import 'directive_resolver.dart' show DirectiveResolver;
-import 'expression_parser/lexer.dart' show Lexer;
-import 'expression_parser/parser.dart' show Parser;
-import 'html_parser.dart' show HtmlParser;
 import 'pipe_resolver.dart' show PipeResolver;
-import 'schema/dom_element_schema_registry.dart' show DomElementSchemaRegistry;
-import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'style_compiler.dart' show StyleCompiler;
-import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/view_compiler.dart' show ViewCompiler;
 import 'view_resolver.dart' show ViewResolver;
 
@@ -37,18 +31,12 @@ CompilerConfig createCompilerConfig() => new CompilerConfig(
 /// template compilation.
 const List<dynamic /* Type | Provider | List < dynamic > */ >
     COMPILER_PROVIDERS = const [
-  Lexer,
-  Parser,
-  HtmlParser,
-  TemplateParser,
   DirectiveNormalizer,
   DEFAULT_PACKAGE_URL_PROVIDER,
   StyleCompiler,
   ViewCompiler,
   const Provider(CompilerConfig,
       useFactory: createCompilerConfig, deps: const []),
-  DomElementSchemaRegistry,
-  const Provider(ElementSchemaRegistry, useExisting: DomElementSchemaRegistry),
   UrlResolver,
   ViewResolver,
   DirectiveResolver,
