@@ -24,6 +24,7 @@ const ALL_EXTENSIONS = const [
   META_EXTENSION,
   SUMMARY_META_EXTENSION,
   TEMPLATE_EXTENSION,
+  '.ng_placeholder',
   '.dart'
 ];
 
@@ -40,6 +41,7 @@ bool isGenerated(String uri) {
     SHIMMED_STYLESHEET_EXTENSION,
     SUMMARY_META_EXTENSION,
     TEMPLATE_EXTENSION,
+    '.ng_placeholder',
   ].any((ext) => uri.endsWith(ext));
 }
 

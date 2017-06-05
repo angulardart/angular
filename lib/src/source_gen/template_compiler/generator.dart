@@ -28,14 +28,6 @@ class TemplateGenerator extends Generator {
 
   @override
   Future<String> generate(Element element, BuildStep buildStep) async {
-    // Because buildStep.hasInput() does not currently work as needed, we
-    // instead track the inputs ourselves. Thus, we await for all of the inputs
-    // to be collected, before continuing. This only works because of
-    // implementation details in package:build which will probably change, so it
-    // is recommended that you do not copy this.
-    assets.add(buildStep.inputId);
-    await new Future(() {});
-
     if (element is! LibraryElement) return null;
     return runZoned(() async {
       var config = new CompilerConfig(
@@ -44,7 +36,7 @@ class TemplateGenerator extends Generator {
           useLegacyStyleEncapsulation: _options.useLegacyStyleEncapsulation,
           profileType: codegenModeToProfileType(_options.codegenMode));
       var outputs = await processTemplates(element, buildStep, config,
-          collectAssets: _options.collectAssets);
+          usePlaceholder: _options.usePlaceholder);
       if (outputs == null) return _emptyNgDepsContents;
       return buildGeneratedCode(
         outputs,
@@ -64,3 +56,21 @@ class TemplateGenerator extends Generator {
 
 final String _emptyNgDepsContents = prettyToSource(
     new MethodBuilder.returnVoid('initReflector').buildTopLevelAst());
+
+/// Generates an empty `.ng_placeholder` file which is used as a signal to later
+/// builders which files will eventually get `.template.dart` generated.
+class TemplatePlaceholderBuilder implements Builder {
+  const TemplatePlaceholderBuilder();
+
+  @override
+  final buildExtensions = const {
+    '.dart': const ['.ng_placeholder']
+  };
+
+  @override
+  Future build(BuildStep buildStep) {
+    buildStep.writeAsString(
+        buildStep.inputId.changeExtension('.ng_placeholder'), '');
+    return new Future.value(null);
+  }
+}
