@@ -38,13 +38,16 @@ class AngularTransformerGroup extends TransformerGroup {
             'using the Dart analyzer. See https://goo.gl/68VhMa for details.');
       }
       phases = [
+        [new BuilderTransformer(new TemplatePlaceholderBuilder())],
+        [new ReflectionRemover(options)],
         [
+          new DeferredRewriter(),
+          new StylesheetCompiler(options),
           new BuilderTransformer(createSourceGenTemplateCompiler(
               new GeneratorOptions(
                   codegenMode: options.codegenMode,
                   useLegacyStyleEncapsulation:
-                      options.useLegacyStyleEncapsulation,
-                  collectAssets: false)))
+                      options.useLegacyStyleEncapsulation)))
         ]
       ];
     } else if (options.inlineViews) {

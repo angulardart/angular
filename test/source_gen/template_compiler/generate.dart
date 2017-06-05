@@ -28,7 +28,7 @@ Future main(List<String> args) async {
       ..addAction(
           new GeneratorBuilder([
             new TemplateGenerator(new GeneratorOptions(
-                codegenMode: 'release', collectAssets: false))
+                codegenMode: 'release', usePlaceholder: false))
           ],
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
@@ -38,7 +38,7 @@ Future main(List<String> args) async {
       ..addAction(
           new GeneratorBuilder([
             new TemplateGenerator(new GeneratorOptions(
-                codegenMode: 'debug', collectAssets: false))
+                codegenMode: 'debug', usePlaceholder: false))
           ],
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'

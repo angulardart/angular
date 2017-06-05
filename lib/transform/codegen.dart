@@ -46,13 +46,14 @@ class CodegenTransformer extends TransformerGroup {
       }
       phases = [
         [new AssetConsumer()],
+        [new BuilderTransformer(new TemplatePlaceholderBuilder())],
         [
+          new StylesheetCompiler(options),
           new BuilderTransformer(createSourceGenTemplateCompiler(
               new GeneratorOptions(
                   codegenMode: options.codegenMode,
                   useLegacyStyleEncapsulation:
-                      options.useLegacyStyleEncapsulation,
-                  collectAssets: false)))
+                      options.useLegacyStyleEncapsulation)))
         ]
       ];
     } else if (options.inlineViews) {

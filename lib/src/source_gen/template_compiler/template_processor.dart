@@ -11,16 +11,9 @@ import 'find_components.dart';
 import 'ng_deps_visitor.dart';
 import 'template_compiler_outputs.dart';
 
-// Because buildStep.canRead() does not currently work as needed, we instead
-// track the inputs ourselves. Thus, we await for all of the inputs to be
-// collected, before continuing. This only works because of implementation
-// details in package:build which will probably change, so it is recommended
-// that you do not copy this.
-final Set<AssetId> assets = new Set();
-
 Future<TemplateCompilerOutputs> processTemplates(
     LibraryElement element, BuildStep buildStep, CompilerConfig config,
-    {bool collectAssets: true}) async {
+    {bool usePlaceholder: true}) async {
   final templateCompiler = createTemplateCompiler(buildStep, config);
   final resolver = await buildStep.resolver;
   final ngDepsModel = await logElapsedAsync(
@@ -34,10 +27,16 @@ Future<TemplateCompilerOutputs> processTemplates(
         // a.dart, and a.dart imports b.dart, we can assume that there will be
         // a generated b.template.dart that we need to import/initReflector().
         hasInput: (uri) async {
-          final asset = new AssetId.resolve(uri, from: buildStep.inputId);
-          return collectAssets
-              ? assets.contains(asset)
-              : await buildStep.canRead(asset);
+          if (usePlaceholder) {
+            final placeholder = ''
+                '${uri.substring(0, uri.length - '.dart'.length)}'
+                '.ng_placeholder';
+            return await buildStep.canRead(
+                new AssetId.resolve(placeholder, from: buildStep.inputId));
+          } else {
+            return await buildStep
+                .canRead(new AssetId.resolve(uri, from: buildStep.inputId));
+          }
         },
         // For a given import or export directive, return whether a generated
         // .template.dart file already exists. If it does we will need to link

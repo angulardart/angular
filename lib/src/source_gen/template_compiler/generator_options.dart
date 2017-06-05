@@ -23,18 +23,18 @@ class GeneratorOptions {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
-  /// Whether to use the global set of visible assets instead of
-  /// buildStep.hasInput().
+  /// Whether to use the .ng_placeholder file instead of just the .dart file for
+  /// checks to buildStep.hasInput().
   ///
   /// For bazel workspaces, this should be [true] (default), since
   /// buildStep.hasInput() doesn't work in all cases. In other workspaces, like
   /// with build_runner, this should be [false].
-  final bool collectAssets;
+  final bool usePlaceholder;
 
   GeneratorOptions({
     this.reflectPropertiesAsAttributes: false,
     this.codegenMode: '',
     this.useLegacyStyleEncapsulation: false,
-    this.collectAssets: true,
+    this.usePlaceholder: true,
   });
 }

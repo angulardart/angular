@@ -6,6 +6,7 @@ import 'package:source_gen/source_gen.dart';
 import 'template_compiler/generator.dart';
 import 'template_compiler/generator_options.dart';
 
+export 'template_compiler/generator.dart' show TemplatePlaceholderBuilder;
 export 'template_compiler/generator_options.dart';
 
 Builder createSourceGenTemplateCompiler(GeneratorOptions options) =>

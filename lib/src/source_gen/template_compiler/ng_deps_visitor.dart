@@ -28,7 +28,7 @@ import 'compile_metadata.dart';
 /// system) are required.
 Future<NgDepsModel> resolveNgDepsFor(
   LibraryElement library, {
-  @required Future<bool> hasInput(String uri),
+  @required FutureOr<bool> hasInput(String uri),
   @required bool isLibrary(String uri),
 }) async {
   // Visit and find all 'reflectables'.
