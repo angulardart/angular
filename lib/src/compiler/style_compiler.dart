@@ -1,5 +1,6 @@
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular2/src/core/url_resolver.dart" show UrlResolver;
 
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
@@ -7,7 +8,6 @@ import 'config.dart';
 import "output/output_ast.dart" as o;
 import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
-import "package:angular2/src/core/url_resolver.dart" show UrlResolver;
 
 const COMPONENT_VARIABLE = "%COMP%";
 final HOST_ATTR_PREFIX = '_nghost-';
