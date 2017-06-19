@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:angular2/src/core/di.dart" show Injectable;
 import "package:angular2/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular2/src/core/url_resolver.dart" show UrlResolver;
 import "package:angular2/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
@@ -10,7 +11,6 @@ import "html_ast.dart";
 import "html_parser.dart" show HtmlParser;
 import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
 import "template_preparser.dart" show preparseElement, PreparsedElementType;
-import "package:angular2/src/core/url_resolver.dart" show UrlResolver;
 import "xhr.dart" show XHR;
 
 @Injectable()

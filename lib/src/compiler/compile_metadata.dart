@@ -3,11 +3,11 @@ import 'package:angular2/src/core/change_detection/change_detection.dart'
 import 'package:angular2/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks, LIFECYCLE_HOOKS_VALUES;
 import 'package:angular2/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular2/src/core/url_resolver.dart' show getUrlScheme;
 import 'package:angular2/src/facade/exceptions.dart' show BaseException;
 
 import 'compiler_utils.dart';
 import 'selector.dart' show CssSelector;
-import 'package:angular2/src/core/url_resolver.dart' show getUrlScheme;
 
 // group 1: 'property' from '[property]'
 // group 2: 'event' from '(event)'
