@@ -1,0 +1,25 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'directives.dart';
+import 'package:angular/src/core/reflection/reflection.dart'
+    as _ngRef;
+import 'package:angular/angular.dart';
+import 'package:angular/angular.template.dart'
+    as _i1;
+export 'directives.dart';
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerSimpleType(TestDirective, () => new TestDirective());
+  _i1.initReflector();
+}

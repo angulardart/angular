@@ -1,0 +1,178 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'pipes.dart';
+import 'package:angular/src/core/reflection/reflection.dart'
+    as _ngRef;
+import 'package:angular/angular.template.dart'
+    as _i1;
+export 'pipes.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+import 'pipes.dart' as import1;
+import 'dart:html';
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart'
+    as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart'
+    as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/facade/lang.dart'
+    as import8;
+
+const List<dynamic> styles$Comp = const [];
+
+class ViewComp0 extends AppView<import1.Comp> {
+  Text _text_0;
+  var _expr_0;
+  import1.PurePipe _pipe_pure_0;
+  var _pipe_pure_0_0;
+  import1.DirtyPipe _pipe_dirty_1;
+  import1.LifecyclePipe _pipe_lifecycle_2;
+  var _pipe_lifecycle_2_0;
+  static RenderComponentType renderType;
+  ViewComp0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    rootEl = document.createElement('comp');
+    renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.None, styles$Comp);
+    setupComponentType(renderType);
+  }
+  @override
+  ComponentRef build() {
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _text_0 = new Text('');
+    parentRenderNode.append(_text_0);
+    _pipe_pure_0 = new import1.PurePipe();
+    this._pipe_pure_0_0 = import6.pureProxy1(_pipe_pure_0.transform);
+    _pipe_dirty_1 = new import1.DirtyPipe();
+    _pipe_lifecycle_2 = new import1.LifecyclePipe();
+    this._pipe_lifecycle_2_0 = import6.pureProxy1(_pipe_lifecycle_2.transform);
+    init(const [], const []);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final valUnwrapper = new ValueUnwrapper();
+    valUnwrapper.reset();
+    final currVal_0 = import6.interpolate3(
+        '    ',
+        valUnwrapper.unwrap(
+            import6.castByValue(_pipe_pure_0_0, _pipe_pure_0.transform)('foo')),
+        '\n    ',
+        valUnwrapper.unwrap(_pipe_dirty_1.transform('bar')),
+        '\n    ',
+        valUnwrapper.unwrap(import6.castByValue(
+            _pipe_lifecycle_2_0, _pipe_lifecycle_2.transform)('lifecycle')),
+        '\n  ');
+    if ((valUnwrapper.hasWrappedValue ||
+        !import8.looseIdentical(_expr_0, currVal_0))) {
+      _text_0.text = currVal_0;
+      _expr_0 = currVal_0;
+    }
+  }
+
+  @override
+  void destroyInternal() {
+    _pipe_lifecycle_2.ngOnDestroy();
+  }
+}
+
+AppView<import1.Comp> viewFactory_Comp0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewComp0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$CompHost = const [];
+
+class ViewCompHost0 extends AppView<dynamic> {
+  ViewComp0 _compView_0;
+  import1.Comp _Comp_0_2;
+  static RenderComponentType renderType;
+  ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.Emulated, styles$CompHost);
+    setupComponentType(renderType);
+  }
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _Comp_0_2 = new import1.Comp();
+    _compView_0.create(_Comp_0_2, projectableNodes);
+    init([rootEl], const []);
+    return new ComponentRef(0, this, rootEl, _Comp_0_2);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.Comp) && (0 == nodeIndex))) {
+      return _Comp_0_2;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory CompNgFactory = const ComponentFactory(
+    'comp', viewFactory_CompHost0, import1.Comp, _METADATA);
+const _METADATA = const <dynamic>[
+  PurePipe,
+  const <dynamic>[],
+  DirtyPipe,
+  const <dynamic>[],
+  LifecyclePipe,
+  const <dynamic>[],
+  Comp,
+  const <dynamic>[]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerType(
+      PurePipe,
+      new _ngRef.ReflectionInfo(const <dynamic>[], const [],
+          () => new PurePipe(), const <dynamic>[PipeTransform]));
+  _ngRef.reflector.registerType(
+      DirtyPipe,
+      new _ngRef.ReflectionInfo(const <dynamic>[], const [],
+          () => new DirtyPipe(), const <dynamic>[PipeTransform]));
+  _ngRef.reflector.registerType(
+      LifecyclePipe,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[],
+          const [],
+          () => new LifecyclePipe(),
+          const <dynamic>[PipeTransform, OnDestroy]));
+  _ngRef.reflector.registerType(
+      Comp,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[CompNgFactory], const [], () => new Comp()));
+  _i1.initReflector();
+}

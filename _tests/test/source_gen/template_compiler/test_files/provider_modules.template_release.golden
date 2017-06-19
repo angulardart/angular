@@ -1,0 +1,180 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// Target: library
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'provider_modules.dart';
+import 'package:angular/src/core/reflection/reflection.dart'
+    as _ngRef;
+import 'package:angular/angular.template.dart'
+    as _i1;
+export 'provider_modules.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+import 'provider_modules.dart' as import1;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart'
+    as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html';
+import 'package:angular/src/core/linker/app_view_utils.dart'
+    as import6;
+import 'package:angular/angular.dart';
+import 'dart:core';
+
+const List<dynamic> styles$ProviderModulesComponent = const [];
+
+class ViewProviderModulesComponent0
+    extends AppView<import1.ProviderModulesComponent> {
+  static RenderComponentType renderType;
+  ViewProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex)
+      : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    rootEl = document.createElement('provider-modules');
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', ViewEncapsulation.None, styles$ProviderModulesComponent);
+    setupComponentType(renderType);
+  }
+  @override
+  ComponentRef build() {
+    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    init(const [], const []);
+    return null;
+  }
+}
+
+AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewProviderModulesComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$ProviderModulesComponentHost = const [];
+
+class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
+  ViewProviderModulesComponent0 _compView_0;
+  import1.ProviderModulesComponent _ProviderModulesComponent_0_2;
+  import1.FooService __FooService_0_3;
+  Duration __const_OpaqueToken__fooToken___0_4;
+  List<dynamic> __const_OpaqueToken__barToken___0_5;
+  dynamic __const_OpaqueToken__bazToken___0_6;
+  static RenderComponentType renderType;
+  ViewProviderModulesComponentHost0(
+      AppView<dynamic> parentView, num parentIndex)
+      : super(import3.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    renderType ??= import6.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$ProviderModulesComponentHost);
+    setupComponentType(renderType);
+  }
+  import1.FooService get _FooService_0_3 {
+    if ((this.__FooService_0_3 == null)) {
+      (__FooService_0_3 = new import1.FooService());
+    }
+    return this.__FooService_0_3;
+  }
+
+  Duration get _const_OpaqueToken__fooToken___0_4 {
+    if ((this.__const_OpaqueToken__fooToken___0_4 == null)) {
+      (__const_OpaqueToken__fooToken___0_4 = const Duration(seconds: 500));
+    }
+    return this.__const_OpaqueToken__fooToken___0_4;
+  }
+
+  List<dynamic> get _const_OpaqueToken__barToken___0_5 {
+    if ((this.__const_OpaqueToken__barToken___0_5 == null)) {
+      (__const_OpaqueToken__barToken___0_5 = const ['a', 'b', 'c']);
+    }
+    return this.__const_OpaqueToken__barToken___0_5;
+  }
+
+  dynamic get _const_OpaqueToken__bazToken___0_6 {
+    if ((this.__const_OpaqueToken__bazToken___0_6 == null)) {
+      (__const_OpaqueToken__bazToken___0_6 = import1.getSomeValues());
+    }
+    return this.__const_OpaqueToken__bazToken___0_6;
+  }
+
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewProviderModulesComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _ProviderModulesComponent_0_2 = new import1.ProviderModulesComponent();
+    _compView_0.create(_ProviderModulesComponent_0_2, projectableNodes);
+    init([rootEl], const []);
+    return new ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_2);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.ProviderModulesComponent) &&
+        (0 == nodeIndex))) {
+      return _ProviderModulesComponent_0_2;
+    }
+    if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
+      return _FooService_0_3;
+    }
+    if ((identical(token, const OpaqueToken('fooToken')) && (0 == nodeIndex))) {
+      return _const_OpaqueToken__fooToken___0_4;
+    }
+    if ((identical(token, const OpaqueToken('barToken')) && (0 == nodeIndex))) {
+      return _const_OpaqueToken__barToken___0_5;
+    }
+    if ((identical(token, const OpaqueToken('bazToken')) && (0 == nodeIndex))) {
+      return _const_OpaqueToken__bazToken___0_6;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_ProviderModulesComponentHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewProviderModulesComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory ProviderModulesComponentNgFactory =
+    const ComponentFactory(
+        'provider-modules',
+        viewFactory_ProviderModulesComponentHost0,
+        import1.ProviderModulesComponent,
+        _METADATA);
+const _METADATA = const <dynamic>[
+  getSomeValues,
+  const <dynamic>[const Injectable()],
+  FooService,
+  const <dynamic>[const Injectable()],
+  ProviderModulesComponent,
+  const <dynamic>[]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerFunction(getSomeValues,
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const []));
+  _ngRef.reflector.registerType(
+      FooService,
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
+          () => new FooService()));
+  _ngRef.reflector.registerType(
+      ProviderModulesComponent,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[ProviderModulesComponentNgFactory],
+          const [],
+          () => new ProviderModulesComponent()));
+  _i1.initReflector();
+}

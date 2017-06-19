@@ -1,0 +1,50 @@
+name: angular
+version: 4.0.0-dev
+author: Dart Team <web@dartlang.org>
+description: Framework for modern web applications
+homepage: https://webdev.dartlang.org/angular
+documentation: https://webdev.dartlang.org/angular/api
+environment:
+  sdk: '>=1.23.0 <2.0.0'
+dependencies:
+  analyzer: '>=0.29.10 <0.31.0'
+  barback: ^0.15.2+2
+  build: ^0.9.0
+  build_barback: ^0.2.0
+  code_builder: '^1.0.0-beta+4'
+  collection: '^1.12.0'
+  csslib: ^0.14.0
+  dart_style: '>=0.1.8 <2.0.0'
+  func: '>=0.1.0 <2.0.0'
+  glob: ^1.0.0
+  html: '>=0.12.0 <0.14.0'
+  intl: '>=0.13.0 <0.16.0'
+  js: ^0.6.0
+  logging: '>=0.9.0 <0.12.0'
+  meta: ^1.0.3
+  path: ^1.0.0
+  protobuf: ^0.5.1
+  quiver: '>=0.21.4 <0.26.0'
+  source_gen: ^0.5.8
+  source_span: ^1.0.0
+  stack_trace: ^1.6.5
+  tuple: ^1.0.1
+dev_dependencies:
+  args: ^0.13.6
+  build_runner: ^0.3.2
+  build_test: ^0.6.0
+  cli_util: '>=0.0.1+2 <0.2.0'
+  mockito: '>=0.11.0 <3.0.0'
+  test: ^0.12.6
+  transformer_test: ^0.2.0
+transformers:
+  - test/pub_serve:
+      $include: test/**_test.dart
+  - angular/transform/codegen
+  - angular/transform/reflection_remover:
+      $include:
+          - test/testing/ng_test_bed_test.dart
+          - test/security/safe_inner_html_test.dart
+  - $dart2js:
+      commandLineOptions:
+        - '--show-package-warnings'

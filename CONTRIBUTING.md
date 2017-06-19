@@ -1,6 +1,6 @@
 ## <a name="question"></a> Got a Question or Problem?
 
-If you have questions about how to *use* Angular, please direct them to the
+If you have questions about how to *use* AngularDart, please direct them to the
 [Dart Web Group][web-group] discussion list or [Stack Overflow][stack-overflow].
 
 ## <a name="issue"></a> Found an Issue?
@@ -82,8 +82,8 @@ quick process, we promise!
 
 [web-group]: https://groups.google.com/a/dartlang.org/forum/#!forum/web
 [corporate-cla]: http://code.google.com/legal/corporate-cla-v1.0.html
-[github]: https://github.com/dart-lang/angular2
-[github-new-issue]: https://github.com/dart-lang/angular2/issues/new
-[github-pulls]: https://github.com/dart-lang/angular2/pulls
+[github]: https://github.com/dart-lang/angular
+[github-new-issue]: https://github.com/dart-lang/angular/issues/new
+[github-pulls]: https://github.com/dart-lang/angular/pulls
 [individual-cla]: http://code.google.com/legal/individual-cla-v1.0.html
 [stack-overflow]: https://stackoverflow.com/questions/tagged/angular-dart

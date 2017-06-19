@@ -5,9 +5,6 @@ analyzer:
    unused_import: error
    unused_local_variable: error
    dead_code: error
-   ### Useful to uncomment during development to remove the noise of the many
-   ### deprecated APIs.
-   # deprecated_member_use: ignore
 linter:
   rules:
     #- always_declare_return_types
@@ -16,20 +13,14 @@ linter:
     #- avoid_as
     - avoid_empty_else
     - avoid_init_to_null
-    - avoid_null_checks_in_equality_operators
     #- avoid_return_types_on_setters
-
-    # Waiting for https://github.com/dart-lang/linter/releases/tag/0.1.31
-    # In Dart SDK 1.24.0-dev.4.0
-    #- await_only_futures
-
+    - await_only_futures
     - camel_case_types
     - cancel_subscriptions
     #- close_sinks
     #- comment_references
     #- constant_identifier_names
     - control_flow_in_finally
-    - directives_ordering
     - empty_catches
     - empty_constructor_bodies
     - empty_statements
@@ -46,7 +37,11 @@ linter:
     - package_api_docs
     - package_names
     - package_prefixed_library_names
-    - prefer_final_fields
+
+    # Some false positives with x++ until SDK 1.23 with
+    # https://github.com/dart-lang/sdk/commit/2bc70e6a26 lands
+    # - prefer_final_fields
+
     - prefer_is_not_empty
     #- public_member_api_docs
     - slash_for_doc_comments
@@ -58,7 +53,7 @@ linter:
     #- type_annotate_public_apis
     - type_init_formals
     #- unawaited_futures
-    - unnecessary_brace_in_string_interp
+    #- unnecessary_brace_in_string_interp
     #- unnecessary_getters_setters
     - unrelated_type_equality_checks
     - valid_regexps
