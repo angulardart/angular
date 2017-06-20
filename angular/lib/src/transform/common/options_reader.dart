@@ -4,7 +4,6 @@ import 'package:barback/barback.dart';
 
 import './url_resolver.dart';
 import 'annotation_matcher.dart';
-import 'mirror_mode.dart';
 import 'options.dart';
 
 TransformerOptions parseBarbackSettings(BarbackSettings settings) {
@@ -21,9 +20,6 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
   var useLegacyStyleEncapsulation =
       _readBool(config, USE_LEGACY_STYLE_ENCAPSULATION, defaultValue: false);
   var useAnalyzer = _readBool(config, USE_ANALYZER, defaultValue: false);
-  String mirrorModeVal =
-      config.containsKey(MIRROR_MODE_PARAM) ? config[MIRROR_MODE_PARAM] : '';
-  var mirrorMode = MirrorMode.none;
   var codegenMode;
   if (settings.mode == BarbackMode.DEBUG) {
     codegenMode = CODEGEN_DEBUG_MODE;
@@ -32,21 +28,9 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
   } else {
     codegenMode = config[CODEGEN_MODE_PARAM];
   }
-  switch (mirrorModeVal) {
-    case 'debug':
-      mirrorMode = MirrorMode.debug;
-      break;
-    case 'verbose':
-      mirrorMode = MirrorMode.verbose;
-      break;
-    default:
-      mirrorMode = MirrorMode.none;
-      break;
-  }
   var transformerOptions = new TransformerOptions(
     entryPoints,
     modeName: settings.mode.name,
-    mirrorMode: mirrorMode,
     codegenMode: codegenMode,
     customAnnotationDescriptors: _readCustomAnnotations(config),
     reflectPropertiesAsAttributes: reflectPropertiesAsAttributes,

@@ -1,5 +1,3 @@
-library angular.transform.codegen.dart;
-
 import 'package:barback/barback.dart';
 import 'package:build_barback/build_barback.dart';
 import 'package:dart_style/dart_style.dart';
@@ -10,22 +8,18 @@ import 'package:angular/src/transform/common/formatter.dart'
     as formatter;
 import 'package:angular/src/transform/common/options.dart';
 import 'package:angular/src/transform/common/options_reader.dart';
-import 'package:angular/src/transform/directive_metadata_linker/transformer.dart';
-import 'package:angular/src/transform/directive_processor/transformer.dart';
-import 'package:angular/src/transform/inliner_for_test/transformer.dart';
 import 'package:angular/src/transform/stylesheet_compiler/transformer.dart';
-import 'package:angular/src/transform/template_compiler/transformer.dart';
 
 export 'package:angular/src/transform/common/options.dart';
 
-/// Generates code to replace mirror use in Angular apps.
+/// Generates code to replace mirror use in AngularDart apps.
 ///
 /// This transformer can be used along with others as a faster alternative to
-/// the single angular transformer.
+/// the single AngularDart transformer.
 ///
 /// See [the wiki][] for details.
 ///
-/// [the wiki]: https://github.com/angular/angular/wiki/Angular-2-Dart-Transformer
+/// [the wiki]: https://github.com/angular/angular/wiki/AngularDart-Transformer
 class CodegenTransformer extends TransformerGroup {
   CodegenTransformer._(Iterable<Iterable> phases, {bool formatCode: false})
       : super(phases) {
@@ -36,42 +30,21 @@ class CodegenTransformer extends TransformerGroup {
 
   factory CodegenTransformer(TransformerOptions options) {
     Iterable<Iterable> phases;
-    if (options.useAnalyzer) {
-      if (options.platformDirectives?.isNotEmpty == true ||
-          options.platformPipes?.isNotEmpty == true) {
-        throw new UnsupportedError(''
-            'Transformer option "$USE_ANALYZER" cannot be used alongside '
-            '"$PLATFORM_DIRECTIVES" or "$PLATFORM_PIPES", as the new '
-            'compiler needs to be able to resolve all directives and pipes '
-            'using the Dart analyzer. See https://goo.gl/68VhMa for details.');
-      }
-      phases = [
-        [new AssetConsumer()],
-        [new BuilderTransformer(new TemplatePlaceholderBuilder())],
-        [
-          new StylesheetCompiler(options),
-          new BuilderTransformer(createSourceGenTemplateCompiler(
-              new GeneratorOptions(
-                  codegenMode: options.codegenMode,
-                  useLegacyStyleEncapsulation:
-                      options.useLegacyStyleEncapsulation)))
-        ]
-      ];
-    } else if (options.inlineViews) {
-      phases = [
-        [new InlinerForTest(options)]
-      ];
-    } else {
-      phases = [
-        [new AssetConsumer()],
-        [new DirectiveProcessor(options)],
-        [new DirectiveMetadataLinker(options)],
-        [
-          new StylesheetCompiler(options),
-          new TemplateCompiler(options),
-        ],
-      ];
+    if (!options.useAnalyzer) {
+      throw new UnsupportedError('Option $USE_ANALYZER is required.');
     }
+    phases = [
+      [new AssetConsumer()],
+      [new BuilderTransformer(new TemplatePlaceholderBuilder())],
+      [
+        new StylesheetCompiler(options),
+        new BuilderTransformer(createSourceGenTemplateCompiler(
+            new GeneratorOptions(
+                codegenMode: options.codegenMode,
+                useLegacyStyleEncapsulation:
+                    options.useLegacyStyleEncapsulation)))
+      ]
+    ];
     if (options.modeName == BarbackMode.RELEASE.name ||
         !options.lazyTransformers) {
       phases = phases

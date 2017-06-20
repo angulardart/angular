@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:barback/barback.dart';
 import 'package:angular/src/transform/common/asset_reader.dart';
-import 'package:angular/src/transform/common/mirror_mode.dart';
-import 'package:angular/src/transform/common/names.dart';
 import 'package:angular/src/transform/common/options.dart';
 import 'package:angular/src/transform/common/options_reader.dart';
 import 'package:angular/src/transform/common/zone.dart'
@@ -43,19 +41,11 @@ class ReflectionRemover extends Transformer implements LazyTransformer {
   Future apply(Transform transform) async {
     return zone.exec(() async {
       var primaryId = transform.primaryInput.id;
-      var mirrorMode = options.mirrorMode;
-      if (options.modeName == TRANSFORM_DYNAMIC_MODE) {
-        mirrorMode = MirrorMode.debug;
-        zone.log.info(
-            'Running in "${options.modeName}", mirrorMode: $mirrorMode.',
-            asset: primaryId);
-      }
-
       var transformedCode = await removeReflectionCapabilities(
-          new AssetReader.fromTransform(transform),
-          primaryId,
-          options.annotationMatcher,
-          mirrorMode: mirrorMode);
+        new AssetReader.fromTransform(transform),
+        primaryId,
+        options.annotationMatcher,
+      );
       transform.addOutput(new Asset.fromString(primaryId, transformedCode));
     }, log: transform.logger);
   }
