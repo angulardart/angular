@@ -4,7 +4,6 @@ import 'package:analyzer/analyzer.dart';
 import 'package:barback/barback.dart';
 import 'package:angular/src/transform/common/annotation_matcher.dart';
 import 'package:angular/src/transform/common/asset_reader.dart';
-import 'package:angular/src/transform/common/mirror_mode.dart';
 
 import 'codegen.dart';
 import 'entrypoint_matcher.dart';
@@ -19,14 +18,15 @@ import 'rewriter.dart';
 Future<String> removeReflectionCapabilities(
   AssetReader reader,
   AssetId reflectionEntryPoint,
-  AnnotationMatcher annotationMatcher, {
-  MirrorMode mirrorMode: MirrorMode.none,
-}) async {
+  AnnotationMatcher annotationMatcher,
+) async {
   var code = await reader.readAsString(reflectionEntryPoint);
 
   var codegen = new Codegen(reflectionEntryPoint);
-  return new Rewriter(code, codegen,
-          new EntrypointMatcher(reflectionEntryPoint, annotationMatcher),
-          mirrorMode: mirrorMode)
+  return new Rewriter(
+    code,
+    codegen,
+    new EntrypointMatcher(reflectionEntryPoint, annotationMatcher),
+  )
       .rewrite(parseCompilationUnit(code, name: reflectionEntryPoint.path));
 }

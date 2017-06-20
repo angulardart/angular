@@ -1,9 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:path/path.dart' as path;
 import 'package:angular/src/transform/common/logging.dart';
 import 'package:angular/src/transform/common/mirror_matcher.dart';
-import 'package:angular/src/transform/common/mirror_mode.dart';
 import 'package:angular/src/transform/common/names.dart';
 
 import 'codegen.dart';
@@ -22,17 +20,10 @@ class Rewriter {
   final Codegen _codegen;
   final EntrypointMatcher _entrypointMatcher;
   final MirrorMatcher _mirrorMatcher;
-  final MirrorMode _mirrorMode;
 
-  Rewriter(
-    this._code,
-    this._codegen,
-    this._entrypointMatcher, {
-    MirrorMatcher mirrorMatcher,
-    MirrorMode mirrorMode: MirrorMode.none,
-  })
-      : _mirrorMode = mirrorMode,
-        _mirrorMatcher =
+  Rewriter(this._code, this._codegen, this._entrypointMatcher,
+      {MirrorMatcher mirrorMatcher, bool writeStaticInit: true})
+      : _mirrorMatcher =
             mirrorMatcher == null ? const MirrorMatcher() : mirrorMatcher {
     if (_codegen == null) {
       throw new ArgumentError.notNull('Codegen');
@@ -256,11 +247,7 @@ class _RewriterVisitor extends Object with RecursiveAstVisitor<Object> {
           'Found import prefix "${_rewriter._codegen.prefix}" in source file.'
           ' Transform may not succeed.');
     }
-    if (_rewriter._mirrorMode != MirrorMode.none) {
-      buf.write(_importDebugReflectionCapabilities(node));
-    } else {
-      buf.write(_commentedNode(node));
-    }
+    buf.write(_commentedNode(node));
     _currentIndex = node.end;
   }
 
@@ -275,41 +262,11 @@ class _RewriterVisitor extends Object with RecursiveAstVisitor<Object> {
       buf.write(_getStaticReflectorInitBlock());
       _setupAdded = true;
     }
-    switch (_rewriter._mirrorMode) {
-      case MirrorMode.debug:
-        buf.write(node);
-        break;
-      case MirrorMode.verbose:
-        buf.write(_instantiateVerboseReflectionCapabilities(assignNode));
-        break;
-      case MirrorMode.none:
-      default:
-        buf.write(_commentedNode(node));
-        break;
-    }
+    buf.write(_commentedNode(node));
     _currentIndex = node.end;
   }
 
   String _commentedNode(AstNode node) {
     return '/*${_rewriter._code.substring(node.offset, node.end)}*/';
   }
-}
-
-String _importDebugReflectionCapabilities(ImportDirective node) {
-  var uri = '${node.uri}';
-  uri = path
-      .join(path.dirname(uri), 'debug_${path.basename(uri)}')
-      .replaceAll('\\', '/');
-  var asClause = node.prefix != null ? ' as ${node.prefix}' : '';
-  return 'import $uri$asClause;';
-}
-
-String _instantiateVerboseReflectionCapabilities(
-    AssignmentExpression assignNode) {
-  if (assignNode.rightHandSide is! InstanceCreationExpression) {
-    return '$assignNode;';
-  }
-  var rhs = (assignNode.rightHandSide as InstanceCreationExpression);
-  return '${assignNode.leftHandSide} ${assignNode.operator} '
-      'new ${rhs.constructorName}(verbose: true);';
 }

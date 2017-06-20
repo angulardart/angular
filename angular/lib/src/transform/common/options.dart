@@ -2,7 +2,6 @@ import 'package:barback/src/asset/asset_id.dart';
 import 'package:glob/glob.dart';
 
 import 'annotation_matcher.dart';
-import 'mirror_mode.dart';
 
 const CUSTOM_ANNOTATIONS_PARAM = 'custom_annotations';
 const ENTRY_POINT_PARAM = 'entry_points';
@@ -13,7 +12,6 @@ const PLATFORM_PIPES = 'platform_pipes';
 const RESOLVED_IDENTIFIERS = 'resolved_identifiers';
 const ERROR_ON_MISSING_IDENTIFIERS = 'error_on_missing_identifiers';
 const INLINE_VIEWS_PARAM = 'inline_views';
-const MIRROR_MODE_PARAM = 'mirror_mode';
 const CODEGEN_MODE_PARAM = 'codegen_mode';
 const LAZY_TRANSFORMERS = 'lazy_transformers';
 const TRANSLATIONS = 'translations';
@@ -32,9 +30,6 @@ class TransformerOptions {
 
   /// The `BarbackMode#name` we are running in.
   final String modeName;
-
-  /// The [MirrorMode] to use for the transformation.
-  final MirrorMode mirrorMode;
 
   /// The [AnnotationMatcher] which is used to identify angular annotations.
   final AnnotationMatcher annotationMatcher;
@@ -126,7 +121,6 @@ class TransformerOptions {
     this.entryPoints,
     this.entryPointGlobs,
     this.modeName,
-    this.mirrorMode,
     this.annotationMatcher, {
     this.formatCode,
     this.codegenMode,
@@ -148,7 +142,6 @@ class TransformerOptions {
   factory TransformerOptions(
     List<String> entryPoints, {
     String modeName: 'release',
-    MirrorMode mirrorMode: MirrorMode.none,
     List<ClassDescriptor> customAnnotationDescriptors: const [],
     bool inlineViews: false,
     String codegenMode: '',
@@ -173,7 +166,7 @@ class TransformerOptions {
         : null;
     return new TransformerOptions._internal(
       entryPoints, entryPointGlobs,
-      modeName, mirrorMode, annotationMatcher,
+      modeName, annotationMatcher,
       codegenMode: codegenMode,
       genCompiledTemplates: genCompiledTemplates,
       reflectPropertiesAsAttributes: reflectPropertiesAsAttributes,
