@@ -29,11 +29,10 @@ import 'package:angular/src/core/linker/element_ref.dart';
 const List<dynamic> styles$QueriesComponent = const [];
 
 class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
-  import2.QueryList _viewQuery_q8_0;
-  import2.QueryList _viewQuery_q10_1;
-  import2.QueryList _viewQuery_q12_2;
-  import2.QueryList _viewQuery_q12_3;
-  import2.QueryList _viewQuery_AnotherDirective_4;
+  import2.QueryList _viewQuery_q6_0;
+  import2.QueryList _viewQuery_q8_1;
+  import2.QueryList _viewQuery_q8_2;
+  import2.QueryList _viewQuery_AnotherDirective_3;
   Element _el_1;
   import1.AnotherDirective _AnotherDirective_1_2;
   Element _el_3;
@@ -50,14 +49,6 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   import1.AnotherDirective _AnotherDirective_13_2;
   Element _el_15;
   import1.AnotherDirective _AnotherDirective_15_2;
-  Element _el_17;
-  import1.AnotherDirective _AnotherDirective_17_2;
-  Element _el_19;
-  import1.AnotherDirective _AnotherDirective_19_2;
-  Element _el_21;
-  import1.AnotherDirective _AnotherDirective_21_2;
-  Element _el_23;
-  import1.AnotherDirective _AnotherDirective_23_2;
   static RenderComponentType renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -70,11 +61,10 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   @override
   ComponentRef build() {
     final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _viewQuery_q8_0 = new import2.QueryList();
-    _viewQuery_q10_1 = new import2.QueryList();
-    _viewQuery_q12_2 = new import2.QueryList();
-    _viewQuery_q12_3 = new import2.QueryList();
-    _viewQuery_AnotherDirective_4 = new import2.QueryList();
+    _viewQuery_q6_0 = new import2.QueryList();
+    _viewQuery_q8_1 = new import2.QueryList();
+    _viewQuery_q8_2 = new import2.QueryList();
+    _viewQuery_AnotherDirective_3 = new import2.QueryList();
     Text _text_0 = new Text('    ');
     parentRenderNode.append(_text_0);
     var doc = document;
@@ -108,28 +98,12 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     parentRenderNode.append(_text_14);
     _el_15 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_15_2 = new import1.AnotherDirective();
-    Text _text_16 = new Text('\n    ');
+    Text _text_16 = new Text('\n  ');
     parentRenderNode.append(_text_16);
-    _el_17 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_17_2 = new import1.AnotherDirective();
-    Text _text_18 = new Text('\n    ');
-    parentRenderNode.append(_text_18);
-    _el_19 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_19_2 = new import1.AnotherDirective();
-    Text _text_20 = new Text('\n    ');
-    parentRenderNode.append(_text_20);
-    _el_21 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_21_2 = new import1.AnotherDirective();
-    Text _text_22 = new Text('\n    ');
-    parentRenderNode.append(_text_22);
-    _el_23 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_23_2 = new import1.AnotherDirective();
-    Text _text_24 = new Text('\n  ');
-    parentRenderNode.append(_text_24);
-    _viewQuery_q12_2.reset([new ElementRef(_el_23)]);
-    ctx.viewChildFromField = _viewQuery_q12_2.first;
-    _viewQuery_q12_3.reset([new ElementRef(_el_23)]);
-    ctx.readDIFromElement = _viewQuery_q12_3.first;
+    _viewQuery_q8_1.reset([new ElementRef(_el_15)]);
+    ctx.viewChildFromField = _viewQuery_q8_1.first;
+    _viewQuery_q8_2.reset([new ElementRef(_el_15)]);
+    ctx.readDIFromElement = _viewQuery_q8_2.first;
     init(const [], const []);
     return null;
   }
@@ -161,35 +135,18 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     if ((identical(token, import1.AnotherDirective) && (15 == nodeIndex))) {
       return _AnotherDirective_15_2;
     }
-    if ((identical(token, import1.AnotherDirective) && (17 == nodeIndex))) {
-      return _AnotherDirective_17_2;
-    }
-    if ((identical(token, import1.AnotherDirective) && (19 == nodeIndex))) {
-      return _AnotherDirective_19_2;
-    }
-    if ((identical(token, import1.AnotherDirective) && (21 == nodeIndex))) {
-      return _AnotherDirective_21_2;
-    }
-    if ((identical(token, import1.AnotherDirective) && (23 == nodeIndex))) {
-      return _AnotherDirective_23_2;
-    }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    if (_viewQuery_q8_0.dirty) {
-      _viewQuery_q8_0.reset([new ElementRef(_el_15)]);
-      ctx.viewQueryFromField = _viewQuery_q8_0;
-      _viewQuery_q8_0.notifyOnChanges();
+    if (_viewQuery_q6_0.dirty) {
+      _viewQuery_q6_0.reset([new ElementRef(_el_11)]);
+      ctx.viewChildrenFromField = _viewQuery_q6_0;
+      _viewQuery_q6_0.notifyOnChanges();
     }
-    if (_viewQuery_q10_1.dirty) {
-      _viewQuery_q10_1.reset([new ElementRef(_el_19)]);
-      ctx.viewChildrenFromField = _viewQuery_q10_1;
-      _viewQuery_q10_1.notifyOnChanges();
-    }
-    if (_viewQuery_AnotherDirective_4.dirty) {
-      _viewQuery_AnotherDirective_4.reset([
+    if (_viewQuery_AnotherDirective_3.dirty) {
+      _viewQuery_AnotherDirective_3.reset([
         _AnotherDirective_1_2,
         _AnotherDirective_3_2,
         _AnotherDirective_5_2,
@@ -197,14 +154,10 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
         _AnotherDirective_9_2,
         _AnotherDirective_11_2,
         _AnotherDirective_13_2,
-        _AnotherDirective_15_2,
-        _AnotherDirective_17_2,
-        _AnotherDirective_19_2,
-        _AnotherDirective_21_2,
-        _AnotherDirective_23_2
+        _AnotherDirective_15_2
       ]);
-      ctx.usingTypeFromField = _viewQuery_AnotherDirective_4;
-      _viewQuery_AnotherDirective_4.notifyOnChanges();
+      ctx.usingTypeFromField = _viewQuery_AnotherDirective_3;
+      _viewQuery_AnotherDirective_3.notifyOnChanges();
     }
   }
 }
@@ -219,15 +172,12 @@ const List<dynamic> styles$QueriesComponentHost = const [];
 class ViewQueriesComponentHost0 extends AppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_2;
-  import2.QueryList _query_q7_0_0;
-  import2.QueryList _query_q9_0_1;
-  import2.QueryList _query_q11_0_2;
-  import2.QueryList _query_q1_0_3;
-  import2.QueryList _query_q2_0_4;
-  import2.QueryList _query_q3_0_5;
-  import2.QueryList _query_q4_0_6;
-  import2.QueryList _query_q5_0_7;
-  import2.QueryList _query_q6_0_8;
+  import2.QueryList _query_q5_0_0;
+  import2.QueryList _query_q7_0_1;
+  import2.QueryList _query_q1_0_2;
+  import2.QueryList _query_q2_0_3;
+  import2.QueryList _query_q3_0_4;
+  import2.QueryList _query_q4_0_5;
   static RenderComponentType renderType;
   ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.HOST, {}, parentView, parentIndex,
@@ -241,21 +191,18 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _QueriesComponent_0_2 = new import1.QueriesComponent();
-    _query_q7_0_0 = new import2.QueryList();
-    _query_q9_0_1 = new import2.QueryList();
-    _query_q11_0_2 = new import2.QueryList();
-    _query_q1_0_3 = new import2.QueryList();
-    _query_q2_0_4 = new import2.QueryList();
-    _query_q3_0_5 = new import2.QueryList();
-    _query_q4_0_6 = new import2.QueryList();
-    _query_q5_0_7 = new import2.QueryList();
-    _query_q6_0_8 = new import2.QueryList();
-    _query_q11_0_2.reset([]);
-    _QueriesComponent_0_2.contentChildFromField = _query_q11_0_2.first;
-    _query_q5_0_7.reset([]);
-    _QueriesComponent_0_2.contentChildFromAnnotation = _query_q5_0_7.first;
-    _query_q6_0_8.reset([]);
-    _QueriesComponent_0_2.viewChildFromAnnotation = _query_q6_0_8.first;
+    _query_q5_0_0 = new import2.QueryList();
+    _query_q7_0_1 = new import2.QueryList();
+    _query_q1_0_2 = new import2.QueryList();
+    _query_q2_0_3 = new import2.QueryList();
+    _query_q3_0_4 = new import2.QueryList();
+    _query_q4_0_5 = new import2.QueryList();
+    _query_q7_0_1.reset([]);
+    _QueriesComponent_0_2.contentChildFromField = _query_q7_0_1.first;
+    _query_q3_0_4.reset([]);
+    _QueriesComponent_0_2.contentChildFromAnnotation = _query_q3_0_4.first;
+    _query_q4_0_5.reset([]);
+    _QueriesComponent_0_2.viewChildFromAnnotation = _query_q4_0_5.first;
     _compView_0.create(_QueriesComponent_0_2, projectableNodes);
     init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _QueriesComponent_0_2);
@@ -272,35 +219,20 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    if (_query_q7_0_0.dirty) {
-      _query_q7_0_0.reset([]);
-      _QueriesComponent_0_2.queryFromField = _query_q7_0_0;
-      _query_q7_0_0.notifyOnChanges();
+    if (_query_q5_0_0.dirty) {
+      _query_q5_0_0.reset([]);
+      _QueriesComponent_0_2.contentChildrenFromField = _query_q5_0_0;
+      _query_q5_0_0.notifyOnChanges();
     }
-    if (_query_q9_0_1.dirty) {
-      _query_q9_0_1.reset([]);
-      _QueriesComponent_0_2.contentChildrenFromField = _query_q9_0_1;
-      _query_q9_0_1.notifyOnChanges();
+    if (_query_q1_0_2.dirty) {
+      _query_q1_0_2.reset([]);
+      _QueriesComponent_0_2.contentChildrenFromAnnotation = _query_q1_0_2;
+      _query_q1_0_2.notifyOnChanges();
     }
-    if (_query_q1_0_3.dirty) {
-      _query_q1_0_3.reset([]);
-      _QueriesComponent_0_2.queryFromAnnotation = _query_q1_0_3;
-      _query_q1_0_3.notifyOnChanges();
-    }
-    if (_query_q2_0_4.dirty) {
-      _query_q2_0_4.reset([]);
-      _QueriesComponent_0_2.viewQueryFromAnnotation = _query_q2_0_4;
-      _query_q2_0_4.notifyOnChanges();
-    }
-    if (_query_q3_0_5.dirty) {
-      _query_q3_0_5.reset([]);
-      _QueriesComponent_0_2.contentChildrenFromAnnotation = _query_q3_0_5;
-      _query_q3_0_5.notifyOnChanges();
-    }
-    if (_query_q4_0_6.dirty) {
-      _query_q4_0_6.reset([]);
-      _QueriesComponent_0_2.viewChildrenFromAnnotation = _query_q4_0_6;
-      _query_q4_0_6.notifyOnChanges();
+    if (_query_q2_0_3.dirty) {
+      _query_q2_0_3.reset([]);
+      _QueriesComponent_0_2.viewChildrenFromAnnotation = _query_q2_0_3;
+      _query_q2_0_3.notifyOnChanges();
     }
     _compView_0.detectChanges();
   }

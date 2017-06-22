@@ -85,7 +85,7 @@ class ProviderElementContext implements ElementProviderUsage {
     _allProviders = _resolveProvidersFromDirectives(
         directivesMeta, _sourceSpan, _rootProviderContext.errors);
     // Get content queries since we need to eagerly create providers to serve
-    // values for component @Query at ngOnInit time.
+    // values for component @ContentChild/@ContentChildren at ngOnInit time.
     _contentQueries = _getContentQueries(directivesMeta);
     var queriedTokens = new CompileTokenMap<bool>();
     for (var provider in _allProviders.values) {

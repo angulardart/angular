@@ -246,7 +246,6 @@ class ComponentVisitor
               'but was found on $element.');
         }
       } else if (safeMatcherTypes(const [
-        Query,
         ContentChildren,
         ContentChild,
       ], log)(annotation)) {
@@ -258,11 +257,10 @@ class ComponentVisitor
           ));
         } else {
           log.severe(''
-              'Any of the @Query/ViewQuery/Content/view annotations '
+              'ContentChild or ContentChildren annotation '
               'can only be used on a setter, but was found on $element.');
         }
       } else if (safeMatcherTypes(const [
-        ViewQuery,
         ViewChildren,
         ViewChild,
       ], log)(annotation)) {
@@ -274,7 +272,7 @@ class ComponentVisitor
           ));
         } else {
           log.severe(''
-              'Any of the @Query/ViewQuery/Content/view annotations '
+              'ViewChild or ViewChildren annotation '
               'can only be used on a setter, but was found on $element.');
         }
       }

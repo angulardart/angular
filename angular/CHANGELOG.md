@@ -54,10 +54,8 @@ class MyComp {}
 * Returning `false` from an event handler will no longer cancel the event. See
   [#387](https://github.com/dart-lang/angular2/issues/387) for details.
 
-### Deprecations
-
-* Deprecated `Query`. Please use `ContentChild` or `ContentChildren` instead.
-* Deprecated `ViewQuery`. Please use `ViewChild` or `ViewChildren` instead.
+* Removed `Query` and `ViewQuery`. Please use `ContentChild`/`ContentChildren`
+  and `ViewChild`/`ViewChildren` in their place instead.
 
 ### Bug fixes
 
