@@ -716,8 +716,7 @@ class Attribute extends DependencyMetadata {
 ///
 /// The injected object is an unmodifiable live list. See [QueryList] for more
 /// details.
-@Deprecated("Use 'ContentChild' or 'ContentChildren'")
-class Query extends DependencyMetadata {
+abstract class _Query extends DependencyMetadata {
   final dynamic /* Type | String */ selector;
 
   /// whether we want to query only direct children (false) or all children
@@ -727,7 +726,7 @@ class Query extends DependencyMetadata {
 
   /// The DI token to read from an element that matches the selector.
   final dynamic read;
-  const Query(this.selector,
+  const _Query(this.selector,
       {bool descendants: false, bool first: false, dynamic read: null})
       : descendants = descendants,
         first = first,
@@ -766,7 +765,7 @@ class Query extends DependencyMetadata {
 ///   }
 /// }
 /// ```
-class ContentChildren extends Query {
+class ContentChildren extends _Query {
   const ContentChildren(dynamic /*Type | string*/ selector,
       {bool descendants: false, dynamic read: null})
       : super(selector, descendants: descendants, read: read);
@@ -790,7 +789,7 @@ class ContentChildren extends Query {
 ///   }
 /// }
 /// ```
-class ContentChild extends Query {
+class ContentChild extends _Query {
   const ContentChild(dynamic /* Type | String */ _selector,
       {dynamic read: null})
       : super(_selector, descendants: true, first: true, read: read);
@@ -831,9 +830,8 @@ class ContentChild extends Query {
 ///
 /// The injected object is an iterable and observable live list.  See
 /// [QueryList] for more details.
-@Deprecated("Use 'ViewChild' or 'ViewChildren'")
-class ViewQuery extends Query {
-  const ViewQuery(dynamic /* Type | String */ _selector,
+abstract class _ViewQuery extends _Query {
+  const _ViewQuery(dynamic /* Type | String */ _selector,
       {bool descendants: false, bool first: false, dynamic read: null})
       : super(_selector, descendants: descendants, first: first, read: read);
 
@@ -925,7 +923,7 @@ class ViewQuery extends Query {
 ///   }
 /// }
 /// ```
-class ViewChildren extends ViewQuery {
+class ViewChildren extends _ViewQuery {
   const ViewChildren(dynamic /* Type | String */ _selector,
       {dynamic read: null})
       : super(_selector, descendants: true, read: read);
@@ -1003,7 +1001,7 @@ class ViewChildren extends ViewQuery {
 ///   }
 /// }
 /// ```
-class ViewChild extends ViewQuery {
+class ViewChild extends _ViewQuery {
   const ViewChild(dynamic /* Type | String */ _selector, {dynamic read: null})
       : super(_selector, descendants: true, first: true, read: read);
 }
