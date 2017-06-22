@@ -11,8 +11,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:quiver/strings.dart' as strings;
 import 'package:source_gen/src/annotation.dart' as source_gen;
 import 'package:angular/src/compiler/compile_metadata.dart';
-import 'package:angular/src/compiler/output/output_ast.dart'
-    as o;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/core/di.dart';
 import 'package:angular/src/core/di/decorators.dart';
 import 'package:angular/src/core/metadata.dart';

@@ -1,5 +1,4 @@
-import 'package:angular/src/core/linker/view_type.dart'
-    show ViewType;
+import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 
 import '../compile_metadata.dart'
     show

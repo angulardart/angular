@@ -1,13 +1,10 @@
 import "dart:async";
 
-import "package:angular/src/core/application_ref.dart"
-    show ApplicationRef;
-import "package:angular/src/core/di.dart"
-    show Injectable, Injector;
+import "package:angular/src/core/application_ref.dart" show ApplicationRef;
+import "package:angular/src/core/di.dart" show Injectable, Injector;
 import "package:angular/src/core/linker/component_factory.dart"
     show ComponentRef, ComponentFactory;
-import "package:angular/src/core/zone/ng_zone.dart"
-    show NgZone;
+import "package:angular/src/core/zone/ng_zone.dart" show NgZone;
 
 /// A no-op implementation of [ApplicationRef], useful for testing.
 @Injectable()

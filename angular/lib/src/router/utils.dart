@@ -1,7 +1,6 @@
 import "package:angular/src/core/linker/component_factory.dart"
     show ComponentFactory;
-import "package:angular/src/core/reflection/reflection.dart"
-    show reflector;
+import "package:angular/src/core/reflection/reflection.dart" show reflector;
 
 import "lifecycle/lifecycle_annotations.dart" show CanActivate;
 

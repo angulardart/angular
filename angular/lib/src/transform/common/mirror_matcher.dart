@@ -2,15 +2,13 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import 'names.dart';
 
-const _ANGULAR_URI =
-    'package:angular/angular.dart';
+const _ANGULAR_URI = 'package:angular/angular.dart';
 
 /// File from which `bootstrap` is exported.
 ///
 /// This file transitively imports dart:mirrors.
 /// It should be replaced with [BOOTSTRAP_STATIC_URI] in production apps.
-const _BOOTSTRAP_URI =
-    'package:angular/platform/browser.dart';
+const _BOOTSTRAP_URI = 'package:angular/platform/browser.dart';
 
 /// File from which `ReflectionCapabilities` is exported.
 ///
@@ -24,8 +22,7 @@ const _REFLECTION_CAPABILITIES_URI =
 ///
 /// This file does not transitively import dart:mirrors.
 /// It should be used in place of [_BOOTSTRAP_URI] in production apps.
-const BOOTSTRAP_STATIC_URI =
-    'package:angular/platform/browser_static.dart';
+const BOOTSTRAP_STATIC_URI = 'package:angular/platform/browser_static.dart';
 
 /// Syntactically checks for code related to the use of `dart:mirrors`.
 ///

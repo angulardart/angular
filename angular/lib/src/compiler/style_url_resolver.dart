@@ -1,8 +1,7 @@
 // Some of the code comes from WebComponents.JS
 // https://github.com/webcomponents/webcomponentsjs/blob/master/src/HTMLImports/path.js
 
-import "package:angular/src/core/url_resolver.dart"
-    show UrlResolver;
+import "package:angular/src/core/url_resolver.dart" show UrlResolver;
 
 class StyleWithImports {
   String style;

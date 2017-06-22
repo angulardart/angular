@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:angular/core.dart'
-    show PLATFORM_INITIALIZER;
-import 'package:angular/di.dart'
-    show Injector, provide, Provider;
+import 'package:angular/core.dart' show PLATFORM_INITIALIZER;
+import 'package:angular/di.dart' show Injector, provide, Provider;
 import 'package:angular/platform/testing/browser.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/reflection/reflection.dart';

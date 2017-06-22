@@ -1,5 +1,4 @@
-import "package:angular/src/facade/lang.dart"
-    show jsSplit;
+import "package:angular/src/facade/lang.dart" show jsSplit;
 
 const MODULE_SUFFIX = ".dart";
 

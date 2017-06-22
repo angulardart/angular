@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 /// Matches asset:<package-name>/<realm>/<path-to-module>
 var _ASSET_URL_RE = new RegExp(r'asset:([^\/]+)\/([^\/]+)\/(.+)');

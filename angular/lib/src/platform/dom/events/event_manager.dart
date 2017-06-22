@@ -1,9 +1,6 @@
-import 'package:angular/src/core/di.dart'
-    show Injectable, Inject, OpaqueToken;
-import 'package:angular/src/core/zone/ng_zone.dart'
-    show NgZone;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/core/di.dart' show Injectable, Inject, OpaqueToken;
+import 'package:angular/src/core/zone/ng_zone.dart' show NgZone;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 const OpaqueToken EVENT_MANAGER_PLUGINS =
     const OpaqueToken('EventManagerPlugins');

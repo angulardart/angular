@@ -1,5 +1,4 @@
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 List<String> convertUrlParamsToArray(Map<String, dynamic> urlParams) {
   var paramsArray = <String>[];

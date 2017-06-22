@@ -3,12 +3,9 @@ import 'dart:async';
 
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:angular/src/core/di.dart'
-    show Injectable;
-import 'package:angular/src/core/testability/testability.dart'
-    show Testability;
-import 'package:angular/src/core/zone/ng_zone.dart'
-    show NgZone;
+import 'package:angular/src/core/di.dart' show Injectable;
+import 'package:angular/src/core/testability/testability.dart' show Testability;
+import 'package:angular/src/core/zone/ng_zone.dart' show NgZone;
 
 // Schedules a microtasks (using a resolved promise .then())
 void microTask(void fn()) {

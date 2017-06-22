@@ -1,7 +1,5 @@
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
-import 'package:angular/src/facade/lang.dart'
-    show looseIdentical;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/facade/lang.dart' show looseIdentical;
 
 typedef void DefaultIterableCallback(
   CollectionChangeRecord item,

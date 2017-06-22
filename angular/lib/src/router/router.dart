@@ -1,11 +1,9 @@
 import "dart:async";
 
-import "package:angular/di.dart"
-    show Inject, Injectable;
+import "package:angular/di.dart" show Inject, Injectable;
 import "package:angular/platform/common.dart"
     show Location, PathLocationStrategy;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 import "directives/router_outlet.dart" show RouterOutlet;
 import "instruction.dart" show ComponentInstruction, Instruction;

@@ -4,8 +4,7 @@ import 'package:barback/barback.dart';
 import 'package:angular/src/transform/common/asset_reader.dart';
 import 'package:angular/src/transform/common/names.dart';
 import 'package:angular/src/transform/common/options.dart';
-import 'package:angular/src/transform/common/zone.dart'
-    as zone;
+import 'package:angular/src/transform/common/zone.dart' as zone;
 
 import 'processor.dart';
 

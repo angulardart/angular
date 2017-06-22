@@ -1,5 +1,4 @@
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:tuple/tuple.dart';
 
 import 'attribute_matcher.dart';

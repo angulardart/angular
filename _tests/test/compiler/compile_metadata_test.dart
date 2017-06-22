@@ -6,8 +6,7 @@ import "package:angular/src/core/change_detection.dart"
     show ChangeDetectionStrategy;
 import "package:angular/src/core/metadata/lifecycle_hooks.dart"
     show LifecycleHooks;
-import "package:angular/src/core/metadata/view.dart"
-    show ViewEncapsulation;
+import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 
 void main() {
   group("CompileMetadata", () {

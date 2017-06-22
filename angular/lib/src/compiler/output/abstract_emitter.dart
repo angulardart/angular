@@ -1,5 +1,4 @@
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'output_ast.dart' as o;
 

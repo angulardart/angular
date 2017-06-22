@@ -1,7 +1,6 @@
 import "package:angular/src/compiler/directive_resolver.dart"
     show DirectiveResolver;
-import "package:angular/src/core/di.dart"
-    show Injectable;
+import "package:angular/src/core/di.dart" show Injectable;
 
 import "../core/metadata.dart" show Directive, Component;
 

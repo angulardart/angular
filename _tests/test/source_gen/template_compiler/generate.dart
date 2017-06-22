@@ -21,8 +21,8 @@ Future main(List<String> args) async {
   var parser = new ArgParser()..addFlag(_updateGoldens, defaultsTo: false);
   var results = parser.parse(args);
   var updateGoldens = results[_updateGoldens];
-  var inputs = new InputSet('_tests',
-      ['$testFiles/*.dart', '$testFiles/**/*.dart']);
+  var inputs =
+      new InputSet('_tests', ['$testFiles/*.dart', '$testFiles/**/*.dart']);
   var phaseGroup = new PhaseGroup()
     ..addPhase(new Phase()
       ..addAction(

@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:angular/src/core/di.dart'
-    show Injectable;
+import 'package:angular/src/core/di.dart' show Injectable;
 
 import '../zone/ng_zone.dart';
 

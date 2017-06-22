@@ -6,12 +6,9 @@ import 'package:func/func.dart';
 import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
-import 'package:angular/src/core/di.dart'
-    show Injector;
-import 'package:angular/src/core/di/injector.dart'
-    show THROW_IF_NOT_FOUND;
-import 'package:angular/src/core/metadata/view.dart'
-    show ViewEncapsulation;
+import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/core/di/injector.dart' show THROW_IF_NOT_FOUND;
+import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
 

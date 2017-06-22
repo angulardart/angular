@@ -1,6 +1,5 @@
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import '../compile_metadata.dart'
     show

@@ -1,7 +1,5 @@
-import 'package:angular/src/core/di.dart'
-    show Injector;
-import 'package:angular/src/core/metadata/view.dart'
-    show ViewEncapsulation;
+import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 
 /// Styles host that adds encapsulated styles to global style sheet for use
 /// by [RenderComponentType].

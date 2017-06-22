@@ -1,7 +1,6 @@
 import "dart:async";
 
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 import "../instruction.dart" show ComponentInstruction;
 import "../route_config/route_config_decorator.dart"

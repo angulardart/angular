@@ -1,7 +1,6 @@
 import 'dart:html';
 
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 int getIntParameter(String name) {
   return int.parse(getStringParameter(name), radix: 10);

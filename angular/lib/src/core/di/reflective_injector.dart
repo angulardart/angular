@@ -1,5 +1,4 @@
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'decorators.dart';
 import 'injector.dart' show Injector, THROW_IF_NOT_FOUND;

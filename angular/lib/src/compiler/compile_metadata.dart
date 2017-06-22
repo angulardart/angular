@@ -2,12 +2,9 @@ import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks, LIFECYCLE_HOOKS_VALUES;
-import 'package:angular/src/core/metadata/view.dart'
-    show ViewEncapsulation;
-import 'package:angular/src/core/url_resolver.dart'
-    show getUrlScheme;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular/src/core/url_resolver.dart' show getUrlScheme;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';

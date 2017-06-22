@@ -1,7 +1,6 @@
 import 'package:angular/src/core/reflection/reflection.dart'
     show reflector, NoReflectionCapabilitiesError;
-import 'package:angular/src/facade/lang.dart'
-    show assertionsEnabled;
+import 'package:angular/src/facade/lang.dart' show assertionsEnabled;
 
 import '../metadata.dart';
 import 'decorators.dart';

@@ -1,8 +1,6 @@
 import 'package:angular/angular.dart';
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
-import 'package:angular/src/facade/lang.dart'
-    show looseIdentical;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/facade/lang.dart' show looseIdentical;
 
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators;

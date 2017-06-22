@@ -1,7 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/core.dart'
-    show DoCheck, ElementRef, Directive;
+import 'package:angular/core.dart' show DoCheck, ElementRef, Directive;
 
 import '../../core/change_detection/differs/default_keyvalue_differ.dart'
     show DefaultKeyValueDiffer, KeyValueChangeRecord;

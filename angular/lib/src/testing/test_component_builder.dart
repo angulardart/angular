@@ -16,8 +16,7 @@ import 'package:angular/src/compiler/view_resolver_mock.dart';
 import "package:angular/src/core/linker/app_view_utils.dart";
 import "package:angular/src/debug/debug_node.dart"
     show DebugElement, getDebugNode;
-import "package:angular/src/platform/dom/dom_tokens.dart"
-    show DOCUMENT;
+import "package:angular/src/platform/dom/dom_tokens.dart" show DOCUMENT;
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
 import "fake_async.dart" show tick;

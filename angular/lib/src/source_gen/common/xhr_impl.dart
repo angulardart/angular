@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:build/build.dart';
-import 'package:angular/src/compiler/xhr.dart'
-    show XHR;
+import 'package:angular/src/compiler/xhr.dart' show XHR;
 
 import 'url_resolver.dart';
 

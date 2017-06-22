@@ -1,11 +1,8 @@
 import "dart:async";
 
-import "package:angular/src/core/metadata/view.dart"
-    show ViewEncapsulation;
-import "package:angular/src/core/url_resolver.dart"
-    show UrlResolver;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular/src/core/url_resolver.dart" show UrlResolver;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 import "compile_metadata.dart"
     show CompileTypeMetadata, CompileDirectiveMetadata, CompileTemplateMetadata;
