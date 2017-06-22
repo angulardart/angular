@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:html' show Event;
 
-import 'package:angular/core.dart'
-    show Directive, Provider;
-import 'package:angular/di.dart'
-    show Optional, Inject, Self;
-import 'package:angular/src/facade/async.dart'
-    show EventEmitter;
+import 'package:angular/core.dart' show Directive, Provider;
+import 'package:angular/di.dart' show Optional, Inject, Self;
+import 'package:angular/src/facade/async.dart' show EventEmitter;
 
 import '../model.dart' show AbstractControl, ControlGroup, Control;
 import '../validators.dart' show NG_VALIDATORS;

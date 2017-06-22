@@ -11,8 +11,7 @@ import 'package:angular/src/transform/common/logging.dart';
 import 'package:angular/src/transform/common/names.dart';
 import 'package:angular/src/transform/common/ng_compiler.dart';
 import 'package:angular/src/transform/common/options.dart';
-import 'package:angular/src/transform/common/zone.dart'
-    as zone;
+import 'package:angular/src/transform/common/zone.dart' as zone;
 
 /// Converts a Barback asset ID to an asset URL.
 String _assetIdToUrl(AssetId assetId) {

@@ -1,11 +1,8 @@
 import 'dart:async';
 
-import 'package:angular/src/core/di.dart'
-    show Injectable;
-import 'package:angular/src/core/reflection/reflection.dart'
-    show reflector;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/core/di.dart' show Injectable;
+import 'package:angular/src/core/reflection/reflection.dart' show reflector;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'component_factory.dart' show ComponentFactory;
 

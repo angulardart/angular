@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular/src/core/di.dart'
-    show Injector, Injectable;
+import 'package:angular/src/core/di.dart' show Injector, Injectable;
 
 import 'app_view_utils.dart' show OnDestroyCallback;
 import 'component_factory.dart' show ComponentRef;

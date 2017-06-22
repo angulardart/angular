@@ -1,6 +1,5 @@
 import "package:angular/di.dart" show Provider;
-import "package:angular/platform/common.dart"
-    show PlatformLocation;
+import "package:angular/platform/common.dart" show PlatformLocation;
 import "package:angular/src/platform/browser/location/browser_platform_location.dart"
     show BrowserPlatformLocation;
 

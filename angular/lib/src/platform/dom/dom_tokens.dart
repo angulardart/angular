@@ -1,5 +1,4 @@
-import "package:angular/src/core/di.dart"
-    show OpaqueToken;
+import "package:angular/src/core/di.dart" show OpaqueToken;
 
 /// A DI Token representing the main rendering context. In a browser this is the DOM Document.
 ///

@@ -1,8 +1,7 @@
 import 'dart:async' show runZoned, ZoneSpecification;
 
 import 'package:quiver/testing/async.dart' as quiver;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'test_injector.dart' show getTestInjector, FunctionWithParamTokens;
 

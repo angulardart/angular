@@ -1,10 +1,8 @@
-import "package:angular/src/core/di.dart"
-    show Injectable;
+import "package:angular/src/core/di.dart" show Injectable;
 import "package:angular/src/core/metadata.dart";
 import "package:angular/src/core/reflection/reflection.dart"
     show Reflector, reflector;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 bool _isDirectiveMetadata(dynamic type) {
   return type is Directive;

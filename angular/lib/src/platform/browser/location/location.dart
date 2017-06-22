@@ -1,6 +1,5 @@
 import "package:angular/di.dart" show Injectable;
-import "package:angular/src/facade/async.dart"
-    show EventEmitter;
+import "package:angular/src/facade/async.dart" show EventEmitter;
 
 import "location_strategy.dart" show LocationStrategy;
 

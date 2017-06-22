@@ -1,10 +1,8 @@
 import 'package:build/build.dart' hide AssetReader;
 import 'package:angular/src/compiler/config.dart';
 import 'package:angular/src/compiler/directive_normalizer.dart';
-import 'package:angular/src/compiler/expression_parser/lexer.dart'
-    as ng;
-import 'package:angular/src/compiler/expression_parser/parser.dart'
-    as ng;
+import 'package:angular/src/compiler/expression_parser/lexer.dart' as ng;
+import 'package:angular/src/compiler/expression_parser/parser.dart' as ng;
 import 'package:angular/src/compiler/html_parser.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/output/dart_emitter.dart';

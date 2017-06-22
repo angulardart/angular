@@ -10,10 +10,8 @@ import "package:angular/src/compiler/html_ast.dart"
         HtmlTextAst,
         HtmlCommentAst,
         htmlVisitAll;
-import "package:angular/src/compiler/html_parser.dart"
-    show HtmlParseTreeResult;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/compiler/html_parser.dart" show HtmlParseTreeResult;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 List<dynamic> humanizeDom(HtmlParseTreeResult parseResult) {
   if (parseResult.errors.length > 0) {

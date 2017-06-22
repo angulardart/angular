@@ -7,10 +7,8 @@ import "package:angular/core.dart"
         ExceptionHandler,
         APPLICATION_COMMON_PROVIDERS,
         TestabilityRegistry;
-import "package:angular/src/core/di.dart"
-    show Injectable, Provider;
-import "package:angular/src/core/testability/testability.dart"
-    show Testability;
+import "package:angular/src/core/di.dart" show Injectable, Provider;
+import "package:angular/src/core/testability/testability.dart" show Testability;
 import "package:angular/src/platform/browser/exceptions.dart"
     show BrowserExceptionHandler;
 import "package:angular/src/security/dom_sanitization_service.dart";

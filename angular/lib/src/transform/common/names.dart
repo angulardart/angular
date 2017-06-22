@@ -9,8 +9,7 @@ const SHIMMED_STYLESHEET_EXTENSION = '.css.shim.dart';
 const NON_SHIMMED_STYLESHEET_EXTENSION = '.css.dart';
 const META_EXTENSION = '.ng_meta.json';
 const REFLECTION_CAPABILITIES_NAME = 'ReflectionCapabilities';
-const REFLECTOR_IMPORT =
-    'package:angular/src/core/reflection/reflection.dart';
+const REFLECTOR_IMPORT = 'package:angular/src/core/reflection/reflection.dart';
 const REFLECTOR_PREFIX = '_ngRef';
 const REGISTER_TYPE_METHOD_NAME = 'registerType';
 const SUMMARY_META_EXTENSION = '.ng_summary.json';

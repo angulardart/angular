@@ -1,20 +1,16 @@
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileTokenMetadata;
 
-var APP_VIEW_MODULE_URL =
-    "asset:angular/lib/src/core/linker/app_view.dart";
+var APP_VIEW_MODULE_URL = "asset:angular/lib/src/core/linker/app_view.dart";
 var DEBUG_APP_VIEW_MODULE_URL =
     "asset:angular/lib/src/debug/debug_app_view.dart";
 var APP_VIEW_UTILS_MODULE_URL =
     "asset:angular/lib/src/core/linker/app_view_utils.dart";
 var CD_MODULE_URL =
     "asset:angular/lib/src/core/change_detection/change_detection.dart";
-var ANGULAR_ROOT_URL =
-    "package:angular/angular.dart";
-var NG_IF_URL =
-    "asset:angular/lib/src/common/directives/ng_if.dart";
-var NG_FOR_URL =
-    "asset:angular/lib/src/common/directives/ng_for.dart";
+var ANGULAR_ROOT_URL = "package:angular/angular.dart";
+var NG_IF_URL = "asset:angular/lib/src/common/directives/ng_if.dart";
+var NG_FOR_URL = "asset:angular/lib/src/common/directives/ng_for.dart";
 var PROFILE_RUNTIME_MODULE_URL =
     "asset:angular/lib/src/debug/profile_runtime.dart";
 
@@ -29,63 +25,51 @@ class Identifiers {
       name: "DebugAppView", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final ViewContainer = new CompileIdentifierMetadata<dynamic>(
       name: "ViewContainer",
-      moduleUrl:
-          "asset:angular/lib/src/core/linker/view_container.dart");
+      moduleUrl: "asset:angular/lib/src/core/linker/view_container.dart");
   static final ElementRef = new CompileIdentifierMetadata<dynamic>(
       name: "ElementRef",
-      moduleUrl:
-          "asset:angular/lib/src/core/linker/element_ref.dart");
+      moduleUrl: "asset:angular/lib/src/core/linker/element_ref.dart");
   static final ViewContainerRef = new CompileIdentifierMetadata<dynamic>(
       name: "ViewContainerRef",
-      moduleUrl:
-          "asset:angular/lib/src/core/linker/view_container_ref.dart");
+      moduleUrl: "asset:angular/lib/src/core/linker/view_container_ref.dart");
   static final ChangeDetectorRef = new CompileIdentifierMetadata<dynamic>(
       name: "ChangeDetectorRef",
-      moduleUrl:
-          'asset:angular/lib/src/core/change_detection/'
+      moduleUrl: 'asset:angular/lib/src/core/change_detection/'
           'change_detector_ref.dart');
   static final ComponentFactory = new CompileIdentifierMetadata<dynamic>(
       name: 'ComponentFactory', moduleUrl: ANGULAR_ROOT_URL);
   static final RenderComponentType = new CompileIdentifierMetadata<dynamic>(
       name: "RenderComponentType",
-      moduleUrl:
-          "asset:angular/lib/src/core/render/api.dart");
+      moduleUrl: "asset:angular/lib/src/core/render/api.dart");
   static final ComponentRef = new CompileIdentifierMetadata<dynamic>(
       name: "ComponentRef", moduleUrl: ANGULAR_ROOT_URL);
   static final QueryList = new CompileIdentifierMetadata<dynamic>(
       name: "QueryList",
-      moduleUrl:
-          "asset:angular/lib/src/core/linker/query_list.dart");
+      moduleUrl: "asset:angular/lib/src/core/linker/query_list.dart");
   static final TemplateRef = new CompileIdentifierMetadata<dynamic>(
       name: "TemplateRef",
-      moduleUrl:
-          "asset:angular/lib/src/core/linker/template_ref.dart");
+      moduleUrl: "asset:angular/lib/src/core/linker/template_ref.dart");
   static final ValueUnwrapper = new CompileIdentifierMetadata<dynamic>(
       name: "ValueUnwrapper", moduleUrl: CD_MODULE_URL);
   static final Injector = new CompileIdentifierMetadata<dynamic>(
       name: "Injector",
-      moduleUrl:
-          'asset:angular/lib/src/core/di/injector.dart');
+      moduleUrl: 'asset:angular/lib/src/core/di/injector.dart');
   static final ViewEncapsulation = new CompileIdentifierMetadata<dynamic>(
       name: "ViewEncapsulation", moduleUrl: ANGULAR_ROOT_URL);
   static final ViewType = new CompileIdentifierMetadata<dynamic>(
       name: "ViewType",
-      moduleUrl:
-          'asset:angular/lib/src/core/linker/view_type.dart');
+      moduleUrl: 'asset:angular/lib/src/core/linker/view_type.dart');
   static final ChangeDetectionStrategy = new CompileIdentifierMetadata<dynamic>(
       name: "ChangeDetectionStrategy", moduleUrl: CD_MODULE_URL);
   static final StaticNodeDebugInfo = new CompileIdentifierMetadata<dynamic>(
       name: "StaticNodeDebugInfo",
-      moduleUrl:
-          'asset:angular/lib/src/debug/debug_context.dart');
+      moduleUrl: 'asset:angular/lib/src/debug/debug_context.dart');
   static final DebugContext = new CompileIdentifierMetadata<dynamic>(
       name: "DebugContext",
-      moduleUrl:
-          'asset:angular/lib/src/debug/debug_context.dart');
+      moduleUrl: 'asset:angular/lib/src/debug/debug_context.dart');
   static final TemplateSecurityContext = new CompileIdentifierMetadata<dynamic>(
       name: 'TemplateSecurityContext',
-      moduleUrl:
-          'asset:angular/lib/src/core/security.dart');
+      moduleUrl: 'asset:angular/lib/src/core/security.dart');
   static final SimpleChange = new CompileIdentifierMetadata<dynamic>(
       name: "SimpleChange", moduleUrl: CD_MODULE_URL);
   static final ChangeDetectorState = new CompileIdentifierMetadata<dynamic>(
@@ -109,8 +93,7 @@ class Identifiers {
       name: "devModeEqual", moduleUrl: CD_MODULE_URL);
   static final looseIdentical = new CompileIdentifierMetadata<dynamic>(
       name: "looseIdentical",
-      moduleUrl:
-          'asset:angular/lib/src/facade/lang.dart');
+      moduleUrl: 'asset:angular/lib/src/facade/lang.dart');
   static final profileSetup = new CompileIdentifierMetadata<dynamic>(
       name: "profileSetup", moduleUrl: PROFILE_RUNTIME_MODULE_URL);
   static final profileMarkStart = new CompileIdentifierMetadata<dynamic>(

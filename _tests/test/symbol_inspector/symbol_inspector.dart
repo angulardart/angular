@@ -4,12 +4,10 @@ import 'dart:collection';
 import 'dart:mirrors';
 
 import 'package:angular/angular.dart' as ng2;
-import 'package:angular/compiler.dart'
-    as ng2compiler;
+import 'package:angular/compiler.dart' as ng2compiler;
 import 'package:angular/core.dart' as ng2core;
 import 'package:angular/di.dart' as di;
-import 'package:angular/platform/common.dart'
-    as ng2platform_common;
+import 'package:angular/platform/common.dart' as ng2platform_common;
 import 'package:angular/platform/testing/browser.dart'
     as ng2platform_browser_testing;
 
@@ -29,8 +27,7 @@ LibraryMirror getLibrary(String uriString) {
   // HACK: this is here only to make _ng2libSymbols used.
   _ng2libSymbols.forEach((_) {});
 
-  var uri =
-      Uri.parse('package:angular/$uriString');
+  var uri = Uri.parse('package:angular/$uriString');
 
   var lib = currentMirrorSystem().libraries[uri];
   if (lib == null) {

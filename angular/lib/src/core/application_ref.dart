@@ -8,8 +8,7 @@ import 'package:angular/src/core/linker/app_view.dart'
 import 'package:angular/src/core/linker/view_ref.dart';
 import 'package:angular/src/facade/exceptions.dart'
     show BaseException, ExceptionHandler;
-import 'package:angular/src/facade/lang.dart'
-    show assertionsEnabled, isDartVM;
+import 'package:angular/src/facade/lang.dart' show assertionsEnabled, isDartVM;
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
 import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;

@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
-import "package:angular/src/core/di/reflective_key.dart"
-    show KeyRegistry;
+import "package:angular/src/core/di/reflective_key.dart" show KeyRegistry;
 
 void main() {
   group("key", () {

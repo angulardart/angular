@@ -1,7 +1,6 @@
 import "package:angular/core.dart"
     show ReflectiveInjector, PLATFORM_INITIALIZER;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 class TestInjector {
   bool _instantiated = false;

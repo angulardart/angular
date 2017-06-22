@@ -1,18 +1,12 @@
-import 'package:angular/di.dart'
-    show Injectable, Inject;
-import 'package:angular/src/core/application_tokens.dart'
-    show APP_ID;
+import 'package:angular/di.dart' show Injectable, Inject;
+import 'package:angular/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show devModeEqual;
-import 'package:angular/src/core/metadata/view.dart'
-    show ViewEncapsulation;
-import 'package:angular/src/core/render/api.dart'
-    show RenderComponentType;
-import 'package:angular/src/core/security.dart'
-    show SafeValue;
+import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular/src/core/render/api.dart' show RenderComponentType;
+import 'package:angular/src/core/security.dart' show SafeValue;
 import 'package:angular/src/core/security.dart';
-import 'package:angular/src/facade/lang.dart'
-    show looseIdentical;
+import 'package:angular/src/facade/lang.dart' show looseIdentical;
 import 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManager;
 

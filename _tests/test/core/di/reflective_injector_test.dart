@@ -11,8 +11,7 @@ import "package:angular/src/core/di/reflective_injector.dart"
         ReflectiveProtoInjector;
 import "package:angular/src/core/di/reflective_provider.dart"
     show ResolvedReflectiveProviderImpl;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 import "package:angular/src/testing/internal.dart";
 
 import "../../test_util.dart";

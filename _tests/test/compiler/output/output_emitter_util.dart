@@ -2,10 +2,8 @@ library angular2.test.compiler.output.output_emitter_util;
 
 import "package:angular/src/compiler/compile_metadata.dart"
     show CompileIdentifierMetadata;
-import "package:angular/src/compiler/compiler_utils.dart"
-    show MODULE_SUFFIX;
-import "package:angular/src/compiler/output/output_ast.dart"
-    as o;
+import "package:angular/src/compiler/compiler_utils.dart" show MODULE_SUFFIX;
+import "package:angular/src/compiler/output/output_ast.dart" as o;
 
 class ExternalClass {
   dynamic data;
@@ -24,16 +22,13 @@ var testDataIdentifier = new CompileIdentifierMetadata<dynamic>(
         'asset:angular2/test/compiler/output/output_emitter_util$MODULE_SUFFIX');
 var eventEmitterIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "EventEmitter",
-    moduleUrl:
-        'asset:angular/lib/src/facade/async$MODULE_SUFFIX');
+    moduleUrl: 'asset:angular/lib/src/facade/async$MODULE_SUFFIX');
 var enumIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ViewType.HOST",
-    moduleUrl:
-        'asset:angular/lib/src/core/linker/view_type$MODULE_SUFFIX');
+    moduleUrl: 'asset:angular/lib/src/core/linker/view_type$MODULE_SUFFIX');
 var baseExceptionIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "BaseException",
-    moduleUrl:
-        'asset:angular/lib/src/facade/exceptions$MODULE_SUFFIX');
+    moduleUrl: 'asset:angular/lib/src/facade/exceptions$MODULE_SUFFIX');
 var codegenExportsVars = ["getExpressions"];
 List<o.Statement> _getExpressionsStmts = [
   o.variable("readVar").set(o.literal("someValue")).toDeclStmt(),

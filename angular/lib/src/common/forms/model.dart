@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:angular/src/facade/async.dart'
-    show EventEmitter;
+import 'package:angular/src/facade/async.dart' show EventEmitter;
 
 import 'directives/validators.dart' show ValidatorFn;
 

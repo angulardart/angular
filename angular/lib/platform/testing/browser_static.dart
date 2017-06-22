@@ -9,22 +9,17 @@ import 'package:angular/core.dart'
         Provider,
         PLATFORM_COMMON_PROVIDERS,
         PLATFORM_INITIALIZER;
-import 'package:angular/platform/common.dart'
-    show LocationStrategy;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    show AppViewUtils;
+import 'package:angular/platform/common.dart' show LocationStrategy;
+import 'package:angular/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular/src/mock/mock_location_strategy.dart'
     show MockLocationStrategy;
-import 'package:angular/src/mock/ng_zone_mock.dart'
-    show MockNgZone;
+import 'package:angular/src/mock/ng_zone_mock.dart' show MockNgZone;
 import 'package:angular/src/platform/browser_common.dart'
     show BROWSER_APP_COMMON_PROVIDERS;
-import 'package:angular/src/platform/dom/dom_tokens.dart'
-    show DOCUMENT;
+import 'package:angular/src/platform/dom/dom_tokens.dart' show DOCUMENT;
 import 'package:angular/src/testing/test_component_builder.dart'
     show TestComponentBuilder;
-import 'package:angular/src/testing/utils.dart'
-    show BrowserDetection, Log;
+import 'package:angular/src/testing/utils.dart' show BrowserDetection, Log;
 
 void initBrowserTests() {
   BrowserDetection.setup();

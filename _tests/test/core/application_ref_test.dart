@@ -29,13 +29,11 @@ import 'package:angular/src/core/application_ref.dart'
         PlatformRef,
         PLATFORM_CORE_PROVIDERS,
         APPLICATION_CORE_PROVIDERS;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    show AppViewUtils;
+import 'package:angular/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular/src/core/linker/component_factory.dart';
 import 'package:angular/src/facade/exception_handler.dart'
     show ExceptionHandler;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/platform/browser_common.dart';
 
 import "../test_util.dart";

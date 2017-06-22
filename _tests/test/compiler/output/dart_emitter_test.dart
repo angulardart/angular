@@ -3,10 +3,8 @@ library angular2.test.compiler.output.dart_emitter_test;
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
-import 'package:angular/src/compiler/output/dart_emitter.dart'
-    show DartEmitter;
-import 'package:angular/src/compiler/output/output_ast.dart'
-    as o;
+import 'package:angular/src/compiler/output/dart_emitter.dart' show DartEmitter;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 
 var someModuleUrl = 'asset:somePackage/lib/somePath';
 var anotherModuleUrl = 'asset:somePackage/lib/someOtherPath';

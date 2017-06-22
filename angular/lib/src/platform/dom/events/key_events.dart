@@ -1,7 +1,6 @@
 import "dart:html";
 
-import "package:angular/src/core/di.dart"
-    show Injectable;
+import "package:angular/src/core/di.dart" show Injectable;
 
 import "event_manager.dart" show EventManagerPlugin;
 

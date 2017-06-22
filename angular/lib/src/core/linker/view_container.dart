@@ -1,7 +1,5 @@
-import 'package:angular/src/core/di.dart'
-    show Injector;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;

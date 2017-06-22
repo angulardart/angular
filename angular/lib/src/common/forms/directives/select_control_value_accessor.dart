@@ -3,10 +3,8 @@ import 'dart:html';
 import 'package:func/func.dart' show Func0, VoidFunc1;
 import 'package:angular/core.dart'
     show Directive, Provider, ElementRef, Input, OnDestroy;
-import 'package:angular/di.dart'
-    show Host, Optional;
-import 'package:angular/src/facade/lang.dart'
-    show isPrimitive, looseIdentical;
+import 'package:angular/di.dart' show Host, Optional;
+import 'package:angular/src/facade/lang.dart' show isPrimitive, looseIdentical;
 
 import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;

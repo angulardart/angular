@@ -1,9 +1,7 @@
 import 'dart:html';
 
-import 'package:angular/src/core/di.dart'
-    show Injector;
-import 'package:angular/src/core/reflection/reflection.dart'
-    show reflector;
+import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/core/reflection/reflection.dart' show reflector;
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';

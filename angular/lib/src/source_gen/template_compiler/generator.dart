@@ -5,8 +5,7 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/config.dart';
-import 'package:angular/src/compiler/logging.dart'
-    show loggerKey;
+import 'package:angular/src/compiler/logging.dart' show loggerKey;
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular/src/transform/common/options.dart';
 

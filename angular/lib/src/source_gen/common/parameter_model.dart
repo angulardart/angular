@@ -66,5 +66,4 @@ class ParameterModel {
       new AnnotationModel.fromElement(annotation, element).asExpression;
 }
 
-const optionalPackage =
-    'package:angular/src/core/di/decorators.dart';
+const optionalPackage = 'package:angular/src/core/di/decorators.dart';

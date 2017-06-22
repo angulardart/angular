@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:angular/src/compiler/xhr.dart'
-    show XHR;
+import 'package:angular/src/compiler/xhr.dart' show XHR;
 
 import 'asset_reader.dart';
 import 'logging.dart';

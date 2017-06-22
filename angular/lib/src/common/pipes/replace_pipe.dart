@@ -1,5 +1,4 @@
-import "package:angular/di.dart"
-    show Injectable, PipeTransform, Pipe;
+import "package:angular/di.dart" show Injectable, PipeTransform, Pipe;
 
 import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 

@@ -1,6 +1,5 @@
 // This was never meant to be a user-visible API.
-@Deprecated(
-    'If you need this, import package:angular/reflection.dart')
+@Deprecated('If you need this, import package:angular/reflection.dart')
 library angular2_deprecated_xhr;
 
 import "dart:async";

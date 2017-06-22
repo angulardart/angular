@@ -1,7 +1,6 @@
 import 'dart:html';
 
-import "package:angular/src/core/application_ref.dart"
-    show ApplicationRef;
+import "package:angular/src/core/application_ref.dart" show ApplicationRef;
 import "package:angular/src/core/linker/component_factory.dart"
     show ComponentRef;
 

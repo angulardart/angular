@@ -4,10 +4,8 @@ library angular2.test.core.zone.ng_zone_test;
 import "dart:async";
 
 import 'package:test/test.dart';
-import "package:angular/src/core/zone/ng_zone.dart"
-    show NgZone, NgZoneError;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/core/zone/ng_zone.dart" show NgZone, NgZoneError;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 import "package:angular/src/testing/internal.dart";
 
 import "../../test_util.dart";

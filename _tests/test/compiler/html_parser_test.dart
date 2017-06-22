@@ -2,12 +2,10 @@ library angular2.test.compiler.html_parser_test;
 
 import 'package:test/test.dart';
 import "package:angular/src/compiler/html_ast.dart";
-import "package:angular/src/compiler/html_lexer.dart"
-    show HtmlTokenType;
+import "package:angular/src/compiler/html_lexer.dart" show HtmlTokenType;
 import "package:angular/src/compiler/html_parser.dart"
     show HtmlParser, HtmlTreeError;
-import "package:angular/src/compiler/parse_util.dart"
-    show ParseError;
+import "package:angular/src/compiler/parse_util.dart" show ParseError;
 
 import "html_ast_spec_utils.dart"
     show humanizeDom, humanizeDomSourceSpans, humanizeLineColumn;

@@ -6,8 +6,7 @@ import "package:angular/src/core/change_detection/change_detection.dart"
 import 'package:angular/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
 import "package:angular/src/core/linker/view_type.dart";
-import "package:angular/src/core/metadata/view.dart"
-    show ViewEncapsulation;
+import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;

@@ -1,7 +1,5 @@
-import "package:angular/src/core/di.dart"
-    show Injector;
-import "package:angular/src/core/render/api.dart"
-    show RenderDebugInfo;
+import "package:angular/src/core/di.dart" show Injector;
+import "package:angular/src/core/render/api.dart" show RenderDebugInfo;
 
 import "debug_app_view.dart";
 

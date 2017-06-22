@@ -4,8 +4,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:angular/source_gen.dart';
 import 'package:angular/src/transform/asset_consumer/transformer.dart';
 import 'package:angular/src/transform/common/eager_transformer_wrapper.dart';
-import 'package:angular/src/transform/common/formatter.dart'
-    as formatter;
+import 'package:angular/src/transform/common/formatter.dart' as formatter;
 import 'package:angular/src/transform/common/options.dart';
 import 'package:angular/src/transform/common/options_reader.dart';
 import 'package:angular/src/transform/stylesheet_compiler/transformer.dart';

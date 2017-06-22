@@ -1,9 +1,6 @@
-import 'package:angular/src/core/linker/view_type.dart'
-    show ViewType;
-import 'package:angular/src/facade/async.dart'
-    show EventEmitter;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/src/core/linker/view_type.dart' show ViewType;
+import 'package:angular/src/facade/async.dart' show EventEmitter;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'output_emitter_util.dart' show ExternalClass;
 

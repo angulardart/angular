@@ -1,9 +1,7 @@
 import "package:angular/src/core/change_detection/change_detection.dart"
     show ChangeDetectorState, ChangeDetectionStrategy;
-import "package:angular/src/core/linker/view_type.dart"
-    show ViewType;
-import "package:angular/src/core/metadata/view.dart"
-    show ViewEncapsulation;
+import "package:angular/src/core/linker/view_type.dart" show ViewType;
+import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "../identifiers.dart" show Identifiers;

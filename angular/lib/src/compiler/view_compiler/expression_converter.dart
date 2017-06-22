@@ -1,5 +1,4 @@
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 import "../chars.dart";
 import "../expression_parser/ast.dart" as compiler_ast;

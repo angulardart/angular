@@ -1,10 +1,8 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
     show MAX_INTERPOLATION_VALUES;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
-import 'package:angular/src/facade/lang.dart'
-    show jsSplit;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/facade/lang.dart' show jsSplit;
 
 import '../core/security.dart';
 import 'chars.dart';

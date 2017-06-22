@@ -1,5 +1,4 @@
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 import "../compile_metadata.dart" show CompilePipeMetadata;
 import "../identifiers.dart" show Identifiers, identifierToken;

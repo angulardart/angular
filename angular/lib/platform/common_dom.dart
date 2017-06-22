@@ -2,9 +2,7 @@
 /// the browser and on the server.
 library angular.platform.common_dom;
 
-export 'package:angular/src/core/render/api.dart'
-    show sharedStylesHost;
-export 'package:angular/src/platform/dom/dom_tokens.dart'
-    show DOCUMENT;
+export 'package:angular/src/core/render/api.dart' show sharedStylesHost;
+export 'package:angular/src/platform/dom/dom_tokens.dart' show DOCUMENT;
 export 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManagerPlugin;

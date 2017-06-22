@@ -2,12 +2,9 @@ import 'dart:html' show Event;
 
 import 'package:angular/core.dart'
     show SimpleChange, OnChanges, Directive, Provider;
-import 'package:angular/di.dart'
-    show Optional, Inject, Self;
-import 'package:angular/src/facade/async.dart'
-    show EventEmitter;
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException;
+import 'package:angular/di.dart' show Optional, Inject, Self;
+import 'package:angular/src/facade/async.dart' show EventEmitter;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;

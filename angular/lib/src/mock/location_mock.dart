@@ -1,8 +1,6 @@
 import "package:angular/platform/common.dart";
-import "package:angular/src/core/di.dart"
-    show Injectable;
-import "package:angular/src/facade/async.dart"
-    show EventEmitter;
+import "package:angular/src/core/di.dart" show Injectable;
+import "package:angular/src/facade/async.dart" show EventEmitter;
 
 /// A spy for [Location] that allows tests to fire simulated location events.
 @Injectable()

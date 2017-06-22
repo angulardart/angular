@@ -1,7 +1,5 @@
-import "package:angular/src/core/metadata/view.dart"
-    show ViewEncapsulation;
-import "package:angular/src/core/url_resolver.dart"
-    show UrlResolver;
+import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
+import "package:angular/src/core/url_resolver.dart" show UrlResolver;
 
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;

@@ -4,8 +4,7 @@ import 'package:source_span/source_span.dart';
 import 'package:test/test.dart';
 import "package:angular/src/compiler/html_lexer.dart"
     show tokenizeHtml, HtmlToken, HtmlTokenType, HtmlTokenError;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 void main() {
   group("HtmlLexer", () {

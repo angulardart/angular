@@ -1,9 +1,6 @@
-import "package:angular/src/core/di.dart"
-    show Injectable;
-import "package:angular/src/core/zone/ng_zone.dart"
-    show NgZone;
-import "package:angular/src/facade/async.dart"
-    show EventEmitter;
+import "package:angular/src/core/di.dart" show Injectable;
+import "package:angular/src/core/zone/ng_zone.dart" show NgZone;
+import "package:angular/src/facade/async.dart" show EventEmitter;
 
 @Injectable()
 class MockNgZone extends NgZone {

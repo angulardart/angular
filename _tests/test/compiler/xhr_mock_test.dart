@@ -5,8 +5,7 @@ library angular2.test.compiler.xhr_mock_test;
 import 'dart:async';
 
 import 'package:test/test.dart';
-import 'package:angular/src/compiler/xhr_mock.dart'
-    show MockXHR;
+import 'package:angular/src/compiler/xhr_mock.dart' show MockXHR;
 
 import '../test_util.dart';
 

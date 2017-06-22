@@ -14,8 +14,7 @@ import 'package:angular/core.dart'
         ViewChild,
         ViewChildren,
         ViewContainerRef;
-import 'package:angular/src/debug/debug_node.dart'
-    show getAllDebugNodes;
+import 'package:angular/src/debug/debug_node.dart' show getAllDebugNodes;
 
 void main() {
   group('projection', () {

@@ -11,12 +11,9 @@ import 'package:angular/src/compiler/compile_metadata.dart'
 import 'package:angular/src/compiler/directive_normalizer.dart'
     show DirectiveNormalizer;
 import 'package:angular/src/compiler/html_parser.dart';
-import 'package:angular/src/compiler/xhr.dart'
-    show XHR;
-import 'package:angular/src/compiler/xhr_mock.dart'
-    show MockXHR;
-import 'package:angular/src/core/metadata/view.dart'
-    show ViewEncapsulation;
+import 'package:angular/src/compiler/xhr.dart' show XHR;
+import 'package:angular/src/compiler/xhr_mock.dart' show MockXHR;
+import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 
 import '../test_util.dart';
 import 'test_bindings.dart' show TEST_PROVIDERS;

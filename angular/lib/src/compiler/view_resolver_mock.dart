@@ -1,9 +1,6 @@
-import "package:angular/src/compiler/view_resolver.dart"
-    show ViewResolver;
-import "package:angular/src/core/di.dart"
-    show Injectable;
-import "package:angular/src/facade/exceptions.dart"
-    show BaseException;
+import "package:angular/src/compiler/view_resolver.dart" show ViewResolver;
+import "package:angular/src/core/di.dart" show Injectable;
+import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 import "../core/metadata.dart" show View;
 

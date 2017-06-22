@@ -6,10 +6,8 @@
 @Deprecated('This may move in a future version of Angular.')
 library angular2.core.url_resolver;
 
-import 'package:angular/src/core/application_tokens.dart'
-    show PACKAGE_ROOT_URL;
-import 'package:angular/src/core/di.dart'
-    show Injectable, Inject, Provider;
+import 'package:angular/src/core/application_tokens.dart' show PACKAGE_ROOT_URL;
+import 'package:angular/src/core/di.dart' show Injectable, Inject, Provider;
 
 const _ASSET_SCHEME = 'asset:';
 
