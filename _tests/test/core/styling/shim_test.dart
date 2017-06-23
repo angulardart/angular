@@ -116,6 +116,13 @@ void main() {
       Element elm = testFixture.rootElement;
       expect(elm.getComputedStyle().backgroundColor, 'rgb(255, 0, 0)');
     });
+    test('Should apply shim class on top of host attr.class property',
+        () async {
+      var testBed = new NgTestBed<NgHostAttribShimTest>();
+      var testFixture = await testBed.create();
+      Element elm = testFixture.rootElement.querySelector('feature-promo');
+      expect(elm.className.startsWith('position-class _nghost-'), true);
+    });
   });
 }
 
@@ -281,3 +288,26 @@ class NativeContainerTest {}
     styles: const [':host { background-color: blue; }'],
     encapsulation: ViewEncapsulation.Native)
 class NativeComp {}
+
+@Component(
+    selector: 'feature-promo',
+    host: const {'[attr.class]': 'positionClass'},
+    styles: const [':host {position: absolute;}'],
+    template: '<div>Hello</div>')
+class FeaturePromoComponent {
+  @Input()
+  String positionClass;
+}
+
+@Component(
+    selector: 'feature-promo-test',
+    directives: const [FeaturePromoComponent],
+    template: '''<div>
+      <feature-promo [positionClass]="myposition"></feature-promo>
+    </div>''')
+class NgHostAttribShimTest {
+  String myposition;
+  NgHostAttribShimTest() {
+    myposition = "position-class";
+  }
+}
