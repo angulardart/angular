@@ -1,5 +1,10 @@
+// **WARNING**: Do not delete this file.
+//
+// It is currently used as part of the expression parsing tests, even though the
+// concept of 'DynamicClass' doesn't exist anymore in AngularDart.
+
+import 'dart:async';
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
-import 'package:angular/src/facade/async.dart' show EventEmitter;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'output_emitter_util.dart' show ExternalClass;
@@ -77,7 +82,7 @@ dynamic getExpressions() {
     'conditionalFalse': ((''.length != 0) ? 'true' : 'false'),
     'not': !false,
     'externalTestIdentifier': ExternalClass,
-    'externalSrcIdentifier': EventEmitter,
+    'externalSrcIdentifier': Stream,
     'externalEnumIdentifier': ViewType.HOST,
     'externalInstance': externalInstance,
     'dynamicInstance': dynamicInstance,

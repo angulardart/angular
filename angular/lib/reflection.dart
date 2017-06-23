@@ -1,8 +1,6 @@
 import 'src/core/reflection/reflection.dart';
 import 'src/core/reflection/reflection_capabilities.dart';
 
-export 'src/compiler/xhr.dart' show XHR;
-
 /// Setup Angular to use runtime (`dart:mirrors`-based) reflection.
 ///
 /// This is required when:
