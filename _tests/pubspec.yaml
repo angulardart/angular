@@ -17,6 +17,4 @@ dependency_overrides:
   angular:
     path: ../angular
   angular_test:
-    git:
-      url: git://github.com/dart-lang/angular_test.git
-      ref: angular1
+    path: ../angular_test

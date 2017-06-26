@@ -8,6 +8,12 @@ pub upgrade
 dartanalyzer --fatal-warnings .
 popd
 
+pushd angular_test
+pub upgrade
+dartanalyzer --fatal-warnings .
+pub run test
+popd
+
 pushd _tests
 pub upgrade
 dartanalyzer --fatal-warnings .
