@@ -1,0 +1,41 @@
+name: angular_test
+author: Dart Team <misc@dartlang.org>
+homepage: https://github.com/dart-lang/angular2
+description: Testing infrastructure for AngularDart
+version: 1.0.0-beta+1
+
+environment:
+  sdk: '>=1.22.0 <2.0.0'
+
+executables:
+  angular_test:
+
+dependencies:
+  angular: '^4.0.0'
+  ansicolor: '^0.0.9'
+  args: '^0.13.7'
+  logging: '^0.11.3+1'
+  matcher: '^0.12.0+2'
+  pageloader: '^2.2.5'
+  path: '^1.4.1'
+  test: '^0.12.17'
+dependency_overrides:
+  angular:
+    path: ../angular
+
+transformers:
+  # Run the code generator on the entire package.
+  - angular/transform/codegen
+
+  # Run the reflection remover just on tests that have AoT enabled.
+  # TODO: Automate this, either via script or a naming convention.
+  - angular/transform/reflection_remover:
+      $include:
+          - test/frontend/bed_error_test.dart
+          - test/frontend/bed_lifecycle_test.dart
+          - test/frontend/pageloader_test.dart
+          - test/bootstrap_test.dart
+
+  # Allow test to proxy-load files so we can run AoT tests w/ pub serve.
+  - test/pub_serve:
+      $include: test/**_test.dart
