@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:mirrors';
 
+import 'package:dart_style/src/dart_formatter.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -12,7 +13,9 @@ Future compareSummaryFileToGolden(String dartFileName,
   var input = getFile(dartFileName, summaryExtension);
   var golden = getFile(dartFileName, goldenExtension);
 
-  expect(await input.readAsString(), await golden.readAsString());
+  final formattedInput = _formatter.format(await input.readAsString());
+  final formattedGolden = _formatter.format(await golden.readAsString());
+  expect(formattedInput, formattedGolden);
 }
 
 File getFile(String dartFileName, String extension) =>
@@ -27,3 +30,5 @@ final String _testFilesDir = p.join(_scriptDir(), 'test_files');
 
 String _scriptDir() =>
     p.dirname(currentMirrorSystem().findLibrary(#compare_to_golden).uri.path);
+
+final _formatter = new DartFormatter();
