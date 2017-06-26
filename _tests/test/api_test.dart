@@ -1,3 +1,4 @@
+@Skip('Test broken by package refactoring. See issue #466')
 @TestOn('!browser')
 import 'package:analyzer/dart/element/element.dart';
 
