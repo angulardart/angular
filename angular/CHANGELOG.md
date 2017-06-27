@@ -49,7 +49,8 @@ class MyComp {}
 
 * Removed the runtime (`dart:mirrors`-based) interpreter. It is now required to
   always use the AngularDart transformer to pre-compile the code, even during
-  development time in Dartium.
+  development time in Dartium. `package:angular2/reflection.dart` was also
+  removed.
 
 * Returning `false` from an event handler will no longer cancel the event. See
   [#387](https://github.com/dart-lang/angular2/issues/387) for details.
