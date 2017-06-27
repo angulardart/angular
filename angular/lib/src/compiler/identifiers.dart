@@ -1,17 +1,17 @@
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileTokenMetadata;
 
-var APP_VIEW_MODULE_URL = "asset:angular/lib/src/core/linker/app_view.dart";
-var DEBUG_APP_VIEW_MODULE_URL =
+final APP_VIEW_MODULE_URL = "asset:angular/lib/src/core/linker/app_view.dart";
+final DEBUG_APP_VIEW_MODULE_URL =
     "asset:angular/lib/src/debug/debug_app_view.dart";
-var APP_VIEW_UTILS_MODULE_URL =
+final APP_VIEW_UTILS_MODULE_URL =
     "asset:angular/lib/src/core/linker/app_view_utils.dart";
-var CD_MODULE_URL =
+final CD_MODULE_URL =
     "asset:angular/lib/src/core/change_detection/change_detection.dart";
-var ANGULAR_ROOT_URL = "package:angular/angular.dart";
-var NG_IF_URL = "asset:angular/lib/src/common/directives/ng_if.dart";
-var NG_FOR_URL = "asset:angular/lib/src/common/directives/ng_for.dart";
-var PROFILE_RUNTIME_MODULE_URL =
+final ANGULAR_ROOT_URL = "package:angular/angular.dart";
+final NG_IF_URL = "asset:angular/lib/src/common/directives/ng_if.dart";
+final NG_FOR_URL = "asset:angular/lib/src/common/directives/ng_for.dart";
+final PROFILE_RUNTIME_MODULE_URL =
     "asset:angular/lib/src/debug/profile_runtime.dart";
 
 class Identifiers {
