@@ -2,7 +2,6 @@ import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
-import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
 import 'constants.dart' show EventHandlerVars;
@@ -140,8 +139,7 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
     List<DirectiveAst> dirs, CompileElement compileElement) {
   List<CompileEventListener> eventListeners = [];
   for (var hostEvent in hostEvents) {
-    compileElement.view.bindings
-        .add(new CompileBinding(compileElement, hostEvent));
+    compileElement.view.addBinding(compileElement, hostEvent);
     var listener = CompileEventListener.getOrCreate(
         compileElement, hostEvent.name, eventListeners);
     listener.addAction(hostEvent, null, null);
@@ -152,8 +150,7 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
     // by the component implementation.
     if (directiveAst.directive.isComponent) continue;
     for (var hostEvent in directiveAst.hostEvents) {
-      compileElement.view.bindings
-          .add(new CompileBinding(compileElement, hostEvent));
+      compileElement.view.addBinding(compileElement, hostEvent);
       var listener = CompileEventListener.getOrCreate(
           compileElement, hostEvent.name, eventListeners);
       listener.addAction(hostEvent, directiveAst.directive,

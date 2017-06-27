@@ -1,3 +1,4 @@
+import 'package:source_span/source_span.dart';
 import 'package:logging/logging.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
@@ -8,11 +9,13 @@ import '../config.dart' show CompilerConfig;
 import '../expression_parser/parser.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
+import '../parse_util.dart' show ParseErrorLevel;
+import '../schema/element_schema_registry.dart';
 import '../style_compiler.dart' show StylesCompileResult;
 import '../template_ast.dart' show TemplateAst, templateVisitAll;
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
-import 'view_binder.dart' show bindView;
+import 'view_binder.dart' show bindView, bindViewHostProperties;
 import 'view_builder.dart';
 
 class ViewCompileResult {
@@ -31,10 +34,11 @@ class ViewCompileResult {
 /// - Builds a tree of CompileNode/Element(s)
 class ViewCompiler {
   final CompilerConfig _genConfig;
+  final ElementSchemaRegistry _schemaRegistry;
   Parser parser;
   Logger _logger;
 
-  ViewCompiler(this._genConfig, this.parser);
+  ViewCompiler(this._genConfig, this.parser, this._schemaRegistry);
 
   ViewCompileResult compileComponent(
       CompileDirectiveMetadata component,
@@ -51,9 +55,22 @@ class ViewCompiler {
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.
     bindView(view, template);
+    bindHostProperties(view);
     finishView(view, statements);
     return new ViewCompileResult(
         statements, view.viewFactory.name, dependencies);
+  }
+
+  void bindHostProperties(CompileView view) {
+    var errorHandler =
+        (String message, SourceSpan sourceSpan, [ParseErrorLevel level]) {
+      if (level == ParseErrorLevel.FATAL) {
+        logger.severe(message);
+      } else {
+        logger.warning(message);
+      }
+    };
+    bindViewHostProperties(view, parser, _schemaRegistry, errorHandler);
   }
 
   Logger get logger => _logger ??= new Logger('View Compiler');

@@ -135,36 +135,30 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
   @override
   dynamic visitElement(HtmlElementAst ast, dynamic context) {
     var preparsedElement = preparseElement(ast);
-    switch (preparsedElement.type) {
-      case PreparsedElementType.NG_CONTENT:
-        if (identical(this.ngNonBindableStackCount, 0)) {
-          this.ngContentSelectors.add(preparsedElement.selectAttr);
+    if (preparsedElement.isNgContent) {
+      if (identical(this.ngNonBindableStackCount, 0)) {
+        this.ngContentSelectors.add(preparsedElement.selectAttr);
+      }
+    } else if (preparsedElement.isStyle) {
+      var textContent = "";
+      ast.children.forEach((child) {
+        if (child is HtmlTextAst) {
+          textContent += child.value;
         }
-        break;
-      case PreparsedElementType.STYLE:
-        var textContent = "";
-        ast.children.forEach((child) {
-          if (child is HtmlTextAst) {
-            textContent += child.value;
-          }
-        });
-        styles.add(textContent);
-        break;
-      case PreparsedElementType.STYLESHEET:
-        styleUrls.add(preparsedElement.hrefAttr);
-        break;
-      default:
-        // DDC reports this as error. See:
-
-        // https://github.com/dart-lang/dev_compiler/issues/428
-        break;
+      });
+      styles.add(textContent);
+    } else if (preparsedElement.isStyleSheet) {
+      styleUrls.add(preparsedElement.hrefAttr);
+    } else {
+      // DDC reports this as error. See:
+      // https://github.com/dart-lang/dev_compiler/issues/428
     }
     if (preparsedElement.nonBindable) {
-      this.ngNonBindableStackCount++;
+      ngNonBindableStackCount++;
     }
     htmlVisitAll(this, ast.children);
     if (preparsedElement.nonBindable) {
-      this.ngNonBindableStackCount--;
+      ngNonBindableStackCount--;
     }
     return null;
   }

@@ -30,6 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponent0 = [null, null];
 
 class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   DivElement _el_0;
+  var _expr_0;
   static RenderComponentType renderType;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -56,6 +57,15 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
     return null;
+  }
+
+  void detectHostChanges(bool firstCheck) {
+    dbg(null, 0, 0);
+    final currVal_0 = ctx.id;
+    if (import8.checkBinding(_expr_0, currVal_0)) {
+      setProp(rootEl, 'id', currVal_0);
+      _expr_0 = currVal_0;
+    }
   }
 }
 
@@ -108,6 +118,8 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
+    bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
+    _compView_0.detectHostChanges(firstCheck);
     _compView_0.detectChanges();
   }
 

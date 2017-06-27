@@ -15,22 +15,21 @@ void main() {
     }
 
     test("should detect script elements", () async {
-      expect(preparse("<script>").type, PreparsedElementType.SCRIPT);
+      expect(preparse("<script>").isScript, true);
     });
     test("should detect style elements", () async {
-      expect(preparse("<style>").type, PreparsedElementType.STYLE);
+      expect(preparse("<style>").isStyle, true);
     });
     test("should detect stylesheet elements", () async {
-      expect(preparse("<link rel=\"stylesheet\">").type,
-          PreparsedElementType.STYLESHEET);
+      expect(preparse("<link rel=\"stylesheet\">").isStyleSheet, true);
       expect(preparse("<link rel=\"stylesheet\" href=\"someUrl\">").hrefAttr,
           "someUrl");
-      expect(
-          preparse("<link rel=\"someRel\">").type, PreparsedElementType.OTHER);
+      expect(preparse("<link rel=\"someRel\">").isOther, true);
     });
     test("should detect ng-content elements", () async {
-      expect(preparse("<ng-content>").type, PreparsedElementType.NG_CONTENT);
+      expect(preparse("<ng-content>").isNgContent, true);
     });
+
     test("should normalize ng-content.select attribute", () async {
       expect(preparse("<ng-content>").selectAttr, "*");
       expect(preparse("<ng-content select>").selectAttr, "*");

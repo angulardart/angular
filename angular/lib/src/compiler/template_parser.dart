@@ -47,7 +47,7 @@ import 'template_ast.dart'
         DirectiveAst,
         BoundDirectivePropertyAst,
         VariableAst;
-import 'template_preparser.dart' show preparseElement, PreparsedElementType;
+import 'template_preparser.dart' show preparseElement;
 
 // Group 1 = 'bind-'
 // Group 2 = 'var-'
@@ -129,10 +129,10 @@ class TemplateParser {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String templateUrl) {
-    var htmlAstWithErrors = this._htmlParser.parse(template, templateUrl);
+    var htmlAstWithErrors = _htmlParser.parse(template, templateUrl);
     List<ParseError> errors = htmlAstWithErrors.errors;
     List<TemplateAst> result;
-    if (htmlAstWithErrors.rootNodes.length > 0) {
+    if (htmlAstWithErrors.rootNodes.isNotEmpty) {
       List<CompileDirectiveMetadata> uniqDirectives;
       try {
         uniqDirectives = removeDuplicates(directives);
@@ -140,31 +140,28 @@ class TemplateParser {
         // Continue since we are trying to report errors.
         uniqDirectives = directives;
       }
-      var uniqPipes = removeDuplicates(pipes);
+      var uniquePipes = removeDuplicates(pipes);
       var providerViewContext = new ProviderViewContext(
-          component, htmlAstWithErrors.rootNodes[0].sourceSpan);
+          component, htmlAstWithErrors.rootNodes.first.sourceSpan);
       try {
         var parseVisitor = new TemplateParseVisitor(
             providerViewContext,
             uniqDirectives,
-            uniqPipes,
-            this._exprParser,
-            this._schemaRegistry,
+            uniquePipes,
+            _exprParser,
+            _schemaRegistry,
             component.template?.preserveWhitespace ?? false);
         result = htmlVisitAll(parseVisitor, htmlAstWithErrors.rootNodes,
             EMPTY_ELEMENT_CONTEXT) as List<TemplateAst>;
-        errors =
-            (new List.from((new List.from(errors)..addAll(parseVisitor.errors)))
-              ..addAll(providerViewContext.errors));
+        errors = new List.from(errors)
+          ..addAll(parseVisitor.errors)
+          ..addAll(providerViewContext.errors);
       } catch (_) {
         errors = new List.from(errors)..addAll(providerViewContext.errors);
         result = <TemplateAst>[];
       }
     } else {
       result = <TemplateAst>[];
-    }
-    if (errors.length > 0) {
-      return new TemplateParseResult(result, errors);
     }
     return new TemplateParseResult(result, errors);
   }
@@ -207,88 +204,11 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       pipesByName[pipe.name] = pipe;
     }
   }
+
   void _reportError(String message, SourceSpan sourceSpan,
-      [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
+      [ParseErrorLevel level]) {
+    level ??= ParseErrorLevel.FATAL;
     errors.add(new TemplateParseError(message, sourceSpan, level));
-  }
-
-  ASTWithSource _parseInterpolation(String value, SourceSpan sourceSpan,
-      List<CompileIdentifierMetadata> exports) {
-    var sourceInfo = sourceSpan.start.toString();
-    try {
-      var ast = _exprParser.parseInterpolation(value, sourceInfo, exports);
-      _validatePipeNames(ast, sourceSpan);
-      // Validate number of interpolations.
-      if (ast != null &&
-          ((ast.ast as Interpolation)).expressions.length >
-              MAX_INTERPOLATION_VALUES) {
-        throw new BaseException(
-            'Only support at most $MAX_INTERPOLATION_VALUES '
-            'interpolation values!');
-      }
-      return ast;
-    } catch (e) {
-      _reportError('$e', sourceSpan);
-      return _exprParser.wrapLiteralPrimitive('ERROR', sourceInfo);
-    }
-  }
-
-  ASTWithSource _parseAction(String value, SourceSpan sourceSpan,
-      List<CompileIdentifierMetadata> exports) {
-    var sourceInfo = sourceSpan.start.toString();
-    try {
-      var ast = _exprParser.parseAction(value, sourceInfo, exports);
-      _validatePipeNames(ast, sourceSpan);
-      return ast;
-    } catch (e) {
-      _reportError('$e', sourceSpan);
-      return _exprParser.wrapLiteralPrimitive('ERROR', sourceInfo);
-    }
-  }
-
-  ASTWithSource _parseBinding(String value, SourceSpan sourceSpan,
-      List<CompileIdentifierMetadata> exports) {
-    var sourceInfo = sourceSpan.start.toString();
-    try {
-      var ast = _exprParser.parseBinding(value, sourceInfo, exports);
-      _validatePipeNames(ast, sourceSpan);
-      return ast;
-    } catch (e) {
-      _reportError('$e', sourceSpan);
-      return _exprParser.wrapLiteralPrimitive('ERROR', sourceInfo);
-    }
-  }
-
-  List<TemplateBinding> _parseTemplateBindings(String value,
-      SourceSpan sourceSpan, List<CompileIdentifierMetadata> exports) {
-    var sourceInfo = sourceSpan.start.toString();
-    try {
-      var bindingsResult =
-          _exprParser.parseTemplateBindings(value, sourceInfo, exports);
-      for (TemplateBinding binding in bindingsResult.templateBindings) {
-        if (binding.expression != null) {
-          _validatePipeNames(binding.expression, sourceSpan);
-        }
-      }
-      for (var warning in bindingsResult.warnings) {
-        _reportError(warning, sourceSpan, ParseErrorLevel.WARNING);
-      }
-      return bindingsResult.templateBindings;
-    } catch (e) {
-      _reportError('$e', sourceSpan);
-      return [];
-    }
-  }
-
-  void _validatePipeNames(ASTWithSource ast, SourceSpan sourceSpan) {
-    if (ast == null) return;
-    var collector = new PipeCollector();
-    ast.visit(collector);
-    for (String pipeName in collector.pipes) {
-      if (!pipesByName.containsKey(pipeName)) {
-        _reportError("The pipe '$pipeName' could not be found", sourceSpan);
-      }
-    }
   }
 
   @override
@@ -314,8 +234,9 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           return null;
         }
       }
-      return new TextAst(
-          text.replaceAll('\uE500', ' '), ngContentIndex, ast.sourceSpan);
+      // Convert &ngsp to actual space.
+      text = text.replaceAll('\uE500', ' ');
+      return new TextAst(text, ngContentIndex, ast.sourceSpan);
     }
   }
 
@@ -341,13 +262,12 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     ElementContext parent = context;
     var nodeName = element.name;
     var preparsedElement = preparseElement(element);
-    if (identical(preparsedElement.type, PreparsedElementType.SCRIPT) ||
-        identical(preparsedElement.type, PreparsedElementType.STYLE)) {
+    if (preparsedElement.isScript || preparsedElement.isStyle) {
       // Skipping <script> for security reasons
       // Skipping <style> as we already processed them in the StyleCompiler.
       return null;
     }
-    if (identical(preparsedElement.type, PreparsedElementType.STYLESHEET) &&
+    if (preparsedElement.isStyleSheet &&
         isStyleUrlResolvable(preparsedElement.hrefAttr)) {
       // Skipping stylesheets with either relative urls or package scheme as
       // we already processed them in the StyleCompiler
@@ -434,7 +354,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         : elementCssSelector;
     var ngContentIndex = parent.findNgContentIndex(projectionSelector);
     TemplateAst parsedElement;
-    if (identical(preparsedElement.type, PreparsedElementType.NG_CONTENT)) {
+    if (preparsedElement.isNgContent) {
       var elementChildren = element.children;
       if (elementChildren != null && elementChildren.isNotEmpty) {
         _reportError(
@@ -519,6 +439,85 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           hasDeferredComponent: hasDeferredComponent);
     }
     return parsedElement;
+  }
+
+  ASTWithSource _parseInterpolation(String value, SourceSpan sourceSpan,
+      List<CompileIdentifierMetadata> exports) {
+    var sourceInfo = sourceSpan.start.toString();
+    try {
+      var ast = _exprParser.parseInterpolation(value, sourceInfo, exports);
+      _validatePipeNames(ast, sourceSpan);
+      // Validate number of interpolations.
+      if (ast != null &&
+          ((ast.ast as Interpolation)).expressions.length >
+              MAX_INTERPOLATION_VALUES) {
+        throw new BaseException(
+            'Only support at most $MAX_INTERPOLATION_VALUES '
+            'interpolation values!');
+      }
+      return ast;
+    } catch (e) {
+      _reportError('$e', sourceSpan);
+      return _exprParser.wrapLiteralPrimitive('ERROR', sourceInfo);
+    }
+  }
+
+  ASTWithSource _parseAction(String value, SourceSpan sourceSpan,
+      List<CompileIdentifierMetadata> exports) {
+    var sourceInfo = sourceSpan.start.toString();
+    try {
+      var ast = _exprParser.parseAction(value, sourceInfo, exports);
+      _validatePipeNames(ast, sourceSpan);
+      return ast;
+    } catch (e) {
+      _reportError('$e', sourceSpan);
+      return _exprParser.wrapLiteralPrimitive('ERROR', sourceInfo);
+    }
+  }
+
+  ASTWithSource _parseBinding(String value, SourceSpan sourceSpan,
+      List<CompileIdentifierMetadata> exports) {
+    var sourceInfo = sourceSpan.start.toString();
+    try {
+      var ast = _exprParser.parseBinding(value, sourceInfo, exports);
+      _validatePipeNames(ast, sourceSpan);
+      return ast;
+    } catch (e) {
+      _reportError('$e', sourceSpan);
+      return _exprParser.wrapLiteralPrimitive('ERROR', sourceInfo);
+    }
+  }
+
+  List<TemplateBinding> _parseTemplateBindings(String value,
+      SourceSpan sourceSpan, List<CompileIdentifierMetadata> exports) {
+    var sourceInfo = sourceSpan.start.toString();
+    try {
+      var bindingsResult =
+          _exprParser.parseTemplateBindings(value, sourceInfo, exports);
+      for (TemplateBinding binding in bindingsResult.templateBindings) {
+        if (binding.expression != null) {
+          _validatePipeNames(binding.expression, sourceSpan);
+        }
+      }
+      for (var warning in bindingsResult.warnings) {
+        _reportError(warning, sourceSpan, ParseErrorLevel.WARNING);
+      }
+      return bindingsResult.templateBindings;
+    } catch (e) {
+      _reportError('$e', sourceSpan);
+      return [];
+    }
+  }
+
+  void _validatePipeNames(ASTWithSource ast, SourceSpan sourceSpan) {
+    if (ast == null) return;
+    var collector = new PipeCollector();
+    ast.visit(collector);
+    for (String pipeName in collector.pipes) {
+      if (!pipesByName.containsKey(pipeName)) {
+        _reportError("The pipe '$pipeName' could not be found", sourceSpan);
+      }
+    }
   }
 
   bool _parseInlineTemplateBinding(
@@ -819,8 +818,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     var targetPropertyAsts = <BoundElementPropertyAst>[];
     hostProps.forEach((String propName, String expression) {
       var exprAst = _parseBinding(expression, sourceSpan, exports);
-      targetPropertyAsts.add(_createElementPropertyAst(
-          elementName, propName, exprAst, sourceSpan));
+      targetPropertyAsts.add(createElementPropertyAst(elementName, propName,
+          exprAst, sourceSpan, _schemaRegistry, _reportError));
     });
     return targetPropertyAsts;
   }
@@ -876,83 +875,11 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     }
     for (BoundElementOrDirectiveProperty prop in props) {
       if (!prop.isLiteral && boundDirectivePropsIndex[prop.name] == null) {
-        boundElementProps.add(_createElementPropertyAst(
-            elementName, prop.name, prop.expression, prop.sourceSpan));
+        boundElementProps.add(createElementPropertyAst(elementName, prop.name,
+            prop.expression, prop.sourceSpan, _schemaRegistry, _reportError));
       }
     }
     return boundElementProps;
-  }
-
-  BoundElementPropertyAst _createElementPropertyAst(
-      String elementName, String name, AST ast, SourceSpan sourceSpan) {
-    var unit;
-    var bindingType;
-    String boundPropertyName;
-    TemplateSecurityContext securityContext;
-    var parts = name.split(PROPERTY_PARTS_SEPARATOR);
-    if (identical(parts.length, 1)) {
-      boundPropertyName = _schemaRegistry.getMappedPropName(parts[0]);
-      securityContext =
-          _schemaRegistry.securityContext(elementName, boundPropertyName);
-      bindingType = PropertyBindingType.Property;
-      if (!_schemaRegistry.hasProperty(elementName, boundPropertyName)) {
-        _reportUnknownPropertyOrDirective(
-            elementName, boundPropertyName, sourceSpan);
-      }
-    } else {
-      if (parts[0] == ATTRIBUTE_PREFIX) {
-        boundPropertyName = parts[1];
-        if (boundPropertyName.toLowerCase().startsWith('on')) {
-          _reportError(
-              'Binding to event attribute \'$boundPropertyName\' '
-              'is disallowed for security reasons, please use '
-              '(${boundPropertyName.substring(2)})=...',
-              sourceSpan);
-        }
-        // NB: For security purposes, use the mapped property name, not the
-        // attribute name.
-        securityContext = _schemaRegistry.securityContext(
-            elementName, _schemaRegistry.getMappedPropName(boundPropertyName));
-        var nsSeparatorIdx = boundPropertyName.indexOf(':');
-        if (nsSeparatorIdx > -1) {
-          var ns = boundPropertyName.substring(0, nsSeparatorIdx);
-          var name = boundPropertyName.substring(nsSeparatorIdx + 1);
-          boundPropertyName = mergeNsAndName(ns, name);
-        }
-        bindingType = PropertyBindingType.Attribute;
-      } else if (parts[0] == CLASS_PREFIX) {
-        boundPropertyName = parts[1];
-        bindingType = PropertyBindingType.Class;
-        securityContext = TemplateSecurityContext.none;
-      } else if (parts[0] == STYLE_PREFIX) {
-        unit = parts.length > 2 ? parts[2] : null;
-        boundPropertyName = parts[1];
-        bindingType = PropertyBindingType.Style;
-        securityContext = TemplateSecurityContext.style;
-      } else {
-        this._reportError("Invalid property name '$name'", sourceSpan);
-        bindingType = null;
-        securityContext = null;
-      }
-    }
-    return new BoundElementPropertyAst(
-        boundPropertyName, bindingType, securityContext, ast, unit, sourceSpan);
-  }
-
-  void _reportUnknownPropertyOrDirective(
-      String elementName, String boundPropertyName, SourceSpan sourceSpan) {
-    // Very common mistake is to type [ngClass] as [ngclass]
-    if (boundPropertyName == 'ngclass') {
-      _reportError(
-          'Please use camel-case ngClass instead of ngclass in your template',
-          sourceSpan);
-      return;
-    }
-    _reportError(
-        "Can't bind to '$boundPropertyName' since it isn't a known "
-        "native property or known directive. Please fix typo or add to "
-        "directives list.",
-        sourceSpan);
   }
 
   List<String> _findComponentDirectiveNames(List<DirectiveAst> directives) {
@@ -1013,6 +940,79 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 }
 
+typedef void ErrorCallback(String message, SourceSpan sourceSpan,
+    [ParseErrorLevel level]);
+
+BoundElementPropertyAst createElementPropertyAst(
+    String elementName,
+    String name,
+    AST valueExpr,
+    SourceSpan sourceSpan,
+    ElementSchemaRegistry schemaRegistry,
+    ErrorCallback reportError) {
+  var unit;
+  var bindingType;
+  String boundPropertyName;
+  TemplateSecurityContext securityContext;
+  var parts = name.split(PROPERTY_PARTS_SEPARATOR);
+  if (identical(parts.length, 1)) {
+    boundPropertyName = schemaRegistry.getMappedPropName(parts[0]);
+    securityContext =
+        schemaRegistry.securityContext(elementName, boundPropertyName);
+    bindingType = PropertyBindingType.Property;
+    if (!schemaRegistry.hasProperty(elementName, boundPropertyName)) {
+      if (boundPropertyName == 'ngclass') {
+        reportError(
+            'Please use camel-case ngClass instead of ngclass in your template',
+            sourceSpan);
+      } else {
+        reportError(
+            "Can't bind to '$boundPropertyName' since it isn't a known "
+            "native property or known directive. Please fix typo or add to "
+            "directives list.",
+            sourceSpan);
+      }
+    }
+  } else {
+    if (parts[0] == ATTRIBUTE_PREFIX) {
+      boundPropertyName = parts[1];
+      if (boundPropertyName.toLowerCase().startsWith('on')) {
+        reportError(
+            'Binding to event attribute \'$boundPropertyName\' '
+            'is disallowed for security reasons, please use '
+            '(${boundPropertyName.substring(2)})=...',
+            sourceSpan);
+      }
+      // NB: For security purposes, use the mapped property name, not the
+      // attribute name.
+      securityContext = schemaRegistry.securityContext(
+          elementName, schemaRegistry.getMappedPropName(boundPropertyName));
+      var nsSeparatorIdx = boundPropertyName.indexOf(':');
+      if (nsSeparatorIdx > -1) {
+        var ns = boundPropertyName.substring(0, nsSeparatorIdx);
+        var name = boundPropertyName.substring(nsSeparatorIdx + 1);
+        boundPropertyName = mergeNsAndName(ns, name);
+      }
+      bindingType = PropertyBindingType.Attribute;
+    } else if (parts[0] == CLASS_PREFIX) {
+      boundPropertyName = parts[1];
+      bindingType = PropertyBindingType.Class;
+      securityContext = TemplateSecurityContext.none;
+    } else if (parts[0] == STYLE_PREFIX) {
+      unit = parts.length > 2 ? parts[2] : null;
+      boundPropertyName = parts[1];
+      bindingType = PropertyBindingType.Style;
+      securityContext = TemplateSecurityContext.style;
+    } else {
+      reportError("Invalid property name '$name'", sourceSpan);
+      bindingType = null;
+      securityContext = null;
+    }
+  }
+  return new BoundElementPropertyAst(boundPropertyName, bindingType,
+      securityContext, valueExpr, unit, sourceSpan);
+}
+
 class NonBindableVisitor implements HtmlAstVisitor {
   @override
   bool visit(HtmlAst ast, dynamic context) => false;
@@ -1021,9 +1021,9 @@ class NonBindableVisitor implements HtmlAstVisitor {
   ElementAst visitElement(HtmlElementAst ast, dynamic context) {
     ElementContext parent = context;
     var preparsedElement = preparseElement(ast);
-    if (identical(preparsedElement.type, PreparsedElementType.SCRIPT) ||
-        identical(preparsedElement.type, PreparsedElementType.STYLE) ||
-        identical(preparsedElement.type, PreparsedElementType.STYLESHEET)) {
+    if (preparsedElement.isScript ||
+        preparsedElement.isStyle ||
+        preparsedElement.isStyleSheet) {
       // Skipping <script> for security reasons
       // Skipping <style> and stylesheets as we already processed them
       // in the StyleCompiler

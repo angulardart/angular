@@ -1,13 +1,9 @@
-import "package:angular/src/core/change_detection/change_detection.dart"
-    show ChangeDetectorState, ChangeDetectionStrategy;
-import "package:angular/src/core/linker/view_type.dart" show ViewType;
-import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
-
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
-import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 
-o.Expression _enumExpression(
+const String appViewRootElementName = 'rootEl';
+
+o.Expression createEnumExpression(
     CompileIdentifierMetadata classIdentifier, dynamic value) {
   if (value == null) return o.NULL_EXPR;
   String enumStr = value.toString();
@@ -15,60 +11,6 @@ o.Expression _enumExpression(
   return o.importExpr(new CompileIdentifierMetadata(
       name: '${classIdentifier.name}.$name',
       moduleUrl: classIdentifier.moduleUrl));
-}
-
-class ViewTypeEnum {
-  static o.Expression fromValue(ViewType value) {
-    return _enumExpression(Identifiers.ViewType, value);
-  }
-
-  static final HOST = ViewTypeEnum.fromValue(ViewType.HOST);
-  static final COMPONENT = ViewTypeEnum.fromValue(ViewType.COMPONENT);
-  static final EMBEDDED = ViewTypeEnum.fromValue(ViewType.EMBEDDED);
-}
-
-class ViewEncapsulationEnum {
-  static o.Expression fromValue(ViewEncapsulation value) {
-    return _enumExpression(Identifiers.ViewEncapsulation, value);
-  }
-
-  static final Emulated =
-      ViewEncapsulationEnum.fromValue(ViewEncapsulation.Emulated);
-  static final Native =
-      ViewEncapsulationEnum.fromValue(ViewEncapsulation.Native);
-  static final None = ViewEncapsulationEnum.fromValue(ViewEncapsulation.None);
-}
-
-class ChangeDetectorStateEnum {
-  static o.Expression fromValue(ChangeDetectorState value) {
-    return _enumExpression(Identifiers.ChangeDetectorState, value);
-  }
-
-  static final NeverChecked =
-      ChangeDetectorStateEnum.fromValue(ChangeDetectorState.NeverChecked);
-  static final CheckedBefore =
-      ChangeDetectorStateEnum.fromValue(ChangeDetectorState.CheckedBefore);
-  static final Errored =
-      ChangeDetectorStateEnum.fromValue(ChangeDetectorState.Errored);
-}
-
-class ChangeDetectionStrategyEnum {
-  static o.Expression fromValue(ChangeDetectionStrategy value) {
-    return _enumExpression(Identifiers.ChangeDetectionStrategy, value);
-  }
-
-  static final CheckOnce =
-      ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.CheckOnce);
-  static final Checked =
-      ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.Checked);
-  static final CheckAlways = ChangeDetectionStrategyEnum
-      .fromValue(ChangeDetectionStrategy.CheckAlways);
-  static final Detached =
-      ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.Detached);
-  static final OnPush =
-      ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.OnPush);
-  static final Default =
-      ChangeDetectionStrategyEnum.fromValue(ChangeDetectionStrategy.Default);
 }
 
 class ViewConstructorVars {

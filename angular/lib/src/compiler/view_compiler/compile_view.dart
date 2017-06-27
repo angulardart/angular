@@ -10,6 +10,7 @@ import '../compile_metadata.dart'
 import '../config.dart' show CompilerConfig;
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
+import "../template_ast.dart" show TemplateAst;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
@@ -50,7 +51,7 @@ class CompileView implements NameResolver {
   /// List of references to view containers used by embedded templates
   /// and child components.
   List<o.Expression> viewContainers = [];
-  List<CompileBinding> bindings = [];
+  List<CompileBinding> _bindings = [];
   List<o.Statement> classStatements = [];
   CompileMethod createMethod;
   CompileMethod injectorGetMethod;
@@ -59,6 +60,7 @@ class CompileView implements NameResolver {
   CompileMethod updateViewQueriesMethod;
   CompileMethod detectChangesInInputsMethod;
   CompileMethod detectChangesRenderPropertiesMethod;
+  CompileMethod detectHostChangesMethod;
   CompileMethod afterContentLifecycleCallbacksMethod;
   CompileMethod afterViewLifecycleCallbacksMethod;
   CompileMethod destroyMethod;
@@ -144,6 +146,12 @@ class CompileView implements NameResolver {
     if (deferredModules == null) {
       throw new ArgumentError();
     }
+  }
+
+  // Adds a binding to the view and returns binding index.
+  int addBinding(CompileNode node, TemplateAst sourceAst) {
+    _bindings.add(new CompileBinding(node, sourceAst));
+    return _bindings.length - 1;
   }
 
   o.Expression callPipe(

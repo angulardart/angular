@@ -3,8 +3,11 @@ import 'package:angular/angular.dart';
 @Component(
     selector: 'CheckOnce',
     template: '<div>CheckOnce</div>',
+    host: const {'[id]': 'id'},
     changeDetection: ChangeDetectionStrategy.CheckOnce)
-class CheckOnceComponent {}
+class CheckOnceComponent {
+  String id;
+}
 
 @Component(
     selector: 'Checked',

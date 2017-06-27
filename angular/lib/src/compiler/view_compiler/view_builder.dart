@@ -11,6 +11,8 @@ import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import '../config.dart';
+import '../../core/change_detection/change_detection.dart'
+    show ChangeDetectorState, ChangeDetectionStrategy;
 import '../expression_parser/parser.dart' show Parser;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
@@ -38,15 +40,13 @@ import "compile_method.dart";
 import "compile_view.dart";
 import "constants.dart"
     show
-        ChangeDetectionStrategyEnum,
-        ChangeDetectorStateEnum,
+        appViewRootElementName,
+        createEnumExpression,
         DetectChangesVars,
         EventHandlerVars,
         InjectMethodVars,
         ViewConstructorVars,
-        ViewEncapsulationEnum,
-        ViewProperties,
-        ViewTypeEnum;
+        ViewProperties;
 import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
 import 'expression_converter.dart';
 import 'parse_utils.dart';
@@ -68,7 +68,6 @@ var cloneAnchorNodeExpr =
 var parentRenderNodeVar = o.variable("parentRenderNode");
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
-const String appViewRootElementName = 'rootEl';
 
 /// Component dependency and associated identifier.
 class ViewCompileDependency {
@@ -880,6 +879,12 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
         null, ['override'])
   ])
     ..addAll(view.eventHandlerMethods));
+  if (view.detectHostChangesMethod != null) {
+    viewMethods.add(new o.ClassMethod(
+        'detectHostChanges',
+        [new o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
+        view.detectHostChangesMethod.finish()));
+  }
   var superClass = view.genConfig.genDebugInfo
       ? Identifiers.DebugAppView
       : Identifiers.AppView;
@@ -908,11 +913,12 @@ o.ClassMethod _createViewClassConstructor(
     new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE)
   ];
   var superConstructorArgs = [
-    ViewTypeEnum.fromValue(view.viewType),
+    createEnumExpression(Identifiers.ViewType, view.viewType),
     o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,
     ViewConstructorVars.parentIndex,
-    ChangeDetectionStrategyEnum.fromValue(getChangeDetectionMode(view))
+    createEnumExpression(
+        Identifiers.ChangeDetectionStrategy, getChangeDetectionMode(view))
   ];
   if (view.genConfig.genDebugInfo) {
     superConstructorArgs.add(nodeDebugInfosVar);
@@ -1002,8 +1008,8 @@ o.Expression _constructRenderType(
               .importExpr(Identifiers.appViewUtils)
               .callMethod("createRenderType", [
             o.literal(view.genConfig.genDebugInfo ? templateUrlInfo : ''),
-            ViewEncapsulationEnum
-                .fromValue(view.component.template.encapsulation),
+            createEnumExpression(Identifiers.ViewEncapsulation,
+                view.component.template.encapsulation),
             view.styles
           ]),
           checkIfNull: true)
@@ -1310,9 +1316,8 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   if (readVars.contains(DetectChangesVars.firstCheck.name)) {
     varStmts.add(new o.DeclareVarStmt(
         DetectChangesVars.firstCheck.name,
-        o.THIS_EXPR
-            .prop('cdState')
-            .identical(ChangeDetectorStateEnum.NeverChecked),
+        o.THIS_EXPR.prop('cdState').identical(createEnumExpression(
+            Identifiers.ChangeDetectorState, ChangeDetectorState.NeverChecked)),
         o.BOOL_TYPE));
   }
   if (readVars.contains(DetectChangesVars.valUnwrapper.name)) {

@@ -29,6 +29,8 @@ const List<dynamic> styles$HostComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HostComponent0 = [];
 
 class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
+  var _expr_0;
+  bool _expr_1;
   static RenderComponentType renderType;
   ViewHostComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -55,6 +57,20 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
     rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
     return null;
   }
+
+  void detectHostChanges(bool firstCheck) {
+    dbg(null, 0, 0);
+    final currVal_0 = ctx.title;
+    if (import8.checkBinding(_expr_0, currVal_0)) {
+      setProp(rootEl, 'title', currVal_0);
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = ctx.isDisabled;
+    if (import8.checkBinding(_expr_1, currVal_1)) {
+      updateElemClass(rootEl, 'is-disabled', currVal_1);
+      _expr_1 = currVal_1;
+    }
+  }
 }
 
 AppView<import2.HostComponent> viewFactory_HostComponent0(
@@ -71,8 +87,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = [
 class ViewHostComponentHost0 extends DebugAppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import2.HostComponent _HostComponent_0_2;
-  var _expr_0;
-  bool _expr_1;
   static RenderComponentType renderType;
   ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -108,17 +122,8 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    dbg(0, 0, 0);
-    final currVal_0 = _HostComponent_0_2.title;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      setProp(rootEl, 'title', currVal_0);
-      _expr_0 = currVal_0;
-    }
-    final currVal_1 = _HostComponent_0_2.isDisabled;
-    if (import8.checkBinding(_expr_1, currVal_1)) {
-      updateElemClass(rootEl, 'is-disabled', currVal_1);
-      _expr_1 = currVal_1;
-    }
+    bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
+    _compView_0.detectHostChanges(firstCheck);
     _compView_0.detectChanges();
   }
 

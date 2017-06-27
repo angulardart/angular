@@ -15,7 +15,7 @@ import "compile_method.dart" show CompileMethod;
 import "compile_query.dart"
     show CompileQuery, createQueryListField, addQueryToTokenMap;
 import "compile_view.dart" show CompileView;
-import "constants.dart" show InjectMethodVars;
+import "constants.dart" show appViewRootElementName, InjectMethodVars;
 import "view_compiler_utils.dart"
     show
         getPropertyInView,
@@ -116,7 +116,18 @@ class CompileElement extends CompileNode {
 
   CompileElement.root()
       : this(
-            null, null, null, null, null, null, null, [], [], false, false, []);
+            null,
+            null,
+            null,
+            new o.ReadClassMemberExpr(appViewRootElementName),
+            appViewRootElementName,
+            null,
+            null,
+            [],
+            [],
+            false,
+            false,
+            []);
 
   void _createViewContainer() {
     var fieldName = '_appEl_$nodeIndex';

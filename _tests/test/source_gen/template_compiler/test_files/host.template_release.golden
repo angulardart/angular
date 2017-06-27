@@ -28,6 +28,8 @@ import 'package:angular/src/facade/lang.dart'
 const List<dynamic> styles$HostComponent = const [];
 
 class ViewHostComponent0 extends AppView<import1.HostComponent> {
+  var _expr_0;
+  bool _expr_1;
   static RenderComponentType renderType;
   ViewHostComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -47,6 +49,19 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
     return null;
   }
+
+  void detectHostChanges(bool firstCheck) {
+    final currVal_0 = ctx.title;
+    if (!import8.looseIdentical(_expr_0, currVal_0)) {
+      setProp(rootEl, 'title', currVal_0);
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = ctx.isDisabled;
+    if (!import8.looseIdentical(_expr_1, currVal_1)) {
+      updateElemClass(rootEl, 'is-disabled', currVal_1);
+      _expr_1 = currVal_1;
+    }
+  }
 }
 
 AppView<import1.HostComponent> viewFactory_HostComponent0(
@@ -59,8 +74,6 @@ const List<dynamic> styles$HostComponentHost = const [];
 class ViewHostComponentHost0 extends AppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_2;
-  var _expr_0;
-  bool _expr_1;
   static RenderComponentType renderType;
   ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
@@ -90,16 +103,8 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    final currVal_0 = _HostComponent_0_2.title;
-    if (!import8.looseIdentical(_expr_0, currVal_0)) {
-      setProp(rootEl, 'title', currVal_0);
-      _expr_0 = currVal_0;
-    }
-    final currVal_1 = _HostComponent_0_2.isDisabled;
-    if (!import8.looseIdentical(_expr_1, currVal_1)) {
-      updateElemClass(rootEl, 'is-disabled', currVal_1);
-      _expr_1 = currVal_1;
-    }
+    bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
+    _compView_0.detectHostChanges(firstCheck);
     _compView_0.detectChanges();
   }
 
