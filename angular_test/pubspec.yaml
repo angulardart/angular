@@ -1,8 +1,8 @@
 name: angular_test
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular2
-description: Testing infrastructure for AngularDart
-version: 1.0.0-beta+1
+description: Testing runner and library for AngularDart
+version: 1.0.0-beta+3
 
 environment:
   sdk: '>=1.22.0 <2.0.0'
@@ -13,11 +13,15 @@ executables:
 dependencies:
   angular: '^4.0.0'
   ansicolor: '^0.0.9'
-  args: '^0.13.7'
+  args: '>=0.13.7 <2.0.0'
+  collection: '^1.14.0'
+  func: '>=0.1.1 <2.0.0'
   logging: '^0.11.3+1'
   matcher: '^0.12.0+2'
+  meta: '^1.0.0'
   pageloader: '^2.2.5'
   path: '^1.4.1'
+  stack_trace: ^1.7.0
   test: '^0.12.17'
 dependency_overrides:
   angular:
@@ -34,6 +38,7 @@ transformers:
           - test/frontend/bed_error_test.dart
           - test/frontend/bed_lifecycle_test.dart
           - test/frontend/pageloader_test.dart
+          - test/frontend/query_test.dart
           - test/bootstrap_test.dart
 
   # Allow test to proxy-load files so we can run AoT tests w/ pub serve.

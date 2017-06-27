@@ -4,10 +4,10 @@
 
 import 'dart:async';
 
-import 'package:angular_test/src/errors.dart';
-import 'package:angular_test/src/frontend/stabilizer.dart';
 import 'package:test/test.dart';
 import 'package:angular/di.dart';
+import 'package:angular_test/src/errors.dart';
+import 'package:angular_test/src/frontend/stabilizer.dart';
 
 void main() {
   group('$NgZoneStabilizer', () {

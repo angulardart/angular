@@ -6,34 +6,13 @@
 @TestOn('browser')
 import 'dart:html';
 
-import 'package:angular_test/src/bootstrap.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/src/bootstrap.dart';
 
 @AngularEntrypoint()
 void main() {
-  test(
-    'should create a new component in the DOM',
-    NewComponentInDom._runTest,
-  );
-
-  test(
-    'should call a handler before initial load',
-    BeforeChangeDetection._runTest,
-  );
-
-  test(
-    'should include user-specified providers',
-    AddProviders._runTest,
-  );
-}
-
-@Component(
-  selector: 'test',
-  template: 'Hello World',
-)
-class NewComponentInDom {
-  static _runTest() async {
+  test('should create a new component in the DOM', () async {
     final host = new Element.div();
     final test = await bootstrapForTest(
       NewComponentInDom,
@@ -41,15 +20,9 @@ class NewComponentInDom {
     );
     expect(host.text, contains('Hello World'));
     test.destroy();
-  }
-}
+  });
 
-@Component(
-  selector: 'test',
-  template: 'Hello {{users.first}}!',
-)
-class BeforeChangeDetection {
-  static _runTest() async {
+  test('should call a handler before initial load', () async {
     final host = new Element.div();
     final test = await bootstrapForTest/*<BeforeChangeDetection>*/(
       BeforeChangeDetection,
@@ -58,18 +31,9 @@ class BeforeChangeDetection {
     );
     expect(host.text, contains('Hello Mati!'));
     test.destroy();
-  }
+  });
 
-  // This will fail with an NPE if not initialized before change detection.
-  final users = <String>[];
-}
-
-@Component(
-  selector: 'test',
-  template: '',
-)
-class AddProviders {
-  static _runTest() async {
+  test('should include user-specified providers', () async {
     final host = new Element.div();
     final test = await bootstrapForTest(
       AddProviders,
@@ -81,8 +45,36 @@ class AddProviders {
     AddProviders instance = test.instance;
     expect(instance._testService, isNotNull);
     test.destroy();
-  }
+  });
 
+  test('should throw if the root component is OnPush', () async {
+    expect(
+      bootstrapForTest(OnPushComponent, new DivElement()),
+      throwsUnsupportedError,
+    );
+  }, skip: 'See https://github.com/dart-lang/angular2/issues/329');
+}
+
+@Component(
+  selector: 'test',
+  template: 'Hello World',
+)
+class NewComponentInDom {}
+
+@Component(
+  selector: 'test',
+  template: 'Hello {{users.first}}!',
+)
+class BeforeChangeDetection {
+  // This will fail with an NPE if not initialized before change detection.
+  final users = <String>[];
+}
+
+@Component(
+  selector: 'test',
+  template: '',
+)
+class AddProviders {
   final TestService _testService;
 
   AddProviders(this._testService);
@@ -90,3 +82,17 @@ class AddProviders {
 
 @Injectable()
 class TestService {}
+
+@Component(
+  selector: 'test',
+  template: '{{"Hello World"}}',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class OnPushComponent {}
+
+@Component(
+  selector: 'test',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Stateful,
+)
+class XXXComponent extends ComponentState {}

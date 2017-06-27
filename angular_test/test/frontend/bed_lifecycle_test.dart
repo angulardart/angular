@@ -6,9 +6,9 @@
 @TestOn('browser')
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 @AngularEntrypoint()
 void main() {
@@ -23,27 +23,67 @@ void main() {
 
   tearDown(disposeAnyRunningTest);
 
-  test('should render, update, and destroy a component', () {
-    return AngularLifecycle._runTest(docRoot, testRoot);
-  });
-}
-
-@Component(selector: 'test', template: '{{value}}')
-class AngularLifecycle {
-  static _runTest(Element docRoot, Element testRoot) async {
+  test('should render, update, and destroy a component', () async {
     // We are going to verify that the document root has a new node created (our
     // component), the node is updated (after change detection), and after
     // destroying the test the document root has been cleared.
-    final fixture = await new NgTestBed<AngularLifecycle>(
-      host: testRoot,
-    )
-        .create();
+    final testBed = new NgTestBed<AngularLifecycle>(host: testRoot);
+    final fixture = await testBed.create();
     expect(docRoot.text, isEmpty);
     await fixture.update((c) => c.value = 'New value');
     expect(docRoot.text, 'New value');
     await fixture.dispose();
+    print(docRoot.innerHtml);
     expect(docRoot.text, isEmpty);
+  });
+
+  test('should invoke ngOnChanges, then ngOnInit', () async {
+    final fixture = await new NgTestBed<NgOnChangesInitOrder>().create(
+      beforeChangeDetection: (root) => root.name = 'Hello',
+    );
+    await fixture.query<ChildWithLifeCycles>(
+      (el) => el.componentInstance is ChildWithLifeCycles,
+      (child) {
+        expect(child.events, ['OnChanges:name=Hello', 'OnInit']);
+      },
+    );
+  });
+}
+
+@Component(
+  selector: 'test',
+  template: '{{value}}',
+)
+class AngularLifecycle {
+  String value = '';
+}
+
+@Component(
+  selector: 'test',
+  directives: const [ChildWithLifeCycles],
+  template: '<child [name]="name"></child>',
+)
+class NgOnChangesInitOrder {
+  String name;
+}
+
+@Component(
+  selector: 'child',
+  template: '',
+)
+class ChildWithLifeCycles implements OnChanges, OnInit {
+  final events = <String>[];
+
+  @Input()
+  String name = '';
+
+  @override
+  void ngOnChanges(_) {
+    events.add('OnChanges:name=$name');
   }
 
-  String value = '';
+  @override
+  void ngOnInit() {
+    events.add('OnInit');
+  }
 }
