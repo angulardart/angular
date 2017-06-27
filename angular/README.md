@@ -60,12 +60,3 @@ following our [tutorial][] to get started.
 > confusion in the near future - [track our progress][track_rename].
 
 [track_rename]: https://github.com/dart-lang/angular2/issues/78
-
-## Contributing
-
-![AngularDart 3.0.0](https://3.bp.blogspot.com/-Pypqb322bLc/WQpchgDAsKI/AAAAAAAAPI4/eBaQwnDkACYglJhBuinr5YzE9x_mQ-EGgCLcB/s640/angulardart-3.0-release.jpg)
-
-Please read and agree to our [contribution guidelines][contribute]. We sync
-internally periodically, and test against thousands of component and e2e tests
-so please excuse small delays in merging pull requests.
-
