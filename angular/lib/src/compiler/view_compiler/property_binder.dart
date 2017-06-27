@@ -20,7 +20,6 @@ import '../template_ast.dart'
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
-import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
@@ -149,8 +148,7 @@ void _bindLiteral(
 
 void bindRenderText(
     BoundTextAst boundText, CompileNode compileNode, CompileView view) {
-  var bindingIndex = view.bindings.length;
-  view.bindings.add(new CompileBinding(compileNode, boundText));
+  int bindingIndex = view.addBinding(compileNode, boundText);
   // Expression for current value of expression when value is re-read.
   var currValExpr = createCurrValueExpr(bindingIndex);
   // Expression that points to _expr_## stored value.
@@ -186,17 +184,20 @@ void bindRenderText(
 ///       this.renderer.setElementClass(this._el_4,'disabled',currVal_1);
 ///       this._expr_1 = currVal_1;
 ///     }
-void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
-    o.Expression context, CompileElement compileElement) {
-  var view = compileElement.view;
+void bindAndWriteToRenderer(
+    List<BoundElementPropertyAst> boundProps,
+    o.Expression context,
+    CompileView compileView,
+    CompileElement compileElement,
+    CompileMethod targetMethod,
+    {bool updatingHost: false}) {
+  var view = compileView;
   var renderNode = compileElement.renderNode;
   var dynamicPropertiesMethod = new CompileMethod(view);
   var constantPropertiesMethod = new CompileMethod(view);
   boundProps.forEach((boundProp) {
-    var bindingIndex = view.bindings.length;
-
     // Add to view bindings collection.
-    view.bindings.add(new CompileBinding(compileElement, boundProp));
+    int bindingIndex = view.addBinding(compileElement, boundProp);
 
     // Generate call to this.debug(index, column, row);
     dynamicPropertiesMethod.resetDebugInfo(compileElement.nodeIndex, boundProp);
@@ -223,8 +224,9 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
         }
         if (boundProp.name == 'className') {
           // Handle className special case for class="binding".
-          updateStmts
-              .addAll(_createSetClassNameStmt(compileElement, renderValue));
+          updateStmts.addAll(_createSetClassNameStmt(
+              compileElement, renderValue,
+              updatingHost: updatingHost));
           fieldType = o.STRING_TYPE;
         } else {
           updateStmts.add(new o.InvokeMemberMethodExpr('setProp',
@@ -242,8 +244,9 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
 
         if (attrName == 'class') {
           // Handle [attr.class].
-          updateStmts
-              .addAll(_createSetClassNameStmt(compileElement, renderValue));
+          updateStmts.addAll(_createSetClassNameStmt(
+              compileElement, renderValue,
+              updatingHost: updatingHost));
         } else {
           // For attributes other than class convert value to a string.
           // TODO: Once we have analyzer summaries and know the type is already
@@ -266,11 +269,8 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
         fieldType = o.BOOL_TYPE;
         renderMethod =
             compileElement.isHtmlElement ? 'updateClass' : 'updateElemClass';
-        updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod, [
-          compileElement.renderNode,
-          o.literal(boundProp.name),
-          renderValue
-        ]).toStmt());
+        updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod,
+            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
       case PropertyBindingType.Style:
         // value = value?.toString().
@@ -282,10 +282,8 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
               o.NULL_EXPR, styleValueExpr.plus(o.literal(boundProp.unit)));
         }
         // Call Element.style.setProperty(propName, value);
-        o.Expression updateStyleExpr = compileElement.renderNode
-            .prop('style')
-            .callMethod(
-                'setProperty', [o.literal(boundProp.name), styleValueExpr]);
+        o.Expression updateStyleExpr = renderNode.prop('style').callMethod(
+            'setProperty', [o.literal(boundProp.name), styleValueExpr]);
         updateStmts.add(updateStyleExpr.toStmt());
         break;
     }
@@ -295,39 +293,42 @@ void bindAndWriteToRenderer(List<BoundElementPropertyAst> boundProps,
         fieldType: fieldType);
   });
   if (!constantPropertiesMethod.isEmpty) {
-    view.detectChangesRenderPropertiesMethod.addStmt(new o.IfStmt(
+    targetMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck, constantPropertiesMethod.finish()));
   }
   if (!dynamicPropertiesMethod.isEmpty) {
-    view.detectChangesRenderPropertiesMethod
-        .addStmts(dynamicPropertiesMethod.finish());
+    targetMethod.addStmts(dynamicPropertiesMethod.finish());
   }
 }
 
 List<o.Statement> _createSetClassNameStmt(
-    CompileElement compileElement, o.Expression renderValue) {
+    CompileElement compileElement, o.Expression renderValue,
+    {bool updatingHost: false}) {
   var updateStmts = <o.Statement>[];
+  var renderNode = compileElement.renderNode;
   // TODO: upgrade to codebuilder / build string interpolation to
   // move into single expression.
-  updateStmts.add(
-      compileElement.renderNode.prop('className').set(renderValue).toStmt());
-  bool isHostRootView = compileElement.nodeIndex == 0 &&
-      compileElement.view.viewType == ViewType.HOST;
+  updateStmts.add(renderNode.prop('className').set(renderValue).toStmt());
+  var view = compileElement.view;
+  bool isHostRootView =
+      compileElement.nodeIndex == 0 && view.viewType == ViewType.HOST;
   // _ngcontent- class should be applied to every element other than host's
   // main node.
   if (!isHostRootView &&
-      compileElement.view.component.template.encapsulation ==
-          ViewEncapsulation.Emulated) {
-    updateStmts.add(
-        (new o.InvokeMemberMethodExpr('addShimC', [compileElement.renderNode]))
-            .toStmt());
+      view != null &&
+      view.component.template.encapsulation == ViewEncapsulation.Emulated) {
+    updateStmts
+        .add((new o.InvokeMemberMethodExpr('addShimC', [renderNode])).toStmt());
   }
   // Since we are overriding component className above with bound value we need
   // to add host class.
   if (compileElement.component != null) {
-    updateStmts.add((compileElement.componentView
-            .callMethod('addShimH', [compileElement.renderNode]))
-        .toStmt());
+    updateStmts.add(
+        (compileElement.componentView.callMethod('addShimH', [renderNode]))
+            .toStmt());
+  } else if (updatingHost) {
+    updateStmts
+        .add(new o.InvokeMemberMethodExpr('addShimH', [renderNode]).toStmt());
   }
   return updateStmts;
 }
@@ -363,13 +364,30 @@ o.Expression sanitizedValue(
 
 void bindRenderInputs(
     List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {
-  bindAndWriteToRenderer(boundProps, o.variable('_ctx'), compileElement);
+  bindAndWriteToRenderer(boundProps, o.variable('_ctx'), compileElement.view,
+      compileElement, compileElement.view.detectChangesRenderPropertiesMethod);
 }
 
 void bindDirectiveHostProps(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
+  if (directiveAst.directive.isComponent) {
+    // Component level host properties are change detected inside the component
+    // itself inside detectHostChanges method, no need to generate code
+    // at call-site.
+    if (directiveAst.hostProperties.isNotEmpty) {
+      var callDetectHostPropertiesExpr = compileElement.compViewExpr
+          .callMethod('detectHostChanges', [DetectChangesVars.firstCheck]);
+      compileElement.view.detectChangesRenderPropertiesMethod
+          .addStmt(callDetectHostPropertiesExpr.toStmt());
+    }
+    return;
+  }
   bindAndWriteToRenderer(
-      directiveAst.hostProperties, directiveInstance, compileElement);
+      directiveAst.hostProperties,
+      directiveInstance,
+      compileElement.view,
+      compileElement,
+      compileElement.view.detectChangesRenderPropertiesMethod);
 }
 
 void bindDirectiveInputs(DirectiveAst directiveAst,
@@ -402,8 +420,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   // directiveAst contains the target directive we are updating.
   // input is a BoundPropertyAst that contains binding metadata.
   for (var input in directiveAst.inputs) {
-    var bindingIndex = view.bindings.length;
-    view.bindings.add(new CompileBinding(compileElement, input));
+    var bindingIndex = view.addBinding(compileElement, input);
     dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
     var fieldExpr = createBindFieldExpr(bindingIndex);
     var currValExpr = createCurrValueExpr(bindingIndex);

@@ -1,3 +1,8 @@
+import 'package:source_span/source_span.dart';
+import '../../core/linker/view_type.dart';
+import '../../compiler/output/output_ast.dart' as o;
+import '../../compiler/schema/element_schema_registry.dart';
+import '../expression_parser/parser.dart';
 import "../template_ast.dart"
     show
         TemplateAst,
@@ -15,7 +20,9 @@ import "../template_ast.dart"
         DirectiveAst,
         BoundDirectivePropertyAst,
         templateVisitAll;
+import '../template_parser.dart';
 import "compile_element.dart" show CompileElement;
+import "compile_method.dart" show CompileMethod;
 import "compile_view.dart" show CompileView;
 import "event_binder.dart"
     show
@@ -32,6 +39,7 @@ import "lifecycle_binder.dart"
         bindDirectiveDetectChangesLifecycleCallbacks;
 import "property_binder.dart"
     show
+        bindAndWriteToRenderer,
         bindRenderText,
         bindRenderInputs,
         bindDirectiveInputs,
@@ -175,5 +183,30 @@ class ViewBinderVisitor implements TemplateAstVisitor {
 
   dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
     return null;
+  }
+}
+
+void bindViewHostProperties(CompileView view, Parser parser,
+    ElementSchemaRegistry schemaRegistry, ErrorCallback errorCallback) {
+  if (view.viewIndex != 0 || view.viewType != ViewType.COMPONENT) return;
+  var hostProps = view.component.hostProperties;
+  if (hostProps == null) return;
+
+  List<BoundElementPropertyAst> hostProperties = <BoundElementPropertyAst>[];
+
+  var span = new SourceSpan(new SourceLocation(0), new SourceLocation(0), '');
+  hostProps.forEach((String propName, String expression) {
+    var exprAst = parser.parseBinding(expression, null, view.component.exports);
+    var elementName = view.component.selector;
+    hostProperties.add(createElementPropertyAst(
+        elementName, propName, exprAst, span, schemaRegistry, errorCallback));
+  });
+
+  var hostMethod = new CompileMethod(view);
+  bindAndWriteToRenderer(hostProperties, new o.ReadClassMemberExpr('ctx'), view,
+      view.componentView.declarationElement, hostMethod,
+      updatingHost: true);
+  if (!hostMethod.isEmpty) {
+    view.detectHostChangesMethod = hostMethod;
   }
 }

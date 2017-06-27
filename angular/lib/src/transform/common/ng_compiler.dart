@@ -22,14 +22,14 @@ OfflineCompiler createTemplateCompiler(
   // TODO(yjbanov): add router AST transformer when ready
   var parser = new ng.Parser(new ng.Lexer());
   var htmlParser = new HtmlParser();
+  var schemaRegistry = new DomElementSchemaRegistry();
 
-  var templateParser =
-      new TemplateParser(parser, new DomElementSchemaRegistry(), htmlParser);
+  var templateParser = new TemplateParser(parser, schemaRegistry, htmlParser);
 
   return new OfflineCompiler(
       new DirectiveNormalizer(xhr, urlResolver, htmlParser),
       templateParser,
       new StyleCompiler(compilerConfig, urlResolver),
-      new ViewCompiler(compilerConfig, parser),
+      new ViewCompiler(compilerConfig, parser, schemaRegistry),
       new DartEmitter(), {});
 }
