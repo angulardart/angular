@@ -4,10 +4,10 @@
 
 @Tags(const ['aot'])
 @TestOn('browser')
-import 'package:angular_test/angular_test.dart';
 import 'package:pageloader/objects.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 @AngularEntrypoint()
 void main() {

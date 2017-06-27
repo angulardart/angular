@@ -32,7 +32,8 @@ void success(String message, {bool verbose: true}) {
   }
 }
 
-void warn(String message, {exception, stack, bool verbose: true}) {
+void warn(String message,
+    {Object exception, StackTrace stack, bool verbose: true}) {
   if (verbose) {
     _currentLogger.warning(_yellow(message), exception, stack);
   } else {
@@ -40,7 +41,8 @@ void warn(String message, {exception, stack, bool verbose: true}) {
   }
 }
 
-void error(String message, {exception, stack, bool verbose: true}) {
+void error(String message,
+    {Object exception, StackTrace stack, bool verbose: true}) {
   if (verbose) {
     _currentLogger.severe(_red(message), exception, stack);
   } else {
@@ -50,8 +52,13 @@ void error(String message, {exception, stack, bool verbose: true}) {
 
 /// Starts listening to a new logger and outputting it through `print`.
 void initLogging(String name) {
-  _currentLogger = new Logger(name);
-  _currentLogger.onRecord.forEach((message) => print(message.message.trim()));
+  _currentLogger = new Logger(name)
+    ..onRecord.forEach((message) => print(message.message.trim()));
+}
+
+void initLoggingForTest(String name, List<String> output) {
+  _currentLogger = new Logger(name)
+    ..onRecord.forEach((message) => output.add(message.message.trim()));
 }
 
 void initFileWriting(IOSink sink) {
