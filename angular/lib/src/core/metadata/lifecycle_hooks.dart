@@ -66,39 +66,86 @@ abstract class OnChanges {
   ngOnChanges(Map<String, SimpleChange> changes);
 }
 
-/// Implement this interface to execute custom initialization logic after your
-/// directive's data-bound properties have been initialized.
+/// Implement to execute [ngOnInit] after the first change-detection completed.
 ///
-/// [ngOnInit] is called right after the directive's data-bound properties have
-/// been checked for the first time, and before any of its children have been
-/// checked. It is invoked only once when the directive is instantiated.
+/// [ngOnInit] is called right after the component or directive's data-bound
+/// properties have been checked for the first time, and before any of its
+/// children have been checked. It is normally only invoked once when the
+/// directive is instantiated:
 ///
-/// ### Examples
-///
-/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
-///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/spy_directive.dart (spy-directive)"?>
 /// ```dart
-/// // Spy on any element to which it is applied.
-/// // Usage: <div mySpy>...</div>
-/// @Directive(selector: '[mySpy]')
-/// class SpyDirective implements OnInit, OnDestroy {
-///   final LoggerService _logger;
+/// @Component(
+///   selector: 'user-panel',
+///   directives: const [NgFor],
+///   template: r'''
+///     <li *ngFor="let user of users">
+///       {{user}}
+///     </li>
+///   ''',
+/// )
+/// class UserPanel implements OnInit {
+///   final RpcService _rpcService;
 ///
-///   SpyDirective(this._logger);
+///   List<String> users = const [];
 ///
-///   ngOnInit() => _logIt('onInit');
+///   UserPanel(this._rpcService);
 ///
-///   ngOnDestroy() => _logIt('onDestroy');
-///
-///   _logIt(String msg) => _logger.log('Spy #${_nextId++} $msg');
+///   @override
+///   ngOnInit() async {
+///     users = await _rpcService.getUsers();
+///   }
 /// }
 /// ```
 ///
-/// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#oninit
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#spy
+/// **WARNING**: As part of [crash detection](go/angular-dart-docs/crash_detection.md)
+/// AngularDart may execute [ngOnInit] a second time if part of the application
+/// threw an exception during change detection.
 abstract class OnInit {
+  /// Executed after the first change detection run for a directive.
+  ///
+  /// _See [OnInit] for a full description._
   ngOnInit();
+}
+
+/// Implement to execute [ngOnDestroy] before your component is destroyed.
+///
+/// [ngOnDestroy] is invoked as AngularDart is removing the component or
+/// directive from the DOM, as either it has been destroyed as a result of
+/// a structural directive's request (`*ngIf` becoming `false`), or a parent
+/// component is being destroyed. [ngOnDestroy] may be used to cleanup resources
+/// such as [StreamSubscription]s:
+///
+/// ```dart
+/// @Component(
+///   selector: 'user-panel',
+///   template: 'Online users: {{count}}',
+/// )
+/// class UserPanel implements OnInit, OnDestroy {
+///   StreamSubscription _onlineUserSub;
+///
+///   int count = 0;
+///
+///   @override
+///   ngOnInit() {
+///     _onlineUserSub = onlineUsers.listen((count) => this.count = count);
+///   }
+///
+///   @override
+///   ngOnDestroy() {
+///     _onlineUserSub.cancel();
+///   }
+/// }
+/// ```
+///
+/// **WARNING**: As part of [crash detection](go/angular-dart-docs/crash_detection.md)
+/// AngularDart may execute [ngOnDestroy] a second time if part of the
+/// application threw an exception during change detection. It is
+/// _not recommended_ to set values to `null` as a result.
+abstract class OnDestroy {
+  /// Executed before the directive is removed from the DOM and destroyed.
+  ///
+  /// _See [OnDestroy] for a full description._
+  ngOnDestroy();
 }
 
 /// Implement this interface to override the default change detection algorithm
@@ -167,39 +214,6 @@ abstract class OnInit {
 /// [ex]: http://angular-examples.github.io/lifecycle-hooks#docheck
 abstract class DoCheck {
   ngDoCheck();
-}
-
-/// Implement this interface to get notified when your directive is destroyed.
-///
-/// [ngOnDestroy] callback is typically used for any custom cleanup that needs
-/// to occur when the instance is destroyed
-///
-/// ### Examples
-///
-/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
-///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/spy_directive.dart (spy-directive)"?>
-/// ```dart
-/// // Spy on any element to which it is applied.
-/// // Usage: <div mySpy>...</div>
-/// @Directive(selector: '[mySpy]')
-/// class SpyDirective implements OnInit, OnDestroy {
-///   final LoggerService _logger;
-///
-///   SpyDirective(this._logger);
-///
-///   ngOnInit() => _logIt('onInit');
-///
-///   ngOnDestroy() => _logIt('onDestroy');
-///
-///   _logIt(String msg) => _logger.log('Spy #${_nextId++} $msg');
-/// }
-/// ```
-///
-/// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#ondestroy
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#spy
-abstract class OnDestroy {
-  ngOnDestroy();
 }
 
 /// Implement this interface to get notified when your directive's content has
