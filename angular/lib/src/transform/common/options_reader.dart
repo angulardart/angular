@@ -19,7 +19,6 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
   var formatCode = _readBool(config, FORMAT_CODE_PARAM, defaultValue: false);
   var useLegacyStyleEncapsulation =
       _readBool(config, USE_LEGACY_STYLE_ENCAPSULATION, defaultValue: false);
-  var useAnalyzer = _readBool(config, USE_ANALYZER, defaultValue: false);
   var codegenMode;
   if (settings.mode == BarbackMode.DEBUG) {
     codegenMode = CODEGEN_DEBUG_MODE;
@@ -43,7 +42,6 @@ TransformerOptions parseBarbackSettings(BarbackSettings settings) {
     translations: _readAssetId(config, TRANSLATIONS),
     formatCode: formatCode,
     useLegacyStyleEncapsulation: useLegacyStyleEncapsulation,
-    useAnalyzer: useAnalyzer,
   );
 
   _checkEntryPointsExist(transformerOptions);
