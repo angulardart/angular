@@ -23,9 +23,6 @@ class AngularTransformerGroup extends TransformerGroup {
   }
 
   factory AngularTransformerGroup(TransformerOptions options) {
-    if (!options.useAnalyzer) {
-      throw new UnsupportedError('"$USE_ANALYZER" is required.');
-    }
     Iterable<Iterable> phases = [
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
       [new ReflectionRemover(options)],

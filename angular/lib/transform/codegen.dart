@@ -29,9 +29,6 @@ class CodegenTransformer extends TransformerGroup {
 
   factory CodegenTransformer(TransformerOptions options) {
     Iterable<Iterable> phases;
-    if (!options.useAnalyzer) {
-      throw new UnsupportedError('Option $USE_ANALYZER is required.');
-    }
     phases = [
       [new AssetConsumer()],
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
