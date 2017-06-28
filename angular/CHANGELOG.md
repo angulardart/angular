@@ -1,8 +1,13 @@
 ## 4.0.0-alpha
 
-**NOTE**: Some of the features are not yet usable @ HEAD, as they require use of
-the new AngularDart compiler, which is not yet enabled by default, and work is
-ongoing. You can [track our progress](https://goo.gl/tFYsO3).
+**We are now named `package:angular` instead of `package:angular2`**. As such
+you cannot `pub upgrade` from `angular2 3.x` -> `angular2 4.x`, and you need to
+manually update your dependencies instead:
+
+```yaml
+dependencies:
+  angular: ^4.0.0-alpha
+```
 
 ### New features
 
@@ -49,6 +54,15 @@ class MyComp {}
   inputs, outputs, host bindings, host listeners, queries, and view queries
   transitively from their immediate supertype if it's a component or directive.
 
+* We use a new open sourcing tool called "[CopyBara][]" that greatly simplifies
+  both releasing and taking open source contributions. We are able to release
+  to github more often, and accept PRs much more easily. You can view our
+  bleeding [`github-sync`][github-sync] branch for what has yet to be merged
+  into `master`.
+
+[CopyBara]: https://github.com/google/copybara
+[github-sync]: https://github.com/dart-lang/angular/tree/github-sync
+
 ### Breaking changes
 
 * Removed the runtime (`dart:mirrors`-based) interpreter. It is now required to
@@ -62,15 +76,27 @@ class MyComp {}
 * Removed `Query` and `ViewQuery`. Please use `ContentChild`/`ContentChildren`
   and `ViewChild`/`ViewChildren` in their place instead.
 
+* Removed the `use_analyzer` flag for the transformer. This is always `true`.
+
+* Removed a number of classes that were never intended to be public:
+  * `ViewResolver`
+
 ### Bug fixes
 
 * Properly annotate methods in generated `.template.dart` code with `@override`.
+
+* Updated the documentation for `OnInit` and `OnDestroy` to mention more
+  specifics about the contract and document "crash detection" caes where they
+  may be called more than once.
 
 ### Performance
 
 * Remove redundant calls to `dbg(...)` in dev-mode. This reduces the amount of
   work done and speeds up developer runtimes, such as those using the
   [DartDevCompiler (DDC)](https://github.com/dart-lang/sdk/tree/master/pkg/dev_compiler).
+
+* Some change detection code that was duplicated across all generated templates
+  were moved internally to a new `AppView#detectHostChanges` method.
 
 ## 3.2.0
 
