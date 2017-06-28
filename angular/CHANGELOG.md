@@ -47,7 +47,7 @@ class MyComp {}
 
 * Added preliminary support for component inheritance. Components now inherit
   inputs, outputs, host bindings, host listeners, queries, and view queries
-  transitively from their immediate supertype if it's also a component.
+  transitively from their immediate supertype if it's a component or directive.
 
 ### Breaking changes
 

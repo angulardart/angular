@@ -402,7 +402,7 @@ class ComponentVisitor
       template: template,
       analyzedClass: new AnalyzedClass(element),
     );
-    // For now only component to component inheritance is supported.
+    // For now only components support inheritance.
     if (metadata.isComponent) {
       // This is doing more work than necessary, as we only need to extract the
       // subset of ancestor directive metadata that is inherited. However, this
@@ -563,7 +563,7 @@ void _addInheritedDirectiveMetadata(
   CompileDirectiveMetadata metadata,
   CompileDirectiveMetadata inheritedMetadata,
 ) {
-  if (inheritedMetadata == null || !inheritedMetadata.isComponent) return;
+  if (inheritedMetadata == null) return;
   if (!metadata.isComponent && inheritedMetadata.isComponent) {
     throw new UnsupportedError(
         "Inheritance of directive '${inheritedMetadata.type.name}' from "
