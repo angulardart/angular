@@ -137,7 +137,6 @@ const NG_COMPILER = const [
   'ProviderAst',
   'ProviderAstType',
   'sanitizeEventName',
-  'ViewResolver',
 ];
 const NG_CORE = const [
   'APP_INITIALIZER',

@@ -9,7 +9,7 @@ import "compile_metadata.dart"
 import "html_ast.dart";
 import "html_parser.dart" show HtmlParser;
 import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
-import "template_preparser.dart" show preparseElement, PreparsedElementType;
+import "template_preparser.dart" show preparseElement;
 import 'xhr.dart' show XHR;
 
 class DirectiveNormalizer {

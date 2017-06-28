@@ -12,7 +12,6 @@ import "package:angular/core.dart"
 import "package:angular/di.dart" show Injectable;
 import 'package:angular/platform/common_dom.dart';
 import 'package:angular/src/compiler/directive_resolver_mock.dart';
-import 'package:angular/src/compiler/view_resolver_mock.dart';
 import "package:angular/src/core/linker/app_view_utils.dart";
 import "package:angular/src/debug/debug_node.dart"
     show DebugElement, getDebugNode;
@@ -175,16 +174,6 @@ class TestComponentBuilder {
   Future<ComponentFixture> createAsync(Type rootComponentType) {
     AppViewUtils.resetChangeDetection();
     var mockDirectiveResolver = new MockDirectiveResolver();
-    var mockViewResolver = new MockViewResolver();
-    _viewOverrides
-        .forEach((type, view) => mockViewResolver.setView(type, view));
-    _templateOverrides.forEach(
-        (type, template) => mockViewResolver.setInlineTemplate(type, template));
-    _directiveOverrides.forEach((component, overrides) {
-      overrides.forEach((from, to) {
-        mockViewResolver.overrideViewDirective(component, from, to);
-      });
-    });
     _bindingsOverrides.forEach((type, bindings) =>
         mockDirectiveResolver.setBindingsOverride(type, bindings));
     _viewBindingsOverrides.forEach((type, bindings) =>
