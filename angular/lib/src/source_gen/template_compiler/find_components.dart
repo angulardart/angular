@@ -44,8 +44,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   NormalizedComponentWithViewDirectives _visitClassElement(
       ClassElement element) {
-    var componentVisitor = new ComponentVisitor();
-    CompileDirectiveMetadata directive = element.accept(componentVisitor);
+    final directive = extractDirectiveMetadata(element);
     if (directive == null || !directive.isComponent) return null;
     var directives = _visitDirectives(element);
     var pipes = _visitPipes(element);
@@ -211,7 +210,7 @@ class ComponentVisitor
   void _visitClassMember(
     Element element, {
     bool isGetter: false,
-    isSetter: false,
+    bool isSetter: false,
   }) {
     for (ElementAnnotation annotation in element.metadata) {
       if (safeMatcherType(Input, log)(annotation)) {
@@ -384,7 +383,7 @@ class ComponentVisitor
     coerceMap(componentValue, 'queries').forEach((propertyName, query) {
       queries.add(_getQuery(query, propertyName.toStringValue()));
     });
-    return CompileDirectiveMetadata.create(
+    final metadata = CompileDirectiveMetadata.create(
       type: element.accept(new CompileTypeMetadataVisitor(log)),
       isComponent: isComponent,
       selector: coerceString(componentValue, 'selector'),
@@ -403,6 +402,17 @@ class ComponentVisitor
       template: template,
       analyzedClass: new AnalyzedClass(element),
     );
+    // For now only component to component inheritance is supported.
+    if (metadata.isComponent) {
+      // This is doing more work than necessary, as we only need to extract the
+      // subset of ancestor directive metadata that is inherited. However, this
+      // solution was simplest to implement, and trivial to extend if
+      // inheritance of more metadata is required in the future.
+      final supertypeElement = element.supertype.element;
+      final supertypeMetadata = extractDirectiveMetadata(supertypeElement);
+      _addInheritedDirectiveMetadata(metadata, supertypeMetadata);
+    }
+    return metadata;
   }
 
   ElementAnnotation _findView(ClassElement element) =>
@@ -506,6 +516,9 @@ class ComponentVisitor
   }
 }
 
+CompileDirectiveMetadata extractDirectiveMetadata(ClassElement element) =>
+    element.accept(new ComponentVisitor());
+
 List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
   const hooks = const <TypeChecker, LifecycleHooks>{
     const TypeChecker.fromRuntime(OnInit): LifecycleHooks.OnInit,
@@ -524,4 +537,78 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .where((hook) => hook.isAssignableFrom(clazz))
       .map((t) => hooks[t])
       .toList();
+}
+
+/// Creates a new map from [oldMap] combined with [newMap].
+///
+/// If an entry from [newMap] will mutate an entry from [oldMap], [onMutation]
+/// is invoked with the key, the original value, and the new value.
+Map<A, B> _mergeImmutableValueMaps<A, B>(
+  Map<A, B> oldMap,
+  Map<A, B> newMap,
+  void onMutation(A key, B value, B newValue),
+) {
+  final mergedMap = new Map.from(oldMap);
+  newMap.forEach((key, value) {
+    if (oldMap.containsKey(key) && value != oldMap[key]) {
+      onMutation(key, oldMap[key], value);
+    }
+    mergedMap[key] = value;
+  });
+  return mergedMap;
+}
+
+/// Adds inheritable metadata from [inheritedMetadata] to [metadata].
+void _addInheritedDirectiveMetadata(
+  CompileDirectiveMetadata metadata,
+  CompileDirectiveMetadata inheritedMetadata,
+) {
+  if (inheritedMetadata == null || !inheritedMetadata.isComponent) return;
+  if (!metadata.isComponent && inheritedMetadata.isComponent) {
+    throw new UnsupportedError(
+        "Inheritance of directive '${inheritedMetadata.type.name}' from "
+        "component '${metadata.type.name}' is prohibited.");
+  }
+  if (inheritedMetadata.inputs.isNotEmpty) {
+    metadata.inputs = _mergeImmutableValueMaps(
+        inheritedMetadata.inputs,
+        metadata.inputs,
+        (name, binding, newBinding) => throw new UnsupportedError(
+            "'${metadata.type.name}' violates interface of its ancestor "
+            "'${inheritedMetadata.type.name}' by overriding the binding name "
+            "of inherited input '$name' from '$binding' to '$newBinding'."));
+  }
+  if (inheritedMetadata.outputs.isNotEmpty) {
+    metadata.outputs = _mergeImmutableValueMaps(
+        inheritedMetadata.outputs,
+        metadata.outputs,
+        (name, binding, newBinding) => throw new UnsupportedError(
+            "'${metadata.type.name}' violates interface of its ancestor "
+            "'${inheritedMetadata.type.name}' by overriding the binding name "
+            "of inherited output '$name' from '$binding' to '$newBinding'."));
+  }
+  if (inheritedMetadata.hostAttributes.isNotEmpty) {
+    metadata.hostAttributes = new Map.from(inheritedMetadata.hostAttributes)
+      ..addAll(metadata.hostAttributes);
+  }
+  if (inheritedMetadata.hostListeners.isNotEmpty) {
+    metadata.hostListeners = new Map.from(inheritedMetadata.hostListeners)
+      ..addAll(metadata.hostListeners);
+  }
+  if (inheritedMetadata.hostProperties.isNotEmpty) {
+    metadata.hostProperties = new Map.from(inheritedMetadata.hostProperties)
+      ..addAll(metadata.hostProperties);
+  }
+  if (inheritedMetadata.inputTypes.isNotEmpty) {
+    metadata.inputTypes = new Map.from(inheritedMetadata.inputTypes)
+      ..addAll(metadata.inputTypes);
+  }
+  if (inheritedMetadata.queries.isNotEmpty) {
+    metadata.queries = new List.from(inheritedMetadata.queries)
+      ..addAll(metadata.queries);
+  }
+  if (inheritedMetadata.viewQueries.isNotEmpty) {
+    metadata.viewQueries = new List.from(inheritedMetadata.viewQueries)
+      ..addAll(metadata.viewQueries);
+  }
 }
