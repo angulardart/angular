@@ -19,7 +19,7 @@ class ExternalClass {
 var testDataIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ExternalClass",
     moduleUrl:
-        'asset:angular2/test/compiler/output/output_emitter_util$MODULE_SUFFIX');
+        'asset:_tests/test/compiler/output/output_emitter_util$MODULE_SUFFIX');
 var eventEmitterIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "EventEmitter",
     moduleUrl: 'asset:angular/lib/src/facade/async$MODULE_SUFFIX');
