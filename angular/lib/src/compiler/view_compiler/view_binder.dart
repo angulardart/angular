@@ -1,7 +1,7 @@
 import 'package:source_span/source_span.dart';
-import '../../core/linker/view_type.dart';
 import '../../compiler/output/output_ast.dart' as o;
 import '../../compiler/schema/element_schema_registry.dart';
+import '../../core/linker/view_type.dart';
 import '../expression_parser/parser.dart';
 import "../template_ast.dart"
     show

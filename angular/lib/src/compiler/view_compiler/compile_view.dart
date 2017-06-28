@@ -51,7 +51,7 @@ class CompileView implements NameResolver {
   /// List of references to view containers used by embedded templates
   /// and child components.
   List<o.Expression> viewContainers = [];
-  List<CompileBinding> _bindings = [];
+  final _bindings = <CompileBinding>[];
   List<o.Statement> classStatements = [];
   CompileMethod createMethod;
   CompileMethod injectorGetMethod;
