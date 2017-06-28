@@ -9,7 +9,7 @@ import 'package:analyzer/src/generated/utilities_dart.dart';
 import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:quiver/strings.dart' as strings;
-import 'package:source_gen/src/annotation.dart' as source_gen;
+import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/core/di.dart';
@@ -421,13 +421,17 @@ class CompileTypeMetadataVisitor
       var isSkipSelf = false;
       var isOptional = false;
       for (var i = 1; i < metadata.length; i++) {
-        if (source_gen.matchTypes(Self, metadata[i].type)) {
+        if (const TypeChecker.fromRuntime(Self)
+            .isExactlyType(metadata[i].type)) {
           isSelf = true;
-        } else if (source_gen.matchTypes(Host, metadata[i].type)) {
+        } else if (const TypeChecker.fromRuntime(Host)
+            .isExactlyType(metadata[i].type)) {
           isHost = true;
-        } else if (source_gen.matchTypes(SkipSelf, metadata[i].type)) {
+        } else if (const TypeChecker.fromRuntime(SkipSelf)
+            .isExactlyType(metadata[i].type)) {
           isSkipSelf = true;
-        } else if (source_gen.matchTypes(Optional, metadata[i].type)) {
+        } else if (const TypeChecker.fromRuntime(Optional)
+            .isExactlyType(metadata[i].type)) {
           isOptional = true;
         }
       }
@@ -446,7 +450,8 @@ class CompileTypeMetadataVisitor
   }
 
   bool _isOpaqueToken(DartObject token) =>
-      token != null && source_gen.matchTypes(OpaqueToken, token.type);
+      token != null &&
+      const TypeChecker.fromRuntime(OpaqueToken).isExactlyType(token.type);
 
   ElementAnnotation _getAnnotation(Element element, Type type) =>
       element.metadata.firstWhere(
@@ -477,7 +482,8 @@ class CompileTypeMetadataVisitor
 
   bool _isProtobufEnum(ParameterizedType type) {
     return type is InterfaceType &&
-        source_gen.matchTypes(ProtobufEnum, type.superclass);
+        const TypeChecker.fromRuntime(ProtobufEnum)
+            .isExactlyType(type.superclass);
   }
 
   /// Creates an expression for protobuf enums.
