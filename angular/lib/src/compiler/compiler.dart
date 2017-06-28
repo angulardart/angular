@@ -10,7 +10,6 @@ export 'directive_resolver.dart' show DirectiveResolver;
 export 'offline_compiler.dart';
 export 'source_module.dart' show SourceModule;
 export 'template_ast.dart';
-export 'view_resolver.dart' show ViewResolver;
 
 /// A set of providers that provide `Compiler` and its dependencies to use for
 /// template compilation.
