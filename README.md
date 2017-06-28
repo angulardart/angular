@@ -3,7 +3,7 @@
 <!-- Badges -->
 
 [![Pub Package](https://img.shields.io/pub/v/angular2.svg)](https://pub.dartlang.org/packages/angular2)
-[![Build Status](https://travis-ci.org/dart-lang/angular2.svg?branch=master)](https://travis-ci.org/dart-lang/angular2)
+[![Build Status](https://travis-ci.org/dart-lang/angular.svg?branch=master)](https://travis-ci.org/dart-lang/angular)
 [![Gitter](https://img.shields.io/gitter/room/dart-lang/angular2.svg)](https://gitter.im/dart-lang/angular2)
 
 AngularDart is a fast and productive web framework provided by [Dart][].
