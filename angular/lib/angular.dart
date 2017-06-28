@@ -2,7 +2,6 @@
 library angular;
 
 export 'core.dart';
-// Used to be package:angular/common.dart.
 export 'src/common/common_directives.dart';
 export 'src/common/directives.dart';
 export 'src/common/forms.dart';
