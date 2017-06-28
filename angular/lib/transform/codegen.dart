@@ -28,8 +28,7 @@ class CodegenTransformer extends TransformerGroup {
   }
 
   factory CodegenTransformer(TransformerOptions options) {
-    Iterable<Iterable> phases;
-    phases = [
+    Iterable<Iterable> phases = [
       [new AssetConsumer()],
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
       [
