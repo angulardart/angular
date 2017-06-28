@@ -139,6 +139,15 @@ void main() {
       expect(testComponent.derivedComponent.viewChildren, hasLength(2));
     });
   });
+
+  test('Component should inherit metadata from Directive', () async {
+    final testBed = new NgTestBed<TestDirectiveDerivedComponent>();
+    final testFixture =
+        await testBed.create(beforeChangeDetection: (component) {
+      component.input = 'Hello!';
+    });
+    expect(testFixture.text, 'Hello!');
+  });
 }
 
 /// Base component from which all other components will be derived for testing.
@@ -147,7 +156,8 @@ void main() {
   template: '',
 )
 class RootComponent {
-  StreamController<String> _outputController = new StreamController<String>();
+  final StreamController<String> _outputController =
+      new StreamController<String>();
 
   String clickMessage;
 
@@ -218,7 +228,7 @@ class TestDerivedComponent {
   template: '',
 )
 class OverrideComponent extends RootComponent {
-  String title = 'overridden';
+  String get title => 'overridden';
 
   void onClick() {
     clickMessage = 'Overridden message';
@@ -262,10 +272,14 @@ class AnnotatedDerivedComponent extends RootComponent {
   String get title => super.title;
 
   @ContentChildren('content')
-  QueryList<QueryTargetComponent> contentChildren;
+  set contentChildren(QueryList<QueryTargetComponent> value) {
+    super.contentChildren = value;
+  }
 
   @ViewChildren('view')
-  QueryList<QueryTargetComponent> viewChildren;
+  set viewChildren(QueryList<QueryTargetComponent> value) {
+    super.viewChildren = value;
+  }
 }
 
 @Component(
@@ -281,4 +295,27 @@ class AnnotatedDerivedComponent extends RootComponent {
 class TestAnnotatedDerivedComponent {
   @ViewChild(AnnotatedDerivedComponent)
   AnnotatedDerivedComponent derivedComponent;
+}
+
+@Directive(
+  selector: 'base',
+)
+class BaseDirective {
+  @Input()
+  String input;
+}
+
+@Component(
+  selector: 'directive-derived',
+  template: '<div>{{input}}</div>',
+)
+class DirectiveDerivedComponent extends BaseDirective {}
+
+@Component(
+  selector: 'test-directive-derived',
+  template: '<directive-derived [input]="input"></directive-derived>',
+  directives: const [DirectiveDerivedComponent],
+)
+class TestDirectiveDerivedComponent {
+  String input;
 }
