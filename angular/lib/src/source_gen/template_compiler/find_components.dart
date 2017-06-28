@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:source_gen/src/annotation.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
@@ -507,18 +507,21 @@ class ComponentVisitor
 }
 
 List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
-  const hooks = const <Type, LifecycleHooks>{
-    OnInit: LifecycleHooks.OnInit,
-    OnDestroy: LifecycleHooks.OnDestroy,
-    DoCheck: LifecycleHooks.DoCheck,
-    OnChanges: LifecycleHooks.OnChanges,
-    AfterContentInit: LifecycleHooks.AfterContentInit,
-    AfterContentChecked: LifecycleHooks.AfterContentChecked,
-    AfterViewInit: LifecycleHooks.AfterViewInit,
-    AfterViewChecked: LifecycleHooks.AfterViewChecked,
+  const hooks = const <TypeChecker, LifecycleHooks>{
+    const TypeChecker.fromRuntime(OnInit): LifecycleHooks.OnInit,
+    const TypeChecker.fromRuntime(OnDestroy): LifecycleHooks.OnDestroy,
+    const TypeChecker.fromRuntime(DoCheck): LifecycleHooks.DoCheck,
+    const TypeChecker.fromRuntime(OnChanges): LifecycleHooks.OnChanges,
+    const TypeChecker.fromRuntime(AfterContentInit):
+        LifecycleHooks.AfterContentInit,
+    const TypeChecker.fromRuntime(AfterContentChecked):
+        LifecycleHooks.AfterContentChecked,
+    const TypeChecker.fromRuntime(AfterViewInit): LifecycleHooks.AfterViewInit,
+    const TypeChecker.fromRuntime(AfterViewChecked):
+        LifecycleHooks.AfterViewChecked,
   };
   return hooks.keys
-      .where((hook) => clazz.allSupertypes.any((t) => matchTypes(hook, t)))
+      .where((hook) => hook.isAssignableFrom(clazz))
       .map((t) => hooks[t])
       .toList();
 }

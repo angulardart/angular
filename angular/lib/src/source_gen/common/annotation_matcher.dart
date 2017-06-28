@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:logging/logging.dart';
-import 'package:source_gen/src/annotation.dart' as source_gen;
+import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/core/metadata.dart';
 
 // See internal bug b/35319372 for details.
@@ -63,7 +63,7 @@ bool isPipe(ElementAnnotation annotation) => matchAnnotation(Pipe, annotation);
 bool matchTypes(Iterable<Type> types, ElementAnnotation annotation) =>
     types.any((type) => matchAnnotation(type, annotation));
 
-/// Checks if an [ElementAnnotation] node implements the specified [Type].
+/// Checks if an [ElementAnnotation] node is exactly the specified [Type].
 ///
 /// It will attempt to compute the constant value of the annotation in case the
 /// annotation was declared in a file other than the one currently being
@@ -74,7 +74,9 @@ bool matchTypes(Iterable<Type> types, ElementAnnotation annotation) =>
 bool matchAnnotation(Type type, ElementAnnotation annotation) {
   annotation.computeConstantValue();
   try {
-    return source_gen.matchAnnotation(type, annotation);
+    final checker = new TypeChecker.fromRuntime(type);
+    final objectType = annotation.constantValue.type;
+    return checker.isExactlyType(objectType);
   } on ArgumentError catch (_) {
     String message = ''
         'Could not determine type of annotation. It resolved to '
