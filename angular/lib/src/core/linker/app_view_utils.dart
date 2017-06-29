@@ -44,6 +44,8 @@ class AppViewUtils {
       List<dynamic /* String | List < dynamic > */ > styles) {
     return new RenderComponentType(
         '$_appId-${_nextCompTypeId++}', templateUrl, encapsulation, styles);
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
   }
 
   /// Enters execution mode that will throw exceptions if any binding
