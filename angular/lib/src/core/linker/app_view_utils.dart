@@ -290,14 +290,25 @@ const MAX_INTERPOLATION_VALUES = 9;
 
 String _toStringWithNull(dynamic v) => v == null ? '' : '$v';
 
-bool checkBinding(dynamic oldValue, dynamic newValue) {
+/// Returns whether [newValue] has changed since being [oldValue].
+///
+/// In _dev-mode_ it throws if a second-pass change-detection is being made to
+/// ensure that values are not changing during change detection (illegal).
+bool checkBinding(oldValue, newValue) {
+  // This is only ever possibly true when assertions are enabled.
+  //
+  // It's set during the second "make-sure-nothing-changed" pass of tick().
   if (AppViewUtils.throwOnChanges) {
     if (!devModeEqual(oldValue, newValue)) {
       throw new ExpressionChangedAfterItHasBeenCheckedException(
-          oldValue, newValue, null);
+        oldValue,
+        newValue,
+        null,
+      );
     }
     return false;
   } else {
+    // Delegates to identical(...) for JS, so no performance issues.
     return !looseIdentical(oldValue, newValue);
   }
 }
