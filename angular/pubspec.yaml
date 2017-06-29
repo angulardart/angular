@@ -5,7 +5,7 @@ description: Framework for modern web applications
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
-  sdk: '>=1.23.0 <2.0.0'
+  sdk: '>=1.24.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.31.0'
   barback: ^0.15.2+2
