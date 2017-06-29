@@ -8,11 +8,11 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
 import "package:angular/src/core/linker/view_type.dart";
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 
+import '../../core/change_detection/change_detection.dart'
+    show ChangeDetectorState, ChangeDetectionStrategy;
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import '../config.dart';
-import '../../core/change_detection/change_detection.dart'
-    show ChangeDetectorState, ChangeDetectionStrategy;
 import '../expression_parser/parser.dart' show Parser;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
