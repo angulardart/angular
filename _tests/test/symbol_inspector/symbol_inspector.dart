@@ -31,7 +31,7 @@ LibraryMirror getLibrary(String uriString) {
 
   var lib = currentMirrorSystem().libraries[uri];
   if (lib == null) {
-    throw 'Failed to load library ${uri}';
+    throw 'Failed to load library $uri';
   }
   return lib;
 }
