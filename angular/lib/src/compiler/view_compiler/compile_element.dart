@@ -388,18 +388,17 @@ class CompileElement extends CompileNode {
     }
 
     CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
-        name: 'loadLibrary', prefix: prefix, emitPrefix: true);
+        name: 'loadLibrary', prefix: prefix);
     CompileIdentifierMetadata nestedComponentId = new CompileIdentifierMetadata(
         name: getViewFactoryName(deferredElement.component, 0));
     CompileIdentifierMetadata templatePrefixId = new CompileIdentifierMetadata(
-        name: 'loadLibrary', prefix: templatePrefix, emitPrefix: true);
+        name: 'loadLibrary', prefix: templatePrefix);
 
     CompileIdentifierMetadata templateInitializer =
         new CompileIdentifierMetadata(
             name: 'initReflector',
             moduleUrl: nestedComponentId.moduleUrl,
             prefix: templatePrefix,
-            emitPrefix: true,
             value: nestedComponentId.value);
 
     var templateRefExpr =

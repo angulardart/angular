@@ -382,8 +382,7 @@ class CompileTypeMetadataVisitor
     return new CompileIdentifierMetadata(
         name: function.name,
         moduleUrl: moduleUrl(function),
-        prefix: prefix,
-        emitPrefix: true);
+        prefix: prefix);
   }
 
   CompileFactoryMetadata _factoryForFunction(
@@ -398,7 +397,6 @@ class CompileTypeMetadataVisitor
       name: function.name,
       moduleUrl: moduleUrl(function),
       prefix: prefix,
-      emitPrefix: true,
       diDeps: typesOrTokens != null
           ? typesOrTokens.map(_factoryDiDep).toList()
           : _getCompileDiDependencyMetadata(function.parameters, function),

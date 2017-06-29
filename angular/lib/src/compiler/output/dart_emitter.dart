@@ -522,7 +522,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         }
         importsWithPrefixes[value.moduleUrl] = prefix;
       }
-    } else if (value.emitPrefix) {
+    } else {
       prefix = value.prefix ?? '';
     }
     if (isDeferred) {
@@ -533,7 +533,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
         ctx.print(prefix.isEmpty ? '' : '$prefix.');
       }
-      if (value.emitPrefix && value.prefix != null && value.prefix.isNotEmpty) {
+      if (value.prefix != null && value.prefix.isNotEmpty) {
         ctx.print('${value.prefix}.');
       }
     }
