@@ -18,11 +18,7 @@ linter:
     - avoid_init_to_null
     - avoid_null_checks_in_equality_operators
     #- avoid_return_types_on_setters
-
-    # Waiting for https://github.com/dart-lang/linter/releases/tag/0.1.31
-    # In Dart SDK 1.24.0-dev.4.0
-    #- await_only_futures
-
+    - await_only_futures
     - camel_case_types
     - cancel_subscriptions
     #- close_sinks
