@@ -89,6 +89,8 @@ class MyComp {}
   specifics about the contract and document "crash detection" caes where they
   may be called more than once.
 
+* `*ngIf` now properly checks that inputs do not change during change detection.
+
 ### Performance
 
 * Remove redundant calls to `dbg(...)` in dev-mode. This reduces the amount of
