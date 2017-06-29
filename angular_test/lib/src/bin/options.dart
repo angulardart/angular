@@ -50,7 +50,7 @@ class CliOptions {
     final testArgs = new List<String>.from(runTestArgs);
 
     if (pubServePort != null) {
-      pubArgs.add('--port=${pubServePort}');
+      pubArgs.add('--port=$pubServePort');
     } else if (!pubArgs.any((p) => p.contains('--port='))) {
       pubArgs.add('--port=0');
     }
