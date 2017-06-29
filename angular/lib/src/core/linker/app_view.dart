@@ -104,7 +104,7 @@ abstract class AppView<T> {
 
   // The names of the below fields must be kept in sync with codegen_name_util.ts or
   // change detection will fail.
-  ChangeDetectorState _cdState = ChangeDetectorState.NeverChecked;
+  int _cdState = ChangeDetectorState.NeverChecked;
 
   /// The context against which data-binding expressions in this view are
   /// evaluated against.
@@ -156,20 +156,20 @@ abstract class AppView<T> {
 
   /// Sets change detection state and caches flag to skip change detection
   /// if mode and state don't require one.
-  set cdState(ChangeDetectorState value) {
+  set cdState(int value) {
     if (_cdState != value) {
       _cdState = value;
       _updateSkipChangeDetectionFlag();
     }
   }
 
-  ChangeDetectorState get cdState => _cdState;
+  int get cdState => _cdState;
 
   void _updateSkipChangeDetectionFlag() {
     _skipChangeDetection =
         identical(_cdMode, ChangeDetectionStrategy.Detached) ||
             identical(_cdMode, ChangeDetectionStrategy.Checked) ||
-            identical(_cdState, ChangeDetectorState.Errored);
+            _cdState == ChangeDetectorState.Errored;
   }
 
   ComponentRef create(T context,

@@ -1,18 +1,18 @@
 /// Describes the current state of the change detector.
-enum ChangeDetectorState {
+class ChangeDetectorState {
   /// [NeverChecked] means that the change detector has not been checked yet,
   /// and initialization methods should be called during detection.
-  NeverChecked,
+  static const int NeverChecked = 0;
 
   /// [CheckedBefore] means that the change detector has successfully completed
   /// at least one detection previously.
-  CheckedBefore,
+  static const int CheckedBefore = 1;
 
   /// [Errored] means that the change detector encountered an error checking a
   /// binding or calling a directive lifecycle method and is now in an
   /// inconsistent state. Change detectors in this state will no longer detect
   /// changes.
-  Errored
+  static const int Errored = 2;
 }
 
 /// Describes within the change detector which strategy will be used the next

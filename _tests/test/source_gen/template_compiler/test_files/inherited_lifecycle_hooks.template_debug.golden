@@ -104,7 +104,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
+    bool firstCheck = (this.cdState == 0);
     if ((firstCheck && !import8.AppViewUtils.throwOnChanges)) {
       _LifecycleHooksComponent_0_2.ngOnInit();
     }
