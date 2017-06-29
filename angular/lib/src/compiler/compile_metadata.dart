@@ -471,6 +471,108 @@ class CompileTemplateMetadata {
 
 /// Metadata regarding compilation of a directive.
 class CompileDirectiveMetadata implements CompileMetadataWithType {
+  /// Maps host attributes, listeners, and properties from a serialized map.
+  ///
+  /// Serialized host key grammar:
+  ///
+  ///     <key> :=
+  ///         <attribute-key> |
+  ///         <listener-key> |
+  ///         <property-key>
+  ///
+  ///     <attribute-key> :=
+  ///         <identifier>
+  ///
+  ///     <listener-key> :=
+  ///         '(' <identifier> ')'
+  ///
+  ///     <property-key> :=
+  ///         '[' <identifier> ']'
+  ///
+  /// For each (<key>, <value>) in [host], (<identifier>, <value>) is added to
+  ///
+  /// * [outAttributes] if <key> is an <attribute-key>,
+  /// * [outListeners] if <key> is a <listener-key>, or
+  /// * [outProperties] if <key> is a <property-key>.
+  static void deserializeHost(
+    Map<String, String> host,
+    Map<String, String> outAttributes,
+    Map<String, String> outListeners,
+    Map<String, String> outProperties,
+  ) {
+    assert(outAttributes != null);
+    assert(outListeners != null);
+    assert(outProperties != null);
+
+    host?.forEach((key, value) {
+      final matches = HOST_REG_EXP.firstMatch(key);
+      if (matches == null) {
+        outAttributes[key] = value;
+      } else if (matches[1] != null) {
+        outProperties[matches[1]] = value;
+      } else if (matches[2] != null) {
+        outListeners[matches[2]] = value;
+      }
+    });
+  }
+
+  /// Maps binding names and types from a list of serialized inputs.
+  ///
+  /// Serialized input grammar:
+  ///
+  ///     <input> :=
+  ///         <input-binding> [; <type>]
+  ///
+  ///     <input-binding> :=
+  ///         <dirProp> |
+  ///         <dirProp> ':' <elProp>
+  ///
+  /// For each <input> in [inputs], (<dirProp>, <elProp>) is added to
+  /// [outBindingNames], and (<dirProp>, <type>) is added to [outTypes]. If
+  /// omitted, <elProp> defaults to <dirProp>.
+  static void deserializeInputs(
+    List<String> inputs,
+    Map<String, String> outBindingNames,
+    Map<String, String> outTypes,
+  ) {
+    assert(outBindingNames != null);
+    assert(outTypes != null);
+
+    inputs?.forEach((input) {
+      final inputParts = input.split(';');
+      final inputName = inputParts[0];
+      final bindingParts = splitAtColon(inputName, [inputName, inputName]);
+
+      outBindingNames[bindingParts[0]] = bindingParts[1];
+
+      if (inputParts.length > 1) {
+        outTypes[bindingParts[0]] = inputParts[1];
+      }
+    });
+  }
+
+  /// Maps binding names from a list of serialized outputs.
+  ///
+  /// Serialized output grammar:
+  ///
+  ///     <output> :=
+  ///         <dirProp> |
+  ///         <dirProp> ':' <elProp>
+  ///
+  /// For each <output> in [outputs], (<dirProp>, <elProp>) is added to
+  /// [outBindingNames]. If omitted, <elProp> defaults to <dirProp>.
+  static void deserializeOutputs(
+    List<String> outputs,
+    Map<String, String> outBindingNames,
+  ) {
+    assert(outBindingNames != null);
+
+    outputs?.forEach((output) {
+      final bindingParts = splitAtColon(output, [output, output]);
+      outBindingNames[bindingParts[0]] = bindingParts[1];
+    });
+  }
+
   static CompileDirectiveMetadata create(
       {CompileTypeMetadata type,
       bool isComponent,
@@ -492,42 +594,17 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       List<CompileQueryMetadata> viewQueries,
       CompileTemplateMetadata template,
       AnalyzedClass analyzedClass}) {
-    var hostListeners = <String, String>{};
-    var hostProperties = <String, String>{};
-    var hostAttributes = <String, String>{};
-    host?.forEach((String key, String value) {
-      var matches = HOST_REG_EXP.firstMatch(key);
-      if (matches == null) {
-        hostAttributes[key] = value;
-      } else if (matches[1] != null) {
-        hostProperties[matches[1]] = value;
-      } else if (matches[2] != null) {
-        hostListeners[matches[2]] = value;
-      }
-    });
+    final hostListeners = <String, String>{};
+    final hostProperties = <String, String>{};
+    final hostAttributes = <String, String>{};
+    deserializeHost(host, hostAttributes, hostListeners, hostProperties);
 
-    Map<String, String> inputsMap = {};
-    Map<String, String> inputTypeMap = {};
-    inputs?.forEach((String bindConfig) {
-      // Syntax: dirProp [; type] | dirProp : elProp [; type]
-      // if there is no [:], use dirProp = elProp
-      var parts = bindConfig.split(';');
-      String typeName = parts.length > 1 ? parts[1] : null;
-      String inputName = parts[0];
-      var inputParts = splitAtColon(inputName, [inputName, inputName]);
-      inputsMap[inputParts[0]] = inputParts[1];
-      if (typeName != null) {
-        inputTypeMap[inputParts[0]] = typeName;
-      }
-    });
+    final inputsMap = <String, String>{};
+    final inputTypeMap = <String, String>{};
+    deserializeInputs(inputs, inputsMap, inputTypeMap);
 
-    Map<String, String> outputsMap = {};
-    outputs?.forEach((String bindConfig) {
-      // canonical syntax: dirProp | dirProp : elProp
-      // if there is no [:], use dirProp = elProp
-      var parts = splitAtColon(bindConfig, [bindConfig, bindConfig]);
-      outputsMap[parts[0]] = parts[1];
-    });
+    final outputsMap = <String, String>{};
+    deserializeOutputs(outputs, outputsMap);
 
     return new CompileDirectiveMetadata(
         type: type,

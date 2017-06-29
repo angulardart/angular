@@ -154,10 +154,12 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
 class ComponentVisitor
     extends RecursiveElementVisitor<CompileDirectiveMetadata> {
-  final _fieldInputs = <String>[];
-  final _setterInputs = <String>[];
-  final _outputs = <String>[];
-  final _host = <String, String>{};
+  final _fieldInputs = <String, String>{};
+  final _setterInputs = <String, String>{};
+  final _inputTypes = <String, String>{};
+  final _outputs = <String, String>{};
+  final _hostListeners = <String, String>{};
+  final _hostProperties = <String, String>{};
   final _queries = <CompileQueryMetadata>[];
   final _viewQueries = <CompileQueryMetadata>[];
 
@@ -223,16 +225,18 @@ class ComponentVisitor
           } else if (element is PropertyAccessorElement) {
             typeName = element.parameters.first.type?.name;
           }
-          _addPropertyToType(
-              isField ? _fieldInputs : _setterInputs, annotation, element,
-              typeName: typeName);
+          _addPropertyBindingTo(
+              isField ? _fieldInputs : _setterInputs, annotation, element);
+          if (typeName != null) {
+            _inputTypes[element.displayName] = typeName;
+          }
         } else {
           log.severe('@Input can only be used on a setter or non-final '
               'field, but was found on $element.');
         }
       } else if (safeMatcherType(Output, log)(annotation)) {
         if (isGetter) {
-          _addPropertyToType(_outputs, annotation, element);
+          _addPropertyBindingTo(_outputs, annotation, element);
         } else {
           log.severe('@Output can only be used on a getter or a field, but '
               'was found on $element.');
@@ -329,7 +333,7 @@ class ComponentVisitor
     var value = annotation.computeConstantValue();
     var property =
         coerceString(value, 'hostPropertyName', defaultTo: element.name);
-    _host['[$property]'] = element.name;
+    _hostProperties[property] = element.name;
   }
 
   void _addHostListener(ElementAnnotation annotation, Element element) {
@@ -337,21 +341,18 @@ class ComponentVisitor
     var eventName = coerceString(value, 'eventName');
     var methodName = element.name;
     var methodArgs = coerceStringList(value, 'args');
-    _host['($eventName)'] = '$methodName(${methodArgs.join(', ')})';
+    _hostListeners[eventName] = '$methodName(${methodArgs.join(', ')})';
   }
 
-  void _addPropertyToType(
-      List<String> types, ElementAnnotation annotation, Element element,
-      {String typeName}) {
+  void _addPropertyBindingTo(
+    Map<String, String> bindings,
+    ElementAnnotation annotation,
+    Element element,
+  ) {
     var value = annotation.computeConstantValue();
-    var bindingName = coerceString(value, 'bindingPropertyName');
-    var entry = bindingName != null
-        ? '${element.displayName}: $bindingName'
-        : element.displayName;
-    if (typeName != null) {
-      entry += '; $typeName';
-    }
-    types.add(entry);
+    var bindingName = coerceString(value, 'bindingPropertyName',
+        defaultTo: element.displayName);
+    bindings[element.displayName] = bindingName;
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
@@ -369,21 +370,31 @@ class ComponentVisitor
         ? _createTemplateMetadata(componentValue,
             view: _findView(element)?.computeConstantValue())
         : new CompileTemplateMetadata();
-    var inputs =
-        new List<String>.from(coerceStringList(componentValue, 'inputs'))
-          ..addAll(_fieldInputs)
-          ..addAll(_setterInputs);
-    var outputs =
-        new List<String>.from(coerceStringList(componentValue, 'outputs'))
-          ..addAll(_outputs);
-    var host =
-        new Map<String, String>.from(coerceStringMap(componentValue, 'host'))
-          ..addAll(_host);
+
+    final inputs = <String, String>{};
+    CompileDirectiveMetadata.deserializeInputs(
+        coerceStringList(componentValue, 'inputs'), inputs, _inputTypes);
+    inputs..addAll(_fieldInputs)..addAll(_setterInputs);
+
+    CompileDirectiveMetadata.deserializeOutputs(
+        coerceStringList(componentValue, 'outputs'), _outputs);
+
+    final hostAttributes = <String, String>{};
+    final hostListeners = <String, String>{};
+    final hostProperties = <String, String>{};
+    CompileDirectiveMetadata.deserializeHost(
+        coerceStringMap(componentValue, 'host'),
+        hostAttributes,
+        hostListeners,
+        hostProperties);
+    hostListeners..addAll(_hostListeners);
+    hostProperties..addAll(_hostProperties);
+
     var queries = new List<CompileQueryMetadata>.from(_queries);
     coerceMap(componentValue, 'queries').forEach((propertyName, query) {
       queries.add(_getQuery(query, propertyName.toStringValue()));
     });
-    final metadata = CompileDirectiveMetadata.create(
+    final metadata = new CompileDirectiveMetadata(
       type: element.accept(new CompileTypeMetadataVisitor(log)),
       isComponent: isComponent,
       selector: coerceString(componentValue, 'selector'),
@@ -391,8 +402,11 @@ class ComponentVisitor
       // Even for directives, we want change detection set to the default.
       changeDetection: _changeDetection(element, componentValue),
       inputs: inputs,
-      outputs: outputs,
-      host: host,
+      inputTypes: _inputTypes,
+      outputs: _outputs,
+      hostAttributes: hostAttributes,
+      hostListeners: hostListeners,
+      hostProperties: hostProperties,
       lifecycleHooks: extractLifecycleHooks(element),
       providers: _extractProviders(componentValue, 'providers'),
       viewProviders: _extractProviders(componentValue, 'viewProviders'),
