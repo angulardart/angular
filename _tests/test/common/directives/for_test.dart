@@ -701,7 +701,7 @@ class ObjectEditorComponent {
 @Component(selector: 'object-to-edit', template: '<p>{{objectId}}</p>')
 class ObjectToEdit {
   dynamic _value;
-  String get objectId => '${_value}';
+  String get objectId => '$_value';
 
   @Input()
   set objectId(dynamic value) {

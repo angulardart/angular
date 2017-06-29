@@ -19,7 +19,7 @@ Future compareSummaryFileToGolden(String dartFileName,
 }
 
 File getFile(String dartFileName, String extension) =>
-    _getFile('${p.withoutExtension(dartFileName)}${extension}');
+    _getFile('${p.withoutExtension(dartFileName)}$extension');
 
 File _getFile(String filename) {
   Uri fileUri = new Uri.file(p.join(_testFilesDir, filename));

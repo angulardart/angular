@@ -113,7 +113,7 @@ void main() {
     test('should strip style attribute', () {
       var dangerousAttrs = ['style'];
       for (var attrName in dangerousAttrs) {
-        String testInput = '<a ${attrName}="x">evil!</a>';
+        String testInput = '<a $attrName="x">evil!</a>';
         expect(sanitizeHtmlInternal(testInput), '<a>evil!</a>');
       }
     });
