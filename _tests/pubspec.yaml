@@ -5,7 +5,7 @@ description: Tests for the angular web framework.
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
-  sdk: '>=1.23.0 <2.0.0'
+  sdk: '>=1.24.0 <2.0.0'
 dependencies:
   angular: 4.0.0-dev
   angular_test: '^1.0.0-beta'
