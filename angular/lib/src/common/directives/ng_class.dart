@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'package:angular/core.dart'
     show DoCheck, OnDestroy, Directive, ElementRef;
 import 'package:angular/src/core/change_detection/differs/default_iterable_differ.dart';
@@ -161,23 +162,24 @@ class NgClass implements DoCheck, OnDestroy {
 
   void _toggleClass(String className, bool enabled) {
     className = className.trim();
-    if (className.length > 0) {
-      if (className.indexOf(' ') > -1) {
-        _separator ??= new RegExp(r'\s+');
-        var classes = className.split(_separator);
-        for (var i = 0, len = classes.length; i < len; i++) {
-          if (enabled) {
-            _ngEl.nativeElement.classes.add(classes[i]);
-          } else {
-            _ngEl.nativeElement.classes.remove(classes[i]);
-          }
-        }
-      } else {
+    if (className.isEmpty) return;
+    Element el = _ngEl.nativeElement;
+    var classList = el.classes;
+    if (className.indexOf(' ') > -1) {
+      _separator ??= new RegExp(r'\s+');
+      var classes = className.split(_separator);
+      for (var i = 0, len = classes.length; i < len; i++) {
         if (enabled) {
-          _ngEl.nativeElement.classes.add(className);
+          classList.add(classes[i]);
         } else {
-          _ngEl.nativeElement.classes.remove(className);
+          classList.remove(classes[i]);
         }
+      }
+    } else {
+      if (enabled) {
+        classList.add(className);
+      } else {
+        classList.remove(className);
       }
     }
   }

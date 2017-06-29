@@ -246,8 +246,7 @@ class ApplicationRefImpl extends ApplicationRef {
       _exceptionHandler = _injector.get(ExceptionHandler);
     });
     _asyncInitDonePromise = this.run(() {
-      List<Function> initializers =
-          _injector.get(APP_INITIALIZER, null) as List<Function>;
+      List<Function> initializers = _injector.get(APP_INITIALIZER, null);
       var asyncInitResults = <Future>[];
       var asyncInitDonePromise;
       if (initializers != null) {
