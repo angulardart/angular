@@ -1316,8 +1316,9 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   if (readVars.contains(DetectChangesVars.firstCheck.name)) {
     varStmts.add(new o.DeclareVarStmt(
         DetectChangesVars.firstCheck.name,
-        o.THIS_EXPR.prop('cdState').identical(createEnumExpression(
-            Identifiers.ChangeDetectorState, ChangeDetectorState.NeverChecked)),
+        o.THIS_EXPR
+            .prop('cdState')
+            .equals(o.literal(ChangeDetectorState.NeverChecked)),
         o.BOOL_TYPE));
   }
   if (readVars.contains(DetectChangesVars.valUnwrapper.name)) {

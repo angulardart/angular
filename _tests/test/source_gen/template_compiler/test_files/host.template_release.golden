@@ -103,7 +103,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    bool firstCheck = identical(this.cdState, ChangeDetectorState.NeverChecked);
+    bool firstCheck = (this.cdState == 0);
     _compView_0.detectHostChanges(firstCheck);
     _compView_0.detectChanges();
   }
