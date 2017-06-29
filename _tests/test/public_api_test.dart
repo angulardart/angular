@@ -13,7 +13,7 @@ void main() {
         // Not storing expected libraries yet – TODO
         return;
       }
-      test('for ${lib} should fail when it changes unexpectedly', () {
+      test('for $lib should fail when it changes unexpectedly', () {
         var symbols = getSymbolsFromLibrary(getLibrary(lib));
         expect(diff(symbols, expected), isEmpty);
       });
