@@ -112,8 +112,20 @@ void main() {
         component.booleanCondition = false;
       });
     });
+
+    test('should throw during change detection if getter changes', () async {
+      var testBed = new NgTestBed<NgIfThrowsDuringChangeDetection>();
+      var fixture = await testBed.create();
+      expect(
+        fixture.update((c) => c.startFailing = true),
+        throwsInAngular(isExpressionChanged),
+      );
+    });
   });
 }
+
+const isExpressionChanged =
+    const isInstanceOf<ExpressionChangedAfterItHasBeenCheckedException>();
 
 @Component(
     selector: 'ngif-intemplate-attr-test',
@@ -167,4 +179,22 @@ class NgIfMultiUpdateTestComponent {
   num numberCondition = 1;
   String stringCondition = 'foo';
   bool functionCondition(s, n) => s == "foo" && n == 1;
+}
+
+@Component(
+  selector: 'ngif-checkbinding-test',
+  template: r'''
+    <template [ngIf]="startFailing">
+      <div *ngIf="value">Hello</div>
+    </template>
+  ''',
+  directives: const [NgIf],
+)
+class NgIfThrowsDuringChangeDetection {
+  bool _value = false;
+
+  // This is considered illegal and should throw in dev-mode.
+  bool get value => _value = !_value;
+
+  bool startFailing = false;
 }
