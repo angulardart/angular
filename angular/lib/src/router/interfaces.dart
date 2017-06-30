@@ -16,7 +16,7 @@ import 'instruction.dart' show ComponentInstruction;
 ///
 /// ### Example
 ///
-/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart (routerOnActivate)"?>
+/// <?code-excerpt "docs/router/lib/src/crisis_center/crisis_detail_component.dart (routerOnActivate)"?>
 /// ```dart
 /// @override
 /// void routerOnActivate(next, prev) {
@@ -45,7 +45,7 @@ abstract class OnActivate {
 ///
 /// ### Example
 ///
-/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart (routerOnReuse)"?>
+/// <?code-excerpt "docs/router/lib/src/crisis_center/crisis_detail_component.dart (routerOnReuse)"?>
 /// ```dart
 /// @override
 /// Future<Null> routerOnReuse(ComponentInstruction next, prev) =>
@@ -73,7 +73,7 @@ abstract class OnReuse {
 ///
 /// ### Example
 ///
-/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart (routerOnDeactivate)"?>
+/// <?code-excerpt "docs/router/lib/src/crisis_center/crisis_detail_component.dart (routerOnDeactivate)"?>
 /// ```dart
 /// @override
 /// void routerOnDeactivate(next, prev) {
@@ -107,7 +107,7 @@ abstract class OnDeactivate {
 ///
 /// ### Example
 ///
-/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart (routerCanReuse)"?>
+/// <?code-excerpt "docs/router/lib/src/crisis_center/crisis_detail_component.dart (routerCanReuse)"?>
 /// ```dart
 /// @override
 /// FutureOr<bool> routerCanReuse(next, prev) => true;
@@ -140,7 +140,7 @@ abstract class CanReuse {
 ///
 /// ### Example
 ///
-/// <?code-excerpt "docs/router/lib/crisis_center/crisis_detail_component.dart (routerCanDeactivate)"?>
+/// <?code-excerpt "docs/router/lib/src/crisis_center/crisis_detail_component.dart (routerCanDeactivate)"?>
 /// ```dart
 /// @override
 /// FutureOr<bool> routerCanDeactivate(next, prev) =>
