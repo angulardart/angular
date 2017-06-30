@@ -31,7 +31,8 @@ dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
-  angular_test: ../angular_test
+  angular_test:
+      path: ../angular_test
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
