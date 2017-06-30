@@ -21,13 +21,14 @@ import 'package:path/path.dart' as p;
 
 import 'package:test/test.dart';
 
-final _packageName = 'angular2';
-
+/// This is the path to the root of the `angular` package.
+///
+/// The call to `resolve` navigates relative to **this** file.
 final String packageRootPath = (m.reflect(getLibraries) as m.ClosureMirror)
     .function
     .location
     .sourceUri
-    .resolve('..')
+    .resolve('../../angular')
     .toFilePath();
 
 String get pkgLibPath => p.join(packageRootPath, 'lib');
