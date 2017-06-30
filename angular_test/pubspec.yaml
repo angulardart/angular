@@ -26,7 +26,8 @@ dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
-  angular: ../angular
+  angular:
+    path: ../angular
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
