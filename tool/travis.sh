@@ -10,6 +10,8 @@ set -e
 pushd $PKG
 pub upgrade
 
+dartanalyzer --fatal-warnings .
+
 if [ "$PKG" == "_tests" ]; then
   dart test/source_gen/template_compiler/generate.dart
 fi
@@ -18,6 +20,5 @@ if [ "$PKG" == "_tests" ] || [ "$PKG" == "angular_test" ]; then
   pub run test
 fi
 
-dartanalyzer --fatal-warnings .
 echo Any unformatted files?
 dartfmt -n --set-exit-if-changed .
