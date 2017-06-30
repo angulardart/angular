@@ -1,17 +1,16 @@
 name: _tests
-version: 0.0.1
 author: Dart Team <web@dartlang.org>
 description: Tests for the angular web framework.
 homepage: https://webdev.dartlang.org/angular
-documentation: https://webdev.dartlang.org/angular/api
 environment:
   sdk: '>=1.24.0 <2.0.0'
-dependencies:
+dev_dependencies:
   angular: 4.0.0-dev
   angular_test: '^1.0.0-beta'
   build_runner: ^0.3.4
   build_test: ^0.6.0
   mockito: '>=0.11.0 <3.0.0'
+  source_span: ^1.4.0
   test: ^0.12.6
 dependency_overrides:
   angular:
