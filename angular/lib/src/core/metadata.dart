@@ -20,7 +20,7 @@ export 'metadata/view.dart';
 /// An annotation that marks a class as an Angular directive, allowing you to
 /// attach behavior to elements in the DOM.
 ///
-/// <?code-excerpt "docs/attribute-directives/lib/highlight_directive_1.dart"?>
+/// <?code-excerpt "docs/attribute-directives/lib/src/highlight_directive_1.dart"?>
 /// ```dart
 /// import 'package:angular/angular.dart';
 ///
