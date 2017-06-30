@@ -10,6 +10,25 @@ import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
+import 'package:angular/src/mock/mock_location_strategy.dart';
+import 'package:angular/src/platform/location.dart';
+
+/// Returns an application injector for [providers] based on a [platform].
+///
+/// Optionally can include the deprecated router APIs [withRouter].
+Injector createTestInjector(List<dynamic> providers, {bool withRouter: false}) {
+  final appInjector = ReflectiveInjector.resolveAndCreate([
+    BROWSER_APP_PROVIDERS,
+    withRouter
+        ? const [
+            const Provider(LocationStrategy, useClass: MockLocationStrategy),
+          ]
+        : const [],
+    providers,
+  ], browserStaticPlatform().injector);
+  appViewUtils ??= appInjector.get(AppViewUtils);
+  return appInjector;
+}
 
 /// Returns a future that completes with a new instantiated component.
 ///
@@ -32,12 +51,10 @@ Future<ComponentRef> bootstrapForTest<E>(
     throw new ArgumentError.notNull('hostElement');
   }
   // This should be kept in sync with 'bootstrapStatic' as much as possible.
-  final platformRef = browserStaticPlatform();
-  final appInjector = ReflectiveInjector.resolveAndCreate([
+  final appInjector = createTestInjector([
     BROWSER_APP_PROVIDERS,
     addProviders,
-  ], platformRef.injector);
-  appViewUtils ??= appInjector.get(AppViewUtils);
+  ]);
   final ApplicationRefImpl appRef = appInjector.get(ApplicationRef);
   NgZoneError caughtError;
   final NgZone ngZone = appInjector.get(NgZone);

@@ -13,7 +13,6 @@ import 'package:angular/platform/common.dart' show LocationStrategy;
 import 'package:angular/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular/src/mock/mock_location_strategy.dart'
     show MockLocationStrategy;
-import 'package:angular/src/mock/ng_zone_mock.dart' show MockNgZone;
 import 'package:angular/src/platform/browser_common.dart'
     show BROWSER_APP_COMMON_PROVIDERS;
 import 'package:angular/src/platform/dom/dom_tokens.dart' show DOCUMENT;
@@ -35,7 +34,6 @@ const List<dynamic> ADDITIONAL_TEST_BROWSER_PROVIDERS = const [
   AppViewUtils,
   Log,
   TestComponentBuilder,
-  const Provider(NgZone, useClass: MockNgZone),
   const Provider(LocationStrategy, useClass: MockLocationStrategy),
 ];
 
