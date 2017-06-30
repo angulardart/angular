@@ -63,7 +63,7 @@ const BROWSER_APP_PROVIDERS = const [
 /// ```dart
 /// import 'package:angular/platform/browser.dart';
 ///
-/// import 'package:angular_quickstart/app_component.dart';
+/// import 'package:angular_app/app_component.dart';
 ///
 /// void main() {
 ///   bootstrap(AppComponent);
@@ -79,12 +79,11 @@ const BROWSER_APP_PROVIDERS = const [
 /// import 'package:http/http.dart';
 ///
 /// void main() {
-///   bootstrap(AppComponent,
-///     [provide(Client, useClass: InMemoryDataService)]
-///     // Using a real back end?
-///     // Import browser_client.dart and change the above to:
-///     // [provide(Client, useFactory: () => new BrowserClient(), deps: [])]
-///   );
+///   bootstrap(AppComponent, [provide(Client, useClass: InMemoryDataService)]
+///       // Using a real back end?
+///       // Import browser_client.dart and change the above to:
+///       // [provide(Client, useFactory: () => new BrowserClient(), deps: [])]
+///       );
 /// }
 /// ```
 ///
