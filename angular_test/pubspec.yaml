@@ -23,9 +23,11 @@ dependencies:
   path: '^1.4.1'
   stack_trace: ^1.7.0
   test: '^0.12.17'
+
+# === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
-  angular:
-    path: ../angular
+  angular: ../angular
+# === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
   # Run the code generator on the entire package.
