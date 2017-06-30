@@ -400,7 +400,8 @@ class ComponentVisitor
       selector: coerceString(componentValue, 'selector'),
       exportAs: coerceString(componentValue, 'exportAs'),
       // Even for directives, we want change detection set to the default.
-      changeDetection: _changeDetection(element, componentValue),
+      changeDetection:
+          _changeDetection(element, componentValue, 'changeDetection'),
       inputs: inputs,
       inputTypes: _inputTypes,
       outputs: _outputs,
@@ -461,21 +462,17 @@ class ComponentVisitor
         defaultTo: ViewEncapsulation.Emulated,
       );
 
-  ChangeDetectionStrategy _changeDetection(
+  int _changeDetection(
     ClassElement clazz,
     DartObject value,
+    String field,
   ) {
     // TODO: Use angular2/src/meta instead of this error-prone check.
     if (clazz.allSupertypes.any((t) => t.name == 'ComponentState')) {
       // TODO: Warn/fail if changeDetection: ... is set to anything else.
       return ChangeDetectionStrategy.Stateful;
     }
-    return coerceEnum(
-      value,
-      'changeDetection',
-      ChangeDetectionStrategy.values,
-      defaultTo: ChangeDetectionStrategy.Default,
-    );
+    return coerceInt(value, field, defaultTo: ChangeDetectionStrategy.Default);
   }
 
   List<CompileProviderMetadata> _extractProviders(
