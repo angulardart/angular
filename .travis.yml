@@ -1,8 +1,15 @@
 language: dart
 sudo: false
+
 dart:
   - dev
   - stable
+
+env:
+  - PKG=_tests
+  - PKG=angular
+  - PKG=angular_test
+
 script: ./tool/travis.sh
 
 # Only building master means that we don't run two builds for each pull request.
