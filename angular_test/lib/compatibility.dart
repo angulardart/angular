@@ -6,8 +6,12 @@
 ///
 /// It is **highly recommended** not to use this and only stick to
 /// `angular_test.dart` for any new code or for new users of this package. APIs
-/// may change at _any time_ without adhering strictly to semver.
+/// may change at _any time_ without adhering strictly to sem-ver.
+@experimental
+library angular_test.compatibility;
 
+import 'package:meta/meta.dart';
+
+export 'src/bootstrap.dart' show bootstrapForTest, createTestInjector;
 export 'src/frontend/bed.dart' show createDynamicFixture, createDynamicTestBed;
-
 export 'src/frontend/fixture.dart' show componentOfFixture, injectFromFixture;
