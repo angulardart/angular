@@ -1,9 +1,6 @@
 name: _tests
-version: 0.0.1
 author: Dart Team <web@dartlang.org>
-description: Tests for the angular web framework.
-homepage: https://webdev.dartlang.org/angular
-documentation: https://webdev.dartlang.org/angular/api
+description: Tests for AngularDart.
 environment:
   sdk: '>=1.24.0 <2.0.0'
 dependencies:
@@ -13,6 +10,8 @@ dependencies:
   build_test: ^0.6.0
   mockito: '>=0.11.0 <3.0.0'
   test: ^0.12.6
+
+# DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:
   angular:
     path: ../angular

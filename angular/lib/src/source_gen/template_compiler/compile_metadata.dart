@@ -7,7 +7,6 @@ import 'package:analyzer/src/dart/constant/value.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/generated/utilities_dart.dart';
 import 'package:logging/logging.dart';
-import 'package:protobuf/protobuf.dart';
 import 'package:quiver/strings.dart' as strings;
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
@@ -482,7 +481,7 @@ class CompileTypeMetadataVisitor
 
   bool _isProtobufEnum(ParameterizedType type) {
     return type is InterfaceType &&
-        const TypeChecker.fromRuntime(ProtobufEnum)
+        const TypeChecker.fromUrl('package:protobuf/protobuf.dart#ProtobufEnum')
             .isExactlyType(type.superclass);
   }
 

@@ -23,20 +23,17 @@ dependencies:
   logging: '>=0.9.0 <0.12.0'
   meta: ^1.0.3
   path: ^1.0.0
-  protobuf: ^0.5.1
   quiver: '>=0.21.4 <0.26.0'
   source_gen: ^0.5.9
   source_span: ^1.0.0
   stack_trace: ^1.6.5
   tuple: ^1.0.1
-dev_dependencies:
-  args: ^0.13.6
-  build_runner: ^0.3.2
-  build_test: ^0.6.0
-  cli_util: '>=0.0.1+2 <0.2.0'
-  mockito: '>=0.11.0 <3.0.0'
-  test: ^0.12.6
-  transformer_test: ^0.2.0
+
+# === vvv REMOVE WHEN PUBLISHING vvv ===
+dependency_overrides:
+  angular_test: ../angular_test
+# === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
+
 transformers:
   - test/pub_serve:
       $include: test/**_test.dart
