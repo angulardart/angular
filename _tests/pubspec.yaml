@@ -3,12 +3,13 @@ author: Dart Team <web@dartlang.org>
 description: Tests for AngularDart.
 environment:
   sdk: '>=1.24.0 <2.0.0'
-dependencies:
+dev_dependencies:
   angular: 4.0.0-dev
   angular_test: '^1.0.0-beta'
   build_runner: ^0.3.4
   build_test: ^0.6.0
   mockito: '>=0.11.0 <3.0.0'
+  source_span: ^1.4.0
   test: ^0.12.6
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
