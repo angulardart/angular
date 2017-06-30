@@ -1,7 +1,7 @@
 name: angular
-version: 4.0.0-dev
+version: 4.0.0-alpha
 author: Dart Team <web@dartlang.org>
-description: Framework for modern web applications
+description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
@@ -28,6 +28,9 @@ dependencies:
   source_span: ^1.0.0
   stack_trace: ^1.6.5
   tuple: ^1.0.1
+
+dev_dependencies:
+  test: ^0.12.6
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
