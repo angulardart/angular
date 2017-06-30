@@ -42,6 +42,7 @@ import "constants.dart"
     show
         appViewRootElementName,
         createEnumExpression,
+        changeDetectionStrategyToConst,
         DetectChangesVars,
         EventHandlerVars,
         InjectMethodVars,
@@ -917,8 +918,7 @@ o.ClassMethod _createViewClassConstructor(
     o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,
     ViewConstructorVars.parentIndex,
-    createEnumExpression(
-        Identifiers.ChangeDetectionStrategy, getChangeDetectionMode(view))
+    changeDetectionStrategyToConst(getChangeDetectionMode(view))
   ];
   if (view.genConfig.genDebugInfo) {
     superConstructorArgs.add(nodeDebugInfosVar);
@@ -1346,8 +1346,8 @@ o.OutputType getContextType(CompileView view) {
   return typeMeta.isHost ? o.DYNAMIC_TYPE : o.importType(typeMeta);
 }
 
-ChangeDetectionStrategy getChangeDetectionMode(CompileView view) {
-  ChangeDetectionStrategy mode;
+int getChangeDetectionMode(CompileView view) {
+  int mode;
   if (identical(view.viewType, ViewType.COMPONENT)) {
     mode = isDefaultChangeDetectionStrategy(view.component.changeDetection)
         ? ChangeDetectionStrategy.CheckAlways

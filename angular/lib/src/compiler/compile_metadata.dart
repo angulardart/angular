@@ -578,7 +578,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       bool isComponent,
       String selector,
       String exportAs,
-      ChangeDetectionStrategy changeDetection,
+      int changeDetection,
       List<String> inputs,
       List<String> outputs,
       Map<String, String> host,
@@ -633,7 +633,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   bool isComponent;
   String selector;
   String exportAs;
-  ChangeDetectionStrategy changeDetection;
+  int changeDetection;
   Map<String, String> inputs;
   Map<String, String> inputTypes;
   Map<String, String> outputs;
@@ -693,9 +693,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         type: data['type'] != null
             ? CompileTypeMetadata.fromJson(data['type'] as Map<String, dynamic>)
             : data['type'],
-        changeDetection: data['changeDetection'] != null
-            ? ChangeDetectionStrategy.values[data['changeDetection']]
-            : null,
+        changeDetection: data['changeDetection'],
         inputs: data['inputs'] as Map<String, String>,
         inputTypes: data['inputTypes'] as Map<String, String>,
         outputs: data['outputs'] as Map<String, String>,
@@ -728,7 +726,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         'selector': selector,
         'exportAs': exportAs,
         'type': type?.toJson(),
-        'changeDetection': changeDetection?.index,
+        'changeDetection': changeDetection,
         'inputs': inputs,
         'inputTypes': inputTypes,
         'outputs': outputs,

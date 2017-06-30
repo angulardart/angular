@@ -17,36 +17,37 @@ class ChangeDetectorState {
 
 /// Describes within the change detector which strategy will be used the next
 /// time change detection is triggered.
-enum ChangeDetectionStrategy {
+///
+/// ! Changes to this class require updates to view_compiler/constants.dart.
+class ChangeDetectionStrategy {
   /// After calling detectChanges the mode of the change detector will become
   /// `Checked`.
-  CheckOnce,
+  static const int CheckOnce = 1;
 
   /// The change detector should be skipped until its mode changes to
   /// `CheckOnce`.
-  Checked,
+  static const int Checked = 2;
 
   /// After calling detectChanges the mode of the change detector will remain
   /// `CheckAlways`.
-  CheckAlways,
+  static const int CheckAlways = 3;
 
   /// The change detector sub tree is not a part of the main tree and should be
   /// skipped.
-  Detached,
+  static const int Detached = 4;
 
   /// The change detector's mode will be set to `CheckOnce` during hydration.
-  OnPush,
+  static const int OnPush = 5;
 
   /// The component manages state itself and explicitly calls setState to
   /// notify Angular to update template.
-  Stateful,
+  static const int Stateful = 6;
 
   /// The change detector's mode will be set to `CheckAlways` during hydration.
-  Default
+  static const int Default = 0;
 }
 
-bool isDefaultChangeDetectionStrategy(
-    ChangeDetectionStrategy changeDetectionStrategy) {
+bool isDefaultChangeDetectionStrategy(int changeDetectionStrategy) {
   return changeDetectionStrategy == null ||
-      identical(changeDetectionStrategy, ChangeDetectionStrategy.Default);
+      changeDetectionStrategy == ChangeDetectionStrategy.Default;
 }

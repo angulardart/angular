@@ -58,13 +58,8 @@ class DebugAppView<T> extends AppView<T> {
   @visibleForTesting
   final List<Future> deferredLoads = [];
 
-  DebugAppView(
-      ViewType type,
-      Map<String, dynamic> locals,
-      AppView parentView,
-      int parentIndex,
-      ChangeDetectionStrategy cdMode,
-      this.staticNodeDebugInfos)
+  DebugAppView(ViewType type, Map<String, dynamic> locals, AppView parentView,
+      int parentIndex, int cdMode, this.staticNodeDebugInfos)
       : super(type, locals, parentView, parentIndex, cdMode) {
     this.cdMode = cdMode;
     if (!_ngProbeInitialized) {

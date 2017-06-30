@@ -390,7 +390,7 @@ class Component extends Directive {
   ///
   /// The [changeDetection] property defines, whether the change detection will
   /// be checked every time or only when the component tells it to do so.
-  final ChangeDetectionStrategy changeDetection;
+  final int changeDetection;
 
   /// Defines the set of injectable objects that are visible to its view
   /// DOM children.

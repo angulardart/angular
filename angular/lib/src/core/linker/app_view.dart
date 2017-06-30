@@ -83,7 +83,7 @@ abstract class AppView<T> {
   HtmlElement rootEl;
 
   /// What type of change detection the view is using.
-  ChangeDetectionStrategy _cdMode;
+  int _cdMode;
 
   // Improves change detection tree traversal by caching change detection mode
   // and change detection state checks. When set to true, this view doesn't need
@@ -145,14 +145,14 @@ abstract class AppView<T> {
   /// if error state has been set due a prior exception.
   ///
   /// Typically a view alternates between CheckOnce and Checked modes.
-  set cdMode(ChangeDetectionStrategy value) {
+  set cdMode(int value) {
     if (_cdMode != value) {
       _cdMode = value;
       _updateSkipChangeDetectionFlag();
     }
   }
 
-  ChangeDetectionStrategy get cdMode => _cdMode;
+  int get cdMode => _cdMode;
 
   /// Sets change detection state and caches flag to skip change detection
   /// if mode and state don't require one.
@@ -396,7 +396,7 @@ abstract class AppView<T> {
   void markPathToRootAsCheckOnce() {
     AppView view = this;
     while (view != null) {
-      ChangeDetectionStrategy cdMode = view.cdMode;
+      int cdMode = view.cdMode;
       if (cdMode == ChangeDetectionStrategy.Detached) break;
       if (cdMode == ChangeDetectionStrategy.Checked) {
         view.cdMode = ChangeDetectionStrategy.CheckOnce;

@@ -8,6 +8,14 @@ import 'package:analyzer/dart/constant/value.dart';
 bool coerceBool(DartObject value, String field, {bool defaultTo}) =>
     getField(value, field)?.toBoolValue() ?? defaultTo;
 
+/// Reads and returns [field] on [value] as an integer.
+///
+/// Unlike `DartObject#getField`, this also traverses `super` if available.
+///
+/// If the value is missing or is not a boolean, returns [defaultTo].
+int coerceInt(DartObject value, String field, {int defaultTo}) =>
+    getField(value, field)?.toIntValue() ?? defaultTo;
+
 /// Reads and returns [field] on [value] as a string.
 ///
 /// Unlike `DartObject#getField`, this also traverses `super` if available.

@@ -1,5 +1,6 @@
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "../output/output_ast.dart" as o;
+import "../identifiers.dart";
 
 const String appViewRootElementName = 'rootEl';
 
@@ -11,6 +12,25 @@ o.Expression createEnumExpression(
   return o.importExpr(new CompileIdentifierMetadata(
       name: '${classIdentifier.name}.$name',
       moduleUrl: classIdentifier.moduleUrl));
+}
+
+const List<String> _changeDetectionStrategies = const [
+  'Default',
+  'CheckOnce',
+  'Checked',
+  'CheckAlways',
+  'Detached',
+  'OnPush',
+  'Stateful'
+];
+
+// Converts integer change detection strategy to const expression
+// to make generated code more readable.
+o.Expression changeDetectionStrategyToConst(int value) {
+  String name = _changeDetectionStrategies[value];
+  return o.importExpr(new CompileIdentifierMetadata(
+      name: 'ChangeDetectionStrategy.$name',
+      moduleUrl: Identifiers.ChangeDetectionStrategy.moduleUrl));
 }
 
 class ViewConstructorVars {
