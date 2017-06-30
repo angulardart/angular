@@ -695,5 +695,5 @@ Element createAndAppendToShadowRoot(
 }
 
 /// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
-/// This prevents unused import error in dart_analyzed_library build.
+/// This prevents unused import error in dart_library build.
 Element _temporaryTodo;
