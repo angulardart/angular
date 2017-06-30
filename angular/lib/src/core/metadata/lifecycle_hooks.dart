@@ -47,7 +47,7 @@ var LIFECYCLE_HOOKS_VALUES = [
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/on_changes_component.dart (ng-on-changes)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/on_changes_component.dart (ng-on-changes)"?>
 /// ```dart
 /// ngOnChanges(Map<String, SimpleChange> changes) {
 ///   changes.forEach((String propName, SimpleChange change) {
@@ -174,7 +174,7 @@ abstract class OnDestroy {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/do_check_component.dart (ng-do-check)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/do_check_component.dart (ng-do-check)"?>
 /// ```dart
 /// ngDoCheck() {
 ///   if (hero.name != oldHeroName) {
@@ -223,7 +223,7 @@ abstract class DoCheck {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart (template)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_content_component.dart (template)"?>
 /// ```dart
 /// template: '''
 ///   <div>-- projected content begins --</div>
@@ -233,7 +233,7 @@ abstract class DoCheck {
 ///   ''',
 /// ```
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart (hooks)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_content_component.dart (hooks)"?>
 /// ```dart
 /// class AfterContentComponent implements AfterContentChecked, AfterContentInit {
 ///   String _prevHero = '';
@@ -277,7 +277,7 @@ abstract class AfterContentInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart (template)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_content_component.dart (template)"?>
 /// ```dart
 /// template: '''
 ///   <div>-- projected content begins --</div>
@@ -287,7 +287,7 @@ abstract class AfterContentInit {
 ///   ''',
 /// ```
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_content_component.dart (hooks)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_content_component.dart (hooks)"?>
 /// ```dart
 /// class AfterContentComponent implements AfterContentChecked, AfterContentInit {
 ///   String _prevHero = '';
@@ -331,7 +331,7 @@ abstract class AfterContentChecked {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart (template)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_view_component.dart (template)"?>
 /// ```dart
 /// template: '''
 ///   <div>-- child view begins --</div>
@@ -340,7 +340,7 @@ abstract class AfterContentChecked {
 ///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>''',
 /// ```
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart (hooks)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_view_component.dart (hooks)"?>
 /// ```dart
 /// class AfterViewComponent implements AfterViewChecked, AfterViewInit {
 ///   var _prevHero = '';
@@ -382,7 +382,7 @@ abstract class AfterViewInit {
 ///
 /// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart (template)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_view_component.dart (template)"?>
 /// ```dart
 /// template: '''
 ///   <div>-- child view begins --</div>
@@ -391,7 +391,7 @@ abstract class AfterViewInit {
 ///   <p *ngIf="comment.isNotEmpty" class="comment">{{comment}}</p>''',
 /// ```
 ///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/after_view_component.dart (hooks)"?>
+/// <?code-excerpt "docs/lifecycle-hooks/lib/src/after_view_component.dart (hooks)"?>
 /// ```dart
 /// class AfterViewComponent implements AfterViewChecked, AfterViewInit {
 ///   var _prevHero = '';
