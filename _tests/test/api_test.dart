@@ -1,4 +1,3 @@
-@Skip('Test broken by package refactoring. See issue #466')
 @TestOn('!browser')
 import 'package:analyzer/dart/element/element.dart';
 
@@ -13,6 +12,7 @@ main() {
 
   setUpAll(() async {
     elements = await getLibraries();
+    expect(elements, isNotEmpty);
   });
 
   test('public libraries', () async {
