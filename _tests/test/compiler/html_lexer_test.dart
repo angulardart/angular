@@ -613,7 +613,7 @@ t</title>'''), [
     group("errors", () {
       test("should include 2 lines of context in message", () {
         var src = "111\n222\n333\nE\n444\n555\n666\n";
-        var file = new SourceFile(src, url: "file://");
+        var file = new SourceFile.fromString(src, url: "file://");
         var start = new SourceLocation(src.indexOf('E\n'));
         var end = new SourceLocation(start.offset + 1);
         var span =
