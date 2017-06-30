@@ -1,3 +1,7 @@
+## 1.0.0-beta+4
+
+**Now supports `package:angular` instead of `package:angular2`.**
+
 ## 1.0.0-beta+3
 
 ### Breaking Changes & Deprecations

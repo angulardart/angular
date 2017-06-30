@@ -47,10 +47,10 @@ You will need to also configure in `pubspec.yaml` to run code generation:
 ```yaml
 transformers:
   # Run the code generator on the entire package.
-  - angular2/transform/codegen
+  - angular/transform/codegen
 
   # Run the reflection remover on tests that have AoT enabled.
-  - angular2/transform/reflection_remover:
+  - angular/transform/reflection_remover:
       $include:
           - test/test_using_angular_test.dart
 
