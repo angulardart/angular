@@ -21,16 +21,20 @@ import 'package:path/path.dart' as p;
 
 import 'package:test/test.dart';
 
-final _packageName = 'angular2';
+final Uri _thisFileUri =
+    (m.reflect(getLibraries) as m.ClosureMirror).function.location.sourceUri;
 
-final String packageRootPath = (m.reflect(getLibraries) as m.ClosureMirror)
-    .function
-    .location
-    .sourceUri
-    .resolve('..')
-    .toFilePath();
+/// This is the path to the root of the `angular` package.
+///
+/// The call to `resolve` navigates relative to **this** file.
+final String _dotPackagesPath =
+    _thisFileUri.resolve('../.packages').toFilePath();
 
-String get pkgLibPath => p.join(packageRootPath, 'lib');
+/// This is the path to the root of the `angular` package.
+///
+/// The call to `resolve` navigates relative to **this** file.
+final String _packageRootPath =
+    _thisFileUri.resolve('../../angular').toFilePath();
 
 int _uriComparer(Uri a, Uri b) => a.toString().compareTo(b.toString());
 
@@ -50,6 +54,8 @@ Set<String> getMembers(LibraryElement libElement) {
 }
 
 Future<Map<String, LibraryElement>> getLibraries() async {
+  var pkgLibPath = p.join(_packageRootPath, 'lib');
+
   var result = Process.runSync('find', [pkgLibPath, '-iname', '*.dart']);
 
   var items = LineSplitter.split(result.stdout).toSet();
@@ -61,7 +67,8 @@ Future<Map<String, LibraryElement>> getLibraries() async {
     return segments.length > 1 && segments.first == 'src';
   });
 
-  var context = await getAnalysisContextForProjectPath(packageRootPath, items);
+  var context = await _getAnalysisContextForProjectPath(
+      _dotPackagesPath, _packageRootPath, items);
 
   var uriSources = new SplayTreeMap<Uri, Source>(_uriComparer);
   var libElements = new SplayTreeMap<String, LibraryElement>();
@@ -88,8 +95,10 @@ Future<Map<String, LibraryElement>> getLibraries() async {
 }
 
 /// [foundFiles] is the list of files to consider for the context.
-Future<AnalysisContext> getAnalysisContextForProjectPath(
-    String projectPath, Iterable<String> foundFiles) async {
+Future<AnalysisContext> _getAnalysisContextForProjectPath(
+    String dotPackagesPath,
+    String projectPath,
+    Iterable<String> foundFiles) async {
   // TODO: fail more clearly if this...fails
   var sdkPath = cli.getSdkDir().path;
 
@@ -97,7 +106,7 @@ Future<AnalysisContext> getAnalysisContextForProjectPath(
   DartSdk sdk = new FolderBasedDartSdk(
       resourceProvider, resourceProvider.getFolder(sdkPath));
 
-  var packageResolver = _getPackageResolver(projectPath, sdk);
+  var packageResolver = _getPackageResolver(dotPackagesPath, sdk);
 
   var resolvers = [
     new DartUriResolver(sdk),
@@ -119,9 +128,7 @@ Future<AnalysisContext> getAnalysisContextForProjectPath(
   return context;
 }
 
-UriResolver _getPackageResolver(String projectPath, DartSdk sdk) {
-  var dotPackagesPath = p.join(projectPath, '.packages');
-
+UriResolver _getPackageResolver(String dotPackagesPath, DartSdk sdk) {
   if (!FileSystemEntity.isFileSync(dotPackagesPath)) {
     throw new StateError('A package configuration file was not found at the '
         'expectetd location. $dotPackagesPath');
@@ -140,27 +147,6 @@ UriResolver _getPackageResolver(String projectPath, DartSdk sdk) {
       PhysicalResourceProvider.INSTANCE, packageMap);
 }
 
-LibraryElement getLibraryElementForSourceFile(
-    AnalysisContext context, String sourcePath) {
-  Source source = new FileBasedSource(new JavaFile(sourcePath));
-
-  var libs = context.getLibrariesContaining(source);
-
-  if (libs.length > 1) {
-    throw new Exception("We don't support multiple libraries for a source.");
-  }
-
-  if (libs.isEmpty) {
-    return null;
-  }
-
-  var libSource = libs.single;
-
-  // using `getLibraryElement` because the library should already be computed
-  // If not, it's a bug in usage
-  return context.getLibraryElement(libSource);
-}
-
 // may return `null` if [path] doesn't refer to a library.
 /// [dartFiles] is an [Iterable] of paths to [.dart] files.
 Iterable<LibraryElement> _getLibraryElements(
@@ -175,8 +161,4 @@ LibraryElement _getLibraryElement(String path, AnalysisContext context) {
     return context.computeLibraryElement(source);
   }
   return null;
-}
-
-String getFileBasedSourcePath(FileBasedSource source) {
-  return p.fromUri(source.uri);
 }
