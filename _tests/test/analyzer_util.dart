@@ -36,8 +36,6 @@ final String _dotPackagesPath =
 final String _packageRootPath =
     _thisFileUri.resolve('../../angular').toFilePath();
 
-String get _pkgLibPath => p.join(_packageRootPath, 'lib');
-
 int _uriComparer(Uri a, Uri b) => a.toString().compareTo(b.toString());
 
 Set<String> getMembers(LibraryElement libElement) {
@@ -56,13 +54,15 @@ Set<String> getMembers(LibraryElement libElement) {
 }
 
 Future<Map<String, LibraryElement>> getLibraries() async {
-  var result = Process.runSync('find', [_pkgLibPath, '-iname', '*.dart']);
+  var pkgLibPath = p.join(_packageRootPath, 'lib');
+
+  var result = Process.runSync('find', [pkgLibPath, '-iname', '*.dart']);
 
   var items = LineSplitter.split(result.stdout).toSet();
 
   // only things in lib (but not lib/src)
   items.removeWhere((path) {
-    var relativePath = p.relative(path, from: _pkgLibPath);
+    var relativePath = p.relative(path, from: pkgLibPath);
     var segments = p.split(relativePath);
     return segments.length > 1 && segments.first == 'src';
   });
@@ -86,7 +86,7 @@ Future<Map<String, LibraryElement>> getLibraries() async {
     var lib = context.getLibraryElement(source);
     expect(lib, isNotNull, reason: 'For ${source.uri}');
 
-    libElements[p.relative(filePath, from: _pkgLibPath)] = lib;
+    libElements[p.relative(filePath, from: pkgLibPath)] = lib;
   }
 
   expect(uriSources, hasLength(items.length));
