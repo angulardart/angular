@@ -1,3 +1,4 @@
+import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/app_view_utils.dart'
@@ -71,7 +72,8 @@ void bind(
       checkExpression.anyExplicit) {
     view.cacheCtxInDetectChangesMethod = true;
   }
-  if (checkExpression.expression is o.LiteralExpr) {
+  if (isImmutable(
+      checkExpression.expression, context, view.component.analyzedClass)) {
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
     _bindLiteral(checkExpression, literalMethod, actions, currValExpr.name,
@@ -127,10 +129,6 @@ void _bindLiteral(
     List<o.Statement> actions,
     String currValName,
     String fieldName) {
-  assert(checkExpression.expression is o.LiteralExpr);
-  // Literals don't need value unwrappers.
-  assert(!checkExpression.needsValueUnwrapper);
-
   if (checkExpression.expression == o.NULL_EXPR) {
     // In this case, there is no transition, since change detection variables
     // are initialized to null.
@@ -143,7 +141,13 @@ void _bindLiteral(
           currValName, checkExpression.expression, stmt))
       // Replace all 'expr_X' with 'null'
       .map((stmt) => o.replaceVarInStatement(fieldName, o.NULL_EXPR, stmt));
-  method.addStmts(mappedActions.toList());
+  // TODO(het): Don't check for null if it's unnecessary:
+  //   - if the expression is a literal
+  //   - if the expression is a method tear-off
+  //   - if the expression has a known, non-null value
+  method.addStmt(new o.IfStmt(
+      checkExpression.expression.notIdentical(o.NULL_EXPR),
+      mappedActions.toList()));
 }
 
 void bindRenderText(
