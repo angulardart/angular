@@ -1,0 +1,18 @@
+name: angular_compiler
+author: Dart Team <misc@dartlang.org>
+homepage: https://github.com/dart-lang/angular
+description: Compiler for AngularDart.
+version: 0.1.0-dev
+
+environment:
+  sdk: '>=1.22.0 <2.0.0'
+
+dependencies:
+  source_gen: '^0.5.9'
+
+dev_dependencies:
+  # This is here in order for it to be resolvable by the analyzer.
+  angular: ../angular
+  analyzer: '>=0.29.10 <0.31.0'
+  build_test: '>=0.5.1 <0.7.0'
+  test: '^0.12.0'
