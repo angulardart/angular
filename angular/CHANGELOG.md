@@ -81,6 +81,20 @@ class MyComp {}
 * Removed a number of classes that were never intended to be public:
   * `ViewResolver`
 
+### Deprecations
+
+* Support for shadow piercing combinators `/deep/` and `>>>` to prevent style
+  encapsulation is now deprecated. `/deep/` is already deprecated and will be
+  [removed in Chrome 60][deep-removal]. Its alias `>>>` is limited to the
+  [static profile of selectors][static-profile], meaning it's not supported
+  in style sheets. Continued use of these combinators puts Angular at risk of
+  incompatibility with common CSS tooling. `::ng-deep` is a drop-in replacement,
+  intended to provide the same functionality as `/deep/` and `>>>`, without the
+  need to use deprecated or unsupported CSS syntax.
+
+[deep-removal]: https://www.chromestatus.com/features/4964279606312960
+[static-profile]: https://drafts.csswg.org/css-scoping/#deep-combinator
+
 ### Bug fixes
 
 * Properly annotate methods in generated `.template.dart` code with `@override`.
@@ -99,22 +113,6 @@ class MyComp {}
 
 * Some change detection code that was duplicated across all generated templates
   were moved internally to a new `AppView#detectHostChanges` method.
-
-## 3.2.0
-
-### Deprecations
-
-* Support for shadow piercing combinators `/deep/` and `>>>` to prevent style
-  encapsulation is now deprecated. `/deep/` is already deprecated and will be
-  [removed in Chrome 60][deep-removal]. Its alias `>>>` is limited to the
-  [static profile of selectors][static-profile], meaning it's not supported
-  in style sheets. Continued use of these combinators puts Angular at risk of
-  incompatibility with common CSS tooling. `::ng-deep` is a drop-in replacement,
-  intended to provide the same functionality as `/deep/` and `>>>`, without the
-  need to use deprecated or unsupported CSS syntax.
-
-[deep-removal]: https://www.chromestatus.com/features/4964279606312960
-[static-profile]: https://drafts.csswg.org/css-scoping/#deep-combinator
 
 ## 3.1.0
 
