@@ -37,7 +37,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   NgIf _NgIf_1_5;
   ViewContainer _appEl_3;
   import4.NgFor _NgFor_3_5;
-  var _expr_1;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -74,12 +73,13 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
+    bool firstCheck = (this.cdState == 0);
     final import1.TestFooComponent _ctx = ctx;
     _NgIf_1_5.ngIf = _ctx.foo;
-    final currVal_1 = _ctx.bars;
-    if (!import12.looseIdentical(_expr_1, currVal_1)) {
-      _NgFor_3_5.ngForOf = currVal_1;
-      _expr_1 = currVal_1;
+    if (firstCheck) {
+      if (!identical(_ctx.bars, null)) {
+        (_NgFor_3_5.ngForOf = _ctx.bars);
+      }
     }
     _NgFor_3_5.ngDoCheck();
     _appEl_1.detectChangesInNestedViews();

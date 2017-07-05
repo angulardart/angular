@@ -34,9 +34,31 @@ class DefaultIterableDiffer {
   // has changed
   CollectionChangeRecord _identityChangesHead;
   CollectionChangeRecord _identityChangesTail;
+
   DefaultIterableDiffer([this._trackByFn]) {
     _trackByFn = _trackByFn ?? trackByIdentity;
   }
+
+  clone(TrackByFn trackByFn) {
+    var differ = new DefaultIterableDiffer(trackByFn);
+    return differ
+      .._length = _length
+      .._collection = _collection
+      .._linkedRecords = _linkedRecords
+      .._unlinkedRecords = _unlinkedRecords
+      .._previousItHead = _previousItHead
+      .._itHead = _itHead
+      .._itTail = _itTail
+      .._additionsHead = _additionsHead
+      .._additionsTail = _additionsTail
+      .._movesHead = _movesHead
+      .._movesTail = _movesTail
+      .._removalsHead = _removalsHead
+      .._removalsTail = _removalsTail
+      .._identityChangesHead = _identityChangesHead
+      .._identityChangesTail = _identityChangesTail;
+  }
+
   Iterable get collection {
     return this._collection;
   }

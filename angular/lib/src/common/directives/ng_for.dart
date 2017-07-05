@@ -126,6 +126,13 @@ class NgFor implements DoCheck {
 
   set ngForTrackBy(TrackByFn value) {
     _ngForTrackBy = value;
+    if (_ngForOf != null) {
+      if (_differ == null) {
+        _differ = new DefaultIterableDiffer(_ngForTrackBy);
+      } else {
+        _differ = _differ.clone(_ngForTrackBy);
+      }
+    }
   }
 
   @override

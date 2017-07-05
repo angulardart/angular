@@ -43,7 +43,8 @@ class DirectiveNormalizer {
                 exports: directive.exports,
                 queries: directive.queries,
                 viewQueries: directive.viewQueries,
-                template: normalizedTemplate));
+                template: normalizedTemplate,
+                analyzedClass: directive.analyzedClass));
   }
 
   Future<CompileTemplateMetadata> normalizeTemplate(
