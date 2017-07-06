@@ -2,19 +2,21 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:angular/src/compiler/config.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/source_gen/common/logging.dart';
 import 'package:angular/src/source_gen/common/ng_compiler.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
 import 'find_components.dart';
 import 'ng_deps_visitor.dart';
 import 'template_compiler_outputs.dart';
 
 Future<TemplateCompilerOutputs> processTemplates(
-    LibraryElement element, BuildStep buildStep, CompilerConfig config,
-    {bool usePlaceholder: true}) async {
-  final templateCompiler = createTemplateCompiler(buildStep, config);
+  LibraryElement element,
+  BuildStep buildStep,
+  CompilerFlags flags,
+) async {
+  final templateCompiler = createTemplateCompiler(buildStep, flags);
   final resolver = await buildStep.resolver;
   final ngDepsModel = await logElapsedAsync(
     () => resolveNgDepsFor(element,
@@ -27,7 +29,7 @@ Future<TemplateCompilerOutputs> processTemplates(
         // a.dart, and a.dart imports b.dart, we can assume that there will be
         // a generated b.template.dart that we need to import/initReflector().
         hasInput: (uri) async {
-          if (usePlaceholder) {
+          if (flags.usePlaceholder) {
             final placeholder = ''
                 '${uri.substring(0, uri.length - '.dart'.length)}'
                 '.ng_placeholder';

@@ -18,3 +18,4 @@ export 'src/analyzer.dart'
         $SkipSelf,
         $ViewChild,
         $ViewChildren;
+export 'src/flags.dart' show CompilerFlags, Profile;

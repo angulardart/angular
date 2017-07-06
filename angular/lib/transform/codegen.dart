@@ -5,11 +5,8 @@ import 'package:angular/source_gen.dart';
 import 'package:angular/src/transform/asset_consumer/transformer.dart';
 import 'package:angular/src/transform/common/eager_transformer_wrapper.dart';
 import 'package:angular/src/transform/common/formatter.dart' as formatter;
-import 'package:angular/src/transform/common/options.dart';
-import 'package:angular/src/transform/common/options_reader.dart';
 import 'package:angular/src/transform/stylesheet_compiler/transformer.dart';
-
-export 'package:angular/src/transform/common/options.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
 /// Generates code to replace mirror use in AngularDart apps.
 ///
@@ -20,35 +17,33 @@ export 'package:angular/src/transform/common/options.dart';
 ///
 /// [the wiki]: https://github.com/angular/angular/wiki/AngularDart-Transformer
 class CodegenTransformer extends TransformerGroup {
-  CodegenTransformer._(Iterable<Iterable> phases, {bool formatCode: false})
-      : super(phases) {
-    if (formatCode) {
-      formatter.init(new DartFormatter());
-    }
+  CodegenTransformer._(Iterable<Iterable> phases) : super(phases) {
+    formatter.init(new DartFormatter());
   }
 
-  factory CodegenTransformer(TransformerOptions options) {
+  factory CodegenTransformer(CompilerFlags flags) {
     Iterable<Iterable> phases = [
       [new AssetConsumer()],
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
       [
-        new StylesheetCompiler(options),
-        new BuilderTransformer(createSourceGenTemplateCompiler(
-            new GeneratorOptions(
-                codegenMode: options.codegenMode,
-                useLegacyStyleEncapsulation:
-                    options.useLegacyStyleEncapsulation)))
-      ]
+        new StylesheetCompiler(flags),
+        new BuilderTransformer(createSourceGenTemplateCompiler(flags)),
+      ],
     ];
-    if (options.modeName == BarbackMode.RELEASE.name ||
-        !options.lazyTransformers) {
-      phases = phases
-          .map((phase) => phase.map((t) => new EagerTransformerWrapper(t)));
-    }
-    return new CodegenTransformer._(phases, formatCode: options.formatCode);
+    phases =
+        phases.map((phase) => phase.map((t) => new EagerTransformerWrapper(t)));
+    return new CodegenTransformer._(phases);
   }
 
   factory CodegenTransformer.asPlugin(BarbackSettings settings) {
-    return new CodegenTransformer(parseBarbackSettings(settings));
+    return new CodegenTransformer(
+      new CompilerFlags.parseBarback(
+        settings,
+        defaultTo: new CompilerFlags(
+          genDebugInfo: settings.mode == BarbackMode.DEBUG,
+          useLegacyStyleEncapsulation: true,
+        ),
+      ),
+    );
   }
 }

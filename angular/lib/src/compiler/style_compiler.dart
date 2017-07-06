@@ -1,9 +1,9 @@
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular/src/core/url_resolver.dart" show UrlResolver;
+import 'package:angular_compiler/angular_compiler.dart';
 
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
-import 'config.dart';
 import "output/output_ast.dart" as o;
 import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
@@ -33,7 +33,7 @@ class StylesCompileResult {
 }
 
 class StyleCompiler {
-  final CompilerConfig _config;
+  final CompilerFlags _config;
   final UrlResolver _urlResolver;
   bool usesContentAttribute;
   bool usesHostAttribute;

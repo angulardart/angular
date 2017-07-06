@@ -7,12 +7,12 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
 import "package:angular/src/core/linker/view_type.dart";
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
+import 'package:angular_compiler/angular_compiler.dart';
 
 import '../../core/change_detection/change_detection.dart'
     show ChangeDetectorState, ChangeDetectionStrategy;
 import "../compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
-import '../config.dart';
 import '../expression_parser/parser.dart' show Parser;
 import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
@@ -936,7 +936,7 @@ o.ClassMethod _createViewClassConstructor(
           tagName, appViewRootElementName, name, value);
       ctor.body.add(stmt);
     });
-    if (view.genConfig.profileType != ProfileType.None) {
+    if (view.genConfig.profileFor != Profile.none) {
       genProfileSetup(ctor.body);
     }
   }
@@ -1079,7 +1079,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   }
 
   var statements = <o.Statement>[];
-  if (view.genConfig.profileType == ProfileType.Build) {
+  if (view.genConfig.profileFor == Profile.build) {
     genProfileBuildStart(view, statements);
   }
 
@@ -1161,7 +1161,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   } else {
     resultExpr = o.NULL_EXPR;
   }
-  if (view.genConfig.profileType == ProfileType.Build) {
+  if (view.genConfig.profileFor == Profile.build) {
     genProfileBuildEnd(view, statements);
   }
   statements.add(new o.ReturnStatement(resultExpr));
@@ -1236,7 +1236,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     return stmts;
   }
 
-  if (view.genConfig.profileType == ProfileType.Build) {
+  if (view.genConfig.profileFor == Profile.build) {
     genProfileCdStart(view, stmts);
   }
 
@@ -1314,7 +1314,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
         .set(o.importExpr(Identifiers.ValueUnwrapper).instantiate([]))
         .toDeclStmt(null, [o.StmtModifier.Final]));
   }
-  if (view.genConfig.profileType == ProfileType.Build) {
+  if (view.genConfig.profileFor == Profile.build) {
     genProfileCdEnd(view, stmts);
   }
   return (new List.from(varStmts)..addAll(stmts));

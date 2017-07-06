@@ -221,6 +221,7 @@ void bindAndWriteToRenderer(
     switch (boundProp.type) {
       case PropertyBindingType.Property:
         renderMethod = 'setElementProperty';
+        // If user asked for logging bindings, generate code to log them.
         if (boundProp.name == 'className') {
           // Handle className special case for class="binding".
           updateStmts.addAll(_createSetClassNameStmt(

@@ -4,13 +4,11 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:angular/src/compiler/config.dart';
 import 'package:angular/src/compiler/logging.dart' show loggerKey;
 import 'package:angular/src/source_gen/common/url_resolver.dart';
-import 'package:angular/src/transform/common/options.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
 import 'code_builder.dart';
-import 'generator_options.dart';
 import 'template_processor.dart';
 
 /// Generates `.template.dart` files to initialize the Angular2 system.
@@ -22,20 +20,15 @@ import 'template_processor.dart';
 /// - [Eventually]Uses the resulting `NgDeps` object to generate code which
 ///   initializes the Angular2 reflective system.
 class TemplateGenerator extends Generator {
-  final GeneratorOptions _options;
+  final CompilerFlags _flags;
 
-  const TemplateGenerator(this._options);
+  const TemplateGenerator(this._flags);
 
   @override
   Future<String> generate(Element element, BuildStep buildStep) async {
     if (element is! LibraryElement) return null;
     return runZoned(() async {
-      var config = new CompilerConfig(
-          genDebugInfo: _options.codegenMode == CODEGEN_DEBUG_MODE,
-          useLegacyStyleEncapsulation: _options.useLegacyStyleEncapsulation,
-          profileType: codegenModeToProfileType(_options.codegenMode));
-      var outputs = await processTemplates(element, buildStep, config,
-          usePlaceholder: _options.usePlaceholder);
+      var outputs = await processTemplates(element, buildStep, _flags);
       if (outputs == null) return _emptyNgDepsContents;
       return buildGeneratedCode(
         outputs,

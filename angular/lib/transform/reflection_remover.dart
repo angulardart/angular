@@ -1,12 +1,9 @@
-library angular.transform.reflection_remover.dart;
-
 import 'dart:async';
 
 import 'package:barback/barback.dart';
-import 'package:angular/src/transform/common/options.dart';
-import 'package:angular/src/transform/common/options_reader.dart';
 import 'package:angular/src/transform/reflection_remover/transformer.dart'
     as base show ReflectionRemover;
+import 'package:angular_compiler/angular_compiler.dart';
 
 // TODO(kegluneq): Make this a TransformerGroup and add an AggregateTransformer
 // that counts the number of transformed files & primary inputs.
@@ -28,19 +25,18 @@ class ReflectionRemover extends Transformer implements DeclaringTransformer {
 
   /// Ctor which tells pub that this can be run as a standalone transformer.
   factory ReflectionRemover.asPlugin(BarbackSettings settings) {
-    final options = parseBarbackSettings(settings);
-    final entryPoints = options.entryPoints;
+    final flags = new CompilerFlags.parseBarback(settings);
+    final entryPoints = flags.entryPoints;
     if (entryPoints != null && entryPoints.isNotEmpty) {
-      // TODO(kegluneq): Add a goo.gl link with more info.
       throw new ArgumentError.value(
           entryPoints.join(', '),
-          ENTRY_POINT_PARAM,
-          "Do not use '$ENTRY_POINT_PARAM' when specifying the Angular 2 "
+          'entry_points',
+          "Do not use 'entry_points' when specifying the AngularDart "
           "reflection_remover transformer. Instead, use pub's built-in "
           r"$include and $exclude parameters to filter which files are "
           "processed.");
     }
-    return new ReflectionRemover._(new base.ReflectionRemover(options));
+    return new ReflectionRemover._(new base.ReflectionRemover(flags));
   }
 
   /// Signal that we process all .dart files.
