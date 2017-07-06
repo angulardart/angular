@@ -554,25 +554,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     CompileElement parent = context;
     // When logging updates, we need to create anchor as a field to be able
     // to update the comment, otherwise we can create simple local field.
-    bool createFieldForAnchor = view.genConfig.logBindingUpdate;
     var nodeIndex = this.view.nodes.length;
     var fieldName = '_anchor_$nodeIndex';
     o.Expression anchorVarExpr;
-    // Clone template anchor.
-    if (createFieldForAnchor) {
-      view.fields.add(new o.ClassField(fieldName,
-          outputType: o.importType(Identifiers.HTML_COMMENT_NODE),
-          modifiers: const [o.StmtModifier.Private]));
-      anchorVarExpr = new o.ReadClassMemberExpr(fieldName);
-      var assignCloneAnchorNodeExpr =
-          new o.WriteClassMemberExpr(fieldName, cloneAnchorNodeExpr);
-      view.createMethod.addStmt(assignCloneAnchorNodeExpr.toStmt());
-    } else {
-      var readVarExpr = o.variable(fieldName);
-      anchorVarExpr = readVarExpr;
-      var assignCloneAnchorNodeExpr = readVarExpr.set(cloneAnchorNodeExpr);
-      view.createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
-    }
+    var readVarExpr = o.variable(fieldName);
+    anchorVarExpr = readVarExpr;
+    var assignCloneAnchorNodeExpr = readVarExpr.set(cloneAnchorNodeExpr);
+    view.createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
     var parentNode = _getParentRenderNode(parent);
     if (parentNode != o.NULL_EXPR) {
       var addCommentStmt =

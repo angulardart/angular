@@ -221,11 +221,6 @@ void bindAndWriteToRenderer(
     switch (boundProp.type) {
       case PropertyBindingType.Property:
         renderMethod = 'setElementProperty';
-        // If user asked for logging bindings, generate code to log them.
-        if (view.genConfig.logBindingUpdate) {
-          updateStmts.add(
-              logBindingUpdateStmt(renderNode, boundProp.name, currValExpr));
-        }
         if (boundProp.name == 'className') {
           // Handle className special case for class="binding".
           updateStmts.addAll(_createSetClassNameStmt(
@@ -448,12 +443,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           .prop(input.directiveName)
           .set(checkExpression.expression)
           .toStmt());
-      if (view.genConfig.logBindingUpdate) {
-        dynamicInputsMethod.addStmt(logBindingUpdateStmt(
-            compileElement.renderNode,
-            input.directiveName,
-            checkExpression.expression));
-      }
       continue;
     }
     if (isStatefulComp) {
@@ -493,10 +482,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
     if (!isStatefulComp && isOnPushComp) {
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
-    }
-    if (view.genConfig.logBindingUpdate) {
-      statements.add(logBindingUpdateStmt(
-          compileElement.renderNode, input.directiveName, currValExpr));
     }
     // Execute actions and assign result to fieldExpr which hold previous value.
     String inputTypeName = directiveAst.directive.inputTypes != null
