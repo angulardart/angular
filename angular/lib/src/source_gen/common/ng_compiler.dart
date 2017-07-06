@@ -1,5 +1,5 @@
 import 'package:build/build.dart' hide AssetReader;
-import 'package:angular/src/compiler/config.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular/src/compiler/directive_normalizer.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart' as ng;
 import 'package:angular/src/compiler/expression_parser/parser.dart' as ng;
@@ -15,7 +15,7 @@ import 'package:angular/src/core/url_resolver.dart';
 import 'xhr_impl.dart';
 
 OfflineCompiler createTemplateCompiler(
-    BuildStep buildStep, CompilerConfig compilerConfig) {
+    BuildStep buildStep, CompilerFlags flags) {
   var reader = new XhrImpl(buildStep);
   var urlResolver = createOfflineCompileUrlResolver();
 
@@ -28,7 +28,7 @@ OfflineCompiler createTemplateCompiler(
   return new OfflineCompiler(
       new DirectiveNormalizer(reader, urlResolver, htmlParser),
       templateParser,
-      new StyleCompiler(compilerConfig, urlResolver),
-      new ViewCompiler(compilerConfig, parser, schemaRegistry),
+      new StyleCompiler(flags, urlResolver),
+      new ViewCompiler(flags, parser, schemaRegistry),
       new DartEmitter(), {});
 }

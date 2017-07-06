@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:barback/barback.dart';
+import 'package:angular/src/transform/common/annotation_matcher.dart';
 import 'package:angular/src/transform/common/asset_reader.dart';
-import 'package:angular/src/transform/common/options.dart';
-import 'package:angular/src/transform/common/options_reader.dart';
 import 'package:angular/src/transform/common/zone.dart' as zone;
+import 'package:angular_compiler/angular_compiler.dart';
 
 import 'remove_reflection_capabilities.dart';
 
@@ -18,18 +18,18 @@ import 'remove_reflection_capabilities.dart';
 /// {@link options.entryPoint}. The instantiation of {@link ReflectionCapabilities} is
 /// replaced by calling `initReflector` in that .template.dart file.
 class ReflectionRemover extends Transformer implements LazyTransformer {
-  final TransformerOptions options;
+  final CompilerFlags _flags;
 
-  ReflectionRemover(this.options);
+  ReflectionRemover(this._flags);
 
   /// Ctor which tells pub that this can be run as a standalone transformer.
   factory ReflectionRemover.asPlugin(BarbackSettings settings) =>
-      new ReflectionRemover(parseBarbackSettings(settings));
+      new ReflectionRemover(new CompilerFlags.parseBarback(settings));
 
   @override
   bool isPrimary(AssetId id) =>
-      options.entryPointGlobs != null &&
-      options.entryPointGlobs.any((g) => g.matches(id.path));
+      _flags.entryPoints != null &&
+      _flags.entryPoints.any((g) => g.matches(id.path));
 
   @override
   declareOutputs(DeclaringTransform transform) {
@@ -43,7 +43,7 @@ class ReflectionRemover extends Transformer implements LazyTransformer {
       var transformedCode = await removeReflectionCapabilities(
         new AssetReader.fromTransform(transform),
         primaryId,
-        options.annotationMatcher,
+        new AnnotationMatcher(),
       );
       transform.addOutput(new Asset.fromString(primaryId, transformedCode));
     }, log: transform.logger);

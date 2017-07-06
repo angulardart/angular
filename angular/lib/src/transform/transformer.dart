@@ -1,3 +1,4 @@
+import 'package:angular_compiler/angular_compiler.dart';
 import 'package:barback/barback.dart';
 import 'package:build_barback/build_barback.dart';
 import 'package:dart_style/dart_style.dart';
@@ -5,50 +6,42 @@ import 'package:dart_style/dart_style.dart';
 import '../../source_gen.dart';
 import 'common/eager_transformer_wrapper.dart';
 import 'common/formatter.dart' as formatter;
-import 'common/options.dart';
-import 'common/options_reader.dart';
 import 'deferred_rewriter/transformer.dart';
 import 'reflection_remover/transformer.dart';
 import 'stylesheet_compiler/transformer.dart';
 
-export 'common/options.dart';
-
 /// Replaces Angular 2 mirror use with generated code.
 class AngularTransformerGroup extends TransformerGroup {
-  AngularTransformerGroup._(Iterable<Iterable> phases, {bool formatCode: false})
-      : super(phases) {
-    if (formatCode) {
-      formatter.init(new DartFormatter());
-    }
+  AngularTransformerGroup._(Iterable<Iterable> phases) : super(phases) {
+    formatter.init(new DartFormatter());
   }
 
-  factory AngularTransformerGroup(TransformerOptions options) {
+  factory AngularTransformerGroup(CompilerFlags flags) {
     Iterable<Iterable> phases = [
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
-      [new ReflectionRemover(options)],
+      [new ReflectionRemover(flags)],
       [
         new DeferredRewriter(),
-        new StylesheetCompiler(options),
+        new StylesheetCompiler(flags),
         new BuilderTransformer(
-          createSourceGenTemplateCompiler(
-            new GeneratorOptions(
-              codegenMode: options.codegenMode,
-              useLegacyStyleEncapsulation: options.useLegacyStyleEncapsulation,
-            ),
-          ),
+          createSourceGenTemplateCompiler(flags),
         )
       ],
     ];
-    if (options.modeName == BarbackMode.RELEASE.name ||
-        !options.lazyTransformers) {
-      phases = phases
-          .map((phase) => phase.map((t) => new EagerTransformerWrapper(t)));
-    }
-    return new AngularTransformerGroup._(phases,
-        formatCode: options.formatCode);
+    phases =
+        phases.map((phase) => phase.map((t) => new EagerTransformerWrapper(t)));
+    return new AngularTransformerGroup._(phases);
   }
 
   factory AngularTransformerGroup.asPlugin(BarbackSettings settings) {
-    return new AngularTransformerGroup(parseBarbackSettings(settings));
+    return new AngularTransformerGroup(
+      new CompilerFlags.parseBarback(
+        settings,
+        defaultTo: new CompilerFlags(
+          genDebugInfo: settings.mode == BarbackMode.DEBUG,
+          useLegacyStyleEncapsulation: true,
+        ),
+      ),
+    );
   }
 }

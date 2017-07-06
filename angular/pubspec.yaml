@@ -8,6 +8,7 @@ environment:
   sdk: '>=1.24.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.31.0'
+  third_party.dart_src.angular_compiler: ^0.1.0
   barback: ^0.15.2+2
   build: ^0.9.0
   build_barback: ^0.2.0
@@ -34,6 +35,8 @@ dev_dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
+  angular_compiler:
+      path: ../angular_compiler
   angular_test:
       path: ../angular_test
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===

@@ -4,7 +4,7 @@ import 'package:args/args.dart';
 import 'package:build_runner/build_runner.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/source_gen/template_compiler/generator.dart';
-import 'package:angular/src/source_gen/template_compiler/generator_options.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
 const testFiles = 'test/source_gen/template_compiler/test_files';
 
@@ -26,20 +26,16 @@ Future main(List<String> args) async {
   var phaseGroup = new PhaseGroup()
     ..addPhase(new Phase()
       ..addAction(
-          new GeneratorBuilder([
-            new TemplateGenerator(new GeneratorOptions(
-                codegenMode: 'release', usePlaceholder: false))
-          ],
+          new GeneratorBuilder(
+              [new TemplateGenerator(const CompilerFlags(genDebugInfo: false))],
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
                   : '.template_release.dart',
               isStandalone: true),
           inputs)
       ..addAction(
-          new GeneratorBuilder([
-            new TemplateGenerator(new GeneratorOptions(
-                codegenMode: 'debug', usePlaceholder: false))
-          ],
+          new GeneratorBuilder(
+              [new TemplateGenerator(const CompilerFlags(genDebugInfo: true))],
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'
                   : '.template_debug.dart',

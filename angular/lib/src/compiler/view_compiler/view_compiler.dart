@@ -1,11 +1,12 @@
-import 'package:source_span/source_span.dart';
-import 'package:logging/logging.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
+import 'package:angular_compiler/angular_compiler.dart';
+
+import 'package:source_span/source_span.dart';
+import 'package:logging/logging.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
-import '../config.dart' show CompilerConfig;
 import '../expression_parser/parser.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
@@ -33,7 +34,7 @@ class ViewCompileResult {
 ///     - For each embedded template creates a child CompileView and recurses.
 /// - Builds a tree of CompileNode/Element(s)
 class ViewCompiler {
-  final CompilerConfig _genConfig;
+  final CompilerFlags _genConfig;
   final ElementSchemaRegistry _schemaRegistry;
   Parser parser;
   Logger _logger;

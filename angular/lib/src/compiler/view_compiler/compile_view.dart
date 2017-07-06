@@ -1,4 +1,5 @@
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
+import 'package:angular_compiler/angular_compiler.dart';
 
 import '../compile_metadata.dart'
     show
@@ -7,7 +8,6 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
-import '../config.dart' show CompilerConfig;
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import "../template_ast.dart" show TemplateAst;
@@ -27,7 +27,7 @@ import 'view_compiler_utils.dart'
 /// Members and method builders are populated by ViewBuilder.
 class CompileView implements NameResolver {
   final CompileDirectiveMetadata component;
-  final CompilerConfig genConfig;
+  final CompilerFlags genConfig;
   final List<CompilePipeMetadata> pipeMetas;
   final o.Expression styles;
   final Map<String, String> deferredModules;

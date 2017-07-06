@@ -3,15 +3,14 @@ import 'dart:async';
 import 'package:analyzer/dart/ast/token.dart' show Keyword;
 import 'package:barback/barback.dart';
 import 'package:build/build.dart' as build;
-import 'package:angular/src/compiler/config.dart';
 import 'package:angular/src/compiler/source_module.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular/src/transform/common/asset_reader.dart';
 import 'package:angular/src/transform/common/logging.dart';
 import 'package:angular/src/transform/common/names.dart';
 import 'package:angular/src/transform/common/ng_compiler.dart';
-import 'package:angular/src/transform/common/options.dart';
 import 'package:angular/src/transform/common/zone.dart' as zone;
+import 'package:angular_compiler/angular_compiler.dart';
 
 /// Converts a Barback asset ID to an asset URL.
 String _assetIdToUrl(AssetId assetId) {
@@ -31,14 +30,12 @@ AssetId shimmedStylesheetAssetId(AssetId cssAssetId) => new AssetId(
 AssetId nonShimmedStylesheetAssetId(AssetId cssAssetId) => new AssetId(
     cssAssetId.package, toNonShimmedStylesheetExtension(cssAssetId.path));
 
-Future<Iterable<Asset>> processStylesheet(AssetReader reader,
-    AssetId stylesheetId, TransformerOptions options) async {
+Future<Iterable<Asset>> processStylesheet(
+    AssetReader reader, AssetId stylesheetId, CompilerFlags flags) async {
   final stylesheetUrl = _assetIdToUrl(stylesheetId);
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
-    var config = new CompilerConfig(
-        useLegacyStyleEncapsulation: options.useLegacyStyleEncapsulation);
-    templateCompiler = createTemplateCompiler(reader, config);
+    templateCompiler = createTemplateCompiler(reader, flags);
   }
   final cssText = await reader.readAsString(stylesheetId);
   return logElapsedAsync(() async {

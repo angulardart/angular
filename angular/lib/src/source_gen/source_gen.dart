@@ -1,18 +1,16 @@
+import 'package:angular_compiler/angular_compiler.dart';
 import 'package:build/build.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../transform/common/names.dart';
 import 'template_compiler/generator.dart';
-import 'template_compiler/generator_options.dart';
 
-export '../transform/common/options.dart'
-    show CODEGEN_MODE_PARAM, USE_LEGACY_STYLE_ENCAPSULATION;
-export 'template_compiler/generator.dart' show TemplatePlaceholderBuilder;
-export 'template_compiler/generator_options.dart';
+export 'template_compiler/generator.dart'
+    show TemplatePlaceholderBuilder, TemplateGenerator;
 
-Builder createSourceGenTemplateCompiler(GeneratorOptions options) =>
-    new GeneratorBuilder([new TemplateGenerator(options)],
+Builder createSourceGenTemplateCompiler(CompilerFlags flags) =>
+    new GeneratorBuilder([new TemplateGenerator(flags)],
         formatOutput: (String original) => _formatter.format(original),
         generatedExtension: TEMPLATE_EXTENSION,
         isStandalone: true);
