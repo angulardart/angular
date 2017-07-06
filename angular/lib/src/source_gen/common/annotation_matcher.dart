@@ -77,7 +77,7 @@ bool matchAnnotation(Type type, ElementAnnotation annotation) {
     final checker = new TypeChecker.fromRuntime(type);
     final objectType = annotation.constantValue.type;
     return checker.isExactlyType(objectType);
-  } on ArgumentError catch (_) {
+  } catch (_) {
     String message = ''
         'Could not determine type of annotation. It resolved to '
         '${annotation.computeConstantValue()}. '
@@ -88,14 +88,11 @@ bool matchAnnotation(Type type, ElementAnnotation annotation) {
           '${annotation.annotationAst.toSource()} in '
           '${annotation.librarySource.uri.toString()}';
     }
-    if (annotation is ElementAnnotationImpl) {
-      throw new ArgumentError.value(
-        annotation,
-        'annotation',
-        message,
-      );
-    }
-    rethrow;
+    throw new ArgumentError.value(
+      annotation,
+      'annotation',
+      message,
+    );
   }
 }
 

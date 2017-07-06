@@ -8,7 +8,7 @@ environment:
   sdk: '>=1.22.0 <2.0.0'
 
 dependencies:
-  source_gen: '^0.5.9'
+  source_gen: '^0.6.0'
 
 dev_dependencies:
   # This is here in order for it to be resolvable by the analyzer.

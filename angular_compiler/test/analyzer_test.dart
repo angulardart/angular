@@ -25,7 +25,7 @@ void main() {
       @Directive()
       class ADirective {}
     ''');
-      expect($Directive.firstAnnotationOf(aDirective), isNotNull);
+      expect($Directive.firstAnnotationOfExact(aDirective), isNotNull);
     });
 
     test('@Component', () async {
@@ -33,7 +33,7 @@ void main() {
       @Component()
       class AComponent {}
     ''');
-      expect($Component.firstAnnotationOf(aComponent), isNotNull);
+      expect($Component.firstAnnotationOfExact(aComponent), isNotNull);
     });
   });
 
@@ -42,7 +42,7 @@ void main() {
       @Pipe('aPipe')
       class APipe {}
     ''');
-    expect($Pipe.firstAnnotationOf(aPipe), isNotNull);
+    expect($Pipe.firstAnnotationOfExact(aPipe), isNotNull);
   });
 
   test('@Injectable', () async {
@@ -50,7 +50,7 @@ void main() {
       @Injectable()
       class AnInjectable {}
     ''');
-    expect($Injectable.firstAnnotationOf(anInjectable), isNotNull);
+    expect($Injectable.firstAnnotationOfExact(anInjectable), isNotNull);
   });
 
   test('@Attribute', () async {
@@ -60,7 +60,7 @@ void main() {
       }
     ''');
     final depParam = aComponent.constructors.first.parameters.first;
-    expect($Attribute.firstAnnotationOf(depParam), isNotNull);
+    expect($Attribute.firstAnnotationOfExact(depParam), isNotNull);
   });
 
   test('@Inject', () async {
@@ -70,7 +70,7 @@ void main() {
       }
     ''');
     final depParam = aComponent.constructors.first.parameters.first;
-    expect($Inject.firstAnnotationOf(depParam), isNotNull);
+    expect($Inject.firstAnnotationOfExact(depParam), isNotNull);
   });
 
   test('@Optional', () async {
@@ -80,7 +80,7 @@ void main() {
       }
     ''');
     final depParam = aComponent.constructors.first.parameters.first;
-    expect($Optional.firstAnnotationOf(depParam), isNotNull);
+    expect($Optional.firstAnnotationOfExact(depParam), isNotNull);
   });
 
   test('@Self', () async {
@@ -90,7 +90,7 @@ void main() {
       }
     ''');
     final depParam = aComponent.constructors.first.parameters.first;
-    expect($Self.firstAnnotationOf(depParam), isNotNull);
+    expect($Self.firstAnnotationOfExact(depParam), isNotNull);
   });
 
   test('@SkipSelf', () async {
@@ -100,7 +100,7 @@ void main() {
       }
     ''');
     final depParam = aComponent.constructors.first.parameters.first;
-    expect($SkipSelf.firstAnnotationOf(depParam), isNotNull);
+    expect($SkipSelf.firstAnnotationOfExact(depParam), isNotNull);
   });
 
   test('@Host', () async {
@@ -110,7 +110,7 @@ void main() {
       }
     ''');
     final depParam = aComponent.constructors.first.parameters.first;
-    expect($Host.firstAnnotationOf(depParam), isNotNull);
+    expect($Host.firstAnnotationOfExact(depParam), isNotNull);
   });
 
   test('@ContentChildren', () async {
@@ -123,7 +123,7 @@ void main() {
       class AChild {}
     ''');
     final queryField = aComponent.fields.first;
-    expect($ContentChildren.firstAnnotationOf(queryField), isNotNull);
+    expect($ContentChildren.firstAnnotationOfExact(queryField), isNotNull);
   });
 
   test('@ContentChild', () async {
@@ -136,7 +136,7 @@ void main() {
       class AChild {}
     ''');
     final queryField = aComponent.fields.first;
-    expect($ContentChild.firstAnnotationOf(queryField), isNotNull);
+    expect($ContentChild.firstAnnotationOfExact(queryField), isNotNull);
   });
 
   test('@ViewChildren', () async {
@@ -149,7 +149,7 @@ void main() {
       class AChild {}
     ''');
     final queryField = aComponent.fields.first;
-    expect($ViewChildren.firstAnnotationOf(queryField), isNotNull);
+    expect($ViewChildren.firstAnnotationOfExact(queryField), isNotNull);
   });
 
   test('@ViewChild', () async {
@@ -162,7 +162,7 @@ void main() {
       class AChild {}
     ''');
     final queryField = aComponent.fields.first;
-    expect($ViewChild.firstAnnotationOf(queryField), isNotNull);
+    expect($ViewChild.firstAnnotationOfExact(queryField), isNotNull);
   });
 
   test('@Input', () async {
@@ -173,7 +173,7 @@ void main() {
       }
     ''');
     final inputField = aComponent.fields.first;
-    expect($Input.firstAnnotationOf(inputField), isNotNull);
+    expect($Input.firstAnnotationOfExact(inputField), isNotNull);
   });
 
   test('@Output', () async {
@@ -184,7 +184,7 @@ void main() {
       }
     ''');
     final outputGetter = aComponent.accessors.first;
-    expect($Output.firstAnnotationOf(outputGetter), isNotNull);
+    expect($Output.firstAnnotationOfExact(outputGetter), isNotNull);
   });
 
   test('@HostBinding', () async {
@@ -195,7 +195,7 @@ void main() {
       }
     ''');
     final hostGetter = aComponent.accessors.first;
-    expect($HostBinding.firstAnnotationOf(hostGetter), isNotNull);
+    expect($HostBinding.firstAnnotationOfExact(hostGetter), isNotNull);
   });
 
   test('@HostListener', () async {
@@ -206,6 +206,6 @@ void main() {
       }
     ''');
     final hostMethod = aComponent.methods.first;
-    expect($HostListener.firstAnnotationOf(hostMethod), isNotNull);
+    expect($HostListener.firstAnnotationOfExact(hostMethod), isNotNull);
   });
 }
