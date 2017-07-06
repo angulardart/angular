@@ -32,7 +32,6 @@ class TemplateGenerator extends Generator {
     return runZoned(() async {
       var config = new CompilerConfig(
           genDebugInfo: _options.codegenMode == CODEGEN_DEBUG_MODE,
-          logBindingUpdate: _options.reflectPropertiesAsAttributes,
           useLegacyStyleEncapsulation: _options.useLegacyStyleEncapsulation,
           profileType: codegenModeToProfileType(_options.codegenMode));
       var outputs = await processTemplates(element, buildStep, config,
