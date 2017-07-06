@@ -8,7 +8,7 @@ import 'package:func/func.dart';
 import 'package:js/js.dart' as js;
 import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy, ChangeDetectorState;
+    show ChangeDetectorState;
 import 'package:angular/src/core/di.dart' show Injector;
 import 'package:angular/src/core/di/injector.dart' show THROW_IF_NOT_FOUND;
 import 'package:angular/src/core/linker/app_view.dart';

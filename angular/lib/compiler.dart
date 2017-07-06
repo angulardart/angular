@@ -6,7 +6,6 @@ export 'src/compiler/compiler.dart'
         PLATFORM_DIRECTIVES,
         PLATFORM_PIPES,
         COMPILER_PROVIDERS,
-        CompilerConfig,
         DirectiveResolver,
         SourceModule,
         NormalizedComponentWithViewDirectives,
