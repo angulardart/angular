@@ -163,52 +163,24 @@ void ngComponentTest(
   test(description, () {
     return inject([TestComponentBuilder, AsyncTestCompleter],
         (TestComponentBuilder tcb, AsyncTestCompleter completer) {
-      if (templateOverride != null) {
-        return tcb
-            .overrideView(
-                componentType,
-                new View(
-                    template: templateOverride,
-                    directives: directives,
-                    pipes: pipes))
-            .createAsync(componentType)
-            .then((componentFixture) {
-          var res = fn(componentFixture);
-          if (res is Future) {
-            res.then((_) {
-              completer.done();
-            });
-          } else {
+      // Build component, call test case function without override.
+      return tcb.createAsync(componentType).then((componentFixture) {
+        var res = fn(componentFixture);
+        if (res is Future) {
+          res.then((_) {
             completer.done();
-          }
-        }).catchError((e) {
-          if (onError != null) {
-            onError(e);
-          } else {
-            throw e;
-          }
+          });
+        } else {
           completer.done();
-        });
-      } else {
-        // Build component, call test case function without override.
-        return tcb.createAsync(componentType).then((componentFixture) {
-          var res = fn(componentFixture);
-          if (res is Future) {
-            res.then((_) {
-              completer.done();
-            });
-          } else {
-            completer.done();
-          }
-        }).catchError((e) {
-          if (onError != null) {
-            onError(e);
-          } else {
-            throw e;
-          }
-          completer.done();
-        });
-      }
+        }
+      }).catchError((e) {
+        if (onError != null) {
+          onError(e);
+        } else {
+          throw e;
+        }
+        completer.done();
+      });
     }).catchError((e) {
       if (onError != null) {
         onError(e);

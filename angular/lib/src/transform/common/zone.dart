@@ -65,9 +65,8 @@ OfflineCompiler get templateCompiler =>
 /// Generate a human-readable error message from `error`.
 String _friendlyError(AnalysisError error) {
   if (error.source != null) {
-    var file =
-        new SourceFile(error.source.contents.data, url: error.source.fullName);
-
+    var file = new SourceFile.fromString(error.source.contents.data,
+        url: error.source.fullName);
     return file
         .span(error.offset, error.offset + error.length)
         .message(error.message, color: false);

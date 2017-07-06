@@ -1,5 +1,3 @@
-import 'package:angular/common.dart'
-    show COMMON_DIRECTIVES, COMMON_PIPES, FORM_PROVIDERS;
 import "package:angular/core.dart"
     show
         PLATFORM_DIRECTIVES,
@@ -7,6 +5,9 @@ import "package:angular/core.dart"
         ExceptionHandler,
         APPLICATION_COMMON_PROVIDERS,
         TestabilityRegistry;
+import 'package:angular/src/common/common_directives.dart';
+import 'package:angular/src/common/forms.dart';
+import 'package:angular/src/common/pipes/common_pipes.dart';
 import "package:angular/src/core/di.dart" show Injectable, Provider;
 import "package:angular/src/core/testability/testability.dart" show Testability;
 import "package:angular/src/platform/browser/exceptions.dart"

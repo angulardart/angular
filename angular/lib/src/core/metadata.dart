@@ -373,8 +373,6 @@ class Directive extends Injectable {
 /// All template expressions and statements are then evaluated against the
 /// component instance.
 ///
-/// For details on the `@View` annotation, see [View].
-///
 /// ### Lifecycle hooks
 ///
 /// When the component class implements some [lifecycle-hooks][LCH]

@@ -1,6 +1,6 @@
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
-import "../output/output_ast.dart" as o;
 import "../identifiers.dart";
+import "../output/output_ast.dart" as o;
 
 const String appViewRootElementName = 'rootEl';
 

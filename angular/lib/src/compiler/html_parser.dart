@@ -27,7 +27,7 @@ class HtmlParser {
     var tokensAndErrors =
         tokenizeHtml(sourceContent, sourceUrl, parseExpansionForms);
     var treeAndErrors = new HtmlTreeBuilder(tokensAndErrors.tokens,
-            new SourceFile(sourceContent, url: sourceUrl))
+            new SourceFile.fromString(sourceContent, url: sourceUrl))
         .build();
     return new HtmlParseTreeResult(
         treeAndErrors.rootNodes,

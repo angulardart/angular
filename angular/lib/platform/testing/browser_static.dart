@@ -3,12 +3,7 @@ library angular.platform.testing.browser_static;
 import 'dart:html';
 
 import 'package:angular/core.dart'
-    show
-        APP_ID,
-        NgZone,
-        Provider,
-        PLATFORM_COMMON_PROVIDERS,
-        PLATFORM_INITIALIZER;
+    show APP_ID, Provider, PLATFORM_COMMON_PROVIDERS, PLATFORM_INITIALIZER;
 import 'package:angular/platform/common.dart' show LocationStrategy;
 import 'package:angular/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular/src/mock/mock_location_strategy.dart'

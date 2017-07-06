@@ -49,7 +49,8 @@ class HtmlTokenizeResult {
 HtmlTokenizeResult tokenizeHtml(String sourceContent, String sourceUrl,
     [bool tokenizeExpansionForms = false]) {
   return new _HtmlTokenizer(
-          new SourceFile(sourceContent, url: sourceUrl), tokenizeExpansionForms)
+          new SourceFile.fromString(sourceContent, url: sourceUrl),
+          tokenizeExpansionForms)
       .tokenize();
 }
 
