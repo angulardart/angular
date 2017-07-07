@@ -84,8 +84,8 @@ class ViewProvidersComponentHost0 extends AppView<dynamic> {
 
   dynamic get _MyUseFactory_0_4 {
     if ((this.__MyUseFactory_0_4 == null)) {
-      (__MyUseFactory_0_4 = import1.ProvidersComponent
-          .createService(this.injectorGet(import8.NgZone, this.parentIndex)));
+      (__MyUseFactory_0_4 = import1.ProvidersComponent.createService(
+          this.injectorGet(import8.NgZone, this.viewData.parentIndex)));
     }
     return this.__MyUseFactory_0_4;
   }

@@ -115,7 +115,7 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     if ((this.__BaseService_0_5 == null)) {
       (__BaseService_0_5 = import2.createLinkedHashMap(
           this._SomeDep_0_4,
-          this.injectorGet(import2.SomeDep, this.parentIndex),
+          this.injectorGet(import2.SomeDep, this.viewData.parentIndex),
           this._SomeDep_0_4));
     }
     return this.__BaseService_0_5;
@@ -126,13 +126,13 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _const_OpaqueToken__test___0_2 =
-        import2.injectableFactory(this.injectorGet(Window, parentIndex));
+    _const_OpaqueToken__test___0_2 = import2
+        .injectableFactory(this.injectorGet(Window, viewData.parentIndex));
     _InjectableComponent_0_3 = new import2.InjectableComponent(
         null,
-        this.injectorGet(import2.InjectableService, parentIndex, null),
+        this.injectorGet(import2.InjectableService, viewData.parentIndex, null),
         _const_OpaqueToken__test___0_2,
-        this.injectorGet(String, parentIndex, null));
+        this.injectorGet(String, viewData.parentIndex, null));
     _compView_0.create(_InjectableComponent_0_3, projectableNodes);
     init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _InjectableComponent_0_3);
