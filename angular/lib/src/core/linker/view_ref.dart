@@ -89,7 +89,7 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
 
   bool hasLocal(String variableName) => appView.hasLocal(variableName);
 
-  bool get destroyed => appView.destroyed;
+  bool get destroyed => appView.viewData.destroyed;
 
   @override
   void markForCheck() {

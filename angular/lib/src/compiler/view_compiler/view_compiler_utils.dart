@@ -71,7 +71,7 @@ o.Expression injectFromViewParentInjector(
       : new o.ReadClassMemberExpr('parentView');
   var args = [
     createDiTokenExpression(token),
-    new o.ReadClassMemberExpr('parentIndex')
+    new o.ReadClassMemberExpr('viewData').prop('parentIndex')
   ];
   if (optional) {
     args.add(o.NULL_EXPR);

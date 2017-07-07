@@ -30,7 +30,7 @@ class ViewContainer implements ViewContainerRef {
   /// specified index.
   @override
   EmbeddedViewRef get(num index) {
-    return nestedViews[index].ref;
+    return nestedViews[index].viewData.ref;
   }
 
   /// The number of Views currently attached to this container.
@@ -138,7 +138,7 @@ class ViewContainer implements ViewContainerRef {
   @override
   ViewRef detach([num index = -1]) {
     if (index == -1) index = this.length - 1;
-    return detachView(index).ref;
+    return detachView(index).viewData.ref;
   }
 
   /// Destroys all Views in this container.
@@ -167,7 +167,7 @@ class ViewContainer implements ViewContainerRef {
   void moveView(AppView view, int currentIndex) {
     int previousIndex = nestedViews.indexOf(view);
 
-    if (view.type == ViewType.COMPONENT) {
+    if (view.viewData.type == ViewType.COMPONENT) {
       throw new Exception("Component views can't be moved!");
     }
 
@@ -197,7 +197,7 @@ class ViewContainer implements ViewContainerRef {
   }
 
   void attachView(AppView view, int viewIndex) {
-    if (identical(view.type, ViewType.COMPONENT)) {
+    if (identical(view.viewData.type, ViewType.COMPONENT)) {
       throw new BaseException("Component views can't be moved!");
     }
     nestedViews ??= <AppView>[];
@@ -217,7 +217,7 @@ class ViewContainer implements ViewContainerRef {
 
   AppView detachView(int viewIndex) {
     var view = nestedViews.removeAt(viewIndex);
-    if (view.type == ViewType.COMPONENT) {
+    if (view.viewData.type == ViewType.COMPONENT) {
       throw new BaseException("Component views can't be moved!");
     }
     view.detachViewNodes(view.flatRootNodes);

@@ -55,22 +55,107 @@ bool domRootRendererIsDirty = false;
 
 const _UndefinedInjectorResult = const Object();
 
-/// Base class for a generated templates for a given [Component] type [T].
-abstract class AppView<T> {
+/// Shared app view members used to reduce polymorphic calls and
+/// dart2js code size of constructors.
+class AppViewData<T> {
   /// The type of view (host element, complete template, embedded template).
   final ViewType type;
+
+  /// View reference interface (user-visible API).
+  final ViewRefImpl ref;
+
+  /// Whether the view has been destroyed.
+  bool destroyed = false;
+
+  /// Container that is set when this view is attached to a container.
+  ViewContainer _viewContainerElement;
+
+  List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
+
+  /// Host DI interface.
+  Injector _hostInjector;
+
+  List subscriptions;
+
+  List<OnDestroyCallback> _onDestroyCallbacks;
+
+  /// Tracks the root DOM elements or view containers (for `<template>`).
+  ///
+  /// **INTERNAL ONLY**: Not part of the supported public API.
+  @visibleForTesting
+  List rootNodesOrViewContainers;
+
+  /// Index of this view within the [parentView].
+  final int parentIndex;
+
+  /// What type of change detection the view is using.
+  int _cdMode;
+
+  // Improves change detection tree traversal by caching change detection mode
+  // and change detection state checks. When set to true, this view doesn't need
+  // to be change detected.
+  bool _skipChangeDetection = false;
+
+  // The names of the below fields must be kept in sync with codegen_name_util.ts or
+  // change detection will fail.
+  int _cdState = ChangeDetectorState.NeverChecked;
+
+  AppViewData._(AppView<T> appView, this._cdMode, this.type, this.parentIndex)
+      : ref = new ViewRefImpl(appView);
+
+  factory AppViewData(
+      AppView<T> appView, int cdMode, ViewType viewType, int parentIndex) {
+    return new AppViewData._(appView, cdMode, viewType, parentIndex);
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+  }
+
+  set cdMode(int value) {
+    if (_cdMode != value) {
+      _cdMode = value;
+      updateSkipChangeDetectionFlag();
+    }
+  }
+
+  set cdState(int value) {
+    if (_cdState != value) {
+      _cdState = value;
+      updateSkipChangeDetectionFlag();
+    }
+  }
+
+  void updateSkipChangeDetectionFlag() {
+    _skipChangeDetection =
+        identical(_cdMode, ChangeDetectionStrategy.Detached) ||
+            identical(_cdMode, ChangeDetectionStrategy.Checked) ||
+            _cdState == ChangeDetectorState.Errored;
+  }
+
+  void destroy() {
+    if (_onDestroyCallbacks == null) return;
+    for (int i = 0, len = _onDestroyCallbacks.length; i < len; i++) {
+      _onDestroyCallbacks[i]();
+    }
+    for (var i = 0, len = subscriptions.length; i < len; i++) {
+      subscriptions[i].cancel();
+    }
+  }
+
+  void addDestroyCallback(OnDestroyCallback callback) {
+    _onDestroyCallbacks ??= <OnDestroyCallback>[];
+    _onDestroyCallbacks.add(callback);
+  }
+}
+
+/// Base class for a generated templates for a given [Component] type [T].
+abstract class AppView<T> {
+  AppViewData<T> viewData;
 
   /// Local values scoped to this view.
   final Map<String, dynamic> locals;
 
   /// Parent generated view.
   final AppView parentView;
-
-  /// Index of this view within the [parentView].
-  final int parentIndex;
-
-  /// View reference interface (user-visible API).
-  ViewRefImpl ref;
 
   /// A representation of how the component will be rendered in the DOM.
   ///
@@ -82,52 +167,20 @@ abstract class AppView<T> {
   /// This is _lazily_ initialized in a generated constructor.
   HtmlElement rootEl;
 
-  /// What type of change detection the view is using.
-  int _cdMode;
-
-  // Improves change detection tree traversal by caching change detection mode
-  // and change detection state checks. When set to true, this view doesn't need
-  // to be change detected.
-  bool _skipChangeDetection = false;
-
-  /// Tracks the root DOM elements or view containers (for `<template>`).
-  ///
-  /// **INTERNAL ONLY**: Not part of the supported public API.
-  @visibleForTesting
-  List rootNodesOrViewContainers;
-
-  final _onDestroyCallbacks = <OnDestroyCallback>[];
-  List subscriptions;
-
-  /// Container that is set when this view is attached to a container.
-  ViewContainer _viewContainerElement;
-
-  // The names of the below fields must be kept in sync with codegen_name_util.ts or
-  // change detection will fail.
-  int _cdState = ChangeDetectorState.NeverChecked;
-
   /// The context against which data-binding expressions in this view are
   /// evaluated against.
   ///
   /// This is always a component instance.
   T ctx;
 
-  List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
-
-  /// Whether the view has been destroyed.
-  bool destroyed = false;
-
-  /// Host DI interface.
-  Injector _hostInjector;
-
   AppView(
-    this.type,
+    ViewType type,
     this.locals,
     this.parentView,
-    this.parentIndex,
-    this._cdMode,
+    int parentIndex,
+    int cdMode,
   ) {
-    ref = new ViewRefImpl(this);
+    viewData = new AppViewData(this, cdMode, type, parentIndex);
   }
 
   void setupComponentType(RenderComponentType renderType) {
@@ -146,44 +199,37 @@ abstract class AppView<T> {
   ///
   /// Typically a view alternates between CheckOnce and Checked modes.
   set cdMode(int value) {
-    if (_cdMode != value) {
-      _cdMode = value;
-      _updateSkipChangeDetectionFlag();
-    }
+    viewData.cdMode = value;
   }
 
-  int get cdMode => _cdMode;
+  int get cdMode => viewData._cdMode;
 
   /// Sets change detection state and caches flag to skip change detection
   /// if mode and state don't require one.
   set cdState(int value) {
-    if (_cdState != value) {
-      _cdState = value;
-      _updateSkipChangeDetectionFlag();
-    }
+    viewData.cdState = value;
   }
 
-  int get cdState => _cdState;
+  int get cdState => viewData._cdState;
 
-  void _updateSkipChangeDetectionFlag() {
-    _skipChangeDetection =
-        identical(_cdMode, ChangeDetectionStrategy.Detached) ||
-            identical(_cdMode, ChangeDetectionStrategy.Checked) ||
-            _cdState == ChangeDetectorState.Errored;
-  }
+  /// View reference interface (user-visible API).
+  ViewRefImpl get ref => viewData.ref;
+
+  List<dynamic /* dynamic | List < dynamic > */ > get projectableNodes =>
+      viewData.projectableNodes;
 
   ComponentRef create(T context,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
     ctx = context;
-    projectableNodes = givenProjectableNodes;
+    viewData.projectableNodes = givenProjectableNodes;
     return build();
   }
 
   /// Builds host level view.
   ComponentRef createHostView(Injector hostInjector,
       List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
-    _hostInjector = hostInjector;
-    projectableNodes = givenProjectableNodes;
+    viewData._hostInjector = hostInjector;
+    viewData.projectableNodes = givenProjectableNodes;
     return build();
   }
 
@@ -194,9 +240,9 @@ abstract class AppView<T> {
 
   /// Called by build once all dom nodes are available.
   void init(List rootNodesOrViewContainers, List subscriptions) {
-    this.rootNodesOrViewContainers = rootNodesOrViewContainers;
-    this.subscriptions = subscriptions;
-    if (type == ViewType.COMPONENT) {
+    viewData.rootNodesOrViewContainers = rootNodesOrViewContainers;
+    viewData.subscriptions = subscriptions;
+    if (viewData.type == ViewType.COMPONENT) {
       dirtyParentQueriesInternal();
     }
   }
@@ -230,11 +276,13 @@ abstract class AppView<T> {
         result = view.injectorGetInternal(
             token, nodeIndex, _UndefinedInjectorResult);
       }
-      if (identical(result, _UndefinedInjectorResult) &&
-          view._hostInjector != null) {
-        result = view._hostInjector.get(token, notFoundValue);
+      if (identical(result, _UndefinedInjectorResult)) {
+        var injector = view.viewData._hostInjector;
+        if (injector != null) {
+          result = injector.get(token, notFoundValue);
+        }
       }
-      nodeIndex = view.parentIndex;
+      nodeIndex = view.viewData.parentIndex;
       view = view.parentView;
     }
     return result;
@@ -249,8 +297,8 @@ abstract class AppView<T> {
   Injector injector(int nodeIndex) => new ElementInjector(this, nodeIndex);
 
   void detachAndDestroy() {
-    _viewContainerElement
-        ?.detachView(_viewContainerElement.nestedViews.indexOf(this));
+    var containerElement = viewData._viewContainerElement;
+    containerElement?.detachView(containerElement.nestedViews.indexOf(this));
     destroy();
   }
 
@@ -264,16 +312,11 @@ abstract class AppView<T> {
   }
 
   void destroy() {
-    if (destroyed) return;
-    destroyed = true;
+    if (viewData.destroyed) return;
+    viewData.destroyed = true;
 
-    var hostElement = type == ViewType.COMPONENT ? rootEl : null;
-    for (int i = 0, len = _onDestroyCallbacks.length; i < len; i++) {
-      _onDestroyCallbacks[i]();
-    }
-    for (var i = 0, len = subscriptions.length; i < len; i++) {
-      subscriptions[i].cancel();
-    }
+    var hostElement = viewData.type == ViewType.COMPONENT ? rootEl : null;
+    viewData.destroy();
     destroyInternal();
     dirtyParentQueriesInternal();
     destroyViewNodes(hostElement);
@@ -288,20 +331,20 @@ abstract class AppView<T> {
   }
 
   void addOnDestroyCallback(OnDestroyCallback callback) {
-    _onDestroyCallbacks.add(callback);
+    viewData.addDestroyCallback(callback);
   }
 
   /// Overwritten by implementations to destroy view.
   void destroyInternal() {}
 
-  ChangeDetectorRef get changeDetectorRef => ref;
+  ChangeDetectorRef get changeDetectorRef => viewData.ref;
 
   List<Node> get flatRootNodes =>
-      _flattenNestedViews(rootNodesOrViewContainers);
+      _flattenNestedViews(viewData.rootNodesOrViewContainers);
 
   Node get lastRootNode {
-    var lastNode = rootNodesOrViewContainers.isNotEmpty
-        ? rootNodesOrViewContainers.last
+    var lastNode = viewData.rootNodesOrViewContainers.isNotEmpty
+        ? viewData.rootNodesOrViewContainers.last
         : null;
     return _findLastRenderNode(lastNode);
   }
@@ -320,13 +363,13 @@ abstract class AppView<T> {
   void detectChanges() {
     // Whether the CD state means change detection should be skipped.
     // Cases: ERRORED (Crash), CHECKED (Already-run), DETACHED (inactive).
-    if (_skipChangeDetection) {
+    if (viewData._skipChangeDetection) {
       return;
     }
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
     assert(() {
-      if (destroyed) {
+      if (viewData.destroyed) {
         throw new ViewDestroyedException('detectChanges');
       }
       return true;
@@ -341,9 +384,9 @@ abstract class AppView<T> {
     }
 
     // If we are a 'CheckOnce' component, we are done being checked.
-    if (_cdMode == ChangeDetectionStrategy.CheckOnce) {
-      _cdMode = ChangeDetectionStrategy.Checked;
-      _skipChangeDetection = true;
+    if (viewData._cdMode == ChangeDetectionStrategy.CheckOnce) {
+      viewData._cdMode = ChangeDetectionStrategy.Checked;
+      viewData._skipChangeDetection = true;
     }
 
     // Set the state to already checked at least once.
@@ -374,13 +417,13 @@ abstract class AppView<T> {
   }
 
   void addToContentChildren(ViewContainer renderViewContainer) {
-    _viewContainerElement = renderViewContainer;
+    viewData._viewContainerElement = renderViewContainer;
     dirtyParentQueriesInternal();
   }
 
   void removeFromContentChildren(ViewContainer renderViewContainer) {
     dirtyParentQueriesInternal();
-    _viewContainerElement = null;
+    viewData._viewContainerElement = null;
   }
 
   void markAsCheckOnce() {
@@ -401,9 +444,9 @@ abstract class AppView<T> {
       if (cdMode == ChangeDetectionStrategy.Checked) {
         view.cdMode = ChangeDetectionStrategy.CheckOnce;
       }
-      view = view.type == ViewType.COMPONENT
+      view = view.viewData.type == ViewType.COMPONENT
           ? view.parentView
-          : view._viewContainerElement?.parentView;
+          : view.viewData._viewContainerElement?.parentView;
     }
   }
 
@@ -510,6 +553,7 @@ abstract class AppView<T> {
     if (parentElement == null) return;
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.
+    var projectableNodes = viewData.projectableNodes;
     if (projectableNodes == null || index >= projectableNodes.length) return;
     List projectables = projectableNodes[index];
     if (projectables == null) return;
@@ -594,9 +638,9 @@ Node _findLastRenderNode(dynamic node) {
       // Note: Views might have no root nodes at all!
       for (var i = appEl.nestedViews.length - 1; i >= 0; i--) {
         var nestedView = appEl.nestedViews[i];
-        if (nestedView.rootNodesOrViewContainers.isNotEmpty) {
-          lastNode =
-              _findLastRenderNode(nestedView.rootNodesOrViewContainers.last);
+        if (nestedView.viewData.rootNodesOrViewContainers.isNotEmpty) {
+          lastNode = _findLastRenderNode(
+              nestedView.viewData.rootNodesOrViewContainers.last);
         }
       }
     }
@@ -617,7 +661,8 @@ void _appendNestedViewRenderNodes(
   if (nestedViews == null || nestedViews.isEmpty) return;
   int nestedViewCount = nestedViews.length;
   for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
-    List projectables = nestedViews[viewIndex].rootNodesOrViewContainers;
+    List projectables =
+        nestedViews[viewIndex].viewData.rootNodesOrViewContainers;
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];
@@ -645,7 +690,8 @@ List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
       if (appEl.nestedViews != null) {
         for (var k = 0; k < appEl.nestedViews.length; k++) {
           _flattenNestedViewRenderNodes(
-              appEl.nestedViews[k].rootNodesOrViewContainers, renderNodes);
+              appEl.nestedViews[k].viewData.rootNodesOrViewContainers,
+              renderNodes);
         }
       }
     } else {

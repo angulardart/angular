@@ -61,7 +61,7 @@ class DebugAppView<T> extends AppView<T> {
   DebugAppView(ViewType type, Map<String, dynamic> locals, AppView parentView,
       int parentIndex, int cdMode, this.staticNodeDebugInfos)
       : super(type, locals, parentView, parentIndex, cdMode) {
-    this.cdMode = cdMode;
+    viewData.updateSkipChangeDetectionFlag();
     if (!_ngProbeInitialized) {
       _ngProbeInitialized = true;
       _setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
@@ -229,6 +229,7 @@ class DebugAppView<T> extends AppView<T> {
     }
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.
+    var projectableNodes = viewData.projectableNodes;
     if (projectableNodes == null || index >= projectableNodes.length) return;
     List projectables = projectableNodes[index];
     if (projectables == null) return;
@@ -333,7 +334,8 @@ void _appendDebugNestedViewRenderNodes(
   if (nestedViews == null || nestedViews.isEmpty) return;
   int nestedViewCount = nestedViews.length;
   for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
-    List projectables = nestedViews[viewIndex].rootNodesOrViewContainers;
+    List projectables =
+        nestedViews[viewIndex].viewData.rootNodesOrViewContainers;
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
       var projectable = projectables[i];

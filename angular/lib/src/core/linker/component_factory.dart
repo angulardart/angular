@@ -33,10 +33,10 @@ class ComponentRef<C> {
   C get instance => _component;
 
   /// The [ViewRef] of the Host View of this Component instance.
-  ViewRef get hostView => _parentView.ref;
+  ViewRef get hostView => _parentView.viewData.ref;
 
   /// The [ChangeDetectorRef] of the Component instance.
-  ChangeDetectorRef get changeDetectorRef => _parentView.ref;
+  ChangeDetectorRef get changeDetectorRef => _parentView.viewData.ref;
 
   /// Returns type of component.
   /// TODO: remove use from angular router and deprecate.
