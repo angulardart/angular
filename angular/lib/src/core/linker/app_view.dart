@@ -132,9 +132,10 @@ class AppViewData<T> {
   }
 
   void destroy() {
-    if (_onDestroyCallbacks == null) return;
-    for (int i = 0, len = _onDestroyCallbacks.length; i < len; i++) {
-      _onDestroyCallbacks[i]();
+    if (_onDestroyCallbacks != null) {
+      for (int i = 0, len = _onDestroyCallbacks.length; i < len; i++) {
+        _onDestroyCallbacks[i]();
+      }
     }
     for (var i = 0, len = subscriptions.length; i < len; i++) {
       subscriptions[i].cancel();
