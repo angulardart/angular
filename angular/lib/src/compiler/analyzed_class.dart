@@ -18,6 +18,7 @@ class AnalyzedClass {
 bool isImmutable(
     Expression expression, Expression context, AnalyzedClass analyzedClass) {
   if (expression is LiteralExpr) return true;
+  if (expression is ExternalExpr) return expression.isConst;
   if (expression is ReadPropExpr) {
     if (analyzedClass == null) return false;
     if (expression.receiver == context &&

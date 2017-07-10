@@ -879,7 +879,7 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
       : Identifiers.AppView;
   var viewClass = new o.ClassStmt(
       view.className,
-      o.importExpr(superClass, [getContextType(view)]),
+      o.importExpr(superClass, typeParams: [getContextType(view)]),
       view.fields,
       view.getters,
       viewConstructor,
