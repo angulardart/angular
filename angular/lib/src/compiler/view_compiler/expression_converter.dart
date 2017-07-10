@@ -359,7 +359,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
 
   dynamic visitStaticRead(compiler_ast.StaticRead ast, dynamic context) {
     _Mode mode = context;
-    return convertToStatementIfNeeded(mode, o.importExpr(ast.id.identifier));
+    return convertToStatementIfNeeded(
+        mode, o.importExpr(ast.id.identifier, isConst: true));
   }
 
   dynamic visitAll(List<compiler_ast.AST> asts, dynamic context) {
