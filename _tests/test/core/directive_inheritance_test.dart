@@ -165,7 +165,9 @@ class RootComponent {
   String title = 'inherited';
 
   @HostListener('click')
-  void onClick() => clickMessage = 'Original message';
+  void onClick() {
+    clickMessage = 'Original message';
+  }
 
   @Input()
   String input;
