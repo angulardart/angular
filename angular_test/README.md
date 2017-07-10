@@ -63,14 +63,17 @@ transformers:
 ## Running
 
 Use `pub run angular_test` - it will automatically run `pub serve` to run code generation
-(transformers) and `pub run test` to run browser tests on anything tagged with `'aot'`.:
+(transformers) and `pub run test` to run browser tests on anything tagged with `'aot'`. You'll also need to declare a specific [browser test platform: `dartium` or `content-shell`](test-on-dartium) are the most common choices. For example:
+
+[test-on-dartium]: https://pub.dartlang.org/packages/test#running-tests-on-dartium
 
 ```sh
-$ pub run angular_test --test-arg=--tags=aot
+pub run angular_test --test-arg=--tags=aot --test-arg=--platform=content-shell
 ```
 
-You can use `--test-arg` to pass arbitrary arguments to `pub run test` and
-`--serve-arg` to pass arbitrary arguments to `pub serve`.
+Use one or more
+- `--test-arg` to pass arguments to `pub run test`
+- `--serve-arg` to pass arguments to `pub serve`
 
 ### Usage
 
