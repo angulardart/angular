@@ -12,18 +12,25 @@ import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
 import "template_preparser.dart" show preparseElement;
 import 'xhr.dart' show XHR;
 
+/// Loads contents of templateUrls, styleUrls to convert
+/// CompileDirectiveMetadata into a normalized form where template content and
+/// styles are available as a simple strings to use in compilation step.
+///
+/// The normalizer also resolves inline style and stylesheets in the template.
 class DirectiveNormalizer {
   final XHR _xhr;
   final UrlResolver _urlResolver;
   final HtmlParser _htmlParser;
+
   DirectiveNormalizer(this._xhr, this._urlResolver, this._htmlParser);
+
   Future<CompileDirectiveMetadata> normalizeDirective(
       CompileDirectiveMetadata directive) {
     if (!directive.isComponent) {
       // For non components there is nothing to be normalized yet.
       return new Future.value(directive);
     }
-    return this.normalizeTemplate(directive.type, directive.template).then(
+    return normalizeTemplate(directive.type, directive.template).then(
         (CompileTemplateMetadata normalizedTemplate) =>
             new CompileDirectiveMetadata(
                 type: directive.type,
@@ -55,7 +62,7 @@ class DirectiveNormalizer {
     // omitting either template: or templateUrl: results in an empty template.
     template ??= new CompileTemplateMetadata(template: '');
     if (template.template != null) {
-      return new Future.value(this.normalizeLoadedTemplate(
+      return new Future.value(normalizeLoadedTemplate(
           directiveType,
           template,
           template.template,
@@ -80,8 +87,7 @@ class DirectiveNormalizer {
       String template,
       String templateAbsUrl,
       bool preserveWhitespace) {
-    var rootNodesAndErrors =
-        this._htmlParser.parse(template, directiveType.name);
+    var rootNodesAndErrors = _htmlParser.parse(template, directiveType.name);
     if (rootNodesAndErrors.errors.isNotEmpty) {
       var errorString = rootNodesAndErrors.errors.join('\n');
       throw new BaseException('Template parse errors: $errorString');
@@ -93,20 +99,23 @@ class DirectiveNormalizer {
     List<String> allStyleAbsUrls = (new List.from(visitor.styleUrls
         .where(isStyleUrlResolvable)
         .toList()
-        .map((url) => this._urlResolver.resolve(templateAbsUrl, url))
+        .map((url) => _urlResolver.resolve(templateAbsUrl, url))
         .toList())
       ..addAll(templateMeta.styleUrls
           .where(isStyleUrlResolvable)
           .toList()
-          .map((url) => this._urlResolver.resolve(directiveType.moduleUrl, url))
+          .map((url) => _urlResolver.resolve(directiveType.moduleUrl, url))
           .toList()));
     var allResolvedStyles = allStyles.map((style) {
       var styleWithImports =
-          extractStyleUrls(this._urlResolver, templateAbsUrl, style);
+          extractStyleUrls(_urlResolver, templateAbsUrl, style);
       styleWithImports.styleUrls
           .forEach((styleUrl) => allStyleAbsUrls.add(styleUrl));
       return styleWithImports.style;
     }).toList();
+
+    // Optimization: Turn off encapsulation if there are no resolved styles or
+    // absolute urls in the template definition to shim at runtime.
     var encapsulation = templateMeta.encapsulation;
     if (identical(encapsulation, ViewEncapsulation.Emulated) &&
         identical(allResolvedStyles.length, 0) &&
@@ -124,11 +133,13 @@ class DirectiveNormalizer {
   }
 }
 
+/// Extracts a list of inline styles, stylesheet links and content selectors
+/// from a template to use for normalization of templates.
 class TemplatePreparseVisitor implements HtmlAstVisitor {
   List<String> ngContentSelectors = [];
   List<String> styles = [];
   List<String> styleUrls = [];
-  num ngNonBindableStackCount = 0;
+  int inLiteralHtmlArea = 0;
 
   @override
   bool visit(HtmlAst ast, dynamic context) => false;
@@ -137,17 +148,17 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
   dynamic visitElement(HtmlElementAst ast, dynamic context) {
     var preparsedElement = preparseElement(ast);
     if (preparsedElement.isNgContent) {
-      if (identical(this.ngNonBindableStackCount, 0)) {
-        this.ngContentSelectors.add(preparsedElement.selectAttr);
+      if (inLiteralHtmlArea == 0) {
+        ngContentSelectors.add(preparsedElement.selectAttr);
       }
     } else if (preparsedElement.isStyle) {
-      var textContent = "";
-      ast.children.forEach((child) {
+      final sb = new StringBuffer();
+      for (var child in ast.children) {
         if (child is HtmlTextAst) {
-          textContent += child.value;
+          sb.write(child.value);
         }
-      });
-      styles.add(textContent);
+      }
+      styles.add(sb.toString());
     } else if (preparsedElement.isStyleSheet) {
       styleUrls.add(preparsedElement.hrefAttr);
     } else {
@@ -155,11 +166,11 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
       // https://github.com/dart-lang/dev_compiler/issues/428
     }
     if (preparsedElement.nonBindable) {
-      ngNonBindableStackCount++;
+      inLiteralHtmlArea++;
     }
     htmlVisitAll(this, ast.children);
     if (preparsedElement.nonBindable) {
-      ngNonBindableStackCount--;
+      inLiteralHtmlArea--;
     }
     return null;
   }

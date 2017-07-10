@@ -9,6 +9,9 @@ const LINK_STYLE_HREF_ATTR = 'href';
 const LINK_STYLE_REL_VALUE = 'stylesheet';
 const STYLE_ELEMENT = 'style';
 const SCRIPT_ELEMENT = 'script';
+
+/// Attribute used to mark a template node and children as literal html to
+/// skip processing contents as directives or bindings.
 const NG_NON_BINDABLE_ATTR = 'ngNonBindable';
 const NG_PROJECT_AS = 'ngProjectAs';
 const defaultNgContentSelector = '*';
