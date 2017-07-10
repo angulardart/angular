@@ -20,6 +20,16 @@ import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
 
+/// List of components and directives in source module.
+class AngularArtifacts {
+  final List<NormalizedComponentWithViewDirectives> components;
+  final List<CompileDirectiveMetadata> directives;
+
+  AngularArtifacts(this.components, this.directives);
+
+  bool get isEmpty => components.isEmpty && directives.isEmpty;
+}
+
 class NormalizedComponentWithViewDirectives {
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> directives;
@@ -63,7 +73,9 @@ class OfflineCompiler {
     return _directiveNormalizer.normalizeDirective(directive);
   }
 
-  SourceModule compile(List<NormalizedComponentWithViewDirectives> components) {
+  SourceModule compile(AngularArtifacts artifacts) {
+    List<NormalizedComponentWithViewDirectives> components =
+        artifacts.components;
     if (_DEBUG_PRINT_COMPILATION) {
       print(components.map((comp) {
         return const JsonEncoder.withIndent('  ').convert(comp.toJson());

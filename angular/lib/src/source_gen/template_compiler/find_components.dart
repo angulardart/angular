@@ -23,33 +23,30 @@ import 'pipe_visitor.dart';
 
 const String _directivesProperty = 'directives';
 
-List<NormalizedComponentWithViewDirectives> findComponents(Element element) {
+AngularArtifacts findComponentsAndDirectives(Element element) {
   var componentVisitor = new NormalizedComponentVisitor();
   element.accept(componentVisitor);
-  return componentVisitor.directives;
+  return new AngularArtifacts(
+      componentVisitor.components, componentVisitor.directives);
 }
 
 class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
-  final List<NormalizedComponentWithViewDirectives> _directives = [];
-
-  List<NormalizedComponentWithViewDirectives> get directives {
-    return _directives.where((directive) => directive != null).toList();
-  }
+  final List<NormalizedComponentWithViewDirectives> components = [];
+  final List<CompileDirectiveMetadata> directives = [];
 
   @override
   Null visitClassElement(ClassElement element) {
-    _directives.add(_visitClassElement(element));
-    return null;
-  }
-
-  NormalizedComponentWithViewDirectives _visitClassElement(
-      ClassElement element) {
     final directive = extractDirectiveMetadata(element);
-    if (directive == null || !directive.isComponent) return null;
-    var directives = _visitDirectives(element);
-    var pipes = _visitPipes(element);
-    return new NormalizedComponentWithViewDirectives(
-        directive, directives, pipes);
+    if (directive != null) {
+      if (directive.isComponent) {
+        var pipes = _visitPipes(element);
+        components.add(new NormalizedComponentWithViewDirectives(
+            directive, _visitDirectives(element), pipes));
+      } else {
+        directives.add(directive);
+      }
+    }
+    return null;
   }
 
   List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
