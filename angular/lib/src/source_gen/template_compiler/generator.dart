@@ -13,7 +13,7 @@ import 'template_processor.dart';
 
 /// Generates `.template.dart` files to initialize the Angular2 system.
 ///
-/// - Processes the input element using `findComponents`.
+/// - Processes the input element using `findComponentsAndDirectives`.
 /// - Passes the resulting `NormalizedComponentWithViewDirectives` instance(s)
 ///   to the `TemplateCompiler` to generate compiled template(s) as a
 ///   `SourceModule`.

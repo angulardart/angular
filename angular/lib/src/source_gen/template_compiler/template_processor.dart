@@ -50,15 +50,16 @@ Future<TemplateCompilerOutputs> processTemplates(
     log: log,
   );
 
-  final List<NormalizedComponentWithViewDirectives> compileComponentsData =
-      logElapsedSync(() => findComponents(element),
-          operationName: 'findComponents',
-          assetId: buildStep.inputId,
-          log: log);
-  if (compileComponentsData.isEmpty) {
+  final AngularArtifacts compileComponentsData = logElapsedSync(
+      () => findComponentsAndDirectives(element),
+      operationName: 'findComponents',
+      assetId: buildStep.inputId,
+      log: log);
+  if (compileComponentsData.components.isEmpty) {
     return new TemplateCompilerOutputs(null, ngDepsModel);
   }
-  for (final component in compileComponentsData) {
+  // Normalize directive meta data for component and directives.
+  for (final component in compileComponentsData.components) {
     final normalizedComp = await templateCompiler.normalizeDirectiveMetadata(
       component.component,
     );
