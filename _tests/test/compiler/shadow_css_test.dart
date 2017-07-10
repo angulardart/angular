@@ -3,10 +3,60 @@ library angular2.test.compiler.shadow_css_test;
 
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/shadow_css.dart';
-import "package:angular/src/testing/internal.dart";
 
 const content = 'content';
 const host = 'host';
+
+const _RE_SPECIAL_CHARS = const [
+  '-',
+  '[',
+  ']',
+  '/',
+  '{',
+  '}',
+  '\\',
+  '(',
+  ')',
+  '*',
+  '+',
+  '?',
+  '.',
+  '^',
+  '\$',
+  '|'
+];
+final _ESCAPE_RE = new RegExp('[\\${_RE_SPECIAL_CHARS.join('\\')}]');
+RegExp containsRegexp(String input) {
+  return new RegExp(
+      input.replaceAllMapped(_ESCAPE_RE, (match) => '\\${match[0]}'));
+}
+
+RegExp _normalizerExp1,
+    _normalizerExp2,
+    _normalizerExp3,
+    _normalizerExp4,
+    _normalizerExp5,
+    _normalizerExp6,
+    _normalizerExp7;
+
+String normalizeCSS(String css) {
+  _normalizerExp1 ??= new RegExp(r'\s+');
+  _normalizerExp2 ??= new RegExp(r':\s');
+  _normalizerExp3 ??= new RegExp('' + "'" + r'');
+  _normalizerExp4 ??= new RegExp('{ ');
+  _normalizerExp5 ??= new RegExp(' }');
+  _normalizerExp6 ??= new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
+  _normalizerExp7 ??= new RegExp(r'\[(.+)=([^"\]]+)\]');
+  css = css.replaceAll(_normalizerExp1, ' ');
+  css = css.replaceAll(_normalizerExp2, ':');
+  css = css.replaceAll(_normalizerExp3, '"');
+  css = css.replaceAll(_normalizerExp4, '{');
+  css = css.replaceAll(_normalizerExp5, '}');
+  css = css.replaceAllMapped(_normalizerExp6, (match) => 'url("${match[2]}")');
+  css = css.replaceAllMapped(
+      _normalizerExp7, (match) => '[${match[1]}="${match[2]}"]');
+  return css;
+}
 
 /// Shims [css] and compares to the [expected] output for both current and
 /// legacy encapsulation.

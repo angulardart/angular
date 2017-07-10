@@ -15,7 +15,6 @@ export "fake_async.dart";
 export "internal_injector.dart";
 export "matchers.dart";
 export "test_component_builder.dart";
-export "utils.dart";
 
 /// Allows injecting dependencies in [setUp()] and [test()].
 ///

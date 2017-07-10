@@ -58,13 +58,6 @@ class ComponentFixture {
   void detectChanges([bool checkForNoChanges = true]) {
     AppViewUtils.resetChangeDetection();
     changeDetectorRef.detectChanges();
-    if (checkForNoChanges) {
-      checkNoChanges();
-    }
-  }
-
-  void checkNoChanges() {
-    changeDetectorRef.checkNoChanges();
   }
 
   /// Trigger component destruction.
