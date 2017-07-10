@@ -56,18 +56,6 @@ class ArrayConsole {
   }
 }
 
-bool compareProviderList(List a, List b) {
-  if (a.length != b.length) return false;
-  for (int i = 0; i < a.length; i++) {
-    if (a[i]?.toJson()?.toString() != b[i]?.toJson()?.toString()) {
-      print('a> ${a[i]?.toJson()}');
-      print('b> ${b[i]?.toJson()}');
-      return false;
-    }
-  }
-  return true;
-}
-
 void main() {
   final console = new ArrayConsole();
   final ngIf = CompileDirectiveMetadata.create(
@@ -617,8 +605,7 @@ void main() {
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PublicService);
-          expect(compareProviderList(elAst.providers[1].providers, [provider]),
-              true);
+          expect(elAst.providers[1].providers, orderedEquals([provider]));
         });
         test("should use the private providers of a component", () {
           var provider = createProvider("service");
@@ -627,8 +614,7 @@ void main() {
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PrivateService);
-          expect(compareProviderList(elAst.providers[1].providers, [provider]),
-              true);
+          expect(elAst.providers[1].providers, orderedEquals([provider]));
         });
         test("should support multi providers", () {
           var provider0 = createProvider("service0", multi: true);
@@ -639,12 +625,9 @@ void main() {
           ElementAst elAst =
               (parse("<div dirA dirB>", [dirA, dirB])[0] as ElementAst);
           expect(elAst.providers, hasLength(4));
-          expect(
-              compareProviderList(
-                  elAst.providers[2].providers, [provider0, provider2]),
-              true);
-          expect(compareProviderList(elAst.providers[3].providers, [provider1]),
-              true);
+          expect(elAst.providers[2].providers,
+              orderedEquals([provider0, provider2]));
+          expect(elAst.providers[3].providers, orderedEquals([provider1]));
         });
         test("should overwrite non multi providers", () {
           var provider1 = createProvider("service0");
@@ -655,10 +638,8 @@ void main() {
           ElementAst elAst =
               (parse("<div dirA dirB>", [dirA, dirB])[0] as ElementAst);
           expect(elAst.providers, hasLength(4));
-          expect(compareProviderList(elAst.providers[2].providers, [provider3]),
-              true);
-          expect(compareProviderList(elAst.providers[3].providers, [provider2]),
-              true);
+          expect(elAst.providers[2].providers, orderedEquals([provider3]));
+          expect(elAst.providers[3].providers, orderedEquals([provider2]));
         });
         test("should overwrite component providers by directive providers", () {
           var compProvider = createProvider("service0");
@@ -668,9 +649,7 @@ void main() {
           ElementAst elAst =
               (parse("<my-comp dirA>", [dirA, comp])[0] as ElementAst);
           expect(elAst.providers, hasLength(3));
-          expect(
-              compareProviderList(elAst.providers[2].providers, [dirProvider]),
-              true);
+          expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
         });
         test("should overwrite view providers by directive providers", () {
           var viewProvider = createProvider("service0");
@@ -680,18 +659,14 @@ void main() {
           ElementAst elAst =
               (parse("<my-comp dirA>", [dirA, comp])[0] as ElementAst);
           expect(elAst.providers, hasLength(3));
-          expect(
-              compareProviderList(elAst.providers[2].providers, [dirProvider]),
-              true);
+          expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
         });
         test("should overwrite directives by providers", () {
           var dirProvider = createProvider("type:my-comp");
           var comp = createDir("my-comp", providers: [dirProvider]);
           ElementAst elAst = (parse("<my-comp>", [comp])[0] as ElementAst);
           expect(elAst.providers, hasLength(1));
-          expect(
-              compareProviderList(elAst.providers[0].providers, [dirProvider]),
-              true);
+          expect(elAst.providers[0].providers, orderedEquals([dirProvider]));
         });
         test("should throw if mixing multi and non multi providers", () {
           var provider0 = createProvider("service0");
@@ -714,11 +689,9 @@ void main() {
               parse("<my-comp dir2>", [comp, dir2])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[0].providers[0].useClass, comp.type);
-          expect(compareProviderList(elAst.providers[1].providers, [provider1]),
-              true);
+          expect(elAst.providers[1].providers, orderedEquals([provider1]));
           expect(elAst.providers[2].providers[0].useClass, dir2.type);
-          expect(compareProviderList(elAst.providers[3].providers, [provider0]),
-              true);
+          expect(elAst.providers[3].providers, orderedEquals([provider0]));
         });
         test("should sort directives by their DI order", () {
           var dir0 = createDir("[dir0]", deps: ["type:my-comp"]);
@@ -742,13 +715,11 @@ void main() {
               providers: [provider0, provider1], deps: ["service0"]);
           ElementAst elAst = parse("<div dirA>", [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
-          expect(compareProviderList(elAst.providers[0].providers, [provider0]),
-              true);
+          expect(elAst.providers[0].providers, orderedEquals([provider0]));
           expect(elAst.providers[0].eager, true);
           expect(elAst.providers[1].providers[0].useClass, dirA.type);
           expect(elAst.providers[1].eager, true);
-          expect(compareProviderList(elAst.providers[2].providers, [provider1]),
-              true);
+          expect(elAst.providers[2].providers, orderedEquals([provider1]));
           expect(elAst.providers[2].eager, false);
         });
         test("should mark dependencies on parent elements as eager", () {
@@ -762,11 +733,9 @@ void main() {
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
-          expect(compareProviderList(elAst.providers[1].providers, [provider0]),
-              true);
+          expect(elAst.providers[1].providers, orderedEquals([provider0]));
           expect(elAst.providers[1].eager, true);
-          expect(compareProviderList(elAst.providers[2].providers, [provider1]),
-              true);
+          expect(elAst.providers[2].providers, orderedEquals([provider1]));
           expect(elAst.providers[2].eager, false);
         });
         test("should mark queried providers as eager", () {
@@ -779,11 +748,9 @@ void main() {
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
-          expect(compareProviderList(elAst.providers[1].providers, [provider0]),
-              true);
+          expect(elAst.providers[1].providers, orderedEquals([provider0]));
           expect(elAst.providers[1].eager, true);
-          expect(compareProviderList(elAst.providers[2].providers, [provider1]),
-              true);
+          expect(elAst.providers[2].providers, orderedEquals([provider1]));
           expect(elAst.providers[2].eager, false);
         });
         test("should not mark dependencies accross embedded views as eager",
@@ -797,8 +764,7 @@ void main() {
           expect(elAst.providers, hasLength(2));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
-          expect(compareProviderList(elAst.providers[1].providers, [provider0]),
-              true);
+          expect(elAst.providers[1].providers, orderedEquals([provider0]));
           expect(elAst.providers[1].eager, false);
         });
         test("should report missing @Self() deps as errors", () {
