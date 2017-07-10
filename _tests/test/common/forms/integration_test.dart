@@ -7,7 +7,10 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
-import 'package:angular/src/testing/utils.dart';
+
+void dispatchEvent(Element element, String eventType) {
+  element.dispatchEvent(new Event(eventType, canBubble: true));
+}
 
 void main() {
   group('ngForm', () {

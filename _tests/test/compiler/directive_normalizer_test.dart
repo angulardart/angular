@@ -11,12 +11,10 @@ import 'package:angular/src/compiler/compile_metadata.dart'
 import 'package:angular/src/compiler/directive_normalizer.dart'
     show DirectiveNormalizer;
 import 'package:angular/src/compiler/html_parser.dart';
-import 'package:angular/src/compiler/xhr.dart' show XHR;
 import 'package:angular/src/compiler/xhr_mock.dart' show MockXHR;
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 
 import '../test_util.dart';
-import 'test_bindings.dart' show TEST_PROVIDERS;
 
 void main() {
   CompileTypeMetadata dirType;
@@ -366,14 +364,18 @@ void main() {
   });
 }
 
-@Component(selector: 'test', template: '', providers: const [TEST_PROVIDERS])
+@Component(selector: 'test', template: '')
 class DirectiveNormalizerTest {
-  final DirectiveNormalizer directiveNormalizer;
-  final XHR xhr;
+  DirectiveNormalizer directiveNormalizer;
+  final xhr = new MockXHR();
 
-  DirectiveNormalizerTest(this.xhr, UrlResolver urlResolver)
-      : directiveNormalizer =
-            new DirectiveNormalizer(xhr, urlResolver, new HtmlParser());
+  DirectiveNormalizerTest() {
+    directiveNormalizer = new DirectiveNormalizer(
+      xhr,
+      new UrlResolver(),
+      new HtmlParser(),
+    );
+  }
 }
 
 Future<DirectiveNormalizer> getNormalizer() async {
