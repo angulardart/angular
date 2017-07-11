@@ -7,7 +7,17 @@ import 'output/output_ast.dart';
 class AnalyzedClass {
   final ClassElement _classElement;
 
-  AnalyzedClass(this._classElement);
+  /// Whether this class has mock-like behavior.
+  ///
+  /// The heuristic used to determine mock-like behavior is if the analyzed
+  /// class or one of its ancestors, other than [Object], implements
+  /// [noSuchMethod].
+  final bool isMockLike;
+
+  AnalyzedClass(
+    this._classElement, {
+    this.isMockLike: false,
+  });
 }
 
 // TODO(het): This only works for literals and simple property reads. Make this

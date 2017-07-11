@@ -71,6 +71,7 @@ class CompileView implements NameResolver {
   List<o.ClassField> fields = [];
   List<o.ClassGetter> getters = [];
   List<o.Expression> subscriptions = [];
+  bool subscribesToMockLike = false;
   CompileView componentView;
   var purePipes = new Map<String, CompilePipe>();
   List<CompilePipe> pipes = [];

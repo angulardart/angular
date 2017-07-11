@@ -56,7 +56,7 @@ class MyComp {}
 
 * Added preliminary support for component inheritance. Components now inherit
   inputs, outputs, host bindings, host listeners, queries, and view queries
-  transitively from their immediate supertype if it's a component or directive.
+  from all supertypes.
 
 * We use a new open sourcing tool called "[CopyBara][]" that greatly simplifies
   both releasing and taking open source contributions. We are able to release

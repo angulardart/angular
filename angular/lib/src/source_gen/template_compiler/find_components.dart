@@ -1,6 +1,7 @@
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
@@ -11,10 +12,7 @@ import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
-import 'package:angular/src/source_gen/common/annotation_matcher.dart'
-    as annotation_matcher;
-import 'package:angular/src/source_gen/common/annotation_matcher.dart'
-    show safeMatcher, safeMatcherType, safeMatcherTypes;
+import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 
 import 'compile_metadata.dart';
@@ -36,7 +34,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitClassElement(ClassElement element) {
-    final directive = extractDirectiveMetadata(element);
+    final directive = element.accept(new ComponentVisitor());
     if (directive != null) {
       if (directive.isComponent) {
         var pipes = _visitPipes(element);
@@ -52,7 +50,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
         element,
         'pipes',
-        safeMatcher(annotation_matcher.isPipe, log),
+        safeMatcher(isPipe, log),
         () => new PipeVisitor(log),
       );
 
@@ -60,19 +58,19 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       _visitTypes(
         element,
         _directivesProperty,
-        safeMatcher(annotation_matcher.isDirective, log),
+        safeMatcher(isDirective, log),
         () => new ComponentVisitor(),
       );
 
   List<T> _visitTypes<T>(
     ClassElement element,
     String field,
-    annotation_matcher.AnnotationMatcher annotationMatcher,
+    AnnotationMatcher annotationMatcher,
     ElementVisitor<T> visitor(),
   ) {
     return element.metadata
         .where(safeMatcher(
-          annotation_matcher.hasDirectives,
+          hasDirectives,
           log,
         ))
         .expand((annotation) => _visitTypeObjects(
@@ -106,7 +104,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   List<T> _visitTypeObjects<T>(
     Iterable<DartObject> directives,
-    annotation_matcher.AnnotationMatcher annotationMatcher,
+    AnnotationMatcher annotationMatcher,
     ElementVisitor<T> visitor(), {
     ElementAnnotationImpl annotation,
     ClassElement element,
@@ -155,6 +153,7 @@ class ComponentVisitor
   final _setterInputs = <String, String>{};
   final _inputTypes = <String, String>{};
   final _outputs = <String, String>{};
+  final _hostAttributes = <String, String>{};
   final _hostListeners = <String, String>{};
   final _hostProperties = <String, String>{};
   final _queries = <CompileQueryMetadata>[];
@@ -162,9 +161,9 @@ class ComponentVisitor
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
-    super.visitClassElement(element);
-    for (ElementAnnotation annotation in element.metadata) {
-      if (safeMatcher(annotation_matcher.isDirective, log)(annotation)) {
+    final matchesDirective = safeMatcher(isDirective, log);
+    for (var annotation in element.metadata) {
+      if (matchesDirective(annotation)) {
         return _createCompileDirectiveMetadata(annotation, element);
       }
     }
@@ -346,85 +345,107 @@ class ComponentVisitor
     ElementAnnotation annotation,
     Element element,
   ) {
-    var value = annotation.computeConstantValue();
-    var bindingName = coerceString(value, 'bindingPropertyName',
-        defaultTo: element.displayName);
-    bindings[element.displayName] = bindingName;
+    final value = annotation.computeConstantValue();
+    final propertyName = element.displayName;
+    final bindingName =
+        coerceString(value, 'bindingPropertyName', defaultTo: propertyName);
+
+    if (bindings.containsKey(propertyName) &&
+        bindings[propertyName] != bindingName) {
+      log.severe("'${element.enclosingElement.name}' overwrites the binding "
+          "name of property '$propertyName' from '${bindings[propertyName]}' "
+          "to '$bindingName'.");
+    }
+
+    bindings[propertyName] = bindingName;
+  }
+
+  void _collectInheritableMetadata(
+    ClassElement element, {
+    DartObject annotationValue,
+  }) {
+    if (annotationValue == null) {
+      final matchesDirective = safeMatcher(isDirective, log);
+      for (var annotation in element.metadata) {
+        if (matchesDirective(annotation)) {
+          annotationValue = annotation.computeConstantValue();
+          break;
+        }
+      }
+    }
+
+    // Collect metadata from class annotation.
+    if (annotationValue != null) {
+      final host = coerceStringMap(annotationValue, 'host');
+      CompileDirectiveMetadata.deserializeHost(
+          host, _hostAttributes, _hostListeners, _hostProperties);
+
+      final inputs = coerceStringList(annotationValue, 'inputs');
+      CompileDirectiveMetadata.deserializeInputs(
+          inputs, _fieldInputs, _inputTypes);
+
+      final outputs = coerceStringList(annotationValue, 'outputs');
+      CompileDirectiveMetadata.deserializeOutputs(outputs, _outputs);
+
+      coerceMap(annotationValue, 'queries').forEach((propertyName, query) {
+        _queries.add(_getQuery(query, propertyName.toStringValue()));
+      });
+    }
+
+    // Collect metadata from field and property accessor annotations.
+    super.visitClassElement(element);
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
     ElementAnnotation annotation,
     ClassElement element,
   ) {
-    var componentValue = annotation.computeConstantValue();
-    var isComponent = safeMatcher(
-      annotation_matcher.isComponent,
-      log,
-    )(annotation);
+    final isComp = safeMatcher(isComponent, log)(annotation);
+    // Collect inheritable metadata from all ancestors in descending
+    // hierarchical order.
+    if (isComp) {
+      // Currently only components support inheritance.
+      element.allSupertypes.reversed.forEach((interfaceType) =>
+          _collectInheritableMetadata(interfaceType.element));
+    }
+    final annotationValue = annotation.computeConstantValue();
+    _collectInheritableMetadata(element, annotationValue: annotationValue);
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
-    var template = isComponent
-        ? _createTemplateMetadata(componentValue,
+    final template = isComp
+        ? _createTemplateMetadata(annotationValue,
             view: _findView(element)?.computeConstantValue())
         : new CompileTemplateMetadata();
-
-    final inputs = <String, String>{};
-    CompileDirectiveMetadata.deserializeInputs(
-        coerceStringList(componentValue, 'inputs'), inputs, _inputTypes);
-    inputs..addAll(_fieldInputs)..addAll(_setterInputs);
-
-    CompileDirectiveMetadata.deserializeOutputs(
-        coerceStringList(componentValue, 'outputs'), _outputs);
-
-    final hostAttributes = <String, String>{};
-    final hostListeners = <String, String>{};
-    final hostProperties = <String, String>{};
-    CompileDirectiveMetadata.deserializeHost(
-        coerceStringMap(componentValue, 'host'),
-        hostAttributes,
-        hostListeners,
-        hostProperties);
-    hostListeners..addAll(_hostListeners);
-    hostProperties..addAll(_hostProperties);
-
-    var queries = new List<CompileQueryMetadata>.from(_queries);
-    coerceMap(componentValue, 'queries').forEach((propertyName, query) {
-      queries.add(_getQuery(query, propertyName.toStringValue()));
-    });
-    final metadata = new CompileDirectiveMetadata(
+    final noSuchMethodImplementor = firstAncestorWhere(
+        element,
+        (interfaceType) =>
+            interfaceType.superclass != null && // Excludes 'Object'.
+            interfaceType.getMethod('noSuchMethod') != null);
+    final isMockLike = noSuchMethodImplementor != null;
+    final analyzedClass = new AnalyzedClass(element, isMockLike: isMockLike);
+    return new CompileDirectiveMetadata(
       type: element.accept(new CompileTypeMetadataVisitor(log)),
-      isComponent: isComponent,
-      selector: coerceString(componentValue, 'selector'),
-      exportAs: coerceString(componentValue, 'exportAs'),
+      isComponent: isComp,
+      selector: coerceString(annotationValue, 'selector'),
+      exportAs: coerceString(annotationValue, 'exportAs'),
       // Even for directives, we want change detection set to the default.
       changeDetection:
-          _changeDetection(element, componentValue, 'changeDetection'),
-      inputs: inputs,
+          _changeDetection(element, annotationValue, 'changeDetection'),
+      inputs: new Map.from(_fieldInputs)..addAll(_setterInputs),
       inputTypes: _inputTypes,
       outputs: _outputs,
-      hostAttributes: hostAttributes,
-      hostListeners: hostListeners,
-      hostProperties: hostProperties,
+      hostListeners: _hostListeners,
+      hostProperties: _hostProperties,
+      hostAttributes: _hostAttributes,
+      analyzedClass: analyzedClass,
       lifecycleHooks: extractLifecycleHooks(element),
-      providers: _extractProviders(componentValue, 'providers'),
-      viewProviders: _extractProviders(componentValue, 'viewProviders'),
+      providers: _extractProviders(annotationValue, 'providers'),
+      viewProviders: _extractProviders(annotationValue, 'viewProviders'),
       exports: _extractExports(annotation, element),
-      queries: queries,
+      queries: _queries,
       viewQueries: _viewQueries,
       template: template,
-      analyzedClass: new AnalyzedClass(element),
     );
-    // For now only components support inheritance.
-    if (metadata.isComponent) {
-      // This is doing more work than necessary, as we only need to extract the
-      // subset of ancestor directive metadata that is inherited. However, this
-      // solution was simplest to implement, and trivial to extend if
-      // inheritance of more metadata is required in the future.
-      final supertypeElement = element.supertype.element;
-      final supertypeMetadata = extractDirectiveMetadata(supertypeElement);
-      _addInheritedDirectiveMetadata(metadata, supertypeMetadata);
-    }
-    return metadata;
   }
 
   ElementAnnotation _findView(ClassElement element) =>
@@ -524,9 +545,6 @@ class ComponentVisitor
   }
 }
 
-CompileDirectiveMetadata extractDirectiveMetadata(ClassElement element) =>
-    element.accept(new ComponentVisitor());
-
 List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
   const hooks = const <TypeChecker, LifecycleHooks>{
     const TypeChecker.fromRuntime(OnInit): LifecycleHooks.OnInit,
@@ -547,76 +565,29 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .toList();
 }
 
-/// Creates a new map from [oldMap] combined with [newMap].
+/// Finds the first supertype or mixin of [element] that satisfies [condition].
 ///
-/// If an entry from [newMap] will mutate an entry from [oldMap], [onMutation]
-/// is invoked with the key, the original value, and the new value.
-Map<A, B> _mergeImmutableValueMaps<A, B>(
-  Map<A, B> oldMap,
-  Map<A, B> newMap,
-  void onMutation(A key, B value, B newValue),
+/// Returns null if no supertype or mixin satisfies [condition].
+InterfaceType firstAncestorWhere(
+  ClassElement element,
+  bool Function(InterfaceType) condition,
 ) {
-  final mergedMap = new Map.from(oldMap);
-  newMap.forEach((key, value) {
-    if (oldMap.containsKey(key) && value != oldMap[key]) {
-      onMutation(key, oldMap[key], value);
-    }
-    mergedMap[key] = value;
-  });
-  return mergedMap;
-}
+  var currentType = element.type;
+  final visitedTypes = new Set<InterfaceType>();
 
-/// Adds inheritable metadata from [inheritedMetadata] to [metadata].
-void _addInheritedDirectiveMetadata(
-  CompileDirectiveMetadata metadata,
-  CompileDirectiveMetadata inheritedMetadata,
-) {
-  if (inheritedMetadata == null) return;
-  if (!metadata.isComponent && inheritedMetadata.isComponent) {
-    throw new UnsupportedError(
-        "Inheritance of directive '${inheritedMetadata.type.name}' from "
-        "component '${metadata.type.name}' is prohibited.");
+  while (currentType != null && !visitedTypes.contains(currentType)) {
+    visitedTypes.add(currentType);
+    if (condition(currentType)) return currentType;
+
+    for (var mixinType in currentType.mixins) {
+      if (!visitedTypes.contains(mixinType)) {
+        visitedTypes.add(mixinType);
+        if (condition(mixinType)) return mixinType;
+      }
+    }
+
+    currentType = currentType.superclass;
   }
-  if (inheritedMetadata.inputs.isNotEmpty) {
-    metadata.inputs = _mergeImmutableValueMaps(
-        inheritedMetadata.inputs,
-        metadata.inputs,
-        (name, binding, newBinding) => throw new UnsupportedError(
-            "'${metadata.type.name}' violates interface of its ancestor "
-            "'${inheritedMetadata.type.name}' by overriding the binding name "
-            "of inherited input '$name' from '$binding' to '$newBinding'."));
-  }
-  if (inheritedMetadata.outputs.isNotEmpty) {
-    metadata.outputs = _mergeImmutableValueMaps(
-        inheritedMetadata.outputs,
-        metadata.outputs,
-        (name, binding, newBinding) => throw new UnsupportedError(
-            "'${metadata.type.name}' violates interface of its ancestor "
-            "'${inheritedMetadata.type.name}' by overriding the binding name "
-            "of inherited output '$name' from '$binding' to '$newBinding'."));
-  }
-  if (inheritedMetadata.hostAttributes.isNotEmpty) {
-    metadata.hostAttributes = new Map.from(inheritedMetadata.hostAttributes)
-      ..addAll(metadata.hostAttributes);
-  }
-  if (inheritedMetadata.hostListeners.isNotEmpty) {
-    metadata.hostListeners = new Map.from(inheritedMetadata.hostListeners)
-      ..addAll(metadata.hostListeners);
-  }
-  if (inheritedMetadata.hostProperties.isNotEmpty) {
-    metadata.hostProperties = new Map.from(inheritedMetadata.hostProperties)
-      ..addAll(metadata.hostProperties);
-  }
-  if (inheritedMetadata.inputTypes.isNotEmpty) {
-    metadata.inputTypes = new Map.from(inheritedMetadata.inputTypes)
-      ..addAll(metadata.inputTypes);
-  }
-  if (inheritedMetadata.queries.isNotEmpty) {
-    metadata.queries = new List.from(inheritedMetadata.queries)
-      ..addAll(metadata.queries);
-  }
-  if (inheritedMetadata.viewQueries.isNotEmpty) {
-    metadata.viewQueries = new List.from(inheritedMetadata.viewQueries)
-      ..addAll(metadata.viewQueries);
-  }
+
+  return null;
 }

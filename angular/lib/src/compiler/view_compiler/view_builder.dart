@@ -1102,6 +1102,30 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
 
+  final initParams = [createFlatArray(view.rootNodesOrViewContainers)];
+  final subscriptions = o.literalArr(
+    view.subscriptions,
+    view.subscriptions.isEmpty
+        ? new o.ArrayType(null, const [o.TypeModifier.Const])
+        : null,
+  );
+
+  if (view.subscribesToMockLike) {
+    // Mock-like directives may have null subscriptions which must be
+    // filtered out to prevent an exception when they are later cancelled.
+    final notNull = o.variable('notNull');
+    final notNullAssignment = notNull.set(new o.FunctionExpr(
+      [new o.FnParam('i')],
+      [new o.ReturnStatement(o.variable('i').notEquals(o.NULL_EXPR))],
+    ));
+    statements.add(notNullAssignment.toDeclStmt(null, [o.StmtModifier.Final]));
+    final notNullSubscriptions =
+        subscriptions.callMethod('where', [notNull]).callMethod('toList', []);
+    initParams.add(notNullSubscriptions);
+  } else {
+    initParams.add(subscriptions);
+  }
+
   // In DEBUG mode we call:
   //
   // init(rootNodes, subscriptions, renderNodes);
@@ -1110,30 +1134,11 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   //
   // init(rootNodes, subscriptions);
   if (view.genConfig.genDebugInfo) {
-    var renderNodes = view.nodes.map((node) {
-      return node.renderNode;
-    }).toList();
-    statements.add(new o.InvokeMemberMethodExpr('init', [
-      createFlatArray(view.rootNodesOrViewContainers),
-      o.literalArr(
-        view.subscriptions,
-        view.subscriptions.isEmpty
-            ? new o.ArrayType(null, const [o.TypeModifier.Const])
-            : null,
-      ),
-      o.literalArr(renderNodes),
-    ]).toStmt());
-  } else {
-    statements.add(new o.InvokeMemberMethodExpr('init', [
-      createFlatArray(view.rootNodesOrViewContainers),
-      o.literalArr(
-        view.subscriptions,
-        view.subscriptions.isEmpty
-            ? new o.ArrayType(null, const [o.TypeModifier.Const])
-            : null,
-      ),
-    ]).toStmt());
+    final renderNodes = view.nodes.map((node) => node.renderNode).toList();
+    initParams.add(o.literalArr(renderNodes));
   }
+
+  statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
 
   if (isComponentRoot) {
     _writeComponentHostEventListeners(view, parser, statements);
