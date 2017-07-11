@@ -13,7 +13,7 @@ dependencies:
 
 * Added `exports: [ ... ]` to `@Component`, which allows the limited use of
   top-level fields and static methods/fields in a template without making an
-  alias getter in your class. Implements https://goo.gl/8mTMUH.
+  alias getter in your class. Implements [#374](https://github.com/dart-lang/angular/issues/374).
 
 ```dart
 import 'dart:math' show max;
@@ -34,7 +34,7 @@ class Comp {}
 
 * Added `@deferred` as the first "compile-time" directive (it has no specific
   runtime code nor is it listed in a `directives: [ ... ]` list. Implements
-  https://goo.gl/Cq3Uy1.
+  [#406](https://github.com/dart-lang/angular/issues/406).
 
 ```dart
 import 'package:angular2/angular2.dart';
@@ -64,6 +64,17 @@ component class are.
   bleeding [`github-sync`][github-sync] branch for what has yet to be merged
   into `master`.
 
+* We no longer emit `ng_*.json` files as part of the compile process [#276](https://github.com/dart-lang/angular/issues/276).
+
+* Attribute selectors (`<ng-content select="custom-action[group='1']">`) is now supported [#237](https://github.com/dart-lang/angular/issues/237).
+
+* Lifecycle interfaces no longer need to be "re-implemented" on classes in order
+  for the compiler to pick them up - we now respect the dependency chain [#19](https://github.com/dart-lang/angular/issues/19).
+
+* `Provider(useValue: ...)` now accepts "complex const data structures", with
+  the caveat that your data structure must not be invoking a private constructor
+  [#10](https://github.com/dart-lang/angular/issues/10).
+
 [CopyBara]: https://github.com/google/copybara
 [github-sync]: https://github.com/dart-lang/angular/tree/github-sync
 
@@ -74,6 +85,10 @@ component class are.
   development time in Dartium. `package:angular2/reflection.dart` was also
   removed.
 
+* The `bootstrap` function now always throws a runtime exception, and both it
+  and `bootstrapStatic` are accessible via `angular.dart` instead of
+  `platform/browser.dart` and `platform/browser_static.dart` [#357](https://github.com/dart-lang/angular/issues/357).
+
 * Returning `false` from an event handler will no longer cancel the event. See
   [#387](https://github.com/dart-lang/angular2/issues/387) for details.
 
@@ -81,6 +96,7 @@ component class are.
   and `ViewChild`/`ViewChildren` in their place instead.
 
 * Removed the `use_analyzer` flag for the transformer. This is always `true`.
+  [#404](https://github.com/dart-lang/angular/issues/404).
 
 * Removed all other unused or unsupported flags from the transformer. There is
   now a single `CompilerFlags` class that is universally supported for all build
@@ -97,7 +113,7 @@ component class are.
   in style sheets. Continued use of these combinators puts Angular at risk of
   incompatibility with common CSS tooling. `::ng-deep` is a drop-in replacement,
   intended to provide the same functionality as `/deep/` and `>>>`, without the
-  need to use deprecated or unsupported CSS syntax.
+  need to use deprecated or unsupported CSS syntax [#454](https://github.com/dart-lang/angular/issues/454).
 
 [deep-removal]: https://www.chromestatus.com/features/4964279606312960
 [static-profile]: https://drafts.csswg.org/css-scoping/#deep-combinator
@@ -110,7 +126,11 @@ component class are.
   specifics about the contract and document "crash detection" cases where they
   may be called more than once.
 
-* `*ngIf` now properly checks that inputs do not change during change detection.
+* `*ngIf` now properly checks that inputs do not change during change detection [#453](https://github.com/dart-lang/angular/issues/453).
+
+* Properly typed `TrackByFn` as an `int` not a `num` [#431](https://github.com/dart-lang/angular/issues/431).
+
+* Import aliases are supported by the compiler [#245](https://github.com/dart-lang/angular/issues/245).
 
 ### Performance
 
