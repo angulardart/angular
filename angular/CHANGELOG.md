@@ -32,6 +32,10 @@ class Comp {}
 * _Limitations_:
   * Only top-level fields that are `const` (not `final`) can be exported.
 
+  * As a note, `exports` are considered to always be _pure_ functions (or
+    symbols) and are not change detected the same way that instance methods or
+    fields on the component class are.
+
 * Added `@deferred` as the first "compile-time" directive (it has no specific
   runtime code nor is it listed in a `directives: [ ... ]` list. Implements
   [#406](https://github.com/dart-lang/angular/issues/406).
@@ -49,10 +53,6 @@ import 'expensive_comp.dart' show ExpensiveComp;
 )
 class MyComp {}
 ```
-
-As a note, `exports` are considered to always be _pure_ functions (or symbols)
-and are not change detected the same way that instance methods or fields on the
-component class are.
 
 * Added preliminary support for component inheritance. Components now inherit
   inputs, outputs, host bindings, host listeners, queries, and view queries
