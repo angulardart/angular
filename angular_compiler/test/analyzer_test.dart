@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/src/analyzer.dart';
 import 'package:build_test/build_test.dart';
 import 'package:test/test.dart';
 
