@@ -8,11 +8,22 @@ environment:
   sdk: '>=1.22.0 <2.0.0'
 
 dependencies:
+  args: ^0.13.6
+  barback: ^0.15.2+2
+  build: ^0.9.0
+  glob: ^1.0.0
+  logging: '>=0.9.0 <0.12.0'
+  meta: ^1.0.3
   source_gen: '^0.6.0'
 
 dev_dependencies:
   # This is here in order for it to be resolvable by the analyzer.
-  angular: ../angular
+  angular: '4.0.0-alpha'
   analyzer: '>=0.29.10 <0.31.0'
   build_test: '>=0.5.1 <0.7.0'
   test: '^0.12.0'
+# === vvv REMOVE WHEN PUBLISHING vvv ===
+dependency_overrides:
+  angular:
+    path: ../angular
+# === ^^^ REMOVE WHEN PUBLISHING ^^^ ===

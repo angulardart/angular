@@ -8,7 +8,7 @@ environment:
   sdk: '>=1.24.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.31.0'
-  angular_compiler: ^0.1.0
+  angular_compiler: ^0.1.0-dev
   barback: ^0.15.2+2
   build: ^0.9.0
   build_barback: ^0.2.0
@@ -30,6 +30,7 @@ dependencies:
   stack_trace: ^1.6.5
   tuple: ^1.0.1
 
+# TODO(alorenzen): Move lib/src/testing/matchers.dart to _tests and remove this.
 dev_dependencies:
   test: ^0.12.6
 
@@ -37,18 +38,10 @@ dev_dependencies:
 dependency_overrides:
   angular_compiler:
       path: ../angular_compiler
-  angular_test:
-      path: ../angular_test
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
-  - test/pub_serve:
-      $include: test/**_test.dart
   - angular/transform/codegen
-  - angular/transform/reflection_remover:
-      $include:
-          - test/testing/ng_test_bed_test.dart
-          - test/security/safe_inner_html_test.dart
   - $dart2js:
       commandLineOptions:
         - '--show-package-warnings'
