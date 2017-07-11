@@ -2,7 +2,7 @@ name: angular_compiler
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Compiler for AngularDart.
-version: 0.1.0-dev
+version: 0.1.0
 
 environment:
   sdk: '>=1.22.0 <2.0.0'
@@ -22,6 +22,7 @@ dev_dependencies:
   analyzer: '>=0.29.10 <0.31.0'
   build_test: '>=0.5.1 <0.7.0'
   test: '^0.12.0'
+
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
   angular:
