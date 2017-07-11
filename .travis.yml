@@ -8,6 +8,7 @@ dart:
 env:
   - PKG=_tests
   - PKG=angular
+  - PKG=angular_compiler
   - PKG=angular_test
 
 script: ./tool/travis.sh
