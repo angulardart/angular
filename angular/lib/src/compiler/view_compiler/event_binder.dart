@@ -102,16 +102,24 @@ class CompileEventListener {
   }
 
   void listenToDirective(
-      o.Expression directiveInstance, String observablePropName) {
-    var subscription =
+    DirectiveAst directiveAst,
+    o.Expression directiveInstance,
+    String observablePropName,
+  ) {
+    final subscription =
         o.variable('subscription_${compileElement.view.subscriptions.length}');
-    this.compileElement.view.subscriptions.add(subscription);
     final handlerExpr = _createEventHandlerExpr();
-    this.compileElement.view.createMethod.addStmt(subscription
-        .set(directiveInstance
-            .prop(observablePropName)
-            .callMethod(o.BuiltinMethod.SubscribeObservable, [handlerExpr]))
-        .toDeclStmt(null, [o.StmtModifier.Final]));
+    final isMockLike = directiveAst.directive.analyzedClass.isMockLike;
+    compileElement.view
+      ..subscriptions.add(subscription)
+      ..createMethod.addStmt(subscription
+          .set(directiveInstance.prop(observablePropName).callMethod(
+              o.BuiltinMethod.SubscribeObservable, [handlerExpr],
+              checked: isMockLike))
+          .toDeclStmt(null, [o.StmtModifier.Final]));
+    if (isMockLike) {
+      compileElement.view.subscribesToMockLike = true;
+    }
   }
 
   o.Expression _createEventHandlerExpr() {
@@ -169,7 +177,8 @@ void bindDirectiveOutputs(DirectiveAst directiveAst,
     for (int i = 0, len = eventListeners.length; i < len; i++) {
       CompileEventListener listener = eventListeners[i];
       if (listener.eventName != eventName) continue;
-      listener.listenToDirective(directiveInstance, observablePropName);
+      listener.listenToDirective(
+          directiveAst, directiveInstance, observablePropName);
     }
   });
 }

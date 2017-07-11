@@ -244,12 +244,12 @@ List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = [
 class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_2;
-  import3.QueryList _query_q5_0_0;
-  import3.QueryList _query_q7_0_1;
-  import3.QueryList _query_q1_0_2;
-  import3.QueryList _query_q2_0_3;
-  import3.QueryList _query_q3_0_4;
-  import3.QueryList _query_q4_0_5;
+  import3.QueryList _query_q1_0_0;
+  import3.QueryList _query_q2_0_1;
+  import3.QueryList _query_q3_0_2;
+  import3.QueryList _query_q4_0_3;
+  import3.QueryList _query_q5_0_4;
+  import3.QueryList _query_q7_0_5;
   static RenderComponentType renderType;
   ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -269,18 +269,18 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _QueriesComponent_0_2 = new import1.QueriesComponent();
-    _query_q5_0_0 = new import3.QueryList();
-    _query_q7_0_1 = new import3.QueryList();
-    _query_q1_0_2 = new import3.QueryList();
-    _query_q2_0_3 = new import3.QueryList();
-    _query_q3_0_4 = new import3.QueryList();
-    _query_q4_0_5 = new import3.QueryList();
-    _query_q7_0_1.reset([]);
-    _QueriesComponent_0_2.contentChildFromField = _query_q7_0_1.first;
-    _query_q3_0_4.reset([]);
-    _QueriesComponent_0_2.contentChildFromAnnotation = _query_q3_0_4.first;
-    _query_q4_0_5.reset([]);
-    _QueriesComponent_0_2.viewChildFromAnnotation = _query_q4_0_5.first;
+    _query_q1_0_0 = new import3.QueryList();
+    _query_q2_0_1 = new import3.QueryList();
+    _query_q3_0_2 = new import3.QueryList();
+    _query_q4_0_3 = new import3.QueryList();
+    _query_q5_0_4 = new import3.QueryList();
+    _query_q7_0_5 = new import3.QueryList();
+    _query_q3_0_2.reset([]);
+    _QueriesComponent_0_2.contentChildFromAnnotation = _query_q3_0_2.first;
+    _query_q4_0_3.reset([]);
+    _QueriesComponent_0_2.viewChildFromAnnotation = _query_q4_0_3.first;
+    _query_q7_0_5.reset([]);
+    _QueriesComponent_0_2.contentChildFromField = _query_q7_0_5.first;
     _compView_0.create(_QueriesComponent_0_2, projectableNodes);
     init([rootEl], const [], [rootEl]);
     return new ComponentRef(0, this, rootEl, _QueriesComponent_0_2);
@@ -298,20 +298,20 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   @override
   void detectChangesInternal() {
     if (!import9.AppViewUtils.throwOnChanges) {
-      if (_query_q5_0_0.dirty) {
-        _query_q5_0_0.reset([]);
-        _QueriesComponent_0_2.contentChildrenFromField = _query_q5_0_0;
-        _query_q5_0_0.notifyOnChanges();
+      if (_query_q1_0_0.dirty) {
+        _query_q1_0_0.reset([]);
+        _QueriesComponent_0_2.contentChildrenFromAnnotation = _query_q1_0_0;
+        _query_q1_0_0.notifyOnChanges();
       }
-      if (_query_q1_0_2.dirty) {
-        _query_q1_0_2.reset([]);
-        _QueriesComponent_0_2.contentChildrenFromAnnotation = _query_q1_0_2;
-        _query_q1_0_2.notifyOnChanges();
+      if (_query_q2_0_1.dirty) {
+        _query_q2_0_1.reset([]);
+        _QueriesComponent_0_2.viewChildrenFromAnnotation = _query_q2_0_1;
+        _query_q2_0_1.notifyOnChanges();
       }
-      if (_query_q2_0_3.dirty) {
-        _query_q2_0_3.reset([]);
-        _QueriesComponent_0_2.viewChildrenFromAnnotation = _query_q2_0_3;
-        _query_q2_0_3.notifyOnChanges();
+      if (_query_q5_0_4.dirty) {
+        _query_q5_0_4.reset([]);
+        _QueriesComponent_0_2.contentChildrenFromField = _query_q5_0_4;
+        _query_q5_0_4.notifyOnChanges();
       }
     }
     _compView_0.detectChanges();

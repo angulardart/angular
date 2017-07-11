@@ -4,9 +4,9 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 void main() {
   tearDown(disposeAnyRunningTest);
@@ -140,13 +140,70 @@ void main() {
     });
   });
 
-  test('Component should inherit metadata from Directive', () async {
-    final testBed = new NgTestBed<TestDirectiveDerivedComponent>();
-    final testFixture =
-        await testBed.create(beforeChangeDetection: (component) {
-      component.input = 'Hello!';
+  group('Component should inherit metadata', () {
+    test('from Directive', () async {
+      final testBed = new NgTestBed<TestDirectiveDerivedComponent>();
+      final testFixture =
+          await testBed.create(beforeChangeDetection: (component) {
+        component.input = 'Hello!';
+      });
+      expect(testFixture.text, 'Hello!');
     });
-    expect(testFixture.text, 'Hello!');
+
+    test('from super', () async {
+      final testBed = new NgTestBed<TestInheritMetadataComponent>();
+      final testFixture =
+          await testBed.create(beforeChangeDetection: (component) {
+        component.description = 'Inherited description';
+      });
+      expect(testFixture.text, 'Inherited description');
+    });
+
+    test('from interface', () async {
+      final testBed = new NgTestBed<TestImplementMetadataComponent>();
+      final testFixture =
+          await testBed.create(beforeChangeDetection: (component) {
+        component.description = 'Implemented description';
+      });
+      expect(testFixture.text, 'Implemented description');
+    });
+
+    test('from mixin', () async {
+      final testBed = new NgTestBed<TestMixinMetadataComponent>();
+      final testFixture =
+          await testBed.create(beforeChangeDetection: (component) {
+        component.description = 'Mixed-in description';
+      });
+      expect(testFixture.text, 'Mixed-in description');
+    });
+
+    test('from all supertypes', () async {
+      final testBed = new NgTestBed<TestMultipleSupertypesComponent>();
+      final testFixture =
+          await testBed.create(beforeChangeDetection: (component) {
+        component.viewChild
+          ..foo = '1'
+          ..bar = '2'
+          ..baz = '3';
+      });
+      final element =
+          testFixture.rootElement.querySelector('multiple-supertypes');
+      expect(element.attributes, containsPair('foo', '1'));
+      expect(element.attributes, containsPair('bar', '2'));
+      expect(element.attributes, containsPair('baz', '3'));
+    });
+
+    test('from most derived binding', () async {
+      final testBed = new NgTestBed<TestMostDerivedMetadataComponent>();
+      final testFixture =
+          await testBed.create(beforeChangeDetection: (component) {
+        component
+          ..value = '1'
+          ..fooValue = '2';
+      });
+      expect(testFixture.rootElement.attributes, containsPair('foo', '2'));
+      expect(testFixture.rootElement.attributes, containsPair('bar', '1'));
+    });
   });
 }
 
@@ -321,3 +378,108 @@ class DirectiveDerivedComponent extends BaseDirective {}
 class TestDirectiveDerivedComponent {
   String input;
 }
+
+class DescriptionInput {
+  @Input()
+  String description;
+}
+
+@Component(
+  selector: 'inherit-metadata',
+  template: '<div>{{description}}</div>',
+)
+class InheritMetadataComponent extends DescriptionInput {}
+
+@Component(
+  selector: 'test-inherit-metadata',
+  template: '<inherit-metadata [description]="description"></inherit-metadata>',
+  directives: const [InheritMetadataComponent],
+)
+class TestInheritMetadataComponent {
+  String description;
+}
+
+@Component(
+  selector: 'implement-metadata',
+  template: '<div>{{description}}</div>',
+)
+class ImplementMetadataComponent implements DescriptionInput {
+  String description;
+}
+
+@Component(
+  selector: 'test-implement-metadata',
+  template:
+      '<implement-metadata [description]="description"></implement-metadata>',
+  directives: const [ImplementMetadataComponent],
+)
+class TestImplementMetadataComponent {
+  String description;
+}
+
+@Component(
+  selector: 'mixin-metadata',
+  template: '<div>{{description}}</div>',
+)
+class MixinMetadataComponent extends Object with DescriptionInput {}
+
+@Component(
+  selector: 'test-mixin-metadata',
+  template: '<mixin-metadata [description]="description"></mixin-metadata>',
+  directives: const [MixinMetadataComponent],
+)
+class TestMixinMetadataComponent {
+  String description;
+}
+
+class FooAttribute {
+  @HostBinding('attr.foo')
+  String foo;
+}
+
+class BarAttribute {
+  @HostBinding('attr.bar')
+  String bar;
+}
+
+class BazAttribute {
+  @HostBinding('attr.baz')
+  String baz;
+}
+
+@Component(
+  selector: 'multiple-supertypes',
+  template: '',
+)
+class MultipleSupertypesComponent extends FooAttribute
+    with BarAttribute
+    implements BazAttribute {
+  String baz;
+}
+
+@Component(
+  selector: 'test-multiple-supertypes',
+  template: '<multiple-supertypes></multiple-supertypes>',
+  directives: const [MultipleSupertypesComponent],
+)
+class TestMultipleSupertypesComponent {
+  @ViewChild(MultipleSupertypesComponent)
+  MultipleSupertypesComponent viewChild;
+}
+
+class Attributes {
+  @HostBinding('attr.foo')
+  @HostBinding('attr.bar')
+  String value;
+}
+
+class OverrideFooAttributes extends Attributes {
+  @HostBinding('attr.foo')
+  String fooValue;
+}
+
+@Component(
+  selector: 'test-most-derived-metadata',
+  template: '',
+)
+class TestMostDerivedMetadataComponent extends OverrideFooAttributes {}
