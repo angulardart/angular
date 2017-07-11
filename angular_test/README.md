@@ -1,8 +1,10 @@
 # angular_test
 
+[![Pub Package](https://img.shields.io/pub/v/angular_test.svg)](https://pub.dartlang.org/packages/angular_test)
+
 Testing infrastructure and runner for [AngularDart][gh_angular_dart].
 
-[gh_angular_dart]: https://github.com/dart-lang/angular2
+[gh_angular_dart]: https://github.com/dart-lang/angular
 
 It's **strongly recommended** to view the `test/` folder for examples and recommended patterns.
 
