@@ -13,7 +13,7 @@ dependencies:
 
 * Added `exports: [ ... ]` to `@Component`, which allows the limited use of
   top-level fields and static methods/fields in a template without making an
-  alias getter in your class. Partially implements https://goo.gl/8mTMUH.
+  alias getter in your class. Implements https://goo.gl/8mTMUH.
 
 ```dart
 import 'dart:math' show max;
@@ -50,6 +50,10 @@ import 'expensive_comp.dart' show ExpensiveComp;
 class MyComp {}
 ```
 
+As a note, `exports` are considered to always be _pure_ functions (or symbols)
+and are not change detected the same way that instance methods or fields on the
+component class are.
+
 * Added preliminary support for component inheritance. Components now inherit
   inputs, outputs, host bindings, host listeners, queries, and view queries
   transitively from their immediate supertype if it's a component or directive.
@@ -78,8 +82,11 @@ class MyComp {}
 
 * Removed the `use_analyzer` flag for the transformer. This is always `true`.
 
-* Removed a number of classes that were never intended to be public:
-  * `ViewResolver`
+* Removed all other unused or unsupported flags from the transformer. There is
+  now a single `CompilerFlags` class that is universally supported for all build
+  systems.
+
+* Removed a number of classes that were never intended to be public.
 
 ### Deprecations
 
@@ -100,7 +107,7 @@ class MyComp {}
 * Properly annotate methods in generated `.template.dart` code with `@override`.
 
 * Updated the documentation for `OnInit` and `OnDestroy` to mention more
-  specifics about the contract and document "crash detection" caes where they
+  specifics about the contract and document "crash detection" cases where they
   may be called more than once.
 
 * `*ngIf` now properly checks that inputs do not change during change detection.
@@ -113,6 +120,15 @@ class MyComp {}
 
 * Some change detection code that was duplicated across all generated templates
   were moved internally to a new `AppView#detectHostChanges` method.
+
+* Introduced a new `AppViewData` structure in the generated code that decreases
+  code size ~2% or more in some applications due to better code re-use and emit
+  in dart2js.
+
+* We no longer change detect literals and simple `final` property reads.
+
+* Some of the enums used to manage change detection state have been simplified
+  to `int` in order to reduce the cost in the generated code.
 
 ## 3.1.0
 
