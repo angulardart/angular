@@ -146,7 +146,12 @@ class CompilerFlags {
       debugMode = null;
     }
     var entryPoints = options[_argEntryPoints];
-    if (entryPoints != null && entryPoints is! List<String>) {
+    // Support entry_points: web/main.dart in addition to
+    // entry_points:
+    //   - web/main.dart
+    if (entryPoints is String) {
+      entryPoints = [entryPoints];
+    } else if (entryPoints != null && entryPoints is! List<String>) {
       log('Invalid value "$_argEntryPoints": $entryPoints');
       entryPoints = null;
     }
