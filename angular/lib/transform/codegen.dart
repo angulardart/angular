@@ -41,7 +41,6 @@ class CodegenTransformer extends TransformerGroup {
         settings,
         defaultTo: new CompilerFlags(
           genDebugInfo: settings.mode == BarbackMode.DEBUG,
-          useLegacyStyleEncapsulation: true,
         ),
       ),
     );

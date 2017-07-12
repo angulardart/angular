@@ -85,7 +85,7 @@ class CompilerFlags {
     this.entryPoints: const [],
     this.profileFor: Profile.none,
     this.useLegacyStyleEncapsulation: false,
-    this.usePlaceholder: false,
+    this.usePlaceholder: true,
   });
 
   /// Creates flags by parsing command-line arguments.
