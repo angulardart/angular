@@ -11,7 +11,7 @@ executables:
   angular_test:
 
 dependencies:
-  angular: '^4.0.0'
+  angular: '^4.0.0-alpha'
   ansicolor: '^0.0.9'
   args: '>=0.13.7 <2.0.0'
   collection: '^1.14.0'
