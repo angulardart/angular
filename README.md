@@ -4,8 +4,7 @@
 
 [![Pub Package](https://img.shields.io/pub/v/angular2.svg)](https://pub.dartlang.org/packages/angular2)
 [![Build Status](https://travis-ci.org/dart-lang/angular.svg?branch=master)](https://travis-ci.org/dart-lang/angular)
-[![Build Status for Syncing](https://travis-ci.org/dart-lang/angular.svg?branch=github-sync)](https://travis-ci.org/dart-lang/angular/branches)
-[![Gitter](https://img.shields.io/gitter/room/dart-lang/angular2.svg)](https://gitter.im/dart-lang/angular2)
+[![Gitter](https://img.shields.io/gitter/room/dart-lang/angular.svg)](https://gitter.im/dart-lang/angular)
 
 AngularDart is a fast and productive web framework provided by [Dart][].
 
@@ -27,6 +26,13 @@ The web framework.
 
 High-level but optional testing API.
 
+### Other packages of interest
+
+Here are some packages in other repositories that are helpful when building
+AngularDart applications.
+
+#### [angular_components](https://github.com/dart-lang/angular_components)
+
 ## Contributing
 
 ![AngularDart 3.0.0](https://3.bp.blogspot.com/-Pypqb322bLc/WQpchgDAsKI/AAAAAAAAPI4/eBaQwnDkACYglJhBuinr5YzE9x_mQ-EGgCLcB/s640/angulardart-3.0-release.jpg)
@@ -35,4 +41,4 @@ Please read and agree to our [contribution guidelines][contribute]. We sync
 internally periodically, and test against thousands of component and e2e tests
 so please excuse small delays in merging pull requests.
 
-[contribute]: https://github.com/dart-lang/angular2/blob/master/CONTRIBUTING.md
+[contribute]: https://github.com/dart-lang/angular/blob/master/CONTRIBUTING.md
