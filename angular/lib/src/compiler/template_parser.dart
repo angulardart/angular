@@ -449,7 +449,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       _validatePipeNames(ast, sourceSpan);
       // Validate number of interpolations.
       if (ast != null &&
-          ((ast.ast as Interpolation)).expressions.length >
+          (ast.ast as Interpolation).expressions.length >
               MAX_INTERPOLATION_VALUES) {
         throw new BaseException(
             'Only support at most $MAX_INTERPOLATION_VALUES '
@@ -556,7 +556,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
             targetMatchableAttrs, targetProps);
       } else {
         targetMatchableAttrs.add([binding.key, '']);
-        this._parseLiteralAttr(binding.key, null, attr.sourceSpan, targetProps);
+        _parseLiteralAttr(
+            binding.key, null, attr.sourceSpan, true, targetProps);
       }
     }
     return true;
@@ -643,7 +644,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           attr.sourceSpan, targetMatchableAttrs, targetProps, exports);
     }
     if (!hasBinding) {
-      _parseLiteralAttr(attrName, attrValue, attr.sourceSpan, targetProps);
+      _parseLiteralAttr(
+          attrName, attrValue, attr.sourceSpan, attr.hasValue, targetProps);
     }
     return hasBinding;
   }
@@ -733,9 +735,15 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   void _parseLiteralAttr(String name, String value, SourceSpan sourceSpan,
-      List<BoundElementOrDirectiveProperty> targetProps) {
-    targetProps.add(new BoundElementOrDirectiveProperty(
-        name, _exprParser.wrapLiteralPrimitive(value, ''), true, sourceSpan));
+      bool hasValue, List<BoundElementOrDirectiveProperty> targetProps) {
+    AST valueAst;
+    if (hasValue) {
+      valueAst = _exprParser.wrapLiteralPrimitive(value, '');
+    } else {
+      valueAst = new EmptyExpr();
+    }
+    targetProps.add(
+        new BoundElementOrDirectiveProperty(name, valueAst, true, sourceSpan));
   }
 
   List<CompileDirectiveMetadata> _parseDirectives(

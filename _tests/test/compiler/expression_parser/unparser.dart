@@ -194,6 +194,9 @@ class Unparser implements AstVisitor {
     sb.write(ast.id.name);
   }
 
+  @override
+  void visitEmptyExpr(EmptyExpr ast, dynamic context) {}
+
   void _visit(AST ast) {
     ast.visit(this);
   }

@@ -11,7 +11,8 @@ class AST {
 
 class EmptyExpr extends AST {
   @override
-  void visit(AstVisitor visitor, [dynamic context = null]) {}
+  void visit(AstVisitor visitor, [dynamic context = null]) =>
+      visitor.visitEmptyExpr(this, context);
 }
 
 class StaticRead extends AST {
@@ -242,6 +243,7 @@ abstract class AstVisitor {
   dynamic visitBinary(Binary ast, dynamic context);
   dynamic visitChain(Chain ast, dynamic context);
   dynamic visitConditional(Conditional ast, dynamic context);
+  dynamic visitEmptyExpr(EmptyExpr ast, dynamic context);
   dynamic visitFunctionCall(FunctionCall ast, dynamic context);
   dynamic visitIfNull(IfNull ast, dynamic context);
   dynamic visitImplicitReceiver(ImplicitReceiver ast, dynamic context);
@@ -279,6 +281,11 @@ class RecursiveAstVisitor implements AstVisitor {
     ast.condition.visit(this);
     ast.trueExp.visit(this);
     ast.falseExp.visit(this);
+    return null;
+  }
+
+  @override
+  dynamic visitEmptyExpr(EmptyExpr ast, dynamic context) {
     return null;
   }
 
@@ -474,6 +481,9 @@ class AstTransformer implements AstVisitor {
   @override
   AST visitChain(Chain ast, dynamic context) =>
       new Chain(this._visitAll(ast.expressions));
+
+  @override
+  AST visitEmptyExpr(EmptyExpr ast, dynamic context) => new EmptyExpr();
 
   List<dynamic> _visitAll(List<dynamic> asts) {
     var res = new List(asts.length);

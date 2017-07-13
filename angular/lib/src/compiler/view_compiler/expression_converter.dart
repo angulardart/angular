@@ -29,9 +29,10 @@ ExpressionWithWrappedValueInfo convertCdExpressionToIr(
     o.Expression implicitReceiver,
     compiler_ast.AST expression,
     o.ReadVarExpr valueUnwrapper,
-    bool preserveWhitespace) {
-  var visitor = new _AstToIrVisitor(
-      nameResolver, implicitReceiver, valueUnwrapper, preserveWhitespace);
+    bool preserveWhitespace,
+    bool emptyIsTrue) {
+  var visitor = new _AstToIrVisitor(nameResolver, implicitReceiver,
+      valueUnwrapper, preserveWhitespace, emptyIsTrue);
   o.Expression irAst = expression.visit(visitor, _Mode.Expression);
   return new ExpressionWithWrappedValueInfo(
       irAst, visitor.needsValueUnwrapper, visitor.anyExplicit);
@@ -43,7 +44,7 @@ List<o.Statement> convertCdStatementToIr(
     compiler_ast.AST stmt,
     bool preserveWhitespace) {
   var visitor = new _AstToIrVisitor(
-      nameResolver, implicitReceiver, null, preserveWhitespace);
+      nameResolver, implicitReceiver, null, preserveWhitespace, false);
   var statements = <o.Statement>[];
   flattenStatements(stmt.visit(visitor, _Mode.Statement), statements);
   return statements;
@@ -76,6 +77,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   final NameResolver _nameResolver;
   final o.Expression _implicitReceiver;
   final bool preserveWhitespace;
+  final bool emptyIsTrue;
+
   final o.ReadVarExpr _valueUnwrapper;
   bool needsValueUnwrapper = false;
 
@@ -83,7 +86,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   bool anyExplicit = false;
 
   _AstToIrVisitor(this._nameResolver, this._implicitReceiver,
-      this._valueUnwrapper, this.preserveWhitespace);
+      this._valueUnwrapper, this.preserveWhitespace, this.emptyIsTrue);
 
   dynamic visitBinary(compiler_ast.Binary ast, dynamic context) {
     _Mode mode = context;
@@ -156,6 +159,14 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         mode,
         value.conditional(ast.trueExp.visit(this, _Mode.Expression),
             ast.falseExp.visit(this, _Mode.Expression)));
+  }
+
+  dynamic visitEmptyExpr(compiler_ast.EmptyExpr ast, dynamic context) {
+    _Mode mode = context;
+    o.LiteralExpr value = emptyIsTrue
+        ? new o.LiteralExpr(true, o.BOOL_TYPE)
+        : new o.LiteralExpr('', o.STRING_TYPE);
+    return convertToStatementIfNeeded(mode, value);
   }
 
   dynamic visitPipe(compiler_ast.BindingPipe ast, dynamic context) {

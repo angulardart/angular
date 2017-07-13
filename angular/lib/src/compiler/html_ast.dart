@@ -22,10 +22,14 @@ class HtmlTextAst implements HtmlAst {
 class HtmlAttrAst implements HtmlAst {
   final String name;
   final String value;
+
   @override
   final SourceSpan sourceSpan;
 
-  HtmlAttrAst(this.name, this.value, this.sourceSpan);
+  /// True if this attribute has an explicit value.
+  final bool hasValue;
+
+  HtmlAttrAst(this.name, this.value, this.sourceSpan, this.hasValue);
 
   @override
   visit(HtmlAstVisitor visitor, dynamic context) {
