@@ -157,7 +157,7 @@ class NgForm extends ControlContainer implements Form {
   void onSubmit(Event event) {
     ngBeforeSubmit.add(form);
     ngSubmit.add(form);
-    event.preventDefault();
+    event?.preventDefault();
   }
 
   ControlGroup _findContainer(List<String> path) {
