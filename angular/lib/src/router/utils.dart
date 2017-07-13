@@ -22,7 +22,9 @@ class TouchMap {
 
   Map<String, dynamic> getUnused() {
     Map<String, dynamic> unused = {};
-    keys.keys.forEach((key) => unused[key] = map[key]);
+    for (var key in keys.keys) {
+      unused[key] = map[key];
+    }
     return unused;
   }
 }

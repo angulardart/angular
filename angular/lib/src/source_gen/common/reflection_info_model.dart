@@ -86,9 +86,9 @@ class ReflectionInfoModel {
 
   ExpressionBuilder get _factoryClosure {
     var closure = new MethodBuilder.closure(returns: _constructorExpression);
-    _parameters.forEach((param) {
+    for (var param in _parameters) {
       closure.addPositional(param.asBuilder);
-    });
+    }
     return closure;
   }
 

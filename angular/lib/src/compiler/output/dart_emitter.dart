@@ -21,7 +21,7 @@ String debugOutputAstAsDart(
   if (ast is! List) {
     asts = [ast];
   }
-  asts.forEach((ast) {
+  for (var ast in asts) {
     if (ast is o.Statement) {
       ast.visitStatement(converter, ctx);
     } else if (ast is o.Expression) {
@@ -31,7 +31,7 @@ String debugOutputAstAsDart(
     } else {
       throw new BaseException("Don't know how to print debug info for $ast");
     }
-  });
+  }
   return ctx.toSource();
 }
 
@@ -166,12 +166,18 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     ctx.println(' {');
     ctx.incIndent();
-    stmt.fields.forEach((field) => this._visitClassField(field, ctx));
+    for (var field in stmt.fields) {
+      _visitClassField(field, ctx);
+    }
     if (stmt.constructorMethod != null) {
       this._visitClassConstructor(stmt, ctx);
     }
-    stmt.getters.forEach((getter) => this._visitClassGetter(getter, ctx));
-    stmt.methods.forEach((method) => this._visitClassMethod(method, ctx));
+    for (var getter in stmt.getters) {
+      _visitClassGetter(getter, ctx);
+    }
+    for (var method in stmt.methods) {
+      _visitClassMethod(method, ctx);
+    }
     ctx.decIndent();
     ctx.println('}');
     ctx.popClass();

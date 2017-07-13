@@ -88,7 +88,7 @@ List htmlVisitAll(
   context,
 ]) {
   var result = [];
-  asts.forEach((ast) {
+  for (var ast in asts) {
     bool handled = visitor.visit(ast, context);
     if (!handled) {
       var astResult = ast.visit(visitor, context);
@@ -96,6 +96,6 @@ List htmlVisitAll(
         result.add(astResult);
       }
     }
-  });
+  }
   return result;
 }

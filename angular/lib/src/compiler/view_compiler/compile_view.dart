@@ -228,11 +228,15 @@ class CompileView implements NameResolver {
   }
 
   void afterNodes() {
-    this.pipes.forEach((pipe) => pipe.create());
-    this.viewQueries.values.forEach((queries) => queries.forEach((query) {
-          query.generateImmediateUpdate(createMethod);
-          query.generateDynamicUpdate(updateContentQueriesMethod);
-        }));
+    for (var pipe in pipes) {
+      pipe.create();
+    }
+    for (var queries in viewQueries.values) {
+      for (var query in queries) {
+        query.generateImmediateUpdate(createMethod);
+        query.generateDynamicUpdate(updateContentQueriesMethod);
+      }
+    }
   }
 }
 

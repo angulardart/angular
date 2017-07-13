@@ -166,10 +166,10 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   void _updateDomValue() {
-    directives.forEach((dir) {
+    for (var dir in directives) {
       dynamic ctrl = form.find(dir.path);
       dir.valueAccessor.writeValue(ctrl.value);
-    });
+    }
   }
 
   void _checkFormPresent() {

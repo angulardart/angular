@@ -103,11 +103,11 @@ class DebugElement extends DebugNode {
 
   List<DebugElement> get children {
     List<DebugElement> children = [];
-    childNodes.forEach((node) {
+    for (var node in childNodes) {
       if (node is DebugElement) {
         children.add(node);
       }
-    });
+    }
     return children;
   }
 }
@@ -118,27 +118,27 @@ dynamic asNativeElements(List<DebugElement> debugEls) {
 
 void _queryElementChildren(DebugElement element,
     Predicate<DebugElement> predicate, List<DebugElement> matches) {
-  element.childNodes.forEach((node) {
+  for (var node in element.childNodes) {
     if (node is DebugElement) {
       if (predicate(node)) {
         matches.add(node);
       }
       _queryElementChildren(node, predicate, matches);
     }
-  });
+  }
 }
 
 void _queryNodeChildren(DebugNode parentNode, Predicate<DebugNode> predicate,
     List<DebugNode> matches) {
   if (parentNode is DebugElement) {
-    parentNode.childNodes.forEach((node) {
+    for (var node in parentNode.childNodes) {
       if (predicate(node)) {
         matches.add(node);
       }
       if (node is DebugElement) {
         _queryNodeChildren(node, predicate, matches);
       }
-    });
+    }
   }
 }
 

@@ -52,9 +52,9 @@ import "property_binder.dart"
 void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
   var visitor = new ViewBinderVisitor(view);
   templateVisitAll(visitor, parsedTemplate);
-  view.pipes.forEach((pipe) {
+  for (var pipe in view.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
-  });
+  }
 }
 
 class ViewBinderVisitor implements TemplateAstVisitor {
@@ -103,7 +103,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     bindRenderInputs(ast.inputs, compileElement);
     bindRenderOutputs(eventListeners);
     var index = -1;
-    ast.directives.forEach((directiveAst) {
+    for (var directiveAst in ast.directives) {
       index++;
       var directiveInstance = compileElement.directiveInstances[index];
       bindDirectiveInputs(directiveAst, directiveInstance, compileElement);
@@ -111,12 +111,12 @@ class ViewBinderVisitor implements TemplateAstVisitor {
           directiveAst, directiveInstance, compileElement);
       bindDirectiveHostProps(directiveAst, directiveInstance, compileElement);
       bindDirectiveOutputs(directiveAst, directiveInstance, streamListeners);
-    });
+    }
     templateVisitAll(this, ast.children, compileElement);
     // afterContent and afterView lifecycles need to be called bottom up
     // so that children are notified before parents
     index = -1;
-    ast.directives.forEach((directiveAst) {
+    for (var directiveAst in ast.directives) {
       index++;
       var directiveInstance = compileElement.directiveInstances[index];
       bindDirectiveAfterContentLifecycleCallbacks(
@@ -125,7 +125,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
           directiveAst.directive, directiveInstance, compileElement);
       bindDirectiveDestroyLifecycleCallbacks(
           directiveAst.directive, directiveInstance, compileElement);
-    });
+    }
     return null;
   }
 
@@ -136,7 +136,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     var eventListeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
     var index = -1;
-    ast.directives.forEach((directiveAst) {
+    for (var directiveAst in ast.directives) {
       index++;
       var directiveInstance = compileElement.directiveInstances[index];
       bindDirectiveInputs(directiveAst, directiveInstance, compileElement);
@@ -149,7 +149,7 @@ class ViewBinderVisitor implements TemplateAstVisitor {
           directiveAst.directive, directiveInstance, compileElement);
       bindDirectiveDestroyLifecycleCallbacks(
           directiveAst.directive, directiveInstance, compileElement);
-    });
+    }
     bindView(compileElement.embeddedView, ast.children);
     return null;
   }

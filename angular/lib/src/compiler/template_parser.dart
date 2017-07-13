@@ -924,19 +924,19 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _assertAllEventsPublishedByDirectives(
       List<DirectiveAst> directives, List<BoundEventAst> events) {
     var allDirectiveEvents = new Set<String>();
-    directives.forEach((directive) {
-      directive.directive.outputs.values.forEach((eventName) {
+    for (var directive in directives) {
+      for (var eventName in directive.directive.outputs.values) {
         allDirectiveEvents.add(eventName);
-      });
-    });
-    events.forEach((event) {
+      }
+    }
+    for (var event in events) {
       if (!allDirectiveEvents.contains(event.name)) {
         _reportError(
             'Event binding ${event.name} not emitted by any directive on '
             'an embedded template',
             event.sourceSpan);
       }
-    });
+    }
   }
 }
 
@@ -1152,7 +1152,9 @@ CssSelector createElementCssSelector(
     cssSelector.addAttribute(attrNameNoNs, '=', attrValue);
     if (attrName.toLowerCase() == CLASS_ATTR) {
       var classes = splitClasses(attrValue);
-      classes.forEach((className) => cssSelector.addClassName(className));
+      for (var className in classes) {
+        cssSelector.addClassName(className);
+      }
     }
   }
   return cssSelector;
@@ -1174,7 +1176,7 @@ class PipeCollector extends RecursiveAstVisitor {
 
 List<T> removeDuplicates<T>(List<T> items) {
   var res = <T>[];
-  items.forEach((item) {
+  for (var item in items) {
     var hasMatch = res.where((r) {
       if (r is CompilePipeMetadata) {
         CompilePipeMetadata rMeta = r;
@@ -1192,6 +1194,6 @@ List<T> removeDuplicates<T>(List<T> items) {
     if (!hasMatch) {
       res.add(item);
     }
-  });
+  }
   return res;
 }

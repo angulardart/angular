@@ -386,7 +386,9 @@ class RecursiveAstVisitor implements AstVisitor {
   }
 
   dynamic visitAll(List<AST> asts, dynamic context) {
-    asts.forEach((ast) => ast.visit(this, context));
+    for (var ast in asts) {
+      ast.visit(this, context);
+    }
     return null;
   }
 }
