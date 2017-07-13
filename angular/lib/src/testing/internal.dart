@@ -112,7 +112,11 @@ void setBaseTestProviders(
   var injector = testInjector.createInjector();
   List<Function> initializers =
       injector.get(PLATFORM_INITIALIZER, null) as List<Function>;
-  initializers?.forEach((init) => init());
+  if (initializers != null) {
+    for (var initializer in initializers) {
+      initializer();
+    }
+  }
   testInjector.reset();
 }
 

@@ -89,7 +89,7 @@ class OfflineCompiler {
     }
     var statements = <o.Statement>[];
     var exportedVars = <String>[];
-    components.forEach((componentWithDirs) {
+    for (var componentWithDirs in components) {
       CompileDirectiveMetadata compMeta = componentWithDirs.component;
       _assertComponent(compMeta);
 
@@ -123,7 +123,7 @@ class OfflineCompiler {
                   Identifiers.ComponentFactory, null, [o.TypeModifier.Const])))
           .toDeclStmt(null, [o.StmtModifier.Final]));
       exportedVars.add(compFactoryVar);
-    });
+    }
     return _createSourceModule(
         moduleUrl, statements, exportedVars, _deferredModules);
   }

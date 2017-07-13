@@ -134,7 +134,10 @@ class PlatformRefImpl extends PlatformRef {
     _injector = injector;
 
     List initializers = injector.get(PLATFORM_INITIALIZER, null);
-    initializers?.forEach((init) => init());
+    if (initializers == null) return;
+    for (var initializer in initializers) {
+      initializer();
+    }
   }
 
   void registerDisposeListener(void dispose()) {

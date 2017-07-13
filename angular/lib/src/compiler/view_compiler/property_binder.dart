@@ -199,7 +199,7 @@ void bindAndWriteToRenderer(
   var renderNode = compileElement.renderNode;
   var dynamicPropertiesMethod = new CompileMethod(view);
   var constantPropertiesMethod = new CompileMethod(view);
-  boundProps.forEach((boundProp) {
+  for (var boundProp in boundProps) {
     // Add to view bindings collection.
     int bindingIndex = view.addBinding(compileElement, boundProp);
 
@@ -291,7 +291,7 @@ void bindAndWriteToRenderer(
     bind(view, currValExpr, fieldExpr, boundProp.value, context, updateStmts,
         dynamicPropertiesMethod, constantPropertiesMethod,
         fieldType: fieldType);
-  });
+  }
   if (!constantPropertiesMethod.isEmpty) {
     targetMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck, constantPropertiesMethod.finish()));

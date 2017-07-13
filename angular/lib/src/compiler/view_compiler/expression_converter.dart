@@ -371,7 +371,9 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
 
 void flattenStatements(dynamic arg, List<o.Statement> output) {
   if (arg is List) {
-    arg.forEach((entry) => flattenStatements(entry, output));
+    for (var entry in arg) {
+      flattenStatements(entry, output);
+    }
   } else {
     output.add(arg);
   }

@@ -49,7 +49,7 @@ class DirectiveResolver {
     Map<String, String> host = {};
     Map<String, dynamic> queries = {};
     propertyMetadata.forEach((String propName, List<dynamic> metadata) {
-      metadata.forEach((a) {
+      for (var a in metadata) {
         if (a is Input) {
           if (a.bindingPropertyName != null) {
             inputs.add('$propName: ${a.bindingPropertyName}');
@@ -95,7 +95,7 @@ class DirectiveResolver {
         if (a is ViewChild) {
           queries[propName] = a;
         }
-      });
+      }
     });
     return this._merge(dm, inputs, outputs, host, queries, directiveType);
   }
@@ -111,13 +111,13 @@ class DirectiveResolver {
         dm.inputs != null ? (new List.from(dm.inputs)..addAll(inputs)) : inputs;
     List<String> mergedOutputs;
     if (dm.outputs != null) {
-      dm.outputs.forEach((String propName) {
+      for (String propName in dm.outputs) {
         if (outputs.contains(propName)) {
           throw new BaseException(
               "Output event '$propName' defined multiple times "
               "in '$directiveType'");
         }
-      });
+      }
       mergedOutputs = new List.from(dm.outputs)..addAll(outputs);
     } else {
       mergedOutputs = outputs;

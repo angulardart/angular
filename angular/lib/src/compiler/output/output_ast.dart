@@ -1210,13 +1210,16 @@ class RecursiveExpressionVisitor
 
   @override
   dynamic visitLiteralMapExpr(LiteralMapExpr ast, dynamic context) {
-    ast.entries.forEach(
-        (entry) => ((entry[1] as Expression)).visitExpression(this, context));
+    for (var entry in ast.entries) {
+      ((entry[1] as Expression)).visitExpression(this, context);
+    }
     return ast;
   }
 
   void visitAllExpressions(List<Expression> exprs, dynamic context) {
-    exprs.forEach((expr) => expr.visitExpression(this, context));
+    for (var expr in exprs) {
+      expr.visitExpression(this, context);
+    }
   }
 
   @override
@@ -1276,7 +1279,9 @@ class RecursiveExpressionVisitor
   }
 
   void visitAllStatements(List<Statement> stmts, dynamic context) {
-    stmts.forEach((stmt) => stmt.visitStatement(this, context));
+    for (var stmt in stmts) {
+      stmt.visitStatement(this, context);
+    }
   }
 }
 

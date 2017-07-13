@@ -33,7 +33,7 @@ class CompileQuery {
     var queryListForDirtyExpr =
         getPropertyInView(this.queryList, view, this.view);
     var viewValues = this._values;
-    elPath.forEach((el) {
+    for (var el in elPath) {
       var last = viewValues.values.length > 0
           ? viewValues.values[viewValues.values.length - 1]
           : null;
@@ -44,7 +44,7 @@ class CompileQuery {
         viewValues.values.add(newViewValues);
         viewValues = newViewValues;
       }
-    });
+    }
     viewValues.values.add(value);
     if (elPath.length > 0) {
       view.dirtyParentQueriesMethod
@@ -54,12 +54,12 @@ class CompileQuery {
 
   bool _isStatic() {
     var isStatic = true;
-    this._values.values.forEach((value) {
+    for (var value in _values.values) {
       if (value is ViewQueryValues) {
         // querying a nested view makes the query content dynamic
         isStatic = false;
       }
-    });
+    }
     return isStatic;
   }
 
@@ -154,12 +154,12 @@ o.Expression createQueryListField(
 
 void addQueryToTokenMap(
     CompileTokenMap<List<CompileQuery>> map, CompileQuery query) {
-  query.meta.selectors.forEach((selector) {
+  for (var selector in query.meta.selectors) {
     var entry = map.get(selector);
     if (entry == null) {
       entry = [];
       map.add(selector, entry);
     }
     entry.add(query);
-  });
+  }
 }

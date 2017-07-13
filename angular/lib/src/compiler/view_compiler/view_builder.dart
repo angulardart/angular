@@ -795,9 +795,9 @@ List<List<String>> mapToKeyValueArray(Map<String, String> data) {
   // for tests and for caching generated artifacts...
   entryArray.sort((entry1, entry2) => entry1[0].compareTo(entry2[0]));
   var keyValueArray = <List<String>>[];
-  entryArray.forEach((entry) {
+  for (var entry in entryArray) {
     keyValueArray.add([entry[0], entry[1]]);
-  });
+  }
   return keyValueArray;
 }
 

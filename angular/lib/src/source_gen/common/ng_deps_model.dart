@@ -48,9 +48,9 @@ class NgDepsModel {
       setUpMethod.addStatement(literal(true).asAssign(reference(_visited)));
     }
 
-    reflectables.forEach((r) {
-      setUpMethod.addStatement(r.asRegistration);
-    });
+    for (var reflectable in reflectables) {
+      setUpMethod.addStatement(reflectable.asRegistration);
+    }
 
     // If there's a deferred import for the same URI, don't call the setup
     // method since we want to defer it.

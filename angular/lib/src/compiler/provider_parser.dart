@@ -78,12 +78,13 @@ class ProviderElementContext implements ElementProviderUsage {
     for (var attrAst in attrs) {
       _attrs[attrAst.name] = attrAst.value;
     }
-    var directivesMeta =
-        _directiveAsts.map((directiveAst) => directiveAst.directive).toList();
+    final directivesMeta = _directiveMetadataFromAst(_directiveAsts);
     // Make a list of all providers required by union of all directives
     // including components themselves.
-    _allProviders = _resolveProvidersFromDirectives(
-        directivesMeta, _sourceSpan, _rootProviderContext.errors);
+    final resolver = new _ProviderResolver(directivesMeta, _sourceSpan);
+    _allProviders = resolver.resolve();
+    _rootProviderContext.errors.addAll(resolver.errors);
+
     // Get content queries since we need to eagerly create providers to serve
     // values for component @ContentChild/@ContentChildren at ngOnInit time.
     _contentQueries = _getContentQueries(directivesMeta);
@@ -110,6 +111,15 @@ class ProviderElementContext implements ElementProviderUsage {
             eager: true);
       }
     }
+  }
+
+  List<CompileDirectiveMetadata> _directiveMetadataFromAst(
+      List<DirectiveAst> asts) {
+    final directives = <CompileDirectiveMetadata>[];
+    for (var directiveAst in asts) {
+      directives.add(directiveAst.directive);
+    }
+    return directives;
   }
 
   void afterElement() {
@@ -256,18 +266,17 @@ class ProviderElementContext implements ElementProviderUsage {
       // access built-ins
       if ((requestingProviderType == ProviderAstType.Directive ||
           requestingProviderType == ProviderAstType.Component)) {
-        if (dep.token.equalsTo(identifierToken(Identifiers.ElementRef)) ||
-            dep.token
-                .equalsTo(identifierToken(Identifiers.ChangeDetectorRef)) ||
-            dep.token.equalsTo(identifierToken(Identifiers.TemplateRef))) {
+        if (dep.token.equalsTo(Identifiers.ElementRefToken) ||
+            dep.token.equalsTo(Identifiers.ChangeDetectorRefToken) ||
+            dep.token.equalsTo(Identifiers.TemplateRefToken)) {
           return dep;
         }
-        if (dep.token.equalsTo(identifierToken(Identifiers.ViewContainerRef))) {
+        if (dep.token.equalsTo(Identifiers.ViewContainerRefToken)) {
           _requiresViewContainer = true;
         }
       }
       // access the injector
-      if (dep.token.equalsTo(identifierToken(Identifiers.Injector))) {
+      if (dep.token.equalsTo(Identifiers.InjectorToken)) {
         return dep;
       }
       // access providers
@@ -288,9 +297,10 @@ class ProviderElementContext implements ElementProviderUsage {
     CompileDiDependencyMetadata result;
     if (!dep.isSkipSelf) {
       result = _getLocalDependency(requestingProviderType, dep, eager);
+      if (result != null) return result;
     }
     if (dep.isSelf) {
-      if (result == null && dep.isOptional) {
+      if (dep.isOptional) {
         result = new CompileDiDependencyMetadata(isValue: true, value: null);
       }
     } else {
@@ -388,85 +398,86 @@ List<CompileProviderMetadata> _normalizeProviders(
   return targetProviders;
 }
 
+/// Given an ordered list of directives and components, builds a map from
+/// token to provider.
+///
 /// Creates a ProviderAst for each directive and then resolves
-/// each provider for the component followed by providers for directives.
-CompileTokenMap<ProviderAst> _resolveProvidersFromDirectives(
-    List<CompileDirectiveMetadata> directives,
-    SourceSpan sourceSpan,
-    List<ParseError> targetErrors) {
-  var providersByToken = new CompileTokenMap<ProviderAst>();
-  for (CompileDirectiveMetadata directive in directives) {
-    var dirProvider = new CompileProviderMetadata(
-        token: new CompileTokenMetadata(identifier: directive.type),
-        useClass: directive.type);
-    _resolveProviders(
-      [dirProvider],
-      directive.isComponent
-          ? ProviderAstType.Component
-          : ProviderAstType.Directive,
-      sourceSpan,
-      targetErrors,
-      providersByToken,
-      eager: true,
-    );
-  }
-  // Note: directives need to be able to overwrite providers of a component!
-  var directivesWithComponentFirst =
-      (new List.from(directives.where((dir) => dir.isComponent).toList())
-        ..addAll(directives.where((dir) => !dir.isComponent).toList()));
-  directivesWithComponentFirst.forEach((directive) {
-    _resolveProviders(
-        _normalizeProviders(directive.providers, sourceSpan, targetErrors),
-        ProviderAstType.PublicService,
-        sourceSpan,
-        targetErrors,
-        providersByToken,
-        eager: false);
-    _resolveProviders(
-        _normalizeProviders(directive.viewProviders, sourceSpan, targetErrors),
-        ProviderAstType.PrivateService,
-        sourceSpan,
-        targetErrors,
-        providersByToken,
-        eager: false);
-  });
-  return providersByToken;
-}
+/// each provider for components followed by providers for directives.
+class _ProviderResolver {
+  final List<CompileDirectiveMetadata> directives;
+  final SourceSpan sourceSpan;
+  List<ProviderError> errors = [];
+  CompileTokenMap<ProviderAst> _providersByToken;
 
-// Updates tokenMap by creating new ProviderAst or by adding/replacing new entry
-// for existing ProviderAst.
-void _resolveProviders(
-    List<CompileProviderMetadata> providers,
-    ProviderAstType providerType,
-    SourceSpan sourceSpan,
-    List<ParseError> targetErrors,
-    CompileTokenMap<ProviderAst> targetProvidersByToken,
-    {bool eager}) {
-  for (var provider in providers) {
-    var resolvedProvider = targetProvidersByToken.get(provider.token);
-    if (resolvedProvider != null &&
-        !identical(resolvedProvider.multiProvider, provider.multi)) {
-      targetErrors.add(new ProviderError(
-          'Mixing multi and non multi provider is not possible for token '
-          '${resolvedProvider.token.name}',
-          sourceSpan));
+  _ProviderResolver(this.directives, this.sourceSpan);
+
+  CompileTokenMap<ProviderAst> resolve() {
+    _providersByToken = new CompileTokenMap<ProviderAst>();
+    for (CompileDirectiveMetadata directive in directives) {
+      var dirProvider = new CompileProviderMetadata(
+          token: new CompileTokenMetadata(identifier: directive.type),
+          useClass: directive.type);
+      _resolveProviders(
+        [dirProvider],
+        directive.isComponent
+            ? ProviderAstType.Component
+            : ProviderAstType.Directive,
+        eager: true,
+      );
     }
-    if (resolvedProvider == null) {
-      // Temporarily we mark NgIf/NgFor as visibility local until @Directive
-      // has parameter to mark them explicitly.
-      // TODO: Add @Directive visibility parameter.
-      bool visibleToViewHierarchy =
-          !(provider.token.equalsTo(ngIfTokenMetadata) ||
-              provider.token.equalsTo(ngForTokenMetadata));
-      resolvedProvider = new ProviderAst(
-          provider.token, provider.multi, [provider], providerType, sourceSpan,
-          eager: eager, visibleToViewHierarchy: visibleToViewHierarchy);
-      targetProvidersByToken.add(provider.token, resolvedProvider);
-    } else {
-      if (!provider.multi) {
-        resolvedProvider.providers.clear();
+    // Note: We need an ordered list where components preceded directives so
+    // directives are able to overwrite providers of a component!
+    var orderedList = <CompileDirectiveMetadata>[];
+    for (var dir in directives) {
+      if (dir.isComponent) orderedList.add(dir);
+    }
+    for (var dir in directives) {
+      if (!dir.isComponent) orderedList.add(dir);
+    }
+    for (var directive in orderedList) {
+      _resolveProviders(
+          _normalizeProviders(directive.providers, sourceSpan, errors),
+          ProviderAstType.PublicService,
+          eager: false);
+      _resolveProviders(
+          _normalizeProviders(directive.viewProviders, sourceSpan, errors),
+          ProviderAstType.PrivateService,
+          eager: false);
+    }
+    return _providersByToken;
+  }
+
+  // Updates tokenMap by creating new ProviderAst or by adding/replacing new entry
+  // for existing ProviderAst.
+  void _resolveProviders(
+      List<CompileProviderMetadata> providers, ProviderAstType providerType,
+      {bool eager}) {
+    for (var provider in providers) {
+      var resolvedProvider = _providersByToken.get(provider.token);
+      if (resolvedProvider != null &&
+          !identical(resolvedProvider.multiProvider, provider.multi)) {
+        errors.add(new ProviderError(
+            'Mixing multi and non multi provider is not possible for token '
+            '${resolvedProvider.token.name}',
+            sourceSpan));
       }
-      resolvedProvider.providers.add(provider);
+      if (resolvedProvider == null) {
+        // Temporarily we mark NgIf/NgFor as visibility local until @Directive
+        // has parameter to mark them explicitly.
+        // TODO: Add @Directive visibility parameter.
+        bool visibleToViewHierarchy =
+            !(provider.token.equalsTo(ngIfTokenMetadata) ||
+                provider.token.equalsTo(ngForTokenMetadata));
+        resolvedProvider = new ProviderAst(provider.token, provider.multi,
+            [provider], providerType, sourceSpan,
+            eager: eager, visibleToViewHierarchy: visibleToViewHierarchy);
+        _providersByToken.add(provider.token, resolvedProvider);
+      } else {
+        if (!provider.multi) {
+          resolvedProvider.providers.clear();
+        }
+        resolvedProvider.providers.add(provider);
+      }
     }
   }
 }
@@ -484,25 +495,25 @@ CompileTokenMap<List<CompileQueryMetadata>> _getViewQueries(
 CompileTokenMap<List<CompileQueryMetadata>> _getContentQueries(
     List<CompileDirectiveMetadata> directives) {
   var contentQueries = new CompileTokenMap<List<CompileQueryMetadata>>();
-  directives.forEach((directive) {
-    if (directive.queries != null) {
-      directive.queries
-          .forEach((query) => _addQueryToTokenMap(contentQueries, query));
+  for (var directive in directives) {
+    if (directive.queries == null) continue;
+    for (var query in directive.queries) {
+      _addQueryToTokenMap(contentQueries, query);
     }
-  });
+  }
   return contentQueries;
 }
 
 void _addQueryToTokenMap(CompileTokenMap<List<CompileQueryMetadata>> map,
     CompileQueryMetadata query) {
-  query.selectors.forEach((CompileTokenMetadata token) {
+  for (CompileTokenMetadata token in query.selectors) {
     var entry = map.get(token);
     if (entry == null) {
       entry = [];
       map.add(token, entry);
     }
     entry.add(query);
-  });
+  }
 }
 
 final CompileTokenMetadata ngIfTokenMetadata =

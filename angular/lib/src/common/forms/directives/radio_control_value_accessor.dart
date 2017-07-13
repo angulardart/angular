@@ -32,12 +32,12 @@ class RadioControlRegistry {
   }
 
   void select(RadioControlValueAccessor accessor) {
-    _accessors.forEach((c) {
+    for (var c in _accessors) {
       if (identical(c[0].control.root, accessor._control.control.root) &&
           !identical(c[1], accessor)) {
         c[1].fireUncheck();
       }
-    });
+    }
   }
 }
 

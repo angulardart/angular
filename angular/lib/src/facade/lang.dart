@@ -4,13 +4,13 @@
 List<String> jsSplit(String s, RegExp regExp) {
   var parts = <String>[];
   var lastEnd = 0;
-  regExp.allMatches(s).forEach((match) {
+  for (var match in regExp.allMatches(s)) {
     parts.add(s.substring(lastEnd, match.start));
     lastEnd = match.end;
-    for (var i = 0; i < match.groupCount; i++) {
+    for (var i = 0, len = match.groupCount; i < len; i++) {
       parts.add(match.group(i + 1));
     }
-  });
+  }
   parts.add(s.substring(lastEnd));
   return parts;
 }
