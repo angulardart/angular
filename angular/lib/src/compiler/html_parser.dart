@@ -226,16 +226,20 @@ class HtmlTreeBuilder {
     var fullName = mergeNsAndName(attrName.parts[0], attrName.parts[1]);
     var end = attrName.sourceSpan.end;
     var value = '';
+    var hasValue = false;
     if (peek.type == HtmlTokenType.ATTR_VALUE) {
       var valueToken = _advance();
       value = valueToken.parts[0];
       end = valueToken.sourceSpan.end;
+      hasValue = true;
     }
     return new HtmlAttrAst(
-        fullName,
-        value,
-        new SourceSpan(attrName.sourceSpan.start, end,
-            file.getText(attrName.sourceSpan.start.offset, end.offset)));
+      fullName,
+      value,
+      new SourceSpan(attrName.sourceSpan.start, end,
+          file.getText(attrName.sourceSpan.start.offset, end.offset)),
+      hasValue,
+    );
   }
 
   HtmlElementAst _getParentElement() {

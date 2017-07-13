@@ -695,6 +695,8 @@ class SimpleExpressionChecker implements AstVisitor {
   @override
   void visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {}
   @override
+  void visitEmptyExpr(EmptyExpr ast, dynamic context) {}
+  @override
   void visitStaticRead(StaticRead ast, dynamic context) {}
   @override
   void visitInterpolation(Interpolation ast, dynamic context) {

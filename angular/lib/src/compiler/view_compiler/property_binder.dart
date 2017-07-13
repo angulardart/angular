@@ -66,7 +66,8 @@ void bind(
       context,
       parsedExpression,
       DetectChangesVars.valUnwrapper,
-      view.component.template.preserveWhitespace);
+      view.component.template.preserveWhitespace,
+      _isBoolType(fieldType));
   if (context is o.ReadVarExpr &&
       context.name == '_ctx' &&
       checkExpression.anyExplicit) {
@@ -436,7 +437,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           o.variable('_ctx'),
           input.value,
           DetectChangesVars.valUnwrapper,
-          view.component.template.preserveWhitespace);
+          view.component.template.preserveWhitespace,
+          true);
       if (checkExpression.anyExplicit) {
         view.cacheCtxInDetectChangesMethod = true;
       }
@@ -530,7 +532,8 @@ void bindToUpdateMethod(
       context,
       parsedExpression,
       DetectChangesVars.valUnwrapper,
-      view.component.template.preserveWhitespace);
+      view.component.template.preserveWhitespace,
+      _isBoolType(fieldType));
   if (context is o.ReadVarExpr &&
       context.name == '_ctx' &&
       checkExpression.anyExplicit) {
@@ -617,6 +620,15 @@ bool isPrimitiveTypeName(String typeName) {
     case 'bool':
     case 'String':
       return true;
+  }
+  return false;
+}
+
+bool _isBoolType(o.OutputType type) {
+  if (type == o.BOOL_TYPE) return true;
+  if (type is o.ExternalType) {
+    String name = type.value.name;
+    return 'bool' == name.trim();
   }
   return false;
 }
