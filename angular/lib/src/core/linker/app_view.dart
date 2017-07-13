@@ -413,6 +413,11 @@ abstract class AppView<T> {
   @protected
   void detectChangesInternal() {}
 
+  /// Generated code that is called by hosts.
+  /// This is needed since deferred components don't allow call sites
+  /// to use the explicit AppView type but require base class.
+  void detectHostChanges(bool firstCheck) {}
+
   void markContentChildAsMoved(ViewContainer renderViewContainer) {
     dirtyParentQueriesInternal();
   }
