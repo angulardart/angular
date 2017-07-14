@@ -131,7 +131,6 @@ const NG_COMPILER = const [
   'CompileProviderMetadata',
   'CompileQueryMetadata',
   'CompileTokenMetadata',
-  'DirectiveResolver',
   'NormalizedComponentWithViewDirectives',
   'OfflineCompiler',
   'ProviderAst',

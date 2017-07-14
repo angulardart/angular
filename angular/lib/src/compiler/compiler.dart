@@ -5,7 +5,6 @@ export 'package:angular/src/core/platform_directives_and_pipes.dart'
     show PLATFORM_DIRECTIVES, PLATFORM_PIPES;
 
 export 'compile_metadata.dart';
-export 'directive_resolver.dart' show DirectiveResolver;
 export 'offline_compiler.dart';
 export 'source_module.dart' show SourceModule;
 export 'template_ast.dart';
