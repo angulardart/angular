@@ -157,19 +157,16 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       PurePipe,
-      new _ngRef.ReflectionInfo(const <dynamic>[], const [],
-          () => new PurePipe(), const <dynamic>[PipeTransform]));
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[], const [], () => new PurePipe()));
   _ngRef.reflector.registerType(
       DirtyPipe,
-      new _ngRef.ReflectionInfo(const <dynamic>[], const [],
-          () => new DirtyPipe(), const <dynamic>[PipeTransform]));
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[], const [], () => new DirtyPipe()));
   _ngRef.reflector.registerType(
       LifecyclePipe,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[],
-          const [],
-          () => new LifecyclePipe(),
-          const <dynamic>[PipeTransform, OnDestroy]));
+          const <dynamic>[], const [], () => new LifecyclePipe()));
   _ngRef.reflector.registerType(
       Comp,
       new _ngRef.ReflectionInfo(

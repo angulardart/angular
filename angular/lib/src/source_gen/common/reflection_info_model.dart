@@ -60,13 +60,8 @@ class ReflectionInfoModel {
       _allAnnotations,
       _parameterList
     ];
-
     if (!isFunction) {
       reflectionInfoParams.add(_factoryClosure);
-
-      if (_interfaces.isNotEmpty) {
-        reflectionInfoParams.add(_interfaceList);
-      }
     }
     return reflectionInfoParams;
   }
@@ -80,9 +75,6 @@ class ReflectionInfoModel {
   ExpressionBuilder get _parameterList =>
       list(_parameters.map((ParameterModel model) => model.asList),
           asConst: true);
-
-  ExpressionBuilder get _interfaceList =>
-      list(_interfaces, type: lib$core.$dynamic, asConst: true);
 
   ExpressionBuilder get _factoryClosure {
     var closure = new MethodBuilder.closure(returns: _constructorExpression);
