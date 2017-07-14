@@ -1,10 +1,8 @@
 import 'package:barback/barback.dart';
 import 'package:build_barback/build_barback.dart';
-import 'package:dart_style/dart_style.dart';
 import 'package:angular/source_gen.dart';
 import 'package:angular/src/transform/asset_consumer/transformer.dart';
 import 'package:angular/src/transform/common/eager_transformer_wrapper.dart';
-import 'package:angular/src/transform/common/formatter.dart' as formatter;
 import 'package:angular/src/transform/stylesheet_compiler/transformer.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 
@@ -17,9 +15,7 @@ import 'package:angular_compiler/angular_compiler.dart';
 ///
 /// [the wiki]: https://github.com/angular/angular/wiki/AngularDart-Transformer
 class CodegenTransformer extends TransformerGroup {
-  CodegenTransformer._(Iterable<Iterable> phases) : super(phases) {
-    formatter.init(new DartFormatter());
-  }
+  CodegenTransformer._(Iterable<Iterable> phases) : super(phases);
 
   factory CodegenTransformer(CompilerFlags flags) {
     Iterable<Iterable> phases = [
