@@ -20,5 +20,7 @@ if [ "$PKG" == "_tests" ] || [ "$PKG" == "angular_test" ]; then
   pub run test
 fi
 
-echo Any unformatted files?
-dartfmt -n --set-exit-if-changed .
+if [ "$TRAVIS_DART_VERSION" == "stable" ]; then
+  echo Any unformatted files?
+  dartfmt -n --set-exit-if-changed .
+fi
