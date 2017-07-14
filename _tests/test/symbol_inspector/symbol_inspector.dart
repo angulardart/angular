@@ -7,7 +7,6 @@ import 'package:angular/angular.dart' as ng2;
 import 'package:angular/compiler.dart' as ng2compiler;
 import 'package:angular/core.dart' as ng2core;
 import 'package:angular/di.dart' as di;
-import 'package:angular/common.dart' as ng2platform_common;
 import 'package:angular/platform/testing/browser.dart'
     as ng2platform_browser_testing;
 
@@ -18,7 +17,6 @@ final _ng2libSymbols = [
   ng2compiler.COMPILER_PROVIDERS,
   ng2.NgIf,
   ng2platform_browser_testing.TEST_BROWSER_PLATFORM_PROVIDERS,
-  ng2platform_common.COMMON_DIRECTIVES,
   ng2.APP_ID,
   di.Inject
 ];
