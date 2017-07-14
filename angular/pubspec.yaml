@@ -1,5 +1,5 @@
 name: angular
-version: 4.0.0-alpha
+version: 4.0.0-alpha+1
 author: Dart Team <web@dartlang.org>
 description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
