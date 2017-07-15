@@ -13,7 +13,7 @@ class ReflectionCapabilities implements PlatformReflectionCapabilities {
   bool get reflectionEnabled => true;
 
   Function factory(Type type) {
-    ClassMirror classMirror = reflectType(type);
+    ClassMirror classMirror = reflectClass(type);
     MethodMirror ctor = classMirror.declarations[classMirror.simpleName];
     Function create = classMirror.newInstance;
     Symbol name = ctor.constructorName;
@@ -305,7 +305,7 @@ class ReflectionCapabilities implements PlatformReflectionCapabilities {
   }
 
   List _constructorParameters(Type type) {
-    ClassMirror classMirror = reflectType(type);
+    ClassMirror classMirror = reflectClass(type);
     MethodMirror ctor = classMirror.declarations[classMirror.simpleName];
     return ctor.parameters;
   }
@@ -323,14 +323,14 @@ class ReflectionCapabilities implements PlatformReflectionCapabilities {
 }
 
 final _lifecycleHookMirrors = <ClassMirror>[
-  reflectType(AfterContentChecked),
-  reflectType(AfterContentInit),
-  reflectType(AfterViewChecked),
-  reflectType(AfterViewInit),
-  reflectType(DoCheck),
-  reflectType(OnChanges),
-  reflectType(OnDestroy),
-  reflectType(OnInit),
+  reflectClass(AfterContentChecked),
+  reflectClass(AfterContentInit),
+  reflectClass(AfterViewChecked),
+  reflectClass(AfterViewInit),
+  reflectClass(DoCheck),
+  reflectClass(OnChanges),
+  reflectClass(OnDestroy),
+  reflectClass(OnInit),
 ];
 
 /// Checks whether [clazz] implements lifecycle ifaces without declaring them.

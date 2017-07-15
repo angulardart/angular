@@ -91,7 +91,7 @@ const $z = 122;
 const $x = 120;
 const $NBSP = 160;
 var CR_OR_CRLF_REGEXP = new RegExp(r'\r\n?');
-String unexpectedCharacterErrorMsg(num charCode) {
+String unexpectedCharacterErrorMsg(int charCode) {
   var char =
       identical(charCode, $EOF) ? "EOF" : new String.fromCharCode(charCode);
   return '''Unexpected character "$char"''';
@@ -113,11 +113,11 @@ class _HtmlTokenizer {
   String input;
   num length;
   // Note: this is always lowercase!
-  num peek = -1;
+  int peek = -1;
   num nextPeek = -1;
-  num index = -1;
-  num line = 0;
-  num column = -1;
+  int index = -1;
+  int line = 0;
+  int column = -1;
   SourceLocation currentTokenStart;
   HtmlTokenType currentTokenType;
   var expansionCaseStack = [];
@@ -364,7 +364,7 @@ class _HtmlTokenizer {
   }
 
   HtmlToken _consumeRawText(
-      bool decodeEntities, num firstCharOfEnd, Function attemptEndRest) {
+      bool decodeEntities, num firstCharOfEnd, bool attemptEndRest()) {
     var tagCloseStart;
     var textStart = this._getLocation();
     this._beginToken(
@@ -631,7 +631,7 @@ class _HtmlTokenizer {
     return false;
   }
 
-  List<num> _savePosition() {
+  List<int> _savePosition() {
     return [this.peek, this.index, this.column, this.line, this.tokens.length];
   }
 
@@ -641,7 +641,7 @@ class _HtmlTokenizer {
     return this.input.substring(start, this.index);
   }
 
-  void _restorePosition(List<num> position) {
+  void _restorePosition(List<int> position) {
     this.peek = position[0];
     this.index = position[1];
     this.column = position[2];

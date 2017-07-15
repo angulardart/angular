@@ -5,7 +5,7 @@ import "../template_ast.dart" show TemplateAst;
 import "compile_view.dart" show CompileView;
 
 class _DebugState {
-  num nodeIndex;
+  int nodeIndex;
   TemplateAst sourceAst;
   _DebugState(this.nodeIndex, this.sourceAst);
 }

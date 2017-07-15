@@ -25,7 +25,7 @@ class CssSelector {
   final List<CssSelector> notSelectors = [];
   static List<CssSelector> parse(String selector) {
     List<CssSelector> results = [];
-    var _addResult = (List<CssSelector> res, cssSel) {
+    void _addResult(List<CssSelector> res, CssSelector cssSel) {
       if (cssSel.notSelectors.length > 0 &&
           cssSel.element == null &&
           cssSel.classNames.isEmpty &&
@@ -33,7 +33,8 @@ class CssSelector {
         cssSel.element = "*";
       }
       res.add(cssSel);
-    };
+    }
+
     var cssSelector = new CssSelector();
     var matcher = _SELECTOR_REGEXP.allMatches(selector);
     var current = cssSelector;
@@ -313,7 +314,7 @@ class SelectorMatcher {
     if (selectables == null) {
       return false;
     }
-    var selectable;
+    SelectorContext selectable;
     var result = false;
     for (var index = 0; index < selectables.length; index++) {
       selectable = selectables[index];

@@ -18,6 +18,7 @@ void main() {
           expect(pipe.transform(1.1234), "1.123");
         });
         test("should not support other objects", () {
+          // ignore: strong_mode_invalid_cast_new_expr
           expect(() => pipe.transform(new Object()), throwsATypeError);
         });
       });
@@ -31,6 +32,7 @@ void main() {
           expect(pipe.transform(1.2, ".2"), "120.00%");
         });
         test("should not support other objects", () {
+          // ignore: strong_mode_invalid_cast_new_expr
           expect(() => pipe.transform(new Object()), throwsATypeError);
         });
       });
@@ -43,6 +45,7 @@ void main() {
           expect(pipe.transform(12, "EUR", false, ".2"), "EUR12.00");
         });
         test("should not support other objects", () {
+          // ignore: strong_mode_invalid_cast_new_expr
           expect(() => pipe.transform(new Object()), throwsATypeError);
         });
       });

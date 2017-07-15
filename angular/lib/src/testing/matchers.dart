@@ -29,23 +29,26 @@ String _elementText(n) {
     return n.map(_elementText).join("");
   }
 
-  if (n is! Node) return '$n';
+  if (n is Node) {
+    if (n is! Node) return '$n';
 
-  if (n is Comment) {
-    return '';
+    if (n is Comment) {
+      return '';
+    }
+
+    if (n is ContentElement) {
+      return _elementText(n.getDistributedNodes());
+    }
+
+    if (n is Element && n.shadowRoot != null) {
+      return _elementText(n.shadowRoot.nodes);
+    }
+
+    if (n.nodes != null && n.nodes.isNotEmpty) {
+      return _elementText(n.nodes);
+    }
+
+    return n.text;
   }
-
-  if (n is ContentElement) {
-    return _elementText(n.getDistributedNodes());
-  }
-
-  if (n is Element && n.shadowRoot != null) {
-    return _elementText(n.shadowRoot.nodes);
-  }
-
-  if (n.nodes != null && n.nodes.isNotEmpty) {
-    return _elementText(n.nodes);
-  }
-
-  return n.text;
+  return '$n';
 }

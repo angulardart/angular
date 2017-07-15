@@ -23,7 +23,7 @@ const _MAX_CONSTRUCTION_COUNTER = 10;
 const UNDEFINED = const Object();
 
 abstract class ReflectiveProtoInjectorStrategy {
-  ResolvedReflectiveProvider getProviderAtIndex(num index);
+  ResolvedReflectiveProvider getProviderAtIndex(int index);
   ReflectiveInjectorStrategy createInjectorStrategy(ReflectiveInjectorImpl inj);
 }
 
@@ -124,7 +124,7 @@ class ReflectiveProtoInjectorDynamicStrategy
       keyIds.add(providers[i].key.id);
     }
   }
-  ResolvedReflectiveProvider getProviderAtIndex(num index) => providers[index];
+  ResolvedReflectiveProvider getProviderAtIndex(int index) => providers[index];
 
   ReflectiveInjectorStrategy createInjectorStrategy(ReflectiveInjectorImpl ei) {
     return new ReflectiveInjectorDynamicStrategy(this, ei);
@@ -145,14 +145,14 @@ class ReflectiveProtoInjector {
         ? new ReflectiveProtoInjectorDynamicStrategy(this, providers)
         : new ReflectiveProtoInjectorInlineStrategy(this, providers);
   }
-  ResolvedReflectiveProvider getProviderAtIndex(num index) {
+  ResolvedReflectiveProvider getProviderAtIndex(int index) {
     return this._strategy.getProviderAtIndex(index);
   }
 }
 
 abstract class ReflectiveInjectorStrategy {
   dynamic getObjByKeyId(num keyId);
-  dynamic getObjAtIndex(num index);
+  dynamic getObjAtIndex(int index);
   num getMaxNumberOfObjects();
   void resetConstructionCounter();
   dynamic instantiateProvider(ResolvedReflectiveProvider provider);
@@ -294,7 +294,7 @@ class ReflectiveInjectorDynamicStrategy implements ReflectiveInjectorStrategy {
     return UNDEFINED;
   }
 
-  dynamic getObjAtIndex(num index) => objs[index];
+  dynamic getObjAtIndex(int index) => objs[index];
 
   num getMaxNumberOfObjects() => objs.length;
 }
@@ -539,7 +539,7 @@ class ReflectiveInjectorImpl implements ReflectiveInjector {
     return null; // ignore: dead_code
   }
 
-  dynamic getAt(num index) {
+  dynamic getAt(int index) {
     return this._strategy.getObjAtIndex(index);
   }
 

@@ -751,7 +751,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     // Need to sort the directives so that we get consistent results throughout,
     // as selectorMatcher uses Maps inside.
     // Also dedupe directives as they might match more than one time!
-    var directives = new List(this.directivesIndex.length);
+    var directives =
+        new List<CompileDirectiveMetadata>(this.directivesIndex.length);
     selectorMatcher.match(elementCssSelector, (selector, directive) {
       directives[directivesIndex[directive]] = directive;
     });

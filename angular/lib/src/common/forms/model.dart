@@ -16,8 +16,7 @@ AbstractControl _find(AbstractControl control,
     if (v is ControlGroup) {
       return v.controls[name];
     } else if (v is ControlArray) {
-      var index = (name as num);
-      return v.at(index);
+      return v.at(name as int);
     } else {
       return null;
     }
@@ -398,7 +397,7 @@ class ControlArray extends AbstractControl {
   }
 
   /// Get the [AbstractControl] at the given `index` in the list.
-  AbstractControl at(num index) => controls[index];
+  AbstractControl at(int index) => controls[index];
 
   /// Insert a new [AbstractControl] at the end of the array.
   void push(AbstractControl control) {
@@ -408,14 +407,14 @@ class ControlArray extends AbstractControl {
   }
 
   /// Insert a new [AbstractControl] at the given `index` in the array.
-  void insert(num index, AbstractControl control) {
+  void insert(int index, AbstractControl control) {
     controls.insert(index, control);
     control.setParent(this);
     updateValueAndValidity();
   }
 
   /// Remove the control at the given `index` in the array.
-  void removeAt(num index) {
+  void removeAt(int index) {
     controls.removeAt(index);
     updateValueAndValidity();
   }

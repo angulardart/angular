@@ -40,7 +40,7 @@ class HtmlTreeBuilder {
   final List<HtmlToken> tokens;
   final SourceFile file;
 
-  num index = -1;
+  int index = -1;
   HtmlToken peek;
   List<HtmlAst> rootNodes = [];
   List<HtmlTreeError> errors = [];

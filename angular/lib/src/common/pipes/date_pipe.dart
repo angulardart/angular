@@ -84,13 +84,14 @@ class DatePipe implements PipeTransform {
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(DatePipe, value);
     }
-    if (value is num) {
-      value = new DateTime.fromMillisecondsSinceEpoch(value, isUtc: true);
+    if (value is int) {
+      value =
+          new DateTime.fromMillisecondsSinceEpoch(value as int, isUtc: true);
     }
     if (DatePipe._ALIASES.containsKey(pattern)) {
       pattern = DatePipe._ALIASES[pattern];
     }
-    return _formatDate(value, Intl.defaultLocale, pattern);
+    return _formatDate(value as DateTime, Intl.defaultLocale, pattern);
   }
 
   bool supports(dynamic obj) {

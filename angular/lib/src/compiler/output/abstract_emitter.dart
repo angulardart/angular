@@ -20,7 +20,7 @@ class _EmittedLine {
 class EmitterVisitorContext {
   final Map<String, String> deferredModules;
   final List<String> _exportedVars;
-  num _indent;
+  int _indent;
   int _outputPos;
   // Current method being emitted. Allows expressions access to method
   // parameter names.
@@ -638,4 +638,4 @@ dynamic escapeSingleQuoteString(String input, bool escapeDollar) {
   return "'$body'";
 }
 
-String _createIndent(num count) => '  ' * count;
+String _createIndent(int count) => '  ' * count;

@@ -3,7 +3,6 @@ import 'package:angular/core.dart'
         DoCheck,
         Directive,
         ViewContainerRef,
-        ViewRef,
         TemplateRef,
         EmbeddedViewRef;
 
@@ -158,7 +157,7 @@ class NgFor implements DoCheck {
       } else if (currentIndex == null) {
         _viewContainer.remove(adjustedPreviousIndex);
       } else {
-        ViewRef view = _viewContainer.get(adjustedPreviousIndex);
+        var view = _viewContainer.get(adjustedPreviousIndex);
         _viewContainer.move(view, currentIndex);
         RecordViewTuple tuple = new RecordViewTuple(item, view);
         insertTuples.add(tuple);

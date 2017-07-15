@@ -79,8 +79,7 @@ class MockXHR extends XHR {
 class _PendingRequest {
   String url;
   Completer<String> completer;
-  _PendingRequest(url) {
-    this.url = url;
+  _PendingRequest(this.url) {
     this.completer = new Completer<String>();
   }
   void complete(String response) {

@@ -74,7 +74,7 @@ class NgClass implements DoCheck, OnDestroy {
     if (v is String) {
       v = v.split(' ');
     }
-    this._rawClass = (v as dynamic /* List < String > | Set< String > */);
+    this._rawClass = v;
     this._iterableDiffer = null;
     this._keyValueDiffer = null;
     if (v != null) {
@@ -89,13 +89,13 @@ class NgClass implements DoCheck, OnDestroy {
   @override
   void ngDoCheck() {
     if (_iterableDiffer != null) {
-      var changes = _iterableDiffer.diff(_rawClass);
+      var changes = _iterableDiffer.diff(_rawClass as Iterable);
       if (changes != null) {
         _applyIterableChanges(changes);
       }
     }
     if (_keyValueDiffer != null) {
-      var changes = _keyValueDiffer.diff(_rawClass);
+      var changes = _keyValueDiffer.diff(_rawClass as Map);
       if (changes != null) {
         _applyKeyValueChanges(changes);
       }
@@ -113,7 +113,7 @@ class NgClass implements DoCheck, OnDestroy {
     _applyInitialClasses(false);
   }
 
-  void _applyKeyValueChanges(dynamic changes) {
+  void _applyKeyValueChanges(DefaultKeyValueDiffer changes) {
     changes.forEachAddedItem((KeyValueChangeRecord record) {
       _toggleClass(record.key, record.currentValue);
     });
@@ -127,7 +127,7 @@ class NgClass implements DoCheck, OnDestroy {
     });
   }
 
-  void _applyIterableChanges(dynamic changes) {
+  void _applyIterableChanges(DefaultIterableDiffer changes) {
     changes.forEachAddedItem((CollectionChangeRecord record) {
       _toggleClass(record.item, true);
     });

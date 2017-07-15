@@ -43,8 +43,8 @@ class DefaultValueAccessor implements ControlValueAccessor {
   }
 
   @override
-  void registerOnChange(void fn(dynamic _, {String rawValue})) {
-    this.onChange = (value) {
+  void registerOnChange(ChangeFunction fn) {
+    this.onChange = (String value) {
       fn(value, rawValue: value);
     };
   }

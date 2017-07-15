@@ -537,7 +537,7 @@ class ComponentVisitor
     }
 
     var staticNames = (exportsArg.expression as ListLiteral).elements;
-    if (!staticNames.every((name) => name is Identifier)) {
+    if (staticNames.any((name) => name is! Identifier)) {
       log.severe('Every item in the "exports" field must be an identifier');
       return exports;
     }

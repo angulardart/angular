@@ -29,7 +29,7 @@ typedef dynamic _SimpleChangeFn(value);
       NUMBER_VALUE_ACCESSOR
     ])
 class NumberValueAccessor implements ControlValueAccessor {
-  final ElementRef _elementRef;
+  final ElementRef<InputElement> _elementRef;
   _SimpleChangeFn onChange = (_) {};
   void touchHandler() {
     onTouched();
@@ -45,7 +45,7 @@ class NumberValueAccessor implements ControlValueAccessor {
 
   @override
   void registerOnChange(ChangeFunction fn) {
-    onChange = (value) {
+    onChange = (String value) {
       // TODO(het): also provide rawValue to fn?
       fn(value == '' ? null : double.parse(value));
     };

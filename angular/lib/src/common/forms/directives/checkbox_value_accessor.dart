@@ -23,8 +23,8 @@ const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     providers: const [
       CHECKBOX_VALUE_ACCESSOR
     ])
-class CheckboxControlValueAccessor implements ControlValueAccessor {
-  final ElementRef _elementRef;
+class CheckboxControlValueAccessor implements ControlValueAccessor<bool> {
+  final ElementRef<InputElement> _elementRef;
   ChangeFunction onChange = (_, {String rawValue}) {};
   void touchHandler() {
     onTouched();
@@ -33,7 +33,7 @@ class CheckboxControlValueAccessor implements ControlValueAccessor {
   TouchFunction onTouched = () {};
   CheckboxControlValueAccessor(this._elementRef);
   @override
-  void writeValue(dynamic value) {
+  void writeValue(bool value) {
     InputElement elm = _elementRef.nativeElement;
     elm.checked = value;
   }

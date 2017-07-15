@@ -41,7 +41,7 @@ String _extractId(String valueString) => valueString.split(':')[0];
       SELECT_VALUE_ACCESSOR
     ])
 class SelectControlValueAccessor implements ControlValueAccessor {
-  final ElementRef _elementRef;
+  final ElementRef<SelectElement> _elementRef;
   dynamic value;
   final Map<String, dynamic> _optionMap = new Map<String, dynamic>();
   num _idCounter = 0;
@@ -98,7 +98,7 @@ class SelectControlValueAccessor implements ControlValueAccessor {
 ///     </select>
 @Directive(selector: 'option')
 class NgSelectOption implements OnDestroy {
-  final ElementRef _element;
+  final ElementRef<OptionElement> _element;
   SelectControlValueAccessor _select;
   String id;
   NgSelectOption(this._element, @Optional() @Host() this._select) {
@@ -114,7 +114,7 @@ class NgSelectOption implements OnDestroy {
   }
 
   @Input('value')
-  set value(dynamic value) {
+  set value(String value) {
     _setElementValue(value);
     if (_select != null) _select.writeValue(_select.value);
   }
