@@ -2,7 +2,7 @@ import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/facade/lang.dart' show looseIdentical;
 
 class DefaultKeyValueDiffer {
-  final Map<dynamic, dynamic> _records = new Map<dynamic, dynamic>();
+  final _records = new Map<dynamic, KeyValueChangeRecord>();
   KeyValueChangeRecord _mapHead;
 
   KeyValueChangeRecord _appendAfter;
@@ -23,52 +23,31 @@ class DefaultKeyValueDiffer {
         !identical(this._removalsHead, null);
   }
 
-  void forEachItem(Function fn) {
-    KeyValueChangeRecord record;
-    for (record = this._mapHead;
-        !identical(record, null);
-        record = record._next) {
-      fn(record);
-    }
-  }
-
-  void forEachPreviousItem(Function fn) {
-    KeyValueChangeRecord record;
-    for (record = this._previousMapHead;
-        !identical(record, null);
-        record = record._nextPrevious) {
-      fn(record);
-    }
-  }
-
-  void forEachChangedItem(Function fn) {
-    KeyValueChangeRecord record;
-    for (record = this._changesHead;
+  void forEachChangedItem(void fn(KeyValueChangeRecord value)) {
+    for (var record = this._changesHead;
         !identical(record, null);
         record = record._nextChanged) {
       fn(record);
     }
   }
 
-  void forEachAddedItem(Function fn) {
-    KeyValueChangeRecord record;
-    for (record = this._additionsHead;
+  void forEachAddedItem(void fn(KeyValueChangeRecord value)) {
+    for (var record = this._additionsHead;
         !identical(record, null);
         record = record._nextAdded) {
       fn(record);
     }
   }
 
-  void forEachRemovedItem(Function fn) {
-    KeyValueChangeRecord record;
-    for (record = this._removalsHead;
+  void forEachRemovedItem(void fn(KeyValueChangeRecord value)) {
+    for (var record = this._removalsHead;
         !identical(record, null);
         record = record._next) {
       fn(record);
     }
   }
 
-  dynamic diff(Map map) {
+  DefaultKeyValueDiffer diff(Map map) {
     map ??= {};
     if (map is! Map) {
       throw new BaseException("Error trying to diff '$map'");
@@ -83,12 +62,12 @@ class DefaultKeyValueDiffer {
   /// Check for differences in [map] since the previous invocation.
   ///
   /// Optimized for no key changes.
-  bool check(Map<dynamic, dynamic> map) {
+  bool check(Map map) {
     _reset();
 
     if (_mapHead == null) {
       // Optimize initial add.
-      _forEach(map, (value, key) {
+      map.forEach((value, key) {
         var record = new KeyValueChangeRecord(key)..currentValue = value;
         _records[key] = record;
         _addToAdditions(record);
@@ -108,7 +87,7 @@ class DefaultKeyValueDiffer {
 
     var insertBefore = _mapHead;
 
-    _forEach(map, (value, key) {
+    map.forEach((value, key) {
       if (insertBefore?.key == key) {
         _maybeAddToChanges(insertBefore, value);
         _appendAfter = insertBefore;
@@ -270,28 +249,27 @@ class DefaultKeyValueDiffer {
     var changes = [];
     var additions = [];
     var removals = [];
-    KeyValueChangeRecord record;
-    for (record = this._mapHead;
+    for (var record = this._mapHead;
         !identical(record, null);
         record = record._next) {
       items.add(record);
     }
-    for (record = this._previousMapHead;
+    for (var record = this._previousMapHead;
         !identical(record, null);
         record = record._nextPrevious) {
       previous.add(record);
     }
-    for (record = this._changesHead;
+    for (var record = this._changesHead;
         !identical(record, null);
         record = record._nextChanged) {
       changes.add(record);
     }
-    for (record = this._additionsHead;
+    for (var record = this._additionsHead;
         !identical(record, null);
         record = record._nextAdded) {
       additions.add(record);
     }
-    for (record = this._removalsHead;
+    for (var record = this._removalsHead;
         !identical(record, null);
         record = record._next) {
       removals.add(record);
@@ -312,18 +290,7 @@ class DefaultKeyValueDiffer {
         removals.join(", ") +
         "\n";
   }
-
-  void _forEach(obj, Function fn) {
-    if (obj is Map) {
-      obj.forEach((k, v) => fn(v, k));
-    } else {
-      var handler = fn as _MapHandler;
-      (obj as Map<dynamic, String>).forEach(handler);
-    }
-  }
 }
-
-typedef void _MapHandler(dynamic value, String key);
 
 class KeyValueChangeRecord {
   dynamic key;

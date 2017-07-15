@@ -60,29 +60,11 @@ class DefaultIterableDiffer {
 
   Iterable get collection => _collection;
 
-  int get length =>_length;
-
-  void forEachItem(Function fn) {
-    CollectionChangeRecord record;
-    for (record = this._itHead;
-        !identical(record, null);
-        record = record._next) {
-      fn(record);
-    }
-  }
-
-  void forEachPreviousItem(Function fn) {
-    CollectionChangeRecord record;
-    for (record = this._previousItHead;
-        !identical(record, null);
-        record = record._nextPrevious) {
-      fn(record);
-    }
-  }
+  int get length => _length;
 
   void forEachOperation(DefaultIterableCallback fn) {
-    dynamic nextIt = _itHead;
-    dynamic nextRemove = _removalsHead;
+    var nextIt = _itHead;
+    var nextRemove = _removalsHead;
     int addRemoveOffset = 0;
     int sizeDeficit;
     List<int> moveOffsets;
@@ -163,36 +145,24 @@ class DefaultIterableDiffer {
     }
   }
 
-  void forEachAddedItem(Function fn) {
-    CollectionChangeRecord record;
-    for (record = this._additionsHead;
+  void forEachAddedItem(void fn(CollectionChangeRecord record)) {
+    for (var record = this._additionsHead;
         !identical(record, null);
         record = record._nextAdded) {
       fn(record);
     }
   }
 
-  void forEachMovedItem(Function fn) {
-    CollectionChangeRecord record;
-    for (record = this._movesHead;
-        !identical(record, null);
-        record = record._nextMoved) {
-      fn(record);
-    }
-  }
-
-  void forEachRemovedItem(Function fn) {
-    CollectionChangeRecord record;
-    for (record = this._removalsHead;
+  void forEachRemovedItem(void fn(CollectionChangeRecord record)) {
+    for (var record = this._removalsHead;
         !identical(record, null);
         record = record._nextRemoved) {
       fn(record);
     }
   }
 
-  void forEachIdentityChange(Function fn) {
-    CollectionChangeRecord record;
-    for (record = this._identityChangesHead;
+  void forEachIdentityChange(void fn(CollectionChangeRecord record)) {
+    for (var record = this._identityChangesHead;
         !identical(record, null);
         record = record._nextIdentityChange) {
       fn(record);
@@ -212,7 +182,7 @@ class DefaultIterableDiffer {
 
   void onDestroy() {}
   // todo(vicb): optim for UnmodifiableListView (frozen arrays)
-  bool check(dynamic collection) {
+  bool check(Iterable collection) {
     this._reset();
     CollectionChangeRecord record = this._itHead;
     bool mayBeDirty = false;
@@ -609,13 +579,25 @@ class DefaultIterableDiffer {
 
   String toString() {
     var list = [];
-    this.forEachItem((record) => list.add(record));
+    for (var record = this._itHead;
+        !identical(record, null);
+        record = record._next) {
+      list.add(record);
+    }
     var previous = [];
-    this.forEachPreviousItem((record) => previous.add(record));
+    for (var record = this._previousItHead;
+        !identical(record, null);
+        record = record._nextPrevious) {
+      previous.add(record);
+    }
     var additions = [];
     this.forEachAddedItem((record) => additions.add(record));
     var moves = [];
-    this.forEachMovedItem((record) => moves.add(record));
+    for (var record = this._movesHead;
+        !identical(record, null);
+        record = record._nextMoved) {
+      moves.add(record);
+    }
     var removals = [];
     this.forEachRemovedItem((record) => removals.add(record));
     var identityChanges = [];
