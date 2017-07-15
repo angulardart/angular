@@ -1,15 +1,13 @@
 @Tags(const ['codegen'])
 @TestOn('browser && !js')
-library angular2.test.di.integration_dart_test;
-
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
+import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
-import 'package:angular/src/testing/matchers.dart';
+import 'package:angular_test/angular_test.dart';
 
 void main() {
   tearDown(disposeAnyRunningTest);

@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
-import "package:angular/src/common/pipes/lowercase_pipe.dart";
-
-import '../../test_util.dart';
+import 'package:_tests/test_util.dart';
+import 'package:angular/src/common/pipes/lowercase_pipe.dart';
 
 void main() {
   group("LowerCasePipe", () {

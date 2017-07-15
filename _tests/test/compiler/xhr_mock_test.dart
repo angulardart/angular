@@ -1,13 +1,10 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.compiler.xhr_mock_test;
-
 import 'dart:async';
 
 import 'package:test/test.dart';
+import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/xhr_mock.dart' show MockXHR;
-
-import '../test_util.dart';
 
 void main() {
   group('MockXHR', () {

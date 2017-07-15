@@ -1,20 +1,17 @@
 @TestOn('browser')
-library angular2.test.core.di.reflective_injector_test;
-
 import 'package:test/test.dart';
-import "package:angular/di.dart";
-import "package:angular/src/core/di/reflective_injector.dart"
+import 'package:_tests/test_util.dart';
+import 'package:angular/di.dart';
+import 'package:angular/src/core/di/reflective_injector.dart'
     show
         ReflectiveInjectorImpl,
         ReflectiveInjectorInlineStrategy,
         ReflectiveInjectorDynamicStrategy,
         ReflectiveProtoInjector;
-import "package:angular/src/core/di/reflective_provider.dart"
+import 'package:angular/src/core/di/reflective_provider.dart'
     show ResolvedReflectiveProviderImpl;
-import "package:angular/src/facade/exceptions.dart" show BaseException;
-import "package:angular/src/testing/internal.dart";
-
-import "../../test_util.dart";
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/testing/internal.dart';
 
 class CustomDependencyMetadata extends DependencyMetadata {
   @override

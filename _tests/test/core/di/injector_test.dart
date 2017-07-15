@@ -1,8 +1,7 @@
 @TestOn('browser')
 import 'package:test/test.dart';
+import 'package:_tests/test_util.dart';
 import 'package:angular/angular.dart';
-
-import '../../test_util.dart';
 
 void main() {
   Injector injector;

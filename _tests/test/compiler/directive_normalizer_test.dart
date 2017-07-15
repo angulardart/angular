@@ -3,8 +3,8 @@
 
 import 'dart:async';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
+import 'package:_tests/test_util.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileTypeMetadata, CompileTemplateMetadata;
@@ -13,8 +13,7 @@ import 'package:angular/src/compiler/directive_normalizer.dart'
 import 'package:angular/src/compiler/html_parser.dart';
 import 'package:angular/src/compiler/xhr_mock.dart' show MockXHR;
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
-
-import '../test_util.dart';
+import 'package:angular_test/angular_test.dart';
 
 void main() {
   CompileTypeMetadata dirType;

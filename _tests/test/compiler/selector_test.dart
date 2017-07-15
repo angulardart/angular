@@ -1,14 +1,11 @@
 @TestOn('browser')
-library angular2.test.compiler.selector_test;
-
 import 'dart:html';
 
 import 'package:test/test.dart';
+import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/attribute_matcher.dart';
 import 'package:angular/src/compiler/selector.dart'
     show CssSelector, SelectorMatcher;
-
-import "../test_util.dart";
 
 void main() {
   group('SelectorMatcher', () {
