@@ -34,6 +34,7 @@ class CssSelector {
       }
       res.add(cssSel);
     }
+
     var cssSelector = new CssSelector();
     var matcher = _SELECTOR_REGEXP.allMatches(selector);
     var current = cssSelector;

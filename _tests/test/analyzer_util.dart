@@ -100,7 +100,7 @@ Future<AnalysisContext> _getAnalysisContextForProjectPath(
     String projectPath,
     Iterable<String> foundFiles) async {
   // TODO: fail more clearly if this...fails
-  var sdkPath = cli.getSdkDir().path;
+  var sdkPath = cli.getSdkPath();
 
   var resourceProvider = PhysicalResourceProvider.INSTANCE;
   DartSdk sdk = new FolderBasedDartSdk(

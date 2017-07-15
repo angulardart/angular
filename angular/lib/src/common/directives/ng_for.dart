@@ -3,7 +3,6 @@ import 'package:angular/core.dart'
         DoCheck,
         Directive,
         ViewContainerRef,
-        ViewRef,
         TemplateRef,
         EmbeddedViewRef;
 
