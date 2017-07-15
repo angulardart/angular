@@ -1,16 +1,14 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.common.directives.ng_template_outlet_test;
-
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
+import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
-import "package:angular/src/common/directives/ng_template_outlet.dart"
+import 'package:angular/src/common/directives/ng_template_outlet.dart'
     show NgTemplateOutlet;
 import 'package:angular/src/debug/debug_node.dart';
-import 'package:angular/src/testing/matchers.dart';
+import 'package:angular_test/angular_test.dart';
 
 void main() {
   group("insert", () {

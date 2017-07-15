@@ -1,14 +1,12 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.core.view.projection_test;
-
 import 'dart:html';
 
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
-import 'package:angular/src/testing/matchers.dart';
+import 'package:_tests/matchers.dart';
 
 void main() {
   group('projection', () {
