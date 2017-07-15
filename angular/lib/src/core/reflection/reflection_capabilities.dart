@@ -1,3 +1,4 @@
+@MirrorsUsed(symbols: 'classMirror')
 import 'dart:mirrors';
 
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
