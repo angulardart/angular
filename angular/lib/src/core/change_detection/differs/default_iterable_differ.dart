@@ -12,7 +12,7 @@ typedef dynamic TrackByFn(int index, dynamic item);
 var trackByIdentity = (int index, dynamic item) => item;
 
 class DefaultIterableDiffer {
-  TrackByFn _trackByFn;
+  final TrackByFn _trackByFn;
   int _length;
   Iterable _collection;
   // Keeps track of the used records at any point in time (during & across
@@ -35,11 +35,10 @@ class DefaultIterableDiffer {
   CollectionChangeRecord _identityChangesHead;
   CollectionChangeRecord _identityChangesTail;
 
-  DefaultIterableDiffer([this._trackByFn]) {
-    _trackByFn = _trackByFn ?? trackByIdentity;
-  }
+  DefaultIterableDiffer([TrackByFn trackByFn])
+      : this._trackByFn = trackByFn ?? trackByIdentity;
 
-  clone(TrackByFn trackByFn) {
+  DefaultIterableDiffer clone(TrackByFn trackByFn) {
     var differ = new DefaultIterableDiffer(trackByFn);
     return differ
       .._length = _length
@@ -59,13 +58,9 @@ class DefaultIterableDiffer {
       .._identityChangesTail = _identityChangesTail;
   }
 
-  Iterable get collection {
-    return this._collection;
-  }
+  Iterable get collection => _collection;
 
-  int get length {
-    return this._length;
-  }
+  int get length =>_length;
 
   void forEachItem(Function fn) {
     CollectionChangeRecord record;
