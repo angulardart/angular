@@ -67,7 +67,7 @@ class DefaultKeyValueDiffer {
 
     if (_mapHead == null) {
       // Optimize initial add.
-      map.forEach((value, key) {
+      map.forEach((key, value) {
         var record = new KeyValueChangeRecord(key)..currentValue = value;
         _records[key] = record;
         _addToAdditions(record);
@@ -87,7 +87,7 @@ class DefaultKeyValueDiffer {
 
     var insertBefore = _mapHead;
 
-    map.forEach((value, key) {
+    map.forEach((key, value) {
       if (insertBefore?.key == key) {
         _maybeAddToChanges(insertBefore, value);
         _appendAfter = insertBefore;
