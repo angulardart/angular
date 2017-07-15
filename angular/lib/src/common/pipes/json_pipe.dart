@@ -10,5 +10,5 @@ class JsonPipe implements PipeTransform {
 
   const JsonPipe();
 
-  String transform(value) => _json.convert(value);
+  String transform(Object value) => _json.convert(value);
 }

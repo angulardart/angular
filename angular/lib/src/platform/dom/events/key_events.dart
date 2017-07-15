@@ -157,9 +157,8 @@ class KeyEventsPlugin extends EventManagerPlugin {
     return fullKey;
   }
 
-  static String getEventKey(e) {
-    KeyboardEvent event = e;
-    int keyCode = event.keyCode;
+  static String getEventKey(KeyboardEvent e) {
+    int keyCode = e.keyCode;
     return _keyCodeToKeyMap.containsKey(keyCode)
         ? _keyCodeToKeyMap[keyCode]
         : 'Unidentified';

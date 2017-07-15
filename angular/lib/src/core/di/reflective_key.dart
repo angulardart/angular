@@ -39,7 +39,7 @@ class ReflectiveKey {
     return null; // ignore: dead_code
   }
 
-  static num get numberOfKeys => _globalKeyRegistry.numberOfKeys;
+  static int get numberOfKeys => _globalKeyRegistry.numberOfKeys;
 }
 
 class KeyRegistry {

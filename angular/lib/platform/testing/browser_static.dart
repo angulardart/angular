@@ -32,4 +32,4 @@ const List<dynamic> TEST_BROWSER_STATIC_APPLICATION_PROVIDERS = const [
   const Provider(DOCUMENT, useFactory: createDoc, deps: const []),
 ];
 
-createDoc() => document;
+HtmlDocument createDoc() => document;

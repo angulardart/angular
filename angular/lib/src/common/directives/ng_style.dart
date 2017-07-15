@@ -74,7 +74,7 @@ class NgStyle implements DoCheck {
     if (_differ == null) return;
     var changes = _differ.diff(_rawStyle);
     if (changes == null) return;
-    changes.forEachAddedItem((KeyValueChangeRecord record) {
+    changes.forEachAddedItem((record) {
       _ngElement.style.setProperty(record.key, record.currentValue);
     });
     changes.forEachChangedItem((KeyValueChangeRecord record) {

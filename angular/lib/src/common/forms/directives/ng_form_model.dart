@@ -125,7 +125,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
 
   @override
   void addControl(NgControl dir) {
-    dynamic ctrl = form.find(dir.path);
+    var ctrl = form.find(dir.path);
     setUpControl(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
     directives.add(dir);
@@ -141,7 +141,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
 
   @override
   void addControlGroup(NgControlGroup dir) {
-    dynamic ctrl = form.find(dir.path);
+    var ctrl = form.find(dir.path);
     setUpControlGroup(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
   }

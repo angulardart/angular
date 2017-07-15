@@ -29,7 +29,7 @@ class ViewContainer implements ViewContainerRef {
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
   @override
-  EmbeddedViewRef get(num index) {
+  EmbeddedViewRef get(int index) {
     return nestedViews[index].viewData.ref;
   }
 
@@ -87,7 +87,7 @@ class ViewContainer implements ViewContainerRef {
   }
 
   ComponentRef createComponent(ComponentFactory componentFactory,
-      [num index = -1,
+      [int index = -1,
       Injector injector = null,
       List<List<dynamic>> projectableNodes = null]) {
     var contextInjector = injector ?? parentInjector;
@@ -98,7 +98,7 @@ class ViewContainer implements ViewContainerRef {
   }
 
   @override
-  ViewRef insert(ViewRef viewRef, [num index = -1]) {
+  ViewRef insert(ViewRef viewRef, [int index = -1]) {
     if (index == -1) index = this.length;
     var viewRef_ = (viewRef as ViewRefImpl);
     attachView(viewRef_.appView, index);
@@ -125,7 +125,7 @@ class ViewContainer implements ViewContainerRef {
   /// removed.
   /// TODO(i): rename to destroy
   @override
-  void remove([num index = -1]) {
+  void remove([int index = -1]) {
     if (index == -1) index = this.length - 1;
     var view = detachView(index);
     view.destroy();
@@ -136,7 +136,7 @@ class ViewContainer implements ViewContainerRef {
   /// If the `index` param is omitted, the last [ViewRef] is detached.
   /// TODO(i): refactor insert+remove into move
   @override
-  ViewRef detach([num index = -1]) {
+  ViewRef detach([int index = -1]) {
     if (index == -1) index = this.length - 1;
     return detachView(index).viewData.ref;
   }

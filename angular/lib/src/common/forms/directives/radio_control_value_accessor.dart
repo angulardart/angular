@@ -6,7 +6,7 @@ import 'package:angular/core.dart'
 import 'package:angular/di.dart' show Injectable;
 
 import 'control_value_accessor.dart'
-    show NG_VALUE_ACCESSOR, ControlValueAccessor;
+    show NG_VALUE_ACCESSOR, ControlValueAccessor, ChangeFunction;
 import 'ng_control.dart' show NgControl;
 
 const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
@@ -72,7 +72,7 @@ class RadioButtonState {
     host: const {'(change)': 'changeHandler()', '(blur)': 'touchHandler()'},
     providers: const [RADIO_VALUE_ACCESSOR])
 class RadioControlValueAccessor
-    implements ControlValueAccessor, OnDestroy, OnInit {
+    implements ControlValueAccessor<RadioButtonState>, OnDestroy, OnInit {
   ElementRef _elementRef;
   RadioControlRegistry _registry;
   Injector _injector;
@@ -80,7 +80,7 @@ class RadioControlValueAccessor
   NgControl _control;
   @Input()
   String name;
-  Function _fn;
+  ChangeFunction<RadioButtonState> _fn;
   void changeHandler() {
     onChange();
   }
@@ -105,7 +105,7 @@ class RadioControlValueAccessor
   }
 
   @override
-  void writeValue(dynamic value) {
+  void writeValue(RadioButtonState value) {
     _state = value;
     if (value?.checked ?? false) {
       js_util.setProperty(_elementRef.nativeElement, 'checked', true);
@@ -113,7 +113,7 @@ class RadioControlValueAccessor
   }
 
   @override
-  void registerOnChange(dynamic fn(dynamic _)) {
+  void registerOnChange(ChangeFunction<RadioButtonState> fn) {
     _fn = fn;
     onChange = () {
       fn(new RadioButtonState(true, _state.value));

@@ -301,7 +301,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   @override
   String getBuiltinMethodName(o.BuiltinMethod method) {
-    var name;
+    String name;
     switch (method) {
       case o.BuiltinMethod.ConcatArray:
         name = ".addAll";

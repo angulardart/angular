@@ -40,7 +40,8 @@ class EntrypointMatcher {
         annotation.arguments.arguments.isEmpty) {
       return _defaultEntrypointName;
     }
-    final entryPointName = naiveEval(annotation.arguments.arguments.first);
+    var entryPointName =
+        naiveEval(annotation.arguments.arguments.first) as String;
     if (entryPointName == NOT_A_CONSTANT) {
       throw new ArgumentError(
           'Could not evaluate "$node" as parameter to @AngularEntrypoint');

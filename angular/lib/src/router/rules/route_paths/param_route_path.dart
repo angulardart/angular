@@ -196,7 +196,8 @@ class ParamRoutePath implements RoutePath {
     this._segments = [];
     var limit = segmentStrings.length - 1;
     for (var i = 0; i <= limit; i++) {
-      var segment = segmentStrings[i], match;
+      var segment = segmentStrings[i];
+      Match match;
       if ((match = DynamicPathSegment.paramMatcher.firstMatch(segment)) !=
           null) {
         this._segments.add(new DynamicPathSegment(match[1]));
@@ -227,13 +228,14 @@ class ParamRoutePath implements RoutePath {
     // segments into a single string that we can sort later. Each static segment
     // is marked as a specificity of "2," each dynamic segment is worth "1"
     // specificity, and stars are worth "0" specificity.
-    var i, length = this._segments.length, specificity;
+    var length = this._segments.length;
+    String specificity;
     if (length == 0) {
       // a single slash (or "empty segment" is as specific as a static segment
       specificity += "2";
     } else {
       specificity = "";
-      for (i = 0; i < length; i++) {
+      for (var i = 0; i < length; i++) {
         specificity += this._segments[i].specificity;
       }
     }
@@ -243,7 +245,7 @@ class ParamRoutePath implements RoutePath {
   String _calculateHash() {
     // this function is used to determine whether a route config path like
     // `/foo/:id` collides with `/foo/:name`.
-    var i, length = this._segments.length;
+    int i, length = this._segments.length;
     var hashParts = [];
     for (i = 0; i < length; i++) {
       hashParts.add(this._segments[i].hash);

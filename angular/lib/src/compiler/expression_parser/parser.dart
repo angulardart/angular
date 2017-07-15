@@ -162,7 +162,7 @@ class Parser {
     return i != null ? input.substring(0, i).trim() : input;
   }
 
-  num _commentStart(String input) {
+  int _commentStart(String input) {
     var outerQuote;
     for (var i = 0; i < input.length - 1; i++) {
       var char = input.codeUnitAt(i);
@@ -205,7 +205,7 @@ class _ParseAST {
   final bool parseAction;
   Map<String, CompileIdentifierMetadata> exports;
   Map<String, Map<String, CompileIdentifierMetadata>> prefixes;
-  num index = 0;
+  int index = 0;
 
   _ParseAST(this.input, this.location, this.tokens, this.parseAction,
       List<CompileIdentifierMetadata> exports) {
@@ -675,7 +675,7 @@ class _ParseAST {
     return new TemplateBindingParseResult(bindings, warnings);
   }
 
-  void error(String message, [num index]) {
+  void error(String message, [int index]) {
     index ??= this.index;
     var location = (index < tokens.length)
         ? 'at column ${tokens[index].index + 1} in'

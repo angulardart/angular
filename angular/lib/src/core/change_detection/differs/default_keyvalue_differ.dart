@@ -293,7 +293,7 @@ class DefaultKeyValueDiffer {
 }
 
 class KeyValueChangeRecord {
-  dynamic key;
+  String key;
   dynamic previousValue;
   dynamic currentValue;
 

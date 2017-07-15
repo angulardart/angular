@@ -71,7 +71,7 @@ class Token {
   }
 }
 
-Token newCharacterToken(num index, num code) =>
+Token newCharacterToken(num index, int code) =>
     new Token(index, TokenType.Character, code, new String.fromCharCode(code));
 
 Token newIdentifierToken(num index, String text) =>
@@ -190,7 +190,7 @@ class _Scanner {
     // Handle identifiers and numbers.
     if (isIdentifierStart(peek)) return scanIdentifier();
     if (isDigit(peek)) return scanNumber(index);
-    num start = index;
+    var start = index;
     switch (peek) {
       case $PERIOD:
         advance();
@@ -240,7 +240,7 @@ class _Scanner {
     return null;
   }
 
-  Token scanCharacter(num start, num code) {
+  Token scanCharacter(num start, int code) {
     advance();
     return newCharacterToken(start, code);
   }
@@ -267,7 +267,7 @@ class _Scanner {
   }
 
   Token scanIdentifier() {
-    num startIndex = index;
+    var startIndex = index;
     advance();
     while (isIdentifierPart(peek)) advance();
     String str = input.substring(startIndex, index);
@@ -300,18 +300,18 @@ class _Scanner {
   }
 
   Token scanString() {
-    num start = index;
-    num quote = peek;
+    var start = index;
+    var quote = peek;
     this.advance();
     List<String> buffer;
-    num marker = index;
+    var marker = index;
     String input = this.input;
     while (peek != quote) {
       if (peek == $BACKSLASH) {
         buffer ??= <String>[];
         buffer.add(input.substring(marker, index));
         advance();
-        num unescapedCode;
+        int unescapedCode;
         if (peek == $u) {
           // 4 character hex code for unicode character.
           String hex = input.substring(index + 1, index + 5);
@@ -390,7 +390,7 @@ bool isExponentSign(num code) => code == $MINUS || code == $PLUS;
 bool isQuote(int code) =>
     identical(code, $SQ) || identical(code, $DQ) || identical(code, $BT);
 
-num unescape(int code) {
+int unescape(int code) {
   switch (code) {
     case $n:
       return $LF;

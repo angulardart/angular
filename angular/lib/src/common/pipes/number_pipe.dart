@@ -71,7 +71,7 @@ class NumberPipe {
 @Pipe("number")
 @Injectable()
 class DecimalPipe extends NumberPipe implements PipeTransform {
-  String transform(dynamic value, [String digits]) {
+  String transform(num value, [String digits]) {
     return NumberPipe._format(value, _NumberFormatStyle.Decimal, digits);
   }
 
@@ -91,7 +91,7 @@ class DecimalPipe extends NumberPipe implements PipeTransform {
 @Pipe("percent")
 @Injectable()
 class PercentPipe extends NumberPipe implements PipeTransform {
-  String transform(dynamic value, [String digits]) {
+  String transform(num value, [String digits]) {
     return NumberPipe._format(value, _NumberFormatStyle.Percent, digits);
   }
 
@@ -116,7 +116,7 @@ class PercentPipe extends NumberPipe implements PipeTransform {
 @Injectable()
 class CurrencyPipe extends NumberPipe implements PipeTransform {
   String transform(
-    dynamic value, [
+    num value, [
     String currencyCode = "USD",
     bool symbolDisplay = false,
     String digits,

@@ -185,7 +185,7 @@ List<ResolvedReflectiveProvider> mergeResolvedReflectiveProviders(
         idToProvider[provider.key.id] = provider;
       }
     } else {
-      var resolvedProvider;
+      ResolvedReflectiveProvider resolvedProvider;
       if (provider.multiProvider) {
         resolvedProvider = new ResolvedReflectiveProviderImpl(provider.key,
             new List.from(provider.resolvedFactories), provider.multiProvider);

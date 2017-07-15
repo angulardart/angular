@@ -137,7 +137,7 @@ class UrlParser {
       // TODO: should these params just be dropped?
       this.parseMatrixParams();
     }
-    var child;
+    Url child;
     if (this.peekStartsWith("/") && !this.peekStartsWith("//")) {
       this.capture("/");
       child = this.parseSegment();
@@ -207,7 +207,7 @@ class UrlParser {
       var valueMatch = matchUrlSegment(this._remaining);
       if (valueMatch != null) {
         value = valueMatch;
-        this.capture(value);
+        this.capture(valueMatch);
       }
     }
     params[key] = value;
