@@ -92,4 +92,3 @@ abstract class DomSanitizationService implements SanitizationService {
   /// security bugs!
   SafeResourceUrl bypassSecurityTrustResourceUrl(String value);
 }
-
