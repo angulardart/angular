@@ -23,7 +23,7 @@ const publicLibraries = const <String, List<String>>{
   "platform/testing/browser_static.dart": null,
   "router.dart": null,
   "router/testing.dart": null,
-  "security.dart": null,
+  "security.dart": securityApis,
   "source_gen.dart": null,
   "testing.dart": null,
   "transform/codegen.dart": null,
@@ -418,4 +418,17 @@ const diApis = const [
   "ZeroArgFunction",
   "noValueProvided",
   "provide"
+];
+
+const securityApis = const [
+  'DomSanitizationService',
+  'SafeHtml',
+  'SafeInnerHtmlDirective',
+  'SafeResourceUrl',
+  'SafeScript',
+  'SafeStyle',
+  'SafeUrl',
+  'SafeValue',
+  'SanitizationService',
+  'TemplateSecurityContext'
 ];
