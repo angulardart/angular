@@ -14,7 +14,7 @@ import 'package:angular/angular.template.dart'
 export 'deferred_component.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'deferred_component.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -27,22 +27,22 @@ const List<dynamic> styles$DeferredChildComponent = const [];
 
 class ViewDeferredChildComponent0
     extends AppView<import1.DeferredChildComponent> {
-  DivElement _el_0;
+  import2.DivElement _el_0;
   static RenderComponentType renderType;
   ViewDeferredChildComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('deferred-component');
+    rootEl = import2.document.createElement('deferred-component');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$DeferredChildComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
-    Text _text_1 = new Text('Child');
+    import2.Text _text_1 = new import2.Text('Child');
     _el_0.append(_text_1);
     init(const [], const []);
     return null;

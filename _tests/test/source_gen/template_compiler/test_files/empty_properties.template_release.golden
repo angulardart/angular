@@ -14,7 +14,7 @@ import 'package:angular/angular.template.dart'
 export 'empty_properties.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'empty_properties.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -27,58 +27,58 @@ const List<dynamic> styles$EmptyPropertiesComponent = const [];
 
 class ViewEmptyPropertiesComponent0
     extends AppView<import1.EmptyPropertiesComponent> {
-  Element _el_0;
+  import2.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_2;
-  Element _el_2;
+  import2.Element _el_2;
   ViewFancyButtonComponent0 _compView_2;
   import1.FancyButtonComponent _FancyButtonComponent_2_2;
-  Element _el_4;
+  import2.Element _el_4;
   ViewFancyButtonComponent0 _compView_4;
   import1.FancyButtonComponent _FancyButtonComponent_4_2;
-  Element _el_6;
+  import2.Element _el_6;
   ViewFancyButtonComponent0 _compView_6;
   import1.FancyButtonComponent _FancyButtonComponent_6_2;
   static RenderComponentType renderType;
   ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('empty-properties');
+    rootEl = import2.document.createElement('empty-properties');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$EmptyPropertiesComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     createAttr(_el_0, 'raised', '');
     _FancyButtonComponent_0_2 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_2, []);
-    Text _text_1 = new Text('\n');
+    import2.Text _text_1 = new import2.Text('\n');
     parentRenderNode.append(_text_1);
     _compView_2 = new ViewFancyButtonComponent0(this, 2);
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     _FancyButtonComponent_2_2 = new import1.FancyButtonComponent();
     _compView_2.create(_FancyButtonComponent_2_2, []);
-    Text _text_3 = new Text('\n');
+    import2.Text _text_3 = new import2.Text('\n');
     parentRenderNode.append(_text_3);
     _compView_4 = new ViewFancyButtonComponent0(this, 4);
     _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
     _FancyButtonComponent_4_2 = new import1.FancyButtonComponent();
     _compView_4.create(_FancyButtonComponent_4_2, []);
-    Text _text_5 = new Text('\n');
+    import2.Text _text_5 = new import2.Text('\n');
     parentRenderNode.append(_text_5);
     _compView_6 = new ViewFancyButtonComponent0(this, 6);
     _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     _FancyButtonComponent_6_2 = new import1.FancyButtonComponent();
     _compView_6.create(_FancyButtonComponent_6_2, []);
-    Text _text_7 = new Text('\n');
+    import2.Text _text_7 = new import2.Text('\n');
     parentRenderNode.append(_text_7);
     init(const [], const []);
     return null;
@@ -208,14 +208,14 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   ViewFancyButtonComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('fancy-button');
+    rootEl = import2.document.createElement('fancy-button');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$FancyButtonComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const []);
     return null;
   }

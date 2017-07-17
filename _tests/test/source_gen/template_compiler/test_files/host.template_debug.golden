@@ -20,7 +20,7 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import8;
 import 'package:angular/angular.dart';
@@ -40,7 +40,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HostComponent0) {
-    rootEl = document.createElement('host');
+    rootEl = import7.document.createElement('host');
     createAttr(this.rootEl, 'aria-title', 'title');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/host.dart class HostComponent - inline template',
@@ -51,7 +51,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   @override
   ComponentRef build() {
     final import2.HostComponent _ctx = ctx;
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     rootEl.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
     rootEl.addEventListener('click', eventHandler1(_ctx.onClick));

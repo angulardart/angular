@@ -14,7 +14,7 @@ import 'package:angular/angular.template.dart'
 export 'pipes.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'pipes.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -28,7 +28,7 @@ import 'package:angular/src/facade/lang.dart'
 const List<dynamic> styles$Comp = const [];
 
 class ViewComp0 extends AppView<import1.Comp> {
-  Text _text_0;
+  import2.Text _text_0;
   var _expr_0;
   import1.PurePipe _pipe_pure_0;
   var _pipe_pure_0_0;
@@ -39,15 +39,15 @@ class ViewComp0 extends AppView<import1.Comp> {
   ViewComp0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('comp');
+    rootEl = import2.document.createElement('comp');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$Comp);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _text_0 = new Text('');
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
     _pipe_pure_0 = new import1.PurePipe();
     this._pipe_pure_0_0 = import6.pureProxy1(_pipe_pure_0.transform);

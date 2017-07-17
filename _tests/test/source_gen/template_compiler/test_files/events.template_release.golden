@@ -15,7 +15,7 @@ import 'package:angular/angular.template.dart'
 export 'events.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'events.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -27,12 +27,12 @@ import 'package:angular/angular.dart';
 const List<dynamic> styles$UsesNativeEvents = const [];
 
 class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
-  ButtonElement _el_1;
+  import2.ButtonElement _el_1;
   static RenderComponentType renderType;
   ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('uses-native-events');
+    rootEl = import2.document.createElement('uses-native-events');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$UsesNativeEvents);
     setupComponentType(renderType);
@@ -40,12 +40,12 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   @override
   ComponentRef build() {
     final import1.UsesNativeEvents _ctx = ctx;
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('    ');
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import2.Text _text_0 = new import2.Text('    ');
     parentRenderNode.append(_text_0);
-    var doc = document;
+    var doc = import2.document;
     _el_1 = createAndAppend(doc, 'button', parentRenderNode);
-    Text _text_2 = new Text('\n  ');
+    import2.Text _text_2 = new import2.Text('\n  ');
     parentRenderNode.append(_text_2);
     _el_1.addEventListener('click', eventHandler0(ctx.onClick));
     init(const [], const []);
@@ -115,29 +115,29 @@ const ComponentFactory UsesNativeEventsNgFactory = const ComponentFactory(
 const List<dynamic> styles$UsesAngularEvents = const [];
 
 class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
-  Element _el_1;
+  import2.Element _el_1;
   ViewHasAngularEvents0 _compView_1;
   import1.HasAngularEvents _HasAngularEvents_1_2;
   static RenderComponentType renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('uses-angular-events');
+    rootEl = import2.document.createElement('uses-angular-events');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$UsesAngularEvents);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('    ');
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import2.Text _text_0 = new import2.Text('    ');
     parentRenderNode.append(_text_0);
     _compView_1 = new ViewHasAngularEvents0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _HasAngularEvents_1_2 = new import1.HasAngularEvents();
     _compView_1.create(_HasAngularEvents_1_2, []);
-    Text _text_2 = new Text('\n  ');
+    import2.Text _text_2 = new import2.Text('\n  ');
     parentRenderNode.append(_text_2);
     final subscription_0 =
         _HasAngularEvents_1_2.foo.listen(eventHandler0(ctx.onFoo));
@@ -230,14 +230,14 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
   ViewHasAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('has-angular-events');
+    rootEl = import2.document.createElement('has-angular-events');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$HasAngularEvents);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const []);
     return null;
   }

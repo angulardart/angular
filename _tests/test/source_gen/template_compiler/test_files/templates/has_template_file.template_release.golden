@@ -15,7 +15,7 @@ export 'has_template_file.dart';
 import 'has_template_file.css.shim.dart' as import0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'has_template_file.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import5;
@@ -28,25 +28,25 @@ const List<dynamic> styles$HasTemplateFileComponent = const [import0.styles];
 
 class ViewHasTemplateFileComponent0
     extends AppView<import2.HasTemplateFileComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('has-template-file');
+    rootEl = import3.document.createElement('has-template-file');
     renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasTemplateFileComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     addShimC(_el_0);
-    Text _text_1 = new Text('Has Template File!');
+    import3.Text _text_1 = new import3.Text('Has Template File!');
     _el_0.append(_text_1);
-    Text _text_2 = new Text('\n');
+    import3.Text _text_2 = new import3.Text('\n');
     parentRenderNode.append(_text_2);
     init(const [], const []);
     return null;

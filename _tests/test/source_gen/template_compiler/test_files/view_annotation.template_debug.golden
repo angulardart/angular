@@ -23,7 +23,7 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import8;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import10;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import11;
 import 'package:angular/angular.dart';
@@ -47,7 +47,7 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestFooComponent0) {
-    rootEl = document.createElement('test-foo');
+    rootEl = import10.document.createElement('test-foo');
     renderType ??= import11.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/view_annotation.dart class TestFooComponent - inline template',
         ViewEncapsulation.Emulated,
@@ -56,7 +56,7 @@ class ViewTestFooComponent0 extends DebugAppView<import4.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import10.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 0);
@@ -89,7 +89,7 @@ AppView<import4.TestFooComponent> viewFactory_TestFooComponent0(
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent1 = [null, null];
 
 class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
-  DivElement _el_0;
+  import10.DivElement _el_0;
   ViewTestFooComponent1(AppView<dynamic> parentView, num parentIndex)
       : super(
             import8.ViewType.EMBEDDED,
@@ -102,11 +102,11 @@ class ViewTestFooComponent1 extends DebugAppView<import4.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    var doc = document;
+    var doc = import10.document;
     _el_0 = doc.createElement('div');
     dbgElm(this, _el_0, 0, 0, 0);
     addShimC(_el_0);
-    Text _text_1 = new Text('Foo');
+    import10.Text _text_1 = new import10.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 18);
     init([_el_0], const [], [_el_0, _text_1]);

@@ -15,7 +15,7 @@ export 'pipes.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'pipes.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -29,7 +29,7 @@ const List<dynamic> styles$Comp = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_Comp0 = [null];
 
 class ViewComp0 extends DebugAppView<import2.Comp> {
-  Text _text_0;
+  import3.Text _text_0;
   var _expr_0;
   import2.PurePipe _pipe_pure_0;
   var _pipe_pure_0_0;
@@ -40,7 +40,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   ViewComp0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Comp0) {
-    rootEl = document.createElement('comp');
+    rootEl = import3.document.createElement('comp');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/pipes.dart class Comp - inline template',
         ViewEncapsulation.None,
@@ -49,8 +49,8 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _text_0 = new Text('');
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _text_0 = new import3.Text('');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
     _pipe_pure_0 = new import2.PurePipe();

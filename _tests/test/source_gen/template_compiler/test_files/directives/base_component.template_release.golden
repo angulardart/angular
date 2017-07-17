@@ -18,7 +18,7 @@ import 'directives.template.dart' as _i3;
 export 'base_component.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'base_component.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -30,22 +30,22 @@ import 'package:angular/angular.dart';
 const List<dynamic> styles$TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
-  DivElement _el_0;
+  import2.DivElement _el_0;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('test-foo');
+    rootEl = import2.document.createElement('test-foo');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
-    Text _text_1 = new Text('Foo');
+    import2.Text _text_1 = new import2.Text('Foo');
     _el_0.append(_text_1);
     init(const [], const []);
     return null;

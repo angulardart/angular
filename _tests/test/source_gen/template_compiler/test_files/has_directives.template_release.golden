@@ -14,7 +14,7 @@ import 'package:angular/angular.template.dart'
 export 'has_directives.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'has_directives.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -26,42 +26,42 @@ import 'package:angular/angular.dart';
 const List<dynamic> styles$TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
-  DivElement _el_1;
-  Element _el_4;
+  import2.DivElement _el_1;
+  import2.Element _el_4;
   import1.TestDirective _TestDirective_4_2;
-  Element _el_6;
+  import2.Element _el_6;
   ViewTestSubComponent0 _compView_6;
   import1.TestSubComponent _TestSubComponent_6_2;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('test-foo');
+    rootEl = import2.document.createElement('test-foo');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('    ');
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import2.Text _text_0 = new import2.Text('    ');
     parentRenderNode.append(_text_0);
-    var doc = document;
+    var doc = import2.document;
     _el_1 = createAndAppend(doc, 'div', parentRenderNode);
-    Text _text_2 = new Text('My own template');
+    import2.Text _text_2 = new import2.Text('My own template');
     _el_1.append(_text_2);
-    Text _text_3 = new Text('\n    A directive: ');
+    import2.Text _text_3 = new import2.Text('\n    A directive: ');
     parentRenderNode.append(_text_3);
     _el_4 = createAndAppend(doc, 'directive', parentRenderNode);
     _TestDirective_4_2 = new import1.TestDirective();
-    Text _text_5 = new Text('\n    A component: ');
+    import2.Text _text_5 = new import2.Text('\n    A component: ');
     parentRenderNode.append(_text_5);
     _compView_6 = new ViewTestSubComponent0(this, 6);
     _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     _TestSubComponent_6_2 = new import1.TestSubComponent();
     _compView_6.create(_TestSubComponent_6_2, []);
-    Text _text_7 = new Text('\n  ');
+    import2.Text _text_7 = new import2.Text('\n  ');
     parentRenderNode.append(_text_7);
     init(const [], const []);
     return null;
@@ -151,22 +151,22 @@ const ComponentFactory TestFooComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles$TestSubComponent = const [];
 
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
-  DivElement _el_0;
+  import2.DivElement _el_0;
   static RenderComponentType renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('test-bar');
+    rootEl = import2.document.createElement('test-bar');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$TestSubComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
-    Text _text_1 = new Text('Bar');
+    import2.Text _text_1 = new import2.Text('Bar');
     _el_0.append(_text_1);
     init(const [], const []);
     return null;

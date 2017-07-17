@@ -23,7 +23,7 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import7;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import9;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import10;
 import 'package:angular/angular.dart';
@@ -47,7 +47,7 @@ class ViewTestContainerComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestContainerComponent0) {
-    rootEl = document.createElement('test-container');
+    rootEl = import9.document.createElement('test-container');
     renderType ??= import10.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/deferred/container_component.dart class TestContainerComponent - inline template',
         ViewEncapsulation.None,
@@ -56,7 +56,7 @@ class ViewTestContainerComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import9.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 0);
@@ -86,7 +86,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponent1 = [
 
 class ViewTestContainerComponent1
     extends DebugAppView<import3.TestContainerComponent> {
-  Element _el_0;
+  import9.Element _el_0;
   AppView _compView_0;
   dynamic _DeferredChildComponent_0_2;
   ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex)
@@ -105,7 +105,7 @@ class ViewTestContainerComponent1
     _el_0 = _compView_0.rootEl;
     dbgElm(this, _el_0, 0, 0, 0);
     _DeferredChildComponent_0_2 = new deflib0.DeferredChildComponent();
-    Text _text_1 = new Text('Foo');
+    import9.Text _text_1 = new import9.Text('Foo');
     dbgElm(this, _text_1, 1, 0, 30);
     _compView_0.create(_DeferredChildComponent_0_2, []);
     init([_el_0], const [], [_el_0, _text_1]);

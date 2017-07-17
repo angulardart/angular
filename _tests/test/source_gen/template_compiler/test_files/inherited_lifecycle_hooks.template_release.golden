@@ -18,7 +18,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
@@ -31,14 +31,14 @@ class ViewLifecycleHooksComponent0
   ViewLifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('lifecycle-hooks');
+    rootEl = import5.document.createElement('lifecycle-hooks');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$LifecycleHooksComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const []);
     return null;
   }
