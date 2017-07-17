@@ -113,7 +113,7 @@ class NgClass implements DoCheck, OnDestroy {
     _applyInitialClasses(false);
   }
 
-  void _applyKeyValueChanges(dynamic changes) {
+  void _applyKeyValueChanges(DefaultKeyValueDiffer changes) {
     changes.forEachAddedItem((KeyValueChangeRecord record) {
       _toggleClass(record.key, record.currentValue);
     });
@@ -127,7 +127,7 @@ class NgClass implements DoCheck, OnDestroy {
     });
   }
 
-  void _applyIterableChanges(dynamic changes) {
+  void _applyIterableChanges(DefaultIterableDiffer changes) {
     changes.forEachAddedItem((CollectionChangeRecord record) {
       _toggleClass(record.item, true);
     });
