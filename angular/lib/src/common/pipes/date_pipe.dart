@@ -66,20 +66,19 @@ import 'invalid_pipe_argument_exception.dart';
 ///     {{ dateObj | date:'medium' }}    // output is 'Jun 15, 2015, 9:43:11 PM'
 ///     {{ dateObj | date:'shortTime' }} // output is '9:43 PM'
 ///     {{ dateObj | date:'mmss' }}      // output is '43:11'
-@Pipe("date", pure: true)
-@Injectable()
+@Pipe('date', pure: true)
 class DatePipe implements PipeTransform {
   static final Map<String, String> _ALIASES = {
-    "medium": "yMMMdjms",
-    "short": "yMdjm",
-    "fullDate": "yMMMMEEEEd",
-    "longDate": "yMMMMd",
-    "mediumDate": "yMMMd",
-    "shortDate": "yMd",
-    "mediumTime": "jms",
-    "shortTime": "jm"
+    'medium': 'yMMMdjms',
+    'short': 'yMdjm',
+    'fullDate': 'yMMMMEEEEd',
+    'longDate': 'yMMMMd',
+    'mediumDate': 'yMMMd',
+    'shortDate': 'yMd',
+    'mediumTime': 'jms',
+    'shortTime': 'jm'
   };
-  String transform(dynamic value, [String pattern = "mediumDate"]) {
+  String transform(dynamic value, [String pattern = 'mediumDate']) {
     if (value == null) return null;
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(DatePipe, value);
