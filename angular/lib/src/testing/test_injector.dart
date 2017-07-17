@@ -1,6 +1,5 @@
 import "package:angular/core.dart"
     show ReflectiveInjector, PLATFORM_INITIALIZER;
-import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 class TestInjector {
   bool _instantiated = false;
@@ -20,7 +19,7 @@ class TestInjector {
       List<dynamic /* Type | Provider | List < dynamic > */ > providers) {
     if (this._instantiated) {
       throw new StateError(
-          "Cannot add providers after test injector is instantiated");
+          'Cannot add providers after test injector is instantiated');
     }
     this._providers = new List.from(this._providers)..addAll(providers);
   }
@@ -65,8 +64,8 @@ void setBaseTestProviders(
   var testInjector = getTestInjector();
   if (testInjector.platformProviders.length > 0 ||
       testInjector.applicationProviders.length > 0) {
-    throw new BaseException(
-        "Cannot set base providers because it has already been called");
+    throw new StateError(
+        'Cannot set base providers because it has already been called');
   }
   testInjector.platformProviders = platformProviders;
   testInjector.applicationProviders = applicationProviders;
@@ -166,8 +165,8 @@ FunctionWithParamTokens async(
   } else if (fn is Function) {
     return new FunctionWithParamTokens([], fn, true);
   } else {
-    throw new BaseException(
-        "argument to async must be a function or inject(<Function>)");
+    throw new ArgumentError.value(
+        fn, 'argument to async must be a function or inject(<Function>)');
   }
 }
 
