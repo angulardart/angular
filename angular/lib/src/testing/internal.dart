@@ -11,7 +11,6 @@ import 'internal_injector.dart';
 
 export 'package:angular/src/debug/debug_node.dart';
 
-export 'fake_async.dart';
 export 'internal_injector.dart';
 export 'test_component_builder.dart';
 
