@@ -20,7 +20,7 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import8;
 import 'package:angular/angular.dart';
@@ -39,7 +39,7 @@ class ViewLifecycleHooksComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_LifecycleHooksComponent0) {
-    rootEl = document.createElement('lifecycle-hooks');
+    rootEl = import7.document.createElement('lifecycle-hooks');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/lifecycle_hooks.dart class LifecycleHooksComponent - inline template',
         ViewEncapsulation.None,
@@ -48,7 +48,7 @@ class ViewLifecycleHooksComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     return null;
   }

@@ -16,7 +16,7 @@ export 'events.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'events.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -30,7 +30,7 @@ const List<dynamic> styles$UsesNativeEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = [null, null, null];
 
 class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
-  ButtonElement _el_1;
+  import3.ButtonElement _el_1;
   static RenderComponentType renderType;
   ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -40,7 +40,7 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_UsesNativeEvents0) {
-    rootEl = document.createElement('uses-native-events');
+    rootEl = import3.document.createElement('uses-native-events');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/events.dart class UsesNativeEvents - inline template',
         ViewEncapsulation.None,
@@ -50,13 +50,13 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
   @override
   ComponentRef build() {
     final import2.UsesNativeEvents _ctx = ctx;
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('    ');
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import3.Text _text_0 = new import3.Text('    ');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
-    var doc = document;
+    var doc = import3.document;
     _el_1 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 1, 0, 4);
-    Text _text_2 = new Text('\n  ');
+    import3.Text _text_2 = new import3.Text('\n  ');
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 41);
     _el_1.addEventListener('click', eventHandler0(ctx.onClick));
@@ -143,7 +143,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = [
 ];
 
 class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
-  Element _el_1;
+  import3.Element _el_1;
   ViewHasAngularEvents0 _compView_1;
   import2.HasAngularEvents _HasAngularEvents_1_2;
   static RenderComponentType renderType;
@@ -155,7 +155,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_UsesAngularEvents0) {
-    rootEl = document.createElement('uses-angular-events');
+    rootEl = import3.document.createElement('uses-angular-events');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/events.dart class UsesAngularEvents - inline template',
         ViewEncapsulation.None,
@@ -164,8 +164,8 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('    ');
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import3.Text _text_0 = new import3.Text('    ');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
     _compView_1 = new ViewHasAngularEvents0(this, 1);
@@ -174,7 +174,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
     dbgElm(this, _el_1, 1, 0, 4);
     _HasAngularEvents_1_2 = new import2.HasAngularEvents();
     _compView_1.create(_HasAngularEvents_1_2, []);
-    Text _text_2 = new Text('\n  ');
+    import3.Text _text_2 = new import3.Text('\n  ');
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 61);
     final subscription_0 =
@@ -284,7 +284,7 @@ class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasAngularEvents0) {
-    rootEl = document.createElement('has-angular-events');
+    rootEl = import3.document.createElement('has-angular-events');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/events.dart class HasAngularEvents - inline template',
         ViewEncapsulation.None,
@@ -293,7 +293,7 @@ class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     return null;
   }

@@ -14,7 +14,7 @@ import 'package:angular/angular.template.dart'
 export 'opaque_token.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'opaque_token.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -28,21 +28,21 @@ import 'package:angular/src/facade/lang.dart'
 const List<dynamic> styles$HasOpaqueTokens = const [];
 
 class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
-  Text _text_0;
+  import2.Text _text_0;
   var _expr_0;
   static RenderComponentType renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('has-opaque-tokens');
+    rootEl = import2.document.createElement('has-opaque-tokens');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$HasOpaqueTokens);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _text_0 = new Text('');
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], const []);
     return null;

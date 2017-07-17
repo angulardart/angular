@@ -18,7 +18,7 @@ export 'injectables.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'injectables.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -34,7 +34,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponent0 = [null, null];
 
 class ViewInjectableComponent0
     extends DebugAppView<import2.InjectableComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewInjectableComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -44,7 +44,7 @@ class ViewInjectableComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_InjectableComponent0) {
-    rootEl = document.createElement('test-injectables');
+    rootEl = import3.document.createElement('test-injectables');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/injectables.dart class InjectableComponent - inline template',
         ViewEncapsulation.None,
@@ -53,10 +53,10 @@ class ViewInjectableComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Inject!');
+    import3.Text _text_1 = new import3.Text('Inject!');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -126,8 +126,8 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _const_OpaqueToken__test___0_2 = import2
-        .injectableFactory(this.injectorGet(Window, viewData.parentIndex));
+    _const_OpaqueToken__test___0_2 = import2.injectableFactory(
+        this.injectorGet(import3.Window, viewData.parentIndex));
     _InjectableComponent_0_3 = new import2.InjectableComponent(
         null,
         this.injectorGet(import2.InjectableService, viewData.parentIndex, null),

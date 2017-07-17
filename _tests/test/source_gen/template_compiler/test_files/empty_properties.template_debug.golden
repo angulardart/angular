@@ -15,7 +15,7 @@ export 'empty_properties.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'empty_properties.dart' as import1;
 import 'package:angular/src/debug/debug_app_view.dart';
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -43,16 +43,16 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmptyPropertiesComponent0 = [
 
 class ViewEmptyPropertiesComponent0
     extends DebugAppView<import1.EmptyPropertiesComponent> {
-  Element _el_0;
+  import3.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_2;
-  Element _el_2;
+  import3.Element _el_2;
   ViewFancyButtonComponent0 _compView_2;
   import1.FancyButtonComponent _FancyButtonComponent_2_2;
-  Element _el_4;
+  import3.Element _el_4;
   ViewFancyButtonComponent0 _compView_4;
   import1.FancyButtonComponent _FancyButtonComponent_4_2;
-  Element _el_6;
+  import3.Element _el_6;
   ViewFancyButtonComponent0 _compView_6;
   import1.FancyButtonComponent _FancyButtonComponent_6_2;
   static RenderComponentType renderType;
@@ -64,7 +64,7 @@ class ViewEmptyPropertiesComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_EmptyPropertiesComponent0) {
-    rootEl = document.createElement('empty-properties');
+    rootEl = import3.document.createElement('empty-properties');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/empty_properties.dart class EmptyPropertiesComponent - inline template',
         ViewEncapsulation.None,
@@ -73,7 +73,7 @@ class ViewEmptyPropertiesComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -81,7 +81,7 @@ class ViewEmptyPropertiesComponent0
     createAttr(_el_0, 'raised', '');
     _FancyButtonComponent_0_2 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_2, []);
-    Text _text_1 = new Text('\n');
+    import3.Text _text_1 = new import3.Text('\n');
     parentRenderNode.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 36);
     _compView_2 = new ViewFancyButtonComponent0(this, 2);
@@ -90,7 +90,7 @@ class ViewEmptyPropertiesComponent0
     dbgElm(this, _el_2, 2, 1, 0);
     _FancyButtonComponent_2_2 = new import1.FancyButtonComponent();
     _compView_2.create(_FancyButtonComponent_2_2, []);
-    Text _text_3 = new Text('\n');
+    import3.Text _text_3 = new import3.Text('\n');
     parentRenderNode.append(_text_3);
     dbgElm(this, _text_3, 3, 1, 38);
     _compView_4 = new ViewFancyButtonComponent0(this, 4);
@@ -99,7 +99,7 @@ class ViewEmptyPropertiesComponent0
     dbgElm(this, _el_4, 4, 2, 0);
     _FancyButtonComponent_4_2 = new import1.FancyButtonComponent();
     _compView_4.create(_FancyButtonComponent_4_2, []);
-    Text _text_5 = new Text('\n');
+    import3.Text _text_5 = new import3.Text('\n');
     parentRenderNode.append(_text_5);
     dbgElm(this, _text_5, 5, 2, 45);
     _compView_6 = new ViewFancyButtonComponent0(this, 6);
@@ -108,7 +108,7 @@ class ViewEmptyPropertiesComponent0
     dbgElm(this, _el_6, 6, 3, 0);
     _FancyButtonComponent_6_2 = new import1.FancyButtonComponent();
     _compView_6.create(_FancyButtonComponent_6_2, []);
-    Text _text_7 = new Text('\n');
+    import3.Text _text_7 = new import3.Text('\n');
     parentRenderNode.append(_text_7);
     dbgElm(this, _text_7, 7, 3, 46);
     init(const [], const [],
@@ -257,7 +257,7 @@ class ViewFancyButtonComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_FancyButtonComponent0) {
-    rootEl = document.createElement('fancy-button');
+    rootEl = import3.document.createElement('fancy-button');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/empty_properties.dart class FancyButtonComponent - inline template',
         ViewEncapsulation.None,
@@ -266,7 +266,7 @@ class ViewFancyButtonComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], const [], []);
     return null;
   }

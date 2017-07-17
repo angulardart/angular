@@ -22,7 +22,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import6;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import8;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import9;
 import 'package:angular/angular.dart';
@@ -41,15 +41,15 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('test-foo');
+    rootEl = import8.document.createElement('test-foo');
     renderType ??= import9.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('    ');
+    final import8.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import8.Text _text_0 = new import8.Text('    ');
     parentRenderNode.append(_text_0);
     var _anchor_1 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_1);
@@ -57,7 +57,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     TemplateRef _TemplateRef_1_4 =
         new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
     _NgIf_1_5 = new NgIf(_appEl_1, _TemplateRef_1_4);
-    Text _text_2 = new Text('\n    ');
+    import8.Text _text_2 = new import8.Text('\n    ');
     parentRenderNode.append(_text_2);
     var _anchor_3 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_3);
@@ -65,7 +65,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     TemplateRef _TemplateRef_3_4 =
         new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
     _NgFor_3_5 = new import4.NgFor(_appEl_3, _TemplateRef_3_4);
-    Text _text_4 = new Text('\n    ');
+    import8.Text _text_4 = new import8.Text('\n    ');
     parentRenderNode.append(_text_4);
     init(const [], const []);
     return null;
@@ -99,7 +99,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
 }
 
 class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
-  DivElement _el_0;
+  import8.DivElement _el_0;
   ViewTestFooComponent1(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.EMBEDDED, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
@@ -107,9 +107,9 @@ class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    var doc = document;
+    var doc = import8.document;
     _el_0 = doc.createElement('div');
-    Text _text_1 = new Text('Foo');
+    import8.Text _text_1 = new import8.Text('Foo');
     _el_0.append(_text_1);
     init([_el_0], const []);
     return null;
@@ -122,9 +122,9 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent1(
 }
 
 class ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
-  DivElement _el_0;
-  Element _el_2;
-  Text _text_3;
+  import8.DivElement _el_0;
+  import8.Element _el_2;
+  import8.Text _text_3;
   var _expr_0;
   ViewTestFooComponent2(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.EMBEDDED, {'\$implicit': null}, parentView,
@@ -133,14 +133,14 @@ class ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    var doc = document;
+    var doc = import8.document;
     _el_0 = doc.createElement('div');
-    Text _text_1 = new Text('\n      ');
+    import8.Text _text_1 = new import8.Text('\n      ');
     _el_0.append(_text_1);
     _el_2 = createAndAppend(doc, 'span', _el_0);
-    _text_3 = new Text('');
+    _text_3 = new import8.Text('');
     _el_2.append(_text_3);
-    Text _text_4 = new Text('\n    ');
+    import8.Text _text_4 = new import8.Text('\n    ');
     _el_0.append(_text_4);
     init([_el_0], const []);
     return null;

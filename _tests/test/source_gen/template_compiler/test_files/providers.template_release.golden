@@ -18,7 +18,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
@@ -32,15 +32,15 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('providers');
+    rootEl = import5.document.createElement('providers');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$ProvidersComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('Hello');
+    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import5.Text _text_0 = new import5.Text('Hello');
     parentRenderNode.append(_text_0);
     init(const [], const []);
     return null;

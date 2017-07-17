@@ -14,7 +14,7 @@ import 'package:angular/angular.template.dart'
 export 'interpolation.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'interpolation.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -29,26 +29,26 @@ const List<dynamic> styles$InterpolationComponent = const [];
 
 class ViewInterpolationComponent0
     extends AppView<import1.InterpolationComponent> {
-  DivElement _el_0;
-  Text _text_1;
+  import2.DivElement _el_0;
+  import2.Text _text_1;
   var _expr_0;
   static RenderComponentType renderType;
   ViewInterpolationComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('interpolation');
+    rootEl = import2.document.createElement('interpolation');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$InterpolationComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
-    _text_1 = new Text('');
+    _text_1 = new import2.Text('');
     _el_0.append(_text_1);
-    Text _text_2 = new Text('\n');
+    import2.Text _text_2 = new import2.Text('\n');
     parentRenderNode.append(_text_2);
     init(const [], const []);
     return null;
@@ -128,25 +128,25 @@ const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0
     extends AppView<import1.InterpolationComponentNoWhitespace> {
-  DivElement _el_0;
-  Text _text_1;
+  import2.DivElement _el_0;
+  import2.Text _text_1;
   var _expr_0;
   static RenderComponentType renderType;
   ViewInterpolationComponentNoWhitespace0(
       AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('interpolation');
+    rootEl = import2.document.createElement('interpolation');
     renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$InterpolationComponentNoWhitespace);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
-    _text_1 = new Text('');
+    _text_1 = new import2.Text('');
     _el_0.append(_text_1);
     init(const [], const []);
     return null;

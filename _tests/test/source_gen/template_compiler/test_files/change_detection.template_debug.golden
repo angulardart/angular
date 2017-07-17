@@ -15,7 +15,7 @@ export 'change_detection.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'change_detection.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -29,7 +29,7 @@ const List<dynamic> styles$CheckOnceComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponent0 = [null, null];
 
 class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   var _expr_0;
   static RenderComponentType renderType;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex)
@@ -40,7 +40,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_CheckOnceComponent0) {
-    rootEl = document.createElement('CheckOnce');
+    rootEl = import3.document.createElement('CheckOnce');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class CheckOnceComponent - inline template',
         ViewEncapsulation.None,
@@ -49,10 +49,10 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('CheckOnce');
+    import3.Text _text_1 = new import3.Text('CheckOnce');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -143,7 +143,7 @@ const List<dynamic> styles$CheckedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = [null, null];
 
 class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -153,7 +153,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_CheckedComponent0) {
-    rootEl = document.createElement('Checked');
+    rootEl = import3.document.createElement('Checked');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class CheckedComponent - inline template',
         ViewEncapsulation.None,
@@ -162,10 +162,10 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Checked');
+    import3.Text _text_1 = new import3.Text('Checked');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -246,7 +246,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
 
 class ViewCheckAlwaysComponent0
     extends DebugAppView<import2.CheckAlwaysComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -256,7 +256,7 @@ class ViewCheckAlwaysComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_CheckAlwaysComponent0) {
-    rootEl = document.createElement('CheckAlways');
+    rootEl = import3.document.createElement('CheckAlways');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class CheckAlwaysComponent - inline template',
         ViewEncapsulation.None,
@@ -265,10 +265,10 @@ class ViewCheckAlwaysComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('CheckAlways');
+    import3.Text _text_1 = new import3.Text('CheckAlways');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -348,7 +348,7 @@ const List<dynamic> styles$DetachedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = [null, null];
 
 class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -358,7 +358,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_DetachedComponent0) {
-    rootEl = document.createElement('Detached');
+    rootEl = import3.document.createElement('Detached');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class DetachedComponent - inline template',
         ViewEncapsulation.None,
@@ -367,10 +367,10 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Detached');
+    import3.Text _text_1 = new import3.Text('Detached');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -450,7 +450,7 @@ const List<dynamic> styles$OnPushComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
 
 class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -460,7 +460,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_OnPushComponent0) {
-    rootEl = document.createElement('OnPush');
+    rootEl = import3.document.createElement('OnPush');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class OnPushComponent - inline template',
         ViewEncapsulation.None,
@@ -469,10 +469,10 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('OnPush');
+    import3.Text _text_1 = new import3.Text('OnPush');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -552,7 +552,7 @@ const List<dynamic> styles$StatefulComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
 
 class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -562,7 +562,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_StatefulComponent0) {
-    rootEl = document.createElement('Stateful');
+    rootEl = import3.document.createElement('Stateful');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class StatefulComponent - inline template',
         ViewEncapsulation.None,
@@ -572,10 +572,10 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   @override
   ComponentRef build() {
     final import2.StatefulComponent _ctx = ctx;
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Stateful');
+    import3.Text _text_1 = new import3.Text('Stateful');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -656,7 +656,7 @@ const List<dynamic> styles$DefaultComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
 
 class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -666,7 +666,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DefaultComponent0) {
-    rootEl = document.createElement('Default');
+    rootEl = import3.document.createElement('Default');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class DefaultComponent - inline template',
         ViewEncapsulation.None,
@@ -675,10 +675,10 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Default');
+    import3.Text _text_1 = new import3.Text('Default');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);

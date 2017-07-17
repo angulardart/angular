@@ -15,7 +15,7 @@ export 'has_directives.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'has_directives.dart' as import1;
 import 'package:angular/src/debug/debug_app_view.dart';
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -39,10 +39,10 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
 ];
 
 class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
-  DivElement _el_1;
-  Element _el_4;
+  import3.DivElement _el_1;
+  import3.Element _el_4;
   import1.TestDirective _TestDirective_4_2;
-  Element _el_6;
+  import3.Element _el_6;
   ViewTestSubComponent0 _compView_6;
   import1.TestSubComponent _TestSubComponent_6_2;
   static RenderComponentType renderType;
@@ -54,7 +54,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestFooComponent0) {
-    rootEl = document.createElement('test-foo');
+    rootEl = import3.document.createElement('test-foo');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/has_directives.dart class TestFooComponent - inline template',
         ViewEncapsulation.None,
@@ -63,22 +63,22 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('    ');
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import3.Text _text_0 = new import3.Text('    ');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
-    var doc = document;
+    var doc = import3.document;
     _el_1 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 1, 0, 4);
-    Text _text_2 = new Text('My own template');
+    import3.Text _text_2 = new import3.Text('My own template');
     _el_1.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 9);
-    Text _text_3 = new Text('\n    A directive: ');
+    import3.Text _text_3 = new import3.Text('\n    A directive: ');
     parentRenderNode.append(_text_3);
     dbgElm(this, _text_3, 3, 0, 30);
     _el_4 =
         createAndAppendDbg(this, doc, 'directive', parentRenderNode, 4, 1, 17);
     _TestDirective_4_2 = new import1.TestDirective();
-    Text _text_5 = new Text('\n    A component: ');
+    import3.Text _text_5 = new import3.Text('\n    A component: ');
     parentRenderNode.append(_text_5);
     dbgElm(this, _text_5, 5, 1, 40);
     _compView_6 = new ViewTestSubComponent0(this, 6);
@@ -87,7 +87,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     dbgElm(this, _el_6, 6, 2, 17);
     _TestSubComponent_6_2 = new import1.TestSubComponent();
     _compView_6.create(_TestSubComponent_6_2, []);
-    Text _text_7 = new Text('\n  ');
+    import3.Text _text_7 = new import3.Text('\n  ');
     parentRenderNode.append(_text_7);
     dbgElm(this, _text_7, 7, 2, 38);
     init(const [], const [],
@@ -190,7 +190,7 @@ const List<dynamic> styles$TestSubComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = [null, null];
 
 class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -200,7 +200,7 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestSubComponent0) {
-    rootEl = document.createElement('test-bar');
+    rootEl = import3.document.createElement('test-bar');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/has_directives.dart class TestSubComponent - inline template',
         ViewEncapsulation.None,
@@ -209,10 +209,10 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Bar');
+    import3.Text _text_1 = new import3.Text('Bar');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);

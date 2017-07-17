@@ -16,7 +16,7 @@ import 'has_template_file.css.shim.dart' as import0;
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'has_template_file.dart' as import3;
-import 'dart:html';
+import 'dart:html' as import4;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -35,7 +35,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [
 
 class ViewHasTemplateFileComponent0
     extends DebugAppView<import3.HasTemplateFileComponent> {
-  DivElement _el_0;
+  import4.DivElement _el_0;
   static RenderComponentType renderType;
   ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -45,7 +45,7 @@ class ViewHasTemplateFileComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasTemplateFileComponent0) {
-    rootEl = document.createElement('has-template-file');
+    rootEl = import4.document.createElement('has-template-file');
     renderType ??= import9.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/templates/has_template_file.html',
         ViewEncapsulation.Emulated,
@@ -54,14 +54,14 @@ class ViewHasTemplateFileComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import4.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     addShimC(_el_0);
-    Text _text_1 = new Text('Has Template File!');
+    import4.Text _text_1 = new import4.Text('Has Template File!');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    Text _text_2 = new Text('\n');
+    import4.Text _text_2 = new import4.Text('\n');
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 29);
     init(const [], const [], [_el_0, _text_1, _text_2]);
