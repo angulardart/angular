@@ -4,7 +4,7 @@
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/compiler.dart';
+import 'package:angular/src/compiler/compiler.dart';
 import 'package:angular/src/core/url_resolver.dart'
     show UrlResolver, createOfflineCompileUrlResolver;
 
