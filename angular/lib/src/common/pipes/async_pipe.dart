@@ -1,10 +1,9 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:angular/core.dart"
+import 'package:angular/core.dart'
     show Pipe, ChangeDetectorRef, OnDestroy, WrappedValue;
-import "package:angular/di.dart" show Injectable;
 
-import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
+import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
 class ObservableStrategy {
   StreamSubscription createSubscription(
@@ -79,8 +78,7 @@ final _observableStrategy = new ObservableStrategy();
 /// }
 /// ```
 ///
-@Pipe("async", pure: false)
-@Injectable()
+@Pipe('async', pure: false)
 class AsyncPipe implements OnDestroy {
   Object _latestValue;
   Object _latestReturnedValue;

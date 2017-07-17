@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import "package:angular/di.dart" show Injectable, PipeTransform, Pipe;
+import 'package:angular/di.dart' show PipeTransform, Pipe;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'invalid_pipe_argument_exception.dart';
@@ -7,13 +7,12 @@ import 'invalid_pipe_argument_exception.dart';
 final RegExp _re = new RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 
 /// Internal base class for numeric pipes.
-@Injectable()
-class NumberPipe {
+class _NumberPipe {
   static String _format(num value, _NumberFormatStyle style, String digits,
       [String currency = null, bool currencyAsSymbol = false]) {
     if (value == null) return null;
     if (value is! num) {
-      throw new InvalidPipeArgumentException(NumberPipe, value);
+      throw new InvalidPipeArgumentException(_NumberPipe, value);
     }
     var minInt = 1, minFraction = 0, maxFraction = 3;
     if (digits != null) {
@@ -45,7 +44,7 @@ class NumberPipe {
     );
   }
 
-  const NumberPipe();
+  const _NumberPipe();
 }
 
 /// WARNING: this pipe uses the Internationalization API.
@@ -68,11 +67,10 @@ class NumberPipe {
 ///
 /// For more information on the acceptable range for each of these numbers and other
 /// details see your native internationalization library.
-@Pipe("number")
-@Injectable()
-class DecimalPipe extends NumberPipe implements PipeTransform {
+@Pipe('number')
+class DecimalPipe extends _NumberPipe implements PipeTransform {
   String transform(dynamic value, [String digits]) {
-    return NumberPipe._format(value, _NumberFormatStyle.Decimal, digits);
+    return _NumberPipe._format(value, _NumberFormatStyle.Decimal, digits);
   }
 
   const DecimalPipe();
@@ -88,11 +86,10 @@ class DecimalPipe extends NumberPipe implements PipeTransform {
 ///     expression | percent[:digitInfo]
 ///
 /// For more information about `digitInfo` see [DecimalPipe]
-@Pipe("percent")
-@Injectable()
-class PercentPipe extends NumberPipe implements PipeTransform {
+@Pipe('percent')
+class PercentPipe extends _NumberPipe implements PipeTransform {
   String transform(dynamic value, [String digits]) {
-    return NumberPipe._format(value, _NumberFormatStyle.Percent, digits);
+    return _NumberPipe._format(value, _NumberFormatStyle.Percent, digits);
   }
 
   const PercentPipe();
@@ -112,16 +109,15 @@ class PercentPipe extends NumberPipe implements PipeTransform {
 /// whether to use the currency symbol (e.g. $) or the currency code (e.g. USD)
 /// in the output. The default for this value is `false`.
 /// For more information about `digitInfo` see [DecimalPipe]
-@Pipe("currency")
-@Injectable()
-class CurrencyPipe extends NumberPipe implements PipeTransform {
+@Pipe('currency')
+class CurrencyPipe extends _NumberPipe implements PipeTransform {
   String transform(
     dynamic value, [
-    String currencyCode = "USD",
+    String currencyCode = 'USD',
     bool symbolDisplay = false,
     String digits,
   ]) =>
-      NumberPipe._format(
+      _NumberPipe._format(
         value,
         _NumberFormatStyle.Currency,
         digits,

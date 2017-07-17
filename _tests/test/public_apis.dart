@@ -257,7 +257,6 @@ const angularApis = const [
   'NoAnnotationError',
   'NoProviderError',
   'NoReflectionCapabilities',
-  'NumberPipe',
   'OnChanges',
   'OnDestroy',
   'OnInit',

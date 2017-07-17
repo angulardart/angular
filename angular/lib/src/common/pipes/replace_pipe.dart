@@ -1,6 +1,6 @@
-import "package:angular/di.dart" show Injectable, PipeTransform, Pipe;
+import 'package:angular/di.dart' show PipeTransform, Pipe;
 
-import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
+import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
 /// Creates a new String with some or all of the matches of a pattern replaced
 /// by a replacement.
@@ -26,8 +26,7 @@ import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
 /// --Note--: The 'pattern' parameter will be converted to a RegExp instance.
 /// Make sure to escape the string properly if you are matching for regular
 /// expression special characters like parenthesis, brackets etc.
-@Pipe("replace")
-@Injectable()
+@Pipe('replace')
 class ReplacePipe implements PipeTransform {
   const ReplacePipe();
 
