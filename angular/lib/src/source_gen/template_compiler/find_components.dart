@@ -361,20 +361,12 @@ class ComponentVisitor
     Element element, {
     Map<String, String> immutableBindings,
   }) {
-    immutableBindings ??= bindings;
-
     final value = annotation.computeConstantValue();
     final propertyName = element.displayName;
     final bindingName =
         coerceString(value, 'bindingPropertyName', defaultTo: propertyName);
-
-    if (immutableBindings.containsKey(propertyName) &&
-        immutableBindings[propertyName] != bindingName) {
-      log.severe("'${element.enclosingElement.name}' overwrites the binding "
-          "name of property '$propertyName' from "
-          "'${immutableBindings[propertyName]}' to '$bindingName'.");
-    }
-
+    _prohibitBindingChange(element.enclosingElement, propertyName, bindingName,
+        immutableBindings ?? bindings);
     bindings[propertyName] = bindingName;
   }
 
@@ -395,8 +387,14 @@ class ComponentVisitor
         CompileDirectiveMetadata.deserializeHost(
             host, _hostAttributes, _hostListeners, _hostProperties);
         final inputs = coerceStringList(annotationValue, 'inputs');
+        final unboundInputs = <String, String>{};
         CompileDirectiveMetadata.deserializeInputs(
-            inputs, _inputs, _inputTypes);
+            inputs, unboundInputs, _inputTypes);
+        for (var propertyName in unboundInputs.keys) {
+          final bindingName = unboundInputs[propertyName];
+          _prohibitBindingChange(element, propertyName, bindingName, _inputs);
+          _inputs[propertyName] = bindingName;
+        }
         final outputs = coerceStringList(annotationValue, 'outputs');
         CompileDirectiveMetadata.deserializeOutputs(outputs, _outputs);
         coerceMap(annotationValue, 'queries').forEach((propertyName, query) {
@@ -600,4 +598,18 @@ List<InterfaceType> _getInheritanceHierarchy(InterfaceType type) {
     }
   }
   return types;
+}
+
+void _prohibitBindingChange(
+  ClassElement element,
+  String propertyName,
+  String bindingName,
+  Map<String, String> bindings,
+) {
+  if (bindings.containsKey(propertyName) &&
+      bindings[propertyName] != bindingName) {
+    log.severe(
+        "'${element.displayName}' overwrites the binding name of property "
+        "'$propertyName' from '${bindings[propertyName]}' to '$bindingName'.");
+  }
 }
