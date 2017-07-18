@@ -11,7 +11,7 @@ dependencies:
   angular_compiler: ^0.1.0-dev
   barback: ^0.15.2+2
   build: ^0.9.0
-  build_barback: ^0.2.0
+  build_barback: ^0.3.0
   code_builder: '^1.0.0-beta+4'
   collection: '^1.12.0'
   csslib: ^0.14.0
@@ -41,7 +41,7 @@ dependency_overrides:
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
-  - angular/transform/codegen
+  - angular
   - $dart2js:
       commandLineOptions:
         - '--show-package-warnings'

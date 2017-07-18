@@ -13,11 +13,17 @@ pub upgrade
 dartanalyzer --fatal-warnings .
 
 if [ "$PKG" == "_tests" ]; then
-  dart test/source_gen/template_compiler/generate.dart
+dart test/source_gen/template_compiler/generate.dart
+  pub run test -p vm -x codegen
+  pub run angular_test \
+      --serve-arg=--port=8080 \
+      --test-arg=--platform=dartium \
+      --test-arg=--tags=codegen \
+      --test-arg=--exclude-tags=known_pub_serve_failure
 fi
 
-if [ "$PKG" == "_tests" ] || [ "$PKG" == "angular_test" ]; then
-  pub run test
+if [ "$PKG" == "angular_test" ]; then
+  dart test/test_on_travis.dart
 fi
 
 echo Any unformatted files?
