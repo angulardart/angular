@@ -6,14 +6,10 @@ import "package:angular/core.dart" show OnInit;
 import "package:angular/src/core/reflection/reflection.dart"
     show Reflector, ReflectionInfo;
 import "package:angular/src/core/reflection/reflection_capabilities.dart"
-    show ReflectionCapabilities, MissingInterfaceError;
+    show ReflectionCapabilities;
 
 import "reflector_common.dart"
-    show
-        ClassDecorator,
-        ParamDecorator,
-        PropDecorator,
-        HasGetterAndSetterDecorators;
+    show ClassDecorator, ParamDecorator, PropDecorator;
 
 class AType {
   var value;
@@ -129,29 +125,6 @@ void main() {
         expect(reflector.parameters(TestObj), []);
       });
     });
-    group("propMetadata", () {
-      test("should return a string map of prop metadata for the given class",
-          () {
-        var p = reflector.propMetadata(ClassWithDecorators);
-        expect(p["a"][0].value, "p1");
-        expect(p["a"][1].value, "p2");
-        expect(p["c"][0].value, "p3");
-      });
-      test("should return registered meta if available", () {
-        reflector.registerType(
-            TestObj,
-            new ReflectionInfo(null, null, null, null, {
-              "a": [1, 2]
-            }));
-        expect(reflector.propMetadata(TestObj), {
-          "a": [1, 2]
-        });
-      });
-      test("should merge metadata from getters and setters", () {
-        var p = reflector.propMetadata(HasGetterAndSetterDecorators);
-        expect(p["a"].map((PropDecorator p) => p.value), ["get", "set"]);
-      });
-    });
     group("annotations", () {
       test("should return an array of annotations for a type", () {
         var p = reflector.annotations(ClassWithDecorators);
@@ -165,75 +138,6 @@ void main() {
       test("should work for a class without annotations", () {
         var p = reflector.annotations(ClassWithoutDecorators);
         expect(p, []);
-      });
-    });
-    group("interfaces", () {
-      test("should return an array of interfaces for a type", () {
-        var p = reflector.interfaces(ClassImplementingInterface);
-        expect(p, [Interface, Interface2]);
-      });
-      test("should return an empty array otherwise", () {
-        var p = reflector.interfaces(ClassWithDecorators);
-        expect(p, []);
-      });
-      test("should throw for undeclared lifecycle interfaces", () {
-        expect(() => reflector.interfaces(ClassDoesNotDeclareOnInit),
-            throwsA(new isInstanceOf<MissingInterfaceError>()));
-      });
-      test(
-          "should throw for class inheriting a lifecycle impl and not declaring the interface",
-          () {
-        expect(() => reflector.interfaces(SubClassDoesNotDeclareOnInit),
-            throwsA(new isInstanceOf<MissingInterfaceError>()));
-      });
-    });
-
-    group("getter", () {
-      test("returns a function reading a property", () {
-        var getA = reflector.getter("a");
-        expect(getA(new TestObj(1, 2)), 1);
-      });
-      test("should return a registered getter if available", () {
-        reflector.registerGetters({"abc": (obj) => "fake"});
-        expect(reflector.getter("abc")("anything"), "fake");
-      });
-    });
-    group("setter", () {
-      test("returns a function setting a property", () {
-        var setA = reflector.setter("a");
-        var obj = new TestObj(1, 2);
-        setA(obj, 100);
-        expect(obj.a, 100);
-      });
-      test("should return a registered setter if available", () {
-        var updateMe;
-        reflector.registerSetters({
-          "abc": (obj, value) {
-            updateMe = value;
-          }
-        });
-        reflector.setter("abc")("anything", "fake");
-        expect(updateMe, "fake");
-      });
-    });
-    group("method", () {
-      test("returns a function invoking a method", () {
-        var func = reflector.method("identity");
-        var obj = new TestObj(1, 2);
-        expect(func(obj, ["value"]), "value");
-      });
-      test("should return a registered method if available", () {
-        reflector.registerMethods({"abc": (obj, args) => args});
-        expect(reflector.method("abc")("anything", ["fake"]), ["fake"]);
-      });
-    });
-    group("importUri", () {
-      test("should return the importUri for a type", () {
-        expect(
-            reflector
-                .importUri(TestObjWith00Args)
-                .endsWith("test/core/reflection/reflector_test.dart"),
-            isTrue);
       });
     });
   });

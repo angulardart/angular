@@ -4,176 +4,200 @@ import "package:angular/src/compiler/expression_parser/ast.dart";
 
 class Unparser implements AstVisitor {
   static final _quoteRegExp = new RegExp(r'"');
-  String _expression;
-  unparse(AST ast) {
-    this._expression = "";
-    this._visit(ast);
-    return this._expression;
+  StringBuffer sb;
+
+  String unparse(AST ast) {
+    sb = new StringBuffer();
+    _visit(ast);
+    return sb.toString();
   }
 
+  @override
   void visitPropertyRead(PropertyRead ast, dynamic context) {
     this._visit(ast.receiver);
-    this._expression +=
-        ast.receiver is ImplicitReceiver ? '${ast.name}' : '.${ast.name}';
+    sb.write(ast.receiver is ImplicitReceiver ? '${ast.name}' : '.${ast.name}');
   }
 
+  @override
   void visitPropertyWrite(PropertyWrite ast, dynamic context) {
-    this._visit(ast.receiver);
-    this._expression +=
-        ast.receiver is ImplicitReceiver ? '${ast.name} = ' : '.${ast.name} = ';
-    this._visit(ast.value);
+    _visit(ast.receiver);
+    sb.write(ast.receiver is ImplicitReceiver
+        ? '${ast.name} = '
+        : '.${ast.name} = ');
+    _visit(ast.value);
   }
 
+  @override
   void visitBinary(Binary ast, dynamic context) {
-    this._visit(ast.left);
-    this._expression += ' ${ast.operation} ';
-    this._visit(ast.right);
+    _visit(ast.left);
+    sb.write(' ${ast.operation} ');
+    _visit(ast.right);
   }
 
+  @override
   void visitChain(Chain ast, dynamic context) {
     var len = ast.expressions.length;
     for (var i = 0; i < len; i++) {
-      this._visit(ast.expressions[i]);
-      this._expression += i == len - 1 ? ";" : "; ";
+      _visit(ast.expressions[i]);
+      sb.write(i == len - 1 ? ";" : "; ");
     }
   }
 
+  @override
   void visitConditional(Conditional ast, dynamic context) {
-    this._visit(ast.condition);
-    this._expression += " ? ";
-    this._visit(ast.trueExp);
-    this._expression += " : ";
-    this._visit(ast.falseExp);
+    _visit(ast.condition);
+    sb.write(" ? ");
+    _visit(ast.trueExp);
+    sb.write(" : ");
+    _visit(ast.falseExp);
   }
 
+  @override
   void visitIfNull(IfNull ast, dynamic context) {
     this._visit(ast.condition);
-    this._expression += " ?? ";
-    this._visit(ast.nullExp);
+    sb.write(" ?? ");
+    _visit(ast.nullExp);
   }
 
+  @override
   void visitPipe(BindingPipe ast, dynamic context) {
-    this._expression += "(";
-    this._visit(ast.exp);
-    this._expression += ' | ${ast.name}';
-    ast.args.forEach((arg) {
-      this._expression += ":";
-      this._visit(arg);
-    });
-    this._expression += ")";
+    sb.write("(");
+    _visit(ast.exp);
+    sb.write(' | ${ast.name}');
+    for (var arg in ast.args) {
+      sb.write(":");
+      _visit(arg);
+    }
+    sb.write(")");
   }
 
+  @override
   void visitFunctionCall(FunctionCall ast, dynamic context) {
-    this._visit(ast.target);
-    this._expression += "(";
+    _visit(ast.target);
+    sb.write("(");
     var isFirst = true;
-    ast.args.forEach((arg) {
-      if (!isFirst) this._expression += ", ";
+    for (var arg in ast.args) {
+      if (!isFirst) sb.write(", ");
       isFirst = false;
-      this._visit(arg);
-    });
-    this._expression += ")";
+      _visit(arg);
+    }
+    sb.write(")");
   }
 
+  @override
   void visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {}
+
+  @override
   void visitInterpolation(Interpolation ast, dynamic context) {
     for (var i = 0; i < ast.strings.length; i++) {
-      this._expression += ast.strings[i];
+      sb.write(ast.strings[i]);
       if (i < ast.expressions.length) {
-        this._expression += "{{ ";
-        this._visit(ast.expressions[i]);
-        this._expression += " }}";
+        sb.write("{{ ");
+        _visit(ast.expressions[i]);
+        sb.write(" }}");
       }
     }
   }
 
+  @override
   void visitKeyedRead(KeyedRead ast, dynamic context) {
-    this._visit(ast.obj);
-    this._expression += "[";
-    this._visit(ast.key);
-    this._expression += "]";
+    _visit(ast.obj);
+    sb.write("[");
+    _visit(ast.key);
+    sb.write("]");
   }
 
+  @override
   void visitKeyedWrite(KeyedWrite ast, dynamic context) {
-    this._visit(ast.obj);
-    this._expression += "[";
-    this._visit(ast.key);
-    this._expression += "] = ";
-    this._visit(ast.value);
+    _visit(ast.obj);
+    sb.write("[");
+    _visit(ast.key);
+    sb.write("] = ");
+    _visit(ast.value);
   }
 
+  @override
   void visitLiteralArray(LiteralArray ast, dynamic context) {
-    this._expression += "[";
+    sb.write("[");
     var isFirst = true;
-    ast.expressions.forEach((expression) {
-      if (!isFirst) this._expression += ", ";
+    for (var expression in ast.expressions) {
+      if (!isFirst) sb.write(", ");
       isFirst = false;
-      this._visit(expression);
-    });
-    this._expression += "]";
+      _visit(expression);
+    }
+    sb.write("]");
   }
 
+  @override
   void visitLiteralMap(LiteralMap ast, dynamic context) {
-    this._expression += "{";
+    sb.write("{");
     var isFirst = true;
     for (var i = 0; i < ast.keys.length; i++) {
-      if (!isFirst) this._expression += ", ";
+      if (!isFirst) sb.write(", ");
       isFirst = false;
-      this._expression += '${ast.keys[i]}: ';
-      this._visit(ast.values[i]);
+      sb.write('${ast.keys[i]}: ');
+      _visit(ast.values[i]);
     }
-    this._expression += "}";
+    sb.write("}");
   }
 
+  @override
   void visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {
     if (ast.value is String) {
-      this._expression +=
-          '"${ast.value.replaceAll(Unparser._quoteRegExp, '"')}"';
+      sb.write('"${ast.value.replaceAll(Unparser._quoteRegExp, '"')}"');
     } else {
-      this._expression += '${ast.value}';
+      sb.write('${ast.value}');
     }
   }
 
+  @override
   void visitMethodCall(MethodCall ast, dynamic context) {
-    this._visit(ast.receiver);
-    this._expression +=
-        ast.receiver is ImplicitReceiver ? '${ast.name}(' : '.${ast.name}(';
+    _visit(ast.receiver);
+    sb.write(
+        ast.receiver is ImplicitReceiver ? '${ast.name}(' : '.${ast.name}(');
     var isFirst = true;
-    ast.args.forEach((arg) {
-      if (!isFirst) this._expression += ", ";
+    for (var arg in ast.args) {
+      if (!isFirst) sb.write(", ");
       isFirst = false;
-      this._visit(arg);
-    });
-    this._expression += ")";
+      _visit(arg);
+    }
+    sb.write(")");
   }
 
+  @override
   void visitPrefixNot(PrefixNot ast, dynamic context) {
-    this._expression += "!";
-    this._visit(ast.expression);
+    sb.write("!");
+    _visit(ast.expression);
   }
 
-  visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
-    this._visit(ast.receiver);
-    this._expression += '?.${ast.name}';
+  @override
+  void visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
+    _visit(ast.receiver);
+    sb.write('?.${ast.name}');
   }
 
-  visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
-    this._visit(ast.receiver);
-    this._expression += '?.${ast.name}(';
+  @override
+  void visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
+    _visit(ast.receiver);
+    sb.write('?.${ast.name}(');
     var isFirst = true;
-    ast.args.forEach((arg) {
-      if (!isFirst) this._expression += ", ";
+    for (var arg in ast.args) {
+      if (!isFirst) sb.write(", ");
       isFirst = false;
-      this._visit(arg);
-    });
-    this._expression += ")";
+      _visit(arg);
+    }
+    sb.write(")");
   }
 
-  visitStaticRead(StaticRead ast, dynamic context) {
-    this._expression += ast.id.name;
+  @override
+  void visitStaticRead(StaticRead ast, dynamic context) {
+    sb.write(ast.id.name);
   }
 
-  _visit(AST ast) {
+  @override
+  void visitEmptyExpr(EmptyExpr ast, dynamic context) {}
+
+  void _visit(AST ast) {
     ast.visit(this);
   }
 }

@@ -262,12 +262,12 @@ class DebugAppView<T> extends AppView<T> {
 
   @override
   void detachViewNodes(List<dynamic> viewRootNodes) {
-    viewRootNodes.forEach((node) {
+    for (var node in viewRootNodes) {
       var debugNode = getDebugNode(node);
       if (debugNode != null && debugNode.parent != null) {
         debugNode.parent.removeChild(debugNode);
       }
-    });
+    }
     super.detachViewNodes(viewRootNodes);
   }
 

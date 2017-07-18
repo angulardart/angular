@@ -204,18 +204,22 @@ const Map<String, String> attrToPropMap = const {
 class DomElementSchemaRegistry extends ElementSchemaRegistry {
   var schema = <String, Map<String, String>>{};
   DomElementSchemaRegistry() {
-    SCHEMA.forEach((encodedType) {
+    for (var encodedType in SCHEMA) {
       var parts = encodedType.split("|");
       var properties = parts[1].split(",");
       var typeParts = (parts[0] + "^").split("^");
       var typeName = typeParts[0];
       var type = <String, String>{};
-      typeName.split(",").forEach((tag) => this.schema[tag] = type);
-      var superType = this.schema[typeParts[1]];
+      var tags = typeName.split(",");
+      for (var tag in tags) {
+        schema[tag] = type;
+      }
+      var superType = schema[typeParts[1]];
       superType?.forEach((k, v) => type[k] = v);
-      properties.forEach((String property) {
-        if (property == "") {} else if (property
-            .startsWith("*")) {} else if (property.startsWith("!")) {
+      for (String property in properties) {
+        if (property.isEmpty) continue;
+        if (property.startsWith("*")) continue;
+        if (property.startsWith("!")) {
           type[property.substring(1)] = BOOLEAN;
         } else if (property.startsWith("#")) {
           type[property.substring(1)] = NUMBER;
@@ -224,8 +228,8 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
         } else {
           type[property] = STRING;
         }
-      });
-    });
+      }
+    }
   }
 
   @override

@@ -26,16 +26,20 @@ Future main(List<String> args) async {
   var phaseGroup = new PhaseGroup()
     ..addPhase(new Phase()
       ..addAction(
-          new GeneratorBuilder(
-              [new TemplateGenerator(const CompilerFlags(genDebugInfo: false))],
+          new GeneratorBuilder([
+            new TemplateGenerator(
+                const CompilerFlags(genDebugInfo: false, usePlaceholder: false))
+          ],
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
                   : '.template_release.dart',
               isStandalone: true),
           inputs)
       ..addAction(
-          new GeneratorBuilder(
-              [new TemplateGenerator(const CompilerFlags(genDebugInfo: true))],
+          new GeneratorBuilder([
+            new TemplateGenerator(
+                const CompilerFlags(genDebugInfo: true, usePlaceholder: false))
+          ],
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'
                   : '.template_debug.dart',

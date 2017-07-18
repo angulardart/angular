@@ -159,16 +159,6 @@ void initReflector() {
       new _ngRef.ReflectionInfo(
           const <dynamic>[LifecycleHooksComponentNgFactory],
           const [],
-          () => new LifecycleHooksComponent(),
-          const <dynamic>[
-            OnDestroy,
-            OnChanges,
-            OnInit,
-            AfterContentChecked,
-            AfterContentInit,
-            AfterViewChecked,
-            AfterViewInit,
-            DoCheck
-          ]));
+          () => new LifecycleHooksComponent()));
   _i1.initReflector();
 }

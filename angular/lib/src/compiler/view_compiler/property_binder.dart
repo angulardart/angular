@@ -66,7 +66,8 @@ void bind(
       context,
       parsedExpression,
       DetectChangesVars.valUnwrapper,
-      view.component.template.preserveWhitespace);
+      view.component.template.preserveWhitespace,
+      _isBoolType(fieldType));
   if (context is o.ReadVarExpr &&
       context.name == '_ctx' &&
       checkExpression.anyExplicit) {
@@ -199,7 +200,7 @@ void bindAndWriteToRenderer(
   var renderNode = compileElement.renderNode;
   var dynamicPropertiesMethod = new CompileMethod(view);
   var constantPropertiesMethod = new CompileMethod(view);
-  boundProps.forEach((boundProp) {
+  for (var boundProp in boundProps) {
     // Add to view bindings collection.
     int bindingIndex = view.addBinding(compileElement, boundProp);
 
@@ -291,7 +292,7 @@ void bindAndWriteToRenderer(
     bind(view, currValExpr, fieldExpr, boundProp.value, context, updateStmts,
         dynamicPropertiesMethod, constantPropertiesMethod,
         fieldType: fieldType);
-  });
+  }
   if (!constantPropertiesMethod.isEmpty) {
     targetMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck, constantPropertiesMethod.finish()));
@@ -436,7 +437,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           o.variable('_ctx'),
           input.value,
           DetectChangesVars.valUnwrapper,
-          view.component.template.preserveWhitespace);
+          view.component.template.preserveWhitespace,
+          true);
       if (checkExpression.anyExplicit) {
         view.cacheCtxInDetectChangesMethod = true;
       }
@@ -530,7 +532,8 @@ void bindToUpdateMethod(
       context,
       parsedExpression,
       DetectChangesVars.valUnwrapper,
-      view.component.template.preserveWhitespace);
+      view.component.template.preserveWhitespace,
+      _isBoolType(fieldType));
   if (context is o.ReadVarExpr &&
       context.name == '_ctx' &&
       checkExpression.anyExplicit) {
@@ -617,6 +620,15 @@ bool isPrimitiveTypeName(String typeName) {
     case 'bool':
     case 'String':
       return true;
+  }
+  return false;
+}
+
+bool _isBoolType(o.OutputType type) {
+  if (type == o.BOOL_TYPE) return true;
+  if (type is o.ExternalType) {
+    String name = type.value.name;
+    return 'bool' == name.trim();
   }
   return false;
 }

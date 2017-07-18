@@ -33,7 +33,7 @@ class AnnotationModel {
     if (element is ConstructorElement) {
       var parameters = <ReferenceBuilder>[];
       var namedParameters = <NamedParameter>[];
-      annotation.annotationAst.arguments.arguments.forEach((arg) {
+      for (var arg in annotation.annotationAst.arguments.arguments) {
         if (arg is NamedExpression) {
           namedParameters.add(
             new NamedParameter(
@@ -48,7 +48,7 @@ class AnnotationModel {
             new ExpressionBuilder.raw((_) => arg.toSource()),
           );
         }
-      });
+      }
       return new AnnotationModel(
         name: element.enclosingElement.name,
         type: toBuilder(element.type.returnType, hostElement.library.imports),

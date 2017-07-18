@@ -151,6 +151,7 @@ class ComponentVisitor
     extends RecursiveElementVisitor<CompileDirectiveMetadata> {
   final _fieldInputs = <String, String>{};
   final _setterInputs = <String, String>{};
+  final _inputs = <String, String>{};
   final _inputTypes = <String, String>{};
   final _outputs = <String, String>{};
   final _hostAttributes = <String, String>{};
@@ -222,7 +223,8 @@ class ComponentVisitor
             typeName = element.parameters.first.type?.name;
           }
           _addPropertyBindingTo(
-              isField ? _fieldInputs : _setterInputs, annotation, element);
+              isField ? _fieldInputs : _setterInputs, annotation, element,
+              immutableBindings: _inputs);
           if (typeName != null) {
             _inputTypes[element.displayName] = typeName;
           }
@@ -340,21 +342,34 @@ class ComponentVisitor
     _hostListeners[eventName] = '$methodName(${methodArgs.join(', ')})';
   }
 
+  /// Adds a property binding for [element] to [bindings].
+  ///
+  /// The property binding maps [element]'s display name to a binding name. By
+  /// default, [element]'s name is used as the binding name. However, if
+  /// [annotation] has a `bindingPropertyName` field, its value is used instead.
+  ///
+  /// Property bindings are immutable by default, to prevent derived classes
+  /// from overriding inherited binding names. The optional [immutableBindings]
+  /// may be provided to restrict a different set of property bindings than
+  /// [bindings].
   void _addPropertyBindingTo(
     Map<String, String> bindings,
     ElementAnnotation annotation,
-    Element element,
-  ) {
+    Element element, {
+    Map<String, String> immutableBindings,
+  }) {
+    immutableBindings ??= bindings;
+
     final value = annotation.computeConstantValue();
     final propertyName = element.displayName;
     final bindingName =
         coerceString(value, 'bindingPropertyName', defaultTo: propertyName);
 
-    if (bindings.containsKey(propertyName) &&
-        bindings[propertyName] != bindingName) {
+    if (immutableBindings.containsKey(propertyName) &&
+        immutableBindings[propertyName] != bindingName) {
       log.severe("'${element.enclosingElement.name}' overwrites the binding "
-          "name of property '$propertyName' from '${bindings[propertyName]}' "
-          "to '$bindingName'.");
+          "name of property '$propertyName' from "
+          "'${immutableBindings[propertyName]}' to '$bindingName'.");
     }
 
     bindings[propertyName] = bindingName;
@@ -394,6 +409,13 @@ class ComponentVisitor
 
     // Collect metadata from field and property accessor annotations.
     super.visitClassElement(element);
+
+    // Merge field and setter inputs at each inheritance level, so that a
+    // derived field input binding is not overridden by an inherited setter
+    // input.
+    _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
+    _fieldInputs..clear();
+    _setterInputs..clear();
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
@@ -431,7 +453,7 @@ class ComponentVisitor
       // Even for directives, we want change detection set to the default.
       changeDetection:
           _changeDetection(element, annotationValue, 'changeDetection'),
-      inputs: new Map.from(_fieldInputs)..addAll(_setterInputs),
+      inputs: _inputs,
       inputTypes: _inputTypes,
       outputs: _outputs,
       hostListeners: _hostListeners,

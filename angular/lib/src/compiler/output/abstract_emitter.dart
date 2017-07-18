@@ -209,9 +209,10 @@ abstract class AbstractEmitterVisitor
   dynamic visitCommentStmt(o.CommentStmt stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
     var lines = stmt.comment.split('\n');
-    lines.forEach((line) {
-      ctx.println('// $line');
-    });
+    for (var line in lines) {
+      ctx.print('// ');
+      ctx.println(line);
+    }
     return null;
   }
 

@@ -449,7 +449,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       _validatePipeNames(ast, sourceSpan);
       // Validate number of interpolations.
       if (ast != null &&
-          ((ast.ast as Interpolation)).expressions.length >
+          (ast.ast as Interpolation).expressions.length >
               MAX_INTERPOLATION_VALUES) {
         throw new BaseException(
             'Only support at most $MAX_INTERPOLATION_VALUES '
@@ -556,7 +556,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
             targetMatchableAttrs, targetProps);
       } else {
         targetMatchableAttrs.add([binding.key, '']);
-        this._parseLiteralAttr(binding.key, null, attr.sourceSpan, targetProps);
+        _parseLiteralAttr(
+            binding.key, null, attr.sourceSpan, true, targetProps);
       }
     }
     return true;
@@ -643,7 +644,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           attr.sourceSpan, targetMatchableAttrs, targetProps, exports);
     }
     if (!hasBinding) {
-      _parseLiteralAttr(attrName, attrValue, attr.sourceSpan, targetProps);
+      _parseLiteralAttr(
+          attrName, attrValue, attr.sourceSpan, attr.hasValue, targetProps);
     }
     return hasBinding;
   }
@@ -733,9 +735,15 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   }
 
   void _parseLiteralAttr(String name, String value, SourceSpan sourceSpan,
-      List<BoundElementOrDirectiveProperty> targetProps) {
-    targetProps.add(new BoundElementOrDirectiveProperty(
-        name, _exprParser.wrapLiteralPrimitive(value, ''), true, sourceSpan));
+      bool hasValue, List<BoundElementOrDirectiveProperty> targetProps) {
+    AST valueAst;
+    if (hasValue) {
+      valueAst = _exprParser.wrapLiteralPrimitive(value, '');
+    } else {
+      valueAst = new EmptyExpr();
+    }
+    targetProps.add(
+        new BoundElementOrDirectiveProperty(name, valueAst, true, sourceSpan));
   }
 
   List<CompileDirectiveMetadata> _parseDirectives(
@@ -924,19 +932,19 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   void _assertAllEventsPublishedByDirectives(
       List<DirectiveAst> directives, List<BoundEventAst> events) {
     var allDirectiveEvents = new Set<String>();
-    directives.forEach((directive) {
-      directive.directive.outputs.values.forEach((eventName) {
+    for (var directive in directives) {
+      for (var eventName in directive.directive.outputs.values) {
         allDirectiveEvents.add(eventName);
-      });
-    });
-    events.forEach((event) {
+      }
+    }
+    for (var event in events) {
       if (!allDirectiveEvents.contains(event.name)) {
         _reportError(
             'Event binding ${event.name} not emitted by any directive on '
             'an embedded template',
             event.sourceSpan);
       }
-    });
+    }
   }
 }
 
@@ -1152,7 +1160,9 @@ CssSelector createElementCssSelector(
     cssSelector.addAttribute(attrNameNoNs, '=', attrValue);
     if (attrName.toLowerCase() == CLASS_ATTR) {
       var classes = splitClasses(attrValue);
-      classes.forEach((className) => cssSelector.addClassName(className));
+      for (var className in classes) {
+        cssSelector.addClassName(className);
+      }
     }
   }
   return cssSelector;
@@ -1174,7 +1184,7 @@ class PipeCollector extends RecursiveAstVisitor {
 
 List<T> removeDuplicates<T>(List<T> items) {
   var res = <T>[];
-  items.forEach((item) {
+  for (var item in items) {
     var hasMatch = res.where((r) {
       if (r is CompilePipeMetadata) {
         CompilePipeMetadata rMeta = r;
@@ -1192,6 +1202,6 @@ List<T> removeDuplicates<T>(List<T> items) {
     if (!hasMatch) {
       res.add(item);
     }
-  });
+  }
   return res;
 }

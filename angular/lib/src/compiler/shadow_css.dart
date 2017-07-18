@@ -564,12 +564,12 @@ class ShadowTransformer extends Visitor {
       }
     }
 
-    complexSelectors.forEach(shimSelectors);
-
     // Replace original selectors with shimmed selectors.
-    node.selectors.clear();
+    var nodeSelectors = node.selectors;
+    nodeSelectors.clear();
     for (var complexSelector in complexSelectors) {
-      node.selectors.add(complexSelector.toSelector());
+      shimSelectors(complexSelector);
+      nodeSelectors.add(complexSelector.toSelector());
     }
   }
 }

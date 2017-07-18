@@ -105,10 +105,10 @@ class CompileElement extends CompileNode {
     }
     elementRef =
         o.importExpr(Identifiers.ElementRef).instantiate([this.renderNode]);
-    _instances.add(identifierToken(Identifiers.ElementRef), this.elementRef);
+    _instances.add(Identifiers.ElementRefToken, this.elementRef);
     var readInjectorExpr =
         new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
-    _instances.add(identifierToken(Identifiers.Injector), readInjectorExpr);
+    _instances.add(Identifiers.InjectorToken, readInjectorExpr);
     if (hasViewContainer || hasEmbeddedView) {
       _createViewContainer();
     }
@@ -203,8 +203,7 @@ class CompileElement extends CompileNode {
 
     if (referenceTokens != null) {
       referenceTokens.forEach((String varName, token) {
-        if (token != null &&
-            token.equalsTo(identifierToken(Identifiers.TemplateRef))) {
+        if (token != null && token.equalsTo(Identifiers.TemplateRefToken)) {
           _publishesTemplateRef = true;
         }
       });
@@ -216,9 +215,9 @@ class CompileElement extends CompileNode {
     for (var directive in _directives) {
       var directiveInstance = _instances.get(identifierToken(directive.type));
       directiveInstances.add(directiveInstance);
-      directive.queries.forEach((queryMeta) {
+      for (var queryMeta in directive.queries) {
         _addQuery(queryMeta, directiveInstance);
-      });
+      }
     }
 
     List<_QueryWithRead> queriesWithReads = [];

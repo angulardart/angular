@@ -1,3 +1,61 @@
+## 4.0.0-alpha+1
+
+### New features
+
+* Inheritence for both component and directive metadata is now complete! Any
+  field or method-level annotations (`@Input`, `@Output`,
+  `@ViewChild|Children`, `@ContentChild|Children`) are now inherited through
+  super types (`extends`, `implements`, `with`) [#231](https://github.com/dart-lang/angular/issues/231):
+
+```dart
+class BaseComponent {
+  @Input()
+  String name;
+}
+
+// Also has an input called "name" now!
+@Component(selector: 'comp')
+class ConcreteComponent extends BaseComponent {}
+```
+
+* Inputs that are of type `bool` now receive a default value of `true` instead
+  of a value of `null` or an empty string. This allows a much more HTML-friendly
+  syntax for your components:
+
+```html
+<!-- All of these set a value of disabled=true -->
+<fancy-button disabled></fancy-button>
+<fancy-button [disabled]></fancy-button>
+<fancy-button [disabled]="true"></fancy-button>
+
+<!-- Value of disabled=false -->
+<fancy-button [disabled]="false"></fancy-button>
+```
+
+```dart
+@Component()
+class FancyButton {
+  @Input()
+  bool disabled = false;
+}
+```
+
+### Breaking changes
+
+* Removed `angular/common.dart`; replace imports with `angular/angular.dart`.
+
+### Bug fixes
+
+* Fixed a bug where `@deferred` did not work nested inside of `<template>`:
+
+```html
+<template [ngIf]="someCondition">
+  <expensive-comp @deferred></expensive-comp>
+</template>
+```
+
+* `ngForm` now allows `onSubmit` to be called with a `null` value.
+
 ## 4.0.0-alpha
 
 **We are now named `package:angular` instead of `package:angular2`**. As such
@@ -31,10 +89,6 @@ class Comp {}
 
 * _Limitations_:
   * Only top-level fields that are `const` (not `final`) can be exported.
-
-  * As a note, `exports` are considered to always be _pure_ functions (or
-    symbols) and are not change detected the same way that instance methods or
-    fields on the component class are.
 
 * Added `@deferred` as the first "compile-time" directive (it has no specific
   runtime code nor is it listed in a `directives: [ ... ]` list. Implements

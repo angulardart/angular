@@ -26,5 +26,7 @@ if [ "$PKG" == "angular_test" ]; then
   dart test/test_on_travis.dart
 fi
 
-echo Any unformatted files?
-dartfmt -n --set-exit-if-changed .
+if [ "$TRAVIS_DART_VERSION" == "stable" ]; then
+  echo Any unformatted files?
+  dartfmt -n --set-exit-if-changed .
+fi

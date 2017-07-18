@@ -29,13 +29,18 @@ class Identifiers {
   static final ElementRef = new CompileIdentifierMetadata<dynamic>(
       name: "ElementRef",
       moduleUrl: "asset:angular/lib/src/core/linker/element_ref.dart");
+  static final ElementRefToken = identifierToken(ElementRef);
   static final ViewContainerRef = new CompileIdentifierMetadata<dynamic>(
       name: "ViewContainerRef",
       moduleUrl: "asset:angular/lib/src/core/linker/view_container_ref.dart");
+  static final ViewContainerRefToken =
+      identifierToken(Identifiers.ViewContainerRef);
   static final ChangeDetectorRef = new CompileIdentifierMetadata<dynamic>(
       name: "ChangeDetectorRef",
       moduleUrl: 'asset:angular/lib/src/core/change_detection/'
           'change_detector_ref.dart');
+  static final ChangeDetectorRefToken =
+      identifierToken(Identifiers.ChangeDetectorRef);
   static final ComponentFactory = new CompileIdentifierMetadata<dynamic>(
       name: 'ComponentFactory', moduleUrl: ANGULAR_ROOT_URL);
   static final RenderComponentType = new CompileIdentifierMetadata<dynamic>(
@@ -49,11 +54,13 @@ class Identifiers {
   static final TemplateRef = new CompileIdentifierMetadata<dynamic>(
       name: "TemplateRef",
       moduleUrl: "asset:angular/lib/src/core/linker/template_ref.dart");
+  static final TemplateRefToken = identifierToken(Identifiers.TemplateRef);
   static final ValueUnwrapper = new CompileIdentifierMetadata<dynamic>(
       name: "ValueUnwrapper", moduleUrl: CD_MODULE_URL);
   static final Injector = new CompileIdentifierMetadata<dynamic>(
       name: "Injector",
       moduleUrl: 'asset:angular/lib/src/core/di/injector.dart');
+  static final InjectorToken = identifierToken(Identifiers.Injector);
   static final ViewEncapsulation = new CompileIdentifierMetadata<dynamic>(
       name: "ViewEncapsulation", moduleUrl: ANGULAR_ROOT_URL);
   static final ViewType = new CompileIdentifierMetadata<dynamic>(

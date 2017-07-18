@@ -276,9 +276,10 @@ class HtmlTagDefinition {
       bool closedByParent,
       bool isVoid,
       bool ignoreFirstLf}) {
-    if (closedByChildren != null && closedByChildren.length > 0) {
-      closedByChildren
-          .forEach((tagName) => this.closedByChildren[tagName] = true);
+    if (closedByChildren != null && closedByChildren.isNotEmpty) {
+      for (var tagName in closedByChildren) {
+        this.closedByChildren[tagName] = true;
+      }
     }
     this.isVoid = isVoid == true;
     this.closedByParent = closedByParent == true || this.isVoid;
