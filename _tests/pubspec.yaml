@@ -23,12 +23,6 @@ dependency_overrides:
   # TODO: Publish a new `build_runner` to remove this override.
   build_barback: 0.3.0
 
-  # TODO: Remove before submitting
-  test:
-    git:
-      url: https://github.com/matanlurey/test.git
-      ref: debug-pkg-test
-
 transformers:
   - angular:
       entry_points: test/**_test.dart
