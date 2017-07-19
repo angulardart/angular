@@ -13,31 +13,31 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:test/test.dart';
 import 'package:angular_test/src/util.dart';
 
-main() {
-  var exec = 'pub';
-  var args = [
-    'run',
-    'angular_test',
+main() async {
+  final exec = 'dart';
+  final args = [
+    'bin/angular_test.dart',
     // Use a specific port to avoid grabbing a bad one.
     '--serve-arg=--port=8080',
     '--test-arg=--timeout=4x',
-    '--test-arg=--tags=aot',
+    '--test-arg=--tags=codegen',
     '--test-arg=--platform=dartium',
   ];
-  var name = ([exec]..addAll(args)).join(' ');
+  final name = ([exec]..addAll(args)).join(' ');
+  final proc = await Process.start(exec, args);
 
-  test(name, () async {
-    var proc = await Process.start(exec, args);
+  final values = await Future.wait(<Future>[
+    proc.exitCode,
+    standardIoToLines(proc.stdout).forEach(print),
+    standardIoToLines(proc.stderr).forEach(print),
+  ]);
 
-    var values = await Future.wait(<Future>[
-      proc.exitCode,
-      standardIoToLines(proc.stdout).forEach(print),
-      standardIoToLines(proc.stderr).forEach(print),
-    ]);
-
-    expect(values.first, 0, reason: "Expect exit code to be 0 (successs).");
-  });
+  // We purposefully don't use package:test because of dealing with timeouts
+  // as part of the compiler running above on travis.
+  if (values.first != 0) {
+    stdout.writeln('Ran $name; failed.');
+    exit(1);
+  }
 }

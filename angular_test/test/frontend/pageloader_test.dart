@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-@Tags(const ['aot'])
+@Tags(const ['codegen'])
 @TestOn('browser')
 import 'package:pageloader/objects.dart';
 import 'package:test/test.dart';

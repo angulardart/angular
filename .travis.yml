@@ -1,8 +1,8 @@
 language: dart
-sudo: false
 
 dart:
-  - dev
+  # Temporarily disabled. We only have the stable release of Dartium installed.
+  # - dev
   - stable
 
 env:
@@ -11,6 +11,27 @@ env:
   - PKG=angular_compiler
   - PKG=angular_router
   - PKG=angular_test
+
+# We don't use the dart_task model yet (mono-repo), so this will have to do.
+before_install:
+  # Add a local `bin` folder and add it to the PATH.
+  - mkdir -p bin
+  - export PATH="$PATH:$PWD/bin"
+
+  # Start UI (required for Dartium).
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start &
+  - sleep 3
+
+  # Download the latest stable release of Dartium, extract it, and add a symlink to bin.
+  - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
+  - unzip dartium-linux-x64-release.zip
+  - rm dartium-linux-x64-release.zip
+  - PATH_TO_DARTIUM=`pwd`/`echo dartium-linux-*`/chrome
+  - ln -sv "$PATH_TO_DARTIUM" "bin/dartium"
+
+  # Sanity check for terminal output.
+  - echo `which dartium`
 
 script: ./tool/travis.sh
 
