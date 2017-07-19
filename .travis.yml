@@ -27,9 +27,6 @@ before_install:
   # Sanity check for terminal output.
   - echo `which dartium`
 
-  # Run xvfb.
-  - xvfb-run -s "-screen 0 1024x768x24"
-
 script: ./tool/travis.sh
 
 # Only building master means that we don't run two builds for each pull request.
