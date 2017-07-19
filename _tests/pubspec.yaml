@@ -20,3 +20,17 @@ dependency_overrides:
     path: ../angular_compiler
   angular_test:
     path: ../angular_test
+  # TODO: Publish a new `build_runner` to remove this override.
+  build_barback: 0.3.0
+
+transformers:
+  - angular:
+      entry_points: test/**_test.dart
+      $exclude:
+          - test/**.template.dart
+          - test/core/reflection/reflector_test.dart
+          - test/source_gen/template_compiler/test_files/**
+
+  # Allow test to proxy-load files so we can run tests w/ pub serve.
+  - test/pub_serve:
+      $include: test/**_test.dart

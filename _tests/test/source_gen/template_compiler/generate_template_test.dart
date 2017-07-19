@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 
 import 'compare_to_golden.dart' as golden;
 
-String summaryExtension(String codegenMode) => '.template_$codegenMode.dart';
+String summaryExtension(String codegenMode) => '.template_$codegenMode.check';
 String goldenExtension(String codegenMode) => '.template_$codegenMode.golden';
 
 /// To update the golden files, in the root angular2 directory, run

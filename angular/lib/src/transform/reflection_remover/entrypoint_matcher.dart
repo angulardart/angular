@@ -23,8 +23,8 @@ class EntrypointMatcher {
         (node is! FunctionDeclaration && node is! MethodDeclaration)) {
       return false;
     }
-    return node.metadata
-        .any((a) => _annotationMatcher.isEntrypoint(a, _assetId));
+    return node is FunctionDeclaration && node.name.name == 'main' ||
+        node.metadata.any((a) => _annotationMatcher.isEntrypoint(a, _assetId));
   }
 
   /// Gets the name assigned to the `AngularEntrypoint`.
