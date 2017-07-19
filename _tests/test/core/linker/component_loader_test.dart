@@ -5,6 +5,7 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
+// ignore: uri_has_not_been_generated
 import 'component_loader_test.template.dart' as ng;
 
 void main() {
