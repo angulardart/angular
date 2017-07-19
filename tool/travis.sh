@@ -13,6 +13,7 @@ pub upgrade
 dartanalyzer --fatal-warnings .
 
 if [ "$PKG" == "_tests" ]; then
+  dartium --version
   dart test/source_gen/template_compiler/generate.dart
   pub run test -p vm -x codegen
   pub run angular_test \
@@ -23,6 +24,7 @@ if [ "$PKG" == "_tests" ]; then
 fi
 
 if [ "$PKG" == "angular_test" ]; then
+  dartium --version
   dart test/test_on_travis.dart
 fi
 
