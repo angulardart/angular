@@ -1,5 +1,7 @@
 language: dart
-sudo: false
+
+# travis-ci/travis-ci#4714
+sudo: required
 
 dart:
   # Temporarily disabled. We only have the stable release of Dartium installed.
@@ -14,13 +16,24 @@ env:
 
 # We don't use the dart_task model yet (mono-repo), so this will have to do.
 before_install:
+  # Install required fonts for Dartium.
+  # travis-ci/travis-ci#4714
+  - sudo apt-get update -yq
+  - sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
+  - sudo apt-get install msttcorefonts -qq
+
+  # Add a local `bin` folder and add it to the PATH.
   - mkdir -p bin
   - export PATH="$PATH:$PWD/bin"
+
+  # Download the latest stable release of Dartium, extract it, and add a symlink to bin.
   - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
   - unzip dartium-linux-x64-release.zip
   - rm dartium-linux-x64-release.zip
   - PATH_TO_DARTIUM=`pwd`/`echo dartium-linux-*`/chrome
   - ln -sv "$PATH_TO_DARTIUM" "bin/dartium"
+
+  # Sanity check for terminal output.
   - echo `which dartium`
 
 script: ./tool/travis.sh
