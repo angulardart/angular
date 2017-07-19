@@ -25,7 +25,7 @@ dependency_overrides:
   # TODO: Remove before submitting
   test:
     git:
-      url: git@github.com:matanlurey/test.git
+      url: https://github.com/matanlurey/test.git
       ref: debug-pkg-test
 
 transformers:
