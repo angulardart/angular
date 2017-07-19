@@ -579,13 +579,8 @@ List<InterfaceType> _getInheritanceHierarchy(InterfaceType type) {
     types.add(currentType);
     typesToVisit
       ..add(supertype)
-      ..addAll(currentType.interfaces);
-    for (var mixinType in currentType.mixins) {
-      if (!visitedTypes.contains(mixinType)) {
-        visitedTypes.add(mixinType);
-        types.add(mixinType);
-      }
-    }
+      ..addAll(currentType.interfaces)
+      ..addAll(currentType.mixins);
   }
   return types;
 }
