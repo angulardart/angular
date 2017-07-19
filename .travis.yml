@@ -11,7 +11,12 @@ env:
   - PKG=angular_compiler
   - PKG=angular_test
 
-install_dartium: true
+# We don't use the dart_task model yet (mono-repo), so this will have to do.
+before_install:
+  - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
+  - unzip dartium_shell-linux-x64-release.zip
+  - ln -s `pwd`/`echo drt-linux-*`/chrome bin/dartium
+
 script: ./tool/travis.sh
 
 # Only building master means that we don't run two builds for each pull request.
