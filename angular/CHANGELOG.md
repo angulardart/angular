@@ -43,6 +43,8 @@ class FancyButton {
 ### Breaking changes
 
 * Removed `angular/common.dart`; replace imports with `angular/angular.dart`.
+* Removed `angular/compiler.dart'; Compiler should only be invoked via the
+  transformers or via `pkg:build` directly using `angular/source_gen.dart`.
 
 ### Bug fixes
 

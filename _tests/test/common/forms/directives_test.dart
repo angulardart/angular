@@ -3,13 +3,12 @@ import 'dart:html';
 
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+import 'package:_tests/control_mocks.dart';
+import 'package:_tests/fake_async.dart';
+import 'package:_tests/test_util.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/common/forms/directives/shared.dart'
     show selectValueAccessor, composeValidators;
-import 'package:angular/src/testing/internal.dart';
-
-import '../../test_util.dart';
-import '../control_mocks.dart';
 
 class DummyControlValueAccessor implements ControlValueAccessor {
   var writtenValue;

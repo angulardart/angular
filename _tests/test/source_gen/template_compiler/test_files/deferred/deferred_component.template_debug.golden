@@ -15,7 +15,7 @@ export 'deferred_component.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'deferred_component.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DeferredChildComponent0 = [null, null];
 
 class ViewDeferredChildComponent0
     extends DebugAppView<import2.DeferredChildComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewDeferredChildComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -40,7 +40,7 @@ class ViewDeferredChildComponent0
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DeferredChildComponent0) {
-    rootEl = document.createElement('deferred-component');
+    rootEl = import3.document.createElement('deferred-component');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/deferred/deferred_component.dart class DeferredChildComponent - inline template',
         ViewEncapsulation.None,
@@ -49,10 +49,10 @@ class ViewDeferredChildComponent0
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Child');
+    import3.Text _text_1 = new import3.Text('Child');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);

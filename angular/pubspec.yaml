@@ -30,10 +30,6 @@ dependencies:
   stack_trace: ^1.6.5
   tuple: ^1.0.1
 
-# TODO(alorenzen): Move lib/src/testing/matchers.dart to _tests and remove this.
-dev_dependencies:
-  test: ^0.12.6
-
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
   angular_compiler:

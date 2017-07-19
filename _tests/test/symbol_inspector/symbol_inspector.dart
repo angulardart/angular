@@ -4,7 +4,6 @@ import 'dart:collection';
 import 'dart:mirrors';
 
 import 'package:angular/angular.dart' as ng2;
-import 'package:angular/compiler.dart' as ng2compiler;
 import 'package:angular/core.dart' as ng2core;
 import 'package:angular/di.dart' as di;
 import 'package:angular/platform/testing/browser.dart'
@@ -14,7 +13,6 @@ import 'package:angular/platform/testing/browser.dart'
 // imports are only needed to reflect on them using mirrors.
 final _ng2libSymbols = [
   ng2core.Component,
-  ng2compiler.COMPILER_PROVIDERS,
   ng2.NgIf,
   ng2platform_browser_testing.TEST_BROWSER_PLATFORM_PROVIDERS,
   ng2.APP_ID,

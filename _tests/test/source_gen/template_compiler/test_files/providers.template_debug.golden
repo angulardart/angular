@@ -20,7 +20,7 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import8;
 import 'package:angular/angular.dart';
@@ -40,7 +40,7 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProvidersComponent0) {
-    rootEl = document.createElement('providers');
+    rootEl = import7.document.createElement('providers');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/providers.dart class ProvidersComponent - inline template',
         ViewEncapsulation.None,
@@ -49,8 +49,8 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    Text _text_0 = new Text('Hello');
+    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import7.Text _text_0 = new import7.Text('Hello');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
     init(const [], const [], [_text_0]);

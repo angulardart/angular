@@ -1,26 +1,24 @@
 @TestOn('browser')
-library angular2.test.compiler.template_parser_test;
-
-import "package:logging/logging.dart";
+import 'package:logging/logging.dart';
 import 'package:test/test.dart';
-import "package:angular/src/compiler/compile_metadata.dart";
-import "package:angular/src/compiler/expression_parser/lexer.dart";
-import "package:angular/src/compiler/expression_parser/parser.dart";
-import "package:angular/src/compiler/html_parser.dart";
-import "package:angular/src/compiler/identifiers.dart"
+import 'package:_tests/test_util.dart';
+import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/expression_parser/lexer.dart';
+import 'package:angular/src/compiler/expression_parser/parser.dart';
+import 'package:angular/src/compiler/html_parser.dart';
+import 'package:angular/src/compiler/identifiers.dart'
     show identifierToken, Identifiers;
 import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
-import "package:angular/src/compiler/schema/element_schema_registry.dart"
+import 'package:angular/src/compiler/schema/element_schema_registry.dart'
     show ElementSchemaRegistry;
-import "package:angular/src/compiler/template_ast.dart";
-import "package:angular/src/compiler/template_parser.dart"
+import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/template_parser.dart'
     show TemplateParser, splitClasses;
 
-import "../test_util.dart";
-import "schema_registry_mock.dart" show MockSchemaRegistry;
-import "template_humanizer_util.dart";
+import 'schema_registry_mock.dart' show MockSchemaRegistry;
+import 'template_humanizer_util.dart';
 
-const someModuleUrl = "package:someModule";
+const someModuleUrl = 'package:someModule';
 
 typedef List<TemplateAst> ParseTemplate(
   String template,

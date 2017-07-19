@@ -205,6 +205,26 @@ void main() {
       expect(testFixture.rootElement.attributes, containsPair('bar', '1'));
     });
   });
+
+  group('Directive', () {
+    test('should inherit metadata', () async {
+      TestDirectiveInheritMetadataComponent testComponent;
+      final testBed = new NgTestBed<TestDirectiveInheritMetadataComponent>();
+      await testBed.create(beforeChangeDetection: (component) {
+        testComponent = component..tooltipMessage = 'Successfully inherited!';
+      });
+      expect(testComponent.directive.tooltip, 'Successfully inherited!');
+    });
+
+    test('can alias input name to match selector', () async {
+      TestDirectiveAliasInputComponent testComponent;
+      final testBed = new NgTestBed<TestDirectiveAliasInputComponent>();
+      await testBed.create(beforeChangeDetection: (component) {
+        testComponent = component..tooltipMessage = 'Successfully aliased!';
+      });
+      expect(testComponent.directive.tooltip, 'Successfully aliased!');
+    });
+  });
 }
 
 /// Base component from which all other components will be derived for testing.
@@ -483,3 +503,39 @@ class OverrideFooAttributes extends Attributes {
   template: '',
 )
 class TestMostDerivedMetadataComponent extends OverrideFooAttributes {}
+
+@Directive(selector: '[tooltip]')
+class TooltipDirective {
+  @Input()
+  String tooltip;
+}
+
+@Directive(selector: '[fancyTooltip]')
+class FancyTooltipDirective extends TooltipDirective {
+  @Input()
+  set fancyTooltip(String value) => tooltip = value;
+}
+
+@Component(
+  selector: 'test-directive-inherit-metadata',
+  template: '<div fancyTooltip [tooltip]="tooltipMessage"></div>',
+  directives: const [FancyTooltipDirective],
+)
+class TestDirectiveInheritMetadataComponent {
+  @ViewChild(FancyTooltipDirective)
+  FancyTooltipDirective directive;
+
+  String tooltipMessage;
+}
+
+@Component(
+  selector: 'test-directive-override-binding',
+  template: '<div [fancyTooltip]="tooltipMessage"></div>',
+  directives: const [FancyTooltipDirective],
+)
+class TestDirectiveAliasInputComponent {
+  @ViewChild(FancyTooltipDirective)
+  FancyTooltipDirective directive;
+
+  String tooltipMessage;
+}

@@ -170,7 +170,7 @@ abstract class Instruction {
   }
 
   String _stringifyPathMatrixAux() {
-    if (component == null) return '';
+    if (urlPath.isEmpty) return '';
     return urlPath + _stringifyMatrixParams() + _stringifyAux();
   }
 

@@ -1,11 +1,8 @@
 @TestOn('browser')
-library angular2.test.compiler.expression_parser.lexer_test;
-
-import "package:test/test.dart";
-import "package:angular/src/compiler/expression_parser/lexer.dart"
+import 'package:test/test.dart';
+import 'package:_tests/test_util.dart';
+import 'package:angular/src/compiler/expression_parser/lexer.dart'
     show Lexer, Token;
-
-import "../../test_util.dart";
 
 List<Token> lex(String text) {
   return new Lexer().tokenize(text);

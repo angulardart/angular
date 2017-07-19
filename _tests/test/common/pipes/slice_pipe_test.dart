@@ -1,11 +1,9 @@
 @TestOn('browser')
 @Tags(const ['codegen'])
-library angular2.test.common.pipes.slice_pipe_test;
-
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
+import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
-import "package:angular/src/testing/internal.dart";
+import 'package:angular_test/angular_test.dart';
 
 void main() {
   group('SlicePipe', () {

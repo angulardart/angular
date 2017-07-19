@@ -1,24 +1,25 @@
 import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/output/output_ast.dart';
-import "package:angular/src/core/change_detection/change_detection.dart"
-    show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
+import 'package:angular/src/core/change_detection/change_detection.dart'
+    show
+        ChangeDetectorState,
+        ChangeDetectionStrategy,
+        isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
-import "package:angular/src/core/linker/view_type.dart";
-import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
+import 'package:angular/src/core/linker/view_type.dart';
+import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular_compiler/angular_compiler.dart';
 
-import '../../core/change_detection/change_detection.dart'
-    show ChangeDetectorState, ChangeDetectionStrategy;
-import "../compile_metadata.dart"
+import '../compile_metadata.dart'
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import '../expression_parser/parser.dart' show Parser;
-import "../identifiers.dart" show Identifiers, identifierToken;
-import "../output/output_ast.dart" as o;
-import "../provider_parser.dart" show ngIfTokenMetadata, ngForTokenMetadata;
-import "../style_compiler.dart" show StylesCompileResult;
-import "../template_ast.dart"
+import '../identifiers.dart' show Identifiers, identifierToken;
+import '../output/output_ast.dart' as o;
+import '../provider_parser.dart' show ngIfTokenMetadata, ngForTokenMetadata;
+import '../style_compiler.dart' show StylesCompileResult;
+import '../template_ast.dart'
     show
         AttrAst,
         BoundDirectivePropertyAst,
@@ -35,10 +36,10 @@ import "../template_ast.dart"
         VariableAst,
         TextAst,
         templateVisitAll;
-import "compile_element.dart" show CompileElement, CompileNode;
-import "compile_method.dart";
-import "compile_view.dart";
-import "constants.dart"
+import 'compile_element.dart' show CompileElement, CompileNode;
+import 'compile_method.dart';
+import 'compile_view.dart';
+import 'constants.dart'
     show
         appViewRootElementName,
         createEnumExpression,
@@ -53,7 +54,7 @@ import 'expression_converter.dart';
 import 'parse_utils.dart';
 import 'perf_profiler.dart';
 import 'property_binder.dart';
-import "view_compiler_utils.dart"
+import 'view_compiler_utils.dart'
     show
         getViewFactoryName,
         createFlatArray,

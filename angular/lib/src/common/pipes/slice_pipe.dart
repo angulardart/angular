@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:angular/di.dart' show Injectable, PipeTransform, Pipe;
+import 'package:angular/di.dart' show PipeTransform, Pipe;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
@@ -51,8 +51,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 /// ```
 /// The first example generates two `<li>` elements with text `b` and `c`.
 /// The second example uses the string `'abcdefghij'`.
-@Pipe("slice", pure: false)
-@Injectable()
+@Pipe('slice', pure: false)
 class SlicePipe implements PipeTransform {
   dynamic transform(dynamic value, num start, [num end = null]) {
     if (!this.supports(value)) {

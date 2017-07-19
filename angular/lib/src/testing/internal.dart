@@ -7,14 +7,12 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/reflection/reflection.dart';
 import 'package:angular/src/core/reflection/reflection_capabilities.dart';
 
-import "internal_injector.dart";
+import 'internal_injector.dart';
 
-export "package:angular/src/debug/debug_node.dart";
+export 'package:angular/src/debug/debug_node.dart';
 
-export "fake_async.dart";
-export "internal_injector.dart";
-export "matchers.dart";
-export "test_component_builder.dart";
+export 'internal_injector.dart';
+export 'test_component_builder.dart';
 
 /// Allows injecting dependencies in [setUp()] and [test()].
 ///
@@ -43,9 +41,6 @@ Future<dynamic> inject(List<dynamic> tokens, Function fn) async {
     assert(p != null);
     _testInjector.addProviders([funcWithParams.completer]);
   }
-  if (_extraPerTestProviders != null) {
-    _testInjector.addProviders(_extraPerTestProviders);
-  }
   _inTest = true;
   _testInjector
       .execute(new FunctionWithParamTokens([Injector], (Injector injector) {
@@ -59,21 +54,6 @@ Future<dynamic> inject(List<dynamic> tokens, Function fn) async {
   }
 }
 
-/// Allows overriding default providers defined in test_injector.js.
-///
-///  The given function must return a list of DI providers.
-///
-///  Example:
-///
-///    beforeEachProviders(() => [
-///        provide(Compiler, useClass: MockCompiler),
-///        provide(SomeToken, useValue: myValue),
-///    ]);
-///
-void beforeEachProviders(Function fn) {
-  _extraPerTestProviders = fn();
-}
-
 TestInjector _testInjector = TestInjector.singleton();
 bool _inTest = false;
 // Set on one-time initialization of tests for platform.
@@ -81,7 +61,6 @@ bool _bootstrap_initialized = false;
 // Providers for specific Platform.
 List _platformProviders;
 List _applicationProviders;
-List _extraPerTestProviders;
 
 void _bootstrapInternalTests() {
   _platformProviders ??= TEST_BROWSER_PLATFORM_PROVIDERS;
@@ -89,13 +68,13 @@ void _bootstrapInternalTests() {
   if (_bootstrap_initialized) return;
   _bootstrap_initialized = true;
   reflector.reflectionCapabilities = new ReflectionCapabilities();
-  setBaseTestProviders(_platformProviders, _applicationProviders);
+  _setBaseTestProviders(_platformProviders, _applicationProviders);
 }
 
 /// Set the providers that the test injector should use.
 ///
 /// These should be providers common to every test in the suite.
-void setBaseTestProviders(
+void _setBaseTestProviders(
     List<dynamic /* Type | Provider | List < dynamic > */ > platformProviders,
     List<dynamic /* Type | Provider | List < dynamic > */ >
         applicationProviders) {
@@ -119,5 +98,3 @@ void setBaseTestProviders(
   }
   testInjector.reset();
 }
-
-TestInjector getTestInjector() => _testInjector;

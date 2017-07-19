@@ -1,14 +1,12 @@
 @TestOn('browser')
-library angular2.test.compiler.expression_parser.parser_test;
-
-import "package:test/test.dart";
-import "package:angular/src/compiler/expression_parser/ast.dart"
+import 'package:test/test.dart';
+import 'package:_tests/test_util.dart';
+import 'package:angular/src/compiler/expression_parser/ast.dart'
     show BindingPipe, AST;
-import "package:angular/src/compiler/expression_parser/lexer.dart" show Lexer;
-import "package:angular/src/compiler/expression_parser/parser.dart" show Parser;
+import 'package:angular/src/compiler/expression_parser/lexer.dart' show Lexer;
+import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 
-import "../../test_util.dart";
-import "unparser.dart" show Unparser;
+import 'unparser.dart' show Unparser;
 
 void main() {
   Parser createParser() {

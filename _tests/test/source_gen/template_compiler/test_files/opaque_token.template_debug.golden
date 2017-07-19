@@ -15,7 +15,7 @@ export 'opaque_token.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'opaque_token.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -29,7 +29,7 @@ const List<dynamic> styles$HasOpaqueTokens = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = [null];
 
 class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
-  Text _text_0;
+  import3.Text _text_0;
   var _expr_0;
   static RenderComponentType renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
@@ -40,7 +40,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasOpaqueTokens0) {
-    rootEl = document.createElement('has-opaque-tokens');
+    rootEl = import3.document.createElement('has-opaque-tokens');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/opaque_token.dart class HasOpaqueTokens - inline template',
         ViewEncapsulation.None,
@@ -49,8 +49,8 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _text_0 = new Text('');
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _text_0 = new import3.Text('');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
     init(const [], const [], [_text_0]);

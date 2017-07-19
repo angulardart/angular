@@ -15,7 +15,7 @@ export 'export_as.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'export_as.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -29,7 +29,7 @@ const List<dynamic> styles$TestFooComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [null, null];
 
 class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -39,7 +39,7 @@ class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestFooComponent0) {
-    rootEl = document.createElement('test-foo');
+    rootEl = import3.document.createElement('test-foo');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/export_as.dart class TestFooComponent - inline template',
         ViewEncapsulation.None,
@@ -48,10 +48,10 @@ class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Foo');
+    import3.Text _text_1 = new import3.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);

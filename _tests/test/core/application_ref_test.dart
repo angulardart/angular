@@ -8,6 +8,7 @@ import 'dart:html';
 import 'package:logging/logging.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+import 'package:_tests/test_util.dart';
 import 'package:angular/core.dart'
     show
         Injector,
@@ -36,7 +37,6 @@ import 'package:angular/src/facade/exception_handler.dart'
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/platform/browser_common.dart';
 
-import "../test_util.dart";
 import 'core_mocks.dart';
 
 void main() {

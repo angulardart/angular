@@ -1,10 +1,9 @@
-import "package:angular/di.dart" show PipeTransform, Injectable, Pipe;
+import 'package:angular/di.dart' show PipeTransform, Injectable, Pipe;
 
-import "invalid_pipe_argument_exception.dart" show InvalidPipeArgumentException;
+import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
 /// Implements uppercase transforms to text.
-@Pipe("uppercase")
-@Injectable()
+@Pipe('uppercase')
 class UpperCasePipe implements PipeTransform {
   String transform(String value) {
     if (value == null) return value;

@@ -20,7 +20,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html';
+import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import8;
 import 'package:angular/angular.dart';
@@ -37,14 +37,14 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('test-foo');
+    rootEl = import7.document.createElement('test-foo');
     renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$TestFooComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
@@ -73,7 +73,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
 }
 
 class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
-  DivElement _el_0;
+  import7.DivElement _el_0;
   ViewTestFooComponent1(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.EMBEDDED, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
@@ -81,10 +81,10 @@ class ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
   }
   @override
   ComponentRef build() {
-    var doc = document;
+    var doc = import7.document;
     _el_0 = doc.createElement('div');
     addShimC(_el_0);
-    Text _text_1 = new Text('Foo');
+    import7.Text _text_1 = new import7.Text('Foo');
     _el_0.append(_text_1);
     init([_el_0], const []);
     return null;

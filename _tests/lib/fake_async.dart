@@ -2,8 +2,7 @@ import 'dart:async' show runZoned, ZoneSpecification;
 
 import 'package:quiver/testing/async.dart' as quiver;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
-
-import 'test_injector.dart' show getTestInjector, FunctionWithParamTokens;
+import 'package:angular/src/testing/test_injector.dart';
 
 const _u = const Object();
 

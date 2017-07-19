@@ -15,7 +15,7 @@ export 'view_encapsulation.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'view_encapsulation.dart' as import2;
-import 'dart:html';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -29,7 +29,7 @@ const List<dynamic> styles$EmulatedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponent0 = [null, null];
 
 class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -39,7 +39,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_EmulatedComponent0) {
-    rootEl = document.createElement('Emulated');
+    rootEl = import3.document.createElement('Emulated');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/view_encapsulation.dart class EmulatedComponent - inline template',
         ViewEncapsulation.None,
@@ -48,10 +48,10 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Emulated');
+    import3.Text _text_1 = new import3.Text('Emulated');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -131,7 +131,7 @@ const List<dynamic> styles$NativeComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_NativeComponent0 = [null, null];
 
 class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewNativeComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -141,7 +141,7 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_NativeComponent0) {
-    rootEl = document.createElement('Native');
+    rootEl = import3.document.createElement('Native');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/view_encapsulation.dart class NativeComponent - inline template',
         ViewEncapsulation.Native,
@@ -150,11 +150,11 @@ class ViewNativeComponent0 extends DebugAppView<import2.NativeComponent> {
   }
   @override
   ComponentRef build() {
-    final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
-    var doc = document;
+    final import3.ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendToShadowRootDbg(
         this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('Native');
+    import3.Text _text_1 = new import3.Text('Native');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);
@@ -234,7 +234,7 @@ const List<dynamic> styles$NoneComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = [null, null];
 
 class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
-  DivElement _el_0;
+  import3.DivElement _el_0;
   static RenderComponentType renderType;
   ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -244,7 +244,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_NoneComponent0) {
-    rootEl = document.createElement('None');
+    rootEl = import3.document.createElement('None');
     renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/view_encapsulation.dart class NoneComponent - inline template',
         ViewEncapsulation.None,
@@ -253,10 +253,10 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
-    Text _text_1 = new Text('None');
+    import3.Text _text_1 = new import3.Text('None');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
     init(const [], const [], [_el_0, _text_1]);

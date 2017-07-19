@@ -14,7 +14,7 @@ import 'package:angular/angular.template.dart'
 export 'view_encapsulation.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'view_encapsulation.dart' as import1;
-import 'dart:html';
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
     as import4;
@@ -26,22 +26,22 @@ import 'package:angular/angular.dart';
 const List<dynamic> styles$EmulatedComponent = const [];
 
 class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
-  DivElement _el_0;
+  import2.DivElement _el_0;
   static RenderComponentType renderType;
   ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('Emulated');
+    rootEl = import2.document.createElement('Emulated');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$EmulatedComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
-    Text _text_1 = new Text('Emulated');
+    import2.Text _text_1 = new import2.Text('Emulated');
     _el_0.append(_text_1);
     init(const [], const []);
     return null;
@@ -109,22 +109,22 @@ const ComponentFactory EmulatedComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles$NativeComponent = const [];
 
 class ViewNativeComponent0 extends AppView<import1.NativeComponent> {
-  DivElement _el_0;
+  import2.DivElement _el_0;
   static RenderComponentType renderType;
   ViewNativeComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('Native');
+    rootEl = import2.document.createElement('Native');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.Native, styles$NativeComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
-    var doc = document;
+    final import2.ShadowRoot parentRenderNode = createViewShadowRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppendToShadowRoot(doc, 'div', parentRenderNode);
-    Text _text_1 = new Text('Native');
+    import2.Text _text_1 = new import2.Text('Native');
     _el_0.append(_text_1);
     init(const [], const []);
     return null;
@@ -192,22 +192,22 @@ const ComponentFactory NativeComponentNgFactory = const ComponentFactory(
 const List<dynamic> styles$NoneComponent = const [];
 
 class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
-  DivElement _el_0;
+  import2.DivElement _el_0;
   static RenderComponentType renderType;
   ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    rootEl = document.createElement('None');
+    rootEl = import2.document.createElement('None');
     renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$NoneComponent);
     setupComponentType(renderType);
   }
   @override
   ComponentRef build() {
-    final HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
-    Text _text_1 = new Text('None');
+    import2.Text _text_1 = new import2.Text('None');
     _el_0.append(_text_1);
     init(const [], const []);
     return null;

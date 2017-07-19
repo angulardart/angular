@@ -1,4 +1,4 @@
-import 'package:analyzer/analyzer.dart';
+import 'package:analyzer/analyzer.dart' hide Directive;
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -159,6 +159,9 @@ class ComponentVisitor
   final _hostProperties = <String, String>{};
   final _queries = <CompileQueryMetadata>[];
   final _viewQueries = <CompileQueryMetadata>[];
+
+  /// Whether the component being visited re-implements 'noSuchMethod'.
+  bool _implementsNoSuchMethod = false;
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
@@ -358,93 +361,75 @@ class ComponentVisitor
     Element element, {
     Map<String, String> immutableBindings,
   }) {
-    immutableBindings ??= bindings;
-
     final value = annotation.computeConstantValue();
     final propertyName = element.displayName;
     final bindingName =
         coerceString(value, 'bindingPropertyName', defaultTo: propertyName);
-
-    if (immutableBindings.containsKey(propertyName) &&
-        immutableBindings[propertyName] != bindingName) {
-      log.severe("'${element.enclosingElement.name}' overwrites the binding "
-          "name of property '$propertyName' from "
-          "'${immutableBindings[propertyName]}' to '$bindingName'.");
-    }
-
+    _prohibitBindingChange(element.enclosingElement, propertyName, bindingName,
+        immutableBindings ?? bindings);
     bindings[propertyName] = bindingName;
   }
 
-  void _collectInheritableMetadata(
-    ClassElement element, {
-    DartObject annotationValue,
-  }) {
-    if (annotationValue == null) {
-      final matchesDirective = safeMatcher(isDirective, log);
-      for (var annotation in element.metadata) {
-        if (matchesDirective(annotation)) {
-          annotationValue = annotation.computeConstantValue();
-          break;
+  void _collectInheritableMetadata(InterfaceType type) {
+    final inheritanceHierarchy = _getInheritanceHierarchy(type);
+    final isDirectiveAnnotation = safeMatcher(isDirective, log);
+    // Traverse inheritance hierarchy from top to bottom so that inherited
+    // annotations are bound to the most derived implementation of the element
+    // they annotate.
+    for (var currentType in inheritanceHierarchy.reversed) {
+      final element = currentType.element;
+      final annotation = element.metadata
+          .firstWhere(isDirectiveAnnotation, orElse: () => null);
+      // Collect metadata from class annotation.
+      if (annotation != null) {
+        final annotationValue = annotation.computeConstantValue();
+        final host = coerceStringMap(annotationValue, 'host');
+        CompileDirectiveMetadata.deserializeHost(
+            host, _hostAttributes, _hostListeners, _hostProperties);
+        final inputs = coerceStringList(annotationValue, 'inputs');
+        final unboundInputs = <String, String>{};
+        CompileDirectiveMetadata.deserializeInputs(
+            inputs, unboundInputs, _inputTypes);
+        for (var propertyName in unboundInputs.keys) {
+          final bindingName = unboundInputs[propertyName];
+          _prohibitBindingChange(element, propertyName, bindingName, _inputs);
+          _inputs[propertyName] = bindingName;
         }
+        final outputs = coerceStringList(annotationValue, 'outputs');
+        CompileDirectiveMetadata.deserializeOutputs(outputs, _outputs);
+        coerceMap(annotationValue, 'queries').forEach((propertyName, query) {
+          _queries.add(_getQuery(query, propertyName.toStringValue()));
+        });
+      }
+      // Collect metadata from field and property accessor annotations.
+      super.visitClassElement(element);
+      // Merge field and setter inputs at each inheritance level, so that a
+      // derived field input binding is not overridden by an inherited setter
+      // input.
+      _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
+      _fieldInputs..clear();
+      _setterInputs..clear();
+      if (currentType.getMethod('noSuchMethod') != null) {
+        _implementsNoSuchMethod = true;
       }
     }
-
-    // Collect metadata from class annotation.
-    if (annotationValue != null) {
-      final host = coerceStringMap(annotationValue, 'host');
-      CompileDirectiveMetadata.deserializeHost(
-          host, _hostAttributes, _hostListeners, _hostProperties);
-
-      final inputs = coerceStringList(annotationValue, 'inputs');
-      CompileDirectiveMetadata.deserializeInputs(
-          inputs, _fieldInputs, _inputTypes);
-
-      final outputs = coerceStringList(annotationValue, 'outputs');
-      CompileDirectiveMetadata.deserializeOutputs(outputs, _outputs);
-
-      coerceMap(annotationValue, 'queries').forEach((propertyName, query) {
-        _queries.add(_getQuery(query, propertyName.toStringValue()));
-      });
-    }
-
-    // Collect metadata from field and property accessor annotations.
-    super.visitClassElement(element);
-
-    // Merge field and setter inputs at each inheritance level, so that a
-    // derived field input binding is not overridden by an inherited setter
-    // input.
-    _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
-    _fieldInputs..clear();
-    _setterInputs..clear();
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
     ElementAnnotation annotation,
     ClassElement element,
   ) {
+    _collectInheritableMetadata(element.type);
     final isComp = safeMatcher(isComponent, log)(annotation);
-    // Collect inheritable metadata from all ancestors in descending
-    // hierarchical order.
-    if (isComp) {
-      // Currently only components support inheritance.
-      element.allSupertypes.reversed.forEach((interfaceType) =>
-          _collectInheritableMetadata(interfaceType.element));
-    }
     final annotationValue = annotation.computeConstantValue();
-    _collectInheritableMetadata(element, annotationValue: annotationValue);
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     final template = isComp
         ? _createTemplateMetadata(annotationValue,
             view: _findView(element)?.computeConstantValue())
         : new CompileTemplateMetadata();
-    final noSuchMethodImplementor = firstAncestorWhere(
-        element,
-        (interfaceType) =>
-            interfaceType.superclass != null && // Excludes 'Object'.
-            interfaceType.getMethod('noSuchMethod') != null);
-    final isMockLike = noSuchMethodImplementor != null;
-    final analyzedClass = new AnalyzedClass(element, isMockLike: isMockLike);
+    final analyzedClass =
+        new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
     return new CompileDirectiveMetadata(
       type: element.accept(new CompileTypeMetadataVisitor(log)),
       isComponent: isComp,
@@ -587,29 +572,44 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .toList();
 }
 
-/// Finds the first supertype or mixin of [element] that satisfies [condition].
+/// Returns the inheritance hierarchy of [type] in an ordered list.
 ///
-/// Returns null if no supertype or mixin satisfies [condition].
-InterfaceType firstAncestorWhere(
-  ClassElement element,
-  bool Function(InterfaceType) condition,
-) {
-  var currentType = element.type;
+/// Types are followed, in order, by their mixins, interfaces, and superclass.
+List<InterfaceType> _getInheritanceHierarchy(InterfaceType type) {
+  final types = <InterfaceType>[];
+  final typesToVisit = [type];
   final visitedTypes = new Set<InterfaceType>();
-
-  while (currentType != null && !visitedTypes.contains(currentType)) {
+  while (typesToVisit.isNotEmpty) {
+    final currentType = typesToVisit.removeLast();
+    if (visitedTypes.contains(currentType)) continue;
     visitedTypes.add(currentType);
-    if (condition(currentType)) return currentType;
-
+    final supertype = currentType.superclass;
+    // Skip [Object], since it can't have metadata, mixins, or interfaces.
+    if (supertype == null) continue;
+    types.add(currentType);
+    typesToVisit
+      ..add(supertype)
+      ..addAll(currentType.interfaces);
     for (var mixinType in currentType.mixins) {
       if (!visitedTypes.contains(mixinType)) {
         visitedTypes.add(mixinType);
-        if (condition(mixinType)) return mixinType;
+        types.add(mixinType);
       }
     }
-
-    currentType = currentType.superclass;
   }
+  return types;
+}
 
-  return null;
+void _prohibitBindingChange(
+  ClassElement element,
+  String propertyName,
+  String bindingName,
+  Map<String, String> bindings,
+) {
+  if (bindings.containsKey(propertyName) &&
+      bindings[propertyName] != bindingName) {
+    log.severe(
+        "'${element.displayName}' overwrites the binding name of property "
+        "'$propertyName' from '${bindings[propertyName]}' to '$bindingName'.");
+  }
 }
