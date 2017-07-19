@@ -11,7 +11,6 @@ import 'exceptions.dart' show WrappedException;
 /// It's possible to instead write a _custom exception handler_:
 /// ```
 /// import 'package:angular/angular.dart';
-/// import 'package:angular/platform/browser.dart';
 ///
 /// @Injectable()
 /// class MyExceptionHandler implements ExceptionHandler {
@@ -98,10 +97,7 @@ class ExceptionHandler {
 
   final Logger _logger;
 
-  const ExceptionHandler(
-    this._logger, [
-    @Deprecated('Not supported') bool _rethrow,
-  ]);
+  const ExceptionHandler(this._logger);
 
   /// Handles an exception caught at runtime.
   ///

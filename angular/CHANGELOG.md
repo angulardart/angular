@@ -45,6 +45,8 @@ class FancyButton {
 * Removed `angular/common.dart`; replace imports with `angular/angular.dart`.
 * Removed `angular/compiler.dart'; Compiler should only be invoked via the
   transformers or via `pkg:build` directly using `angular/source_gen.dart`.
+* Deprecated `@View()` annotation was completely removed.
+* Deprecated second parameter to `ExceptionHandler` was completely removed.
 
 ### Bug fixes
 
@@ -57,6 +59,12 @@ class FancyButton {
 ```
 
 * `ngForm` now allows `onSubmit` to be called with a `null` value.
+
+* Using `inputs|outputs` in the `@Component` annotation to rename an existing
+  `@Input()` or `@Output()` now logs and fails the build during compilation.
+
+* Symbol collisions with `dart:html` no longer cause a runtime exception, all
+  framework use of `dart:html` is now scoped behind a prefixed import.
 
 ## 4.0.0-alpha
 
@@ -159,6 +167,8 @@ class MyComp {}
   systems.
 
 * Removed a number of classes that were never intended to be public.
+
+* Removed the second parameter to `ExceptionHandler`, which was a no-op anyway.
 
 ### Deprecations
 

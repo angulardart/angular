@@ -425,8 +425,7 @@ class ComponentVisitor
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     final template = isComp
-        ? _createTemplateMetadata(annotationValue,
-            view: _findView(element)?.computeConstantValue())
+        ? _createTemplateMetadata(annotationValue)
         : new CompileTemplateMetadata();
     final analyzedClass =
         new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
@@ -455,17 +454,8 @@ class ComponentVisitor
     );
   }
 
-  ElementAnnotation _findView(ClassElement element) =>
-      element.metadata.firstWhere(
-        safeMatcherType(View, log),
-        orElse: () => null,
-      );
-
-  CompileTemplateMetadata _createTemplateMetadata(
-    DartObject component, {
-    DartObject view,
-  }) {
-    var template = view ?? component;
+  CompileTemplateMetadata _createTemplateMetadata(DartObject component) {
+    var template = component;
     return new CompileTemplateMetadata(
       encapsulation: _encapsulation(template),
       template: coerceString(template, 'template'),
@@ -589,13 +579,8 @@ List<InterfaceType> _getInheritanceHierarchy(InterfaceType type) {
     types.add(currentType);
     typesToVisit
       ..add(supertype)
-      ..addAll(currentType.interfaces);
-    for (var mixinType in currentType.mixins) {
-      if (!visitedTypes.contains(mixinType)) {
-        visitedTypes.add(mixinType);
-        types.add(mixinType);
-      }
-    }
+      ..addAll(currentType.interfaces)
+      ..addAll(currentType.mixins);
   }
   return types;
 }

@@ -1,0 +1,1 @@
+library angular_router;

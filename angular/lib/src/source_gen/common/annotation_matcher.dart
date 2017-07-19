@@ -55,7 +55,7 @@ bool isDirective(ElementAnnotation annotation) =>
 /// Checks if an [ElementAnnotation] node is an annotation with directive
 /// fields.
 bool hasDirectives(ElementAnnotation annotation) =>
-    matchTypes([Component, Directive, View], annotation);
+    matchTypes([Component, Directive], annotation);
 
 /// Checks if an [ElementAnnotation] node implements [Pipe].
 bool isPipe(ElementAnnotation annotation) => matchAnnotation(Pipe, annotation);
