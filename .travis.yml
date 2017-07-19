@@ -20,8 +20,8 @@ before_install:
   - unzip dartium-linux-x64-release.zip
   - rm dartium-linux-x64-release.zip
   - PATH_TO_DARTIUM=`pwd`/`echo dartium-linux-*`/chrome
-  - echo "$PATH_TO_DARTIUM"
   - ln -sv "$PATH_TO_DARTIUM" "bin/dartium"
+  - echo which dartium
 
 script: ./tool/travis.sh
 
