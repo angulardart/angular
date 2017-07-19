@@ -14,7 +14,7 @@ env:
 # We don't use the dart_task model yet (mono-repo), so this will have to do.
 before_install:
   - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
-  - unzip dartium_shell-linux-x64-release.zip
+  - unzip dartium-linux-x64-release.zip
   - ln -s `pwd`/`echo drt-linux-*`/chrome bin/dartium
 
 script: ./tool/travis.sh
