@@ -168,6 +168,15 @@ void main() {
       expect(testFixture.text, 'Implemented description');
     });
 
+    test('from interface implemented by mixin', () async {
+      final testBed = new NgTestBed<TestMixesInInterface>();
+      final testFixture =
+          await testBed.create(beforeChangeDetection: (component) {
+        component.input = 'Implemented through mixin';
+      });
+      expect(testFixture.text, 'Implemented through mixin');
+    });
+
     test('from mixin', () async {
       final testBed = new NgTestBed<TestMixinMetadataComponent>();
       final testFixture =
@@ -538,4 +547,28 @@ class TestDirectiveAliasInputComponent {
   FancyTooltipDirective directive;
 
   String tooltipMessage;
+}
+
+abstract class MixinInterface {
+  @Input()
+  set input(String value);
+}
+
+class MixinImplementsInterface implements MixinInterface {
+  String input;
+}
+
+@Component(
+  selector: 'mixes-in-interface',
+  template: '<div>{{input}}</div>',
+)
+class MixesInInterface extends Object with MixinImplementsInterface {}
+
+@Component(
+  selector: 'test-mixes-in-interface',
+  template: '<mixes-in-interface [input]="input"></mixes-in-interface>',
+  directives: const [MixesInInterface],
+)
+class TestMixesInInterface {
+  String input;
 }
