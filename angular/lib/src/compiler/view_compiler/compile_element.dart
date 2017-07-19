@@ -481,6 +481,12 @@ class CompileElement extends CompileNode {
           return new o.ReadClassMemberExpr('ref');
         }
       }
+      // ComponentLoader is currently just an alias for ViewContainerRef with
+      // a smaller API that is also usable outside of the context of a
+      // structural directive.
+      if (dep.token.equalsTo(identifierToken(Identifiers.ComponentLoader))) {
+        return appViewContainer;
+      }
       // access regular providers on the element
       result ??= _instances.get(dep.token);
     }

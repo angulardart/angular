@@ -35,6 +35,10 @@ class Identifiers {
       moduleUrl: "asset:angular/lib/src/core/linker/view_container_ref.dart");
   static final ViewContainerRefToken =
       identifierToken(Identifiers.ViewContainerRef);
+  static final ComponentLoader = new CompileIdentifierMetadata<dynamic>(
+      name: "ComponentLoader",
+      moduleUrl: "asset:angular/lib/src/core/linker/component_loader.dart");
+  static final ComponentLoaderToken = identifierToken(ComponentLoader);
   static final ChangeDetectorRef = new CompileIdentifierMetadata<dynamic>(
       name: "ChangeDetectorRef",
       moduleUrl: 'asset:angular/lib/src/core/change_detection/'

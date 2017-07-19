@@ -3,6 +3,7 @@ import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
+import 'component_loader.dart';
 import 'element_ref.dart';
 import 'template_ref.dart';
 import 'view_container_ref.dart';
@@ -12,7 +13,7 @@ import 'view_type.dart';
 /// A ViewContainer is created for elements that contain
 /// a nested component or a `<template>` element to provide an insertion point
 /// that is needed for attaching children post initialization.
-class ViewContainer implements ViewContainerRef {
+class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final int index;
   final int parentIndex;
   final AppView parentView;
@@ -224,4 +225,11 @@ class ViewContainer implements ViewContainerRef {
     view.removeFromContentChildren(this);
     return view;
   }
+
+  @override
+  ComponentRef loadNextTo(
+    ComponentFactory component, {
+    Injector injector,
+  }) =>
+      loadNextToLocation(component, this, injector: injector);
 }

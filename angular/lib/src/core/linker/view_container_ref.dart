@@ -1,6 +1,7 @@
 import 'package:angular/src/core/di/injector.dart' show Injector;
 
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
+import 'component_loader.dart';
 import 'element_ref.dart';
 import 'template_ref.dart';
 import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
@@ -22,7 +23,7 @@ import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
 /// To access a `ViewContainerRef` of an Element, you can either place a
 /// [Directive] injected with `ViewContainerRef` on the Element, or you obtain
 /// it via a [ViewChild] query.
-abstract class ViewContainerRef {
+abstract class ViewContainerRef implements ComponentLoader {
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
   EmbeddedViewRef get(int index);
