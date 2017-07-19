@@ -189,7 +189,6 @@ class ReflectableVisitor extends RecursiveElementVisitor {
           .where(
               (annotation) => !annotation_matcher.safeMatcherTypes(const <Type>[
                     Component,
-                    View,
                     Directive,
                     Deprecated,
                     Pipe,

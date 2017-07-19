@@ -425,8 +425,7 @@ class ComponentVisitor
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     final template = isComp
-        ? _createTemplateMetadata(annotationValue,
-            view: _findView(element)?.computeConstantValue())
+        ? _createTemplateMetadata(annotationValue)
         : new CompileTemplateMetadata();
     final analyzedClass =
         new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
@@ -455,17 +454,8 @@ class ComponentVisitor
     );
   }
 
-  ElementAnnotation _findView(ClassElement element) =>
-      element.metadata.firstWhere(
-        safeMatcherType(View, log),
-        orElse: () => null,
-      );
-
-  CompileTemplateMetadata _createTemplateMetadata(
-    DartObject component, {
-    DartObject view,
-  }) {
-    var template = view ?? component;
+  CompileTemplateMetadata _createTemplateMetadata(DartObject component) {
+    var template = component;
     return new CompileTemplateMetadata(
       encapsulation: _encapsulation(template),
       template: coerceString(template, 'template'),
