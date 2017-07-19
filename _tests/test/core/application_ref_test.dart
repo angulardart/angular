@@ -161,7 +161,7 @@ void main() {
             throwsWith('Cannot bootstrap as there are still '
                 'asynchronous initializers running. Wait for them using '
                 'waitForAsyncInitializers().'));
-      });
+      }, tags: 'known_pub_serve_failure');
     });
   });
 }
