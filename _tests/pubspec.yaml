@@ -22,6 +22,11 @@ dependency_overrides:
     path: ../angular_test
   # TODO: Publish a new `build_runner` to remove this override.
   build_barback: 0.3.0
+  # TODO: Remove before submitting
+  test:
+    git:
+      url: git@github.com:matanlurey/test.git
+      ref: debug-pkg-test
 
 transformers:
   - angular:
