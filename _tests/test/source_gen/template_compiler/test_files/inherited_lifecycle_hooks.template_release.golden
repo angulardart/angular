@@ -7,20 +7,16 @@
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'inherited_lifecycle_hooks.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _i1;
+import 'package:angular/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _i1;
 export 'inherited_lifecycle_hooks.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'inherited_lifecycle_hooks.dart' as import1;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$LifecycleHooksComponent = const [];

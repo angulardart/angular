@@ -7,10 +7,8 @@
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'pipes.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _i1;
+import 'package:angular/src/core/reflection/reflection.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _i1;
 export 'pipes.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
@@ -18,11 +16,9 @@ import 'pipes.dart' as import2;
 import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import6;
+import 'package:angular/src/core/linker/view_type.dart' as import6;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import8;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$Comp = const [];

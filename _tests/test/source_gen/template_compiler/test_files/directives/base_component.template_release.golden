@@ -7,24 +7,20 @@
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'base_component.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
+import 'package:angular/src/core/reflection/reflection.dart' as _ngRef;
 import 'components.dart';
 import 'directives.dart' as directive;
-import 'package:angular/angular.template.dart'
-    as _i1;
-import 'components.template.dart' as _i2;
-import 'directives.template.dart' as _i3;
+import 'package:angular/angular.template.dart' as _i1;
+import 'directives.template.dart' as _i2;
+import 'components.template.dart' as _i3;
 export 'base_component.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'base_component.dart' as import1;
 import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$TestFooComponent = const [];

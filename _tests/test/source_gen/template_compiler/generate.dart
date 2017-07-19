@@ -32,7 +32,7 @@ Future main(List<String> args) async {
           ],
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
-                  : '.template_release.dart',
+                  : '.template_release.check',
               isStandalone: true),
           inputs)
       ..addAction(
@@ -42,7 +42,7 @@ Future main(List<String> args) async {
           ],
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'
-                  : '.template_debug.dart',
+                  : '.template_debug.check',
               isStandalone: true),
           inputs));
   await build(phaseGroup, deleteFilesByDefault: updateGoldens);
