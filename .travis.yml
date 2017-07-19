@@ -18,6 +18,11 @@ before_install:
   - mkdir -p bin
   - export PATH="$PATH:$PWD/bin"
 
+  # Start UI (required for Dartium).
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start &
+  - sleep 3
+
   # Download the latest stable release of Dartium, extract it, and add a symlink to bin.
   - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
   - unzip dartium-linux-x64-release.zip
