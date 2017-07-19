@@ -18,7 +18,8 @@ before_install:
   - export PATH="$PATH:`pwd`/bin/"
   - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
   - unzip dartium-linux-x64-release.zip
-  - PATH_TO_DARTIUM=dartium-linux-*/chrome
+  - rm dartium-linux-x64-release.zip
+  - PATH_TO_DARTIUM=`pwd`/`echo dartium-linux-*`/chrome
   - echo "$PATH_TO_DARTIUM"
   - ln -sv "$PATH_TO_DARTIUM" "bin/dartium"
 
