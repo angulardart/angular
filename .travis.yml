@@ -1,8 +1,5 @@
 language: dart
 
-# travis-ci/travis-ci#4714
-sudo: required
-
 dart:
   # Temporarily disabled. We only have the stable release of Dartium installed.
   # - dev
@@ -16,12 +13,6 @@ env:
 
 # We don't use the dart_task model yet (mono-repo), so this will have to do.
 before_install:
-  # Install required fonts for Dartium.
-  # travis-ci/travis-ci#4714
-  - sudo apt-get update -yq
-  - sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
-  - sudo apt-get install msttcorefonts -qq
-
   # Add a local `bin` folder and add it to the PATH.
   - mkdir -p bin
   - export PATH="$PATH:$PWD/bin"
