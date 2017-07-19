@@ -15,13 +15,13 @@ env:
 # We don't use the dart_task model yet (mono-repo), so this will have to do.
 before_install:
   - mkdir -p bin
-  - export PATH="$PATH:`pwd`/bin/"
+  - export PATH="$PATH:$PWD/bin/"
   - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
   - unzip dartium-linux-x64-release.zip
   - rm dartium-linux-x64-release.zip
   - PATH_TO_DARTIUM=`pwd`/`echo dartium-linux-*`/chrome
   - ln -sv "$PATH_TO_DARTIUM" "bin/dartium"
-  - echo which dartium
+  - echo `which dartium`
 
 script: ./tool/travis.sh
 
