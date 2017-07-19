@@ -274,6 +274,10 @@ class ProviderElementContext implements ElementProviderUsage {
         if (dep.token.equalsTo(Identifiers.ViewContainerRefToken)) {
           _requiresViewContainer = true;
         }
+        if (dep.token.equalsTo(Identifiers.ComponentLoaderToken)) {
+          _requiresViewContainer = true;
+          return dep;
+        }
       }
       // access the injector
       if (dep.token.equalsTo(Identifiers.InjectorToken)) {

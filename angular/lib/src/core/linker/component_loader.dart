@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../di/decorators.dart';
 import '../di/injector.dart';
 import 'component_factory.dart';
 import 'view_container_ref.dart';
@@ -13,7 +14,8 @@ import 'view_container_ref.dart';
 /// _This class is replacing `DynamicComponentLoader`, which has almost the same
 /// API and properties, but uses runtime introspection in order to lookup and
 /// then create the component. Going forward, `ComponentLoader` is preferred._
-abstract class ComponentLoader {
+@Injectable()
+class ComponentLoader {
   /// Creates and loads a new instance of the component defined by [component].
   ///
   /// Returns a [ComponentRef] that is detached from the physical DOM, and may
@@ -57,18 +59,11 @@ abstract class ComponentLoader {
   /// [UnsupportedError].
   ///
   /// See also [loadNextToLocation].
-  @mustCallSuper
   ComponentRef loadNextTo(
     ComponentFactory component, {
     Injector injector,
-  }) {
-    // Allows type promotion, otherwise cannot be casted.
-    final Object self = this;
-    if (self is ViewContainerRef) {
-      return loadNextToLocation(component, self, injector: injector);
-    }
-    throw new UnsupportedError('Not a structural directive');
-  }
+  }) =>
+      throw new UnsupportedError('Not used within a structural directive');
 
   /// Creates and loads a new instance of the component defined by [component].
   ///
