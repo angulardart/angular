@@ -160,6 +160,8 @@ class MyComp {}
 
 * Removed a number of classes that were never intended to be public.
 
+* Removed the second parameter to `ExceptionHandler`, which was a no-op anyway.
+
 ### Deprecations
 
 * Support for shadow piercing combinators `/deep/` and `>>>` to prevent style
