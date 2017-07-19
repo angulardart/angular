@@ -11,6 +11,7 @@ env:
   - PKG=angular_compiler
   - PKG=angular_test
 
+install_dartium: true
 script: ./tool/travis.sh
 
 # Only building master means that we don't run two builds for each pull request.
