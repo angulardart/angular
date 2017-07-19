@@ -2,7 +2,8 @@ language: dart
 sudo: false
 
 dart:
-  - dev
+  # Temporarily disabled. We only have the stable release of Dartium installed.
+  # - dev
   - stable
 
 env:
@@ -17,7 +18,7 @@ before_install:
   - export PATH="$PATH:`pwd`/bin/"
   - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
   - unzip dartium-linux-x64-release.zip
-  - ln -s `pwd`/`echo drt-linux-*`/chrome bin/dartium
+  - ln -s `pwd`/`echo dartium-linux-*`/chrome bin/dartium
 
 script: ./tool/travis.sh
 
