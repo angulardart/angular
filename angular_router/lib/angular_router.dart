@@ -28,8 +28,8 @@ export 'src/router_providers_common.dart' show ROUTER_PROVIDERS_COMMON;
 /// ## Example ([live demo](http://plnkr.co/edit/iRUP8B5OUbxCWQ3AcIDm))
 ///
 /// ```
-/// import 'package:angular/core.dart' show Component;
-/// import 'package:angular/router.dart'
+/// import 'package:angular/angular.dart' show Component;
+/// import 'package:angular_router/angular_router.dart'
 ///     show ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig;
 ///
 /// @Component(directives: const [ROUTER_DIRECTIVES])
