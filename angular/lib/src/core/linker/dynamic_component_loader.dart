@@ -44,8 +44,6 @@ class SlowComponentLoader implements DynamicComponentLoader {
     Type type,
     ViewContainerRef location, [
     Injector injector,
-    _,
-    __,
   ]) {
     // Purposefully don't use async/await to retain timing.
     return _resolver.resolveComponent(type).then((component) {
@@ -83,7 +81,5 @@ abstract class DynamicComponentLoader {
     Type type,
     ViewContainerRef location, [
     Injector injector,
-    unused1,
-    unused2,
   ]);
 }

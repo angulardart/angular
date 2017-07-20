@@ -68,17 +68,17 @@ class ComponentLoader {
   /// Creates and loads a new instance of the component defined by [component].
   ///
   /// The returned [ComponentRef] is attached _next to_ the provided [location]
-  /// in the DOM, similar to how `*ngIf` and `*ngFor` operate. For example in
-  /// the following view:
-  /// ```html
-  /// Sponsored by:
-  /// <template #currentAd></template>
+  /// in the DOM, similar to how `*ngIf` and `*ngFor` operate.
   /// ```
   ///
   /// The following API would load a new component next to `currentAd`:
   /// ```dart
   /// @Component(
   ///   selector: 'ad-view',
+  ///   template: r'''
+  ///     This component is sponsored by:
+  ///     <template #currentAd></template>
+  ///   ''',
   /// )
   /// class AdViewComponent {
   ///   final ComponentLoader _loader;
@@ -88,6 +88,7 @@ class ComponentLoader {
   ///
   ///   AdViewDirective(this._loader);
   ///
+  ///   @Input()
   ///   set component(ComponentFactory component) {
   ///     _loader.loadNextToLocation(component, currentAd);
   ///   }
