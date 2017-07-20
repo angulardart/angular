@@ -1,10 +1,10 @@
-import "package:angular/core.dart" show ApplicationRef, Provider;
-import "package:angular/platform/common.dart"
+import 'package:angular/angular.dart' show ApplicationRef, Provider;
+import 'package:angular/platform/common.dart'
     show LocationStrategy, PathLocationStrategy, Location;
-import "package:angular/src/facade/exceptions.dart" show BaseException;
 
-import "route_registry.dart" show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
-import "router.dart" show Router, RootRouter;
+import 'route_registry.dart'
+    show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
+import 'router.dart' show Router, RootRouter;
 
 /// The Platform agnostic ROUTER PROVIDERS
 const List<dynamic> ROUTER_PROVIDERS_COMMON = const [
@@ -29,8 +29,8 @@ RootRouter routerFactory(RouteRegistry registry, Location location,
 
 dynamic routerPrimaryComponentFactory(ApplicationRef app) {
   if (app.componentFactories.length == 0) {
-    throw new BaseException(
-        "Bootstrap at least one component before injecting Router.");
+    throw new ArgumentError(
+        'Bootstrap at least one component before injecting Router.');
   }
   return app.componentFactories[0];
 }

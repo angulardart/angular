@@ -1,7 +1,6 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:collection/collection.dart" show MapEquality;
-import "package:angular/core.dart"
+import 'package:angular/angular.dart'
     show
         Directive,
         Attribute,
@@ -12,13 +11,14 @@ import "package:angular/core.dart"
         OnDestroy,
         Output,
         Injector;
+import 'package:collection/collection.dart' show MapEquality;
 
-import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
-import "../interfaces.dart"
+import '../instruction.dart' show ComponentInstruction, RouteParams, RouteData;
+import '../interfaces.dart'
     show OnActivate, CanReuse, OnReuse, OnDeactivate, CanDeactivate;
-import "../lifecycle/lifecycle_annotations.dart" as hook_mod;
-import "../lifecycle/route_lifecycle_reflector.dart" show hasLifecycleHook;
-import "../router.dart" as router_mod;
+import '../lifecycle/lifecycle_annotations.dart' as hook_mod;
+import '../lifecycle/route_lifecycle_reflector.dart' show hasLifecycleHook;
+import '../router.dart' as router_mod;
 
 var _resolveToTrue = new Future<bool>.value(true);
 

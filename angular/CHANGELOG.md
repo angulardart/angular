@@ -1,3 +1,9 @@
+## 4.0.0-alpha+2
+
+### Breaking changes
+* Router code extracted into new 'angular_router' package.  Replace 'angular/router.dart' imports with
+'angular_router/angular_router.dart'.
+
 ## 4.0.0-alpha+1
 
 ### New features

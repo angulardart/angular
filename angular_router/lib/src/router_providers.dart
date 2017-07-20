@@ -1,11 +1,11 @@
-import "package:angular/di.dart" show Provider;
-import "package:angular/platform/common.dart" show PlatformLocation;
-import "package:angular/src/platform/browser/location/browser_platform_location.dart"
-    show BrowserPlatformLocation;
+import 'package:angular/angular.dart' show Provider;
+import 'package:angular/platform/common.dart'
+    show BrowserPlatformLocation, PlatformLocation;
 
-import "router_providers_common.dart" show ROUTER_PROVIDERS_COMMON;
+import 'router_providers_common.dart' show ROUTER_PROVIDERS_COMMON;
 
-/// A list of [Provider]s. To use the router, you must add this to your application.
+/// A list of [Provider]s. To use the router, you must add this to your
+/// application.
 ///
 /// ### Example ([live demo](http://plnkr.co/edit/iRUP8B5OUbxCWQ3AcIDm))
 ///

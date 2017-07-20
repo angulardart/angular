@@ -1,8 +1,6 @@
-import "package:angular/src/facade/exceptions.dart" show BaseException;
-
-import "../../url_parser.dart" show Url, RootUrl, convertUrlParamsToArray;
-import "../../utils.dart" show TouchMap, normalizeString;
-import "route_path.dart" show RoutePath, GeneratedUrl, MatchedUrl;
+import '../../url_parser.dart' show Url, RootUrl, convertUrlParamsToArray;
+import '../../utils.dart' show TouchMap, normalizeString;
+import 'route_path.dart' show RoutePath, GeneratedUrl, MatchedUrl;
 
 /// `ParamRoutePath`s are made up of `PathSegment`s, each of which can
 /// match a segment of a URL. Different kind of `PathSegment`s match
@@ -18,11 +16,11 @@ abstract class PathSegment {
 /// Identified by a `...` URL segment. This indicates that the
 /// Route will continue to be matched by child `Router`s.
 class ContinuationPathSegment implements PathSegment {
-  String name = "";
-  var specificity = "";
-  var hash = "...";
+  String name = '';
+  var specificity = '';
+  var hash = '...';
   String generate(TouchMap params) {
-    return "";
+    return '';
   }
 
   bool match(String path) {
@@ -34,8 +32,8 @@ class ContinuationPathSegment implements PathSegment {
 /// Only matches the URL segments that equal the segment path
 class StaticPathSegment implements PathSegment {
   String path;
-  String name = "";
-  var specificity = "2";
+  String name = '';
+  var specificity = '2';
   String hash;
   StaticPathSegment(this.path) {
     this.hash = path;
@@ -55,8 +53,8 @@ class StaticPathSegment implements PathSegment {
 class DynamicPathSegment implements PathSegment {
   final String name;
   static var paramMatcher = new RegExp(r'^:([^\/]+)$');
-  var specificity = "1";
-  var hash = ":";
+  var specificity = '1';
+  var hash = ':';
   DynamicPathSegment(this.name);
   bool match(String path) {
     return path.length > 0;
@@ -64,9 +62,8 @@ class DynamicPathSegment implements PathSegment {
 
   String generate(TouchMap params) {
     if (!params.map.containsKey(name)) {
-      throw new BaseException(
-          "Route generator for '$name' was not included in parameters "
-          "passed.");
+      throw new ArgumentError(
+          'Route generator for "$name" was not included in parameters passed.');
     }
     return encodeDynamicSegment(normalizeString(params.get(name)));
   }
@@ -78,8 +75,8 @@ class DynamicPathSegment implements PathSegment {
 class StarPathSegment implements PathSegment {
   final String name;
   static var wildcardMatcher = new RegExp(r'^\*([^\/]+)$');
-  var specificity = "0";
-  var hash = "*";
+  var specificity = '0';
+  var hash = '*';
   StarPathSegment(this.name);
   bool match(String path) {
     return true;
@@ -136,14 +133,14 @@ class ParamRoutePath implements RoutePath {
           return null;
         }
         nextUrlSegment = currentUrlSegment.child;
-      } else if (!pathSegment.match("")) {
+      } else if (!pathSegment.match('')) {
         return null;
       }
     }
     if (this.terminal && nextUrlSegment != null) {
       return null;
     }
-    var urlPath = captured.join("/");
+    var urlPath = captured.join('/');
     var auxiliary = <Url>[];
     var urlParams = <String>[];
     var allParams = positionalParams;
@@ -176,7 +173,7 @@ class ParamRoutePath implements RoutePath {
         }
       }
     }
-    var urlPath = path.join("/");
+    var urlPath = path.join('/');
     var nonPositionalParams = paramTokens.getUnused();
     var urlParams = nonPositionalParams;
     return new GeneratedUrl(urlPath, urlParams);
@@ -187,12 +184,12 @@ class ParamRoutePath implements RoutePath {
   }
 
   void _parsePathString(String routePath) {
-    // Normalize route as not starting with a "/". Recognition will also
+    // Normalize route as not starting with a '/'. Recognition will also
     // normalize.
-    if (routePath.startsWith("/")) {
+    if (routePath.startsWith('/')) {
       routePath = routePath.substring(1);
     }
-    var segmentStrings = routePath.split("/");
+    var segmentStrings = routePath.split('/');
     this._segments = [];
     var limit = segmentStrings.length - 1;
     for (var i = 0; i <= limit; i++) {
@@ -204,9 +201,9 @@ class ParamRoutePath implements RoutePath {
               StarPathSegment.wildcardMatcher.firstMatch(segment)) !=
           null) {
         this._segments.add(new StarPathSegment(match[1]));
-      } else if (segment == "...") {
+      } else if (segment == '...') {
         if (i < limit) {
-          throw new BaseException(
+          throw new ArgumentError(
               'Unexpected "..." before the end of the path for "$routePath".');
         }
         this._segments.add(new ContinuationPathSegment());
@@ -217,22 +214,22 @@ class ParamRoutePath implements RoutePath {
   }
 
   String _calculateSpecificity() {
-    // The "specificity" of a path is used to determine which route is used when
-    // multiple routes match a URL. Static segments (like "/foo") are the most
-    // specific, followed by dynamic segments (like "/:id"). Star segments
+    // The 'specificity' of a path is used to determine which route is used when
+    // multiple routes match a URL. Static segments (like '/foo') are the most
+    // specific, followed by dynamic segments (like '/:id'). Star segments
     // add no specificity. Segments at the start of the path are more specific
     // than proceeding ones.
     //
     // The code below uses place values to combine the different types of
     // segments into a single string that we can sort later. Each static segment
-    // is marked as a specificity of "2," each dynamic segment is worth "1"
-    // specificity, and stars are worth "0" specificity.
+    // is marked as a specificity of '2,' each dynamic segment is worth '1'
+    // specificity, and stars are worth '0' specificity.
     var i, length = this._segments.length, specificity;
     if (length == 0) {
-      // a single slash (or "empty segment" is as specific as a static segment
-      specificity += "2";
+      // a single slash (or 'empty segment' is as specific as a static segment
+      specificity += '2';
     } else {
-      specificity = "";
+      specificity = '';
       for (i = 0; i < length; i++) {
         specificity += this._segments[i].specificity;
       }
@@ -248,24 +245,24 @@ class ParamRoutePath implements RoutePath {
     for (i = 0; i < length; i++) {
       hashParts.add(this._segments[i].hash);
     }
-    return hashParts.join("/");
+    return hashParts.join('/');
   }
 
   void _assertValidPath(String path) {
-    if (path.contains("#")) {
-      throw new BaseException(
+    if (path.contains('#')) {
+      throw new ArgumentError(
           'Path "$path" should not include "#". Use "HashLocationStrategy" '
           'instead.');
     }
     var illegalCharacter = ParamRoutePath.RESERVED_CHARS.firstMatch(path);
     if (illegalCharacter != null) {
-      throw new BaseException(
+      throw new ArgumentError(
           'Path "$path" contains "${ illegalCharacter [ 0 ]}" which is not '
           'allowed in a route config.');
     }
   }
 
-  static final RESERVED_CHARS = new RegExp("//|\\(|\\)|;|\\?|=");
+  static final RESERVED_CHARS = new RegExp('//|\\(|\\)|;|\\?|=');
 }
 
 final RegExp REGEXP_PERCENT = new RegExp(r'%');
@@ -277,11 +274,11 @@ String encodeDynamicSegment(String value) {
   if (value == null) {
     return null;
   }
-  value = value.replaceAll(REGEXP_PERCENT, "%25");
-  value = value.replaceAll(REGEXP_SLASH, "%2F");
-  value = value.replaceAll(REGEXP_OPEN_PARENT, "%28");
-  value = value.replaceAll(REGEXP_CLOSE_PARENT, "%29");
-  value = value.replaceAll(REGEXP_SEMICOLON, "%3B");
+  value = value.replaceAll(REGEXP_PERCENT, '%25');
+  value = value.replaceAll(REGEXP_SLASH, '%2F');
+  value = value.replaceAll(REGEXP_OPEN_PARENT, '%28');
+  value = value.replaceAll(REGEXP_CLOSE_PARENT, '%29');
+  value = value.replaceAll(REGEXP_SEMICOLON, '%3B');
   return value;
 }
 
@@ -294,10 +291,10 @@ String decodeDynamicSegment(String value) {
   if (value == null) {
     return null;
   }
-  value = value.replaceAll(REGEXP_ENC_SEMICOLON, ";");
-  value = value.replaceAll(REGEXP_ENC_CLOSE_PARENT, ")");
-  value = value.replaceAll(REGEXP_ENC_OPEN_PARENT, "(");
-  value = value.replaceAll(REGEXP_ENC_SLASH, "/");
-  value = value.replaceAll(REGEXP_ENC_PERCENT, "%");
+  value = value.replaceAll(REGEXP_ENC_SEMICOLON, ';');
+  value = value.replaceAll(REGEXP_ENC_CLOSE_PARENT, ')');
+  value = value.replaceAll(REGEXP_ENC_OPEN_PARENT, '(');
+  value = value.replaceAll(REGEXP_ENC_SLASH, '/');
+  value = value.replaceAll(REGEXP_ENC_PERCENT, '%');
   return value;
 }
