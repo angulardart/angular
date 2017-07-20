@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   angular: '^4.0.0-alpha'
+  collection: '^1.12.0'
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:

@@ -1,18 +1,16 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:angular/src/facade/exceptions.dart" show BaseException;
-
-import "../instruction.dart" show ComponentInstruction;
-import "../route_config/route_config_decorator.dart"
+import '../instruction.dart' show ComponentInstruction;
+import '../route_config/route_config_decorator.dart'
     show Route, AsyncRoute, AuxRoute, Redirect, RouteDefinition;
-import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
-import "../url_parser.dart" show Url;
-import "route_handlers/async_route_handler.dart" show AsyncRouteHandler;
-import "route_handlers/sync_route_handler.dart" show SyncRouteHandler;
-import "route_paths/param_route_path.dart" show ParamRoutePath;
-import "route_paths/regex_route_path.dart" show RegexRoutePath;
-import "route_paths/route_path.dart" show RoutePath;
-import "rules.dart"
+import '../rules/route_paths/regex_route_path.dart' show RegexSerializer;
+import '../url_parser.dart' show Url;
+import 'route_handlers/async_route_handler.dart' show AsyncRouteHandler;
+import 'route_handlers/sync_route_handler.dart' show SyncRouteHandler;
+import 'route_paths/param_route_path.dart' show ParamRoutePath;
+import 'route_paths/regex_route_path.dart' show RegexRoutePath;
+import 'route_paths/route_path.dart' show RoutePath;
+import 'rules.dart'
     show AbstractRule, RouteRule, RedirectRule, RouteMatch, PathMatch;
 
 /// A `RuleSet` is responsible for recognizing routes for a particular component.
@@ -35,7 +33,7 @@ class RuleSet {
     if (config.name != null && config.name[0].toUpperCase() != config.name[0]) {
       var suggestedName =
           config.name[0].toUpperCase() + config.name.substring(1);
-      throw new BaseException(
+      throw new ArgumentError(
           'Route "${config.path}" with name "${config.name}" does not '
           'begin with an uppercase letter. Route names should be CamelCase '
           'like "$suggestedName".');
@@ -73,7 +71,7 @@ class RuleSet {
     this._assertNoHashCollision(newRule.hash, config.path);
     if (useAsDefault) {
       if (defaultRule != null) {
-        throw new BaseException('Only one route can be default');
+        throw new StateError('Only one route can be default');
       }
       this.defaultRule = newRule;
     }
@@ -137,9 +135,9 @@ class RuleSet {
   void _assertNoHashCollision(String hash, path) {
     this.rules.forEach((rule) {
       if (hash == rule.hash) {
-        throw new BaseException(
-            "Configuration '$path' conflicts with existing route "
-            "'${rule.path}'");
+        throw new ArgumentError(
+            'Configuration "$path" conflicts with existing route '
+                '"${rule.path}"');
       }
     });
   }
@@ -150,19 +148,19 @@ class RuleSet {
         return new RegexRoutePath(
             config.regex, config.serializer as RegexSerializer);
       } else {
-        throw new BaseException(
-            "Route provides a regex property, '${config.regex}', but no "
-            "serializer property");
+        throw new ArgumentError(
+            'Route provides a regex property, "${config.regex}", but no '
+                'serializer property');
       }
     }
     if (config.path != null) {
       // Auxiliary routes do not have a slash at the start.
-      var path = (config is AuxRoute && config.path.startsWith("/"))
+      var path = (config is AuxRoute && config.path.startsWith('/'))
           ? config.path.substring(1)
           : config.path;
       return new ParamRoutePath(path);
     }
-    throw new BaseException(
+    throw new ArgumentError(
         'Route must provide either a path or regex property');
   }
 }

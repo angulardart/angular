@@ -1,17 +1,16 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:angular/di.dart" show Inject, Injectable;
-import "package:angular/platform/common.dart"
+import 'package:angular/angular.dart' show Inject, Injectable;
+import 'package:angular/platform/common.dart'
     show Location, PathLocationStrategy;
-import "package:angular/src/facade/exceptions.dart" show BaseException;
-import "package:angular_router/src/instruction.dart"
-    show ComponentInstruction, Instruction;
-import "package:angular_router/src/route_registry.dart"
-    show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
-import "package:angular_router/src/utils.dart" show getCanActivateHook;
 
-import "directives/router_outlet.dart" show RouterOutlet;
-import "route_config/route_config_decorator.dart" show RouteDefinition;
+import 'directives/router_outlet.dart' show RouterOutlet;
+import 'instruction.dart'
+    show ComponentInstruction, Instruction;
+import 'route_config/route_config_decorator.dart' show RouteDefinition;
+import 'route_registry.dart'
+    show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
+import 'utils.dart' show getCanActivateHook;
 
 final _resolveToTrue = new Future<bool>.value(true);
 final _resolveToFalse = new Future<bool>.value(false);
@@ -68,11 +67,11 @@ class Router {
   /// component.
   Future<dynamic> registerPrimaryOutlet(RouterOutlet outlet) {
     if (outlet.name != null) {
-      throw new BaseException(
+      throw new ArgumentError(
           'registerPrimaryOutlet expects to be called with an unnamed outlet.');
     }
     if (_outlet != null) {
-      throw new BaseException('Primary outlet is already registered.');
+      throw new StateError('Primary outlet is already registered.');
     }
     this._outlet = outlet;
     if (currentInstruction != null) {
@@ -87,7 +86,7 @@ class Router {
   /// implementation.
   void unregisterPrimaryOutlet(RouterOutlet outlet) {
     if (outlet.name != null) {
-      throw new BaseException(
+      throw new ArgumentError(
           'registerPrimaryOutlet expects to be called with an unnamed outlet.');
     }
     this._outlet = null;
@@ -100,7 +99,7 @@ class Router {
   Future<dynamic> registerAuxOutlet(RouterOutlet outlet) {
     var outletName = outlet.name;
     if (outletName == null) {
-      throw new BaseException(
+      throw new ArgumentError(
           'registerAuxOutlet expects to be called with an outlet with a name.');
     }
     var router = this.auxRouter(this.hostComponent);
@@ -428,19 +427,19 @@ class RootRouter extends Router {
     this.root = this;
     this._locationSub = this._location.subscribe((change) {
       // we call recognize ourselves
-      this.recognize(change["url"]).then((instruction) {
+      this.recognize(change['url']).then((instruction) {
         if (instruction != null) {
           this
-              .navigateByInstruction(instruction, change["pop"] != null)
+              .navigateByInstruction(instruction, change['pop'] != null)
               .then((_) {
             // this is a popstate event; no need to change the URL
-            if (change["pop"] != null && change["type"] != "hashchange") {
+            if (change['pop'] != null && change['type'] != 'hashchange') {
               return;
             }
             var emitPath = instruction.path;
             var emitQuery = instruction.toUrlQuery();
-            if (emitPath.length == 0 || emitPath[0] != "/") {
-              emitPath = "/" + emitPath;
+            if (emitPath.length == 0 || emitPath[0] != '/') {
+              emitPath = '/' + emitPath;
             }
             // We've opted to use pushstate and popState APIs regardless of whether you
 
@@ -455,7 +454,7 @@ class RootRouter extends Router {
             // To support these cases where we respond to hashchanges and redirect as a
 
             // result, we need to replace the top item on the stack.
-            if (change["type"] == "hashchange") {
+            if (change['type'] == 'hashchange') {
               if (instruction.rootUrl != this._location.path()) {
                 this._location.replaceState(emitPath, emitQuery);
               }
@@ -464,7 +463,7 @@ class RootRouter extends Router {
             }
           });
         } else {
-          this._emitNavigationFail(change["url"]);
+          this._emitNavigationFail(change['url']);
         }
       });
     });
@@ -475,13 +474,13 @@ class RootRouter extends Router {
       [bool _skipLocationChange = false, bool _replaceState = false]) {
     var emitPath = instruction.path;
     var emitQuery = instruction.toUrlQuery();
-    if (emitPath.length == 0 || emitPath[0] != "/") {
-      emitPath = "/" + emitPath;
+    if (emitPath.length == 0 || emitPath[0] != '/') {
+      emitPath = '/' + emitPath;
     }
     if (_location.platformStrategy is PathLocationStrategy) {
       var hash = this._location.hash();
       if (hash.isNotEmpty) {
-        var normalizedHash = hash.startsWith("#") ? hash : "#" + hash;
+        var normalizedHash = hash.startsWith('#') ? hash : '#' + hash;
         emitQuery = (emitQuery ?? '') + normalizedHash;
       }
     }
