@@ -83,22 +83,6 @@ void main() {
       // should not throw.
       await fixture.update((MyComp component) {});
     });
-
-    test('should allow to pass projectable nodes', () async {
-      var testBed = new NgTestBed<MyComp>();
-      var fixture = await testBed.create();
-      await fixture.update((MyComp component) async {
-        await component.loader.loadNextToLocation(
-            DynamicallyLoadedWithNgContent, component.viewContainerRef, null, [
-          [new Text('hello')]
-        ]);
-      });
-      var newlyInsertedElement =
-          (getDebugNode(fixture.rootElement) as DebugElement)
-              .children[1]
-              .nativeNode;
-      expect(newlyInsertedElement, hasTextContent('dynamic(hello)'));
-    });
   });
 
   group('loadAsRoot', () {
@@ -121,23 +105,6 @@ void main() {
       expect(rootEl, hasTextContent('CHILD_new'));
       componentRef.destroy();
       expect(rootEl.parentNode, isNull);
-    });
-
-    test('should allow to pass projectable nodes', () async {
-      var testBed = new NgTestBed<MyComp>();
-      var fixture = await testBed.create();
-      var rootEl;
-      ComponentRef componentRef;
-      await fixture.update((MyComp component) async {
-        componentRef = await component.loader
-            .load(DynamicallyLoadedWithNgContent, null, projectableNodes: [
-          [new Text('hello')]
-        ]);
-        rootEl = componentRef.location.nativeElement as Element;
-      });
-      document.body.append(rootEl);
-      componentRef.changeDetectorRef.detectChanges();
-      expect(rootEl, hasTextContent('dynamic(hello)'));
     });
   });
 }
