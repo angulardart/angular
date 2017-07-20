@@ -9,6 +9,7 @@ const Object noValueProvided = '__noValueProvided__';
 /// A [Provider] is a binding between a _token_ and an implementation that may
 /// be _provided_ either by invoking a constructor, a function, or referring to
 /// a literal value.
+@optionalTypeArgs
 abstract class Provider<T> implements RuntimeProvider<T> {
   const factory Provider(
     Object token, {
@@ -22,7 +23,7 @@ abstract class Provider<T> implements RuntimeProvider<T> {
 }
 
 /// An alias for `new Provider`; see [Provider].
-Provider provide(
+Provider<dynamic> provide(
   Object token, {
   Type useClass,
   Object useValue: noValueProvided,
@@ -31,7 +32,7 @@ Provider provide(
   List<Object> deps,
   bool multi: false,
 }) =>
-    new Provider(token,
+    new Provider<dynamic>(token,
         useClass: useClass,
         useValue: useValue,
         useExisting: useExisting,
@@ -40,6 +41,7 @@ Provider provide(
         multi: multi);
 
 /// A marker interface that says the provider can be inspected at runtime.
+@optionalTypeArgs
 @visibleForTesting
 abstract class RuntimeProvider<T> {
   /// Either a [Type] or [OpaqueToken] that is an identifier for this provider.
@@ -69,6 +71,7 @@ abstract class RuntimeProvider<T> {
 /// Contains configuration for every possibility of provider, requiring that
 /// runtime injector implementations need to inspect the various properties and
 /// determine how to configure themselves.
+@optionalTypeArgs
 @visibleForTesting
 class SlowProvider<T> implements Provider<T> {
   @override
