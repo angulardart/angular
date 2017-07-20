@@ -8,14 +8,12 @@ import 'package:angular/src/compiler/offline_compiler.dart';
 
 import 'logging.dart' show forwardLogRecord;
 
-typedef Future _SimpleCallback();
-
 // Keys used to store zone local values on the current zone.
 final _loggerKey = #loggingZonedLoggerKey;
 final _templateCompilerKey = #templateCompilerKey;
 
 /// Executes `fn` inside a new `Zone` with the provided zone-local values.
-Future<dynamic> exec(_SimpleCallback fn,
+Future<dynamic> exec(Future Function() fn,
     {TransformLogger log, OfflineCompiler templateCompiler}) async {
   return runZoned(() async {
     var loggerSubscription = Logger.root.onRecord.listen(forwardLogRecord);

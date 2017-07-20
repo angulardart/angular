@@ -46,7 +46,7 @@ class ReplacePipe implements PipeTransform {
       throw new InvalidPipeArgumentException(ReplacePipe, replacement);
     }
     // template fails with literal RegExp e.g /pattern/igm
-    if (replacement is _Matcher) {
+    if (replacement is String Function(Match)) {
       var rgxPattern =
           pattern is String ? new RegExp(pattern) : (pattern as RegExp);
       return input.replaceAllMapped(rgxPattern, replacement);
@@ -68,5 +68,3 @@ class ReplacePipe implements PipeTransform {
     return replacement is String || replacement is Function;
   }
 }
-
-typedef String _Matcher(Match _);

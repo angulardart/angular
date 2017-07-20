@@ -340,8 +340,6 @@ class SelectorMatcher {
   }
 }
 
-typedef void MatchCallbackHandler(CssSelector, dynamic);
-
 class SelectorListContext {
   List<CssSelector> selectors;
   bool alreadyMatched = false;

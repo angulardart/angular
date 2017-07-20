@@ -370,20 +370,17 @@ class NgZone {
   Stream get onUnstable => _onUnstableController.stream;
 }
 
-typedef void ZeroArgFunction();
-typedef void ErrorHandlingFn(error, stackTrace);
-
 /// A `Timer` wrapper that lets you specify additional functions to call when it
 /// is cancelled.
 class WrappedTimer implements Timer {
   Timer _timer;
-  ZeroArgFunction _onCancelCb;
+  void Function() _onCancelCb;
 
   WrappedTimer(Timer timer) {
     _timer = timer;
   }
 
-  void addOnCancelCb(ZeroArgFunction onCancelCb) {
+  void addOnCancelCb(void Function() onCancelCb) {
     if (this._onCancelCb != null) {
       throw "On cancel cb already registered";
     }
