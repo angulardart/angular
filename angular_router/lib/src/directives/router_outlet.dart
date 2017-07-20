@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:angular/core.dart'
+import 'package:angular/angular.dart'
     show
         Directive,
         Attribute,
