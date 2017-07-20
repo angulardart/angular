@@ -1,12 +1,8 @@
 # Crash Safety for AngularDart
 
-[TOC]
-
-
 ## Overview
 
 The following bit of code causes infinite work to be scheduled in an application:
-
 
 ```dart
 @Component(
