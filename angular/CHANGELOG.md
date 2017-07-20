@@ -1,8 +1,41 @@
+## 4.0.0-alpha+2
+
+### New features
+
+* Added `ComponentLoader`, a high-level imperative API for creating components
+  at runtime. It uses internal code-paths that already existed, and is much
+  more future proof. `ComponentLoader` is usable within a `@Directive()`, an
+  `@Component()`, and injectable services.
+
+```dart
+// An `ExampleComponent`s generated code, including a `ComponentFactory`.
+import 'example.template.dart' as ng;
+
+class AdBannerComponent implements AfterViewInit {
+  final ComponentLoader _loader;
+
+  AdBannerComponent(this._loader);
+
+  @override
+  ngAfterViewInit() {
+    final component = _loader.loadDetached(ng.ExampleComponentNgFactory);
+    // Do something with this reference.
+  }
+}
+```
+
+### Breaking changes
+
+* `DynamicComponentLoader` is being renamed `SlowComponentLoader` to encourage
+  users to prefer `ComponentLoader`. Additionally, `projectableNodes:` and
+  `onDestroy:` callbacks were removed - they were mostly unused, and confusing
+  since they were undocumented.
+
 ## 4.0.0-alpha+1
 
 ### New features
 
-* Inheritence for both component and directive metadata is now complete! Any
+* Inheritance for both component and directive metadata is now complete! Any
   field or method-level annotations (`@Input`, `@Output`,
   `@ViewChild|Children`, `@ContentChild|Children`) are now inherited through
   super types (`extends`, `implements`, `with`) [#231](https://github.com/dart-lang/angular/issues/231):
