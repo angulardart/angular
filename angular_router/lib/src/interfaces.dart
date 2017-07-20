@@ -1,4 +1,4 @@
-import 'package:angular_router/src/instruction.dart' show ComponentInstruction;
+import 'instruction.dart' show ComponentInstruction;
 
 /// Defines route lifecycle method `routerOnActivate`, which is called by the router at the end of a
 /// successful route navigation.
