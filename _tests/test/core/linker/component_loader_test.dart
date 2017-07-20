@@ -29,7 +29,13 @@ void main() {
       expect(fixture.text, 'BeforeDynamicAfter');
     });
 
-    // TODO(matanl): Add test-case for detached component.
+    test('should be able to load from a service', () async {
+      final fixture = await new NgTestBed<CompWithService>().create();
+      await fixture.update((comp) {
+        final ref = comp.service.loader.loadDetached(ng.DynamicCompNgFactory);
+        expect(ref.location.nativeElement.text, 'Dynamic');
+      });
+    });
   });
 }
 
@@ -62,6 +68,24 @@ class DirectiveThatIsLocation {
   DirectiveThatIsLocation(ComponentLoader loader) {
     loader.loadNextTo(ng.DynamicCompNgFactory);
   }
+}
+
+@Component(
+  selector: 'comp-with-service',
+  providers: const [Service],
+  template: '',
+)
+class CompWithService {
+  final Service service;
+
+  CompWithService(this.service);
+}
+
+@Injectable()
+class Service {
+  final ComponentLoader loader;
+
+  Service(this.loader);
 }
 
 @Component(

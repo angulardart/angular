@@ -2,6 +2,7 @@ import "application_ref.dart" show APPLICATION_CORE_PROVIDERS;
 import "application_tokens.dart" show APP_ID_RANDOM_PROVIDER;
 import 'di.dart' show Provider;
 import "linker/app_view_utils.dart" show AppViewUtils;
+import "linker/component_loader.dart";
 import "linker/component_resolver.dart" show ComponentResolver;
 import "linker/component_resolver.dart" show ReflectorComponentResolver;
 import "linker/dynamic_component_loader.dart" show DynamicComponentLoader;
@@ -14,5 +15,6 @@ const List APPLICATION_COMMON_PROVIDERS = const [
   const Provider(ComponentResolver, useClass: ReflectorComponentResolver),
   APP_ID_RANDOM_PROVIDER,
   AppViewUtils,
+  const Provider(ComponentLoader),
   const Provider(DynamicComponentLoader, useClass: DynamicComponentLoaderImpl)
 ];
