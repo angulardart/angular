@@ -2,9 +2,9 @@ import "package:angular/core.dart" show ApplicationRef, Provider;
 import "package:angular/platform/common.dart"
     show LocationStrategy, PathLocationStrategy, Location;
 import "package:angular/src/facade/exceptions.dart" show BaseException;
-
-import "route_registry.dart" show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
-import "router.dart" show Router, RootRouter;
+import "package:angular_router/src/route_registry.dart"
+    show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
+import "package:angular_router/src/router.dart" show Router, RootRouter;
 
 /// The Platform agnostic ROUTER PROVIDERS
 const List<dynamic> ROUTER_PROVIDERS_COMMON = const [

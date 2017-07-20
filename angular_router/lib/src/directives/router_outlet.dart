@@ -1,6 +1,5 @@
 import "dart:async";
 
-import "package:collection/collection.dart" show MapEquality;
 import "package:angular/core.dart"
     show
         Directive,
@@ -12,6 +11,7 @@ import "package:angular/core.dart"
         OnDestroy,
         Output,
         Injector;
+import "package:collection/collection.dart" show MapEquality;
 
 import "../instruction.dart" show ComponentInstruction, RouteParams, RouteData;
 import "../interfaces.dart"

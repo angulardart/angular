@@ -4,14 +4,18 @@ import 'dart:math' as math;
 import "package:angular/core.dart" show OpaqueToken, ComponentFactory;
 import "package:angular/di.dart" show Injectable, Inject;
 import "package:angular/src/facade/exceptions.dart" show BaseException;
-
-import "instruction.dart"
+import "package:angular_router/src/instruction.dart"
     show
         Instruction,
         ResolvedInstruction,
         RedirectInstruction,
         UnresolvedInstruction,
         DefaultInstruction;
+import "package:angular_router/src/url_parser.dart"
+    show parser, Url, convertUrlParamsToArray;
+import "package:angular_router/src/utils.dart"
+    show getComponentAnnotations, getComponentType;
+
 import "route_config/route_config_decorator.dart"
     show RouteConfig, Route, AuxRoute, RouteDefinition;
 import "route_config/route_config_normalizer.dart"
@@ -19,8 +23,6 @@ import "route_config/route_config_normalizer.dart"
 import "rules/route_paths/route_path.dart" show GeneratedUrl;
 import "rules/rule_set.dart" show RuleSet;
 import "rules/rules.dart" show PathMatch, RedirectMatch, RouteMatch;
-import "url_parser.dart" show parser, Url, convertUrlParamsToArray;
-import "utils.dart" show getComponentAnnotations, getComponentType;
 
 var _resolveToNull = new Future<Null>.value(null);
 // A LinkItemArray is an array, which describes a set of routes

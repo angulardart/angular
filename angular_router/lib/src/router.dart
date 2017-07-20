@@ -4,12 +4,14 @@ import "package:angular/di.dart" show Inject, Injectable;
 import "package:angular/platform/common.dart"
     show Location, PathLocationStrategy;
 import "package:angular/src/facade/exceptions.dart" show BaseException;
+import "package:angular_router/src/instruction.dart"
+    show ComponentInstruction, Instruction;
+import "package:angular_router/src/route_registry.dart"
+    show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
+import "package:angular_router/src/utils.dart" show getCanActivateHook;
 
 import "directives/router_outlet.dart" show RouterOutlet;
-import "instruction.dart" show ComponentInstruction, Instruction;
 import "route_config/route_config_decorator.dart" show RouteDefinition;
-import "route_registry.dart" show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
-import "utils.dart" show getCanActivateHook;
 
 final _resolveToTrue = new Future<bool>.value(true);
 final _resolveToFalse = new Future<bool>.value(false);
