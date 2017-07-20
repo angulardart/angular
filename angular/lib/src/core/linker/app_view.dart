@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:func/func.dart';
 import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
@@ -557,7 +556,7 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  VoidFunc1<E> eventHandler0<E>(VoidFunc0 handler) {
+  void Function(E) eventHandler0<E>(void Function() handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
       if (NgZone.isInAngularZone()) {
@@ -576,7 +575,7 @@ abstract class AppView<T> {
   // parameter of the event listener is a subclass of Event. The Event passed in
   // from EventTarget.addEventListener() can then be safely coerced back to its
   // known type.
-  VoidFunc1<E> eventHandler1<E, F extends E>(VoidFunc1<F> handler) {
+  void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
       if (NgZone.isInAngularZone()) {

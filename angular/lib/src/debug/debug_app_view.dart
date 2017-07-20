@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:func/func.dart';
 import 'package:js/js.dart' as js;
 import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
@@ -144,7 +143,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  VoidFunc1<E> eventHandler0<E>(VoidFunc0 handler) {
+  void Function(E) eventHandler0<E>(void Function() handler) {
     return (E event) {
       _resetDebug();
       try {
@@ -157,7 +156,7 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  VoidFunc1<E> eventHandler1<E, F extends E>(VoidFunc1<F> handler) {
+  void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
     return (E event) {
       _resetDebug();
       try {
