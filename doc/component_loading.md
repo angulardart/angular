@@ -167,6 +167,47 @@ class BlogArticleComponent {
 }
 ```
 
+### Deferred loading
+
+`ComponentLoader` also works great with _deferred_ loading. Here is an example
+of the same component above using _deferred_ loading to load more code on
+demand:
+
+```dart
+import 'example_ad_1.template.dart' deferred as example_1;
+import 'example_ad_2.template.dart' deferred as example_2;
+
+@Component(
+  selector: 'blog-article',
+  template: r'''
+    Blah blah blah.<br>
+    This article is sponsored by:<br>
+    <template [adView]="component"></template>
+  ''',
+  directives: const [
+    AdViewDirective,
+  ],
+)
+class BlogArticleComponent implements OnInit {
+  final AdService _adService;
+
+  BlogArticleComponent(this._adService);
+
+  @override
+  ngOnInit() async {
+    if (adService.showExample1) {
+      await example_1.loadLibrary();
+      component = example_1.Example1ComponentNgFactory;
+    } else {
+      await example_2.loadLibrary();
+      component = example_2.Example2ComponentNgFactory;
+    }
+  }
+
+  ComponentFactory component;
+}
+```
+
 ## Migration
 
 If you see `SlowComponentLoader` or `DynamicComponentLoader` in your app it
