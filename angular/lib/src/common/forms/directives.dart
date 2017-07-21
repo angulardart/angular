@@ -75,3 +75,5 @@ const List<Type> FORM_DIRECTIVES = const [
   MaxLengthValidator,
   PatternValidator
 ];
+
+const List<Type> formDirectives = FORM_DIRECTIVES;
