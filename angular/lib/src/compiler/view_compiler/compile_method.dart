@@ -86,4 +86,6 @@ class CompileMethod {
   }
 
   bool get isEmpty => _bodyStatements.isEmpty;
+
+  bool get isNotEmpty => _bodyStatements.isNotEmpty;
 }

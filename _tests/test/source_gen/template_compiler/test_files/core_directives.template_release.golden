@@ -16,7 +16,7 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'core_directives.dart' as import1;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
-import 'package:angular/src/common/directives/ng_for.dart'
+import 'package:angular/src/common/directives/ng_for.template.dart'
     as import4;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
@@ -27,8 +27,10 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
     as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/facade/lang.dart'
+import 'package:angular/src/common/directives/ng_for.dart'
     as import12;
+import 'package:angular/src/facade/lang.dart'
+    as import13;
 
 const List<dynamic> styles$TestFooComponent = const [];
 
@@ -36,7 +38,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ViewContainer _appEl_1;
   NgIf _NgIf_1_5;
   ViewContainer _appEl_3;
-  import4.NgFor _NgFor_3_5;
+  import4.NgForNgCd _NgFor_3_5;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -64,7 +66,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
     TemplateRef _TemplateRef_3_4 =
         new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
-    _NgFor_3_5 = new import4.NgFor(_appEl_3, _TemplateRef_3_4);
+    _NgFor_3_5 =
+        new import4.NgForNgCd(new import12.NgFor(_appEl_3, _TemplateRef_3_4));
     import8.Text _text_4 = new import8.Text('\n    ');
     parentRenderNode.append(_text_4);
     init(const [], const []);
@@ -73,15 +76,13 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
     final import1.TestFooComponent _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
     _NgIf_1_5.ngIf = _ctx.foo;
     if (firstCheck) {
-      if (!identical(_ctx.bars, null)) {
-        (_NgFor_3_5.ngForOf = _ctx.bars);
-      }
+      _NgFor_3_5.ngSet$ngForOf(_ctx.bars);
     }
-    _NgFor_3_5.ngDoCheck();
+    _NgFor_3_5.instance.ngDoCheck();
     _appEl_1.detectChangesInNestedViews();
     _appEl_3.detectChangesInNestedViews();
   }
@@ -149,7 +150,7 @@ class ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   @override
   void detectChangesInternal() {
     final currVal_0 = import9.interpolate0(locals['\$implicit']);
-    if (!import12.looseIdentical(_expr_0, currVal_0)) {
+    if (!import13.looseIdentical(_expr_0, currVal_0)) {
       _text_3.text = currVal_0;
       _expr_0 = currVal_0;
     }
