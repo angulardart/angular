@@ -146,11 +146,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         return o.NULL_EXPR;
       }
     } else {
-      return parent.component != null &&
-              !identical(parent.component.template.encapsulation,
-                  ViewEncapsulation.Native)
-          ? o.NULL_EXPR
-          : parent.renderNode;
+      return parent.component != null ? o.NULL_EXPR : parent.renderNode;
     }
   }
 
@@ -362,16 +358,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         } else {
           // Generate code to create Html element, append to parent and
           // optionally add dbg info in single call.
-          _createElementAndAppend(
-              tagNameExpr,
-              parentRenderNodeExpr,
-              fieldName,
-              view.component.template.encapsulation ==
-                      ViewEncapsulation.Native &&
-                  (nodeIndex == 0),
-              generateDebugInfo,
-              ast.sourceSpan,
-              nodeIndex);
+          _createElementAndAppend(tagNameExpr, parentRenderNodeExpr, fieldName,
+              generateDebugInfo, ast.sourceSpan, nodeIndex);
         }
       } else {
         view.createMethod.addStmt(new o.WriteClassMemberExpr(
@@ -456,7 +444,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       o.Expression tagName,
       o.Expression parent,
       String targetFieldName,
-      bool parentIsShadowRoot,
       bool generateDebugInfo,
       SourceSpan debugSpan,
       int debugNodeIndex) {
@@ -467,11 +454,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     if (parent != null && parent != o.NULL_EXPR) {
       o.Expression createExpr;
       if (generateDebugInfo) {
-        createExpr = o
-            .importExpr(parentIsShadowRoot
-                ? Identifiers.createAndAppendToShadowRootDbg
-                : Identifiers.createAndAppendDbg)
-            .callFn([
+        createExpr = o.importExpr(Identifiers.createAndAppendDbg).callFn([
           o.THIS_EXPR,
           new o.ReadVarExpr(docVarName),
           tagName,
@@ -486,9 +469,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ]);
       } else {
         createExpr = o
-            .importExpr(parentIsShadowRoot
-                ? Identifiers.createAndAppendToShadowRoot
-                : Identifiers.createAndAppend)
+            .importExpr(Identifiers.createAndAppend)
             .callFn([new o.ReadVarExpr(docVarName), tagName, parent]);
       }
       view.createMethod.addStmt(
@@ -1063,17 +1044,9 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   var parentRenderNodeStmts = <o.Statement>[];
   bool isComponent = view.viewType == ViewType.COMPONENT;
   if (isComponent) {
-    o.ExternalType nodeType;
-    if (view.component.template.encapsulation == ViewEncapsulation.Native) {
-      parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
-          "createViewShadowRoot",
-          [new o.ReadClassMemberExpr(appViewRootElementName)]);
-      nodeType = o.importType(Identifiers.HTML_SHADOW_ROOT_ELEMENT);
-    } else {
-      parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
-          "initViewRoot", [new o.ReadClassMemberExpr(appViewRootElementName)]);
-      nodeType = o.importType(Identifiers.HTML_HTML_ELEMENT);
-    }
+    final nodeType = o.importType(Identifiers.HTML_HTML_ELEMENT);
+    parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
+        "initViewRoot", [new o.ReadClassMemberExpr(appViewRootElementName)]);
     parentRenderNodeStmts.add(parentRenderNodeVar
         .set(parentRenderNodeExpr)
         .toDeclStmt(nodeType, [o.StmtModifier.Final]));

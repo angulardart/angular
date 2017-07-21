@@ -47,9 +47,7 @@ class RenderComponentType {
 
   void shimStyles(SharedStylesHost stylesHost) {
     _styles = _flattenStyles(id, templateStyles, []);
-    if (encapsulation != ViewEncapsulation.Native) {
-      stylesHost.addStyles(this._styles);
-    }
+    stylesHost.addStyles(this._styles);
     if (encapsulation == ViewEncapsulation.Emulated) {
       _contentAttr = _shimContentAttribute(id);
       _hostAttr = _shimHostAttribute(id);

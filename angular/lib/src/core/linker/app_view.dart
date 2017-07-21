@@ -320,15 +320,6 @@ abstract class AppView<T> {
     viewData.destroy();
     destroyInternal();
     dirtyParentQueriesInternal();
-    destroyViewNodes(hostElement);
-  }
-
-  void destroyViewNodes(hostElement) {
-    if (componentType.encapsulation == ViewEncapsulation.Native &&
-        hostElement != null) {
-      sharedStylesHost.removeHost(hostElement.shadowRoot);
-      domRootRendererIsDirty = true;
-    }
   }
 
   void addOnDestroyCallback(OnDestroyCallback callback) {
@@ -467,22 +458,6 @@ abstract class AppView<T> {
       hostElement.classes.add(componentType.hostAttr);
     }
     return hostElement;
-  }
-
-  /// Creates native shadowdom root and initializes styles.
-  ShadowRoot createViewShadowRoot(dynamic hostElement) {
-    assert(componentType.encapsulation == ViewEncapsulation.Native);
-    var nodesParent;
-    Element host = hostElement;
-    nodesParent = host.createShadowRoot();
-    sharedStylesHost.addHost(nodesParent);
-    List<String> styles = componentType.styles;
-    int styleCount = styles.length;
-    for (var i = 0; i < styleCount; i++) {
-      StyleElement style = sharedStylesHost.createStyleElement(styles[i]);
-      nodesParent.append(style);
-    }
-    return nodesParent;
   }
 
   // Called by template.dart code to updates [class.X] style bindings.

@@ -110,12 +110,6 @@ void main() {
       expect(elm.className.contains('_nghost'), true);
     });
 
-    test('Should support native encapsulation', () async {
-      var testBed = new NgTestBed<NativeContainerTest>();
-      NgTestFixture<NativeContainerTest> testFixture = await testBed.create();
-      Element elm = testFixture.rootElement;
-      expect(elm.getComputedStyle().backgroundColor, 'rgb(255, 0, 0)');
-    });
     test('Should apply shim class on top of host attr.class property',
         () async {
       var testBed = new NgTestBed<NgHostAttribShimTest>();
@@ -272,22 +266,6 @@ String colorToHex(String value) {
   }
   return value;
 }
-
-@Component(
-    selector: 'native-host-test',
-    template: '<div id="item1">Test1</div><native-comp></native-comp>'
-        '<ng-content></ng-content>',
-    styles: const [':host { background-color: red; }'],
-    directives: const [NativeComp],
-    encapsulation: ViewEncapsulation.Native)
-class NativeContainerTest {}
-
-@Component(
-    selector: 'native-comp',
-    template: '<div id="item1">Test1</div><ng-content></ng-content>',
-    styles: const [':host { background-color: blue; }'],
-    encapsulation: ViewEncapsulation.Native)
-class NativeComp {}
 
 @Component(
     selector: 'feature-promo',
