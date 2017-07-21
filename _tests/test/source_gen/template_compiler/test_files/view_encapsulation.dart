@@ -7,12 +7,6 @@ import 'package:angular/angular.dart';
 class EmulatedComponent {}
 
 @Component(
-    selector: 'Native',
-    template: '<div>Native</div>',
-    encapsulation: ViewEncapsulation.Native)
-class NativeComponent {}
-
-@Component(
     selector: 'None',
     template: '<div>None</div>',
     encapsulation: ViewEncapsulation.None)

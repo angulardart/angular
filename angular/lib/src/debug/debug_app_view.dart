@@ -301,17 +301,6 @@ class DebugAppView<T> extends AppView<T> {
     super.attachViewAfter(node, viewRootNodes);
   }
 
-  @override
-  void destroyViewNodes(hostElement) {
-    int nodeCount = allNodes.length;
-    for (int i = 0; i < nodeCount; i++) {
-      var debugNode = getDebugNode(allNodes[i]);
-      if (debugNode == null) continue;
-      removeDebugNodeFromIndex(debugNode);
-    }
-    super.destroyViewNodes(hostElement);
-  }
-
   void _rethrowWithContext(dynamic e, dynamic stack,
       {bool stopChangeDetection: true}) {
     if (!(e is ViewWrappedException)) {

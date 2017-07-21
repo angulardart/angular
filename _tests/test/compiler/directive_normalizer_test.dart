@@ -153,18 +153,6 @@ void main() {
       });
     });
     group("normalizeLoadedTemplate", () {
-      test("should store the viewEncapsulationin the result", () async {
-        var viewEncapsulation = ViewEncapsulation.Native;
-        var normalizer = await getNormalizer();
-        var template = normalizer.normalizeLoadedTemplate(
-            dirType,
-            new CompileTemplateMetadata(
-                encapsulation: viewEncapsulation, styles: [], styleUrls: []),
-            "",
-            "package:some/module/",
-            true);
-        expect(template.encapsulation, viewEncapsulation);
-      });
       test("should keep the template as html", () async {
         var normalizer = await getNormalizer();
         var template = normalizer.normalizeLoadedTemplate(
