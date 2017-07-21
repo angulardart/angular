@@ -32,6 +32,8 @@ class AdBannerComponent implements AfterViewInit {
   since they were undocumented.
 * Removed `angular/platform/browser_static.dart`; replace imports with
   `angular/angular.dart`.
+* Removed `angular/platform/common_dom.dart`; replace imports with
+  `angular/angular.dart`.
 
 ## 4.0.0-alpha+1
 

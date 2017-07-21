@@ -1,19 +1,19 @@
-import "dart:async";
-import "dart:html";
+import 'dart:async';
+import 'dart:html';
 
-import "package:angular/core.dart"
+import 'package:angular/core.dart'
     show
         ComponentRef,
         DynamicComponentLoader,
         Injector,
         ElementRef,
         ChangeDetectorRef;
-import "package:angular/di.dart" show Injectable;
-import 'package:angular/platform/common_dom.dart';
-import "package:angular/src/core/linker/app_view_utils.dart";
-import "package:angular/src/debug/debug_node.dart"
+import 'package:angular/di.dart' show Injectable;
+import 'package:angular/src/core/linker/app_view_utils.dart';
+import 'package:angular/src/core/render/api.dart' show sharedStylesHost;
+import 'package:angular/src/debug/debug_node.dart'
     show DebugElement, getDebugNode;
-import "package:angular/src/platform/dom/dom_tokens.dart" show DOCUMENT;
+import 'package:angular/src/platform/dom/dom_tokens.dart' show DOCUMENT;
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
 /// Fixture for debugging and testing a component.
