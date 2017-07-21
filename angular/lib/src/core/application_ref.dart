@@ -1,22 +1,20 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular/platform/common_dom.dart';
-import 'package:angular/src/core/change_detection/constants.dart';
-import 'package:angular/src/core/linker/app_view.dart'
-    show lastGuardedView, caughtException, caughtStack;
-import 'package:angular/src/core/linker/view_ref.dart';
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException, ExceptionHandler;
-import 'package:angular/src/facade/lang.dart' show assertionsEnabled, isDartVM;
-import 'package:angular/src/platform/dom/shared_styles_host.dart';
-
+import '../facade/exceptions.dart' show BaseException, ExceptionHandler;
+import '../facade/lang.dart' show assertionsEnabled, isDartVM;
+import '../platform/dom/shared_styles_host.dart';
 import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
 import 'change_detection/change_detector_ref.dart';
+import 'change_detection/constants.dart';
 import 'di.dart';
+import 'linker/app_view.dart'
+    show lastGuardedView, caughtException, caughtStack;
 import 'linker/app_view_utils.dart';
 import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
 import 'linker/component_resolver.dart';
+import 'linker/view_ref.dart';
+import 'render/api.dart' show sharedStylesHost;
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
