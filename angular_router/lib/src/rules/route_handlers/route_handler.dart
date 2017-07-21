@@ -1,6 +1,6 @@
-import "dart:async";
+import 'dart:async';
 
-import "../../instruction.dart" show RouteData;
+import '../../instruction.dart' show RouteData;
 
 abstract class RouteHandler {
   dynamic componentType;

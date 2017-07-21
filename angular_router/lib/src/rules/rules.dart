@@ -1,11 +1,9 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:angular/src/facade/exceptions.dart" show BaseException;
-
-import "../instruction.dart" show ComponentInstruction;
-import "../url_parser.dart" show Url, convertUrlParamsToArray;
-import "route_handlers/route_handler.dart" show RouteHandler;
-import "route_paths/route_path.dart" show GeneratedUrl, RoutePath;
+import '../instruction.dart' show ComponentInstruction;
+import '../url_parser.dart' show Url, convertUrlParamsToArray;
+import 'route_handlers/route_handler.dart' show RouteHandler;
+import 'route_paths/route_path.dart' show GeneratedUrl, RoutePath;
 
 // RouteMatch objects hold information about a match between a rule and a URL
 abstract class RouteMatch {}
@@ -43,8 +41,7 @@ class RedirectRule implements AbstractRule {
   }
 
   set path(val) {
-    throw new BaseException(
-        "you cannot set the path of a RedirectRule directly");
+    throw new StateError('you cannot set the path of a RedirectRule directly');
   }
 
   /// Returns `null` or a `ParsedUrl` representing the new path to match
@@ -58,7 +55,7 @@ class RedirectRule implements AbstractRule {
   }
 
   ComponentInstruction generate(Map<String, dynamic> params) {
-    throw new BaseException('Tried to generate a redirect.');
+    throw new StateError('Tried to generate a redirect.');
   }
 }
 
@@ -82,7 +79,7 @@ class RouteRule implements AbstractRule {
   }
 
   set path(val) {
-    throw new BaseException("you cannot set the path of a RouteRule directly");
+    throw new StateError('you cannot set the path of a RouteRule directly');
   }
 
   Future<RouteMatch> recognize(Url beginningSegment) {
@@ -112,10 +109,10 @@ class RouteRule implements AbstractRule {
   ComponentInstruction _getInstruction(
       String urlPath, List<String> urlParams, Map<String, String> params) {
     if (handler.componentType == null) {
-      throw new BaseException(
+      throw new StateError(
           'Tried to get instruction before the type was loaded.');
     }
-    var hashKey = urlPath + "?" + urlParams.join("&");
+    var hashKey = urlPath + '?' + urlParams.join('&');
     if (this._cache.containsKey(hashKey)) {
       return this._cache[hashKey];
     }

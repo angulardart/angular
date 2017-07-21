@@ -1,9 +1,9 @@
-import "dart:async";
+import 'dart:async';
 
-import "../route_definition.dart" show RouteDefinition;
-import "../rules/route_paths/regex_route_path.dart" show RegexSerializer;
+import '../route_definition.dart' show RouteDefinition;
+import '../rules/route_paths/regex_route_path.dart' show RegexSerializer;
 
-export "../route_definition.dart" show RouteDefinition;
+export '../route_definition.dart' show RouteDefinition;
 
 /// The [RouteConfig] decorator defines routes for a given component.
 ///

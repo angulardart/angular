@@ -1,7 +1,7 @@
-import "dart:async";
+import 'dart:async';
 
-import "../../instruction.dart" show RouteData, BLANK_ROUTE_DATA;
-import "route_handler.dart" show RouteHandler;
+import '../../instruction.dart' show RouteData, BLANK_ROUTE_DATA;
+import 'route_handler.dart' show RouteHandler;
 
 class SyncRouteHandler implements RouteHandler {
   dynamic componentType;

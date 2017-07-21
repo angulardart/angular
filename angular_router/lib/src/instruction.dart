@@ -1,4 +1,4 @@
-import "dart:async";
+import 'dart:async';
 
 /// Immutable map of parameters for the given route
 /// based on the url matcher and optional parameters for that route.
@@ -160,13 +160,13 @@ abstract class Instruction {
   String _stringifyPathMatrixAuxPrefixed() {
     var primary = _stringifyPathMatrixAux();
     if (primary.length > 0) {
-      primary = "/" + primary;
+      primary = '/' + primary;
     }
     return primary;
   }
 
   String _stringifyMatrixParams() {
-    return urlParams.isNotEmpty ? (";" + urlParams.join(";")) : "";
+    return urlParams.isNotEmpty ? (';' + urlParams.join(';')) : '';
   }
 
   String _stringifyPathMatrixAux() {
@@ -215,7 +215,7 @@ class UnresolvedInstruction extends Instruction {
   final List<String> _urlParams;
 
   UnresolvedInstruction(this._resolver,
-      [this._urlPath = "", this._urlParams = const []])
+      [this._urlPath = '', this._urlParams = const []])
       : super(null, null, {});
 
   String get urlPath {
@@ -259,7 +259,7 @@ class RedirectInstruction extends ResolvedInstruction {
 ///
 /// [ComponentInstruction]`s are [hash consed]
 /// (https://en.wikipedia.org/wiki/Hash_consing). You should
-/// never construct one yourself with "new." Instead, rely on router's internal
+/// never construct one yourself with 'new.' Instead, rely on router's internal
 /// recognizer to construct.
 ///
 /// You should not modify this object. It should be treated as immutable.

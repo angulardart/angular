@@ -1,5 +1,5 @@
-import "../../url_parser.dart" show Url;
-import "route_path.dart" show RoutePath, GeneratedUrl, MatchedUrl;
+import '../../url_parser.dart' show Url;
+import 'route_path.dart' show RoutePath, GeneratedUrl, MatchedUrl;
 
 typedef GeneratedUrl RegexSerializer(Map<String, dynamic> params);
 
@@ -8,7 +8,7 @@ class RegexRoutePath implements RoutePath {
   final RegexSerializer _serializer;
   String hash;
   bool terminal = true;
-  String specificity = "2";
+  String specificity = '2';
   RegExp _regex;
   RegexRoutePath(this._reString, this._serializer) {
     this.hash = this._reString;

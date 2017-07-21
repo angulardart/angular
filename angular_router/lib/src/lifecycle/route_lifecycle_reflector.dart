@@ -1,5 +1,4 @@
-import 'package:angular/src/router/interfaces.dart';
-
+import '../interfaces.dart';
 import 'lifecycle_annotations.dart';
 
 bool hasLifecycleHook(RouteLifecycleHook e, instance) {
