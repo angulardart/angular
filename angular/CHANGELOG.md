@@ -30,6 +30,8 @@ class AdBannerComponent implements AfterViewInit {
   users to prefer `ComponentLoader`. Additionally, `projectableNodes:` and
   `onDestroy:` callbacks were removed - they were mostly unused, and confusing
   since they were undocumented.
+* Removed `angular/platform/browser_static.dart`; replace imports with
+  `angular/angular.dart`.
 
 ## 4.0.0-alpha+1
 
