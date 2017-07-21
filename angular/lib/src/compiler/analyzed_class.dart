@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 
 import 'output/output_ast.dart';
+import 'view_compiler/constants.dart';
 
 /// A wrapper around [ClassElement] which exposes the functionality
 /// needed for the view compiler to find types for expressions.
@@ -34,7 +35,7 @@ bool isImmutable(
     if (expression.receiver == context &&
         // make sure the context is the Component
         context is ReadVarExpr &&
-        context.name == '_ctx') {
+        context.name == DetectChangesVars.cachedCtx.name) {
       var field = analyzedClass._classElement.getField(expression.name);
       if (field != null) {
         return !field.isSynthetic && (field.isFinal || field.isConst);

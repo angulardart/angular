@@ -532,8 +532,8 @@ class ReadPropExpr extends Expression {
   final Expression receiver;
   final String name;
 
-  ReadPropExpr(this.receiver, this.name, [OutputType type = null])
-      : super(type);
+  ReadPropExpr(this.receiver, this.name, {OutputType outputType = null})
+      : super(outputType);
 
   @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -962,7 +962,8 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
   @override
   dynamic visitReadPropExpr(ReadPropExpr ast, dynamic context) {
     return new ReadPropExpr(
-        ast.receiver.visitExpression(this, context), ast.name, ast.type);
+        ast.receiver.visitExpression(this, context), ast.name,
+        outputType: ast.type);
   }
 
   @override

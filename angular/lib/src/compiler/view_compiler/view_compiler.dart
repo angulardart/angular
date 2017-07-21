@@ -153,4 +153,6 @@ class ViewCompiler {
     }
     return nodeDebugInfosVar;
   }
+
+  bool get genDebugInfo => _genConfig.genDebugInfo;
 }

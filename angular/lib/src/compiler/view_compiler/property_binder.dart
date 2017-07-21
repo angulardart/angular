@@ -18,6 +18,7 @@ import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
     show
         BoundTextAst,
+        BoundDirectivePropertyAst,
         BoundElementPropertyAst,
         DirectiveAst,
         PropertyBindingType;
@@ -25,6 +26,7 @@ import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
+import 'directive_compiler.dart';
 import 'expression_converter.dart'
     show ExpressionWithWrappedValueInfo, convertCdExpressionToIr;
 import 'view_builder.dart' show buildUpdaterFunctionName;
@@ -68,11 +70,6 @@ void bind(
       DetectChangesVars.valUnwrapper,
       view.component.template.preserveWhitespace,
       _isBoolType(fieldType));
-  if (context is o.ReadVarExpr &&
-      context.name == '_ctx' &&
-      checkExpression.anyExplicit) {
-    view.cacheCtxInDetectChangesMethod = true;
-  }
   if (isImmutable(
       checkExpression.expression, context, view.component.analyzedClass)) {
     // If the expression is a literal, it will never change, so we can run it
@@ -85,7 +82,7 @@ void bind(
     // e.g. an empty expression was given
     return;
   }
-  bool isPrimitive = _isPrimitiveFieldType(fieldType);
+  bool isPrimitive = isPrimitiveFieldType(fieldType);
   view.fields.add(new o.ClassField(fieldExpr.name,
       modifiers: const [o.StmtModifier.Private],
       outputType: isPrimitive ? fieldType : null));
@@ -166,15 +163,15 @@ void bindRenderText(
       currValExpr,
       valueField,
       boundText.value,
-      o.variable('_ctx'),
+      DetectChangesVars.cachedCtx,
       [compileNode.renderNode.prop('text').set(currValExpr).toStmt()],
       dynamicRenderMethod,
       constantRenderMethod);
-  if (!constantRenderMethod.isEmpty) {
+  if (constantRenderMethod.isNotEmpty) {
     view.detectChangesRenderPropertiesMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck, constantRenderMethod.finish()));
   }
-  if (!dynamicRenderMethod.isEmpty) {
+  if (dynamicRenderMethod.isNotEmpty) {
     view.detectChangesRenderPropertiesMethod
         .addStmts(dynamicRenderMethod.finish());
   }
@@ -293,11 +290,11 @@ void bindAndWriteToRenderer(
         dynamicPropertiesMethod, constantPropertiesMethod,
         fieldType: fieldType);
   }
-  if (!constantPropertiesMethod.isEmpty) {
+  if (constantPropertiesMethod.isNotEmpty) {
     targetMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck, constantPropertiesMethod.finish()));
   }
-  if (!dynamicPropertiesMethod.isEmpty) {
+  if (dynamicPropertiesMethod.isNotEmpty) {
     targetMethod.addStmts(dynamicPropertiesMethod.finish());
   }
 }
@@ -365,8 +362,12 @@ o.Expression sanitizedValue(
 
 void bindRenderInputs(
     List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {
-  bindAndWriteToRenderer(boundProps, o.variable('_ctx'), compileElement.view,
-      compileElement, compileElement.view.detectChangesRenderPropertiesMethod);
+  bindAndWriteToRenderer(
+      boundProps,
+      DetectChangesVars.cachedCtx,
+      compileElement.view,
+      compileElement,
+      compileElement.view.detectChangesRenderPropertiesMethod);
 }
 
 void bindDirectiveHostProps(DirectiveAst directiveAst,
@@ -376,7 +377,7 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
     // itself inside detectHostChanges method, no need to generate code
     // at call-site.
     if (directiveAst.hostProperties.isNotEmpty) {
-      var callDetectHostPropertiesExpr = compileElement.compViewExpr
+      var callDetectHostPropertiesExpr = compileElement.componentView
           .callMethod('detectHostChanges', [DetectChangesVars.firstCheck]);
       compileElement.view.detectChangesRenderPropertiesMethod
           .addStmt(callDetectHostPropertiesExpr.toStmt());
@@ -393,27 +394,29 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
 
 void bindDirectiveInputs(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
-  if (identical(directiveAst.inputs.length, 0)) {
+  var directive = directiveAst.directive;
+  if (directive.inputs.isEmpty) {
     return;
   }
+
+  if (requiresDirectiveChangeDetector(directive)) {
+    _bindDirectiveInputsOnChangeDetectorClass(
+        directiveAst, directiveInstance, compileElement);
+    return;
+  }
+
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var dynamicInputsMethod = new CompileMethod(view);
   var constantInputsMethod = new CompileMethod(view);
   dynamicInputsMethod.resetDebugInfo(
       compileElement.nodeIndex, compileElement.sourceAst);
-  var lifecycleHooks = directiveAst.directive.lifecycleHooks;
-  var calcChangesMap =
-      !identical(lifecycleHooks.indexOf(LifecycleHooks.OnChanges), -1);
-  var isOnPushComp = directiveAst.directive.isComponent &&
-      !isDefaultChangeDetectionStrategy(directiveAst.directive.changeDetection);
-  var isStatefulComp = directiveAst.directive.isComponent &&
-      directiveAst.directive.changeDetection ==
-          ChangeDetectionStrategy.Stateful;
-  if (calcChangesMap) {
-    detectChangesInInputsMethod
-        .addStmt(DetectChangesVars.changes.set(o.NULL_EXPR).toStmt());
-  }
+  var lifecycleHooks = directive.lifecycleHooks;
+  var calcChangesMap = lifecycleHooks.contains(LifecycleHooks.OnChanges);
+  var isOnPushComp = directive.isComponent &&
+      !isDefaultChangeDetectionStrategy(directive.changeDetection);
+  var isStatefulComp = directive.isComponent &&
+      directive.changeDetection == ChangeDetectionStrategy.Stateful;
   if (!isStatefulComp && isOnPushComp) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
@@ -430,18 +433,14 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     // Optimization specifically for NgIf. Since the directive already performs
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
-    if (directiveAst.directive.identifier.name == 'NgIf' &&
-        input.directiveName == 'ngIf') {
+    if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
       var checkExpression = convertCdExpressionToIr(
           view,
-          o.variable('_ctx'),
+          DetectChangesVars.cachedCtx,
           input.value,
           DetectChangesVars.valUnwrapper,
           view.component.template.preserveWhitespace,
           true);
-      if (checkExpression.anyExplicit) {
-        view.cacheCtxInDetectChangesMethod = true;
-      }
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
           .set(checkExpression.expression)
@@ -449,6 +448,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       continue;
     }
     if (isStatefulComp) {
+      // Write code for components that extend ComponentState:
       // Since we are not going to call markAsCheckOnce anymore we need to
       // generate a call to property updater that will invoke setState() on the
       // component if value has changed.
@@ -456,9 +456,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           directiveAst.directive.type.name, input.directiveName);
       var updateFuncExpr = o.importExpr(new CompileIdentifierMetadata(
           name: updaterFunctionName,
-          moduleUrl:
-              toTemplateExtension(directiveAst.directive.identifier.moduleUrl),
-          prefix: directiveAst.directive.identifier.prefix));
+          moduleUrl: toTemplateExtension(directive.identifier.moduleUrl),
+          prefix: directive.identifier.prefix));
       statements.add(updateFuncExpr
           .callFn([directiveInstance, fieldExpr, currValExpr]).toStmt());
     } else {
@@ -487,35 +486,101 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
     // Execute actions and assign result to fieldExpr which hold previous value.
-    String inputTypeName = directiveAst.directive.inputTypes != null
-        ? directiveAst.directive.inputTypes[input.directiveName]
+    String inputTypeName = directive.inputTypes != null
+        ? directive.inputTypes[input.directiveName]
         : null;
     var inputType = inputTypeName != null
         ? o.importType(new CompileIdentifierMetadata(name: inputTypeName))
         : null;
     if (isStatefulComp) {
       bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
-          o.variable('_ctx'), statements, dynamicInputsMethod,
+          DetectChangesVars.cachedCtx, statements, dynamicInputsMethod,
           fieldType: inputType);
     } else {
-      bind(view, currValExpr, fieldExpr, input.value, o.variable('_ctx'),
-          statements, dynamicInputsMethod, constantInputsMethod,
+      bind(
+          view,
+          currValExpr,
+          fieldExpr,
+          input.value,
+          DetectChangesVars.cachedCtx,
+          statements,
+          dynamicInputsMethod,
+          constantInputsMethod,
           fieldType: inputType);
     }
   }
-  if (!constantInputsMethod.isEmpty) {
+  if (constantInputsMethod.isNotEmpty) {
     detectChangesInInputsMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck, constantInputsMethod.finish()));
   }
-  if (!dynamicInputsMethod.isEmpty) {
+  if (dynamicInputsMethod.isNotEmpty) {
     detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
   }
   if (!isStatefulComp && isOnPushComp) {
     detectChangesInInputsMethod.addStmt(new o.IfStmt(
         DetectChangesVars.changed, [
-      compileElement.compViewExpr.callMethod('markAsCheckOnce', []).toStmt()
+      compileElement.componentView.callMethod('markAsCheckOnce', []).toStmt()
     ]));
   }
+}
+
+void _bindDirectiveInputsOnChangeDetectorClass(DirectiveAst directiveAst,
+    o.Expression directiveInstance, CompileElement compileElement) {
+  assert(requiresDirectiveChangeDetector(directiveAst.directive));
+
+  var view = compileElement.view;
+  var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
+  var directive = directiveAst.directive;
+  var constStatements = <o.Statement>[];
+  var dynamicStatements = <o.Statement>[];
+  // directiveAst contains the target directive we are updating.
+  // input is a BoundPropertyAst that contains binding metadata.
+  for (BoundDirectivePropertyAst input in directiveAst.inputs) {
+    view.addBinding(compileElement, input);
+    detectChangesInInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
+    var inputTypeName = directiveAst.directive.inputTypes[input.directiveName];
+    var inputType = inputTypeName != null
+        ? o.importType(new CompileIdentifierMetadata(name: inputTypeName))
+        : null;
+    var newValExpr = convertCdExpressionToIr(
+            view,
+            DetectChangesVars.cachedCtx,
+            input.value,
+            DetectChangesVars.valUnwrapper,
+            view.component.template.preserveWhitespace,
+            _isBoolType(inputType))
+        .expression;
+    bool isLiteral = isImmutable(
+        newValExpr, DetectChangesVars.cachedCtx, view.component.analyzedClass);
+
+    if (newValExpr == null) {
+      // e.g. an empty expression was given
+      return;
+    }
+    assert(directiveInstance is o.ReadPropExpr &&
+        directiveInstance.name == 'instance');
+    String updateMethodName =
+        DirectiveCompiler.buildInputUpdateMethodName(input.directiveName);
+    var updateExpr;
+    if (directiveInstance is o.ReadPropExpr) {
+      updateExpr =
+          directiveInstance.receiver.callMethod(updateMethodName, [newValExpr]);
+    } else {
+      updateExpr = (directiveInstance as o.ReadClassMemberExpr)
+          .callMethod(updateMethodName, [newValExpr]);
+    }
+    if (isLiteral) {
+      constStatements.add(updateExpr.toStmt());
+    } else {
+      dynamicStatements.add(updateExpr.toStmt());
+    }
+  }
+
+  if (constStatements.isNotEmpty) {
+    detectChangesInInputsMethod
+        .addStmt(new o.IfStmt(DetectChangesVars.firstCheck, constStatements));
+  }
+  detectChangesInInputsMethod.addStmts(dynamicStatements);
 }
 
 void bindToUpdateMethod(
@@ -534,17 +599,12 @@ void bindToUpdateMethod(
       DetectChangesVars.valUnwrapper,
       view.component.template.preserveWhitespace,
       _isBoolType(fieldType));
-  if (context is o.ReadVarExpr &&
-      context.name == '_ctx' &&
-      checkExpression.anyExplicit) {
-    view.cacheCtxInDetectChangesMethod = true;
-  }
   if (checkExpression.expression == null) {
     // e.g. an empty expression was given
     return;
   }
   // Add class field to store previous value.
-  bool isPrimitive = _isPrimitiveFieldType(fieldType);
+  bool isPrimitive = isPrimitiveFieldType(fieldType);
   view.fields.add(new o.ClassField(fieldExpr.name,
       outputType: isPrimitive ? fieldType : null,
       modifiers: const [o.StmtModifier.Private]));
@@ -599,7 +659,7 @@ o.Statement logBindingUpdateStmt(
   ]).toStmt();
 }
 
-bool _isPrimitiveFieldType(o.OutputType type) {
+bool isPrimitiveFieldType(o.OutputType type) {
   if (type == o.BOOL_TYPE ||
       type == o.INT_TYPE ||
       type == o.DOUBLE_TYPE ||
