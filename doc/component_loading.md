@@ -195,7 +195,7 @@ class BlogArticleComponent implements OnInit {
 
   @override
   ngOnInit() async {
-    if (adService.showExample1) {
+    if (_adService.showExample1) {
       await example_1.loadLibrary();
       component = example_1.Example1ComponentNgFactory;
     } else {
