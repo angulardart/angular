@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import "package:angular/src/facade/exceptions.dart" show BaseException;
-
-import "../route_definition.dart";
-import "../route_registry.dart";
-import "route_config_decorator.dart";
+import '../route_definition.dart';
+import '../route_registry.dart';
+import 'route_config_decorator.dart';
 
 RouteDefinition normalizeRouteConfig(
     RouteDefinition config, RouteRegistry registry) {
@@ -27,7 +25,7 @@ RouteDefinition normalizeRouteConfig(
 
 void assertComponentExists(dynamic component, String path) {
   if (component == null) {
-    throw new BaseException(
+    throw new ArgumentError(
         'Component for route "$path" is not defined, or is not a class.');
   }
 }

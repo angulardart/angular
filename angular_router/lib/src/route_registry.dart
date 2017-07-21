@@ -1,26 +1,25 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import "package:angular/core.dart" show OpaqueToken, ComponentFactory;
-import "package:angular/di.dart" show Injectable, Inject;
-import "package:angular/src/facade/exceptions.dart" show BaseException;
+import 'package:angular/angular.dart'
+    show OpaqueToken, ComponentFactory, Injectable, Inject;
 
-import "instruction.dart"
+import 'instruction.dart'
     show
         Instruction,
         ResolvedInstruction,
         RedirectInstruction,
         UnresolvedInstruction,
         DefaultInstruction;
-import "route_config/route_config_decorator.dart"
+import 'route_config/route_config_decorator.dart'
     show RouteConfig, Route, AuxRoute, RouteDefinition;
-import "route_config/route_config_normalizer.dart"
+import 'route_config/route_config_normalizer.dart'
     show normalizeRouteConfig, assertComponentExists;
-import "rules/route_paths/route_path.dart" show GeneratedUrl;
-import "rules/rule_set.dart" show RuleSet;
-import "rules/rules.dart" show PathMatch, RedirectMatch, RouteMatch;
-import "url_parser.dart" show parser, Url, convertUrlParamsToArray;
-import "utils.dart" show getComponentAnnotations, getComponentType;
+import 'rules/route_paths/route_path.dart' show GeneratedUrl;
+import 'rules/rule_set.dart' show RuleSet;
+import 'rules/rules.dart' show PathMatch, RedirectMatch, RouteMatch;
+import 'url_parser.dart' show parser, Url, convertUrlParamsToArray;
+import 'utils.dart' show getComponentAnnotations, getComponentType;
 
 var _resolveToNull = new Future<Null>.value(null);
 // A LinkItemArray is an array, which describes a set of routes
@@ -65,7 +64,7 @@ var _resolveToNull = new Future<Null>.value(null);
 /// bootstrap(AppCmp, [ROUTER_PROVIDERS]);
 /// ```
 const OpaqueToken ROUTER_PRIMARY_COMPONENT =
-    const OpaqueToken("RouterPrimaryComponent");
+    const OpaqueToken('RouterPrimaryComponent');
 
 /// The RouteRegistry holds route configurations for each component in an
 /// Angular app. It is responsible for creating Instructions from URLs, and
@@ -195,7 +194,7 @@ class RouteRegistry {
               return null;
             }))
         .toList();
-    if ((parsedUrl == null || parsedUrl.path == "") &&
+    if ((parsedUrl == null || parsedUrl.path == '') &&
         possibleMatches.length == 0) {
       return new Future.value(this.generateDefault(parentComponent));
     }
@@ -227,7 +226,7 @@ class RouteRegistry {
     // The first segment should be either '.' (generate from parent) or ''
     // (generate from root). When we normalize above, we strip all the slashes,
     // './' becomes '.' and '/' becomes ''.
-    if (params.first == "") {
+    if (params.first == '') {
       params.removeAt(0);
       prevInstruction = ancestorInstructions.first;
       ancestorInstructions = [];
@@ -235,12 +234,12 @@ class RouteRegistry {
       prevInstruction = ancestorInstructions.length > 0
           ? ancestorInstructions.removeLast()
           : null;
-      if (params.first == ".") {
+      if (params.first == '.') {
         params.removeAt(0);
-      } else if (params.first == "..") {
-        while (params.first == "..") {
+      } else if (params.first == '..') {
+        while (params.first == '..') {
           if (ancestorInstructions.length <= 0) {
-            throw new BaseException(
+            throw new ArgumentError(
                 'Link "$linkParams" has too many "../" segments.');
           }
           prevInstruction = ancestorInstructions.removeLast();
@@ -273,22 +272,22 @@ class RouteRegistry {
         if (parentRouteExists && childRouteExists) {
           var msg = 'Link "$linkParams" is ambiguous, use "./" or "../" to '
               'disambiguate.';
-          throw new BaseException(msg);
+          throw new StateError(msg);
         }
         if (parentRouteExists) {
           prevInstruction = ancestorInstructions.removeLast();
         }
       }
     }
-    if (params[params.length - 1] == "") {
+    if (params[params.length - 1] == '') {
       params.removeLast();
     }
-    if (params.length > 0 && params[0] == "") {
+    if (params.length > 0 && params[0] == '') {
       params.removeAt(0);
     }
     if (params.length < 1) {
       var msg = 'Link "$linkParams" must include a route name.';
-      throw new BaseException(msg);
+      throw new ArgumentError(msg);
     }
     var generatedInstruction = this._generate(
         params, ancestorInstructions, prevInstruction, _aux, linkParams);
@@ -322,7 +321,7 @@ class RouteRegistry {
     if (linkParams.length == 0) {
       var defaultInstruction = this.generateDefault(parentComponentType);
       if (defaultInstruction == null) {
-        throw new BaseException(
+        throw new StateError(
             'Link "$_originalLink" does not resolve to a terminal '
             'instruction.');
       }
@@ -339,7 +338,7 @@ class RouteRegistry {
     }
     var rules = this._rules[parentComponentType];
     if (rules == null) {
-      throw new BaseException(
+      throw new StateError(
           'Component "${getComponentType(parentComponentType)}" has no route '
           'config.');
     }
@@ -349,8 +348,8 @@ class RouteRegistry {
     if (linkParamIndex < linkParams.length &&
         linkParams[linkParamIndex] is String) {
       var routeName = linkParams[linkParamIndex];
-      if (routeName == "" || routeName == "." || routeName == "..") {
-        throw new BaseException(
+      if (routeName == '' || routeName == '.' || routeName == '..') {
+        throw new ArgumentError(
             '"$routeName/" is only allowed at the beginning of a link DSL.');
       }
       linkParamIndex += 1;
@@ -364,7 +363,7 @@ class RouteRegistry {
       var routeRecognizer =
           (_aux ? rules.auxRulesByName : rules.rulesByName)[routeName];
       if (routeRecognizer == null) {
-        throw new BaseException(
+        throw new StateError(
             'Component "${getComponentType(parentComponentType)}" has no route '
             'named "$routeName".');
       }
@@ -462,7 +461,7 @@ List<dynamic> splitAndFlattenLinkParams(List<dynamic> linkParams) {
   var accumulation = [];
   linkParams.forEach((dynamic item) {
     if (item is String) {
-      accumulation = (new List.from(accumulation)..addAll(item.split("/")));
+      accumulation = (new List.from(accumulation)..addAll(item.split('/')));
     } else {
       accumulation.add(item);
     }
@@ -517,7 +516,7 @@ void assertTerminalComponent(component, path) {
     for (var i = 0; i < annotations.length; i++) {
       var annotation = annotations[i];
       if (annotation is RouteConfig) {
-        throw new BaseException(
+        throw new ArgumentError(
             'Child routes are not allowed for "$path". Use "..." on the '
             'parent\'s route path.');
       }
