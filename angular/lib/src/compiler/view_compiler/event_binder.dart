@@ -136,8 +136,7 @@ class CompileEventListener {
 
     final wrapperName = 'eventHandler$numArgs';
     if (_hasComponentHostListener) {
-      return compileElement.componentView
-          .callMethod(wrapperName, [handlerExpr]);
+      return compileElement.compViewExpr.callMethod(wrapperName, [handlerExpr]);
     } else {
       return new o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
     }

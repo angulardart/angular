@@ -206,7 +206,7 @@ void bindViewHostProperties(CompileView view, Parser parser,
   bindAndWriteToRenderer(hostProperties, new o.ReadClassMemberExpr('ctx'), view,
       view.componentView.declarationElement, hostMethod,
       updatingHost: true);
-  if (hostMethod.isNotEmpty) {
+  if (!hostMethod.isEmpty) {
     view.detectHostChangesMethod = hostMethod;
   }
 }

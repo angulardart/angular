@@ -1067,7 +1067,8 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     var contextType = view.viewType != ViewType.HOST
         ? o.importType(view.component.type)
         : null;
-    statements.add(DetectChangesVars.cachedCtx
+    statements.add(o
+        .variable('_ctx')
         .set(new o.ReadClassMemberExpr('ctx'))
         .toDeclStmt(contextType, [o.StmtModifier.Final]));
   }
@@ -1120,7 +1121,8 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   if (isComponentRoot &&
       view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
     // Connect ComponentState callback to view.
-    statements.add((DetectChangesVars.cachedCtx
+    statements.add((o
+            .variable('_ctx')
             .prop('stateChangeCallback')
             .set(new o.ReadClassMemberExpr('markStateChanged')))
         .toStmt());
@@ -1173,7 +1175,7 @@ void _writeComponentHostEventListeners(
       handlerExpr = new o.ReadClassMemberExpr(methodName);
       numArgs = 1;
     } else {
-      var context = DetectChangesVars.cachedCtx;
+      var context = o.variable('_ctx');
       var actionExpr = convertStmtIntoExpression(
           convertCdStatementToIr(view, context, handlerAst, false).last);
       assert(actionExpr is o.InvokeMethodExpr);
@@ -1217,6 +1219,18 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     genProfileCdStart(view, stmts);
   }
 
+  if (view.cacheCtxInDetectChangesMethod) {
+    // Cache [ctx] class field member as typed [_ctx] local for change detection
+    // code to consume.
+    var contextType = view.viewType != ViewType.HOST
+        ? o.importType(view.component.type)
+        : null;
+    stmts.add(o
+        .variable('_ctx')
+        .set(new o.ReadClassMemberExpr('ctx'))
+        .toDeclStmt(contextType, [o.StmtModifier.Final]));
+  }
+
   // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
 
@@ -1258,17 +1272,6 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   }
   var varStmts = [];
   var readVars = o.findReadVarNames(stmts);
-  if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
-    // Cache [ctx] class field member as typed [_ctx] local for change detection
-    // code to consume.
-    var contextType = view.viewType != ViewType.HOST
-        ? o.importType(view.component.type)
-        : null;
-    varStmts.add(o
-        .variable(DetectChangesVars.cachedCtx.name)
-        .set(new o.ReadClassMemberExpr('ctx'))
-        .toDeclStmt(contextType, [o.StmtModifier.Final]));
-  }
   if (readVars.contains(DetectChangesVars.changed.name)) {
     varStmts.add(
         DetectChangesVars.changed.set(o.literal(true)).toDeclStmt(o.BOOL_TYPE));

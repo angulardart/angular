@@ -48,19 +48,8 @@ o.Expression getPropertyInView(
       throw new BaseException('Internal error: Could not calculate a property '
           'in a parent view: $property');
     }
-    o.ReadClassMemberExpr readMemberExpr;
-
-    // Detect _PopupSourceDirective_0_6.instance for directives that have
-    // change detectors.
-    if (property is o.ReadPropExpr &&
-        property.name == 'instance' &&
-        property.receiver is o.ReadClassMemberExpr) {
-      readMemberExpr = property.receiver;
-    } else if (property is o.ReadClassMemberExpr) {
-      // Non change detector directive read.
-      readMemberExpr = property;
-    }
-    if (readMemberExpr != null) {
+    if (property is o.ReadClassMemberExpr) {
+      o.ReadClassMemberExpr readMemberExpr = property;
       // Note: Don't cast for members of the AppView base class...
       if (definedView.fields
               .any((field) => field.name == readMemberExpr.name) ||
@@ -171,7 +160,6 @@ o.Expression createFlatArray(List<o.Expression> expressions) {
   return result;
 }
 
-/// Converts a reference, literal or existing expression to provider value.
 o.Expression convertValueToOutputAst(dynamic value) {
   if (value is CompileIdentifierMetadata) {
     return o.importExpr(value);

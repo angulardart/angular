@@ -25,7 +25,7 @@ class CssSelector {
   final List<CssSelector> notSelectors = [];
   static List<CssSelector> parse(String selector) {
     List<CssSelector> results = [];
-    var _addResult = (List<CssSelector> res, CssSelector cssSel) {
+    var _addResult = (List<CssSelector> res, cssSel) {
       if (cssSel.notSelectors.length > 0 &&
           cssSel.element == null &&
           cssSel.classNames.isEmpty &&

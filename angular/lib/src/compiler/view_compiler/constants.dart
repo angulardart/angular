@@ -55,7 +55,6 @@ class InjectMethodVars {
 }
 
 class DetectChangesVars {
-  static final cachedCtx = o.variable('_ctx');
   static final changes = o.variable('changes');
   static final changed = o.variable('changed');
   static final firstCheck = o.variable('firstCheck');
