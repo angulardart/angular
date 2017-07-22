@@ -206,7 +206,11 @@ class CompileTokenMap<V> {
 
   V get(CompileTokenMetadata token) {
     var ak = token.assetCacheKey;
-    return ak != null ? _valueMap[ak] : null;
+    V result;
+    if (result == null && ak != null) {
+      result = _valueMap[ak];
+    }
+    return result;
   }
 
   bool containsKey(CompileTokenMetadata token) => get(token) != null;

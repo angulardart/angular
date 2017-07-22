@@ -16,7 +16,6 @@ import "compile_query.dart"
     show CompileQuery, createQueryListField, addQueryToTokenMap;
 import "compile_view.dart" show CompileView;
 import "constants.dart" show appViewRootElementName, InjectMethodVars;
-import "directive_compiler.dart";
 import "view_compiler_utils.dart"
     show
         getPropertyInView,
@@ -58,16 +57,10 @@ class CompileElement extends CompileNode {
   final bool hasEmbeddedView;
   final bool hasTemplateRefQuery;
 
-  /// Reference to optional view container created for this element.
+  /// Expression that contains reference to componentView.
+  o.Expression compViewExpr;
   o.ReadClassMemberExpr appViewContainer;
   o.Expression elementRef;
-
-  /// Expression that contains reference to componentView (root View class).
-  o.Expression _compViewExpr;
-
-  /// Maps from a provider token to expression that will return instance
-  /// at runtime. Builtin(s) are populated eagerly, ProviderAst based
-  /// instances are added on demand.
   final _instances = new CompileTokenMap<o.Expression>();
 
   /// We track which providers are just 'useExisting' for another provider on
@@ -110,15 +103,12 @@ class CompileElement extends CompileNode {
         referenceTokens[ref.name] = ref.value;
       }
     }
-    // Create new ElementRef(_el_#) expression and provide as instance.
     elementRef =
         o.importExpr(Identifiers.ElementRef).instantiate([this.renderNode]);
     _instances.add(Identifiers.ElementRefToken, this.elementRef);
-
     var readInjectorExpr =
         new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
     _instances.add(Identifiers.InjectorToken, readInjectorExpr);
-
     if (hasViewContainer || hasEmbeddedView) {
       _createViewContainer();
     }
@@ -168,17 +158,16 @@ class CompileElement extends CompileNode {
     }
   }
 
-  set componentView(o.Expression componentViewExpr) {
-    _compViewExpr = componentViewExpr;
+  set componentView(o.Expression compViewExpr) {
+    this.compViewExpr = compViewExpr;
     int indexCount = component.template.ngContentSelectors.length;
     contentNodesByNgContentIndex = new List<List<o.Expression>>(indexCount);
     for (var i = 0; i < indexCount; i++) {
-      contentNodesByNgContentIndex[i] = <o.Expression>[];
+      this.contentNodesByNgContentIndex[i] = <o.Expression>[];
     }
   }
 
-  /// Returns expression with reference to root component view.
-  o.Expression get componentView => _compViewExpr;
+  o.Expression get componentView => compViewExpr;
 
   void setEmbeddedView(CompileView view) {
     embeddedView = view;
@@ -192,7 +181,7 @@ class CompileElement extends CompileNode {
           useValue: createTemplateRefExpr);
 
       bool isReachable = false;
-      if (_getQueriesFor(Identifiers.TemplateRefToken).isNotEmpty) {
+      if (_getQueriesFor(identifierToken(Identifiers.TemplateRef)).isNotEmpty) {
         isReachable = true;
       }
       // Add TemplateRef as first provider as it does not have deps on other
@@ -207,9 +196,9 @@ class CompileElement extends CompileNode {
   }
 
   void beforeChildren(bool componentIsDeferred) {
-    if (hasViewContainer &&
-        !_instances.containsKey(Identifiers.ViewContainerRefToken)) {
-      _instances.add(Identifiers.ViewContainerRefToken, appViewContainer);
+    if (hasViewContainer) {
+      _instances.add(
+          identifierToken(Identifiers.ViewContainerRef), appViewContainer);
     }
 
     if (referenceTokens != null) {
@@ -281,10 +270,9 @@ class CompileElement extends CompileNode {
     // Create all the provider instances, some in the view constructor (eager),
     // some as getters (eager=false). We rely on the fact that they are
     // already sorted topologically.
-    for (ProviderAst resolvedProvider in _resolvedProvidersArray) {
+    for (ProviderAst resolvedProvider in _resolvedProviders.values) {
       var providerValueExpressions = <o.Expression>[];
       var isLocalAlias = false;
-      CompileDirectiveMetadata directiveMetadata;
       for (var provider in resolvedProvider.providers) {
         o.Expression providerValue;
         if (provider.useExisting != null) {
@@ -296,46 +284,28 @@ class CompileElement extends CompileNode {
             isLocalAlias = true;
             break;
           }
-          // Given the token and visibility defined by providerType,
-          // get value based on existing expression mapped to token.
           providerValue = _getDependency(resolvedProvider.providerType,
               new CompileDiDependencyMetadata(token: provider.useExisting));
-          directiveMetadata = null;
         } else if (provider.useFactory != null) {
-          var parameters = <o.Expression>[];
-          for (var paramDep in provider.deps ?? provider.useFactory.diDeps) {
-            parameters
-                .add(_getDependency(resolvedProvider.providerType, paramDep));
-          }
-          providerValue = o.importExpr(provider.useFactory).callFn(parameters);
+          var deps = provider.deps ?? provider.useFactory.diDeps;
+          var depsExpr = deps
+              .map((dep) => _getDependency(resolvedProvider.providerType, dep))
+              .toList();
+          providerValue = o.importExpr(provider.useFactory).callFn(depsExpr);
         } else if (provider.useClass != null) {
-          var paramDeps = provider.deps ?? provider.useClass.diDeps;
-          // Resolve constructor parameters for class.
-          var parameters = <o.Expression>[];
-          for (var paramDep in paramDeps) {
-            parameters
-                .add(_getDependency(resolvedProvider.providerType, paramDep));
-          }
-          var classType = provider.useClass.identifier;
-          // Check if class is a directive.
-          for (var dir in _directives) {
-            if (dir.identifier == classType) {
-              directiveMetadata = dir;
-              break;
-            }
-          }
+          var deps = provider.deps ?? provider.useClass.diDeps;
+          var depsExpr = deps
+              .map((dep) => _getDependency(resolvedProvider.providerType, dep))
+              .toList();
           providerValue = o
               .importExpr(provider.useClass)
-              .instantiate(parameters, o.importType(provider.useClass));
+              .instantiate(depsExpr, o.importType(provider.useClass));
         } else {
           providerValue = convertValueToOutputAst(provider.useValue);
         }
         providerValueExpressions.add(providerValue);
       }
       if (isLocalAlias) {
-        // This provider is just an alias for an existing field/instance
-        // on the same view class, so just add the existing reference for this
-        // token.
         var provider = resolvedProvider.providers.single;
         var alias = provider.useExisting;
         if (_aliasedProviders.containsKey(alias)) {
@@ -348,12 +318,10 @@ class CompileElement extends CompileNode {
         _aliasedProviders.add(resolvedProvider.token, alias);
         _instances.add(resolvedProvider.token, _instances.get(alias));
       } else {
-        // Create a new field property for this provider.
         var propName =
             '_${resolvedProvider.token.name}_${nodeIndex}_${_instances.size}';
         var instance = createProviderProperty(
             propName,
-            directiveMetadata,
             resolvedProvider,
             providerValueExpressions,
             resolvedProvider.multiProvider,
@@ -449,6 +417,11 @@ class CompileElement extends CompileNode {
     ]).toStmt());
   }
 
+  String _toTemplateExtension(String moduleUrl) {
+    if (!moduleUrl.endsWith('.dart')) return moduleUrl;
+    return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
+  }
+
   void addContentNode(num ngContentIndex, o.Expression nodeExpr) {
     contentNodesByNgContentIndex[ngContentIndex].add(nodeExpr);
   }
@@ -503,7 +476,7 @@ class CompileElement extends CompileNode {
       // access builtins with special visibility
       if (dep.token.equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
         if (identical(requestingProviderType, ProviderAstType.Component)) {
-          return _compViewExpr.prop("ref");
+          return compViewExpr.prop("ref");
         } else {
           return new o.ReadClassMemberExpr('ref');
         }
@@ -583,7 +556,6 @@ o.Statement _createInjectInternalCondition(
 ///
 o.Expression createProviderProperty(
     String propName,
-    CompileDirectiveMetadata directiveMetadata,
     ProviderAst provider,
     List<o.Expression> providerValueExpressions,
     bool isMulti,
@@ -603,47 +575,16 @@ o.Expression createProviderProperty(
 
   type ??= o.DYNAMIC_TYPE;
 
-  bool providerHasChangeDetector =
-      provider.providerType == ProviderAstType.Directive &&
-          directiveMetadata != null &&
-          requiresDirectiveChangeDetector(directiveMetadata);
-
-  CompileIdentifierMetadata changeDetectorType;
-  if (providerHasChangeDetector) {
-    changeDetectorType = new CompileIdentifierMetadata(
-        name: directiveMetadata.identifier.name + 'NgCd',
-        moduleUrl:
-            _toTemplateExtension(directiveMetadata.identifier.moduleUrl));
-  }
-
   if (isEager) {
-    // Check if we need to reach this directive or component beyond the
-    // contents of the build() function. Otherwise allocate locally.
     if (compileElement.publishesTemplateRef ||
         compileElement.hasTemplateRefQuery ||
         provider.dynamicallyReachable) {
-      if (providerHasChangeDetector) {
-        view.fields.add(new o.ClassField(propName,
-            outputType: o.importType(changeDetectorType),
-            modifiers: const [o.StmtModifier.Private]));
-        view.createMethod.addStmt(new o.WriteClassMemberExpr(
-            propName,
-            o
-                .importExpr(changeDetectorType)
-                .instantiate([resolvedProviderValueExpr])).toStmt());
-        return new o.ReadPropExpr(
-            new o.ReadClassMemberExpr(
-                propName, o.importType(changeDetectorType)),
-            'instance',
-            outputType: forceDynamic ? o.DYNAMIC_TYPE : type);
-      } else {
-        view.fields.add(new o.ClassField(propName,
-            outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
-            modifiers: const [o.StmtModifier.Private]));
-        view.createMethod.addStmt(
-            new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
-                .toStmt());
-      }
+      view.fields.add(new o.ClassField(propName,
+          outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
+          modifiers: const [o.StmtModifier.Private]));
+      view.createMethod.addStmt(
+          new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
+              .toStmt());
     } else {
       // Since provider is not dynamically reachable and we only need
       // the provider locally in build, create a local var.
@@ -653,24 +594,12 @@ o.Expression createProviderProperty(
       return localVar;
     }
   } else {
-    // We don't have to eagerly initialize this object. Add an uninitialized
-    // class field and provide a getter to construct the provider on demand.
     var internalField = '_$propName';
     view.fields.add(new o.ClassField(internalField,
-        outputType: forceDynamic
-            ? o.DYNAMIC_TYPE
-            : (providerHasChangeDetector
-                ? o.importType(changeDetectorType)
-                : type),
+        outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
         modifiers: const [o.StmtModifier.Private]));
     var getter = new CompileMethod(view);
     getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
-
-    if (providerHasChangeDetector) {
-      resolvedProviderValueExpr = o
-          .importExpr(changeDetectorType)
-          .instantiate([resolvedProviderValueExpr]);
-    }
     // Note: Equals is important for JS so that it also checks the undefined case!
     getter.addStmt(new o.IfStmt(
         new o.ReadClassMemberExpr(internalField).isBlank(), [
@@ -680,11 +609,7 @@ o.Expression createProviderProperty(
     getter.addStmt(
         new o.ReturnStatement(new o.ReadClassMemberExpr(internalField)));
     view.getters.add(new o.ClassGetter(
-        propName,
-        getter.finish(),
-        forceDynamic
-            ? o.DYNAMIC_TYPE
-            : (providerHasChangeDetector ? changeDetectorType : type)));
+        propName, getter.finish(), forceDynamic ? o.DYNAMIC_TYPE : type));
   }
   return new o.ReadClassMemberExpr(propName);
 }
@@ -695,9 +620,4 @@ class _QueryWithRead {
   _QueryWithRead(this.query, CompileTokenMetadata match) {
     read = query.meta.read ?? match;
   }
-}
-
-String _toTemplateExtension(String moduleUrl) {
-  if (!moduleUrl.endsWith('.dart')) return moduleUrl;
-  return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
 }

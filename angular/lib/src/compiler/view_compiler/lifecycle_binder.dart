@@ -17,8 +17,8 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var lifecycleHooks = directiveAst.directive.lifecycleHooks;
-  if (lifecycleHooks.contains(LifecycleHooks.OnChanges) &&
-      directiveAst.inputs.isNotEmpty) {
+  if (!identical(lifecycleHooks.indexOf(LifecycleHooks.OnChanges), -1) &&
+      directiveAst.inputs.length > 0) {
     detectChangesInInputsMethod.addStmt(
         new o.IfStmt(DetectChangesVars.changes.notIdentical(o.NULL_EXPR), [
       directiveInstance

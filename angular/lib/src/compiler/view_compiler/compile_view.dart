@@ -83,6 +83,11 @@ class CompileView implements NameResolver {
   var literalMapCount = 0;
   var pipeCount = 0;
 
+  /// Whether "ctx" needs to be cached in the "detectChangesInternal" method.
+  /// This is essentially true only when statements refer to "_ctx" (the cached
+  /// variable).
+  var cacheCtxInDetectChangesMethod = false;
+
   CompileView(
       this.component,
       this.genConfig,
