@@ -315,8 +315,6 @@ abstract class AppView<T> {
   void destroy() {
     if (viewData.destroyed) return;
     viewData.destroyed = true;
-
-    var hostElement = viewData.type == ViewType.COMPONENT ? rootEl : null;
     viewData.destroy();
     destroyInternal();
     dirtyParentQueriesInternal();
