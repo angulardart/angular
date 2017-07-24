@@ -6,16 +6,14 @@ import 'dart:mirrors';
 import 'package:angular/angular.dart' as ng2;
 import 'package:angular/core.dart' as ng2core;
 import 'package:angular/di.dart' as di;
-import 'package:angular/platform/testing/browser.dart'
-    as ng2platform_browser_testing;
+import 'package:angular/platform/common.dart' as ng2platform_common;
 
 // HACK: This list is here only to make the corresponding libraries used. The
 // imports are only needed to reflect on them using mirrors.
 final _ng2libSymbols = [
   ng2core.Component,
   ng2.NgIf,
-  ng2platform_browser_testing.TEST_BROWSER_PLATFORM_PROVIDERS,
-  ng2.APP_ID,
+  ng2platform_common.Location,
   di.Inject
 ];
 
