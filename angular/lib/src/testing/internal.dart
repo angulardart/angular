@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:angular/core.dart' show PLATFORM_INITIALIZER;
-import 'package:angular/di.dart' show Injector, provide, Provider;
-import 'package:angular/platform/testing/browser.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/platform/testing/browser_static.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/reflection/reflection.dart';
 import 'package:angular/src/core/reflection/reflection_capabilities.dart';
@@ -63,8 +62,8 @@ List _platformProviders;
 List _applicationProviders;
 
 void _bootstrapInternalTests() {
-  _platformProviders ??= TEST_BROWSER_PLATFORM_PROVIDERS;
-  _applicationProviders ??= TEST_BROWSER_APPLICATION_PROVIDERS;
+  _platformProviders ??= PLATFORM_COMMON_PROVIDERS;
+  _applicationProviders ??= _testBrowserApplicationProviders;
   if (_bootstrap_initialized) return;
   _bootstrap_initialized = true;
   reflector.reflectionCapabilities = new ReflectionCapabilities();
@@ -98,3 +97,8 @@ void _setBaseTestProviders(
   }
   testInjector.reset();
 }
+
+const List<dynamic> _testBrowserApplicationProviders = const [
+  BROWSER_APP_PROVIDERS,
+  ADDITIONAL_TEST_BROWSER_PROVIDERS
+];

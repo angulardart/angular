@@ -17,8 +17,6 @@ const publicLibraries = const <String, List<String>>{
   'experimental.dart': null,
   'platform/browser_static.dart': null,
   'platform/common.dart': NG_PLATFORM_COMMON,
-  'platform/common_dom.dart': null,
-  'platform/testing/browser.dart': NG_PLATFORM_BROWSER_TESTING,
   'platform/testing/browser_static.dart': null,
   'router/testing.dart': null,
   'security.dart': null,
@@ -133,14 +131,6 @@ const NG_CORE = const [
   'TrackByFn',
   'noValueProvided',
 ];
-const NG_PLATFORM_BROWSER_TESTING = const [
-  'inspectNativeElement',
-  'By',
-  'DebugNode',
-  'DebugElement',
-  'TEST_BROWSER_APPLICATION_PROVIDERS',
-  'TEST_BROWSER_PLATFORM_PROVIDERS',
-];
 const NG_PLATFORM_COMMON = const [
   'APP_BASE_HREF',
   'BrowserPlatformLocation',
@@ -152,7 +142,6 @@ const NG_PLATFORM_COMMON = const [
   'baseHRefFromDOM',
   'BaseHRefFromDOMProvider',
 ];
-
 const angularApis = const [
   'APPLICATION_COMMON_PROVIDERS',
   'APP_ID',
