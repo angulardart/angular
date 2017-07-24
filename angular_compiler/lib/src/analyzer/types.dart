@@ -4,6 +4,8 @@ import 'package:source_gen/source_gen.dart';
 const _angular = 'package:angular';
 const _meta = '$_angular/src/core/metadata.dart';
 const _di = '$_angular/src/core/di/decorators.dart';
+const _provider = '$_angular/src/di/provider.dart';
+const _token = '$_angular/src/core/di/opaque_token.dart';
 
 // Class metadata.
 const $Directive = const TypeChecker.fromUrl('$_meta#Directive');
@@ -30,5 +32,5 @@ const $HostBinding = const TypeChecker.fromUrl('$_meta#HostBinding');
 const $HostListener = const TypeChecker.fromUrl('$_meta#HostListener');
 
 // Class types.
-const $Provider = const TypeChecker.fromUrl('$_di#Provider');
-const $OpaqueToken = const TypeChecker.fromUrl('$_di#OpaqueToken');
+const $Provider = const TypeChecker.fromUrl('$_provider#Provider');
+const $OpaqueToken = const TypeChecker.fromUrl('$_token#OpaqueToken');
