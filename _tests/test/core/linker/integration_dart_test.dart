@@ -98,7 +98,6 @@ class OnChangeContainer {
   dynamic value;
 }
 
-@proxy
 class PropModel implements Map {
   final String foo = 'foo-prop';
 
@@ -107,6 +106,8 @@ class PropModel implements Map {
   dynamic noSuchMethod(_) {
     throw 'property not found';
   }
+
+  get doesNotExist;
 }
 
 @Component(
