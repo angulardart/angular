@@ -214,6 +214,7 @@ const angularApis = const [
   'ExceptionHandler',
   'ExpressionChangedAfterItHasBeenCheckedException',
   'FORM_BINDINGS',
+  'formDirectives',
   'FORM_DIRECTIVES',
   'FORM_PROVIDERS',
   'Form',
