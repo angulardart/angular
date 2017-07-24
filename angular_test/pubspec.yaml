@@ -12,6 +12,7 @@ executables:
 
 dependencies:
   angular: '^4.0.0-alpha'
+  angular_router: '0.1.0'
   ansicolor: '^0.0.9'
   args: '>=0.13.7 <2.0.0'
   collection: '^1.14.0'
@@ -30,6 +31,8 @@ dependency_overrides:
     path: ../angular
   angular_compiler:
     path: ../angular_compiler
+  angular_router:
+    path: ../angular_router
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:

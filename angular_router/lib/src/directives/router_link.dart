@@ -1,9 +1,9 @@
 import 'dart:html' show MouseEvent;
 
 import 'package:angular/angular.dart' show Directive;
-import 'package:angular/platform/common.dart' show Location;
 
 import '../instruction.dart' show Instruction;
+import '../location.dart' show Location;
 import '../router.dart' show Router;
 
 /// The RouterLink directive lets you link to specific parts of your app.

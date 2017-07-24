@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import "package:angular/di.dart" show OpaqueToken;
+import 'package:angular/angular.dart' show OpaqueToken;
 
 /// `LocationStrategy` is responsible for representing and reading route state
 /// from the browser's URL. Angular provides two strategies:
@@ -39,9 +39,9 @@ abstract class LocationStrategy {
 /// ### Example
 ///
 /// ```
-/// import {Component} from 'angular2/core';
-/// import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig} from 'angular2/router';
-/// import {APP_BASE_HREF} from 'angular2/platform/common';
+/// import 'package:angular/angular.dart' show Component;
+/// import 'package:angular_router/angular_router.dart'
+///   show APP_BASE_HREF, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig;
 ///
 /// @Component({directives: [ROUTER_DIRECTIVES]})
 /// @RouteConfig([
@@ -56,4 +56,4 @@ abstract class LocationStrategy {
 ///   provide(APP_BASE_HREF, {useValue: '/my/app'})
 /// ]);
 /// ```
-const OpaqueToken APP_BASE_HREF = const OpaqueToken("appBaseHref");
+const OpaqueToken APP_BASE_HREF = const OpaqueToken('appBaseHref');

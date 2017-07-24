@@ -11,7 +11,7 @@ import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
 import 'package:angular/src/mock/mock_location_strategy.dart';
-import 'package:angular/src/platform/location.dart';
+import 'package:angular_router/angular_router.dart';
 
 /// Returns an application injector for [providers] based on a [platform].
 ///
