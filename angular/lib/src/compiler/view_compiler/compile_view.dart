@@ -79,14 +79,10 @@ class CompileView implements NameResolver {
   String className;
   o.OutputType classType;
   o.ReadVarExpr viewFactory;
+  bool requiresOnChangesCall = false;
   var literalArrayCount = 0;
   var literalMapCount = 0;
   var pipeCount = 0;
-
-  /// Whether "ctx" needs to be cached in the "detectChangesInternal" method.
-  /// This is essentially true only when statements refer to "_ctx" (the cached
-  /// variable).
-  var cacheCtxInDetectChangesMethod = false;
 
   CompileView(
       this.component,
