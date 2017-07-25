@@ -61,10 +61,10 @@ const List<dynamic> styles$InjectableComponentHost = const [];
 
 class ViewInjectableComponentHost0 extends AppView<dynamic> {
   ViewInjectableComponent0 _compView_0;
-  dynamic _const_OpaqueToken__test___0_2;
-  import1.InjectableComponent _InjectableComponent_0_3;
-  dynamic __SomeDep_0_4;
-  dynamic __BaseService_0_5;
+  dynamic _const_OpaqueToken__test___0_4;
+  import1.InjectableComponent _InjectableComponent_0_5;
+  dynamic __SomeDep_0_6;
+  dynamic __BaseService_0_7;
   static RenderComponentType renderType;
   ViewInjectableComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -73,54 +73,54 @@ class ViewInjectableComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles$InjectableComponentHost);
     setupComponentType(renderType);
   }
-  dynamic get _SomeDep_0_4 {
-    if ((this.__SomeDep_0_4 == null)) {
-      (__SomeDep_0_4 =
-          import1.createLinkedHashMap(this._const_OpaqueToken__test___0_2));
+  dynamic get _SomeDep_0_6 {
+    if ((this.__SomeDep_0_6 == null)) {
+      (__SomeDep_0_6 =
+          import1.createLinkedHashMap(this._const_OpaqueToken__test___0_4));
     }
-    return this.__SomeDep_0_4;
+    return this.__SomeDep_0_6;
   }
 
-  dynamic get _BaseService_0_5 {
-    if ((this.__BaseService_0_5 == null)) {
-      (__BaseService_0_5 = import1.createLinkedHashMap(
-          this._SomeDep_0_4,
+  dynamic get _BaseService_0_7 {
+    if ((this.__BaseService_0_7 == null)) {
+      (__BaseService_0_7 = import1.createLinkedHashMap(
+          this._SomeDep_0_6,
           this.injectorGet(import1.SomeDep, this.viewData.parentIndex),
-          this._SomeDep_0_4));
+          this._SomeDep_0_6));
     }
-    return this.__BaseService_0_5;
+    return this.__BaseService_0_7;
   }
 
   @override
   ComponentRef build() {
     _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _const_OpaqueToken__test___0_2 = import1.injectableFactory(
+    _const_OpaqueToken__test___0_4 = import1.injectableFactory(
         this.injectorGet(import2.Window, viewData.parentIndex));
-    _InjectableComponent_0_3 = new import1.InjectableComponent(
+    _InjectableComponent_0_5 = new import1.InjectableComponent(
         null,
         this.injectorGet(import1.InjectableService, viewData.parentIndex, null),
-        _const_OpaqueToken__test___0_2,
+        _const_OpaqueToken__test___0_4,
         this.injectorGet(String, viewData.parentIndex, null));
-    _compView_0.create(_InjectableComponent_0_3, projectableNodes);
+    _compView_0.create(_InjectableComponent_0_5, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _InjectableComponent_0_3);
+    return new ComponentRef(0, this, rootEl, _InjectableComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, const OpaqueToken('test')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__test___0_2;
+      return _const_OpaqueToken__test___0_4;
     }
     if ((identical(token, import1.InjectableComponent) && (0 == nodeIndex))) {
-      return _InjectableComponent_0_3;
+      return _InjectableComponent_0_5;
     }
     if ((identical(token, import1.SomeDep) && (0 == nodeIndex))) {
-      return _SomeDep_0_4;
+      return _SomeDep_0_6;
     }
     if ((identical(token, import1.BaseService) && (0 == nodeIndex))) {
-      return _BaseService_0_5;
+      return _BaseService_0_7;
     }
     return notFoundResult;
   }

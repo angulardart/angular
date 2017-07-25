@@ -82,7 +82,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
 
 class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckOnceComponent0 _compView_0;
-  import2.CheckOnceComponent _CheckOnceComponent_0_2;
+  import2.CheckOnceComponent _CheckOnceComponent_0_4;
   static RenderComponentType renderType;
   ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -101,17 +101,17 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _CheckOnceComponent_0_2 = new import2.CheckOnceComponent();
-    _compView_0.create(_CheckOnceComponent_0_2, projectableNodes);
+    _CheckOnceComponent_0_4 = new import2.CheckOnceComponent();
+    _compView_0.create(_CheckOnceComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckOnceComponent) && (0 == nodeIndex))) {
-      return _CheckOnceComponent_0_2;
+      return _CheckOnceComponent_0_4;
     }
     return notFoundResult;
   }
@@ -186,7 +186,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
 
 class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckedComponent0 _compView_0;
-  import2.CheckedComponent _CheckedComponent_0_2;
+  import2.CheckedComponent _CheckedComponent_0_4;
   static RenderComponentType renderType;
   ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -205,17 +205,17 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _CheckedComponent_0_2 = new import2.CheckedComponent();
-    _compView_0.create(_CheckedComponent_0_2, projectableNodes);
+    _CheckedComponent_0_4 = new import2.CheckedComponent();
+    _compView_0.create(_CheckedComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _CheckedComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _CheckedComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckedComponent) && (0 == nodeIndex))) {
-      return _CheckedComponent_0_2;
+      return _CheckedComponent_0_4;
     }
     return notFoundResult;
   }
@@ -289,7 +289,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
 
 class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckAlwaysComponent0 _compView_0;
-  import2.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
+  import2.CheckAlwaysComponent _CheckAlwaysComponent_0_4;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -308,17 +308,17 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _CheckAlwaysComponent_0_2 = new import2.CheckAlwaysComponent();
-    _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes);
+    _CheckAlwaysComponent_0_4 = new import2.CheckAlwaysComponent();
+    _compView_0.create(_CheckAlwaysComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckAlwaysComponent) && (0 == nodeIndex))) {
-      return _CheckAlwaysComponent_0_2;
+      return _CheckAlwaysComponent_0_4;
     }
     return notFoundResult;
   }
@@ -391,7 +391,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
 
 class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   ViewDetachedComponent0 _compView_0;
-  import2.DetachedComponent _DetachedComponent_0_2;
+  import2.DetachedComponent _DetachedComponent_0_4;
   static RenderComponentType renderType;
   ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -410,17 +410,17 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DetachedComponent_0_2 = new import2.DetachedComponent();
-    _compView_0.create(_DetachedComponent_0_2, projectableNodes);
+    _DetachedComponent_0_4 = new import2.DetachedComponent();
+    _compView_0.create(_DetachedComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _DetachedComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _DetachedComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DetachedComponent) && (0 == nodeIndex))) {
-      return _DetachedComponent_0_2;
+      return _DetachedComponent_0_4;
     }
     return notFoundResult;
   }
@@ -493,7 +493,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
 
 class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   ViewOnPushComponent0 _compView_0;
-  import2.OnPushComponent _OnPushComponent_0_2;
+  import2.OnPushComponent _OnPushComponent_0_4;
   static RenderComponentType renderType;
   ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -512,17 +512,17 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _OnPushComponent_0_2 = new import2.OnPushComponent();
-    _compView_0.create(_OnPushComponent_0_2, projectableNodes);
+    _OnPushComponent_0_4 = new import2.OnPushComponent();
+    _compView_0.create(_OnPushComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _OnPushComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _OnPushComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.OnPushComponent) && (0 == nodeIndex))) {
-      return _OnPushComponent_0_2;
+      return _OnPushComponent_0_4;
     }
     return notFoundResult;
   }
@@ -597,7 +597,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
 
 class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   ViewStatefulComponent0 _compView_0;
-  import2.StatefulComponent _StatefulComponent_0_2;
+  import2.StatefulComponent _StatefulComponent_0_4;
   static RenderComponentType renderType;
   ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -616,17 +616,17 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _StatefulComponent_0_2 = new import2.StatefulComponent();
-    _compView_0.create(_StatefulComponent_0_2, projectableNodes);
+    _StatefulComponent_0_4 = new import2.StatefulComponent();
+    _compView_0.create(_StatefulComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _StatefulComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _StatefulComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.StatefulComponent) && (0 == nodeIndex))) {
-      return _StatefulComponent_0_2;
+      return _StatefulComponent_0_4;
     }
     return notFoundResult;
   }
@@ -699,7 +699,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
 
 class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   ViewDefaultComponent0 _compView_0;
-  import2.DefaultComponent _DefaultComponent_0_2;
+  import2.DefaultComponent _DefaultComponent_0_4;
   static RenderComponentType renderType;
   ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -718,17 +718,17 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DefaultComponent_0_2 = new import2.DefaultComponent();
-    _compView_0.create(_DefaultComponent_0_2, projectableNodes);
+    _DefaultComponent_0_4 = new import2.DefaultComponent();
+    _compView_0.create(_DefaultComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _DefaultComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _DefaultComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DefaultComponent) && (0 == nodeIndex))) {
-      return _DefaultComponent_0_2;
+      return _DefaultComponent_0_4;
     }
     return notFoundResult;
   }

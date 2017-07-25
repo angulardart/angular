@@ -63,7 +63,7 @@ const List<dynamic> styles$UsesNativeEventsHost = const [];
 
 class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
   ViewUsesNativeEvents0 _compView_0;
-  import1.UsesNativeEvents _UsesNativeEvents_0_2;
+  import1.UsesNativeEvents _UsesNativeEvents_0_4;
   static RenderComponentType renderType;
   ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -76,17 +76,17 @@ class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesNativeEvents_0_2 = new import1.UsesNativeEvents();
-    _compView_0.create(_UsesNativeEvents_0_2, projectableNodes);
+    _UsesNativeEvents_0_4 = new import1.UsesNativeEvents();
+    _compView_0.create(_UsesNativeEvents_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_2);
+    return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.UsesNativeEvents) && (0 == nodeIndex))) {
-      return _UsesNativeEvents_0_2;
+      return _UsesNativeEvents_0_4;
     }
     return notFoundResult;
   }
@@ -117,7 +117,7 @@ const List<dynamic> styles$UsesAngularEvents = const [];
 class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   import2.Element _el_1;
   ViewHasAngularEvents0 _compView_1;
-  import1.HasAngularEvents _HasAngularEvents_1_2;
+  import1.HasAngularEvents _HasAngularEvents_1_4;
   static RenderComponentType renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -135,12 +135,12 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     _compView_1 = new ViewHasAngularEvents0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    _HasAngularEvents_1_2 = new import1.HasAngularEvents();
-    _compView_1.create(_HasAngularEvents_1_2, []);
+    _HasAngularEvents_1_4 = new import1.HasAngularEvents();
+    _compView_1.create(_HasAngularEvents_1_4, []);
     import2.Text _text_2 = new import2.Text('\n  ');
     parentRenderNode.append(_text_2);
     final subscription_0 =
-        _HasAngularEvents_1_2.foo.listen(eventHandler0(ctx.onFoo));
+        _HasAngularEvents_1_4.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
     return null;
   }
@@ -149,7 +149,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.HasAngularEvents) && (1 == nodeIndex))) {
-      return _HasAngularEvents_1_2;
+      return _HasAngularEvents_1_4;
     }
     return notFoundResult;
   }
@@ -174,7 +174,7 @@ const List<dynamic> styles$UsesAngularEventsHost = const [];
 
 class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
   ViewUsesAngularEvents0 _compView_0;
-  import1.UsesAngularEvents _UsesAngularEvents_0_2;
+  import1.UsesAngularEvents _UsesAngularEvents_0_4;
   static RenderComponentType renderType;
   ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -187,17 +187,17 @@ class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesAngularEvents_0_2 = new import1.UsesAngularEvents();
-    _compView_0.create(_UsesAngularEvents_0_2, projectableNodes);
+    _UsesAngularEvents_0_4 = new import1.UsesAngularEvents();
+    _compView_0.create(_UsesAngularEvents_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_2);
+    return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.UsesAngularEvents) && (0 == nodeIndex))) {
-      return _UsesAngularEvents_0_2;
+      return _UsesAngularEvents_0_4;
     }
     return notFoundResult;
   }
@@ -252,7 +252,7 @@ const List<dynamic> styles$HasAngularEventsHost = const [];
 
 class ViewHasAngularEventsHost0 extends AppView<dynamic> {
   ViewHasAngularEvents0 _compView_0;
-  import1.HasAngularEvents _HasAngularEvents_0_2;
+  import1.HasAngularEvents _HasAngularEvents_0_4;
   static RenderComponentType renderType;
   ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -265,17 +265,17 @@ class ViewHasAngularEventsHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasAngularEvents_0_2 = new import1.HasAngularEvents();
-    _compView_0.create(_HasAngularEvents_0_2, projectableNodes);
+    _HasAngularEvents_0_4 = new import1.HasAngularEvents();
+    _compView_0.create(_HasAngularEvents_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_2);
+    return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.HasAngularEvents) && (0 == nodeIndex))) {
-      return _HasAngularEvents_0_2;
+      return _HasAngularEvents_0_4;
     }
     return notFoundResult;
   }

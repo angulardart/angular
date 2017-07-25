@@ -94,7 +94,7 @@ const List<dynamic> styles$CompHost = const [];
 
 class ViewCompHost0 extends AppView<dynamic> {
   ViewComp0 _compView_0;
-  import1.Comp _Comp_0_2;
+  import1.Comp _Comp_0_4;
   static RenderComponentType renderType;
   ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -107,17 +107,17 @@ class ViewCompHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    _Comp_0_2 = new import1.Comp();
-    _compView_0.create(_Comp_0_2, projectableNodes);
+    _Comp_0_4 = new import1.Comp();
+    _compView_0.create(_Comp_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _Comp_0_2);
+    return new ComponentRef(0, this, rootEl, _Comp_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.Comp) && (0 == nodeIndex))) {
-      return _Comp_0_2;
+      return _Comp_0_4;
     }
     return notFoundResult;
   }

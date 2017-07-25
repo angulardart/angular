@@ -68,8 +68,8 @@ const List<dynamic> styles$HasOpaqueTokensHost = const [];
 
 class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
-  String _const_OpaqueToken__baseUrlDescription___0_2;
-  import1.HasOpaqueTokens _HasOpaqueTokens_0_3;
+  String _const_OpaqueToken__baseUrlDescription___0_4;
+  import1.HasOpaqueTokens _HasOpaqueTokens_0_5;
   static RenderComponentType renderType;
   ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -82,12 +82,12 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
-    _const_OpaqueToken__baseUrlDescription___0_2 = 'https://localhost';
-    _HasOpaqueTokens_0_3 = new import1.HasOpaqueTokens(
-        _const_OpaqueToken__baseUrlDescription___0_2);
-    _compView_0.create(_HasOpaqueTokens_0_3, projectableNodes);
+    _const_OpaqueToken__baseUrlDescription___0_4 = 'https://localhost';
+    _HasOpaqueTokens_0_5 = new import1.HasOpaqueTokens(
+        _const_OpaqueToken__baseUrlDescription___0_4);
+    _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_3);
+    return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_5);
   }
 
   @override
@@ -95,10 +95,10 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken__baseUrlDescription___0_2;
+      return _const_OpaqueToken__baseUrlDescription___0_4;
     }
     if ((identical(token, import1.HasOpaqueTokens) && (0 == nodeIndex))) {
-      return _HasOpaqueTokens_0_3;
+      return _HasOpaqueTokens_0_5;
     }
     return notFoundResult;
   }

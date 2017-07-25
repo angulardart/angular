@@ -68,7 +68,7 @@ const List<dynamic> styles$CheckOnceComponentHost = const [];
 
 class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   ViewCheckOnceComponent0 _compView_0;
-  import1.CheckOnceComponent _CheckOnceComponent_0_2;
+  import1.CheckOnceComponent _CheckOnceComponent_0_4;
   static RenderComponentType renderType;
   ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -81,17 +81,17 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CheckOnceComponent_0_2 = new import1.CheckOnceComponent();
-    _compView_0.create(_CheckOnceComponent_0_2, projectableNodes);
+    _CheckOnceComponent_0_4 = new import1.CheckOnceComponent();
+    _compView_0.create(_CheckOnceComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.CheckOnceComponent) && (0 == nodeIndex))) {
-      return _CheckOnceComponent_0_2;
+      return _CheckOnceComponent_0_4;
     }
     return notFoundResult;
   }
@@ -153,7 +153,7 @@ const List<dynamic> styles$CheckedComponentHost = const [];
 
 class ViewCheckedComponentHost0 extends AppView<dynamic> {
   ViewCheckedComponent0 _compView_0;
-  import1.CheckedComponent _CheckedComponent_0_2;
+  import1.CheckedComponent _CheckedComponent_0_4;
   static RenderComponentType renderType;
   ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -166,17 +166,17 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CheckedComponent_0_2 = new import1.CheckedComponent();
-    _compView_0.create(_CheckedComponent_0_2, projectableNodes);
+    _CheckedComponent_0_4 = new import1.CheckedComponent();
+    _compView_0.create(_CheckedComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _CheckedComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _CheckedComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.CheckedComponent) && (0 == nodeIndex))) {
-      return _CheckedComponent_0_2;
+      return _CheckedComponent_0_4;
     }
     return notFoundResult;
   }
@@ -236,7 +236,7 @@ const List<dynamic> styles$CheckAlwaysComponentHost = const [];
 
 class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   ViewCheckAlwaysComponent0 _compView_0;
-  import1.CheckAlwaysComponent _CheckAlwaysComponent_0_2;
+  import1.CheckAlwaysComponent _CheckAlwaysComponent_0_4;
   static RenderComponentType renderType;
   ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -249,17 +249,17 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CheckAlwaysComponent_0_2 = new import1.CheckAlwaysComponent();
-    _compView_0.create(_CheckAlwaysComponent_0_2, projectableNodes);
+    _CheckAlwaysComponent_0_4 = new import1.CheckAlwaysComponent();
+    _compView_0.create(_CheckAlwaysComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.CheckAlwaysComponent) && (0 == nodeIndex))) {
-      return _CheckAlwaysComponent_0_2;
+      return _CheckAlwaysComponent_0_4;
     }
     return notFoundResult;
   }
@@ -319,7 +319,7 @@ const List<dynamic> styles$DetachedComponentHost = const [];
 
 class ViewDetachedComponentHost0 extends AppView<dynamic> {
   ViewDetachedComponent0 _compView_0;
-  import1.DetachedComponent _DetachedComponent_0_2;
+  import1.DetachedComponent _DetachedComponent_0_4;
   static RenderComponentType renderType;
   ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -332,17 +332,17 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DetachedComponent_0_2 = new import1.DetachedComponent();
-    _compView_0.create(_DetachedComponent_0_2, projectableNodes);
+    _DetachedComponent_0_4 = new import1.DetachedComponent();
+    _compView_0.create(_DetachedComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _DetachedComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _DetachedComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.DetachedComponent) && (0 == nodeIndex))) {
-      return _DetachedComponent_0_2;
+      return _DetachedComponent_0_4;
     }
     return notFoundResult;
   }
@@ -402,7 +402,7 @@ const List<dynamic> styles$OnPushComponentHost = const [];
 
 class ViewOnPushComponentHost0 extends AppView<dynamic> {
   ViewOnPushComponent0 _compView_0;
-  import1.OnPushComponent _OnPushComponent_0_2;
+  import1.OnPushComponent _OnPushComponent_0_4;
   static RenderComponentType renderType;
   ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -415,17 +415,17 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _OnPushComponent_0_2 = new import1.OnPushComponent();
-    _compView_0.create(_OnPushComponent_0_2, projectableNodes);
+    _OnPushComponent_0_4 = new import1.OnPushComponent();
+    _compView_0.create(_OnPushComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _OnPushComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _OnPushComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.OnPushComponent) && (0 == nodeIndex))) {
-      return _OnPushComponent_0_2;
+      return _OnPushComponent_0_4;
     }
     return notFoundResult;
   }
@@ -487,7 +487,7 @@ const List<dynamic> styles$StatefulComponentHost = const [];
 
 class ViewStatefulComponentHost0 extends AppView<dynamic> {
   ViewStatefulComponent0 _compView_0;
-  import1.StatefulComponent _StatefulComponent_0_2;
+  import1.StatefulComponent _StatefulComponent_0_4;
   static RenderComponentType renderType;
   ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -500,17 +500,17 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _StatefulComponent_0_2 = new import1.StatefulComponent();
-    _compView_0.create(_StatefulComponent_0_2, projectableNodes);
+    _StatefulComponent_0_4 = new import1.StatefulComponent();
+    _compView_0.create(_StatefulComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _StatefulComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _StatefulComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.StatefulComponent) && (0 == nodeIndex))) {
-      return _StatefulComponent_0_2;
+      return _StatefulComponent_0_4;
     }
     return notFoundResult;
   }
@@ -570,7 +570,7 @@ const List<dynamic> styles$DefaultComponentHost = const [];
 
 class ViewDefaultComponentHost0 extends AppView<dynamic> {
   ViewDefaultComponent0 _compView_0;
-  import1.DefaultComponent _DefaultComponent_0_2;
+  import1.DefaultComponent _DefaultComponent_0_4;
   static RenderComponentType renderType;
   ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -583,17 +583,17 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DefaultComponent_0_2 = new import1.DefaultComponent();
-    _compView_0.create(_DefaultComponent_0_2, projectableNodes);
+    _DefaultComponent_0_4 = new import1.DefaultComponent();
+    _compView_0.create(_DefaultComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _DefaultComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _DefaultComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.DefaultComponent) && (0 == nodeIndex))) {
-      return _DefaultComponent_0_2;
+      return _DefaultComponent_0_4;
     }
     return notFoundResult;
   }

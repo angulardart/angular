@@ -102,7 +102,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CompHost0 = [
 
 class ViewCompHost0 extends DebugAppView<dynamic> {
   ViewComp0 _compView_0;
-  import2.Comp _Comp_0_2;
+  import2.Comp _Comp_0_4;
   static RenderComponentType renderType;
   ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.HOST, {}, parentView, parentIndex,
@@ -116,17 +116,17 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _Comp_0_2 = new import2.Comp();
-    _compView_0.create(_Comp_0_2, projectableNodes);
+    _Comp_0_4 = new import2.Comp();
+    _compView_0.create(_Comp_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _Comp_0_2);
+    return new ComponentRef(0, this, rootEl, _Comp_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.Comp) && (0 == nodeIndex))) {
-      return _Comp_0_2;
+      return _Comp_0_4;
     }
     return notFoundResult;
   }
