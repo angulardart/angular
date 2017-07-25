@@ -101,11 +101,12 @@ AppView viewFactory_EmulatedComponentHost0(
   return new ViewEmulatedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory EmulatedComponentNgFactory = const ComponentFactory(
+const ComponentFactory _EmulatedComponentNgFactory = const ComponentFactory(
     'Emulated',
     viewFactory_EmulatedComponentHost0,
     import1.EmulatedComponent,
     _METADATA);
+final ComponentFactory EmulatedComponentNgFactory = _EmulatedComponentNgFactory;
 const List<dynamic> styles$NoneComponent = const [];
 
 class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
@@ -184,8 +185,9 @@ AppView viewFactory_NoneComponentHost0(
   return new ViewNoneComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory NoneComponentNgFactory = const ComponentFactory(
+const ComponentFactory _NoneComponentNgFactory = const ComponentFactory(
     'None', viewFactory_NoneComponentHost0, import1.NoneComponent, _METADATA);
+final ComponentFactory NoneComponentNgFactory = _NoneComponentNgFactory;
 const _METADATA = const <dynamic>[
   EmulatedComponent,
   const <dynamic>[],
@@ -200,11 +202,11 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       EmulatedComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[EmulatedComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_EmulatedComponentNgFactory],
           const [], () => new EmulatedComponent()));
   _ngRef.reflector.registerType(
       NoneComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[NoneComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_NoneComponentNgFactory],
           const [], () => new NoneComponent()));
   _i1.initReflector();
 }

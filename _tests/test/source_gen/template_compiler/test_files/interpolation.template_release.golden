@@ -119,11 +119,14 @@ AppView viewFactory_InterpolationComponentHost0(
   return new ViewInterpolationComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory InterpolationComponentNgFactory = const ComponentFactory(
-    'interpolation',
-    viewFactory_InterpolationComponentHost0,
-    import1.InterpolationComponent,
-    _METADATA);
+const ComponentFactory _InterpolationComponentNgFactory =
+    const ComponentFactory(
+        'interpolation',
+        viewFactory_InterpolationComponentHost0,
+        import1.InterpolationComponent,
+        _METADATA);
+final ComponentFactory InterpolationComponentNgFactory =
+    _InterpolationComponentNgFactory;
 const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0
@@ -226,12 +229,14 @@ AppView viewFactory_InterpolationComponentNoWhitespaceHost0(
       parentView, parentIndex);
 }
 
-const ComponentFactory InterpolationComponentNoWhitespaceNgFactory =
+const ComponentFactory _InterpolationComponentNoWhitespaceNgFactory =
     const ComponentFactory(
         'interpolation',
         viewFactory_InterpolationComponentNoWhitespaceHost0,
         import1.InterpolationComponentNoWhitespace,
         _METADATA);
+final ComponentFactory InterpolationComponentNoWhitespaceNgFactory =
+    _InterpolationComponentNoWhitespaceNgFactory;
 const _METADATA = const <dynamic>[
   InterpolationComponent,
   const <dynamic>[],
@@ -247,13 +252,13 @@ void initReflector() {
   _ngRef.reflector.registerType(
       InterpolationComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[InterpolationComponentNgFactory],
+          const <dynamic>[_InterpolationComponentNgFactory],
           const [],
           () => new InterpolationComponent()));
   _ngRef.reflector.registerType(
       InterpolationComponentNoWhitespace,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[InterpolationComponentNoWhitespaceNgFactory],
+          const <dynamic>[_InterpolationComponentNoWhitespaceNgFactory],
           const [],
           () => new InterpolationComponentNoWhitespace()));
   _i1.initReflector();

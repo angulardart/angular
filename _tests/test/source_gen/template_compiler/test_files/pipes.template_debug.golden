@@ -146,8 +146,9 @@ AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory CompNgFactory = const ComponentFactory(
+const ComponentFactory _CompNgFactory = const ComponentFactory(
     'comp', viewFactory_CompHost0, import2.Comp, _METADATA);
+final ComponentFactory CompNgFactory = _CompNgFactory;
 const _METADATA = const <dynamic>[
   PurePipe,
   const <dynamic>[],
@@ -179,6 +180,6 @@ void initReflector() {
   _ngRef.reflector.registerType(
       Comp,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[CompNgFactory], const [], () => new Comp()));
+          const <dynamic>[_CompNgFactory], const [], () => new Comp()));
   _i1.initReflector();
 }

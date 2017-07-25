@@ -625,7 +625,7 @@ var CATCH_STACK_VAR = new ReadVarExpr(BuiltinVar.CatchStack);
 var METADATA_MAP = new ReadVarExpr(BuiltinVar.MetadataMap);
 var NULL_EXPR = new LiteralExpr(null, null);
 //// Statements
-enum StmtModifier { Final, Private, Static }
+enum StmtModifier { Const, Final, Private, Static }
 
 abstract class Statement {
   List<StmtModifier> modifiers;

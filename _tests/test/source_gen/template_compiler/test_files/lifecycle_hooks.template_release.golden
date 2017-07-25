@@ -112,12 +112,14 @@ AppView viewFactory_LifecycleHooksComponentHost0(
   return new ViewLifecycleHooksComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory LifecycleHooksComponentNgFactory =
+const ComponentFactory _LifecycleHooksComponentNgFactory =
     const ComponentFactory(
         'lifecycle-hooks',
         viewFactory_LifecycleHooksComponentHost0,
         import1.LifecycleHooksComponent,
         _METADATA);
+final ComponentFactory LifecycleHooksComponentNgFactory =
+    _LifecycleHooksComponentNgFactory;
 const _METADATA = const <dynamic>[LifecycleHooksComponent, const <dynamic>[]];
 var _visited = false;
 void initReflector() {
@@ -128,7 +130,7 @@ void initReflector() {
   _ngRef.reflector.registerType(
       LifecycleHooksComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[LifecycleHooksComponentNgFactory],
+          const <dynamic>[_LifecycleHooksComponentNgFactory],
           const [],
           () => new LifecycleHooksComponent()));
   _i1.initReflector();

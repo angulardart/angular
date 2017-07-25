@@ -141,11 +141,13 @@ AppView viewFactory_InjectableComponentHost0(
   return new ViewInjectableComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory InjectableComponentNgFactory = const ComponentFactory(
+const ComponentFactory _InjectableComponentNgFactory = const ComponentFactory(
     'test-injectables',
     viewFactory_InjectableComponentHost0,
     import1.InjectableComponent,
     _METADATA);
+final ComponentFactory InjectableComponentNgFactory =
+    _InjectableComponentNgFactory;
 const _METADATA = const <dynamic>[
   injectableFactory,
   const <dynamic>[const Injectable()],
@@ -175,7 +177,7 @@ void initReflector() {
       InjectableComponent,
       new _ngRef.ReflectionInfo(
           const <dynamic>[
-            InjectableComponentNgFactory
+            _InjectableComponentNgFactory
           ],
           const [
             const <dynamic>[

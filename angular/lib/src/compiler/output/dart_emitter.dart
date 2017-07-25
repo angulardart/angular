@@ -121,11 +121,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       ctx.print('static ');
     }
     if (stmt.hasModifier(o.StmtModifier.Final)) {
-      if (isConstType(stmt.type)) {
-        ctx.print('const ');
-      } else {
-        ctx.print('final ');
-      }
+      ctx.print('final ');
+    } else if (stmt.hasModifier(o.StmtModifier.Const)) {
+      ctx.print('const ');
     } else if (stmt.type == null) {
       ctx.print('var ');
     }

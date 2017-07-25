@@ -328,11 +328,12 @@ AppView viewFactory_QueriesComponentHost0(
   return new ViewQueriesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory QueriesComponentNgFactory = const ComponentFactory(
+const ComponentFactory _QueriesComponentNgFactory = const ComponentFactory(
     'queries',
     viewFactory_QueriesComponentHost0,
     import1.QueriesComponent,
     _METADATA);
+final ComponentFactory QueriesComponentNgFactory = _QueriesComponentNgFactory;
 const _METADATA = const <dynamic>[
   QueriesComponent,
   const <dynamic>[],
@@ -347,7 +348,7 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       QueriesComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[QueriesComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_QueriesComponentNgFactory],
           const [], () => new QueriesComponent()));
   _ngRef.reflector
       .registerSimpleType(AnotherDirective, () => new AnotherDirective());

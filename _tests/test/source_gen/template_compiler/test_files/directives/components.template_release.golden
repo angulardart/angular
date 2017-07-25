@@ -101,11 +101,12 @@ AppView viewFactory_TestSubComponentHost0(
   return new ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory TestSubComponentNgFactory = const ComponentFactory(
+const ComponentFactory _TestSubComponentNgFactory = const ComponentFactory(
     'test-bar',
     viewFactory_TestSubComponentHost0,
     import1.TestSubComponent,
     _METADATA);
+final ComponentFactory TestSubComponentNgFactory = _TestSubComponentNgFactory;
 const _METADATA = const <dynamic>[TestSubComponent, const <dynamic>[]];
 var _visited = false;
 void initReflector() {
@@ -115,7 +116,7 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       TestSubComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[TestSubComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_TestSubComponentNgFactory],
           const [], () => new TestSubComponent()));
   _i1.initReflector();
 }

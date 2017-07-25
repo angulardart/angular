@@ -108,12 +108,14 @@ AppView viewFactory_HasTemplateFileComponentHost0(
   return new ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory HasTemplateFileComponentNgFactory =
+const ComponentFactory _HasTemplateFileComponentNgFactory =
     const ComponentFactory(
         'has-template-file',
         viewFactory_HasTemplateFileComponentHost0,
         import2.HasTemplateFileComponent,
         _METADATA);
+final ComponentFactory HasTemplateFileComponentNgFactory =
+    _HasTemplateFileComponentNgFactory;
 const _METADATA = const <dynamic>[HasTemplateFileComponent, const <dynamic>[]];
 var _visited = false;
 void initReflector() {
@@ -124,7 +126,7 @@ void initReflector() {
   _ngRef.reflector.registerType(
       HasTemplateFileComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[HasTemplateFileComponentNgFactory],
+          const <dynamic>[_HasTemplateFileComponentNgFactory],
           const [],
           () => new HasTemplateFileComponent()));
   _i1.initReflector();

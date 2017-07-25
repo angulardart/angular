@@ -113,8 +113,11 @@ class OfflineCompiler {
           hostMeta, [compMeta], [], statements, _deferredModules);
       var compFactoryVar = '${compMeta.type.name}NgFactory';
 
+      // Adds const _SomeComponentNgFactory = ...
+      //
+      // This is referenced in `initReflector/METADATA` _and_ below.
       statements.add(o
-          .variable(compFactoryVar)
+          .variable('_$compFactoryVar')
           .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
               <o.Expression>[
                 o.literal(compMeta.selector),
@@ -123,8 +126,22 @@ class OfflineCompiler {
                 o.METADATA_MAP
               ],
               o.importType(
-                  Identifiers.ComponentFactory, null, [o.TypeModifier.Const])))
-          .toDeclStmt(null, [o.StmtModifier.Final]));
+                Identifiers.ComponentFactory,
+                null,
+                [o.TypeModifier.Const],
+              )))
+          .toDeclStmt(null, [o.StmtModifier.Const]));
+
+      // User-visible SomeComponentNgFactory.
+      //
+      // This is not `const`.
+      statements.add(o
+          .variable(compFactoryVar)
+          .set(new o.ReadVarExpr('_$compFactoryVar'))
+          .toDeclStmt(o.importType(Identifiers.ComponentFactory), [
+        o.StmtModifier.Final,
+      ]));
+
       exportedVars.add(compFactoryVar);
     }
 

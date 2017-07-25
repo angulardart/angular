@@ -119,11 +119,12 @@ AppView viewFactory_HasOpaqueTokensHost0(
   return new ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
-const ComponentFactory HasOpaqueTokensNgFactory = const ComponentFactory(
+const ComponentFactory _HasOpaqueTokensNgFactory = const ComponentFactory(
     'has-opaque-tokens',
     viewFactory_HasOpaqueTokensHost0,
     import1.HasOpaqueTokens,
     _METADATA);
+final ComponentFactory HasOpaqueTokensNgFactory = _HasOpaqueTokensNgFactory;
 const _METADATA = const <dynamic>[HasOpaqueTokens, const <dynamic>[]];
 var _visited = false;
 void initReflector() {
@@ -134,7 +135,7 @@ void initReflector() {
   _ngRef.reflector.registerType(
       HasOpaqueTokens,
       new _ngRef.ReflectionInfo(const <dynamic>[
-        HasOpaqueTokensNgFactory
+        _HasOpaqueTokensNgFactory
       ], const [
         const <dynamic>[String, const Inject(baseUrlToken)]
       ], (String baseUrl) => new HasOpaqueTokens(baseUrl)));

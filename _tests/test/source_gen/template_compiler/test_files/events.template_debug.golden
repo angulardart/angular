@@ -129,11 +129,12 @@ AppView viewFactory_UsesNativeEventsHost0(
   return new ViewUsesNativeEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory UsesNativeEventsNgFactory = const ComponentFactory(
+const ComponentFactory _UsesNativeEventsNgFactory = const ComponentFactory(
     'uses-native-events',
     viewFactory_UsesNativeEventsHost0,
     import2.UsesNativeEvents,
     _METADATA);
+final ComponentFactory UsesNativeEventsNgFactory = _UsesNativeEventsNgFactory;
 const List<dynamic> styles$UsesAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = [
   null,
@@ -266,11 +267,12 @@ AppView viewFactory_UsesAngularEventsHost0(
   return new ViewUsesAngularEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory UsesAngularEventsNgFactory = const ComponentFactory(
+const ComponentFactory _UsesAngularEventsNgFactory = const ComponentFactory(
     'uses-angular-events',
     viewFactory_UsesAngularEventsHost0,
     import2.UsesAngularEvents,
     _METADATA);
+final ComponentFactory UsesAngularEventsNgFactory = _UsesAngularEventsNgFactory;
 const List<dynamic> styles$HasAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEvents0 = [];
 
@@ -362,11 +364,12 @@ AppView viewFactory_HasAngularEventsHost0(
   return new ViewHasAngularEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory HasAngularEventsNgFactory = const ComponentFactory(
+const ComponentFactory _HasAngularEventsNgFactory = const ComponentFactory(
     'has-angular-events',
     viewFactory_HasAngularEventsHost0,
     import2.HasAngularEvents,
     _METADATA);
+final ComponentFactory HasAngularEventsNgFactory = _HasAngularEventsNgFactory;
 const _METADATA = const <dynamic>[
   UsesNativeEvents,
   const <dynamic>[],
@@ -383,15 +386,15 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       UsesNativeEvents,
-      new _ngRef.ReflectionInfo(const <dynamic>[UsesNativeEventsNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_UsesNativeEventsNgFactory],
           const [], () => new UsesNativeEvents()));
   _ngRef.reflector.registerType(
       UsesAngularEvents,
-      new _ngRef.ReflectionInfo(const <dynamic>[UsesAngularEventsNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_UsesAngularEventsNgFactory],
           const [], () => new UsesAngularEvents()));
   _ngRef.reflector.registerType(
       HasAngularEvents,
-      new _ngRef.ReflectionInfo(const <dynamic>[HasAngularEventsNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_HasAngularEventsNgFactory],
           const [], () => new HasAngularEvents()));
   _i1.initReflector();
 }

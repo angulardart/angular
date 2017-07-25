@@ -85,7 +85,7 @@ class StyleCompiler {
         .variable(stylesVar)
         .set(o.literalArr(styleExpressions,
             new o.ArrayType(o.DYNAMIC_TYPE, [o.TypeModifier.Const])))
-        .toDeclStmt(null, [o.StmtModifier.Final]);
+        .toDeclStmt(null, [o.StmtModifier.Const]);
     return new StylesCompileResult([stmt], stylesVar, dependencies,
         usesHostAttribute, usesContentAttribute);
   }
