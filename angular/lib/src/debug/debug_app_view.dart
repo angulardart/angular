@@ -120,6 +120,13 @@ class DebugAppView<T> extends AppView<T> {
     _resetDebug();
     try {
       super.destroy();
+      // Cleanup debug nodes, which used to happen in "destroyViewNodes".
+      int nodeCount = allNodes.length;
+      for (int i = 0; i < nodeCount; i++) {
+        var debugNode = getDebugNode(allNodes[i]);
+        if (debugNode == null) continue;
+        removeDebugNodeFromIndex(debugNode);
+      }
     } catch (e, s) {
       _rethrowWithContext(e, s);
       rethrow;
