@@ -5,6 +5,6 @@ import 'directives.dart' as directive;
 
 @Component(
     selector: 'test-foo',
-    template: '<div>Foo</div>',
+    template: '<div>Foo</div><test-bar></test-bar>',
     directives: const [directive.TestDirective, TestSubComponent])
 class TestFooComponent {}

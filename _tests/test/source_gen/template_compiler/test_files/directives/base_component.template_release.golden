@@ -19,24 +19,29 @@ export 'base_component.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'base_component.dart' as import1;
 import 'dart:html' as import2;
+import 'components.template.dart' as import3;
+import 'components.dart' as import4;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
-    as import4;
+    as import6;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+    as import8;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   import2.DivElement _el_0;
+  import2.Element _el_2;
+  import3.ViewTestSubComponent0 _compView_2;
+  import4.TestSubComponent _TestSubComponent_2_4;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+      : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-foo');
-    renderType ??= import6.appViewUtils
+    renderType ??= import8.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(renderType);
   }
@@ -47,8 +52,32 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     import2.Text _text_1 = new import2.Text('Foo');
     _el_0.append(_text_1);
+    _compView_2 = new import3.ViewTestSubComponent0(this, 2);
+    _el_2 = _compView_2.rootEl;
+    parentRenderNode.append(_el_2);
+    _TestSubComponent_2_4 = new import4.TestSubComponent();
+    _compView_2.create(_TestSubComponent_2_4, []);
     init(const [], const []);
     return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import4.TestSubComponent) && (2 == nodeIndex))) {
+      return _TestSubComponent_2_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_2.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_2.destroy();
   }
 }
 
@@ -64,9 +93,9 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   import1.TestFooComponent _TestFooComponent_0_4;
   static RenderComponentType renderType;
   ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+      : super(import6.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$TestFooComponentHost);
     setupComponentType(renderType);
   }
