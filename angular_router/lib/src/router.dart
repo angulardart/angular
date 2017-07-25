@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart' show Inject, Injectable;
-import 'package:angular/platform/common.dart'
-    show Location, PathLocationStrategy;
 
 import 'directives/router_outlet.dart' show RouterOutlet;
 import 'instruction.dart' show ComponentInstruction, Instruction;
+import 'location.dart' show Location, PathLocationStrategy;
 import 'route_config/route_config_decorator.dart' show RouteDefinition;
 import 'route_registry.dart' show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
 import 'utils.dart' show getCanActivateHook;
