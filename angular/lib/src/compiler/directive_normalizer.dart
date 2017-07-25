@@ -14,8 +14,7 @@ import 'xhr.dart' show XHR;
 
 /// Loads contents of templateUrls, styleUrls to convert
 /// CompileDirectiveMetadata into a normalized form where template content and
-/// styles are available as a simple strings to use in compilation step.
-///
+/// styles are available to compilation step as simple strings.
 /// The normalizer also resolves inline style and stylesheets in the template.
 class DirectiveNormalizer {
   final XHR _xhr;

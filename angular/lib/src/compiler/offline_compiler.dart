@@ -18,6 +18,7 @@ import 'source_module.dart';
 import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
 import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;
+import 'view_compiler/directive_compiler.dart';
 import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
 
 /// List of components and directives in source module.
@@ -84,6 +85,8 @@ class OfflineCompiler {
     String moduleUrl;
     if (components.isNotEmpty) {
       moduleUrl = _templateModuleUrl(components[0].component.type);
+    } else if (artifacts.directives.isNotEmpty) {
+      moduleUrl = _templateModuleUrl(artifacts.directives.first.type);
     } else {
       throw new BaseException('No components nor injectorModules given');
     }
@@ -124,6 +127,16 @@ class OfflineCompiler {
           .toDeclStmt(null, [o.StmtModifier.Final]));
       exportedVars.add(compFactoryVar);
     }
+
+    for (CompileDirectiveMetadata directive in artifacts.directives) {
+      if (!requiresDirectiveChangeDetector(directive)) continue;
+      DirectiveCompiler comp =
+          new DirectiveCompiler(directive, _viewCompiler.genDebugInfo);
+      DirectiveCompileResult res = comp.compile();
+      statements.addAll(res.statements);
+      exportedVars.add(comp.changeDetectorClassName);
+    }
+
     return _createSourceModule(
         moduleUrl, statements, exportedVars, _deferredModules);
   }

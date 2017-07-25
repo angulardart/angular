@@ -55,9 +55,10 @@ Future<TemplateCompilerOutputs> processTemplates(
       operationName: 'findComponents',
       assetId: buildStep.inputId,
       log: log);
-  if (compileComponentsData.components.isEmpty) {
+  if (compileComponentsData.isEmpty) {
     return new TemplateCompilerOutputs(null, ngDepsModel);
   }
+
   // Normalize directive meta data for component and directives.
   for (final component in compileComponentsData.components) {
     final normalizedComp = await templateCompiler.normalizeDirectiveMetadata(

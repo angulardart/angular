@@ -67,8 +67,14 @@ void _writeImportExports(
     _NgScope scope,
     Map<String, String> deferredModules) {
   // We need to import & export (see below) the source file.
-  scope.addPrefixImport(sourceFile, '');
-  List<ImportBuilder> imports = [new ImportModel(uri: sourceFile).asBuilder];
+  // If import was already added by directive compiler, we should skip adding
+  // it twice.
+  var sourceImport = new ImportModel(uri: sourceFile);
+  var imports = <ImportBuilder>[];
+  if (!templateCode.contains(sourceImport.asStatement)) {
+    scope.addPrefixImport(sourceFile, '');
+    imports.add(sourceImport.asBuilder);
+  }
 
   if (model.reflectables.isNotEmpty) {
     scope.addPrefixImport(REFLECTOR_IMPORT, REFLECTOR_PREFIX);
