@@ -1,7 +1,7 @@
 import 'package:angular/angular.dart' show Provider;
-import 'package:angular/platform/common.dart'
-    show BrowserPlatformLocation, PlatformLocation;
 
+import 'location.dart'
+    show BrowserPlatformLocation, PlatformLocation;
 import 'router_providers_common.dart' show ROUTER_PROVIDERS_COMMON;
 
 /// A list of [Provider]s. To use the router, you must add this to your

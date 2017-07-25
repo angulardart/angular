@@ -1,10 +1,10 @@
 import 'dart:html' as html;
 
-import "package:angular/di.dart" show Injectable, Inject, Optional;
+import 'package:angular/angular.dart' show Injectable, Inject, Optional;
 
-import "location.dart" show Location;
-import "location_strategy.dart" show LocationStrategy, APP_BASE_HREF;
-import "platform_location.dart" show PlatformLocation;
+import 'location.dart' show Location;
+import 'location_strategy.dart' show LocationStrategy, APP_BASE_HREF;
+import 'platform_location.dart' show PlatformLocation;
 
 /// `HashLocationStrategy` is a [LocationStrategy] used to configure the
 /// [PlatformLocation] service to represent its state in the
@@ -47,7 +47,7 @@ import "platform_location.dart" show PlatformLocation;
 @Injectable()
 class HashLocationStrategy extends LocationStrategy {
   PlatformLocation _platformLocation;
-  String _baseHref = "";
+  String _baseHref = '';
   HashLocationStrategy(this._platformLocation,
       [@Optional() @Inject(APP_BASE_HREF) String _baseHref]) {
     if (_baseHref != null) {
@@ -81,7 +81,7 @@ class HashLocationStrategy extends LocationStrategy {
 
   String prepareExternalUrl(String internal) {
     var url = Location.joinWithSlash(this._baseHref, internal);
-    return url.length > 0 ? ("#" + url) : url;
+    return url.length > 0 ? ('#' + url) : url;
   }
 
   void pushState(dynamic state, String title, String path, String queryParams) {
