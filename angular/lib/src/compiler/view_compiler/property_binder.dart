@@ -537,7 +537,6 @@ void _bindDirectiveInputsOnChangeDetectorClass(DirectiveAst directiveAst,
 
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var directive = directiveAst.directive;
   var constStatements = <o.Statement>[];
   var dynamicStatements = <o.Statement>[];
   // directiveAst contains the target directive we are updating.
