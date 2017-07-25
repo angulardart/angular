@@ -1,6 +1,8 @@
 @TestOn('browser')
 @Tags(const ['codegen'])
 
+import 'dart:html';
+
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -214,6 +216,23 @@ void main() {
         expect(el.children[0].inject(NeedsElementRef).elementRef.nativeElement,
             el.children[0].nativeElement);
       });
+
+      test('should inject Element', () async {
+        var testBed = new NgTestBed<InjectElementTest>();
+        var fixture = await testBed.create();
+        var el = getDebugNode(fixture.rootElement) as DebugElement;
+        expect(el.children[0].inject(NeedsElement).element,
+            el.children[0].nativeElement);
+      });
+
+      test('should inject HtmlElement', () async {
+        var testBed = new NgTestBed<InjectHtmlElementTest>();
+        var fixture = await testBed.create();
+        var el = getDebugNode(fixture.rootElement) as DebugElement;
+        expect(el.children[0].inject(NeedsHtmlElement).element,
+            el.children[0].nativeElement);
+      });
+
       test(
           'should inject ChangeDetectorRef of the component\'s '
           'view into the component via a proxy', () async {
@@ -439,6 +458,22 @@ class NeedsElementRef {
   var elementRef;
   NeedsElementRef(ElementRef ref) {
     this.elementRef = ref;
+  }
+}
+
+@Directive(selector: '[needsElement]')
+class NeedsElement {
+  Element element;
+  NeedsElement(Element e) {
+    this.element = e;
+  }
+}
+
+@Directive(selector: '[needsHtmlElement]')
+class NeedsHtmlElement {
+  HtmlElement element;
+  NeedsHtmlElement(HtmlElement e) {
+    this.element = e;
   }
 }
 
@@ -835,6 +870,20 @@ class InjectStaticAttributeNoTypeTest {}
   directives: const [NeedsElementRef],
 )
 class InjectElementRefTest {}
+
+@Component(
+  selector: 'inject-element-test',
+  template: '<div needsElement></div>',
+  directives: const [NeedsElement],
+)
+class InjectElementTest {}
+
+@Component(
+  selector: 'inject-html-element-test',
+  template: '<div needsHtmlElement></div>',
+  directives: const [NeedsHtmlElement],
+)
+class InjectHtmlElementTest {}
 
 @Component(
   selector: 'inject-change-detector-test',

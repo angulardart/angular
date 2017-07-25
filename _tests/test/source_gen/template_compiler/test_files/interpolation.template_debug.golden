@@ -93,7 +93,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentHost0 = [
 
 class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
-  import2.InterpolationComponent _InterpolationComponent_0_2;
+  import2.InterpolationComponent _InterpolationComponent_0_4;
   static RenderComponentType renderType;
   ViewInterpolationComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -112,10 +112,10 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _InterpolationComponent_0_2 = new import2.InterpolationComponent();
-    _compView_0.create(_InterpolationComponent_0_2, projectableNodes);
+    _InterpolationComponent_0_4 = new import2.InterpolationComponent();
+    _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_4);
   }
 
   @override
@@ -123,7 +123,7 @@ class ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.InterpolationComponent) &&
         (0 == nodeIndex))) {
-      return _InterpolationComponent_0_2;
+      return _InterpolationComponent_0_4;
     }
     return notFoundResult;
   }
@@ -218,7 +218,7 @@ class ViewInterpolationComponentNoWhitespaceHost0
     extends DebugAppView<dynamic> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
   import2.InterpolationComponentNoWhitespace
-      _InterpolationComponentNoWhitespace_0_2;
+      _InterpolationComponentNoWhitespace_0_4;
   static RenderComponentType renderType;
   ViewInterpolationComponentNoWhitespaceHost0(
       AppView<dynamic> parentView, num parentIndex)
@@ -240,13 +240,13 @@ class ViewInterpolationComponentNoWhitespaceHost0
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _InterpolationComponentNoWhitespace_0_2 =
+    _InterpolationComponentNoWhitespace_0_4 =
         new import2.InterpolationComponentNoWhitespace();
     _compView_0.create(
-        _InterpolationComponentNoWhitespace_0_2, projectableNodes);
+        _InterpolationComponentNoWhitespace_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
     return new ComponentRef(
-        0, this, rootEl, _InterpolationComponentNoWhitespace_0_2);
+        0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
   }
 
   @override
@@ -254,7 +254,7 @@ class ViewInterpolationComponentNoWhitespaceHost0
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.InterpolationComponentNoWhitespace) &&
         (0 == nodeIndex))) {
-      return _InterpolationComponentNoWhitespace_0_2;
+      return _InterpolationComponentNoWhitespace_0_4;
     }
     return notFoundResult;
   }

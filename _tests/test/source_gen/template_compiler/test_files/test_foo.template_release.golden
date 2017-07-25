@@ -57,7 +57,7 @@ const List<dynamic> styles$TestFooComponentHost = const [];
 
 class ViewTestFooComponentHost0 extends AppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
-  import1.TestFooComponent _TestFooComponent_0_2;
+  import1.TestFooComponent _TestFooComponent_0_4;
   static RenderComponentType renderType;
   ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -70,17 +70,17 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestFooComponent_0_2 = new import1.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_2, projectableNodes);
+    _TestFooComponent_0_4 = new import1.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _TestFooComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
-      return _TestFooComponent_0_2;
+      return _TestFooComponent_0_4;
     }
     return notFoundResult;
   }

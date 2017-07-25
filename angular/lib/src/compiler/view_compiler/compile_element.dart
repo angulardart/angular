@@ -114,7 +114,8 @@ class CompileElement extends CompileNode {
     elementRef =
         o.importExpr(Identifiers.ElementRef).instantiate([this.renderNode]);
     _instances.add(Identifiers.ElementRefToken, this.elementRef);
-
+    _instances.add(Identifiers.ElementToken, this.renderNode);
+    _instances.add(Identifiers.HtmlElementToken, this.renderNode);
     var readInjectorExpr =
         new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
     _instances.add(Identifiers.InjectorToken, readInjectorExpr);

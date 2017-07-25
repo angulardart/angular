@@ -182,8 +182,10 @@ class Identifiers {
       name: "document", moduleUrl: "dart:html");
   static final HTML_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "Element", moduleUrl: "dart:html");
+  static final ElementToken = identifierToken(HTML_ELEMENT);
   static final HTML_HTML_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "HtmlElement", moduleUrl: "dart:html");
+  static final HtmlElementToken = identifierToken(HTML_HTML_ELEMENT);
   static final HTML_SHADOW_ROOT_ELEMENT =
       new CompileIdentifierMetadata<dynamic>(
           name: "ShadowRoot", moduleUrl: "dart:html");

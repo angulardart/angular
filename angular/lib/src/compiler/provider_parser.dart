@@ -267,6 +267,8 @@ class ProviderElementContext implements ElementProviderUsage {
       if ((requestingProviderType == ProviderAstType.Directive ||
           requestingProviderType == ProviderAstType.Component)) {
         if (dep.token.equalsTo(Identifiers.ElementRefToken) ||
+            dep.token.equalsTo(Identifiers.HtmlElementToken) ||
+            dep.token.equalsTo(Identifiers.ElementToken) ||
             dep.token.equalsTo(Identifiers.ChangeDetectorRefToken) ||
             dep.token.equalsTo(Identifiers.TemplateRefToken)) {
           return dep;

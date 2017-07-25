@@ -61,10 +61,10 @@ class ViewTestContainerComponent0
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_3 =
+    TemplateRef _TemplateRef_0_5 =
         new TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
     loadDeferred(
-        deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_3,
+        deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_5,
         () {
       deflib1.initReflector();
     });
@@ -88,7 +88,7 @@ class ViewTestContainerComponent1
     extends DebugAppView<import3.TestContainerComponent> {
   import9.Element _el_0;
   AppView _compView_0;
-  dynamic _DeferredChildComponent_0_2;
+  dynamic _DeferredChildComponent_0_4;
   ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.EMBEDDED,
@@ -104,10 +104,10 @@ class ViewTestContainerComponent1
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     dbgElm(this, _el_0, 0, 0, 0);
-    _DeferredChildComponent_0_2 = new deflib0.DeferredChildComponent();
+    _DeferredChildComponent_0_4 = new deflib0.DeferredChildComponent();
     import9.Text _text_1 = new import9.Text('Foo');
     dbgElm(this, _text_1, 1, 0, 30);
-    _compView_0.create(_DeferredChildComponent_0_2, []);
+    _compView_0.create(_DeferredChildComponent_0_4, []);
     init([_el_0], const [], [_el_0, _text_1]);
     return null;
   }
@@ -117,7 +117,7 @@ class ViewTestContainerComponent1
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, deflib0.DeferredChildComponent) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _DeferredChildComponent_0_2;
+      return _DeferredChildComponent_0_4;
     }
     return notFoundResult;
   }
@@ -146,7 +146,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponentHost0 = [
 
 class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
   ViewTestContainerComponent0 _compView_0;
-  import3.TestContainerComponent _TestContainerComponent_0_2;
+  import3.TestContainerComponent _TestContainerComponent_0_4;
   static RenderComponentType renderType;
   ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -165,10 +165,10 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewTestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _TestContainerComponent_0_2 = new import3.TestContainerComponent();
-    _compView_0.create(_TestContainerComponent_0_2, projectableNodes);
+    _TestContainerComponent_0_4 = new import3.TestContainerComponent();
+    _compView_0.create(_TestContainerComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _TestContainerComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _TestContainerComponent_0_4);
   }
 
   @override
@@ -176,7 +176,7 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import3.TestContainerComponent) &&
         (0 == nodeIndex))) {
-      return _TestContainerComponent_0_2;
+      return _TestContainerComponent_0_4;
     }
     return notFoundResult;
   }

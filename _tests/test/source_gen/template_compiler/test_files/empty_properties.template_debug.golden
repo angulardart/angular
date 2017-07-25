@@ -45,16 +45,16 @@ class ViewEmptyPropertiesComponent0
     extends DebugAppView<import1.EmptyPropertiesComponent> {
   import3.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
-  import1.FancyButtonComponent _FancyButtonComponent_0_2;
+  import1.FancyButtonComponent _FancyButtonComponent_0_4;
   import3.Element _el_2;
   ViewFancyButtonComponent0 _compView_2;
-  import1.FancyButtonComponent _FancyButtonComponent_2_2;
+  import1.FancyButtonComponent _FancyButtonComponent_2_4;
   import3.Element _el_4;
   ViewFancyButtonComponent0 _compView_4;
-  import1.FancyButtonComponent _FancyButtonComponent_4_2;
+  import1.FancyButtonComponent _FancyButtonComponent_4_4;
   import3.Element _el_6;
   ViewFancyButtonComponent0 _compView_6;
-  import1.FancyButtonComponent _FancyButtonComponent_6_2;
+  import1.FancyButtonComponent _FancyButtonComponent_6_4;
   static RenderComponentType renderType;
   ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -79,8 +79,8 @@ class ViewEmptyPropertiesComponent0
     parentRenderNode.append(_el_0);
     dbgElm(this, _el_0, 0, 0, 0);
     createAttr(_el_0, 'raised', '');
-    _FancyButtonComponent_0_2 = new import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_2, []);
+    _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
+    _compView_0.create(_FancyButtonComponent_0_4, []);
     import3.Text _text_1 = new import3.Text('\n');
     parentRenderNode.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 36);
@@ -88,8 +88,8 @@ class ViewEmptyPropertiesComponent0
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     dbgElm(this, _el_2, 2, 1, 0);
-    _FancyButtonComponent_2_2 = new import1.FancyButtonComponent();
-    _compView_2.create(_FancyButtonComponent_2_2, []);
+    _FancyButtonComponent_2_4 = new import1.FancyButtonComponent();
+    _compView_2.create(_FancyButtonComponent_2_4, []);
     import3.Text _text_3 = new import3.Text('\n');
     parentRenderNode.append(_text_3);
     dbgElm(this, _text_3, 3, 1, 38);
@@ -97,8 +97,8 @@ class ViewEmptyPropertiesComponent0
     _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
     dbgElm(this, _el_4, 4, 2, 0);
-    _FancyButtonComponent_4_2 = new import1.FancyButtonComponent();
-    _compView_4.create(_FancyButtonComponent_4_2, []);
+    _FancyButtonComponent_4_4 = new import1.FancyButtonComponent();
+    _compView_4.create(_FancyButtonComponent_4_4, []);
     import3.Text _text_5 = new import3.Text('\n');
     parentRenderNode.append(_text_5);
     dbgElm(this, _text_5, 5, 2, 45);
@@ -106,8 +106,8 @@ class ViewEmptyPropertiesComponent0
     _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     dbgElm(this, _el_6, 6, 3, 0);
-    _FancyButtonComponent_6_2 = new import1.FancyButtonComponent();
-    _compView_6.create(_FancyButtonComponent_6_2, []);
+    _FancyButtonComponent_6_4 = new import1.FancyButtonComponent();
+    _compView_6.create(_FancyButtonComponent_6_4, []);
     import3.Text _text_7 = new import3.Text('\n');
     parentRenderNode.append(_text_7);
     dbgElm(this, _text_7, 7, 3, 46);
@@ -120,16 +120,16 @@ class ViewEmptyPropertiesComponent0
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.FancyButtonComponent) && (0 == nodeIndex))) {
-      return _FancyButtonComponent_0_2;
+      return _FancyButtonComponent_0_4;
     }
     if ((identical(token, import1.FancyButtonComponent) && (2 == nodeIndex))) {
-      return _FancyButtonComponent_2_2;
+      return _FancyButtonComponent_2_4;
     }
     if ((identical(token, import1.FancyButtonComponent) && (4 == nodeIndex))) {
-      return _FancyButtonComponent_4_2;
+      return _FancyButtonComponent_4_4;
     }
     if ((identical(token, import1.FancyButtonComponent) && (6 == nodeIndex))) {
-      return _FancyButtonComponent_6_2;
+      return _FancyButtonComponent_6_4;
     }
     return notFoundResult;
   }
@@ -139,22 +139,22 @@ class ViewEmptyPropertiesComponent0
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(true, null)) {
-        (_FancyButtonComponent_0_2.raised = true);
+        (_FancyButtonComponent_0_4.raised = true);
       }
     }
     if (firstCheck) {
       if (!identical(true, null)) {
-        (_FancyButtonComponent_2_2.raised = true);
+        (_FancyButtonComponent_2_4.raised = true);
       }
     }
     if (firstCheck) {
       if (!identical(true, null)) {
-        (_FancyButtonComponent_4_2.raised = true);
+        (_FancyButtonComponent_4_4.raised = true);
       }
     }
     if (firstCheck) {
       if (!identical(false, null)) {
-        (_FancyButtonComponent_6_2.raised = false);
+        (_FancyButtonComponent_6_4.raised = false);
       }
     }
     _compView_0.detectChanges();
@@ -185,7 +185,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmptyPropertiesComponentHost0 = [
 
 class ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
   ViewEmptyPropertiesComponent0 _compView_0;
-  import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_2;
+  import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_4;
   static RenderComponentType renderType;
   ViewEmptyPropertiesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
@@ -205,10 +205,10 @@ class ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewEmptyPropertiesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _EmptyPropertiesComponent_0_2 = new import1.EmptyPropertiesComponent();
-    _compView_0.create(_EmptyPropertiesComponent_0_2, projectableNodes);
+    _EmptyPropertiesComponent_0_4 = new import1.EmptyPropertiesComponent();
+    _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _EmptyPropertiesComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _EmptyPropertiesComponent_0_4);
   }
 
   @override
@@ -216,7 +216,7 @@ class ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.EmptyPropertiesComponent) &&
         (0 == nodeIndex))) {
-      return _EmptyPropertiesComponent_0_2;
+      return _EmptyPropertiesComponent_0_4;
     }
     return notFoundResult;
   }
@@ -285,7 +285,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_FancyButtonComponentHost0 = [
 
 class ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
   ViewFancyButtonComponent0 _compView_0;
-  import1.FancyButtonComponent _FancyButtonComponent_0_2;
+  import1.FancyButtonComponent _FancyButtonComponent_0_4;
   static RenderComponentType renderType;
   ViewFancyButtonComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -304,17 +304,17 @@ class ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _FancyButtonComponent_0_2 = new import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_2, projectableNodes);
+    _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
+    _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _FancyButtonComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _FancyButtonComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.FancyButtonComponent) && (0 == nodeIndex))) {
-      return _FancyButtonComponent_0_2;
+      return _FancyButtonComponent_0_4;
     }
     return notFoundResult;
   }

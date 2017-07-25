@@ -54,11 +54,11 @@ const List<dynamic> styles$ProviderModulesComponentHost = const [];
 
 class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   ViewProviderModulesComponent0 _compView_0;
-  import1.ProviderModulesComponent _ProviderModulesComponent_0_2;
-  import1.FooService __FooService_0_3;
-  Duration __const_OpaqueToken__fooToken___0_4;
-  List<dynamic> __const_OpaqueToken__barToken___0_5;
-  dynamic __const_OpaqueToken__bazToken___0_6;
+  import1.ProviderModulesComponent _ProviderModulesComponent_0_4;
+  import1.FooService __FooService_0_5;
+  Duration __const_OpaqueToken__fooToken___0_6;
+  List<dynamic> __const_OpaqueToken__barToken___0_7;
+  dynamic __const_OpaqueToken__bazToken___0_8;
   static RenderComponentType renderType;
   ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
@@ -68,42 +68,42 @@ class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
         '', ViewEncapsulation.Emulated, styles$ProviderModulesComponentHost);
     setupComponentType(renderType);
   }
-  import1.FooService get _FooService_0_3 {
-    if ((this.__FooService_0_3 == null)) {
-      (__FooService_0_3 = new import1.FooService());
+  import1.FooService get _FooService_0_5 {
+    if ((this.__FooService_0_5 == null)) {
+      (__FooService_0_5 = new import1.FooService());
     }
-    return this.__FooService_0_3;
+    return this.__FooService_0_5;
   }
 
-  Duration get _const_OpaqueToken__fooToken___0_4 {
-    if ((this.__const_OpaqueToken__fooToken___0_4 == null)) {
-      (__const_OpaqueToken__fooToken___0_4 = const Duration(seconds: 500));
+  Duration get _const_OpaqueToken__fooToken___0_6 {
+    if ((this.__const_OpaqueToken__fooToken___0_6 == null)) {
+      (__const_OpaqueToken__fooToken___0_6 = const Duration(seconds: 500));
     }
-    return this.__const_OpaqueToken__fooToken___0_4;
+    return this.__const_OpaqueToken__fooToken___0_6;
   }
 
-  List<dynamic> get _const_OpaqueToken__barToken___0_5 {
-    if ((this.__const_OpaqueToken__barToken___0_5 == null)) {
-      (__const_OpaqueToken__barToken___0_5 = const ['a', 'b', 'c']);
+  List<dynamic> get _const_OpaqueToken__barToken___0_7 {
+    if ((this.__const_OpaqueToken__barToken___0_7 == null)) {
+      (__const_OpaqueToken__barToken___0_7 = const ['a', 'b', 'c']);
     }
-    return this.__const_OpaqueToken__barToken___0_5;
+    return this.__const_OpaqueToken__barToken___0_7;
   }
 
-  dynamic get _const_OpaqueToken__bazToken___0_6 {
-    if ((this.__const_OpaqueToken__bazToken___0_6 == null)) {
-      (__const_OpaqueToken__bazToken___0_6 = import1.getSomeValues());
+  dynamic get _const_OpaqueToken__bazToken___0_8 {
+    if ((this.__const_OpaqueToken__bazToken___0_8 == null)) {
+      (__const_OpaqueToken__bazToken___0_8 = import1.getSomeValues());
     }
-    return this.__const_OpaqueToken__bazToken___0_6;
+    return this.__const_OpaqueToken__bazToken___0_8;
   }
 
   @override
   ComponentRef build() {
     _compView_0 = new ViewProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ProviderModulesComponent_0_2 = new import1.ProviderModulesComponent();
-    _compView_0.create(_ProviderModulesComponent_0_2, projectableNodes);
+    _ProviderModulesComponent_0_4 = new import1.ProviderModulesComponent();
+    _compView_0.create(_ProviderModulesComponent_0_4, projectableNodes);
     init([rootEl], const []);
-    return new ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_4);
   }
 
   @override
@@ -111,19 +111,19 @@ class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.ProviderModulesComponent) &&
         (0 == nodeIndex))) {
-      return _ProviderModulesComponent_0_2;
+      return _ProviderModulesComponent_0_4;
     }
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
-      return _FooService_0_3;
+      return _FooService_0_5;
     }
     if ((identical(token, const OpaqueToken('fooToken')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__fooToken___0_4;
+      return _const_OpaqueToken__fooToken___0_6;
     }
     if ((identical(token, const OpaqueToken('barToken')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__barToken___0_5;
+      return _const_OpaqueToken__barToken___0_7;
     }
     if ((identical(token, const OpaqueToken('bazToken')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__bazToken___0_6;
+      return _const_OpaqueToken__bazToken___0_8;
     }
     return notFoundResult;
   }

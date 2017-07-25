@@ -67,7 +67,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponentHost0 = [
 
 class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;
-  import2.LifecycleHooksComponent _LifecycleHooksComponent_0_2;
+  import2.LifecycleHooksComponent _LifecycleHooksComponent_0_4;
   static RenderComponentType renderType;
   ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -86,10 +86,10 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _LifecycleHooksComponent_0_2 = new import2.LifecycleHooksComponent();
-    _compView_0.create(_LifecycleHooksComponent_0_2, projectableNodes);
+    _LifecycleHooksComponent_0_4 = new import2.LifecycleHooksComponent();
+    _compView_0.create(_LifecycleHooksComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_4);
   }
 
   @override
@@ -97,7 +97,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.LifecycleHooksComponent) &&
         (0 == nodeIndex))) {
-      return _LifecycleHooksComponent_0_2;
+      return _LifecycleHooksComponent_0_4;
     }
     return notFoundResult;
   }
@@ -106,25 +106,25 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if ((firstCheck && !import8.AppViewUtils.throwOnChanges)) {
-      _LifecycleHooksComponent_0_2.ngOnInit();
+      _LifecycleHooksComponent_0_4.ngOnInit();
     }
     if (!import8.AppViewUtils.throwOnChanges) {
-      _LifecycleHooksComponent_0_2.ngDoCheck();
+      _LifecycleHooksComponent_0_4.ngDoCheck();
     }
     if (!import8.AppViewUtils.throwOnChanges) {
       dbg(0, 0, 0);
       if (firstCheck) {
-        _LifecycleHooksComponent_0_2.ngAfterContentInit();
+        _LifecycleHooksComponent_0_4.ngAfterContentInit();
       }
-      _LifecycleHooksComponent_0_2.ngAfterContentChecked();
+      _LifecycleHooksComponent_0_4.ngAfterContentChecked();
     }
     _compView_0.detectChanges();
     if (!import8.AppViewUtils.throwOnChanges) {
       dbg(0, 0, 0);
       if (firstCheck) {
-        _LifecycleHooksComponent_0_2.ngAfterViewInit();
+        _LifecycleHooksComponent_0_4.ngAfterViewInit();
       }
-      _LifecycleHooksComponent_0_2.ngAfterViewChecked();
+      _LifecycleHooksComponent_0_4.ngAfterViewChecked();
     }
   }
 
@@ -132,7 +132,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   void destroyInternal() {
     _compView_0.destroy();
     dbg(0, 0, 0);
-    _LifecycleHooksComponent_0_2.ngOnDestroy();
+    _LifecycleHooksComponent_0_4.ngOnDestroy();
   }
 }
 

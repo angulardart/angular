@@ -44,9 +44,9 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
 
 class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
   ViewContainer _appEl_1;
-  NgIf _NgIf_1_5;
+  NgIf _NgIf_1_7;
   ViewContainer _appEl_3;
-  import7.NgForNgCd _NgFor_3_5;
+  import7.NgForNgCd _NgFor_3_7;
   static RenderComponentType renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -73,9 +73,9 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     parentRenderNode.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 0, 4);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_4 =
+    TemplateRef _TemplateRef_1_6 =
         new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
-    _NgIf_1_5 = new NgIf(_appEl_1, _TemplateRef_1_4);
+    _NgIf_1_7 = new NgIf(_appEl_1, _TemplateRef_1_6);
     import12.Text _text_2 = new import12.Text('\n    ');
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 30);
@@ -83,10 +83,10 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     parentRenderNode.append(_anchor_3);
     dbgElm(this, _anchor_3, 3, 1, 4);
     _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
-    TemplateRef _TemplateRef_3_4 =
+    TemplateRef _TemplateRef_3_6 =
         new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
-    _NgFor_3_5 =
-        new import7.NgForNgCd(new import3.NgFor(_appEl_3, _TemplateRef_3_4));
+    _NgFor_3_7 =
+        new import7.NgForNgCd(new import3.NgFor(_appEl_3, _TemplateRef_3_6));
     import12.Text _text_4 = new import12.Text('\n    ');
     parentRenderNode.append(_text_4);
     dbgElm(this, _text_4, 4, 3, 10);
@@ -99,13 +99,13 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     final import5.TestFooComponent _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     dbg(1, 0, 9);
-    _NgIf_1_5.ngIf = _ctx.foo;
+    _NgIf_1_7.ngIf = _ctx.foo;
     dbg(3, 1, 9);
     if (firstCheck) {
-      _NgFor_3_5.ngSet$ngForOf(_ctx.bars);
+      _NgFor_3_7.ngSet$ngForOf(_ctx.bars);
     }
     if (!import13.AppViewUtils.throwOnChanges) {
-      _NgFor_3_5.instance.ngDoCheck();
+      _NgFor_3_7.instance.ngDoCheck();
     }
     _appEl_1.detectChangesInNestedViews();
     _appEl_3.detectChangesInNestedViews();
@@ -221,7 +221,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
 
 class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
-  import5.TestFooComponent _TestFooComponent_0_2;
+  import5.TestFooComponent _TestFooComponent_0_4;
   static RenderComponentType renderType;
   ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -240,17 +240,17 @@ class ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _TestFooComponent_0_2 = new import5.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_2, projectableNodes);
+    _TestFooComponent_0_4 = new import5.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
     init([rootEl], const [], [rootEl]);
-    return new ComponentRef(0, this, rootEl, _TestFooComponent_0_2);
+    return new ComponentRef(0, this, rootEl, _TestFooComponent_0_4);
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import5.TestFooComponent) && (0 == nodeIndex))) {
-      return _TestFooComponent_0_2;
+      return _TestFooComponent_0_4;
     }
     return notFoundResult;
   }
