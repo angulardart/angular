@@ -22,7 +22,7 @@ void main() {
 @Component(
   selector: 'root',
   directives: const [
-    FORM_DIRECTIVES,
+    formDirectives,
     NgFor,
   ],
   template: r'''
