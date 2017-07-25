@@ -36,6 +36,7 @@ class AdBannerComponent implements AfterViewInit {
   `angular/angular.dart`.
 * Router code extracted into new 'angular_router' package.  Replace
   'angular/router.dart' imports with 'angular_router/angular_router.dart'.
+* Removed `angular/testing.dart`; Use `angular_test` package instead.
 
 ## 4.0.0-alpha+1
 
