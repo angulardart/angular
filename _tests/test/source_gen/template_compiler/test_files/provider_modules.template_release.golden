@@ -144,12 +144,14 @@ AppView viewFactory_ProviderModulesComponentHost0(
   return new ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory ProviderModulesComponentNgFactory =
+const ComponentFactory _ProviderModulesComponentNgFactory =
     const ComponentFactory(
         'provider-modules',
         viewFactory_ProviderModulesComponentHost0,
         import1.ProviderModulesComponent,
         _METADATA);
+final ComponentFactory ProviderModulesComponentNgFactory =
+    _ProviderModulesComponentNgFactory;
 const _METADATA = const <dynamic>[
   getSomeValues,
   const <dynamic>[const Injectable()],
@@ -173,7 +175,7 @@ void initReflector() {
   _ngRef.reflector.registerType(
       ProviderModulesComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[ProviderModulesComponentNgFactory],
+          const <dynamic>[_ProviderModulesComponentNgFactory],
           const [],
           () => new ProviderModulesComponent()));
   _i1.initReflector();

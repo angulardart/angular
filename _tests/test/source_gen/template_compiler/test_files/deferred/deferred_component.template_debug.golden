@@ -124,11 +124,14 @@ AppView viewFactory_DeferredChildComponentHost0(
   return new ViewDeferredChildComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory DeferredChildComponentNgFactory = const ComponentFactory(
-    'deferred-component',
-    viewFactory_DeferredChildComponentHost0,
-    import2.DeferredChildComponent,
-    _METADATA);
+const ComponentFactory _DeferredChildComponentNgFactory =
+    const ComponentFactory(
+        'deferred-component',
+        viewFactory_DeferredChildComponentHost0,
+        import2.DeferredChildComponent,
+        _METADATA);
+final ComponentFactory DeferredChildComponentNgFactory =
+    _DeferredChildComponentNgFactory;
 const _METADATA = const <dynamic>[DeferredChildComponent, const <dynamic>[]];
 var _visited = false;
 void initReflector() {
@@ -139,7 +142,7 @@ void initReflector() {
   _ngRef.reflector.registerType(
       DeferredChildComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[DeferredChildComponentNgFactory],
+          const <dynamic>[_DeferredChildComponentNgFactory],
           const [],
           () => new DeferredChildComponent()));
   _i1.initReflector();

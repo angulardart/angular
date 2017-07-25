@@ -161,11 +161,14 @@ AppView viewFactory_TestContainerComponentHost0(
   return new ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory TestContainerComponentNgFactory = const ComponentFactory(
-    'test-container',
-    viewFactory_TestContainerComponentHost0,
-    import1.TestContainerComponent,
-    _METADATA);
+const ComponentFactory _TestContainerComponentNgFactory =
+    const ComponentFactory(
+        'test-container',
+        viewFactory_TestContainerComponentHost0,
+        import1.TestContainerComponent,
+        _METADATA);
+final ComponentFactory TestContainerComponentNgFactory =
+    _TestContainerComponentNgFactory;
 const _METADATA = const <dynamic>[TestContainerComponent, const <dynamic>[]];
 var _visited = false;
 void initReflector() {
@@ -176,7 +179,7 @@ void initReflector() {
   _ngRef.reflector.registerType(
       TestContainerComponent,
       new _ngRef.ReflectionInfo(
-          const <dynamic>[TestContainerComponentNgFactory],
+          const <dynamic>[_TestContainerComponentNgFactory],
           const [],
           () => new TestContainerComponent()));
   _i1.initReflector();

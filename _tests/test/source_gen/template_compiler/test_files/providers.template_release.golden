@@ -215,11 +215,13 @@ AppView viewFactory_ProvidersComponentHost0(
   return new ViewProvidersComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory ProvidersComponentNgFactory = const ComponentFactory(
+const ComponentFactory _ProvidersComponentNgFactory = const ComponentFactory(
     'providers',
     viewFactory_ProvidersComponentHost0,
     import1.ProvidersComponent,
     _METADATA);
+final ComponentFactory ProvidersComponentNgFactory =
+    _ProvidersComponentNgFactory;
 const _METADATA = const <dynamic>[
   ProvidersComponent,
   const <dynamic>[],
@@ -234,7 +236,7 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       ProvidersComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[ProvidersComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_ProvidersComponentNgFactory],
           const [], () => new ProvidersComponent()));
   _ngRef.reflector.registerType(
       MyInjectableTypeAnnotation,

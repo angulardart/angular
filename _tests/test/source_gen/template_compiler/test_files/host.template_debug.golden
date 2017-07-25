@@ -138,8 +138,9 @@ AppView viewFactory_HostComponentHost0(
   return new ViewHostComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory HostComponentNgFactory = const ComponentFactory(
+const ComponentFactory _HostComponentNgFactory = const ComponentFactory(
     'host', viewFactory_HostComponentHost0, import2.HostComponent, _METADATA);
+final ComponentFactory HostComponentNgFactory = _HostComponentNgFactory;
 const _METADATA = const <dynamic>[HostComponent, const <dynamic>[]];
 var _visited = false;
 void initReflector() {
@@ -149,7 +150,7 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       HostComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[HostComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_HostComponentNgFactory],
           const [], () => new HostComponent()));
   _i1.initReflector();
 }

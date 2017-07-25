@@ -178,7 +178,9 @@ class ReflectableVisitor extends RecursiveElementVisitor {
       log,
     ))) {
       annotations.add(new AnnotationModel(
-          name: '${element.name}NgFactory', isConstObject: true));
+        name: '_${element.name}NgFactory',
+        isConstObject: true,
+      ));
     }
     return annotations;
   }

@@ -143,11 +143,12 @@ AppView viewFactory_TestFooComponentHost0(
   return new ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory TestFooComponentNgFactory = const ComponentFactory(
+const ComponentFactory _TestFooComponentNgFactory = const ComponentFactory(
     'test-foo',
     viewFactory_TestFooComponentHost0,
     import1.TestFooComponent,
     _METADATA);
+final ComponentFactory TestFooComponentNgFactory = _TestFooComponentNgFactory;
 const List<dynamic> styles$TestSubComponent = const [];
 
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
@@ -226,11 +227,12 @@ AppView viewFactory_TestSubComponentHost0(
   return new ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory TestSubComponentNgFactory = const ComponentFactory(
+const ComponentFactory _TestSubComponentNgFactory = const ComponentFactory(
     'test-bar',
     viewFactory_TestSubComponentHost0,
     import1.TestSubComponent,
     _METADATA);
+final ComponentFactory TestSubComponentNgFactory = _TestSubComponentNgFactory;
 const _METADATA = const <dynamic>[
   TestFooComponent,
   const <dynamic>[],
@@ -247,12 +249,12 @@ void initReflector() {
   _visited = true;
   _ngRef.reflector.registerType(
       TestFooComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[TestFooComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_TestFooComponentNgFactory],
           const [], () => new TestFooComponent()));
   _ngRef.reflector.registerSimpleType(TestDirective, () => new TestDirective());
   _ngRef.reflector.registerType(
       TestSubComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[TestSubComponentNgFactory],
+      new _ngRef.ReflectionInfo(const <dynamic>[_TestSubComponentNgFactory],
           const [], () => new TestSubComponent()));
   _i1.initReflector();
 }

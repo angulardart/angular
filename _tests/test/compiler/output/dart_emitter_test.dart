@@ -52,7 +52,7 @@ void main() {
                   new o.BuiltinType(
                       o.BuiltinTypeName.Int, [o.TypeModifier.Const])))
               .toDeclStmt(null, [o.StmtModifier.Final])),
-          'const int someVar = 1;');
+          'final int someVar = 1;');
       expect(emitStmt(someVar.set(o.literal(1)).toDeclStmt(), ['someVar']),
           'var someVar = 1;');
       expect(emitStmt(someVar.set(o.literal(1)).toDeclStmt(o.INT_TYPE)),
