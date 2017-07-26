@@ -1,10 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import '../compile_metadata.dart'
-    show
-        CompileDirectiveMetadata,
-        CompileIdentifierMetadata,
-        CompilePipeMetadata;
+    show CompileDirectiveMetadata, CompileIdentifierMetadata;
 import '../output/output_ast.dart' as o;
 import '../identifiers.dart';
 import 'property_binder.dart' show isPrimitiveFieldType;
