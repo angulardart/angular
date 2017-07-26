@@ -11,13 +11,6 @@ enum ViewEncapsulation {
   /// This is the default option.
   Emulated,
 
-  /// Use the native encapsulation mechanism of the renderer.
-  ///
-  /// For the DOM this means using [Shadow
-  /// DOM](https://w3c.github.io/webcomponents/spec/shadow/) and creating a
-  /// ShadowRoot for Component's Host Element.
-  Native,
-
   /// Don't provide any template or style encapsulation.
   None
 }
