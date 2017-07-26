@@ -12,7 +12,7 @@ import 'package:angular/src/testing/internal.dart';
 import 'package:angular_test/angular_test.dart';
 
 void main() {
-  group('DynamicComponentLoader', () {
+  group('SlowComponentLoader', () {
     tearDown(() => disposeAnyRunningTest());
 
     test('loading next to a location', () async {
@@ -174,7 +174,7 @@ class MyComp {
   bool ctxBoolProp;
   @ViewChild('loc', read: ViewContainerRef)
   ViewContainerRef viewContainerRef;
-  final DynamicComponentLoader loader;
+  final SlowComponentLoader loader;
   MyComp(this.loader) {
     this.ctxBoolProp = false;
   }
