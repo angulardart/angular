@@ -15,9 +15,6 @@ const publicLibraries = const <String, List<String>>{
   'core.dart': NG_CORE,
   'di.dart': diApis,
   'experimental.dart': null,
-  'platform/browser_static.dart': null,
-  'platform/common.dart': NG_PLATFORM_COMMON,
-  'platform/testing/browser_static.dart': null,
   'router/testing.dart': null,
   'security.dart': null,
   'source_gen.dart': null,
@@ -130,17 +127,6 @@ const NG_CORE = const [
   'ViewRef',
   'TrackByFn',
   'noValueProvided',
-];
-const NG_PLATFORM_COMMON = const [
-  'APP_BASE_HREF',
-  'BrowserPlatformLocation',
-  'HashLocationStrategy',
-  'Location',
-  'LocationStrategy',
-  'PathLocationStrategy',
-  'PlatformLocation',
-  'baseHRefFromDOM',
-  'BaseHRefFromDOMProvider',
 ];
 const angularApis = const [
   'APPLICATION_COMMON_PROVIDERS',
@@ -321,7 +307,6 @@ const angularApis = const [
   'provide',
   'reflector',
 ];
-
 const diApis = const [
   'AbstractProviderError',
   'Component',

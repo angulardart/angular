@@ -12,6 +12,7 @@ export 'src/instruction.dart'
 export 'src/interfaces.dart'
     show OnActivate, OnDeactivate, OnReuse, CanDeactivate, CanReuse;
 export 'src/lifecycle/lifecycle_annotations.dart' show CanActivate;
+export 'src/location.dart';
 export 'src/route_config/route_config_decorator.dart';
 export 'src/route_definition.dart';
 export 'src/route_registry.dart' show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
