@@ -1,5 +1,15 @@
 export 'src/analyzer.dart'
     show
+        DependencyElement,
+        Dependencies,
+        OpaqueTokenElement,
+        ProviderElement,
+        ProviderReader,
+        TokenElement,
+        TypeTokenElement,
+        UseClassProviderElement,
+        UseFactoryProviderElement,
+        UseValueProviderElement,
         $Attribute,
         $Component,
         $ContentChild,
