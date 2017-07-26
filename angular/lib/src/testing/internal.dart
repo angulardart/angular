@@ -1,15 +1,11 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
-import 'package:angular/platform/common.dart' show LocationStrategy;
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/reflection/reflection.dart';
 import 'package:angular/src/core/reflection/reflection_capabilities.dart';
-import 'package:angular/src/mock/mock_location_strategy.dart'
-    show MockLocationStrategy;
 
 import 'internal_injector.dart';
-import 'test_component_builder.dart';
 
 export 'package:angular/src/debug/debug_node.dart';
 
@@ -109,6 +105,4 @@ const List<dynamic> _testBrowserApplicationProviders = const [
 const List<dynamic> _additionalTestBrowserProviders = const [
   const Provider(APP_ID, useValue: 'a'),
   AppViewUtils,
-  TestComponentBuilder,
-  const Provider(LocationStrategy, useClass: MockLocationStrategy),
 ];
