@@ -327,8 +327,7 @@ bool arrayLooseIdentical(List<dynamic> a, List<dynamic> b) {
 // Purposefully did not attempt to optimize when refactoring, as it could have
 // bad perf impact if not properly tested. This is a 1:1 from the original
 // version for now (see _looseIdentical for dart vm/dart2js bugs).
-bool mapLooseIdentical/*< V >*/(
-    Map<String, dynamic/*= V */ > m1, Map<String, dynamic/*= V */ > m2) {
+bool mapLooseIdentical<V>(Map<String, V> m1, Map<String, V> m2) {
   // Tiny optimization: Maps of different length, avoid allocating arrays.
   if (m1.length != m2.length) {
     return false;
@@ -341,9 +340,7 @@ bool mapLooseIdentical/*< V >*/(
   return true;
 }
 
-dynamic/*= T */ castByValue/*< T >*/(dynamic input, dynamic/*= T */ value) {
-  return (input as dynamic/*= T */);
-}
+T castByValue<T>(dynamic input, T value) => input as T;
 
 // TODO(matanl): Remove this hack.
 //
