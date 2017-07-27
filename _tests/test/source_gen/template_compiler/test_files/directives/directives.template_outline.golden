@@ -1,0 +1,12 @@
+import 'directives.dart' as _user;
+class TestDirectiveNgCd {
+  external get _user.TestDirective instance;
+  external factory TestDirectiveCd(_user.TestDirective instance);
+}
+class TestDirectiveWithInputsNgCd {
+  external get _user.TestDirectiveWithInputs instance;
+  external factory TestDirectiveWithInputsCd(_user.TestDirectiveWithInputs instance);
+  external void ngSet$input1(dynamic value);
+  external void ngSet$input2(dynamic value);
+}
+external void initReflector();

@@ -29,7 +29,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = [null, null];
 
 class ViewTestSubComponent0 extends DebugAppView<import2.TestSubComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -39,11 +39,11 @@ class ViewTestSubComponent0 extends DebugAppView<import2.TestSubComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestSubComponent0) {
     rootEl = import3.document.createElement('test-bar');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/directives/components.dart class TestSubComponent - inline template',
         ViewEncapsulation.None,
         styles$TestSubComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -69,11 +69,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
       [import2.TestSubComponent], import2.TestSubComponent, <String, dynamic>{})
 ];
 
-class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
+class _ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   ViewTestSubComponent0 _compView_0;
   import2.TestSubComponent _TestSubComponent_0_4;
-  static RenderComponentType renderType;
-  ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -81,9 +81,9 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestSubComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$TestSubComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -118,7 +118,7 @@ class ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_TestSubComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewTestSubComponentHost0(parentView, parentIndex);
+  return new _ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _TestSubComponentNgFactory = const ComponentFactory(

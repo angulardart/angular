@@ -1,0 +1,10 @@
+import 'package:angular/angular.dart';
+
+import 'inherited_lifecycle_hooks.dart' as _user;
+const List<dynamic> styles$LifecycleHooksComponent = const [];
+external ComponentFactory get LifecycleHooksComponentNgFactory;
+external AppView<_user.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewLifecycleHooksComponent0 extends AppView<_user.LifecycleHooksComponent> {
+  external factory ViewLifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

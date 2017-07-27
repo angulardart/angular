@@ -1,0 +1,16 @@
+import 'package:angular/angular.dart';
+
+import 'empty_properties.dart' as _user;
+const List<dynamic> styles$EmptyPropertiesComponent = const [];
+external ComponentFactory get EmptyPropertiesComponentNgFactory;
+external AppView<_user.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewEmptyPropertiesComponent0 extends AppView<_user.EmptyPropertiesComponent> {
+  external factory ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$FancyButtonComponent = const [];
+external ComponentFactory get FancyButtonComponentNgFactory;
+external AppView<_user.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewFancyButtonComponent0 extends AppView<_user.FancyButtonComponent> {
+  external factory ViewFancyButtonComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

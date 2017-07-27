@@ -1,0 +1,14 @@
+import 'package:angular/angular.dart';
+
+import 'queries.dart' as _user;
+const List<dynamic> styles$QueriesComponent = const [];
+external ComponentFactory get QueriesComponentNgFactory;
+external AppView<_user.QueriesComponent> viewFactory_QueriesComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewQueriesComponent0 extends AppView<_user.QueriesComponent> {
+  external factory ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+class AnotherDirectiveNgCd {
+  external get _user.AnotherDirective instance;
+  external factory AnotherDirectiveCd(_user.AnotherDirective instance);
+}
+external void initReflector();

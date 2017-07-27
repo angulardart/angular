@@ -1,0 +1,10 @@
+import 'package:angular/angular.dart';
+
+import 'injectables.dart' as _user;
+const List<dynamic> styles$InjectableComponent = const [];
+external ComponentFactory get InjectableComponentNgFactory;
+external AppView<_user.InjectableComponent> viewFactory_InjectableComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewInjectableComponent0 extends AppView<_user.InjectableComponent> {
+  external factory ViewInjectableComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

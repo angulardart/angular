@@ -29,7 +29,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponent0 = [];
 
 class ViewLifecycleHooksComponent0
     extends DebugAppView<import2.LifecycleHooksComponent> {
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewLifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.COMPONENT,
@@ -39,11 +39,11 @@ class ViewLifecycleHooksComponent0
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_LifecycleHooksComponent0) {
     rootEl = import7.document.createElement('lifecycle-hooks');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/inherited_lifecycle_hooks.dart class LifecycleHooksComponent - inline template',
         ViewEncapsulation.None,
         styles$LifecycleHooksComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -64,11 +64,12 @@ List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponentHost0 = [
       import2.LifecycleHooksComponent, <String, dynamic>{})
 ];
 
-class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
+class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;
   import2.LifecycleHooksComponent _LifecycleHooksComponent_0_4;
-  static RenderComponentType renderType;
-  ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewLifecycleHooksComponentHost0(
+      AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.HOST,
             {},
@@ -76,9 +77,9 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_LifecycleHooksComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$LifecycleHooksComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -137,7 +138,7 @@ class ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_LifecycleHooksComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewLifecycleHooksComponentHost0(parentView, parentIndex);
+  return new _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _LifecycleHooksComponentNgFactory =

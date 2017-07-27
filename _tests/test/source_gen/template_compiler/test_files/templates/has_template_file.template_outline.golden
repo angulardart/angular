@@ -1,0 +1,10 @@
+import 'package:angular/angular.dart';
+
+import 'has_template_file.dart' as _user;
+const List<dynamic> styles$HasTemplateFileComponent = const [];
+external ComponentFactory get HasTemplateFileComponentNgFactory;
+external AppView<_user.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewHasTemplateFileComponent0 extends AppView<_user.HasTemplateFileComponent> {
+  external factory ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

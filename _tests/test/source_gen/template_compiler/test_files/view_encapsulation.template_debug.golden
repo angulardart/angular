@@ -29,7 +29,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponent0 = [null, null];
 
 class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -39,11 +39,11 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_EmulatedComponent0) {
     rootEl = import3.document.createElement('Emulated');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/view_encapsulation.dart class EmulatedComponent - inline template',
         ViewEncapsulation.None,
         styles$EmulatedComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -69,11 +69,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = [
       import2.EmulatedComponent, <String, dynamic>{})
 ];
 
-class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
+class _ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   ViewEmulatedComponent0 _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_4;
-  static RenderComponentType renderType;
-  ViewEmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -81,9 +81,9 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_EmulatedComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$EmulatedComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -118,7 +118,7 @@ class ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_EmulatedComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewEmulatedComponentHost0(parentView, parentIndex);
+  return new _ViewEmulatedComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _EmulatedComponentNgFactory = const ComponentFactory(
@@ -132,7 +132,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = [null, null];
 
 class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -142,11 +142,11 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_NoneComponent0) {
     rootEl = import3.document.createElement('None');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/view_encapsulation.dart class NoneComponent - inline template',
         ViewEncapsulation.None,
         styles$NoneComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -172,11 +172,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = [
       [import2.NoneComponent], import2.NoneComponent, <String, dynamic>{})
 ];
 
-class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
+class _ViewNoneComponentHost0 extends DebugAppView<dynamic> {
   ViewNoneComponent0 _compView_0;
   import2.NoneComponent _NoneComponent_0_4;
-  static RenderComponentType renderType;
-  ViewNoneComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewNoneComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -184,9 +184,9 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_NoneComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$NoneComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -221,7 +221,7 @@ class ViewNoneComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_NoneComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewNoneComponentHost0(parentView, parentIndex);
+  return new _ViewNoneComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _NoneComponentNgFactory = const ComponentFactory(

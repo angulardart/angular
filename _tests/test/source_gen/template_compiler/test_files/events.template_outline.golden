@@ -1,0 +1,22 @@
+import 'package:angular/angular.dart';
+
+import 'events.dart' as _user;
+const List<dynamic> styles$UsesNativeEvents = const [];
+external ComponentFactory get UsesNativeEventsNgFactory;
+external AppView<_user.UsesNativeEvents> viewFactory_UsesNativeEvents0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesNativeEvents0 extends AppView<_user.UsesNativeEvents> {
+  external factory ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$UsesAngularEvents = const [];
+external ComponentFactory get UsesAngularEventsNgFactory;
+external AppView<_user.UsesAngularEvents> viewFactory_UsesAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesAngularEvents0 extends AppView<_user.UsesAngularEvents> {
+  external factory ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$HasAngularEvents = const [];
+external ComponentFactory get HasAngularEventsNgFactory;
+external AppView<_user.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+class ViewHasAngularEvents0 extends AppView<_user.HasAngularEvents> {
+  external factory ViewHasAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

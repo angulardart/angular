@@ -34,14 +34,14 @@ class ViewComp0 extends AppView<import1.Comp> {
   import1.DirtyPipe _pipe_dirty_1;
   import1.LifecyclePipe _pipe_lifecycle_2;
   var _pipe_lifecycle_2_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewComp0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$Comp);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -91,16 +91,16 @@ AppView<import1.Comp> viewFactory_Comp0(
 
 const List<dynamic> styles$CompHost = const [];
 
-class ViewCompHost0 extends AppView<dynamic> {
+class _ViewCompHost0 extends AppView<dynamic> {
   ViewComp0 _compView_0;
   import1.Comp _Comp_0_4;
-  static RenderComponentType renderType;
-  ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.Emulated, styles$CompHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -133,7 +133,7 @@ class ViewCompHost0 extends AppView<dynamic> {
 }
 
 AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCompHost0(parentView, parentIndex);
+  return new _ViewCompHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CompNgFactory = const ComponentFactory(

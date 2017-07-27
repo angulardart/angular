@@ -44,6 +44,12 @@ Future main(List<String> args) async {
                   ? '.template_debug.golden'
                   : '.template_debug.check',
               isStandalone: true),
+          inputs)
+      ..addAction(
+          new TemplateOutliner(
+              extension: updateGoldens
+                  ? '.template_outline.golden'
+                  : '.template_outline..check'),
           inputs));
   await build(phaseGroup, deleteFilesByDefault: updateGoldens);
 }

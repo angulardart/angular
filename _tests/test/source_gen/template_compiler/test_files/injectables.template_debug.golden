@@ -34,7 +34,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponent0 = [null, null];
 class ViewInjectableComponent0
     extends DebugAppView<import2.InjectableComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewInjectableComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -44,11 +44,11 @@ class ViewInjectableComponent0
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_InjectableComponent0) {
     rootEl = import3.document.createElement('test-injectables');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/injectables.dart class InjectableComponent - inline template',
         ViewEncapsulation.None,
         styles$InjectableComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -81,14 +81,14 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
       <String, dynamic>{})
 ];
 
-class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
+class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   ViewInjectableComponent0 _compView_0;
   dynamic _const_OpaqueToken__test___0_4;
   import2.InjectableComponent _InjectableComponent_0_5;
   dynamic __SomeDep_0_6;
   dynamic __BaseService_0_7;
-  static RenderComponentType renderType;
-  ViewInjectableComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewInjectableComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -96,9 +96,9 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_InjectableComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$InjectableComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   dynamic get _SomeDep_0_6 {
     dbg(0, 0, 0);
@@ -168,7 +168,7 @@ class ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_InjectableComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewInjectableComponentHost0(parentView, parentIndex);
+  return new _ViewInjectableComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _InjectableComponentNgFactory = const ComponentFactory(

@@ -1,0 +1,10 @@
+import 'package:angular/angular.dart';
+
+import 'providers.dart' as _user;
+const List<dynamic> styles$ProvidersComponent = const [];
+external ComponentFactory get ProvidersComponentNgFactory;
+external AppView<_user.ProvidersComponent> viewFactory_ProvidersComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewProvidersComponent0 extends AppView<_user.ProvidersComponent> {
+  external factory ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

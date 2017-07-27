@@ -29,14 +29,14 @@ const List<dynamic> styles$CheckOnceComponent = const [];
 class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   import2.DivElement _el_0;
   var _expr_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('CheckOnce');
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$CheckOnceComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -65,16 +65,16 @@ AppView<import1.CheckOnceComponent> viewFactory_CheckOnceComponent0(
 
 const List<dynamic> styles$CheckOnceComponentHost = const [];
 
-class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
+class _ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   ViewCheckOnceComponent0 _compView_0;
   import1.CheckOnceComponent _CheckOnceComponent_0_4;
-  static RenderComponentType renderType;
-  ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$CheckOnceComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -110,7 +110,7 @@ class ViewCheckOnceComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_CheckOnceComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCheckOnceComponentHost0(parentView, parentIndex);
+  return new _ViewCheckOnceComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CheckOnceComponentNgFactory = const ComponentFactory(
@@ -124,14 +124,14 @@ const List<dynamic> styles$CheckedComponent = const [];
 
 class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('Checked');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$CheckedComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -152,16 +152,16 @@ AppView<import1.CheckedComponent> viewFactory_CheckedComponent0(
 
 const List<dynamic> styles$CheckedComponentHost = const [];
 
-class ViewCheckedComponentHost0 extends AppView<dynamic> {
+class _ViewCheckedComponentHost0 extends AppView<dynamic> {
   ViewCheckedComponent0 _compView_0;
   import1.CheckedComponent _CheckedComponent_0_4;
-  static RenderComponentType renderType;
-  ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$CheckedComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -195,7 +195,7 @@ class ViewCheckedComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_CheckedComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCheckedComponentHost0(parentView, parentIndex);
+  return new _ViewCheckedComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CheckedComponentNgFactory = const ComponentFactory(
@@ -208,14 +208,14 @@ const List<dynamic> styles$CheckAlwaysComponent = const [];
 
 class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('CheckAlways');
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$CheckAlwaysComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -236,16 +236,16 @@ AppView<import1.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
 
 const List<dynamic> styles$CheckAlwaysComponentHost = const [];
 
-class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
+class _ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   ViewCheckAlwaysComponent0 _compView_0;
   import1.CheckAlwaysComponent _CheckAlwaysComponent_0_4;
-  static RenderComponentType renderType;
-  ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$CheckAlwaysComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -279,7 +279,7 @@ class ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_CheckAlwaysComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCheckAlwaysComponentHost0(parentView, parentIndex);
+  return new _ViewCheckAlwaysComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CheckAlwaysComponentNgFactory = const ComponentFactory(
@@ -293,14 +293,14 @@ const List<dynamic> styles$DetachedComponent = const [];
 
 class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('Detached');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$DetachedComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -321,16 +321,16 @@ AppView<import1.DetachedComponent> viewFactory_DetachedComponent0(
 
 const List<dynamic> styles$DetachedComponentHost = const [];
 
-class ViewDetachedComponentHost0 extends AppView<dynamic> {
+class _ViewDetachedComponentHost0 extends AppView<dynamic> {
   ViewDetachedComponent0 _compView_0;
   import1.DetachedComponent _DetachedComponent_0_4;
-  static RenderComponentType renderType;
-  ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$DetachedComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -364,7 +364,7 @@ class ViewDetachedComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_DetachedComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewDetachedComponentHost0(parentView, parentIndex);
+  return new _ViewDetachedComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _DetachedComponentNgFactory = const ComponentFactory(
@@ -377,14 +377,14 @@ const List<dynamic> styles$OnPushComponent = const [];
 
 class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('OnPush');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$OnPushComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -405,16 +405,16 @@ AppView<import1.OnPushComponent> viewFactory_OnPushComponent0(
 
 const List<dynamic> styles$OnPushComponentHost = const [];
 
-class ViewOnPushComponentHost0 extends AppView<dynamic> {
+class _ViewOnPushComponentHost0 extends AppView<dynamic> {
   ViewOnPushComponent0 _compView_0;
   import1.OnPushComponent _OnPushComponent_0_4;
-  static RenderComponentType renderType;
-  ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$OnPushComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -448,7 +448,7 @@ class ViewOnPushComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_OnPushComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewOnPushComponentHost0(parentView, parentIndex);
+  return new _ViewOnPushComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _OnPushComponentNgFactory = const ComponentFactory(
@@ -461,14 +461,14 @@ const List<dynamic> styles$StatefulComponent = const [];
 
 class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('Stateful');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$StatefulComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -491,16 +491,16 @@ AppView<import1.StatefulComponent> viewFactory_StatefulComponent0(
 
 const List<dynamic> styles$StatefulComponentHost = const [];
 
-class ViewStatefulComponentHost0 extends AppView<dynamic> {
+class _ViewStatefulComponentHost0 extends AppView<dynamic> {
   ViewStatefulComponent0 _compView_0;
   import1.StatefulComponent _StatefulComponent_0_4;
-  static RenderComponentType renderType;
-  ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$StatefulComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -534,7 +534,7 @@ class ViewStatefulComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_StatefulComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewStatefulComponentHost0(parentView, parentIndex);
+  return new _ViewStatefulComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _StatefulComponentNgFactory = const ComponentFactory(
@@ -547,14 +547,14 @@ const List<dynamic> styles$DefaultComponent = const [];
 
 class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('Default');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$DefaultComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -575,16 +575,16 @@ AppView<import1.DefaultComponent> viewFactory_DefaultComponent0(
 
 const List<dynamic> styles$DefaultComponentHost = const [];
 
-class ViewDefaultComponentHost0 extends AppView<dynamic> {
+class _ViewDefaultComponentHost0 extends AppView<dynamic> {
   ViewDefaultComponent0 _compView_0;
   import1.DefaultComponent _DefaultComponent_0_4;
-  static RenderComponentType renderType;
-  ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$DefaultComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -618,7 +618,7 @@ class ViewDefaultComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_DefaultComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewDefaultComponentHost0(parentView, parentIndex);
+  return new _ViewDefaultComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _DefaultComponentNgFactory = const ComponentFactory(

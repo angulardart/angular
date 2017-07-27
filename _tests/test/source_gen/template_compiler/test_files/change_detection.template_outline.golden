@@ -1,0 +1,46 @@
+import 'package:angular/angular.dart';
+
+import 'change_detection.dart' as _user;
+const List<dynamic> styles$CheckOnceComponent = const [];
+external ComponentFactory get CheckOnceComponentNgFactory;
+external AppView<_user.CheckOnceComponent> viewFactory_CheckOnceComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewCheckOnceComponent0 extends AppView<_user.CheckOnceComponent> {
+  external factory ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$CheckedComponent = const [];
+external ComponentFactory get CheckedComponentNgFactory;
+external AppView<_user.CheckedComponent> viewFactory_CheckedComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewCheckedComponent0 extends AppView<_user.CheckedComponent> {
+  external factory ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$CheckAlwaysComponent = const [];
+external ComponentFactory get CheckAlwaysComponentNgFactory;
+external AppView<_user.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewCheckAlwaysComponent0 extends AppView<_user.CheckAlwaysComponent> {
+  external factory ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$DetachedComponent = const [];
+external ComponentFactory get DetachedComponentNgFactory;
+external AppView<_user.DetachedComponent> viewFactory_DetachedComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewDetachedComponent0 extends AppView<_user.DetachedComponent> {
+  external factory ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$OnPushComponent = const [];
+external ComponentFactory get OnPushComponentNgFactory;
+external AppView<_user.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewOnPushComponent0 extends AppView<_user.OnPushComponent> {
+  external factory ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$StatefulComponent = const [];
+external ComponentFactory get StatefulComponentNgFactory;
+external AppView<_user.StatefulComponent> viewFactory_StatefulComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewStatefulComponent0 extends AppView<_user.StatefulComponent> {
+  external factory ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$DefaultComponent = const [];
+external ComponentFactory get DefaultComponentNgFactory;
+external AppView<_user.DefaultComponent> viewFactory_DefaultComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewDefaultComponent0 extends AppView<_user.DefaultComponent> {
+  external factory ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

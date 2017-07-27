@@ -37,7 +37,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponent0 = [
 class ViewTestContainerComponent0
     extends DebugAppView<import3.TestContainerComponent> {
   ViewContainer _appEl_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewTestContainerComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.COMPONENT,
@@ -47,11 +47,11 @@ class ViewTestContainerComponent0
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestContainerComponent0) {
     rootEl = import9.document.createElement('test-container');
-    renderType ??= import10.appViewUtils.createRenderType(
+    _renderType ??= import10.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/deferred/container_component.dart class TestContainerComponent - inline template',
         ViewEncapsulation.None,
         styles$TestContainerComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -83,12 +83,12 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponent1 = [
   null
 ];
 
-class ViewTestContainerComponent1
+class _ViewTestContainerComponent1
     extends DebugAppView<import3.TestContainerComponent> {
   import9.Element _el_0;
   AppView _compView_0;
   dynamic _DeferredChildComponent_0_4;
-  ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex)
+  _ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.EMBEDDED,
             {},
@@ -96,7 +96,7 @@ class ViewTestContainerComponent1
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestContainerComponent1) {
-    componentType = ViewTestContainerComponent0.renderType;
+    componentType = ViewTestContainerComponent0._renderType;
   }
   @override
   ComponentRef build() {
@@ -134,7 +134,7 @@ class ViewTestContainerComponent1
 
 AppView<import3.TestContainerComponent> viewFactory_TestContainerComponent1(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewTestContainerComponent1(parentView, parentIndex);
+  return new _ViewTestContainerComponent1(parentView, parentIndex);
 }
 
 const List<dynamic> styles$TestContainerComponentHost = const [];
@@ -143,11 +143,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponentHost0 = [
       import3.TestContainerComponent, <String, dynamic>{})
 ];
 
-class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
+class _ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
   ViewTestContainerComponent0 _compView_0;
   import3.TestContainerComponent _TestContainerComponent_0_4;
-  static RenderComponentType renderType;
-  ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.HOST,
             {},
@@ -155,9 +155,9 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_TestContainerComponentHost0) {
-    renderType ??= import10.appViewUtils.createRenderType(
+    _renderType ??= import10.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$TestContainerComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -193,7 +193,7 @@ class ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_TestContainerComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewTestContainerComponentHost0(parentView, parentIndex);
+  return new _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _TestContainerComponentNgFactory =

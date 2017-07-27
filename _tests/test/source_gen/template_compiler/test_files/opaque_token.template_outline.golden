@@ -1,0 +1,10 @@
+import 'package:angular/angular.dart';
+
+import 'opaque_token.dart' as _user;
+const List<dynamic> styles$HasOpaqueTokens = const [];
+external ComponentFactory get HasOpaqueTokensNgFactory;
+external AppView<_user.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex);
+class ViewHasOpaqueTokens0 extends AppView<_user.HasOpaqueTokens> {
+  external factory ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

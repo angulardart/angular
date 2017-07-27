@@ -30,7 +30,7 @@ const List<dynamic> styles$ProvidersComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = [null];
 
 class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.COMPONENT,
@@ -40,11 +40,11 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProvidersComponent0) {
     rootEl = import7.document.createElement('providers');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/providers.dart class ProvidersComponent - inline template',
         ViewEncapsulation.None,
         styles$ProvidersComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -83,7 +83,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
       <String, dynamic>{})
 ];
 
-class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
+class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   ViewProvidersComponent0 _compView_0;
   import2.ProvidersComponent _ProvidersComponent_0_4;
   import2.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_5;
@@ -95,8 +95,8 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   List<dynamic> __const_OpaqueToken__useValueList___0_13;
   Map<String, dynamic> __const_OpaqueToken__useValueMap___0_14;
   dynamic __const_OpaqueToken__useEnums___0_15;
-  static RenderComponentType renderType;
-  ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.HOST,
             {},
@@ -104,9 +104,9 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProvidersComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$ProvidersComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   import2.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_5 {
     dbg(0, 0, 0);
@@ -256,7 +256,7 @@ class ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_ProvidersComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewProvidersComponentHost0(parentView, parentIndex);
+  return new _ViewProvidersComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _ProvidersComponentNgFactory = const ComponentFactory(

@@ -27,14 +27,14 @@ const List<dynamic> styles$DeferredChildComponent = const [];
 class ViewDeferredChildComponent0
     extends AppView<import1.DeferredChildComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewDeferredChildComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('deferred-component');
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$DeferredChildComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -55,16 +55,16 @@ AppView<import1.DeferredChildComponent> viewFactory_DeferredChildComponent0(
 
 const List<dynamic> styles$DeferredChildComponentHost = const [];
 
-class ViewDeferredChildComponentHost0 extends AppView<dynamic> {
+class _ViewDeferredChildComponentHost0 extends AppView<dynamic> {
   ViewDeferredChildComponent0 _compView_0;
   import1.DeferredChildComponent _DeferredChildComponent_0_4;
-  static RenderComponentType renderType;
-  ViewDeferredChildComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$DeferredChildComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -99,7 +99,7 @@ class ViewDeferredChildComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_DeferredChildComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewDeferredChildComponentHost0(parentView, parentIndex);
+  return new _ViewDeferredChildComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _DeferredChildComponentNgFactory =

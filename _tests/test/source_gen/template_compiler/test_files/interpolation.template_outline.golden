@@ -1,0 +1,16 @@
+import 'package:angular/angular.dart';
+
+import 'interpolation.dart' as _user;
+const List<dynamic> styles$InterpolationComponent = const [];
+external ComponentFactory get InterpolationComponentNgFactory;
+external AppView<_user.InterpolationComponent> viewFactory_InterpolationComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewInterpolationComponent0 extends AppView<_user.InterpolationComponent> {
+  external factory ViewInterpolationComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
+external ComponentFactory get InterpolationComponentNoWhitespaceNgFactory;
+external AppView<_user.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(AppView<dynamic> parentView, num parentIndex);
+class ViewInterpolationComponentNoWhitespace0 extends AppView<_user.InterpolationComponentNoWhitespace> {
+  external factory ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

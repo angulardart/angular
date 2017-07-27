@@ -949,7 +949,7 @@ void _addRenderTypeCtorInitialization(CompileView view, o.ClassStmt viewClass) {
   } else {
     viewConstructor.body.add(new o.WriteClassMemberExpr(
             'componentType',
-            new o.ReadStaticMemberExpr('renderType',
+            new o.ReadStaticMemberExpr('_renderType',
                 sourceClass: view.componentView.classType))
         .toStmt());
   }
@@ -968,7 +968,7 @@ o.Expression _constructRenderType(
   }
 
   // renderType static to hold RenderComponentType instance.
-  String renderTypeVarName = 'renderType';
+  String renderTypeVarName = '_renderType';
   o.Expression renderCompTypeVar =
       new o.ReadStaticMemberExpr(renderTypeVarName);
 

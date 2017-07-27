@@ -104,7 +104,8 @@ class CompileView implements NameResolver {
     this.afterViewLifecycleCallbacksMethod = new CompileMethod(this);
     this.destroyMethod = new CompileMethod(this);
     this.viewType = getViewType(component, viewIndex);
-    this.className = 'View${component.type.name}$viewIndex';
+    this.className =
+        '${viewIndex == 0 && viewType != ViewType.HOST ? '' : '_'}View${component.type.name}$viewIndex';
     this.classType =
         o.importType(new CompileIdentifierMetadata(name: this.className));
     this.viewFactory = o.variable(getViewFactoryName(component, viewIndex));
