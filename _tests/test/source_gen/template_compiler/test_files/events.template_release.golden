@@ -27,14 +27,14 @@ const List<dynamic> styles$UsesNativeEvents = const [];
 
 class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   import2.ButtonElement _el_1;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('uses-native-events');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$UsesNativeEvents);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -60,16 +60,16 @@ AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEvents0(
 
 const List<dynamic> styles$UsesNativeEventsHost = const [];
 
-class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
+class _ViewUsesNativeEventsHost0 extends AppView<dynamic> {
   ViewUsesNativeEvents0 _compView_0;
   import1.UsesNativeEvents _UsesNativeEvents_0_4;
-  static RenderComponentType renderType;
-  ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$UsesNativeEventsHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -103,7 +103,7 @@ class ViewUsesNativeEventsHost0 extends AppView<dynamic> {
 
 AppView viewFactory_UsesNativeEventsHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewUsesNativeEventsHost0(parentView, parentIndex);
+  return new _ViewUsesNativeEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _UsesNativeEventsNgFactory = const ComponentFactory(
@@ -118,14 +118,14 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   import2.Element _el_1;
   ViewHasAngularEvents0 _compView_1;
   import1.HasAngularEvents _HasAngularEvents_1_4;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('uses-angular-events');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$UsesAngularEvents);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -172,16 +172,16 @@ AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEvents0(
 
 const List<dynamic> styles$UsesAngularEventsHost = const [];
 
-class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
+class _ViewUsesAngularEventsHost0 extends AppView<dynamic> {
   ViewUsesAngularEvents0 _compView_0;
   import1.UsesAngularEvents _UsesAngularEvents_0_4;
-  static RenderComponentType renderType;
-  ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$UsesAngularEventsHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -215,7 +215,7 @@ class ViewUsesAngularEventsHost0 extends AppView<dynamic> {
 
 AppView viewFactory_UsesAngularEventsHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewUsesAngularEventsHost0(parentView, parentIndex);
+  return new _ViewUsesAngularEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _UsesAngularEventsNgFactory = const ComponentFactory(
@@ -227,14 +227,14 @@ final ComponentFactory UsesAngularEventsNgFactory = _UsesAngularEventsNgFactory;
 const List<dynamic> styles$HasAngularEvents = const [];
 
 class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHasAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('has-angular-events');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$HasAngularEvents);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -251,16 +251,16 @@ AppView<import1.HasAngularEvents> viewFactory_HasAngularEvents0(
 
 const List<dynamic> styles$HasAngularEventsHost = const [];
 
-class ViewHasAngularEventsHost0 extends AppView<dynamic> {
+class _ViewHasAngularEventsHost0 extends AppView<dynamic> {
   ViewHasAngularEvents0 _compView_0;
   import1.HasAngularEvents _HasAngularEvents_0_4;
-  static RenderComponentType renderType;
-  ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasAngularEventsHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -294,7 +294,7 @@ class ViewHasAngularEventsHost0 extends AppView<dynamic> {
 
 AppView viewFactory_HasAngularEventsHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHasAngularEventsHost0(parentView, parentIndex);
+  return new _ViewHasAngularEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HasAngularEventsNgFactory = const ComponentFactory(

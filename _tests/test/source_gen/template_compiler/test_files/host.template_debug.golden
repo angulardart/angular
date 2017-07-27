@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HostComponent0 = [];
 class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   var _expr_0;
   bool _expr_1;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHostComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.COMPONENT,
@@ -41,11 +41,11 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
             nodeDebugInfos_HostComponent0) {
     rootEl = import7.document.createElement('host');
     createAttr(this.rootEl, 'aria-title', 'title');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/host.dart class HostComponent - inline template',
         ViewEncapsulation.None,
         styles$HostComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -83,11 +83,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = [
       [import2.HostComponent], import2.HostComponent, <String, dynamic>{})
 ];
 
-class ViewHostComponentHost0 extends DebugAppView<dynamic> {
+class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import2.HostComponent _HostComponent_0_4;
-  static RenderComponentType renderType;
-  ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.HOST,
             {},
@@ -95,9 +95,9 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HostComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HostComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -134,7 +134,7 @@ class ViewHostComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_HostComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHostComponentHost0(parentView, parentIndex);
+  return new _ViewHostComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HostComponentNgFactory = const ComponentFactory(

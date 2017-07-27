@@ -17,6 +17,7 @@ import 'package:angular/src/source_gen/common/url_resolver.dart';
 
 import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 import 'pipe_visitor.dart';
 
 const String _directivesProperty = 'directives';
@@ -371,7 +372,7 @@ class ComponentVisitor
   }
 
   void _collectInheritableMetadata(InterfaceType type) {
-    final inheritanceHierarchy = _getInheritanceHierarchy(type);
+    final inheritanceHierarchy = getInheritanceHierarchy(type);
     final isDirectiveAnnotation = safeMatcher(isDirective, log);
     // Traverse inheritance hierarchy from top to bottom so that inherited
     // annotations are bound to the most derived implementation of the element
@@ -560,29 +561,6 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .where((hook) => hook.isAssignableFrom(clazz))
       .map((t) => hooks[t])
       .toList();
-}
-
-/// Returns the inheritance hierarchy of [type] in an ordered list.
-///
-/// Types are followed, in order, by their mixins, interfaces, and superclass.
-List<InterfaceType> _getInheritanceHierarchy(InterfaceType type) {
-  final types = <InterfaceType>[];
-  final typesToVisit = [type];
-  final visitedTypes = new Set<InterfaceType>();
-  while (typesToVisit.isNotEmpty) {
-    final currentType = typesToVisit.removeLast();
-    if (visitedTypes.contains(currentType)) continue;
-    visitedTypes.add(currentType);
-    final supertype = currentType.superclass;
-    // Skip [Object], since it can't have metadata, mixins, or interfaces.
-    if (supertype == null) continue;
-    types.add(currentType);
-    typesToVisit
-      ..add(supertype)
-      ..addAll(currentType.interfaces)
-      ..addAll(currentType.mixins);
-  }
-  return types;
 }
 
 void _prohibitBindingChange(

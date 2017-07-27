@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponent0 = [null, null];
 class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   import3.DivElement _el_0;
   var _expr_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -40,11 +40,11 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_CheckOnceComponent0) {
     rootEl = import3.document.createElement('CheckOnce');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class CheckOnceComponent - inline template',
         ViewEncapsulation.None,
         styles$CheckOnceComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -79,11 +79,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
       import2.CheckOnceComponent, <String, dynamic>{})
 ];
 
-class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
+class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckOnceComponent0 _compView_0;
   import2.CheckOnceComponent _CheckOnceComponent_0_4;
-  static RenderComponentType renderType;
-  ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -91,9 +91,9 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckOnceComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$CheckOnceComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -130,7 +130,7 @@ class ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_CheckOnceComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCheckOnceComponentHost0(parentView, parentIndex);
+  return new _ViewCheckOnceComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CheckOnceComponentNgFactory = const ComponentFactory(
@@ -145,7 +145,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = [null, null];
 
 class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -155,11 +155,11 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_CheckedComponent0) {
     rootEl = import3.document.createElement('Checked');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class CheckedComponent - inline template',
         ViewEncapsulation.None,
         styles$CheckedComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -185,11 +185,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
       [import2.CheckedComponent], import2.CheckedComponent, <String, dynamic>{})
 ];
 
-class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
+class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckedComponent0 _compView_0;
   import2.CheckedComponent _CheckedComponent_0_4;
-  static RenderComponentType renderType;
-  ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -197,9 +197,9 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckedComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$CheckedComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -234,7 +234,7 @@ class ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_CheckedComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCheckedComponentHost0(parentView, parentIndex);
+  return new _ViewCheckedComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CheckedComponentNgFactory = const ComponentFactory(
@@ -249,7 +249,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
 class ViewCheckAlwaysComponent0
     extends DebugAppView<import2.CheckAlwaysComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -259,11 +259,11 @@ class ViewCheckAlwaysComponent0
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_CheckAlwaysComponent0) {
     rootEl = import3.document.createElement('CheckAlways');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class CheckAlwaysComponent - inline template',
         ViewEncapsulation.None,
         styles$CheckAlwaysComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -289,11 +289,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
       import2.CheckAlwaysComponent, <String, dynamic>{})
 ];
 
-class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
+class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckAlwaysComponent0 _compView_0;
   import2.CheckAlwaysComponent _CheckAlwaysComponent_0_4;
-  static RenderComponentType renderType;
-  ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -301,9 +301,9 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_CheckAlwaysComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$CheckAlwaysComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -338,7 +338,7 @@ class ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_CheckAlwaysComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCheckAlwaysComponentHost0(parentView, parentIndex);
+  return new _ViewCheckAlwaysComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CheckAlwaysComponentNgFactory = const ComponentFactory(
@@ -353,7 +353,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = [null, null];
 
 class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -363,11 +363,11 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_DetachedComponent0) {
     rootEl = import3.document.createElement('Detached');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class DetachedComponent - inline template',
         ViewEncapsulation.None,
         styles$DetachedComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -393,11 +393,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
       import2.DetachedComponent, <String, dynamic>{})
 ];
 
-class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
+class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   ViewDetachedComponent0 _compView_0;
   import2.DetachedComponent _DetachedComponent_0_4;
-  static RenderComponentType renderType;
-  ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -405,9 +405,9 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DetachedComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$DetachedComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -442,7 +442,7 @@ class ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_DetachedComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewDetachedComponentHost0(parentView, parentIndex);
+  return new _ViewDetachedComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _DetachedComponentNgFactory = const ComponentFactory(
@@ -456,7 +456,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
 
 class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -466,11 +466,11 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_OnPushComponent0) {
     rootEl = import3.document.createElement('OnPush');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class OnPushComponent - inline template',
         ViewEncapsulation.None,
         styles$OnPushComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -496,11 +496,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
       [import2.OnPushComponent], import2.OnPushComponent, <String, dynamic>{})
 ];
 
-class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
+class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   ViewOnPushComponent0 _compView_0;
   import2.OnPushComponent _OnPushComponent_0_4;
-  static RenderComponentType renderType;
-  ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -508,9 +508,9 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_OnPushComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$OnPushComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -545,7 +545,7 @@ class ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_OnPushComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewOnPushComponentHost0(parentView, parentIndex);
+  return new _ViewOnPushComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _OnPushComponentNgFactory = const ComponentFactory(
@@ -559,7 +559,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
 
 class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -569,11 +569,11 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
             ChangeDetectionStrategy.CheckOnce,
             nodeDebugInfos_StatefulComponent0) {
     rootEl = import3.document.createElement('Stateful');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class StatefulComponent - inline template',
         ViewEncapsulation.None,
         styles$StatefulComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -601,11 +601,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
       import2.StatefulComponent, <String, dynamic>{})
 ];
 
-class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
+class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   ViewStatefulComponent0 _compView_0;
   import2.StatefulComponent _StatefulComponent_0_4;
-  static RenderComponentType renderType;
-  ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -613,9 +613,9 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_StatefulComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$StatefulComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -650,7 +650,7 @@ class ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_StatefulComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewStatefulComponentHost0(parentView, parentIndex);
+  return new _ViewStatefulComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _StatefulComponentNgFactory = const ComponentFactory(
@@ -664,7 +664,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
 
 class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -674,11 +674,11 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DefaultComponent0) {
     rootEl = import3.document.createElement('Default');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/change_detection.dart class DefaultComponent - inline template',
         ViewEncapsulation.None,
         styles$DefaultComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -704,11 +704,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
       [import2.DefaultComponent], import2.DefaultComponent, <String, dynamic>{})
 ];
 
-class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
+class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   ViewDefaultComponent0 _compView_0;
   import2.DefaultComponent _DefaultComponent_0_4;
-  static RenderComponentType renderType;
-  ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -716,9 +716,9 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DefaultComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$DefaultComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -753,7 +753,7 @@ class ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_DefaultComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewDefaultComponentHost0(parentView, parentIndex);
+  return new _ViewDefaultComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _DefaultComponentNgFactory = const ComponentFactory(

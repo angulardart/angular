@@ -35,7 +35,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [
 class ViewHasTemplateFileComponent0
     extends DebugAppView<import3.HasTemplateFileComponent> {
   import4.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.COMPONENT,
@@ -45,11 +45,11 @@ class ViewHasTemplateFileComponent0
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasTemplateFileComponent0) {
     rootEl = import4.document.createElement('has-template-file');
-    renderType ??= import9.appViewUtils.createRenderType(
+    _renderType ??= import9.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/templates/has_template_file.html',
         ViewEncapsulation.Emulated,
         styles$HasTemplateFileComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -79,11 +79,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
       import3.HasTemplateFileComponent, <String, dynamic>{})
 ];
 
-class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
+class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   ViewHasTemplateFileComponent0 _compView_0;
   import3.HasTemplateFileComponent _HasTemplateFileComponent_0_4;
-  static RenderComponentType renderType;
-  ViewHasTemplateFileComponentHost0(
+  static RenderComponentType _renderType;
+  _ViewHasTemplateFileComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.HOST,
@@ -92,9 +92,9 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasTemplateFileComponentHost0) {
-    renderType ??= import9.appViewUtils.createRenderType(
+    _renderType ??= import9.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasTemplateFileComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -130,7 +130,7 @@ class ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_HasTemplateFileComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHasTemplateFileComponentHost0(parentView, parentIndex);
+  return new _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HasTemplateFileComponentNgFactory =

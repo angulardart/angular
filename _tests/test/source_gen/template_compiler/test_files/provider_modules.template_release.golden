@@ -27,14 +27,14 @@ const List<dynamic> styles$ProviderModulesComponent = const [];
 
 class ViewProviderModulesComponent0
     extends AppView<import1.ProviderModulesComponent> {
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('provider-modules');
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.None, styles$ProviderModulesComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -51,21 +51,21 @@ AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
 
 const List<dynamic> styles$ProviderModulesComponentHost = const [];
 
-class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
+class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   ViewProviderModulesComponent0 _compView_0;
   import1.ProviderModulesComponent _ProviderModulesComponent_0_4;
   import1.FooService __FooService_0_5;
   Duration __const_OpaqueToken__fooToken___0_6;
   List<dynamic> __const_OpaqueToken__barToken___0_7;
   dynamic __const_OpaqueToken__bazToken___0_8;
-  static RenderComponentType renderType;
-  ViewProviderModulesComponentHost0(
+  static RenderComponentType _renderType;
+  _ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$ProviderModulesComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   import1.FooService get _FooService_0_5 {
     if ((this.__FooService_0_5 == null)) {
@@ -140,7 +140,7 @@ class ViewProviderModulesComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_ProviderModulesComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewProviderModulesComponentHost0(parentView, parentIndex);
+  return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _ProviderModulesComponentNgFactory =

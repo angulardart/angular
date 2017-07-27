@@ -1,0 +1,10 @@
+import 'package:angular/angular.dart';
+
+import 'pipes.dart' as _user;
+const List<dynamic> styles$Comp = const [];
+external ComponentFactory get CompNgFactory;
+external AppView<_user.Comp> viewFactory_Comp0(AppView<dynamic> parentView, num parentIndex);
+class ViewComp0 extends AppView<_user.Comp> {
+  external factory ViewComp0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

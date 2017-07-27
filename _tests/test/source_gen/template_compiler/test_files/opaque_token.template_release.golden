@@ -29,14 +29,14 @@ const List<dynamic> styles$HasOpaqueTokens = const [];
 class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   import2.Text _text_0;
   var _expr_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('has-opaque-tokens');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$HasOpaqueTokens);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -65,17 +65,17 @@ AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
 
 const List<dynamic> styles$HasOpaqueTokensHost = const [];
 
-class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
+class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
   String _const_OpaqueToken__baseUrlDescription___0_4;
   import1.HasOpaqueTokens _HasOpaqueTokens_0_5;
-  static RenderComponentType renderType;
-  ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasOpaqueTokensHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -115,7 +115,7 @@ class ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
 
 AppView viewFactory_HasOpaqueTokensHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHasOpaqueTokensHost0(parentView, parentIndex);
+  return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HasOpaqueTokensNgFactory = const ComponentFactory(

@@ -35,14 +35,14 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   import2.Element _el_2;
   import3.ViewTestSubComponent0 _compView_2;
   import4.TestSubComponent _TestSubComponent_2_4;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-foo');
-    renderType ??= import8.appViewUtils
+    _renderType ??= import8.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -87,16 +87,16 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
 
 const List<dynamic> styles$TestFooComponentHost = const [];
 
-class ViewTestFooComponentHost0 extends AppView<dynamic> {
+class _ViewTestFooComponentHost0 extends AppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_4;
-  static RenderComponentType renderType;
-  ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$TestFooComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -130,7 +130,7 @@ class ViewTestFooComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_TestFooComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewTestFooComponentHost0(parentView, parentIndex);
+  return new _ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _TestFooComponentNgFactory = const ComponentFactory(

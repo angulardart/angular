@@ -77,7 +77,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   import1.AnotherDirective _AnotherDirective_13_4;
   import4.Element _el_15;
   import1.AnotherDirective _AnotherDirective_15_4;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.COMPONENT,
@@ -87,11 +87,11 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_QueriesComponent0) {
     rootEl = import4.document.createElement('queries');
-    renderType ??= import9.appViewUtils.createRenderType(
+    _renderType ??= import9.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/queries.dart class QueriesComponent - inline template',
         ViewEncapsulation.None,
         styles$QueriesComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -240,7 +240,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = [
       [import1.QueriesComponent], import1.QueriesComponent, <String, dynamic>{})
 ];
 
-class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
+class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_4;
   import3.QueryList _query_q1_0_0;
@@ -249,8 +249,8 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   import3.QueryList _query_q4_0_3;
   import3.QueryList _query_q5_0_4;
   import3.QueryList _query_q7_0_5;
-  static RenderComponentType renderType;
-  ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import7.ViewType.HOST,
             {},
@@ -258,9 +258,9 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_QueriesComponentHost0) {
-    renderType ??= import9.appViewUtils.createRenderType(
+    _renderType ??= import9.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$QueriesComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -324,7 +324,7 @@ class ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_QueriesComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewQueriesComponentHost0(parentView, parentIndex);
+  return new _ViewQueriesComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _QueriesComponentNgFactory = const ComponentFactory(

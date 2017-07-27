@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DeferredChildComponent0 = [null, null];
 class ViewDeferredChildComponent0
     extends DebugAppView<import2.DeferredChildComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewDeferredChildComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -40,11 +40,11 @@ class ViewDeferredChildComponent0
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DeferredChildComponent0) {
     rootEl = import3.document.createElement('deferred-component');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/deferred/deferred_component.dart class DeferredChildComponent - inline template',
         ViewEncapsulation.None,
         styles$DeferredChildComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -70,11 +70,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DeferredChildComponentHost0 = [
       import2.DeferredChildComponent, <String, dynamic>{})
 ];
 
-class ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
+class _ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
   ViewDeferredChildComponent0 _compView_0;
   import2.DeferredChildComponent _DeferredChildComponent_0_4;
-  static RenderComponentType renderType;
-  ViewDeferredChildComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -82,9 +82,9 @@ class ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_DeferredChildComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$DeferredChildComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -120,7 +120,7 @@ class ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_DeferredChildComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewDeferredChildComponentHost0(parentView, parentIndex);
+  return new _ViewDeferredChildComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _DeferredChildComponentNgFactory =

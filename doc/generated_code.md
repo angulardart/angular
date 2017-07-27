@@ -14,7 +14,7 @@ Each `@Component` generates the following code at compile-time:
 
 #### Host View
 
-`class View{Type}Host extends AppView<dynamic> { ... }`
+`class _View{Type}Host extends AppView<dynamic> { ... }`
 
 This is a class generated that matches `ViewType.HOST`, and is used to back the
 implementation of `ComponentFactory`, which in turn is used for imperative
@@ -35,7 +35,7 @@ It is considered _public_ but _internal only_ API (i.e. internal to Angular).
 
 #### Embedded Views
 
-`class View{Type}{n > 0} extends AppView<dynamic> { ... }`
+`class _View{Type}{n > 0} extends AppView<dynamic> { ... }`
 
 This is any number of classes, generated, that back the implementation of the
 `template|templateUrl` of an `@Component`. As the template changes these will
@@ -56,6 +56,8 @@ implementation, as well as a "view factory" (below).
 `AppView viewFactory_{Type}Host0`
 
 A top-level function that helps back the implementation of `ComponentFactory`.
+
+It is considered _private_ API, even though the method is public.
 
 ### `@Directive`
 

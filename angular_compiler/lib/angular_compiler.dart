@@ -1,5 +1,7 @@
 export 'src/analyzer.dart'
     show
+        getInheritanceHierarchy,
+        urlOf,
         DependencyElement,
         Dependencies,
         OpaqueTokenElement,
@@ -29,3 +31,4 @@ export 'src/analyzer.dart'
         $ViewChild,
         $ViewChildren;
 export 'src/flags.dart' show CompilerFlags, Profile;
+export 'src/outliner.dart' show TemplateOutliner;

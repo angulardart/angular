@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponent0 = [];
 
 class ViewProviderModulesComponent0
     extends DebugAppView<import2.ProviderModulesComponent> {
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.COMPONENT,
@@ -40,11 +40,11 @@ class ViewProviderModulesComponent0
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProviderModulesComponent0) {
     rootEl = import7.document.createElement('provider-modules');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/provider_modules.dart class ProviderModulesComponent - inline template',
         ViewEncapsulation.None,
         styles$ProviderModulesComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -73,15 +73,15 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 = [
       <String, dynamic>{})
 ];
 
-class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
+class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   ViewProviderModulesComponent0 _compView_0;
   import2.ProviderModulesComponent _ProviderModulesComponent_0_4;
   import2.FooService __FooService_0_5;
   Duration __const_OpaqueToken__fooToken___0_6;
   List<dynamic> __const_OpaqueToken__barToken___0_7;
   dynamic __const_OpaqueToken__bazToken___0_8;
-  static RenderComponentType renderType;
-  ViewProviderModulesComponentHost0(
+  static RenderComponentType _renderType;
+  _ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.HOST,
@@ -90,9 +90,9 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_ProviderModulesComponentHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$ProviderModulesComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   import2.FooService get _FooService_0_5 {
     dbg(0, 0, 0);
@@ -172,7 +172,7 @@ class ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_ProviderModulesComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewProviderModulesComponentHost0(parentView, parentIndex);
+  return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _ProviderModulesComponentNgFactory =

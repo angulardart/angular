@@ -34,6 +34,8 @@ dependencies:
 dependency_overrides:
   angular_compiler:
       path: ../angular_compiler
+  angular_router:
+      path: ../angular_router
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:

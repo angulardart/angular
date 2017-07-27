@@ -26,14 +26,14 @@ const List<dynamic> styles$TestSubComponent = const [];
 
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   import2.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-bar');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$TestSubComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -54,16 +54,16 @@ AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
 
 const List<dynamic> styles$TestSubComponentHost = const [];
 
-class ViewTestSubComponentHost0 extends AppView<dynamic> {
+class _ViewTestSubComponentHost0 extends AppView<dynamic> {
   ViewTestSubComponent0 _compView_0;
   import1.TestSubComponent _TestSubComponent_0_4;
-  static RenderComponentType renderType;
-  ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$TestSubComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -97,7 +97,7 @@ class ViewTestSubComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_TestSubComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewTestSubComponentHost0(parentView, parentIndex);
+  return new _ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _TestSubComponentNgFactory = const ComponentFactory(

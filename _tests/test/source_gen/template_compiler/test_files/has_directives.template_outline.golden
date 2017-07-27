@@ -1,0 +1,20 @@
+import 'package:angular/angular.dart';
+
+import 'has_directives.dart' as _user;
+const List<dynamic> styles$TestFooComponent = const [];
+external ComponentFactory get TestFooComponentNgFactory;
+external AppView<_user.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewTestFooComponent0 extends AppView<_user.TestFooComponent> {
+  external factory ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$TestSubComponent = const [];
+external ComponentFactory get TestSubComponentNgFactory;
+external AppView<_user.TestSubComponent> viewFactory_TestSubComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewTestSubComponent0 extends AppView<_user.TestSubComponent> {
+  external factory ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+class TestDirectiveNgCd {
+  external get _user.TestDirective instance;
+  external factory TestDirectiveCd(_user.TestDirective instance);
+}
+external void initReflector();

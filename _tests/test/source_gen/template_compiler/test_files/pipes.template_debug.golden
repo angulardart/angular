@@ -35,16 +35,16 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   import2.DirtyPipe _pipe_dirty_1;
   import2.LifecyclePipe _pipe_lifecycle_2;
   var _pipe_lifecycle_2_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewComp0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Comp0) {
     rootEl = import3.document.createElement('comp');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/pipes.dart class Comp - inline template',
         ViewEncapsulation.None,
         styles$Comp);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -99,16 +99,16 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CompHost0 = [
   new StaticNodeDebugInfo([import2.Comp], import2.Comp, <String, dynamic>{})
 ];
 
-class ViewCompHost0 extends DebugAppView<dynamic> {
+class _ViewCompHost0 extends DebugAppView<dynamic> {
   ViewComp0 _compView_0;
   import2.Comp _Comp_0_4;
-  static RenderComponentType renderType;
-  ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompHost0) {
-    renderType ??= import8.appViewUtils
+    _renderType ??= import8.appViewUtils
         .createRenderType('', ViewEncapsulation.Emulated, styles$CompHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -142,7 +142,7 @@ class ViewCompHost0 extends DebugAppView<dynamic> {
 }
 
 AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
-  return new ViewCompHost0(parentView, parentIndex);
+  return new _ViewCompHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _CompNgFactory = const ComponentFactory(

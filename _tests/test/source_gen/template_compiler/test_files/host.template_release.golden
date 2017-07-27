@@ -29,15 +29,15 @@ const List<dynamic> styles$HostComponent = const [];
 class ViewHostComponent0 extends AppView<import1.HostComponent> {
   var _expr_0;
   bool _expr_1;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHostComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
     createAttr(this.rootEl, 'aria-title', 'title');
-    renderType ??= import6.appViewUtils
+    _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$HostComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -70,16 +70,16 @@ AppView<import1.HostComponent> viewFactory_HostComponent0(
 
 const List<dynamic> styles$HostComponentHost = const [];
 
-class ViewHostComponentHost0 extends AppView<dynamic> {
+class _ViewHostComponentHost0 extends AppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_4;
-  static RenderComponentType renderType;
-  ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import6.appViewUtils.createRenderType(
+    _renderType ??= import6.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HostComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -115,7 +115,7 @@ class ViewHostComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_HostComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHostComponentHost0(parentView, parentIndex);
+  return new _ViewHostComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HostComponentNgFactory = const ComponentFactory(

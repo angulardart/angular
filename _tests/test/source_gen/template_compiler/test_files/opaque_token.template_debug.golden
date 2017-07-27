@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = [null];
 class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   import3.Text _text_0;
   var _expr_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -40,11 +40,11 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasOpaqueTokens0) {
     rootEl = import3.document.createElement('has-opaque-tokens');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/opaque_token.dart class HasOpaqueTokens - inline template',
         ViewEncapsulation.None,
         styles$HasOpaqueTokens);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -81,12 +81,12 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
       <String, dynamic>{})
 ];
 
-class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
+class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
   String _const_OpaqueToken__baseUrlDescription___0_4;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_5;
-  static RenderComponentType renderType;
-  ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -94,9 +94,9 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasOpaqueTokensHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasOpaqueTokensHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -137,7 +137,7 @@ class ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_HasOpaqueTokensHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHasOpaqueTokensHost0(parentView, parentIndex);
+  return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HasOpaqueTokensNgFactory = const ComponentFactory(

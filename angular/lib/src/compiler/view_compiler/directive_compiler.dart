@@ -51,7 +51,13 @@ class DirectiveCompiler {
   o.ClassMethod _createChangeDetectorConstructor(
       CompileDirectiveMetadata meta) {
     var instanceType = o.importType(meta.type.identifier);
-    addField(new o.ClassField('instance', outputType: instanceType));
+    addField(new o.ClassField(
+      'instance',
+      outputType: instanceType,
+      modifiers: [
+        o.StmtModifier.Final,
+      ],
+    ));
     var constructorArgs = [new o.FnParam('this.instance', instanceType)];
     return new o.ClassMethod(null, constructorArgs, const []);
   }

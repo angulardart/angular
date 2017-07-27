@@ -1,0 +1,16 @@
+import 'package:angular/angular.dart';
+
+import 'view_encapsulation.dart' as _user;
+const List<dynamic> styles$EmulatedComponent = const [];
+external ComponentFactory get EmulatedComponentNgFactory;
+external AppView<_user.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewEmulatedComponent0 extends AppView<_user.EmulatedComponent> {
+  external factory ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+const List<dynamic> styles$NoneComponent = const [];
+external ComponentFactory get NoneComponentNgFactory;
+external AppView<_user.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewNoneComponent0 extends AppView<_user.NoneComponent> {
+  external factory ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+external void initReflector();

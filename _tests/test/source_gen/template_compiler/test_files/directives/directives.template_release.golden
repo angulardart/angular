@@ -12,7 +12,36 @@ import 'package:angular/angular.dart';
 import 'package:angular/angular.template.dart'
     as _i1;
 export 'directives.dart';
+import 'directives.dart' as import0;
+import 'package:angular/src/facade/lang.dart'
+    as import1;
 
+class TestDirectiveWithInputsNgCd {
+  final import0.TestDirectiveWithInputs instance;
+  String _expr_0;
+  String _expr_1;
+  TestDirectiveWithInputsNgCd(import0.TestDirectiveWithInputs this.instance);
+  void ngSet$input1(String value) {
+    if (!import1.looseIdentical(_expr_0, value)) {
+      instance.input1 = value;
+      _expr_0 = value;
+    }
+  }
+
+  void ngSet$input2(String value) {
+    if (!import1.looseIdentical(_expr_1, value)) {
+      instance.input2 = value;
+      _expr_1 = value;
+    }
+  }
+}
+
+const _METADATA = const <dynamic>[
+  TestDirective,
+  const <dynamic>[],
+  TestDirectiveWithInputs,
+  const <dynamic>[]
+];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -20,5 +49,7 @@ void initReflector() {
   }
   _visited = true;
   _ngRef.reflector.registerSimpleType(TestDirective, () => new TestDirective());
+  _ngRef.reflector.registerSimpleType(
+      TestDirectiveWithInputs, () => new TestDirectiveWithInputs());
   _i1.initReflector();
 }

@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = [null, null, null];
 
 class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
   import3.ButtonElement _el_1;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -40,11 +40,11 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_UsesNativeEvents0) {
     rootEl = import3.document.createElement('uses-native-events');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/events.dart class UsesNativeEvents - inline template',
         ViewEncapsulation.None,
         styles$UsesNativeEvents);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -76,11 +76,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEventsHost0 = [
       [import2.UsesNativeEvents], import2.UsesNativeEvents, <String, dynamic>{})
 ];
 
-class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
+class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
   ViewUsesNativeEvents0 _compView_0;
   import2.UsesNativeEvents _UsesNativeEvents_0_4;
-  static RenderComponentType renderType;
-  ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -88,9 +88,9 @@ class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_UsesNativeEventsHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$UsesNativeEventsHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -125,7 +125,7 @@ class ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_UsesNativeEventsHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewUsesNativeEventsHost0(parentView, parentIndex);
+  return new _ViewUsesNativeEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _UsesNativeEventsNgFactory = const ComponentFactory(
@@ -146,7 +146,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
   import3.Element _el_1;
   ViewHasAngularEvents0 _compView_1;
   import2.HasAngularEvents _HasAngularEvents_1_4;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -156,11 +156,11 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_UsesAngularEvents0) {
     rootEl = import3.document.createElement('uses-angular-events');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/events.dart class UsesAngularEvents - inline template',
         ViewEncapsulation.None,
         styles$UsesAngularEvents);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -214,11 +214,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEventsHost0 = [
       import2.UsesAngularEvents, <String, dynamic>{})
 ];
 
-class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
+class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
   ViewUsesAngularEvents0 _compView_0;
   import2.UsesAngularEvents _UsesAngularEvents_0_4;
-  static RenderComponentType renderType;
-  ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -226,9 +226,9 @@ class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_UsesAngularEventsHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$UsesAngularEventsHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -263,7 +263,7 @@ class ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_UsesAngularEventsHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewUsesAngularEventsHost0(parentView, parentIndex);
+  return new _ViewUsesAngularEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _UsesAngularEventsNgFactory = const ComponentFactory(
@@ -276,7 +276,7 @@ const List<dynamic> styles$HasAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEvents0 = [];
 
 class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHasAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.COMPONENT,
@@ -286,11 +286,11 @@ class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasAngularEvents0) {
     rootEl = import3.document.createElement('has-angular-events');
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/events.dart class HasAngularEvents - inline template',
         ViewEncapsulation.None,
         styles$HasAngularEvents);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -311,11 +311,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEventsHost0 = [
       [import2.HasAngularEvents], import2.HasAngularEvents, <String, dynamic>{})
 ];
 
-class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
+class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
   ViewHasAngularEvents0 _compView_0;
   import2.HasAngularEvents _HasAngularEvents_0_4;
-  static RenderComponentType renderType;
-  ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
             {},
@@ -323,9 +323,9 @@ class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HasAngularEventsHost0) {
-    renderType ??= import8.appViewUtils.createRenderType(
+    _renderType ??= import8.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasAngularEventsHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -360,7 +360,7 @@ class ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
 
 AppView viewFactory_HasAngularEventsHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHasAngularEventsHost0(parentView, parentIndex);
+  return new _ViewHasAngularEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HasAngularEventsNgFactory = const ComponentFactory(

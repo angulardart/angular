@@ -48,14 +48,14 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   import1.AnotherDirective _AnotherDirective_13_4;
   import3.Element _el_15;
   import1.AnotherDirective _AnotherDirective_15_4;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import3.document.createElement('queries');
-    renderType ??= import7.appViewUtils
+    _renderType ??= import7.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$QueriesComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -168,7 +168,7 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(
 
 const List<dynamic> styles$QueriesComponentHost = const [];
 
-class ViewQueriesComponentHost0 extends AppView<dynamic> {
+class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_4;
   import2.QueryList _query_q1_0_0;
@@ -177,13 +177,13 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
   import2.QueryList _query_q4_0_3;
   import2.QueryList _query_q5_0_4;
   import2.QueryList _query_q7_0_5;
-  static RenderComponentType renderType;
-  ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
+  static RenderComponentType _renderType;
+  _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import7.appViewUtils.createRenderType(
+    _renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$QueriesComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -244,7 +244,7 @@ class ViewQueriesComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_QueriesComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewQueriesComponentHost0(parentView, parentIndex);
+  return new _ViewQueriesComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _QueriesComponentNgFactory = const ComponentFactory(

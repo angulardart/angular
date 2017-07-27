@@ -28,14 +28,14 @@ const List<dynamic> styles$HasTemplateFileComponent = const [import0.styles];
 class ViewHasTemplateFileComponent0
     extends AppView<import2.HasTemplateFileComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType renderType;
+  static RenderComponentType _renderType;
   ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import3.document.createElement('has-template-file');
-    renderType ??= import7.appViewUtils.createRenderType(
+    _renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasTemplateFileComponent);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -59,17 +59,17 @@ AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
 
 const List<dynamic> styles$HasTemplateFileComponentHost = const [];
 
-class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
+class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   ViewHasTemplateFileComponent0 _compView_0;
   import2.HasTemplateFileComponent _HasTemplateFileComponent_0_4;
-  static RenderComponentType renderType;
-  ViewHasTemplateFileComponentHost0(
+  static RenderComponentType _renderType;
+  _ViewHasTemplateFileComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    renderType ??= import7.appViewUtils.createRenderType(
+    _renderType ??= import7.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$HasTemplateFileComponentHost);
-    setupComponentType(renderType);
+    setupComponentType(_renderType);
   }
   @override
   ComponentRef build() {
@@ -104,7 +104,7 @@ class ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
 
 AppView viewFactory_HasTemplateFileComponentHost0(
     AppView<dynamic> parentView, num parentIndex) {
-  return new ViewHasTemplateFileComponentHost0(parentView, parentIndex);
+  return new _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory _HasTemplateFileComponentNgFactory =
