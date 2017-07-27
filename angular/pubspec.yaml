@@ -25,7 +25,7 @@ dependencies:
   meta: ^1.0.3
   path: ^1.0.0
   quiver: '>=0.22.0 <0.26.0'
-  source_gen: ^0.6.0
+  source_gen: ^0.7.0
   source_span: ^1.4.0
   stack_trace: ^1.6.5
   tuple: ^1.0.1

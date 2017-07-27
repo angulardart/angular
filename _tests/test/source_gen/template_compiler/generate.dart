@@ -26,7 +26,7 @@ Future main(List<String> args) async {
   var phaseGroup = new PhaseGroup()
     ..addPhase(new Phase()
       ..addAction(
-          new GeneratorBuilder([
+          new PartBuilder([
             new TemplateGenerator(
                 const CompilerFlags(genDebugInfo: false, usePlaceholder: false))
           ],
@@ -36,7 +36,7 @@ Future main(List<String> args) async {
               isStandalone: true),
           inputs)
       ..addAction(
-          new GeneratorBuilder([
+          new PartBuilder([
             new TemplateGenerator(
                 const CompilerFlags(genDebugInfo: true, usePlaceholder: false))
           ],

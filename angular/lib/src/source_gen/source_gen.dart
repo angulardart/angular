@@ -10,10 +10,9 @@ export 'template_compiler/generator.dart'
     show TemplatePlaceholderBuilder, TemplateGenerator;
 
 Builder createSourceGenTemplateCompiler(CompilerFlags flags) =>
-    new GeneratorBuilder([new TemplateGenerator(flags)],
+    new LibraryBuilder(new TemplateGenerator(flags),
         formatOutput: (String original) => _formatter.format(original),
-        generatedExtension: TEMPLATE_EXTENSION,
-        isStandalone: true);
+        generatedExtension: TEMPLATE_EXTENSION);
 
 // Note: Use an absurdly long line width in order to speed up the formatter. We
 // still get a lot of other formatting, such as forced line breaks (after

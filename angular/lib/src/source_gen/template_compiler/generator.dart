@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
@@ -25,15 +24,14 @@ class TemplateGenerator extends Generator {
   const TemplateGenerator(this._flags);
 
   @override
-  Future<String> generate(Element element, BuildStep buildStep) async {
-    if (element is! LibraryElement) return null;
+  Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     return runZoned(() async {
-      var outputs = await processTemplates(element, buildStep, _flags);
+      var outputs = await processTemplates(library.element, buildStep, _flags);
       if (outputs == null) return _emptyNgDepsContents;
       return buildGeneratedCode(
         outputs,
         fileName(buildStep.inputId),
-        element.name,
+        library.element.name,
       );
     }, zoneSpecification: new ZoneSpecification(
       print: (_, __, ___, message) {
