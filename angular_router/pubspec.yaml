@@ -19,4 +19,4 @@ dependency_overrides:
 
 transformers:
   # Run the code generator on the entire package.
-  - angular/transform/codegen
+  - angular
