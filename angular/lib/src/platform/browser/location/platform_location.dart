@@ -35,7 +35,5 @@ abstract class PlatformLocation {
   void back();
 }
 
-typedef String BaseHRefFromDOMProvider();
-
 /// Returns base href from browser location.
-BaseHRefFromDOMProvider baseHRefFromDOM;
+String Function() baseHRefFromDOM;

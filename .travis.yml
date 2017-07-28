@@ -2,7 +2,7 @@ language: dart
 
 dart:
   # Temporarily disabled. We only have the stable release of Dartium installed.
-  # - dev
+  - dev
   - stable
 
 env:

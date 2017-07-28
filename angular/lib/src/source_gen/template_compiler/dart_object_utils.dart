@@ -141,13 +141,12 @@ DartObject getField(DartObject object, String field) {
   return getField(object.getField('(super)'), field);
 }
 
-typedef T RecurseFn<T>(DartObject obj);
-
 /// Visits all of the [DartObject]s, accumulating the results of [RecurseFn].
 ///
 /// If the DartObject is a list, then it will recursively visitAll
-/// on that list. Otherwise, then it will call [RecurseFn] on the object.
-List<T> visitAll<T>(Iterable<DartObject> objs, RecurseFn<T> recurseFn) {
+/// on that list. Otherwise, then it will call [recurseFn] on the object.
+List<T> visitAll<T>(
+    Iterable<DartObject> objs, T Function(DartObject) recurseFn) {
   var metadata = <T>[];
   for (DartObject obj in objs) {
     var maybeList = obj.toListValue();

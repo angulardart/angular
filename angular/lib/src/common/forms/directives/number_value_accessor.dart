@@ -8,8 +8,6 @@ import 'control_value_accessor.dart'
 const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
     useExisting: NumberValueAccessor, multi: true);
 
-typedef dynamic _SimpleChangeFn(value);
-
 /// The accessor for writing a number value and listening to changes that is used by the
 /// [NgModel], [NgFormControl], and [NgControlName] directives.
 ///
@@ -30,7 +28,7 @@ typedef dynamic _SimpleChangeFn(value);
     ])
 class NumberValueAccessor implements ControlValueAccessor {
   final ElementRef _elementRef;
-  _SimpleChangeFn onChange = (_) {};
+  dynamic Function(dynamic) onChange = (_) {};
   void touchHandler() {
     onTouched();
   }
