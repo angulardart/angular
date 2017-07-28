@@ -1,4 +1,6 @@
+export 'opaque_token.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/app_view.dart';
 
 import 'opaque_token.dart' as _user;
 const List<dynamic> styles$HasOpaqueTokens = const [];

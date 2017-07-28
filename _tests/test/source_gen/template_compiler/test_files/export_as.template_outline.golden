@@ -1,4 +1,6 @@
+export 'export_as.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/app_view.dart';
 
 import 'export_as.dart' as _user;
 const List<dynamic> styles$TestFooComponent = const [];

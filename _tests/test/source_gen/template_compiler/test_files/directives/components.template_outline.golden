@@ -1,4 +1,6 @@
+export 'components.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/app_view.dart';
 
 import 'components.dart' as _user;
 const List<dynamic> styles$TestSubComponent = const [];

@@ -1,4 +1,6 @@
+export 'empty_properties.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/app_view.dart';
 
 import 'empty_properties.dart' as _user;
 const List<dynamic> styles$EmptyPropertiesComponent = const [];
