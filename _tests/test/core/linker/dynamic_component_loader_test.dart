@@ -95,7 +95,7 @@ void main() {
       ComponentRef componentRef;
       await fixture.update((MyComp component) async {
         componentRef = await component.loader.load(ChildComp, null);
-        rootEl = componentRef.location.nativeElement as Element;
+        rootEl = componentRef.location;
         document.body.append(rootEl);
       });
       componentRef.changeDetectorRef.detectChanges();
@@ -129,9 +129,9 @@ _Predicate<DebugElement> filterByDirective(Type type) {
 
 @Component(selector: 'child-cmp', template: 'CHILD_{{ctxProp}}')
 class ChildComp {
-  ElementRef elementRef;
+  Element element;
   String ctxProp;
-  ChildComp(this.elementRef) {
+  ChildComp(this.element) {
     this.ctxProp = 'hello';
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import '../di.dart';
 import 'component_factory.dart' show ComponentRef;
@@ -30,7 +29,7 @@ class SlowComponentLoader implements DynamicComponentLoader {
       _resolver.resolveComponent(type);
       final reference = _loader.loadDetached(component, injector: injector);
       reference.onDestroy(() {
-        (reference.location.nativeElement as Element).remove();
+        reference.location.remove();
       });
       return reference;
     });

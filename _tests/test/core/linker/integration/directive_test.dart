@@ -2,6 +2,7 @@
 @TestOn('browser')
 
 import 'dart:async';
+import 'dart:html';
 
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
@@ -155,8 +156,7 @@ class UnboundDirectiveInputComponent {}
 
 @Directive(selector: '[no-duplicate]')
 class DuplicateDir {
-  DuplicateDir(ElementRef elementRef) {
-    final element = elementRef.nativeElement;
+  DuplicateDir(HtmlElement element) {
     element.text = '${element.text}noduplicate';
   }
 }

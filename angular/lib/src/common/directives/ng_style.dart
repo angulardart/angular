@@ -60,7 +60,7 @@ class NgStyle implements DoCheck {
   Map<String, String> _rawStyle;
   DefaultKeyValueDiffer _differ;
 
-  NgStyle(ElementRef elementRef) : _ngElement = elementRef.nativeElement;
+  NgStyle(this._ngElement);
 
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;

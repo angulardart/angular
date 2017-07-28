@@ -29,17 +29,17 @@ typedef dynamic _SimpleChangeFn(value);
       NUMBER_VALUE_ACCESSOR
     ])
 class NumberValueAccessor implements ControlValueAccessor {
-  final ElementRef _elementRef;
+  final HtmlElement _element;
   _SimpleChangeFn onChange = (_) {};
   void touchHandler() {
     onTouched();
   }
 
   TouchFunction onTouched = () {};
-  NumberValueAccessor(this._elementRef);
+  NumberValueAccessor(this._element);
   @override
   void writeValue(value) {
-    InputElement elm = _elementRef.nativeElement;
+    InputElement elm = _element;
     elm.value = '$value';
   }
 

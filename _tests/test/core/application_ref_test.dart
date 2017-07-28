@@ -197,7 +197,7 @@ class _MockComponentRef extends ComponentRef {
   _MockComponentRef(this._injector) : super(0, null, null, null);
 
   @override
-  ElementRef get location => new ElementRef(new DivElement());
+  Element get location => new DivElement();
 
   @override
   Injector get injector => _injector;

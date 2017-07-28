@@ -2,6 +2,7 @@
 @TestOn('browser')
 library angular2.test.common.forms.accessor_test;
 
+import 'dart:html';
 import 'dart:js_util' as js_util;
 
 import 'package:angular_test/angular_test.dart';
@@ -64,7 +65,7 @@ typedef dynamic ChangeFunctionSimple(value);
   const Provider(NG_VALIDATORS, useExisting: IntValueAccessor, multi: true)
 ])
 class IntValueAccessor implements ControlValueAccessor, Validator {
-  ElementRef _elementRef;
+  HtmlElement _elementRef;
   ChangeFunctionSimple onChange = (_) {};
 
   void touchHandler() {
@@ -76,7 +77,7 @@ class IntValueAccessor implements ControlValueAccessor, Validator {
   @override
   void writeValue(dynamic value) {
     var normalizedValue = value.toString() ?? '';
-    js_util.setProperty(_elementRef.nativeElement, 'value', normalizedValue);
+    js_util.setProperty(_elementRef, 'value', normalizedValue);
   }
 
   @override

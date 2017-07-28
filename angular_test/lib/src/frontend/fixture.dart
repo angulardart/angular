@@ -59,7 +59,7 @@ class NgTestFixture<T> {
   /// Root debug element, throwing if not available.
   DebugElement get _debugElement {
     if (_isDebugMode) {
-      var node = getDebugNode(_rootComponentRef.location.nativeElement);
+      var node = getDebugNode(_rootComponentRef.location);
       if (node is DebugElement) {
         return node;
       }
@@ -74,7 +74,7 @@ class NgTestFixture<T> {
   Future<Null> dispose() async {
     await update();
     _rootComponentRef.destroy();
-    (_rootComponentRef.location.nativeElement as Element).parent.remove();
+    _rootComponentRef.location.parent.remove();
     _applicationRef.dispose();
     activeTest = null;
   }
@@ -135,7 +135,7 @@ class NgTestFixture<T> {
   }
 
   /// Root element.
-  Element get rootElement => _rootComponentRef.location.nativeElement;
+  Element get rootElement => _rootComponentRef.location;
 
   /// Returns a future that completes after the DOM is reported stable.
   ///

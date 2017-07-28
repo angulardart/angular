@@ -96,8 +96,7 @@ void main() {
     ControlGroup formModel;
     var loginControlDir;
     setUp(() {
-      defaultAccessor = new DefaultValueAccessor(
-          new ElementRef(document.createElement('div')));
+      defaultAccessor = new DefaultValueAccessor(document.createElement('div'));
       form = new NgFormModel([]);
       formModel = new ControlGroup({
         "login": new Control(),

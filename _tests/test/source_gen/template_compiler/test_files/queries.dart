@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'package:angular/angular.dart';
 
 @Component(
@@ -39,7 +40,13 @@ class QueriesComponent {
   AnotherDirective viewChildFromField;
 
   @ViewChild('q8', read: ElementRef)
+  ElementRef readDIFromElementRef;
+
+  @ViewChild('q8', read: Element)
   ElementRef readDIFromElement;
+
+  @ViewChild('q8', read: HtmlElement)
+  ElementRef readDIFromHtmlElement;
 
   @ViewChildren(AnotherDirective)
   QueryList<AnotherDirective> usingTypeFromField;

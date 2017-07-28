@@ -33,8 +33,8 @@ void main() {
 
 @Directive(selector: '[test-dec]')
 class TestDirective {
-  TestDirective(ElementRef el) {
-    (el.nativeElement as Element).classes.add('compiled');
+  TestDirective(Element el) {
+    el.classes.add('compiled');
   }
 }
 
