@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:js_util' as js_util;
 
 import 'package:func/func.dart' show Func0, VoidFunc0;
@@ -73,7 +74,7 @@ class RadioButtonState {
     providers: const [RADIO_VALUE_ACCESSOR])
 class RadioControlValueAccessor
     implements ControlValueAccessor, OnDestroy, OnInit {
-  ElementRef _elementRef;
+  HtmlElement _element;
   RadioControlRegistry _registry;
   Injector _injector;
   RadioButtonState _state;
@@ -91,7 +92,7 @@ class RadioControlValueAccessor
 
   VoidFunc0 onChange = () {};
   Func0 onTouched = () {};
-  RadioControlValueAccessor(this._elementRef, this._registry, this._injector);
+  RadioControlValueAccessor(this._element, this._registry, this._injector);
 
   @override
   void ngOnInit() {
@@ -108,7 +109,7 @@ class RadioControlValueAccessor
   void writeValue(dynamic value) {
     _state = value;
     if (value?.checked ?? false) {
-      js_util.setProperty(_elementRef.nativeElement, 'checked', true);
+      js_util.setProperty(_element, 'checked', true);
     }
   }
 

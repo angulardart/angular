@@ -8,6 +8,7 @@
 import 'queries.dart';
 import 'package:angular/src/core/reflection/reflection.dart'
     as _ngRef;
+import 'dart:html';
 import 'package:angular/angular.template.dart'
     as _i1;
 export 'queries.dart';
@@ -31,7 +32,9 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   import2.QueryList _viewQuery_q6_0;
   import2.QueryList _viewQuery_q8_1;
   import2.QueryList _viewQuery_q8_2;
-  import2.QueryList _viewQuery_AnotherDirective_3;
+  import2.QueryList _viewQuery_q8_3;
+  import2.QueryList _viewQuery_q8_4;
+  import2.QueryList _viewQuery_AnotherDirective_5;
   import3.Element _el_1;
   import1.AnotherDirective _AnotherDirective_1_4;
   import3.Element _el_3;
@@ -63,7 +66,9 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     _viewQuery_q6_0 = new import2.QueryList();
     _viewQuery_q8_1 = new import2.QueryList();
     _viewQuery_q8_2 = new import2.QueryList();
-    _viewQuery_AnotherDirective_3 = new import2.QueryList();
+    _viewQuery_q8_3 = new import2.QueryList();
+    _viewQuery_q8_4 = new import2.QueryList();
+    _viewQuery_AnotherDirective_5 = new import2.QueryList();
     import3.Text _text_0 = new import3.Text('    ');
     parentRenderNode.append(_text_0);
     var doc = import3.document;
@@ -102,7 +107,11 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     _viewQuery_q8_1.reset([new ElementRef(_el_15)]);
     ctx.viewChildFromField = _viewQuery_q8_1.first;
     _viewQuery_q8_2.reset([new ElementRef(_el_15)]);
-    ctx.readDIFromElement = _viewQuery_q8_2.first;
+    ctx.readDIFromElementRef = _viewQuery_q8_2.first;
+    _viewQuery_q8_3.reset([_el_15]);
+    ctx.readDIFromElement = _viewQuery_q8_3.first;
+    _viewQuery_q8_4.reset([_el_15]);
+    ctx.readDIFromHtmlElement = _viewQuery_q8_4.first;
     init(const [], const []);
     return null;
   }
@@ -144,8 +153,8 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
       ctx.viewChildrenFromField = _viewQuery_q6_0;
       _viewQuery_q6_0.notifyOnChanges();
     }
-    if (_viewQuery_AnotherDirective_3.dirty) {
-      _viewQuery_AnotherDirective_3.reset([
+    if (_viewQuery_AnotherDirective_5.dirty) {
+      _viewQuery_AnotherDirective_5.reset([
         _AnotherDirective_1_4,
         _AnotherDirective_3_4,
         _AnotherDirective_5_4,
@@ -155,8 +164,8 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
         _AnotherDirective_13_4,
         _AnotherDirective_15_4
       ]);
-      ctx.usingTypeFromField = _viewQuery_AnotherDirective_3;
-      _viewQuery_AnotherDirective_3.notifyOnChanges();
+      ctx.usingTypeFromField = _viewQuery_AnotherDirective_5;
+      _viewQuery_AnotherDirective_5.notifyOnChanges();
     }
   }
 }

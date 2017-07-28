@@ -54,7 +54,7 @@ class NgClass implements DoCheck, OnDestroy {
   // Separator used to split string to parts - can be any number of
   // whitespaces, new lines or tabs.
   static RegExp _separator;
-  ElementRef _ngEl;
+  Element _ngEl;
   DefaultIterableDiffer _iterableDiffer;
   DefaultKeyValueDiffer _keyValueDiffer;
   List<String> _initialClasses = [];
@@ -163,7 +163,7 @@ class NgClass implements DoCheck, OnDestroy {
   void _toggleClass(String className, bool enabled) {
     className = className.trim();
     if (className.isEmpty) return;
-    Element el = _ngEl.nativeElement;
+    Element el = _ngEl;
     var classList = el.classes;
     if (className.indexOf(' ') > -1) {
       _separator ??= new RegExp(r'\s+');

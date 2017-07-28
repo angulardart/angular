@@ -69,7 +69,7 @@ Future<ComponentRef> bootstrapForTest<E>(
       appInjector,
       beforeChangeDetection: beforeChangeDetection,
     ).then((componentRef) async {
-      hostElement.append(componentRef.location.nativeElement);
+      hostElement.append(componentRef.location);
       await ngZone.onTurnDone.first;
       onErrorSub.cancel();
       if (caughtError != null) {
@@ -105,7 +105,7 @@ Future<ComponentRef> _runAndLoadComponent<E>(
   if (beforeChangeDetection != null) {
     beforeChangeDetection(componentRef.instance);
   }
-  hostElement.append(componentRef.location.nativeElement);
+  hostElement.append(componentRef.location);
   appRef.registerChangeDetector(componentRef.changeDetectorRef);
   componentRef.onDestroy(() {
     appRef.unregisterChangeDetector(componentRef.changeDetectorRef);

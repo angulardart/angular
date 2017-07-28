@@ -33,7 +33,7 @@ void main() {
       final fixture = await new NgTestBed<CompWithService>().create();
       await fixture.update((comp) {
         final ref = comp.service.loader.loadDetached(ng.DynamicCompNgFactory);
-        expect(ref.location.nativeElement.text, 'Dynamic');
+        expect(ref.location.text, 'Dynamic');
       });
     });
   });

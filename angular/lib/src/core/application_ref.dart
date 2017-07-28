@@ -350,7 +350,7 @@ class ApplicationRefImpl extends ApplicationRef {
           document.querySelector(componentFactory.selector);
       Element replacement;
       if (existingElement != null) {
-        Element newElement = compRef.location.nativeElement as Element;
+        Element newElement = compRef.location;
         // For app shards using bootstrapStatic, transfer element id
         // from original node to allow hosting applications to locate loaded
         // application root.
@@ -360,9 +360,9 @@ class ApplicationRefImpl extends ApplicationRef {
         existingElement.replaceWith(newElement);
         replacement = newElement;
       } else {
-        assert(compRef.location.nativeElement != null,
+        assert(compRef.location != null,
             'Could not locate node with selector ${componentFactory.selector}');
-        document.body.append(compRef.location.nativeElement);
+        document.body.append(compRef.location);
       }
       compRef.onDestroy(() {
         _unloadComponent(compRef);
@@ -372,7 +372,7 @@ class ApplicationRefImpl extends ApplicationRef {
       if (testability != null) {
         compRef.injector
             .get(TestabilityRegistry)
-            .registerApplication(compRef.location.nativeElement, testability);
+            .registerApplication(compRef.location, testability);
       }
       _loadComponent(compRef);
       return compRef;

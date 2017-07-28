@@ -6,7 +6,6 @@ import 'package:angular/src/core/reflection/reflection.dart' show reflector;
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';
 import 'app_view_utils.dart' show OnDestroyCallback;
-import 'element_ref.dart' show ElementRef;
 import 'view_ref.dart' show ViewRef;
 
 /// Represents an instance of a Component created via a [ComponentFactory].
@@ -24,7 +23,7 @@ class ComponentRef<C> {
       this._nodeIndex, this._parentView, this._nativeElement, this._component);
 
   /// Location of the Host Element of this Component Instance.
-  ElementRef get location => new ElementRef(_nativeElement);
+  Element get location => _nativeElement;
 
   /// The injector on which the component instance exists.
   Injector get injector => _parentView.injector(_nodeIndex);

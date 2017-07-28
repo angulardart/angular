@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:js_util' as js_util;
 
 import 'package:func/func.dart' show VoidFunc0, VoidFunc1;
@@ -28,7 +29,7 @@ const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
       DEFAULT_VALUE_ACCESSOR
     ])
 class DefaultValueAccessor implements ControlValueAccessor {
-  ElementRef _elementRef;
+  HtmlElement _elementRef;
   VoidFunc1 onChange = (dynamic _) {};
   void touchHandler() {
     onTouched();
@@ -39,7 +40,7 @@ class DefaultValueAccessor implements ControlValueAccessor {
   @override
   void writeValue(dynamic value) {
     var normalizedValue = value ?? '';
-    js_util.setProperty(_elementRef.nativeElement, 'value', normalizedValue);
+    js_util.setProperty(_elementRef, 'value', normalizedValue);
   }
 
   @override
