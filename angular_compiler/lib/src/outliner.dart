@@ -6,7 +6,10 @@ import 'package:path/path.dart' as p;
 
 import 'analyzer.dart';
 
-const _angularPkg = 'package:angular/angular.dart';
+const _angularImports = '''
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+''';
 
 /// Generates an _outline_ of the public API of a `.template.dart` file.
 ///
@@ -24,18 +27,30 @@ class TemplateOutliner implements Builder {
   @override
   Future<Null> build(BuildStep buildStep) async {
     final library = await buildStep.inputLibrary;
+    if (library == null) {
+      buildStep.writeAsString(
+          buildStep.inputId.changeExtension('.outline.template.dart'),
+          'external void initReflector();');
+      return;
+    }
     final components = <String>[];
     final directives = <String>[];
-    for (final clazz in library.definingCompilationUnit.types) {
-      if ($Component.firstAnnotationOfExact(clazz) != null) {
+    var units = [library.definingCompilationUnit]..addAll(library.parts);
+    var types = units.expand((unit) => unit.types);
+    for (final clazz in types) {
+      if ($Component.firstAnnotationOfExact(clazz, throwOnUnresolved: false) !=
+          null) {
         components.add(clazz.name);
-      } else if ($Directive.firstAnnotationOfExact(clazz) != null) {
+      } else if ($Directive.firstAnnotationOfExact(clazz,
+              throwOnUnresolved: false) !=
+          null) {
         directives.add(clazz.name);
       }
     }
     final output = new StringBuffer();
+    output.writeln("export '${p.basename(buildStep.inputId.path)}';");
     if (components.isNotEmpty) {
-      output.writeln("import '$_angularPkg';\n");
+      output.writeln(_angularImports);
     }
     if (components.isNotEmpty || directives.isNotEmpty) {
       final userLandCode = p.basename(buildStep.inputId.path);
@@ -59,9 +74,9 @@ class TemplateOutliner implements Builder {
       for (final directive in directives) {
         final name = '${directive}NgCd';
         output.writeln('class $name {');
-        output.writeln('  external get _user.$directive instance;');
-        output.writeln(
-            '  external factory ${directive}Cd(_user.$directive instance);');
+        output.writeln('  external _user.$directive get instance;');
+        output
+            .writeln('  external factory ${name}(_user.$directive instance);');
         for (final input in _findInputs(library.getType(directive))) {
           output.writeln('  external void ngSet\$$input(dynamic value);');
         }
@@ -79,19 +94,22 @@ class TemplateOutliner implements Builder {
     final inputs = new Set<String>();
     for (final interface in getInheritanceHierarchy(element.type)) {
       for (final accessor in interface.accessors) {
-        final input = $Input.firstAnnotationOfExact(accessor);
+        final input =
+            $Input.firstAnnotationOfExact(accessor, throwOnUnresolved: false);
         if (input != null) {
           inputs.add(accessor.name);
         }
       }
       for (final field in interface.element.fields) {
-        final input = $Input.firstAnnotationOfExact(field);
+        final input =
+            $Input.firstAnnotationOfExact(field, throwOnUnresolved: false);
         if (input != null) {
           inputs.add(field.name);
         }
       }
     }
-    return inputs;
+    return inputs
+        .map((i) => i.endsWith('=') ? i.substring(0, i.length - 1) : i);
   }
 
   @override

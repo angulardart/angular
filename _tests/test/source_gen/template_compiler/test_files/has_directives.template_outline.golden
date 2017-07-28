@@ -1,4 +1,6 @@
+export 'has_directives.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/app_view.dart';
 
 import 'has_directives.dart' as _user;
 const List<dynamic> styles$TestFooComponent = const [];
@@ -14,7 +16,7 @@ class ViewTestSubComponent0 extends AppView<_user.TestSubComponent> {
   external factory ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex);
 }
 class TestDirectiveNgCd {
-  external get _user.TestDirective instance;
-  external factory TestDirectiveCd(_user.TestDirective instance);
+  external _user.TestDirective get instance;
+  external factory TestDirectiveNgCd(_user.TestDirective instance);
 }
 external void initReflector();

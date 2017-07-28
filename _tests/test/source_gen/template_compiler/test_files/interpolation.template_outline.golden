@@ -1,4 +1,6 @@
+export 'interpolation.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/app_view.dart';
 
 import 'interpolation.dart' as _user;
 const List<dynamic> styles$InterpolationComponent = const [];
