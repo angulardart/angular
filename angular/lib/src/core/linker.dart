@@ -3,8 +3,7 @@
 export "linker/component_factory.dart" show ComponentRef, ComponentFactory;
 export "linker/component_loader.dart" show ComponentLoader;
 export "linker/component_resolver.dart" show ComponentResolver;
-export "linker/dynamic_component_loader.dart"
-    show DynamicComponentLoader, SlowComponentLoader;
+export "linker/dynamic_component_loader.dart" show SlowComponentLoader;
 export "linker/element_ref.dart" show ElementRef;
 export "linker/exceptions.dart"
     show ExpressionChangedAfterItHasBeenCheckedException;

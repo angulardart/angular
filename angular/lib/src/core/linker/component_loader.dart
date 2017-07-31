@@ -11,7 +11,7 @@ import 'view_container_ref.dart';
 /// tree is known ahead of time, but sometimes an application will want to load
 /// a new component at runtime.
 ///
-/// _This class is replacing `DynamicComponentLoader`, which has almost the same
+/// _This class is replacing `SlowComponentLoader`, which has almost the same
 /// API and properties, but uses runtime introspection in order to lookup and
 /// then create the component. Going forward, `ComponentLoader` is preferred._
 @Injectable()
