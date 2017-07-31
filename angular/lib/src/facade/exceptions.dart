@@ -34,5 +34,3 @@ class WrappedException {
 
   String get wrapperMessage => _wrapperMessage;
 }
-
-Error makeTypeError([String message = ""]) => new BaseException(message);
