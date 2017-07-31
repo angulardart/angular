@@ -9,5 +9,6 @@ class TestDirectiveWithInputsNgCd {
   external factory TestDirectiveWithInputsNgCd(_user.TestDirectiveWithInputs instance);
   external void ngSet$input1(dynamic value);
   external void ngSet$input2(dynamic value);
+  external void ngSet$input3(dynamic value);
 }
 external void initReflector();
