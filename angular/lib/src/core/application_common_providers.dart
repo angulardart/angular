@@ -5,9 +5,7 @@ import "linker/app_view_utils.dart" show AppViewUtils;
 import "linker/component_loader.dart";
 import "linker/component_resolver.dart" show ComponentResolver;
 import "linker/component_resolver.dart" show ReflectorComponentResolver;
-// ignore: deprecated_member_use
-import "linker/dynamic_component_loader.dart"
-    show DynamicComponentLoader, SlowComponentLoader;
+import "linker/dynamic_component_loader.dart" show SlowComponentLoader;
 
 /// A default set of providers which should be included in any Angular
 /// application, regardless of the platform it runs onto.
@@ -17,7 +15,6 @@ const List APPLICATION_COMMON_PROVIDERS = const [
   APP_ID_RANDOM_PROVIDER,
   AppViewUtils,
   // ignore: deprecated_member_use
-  const Provider(DynamicComponentLoader, useExisting: SlowComponentLoader),
   const Provider(SlowComponentLoader),
   const Provider(ComponentLoader),
 ];

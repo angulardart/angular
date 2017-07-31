@@ -26,8 +26,8 @@ class AdBannerComponent implements AfterViewInit {
 
 ### Breaking changes
 
-* `DynamicComponentLoader` is being renamed `SlowComponentLoader` to encourage
-  users to prefer `ComponentLoader`. Additionally, `projectableNodes:` and
+* `DynamicComponentLoader` was renamed `SlowComponentLoader` to encourage users
+  to prefer `ComponentLoader`. Additionally, arguments `projectableNodes:` and
   `onDestroy:` callbacks were removed - they were mostly unused, and confusing
   since they were undocumented.
 * Removed `angular/platform/browser_static.dart`; replace imports with
