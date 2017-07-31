@@ -18,20 +18,28 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
 
 class TestDirectiveWithInputsNgCd {
   final import0.TestDirectiveWithInputs instance;
-  String _expr_0;
+  var _expr_0;
   String _expr_1;
+  String _expr_2;
   TestDirectiveWithInputsNgCd(import0.TestDirectiveWithInputs this.instance);
-  void ngSet$input1(String value) {
+  void ngSet$input3(value) {
     if (import1.checkBinding(_expr_0, value)) {
-      instance.input1 = value;
+      instance.input3 = value;
       _expr_0 = value;
     }
   }
 
-  void ngSet$input2(String value) {
+  void ngSet$input1(String value) {
     if (import1.checkBinding(_expr_1, value)) {
-      instance.input2 = value;
+      instance.input1 = value;
       _expr_1 = value;
+    }
+  }
+
+  void ngSet$input2(String value) {
+    if (import1.checkBinding(_expr_2, value)) {
+      instance.input2 = value;
+      _expr_2 = value;
     }
   }
 }

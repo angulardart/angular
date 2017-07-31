@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:path/path.dart' as p;
@@ -34,17 +35,24 @@ class TemplateOutliner implements Builder {
       return;
     }
     final components = <String>[];
-    final directives = <String>[];
+    final directives = <String, DartObject>{};
     var units = [library.definingCompilationUnit]..addAll(library.parts);
     var types = units.expand((unit) => unit.types);
     for (final clazz in types) {
-      if ($Component.firstAnnotationOfExact(clazz, throwOnUnresolved: false) !=
-          null) {
+      final component = $Component.firstAnnotationOfExact(
+        clazz,
+        throwOnUnresolved: false,
+      );
+      if (component != null) {
         components.add(clazz.name);
-      } else if ($Directive.firstAnnotationOfExact(clazz,
-              throwOnUnresolved: false) !=
-          null) {
-        directives.add(clazz.name);
+      } else {
+        final directive = $Directive.firstAnnotationOfExact(
+          clazz,
+          throwOnUnresolved: false,
+        );
+        if (directive != null) {
+          directives[clazz.name] = directive;
+        }
       }
     }
     final output = new StringBuffer();
@@ -71,17 +79,19 @@ class TemplateOutliner implements Builder {
       }
     }
     if (directives.isNotEmpty) {
-      for (final directive in directives) {
+      directives.forEach((directive, annotation) {
         final name = '${directive}NgCd';
         output.writeln('class $name {');
         output.writeln('  external _user.$directive get instance;');
-        output
-            .writeln('  external factory ${name}(_user.$directive instance);');
-        for (final input in _findInputs(library.getType(directive))) {
+        output.writeln('  external factory $name(_user.$directive instance);');
+        for (final input in _findInputs(
+          library.getType(directive),
+          annotation,
+        )) {
           output.writeln('  external void ngSet\$$input(dynamic value);');
         }
         output.writeln('}');
-      }
+      });
     }
     output.writeln('external void initReflector();');
     buildStep.writeAsString(
@@ -90,26 +100,40 @@ class TemplateOutliner implements Builder {
     );
   }
 
-  Iterable<String> _findInputs(ClassElement element) {
+  Iterable<String> _findInputs(ClassElement element, DartObject annotation) {
     final inputs = new Set<String>();
     for (final interface in getInheritanceHierarchy(element.type)) {
       for (final accessor in interface.accessors) {
-        final input =
-            $Input.firstAnnotationOfExact(accessor, throwOnUnresolved: false);
+        final input = $Input.firstAnnotationOfExact(
+          accessor,
+          throwOnUnresolved: false,
+        );
         if (input != null) {
           inputs.add(accessor.name);
         }
       }
       for (final field in interface.element.fields) {
-        final input =
-            $Input.firstAnnotationOfExact(field, throwOnUnresolved: false);
+        final input = $Input.firstAnnotationOfExact(
+          field,
+          throwOnUnresolved: false,
+        );
         if (input != null) {
           inputs.add(field.name);
         }
       }
     }
-    return inputs
-        .map((i) => i.endsWith('=') ? i.substring(0, i.length - 1) : i);
+    final onClass = annotation.getField('inputs')?.toListValue() ?? const [];
+    for (final classInput in onClass) {
+      final inputName = classInput.toStringValue();
+      if (inputName.contains(':')) {
+        inputs.add(inputName.split(':').last.trim());
+      } else {
+        inputs.add(inputName.trim());
+      }
+    }
+    return inputs.map(
+      (i) => i.endsWith('=') ? i.substring(0, i.length - 1) : i,
+    );
   }
 
   @override
