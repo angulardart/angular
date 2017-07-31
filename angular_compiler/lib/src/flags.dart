@@ -140,6 +140,26 @@ class CompilerFlags {
       logger.log(severity, message);
     }
 
+    // Check for invalid (unknown) arguments when possible.
+    if (options is Map) {
+      final knownArgs = const [
+        _argDebugMode,
+        _argProfileFor,
+        _argLegacyStyle,
+        _argPlaceholder,
+        _argEntryPoints,
+      ].toSet();
+      final unknownArgs = options.keys.toSet().difference(knownArgs);
+      if (unknownArgs.isNotEmpty) {
+        logger?.severe('Invalid arguments passed to the transformer: \n'
+            '  - ${unknownArgs.join('\n  - ')}\n\n'
+            'You may be providing flags that are no longer valid or supported '
+            'for AngularDart 4.x. See "compiler_flags.md" in the AngularDart '
+            'repository for a list of supported flags.');
+        throw new ArgumentError('Invalid compiler argument(s).');
+      }
+    }
+
     var debugMode = options[_argDebugMode];
     if (debugMode != null && debugMode is! bool) {
       log('Invalid value "$_argDebugMode": $debugMode');
