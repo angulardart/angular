@@ -24,8 +24,26 @@ class AdBannerComponent implements AfterViewInit {
 }
 ```
 
+* You can now directly inject `dart:html`'s `Element` or `HtmlElement` instead
+  of `ElementRef`, which is "soft deprecated" (will be deprecated and removed
+  in a future release).
+
+### Bug Fixes
+
+* The transformer now fails if any unsupported arguments are passed in.
+
+### Performance
+
+* Directives now generate their own change detector class (behind the scenes)
+  instead of the code being re-created into every component that uses a
+  directive.
+
 ### Breaking changes
 
+* The router package is now being published separate as `package:angular_router`
+  (not through `package:angular/router.dart`). In the near future it will be
+  updated to a more Dart idiomatic "2.0" router, but for now it is an exact
+  replica of the previous router.
 * `DynamicComponentLoader` was renamed `SlowComponentLoader` to encourage users
   to prefer `ComponentLoader`. Additionally, arguments `projectableNodes:` and
   `onDestroy:` callbacks were removed - they were mostly unused, and confusing
@@ -34,9 +52,11 @@ class AdBannerComponent implements AfterViewInit {
   `angular/angular.dart`.
 * Removed `angular/platform/common_dom.dart`; replace imports with
   `angular/angular.dart`.
-* Router code extracted into new 'angular_router' package.  Replace
-  'angular/router.dart' imports with 'angular_router/angular_router.dart'.
 * Removed `angular/testing.dart`; Use `angular_test` package instead.
+* Removed `angular/platform/testing.dart`.
+* Removed `platform/testing/browser_static.dart`.
+* Removed `MockNgZone`.
+* Removed `ViewEncapsulation.native`, which is no longer supported.
 
 ## 4.0.0-alpha+1
 
