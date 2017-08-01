@@ -1,7 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/core.dart'
-    show ComponentRef, Injector, ElementRef, ChangeDetectorRef;
+import 'package:angular/core.dart' show Injector;
 import 'package:angular/di.dart' show Injectable;
 import 'package:angular/src/core/render/api.dart' show sharedStylesHost;
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
