@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/core.dart' show Directive, ElementRef, Provider;
+import 'package:angular/core.dart' show Directive, Provider;
 
 import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
