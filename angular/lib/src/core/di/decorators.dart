@@ -1,9 +1,3 @@
-abstract class DependencyMetadata {
-  const DependencyMetadata();
-
-  get token => null;
-}
-
 /// A parameter metadata that specifies a dependency.
 ///
 /// ## Example

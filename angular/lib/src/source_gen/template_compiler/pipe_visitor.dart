@@ -31,7 +31,7 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
     return new CompilePipeMetadata(
       type: element.accept(new CompileTypeMetadataVisitor(_logger)),
       name: coerceString(value, 'name'),
-      pure: coerceBool(value, '_pure', defaultTo: true),
+      pure: coerceBool(value, 'pure', defaultTo: true),
       lifecycleHooks: extractLifecycleHooks(element),
     );
   }

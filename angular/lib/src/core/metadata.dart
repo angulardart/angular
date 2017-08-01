@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import 'change_detection/change_detection.dart';
-import 'di/decorators.dart';
 import 'metadata/view.dart';
 
 export 'di/decorators.dart';
@@ -45,7 +44,7 @@ export 'metadata/view.dart';
 /// * [Attribute Directives](https://webdev.dartlang.org/angular/guide/attribute-directives)
 /// * [Lifecycle Hooks](https://webdev.dartlang.org/angular/guide/lifecycle-hooks)
 ///
-class Directive extends Injectable {
+class Directive {
   /// The CSS selector that triggers the instantiation of the directive.
   ///
   /// Angular only allows directives to trigger on CSS selectors that do not
@@ -119,6 +118,7 @@ class Directive extends Injectable {
   ///   directives: const [BankAccount])
   /// class App {}
   /// ```
+  @Deprecated('Use @Input() on a setter or field instead')
   final List<String> inputs;
 
   /// The directive's event-bound output properties.
@@ -160,6 +160,7 @@ class Directive extends Injectable {
   ///   everyFiveSeconds() { print('five seconds'); }
   /// }
   /// ```
+  @Deprecated('Use @Output() on a getter or field instead')
   final List<String> outputs;
 
   /// Events, actions, properties, and attributes related to the host element.
@@ -258,6 +259,7 @@ class Directive extends Injectable {
   ///   })
   /// class MyButton {}
   /// ```
+  @Deprecated('Use @HostBinding() on a getter or @HostListener on a method')
   final Map<String, String> host;
 
   /// The set of injectable objects that are visible to the directive and
@@ -280,7 +282,7 @@ class Directive extends Injectable {
   ///   HelloWorld(this.greeter);
   /// }
   /// ```
-  final List providers;
+  final List<Object> providers;
 
   /// A name that can be used in the template to assign this directive
   /// to a variable.
@@ -340,6 +342,7 @@ class Directive extends Injectable {
   ///       }
   ///     }
   ///
+  @Deprecated('Use @{View|Content}Child{ren} instead')
   final Map<String, dynamic> queries;
 
   const Directive(
@@ -421,7 +424,7 @@ class Component extends Directive {
   ///     class HelloWorld {
   ///     }
   ///
-  final List viewProviders;
+  final List<Object> viewProviders;
 
   /// A list of identifiers that may be referenced in the template.
   ///
@@ -438,7 +441,7 @@ class Component extends Directive {
   ///     )
   ///     class Example {}
   ///
-  final List exports;
+  final List<Object> exports;
 
   final String templateUrl;
   final String template;
@@ -448,28 +451,30 @@ class Component extends Directive {
   final bool preserveWhitespace;
   final List<String> styleUrls;
   final List<String> styles;
-  final List<dynamic /* Type | List < dynamic > */ > directives;
-  final List<dynamic /* Type | List < dynamic > */ > pipes;
+  final List<Object> directives;
+  final List<Object> pipes;
   final ViewEncapsulation encapsulation;
-  const Component(
-      {String selector,
-      List<String> inputs,
-      List<String> outputs,
-      Map<String, String> host,
-      String exportAs,
-      List providers,
-      this.viewProviders,
-      this.exports,
-      this.changeDetection: ChangeDetectionStrategy.Default,
-      Map<String, dynamic> queries,
-      this.templateUrl,
-      this.template,
-      this.preserveWhitespace: true,
-      this.styleUrls,
-      this.styles,
-      this.directives,
-      this.pipes,
-      this.encapsulation})
+
+  const Component({
+    String selector,
+    List<String> inputs,
+    List<String> outputs,
+    Map<String, String> host,
+    String exportAs,
+    List providers,
+    this.viewProviders,
+    this.exports,
+    this.changeDetection: ChangeDetectionStrategy.Default,
+    Map<String, dynamic> queries,
+    this.templateUrl,
+    this.template,
+    this.preserveWhitespace: true,
+    this.styleUrls,
+    this.styles,
+    this.directives,
+    this.pipes,
+    this.encapsulation,
+  })
       : super(
             selector: selector,
             inputs: inputs,
@@ -485,17 +490,11 @@ class Component extends Directive {
 /// A "pure" pipe is only re-evaluated when either the input or any of the
 /// arguments change. When not specified, pipes default to being pure.
 ///
-class Pipe extends Injectable {
+class Pipe {
   final String name;
-  final bool _pure;
+  final bool pure;
 
-  /// Warning: [_PipeMetaDataVisitor.visitAnnotation] depends on this
-  /// constructor signature to generate metadata, and will require an update if
-  /// changes are made to the parameter list.
-  const Pipe(this.name, {bool pure})
-      : _pure = pure,
-        super();
-  bool get pure => _pure ?? true;
+  const Pipe(this.name, {this.pure: true});
 }
 
 /// An annotation to specify that a constant attribute value should be injected.
@@ -521,22 +520,10 @@ class Pipe extends Injectable {
 ///   }
 /// }
 /// ```
-class Attribute extends DependencyMetadata {
+class Attribute {
   final String attributeName;
-  const Attribute(this.attributeName) : super();
-  @override
-  dynamic get token {
-    // Normally one would default a token to a type of an injected value but
-    // here the type of a variable is "string" and we can't use primitive type
-    // as a return value so we use instance of Attribute instead. This doesn't
-    // matter much in practice as arguments with @Attribute annotation are
-    // injected by ElementInjector that doesn't take tokens into account.
-    return this;
-  }
 
-  String toString() {
-    return '@Attribute($attributeName)';
-  }
+  const Attribute(this.attributeName);
 }
 
 /// Declares an injectable parameter to be a live list of directives or variable
@@ -648,35 +635,25 @@ class Attribute extends DependencyMetadata {
 ///
 /// The injected object is an unmodifiable live list. See [QueryList] for more
 /// details.
-abstract class _Query extends DependencyMetadata {
-  final dynamic /* Type | String */ selector;
+abstract class _Query {
+  /// Either the class [Type] or selector [String].
+  final Object selector;
 
-  /// whether we want to query only direct children (false) or all children
-  /// (true).
+  /// Whether to query only direct children (`false`) or all children (`true`).
   final bool descendants;
+
+  /// Whether to only query the first child.
   final bool first;
 
   /// The DI token to read from an element that matches the selector.
-  final dynamic read;
-  const _Query(this.selector,
-      {bool descendants: false, bool first: false, dynamic read: null})
-      : descendants = descendants,
-        first = first,
-        read = read,
-        super();
+  final Object read;
 
-  /// Always `false` to differentiate it with [ViewQuery].
-  bool get isViewQuery => false;
-
-  /// Whether this is querying for a variable binding or a directive.
-  bool get isVarBindingQuery => selector is String;
-
-  /// A list of variable bindings this is querying for.
-  ///
-  /// Only applicable if this is a variable bindings query.
-  List get varBindings => selector.split(',');
-
-  String toString() => '@Query($selector)';
+  const _Query(
+    this.selector, {
+    this.descendants: false,
+    this.first: false,
+    this.read,
+  });
 }
 
 /// Configures a content query.
@@ -698,9 +675,16 @@ abstract class _Query extends DependencyMetadata {
 /// }
 /// ```
 class ContentChildren extends _Query {
-  const ContentChildren(dynamic /*Type | string*/ selector,
-      {bool descendants: false, dynamic read: null})
-      : super(selector, descendants: descendants, read: read);
+  const ContentChildren(
+    Object selector, {
+    bool descendants: false,
+    Object read,
+  })
+      : super(
+          selector,
+          descendants: descendants,
+          read: read,
+        );
 }
 
 /// Configures a content query.
@@ -722,9 +706,16 @@ class ContentChildren extends _Query {
 /// }
 /// ```
 class ContentChild extends _Query {
-  const ContentChild(dynamic /* Type | String */ _selector,
-      {dynamic read: null})
-      : super(_selector, descendants: true, first: true, read: read);
+  const ContentChild(
+    Object selector, {
+    Object read,
+  })
+      : super(
+          selector,
+          descendants: true,
+          first: true,
+          read: read,
+        );
 }
 
 /// Similar to [Query], but querying the component view, instead of the
@@ -763,14 +754,18 @@ class ContentChild extends _Query {
 /// The injected object is an iterable and observable live list.  See
 /// [QueryList] for more details.
 abstract class _ViewQuery extends _Query {
-  const _ViewQuery(dynamic /* Type | String */ _selector,
-      {bool descendants: false, bool first: false, dynamic read: null})
-      : super(_selector, descendants: descendants, first: first, read: read);
-
-  /// Always `true` to differentiate it with [Query].
-  get isViewQuery => true;
-
-  String toString() => '@ViewQuery($selector)';
+  const _ViewQuery(
+    Object selector, {
+    bool descendants: false,
+    bool first: false,
+    Object read,
+  })
+      : super(
+          selector,
+          descendants: descendants,
+          first: first,
+          read: read,
+        );
 }
 
 /// Declares a reference to multiple child elements.
@@ -856,9 +851,15 @@ abstract class _ViewQuery extends _Query {
 /// }
 /// ```
 class ViewChildren extends _ViewQuery {
-  const ViewChildren(dynamic /* Type | String */ _selector,
-      {dynamic read: null})
-      : super(_selector, descendants: true, read: read);
+  const ViewChildren(
+    Object selector, {
+    Object read,
+  })
+      : super(
+          selector,
+          descendants: true,
+          read: read,
+        );
 }
 
 /// Declares a reference to a single child element.
@@ -934,8 +935,16 @@ class ViewChildren extends _ViewQuery {
 /// }
 /// ```
 class ViewChild extends _ViewQuery {
-  const ViewChild(dynamic /* Type | String */ _selector, {dynamic read: null})
-      : super(_selector, descendants: true, first: true, read: read);
+  const ViewChild(
+    Object selector, {
+    Object read,
+  })
+      : super(
+          selector,
+          descendants: true,
+          first: true,
+          read: read,
+        );
 }
 
 /// Declares a data-bound input property.
@@ -1107,9 +1116,4 @@ class HostListener {
   final String eventName;
   final List<String> args;
   const HostListener(this.eventName, [this.args]);
-}
-
-/// Marks a deferred import as not needing explicit angular initialization.
-class SkipAngularInitCheck {
-  const SkipAngularInitCheck();
 }
