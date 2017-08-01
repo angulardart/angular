@@ -96,7 +96,7 @@ class CompileTypeMetadataVisitor
       useValue: _getUseValue(provider),
       multi: dart_objects.coerceBool(
         provider,
-        '_multi',
+        'multi',
         defaultTo: false,
       ),
     );

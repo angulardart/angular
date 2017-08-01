@@ -92,10 +92,8 @@ class SlowProvider<T> implements Provider<T> {
   @override
   final List<Object> dependencies;
 
-  // Only here because the compiler currently looks for this hidden field.
-  //
-  // TODO(matanl): Remove while cleaning up the DI compiler.
-  final bool _multi;
+  @override
+  final bool multi;
 
   const SlowProvider._(
     this.token, {
@@ -103,12 +101,8 @@ class SlowProvider<T> implements Provider<T> {
     this.useValue: noValueProvided,
     this.useExisting,
     this.useFactory,
+    this.multi: false,
     List<Object> deps,
-    bool multi: false,
   })
-      : dependencies = deps,
-        _multi = multi;
-
-  @override
-  bool get multi => _multi;
+      : dependencies = deps;
 }
