@@ -17,7 +17,6 @@ import 'package:angular/core.dart'
         Component,
         ReflectiveInjector,
         coreLoadAndBootstrap,
-        ElementRef,
         PlatformRef,
         createPlatform,
         disposePlatform,
