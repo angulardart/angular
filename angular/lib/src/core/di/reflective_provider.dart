@@ -1,5 +1,4 @@
-import 'package:angular/src/core/reflection/reflection.dart'
-    show reflector, NoReflectionCapabilitiesError;
+import 'package:angular/src/core/reflection/reflection.dart' show reflector;
 import 'package:angular/src/facade/lang.dart' show assertionsEnabled;
 
 import 'decorators.dart';
@@ -91,25 +90,10 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
   } else if (provider.useFactory != null) {
     factoryFn = provider.useFactory;
     if (assertionsEnabled()) {
-      try {
-        resolvedDeps = constructDependencies(
-          provider.useFactory,
-          provider.dependencies,
-        );
-      } on NoReflectionCapabilitiesError catch (e, s) {
-        // When assertions are enabled, we want to expand this error message
-        // to have lots of information about the provider so our users can debug
-        // and fix the problem.
-        var description =
-            '$Provider {${provider.token} useFactory: ${provider.useFactory}}';
-        throw new NoReflectionCapabilitiesError.debug(
-          ''
-              'Attempted to use reflection to resolve $description, and failed'
-              '\n'
-              '\n'
-              'Stack trace: $s',
-        );
-      }
+      resolvedDeps = constructDependencies(
+        provider.useFactory,
+        provider.dependencies,
+      );
     } else {
       // In production mode, we just directly call this and assume it will work.
       resolvedDeps = constructDependencies(
@@ -276,11 +260,6 @@ ReflectiveDependency _extractToken(
       upperBoundVisibility = paramMetadata;
     } else if (paramMetadata is SkipSelf) {
       lowerBoundVisibility = paramMetadata;
-    } else if (paramMetadata is DependencyMetadata) {
-      if (paramMetadata.token != null) {
-        token = paramMetadata.token;
-      }
-      depProps.add(paramMetadata);
     }
   }
   if (token == null) throw new NoAnnotationError(typeOrFunc, params);
@@ -318,11 +297,6 @@ ReflectiveDependency _extractTokenUnwrappedParameters(
       upperBoundVisibility = paramMetadata;
     } else if (paramMetadata is SkipSelf) {
       lowerBoundVisibility = paramMetadata;
-    } else if (paramMetadata is DependencyMetadata) {
-      if (paramMetadata.token != null) {
-        token = paramMetadata.token;
-      }
-      depProps.add(paramMetadata);
     }
   }
   if (token == null) {

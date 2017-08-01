@@ -1,3 +1,4 @@
+@Tags(const ['codegen'])
 @TestOn('browser')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
@@ -13,19 +14,17 @@ import 'package:angular/src/core/di/reflective_provider.dart'
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/testing/internal.dart';
 
-class CustomDependencyMetadata extends DependencyMetadata {
-  @override
-  get token => null;
-}
-
+@Injectable()
 class Engine {}
 
+@Injectable()
 class BrokenEngine {
   BrokenEngine() {
     throw new BaseException("Broken Engine");
   }
 }
 
+@Injectable()
 class DashboardSoftware {}
 
 @Injectable()
@@ -33,6 +32,7 @@ class Dashboard {
   Dashboard(DashboardSoftware software);
 }
 
+@Injectable()
 class TurboEngine extends Engine {}
 
 @Injectable()
@@ -568,19 +568,6 @@ void main() {
         expect(stringProvider.resolvedFactories[0].dependencies[0].key,
             ReflectiveKey.get(Engine));
       });
-      test(
-          'should support overriding factory dependencies with '
-          'dependency annotations', () {
-        var providers = ReflectiveInjector.resolve([
-          provide("token", useFactory: (e) => "result", deps: [
-            [new Inject("dep"), new CustomDependencyMetadata()]
-          ])
-        ]);
-        var provider = providers[0];
-        expect(provider.resolvedFactories[0].dependencies[0].key.token, "dep");
-        expect(provider.resolvedFactories[0].dependencies[0].properties.first,
-            new isInstanceOf<CustomDependencyMetadata>());
-      });
       test("should allow declaring dependencies with flat arrays", () {
         var resolved = ReflectiveInjector.resolve([
           provide("token", useFactory: (e) => e, deps: [new Inject("dep")])
@@ -1042,19 +1029,6 @@ void main() {
             true);
         expect(stringProvider.resolvedFactories[0].dependencies[0].key,
             ReflectiveKey.get(Engine));
-      });
-      test(
-          'should support overriding factory dependencies with '
-          'dependency annotations', () {
-        var providers = ReflectiveInjector.resolve([
-          provide("token", useFactory: (e) => "result", deps: [
-            [new Inject("dep"), new CustomDependencyMetadata()]
-          ])
-        ]);
-        var provider = providers[0];
-        expect(provider.resolvedFactories[0].dependencies[0].key.token, "dep");
-        expect(provider.resolvedFactories[0].dependencies[0].properties.first,
-            new isInstanceOf<CustomDependencyMetadata>());
       });
       test("should allow declaring dependencies with flat arrays", () {
         var resolved = ReflectiveInjector.resolve([
