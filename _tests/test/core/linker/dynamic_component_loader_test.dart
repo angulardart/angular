@@ -3,12 +3,12 @@
 
 import 'dart:html';
 
+import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 void main() {
   group('SlowComponentLoader', () {
