@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
-import 'package:angular/src/core/reflection/reflection.dart';
-import 'package:angular/src/core/reflection/reflection_capabilities.dart';
 
 import 'internal_injector.dart';
 
@@ -65,7 +63,6 @@ void _bootstrapInternalTests() {
   _applicationProviders ??= _testBrowserApplicationProviders;
   if (_bootstrap_initialized) return;
   _bootstrap_initialized = true;
-  reflector.reflectionCapabilities = new ReflectionCapabilities();
   _setBaseTestProviders(_platformProviders, _applicationProviders);
 }
 

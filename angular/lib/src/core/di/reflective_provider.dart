@@ -1,5 +1,4 @@
 import 'package:angular/src/core/reflection/reflection.dart' show reflector;
-import 'package:angular/src/facade/lang.dart' show assertionsEnabled;
 
 import 'decorators.dart';
 import 'provider.dart' show Provider, noValueProvided;
@@ -89,18 +88,10 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
     ];
   } else if (provider.useFactory != null) {
     factoryFn = provider.useFactory;
-    if (assertionsEnabled()) {
-      resolvedDeps = constructDependencies(
-        provider.useFactory,
-        provider.dependencies,
-      );
-    } else {
-      // In production mode, we just directly call this and assume it will work.
-      resolvedDeps = constructDependencies(
-        provider.useFactory,
-        provider.dependencies,
-      );
-    }
+    resolvedDeps = constructDependencies(
+      provider.useFactory,
+      provider.dependencies,
+    );
   } else {
     var useClass = provider.useClass;
     if (useClass != null) {

@@ -139,7 +139,6 @@ PlatformRef browserStaticPlatform() {
       PLATFORM_INITIALIZER: [createInitDomAdapter(testabilityRegistry)],
       PlatformRef: platform,
       PlatformRefImpl: platform,
-      Reflector: reflector,
       TestabilityRegistry: testabilityRegistry,
     }));
   }

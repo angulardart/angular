@@ -88,15 +88,6 @@ factoryFn(a) {}
 @Injectable()
 class SomeService {}
 
-final _funcRegExp = "'\.*factoryFn\.*'";
-
-final _notDecoratedRegExp =
-    new RegExp("Cannot resolve all parameters for $_funcRegExp"
-        r"\(\?\)\. "
-        "Make sure that all the parameters are decorated with Inject or have "
-        "valid type annotations and that $_funcRegExp is decorated with "
-        r"Injectable\.");
-
 void main() {
   var dynamicProviders = [
     provide("provider0", useValue: 1),
@@ -160,17 +151,12 @@ void main() {
       expect(car.engine, new isInstanceOf<TurboEngine>());
     });
     test("should throw when no type and not @Inject (class case)", () {
-      expect(
-          () => createInjector([NoAnnotations]),
-          throwsWith("Cannot resolve all parameters for 'NoAnnotations'(?). "
-              "Make sure that all the parameters are decorated with "
-              "Inject or have valid type annotations "
-              "and that 'NoAnnotations' is decorated with Injectable."));
+      expect(() => createInjector([NoAnnotations]), throwsStateError);
     });
     test("should throw when no type and not @Inject (factory case)", () {
       expect(
           () => createInjector([provide("someToken", useFactory: factoryFn)]),
-          throwsWith(_notDecoratedRegExp));
+          throwsStateError);
     });
     test("should cache instances", () {
       var injector = createInjector([Engine]);
@@ -396,7 +382,8 @@ void main() {
       var injector = createInjector([
         Car,
         provide(Engine,
-            useFactory: (() => isBroken ? new BrokenEngine() : new Engine()))
+            useFactory: (() => isBroken ? new BrokenEngine() : new Engine()),
+            deps: const [])
       ]);
       expect(() => injector.get(Car), throwsWith("Error"));
       isBroken = false;
@@ -638,17 +625,12 @@ void main() {
       expect(car.engine, new isInstanceOf<TurboEngine>());
     });
     test("should throw when no type and not @Inject (class case)", () {
-      expect(
-          () => createInjector([NoAnnotations]),
-          throwsWith("Cannot resolve all parameters for 'NoAnnotations'(?). "
-              "Make sure that all the parameters are decorated with "
-              "Inject or have valid type annotations "
-              "and that 'NoAnnotations' is decorated with Injectable."));
+      expect(() => createInjector([NoAnnotations]), throwsStateError);
     });
     test("should throw when no type and not @Inject (factory case)", () {
       expect(
           () => createInjector([provide("someToken", useFactory: factoryFn)]),
-          throwsWith(_notDecoratedRegExp));
+          throwsStateError);
     });
     test("should cache instances", () {
       var injector = createInjector([Engine]);
@@ -874,7 +856,8 @@ void main() {
       var injector = createInjector([
         Car,
         provide(Engine,
-            useFactory: (() => isBroken ? new BrokenEngine() : new Engine()))
+            useFactory: (() => isBroken ? new BrokenEngine() : new Engine()),
+            deps: const [])
       ]);
       expect(() => injector.get(Car), throwsWith("Error"));
       isBroken = false;
