@@ -1,4 +1,4 @@
-import "package:angular/core.dart"
+import 'package:angular/angular.dart'
     show ReflectiveInjector, PLATFORM_INITIALIZER;
 
 class TestInjector {
