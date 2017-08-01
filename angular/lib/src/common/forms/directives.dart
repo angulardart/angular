@@ -43,7 +43,6 @@ export 'directives/validators.dart'
         MaxLengthValidator,
         PatternValidator;
 
-///
 /// A list of all the form directives used as part of a `@Component` annotation.
 ///
 ///  This is a shorthand for importing them each individually.
@@ -53,11 +52,11 @@ export 'directives/validators.dart'
 /// ```dart
 /// @Component(
 ///   selector: 'my-app',
-///   directives: const [FORM_DIRECTIVES]
+///   directives: const [formDirectives]
 /// )
 /// class MyApp {}
 /// ```
-const List<Type> FORM_DIRECTIVES = const [
+const List<Type> formDirectives = const [
   NgControlName,
   NgControlGroup,
   NgFormControl,
@@ -76,4 +75,5 @@ const List<Type> FORM_DIRECTIVES = const [
   PatternValidator
 ];
 
-const List<Type> formDirectives = FORM_DIRECTIVES;
+@Deprecated('Please use formDirectives')
+const List<Type> FORM_DIRECTIVES = formDirectives;
