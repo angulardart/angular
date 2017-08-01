@@ -18,7 +18,7 @@ class ReflectionInfo {
 ///
 /// Used internally by Angular to power dependency injection and compilation.
 class Reflector {
-  final _injectableInfo = new HashMap<Object, ReflectionInfo>();
+  final _injectableInfo = new HashMap<dynamic, ReflectionInfo>();
 
   void registerFunction(Function func, ReflectionInfo funcInfo) {
     _injectableInfo[func] = funcInfo;
@@ -38,17 +38,36 @@ class Reflector {
     return null; // ignore: dead_code
   }
 
-  static T _throw<T>(Object typeOrFunc) {
-    throw new StateError('Missing reflectable information on $typeOrFunc.');
+  Function factory(Type type) {
+    final factory = _injectableInfo[type]?.factory;
+    if (factory == null) {
+      throw new StateError('Missing reflectable information on $type.');
+    }
+    return factory;
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
   }
-
-  Function factory(Type type) => _injectableInfo[type]?.factory ?? _throw(type);
 
   List<List<Object>> parameters(Object typeOrFunc) {
     final info = _injectableInfo[typeOrFunc];
-    return info != null ? info.parameters ?? const [] : _throw(typeOrFunc);
+    if (info == null) {
+      throw new StateError('Missing reflectable information on $typeOrFunc.');
+    }
+    return info.parameters ?? const [];
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
   }
 
-  List<Object> annotations(Object typeOrFunc) =>
-      _injectableInfo[typeOrFunc]?.annotations ?? _throw(typeOrFunc);
+  List<Object> annotations(Object typeOrFunc) {
+    final info = _injectableInfo[typeOrFunc];
+    if (info == null) {
+      throw new StateError('Missing reflectable information on $typeOrFunc.');
+    }
+    return info.annotations;
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return null; // ignore: dead_code
+    return null; // ignore: dead_code
+  }
 }
