@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:angular/src/facade/async.dart' show EventEmitter;
 
 import 'directives/validators.dart' show ValidatorFn;
 
@@ -39,8 +38,8 @@ abstract class AbstractControl {
 
   ValidatorFn validator;
   dynamic _value;
-  EventEmitter<dynamic> _valueChanges;
-  EventEmitter<dynamic> _statusChanges;
+  StreamController<dynamic> _valueChanges;
+  StreamController<dynamic> _statusChanges;
   String _status;
   Map<String, dynamic> _errors;
   bool _pristine = true;
@@ -67,9 +66,9 @@ abstract class AbstractControl {
 
   bool get untouched => !_touched;
 
-  Stream<dynamic> get valueChanges => _valueChanges;
+  Stream<dynamic> get valueChanges => _valueChanges.stream;
 
-  Stream<dynamic> get statusChanges => _statusChanges;
+  Stream<dynamic> get statusChanges => _statusChanges.stream;
 
   bool get pending => _status == PENDING;
 
@@ -186,8 +185,8 @@ abstract class AbstractControl {
   }
 
   void _initObservables() {
-    _valueChanges = new EventEmitter();
-    _statusChanges = new EventEmitter();
+    _valueChanges = new StreamController.broadcast();
+    _statusChanges = new StreamController.broadcast();
   }
 
   String _calculateStatus() {
