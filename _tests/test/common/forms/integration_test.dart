@@ -828,7 +828,7 @@ class LoginIsEmptyValidator {}
 
 @Component(
     selector: 'input-form-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <input type="text" ngControl="login">
@@ -839,7 +839,7 @@ class InputFormTest {
 
 @Component(
     selector: 'submit-form-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div>
   <form [ngFormModel]="form" (ngSubmit)="name = 'updated'"></form>
@@ -852,7 +852,7 @@ class SubmitFormTest {
 
 @Component(
   selector: 'single-control-test',
-  directives: const [FORM_DIRECTIVES],
+  directives: const [formDirectives],
   template: '<div><input type="text" [ngFormControl]="form"></div>',
 )
 class SingleControlTest {
@@ -861,7 +861,7 @@ class SingleControlTest {
 
 @Component(
     selector: 'input-without-type-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <input ngControl="text">
@@ -872,7 +872,7 @@ class InputWithoutTypeTest {
 
 @Component(
     selector: 'textarea-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <textarea ngControl="text"></textarea>
@@ -883,7 +883,7 @@ class TextAreaTest {
 
 @Component(
     selector: 'checkbox-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <input type="checkbox" ngControl="checkbox">
@@ -894,7 +894,7 @@ class CheckboxTest {
 
 @Component(
     selector: 'number-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <input type="number" ngControl="num">
@@ -905,7 +905,7 @@ class NumberTest {
 
 @Component(
     selector: 'number-required-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <input type="number" ngControl="num" required>
@@ -916,7 +916,7 @@ class NumberRequiredTest {
 
 @Component(
     selector: 'number-required-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <input type="number" ngControl="num" [(ngModel)]="data">
@@ -928,7 +928,7 @@ class NumberModelTest {
 
 @Component(
     selector: 'radio-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <form [ngFormModel]="form">
   <input type="radio" ngControl="foodChicken" name="food">
@@ -940,7 +940,7 @@ class RadioTest {
 
 @Component(
     selector: 'basic-select-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <select>
   <option value="SF"></option>
@@ -950,7 +950,7 @@ class BasicSelectTest {}
 
 @Component(
     selector: 'select-for-test',
-    directives: const [FORM_DIRECTIVES, NgFor],
+    directives: const [formDirectives, NgFor],
     template: '''
 <select>
   <option *ngFor="let city of cities" [value]="city['id']">
@@ -966,7 +966,7 @@ class SelectForTest {
 
 @Component(
     selector: 'select-control-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <select ngControl="city">
@@ -980,7 +980,7 @@ class SelectControlTest {
 
 @Component(
     selector: 'select-control-dynamic-data-test',
-    directives: const [FORM_DIRECTIVES, NgFor],
+    directives: const [formDirectives, NgFor],
     template: '''
 <div [ngFormModel]="form">
   <select ngControl="city">
@@ -994,7 +994,7 @@ class SelectControlDynamicDataTest {
 
 @Component(
     selector: 'select-option-value-map-test',
-    directives: const [FORM_DIRECTIVES, NgFor],
+    directives: const [formDirectives, NgFor],
     template: '''
 <div>
   <select [(ngModel)]="selectedCity">
@@ -1013,7 +1013,7 @@ class SelectOptionValueMapTest {
 
 @Component(
     selector: 'select-trackby-test',
-    directives: const [FORM_DIRECTIVES, NgFor],
+    directives: const [formDirectives, NgFor],
     template: '''
 <div>
   <select [(ngModel)]="selectedCity">
@@ -1035,7 +1035,7 @@ class SelectTrackByTest {
 
 @Component(
     selector: 'custom-accessor-test',
-    directives: const [FORM_DIRECTIVES, WrappedAccessor],
+    directives: const [formDirectives, WrappedAccessor],
     template: '''
 <div [ngFormModel]="form">
   <input type="text" ngControl="name" wrapped-value>
@@ -1046,7 +1046,7 @@ class CustomAccessorTest {
 
 @Component(
     selector: 'my-input-test',
-    directives: const [FORM_DIRECTIVES, MyInput],
+    directives: const [formDirectives, MyInput],
     template: '''
 <div [ngFormModel]="form">
   <my-input #input ngControl="name"></my-input>
@@ -1060,7 +1060,7 @@ class MyInputTest {
 
 @Component(
     selector: 'sync-validators-html-test',
-    directives: const [FORM_DIRECTIVES, LoginIsEmptyValidator],
+    directives: const [formDirectives, LoginIsEmptyValidator],
     template: '''
 <div [ngFormModel]="form" login-is-empty-validator>
   <input type="text" ngControl="login" required>
@@ -1073,7 +1073,7 @@ class SyncValidatorsHtmlTest {
 
 @Component(
     selector: 'nested-form-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <div ngControlGroup="nested">
@@ -1088,7 +1088,7 @@ class NestedFormTest {
 
 @Component(
     selector: 'complex-ngmodel-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div [ngFormModel]="form">
   <input type="text" ngControl="name" [(ngModel)]="name">
@@ -1101,7 +1101,7 @@ class ComplexNgModelTest {
 
 @Component(
     selector: 'single-field-ngmodel-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <div>
   <input type="text" [ngFormControl]="form" [(ngModel)]="name">
@@ -1113,7 +1113,7 @@ class SingleFieldNgModelTest {
 
 @Component(
     selector: 'template-form-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <form #myForm="ngForm">
   <div ngControlGroup="user">
@@ -1127,7 +1127,7 @@ class TemplateFormTest {
 
 @Component(
   selector: 'template-submit-test',
-  directives: const [FORM_DIRECTIVES],
+  directives: const [formDirectives],
   template: '''<div><form (ngSubmit)="name = 'updated'"></form></div>''',
 )
 class TemplateSubmitTest {
@@ -1136,14 +1136,14 @@ class TemplateSubmitTest {
 
 @Component(
   selector: 'ngnoform-test',
-  directives: const [FORM_DIRECTIVES],
+  directives: const [formDirectives],
   template: '<form ngNoForm></form>',
 )
 class NgNoFormTest {}
 
 @Component(
     selector: 'remove-controls-test',
-    directives: const [FORM_DIRECTIVES, NgIf],
+    directives: const [formDirectives, NgIf],
     template: '''
 <form #myForm="ngForm">
   <div *ngIf="name == 'show'">
@@ -1159,7 +1159,7 @@ class RemoveControlsTest {
 
 @Component(
     selector: 'remove-control-group-test',
-    directives: const [FORM_DIRECTIVES, NgIf],
+    directives: const [formDirectives, NgIf],
     template: '''
 <form #myForm="ngForm">
   <div *ngIf="name == 'show'" ngControlGroup="user">
@@ -1175,7 +1175,7 @@ class RemoveControlGroupTest {
 
 @Component(
     selector: 'ngmodel-complex-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <form>
   <input type="text" ngControl="name" [(ngModel)]="name">
@@ -1186,7 +1186,7 @@ class NgModelComplexTest {
 
 @Component(
   selector: 'ngmodel-single-field-test',
-  directives: const [FORM_DIRECTIVES],
+  directives: const [formDirectives],
   template: '<div><input type="text" [(ngModel)]="name"></div>',
 )
 class NgModelSingleFieldTest {
@@ -1195,7 +1195,7 @@ class NgModelSingleFieldTest {
 
 @Component(
     selector: 'template-radio-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <form>
   <input type="radio" name="food" ngControl="chicken" [(ngModel)]="data['chicken1']">
@@ -1211,7 +1211,7 @@ class TemplateRadioTest {
 
 @Component(
   selector: 'ngmodel-initial-view-test',
-  directives: const [FORM_DIRECTIVES],
+  directives: const [formDirectives],
   template: '''
 <div>
   <input type="text" [ngFormControl]="form" [(ngModel)]="name">
@@ -1224,7 +1224,7 @@ class NgModelInitialViewTest {
 
 @Component(
   selector: 'ngmodel-revert-view-test',
-  directives: const [FORM_DIRECTIVES],
+  directives: const [formDirectives],
   template: '<input type="text" [(ngModel)]="name">',
 )
 class NgModelRevertViewTest {
@@ -1233,7 +1233,7 @@ class NgModelRevertViewTest {
 
 @Component(
     selector: 'ngmodel-validity-test',
-    directives: const [FORM_DIRECTIVES],
+    directives: const [formDirectives],
     template: '''
 <form>
   <div ngControlGroup="x" #x="ngForm">

@@ -24,7 +24,7 @@ void setUpControl(Control control, NgControl dir) {
   assert(
       dir.valueAccessor != null,
       'No value accessor for '
-      '(${dir.path.join(' -> ')}) or you may be missing FORM_DIRECTIVES in '
+      '(${dir.path.join(' -> ')}) or you may be missing formDirectives in '
       'your directives list.');
   control.validator = Validators.compose([control.validator, dir.validator]);
   dir.valueAccessor.writeValue(control.value);

@@ -30,7 +30,7 @@ const controlNameBinding =
 /// ```dart
 /// @Component(
 ///      selector: "login-comp",
-///      directives: const [FORM_DIRECTIVES],
+///      directives: const [formDirectives],
 ///      template: '''
 ///        <form #f="ngForm" (submit)='onLogIn(f.value)'>
 ///          Login <input type='text' ngControl='login' #l="form">
@@ -52,7 +52,7 @@ const controlNameBinding =
 /// ```dart
 /// @Component(
 ///      selector: "login-comp",
-///      directives: [FORM_DIRECTIVES],
+///      directives: [formDirectives],
 ///      template: '''
 ///        <form (submit)='onLogIn()'>
 ///          Login <input type='text' ngControl='login' [(ngModel)]="credentials.login">

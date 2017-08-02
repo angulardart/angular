@@ -174,7 +174,7 @@ abstract class ChangeDetectorRef {
   ///       Live Update: <input type="checkbox" [(ngModel)]="live">
   ///       <live-data [live]="live"><live-data>
   ///     ''',
-  ///     directives: const [LiveData, FORM_DIRECTIVES])
+  ///     directives: const [LiveData, formDirectives])
   /// class App {
   ///   bool live = true;
   /// }
