@@ -42,7 +42,7 @@ To get a handle to its `ComponentFactory`, import `lib/foo.template.dart`:
 
 ```dart
 // Importing generated files with a prefix is not required but is nice to do.
-import 'foo_template.dart' as ng;
+import 'foo.template.dart' as ng;
 
 void doSomething() {
   ng.FooComponentNgFactory;
