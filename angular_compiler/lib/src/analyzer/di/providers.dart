@@ -1,15 +1,24 @@
-import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../common.dart';
 import '../types.dart';
+import 'dependencies.dart';
+import 'tokens.dart';
 
 /// Support for reading and parsing constant `Provider`s into data structures.
 class ProviderReader {
-  const ProviderReader();
+  final DependencyReader _dependencyReader;
+  final TokenReader _tokenReader;
+
+  const ProviderReader(
+      {DependencyReader dependencyReader: const DependencyReader(),
+      TokenReader tokenReader: const TokenReader()})
+      : _dependencyReader = dependencyReader,
+        _tokenReader = tokenReader;
 
   /// Returns whether an object represents a constant [List].
   @protected
@@ -51,19 +60,19 @@ class ProviderReader {
 
   ProviderElement _parseProvider(DartObject o) {
     final reader = new ConstantReader(o);
-    final token = _parseToken(reader.read('token'));
+    final token = _tokenReader.parseTokenObject(o.getField('token'));
     final useClass = reader.read('useClass');
     if (!useClass.isNull) {
       return _parseUseClass(token, useClass.typeValue.element);
     }
     final useFactory = reader.read('useFactory');
     if (!useFactory.isNull) {
-      return _parseUseFactory(token, o);
+      return _parseUseFactory(token, reader);
     }
     // const Provider(<token>, useValue: constExpression)
     final useValue = reader.read('useValue');
     if (!useValue.isString || useValue.stringValue != '__noValueProvided__') {
-      return _parseUseValue(token, useValue);
+      return _parseUseValue(token, useValue.objectValue);
     }
     // Base case: const Provider(Foo) with no fields set.
     if (token is TypeTokenElement) {
@@ -78,154 +87,72 @@ class ProviderReader {
     ClassElement clazz,
   ) {
     // TODO(matanl): Validate that clazz has @Injectable() when flag is set.
-    final constructor = clazz.unnamedConstructor ??
-        clazz.constructors.firstWhere(
-          (c) => c.isPublic,
-          orElse: () =>
-              clazz.constructors.isNotEmpty ? clazz.constructors.first : null,
-        );
-    // TODO(matanl): Validate constructor and warn when appropriate.
     return new UseClassProviderElement(
       token,
       urlOf(clazz),
-      constructor: constructor.name,
-      dependencies: _parseDependencies(constructor.parameters),
+      dependencies: _dependencyReader.parseDependencies(clazz),
     );
   }
 
   // const Provider(<token>, useFactory: createFoo)
-  ProviderElement _parseUseFactory(TokenElement token, DartObject o) {
-    // TODO(matanl): Remove workaround & use reader >= source_gen 0.7.0.
-    final useFactoryWorkaround = o.getField('useFactory');
+  ProviderElement _parseUseFactory(
+    TokenElement token,
+    ConstantReader provider,
+  ) {
+    final factoryElement = provider.read('useFactory').objectValue.type.element;
+    final manualDeps = provider.read('dependencies');
     // TODO(matanl): Validate that Foo has @Injectable() when flag is set.
     return new UseFactoryProviderElement(
       token,
-      urlOf(useFactoryWorkaround.type.element),
-      dependencies: _parseDependencies(
-        (useFactoryWorkaround.type.element as FunctionElement).parameters,
-      ),
+      urlOf(factoryElement),
+      dependencies: manualDeps.isList
+          ? _dependencyReader.parseDependenciesList(
+              factoryElement, manualDeps.listValue)
+          : _dependencyReader.parseDependencies(factoryElement),
     );
   }
 
-  ProviderElement _parseUseValue(TokenElement token, ConstantReader useValue) {
+  ProviderElement _parseUseValue(TokenElement token, DartObject useValue) {
     // TODO(matanl): For corner-cases that can't be revived, display error.
-    return new UseValueProviderElement(token, useValue.revive());
+    return new UseValueProviderElement._(
+      token,
+      _reviveInvocationsOf(useValue),
+    );
   }
 
-  Dependencies _parseDependencies(List<ParameterElement> parameters) {
-    final positional = <DependencyElement>[];
-    for (final parameter in parameters) {
-      if (parameter.parameterKind == ParameterKind.POSITIONAL) {
-        final inject = $Inject.firstAnnotationOfExact(parameter);
-        final token = inject != null
-            ? _parseToken(new ConstantReader(inject).read('token'))
-            : new TypeTokenElement(urlOf(parameter.type.element));
-        positional.add(
-          new DependencyElement(
-            token,
-            host: $Host.firstAnnotationOfExact(parameter) != null,
-            optional: $Optional.firstAnnotationOfExact(parameter) != null,
-            self: $Self.firstAnnotationOfExact(parameter) != null,
-            skipSelf: $SkipSelf.firstAnnotationOfExact(parameter) != null,
-          ),
-        );
-      }
-      // TODO(matanl): Add support for named arguments.
+  Object _reviveInvocationsOf(DartObject o) {
+    final reader = new ConstantReader(o);
+    // TODO: "isPrimitive" @ https://github.com/dart-lang/source_gen/issues/256.
+    if (reader.isBool ||
+        reader.isString ||
+        reader.isDouble ||
+        reader.isInt ||
+        reader.isNull ||
+        reader.isSymbol) {
+      return reader.anyValue;
     }
-    return new Dependencies(positional);
-  }
-
-  /// Returns a token element representing a constant field.
-  TokenElement _parseToken(ConstantReader o) {
-    if (o.isNull) {
-      throw new FormatException('Expected token, but got "null".');
+    if (reader.isList) {
+      return reader.listValue.map(_reviveInvocationsOf).toList();
     }
-    if (o.isType) {
-      return new TypeTokenElement(urlOf(o.typeValue.element));
+    if (reader.isMap) {
+      return mapMap(reader.mapValue,
+          key: (k, _) => _reviveInvocationsOf(k),
+          value: (_, v) => _reviveInvocationsOf(v));
     }
-    if (o.instanceOf($OpaqueToken)) {
-      return new OpaqueTokenElement(o.read('_desc').stringValue);
-    }
-    // TODO(matanl): Improve to include information about the token.
-    // Blocked on https://github.com/dart-lang/source_gen/issues/216.
-    throw new UnsupportedError('Unsupported token value');
+    return reader.revive();
   }
 
   /// Returns a provider element representing a single type.
   ProviderElement _parseType(DartObject o) {
     final reader = new ConstantReader(o);
     final clazz = reader.typeValue.element as ClassElement;
-    final constructor = clazz.constructors.first;
     final token = urlOf(clazz);
     return new UseClassProviderElement(
       new TypeTokenElement(token),
       token,
-      constructor: constructor?.name,
-      dependencies: _parseDependencies(constructor.parameters),
+      dependencies: _dependencyReader.parseDependencies(clazz),
     );
   }
-}
-
-/// A statically parsed token used as an identifier for injection.
-///
-/// See [TypeTokenElement] and [OpaqueTokenElement].
-abstract class TokenElement {}
-
-/// A statically parsed `Type` used as an identifier for injection.
-class TypeTokenElement implements TokenElement {
-  /// Canonical URL of the source location and class name being referenced.
-  final Uri url;
-
-  @visibleForTesting
-  const TypeTokenElement(this.url);
-}
-
-/// A statically parsed `OpaqueToken` used as an identifier for injection.
-class OpaqueTokenElement implements TokenElement {
-  /// Canonical name of an `OpaqueToken`.
-  final String identifier;
-
-  @visibleForTesting
-  const OpaqueTokenElement(this.identifier);
-}
-
-/// Statically analyzed arguments needed to invoke a constructor or function.
-class Dependencies {
-  /// Positional arguments, in order analyzed.
-  final List<DependencyElement> positional;
-
-  /// Named arguments.
-  final Map<String, DependencyElement> named;
-
-  @visibleForTesting
-  const Dependencies(this.positional, [this.named = const {}]);
-}
-
-/// Statically analyzed information necessary to satisfy a dependency.
-class DependencyElement {
-  /// Whether the dependency should be satisfied from the parent only.
-  final bool host;
-
-  /// Whether the dependency may be omitted (i.e. be `null`).
-  final bool optional;
-
-  /// Whether the dependency should be satisfied from itself only.
-  final bool self;
-
-  /// Whether the dependency should never be satisfied from itself.
-  final bool skipSelf;
-
-  /// Token to use to lookup the dependency.
-  final TokenElement token;
-
-  @visibleForTesting
-  const DependencyElement(
-    this.token, {
-    this.host: false,
-    this.optional: false,
-    this.self: false,
-    this.skipSelf: false,
-  });
 }
 
 /// A statically parsed `Provider`.
@@ -234,6 +161,13 @@ abstract class ProviderElement {
   final TokenElement token;
 
   const ProviderElement._(this.token);
+
+  @override
+  bool operator ==(Object o) => o is ProviderElement && o.token == token;
+
+  @mustCallSuper
+  @override
+  int get hashCode => token.hashCode;
 }
 
 /// A statically parsed `Provider` that describes a new class instance.
@@ -241,22 +175,36 @@ class UseClassProviderElement extends ProviderElement {
   /// A reference to the class type to create.
   final Uri useClass;
 
-  /// Constructor name to invoke.
-  ///
-  /// If `null`, assumed to be the default constructor.
-  final String constructor;
-
   /// Arguments that are dependencies to the class.
-  final Dependencies dependencies;
+  final DependencyInvocation<ConstructorElement> dependencies;
 
   @visibleForTesting
   const UseClassProviderElement(
     TokenElement e,
     this.useClass, {
-    @required this.constructor,
     @required this.dependencies,
   })
       : super._(e);
+
+  @override
+  bool operator ==(Object o) =>
+      o is UseClassProviderElement &&
+      o.useClass == useClass &&
+      o.dependencies == dependencies &&
+      super == o;
+
+  @override
+  int get hashCode =>
+      useClass.hashCode ^ dependencies.hashCode ^ super.hashCode;
+
+  @override
+  String toString() =>
+      'UseClassProviderElement ' +
+      {
+        'token': '$token',
+        'useClass': '$useClass',
+        'dependencies': '$dependencies',
+      }.toString();
 }
 
 /// A statically parsed `Provider` that describes a function invocation.
@@ -265,7 +213,7 @@ class UseFactoryProviderElement extends ProviderElement {
   final Uri useFactory;
 
   /// Arguments that are dependencies to the factory.
-  final Dependencies dependencies;
+  final DependencyInvocation<FunctionElement> dependencies;
 
   @visibleForTesting
   const UseFactoryProviderElement(
@@ -274,13 +222,37 @@ class UseFactoryProviderElement extends ProviderElement {
     @required this.dependencies,
   })
       : super._(e);
+
+  @override
+  bool operator ==(Object o) =>
+      o is UseFactoryProviderElement &&
+      o.useFactory == useFactory &&
+      o.dependencies == dependencies &&
+      super == o;
+
+  @override
+  int get hashCode =>
+      useFactory.hashCode ^ dependencies.hashCode ^ super.hashCode;
+
+  @override
+  String toString() =>
+      'UseFactoryProviderElement ' +
+      {
+        'token': '$token',
+        'useClass': '$useFactory',
+        'dependencies': '$dependencies',
+      }.toString();
 }
 
 /// A statically parsed `Provider` that describes a constant expression.
 class UseValueProviderElement extends ProviderElement {
-  /// A reference to the constant expression to generate.
-  final Revivable useValue;
+  /// A reference to the constant expression or literal to generate.
+  final Object useValue;
 
-  @visibleForTesting
-  const UseValueProviderElement(TokenElement e, this.useValue) : super._(e);
+  // Not visible for testing because its impractical to create one.
+  const UseValueProviderElement._(
+    TokenElement e,
+    this.useValue,
+  )
+      : super._(e);
 }
