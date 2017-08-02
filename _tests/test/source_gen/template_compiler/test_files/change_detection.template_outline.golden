@@ -1,6 +1,7 @@
 export 'change_detection.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/debug/debug_app_view.dart';
 
 import 'change_detection.dart' as _user;
 const List<dynamic> styles$CheckOnceComponent = const [];

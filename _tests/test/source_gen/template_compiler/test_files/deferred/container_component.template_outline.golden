@@ -1,6 +1,7 @@
 export 'container_component.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/debug/debug_app_view.dart';
 
 import 'container_component.dart' as _user;
 const List<dynamic> styles$TestContainerComponent = const [];
