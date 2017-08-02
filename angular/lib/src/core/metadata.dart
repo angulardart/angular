@@ -233,7 +233,7 @@ class Directive {
   ///     @Component({
   ///       selector: 'app',
   ///       template: `<input [(ngModel)]="prop">`,
-  ///       directives: [FORM_DIRECTIVES, NgModelStatus]
+  ///       directives: [formDirectives, NgModelStatus]
   ///     })
   ///     class App {
   ///       prop;
@@ -1072,7 +1072,7 @@ class Output {
 /// @Component(
 ///   selector: 'app',
 ///   template: '<input [(ngModel)]="prop">',
-///   directives: const [FORM_DIRECTIVES, NgModelStatus])
+///   directives: const [formDirectives, NgModelStatus])
 /// class App {
 ///   var prop;
 ///  }

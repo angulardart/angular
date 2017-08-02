@@ -20,7 +20,7 @@ const controlGroupProvider =
 /// ```dart
 /// @Component(
 ///   selector: 'my-app',
-///   directives: const [FORM_DIRECTIVES],
+///   directives: const [formDirectives],
 ///   template: '''
 ///     <div>
 ///       <h2>Angular2 Control &amp; ControlGroup Example</h2>

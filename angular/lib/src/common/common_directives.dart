@@ -1,5 +1,5 @@
 import "directives.dart" show CORE_DIRECTIVES;
-import "forms.dart" show FORM_DIRECTIVES;
+import "forms.dart" show formDirectives;
 
 /// A collection of Angular core directives that are likely to be used in each
 /// and every Angular application. This includes core directives
@@ -60,5 +60,5 @@ import "forms.dart" show FORM_DIRECTIVES;
 /// ```
 const List<List<Type>> COMMON_DIRECTIVES = const [
   CORE_DIRECTIVES,
-  FORM_DIRECTIVES
+  formDirectives
 ];

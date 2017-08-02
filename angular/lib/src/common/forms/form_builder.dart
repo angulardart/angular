@@ -21,7 +21,7 @@ import 'model.dart' as model_module;
 ///     <h3>Form value:</h3>
 ///     <pre>{{value}}</pre>
 ///   ''',
-///   directives: const [FORM_DIRECTIVES]
+///   directives: const [formDirectives]
 /// )
 /// class App {
 ///   ControlGroup loginForm;

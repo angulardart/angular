@@ -21,7 +21,7 @@ const formDirectiveProvider =
 ///
 /// ### Typical Use
 ///
-/// Include `FORM_DIRECTIVES` in the `directives` section of a [View] annotation
+/// Include `formDirectives` in the `directives` section of a [View] annotation
 /// to use `NgForm` and its associated controls.
 ///
 /// ### Structure
@@ -60,7 +60,7 @@ const formDirectiveProvider =
 ///       </form>
 ///       <pre>{{data}}</pre>
 ///     </div>''',
-///   directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES]
+///   directives: const [CORE_DIRECTIVES, formDirectives]
 /// })
 /// class App {
 ///

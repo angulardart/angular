@@ -38,7 +38,7 @@ const formDirectiveProvider =
 ///       <pre>{{value}}</pre>
 ///     </div>
 ///   ''',
-///   directives: const [FORM_DIRECTIVES]
+///   directives: const [formDirectives]
 /// })
 /// class App {
 ///   ControlGroup loginForm;
@@ -61,7 +61,7 @@ const formDirectiveProvider =
 /// ```dart
 /// @Component(
 ///      selector: "login-comp",
-///      directives: const [FORM_DIRECTIVES],
+///      directives: const [formDirectives],
 ///      template: '''
 ///        <form [ngFormModel]='loginForm'>
 ///          Login <input type='text' ngControl='login' [(ngModel)]='credentials.login'>

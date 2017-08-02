@@ -41,7 +41,7 @@ const formControlBinding =
 ///       </form>
 ///     </div>
 ///   ''',
-///   directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES]
+///   directives: const [CORE_DIRECTIVES, formDirectives]
 /// )
 /// class App {
 ///   Control loginControl = new Control('');
@@ -57,7 +57,7 @@ const formControlBinding =
 /// ```dart
 /// @Component(
 ///      selector: "login-comp",
-///      directives: const [FORM_DIRECTIVES],
+///      directives: const [formDirectives],
 ///      template: "<input type='text' [ngFormControl]='loginControl' [(ngModel)]='login'>"
 ///      )
 /// class LoginComp {
