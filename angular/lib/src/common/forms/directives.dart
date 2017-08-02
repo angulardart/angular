@@ -74,6 +74,3 @@ const List<Type> formDirectives = const [
   MaxLengthValidator,
   PatternValidator
 ];
-
-@Deprecated('Please use formDirectives')
-const List<Type> FORM_DIRECTIVES = formDirectives;

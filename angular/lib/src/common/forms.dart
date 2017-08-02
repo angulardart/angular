@@ -10,8 +10,7 @@ import "forms/directives/radio_control_value_accessor.dart"
     show RadioControlRegistry;
 import "forms/form_builder.dart" show FormBuilder;
 
-export "forms/directives.dart"
-    show formDirectives, FORM_DIRECTIVES, RadioButtonState;
+export "forms/directives.dart" show formDirectives, RadioButtonState;
 export "forms/directives/abstract_control_directive.dart"
     show AbstractControlDirective;
 export "forms/directives/checkbox_value_accessor.dart"
