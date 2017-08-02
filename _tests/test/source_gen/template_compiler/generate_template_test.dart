@@ -13,7 +13,7 @@ String goldenExtension(String codegenMode) => '.template_$codegenMode.golden';
 /// `pub get` and then
 /// `dart test/source_gen/template_compiler/generate.dart --update-goldens`
 main() {
-  for (String codegenMode in ['release', 'debug']) {
+  for (String codegenMode in ['release', 'debug', 'outline']) {
     group('Test Components in $codegenMode', () {
       for (String file in [
         'change_detection',
