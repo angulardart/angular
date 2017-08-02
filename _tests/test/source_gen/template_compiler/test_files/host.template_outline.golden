@@ -1,13 +1,24 @@
+// The .template.dart files also export the user code.
 export 'host.dart';
+
+// Required for implementing AppView.
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 
+
+// Required for specifically referencing user code.
 import 'host.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'package:angular/angular.dart';
+
+// For @Component class HostComponent.
 const List<dynamic> styles$HostComponent = const [];
 external ComponentFactory get HostComponentNgFactory;
 external AppView<_user.HostComponent> viewFactory_HostComponent0(AppView<dynamic> parentView, num parentIndex);
 class ViewHostComponent0 extends AppView<_user.HostComponent> {
   external factory ViewHostComponent0(AppView<dynamic> parentView, num parentIndex);
 }
+
 external void initReflector();

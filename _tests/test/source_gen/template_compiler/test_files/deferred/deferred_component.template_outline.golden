@@ -1,13 +1,24 @@
+// The .template.dart files also export the user code.
 export 'deferred_component.dart';
+
+// Required for implementing AppView.
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 
+
+// Required for specifically referencing user code.
 import 'deferred_component.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'package:angular/angular.dart';
+
+// For @Component class DeferredChildComponent.
 const List<dynamic> styles$DeferredChildComponent = const [];
 external ComponentFactory get DeferredChildComponentNgFactory;
 external AppView<_user.DeferredChildComponent> viewFactory_DeferredChildComponent0(AppView<dynamic> parentView, num parentIndex);
 class ViewDeferredChildComponent0 extends AppView<_user.DeferredChildComponent> {
   external factory ViewDeferredChildComponent0(AppView<dynamic> parentView, num parentIndex);
 }
+
 external void initReflector();

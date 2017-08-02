@@ -1,17 +1,30 @@
+// The .template.dart files also export the user code.
 export 'queries.dart';
+
+// Required for implementing AppView.
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 
+
+// Required for specifically referencing user code.
 import 'queries.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'dart:html';
+import 'package:angular/angular.dart';
+
+// For @Component class QueriesComponent.
 const List<dynamic> styles$QueriesComponent = const [];
 external ComponentFactory get QueriesComponentNgFactory;
 external AppView<_user.QueriesComponent> viewFactory_QueriesComponent0(AppView<dynamic> parentView, num parentIndex);
 class ViewQueriesComponent0 extends AppView<_user.QueriesComponent> {
   external factory ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Directive class AnotherDirective.
 class AnotherDirectiveNgCd {
   external _user.AnotherDirective get instance;
   external factory AnotherDirectiveNgCd(_user.AnotherDirective instance);
 }
+
 external void initReflector();
