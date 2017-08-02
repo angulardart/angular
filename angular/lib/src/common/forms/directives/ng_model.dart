@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:angular/core.dart'
-    show OnChanges, OnInit, SimpleChange, Directive, Provider;
+    show OnChanges, OnInit, SimpleChange, Directive, Provider, Output;
 import 'package:angular/di.dart' show Inject, Optional, Self;
-import 'package:angular/src/facade/async.dart' show EventEmitter;
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -56,14 +57,14 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
     selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
     providers: const [formControlBinding],
     inputs: const ['model: ngModel'],
-    outputs: const ['update: ngModelChange'],
     exportAs: 'ngForm')
 class NgModel extends NgControl implements OnChanges, OnInit {
   final List<dynamic> _validators;
   final _control = new Control();
-  final update = new EventEmitter<dynamic>(false);
+  final _update = new StreamController.broadcast(sync: true);
   dynamic model;
   dynamic viewModel;
+
   NgModel(
       @Optional()
       @Self()
@@ -76,6 +77,9 @@ class NgModel extends NgControl implements OnChanges, OnInit {
       : super() {
     valueAccessor = selectValueAccessor(this, valueAccessors);
   }
+
+  @Output('ngModelChange')
+  Stream get update => _update.stream;
 
   @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
@@ -102,6 +106,6 @@ class NgModel extends NgControl implements OnChanges, OnInit {
   @override
   void viewToModelUpdate(dynamic newValue) {
     viewModel = newValue;
-    update.add(newValue);
+    _update.add(newValue);
   }
 }

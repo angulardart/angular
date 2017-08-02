@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:html' show Event;
 
-import 'package:angular/core.dart' show Directive, Provider;
+import 'package:angular/core.dart' show Directive, Provider, Output;
 import 'package:angular/di.dart' show Optional, Inject, Self;
-import 'package:angular/src/facade/async.dart' show EventEmitter;
 
 import '../model.dart' show AbstractControl, ControlGroup, Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -75,15 +74,22 @@ const formDirectiveProvider =
     selector: 'form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]',
     providers: const [formDirectiveProvider],
     host: const {'(submit)': 'onSubmit(\$event)'},
-    outputs: const ['ngSubmit', 'ngBeforeSubmit'],
     exportAs: 'ngForm')
 class NgForm extends ControlContainer implements Form {
   ControlGroup form;
-  var ngSubmit = new EventEmitter<ControlGroup>(false);
-  var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);
+  final _ngSubmit = new StreamController<ControlGroup>.broadcast(sync: true);
+  final _ngBeforeSubmit =
+      new StreamController<ControlGroup>.broadcast(sync: true);
+
   NgForm(@Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators) {
     form = new ControlGroup({}, null, composeValidators(validators));
   }
+
+  @Output()
+  Stream<ControlGroup> get ngSubmit => _ngSubmit.stream;
+  @Output()
+  Stream<ControlGroup> get ngBeforeSubmit => _ngBeforeSubmit.stream;
+
   @override
   Form get formDirective => this;
 
@@ -155,8 +161,8 @@ class NgForm extends ControlContainer implements Form {
   }
 
   void onSubmit(Event event) {
-    ngBeforeSubmit.add(form);
-    ngSubmit.add(form);
+    _ngBeforeSubmit.add(form);
+    _ngSubmit.add(form);
     event?.preventDefault();
   }
 

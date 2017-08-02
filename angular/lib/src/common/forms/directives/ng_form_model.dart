@@ -1,10 +1,9 @@
+import 'dart:async';
 import 'dart:html' show Event;
 
 import 'package:angular/core.dart'
-    show SimpleChange, OnChanges, Directive, Provider;
+    show SimpleChange, OnChanges, Directive, Provider, Output;
 import 'package:angular/di.dart' show Optional, Inject, Self;
-import 'package:angular/src/facade/async.dart' show EventEmitter;
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;
@@ -92,16 +91,21 @@ const formDirectiveProvider =
     providers: const [formDirectiveProvider],
     inputs: const ['form: ngFormModel'],
     host: const {'(submit)': 'onSubmit(\$event)'},
-    outputs: const ['ngSubmit', 'ngBeforeSubmit'],
     exportAs: 'ngForm')
 class NgFormModel extends ControlContainer implements Form, OnChanges {
   final List<dynamic> _validators;
   ControlGroup form;
   List<NgControl> directives = [];
-  var ngSubmit = new EventEmitter<ControlGroup>(false);
-  var ngBeforeSubmit = new EventEmitter<ControlGroup>(false);
+  final _ngSubmit = new StreamController<ControlGroup>.broadcast(sync: true);
+  final _ngBeforeSubmit =
+      new StreamController<ControlGroup>.broadcast(sync: true);
 
   NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) this._validators);
+
+  @Output()
+  Stream<ControlGroup> get ngSubmit => _ngSubmit.stream;
+  @Output()
+  Stream<ControlGroup> get ngBeforeSubmit => _ngBeforeSubmit.stream;
 
   @override
   void ngOnChanges(Map<String, SimpleChange> changes) {
@@ -160,8 +164,8 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   void onSubmit(Event event) {
-    ngBeforeSubmit.add(form);
-    ngSubmit.add(form);
+    _ngBeforeSubmit.add(form);
+    _ngSubmit.add(form);
     event.preventDefault();
   }
 
@@ -174,7 +178,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
 
   void _checkFormPresent() {
     if (form == null) {
-      throw new BaseException(
+      throw new StateError(
           'ngFormModel expects a form. Please pass one in. Example: '
           '<form [ngFormModel]="myCoolForm">');
     }

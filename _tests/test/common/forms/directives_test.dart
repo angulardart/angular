@@ -37,7 +37,7 @@ void main() {
     });
     test("should throw when given an empty array", () {
       expect(() => selectValueAccessor(dir, []),
-          throwsABaseException("No valid value accessor for"));
+          throwsWith("No valid value accessor for"));
     });
     test("should return the default value accessor when no other provided", () {
       expect(selectValueAccessor(dir, [defaultAccessor]), defaultAccessor);
@@ -55,10 +55,8 @@ void main() {
     test("should throw when more than one build-in accessor is provided", () {
       var checkboxAccessor = new CheckboxControlValueAccessor(null);
       var selectAccessor = new SelectControlValueAccessor(null);
-      expect(
-          () => selectValueAccessor(dir, [checkboxAccessor, selectAccessor]),
-          throwsABaseException(
-              "More than one built-in value accessor matches"));
+      expect(() => selectValueAccessor(dir, [checkboxAccessor, selectAccessor]),
+          throwsWith("More than one built-in value accessor matches"));
     });
     test("should return custom accessor when provided", () {
       var customAccessor = new MockValueAccessor();
@@ -71,7 +69,7 @@ void main() {
     test("should throw when more than one custom accessor is provided", () {
       ControlValueAccessor customAccessor = new MockValueAccessor();
       expect(() => selectValueAccessor(dir, [customAccessor, customAccessor]),
-          throwsABaseException("More than one custom value accessor matches"));
+          throwsWith("More than one custom value accessor matches"));
     });
   });
   group("Shared composeValidators", () {

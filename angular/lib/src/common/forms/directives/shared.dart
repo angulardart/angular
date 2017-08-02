@@ -1,4 +1,3 @@
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/facade/lang.dart' show looseIdentical;
 
 import '../model.dart' show Control, ControlGroup;
@@ -51,7 +50,7 @@ void _throwError(AbstractControlDirective dir, String message) {
   if (dir.path != null) {
     message = "$message (${dir.path.join(" -> ")})";
   }
-  throw new BaseException(message);
+  throw new ArgumentError(message);
 }
 
 ValidatorFn composeValidators(List<dynamic> validators) {
@@ -67,7 +66,6 @@ bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
   return !looseIdentical(viewModel, change.currentValue);
 }
 
-// TODO: vsavkin remove it once https://github.com/angular/angular/issues/3011 is implemented
 ControlValueAccessor selectValueAccessor(
     NgControl dir, List<ControlValueAccessor> valueAccessors) {
   if (valueAccessors == null) return null;

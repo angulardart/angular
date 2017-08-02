@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:angular/core.dart'
-    show OnChanges, OnDestroy, SimpleChange, Directive, Provider;
+    show OnChanges, OnDestroy, SimpleChange, Directive, Provider, Output;
 import 'package:angular/di.dart' show SkipSelf, Inject, Optional, Self;
-import 'package:angular/src/facade/async.dart' show EventEmitter;
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -74,15 +75,15 @@ const controlNameBinding =
     selector: '[ngControl]',
     providers: const [controlNameBinding],
     inputs: const ['name: ngControl', 'model: ngModel'],
-    outputs: const ['update: ngModelChange'],
     exportAs: 'ngForm')
 class NgControlName extends NgControl implements OnChanges, OnDestroy {
   final ControlContainer _parent;
   final /* Array<Validator|Function> */ List<dynamic> _validators;
-  final update = new EventEmitter<dynamic>();
+  final _update = new StreamController.broadcast();
   dynamic model;
   dynamic viewModel;
   var _added = false;
+
   NgControlName(
       @SkipSelf()
           this._parent,
@@ -96,6 +97,10 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
           List<ControlValueAccessor> valueAccessors) {
     valueAccessor = selectValueAccessor(this, valueAccessors);
   }
+
+  @Output('ngModelChange')
+  Stream get update => _update.stream;
+
   @override
   ngOnChanges(Map<String, SimpleChange> changes) {
     if (!_added) {
@@ -116,7 +121,7 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
   @override
   void viewToModelUpdate(dynamic newValue) {
     viewModel = newValue;
-    update.add(newValue);
+    _update.add(newValue);
   }
 
   @override
