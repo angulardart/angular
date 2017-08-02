@@ -10,6 +10,7 @@ import 'analyzer.dart';
 const _angularImports = '''
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/debug/debug_app_view.dart';
 ''';
 
 /// Generates an _outline_ of the public API of a `.template.dart` file.
@@ -131,9 +132,11 @@ class TemplateOutliner implements Builder {
         inputs.add(inputName.trim());
       }
     }
-    return inputs.map(
-      (i) => i.endsWith('=') ? i.substring(0, i.length - 1) : i,
-    );
+    return inputs
+        .map(
+          (i) => i.endsWith('=') ? i.substring(0, i.length - 1) : i,
+        )
+        .toSet();
   }
 
   @override

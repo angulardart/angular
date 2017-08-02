@@ -1,6 +1,7 @@
 export 'providers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/debug/debug_app_view.dart';
 
 import 'providers.dart' as _user;
 const List<dynamic> styles$ProvidersComponent = const [];
