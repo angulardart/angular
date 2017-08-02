@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:analyzer/analyzer.dart' hide Directive;
 import 'package:analyzer/dart/element/element.dart';
@@ -30,6 +31,7 @@ Future<NgDepsModel> resolveNgDepsFor(
   LibraryElement library, {
   @required FutureOr<bool> hasInput(String uri),
   @required bool isLibrary(String uri),
+  bool checkUnresolvedImports: true,
 }) async {
   // Visit and find all 'reflectables'.
   final reflectableVisitor = new ReflectableVisitor();
@@ -38,7 +40,11 @@ Future<NgDepsModel> resolveNgDepsFor(
   // Collect all import and exports, and see if we need additional metadata.
   final imports = <ImportModel>[];
   final exports = <ExportModel>[];
-  final templateDeps = <ImportModel>[];
+  final templateDeps = new HashSet<ImportModel>(
+    equals: (a, b) => a.uri == b.uri,
+    hashCode: (e) => e.uri.hashCode,
+    isValidKey: (k) => k is ImportModel,
+  );
   final pendingResolution = <Future>[];
 
   if (reflectableVisitor.hasPositionalParams) {
@@ -73,9 +79,24 @@ Future<NgDepsModel> resolveNgDepsFor(
     }
   }
 
+  Future resolveTemplateWorkaround(ImportDirective directive) async {
+    final uri = directive.uri.stringValue;
+    if (uri.endsWith(TEMPLATE_EXTENSION)) {
+      templateDeps.add(new ImportModel(uri: uri));
+    }
+  }
+
   pendingResolution
     ..addAll(library.imports.map(resolveAndCheckUri))
     ..addAll(library.exports.map(resolveAndCheckUri));
+
+  if (checkUnresolvedImports) {
+    pendingResolution.addAll(library.definingCompilationUnit
+        .computeNode()
+        .directives
+        .where((d) => d is ImportDirective && d.deferredKeyword == null)
+        .map((d) => resolveTemplateWorkaround(d as ImportDirective)));
+  }
 
   await Future.wait(pendingResolution);
 
@@ -83,7 +104,7 @@ Future<NgDepsModel> resolveNgDepsFor(
     reflectables: reflectableVisitor.reflectables,
     imports: imports,
     exports: exports,
-    depImports: templateDeps,
+    depImports: templateDeps.toList(),
   );
 }
 

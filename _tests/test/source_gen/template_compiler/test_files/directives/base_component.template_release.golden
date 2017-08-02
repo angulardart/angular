@@ -10,9 +10,9 @@ import 'package:angular/src/core/reflection/reflection.dart'
     as _ngRef;
 import 'components.dart';
 import 'directives.dart' as directive;
+import 'components.template.dart' as _i1;
 import 'package:angular/angular.template.dart'
-    as _i1;
-import 'components.template.dart' as _i2;
+    as _i2;
 import 'directives.template.dart' as _i3;
 export 'base_component.dart';
 import 'package:angular/src/core/linker/app_view.dart';

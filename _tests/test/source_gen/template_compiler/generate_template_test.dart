@@ -17,6 +17,7 @@ main() {
     group('Test Components in $codegenMode', () {
       for (String file in [
         'change_detection',
+        'component_loader_pattern',
         'core_directives',
         'events',
         'export_as',
