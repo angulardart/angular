@@ -1,13 +1,27 @@
+// The .template.dart files also export the user code.
 export 'component_loader_pattern.dart';
+
+// Required for implementing AppView.
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 
+
+// Required for specifically referencing user code.
 import 'component_loader_pattern.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'package:angular/angular.dart';
+import 'package:angular/di.template.dart' as di_lib;
+import 'package:angular/security.template.dart' deferred as security_lib;
+import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
+
+// For @Component class TestComponent.
 const List<dynamic> styles$TestComponent = const [];
 external ComponentFactory get TestComponentNgFactory;
 external AppView<_user.TestComponent> viewFactory_TestComponent0(AppView<dynamic> parentView, num parentIndex);
 class ViewTestComponent0 extends AppView<_user.TestComponent> {
   external factory ViewTestComponent0(AppView<dynamic> parentView, num parentIndex);
 }
+
 external void initReflector();

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
@@ -21,10 +22,14 @@ import 'package:angular/src/debug/debug_app_view.dart';
 class TemplateOutliner implements Builder {
   final String _extension;
 
-  const TemplateOutliner({
+  TemplateOutliner({
     String extension: '.outline.template.dart',
   })
-      : _extension = extension;
+      : _extension = extension {
+    buildExtensions = {
+      '.dart': [extension],
+    };
+  }
 
   @override
   Future<Null> build(BuildStep buildStep) async {
@@ -57,52 +62,105 @@ class TemplateOutliner implements Builder {
       }
     }
     final output = new StringBuffer();
-    output.writeln("export '${p.basename(buildStep.inputId.path)}';");
+    output
+      ..writeln('// The .template.dart files also export the user code.')
+      ..writeln("export '${p.basename(buildStep.inputId.path)}';")
+      ..writeln();
     if (components.isNotEmpty) {
-      output.writeln(_angularImports);
+      output
+        ..writeln('// Required for implementing AppView.')
+        ..writeln(_angularImports)
+        ..writeln();
     }
     if (components.isNotEmpty || directives.isNotEmpty) {
       final userLandCode = p.basename(buildStep.inputId.path);
-      output.writeln("import '$userLandCode' as _user;");
+      output
+        ..writeln('// Required for specifically referencing user code.')
+        ..writeln("import '$userLandCode' as _user;")
+        ..writeln();
     }
+    output.writeln('// Required for "type inference" (scoping).');
+    for (final d in library.definingCompilationUnit.computeNode().directives) {
+      if (d is ImportDirective) {
+        output.writeln(d.toSource());
+      }
+    }
+    output.writeln();
     if (components.isNotEmpty) {
       for (final component in components) {
         final name = '${component}NgFactory';
-        output.writeln('const List<dynamic> styles\$$component = const [];');
-        output.writeln('external ComponentFactory get $name;');
-        output.writeln(
-            'external AppView<_user.$component> viewFactory_${component}0(AppView<dynamic> parentView, num parentIndex);');
-        output.writeln(
-            'class View${component}0 extends AppView<_user.$component> {');
-        output.writeln(
-            '  external factory View${component}0(AppView<dynamic> parentView, num parentIndex);');
-        output.writeln('}');
+        output
+          ..writeln('// For @Component class $component.')
+          ..writeln('const List<dynamic> styles\$$component = const [];')
+          ..writeln('external ComponentFactory get $name;')
+          ..writeln(
+              'external AppView<_user.$component> viewFactory_${component}0(AppView<dynamic> parentView, num parentIndex);')
+          ..writeln(
+              'class View${component}0 extends AppView<_user.$component> {')
+          ..writeln(
+              '  external factory View${component}0(AppView<dynamic> parentView, num parentIndex);')
+          ..writeln('}');
       }
     }
     if (directives.isNotEmpty) {
       directives.forEach((directive, annotation) {
         final name = '${directive}NgCd';
-        output.writeln('class $name {');
-        output.writeln('  external _user.$directive get instance;');
-        output.writeln('  external factory $name(_user.$directive instance);');
-        for (final input in _findInputs(
-          library.getType(directive),
-          annotation,
-        )) {
-          output.writeln('  external void ngSet\$$input(dynamic value);');
-        }
+        output
+          ..writeln('// For @Directive class $directive.')
+          ..writeln('class $name {')
+          ..writeln('  external _user.$directive get instance;')
+          ..writeln('  external factory $name(_user.$directive instance);');
+        _findInputs(library.getType(directive), annotation).forEach((
+          name,
+          type,
+        ) {
+          output.writeln('  external void ngSet\$$name($type value);');
+        });
         output.writeln('}');
       });
     }
-    output.writeln('external void initReflector();');
+    output..writeln()..writeln('external void initReflector();');
     buildStep.writeAsString(
       buildStep.inputId.changeExtension(_extension),
       output.toString(),
     );
   }
 
-  Iterable<String> _findInputs(ClassElement element, DartObject annotation) {
-    final inputs = new Set<String>();
+  static String _inferTypeField(FieldElement element) {
+    final node = element.computeNode();
+    TypeAnnotation type;
+    if (node is VariableDeclaration) {
+      type = (node.parent as VariableDeclarationList).type;
+    } else {
+      // Failed to "infer" type.
+      return '/* FAILED TO INFER: ${node.runtimeType} from $element */ dynamic';
+    }
+    return '$type';
+  }
+
+  static String _inferTypeMethod(PropertyAccessorElement element) {
+    final node = element.computeNode();
+    TypeAnnotation type;
+    if (node is MethodDeclaration) {
+      final parameter = node.parameters.parameters.first;
+      if (parameter is SimpleFormalParameter) {
+        type = parameter.type;
+      } else {
+        // Failed to "infer" type.
+        return '/* FAILED TO INFER: ${parameter.runtimeType} from $element */ dynamic';
+      }
+    } else {
+      // Failed to "infer" type.
+      return '/* FAILED TO INFER: ${node.runtimeType} from $element */ dynamic';
+    }
+    return '$type';
+  }
+
+  static String _normalize(String n) =>
+      n.endsWith('=') ? n.substring(0, n.length - 1) : n;
+
+  Map<String, String> _findInputs(ClassElement element, DartObject annotation) {
+    final inputs = <String, String>{};
     for (final interface in getInheritanceHierarchy(element.type)) {
       for (final accessor in interface.accessors) {
         final input = $Input.firstAnnotationOfExact(
@@ -110,7 +168,7 @@ class TemplateOutliner implements Builder {
           throwOnUnresolved: false,
         );
         if (input != null) {
-          inputs.add(accessor.name);
+          inputs[_normalize(accessor.name)] = _inferTypeMethod(accessor);
         }
       }
       for (final field in interface.element.fields) {
@@ -119,28 +177,25 @@ class TemplateOutliner implements Builder {
           throwOnUnresolved: false,
         );
         if (input != null) {
-          inputs.add(field.name);
+          inputs[field.name] = _inferTypeField(field);
         }
       }
     }
     final onClass = annotation.getField('inputs')?.toListValue() ?? const [];
     for (final classInput in onClass) {
       final inputName = classInput.toStringValue();
+      // These are specifically not typed (dynamic), because we'd have to walk
+      // the hierarchy and "find" the type, which isn't doable in the outliner.
+      const canNotInfer = '/* CAN NOT INFER: Class level. */ dynamic';
       if (inputName.contains(':')) {
-        inputs.add(inputName.split(':').last.trim());
+        inputs[inputName.split(':').last.trim()] = canNotInfer;
       } else {
-        inputs.add(inputName.trim());
+        inputs[inputName.trim()] = canNotInfer;
       }
     }
-    return inputs
-        .map(
-          (i) => i.endsWith('=') ? i.substring(0, i.length - 1) : i,
-        )
-        .toSet();
+    return inputs;
   }
 
   @override
-  Map<String, List<String>> get buildExtensions => {
-        '.dart': [_extension],
-      };
+  Map<String, List<String>> buildExtensions;
 }
