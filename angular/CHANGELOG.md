@@ -57,6 +57,7 @@ class AdBannerComponent implements AfterViewInit {
 * Removed `platform/testing/browser_static.dart`.
 * Removed `MockNgZone`.
 * Removed `ViewEncapsulation.native`, which is no longer supported.
+* Renamed `FORM_DIRECTIVES` to `formDirectives`.
 
 ## 4.0.0-alpha+1
 

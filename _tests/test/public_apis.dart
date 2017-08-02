@@ -180,7 +180,6 @@ const angularApis = const [
   'ExpressionChangedAfterItHasBeenCheckedException',
   'FORM_BINDINGS',
   'formDirectives',
-  'FORM_DIRECTIVES',
   'FORM_PROVIDERS',
   'Form',
   'FormBuilder',
