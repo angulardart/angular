@@ -45,7 +45,7 @@ Future main(List<String> args) async {
           new TemplateOutliner(
               extension: updateGoldens
                   ? '.template_outline.golden'
-                  : '.template_outline..check'),
+                  : '.template_outline.check'),
           inputs));
   await build(phaseGroup, deleteFilesByDefault: updateGoldens);
 }
