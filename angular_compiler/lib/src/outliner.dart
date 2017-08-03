@@ -7,13 +7,15 @@ import 'package:build/build.dart';
 import 'package:path/path.dart' as p;
 
 import 'analyzer.dart';
+import 'flags.dart';
 
-const _angularImports = '''
-import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
-''';
+const _angularImport = "import 'package:angular/angular.dart';";
+const _appViewImport =
+    "import 'package:angular/src/core/linker/app_view.dart';";
+const _debugAppViewImport =
+    "import 'package:angular/src/debug/debug_app_view.dart';";
+const _directiveChangeImport =
+    "import 'package:angular/src/core/change_detection/directive_change_detector.dart';";
 
 /// Generates an _outline_ of the public API of a `.template.dart` file.
 ///
@@ -22,15 +24,25 @@ import 'package:angular/src/debug/debug_app_view.dart';
 /// off the critical path).
 class TemplateOutliner implements Builder {
   final String _extension;
+  final CompilerFlags _compilerFlags;
 
-  TemplateOutliner({
+  String get _angularImports {
+    var appViewImport =
+        _compilerFlags.genDebugInfo ? _debugAppViewImport : _appViewImport;
+    return '$_angularImport\n$_directiveChangeImport\n$appViewImport';
+  }
+
+  String get _appViewClass =>
+      _compilerFlags.genDebugInfo ? 'DebugAppView' : 'AppView';
+
+  TemplateOutliner(
+    this._compilerFlags, {
     String extension: '.outline.template.dart',
   })
-      : _extension = extension {
-    buildExtensions = {
-      '.dart': [extension],
-    };
-  }
+      : _extension = extension,
+        buildExtensions = {
+          '.dart': [extension],
+        };
 
   @override
   Future<Null> build(BuildStep buildStep) async {
@@ -69,7 +81,7 @@ class TemplateOutliner implements Builder {
       ..writeln();
     if (components.isNotEmpty) {
       output
-        ..writeln('// Required for implementing AppView.')
+        ..writeln('// Required for implementing $_appViewClass.')
         ..writeln(_angularImports)
         ..writeln();
     }
@@ -95,11 +107,11 @@ class TemplateOutliner implements Builder {
           ..writeln('const List<dynamic> styles\$$component = const [];')
           ..writeln('external ComponentFactory get $name;')
           ..writeln(
-              'external AppView<_user.$component> viewFactory_${component}0(AppView<dynamic> parentView, num parentIndex);')
+              'external $_appViewClass<_user.$component> viewFactory_${component}0($_appViewClass<dynamic> parentView, num parentIndex);')
           ..writeln(
-              'class View${component}0 extends AppView<_user.$component> {')
+              'class View${component}0 extends $_appViewClass<_user.$component> {')
           ..writeln(
-              '  external factory View${component}0(AppView<dynamic> parentView, num parentIndex);')
+              '  external View${component}0($_appViewClass<dynamic> parentView, num parentIndex);')
           ..writeln('}');
       }
     }
@@ -110,7 +122,7 @@ class TemplateOutliner implements Builder {
           ..writeln('// For @Directive class $directive.')
           ..writeln('class $name extends DirectiveChangeDetector {')
           ..writeln('  external _user.$directive get instance;')
-          ..writeln('  external factory $name(_user.$directive instance);');
+          ..writeln('  external $name(_user.$directive instance);');
         _findInputs(library.getType(directive), annotation).forEach((
           name,
           type,
@@ -189,7 +201,7 @@ class TemplateOutliner implements Builder {
       // the hierarchy and "find" the type, which isn't doable in the outliner.
       const canNotInfer = '/* CAN NOT INFER: Class level. */ dynamic';
       if (inputName.contains(':')) {
-        inputs[inputName.split(':').last.trim()] = canNotInfer;
+        inputs[inputName.split(':').first.trim()] = canNotInfer;
       } else {
         inputs[inputName.trim()] = canNotInfer;
       }
@@ -198,5 +210,5 @@ class TemplateOutliner implements Builder {
   }
 
   @override
-  Map<String, List<String>> buildExtensions;
+  final Map<String, List<String>> buildExtensions;
 }
