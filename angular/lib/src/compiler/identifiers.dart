@@ -47,6 +47,10 @@ class Identifiers {
       identifierToken(Identifiers.ChangeDetectorRef);
   static final ComponentFactory = new CompileIdentifierMetadata<dynamic>(
       name: 'ComponentFactory', moduleUrl: ANGULAR_ROOT_URL);
+  static final DirectiveChangeDetector = new CompileIdentifierMetadata<dynamic>(
+      name: 'DirectiveChangeDetector',
+      moduleUrl: 'asset:angular/lib/src/core/'
+          'change_detection/directive_change_detector.dart');
   static final RenderComponentType = new CompileIdentifierMetadata<dynamic>(
       name: "RenderComponentType",
       moduleUrl: "asset:angular/lib/src/core/render/api.dart");

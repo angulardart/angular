@@ -678,7 +678,8 @@ class ExpressionStatement extends Statement {
 
 class ReturnStatement extends Statement {
   final Expression value;
-  ReturnStatement(this.value);
+  final String inlineComment;
+  ReturnStatement(this.value, {this.inlineComment: ''});
 
   @override
   dynamic visitStatement(StatementVisitor visitor, dynamic context) {
@@ -1011,7 +1012,7 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
 
   @override
   dynamic visitReturnStmt(ReturnStatement stmt, dynamic context) {
-    return new ReturnStatement(stmt.value.visitExpression(this, context));
+    return new ReturnStatement(stmt.value?.visitExpression(this, context));
   }
 
   @override
@@ -1241,7 +1242,7 @@ class RecursiveExpressionVisitor
 
   @override
   dynamic visitReturnStmt(ReturnStatement stmt, dynamic context) {
-    stmt.value.visitExpression(this, context);
+    stmt.value?.visitExpression(this, context);
     return stmt;
   }
 

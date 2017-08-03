@@ -11,6 +11,7 @@ import 'analyzer.dart';
 const _angularImports = '''
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 ''';
 
@@ -107,7 +108,7 @@ class TemplateOutliner implements Builder {
         final name = '${directive}NgCd';
         output
           ..writeln('// For @Directive class $directive.')
-          ..writeln('class $name {')
+          ..writeln('class $name extends DirectiveChangeDetector {')
           ..writeln('  external _user.$directive get instance;')
           ..writeln('  external factory $name(_user.$directive instance);');
         _findInputs(library.getType(directive), annotation).forEach((
