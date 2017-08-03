@@ -8,7 +8,6 @@ import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
-import 'package:angular/src/testing/internal.dart';
 import 'package:angular_test/angular_test.dart';
 
 void main() {

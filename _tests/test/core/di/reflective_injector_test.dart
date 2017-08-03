@@ -1,6 +1,7 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
 import 'package:test/test.dart';
+import 'package:_tests/internal.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/di.dart';
 import 'package:angular/src/core/di/reflective_injector.dart'
@@ -12,7 +13,6 @@ import 'package:angular/src/core/di/reflective_injector.dart'
 import 'package:angular/src/core/di/reflective_provider.dart'
     show ResolvedReflectiveProviderImpl;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
-import 'package:angular/src/testing/internal.dart';
 
 @Injectable()
 class Engine {}
@@ -38,6 +38,7 @@ class TurboEngine extends Engine {}
 @Injectable()
 class Car {
   Engine engine;
+
   Car(Engine engine) {
     this.engine = engine;
   }
@@ -46,6 +47,7 @@ class Car {
 @Injectable()
 class CarWithOptionalEngine {
   var engine;
+
   CarWithOptionalEngine(@Optional() Engine engine) {
     this.engine = engine;
   }
@@ -55,6 +57,7 @@ class CarWithOptionalEngine {
 class CarWithDashboard {
   Engine engine;
   Dashboard dashboard;
+
   CarWithDashboard(Engine engine, Dashboard dashboard) {
     this.engine = engine;
     this.dashboard = dashboard;
@@ -69,6 +72,7 @@ class SportsCar extends Car {
 @Injectable()
 class CarWithInject {
   Engine engine;
+
   CarWithInject(@Inject(TurboEngine) Engine engine) {
     this.engine = engine;
   }
