@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html' show Event;
 
+import 'package:meta/meta.dart';
 import 'package:angular/core.dart' show Directive, Provider, Output;
 import 'package:angular/di.dart' show Optional, Inject, Self;
 
@@ -103,7 +104,7 @@ class NgForm extends ControlContainer implements Form {
 
   @override
   void addControl(NgControl dir) {
-    var container = _findContainer(dir.path);
+    var container = findContainer(dir.path);
     var ctrl = new Control();
     container.addControl(dir.name, ctrl);
     scheduleMicrotask(() {
@@ -118,7 +119,7 @@ class NgForm extends ControlContainer implements Form {
   @override
   void removeControl(NgControl dir) {
     scheduleMicrotask(() {
-      var container = _findContainer(dir.path);
+      var container = findContainer(dir.path);
       if (container != null) {
         container.removeControl(dir.name);
         container.updateValueAndValidity(emitEvent: false);
@@ -128,7 +129,7 @@ class NgForm extends ControlContainer implements Form {
 
   @override
   void addControlGroup(NgControlGroup dir) {
-    var container = _findContainer(dir.path);
+    var container = findContainer(dir.path);
     var group = new ControlGroup({});
     container.addControl(dir.name, group);
     scheduleMicrotask(() {
@@ -140,7 +141,7 @@ class NgForm extends ControlContainer implements Form {
   @override
   void removeControlGroup(NgControlGroup dir) {
     scheduleMicrotask(() {
-      var container = _findContainer(dir.path);
+      var container = findContainer(dir.path);
       if (container != null) {
         container.removeControl(dir.name);
         container.updateValueAndValidity(emitEvent: false);
@@ -166,7 +167,8 @@ class NgForm extends ControlContainer implements Form {
     event?.preventDefault();
   }
 
-  ControlGroup _findContainer(List<String> path) {
+  @protected
+  ControlGroup findContainer(List<String> path) {
     path.removeLast();
     return path.isEmpty ? form : (form.find(path) as ControlGroup);
   }

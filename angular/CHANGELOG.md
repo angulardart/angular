@@ -28,6 +28,9 @@ class AdBannerComponent implements AfterViewInit {
   of `ElementRef`, which is "soft deprecated" (will be deprecated and removed
   in a future release).
 
+* `findContainer` has now been exposed from NgForm allowing easier creation of
+  custom form implementations.
+
 ### Bug Fixes
 
 * The transformer now fails if any unsupported arguments are passed in.
