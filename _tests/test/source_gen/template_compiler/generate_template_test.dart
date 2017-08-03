@@ -1,6 +1,7 @@
 @TestOn('vm')
 @Tags(const ['failing_i302'])
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:test/test.dart';
 
@@ -9,10 +10,14 @@ import 'compare_to_golden.dart' as golden;
 String summaryExtension(String codegenMode) => '.template_$codegenMode.check';
 String goldenExtension(String codegenMode) => '.template_$codegenMode.golden';
 
+final Set bazelOnlyFiles =
+    new Set.from(['component_loader_pattern', 'directives/base_component']);
+
 /// To update the golden files, in the root angular2 directory, run
 /// `pub get` and then
 /// `dart test/source_gen/template_compiler/generate.dart --update-goldens`
 main() {
+  final isBazel = Platform.environment['RUNFILES'] != null;
   for (String codegenMode in ['release', 'debug', 'outline']) {
     group('Test Components in $codegenMode', () {
       for (String file in [
@@ -41,9 +46,11 @@ main() {
         'directives/directives',
         'templates/has_template_file',
       ]) {
-        test(file, () async {
-          await compareSummaryFileToGolden('$file.dart', codegenMode);
-        });
+        if (isBazel || !bazelOnlyFiles.contains(file)) {
+          test(file, () async {
+            await compareSummaryFileToGolden('$file.dart', codegenMode);
+          });
+        }
       }
     });
   }
