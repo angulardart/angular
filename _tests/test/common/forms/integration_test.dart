@@ -929,6 +929,7 @@ class NumberModelTest {
 @Component(
     selector: 'radio-test',
     directives: const [formDirectives],
+    providers: FORM_PROVIDERS,
     template: '''
 <form [ngFormModel]="form">
   <input type="radio" ngControl="foodChicken" name="food">
@@ -1196,6 +1197,7 @@ class NgModelSingleFieldTest {
 @Component(
     selector: 'template-radio-test',
     directives: const [formDirectives],
+    providers: FORM_PROVIDERS,
     template: '''
 <form>
   <input type="radio" name="food" ngControl="chicken" [(ngModel)]="data['chicken1']">
