@@ -426,10 +426,8 @@ class ExternalExpr extends Expression {
   final CompileIdentifierMetadata value;
   final List<OutputType> typeParams;
   final bool deferred;
-  final bool isConst;
 
-  ExternalExpr(this.value,
-      {OutputType type, this.typeParams, this.deferred, this.isConst})
+  ExternalExpr(this.value, {OutputType type, this.typeParams, this.deferred})
       : super(type);
 
   @override
@@ -1349,7 +1347,7 @@ ReadVarExpr variable(String name, [OutputType type = null]) {
 
 ExternalExpr importExpr(CompileIdentifierMetadata id,
     {List<OutputType> typeParams, bool isConst: false}) {
-  return new ExternalExpr(id, typeParams: typeParams, isConst: isConst);
+  return new ExternalExpr(id, typeParams: typeParams);
 }
 
 ExternalExpr importDeferred(CompileIdentifierMetadata id,

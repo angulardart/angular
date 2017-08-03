@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 
-import 'output/output_ast.dart';
-import 'view_compiler/constants.dart';
+import 'expression_parser/ast.dart' as ast;
 
 /// A wrapper around [ClassElement] which exposes the functionality
 /// needed for the view compiler to find types for expressions.
@@ -23,19 +22,20 @@ class AnalyzedClass {
 
 // TODO(het): This only works for literals and simple property reads. Make this
 // more robust. This should also support:
-//   - static expressions (ExternalExpr)
 //   - chained property read (eg a.b.c)
 /// Returns [true] if [expression] is immutable.
-bool isImmutable(
-    Expression expression, Expression context, AnalyzedClass analyzedClass) {
-  if (expression is LiteralExpr) return true;
-  if (expression is ExternalExpr) return expression.isConst;
-  if (expression is ReadPropExpr) {
+bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
+  if (expression is ast.ASTWithSource) {
+    expression = (expression as ast.ASTWithSource).ast;
+  }
+  if (expression is ast.LiteralPrimitive ||
+      expression is ast.StaticRead ||
+      expression is ast.EmptyExpr) {
+    return true;
+  }
+  if (expression is ast.PropertyRead) {
     if (analyzedClass == null) return false;
-    if (expression.receiver == context &&
-        // make sure the context is the Component
-        context is ReadVarExpr &&
-        context.name == DetectChangesVars.cachedCtx.name) {
+    if (expression.receiver is ast.ImplicitReceiver) {
       var field = analyzedClass._classElement.getField(expression.name);
       if (field != null) {
         return !field.isSynthetic && (field.isFinal || field.isConst);
