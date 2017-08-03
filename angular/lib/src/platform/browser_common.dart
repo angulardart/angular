@@ -6,7 +6,6 @@ import "package:angular/core.dart"
         APPLICATION_COMMON_PROVIDERS,
         TestabilityRegistry;
 import 'package:angular/src/common/common_directives.dart';
-import 'package:angular/src/common/forms.dart';
 import 'package:angular/src/common/pipes/common_pipes.dart';
 import "package:angular/src/core/di.dart" show Injectable, Provider;
 import "package:angular/src/core/testability/testability.dart" show Testability;
@@ -41,7 +40,6 @@ const List BROWSER_SANITIZATION_PROVIDERS = const [
 const List<dynamic> BROWSER_APP_COMMON_PROVIDERS = const [
   APPLICATION_COMMON_PROVIDERS,
   BROWSER_SANITIZATION_PROVIDERS,
-  FORM_PROVIDERS,
   const Provider(PLATFORM_PIPES, useValue: COMMON_PIPES, multi: true),
   const Provider(PLATFORM_DIRECTIVES, useValue: COMMON_DIRECTIVES, multi: true),
   const Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
