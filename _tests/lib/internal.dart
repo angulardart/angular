@@ -5,8 +5,6 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 
 import 'internal_injector.dart';
 
-export 'package:angular/src/debug/debug_node.dart';
-
 export 'internal_injector.dart';
 export 'test_component_builder.dart';
 
