@@ -43,6 +43,7 @@ Future main(List<String> args) async {
           inputs)
       ..addAction(
           new TemplateOutliner(
+              const CompilerFlags(genDebugInfo: false, usePlaceholder: false),
               extension: updateGoldens
                   ? '.template_outline.golden'
                   : '.template_outline.check'),
