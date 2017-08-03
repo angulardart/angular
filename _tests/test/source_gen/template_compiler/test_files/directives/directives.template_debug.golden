@@ -30,6 +30,9 @@ class TestDirectiveWithInputsNgCd {
       instance.input3 = value;
       _expr_0 = value;
     }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 
   void ngSet$input1(String value) {
@@ -37,6 +40,9 @@ class TestDirectiveWithInputsNgCd {
       instance.input1 = value;
       _expr_1 = value;
     }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 
   void ngSet$input4(value) {
@@ -44,6 +50,9 @@ class TestDirectiveWithInputsNgCd {
       instance.input4 = value;
       _expr_2 = value;
     }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 
   void ngSet$input2(String value) {
@@ -51,6 +60,9 @@ class TestDirectiveWithInputsNgCd {
       instance.input2 = value;
       _expr_3 = value;
     }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 
   void ngSet$input5(value) {
@@ -58,6 +70,9 @@ class TestDirectiveWithInputsNgCd {
       instance.input5 = value;
       _expr_4 = value;
     }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 }
 

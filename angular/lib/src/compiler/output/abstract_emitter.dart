@@ -156,9 +156,13 @@ abstract class AbstractEmitterVisitor
   @override
   dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print('return ');
-    stmt.value.visitExpression(this, ctx);
-    ctx.println(';');
+    if (stmt.value == null) {
+      ctx.println('return;${stmt.inlineComment}');
+    } else {
+      ctx.print('return ');
+      stmt.value.visitExpression(this, ctx);
+      ctx.println(';${stmt.inlineComment}');
+    }
     return null;
   }
 

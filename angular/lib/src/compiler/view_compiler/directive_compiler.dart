@@ -18,7 +18,6 @@ class DirectiveCompileResult {
 bool requiresDirectiveChangeDetector(CompileDirectiveMetadata meta) =>
     !meta.isComponent &&
     meta.inputs.isNotEmpty &&
-    !meta.lifecycleHooks.contains(LifecycleHooks.OnChanges) &&
     meta.identifier.name != 'NgIf';
 
 class DirectiveCompiler {
@@ -28,8 +27,11 @@ class DirectiveCompiler {
   List<o.ClassField> fields;
   final viewMethods = <o.ClassMethod>[];
   int expressionFieldCounter = 0;
+  final bool hasOnChangesLifecycle;
 
-  DirectiveCompiler(this.directive, this.genDebugInfo);
+  DirectiveCompiler(this.directive, this.genDebugInfo)
+      : hasOnChangesLifecycle =
+            directive.lifecycleHooks.contains(LifecycleHooks.OnChanges);
 
   DirectiveCompileResult compile() {
     assert(requiresDirectiveChangeDetector(directive));
@@ -43,8 +45,12 @@ class DirectiveCompiler {
     var ctor = _createChangeDetectorConstructor(directive);
 
     _buildInputUpdateMethods();
-    var changeDetectorClass = new o.ClassStmt(changeDetectorClassName, null,
-        fields ?? const [], const [], ctor, viewMethods);
+    var superClassExpr;
+    if (hasOnChangesLifecycle) {
+      superClassExpr = o.importExpr(Identifiers.DirectiveChangeDetector);
+    }
+    var changeDetectorClass = new o.ClassStmt(changeDetectorClassName,
+        superClassExpr, fields ?? const [], const [], ctor, viewMethods);
     return changeDetectorClass;
   }
 
@@ -59,7 +65,17 @@ class DirectiveCompiler {
       ],
     ));
     var constructorArgs = [new o.FnParam('this.instance', instanceType)];
-    return new o.ClassMethod(null, constructorArgs, const []);
+    var statements;
+    if (hasOnChangesLifecycle) {
+      statements = [
+        new o.WriteClassMemberExpr(
+                'directive', new o.ReadClassMemberExpr('instance'))
+            .toStmt()
+      ];
+    } else {
+      statements = const [];
+    }
+    return new o.ClassMethod(null, constructorArgs, statements);
   }
 
   void _buildInputUpdateMethods() {
@@ -106,6 +122,13 @@ class DirectiveCompiler {
         .prop(inputName)
         .set(curValueExpr)
         .toStmt());
+    if (hasOnChangesLifecycle) {
+      updateStatements.add(new o.InvokeMemberMethodExpr('addChange', [
+        o.literal(inputName),
+        new o.ReadVarExpr(previousValueFieldName),
+        curValueExpr
+      ]).toStmt());
+    }
     updateStatements.add(
         new o.WriteClassMemberExpr(previousValueFieldName, curValueExpr)
             .toStmt());
@@ -121,6 +144,13 @@ class DirectiveCompiler {
           .callFn([priorExpr, curValueExpr]));
     }
     statements.add(new o.IfStmt(condition, updateStatements));
+    // Don't allow change detectors to be inlined.
+    statements.add(
+        new o.ReturnStatement(null, inlineComment: ' // ignore: dead_code'));
+    statements.add(
+        new o.ReturnStatement(null, inlineComment: ' // ignore: dead_code'));
+    statements.add(
+        new o.ReturnStatement(null, inlineComment: ' // ignore: dead_code'));
     return new o.ClassMethod(buildInputUpdateMethodName(inputName),
         [new o.FnParam(valueParameterName, inputType)], statements);
   }

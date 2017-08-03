@@ -9,12 +9,12 @@ import 'dart:collection' as collection_lib;
 import 'package:angular/angular.dart';
 
 // For @Directive class TestDirective.
-class TestDirectiveNgCd {
+class TestDirectiveNgCd extends DirectiveChangeDetector {
   external _user.TestDirective get instance;
   external factory TestDirectiveNgCd(_user.TestDirective instance);
 }
 // For @Directive class TestDirectiveWithInputs.
-class TestDirectiveWithInputsNgCd {
+class TestDirectiveWithInputsNgCd extends DirectiveChangeDetector {
   external _user.TestDirectiveWithInputs get instance;
   external factory TestDirectiveWithInputsNgCd(_user.TestDirectiveWithInputs instance);
   external void ngSet$input2(String value);

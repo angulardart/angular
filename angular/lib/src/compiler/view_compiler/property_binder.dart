@@ -474,13 +474,11 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           .toStmt());
     }
     if (calcChangesMap) {
-      statements
-          .add(new o.IfStmt(DetectChangesVars.changes.identical(o.NULL_EXPR), [
-        DetectChangesVars.changes
-            .set(o.literalMap(
-                [], new o.MapType(o.importType(Identifiers.SimpleChange))))
-            .toStmt()
-      ]));
+      statements.add(new o.WriteIfNullExpr(
+              DetectChangesVars.changes.name,
+              o.literalMap(
+                  [], new o.MapType(o.importType(Identifiers.SimpleChange))))
+          .toStmt());
       statements.add(DetectChangesVars.changes
           .key(o.literal(input.directiveName))
           .set(o
@@ -538,6 +536,9 @@ void _bindDirectiveInputsOnChangeDetectorClass(DirectiveAst directiveAst,
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var constStatements = <o.Statement>[];
   var dynamicStatements = <o.Statement>[];
+  var lifecycleHooks = directiveAst.directive.lifecycleHooks;
+  var calcChangesMap = lifecycleHooks.contains(LifecycleHooks.OnChanges);
+
   // directiveAst contains the target directive we are updating.
   // input is a BoundPropertyAst that contains binding metadata.
   for (BoundDirectivePropertyAst input in directiveAst.inputs) {
