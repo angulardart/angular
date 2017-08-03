@@ -105,7 +105,6 @@ class _DelegatingNgTestStabilizer extends NgTestStabilizer {
 }
 
 /// A wrapper API that reports stability based on the Angular [NgZone].
-@Injectable()
 class NgZoneStabilizer extends NgTestStabilizer {
   final NgZone _ngZone;
 

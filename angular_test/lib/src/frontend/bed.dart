@@ -57,6 +57,10 @@ NgTestBed<T> createDynamicTestBed<T>({
   );
 }
 
+// https://github.com/dart-lang/angular/issues/549.
+NgTestStabilizer createZoneStabilizer(NgZone ngZone) =>
+    new NgZoneStabilizer(ngZone);
+
 /// An immutable builder for creating a pre-configured AngularDart application.
 ///
 /// The root component type [T] that is created is essentially the same as a
@@ -118,8 +122,14 @@ class NgTestBed<T> {
     return host;
   }
 
-  static const _lifecycleProviders = const [NgZoneStabilizer];
-  static const _lifecycleStabilizers = const [NgZoneStabilizer];
+  static const _lifecycleProviders = const <Provider>[
+    const Provider(
+      NgZoneStabilizer,
+      useFactory: createZoneStabilizer,
+      deps: const [NgZone],
+    ),
+  ];
+  static const _lifecycleStabilizers = const <Type>[NgZoneStabilizer];
 
   final Element _host;
   final Func2<Element, NgTestFixture<T>, PageLoader> _pageLoaderFactory;
@@ -219,7 +229,7 @@ class NgTestBed<T> {
         type,
         _host ?? _defaultHost(),
         beforeChangeDetection: beforeChangeDetection,
-        addProviders: _concat(_providers, _stabilizers),
+        addProviders: _concat(_providers, /*_stabilizers*/ const []),
       ).then((componentRef) async {
         _checkForActiveTest();
         final allStabilizers = new NgTestStabilizer.all(
