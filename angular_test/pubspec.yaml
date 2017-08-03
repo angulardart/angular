@@ -2,7 +2,7 @@ name: angular_test
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Testing runner and library for AngularDart
-version: 1.0.0-beta+4
+version: 1.0.0-beta+5
 
 environment:
   sdk: '>=1.24.0 <2.0.0'
@@ -36,10 +36,17 @@ dependency_overrides:
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
-  - angular:
-      entry_points: test/**_test.dart
-      $exclude:
-          - test/**.template.dart
+  # This using the AngularDart transformer causes hanging builds for some
+  # clients (https://github.com/dart-lang/angular/issues/549). As it was
+  # only needed for a single class, the code was modified temporarily to
+  # not need this.
+  #
+  # Long term we should solve the underlying issue(s).
+  #
+  # - angular:
+  #    entry_points: test/**_test.dart
+  #    $exclude:
+  #        - test/**.template.dart
 
   # Allow test to proxy-load files so we can run AoT tests w/ pub serve.
   - test/pub_serve:

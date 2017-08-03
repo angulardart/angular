@@ -1,3 +1,7 @@
+## 1.0.0-beta+5
+
+- Workaround for `pub {serve|build}` hanging on `angular_test` as a dependency.
+
 ## 1.0.0-beta+4
 
 **Now supports `package:angular` instead of `package:angular2`.**
