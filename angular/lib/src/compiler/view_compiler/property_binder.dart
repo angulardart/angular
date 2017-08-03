@@ -70,8 +70,7 @@ void bind(
       DetectChangesVars.valUnwrapper,
       view.component.template.preserveWhitespace,
       _isBoolType(fieldType));
-  if (isImmutable(
-      checkExpression.expression, context, view.component.analyzedClass)) {
+  if (isImmutable(parsedExpression, view.component.analyzedClass)) {
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
     _bindLiteral(checkExpression, literalMethod, actions, currValExpr.name,
@@ -556,8 +555,7 @@ void _bindDirectiveInputsOnChangeDetectorClass(DirectiveAst directiveAst,
             view.component.template.preserveWhitespace,
             _isBoolType(inputType))
         .expression;
-    bool isLiteral = isImmutable(
-        newValExpr, DetectChangesVars.cachedCtx, view.component.analyzedClass);
+    bool isLiteral = isImmutable(input.value, view.component.analyzedClass);
 
     if (newValExpr == null) {
       // e.g. an empty expression was given
