@@ -50,19 +50,31 @@ class AdBannerComponent implements AfterViewInit {
   (not through `package:angular/router.dart`). In the near future it will be
   updated to a more Dart idiomatic "2.0" router, but for now it is an exact
   replica of the previous router.
+
+* Removed `@{Component|Directive}#queries`. This is replable using the same
+  member-level annotation (i.e. `@{Content|View}Child{ren}`).
+
 * `DynamicComponentLoader` was renamed `SlowComponentLoader` to encourage users
   to prefer `ComponentLoader`. Additionally, arguments `projectableNodes:` and
   `onDestroy:` callbacks were removed - they were mostly unused, and confusing
   since they were undocumented.
+
 * Removed `angular/platform/browser_static.dart`; replace imports with
   `angular/angular.dart`.
+
 * Removed `angular/platform/common_dom.dart`; replace imports with
   `angular/angular.dart`.
+
 * Removed `angular/testing.dart`; Use `angular_test` package instead.
+
 * Removed `angular/platform/testing.dart`.
+
 * Removed `platform/testing/browser_static.dart`.
+
 * Removed `MockNgZone`.
+
 * Removed `ViewEncapsulation.native`, which is no longer supported.
+
 * Renamed `FORM_DIRECTIVES` to `formDirectives`.
 
 ## 4.0.0-alpha+1
