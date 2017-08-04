@@ -3,10 +3,10 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
+import 'package:source_gen/source_gen.dart';
 
 import '../common.dart';
 import '../types.dart';
-import 'package:source_gen/source_gen.dart';
 import 'tokens.dart';
 
 /// Support for reading and parsing a class or function's "dependencies".
@@ -44,12 +44,14 @@ class DependencyReader {
   /// Returns parsed dependencies for the provided [element].
   ///
   /// Throws [ArgumentError] if not a `ClassElement` or `FunctionElement`.
-  DependencyInvocation parseDependencies(Element element) {
+  DependencyInvocation<E> parseDependencies<E extends Element>(
+    Element element,
+  ) {
     if (element is ClassElement) {
-      return _parseClassDependencies(element);
+      return _parseClassDependencies(element) as DependencyInvocation<E>;
     }
     if (element is FunctionElement) {
-      return _parseFunctionDependencies(element);
+      return _parseFunctionDependencies(element) as DependencyInvocation<E>;
     }
     throw new ArgumentError('Invalid type: ${element.runtimeType}.');
   }
@@ -57,7 +59,7 @@ class DependencyReader {
   /// Returns parsed dependencies for the provided [element].
   ///
   /// Instead of looking at the parameters, [dependencies] is used.
-  DependencyInvocation parseDependenciesList(
+  DependencyInvocation<FunctionElement> parseDependenciesList(
     FunctionElement element,
     List<DartObject> dependencies,
   ) {
@@ -79,8 +81,8 @@ class DependencyReader {
     return new DependencyInvocation(element, positional);
   }
 
-  DependencyInvocation _parseDependencies(
-    Element bound,
+  DependencyInvocation<E> _parseDependencies<E extends Element>(
+    E bound,
     List<ParameterElement> parameters,
   ) {
     final positional = <DependencyElement>[];
@@ -102,7 +104,9 @@ class DependencyReader {
     return new DependencyInvocation(bound, positional);
   }
 
-  DependencyInvocation _parseClassDependencies(ClassElement element) {
+  DependencyInvocation<ConstructorElement> _parseClassDependencies(
+    ClassElement element,
+  ) {
     final constructor = findConstructor(element);
     if (constructor == null) {
       // TODO(matanl): Log an exception instead of throwing.
@@ -111,9 +115,10 @@ class DependencyReader {
     return _parseDependencies(constructor, constructor.parameters);
   }
 
-  DependencyInvocation _parseFunctionDependencies(FunctionElement element) {
-    return _parseDependencies(element, element.parameters);
-  }
+  DependencyInvocation<FunctionElement> _parseFunctionDependencies(
+    FunctionElement element,
+  ) =>
+      _parseDependencies(element, element.parameters);
 }
 
 /// Statically analyzed arguments needed to invoke a constructor or function.
@@ -137,13 +142,13 @@ class DependencyInvocation<E extends Element> {
   @override
   bool operator ==(Object o) =>
       o is DependencyInvocation<E> &&
-      bound == o.bound &&
+      urlOf(bound) == urlOf(o.bound) &&
       const ListEquality().equals(positional, o.positional) &&
       const MapEquality().equals(named, o.named);
 
   @override
   int get hashCode =>
-      bound.hashCode ^
+      urlOf(bound).hashCode ^
       const ListEquality().hash(positional) ^
       const MapEquality().hash(named);
 
