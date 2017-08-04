@@ -1,0 +1,50 @@
+// The .template.dart files also export the user code.
+export 'directive_wrapper.dart';
+
+// Required for implementing AppView.
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+
+import 'dart:html';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
+
+// Required for specifically referencing user code.
+import 'directive_wrapper.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'dart:async';
+import 'dart:html';
+import 'package:angular/angular.dart';
+
+// For @Component class TestFooComponent.
+const List<dynamic> styles$TestFooComponent = const [];
+external ComponentFactory get TestFooComponentNgFactory;
+external AppView<_user.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewTestFooComponent0 extends AppView<_user.TestFooComponent> {
+  external ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class InputFormTest.
+const List<dynamic> styles$InputFormTest = const [];
+external ComponentFactory get InputFormTestNgFactory;
+external AppView<_user.InputFormTest> viewFactory_InputFormTest0(AppView<dynamic> parentView, num parentIndex);
+class ViewInputFormTest0 extends AppView<_user.InputFormTest> {
+  external ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Directive class ChildDirective.
+class ChildDirectiveNgCd extends DirectiveChangeDetector {
+  external _user.ChildDirective get instance;
+  external ChildDirectiveNgCd(_user.ChildDirective instance);
+  external void ngSet$input1WithString(String value);
+  external void ngSet$inputWithIterable(Iterable<int> value);
+  external void ngSet$gridRow(String value);
+  external void initHostEvents(AppView view, Element node);
+}
+// For @Directive class DirectiveWithOutput.
+class DirectiveWithOutputNgCd extends DirectiveChangeDetector {
+  external _user.DirectiveWithOutput get instance;
+  external DirectiveWithOutputNgCd(_user.DirectiveWithOutput instance);
+  external void initHostEvents(AppView view, Element node);
+}
+
+external void initReflector();

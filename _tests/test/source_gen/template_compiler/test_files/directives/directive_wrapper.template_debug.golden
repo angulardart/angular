@@ -1,0 +1,497 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'directive_wrapper.dart';
+import 'package:angular/src/core/reflection/reflection.dart'
+    as _ngRef;
+import 'dart:async';
+import 'dart:html';
+import 'package:angular/angular.template.dart'
+    as _i1;
+export 'directive_wrapper.dart';
+import 'package:angular/src/debug/debug_context.dart';
+import 'directive_wrapper.dart' as import1;
+import 'package:angular/src/debug/debug_app_view.dart';
+import 'dart:html' as import3;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/view_type.dart'
+    as import6;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart'
+    as import8;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/element_ref.dart';
+import 'package:angular/src/common/forms/directives/ng_form_model.dart'
+    as import11;
+import 'package:angular/src/common/forms/directives/control_container.dart'
+    as import12;
+import 'package:angular/src/common/forms/directives/default_value_accessor.dart'
+    as import13;
+import 'package:angular/src/common/forms/directives/ng_control_name.dart'
+    as import14;
+import 'package:angular/src/common/forms/directives/ng_control.dart'
+    as import15;
+import 'package:angular/src/common/forms/directives/ng_form_model.template.dart'
+    as import16;
+import 'package:angular/src/common/forms/directives/default_value_accessor.template.dart'
+    as import17;
+import 'package:angular/src/common/forms/directives/ng_control_name.template.dart'
+    as import18;
+
+const List<dynamic> styles$TestFooComponent = const [
+  'div._ngcontent-%COMP% { font-size:10px; }'
+];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
+  new StaticNodeDebugInfo([import1.ChildDirective, import1.DirectiveWithOutput],
+      null, <String, dynamic>{}),
+  null
+];
+
+class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
+  import3.DivElement _el_0;
+  ChildDirectiveNgCd _ChildDirective_0_4;
+  import1.DirectiveWithOutput _DirectiveWithOutput_0_5;
+  var _expr_3;
+  var _expr_4;
+  bool _expr_5;
+  static RenderComponentType _renderType;
+  ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_TestFooComponent0) {
+    rootEl = import3.document.createElement('test-foo');
+    _renderType ??= import8.appViewUtils.createRenderType(
+        'asset:_tests/test/source_gen/template_compiler/test_files/directives/directive_wrapper.dart class TestFooComponent - inline template',
+        ViewEncapsulation.Emulated,
+        styles$TestFooComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    createAttr(_el_0, 'directive-with-output', '');
+    createAttr(_el_0, 'role', 'button');
+    createAttr(_el_0, 'some-child-directive', '');
+    addShimC(_el_0);
+    _ChildDirective_0_4 = new ChildDirectiveNgCd(
+        new import1.ChildDirective(_el_0, new ElementRef(_el_0)));
+    _DirectiveWithOutput_0_5 = new import1.DirectiveWithOutput();
+    import3.Text _text_1 = new import3.Text('Foo');
+    _el_0.append(_text_1);
+    dbgElm(this, _text_1, 1, 0, 87);
+    import8.appViewUtils.eventManager.addEventListener(
+        _el_0,
+        'eventXyz',
+        eventHandler1(
+            _ChildDirective_0_4.instance.handleXyzEventFromOtherDirective));
+    _ChildDirective_0_4.initHostEvents(this, _el_0);
+    final subscription_0 = _ChildDirective_0_4.instance.trigger
+        .listen(eventHandler1(_handle_trigger_0_0));
+    init(const [], [subscription_0], [_el_0, _text_1]);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.ChildDirective) &&
+        ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+      return _ChildDirective_0_4.instance;
+    }
+    if ((identical(token, import1.DirectiveWithOutput) &&
+        ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+      return _DirectiveWithOutput_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.TestFooComponent _ctx = ctx;
+    dbg(0, 0, 48);
+    _ChildDirective_0_4.ngSet$gridRow(_ctx.rowIndex);
+    dbg(0, 0, 0);
+    final currVal_3 = _ChildDirective_0_4.instance.tabIndex;
+    if (import8.checkBinding(_expr_3, currVal_3)) {
+      setProp(_el_0, 'tabIndex', currVal_3);
+      _expr_3 = currVal_3;
+    }
+    final currVal_4 = _ChildDirective_0_4.instance.disabledStr;
+    if (import8.checkBinding(_expr_4, currVal_4)) {
+      setAttr(_el_0, 'aria-disabled', currVal_4?.toString());
+      _expr_4 = currVal_4;
+    }
+    final currVal_5 = _ChildDirective_0_4.instance.disabled;
+    if (import8.checkBinding(_expr_5, currVal_5)) {
+      updateClass(_el_0, 'is-disabled', currVal_5);
+      _expr_5 = currVal_5;
+    }
+  }
+
+  void _handle_trigger_0_0($event) {
+    dbg(0, 0, 65);
+    ctx.onTrigger;
+  }
+}
+
+AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewTestFooComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$TestFooComponentHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import1.TestFooComponent], import1.TestFooComponent, <String, dynamic>{})
+];
+
+class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
+  ViewTestFooComponent0 _compView_0;
+  import1.TestFooComponent _TestFooComponent_0_4;
+  static RenderComponentType _renderType;
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_TestFooComponentHost0) {
+    _renderType ??= import8.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$TestFooComponentHost);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewTestFooComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _TestFooComponent_0_4 = new import1.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
+    init([rootEl], const [], [rootEl]);
+    return new ComponentRef(0, this, rootEl, _TestFooComponent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
+      return _TestFooComponent_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_TestFooComponentHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewTestFooComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory _TestFooComponentNgFactory = const ComponentFactory(
+    'test-foo',
+    viewFactory_TestFooComponentHost0,
+    import1.TestFooComponent,
+    _METADATA);
+final ComponentFactory TestFooComponentNgFactory = _TestFooComponentNgFactory;
+const List<dynamic> styles$InputFormTest = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTest0 = [
+  new StaticNodeDebugInfo([import11.NgFormModel, import12.ControlContainer],
+      null, <String, dynamic>{}),
+  null,
+  new StaticNodeDebugInfo(
+      [
+        import13.DefaultValueAccessor,
+        const OpaqueToken('NgValueAccessor'),
+        import14.NgControlName,
+        import15.NgControl
+      ],
+      null,
+      <String, dynamic>{}),
+  null
+];
+
+class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
+  import3.DivElement _el_0;
+  import16.NgFormModelNgCd _NgFormModel_0_4;
+  import11.NgFormModel _ControlContainer_0_5;
+  import3.InputElement _el_2;
+  import17.DefaultValueAccessorNgCd _DefaultValueAccessor_2_4;
+  List<dynamic> _const_OpaqueToken__NgValueAccessor___2_5;
+  import18.NgControlNameNgCd _NgControlName_2_6;
+  static RenderComponentType _renderType;
+  ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_InputFormTest0) {
+    rootEl = import3.document.createElement('input-form-test');
+    _renderType ??= import8.appViewUtils.createRenderType(
+        'asset:_tests/test/source_gen/template_compiler/test_files/directives/directive_wrapper.dart class InputFormTest - inline template',
+        ViewEncapsulation.None,
+        styles$InputFormTest);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _NgFormModel_0_4 =
+        new import16.NgFormModelNgCd(new import11.NgFormModel(null));
+    _ControlContainer_0_5 = _NgFormModel_0_4.instance;
+    import3.Text _text_1 = new import3.Text('\n  ');
+    _el_0.append(_text_1);
+    dbgElm(this, _text_1, 1, 0, 26);
+    _el_2 = createAndAppendDbg(this, doc, 'input', _el_0, 2, 1, 2);
+    createAttr(_el_2, 'ngControl', 'login');
+    createAttr(_el_2, 'type', 'text');
+    _DefaultValueAccessor_2_4 = new import17.DefaultValueAccessorNgCd(
+        new import13.DefaultValueAccessor(_el_2));
+    _const_OpaqueToken__NgValueAccessor___2_5 = [
+      _DefaultValueAccessor_2_4.instance
+    ];
+    _NgControlName_2_6 = new import18.NgControlNameNgCd(
+        new import14.NgControlName(_ControlContainer_0_5, null,
+            _const_OpaqueToken__NgValueAccessor___2_5));
+    import3.Text _text_3 = new import3.Text('\n');
+    _el_0.append(_text_3);
+    dbgElm(this, _text_3, 3, 1, 39);
+    import8.appViewUtils.eventManager.addEventListener(
+        _el_0, 'submit', eventHandler1(_NgFormModel_0_4.instance.onSubmit));
+    _DefaultValueAccessor_2_4.initHostEvents(this, _el_2);
+    init(const [], const [], [_el_0, _text_1, _el_2, _text_3]);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import13.DefaultValueAccessor) && (2 == nodeIndex))) {
+      return _DefaultValueAccessor_2_4.instance;
+    }
+    if ((identical(token, const OpaqueToken('NgValueAccessor')) &&
+        (2 == nodeIndex))) {
+      return _const_OpaqueToken__NgValueAccessor___2_5;
+    }
+    if (((identical(token, import14.NgControlName) ||
+            identical(token, import15.NgControl)) &&
+        (2 == nodeIndex))) {
+      return _NgControlName_2_6.instance;
+    }
+    if ((identical(token, import11.NgFormModel) &&
+        ((0 <= nodeIndex) && (nodeIndex <= 3)))) {
+      return _NgFormModel_0_4.instance;
+    }
+    if ((identical(token, import12.ControlContainer) &&
+        ((0 <= nodeIndex) && (nodeIndex <= 3)))) {
+      return _ControlContainer_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.InputFormTest _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    dbg(0, 0, 5);
+    _NgFormModel_0_4.ngSet$form(_ctx.form);
+    _NgFormModel_0_4.ngOnChanges();
+    dbg(2, 1, 21);
+    if (firstCheck) {
+      _NgControlName_2_6.ngSet$name('login');
+    }
+    _NgControlName_2_6.ngOnChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    dbg(2, 1, 2);
+    _NgControlName_2_6.instance.ngOnDestroy();
+  }
+}
+
+AppView<import1.InputFormTest> viewFactory_InputFormTest0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewInputFormTest0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$InputFormTestHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTestHost0 = [
+  new StaticNodeDebugInfo(
+      [import1.InputFormTest], import1.InputFormTest, <String, dynamic>{})
+];
+
+class _ViewInputFormTestHost0 extends DebugAppView<dynamic> {
+  ViewInputFormTest0 _compView_0;
+  import1.InputFormTest _InputFormTest_0_4;
+  static RenderComponentType _renderType;
+  _ViewInputFormTestHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_InputFormTestHost0) {
+    _renderType ??= import8.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$InputFormTestHost);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewInputFormTest0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _InputFormTest_0_4 = new import1.InputFormTest();
+    _compView_0.create(_InputFormTest_0_4, projectableNodes);
+    init([rootEl], const [], [rootEl]);
+    return new ComponentRef(0, this, rootEl, _InputFormTest_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.InputFormTest) && (0 == nodeIndex))) {
+      return _InputFormTest_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView viewFactory_InputFormTestHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewInputFormTestHost0(parentView, parentIndex);
+}
+
+const ComponentFactory _InputFormTestNgFactory = const ComponentFactory(
+    'input-form-test',
+    viewFactory_InputFormTestHost0,
+    import1.InputFormTest,
+    _METADATA);
+final ComponentFactory InputFormTestNgFactory = _InputFormTestNgFactory;
+
+class ChildDirectiveNgCd {
+  final import1.ChildDirective instance;
+  String _expr_0;
+  var _expr_1;
+  String _expr_2;
+  ChildDirectiveNgCd(import1.ChildDirective this.instance);
+  void ngSet$input1WithString(String value) {
+    if (import8.checkBinding(_expr_0, value)) {
+      instance.input1WithString = value;
+      _expr_0 = value;
+    }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+  }
+
+  void ngSet$inputWithIterable(value) {
+    if (import8.checkBinding(_expr_1, value)) {
+      instance.inputWithIterable = value;
+      _expr_1 = value;
+    }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+  }
+
+  void ngSet$gridRow(String value) {
+    if (import8.checkBinding(_expr_2, value)) {
+      instance.gridRow = value;
+      _expr_2 = value;
+    }
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+  }
+
+  void initHostEvents(AppView<dynamic> view, import3.Element node) {
+    var _ctx = view.ctx;
+    var eventHandler0 = view.eventHandler0;
+    var eventHandler1 = view.eventHandler1;
+    node.addEventListener('click', eventHandler1(instance.handleClick));
+    node.addEventListener('keypress', eventHandler1(instance.handleKeyPress));
+    import8.appViewUtils.eventManager.addEventListener(node, 'eventXyz',
+        eventHandler1(instance.handleXyzEventFromOtherDirective));
+  }
+}
+
+const _METADATA = const <dynamic>[
+  ChildDirective,
+  const <dynamic>[],
+  DirectiveWithOutput,
+  const <dynamic>[],
+  TestFooComponent,
+  const <dynamic>[],
+  MyInjectableClass,
+  const <dynamic>[const Injectable()],
+  InputFormTest,
+  const <dynamic>[]
+];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ngRef.reflector.registerType(
+      ChildDirective,
+      new _ngRef.ReflectionInfo(
+          const <dynamic>[],
+          const [
+            const <dynamic>[Element],
+            const <dynamic>[ElementRef]
+          ],
+          (Element element, ElementRef elementRef) =>
+              new ChildDirective(element, elementRef)));
+  _ngRef.reflector
+      .registerSimpleType(DirectiveWithOutput, () => new DirectiveWithOutput());
+  _ngRef.reflector.registerType(
+      TestFooComponent,
+      new _ngRef.ReflectionInfo(const <dynamic>[_TestFooComponentNgFactory],
+          const [], () => new TestFooComponent()));
+  _ngRef.reflector.registerType(
+      MyInjectableClass,
+      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
+          () => new MyInjectableClass()));
+  _ngRef.reflector.registerType(
+      InputFormTest,
+      new _ngRef.ReflectionInfo(const <dynamic>[_InputFormTestNgFactory],
+          const [], () => new InputFormTest()));
+  _i1.initReflector();
+}
