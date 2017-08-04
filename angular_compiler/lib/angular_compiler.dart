@@ -2,6 +2,7 @@ export 'src/analyzer.dart'
     show
         getInheritanceHierarchy,
         urlOf,
+        ComponentReader,
         DependencyElement,
         DependencyInvocation,
         DependencyReader,
