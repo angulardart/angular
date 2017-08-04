@@ -398,9 +398,6 @@ class ComponentVisitor
         }
         final outputs = coerceStringList(annotationValue, 'outputs');
         CompileDirectiveMetadata.deserializeOutputs(outputs, _outputs);
-        coerceMap(annotationValue, 'queries').forEach((propertyName, query) {
-          _queries.add(_getQuery(query, propertyName.toStringValue()));
-        });
       }
       // Collect metadata from field and property accessor annotations.
       super.visitClassElement(element);

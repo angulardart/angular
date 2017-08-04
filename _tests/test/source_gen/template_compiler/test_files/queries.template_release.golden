@@ -180,12 +180,8 @@ const List<dynamic> styles$QueriesComponentHost = const [];
 class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_4;
-  import2.QueryList _query_q1_0_0;
-  import2.QueryList _query_q2_0_1;
-  import2.QueryList _query_q3_0_2;
-  import2.QueryList _query_q4_0_3;
-  import2.QueryList _query_q5_0_4;
-  import2.QueryList _query_q7_0_5;
+  import2.QueryList _query_q5_0_0;
+  import2.QueryList _query_q7_0_1;
   static RenderComponentType _renderType;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.HOST, {}, parentView, parentIndex,
@@ -199,18 +195,10 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _QueriesComponent_0_4 = new import1.QueriesComponent();
-    _query_q1_0_0 = new import2.QueryList();
-    _query_q2_0_1 = new import2.QueryList();
-    _query_q3_0_2 = new import2.QueryList();
-    _query_q4_0_3 = new import2.QueryList();
-    _query_q5_0_4 = new import2.QueryList();
-    _query_q7_0_5 = new import2.QueryList();
-    _query_q3_0_2.reset([]);
-    _QueriesComponent_0_4.contentChildFromAnnotation = _query_q3_0_2.first;
-    _query_q4_0_3.reset([]);
-    _QueriesComponent_0_4.viewChildFromAnnotation = _query_q4_0_3.first;
-    _query_q7_0_5.reset([]);
-    _QueriesComponent_0_4.contentChildFromField = _query_q7_0_5.first;
+    _query_q5_0_0 = new import2.QueryList();
+    _query_q7_0_1 = new import2.QueryList();
+    _query_q7_0_1.reset([]);
+    _QueriesComponent_0_4.contentChildFromField = _query_q7_0_1.first;
     _compView_0.create(_QueriesComponent_0_4, projectableNodes);
     init([rootEl], const []);
     return new ComponentRef(0, this, rootEl, _QueriesComponent_0_4);
@@ -227,20 +215,10 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    if (_query_q1_0_0.dirty) {
-      _query_q1_0_0.reset([]);
-      _QueriesComponent_0_4.contentChildrenFromAnnotation = _query_q1_0_0;
-      _query_q1_0_0.notifyOnChanges();
-    }
-    if (_query_q2_0_1.dirty) {
-      _query_q2_0_1.reset([]);
-      _QueriesComponent_0_4.viewChildrenFromAnnotation = _query_q2_0_1;
-      _query_q2_0_1.notifyOnChanges();
-    }
-    if (_query_q5_0_4.dirty) {
-      _query_q5_0_4.reset([]);
-      _QueriesComponent_0_4.contentChildrenFromField = _query_q5_0_4;
-      _query_q5_0_4.notifyOnChanges();
+    if (_query_q5_0_0.dirty) {
+      _query_q5_0_0.reset([]);
+      _QueriesComponent_0_4.contentChildrenFromField = _query_q5_0_0;
+      _query_q5_0_0.notifyOnChanges();
     }
     _compView_0.detectChanges();
   }

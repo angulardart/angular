@@ -303,60 +303,17 @@ class Directive {
   /// ```
   final String exportAs;
 
-  /// The queries to be injected into the directive.
-  ///
-  /// Content queries are set before the [ngAfterContentInit] callback is
-  /// called. View queries are set before the [ngAfterViewInit] callback is
-  /// called.
-  ///
-  /// ### Example
-  ///
-  ///     @Component(
-  ///       selector: 'someDir',
-  ///       queries: const {
-  ///         'contentChildren': const ContentChildren(ChildDirective),
-  ///         'viewChildren': const ViewChildren(ChildDirective),
-  ///         'contentChild': const ContentChild(SingleChildDirective),
-  ///         'viewChild': const ViewChild(SingleChildDirective)
-  ///       },
-  ///       template: '''
-  ///         <child-directive></child-directive>
-  ///         <single-child-directive></single-child-directive>
-  ///         <ng-content></ng-content>
-  ///       ''',
-  ///       directives: const [ChildDirective, SingleChildDirective])
-  ///     class SomeDir implements AfterContentInit, AfterViewInit {
-  ///       QueryList<ChildDirective> contentChildren;
-  ///       QueryList<ChildDirective> viewChildren;
-  ///       SingleChildDirective contentChild;
-  ///       SingleChildDirective viewChild;
-  ///
-  ///       ngAfterContentInit() {
-  ///         // contentChildren is set
-  ///         // contentChild is set
-  ///       }
-  ///
-  ///       ngAfterViewInit() {
-  ///         // viewChildren is set
-  ///         // viewChild is set
-  ///       }
-  ///     }
-  ///
-  @Deprecated('Use @{View|Content}Child{ren} instead')
-  final Map<String, dynamic> queries;
-
-  const Directive(
-      {@required String selector,
-      this.inputs,
-      this.outputs,
-      Map<String, String> host,
-      this.providers,
-      String exportAs,
-      Map<String, dynamic> queries})
+  const Directive({
+    @required String selector,
+    this.inputs,
+    this.outputs,
+    Map<String, String> host,
+    this.providers,
+    String exportAs,
+  })
       : selector = selector,
         host = host,
         exportAs = exportAs,
-        queries = queries,
         super();
 }
 
@@ -465,7 +422,6 @@ class Component extends Directive {
     this.viewProviders,
     this.exports,
     this.changeDetection: ChangeDetectionStrategy.Default,
-    Map<String, dynamic> queries,
     this.templateUrl,
     this.template,
     this.preserveWhitespace: true,
@@ -476,13 +432,13 @@ class Component extends Directive {
     this.encapsulation,
   })
       : super(
-            selector: selector,
-            inputs: inputs,
-            outputs: outputs,
-            host: host,
-            exportAs: exportAs,
-            providers: providers,
-            queries: queries);
+          selector: selector,
+          inputs: inputs,
+          outputs: outputs,
+          host: host,
+          exportAs: exportAs,
+          providers: providers,
+        );
 }
 
 /// Declare reusable pipe function.

@@ -3,12 +3,6 @@ import 'package:angular/angular.dart';
 
 @Component(
   selector: 'queries',
-  queries: const {
-    'contentChildrenFromAnnotation': const ContentChildren('q1'),
-    'viewChildrenFromAnnotation': const ViewChildren('q2'),
-    'contentChildFromAnnotation': const ContentChild('q3'),
-    'viewChildFromAnnotation': const ViewChild('q4'),
-  },
   directives: const [AnotherDirective],
   template: r'''
     <another #q1></another>
@@ -22,11 +16,6 @@ import 'package:angular/angular.dart';
   ''',
 )
 class QueriesComponent {
-  QueryList<AnotherDirective> contentChildrenFromAnnotation;
-  QueryList<AnotherDirective> viewChildrenFromAnnotation;
-  AnotherDirective contentChildFromAnnotation;
-  AnotherDirective viewChildFromAnnotation;
-
   @ContentChildren('q5')
   QueryList<AnotherDirective> contentChildrenFromField;
 
