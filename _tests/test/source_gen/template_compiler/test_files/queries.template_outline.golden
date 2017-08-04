@@ -6,6 +6,9 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/change_detection/directive_change_detector.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 
+import 'dart:html';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
+
 // Required for specifically referencing user code.
 import 'queries.dart' as _user;
 
@@ -24,6 +27,7 @@ class ViewQueriesComponent0 extends AppView<_user.QueriesComponent> {
 class AnotherDirectiveNgCd extends DirectiveChangeDetector {
   external _user.AnotherDirective get instance;
   external AnotherDirectiveNgCd(_user.AnotherDirective instance);
+  external void initHostEvents(AppView view, Element node);
 }
 
 external void initReflector();

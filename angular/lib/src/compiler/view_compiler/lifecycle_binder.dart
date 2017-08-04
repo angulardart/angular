@@ -9,7 +9,6 @@ import '../template_ast.dart' show DirectiveAst;
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
-import 'directive_compiler.dart';
 
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
@@ -21,7 +20,7 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   var lifecycleHooks = directive.lifecycleHooks;
   if (lifecycleHooks.contains(LifecycleHooks.OnChanges) &&
       directiveAst.inputs.isNotEmpty) {
-    if (requiresDirectiveChangeDetector(directive)) {
+    if (directive.requiresDirectiveChangeDetector) {
       o.ReadPropExpr expr = directiveInstance;
       detectChangesInInputsMethod
           .addStmt(expr.receiver.callMethod('ngOnChanges', const []).toStmt());
