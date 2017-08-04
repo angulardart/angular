@@ -45,13 +45,9 @@ import 'constants.dart'
         createEnumExpression,
         changeDetectionStrategyToConst,
         DetectChangesVars,
-        EventHandlerVars,
         InjectMethodVars,
         ViewConstructorVars,
         ViewProperties;
-import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
-import 'expression_converter.dart';
-import 'parse_utils.dart';
 import 'perf_profiler.dart';
 import 'property_binder.dart';
 import 'view_compiler_utils.dart'
@@ -60,7 +56,8 @@ import 'view_compiler_utils.dart'
         createFlatArray,
         createDebugInfoTokenExpression,
         createSetAttributeParams,
-        componentFromDirectives;
+        componentFromDirectives,
+        writeHostEventListeners;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";
@@ -413,7 +410,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     if (component != null) {
       compileElement.componentView = compViewExpr;
-      view.viewChildren.add(compViewExpr);
+      view.addViewChild(compViewExpr);
     }
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
@@ -1114,7 +1111,16 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
 
   if (isComponentRoot) {
-    _writeComponentHostEventListeners(view, parser, statements);
+    final rootElExpr = new o.ReadClassMemberExpr(appViewRootElementName);
+    writeHostEventListeners(
+        view.component,
+        rootElExpr,
+        new o.ReadClassMemberExpr('ctx'),
+        new o.ReadClassMemberExpr('_ctx'),
+        view.nameResolver,
+        parser,
+        statements,
+        view.eventHandlerMethods);
   }
 
   if (isComponentRoot &&
@@ -1143,61 +1149,6 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   }
   statements.add(new o.ReturnStatement(resultExpr));
   return statements;
-}
-
-/// Writes shared event handler wiring for events that are directly defined
-/// on host property of @Component annotation.
-void _writeComponentHostEventListeners(
-    CompileView view, Parser parser, List<o.Statement> statements) {
-  CompileDirectiveMetadata component = view.component;
-  for (String eventName in component.hostListeners.keys) {
-    String handlerSource = component.hostListeners[eventName];
-    var handlerAst = parser.parseAction(handlerSource, '', component.exports);
-    HandlerType handlerType = handlerTypeFromExpression(handlerAst);
-    var handlerExpr;
-    var numArgs;
-    if (handlerType == HandlerType.notSimple) {
-      var context = new o.ReadClassMemberExpr('ctx');
-      var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view, context, handlerAst, false).last);
-      List<o.Statement> stmts = <o.Statement>[
-        new o.ReturnStatement(actionExpr)
-      ];
-      String methodName = '_handle_${sanitizeEventName(eventName)}__';
-      view.eventHandlerMethods.add(new o.ClassMethod(
-          methodName,
-          [new o.FnParam(EventHandlerVars.event.name, o.importType(null))],
-          stmts,
-          o.BOOL_TYPE,
-          [o.StmtModifier.Private]));
-      handlerExpr = new o.ReadClassMemberExpr(methodName);
-      numArgs = 1;
-    } else {
-      var context = DetectChangesVars.cachedCtx;
-      var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view, context, handlerAst, false).last);
-      assert(actionExpr is o.InvokeMethodExpr);
-      var callExpr = actionExpr as o.InvokeMethodExpr;
-      handlerExpr = new o.ReadPropExpr(callExpr.receiver, callExpr.name);
-      numArgs = handlerType == HandlerType.simpleNoArgs ? 0 : 1;
-    }
-
-    final wrappedHandlerExpr =
-        new o.InvokeMemberMethodExpr('eventHandler$numArgs', [handlerExpr]);
-    final rootElExpr = new o.ReadClassMemberExpr(appViewRootElementName);
-
-    var listenExpr;
-    if (isNativeHtmlEvent(eventName)) {
-      listenExpr = rootElExpr.callMethod(
-          'addEventListener', [o.literal(eventName), wrappedHandlerExpr]);
-    } else {
-      final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
-      final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
-      listenExpr = eventManagerExpr.callMethod('addEventListener',
-          [rootElExpr, o.literal(eventName), wrappedHandlerExpr]);
-    }
-    statements.add(listenExpr.toStmt());
-  }
 }
 
 List<o.Statement> generateDetectChangesMethod(CompileView view) {

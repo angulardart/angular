@@ -17,6 +17,12 @@ const _debugAppViewImport =
 const _directiveChangeImport =
     "import 'package:angular/src/core/change_detection/directive_change_detector.dart';";
 
+// Imports that should be included only if we have directive change detectors.
+const _directiveImports = '''
+import 'dart:html';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
+''';
+
 /// Generates an _outline_ of the public API of a `.template.dart` file.
 ///
 /// Used as part of some compile processes in order to speed up incremental
@@ -85,6 +91,9 @@ class TemplateOutliner implements Builder {
         ..writeln(_angularImports)
         ..writeln();
     }
+    if (directives.isNotEmpty) {
+      output.writeln(_directiveImports);
+    }
     if (components.isNotEmpty || directives.isNotEmpty) {
       final userLandCode = p.basename(buildStep.inputId.path);
       output
@@ -129,6 +138,9 @@ class TemplateOutliner implements Builder {
         ) {
           output.writeln('  external void ngSet\$$name($type value);');
         });
+
+        output.writeln(
+            '  external void initHostEvents(AppView view, Element node);');
         output.writeln('}');
       });
     }

@@ -64,7 +64,7 @@ void bind(
     CompileMethod literalMethod,
     {o.OutputType fieldType}) {
   var checkExpression = convertCdExpressionToIr(
-      view,
+      view.nameResolver,
       context,
       parsedExpression,
       DetectChangesVars.valUnwrapper,
@@ -398,7 +398,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     return;
   }
 
-  if (requiresDirectiveChangeDetector(directive)) {
+  if (directive.requiresDirectiveChangeDetector) {
     _bindDirectiveInputsOnChangeDetectorClass(
         directiveAst, directiveInstance, compileElement);
     return;
@@ -441,7 +441,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     // TODO: generalize to SingleInputDirective mixin.
     if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
       var checkExpression = convertCdExpressionToIr(
-          view,
+          view.nameResolver,
           DetectChangesVars.cachedCtx,
           input.value,
           DetectChangesVars.valUnwrapper,
@@ -530,14 +530,12 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
 
 void _bindDirectiveInputsOnChangeDetectorClass(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
-  assert(requiresDirectiveChangeDetector(directiveAst.directive));
+  assert(directiveAst.directive.requiresDirectiveChangeDetector);
 
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var constStatements = <o.Statement>[];
   var dynamicStatements = <o.Statement>[];
-  var lifecycleHooks = directiveAst.directive.lifecycleHooks;
-  var calcChangesMap = lifecycleHooks.contains(LifecycleHooks.OnChanges);
 
   // directiveAst contains the target directive we are updating.
   // input is a BoundPropertyAst that contains binding metadata.
@@ -549,7 +547,7 @@ void _bindDirectiveInputsOnChangeDetectorClass(DirectiveAst directiveAst,
         ? o.importType(new CompileIdentifierMetadata(name: inputTypeName))
         : null;
     var newValExpr = convertCdExpressionToIr(
-            view,
+            view.nameResolver,
             DetectChangesVars.cachedCtx,
             input.value,
             DetectChangesVars.valUnwrapper,
@@ -598,7 +596,7 @@ void bindToUpdateMethod(
     CompileMethod method,
     {o.OutputType fieldType}) {
   var checkExpression = convertCdExpressionToIr(
-      view,
+      view.nameResolver,
       context,
       parsedExpression,
       DetectChangesVars.valUnwrapper,

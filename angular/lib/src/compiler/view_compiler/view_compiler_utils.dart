@@ -1,14 +1,20 @@
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
-
 import '../compile_metadata.dart'
     show
         CompileTokenMetadata,
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
+import '../expression_parser/parser.dart' show Parser;
+import '../html_events.dart';
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;
+import 'constants.dart'
+    show EventHandlerVars, DetectChangesVars, appViewRootElementName;
+import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
+import 'expression_converter.dart';
+import 'parse_utils.dart';
 
 // Creates method parameters list for AppView set attribute calls.
 List<o.Expression> createSetAttributeParams(
@@ -48,18 +54,7 @@ o.Expression getPropertyInView(
       throw new BaseException('Internal error: Could not calculate a property '
           'in a parent view: $property');
     }
-    o.ReadClassMemberExpr readMemberExpr;
-
-    // Detect _PopupSourceDirective_0_6.instance for directives that have
-    // change detectors.
-    if (property is o.ReadPropExpr &&
-        property.name == 'instance' &&
-        property.receiver is o.ReadClassMemberExpr) {
-      readMemberExpr = property.receiver;
-    } else if (property is o.ReadClassMemberExpr) {
-      // Non change detector directive read.
-      readMemberExpr = property;
-    }
+    o.ReadClassMemberExpr readMemberExpr = unwrapDirective(property);
     if (readMemberExpr != null) {
       // Note: Don't cast for members of the AppView base class...
       if (definedView.fields
@@ -205,6 +200,88 @@ CompileDirectiveMetadata componentFromDirectives(
     List<CompileDirectiveMetadata> directives) {
   for (CompileDirectiveMetadata directive in directives) {
     if (directive.isComponent) return directive;
+  }
+  return null;
+}
+
+/// Writes shared event handler wiring for events that are directly defined
+/// on host property of @Component annotation.
+void writeHostEventListeners(
+    CompileDirectiveMetadata directive,
+    o.Expression targetElementExpr,
+    o.Expression classContextExpr,
+    o.Expression contextExpr,
+    NameResolver nameResolver,
+    Parser parser,
+    List<o.Statement> statements,
+    List<o.ClassMethod> targetEventHandlerMethods) {
+  for (String eventName in directive.hostListeners.keys) {
+    String handlerSource = directive.hostListeners[eventName];
+    var handlerAst = parser.parseAction(handlerSource, '', directive.exports);
+    HandlerType handlerType = handlerTypeFromExpression(handlerAst);
+    var handlerExpr;
+    var numArgs;
+    if (handlerType == HandlerType.notSimple) {
+      var actionExpr = convertStmtIntoExpression(convertCdStatementToIr(
+              nameResolver, classContextExpr, handlerAst, false)
+          .last);
+      List<o.Statement> stmts = <o.Statement>[actionExpr.toStmt()];
+      String methodName = '_handle_${sanitizeEventName(eventName)}__';
+      targetEventHandlerMethods.add(new o.ClassMethod(
+          methodName,
+          [new o.FnParam(EventHandlerVars.event.name, o.importType(null))],
+          stmts,
+          null,
+          [o.StmtModifier.Private]));
+      handlerExpr = new o.ReadClassMemberExpr(methodName);
+      numArgs = 1;
+    } else {
+      var actionExpr = convertStmtIntoExpression(
+          convertCdStatementToIr(nameResolver, contextExpr, handlerAst, false)
+              .last);
+      assert(actionExpr is o.InvokeMethodExpr);
+      var callExpr = actionExpr as o.InvokeMethodExpr;
+      handlerExpr = new o.ReadPropExpr(callExpr.receiver, callExpr.name);
+      numArgs = handlerType == HandlerType.simpleNoArgs ? 0 : 1;
+    }
+
+    final wrappedHandlerExpr =
+        new o.InvokeMemberMethodExpr('eventHandler$numArgs', [handlerExpr]);
+
+    var listenExpr;
+    if (isNativeHtmlEvent(eventName)) {
+      listenExpr = targetElementExpr.callMethod(
+          'addEventListener', [o.literal(eventName), wrappedHandlerExpr]);
+    } else {
+      final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
+      final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
+      listenExpr = eventManagerExpr.callMethod('addEventListener',
+          [targetElementExpr, o.literal(eventName), wrappedHandlerExpr]);
+    }
+    statements.add(listenExpr.toStmt());
+  }
+}
+
+// Detect _PopupSourceDirective_0_6.instance for directives that have
+// change detectors and unwrap to change detector.
+o.Expression unwrapDirectiveInstance(o.Expression directiveInstance) {
+  if (directiveInstance is o.ReadPropExpr &&
+      directiveInstance.name == 'instance' &&
+      directiveInstance.receiver is o.ReadClassMemberExpr) {
+    return directiveInstance.receiver;
+  }
+  return null;
+}
+
+// Return instance of directive for both regular directives and directives
+// with ChangeDetector class.
+o.Expression unwrapDirective(o.Expression directiveInstance) {
+  var instance = unwrapDirectiveInstance(directiveInstance);
+  if (instance != null) {
+    return instance;
+  } else if (directiveInstance is o.ReadClassMemberExpr) {
+    // Non change detector directive read.
+    return directiveInstance;
   }
   return null;
 }

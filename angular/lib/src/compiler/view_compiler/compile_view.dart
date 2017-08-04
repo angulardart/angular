@@ -8,7 +8,6 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
-import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import "../template_ast.dart" show TemplateAst;
 import 'compile_binding.dart' show CompileBinding;
@@ -17,15 +16,14 @@ import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart'
     show CompileQuery, createQueryListField, addQueryToTokenMap;
-import 'constants.dart' show EventHandlerVars;
-import 'expression_converter.dart' show NameResolver;
 import 'view_compiler_utils.dart'
     show getViewFactoryName, getPropertyInView, createPureProxy;
+import 'view_name_resolver.dart';
 
 /// Represents data to generate a host, component or embedded AppView.
 ///
 /// Members and method builders are populated by ViewBuilder.
-class CompileView implements NameResolver {
+class CompileView {
   final CompileDirectiveMetadata component;
   final CompilerFlags genConfig;
   final List<CompilePipeMetadata> pipeMetas;
@@ -40,7 +38,7 @@ class CompileView implements NameResolver {
 
   /// Contains references to view children so we can generate code for
   /// change detection and destroy.
-  List<o.Expression> viewChildren = [];
+  final List<o.Expression> _viewChildren = [];
 
   /// Flat list of all nodes inside the template including text nodes.
   List<CompileNode> nodes = [];
@@ -75,14 +73,12 @@ class CompileView implements NameResolver {
   CompileView componentView;
   var purePipes = new Map<String, CompilePipe>();
   List<CompilePipe> pipes = [];
-  var locals = new Map<String, o.Expression>();
   String className;
   o.OutputType classType;
   o.ReadVarExpr viewFactory;
   bool requiresOnChangesCall = false;
-  var literalArrayCount = 0;
-  var literalMapCount = 0;
   var pipeCount = 0;
+  ViewNameResolver nameResolver;
 
   CompileView(
       this.component,
@@ -93,6 +89,7 @@ class CompileView implements NameResolver {
       this.declarationElement,
       this.templateVariableBindings,
       this.deferredModules) {
+    nameResolver = new ViewNameResolver(this);
     this.createMethod = new CompileMethod(this);
     this.injectorGetMethod = new CompileMethod(this);
     this.updateContentQueriesMethod = new CompileMethod(this);
@@ -135,8 +132,8 @@ class CompileView implements NameResolver {
     }
 
     for (List<String> entry in templateVariableBindings) {
-      locals[entry[1]] =
-          new o.ReadClassMemberExpr('locals').key(o.literal(entry[0]));
+      nameResolver.addLocal(entry[1],
+          new o.ReadClassMemberExpr('locals').key(o.literal(entry[0])));
     }
     if (declarationElement.parent != null) {
       declarationElement.setEmbeddedView(this);
@@ -146,82 +143,18 @@ class CompileView implements NameResolver {
     }
   }
 
+  // Adds reference to a child view.
+  void addViewChild(o.Expression componentViewExpr) {
+    _viewChildren.add(componentViewExpr);
+  }
+
+  // Returns list of references to view children.
+  List<o.Expression> get viewChildren => _viewChildren;
+
   // Adds a binding to the view and returns binding index.
   int addBinding(CompileNode node, TemplateAst sourceAst) {
     _bindings.add(new CompileBinding(node, sourceAst));
     return _bindings.length - 1;
-  }
-
-  o.Expression callPipe(
-      String name, o.Expression input, List<o.Expression> args) {
-    return CompilePipe.call(this, name, (new List.from([input])..addAll(args)));
-  }
-
-  o.Expression getLocal(String name) {
-    if (name == EventHandlerVars.event.name) {
-      return EventHandlerVars.event;
-    }
-    CompileView currView = this;
-    var result = currView.locals[name];
-    while (result == null && currView.declarationElement.view != null) {
-      currView = currView.declarationElement.view;
-      result = currView.locals[name];
-    }
-    if (result != null) {
-      return getPropertyInView(result, this, currView);
-    } else {
-      return null;
-    }
-  }
-
-  o.Expression createLiteralArray(List<o.Expression> values) {
-    if (identical(values.length, 0)) {
-      return o.importExpr(Identifiers.EMPTY_ARRAY);
-    }
-    var proxyExpr =
-        new o.ReadClassMemberExpr('_arr_${ this . literalArrayCount ++}');
-    List<o.FnParam> proxyParams = [];
-    List<o.Expression> proxyReturnEntries = [];
-    for (var i = 0; i < values.length; i++) {
-      var paramName = 'p$i';
-      proxyParams.add(new o.FnParam(paramName));
-      proxyReturnEntries.add(o.variable(paramName));
-    }
-    createPureProxy(
-        o.fn(
-            proxyParams,
-            [new o.ReturnStatement(o.literalArr(proxyReturnEntries))],
-            new o.ArrayType(o.DYNAMIC_TYPE)),
-        values.length,
-        proxyExpr,
-        this);
-    return proxyExpr.callFn(values);
-  }
-
-  o.Expression createLiteralMap(
-      List<List<dynamic /* String | o . Expression */ >> entries) {
-    if (identical(entries.length, 0)) {
-      return o.importExpr(Identifiers.EMPTY_MAP);
-    }
-    var proxyExpr = new o.ReadClassMemberExpr('_map_${this.literalMapCount++}');
-    List<o.FnParam> proxyParams = [];
-    List<List<dynamic /* String | o . Expression */ >> proxyReturnEntries = [];
-    List<o.Expression> values = [];
-    for (var i = 0; i < entries.length; i++) {
-      var paramName = 'p$i';
-      proxyParams.add(new o.FnParam(paramName));
-      proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
-      values.add((entries[i][1] as o.Expression));
-    }
-    createPureProxy(
-        o.fn(
-            proxyParams,
-            [new o.ReturnStatement(o.literalMap(proxyReturnEntries))],
-            new o.MapType(o.DYNAMIC_TYPE)),
-        entries.length,
-        proxyExpr,
-        this);
-    return proxyExpr.callFn(values);
   }
 
   void afterNodes() {
