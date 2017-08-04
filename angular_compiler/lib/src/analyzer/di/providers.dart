@@ -42,6 +42,24 @@ class ProviderReader {
   @protected
   bool isModule(DartObject o) => isList(o);
 
+  /// Parses a static object representing a list of providers.
+  List<ProviderElement> parseModule(DartObject o) {
+    if (!isModule(o)) {
+      throw new FormatException('Expceted Module, got "${o.type.name}".');
+    }
+    return _parseModule(o).toList();
+  }
+
+  Iterable<ProviderElement> _parseModule(DartObject o) sync* {
+    if (isList(o)) {
+      yield* o.toListValue().map(_parseModule).expand((i) => i);
+    } else if (isProvider(o) || isType(o)) {
+      yield parseProvider(o);
+    } else {
+      throw new FormatException('Expected Provider, got "${o.type.name}".');
+    }
+  }
+
   /// Parses a static object representing a `Provider`.
   ProviderElement parseProvider(DartObject o) {
     if (o == null) {
