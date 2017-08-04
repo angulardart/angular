@@ -8,4 +8,5 @@ application tasks.
 
 This is initially just a port of the router that was in the core angular
 package. However, we do have a significant refactoring in progress that will
-result in `angular_router` `2.0.0`.
+result in `angular_router` `2.0.0`. As such, we are not planning any
+non-critical fixes or changes for `1.0`
