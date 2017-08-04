@@ -40,13 +40,14 @@ transformers:
   # clients (https://github.com/dart-lang/angular/issues/549). As it was
   # only needed for a single class, the code was modified temporarily to
   # not need this.
-  #
-  # Long term we should solve the underlying issue(s).
-  #
-  # - angular:
-  #    entry_points: test/**_test.dart
-  #    $exclude:
-  #        - test/**.template.dart
+  - angular:
+      entry_points: test/**_test.dart
+      # Forces this transformer to run somewhat like a "dev-transformer", in
+      # that it only executes when you "pub serve" this package directly.
+      $include:
+        - test/**_test.dart
+      $exclude:
+        - test/**.template.dart
 
   # Allow test to proxy-load files so we can run AoT tests w/ pub serve.
   - test/pub_serve:
