@@ -31,6 +31,9 @@ class AdBannerComponent implements AfterViewInit {
 * `findContainer` has now been exposed from NgForm allowing easier creation of
   custom form implementations.
 
+* `setUpControl` has been exposed from the forms API to allow forms to setup
+  their controls easier.
+
 ### Bug Fixes
 
 * The transformer now fails if any unsupported arguments are passed in.

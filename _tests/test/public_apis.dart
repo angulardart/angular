@@ -276,6 +276,7 @@ const angularApis = const [
   'WrappedValue',
   'appIdRandomProviderFactory',
   'composeValidators',
+  'setUpControl',
   'setUpControlGroup',
   'coreBootstrap',
   'coreLoadAndBootstrap',
