@@ -1,6 +1,12 @@
-## 0.1.2
+## 0.2.0
 
-- Added `ProviderReader`, a class for inspecting compile-time providers.
+- Added various classes and helpers to form the new compile infrastructure:
+  - `ComponentReader`
+  - `DependencyReader`, `DependencyInvocation`, `DependencyElement`
+  - `ProviderReader`, `ProviderElement`
+  - `TokenReader`, `TypeTokenElement`, `OpaqueTokenElement`
+  - `getInheritanceHierarchy`, `urlOf`
+  - `ReflectableReader`, `ReflectableOutput`, `ReflectableClass`
 
 ## 0.1.1
 

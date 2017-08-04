@@ -7,6 +7,5 @@ The Angular Router enables navigation from one view to the next as users perform
 application tasks.
 
 This is initially just a port of the router that was in the core angular
-package.
-However, we do have a significant refactoring in progress that will result in
-angualr_router v2.
+package. However, we do have a significant refactoring in progress that will
+result in `angular_router` `2.0.0`.
