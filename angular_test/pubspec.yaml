@@ -45,6 +45,7 @@ transformers:
       # Forces this transformer to run somewhat like a "dev-transformer", in
       # that it only executes when you "pub serve" this package directly.
       $include:
+        - lib/**.dart
         - test/**_test.dart
       $exclude:
         - test/**.template.dart
