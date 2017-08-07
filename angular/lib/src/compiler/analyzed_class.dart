@@ -20,9 +20,7 @@ class AnalyzedClass {
   });
 }
 
-// TODO(het): This only works for literals and simple property reads. Make this
-// more robust. This should also support:
-//   - chained property read (eg a.b.c)
+// TODO(het): Make this work with chained expressions.
 /// Returns [true] if [expression] is immutable.
 bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
   if (expression is ast.ASTWithSource) {
@@ -32,6 +30,9 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
       expression is ast.StaticRead ||
       expression is ast.EmptyExpr) {
     return true;
+  }
+  if (expression is ast.Interpolation) {
+    return expression.expressions.every((e) => isImmutable(e, analyzedClass));
   }
   if (expression is ast.PropertyRead) {
     if (analyzedClass == null) return false;
@@ -49,4 +50,17 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
     return false;
   }
   return false;
+}
+
+/// Returns [true] if [expression] could be [null].
+bool isNullable(ast.AST expression) {
+  if (expression is ast.ASTWithSource) {
+    expression = (expression as ast.ASTWithSource).ast;
+  }
+  if (expression is ast.LiteralPrimitive ||
+      expression is ast.EmptyExpr ||
+      expression is ast.Interpolation) {
+    return false;
+  }
+  return true;
 }

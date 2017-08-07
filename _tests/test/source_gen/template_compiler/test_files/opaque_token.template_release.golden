@@ -21,14 +21,11 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/facade/lang.dart'
-    as import8;
 
 const List<dynamic> styles$HasOpaqueTokens = const [];
 
 class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   import2.Text _text_0;
-  var _expr_0;
   static RenderComponentType _renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -50,10 +47,9 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   @override
   void detectChangesInternal() {
     final import1.HasOpaqueTokens _ctx = ctx;
-    final currVal_0 = import6.interpolate0(_ctx.baseUrl);
-    if (!import8.looseIdentical(_expr_0, currVal_0)) {
-      _text_0.text = currVal_0;
-      _expr_0 = currVal_0;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_text_0.text = import6.interpolate0(_ctx.baseUrl));
     }
   }
 }

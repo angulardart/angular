@@ -105,24 +105,16 @@ class ViewEmptyPropertiesComponent0
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      if (!identical(true, null)) {
-        (_FancyButtonComponent_0_4.raised = true);
-      }
+      (_FancyButtonComponent_0_4.raised = true);
     }
     if (firstCheck) {
-      if (!identical(true, null)) {
-        (_FancyButtonComponent_2_4.raised = true);
-      }
+      (_FancyButtonComponent_2_4.raised = true);
     }
     if (firstCheck) {
-      if (!identical(true, null)) {
-        (_FancyButtonComponent_4_4.raised = true);
-      }
+      (_FancyButtonComponent_4_4.raised = true);
     }
     if (firstCheck) {
-      if (!identical(false, null)) {
-        (_FancyButtonComponent_6_4.raised = false);
-      }
+      (_FancyButtonComponent_6_4.raised = false);
     }
     _compView_0.detectChanges();
     _compView_2.detectChanges();
