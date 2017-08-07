@@ -90,15 +90,13 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     import3.Text _text_1 = new import3.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 87);
-    import8.appViewUtils.eventManager.addEventListener(
-        _el_0,
-        'eventXyz',
-        eventHandler1(
-            _ChildDirective_0_4.instance.handleXyzEventFromOtherDirective));
     _ChildDirective_0_4.initHostEvents(this, _el_0);
     final subscription_0 = _ChildDirective_0_4.instance.trigger
         .listen(eventHandler1(_handle_trigger_0_0));
-    init(const [], [subscription_0], [_el_0, _text_1]);
+    final subscription_1 = _DirectiveWithOutput_0_5.eventXyz.listen(
+        eventHandler1(
+            _ChildDirective_0_4.instance.handleXyzEventFromOtherDirective));
+    init(const [], [subscription_0, subscription_1], [_el_0, _text_1]);
     return null;
   }
 

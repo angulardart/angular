@@ -24,6 +24,7 @@ main() {
         'change_detection',
         'component_loader_pattern',
         'core_directives',
+        'empty_properties',
         'events',
         'export_as',
         'has_directives',
@@ -43,6 +44,7 @@ main() {
         'deferred/deferred_component',
         'directives/base_component',
         'directives/components',
+        'directives/directive_wrapper',
         'directives/directives',
         'templates/has_template_file',
       ]) {
