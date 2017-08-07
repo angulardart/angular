@@ -4,11 +4,10 @@ import 'package:test/test.dart';
 
 import '../src/resolve.dart';
 
-// TODO(matanl): Add a test that adds imports and checks .template.dart.
 void main() {
   test('should record a no-op', () async {
     final testLib = await resolveLibrary('');
-    final output = await new ReflectableReader().resolve(testLib);
+    final output = await new ReflectableReader.noLinking().resolve(testLib);
     expect(
       output,
       new ReflectableOutput(),
@@ -22,7 +21,7 @@ void main() {
 
       Duration notAnnotated() => null;
     ''');
-    final output = await new ReflectableReader().resolve(testLib);
+    final output = await new ReflectableReader.noLinking().resolve(testLib);
     expect(
       output,
       new ReflectableOutput(
@@ -51,7 +50,7 @@ void main() {
         Example(Duration duration);
       }
     ''');
-    final output = await new ReflectableReader().resolve(testLib);
+    final output = await new ReflectableReader.noLinking().resolve(testLib);
     final clazz = testLib.definingCompilationUnit.types.first;
     expect(
       output,
@@ -80,7 +79,7 @@ void main() {
         Example(Duration duration);
       }
     ''');
-    final output = await new ReflectableReader().resolve(testLib);
+    final output = await new ReflectableReader.noLinking().resolve(testLib);
     final clazz = testLib.definingCompilationUnit.types.first;
     expect(
       output,
@@ -109,7 +108,7 @@ void main() {
         Example(Duration duration);
       }
     ''');
-    final output = await new ReflectableReader().resolve(testLib);
+    final output = await new ReflectableReader.noLinking().resolve(testLib);
     final clazz = testLib.definingCompilationUnit.types.first;
     expect(
       output,
@@ -138,7 +137,7 @@ void main() {
         Example(Duration duration);
       }
     ''');
-    final output = await new ReflectableReader().resolve(testLib);
+    final output = await new ReflectableReader.noLinking().resolve(testLib);
     final clazz = testLib.definingCompilationUnit.types.first;
     expect(
       output,
@@ -163,7 +162,7 @@ void main() {
 
   test('should record a component with an @RouteConfig annotation', () async {
     final testLib = await resolveLibrary(r'''
-      // Inlined a minimal version here to simplify the test setup.     
+      // Inlined a minimal version here to simplify the test setup.
       class RouteConfig {
         final List<Route> configs;
         const RouteConfig(this.configs);
@@ -192,7 +191,7 @@ void main() {
         Example(Duration duration);
       }
     ''');
-    final output = await new ReflectableReader().resolve(testLib);
+    final output = await new ReflectableReader.noLinking().resolve(testLib);
     final clazz = testLib.definingCompilationUnit.types.first;
     expect(
       output,
@@ -216,6 +215,65 @@ void main() {
         ),
       ]),
     );
+  });
+
+  group('for linking', () {
+    Set<String> _fakeInputs;
+    Set<String> _fakeIsLibrary;
+    ReflectableReader reader;
+
+    setUp(() {
+      _fakeInputs = new Set<String>();
+      _fakeIsLibrary = new Set<String>();
+      reader = new ReflectableReader(
+        hasInput: _fakeInputs.contains,
+        isLibrary: _fakeIsLibrary.contains,
+      );
+    });
+
+    test('should always link to an imported .template.dart', () async {
+      final testLib = await resolveLibrary(r'''
+        import 'foo.template.dart';
+        export 'bar.template.dart';
+      ''');
+      final output = await reader.resolve(testLib);
+      expect(
+        output.urlsNeedingInitReflector,
+        [
+          'foo.template.dart',
+        ],
+      );
+    });
+
+    test('should link to a file that has a .template.dart on disk', () async {
+      _fakeIsLibrary.add('foo.template.dart');
+      final testLib = await resolveLibrary(r'''
+        import 'foo.dart';
+        import 'bar.dart';
+      ''');
+      final output = await reader.resolve(testLib);
+      expect(
+        output.urlsNeedingInitReflector,
+        [
+          'foo.template.dart',
+        ],
+      );
+    });
+
+    test('should link to a file that will have a .template.dart', () async {
+      _fakeInputs.add('foo.dart');
+      final testLib = await resolveLibrary(r'''
+        import 'foo.dart';
+        import 'bar.dart';
+      ''');
+      final output = await reader.resolve(testLib);
+      expect(
+        output.urlsNeedingInitReflector,
+        [
+          'foo.template.dart',
+        ],
+      );
+    });
   });
 }
 

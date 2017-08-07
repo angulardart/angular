@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/ast/ast.dart' as ast;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:collection/collection.dart';
+import 'package:path/path.dart' as p;
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -18,8 +20,28 @@ import 'types.dart';
 /// given application, with the end-goal being requiring little or none for most
 /// applications.
 class ReflectableReader {
+  static const _defaultOutputExtension = '.template.dart';
+
   /// Used to read dependencies from dart objects.
   final DependencyReader dependencyReader;
+
+  /// Returns whether [uri] is a file part of the same build process.
+  ///
+  /// Used to determine whether [uri] (i.e. `foo.dart`) _will_ generate a future
+  /// output (i.e. `foo.template.dart`). It should be assumed the [uri]
+  /// parameter, if a relative URI, is relative to the library being analyzed.
+  final FutureOr<bool> Function(String uri) hasInput;
+
+  /// Returns whether [uri] represents a summarized/analyzed dart library.
+  ///
+  /// It should be assumed the [uri] parameter, if a relative URI, is relative
+  /// to the library being analyzed.
+  final bool Function(String uri) isLibrary;
+
+  /// File extension used when compiling AngularDart files.
+  ///
+  /// By default this is `.template.dart`.
+  final String outputExtension;
 
   /// Whether to treat an `@Component`-annotated `class` as an `@Component`.
   ///
@@ -50,16 +72,36 @@ class ReflectableReader {
 
   const ReflectableReader({
     this.dependencyReader: const DependencyReader(),
+    @required this.hasInput,
+    @required this.isLibrary,
+    this.outputExtension: _defaultOutputExtension,
     this.recordComponentsAsInjectables: true,
     this.recordDirectivesAsInjectables: true,
     this.recordPipesAsInjectables: true,
     this.recordRouterAnnotationsForComponents: true,
   });
 
+  /// Always emits an empty [ReflectableOutput.urlsNeedingInitReflector].
+  ///
+  /// Useful for tests that do not want to try emulating a complete build.
+  @visibleForTesting
+  const ReflectableReader.noLinking({
+    this.dependencyReader: const DependencyReader(),
+    this.outputExtension: _defaultOutputExtension,
+    this.recordComponentsAsInjectables: true,
+    this.recordDirectivesAsInjectables: true,
+    this.recordPipesAsInjectables: true,
+    this.recordRouterAnnotationsForComponents: true,
+  })
+      : hasInput = _nullHasInput,
+        isLibrary = _nullIsLibrary;
+
+  static FutureOr<bool> _nullHasInput(_) => false;
+  static bool _nullIsLibrary(_) => false;
+
   /// Returns information needed to write `.template.dart` files.
   Future<ReflectableOutput> resolve(LibraryElement library) async {
     final unit = library.definingCompilationUnit;
-    final urlsNeedingInitReflector = <String>[]; // TODO: Implement.
     final registerClasses = <ReflectableClass>[];
     for (final type in unit.types) {
       final reflectable = _resolveClass(type);
@@ -72,7 +114,7 @@ class ReflectableReader {
         .map(dependencyReader.parseDependencies)
         .toList();
     return new ReflectableOutput(
-      urlsNeedingInitReflector: urlsNeedingInitReflector,
+      urlsNeedingInitReflector: await _resolveNeedsReflector(library),
       registerClasses: registerClasses,
       registerFunctions: registerFunctions,
     );
@@ -108,6 +150,47 @@ class ReflectableReader {
       }
     }
     return null;
+  }
+
+  Future<List<String>> _resolveNeedsReflector(LibraryElement library) async {
+    final directives = library.definingCompilationUnit.computeNode().directives;
+    final results = <String>[];
+    await Future.wait(directives.map((d) async {
+      if (await _needsInitReflector(d)) {
+        var uri = (d as ast.UriBasedDirective).uri.stringValue;
+        // Always link to the .template.dart file equivalent of a file.
+        if (!uri.endsWith(outputExtension)) {
+          uri = '${p.basenameWithoutExtension(uri)}$outputExtension';
+        }
+        results.add(uri);
+      }
+    }));
+    return results..sort();
+  }
+
+  // Determines whether initReflector needs to link to [directive].
+  Future<bool> _needsInitReflector(ast.Directive directive) async {
+    if (directive is ast.ImportDirective) {
+      // Do not link to deferred code.
+      if (directive.deferredKeyword != null) {
+        return false;
+      }
+      // Always link when manually importing .template.dart files.
+      final uri = directive.uri.stringValue;
+      if (uri.endsWith(outputExtension)) {
+        return true;
+      }
+    }
+    // Link if we are have or will have a .template.dart file.
+    if (directive is ast.UriBasedDirective) {
+      final uri = directive.uri.stringValue;
+      if (uri.startsWith('dart:')) {
+        return false;
+      }
+      final outputUri = '${p.basenameWithoutExtension(uri)}$outputExtension';
+      return isLibrary(outputUri) || await hasInput(uri);
+    }
+    return false;
   }
 
   bool _shouldRecordFactory(ClassElement element) =>
