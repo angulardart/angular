@@ -74,7 +74,7 @@ void bind(
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
     _bindLiteral(checkExpression, literalMethod, actions, currValExpr.name,
-        fieldExpr.name);
+        fieldExpr.name, isNullable(parsedExpression));
     return;
   }
   if (checkExpression.expression == null) {
@@ -125,7 +125,8 @@ void _bindLiteral(
     CompileMethod method,
     List<o.Statement> actions,
     String currValName,
-    String fieldName) {
+    String fieldName,
+    bool isNullable) {
   if (checkExpression.expression == o.NULL_EXPR) {
     // In this case, there is no transition, since change detection variables
     // are initialized to null.
@@ -138,13 +139,13 @@ void _bindLiteral(
           currValName, checkExpression.expression, stmt))
       // Replace all 'expr_X' with 'null'
       .map((stmt) => o.replaceVarInStatement(fieldName, o.NULL_EXPR, stmt));
-  // TODO(het): Don't check for null if it's unnecessary:
-  //   - if the expression is a literal
-  //   - if the expression is a method tear-off
-  //   - if the expression has a known, non-null value
-  method.addStmt(new o.IfStmt(
-      checkExpression.expression.notIdentical(o.NULL_EXPR),
-      mappedActions.toList()));
+  if (isNullable) {
+    method.addStmt(new o.IfStmt(
+        checkExpression.expression.notIdentical(o.NULL_EXPR),
+        mappedActions.toList()));
+  } else {
+    method.addStmts(mappedActions.toList());
+  }
 }
 
 void bindRenderText(
