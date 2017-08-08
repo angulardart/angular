@@ -1,6 +1,5 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../identifiers.dart' show Identifiers;
-import '../html_events.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_element.dart' show CompileElement;
@@ -66,7 +65,7 @@ class CompileEventListener {
     _method.resetDebugInfo(compileElement.nodeIndex, hostEvent);
     var context = directiveInstance ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(
-        compileElement.view.nameResolver,
+        compileElement.view,
         context,
         hostEvent.handler,
         this.compileElement.view.component.template.preserveWhitespace);
@@ -146,7 +145,7 @@ class CompileEventListener {
 }
 
 List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
-    List<DirectiveAst> directives, CompileElement compileElement) {
+    List<DirectiveAst> dirs, CompileElement compileElement) {
   List<CompileEventListener> eventListeners = [];
   for (var hostEvent in hostEvents) {
     compileElement.view.addBinding(compileElement, hostEvent);
@@ -154,23 +153,12 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
         compileElement, hostEvent.name, eventListeners);
     listener.addAction(hostEvent, null, null);
   }
-  for (var i = 0, len = directives.length; i < len; i++) {
-    final directiveAst = directives[i];
+  for (var i = 0, len = dirs.length; i < len; i++) {
+    final directiveAst = dirs[i];
     // Don't collect component host event listeners because they're registered
     // by the component implementation.
-    final directive = directiveAst.directive;
-    if (directive.isComponent) continue;
-    var requiresDirectiveChangeDetector =
-        directive.requiresDirectiveChangeDetector;
+    if (directiveAst.directive.isComponent) continue;
     for (var hostEvent in directiveAst.hostEvents) {
-      String eventName = hostEvent.name;
-      if (requiresDirectiveChangeDetector && isNativeHtmlEvent(eventName)) {
-        // Native html events are compiled into initHostEvents call instead of
-        // listener code on the call site.
-        if (!_isEventOutputOfAnyDirective(directives, eventName)) {
-          continue;
-        }
-      }
       compileElement.view.addBinding(compileElement, hostEvent);
       var listener = CompileEventListener.getOrCreate(
           compileElement, hostEvent.name, eventListeners);
@@ -182,14 +170,6 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
     eventListeners[i].finish();
   }
   return eventListeners;
-}
-
-bool _isEventOutputOfAnyDirective(
-    List<DirectiveAst> directives, String eventName) {
-  for (DirectiveAst dir in directives) {
-    if (dir.directive.outputs.containsValue(eventName)) return true;
-  }
-  return false;
 }
 
 void bindDirectiveOutputs(DirectiveAst directiveAst,
@@ -224,4 +204,88 @@ o.Expression _extractFunction(o.Expression returnExpr) {
   assert(returnExpr is o.InvokeMethodExpr);
   var callExpr = returnExpr as o.InvokeMethodExpr;
   return new o.ReadPropExpr(callExpr.receiver, callExpr.name);
+}
+
+Set<String> _nativeEventSet;
+
+/// Returns true if event is an html event that is handled by DOM apis
+/// directly and doesn't need to go through plugin system.
+bool isNativeHtmlEvent(String eventName) {
+  const commonEvents = const <String>[
+    'abort',
+    'afterprint',
+    'animationend',
+    'animationiteration',
+    'animationstart',
+    'appinstalled',
+    'audioend',
+    'audiostart',
+    'beforeprint',
+    'beforeunload',
+    'blur',
+    'change',
+    'click',
+    'compositionend',
+    'compositionstart',
+    'compositionupdate',
+    'contextmenu',
+    'copy',
+    'cut',
+    'dblclick',
+    'drag',
+    'dragend',
+    'dragenter',
+    'dragleave',
+    'dragover',
+    'dragstart',
+    'drop',
+    'error',
+    'focus',
+    'fullscreenchange',
+    'fullscreenerror',
+    'gotpointercapture',
+    'lostpointercapture',
+    'input',
+    'invalid',
+    'keydown',
+    'keypress',
+    'keyup',
+    'languagechange',
+    'load',
+    'mousedown',
+    'mouseenter',
+    'mouseleave',
+    'mousemove',
+    'mouseout',
+    'mouseover',
+    'mouseup',
+    'notificationclick',
+    'orientationchange',
+    'paste',
+    'pause',
+    'pointercancel',
+    'pointerdown',
+    'pointerenter',
+    'pointerleave',
+    'pointerlockchange',
+    'pointerlockerror',
+    'pointermove',
+    'pointerout',
+    'pointerover',
+    'pointerup',
+    'reset',
+    'resize',
+    'scroll',
+    'select',
+    'show',
+    'touchcancel',
+    'touchend',
+    'touchmove',
+    'touchstart',
+    'transitionend',
+    'unload',
+    'wheel'
+  ];
+  _nativeEventSet ??= new Set<String>.from(commonEvents);
+  return _nativeEventSet.contains(eventName);
 }

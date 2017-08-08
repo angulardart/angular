@@ -3,7 +3,6 @@ import '../../core/linker/view_type.dart';
 import '../expression_parser/parser.dart';
 import '../output/output_ast.dart' as o;
 import '../schema/element_schema_registry.dart';
-import '../html_events.dart';
 import "../template_ast.dart"
     show
         TemplateAst,
@@ -22,31 +21,29 @@ import "../template_ast.dart"
         BoundDirectivePropertyAst,
         templateVisitAll;
 import '../template_parser.dart';
-import 'compile_element.dart' show CompileElement;
-import 'compile_method.dart' show CompileMethod;
-import 'compile_view.dart' show CompileView;
-import 'event_binder.dart'
+import "compile_element.dart" show CompileElement;
+import "compile_method.dart" show CompileMethod;
+import "compile_view.dart" show CompileView;
+import "event_binder.dart"
     show
         bindRenderOutputs,
         collectEventListeners,
         CompileEventListener,
         bindDirectiveOutputs;
-import 'lifecycle_binder.dart'
+import "lifecycle_binder.dart"
     show
         bindDirectiveAfterContentLifecycleCallbacks,
         bindDirectiveAfterViewLifecycleCallbacks,
         bindDirectiveDestroyLifecycleCallbacks,
         bindPipeDestroyLifecycleCallbacks,
         bindDirectiveDetectChangesLifecycleCallbacks;
-import 'property_binder.dart'
+import "property_binder.dart"
     show
         bindAndWriteToRenderer,
         bindRenderText,
         bindRenderInputs,
         bindDirectiveInputs,
         bindDirectiveHostProps;
-
-import 'view_compiler_utils.dart' show unwrapDirective, unwrapDirectiveInstance;
 
 /// Visits view nodes to generate code for bindings.
 ///
@@ -109,24 +106,6 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     for (var directiveAst in ast.directives) {
       index++;
       var directiveInstance = compileElement.directiveInstances[index];
-
-      if ((!directiveAst.directive.isComponent) &&
-          directiveAst.hostEvents.isNotEmpty) {
-        bool hasNativeEvent = false;
-        for (var hostEvent in directiveAst.hostEvents) {
-          if (isNativeHtmlEvent(hostEvent.name)) {
-            hasNativeEvent = true;
-          }
-        }
-        var instance = unwrapDirectiveInstance(directiveInstance);
-        // instance will be null if DirectiveAst was generated due to a provider
-        // on a method rather than an actual instance in the ast.
-        if (instance != null && hasNativeEvent) {
-          view.createMethod.addStmt(instance.callMethod('initHostEvents',
-              [o.THIS_EXPR, compileElement.renderNode]).toStmt());
-        }
-      }
-
       bindDirectiveInputs(directiveAst, directiveInstance, compileElement);
       bindDirectiveDetectChangesLifecycleCallbacks(
           directiveAst, directiveInstance, compileElement);

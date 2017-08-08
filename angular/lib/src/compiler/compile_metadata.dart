@@ -9,7 +9,6 @@ import '../facade/exceptions.dart' show BaseException;
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
 import 'selector.dart' show CssSelector;
-import 'html_events.dart';
 
 // group 1: 'property' from '[property]'
 // group 2: 'event' from '(event)'
@@ -510,7 +509,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   List<CompileQueryMetadata> viewQueries;
   CompileTemplateMetadata template;
   final AnalyzedClass analyzedClass;
-  bool _requiresDirectiveChangeDetector;
 
   CompileDirectiveMetadata(
       {this.type,
@@ -547,28 +545,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   @override
   CompileIdentifierMetadata get identifier => type;
-
-  /// Returns true if the directive requires a ChangeDetector class to be
-  /// generated.
-  ///
-  /// DirectiveChangeDetector classes should only be generated if they
-  /// reduce the amount of duplicate code. Therefore we check for the presence
-  /// of either inputs (to reduce change detection code) or outputs that
-  /// are DOM events to add listeners inside a initHostEvents method.
-  bool get requiresDirectiveChangeDetector {
-    if (_requiresDirectiveChangeDetector == null) {
-      bool hasDomListeners = false;
-      for (String eventName in hostListeners.keys) {
-        if (isNativeHtmlEvent(eventName)) {
-          hasDomListeners = true;
-        }
-      }
-      _requiresDirectiveChangeDetector = !isComponent &&
-          identifier.name != 'NgIf' &&
-          (inputs.isNotEmpty || hasDomListeners);
-    }
-    return _requiresDirectiveChangeDetector;
-  }
 }
 
 /// Construct [CompileDirectiveMetadata] from [ComponentTypeMetadata] and a

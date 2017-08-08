@@ -1,9 +1,6 @@
 // The .template.dart files also export the user code.
 export 'directives.dart';
 
-import 'dart:html';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-
 // Required for specifically referencing user code.
 import 'directives.dart' as _user;
 
@@ -15,7 +12,6 @@ import 'package:angular/angular.dart';
 class TestDirectiveNgCd extends DirectiveChangeDetector {
   external _user.TestDirective get instance;
   external TestDirectiveNgCd(_user.TestDirective instance);
-  external void initHostEvents(AppView view, Element node);
 }
 // For @Directive class TestDirectiveWithInputs.
 class TestDirectiveWithInputsNgCd extends DirectiveChangeDetector {
@@ -26,7 +22,6 @@ class TestDirectiveWithInputsNgCd extends DirectiveChangeDetector {
   external void ngSet$input1(String value);
   external void ngSet$input4(collection_lib.HashSet<DateTime> value);
   external void ngSet$input3(/* CAN NOT INFER: Class level. */ dynamic value);
-  external void initHostEvents(AppView view, Element node);
 }
 
 external void initReflector();
