@@ -6,9 +6,6 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/change_detection/directive_change_detector.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 
-import 'dart:html';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-
 // Required for specifically referencing user code.
 import 'directive_wrapper.dart' as _user;
 
@@ -38,13 +35,11 @@ class ChildDirectiveNgCd extends DirectiveChangeDetector {
   external void ngSet$input1WithString(String value);
   external void ngSet$inputWithIterable(Iterable<int> value);
   external void ngSet$gridRow(String value);
-  external void initHostEvents(AppView view, Element node);
 }
 // For @Directive class DirectiveWithOutput.
 class DirectiveWithOutputNgCd extends DirectiveChangeDetector {
   external _user.DirectiveWithOutput get instance;
   external DirectiveWithOutputNgCd(_user.DirectiveWithOutput instance);
-  external void initHostEvents(AppView view, Element node);
 }
 
 external void initReflector();

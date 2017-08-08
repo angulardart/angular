@@ -38,10 +38,8 @@ import 'package:angular/src/common/forms/directives/ng_control.dart'
     as import15;
 import 'package:angular/src/common/forms/directives/ng_form_model.template.dart'
     as import16;
-import 'package:angular/src/common/forms/directives/default_value_accessor.template.dart'
-    as import17;
 import 'package:angular/src/common/forms/directives/ng_control_name.template.dart'
-    as import18;
+    as import17;
 
 const List<dynamic> styles$TestFooComponent = const [
   'div._ngcontent-%COMP% { font-size:10px; }'
@@ -56,9 +54,9 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   import3.DivElement _el_0;
   ChildDirectiveNgCd _ChildDirective_0_4;
   import1.DirectiveWithOutput _DirectiveWithOutput_0_5;
-  var _expr_3;
-  var _expr_4;
-  bool _expr_5;
+  var _expr_5;
+  var _expr_6;
+  bool _expr_7;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -90,7 +88,10 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     import3.Text _text_1 = new import3.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 87);
-    _ChildDirective_0_4.initHostEvents(this, _el_0);
+    _el_0.addEventListener(
+        'click', eventHandler1(_ChildDirective_0_4.instance.handleClick));
+    _el_0.addEventListener(
+        'keypress', eventHandler1(_ChildDirective_0_4.instance.handleKeyPress));
     final subscription_0 = _ChildDirective_0_4.instance.trigger
         .listen(eventHandler1(_handle_trigger_0_0));
     final subscription_1 = _DirectiveWithOutput_0_5.eventXyz.listen(
@@ -120,20 +121,20 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     dbg(0, 0, 48);
     _ChildDirective_0_4.ngSet$gridRow(_ctx.rowIndex);
     dbg(0, 0, 0);
-    final currVal_3 = _ChildDirective_0_4.instance.tabIndex;
-    if (import8.checkBinding(_expr_3, currVal_3)) {
-      setProp(_el_0, 'tabIndex', currVal_3);
-      _expr_3 = currVal_3;
-    }
-    final currVal_4 = _ChildDirective_0_4.instance.disabledStr;
-    if (import8.checkBinding(_expr_4, currVal_4)) {
-      setAttr(_el_0, 'aria-disabled', currVal_4?.toString());
-      _expr_4 = currVal_4;
-    }
-    final currVal_5 = _ChildDirective_0_4.instance.disabled;
+    final currVal_5 = _ChildDirective_0_4.instance.tabIndex;
     if (import8.checkBinding(_expr_5, currVal_5)) {
-      updateClass(_el_0, 'is-disabled', currVal_5);
+      setProp(_el_0, 'tabIndex', currVal_5);
       _expr_5 = currVal_5;
+    }
+    final currVal_6 = _ChildDirective_0_4.instance.disabledStr;
+    if (import8.checkBinding(_expr_6, currVal_6)) {
+      setAttr(_el_0, 'aria-disabled', currVal_6?.toString());
+      _expr_6 = currVal_6;
+    }
+    final currVal_7 = _ChildDirective_0_4.instance.disabled;
+    if (import8.checkBinding(_expr_7, currVal_7)) {
+      updateClass(_el_0, 'is-disabled', currVal_7);
+      _expr_7 = currVal_7;
     }
   }
 
@@ -234,9 +235,9 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   import16.NgFormModelNgCd _NgFormModel_0_4;
   import11.NgFormModel _ControlContainer_0_5;
   import3.InputElement _el_2;
-  import17.DefaultValueAccessorNgCd _DefaultValueAccessor_2_4;
+  import13.DefaultValueAccessor _DefaultValueAccessor_2_4;
   List<dynamic> _const_OpaqueToken__NgValueAccessor___2_5;
-  import18.NgControlNameNgCd _NgControlName_2_6;
+  import17.NgControlNameNgCd _NgControlName_2_6;
   static RenderComponentType _renderType;
   ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -267,12 +268,9 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     _el_2 = createAndAppendDbg(this, doc, 'input', _el_0, 2, 1, 2);
     createAttr(_el_2, 'ngControl', 'login');
     createAttr(_el_2, 'type', 'text');
-    _DefaultValueAccessor_2_4 = new import17.DefaultValueAccessorNgCd(
-        new import13.DefaultValueAccessor(_el_2));
-    _const_OpaqueToken__NgValueAccessor___2_5 = [
-      _DefaultValueAccessor_2_4.instance
-    ];
-    _NgControlName_2_6 = new import18.NgControlNameNgCd(
+    _DefaultValueAccessor_2_4 = new import13.DefaultValueAccessor(_el_2);
+    _const_OpaqueToken__NgValueAccessor___2_5 = [_DefaultValueAccessor_2_4];
+    _NgControlName_2_6 = new import17.NgControlNameNgCd(
         new import14.NgControlName(_ControlContainer_0_5, null,
             _const_OpaqueToken__NgValueAccessor___2_5));
     import3.Text _text_3 = new import3.Text('\n');
@@ -280,7 +278,9 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     dbgElm(this, _text_3, 3, 1, 39);
     import8.appViewUtils.eventManager.addEventListener(
         _el_0, 'submit', eventHandler1(_NgFormModel_0_4.instance.onSubmit));
-    _DefaultValueAccessor_2_4.initHostEvents(this, _el_2);
+    _el_2.addEventListener('input', eventHandler1(_handle_input_2_0));
+    _el_2.addEventListener(
+        'blur', eventHandler0(_DefaultValueAccessor_2_4.touchHandler));
     init(const [], const [], [_el_0, _text_1, _el_2, _text_3]);
     return null;
   }
@@ -289,7 +289,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import13.DefaultValueAccessor) && (2 == nodeIndex))) {
-      return _DefaultValueAccessor_2_4.instance;
+      return _DefaultValueAccessor_2_4;
     }
     if ((identical(token, const OpaqueToken('NgValueAccessor')) &&
         (2 == nodeIndex))) {
@@ -329,6 +329,11 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   void destroyInternal() {
     dbg(2, 1, 2);
     _NgControlName_2_6.instance.ngOnDestroy();
+  }
+
+  void _handle_input_2_0($event) {
+    dbg(2, 1, 2);
+    _DefaultValueAccessor_2_4.onChange($event.target.value);
   }
 }
 
@@ -436,16 +441,6 @@ class ChildDirectiveNgCd {
     return; // ignore: dead_code
     return; // ignore: dead_code
     return; // ignore: dead_code
-  }
-
-  void initHostEvents(AppView<dynamic> view, import3.Element node) {
-    var _ctx = view.ctx;
-    var eventHandler0 = view.eventHandler0;
-    var eventHandler1 = view.eventHandler1;
-    node.addEventListener('click', eventHandler1(instance.handleClick));
-    node.addEventListener('keypress', eventHandler1(instance.handleKeyPress));
-    import8.appViewUtils.eventManager.addEventListener(node, 'eventXyz',
-        eventHandler1(instance.handleXyzEventFromOtherDirective));
   }
 }
 
