@@ -1,20 +1,56 @@
 # angular_test
 
-[![Pub Package](https://img.shields.io/pub/v/angular_test.svg)](https://pub.dartlang.org/packages/angular_test)
+[![Pub package](https://img.shields.io/pub/v/angular_test.svg)][pub_angular_test]
 
-Testing infrastructure and runner for [AngularDart][gh_angular_dart].
+Testing infrastructure and runner for [AngularDart][webdev_angular],
+used with the [`test` package][pub_test].
 
-[gh_angular_dart]: https://github.com/dart-lang/angular
+Documentation and examples:
 
-It's **strongly recommended** to view the `test/` folder for examples and recommended patterns.
+* [`_tests/test/`][test_folder] (tests for dart-lang/angular packages)
+  <br>
+  We strongly recommend that you **follow the patterns in these tests**.
+* [AngularDart component testing documentation][webdev_testing]:
+  * [Running Component Tests](https://webdev.dartlang.org/angular/guide/testing/component/running-tests)
+  * [Component Testing: Basics](https://webdev.dartlang.org/angular/guide/testing/component/basics)
+  * Pages for individual topics, such as
+    [page objects](https://webdev.dartlang.org/angular/guide/testing/component/page-objects)
+    and
+    [user actions](https://webdev.dartlang.org/angular/guide/testing/component/simulating-user-action)
 
-## Usage
+[pub_angular_test]: https://pub.dartlang.org/packages/angular_test
+[pub_test]: https://pub.dartlang.org/packages/test
+[test_folder]: https://github.com/dart-lang/angular/tree/master/_tests/test
+[webdev_angular]: https://webdev.dartlang.org/angular
+[webdev_testing]: https://webdev.dartlang.org/angular/guide/testing/component
 
-`angular_test` is both a framework for writing tests for AngularDart components _and_ a
-test _runner_ that delegates to both `pub serve` and `pub run test` to run component tests
-using the AOT-compiler - `angular_test` **does not function in reflective mode**.
+Additional resources:
 
-Example use:
+* [API reference][dartdoc]
+* Community/support:
+  [mailing list][],
+  [Gitter chat room][]
+* GitHub repo (dart-lang/angular):
+  [source code](https://github.com/dart-lang/angular),
+  [test issues][]
+* Pub packages: [angular_test][pub_angular_test], [test][pub_test]
+
+[dartdoc]: https://www.dartdocs.org/documentation/angular_test/latest
+[Gitter chat room]: https://gitter.im/dart-lang/angular
+[mailing list]: https://groups.google.com/a/dartlang.org/forum/#!forum/web
+[test issues]: https://github.com/dart-lang/angular/issues?q=is%3Aopen+is%3Aissue+label%3A%22package%3A+angular_test%22
+[source code]: https://github.com/dart-lang/angular
+
+
+## Overview
+
+`angular_test` is both a framework for writing tests for AngularDart components
+and a test _runner_ that delegates to `pub serve` and `pub run test` to run
+component tests using the AOT compiler.
+
+**Note:** `angular_test` **does not function in reflective mode**.
+
+Here's an example of an AngularDart test:
 
 ```dart
 @Tags(const ['aot'])
@@ -44,40 +80,38 @@ class HelloWorldComponent {
 }
 ```
 
-You will need to also configure in `pubspec.yaml` to run code generation:
+To use `angular_test`, configure your package's `pubspec.yaml` as follows:
 
 ```yaml
 transformers:
   # Run the code generator on the entire package.
   - angular/transform/codegen
 
-  # Run the reflection remover on tests that have AoT enabled.
+  # Run the reflection remover on tests that have AOT enabled.
   - angular/transform/reflection_remover:
       $include:
           - test/test_using_angular_test.dart
 
-  # Allow test to proxy-load files so we can run AoT tests w/ pub serve.
+  # Allow test to proxy-load files so we can run AOT tests with pub serve.
   - test/pub_serve:
       $include: test/**_test.dart
 
 ```
 
-## Running
-
-Use `pub run angular_test` - it will automatically run `pub serve` to run code generation
-(transformers) and `pub run test` to run browser tests on anything tagged with `'aot'`. You'll also need to declare a specific [browser test platform: `dartium` or `content-shell`](test-on-dartium) are the most common choices. For example:
-
-[test-on-dartium]: https://pub.dartlang.org/packages/test#running-tests-on-dartium
+To run tests, use `pub run angular_test`. It automatically runs `pub serve` to
+run code generation (transformers) and `pub run test` to run browser tests on
+anything tagged with `'aot'`. Also declare a specific browser test platform,
+as described in the [`test` package description][pub_test];
+`dartium` and `content-shell` are the most common choices. Here's an example
+of running tests using the content shell:
 
 ```sh
 pub run angular_test --test-arg=--tags=aot --test-arg=--platform=content-shell
 ```
 
-Use one or more
-- `--test-arg` to pass arguments to `pub run test`
-- `--serve-arg` to pass arguments to `pub serve`
+### Options
 
-### Usage
+The `angular_test` script can accept the following options:
 
 ```
 --package              What directory containing a pub package to run tests in

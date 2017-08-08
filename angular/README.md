@@ -58,12 +58,14 @@ AngularDart is available as the [`angular` package on pub][pub_angular].
    [angular_components][pub_angular_components],
    [angular_router][pub_angular_router],
    [angular_test][pub_angular_test]
- * [Source code](https://github.com/dart-lang/angular)
- * [Issues](https://github.com/dart-lang/angular/issues)
- * [Contributor guidelines][contribute]
- * [Logo](https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.svg)
- * [Mailing list](https://groups.google.com/a/dartlang.org/forum/#!forum/web)
- * [Gitter chat room](https://gitter.im/dart-lang/angular)
+ * GitHub repo (dart-lang/angular):
+   [source code](https://github.com/dart-lang/angular),
+   [issues](https://github.com/dart-lang/angular/issues),
+   [contributor guidelines][contribute]
+ * Community/support:
+   [mailing list](https://groups.google.com/a/dartlang.org/forum/#!forum/web),
+   [Gitter chat room](https://gitter.im/dart-lang/angular)
+ * [Logo (SVG)](https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.svg)
  * [Documentation][webdev_angular]
 
 [ad_sense]: http://news.dartlang.org/2016/10/google-adsense-angular-dart.html
