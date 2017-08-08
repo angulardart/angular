@@ -1,16 +1,10 @@
 import 'package:logging/logging.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
-
-import 'constants.dart' show EventHandlerVars;
-import 'property_binder.dart' show isPrimitiveFieldType;
-import 'view_compiler_utils.dart' show writeHostEventListeners;
-import 'view_name_resolver.dart';
-
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompileIdentifierMetadata;
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
-import '../expression_parser/parser.dart' show Parser;
+import 'property_binder.dart' show isPrimitiveFieldType;
 
 class DirectiveCompileResult {
   final o.ClassStmt _changeDetectorClass;
@@ -19,8 +13,14 @@ class DirectiveCompileResult {
   List<o.Statement> get statements => [_changeDetectorClass];
 }
 
+/// Returns true if a change detector class should be created for this
+/// specific directive.
+bool requiresDirectiveChangeDetector(CompileDirectiveMetadata meta) =>
+    !meta.isComponent &&
+    meta.inputs.isNotEmpty &&
+    meta.identifier.name != 'NgIf';
+
 class DirectiveCompiler {
-  final Parser _parser;
   final CompileDirectiveMetadata directive;
   final bool genDebugInfo;
   Logger _logger;
@@ -29,12 +29,12 @@ class DirectiveCompiler {
   int expressionFieldCounter = 0;
   final bool hasOnChangesLifecycle;
 
-  DirectiveCompiler(this.directive, this._parser, this.genDebugInfo)
+  DirectiveCompiler(this.directive, this.genDebugInfo)
       : hasOnChangesLifecycle =
             directive.lifecycleHooks.contains(LifecycleHooks.OnChanges);
 
   DirectiveCompileResult compile() {
-    assert(directive.requiresDirectiveChangeDetector);
+    assert(requiresDirectiveChangeDetector(directive));
     var classStmt = _buildChangeDetector();
     return new DirectiveCompileResult(classStmt);
   }
@@ -49,7 +49,6 @@ class DirectiveCompiler {
     if (hasOnChangesLifecycle) {
       superClassExpr = o.importExpr(Identifiers.DirectiveChangeDetector);
     }
-    _buildInitHostEvents();
     var changeDetectorClass = new o.ClassStmt(changeDetectorClassName,
         superClassExpr, fields ?? const [], const [], ctor, viewMethods);
     return changeDetectorClass;
@@ -156,39 +155,6 @@ class DirectiveCompiler {
         [new o.FnParam(valueParameterName, inputType)], statements);
   }
 
-  void _buildInitHostEvents() {
-    if (directive.hostListeners.isEmpty) return;
-    var statements = <o.Statement>[];
-    var appViewType = o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE]);
-
-    statements
-        .add(new o.DeclareVarStmt('_ctx', o.variable('view').prop('ctx')));
-    statements.add(new o.DeclareVarStmt(
-        'eventHandler0', o.variable('view').prop('eventHandler0')));
-    statements.add(new o.DeclareVarStmt(
-        'eventHandler1', o.variable('view').prop('eventHandler1')));
-
-    var directiveInstance = new o.ReadClassMemberExpr('instance');
-
-    writeHostEventListeners(
-        directive,
-        o.variable('node'),
-        directiveInstance,
-        directiveInstance,
-        new DirectiveNameResolver(),
-        _parser,
-        statements,
-        viewMethods);
-
-    viewMethods.add(new o.ClassMethod(
-        'initHostEvents',
-        [
-          new o.FnParam('view', appViewType),
-          new o.FnParam('node', o.importType(Identifiers.HTML_ELEMENT))
-        ],
-        statements));
-  }
-
   static String buildInputUpdateMethodName(String input) => 'ngSet\$$input';
 
   void addField(o.ClassField field) {
@@ -197,26 +163,4 @@ class DirectiveCompiler {
   }
 
   String get changeDetectorClassName => '${directive.type.name}NgCd';
-}
-
-class DirectiveNameResolver extends ViewNameResolver {
-  DirectiveNameResolver() : super(null);
-
-  void addLocal(String name, o.Expression e) {
-    throw new UnsupportedError('Locals are not supported in directives');
-  }
-
-  @override
-  o.Expression getLocal(String name) {
-    if (name == EventHandlerVars.event.name) {
-      return EventHandlerVars.event;
-    }
-    return null;
-  }
-
-  @override
-  o.Expression callPipe(
-      String name, o.Expression input, List<o.Expression> args) {
-    throw new UnsupportedError('Pipes are not support in directives');
-  }
 }
