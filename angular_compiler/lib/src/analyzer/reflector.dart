@@ -152,6 +152,11 @@ class ReflectableReader {
     return null;
   }
 
+  String _withOutputExtension(String uri) {
+    final extensionAt = uri.lastIndexOf('.');
+    return uri.substring(0, extensionAt) + outputExtension;
+  }
+
   Future<List<String>> _resolveNeedsReflector(LibraryElement library) async {
     final directives = library.definingCompilationUnit.computeNode().directives;
     final results = <String>[];
@@ -160,7 +165,7 @@ class ReflectableReader {
         var uri = (d as ast.UriBasedDirective).uri.stringValue;
         // Always link to the .template.dart file equivalent of a file.
         if (!uri.endsWith(outputExtension)) {
-          uri = '${p.basenameWithoutExtension(uri)}$outputExtension';
+          uri = _withOutputExtension(uri);
         }
         results.add(uri);
       }
