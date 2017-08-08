@@ -36,5 +36,6 @@ export 'src/analyzer.dart'
         $SkipSelf,
         $ViewChild,
         $ViewChildren;
+export 'src/emitter/reflector.dart' show ReflectableEmitter;
 export 'src/flags.dart' show CompilerFlags, Profile;
 export 'src/outliner.dart' show TemplateOutliner;
