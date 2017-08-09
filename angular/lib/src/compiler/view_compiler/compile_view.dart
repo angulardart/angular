@@ -16,8 +16,7 @@ import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart'
     show CompileQuery, createQueryListField, addQueryToTokenMap;
-import 'view_compiler_utils.dart'
-    show getViewFactoryName, getPropertyInView, createPureProxy;
+import 'view_compiler_utils.dart' show getViewFactoryName;
 import 'view_name_resolver.dart';
 
 /// Represents data to generate a host, component or embedded AppView.

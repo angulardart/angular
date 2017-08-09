@@ -1,16 +1,16 @@
 import 'package:logging/logging.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 
+import '../compile_metadata.dart'
+    show CompileDirectiveMetadata, CompileIdentifierMetadata;
+import '../expression_parser/parser.dart' show Parser;
+import '../identifiers.dart';
+import '../output/output_ast.dart' as o;
+
 import 'constants.dart' show EventHandlerVars;
 import 'property_binder.dart' show isPrimitiveFieldType;
 import 'view_compiler_utils.dart' show writeHostEventListeners;
 import 'view_name_resolver.dart';
-
-import '../compile_metadata.dart'
-    show CompileDirectiveMetadata, CompileIdentifierMetadata;
-import '../identifiers.dart';
-import '../output/output_ast.dart' as o;
-import '../expression_parser/parser.dart' show Parser;
 
 class DirectiveCompileResult {
   final o.ClassStmt _changeDetectorClass;

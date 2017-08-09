@@ -81,7 +81,7 @@ class CssSelector {
         notSelectors.isEmpty;
   }
 
-  void setElement([String element = null]) {
+  void setElement([String element]) {
     this.element = element;
   }
 
