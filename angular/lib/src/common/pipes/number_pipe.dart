@@ -9,7 +9,7 @@ final RegExp _re = new RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 /// Internal base class for numeric pipes.
 class _NumberPipe {
   static String _format(num value, _NumberFormatStyle style, String digits,
-      [String currency = null, bool currencyAsSymbol = false]) {
+      [String currency, bool currencyAsSymbol = false]) {
     if (value == null) return null;
     if (value is! num) {
       throw new InvalidPipeArgumentException(_NumberPipe, value);
