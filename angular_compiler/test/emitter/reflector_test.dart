@@ -44,7 +44,7 @@ void main() {
     );
   });
 
-  test('should support registration', () async {
+  test('should support reflector linking', () async {
     final reflector = new ReflectableReader(
       // We have no inputs to this "build".
       hasInput: (_) => false,
@@ -72,10 +72,91 @@ void main() {
       ''
           'void initReflector() {\n'
           '  _ref0.initReflector();\n'
-          '  // TODO: Register functions and classes.\n'
+          '  _ngRef.registerFactory(\n'
+          '    Example,\n'
+          '    () => new Example(),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    Example,\n'
+          '    const [],\n'
+          '  );\n'
+          '\n'
           '}\n',
     );
   });
 
-  // TODO(matanl): Add remaining test cases (functions, components, etc).
+  test('should support factory registration', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      @Injectable()
+      class Example {}
+
+      @Injectable()
+      Example createExample(String parameter) => new Example();
+    '''));
+    final emitter = new ReflectableEmitter(
+      output,
+      reflectorSource: libReflection,
+    );
+    expect(
+      emitter.emitInitReflector(),
+      ''
+          'void initReflector() {\n'
+          '  _ngRef.registerFactory(\n'
+          '    createExample,\n'
+          '    (String p0) => createExample(p0),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    createExample,\n'
+          '    const [const [String,],],\n'
+          '  );\n'
+          '\n'
+          '  _ngRef.registerFactory(\n'
+          '    Example,\n'
+          '    () => new Example(),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    Example,\n'
+          '    const [],\n'
+          '  );\n'
+          '\n'
+          '}\n',
+    );
+  });
+
+  test('should support component registration', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      @Component(selector: 'example')
+      class Example {}
+    '''));
+    final emitter = new ReflectableEmitter(
+      output,
+      reflectorSource: libReflection,
+    );
+    expect(
+      emitter.emitInitReflector(),
+      ''
+          'void initReflector() {\n'
+          '  _ngRef.registerComponent(\n'
+          '    Example,\n'
+          '    ExampleNgFactory,\n'
+          '  );\n'
+          '  _ngRef.registerFactory(\n'
+          '    Example,\n'
+          '    () => new Example(),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    Example,\n'
+          '    const [],\n'
+          '  );\n'
+          '\n'
+          '}\n',
+    );
+  });
+
+  // TODO(matanl): Add remaining test cases:
+  // 1. @RouteConfig.
+  // 2. @Directive.
+  // 3. @Pipe.
 }

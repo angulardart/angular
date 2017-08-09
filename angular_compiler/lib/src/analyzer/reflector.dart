@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:analyzer/dart/ast/ast.dart' as ast;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:collection/collection.dart';
-import 'package:path/path.dart' as p;
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -192,7 +191,7 @@ class ReflectableReader {
       if (uri.startsWith('dart:')) {
         return false;
       }
-      final outputUri = '${p.basenameWithoutExtension(uri)}$outputExtension';
+      final outputUri = _withOutputExtension(uri);
       return isLibrary(outputUri) || await hasInput(uri);
     }
     return false;
