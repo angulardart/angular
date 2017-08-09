@@ -537,8 +537,6 @@ void _bindDirectiveInputsOnChangeDetectorClass(DirectiveAst directiveAst,
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var constStatements = <o.Statement>[];
   var dynamicStatements = <o.Statement>[];
-  var lifecycleHooks = directiveAst.directive.lifecycleHooks;
-  var calcChangesMap = lifecycleHooks.contains(LifecycleHooks.OnChanges);
 
   // directiveAst contains the target directive we are updating.
   // input is a BoundPropertyAst that contains binding metadata.
