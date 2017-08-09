@@ -168,7 +168,7 @@ abstract class AbstractControl {
     return control._errors[errorCode];
   }
 
-  bool hasError(String errorCode, [List<String> path = null]) =>
+  bool hasError(String errorCode, [List<String> path]) =>
       getError(errorCode, path) != null;
 
   AbstractControl get root {
@@ -222,8 +222,7 @@ abstract class AbstractControl {
 class Control extends AbstractControl {
   Function _onChange;
   String _rawValue;
-  Control([dynamic value = null, ValidatorFn validator = null])
-      : super(validator) {
+  Control([dynamic value, ValidatorFn validator]) : super(validator) {
     //// super call moved to initializer */;
     _value = value;
     updateValueAndValidity(onlySelf: true, emitEvent: false);
@@ -389,8 +388,7 @@ class ControlGroup extends AbstractControl {
 /// detection.
 class ControlArray extends AbstractControl {
   List<AbstractControl> controls;
-  ControlArray(this.controls, [ValidatorFn validator = null])
-      : super(validator) {
+  ControlArray(this.controls, [ValidatorFn validator]) : super(validator) {
     _initObservables();
     _setParentForControls();
     updateValueAndValidity(onlySelf: true, emitEvent: false);

@@ -1,7 +1,7 @@
 import 'package:angular/src/compiler/compile_metadata.dart';
 
 class AST {
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) {
+  dynamic visit(AstVisitor visitor, [dynamic context]) {
     return null;
   }
 
@@ -11,7 +11,7 @@ class AST {
 
 class EmptyExpr extends AST {
   @override
-  void visit(AstVisitor visitor, [dynamic context = null]) =>
+  void visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitEmptyExpr(this, context);
 }
 
@@ -20,13 +20,13 @@ class StaticRead extends AST {
   StaticRead(this.id);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitStaticRead(this, context);
 }
 
 class ImplicitReceiver extends AST {
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitImplicitReceiver(this, context);
 }
 
@@ -35,7 +35,7 @@ class Chain extends AST {
   List<dynamic> expressions;
   Chain(this.expressions);
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitChain(this, context);
 }
 
@@ -45,7 +45,7 @@ class Conditional extends AST {
   AST falseExp;
   Conditional(this.condition, this.trueExp, this.falseExp);
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitConditional(this, context);
 }
 
@@ -59,7 +59,7 @@ class IfNull extends AST {
 
   IfNull(this.condition, this.nullExp);
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitIfNull(this, context);
 }
 
@@ -68,7 +68,7 @@ class PropertyRead extends AST {
   String name;
   PropertyRead(this.receiver, this.name);
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitPropertyRead(this, context);
 }
 
@@ -78,7 +78,7 @@ class PropertyWrite extends AST {
   AST value;
   PropertyWrite(this.receiver, this.name, this.value);
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) {
+  dynamic visit(AstVisitor visitor, [dynamic context]) {
     return visitor.visitPropertyWrite(this, context);
   }
 }
@@ -88,7 +88,7 @@ class SafePropertyRead extends AST {
   String name;
   SafePropertyRead(this.receiver, this.name);
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitSafePropertyRead(this, context);
 }
 
@@ -98,7 +98,7 @@ class KeyedRead extends AST {
   KeyedRead(this.obj, this.key);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitKeyedRead(this, context);
 }
 
@@ -109,7 +109,7 @@ class KeyedWrite extends AST {
   KeyedWrite(this.obj, this.key, this.value);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitKeyedWrite(this, context);
 }
 
@@ -120,7 +120,7 @@ class BindingPipe extends AST {
   BindingPipe(this.exp, this.name, this.args);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitPipe(this, context);
 }
 
@@ -129,7 +129,7 @@ class LiteralPrimitive extends AST {
   LiteralPrimitive(this.value);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitLiteralPrimitive(this, context);
 }
 
@@ -138,7 +138,7 @@ class LiteralArray extends AST {
   LiteralArray(this.expressions);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitLiteralArray(this, context);
 }
 
@@ -148,7 +148,7 @@ class LiteralMap extends AST {
   LiteralMap(this.keys, this.values);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) {
+  dynamic visit(AstVisitor visitor, [dynamic context]) {
     return visitor.visitLiteralMap(this, context);
   }
 }
@@ -159,7 +159,7 @@ class Interpolation extends AST {
   Interpolation(this.strings, this.expressions);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) {
+  dynamic visit(AstVisitor visitor, [dynamic context]) {
     return visitor.visitInterpolation(this, context);
   }
 }
@@ -171,7 +171,7 @@ class Binary extends AST {
   Binary(this.operation, this.left, this.right);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitBinary(this, context);
 }
 
@@ -180,7 +180,7 @@ class PrefixNot extends AST {
   PrefixNot(this.expression);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitPrefixNot(this, context);
 }
 
@@ -191,7 +191,7 @@ class MethodCall extends AST {
   MethodCall(this.receiver, this.name, this.args);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitMethodCall(this, context);
 }
 
@@ -202,7 +202,7 @@ class SafeMethodCall extends AST {
   SafeMethodCall(this.receiver, this.name, this.args);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitSafeMethodCall(this, context);
 }
 
@@ -212,7 +212,7 @@ class FunctionCall extends AST {
   FunctionCall(this.target, this.args);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) =>
+  dynamic visit(AstVisitor visitor, [dynamic context]) =>
       visitor.visitFunctionCall(this, context);
 }
 
@@ -223,7 +223,7 @@ class ASTWithSource extends AST {
   ASTWithSource(this.ast, this.source, this.location);
 
   @override
-  dynamic visit(AstVisitor visitor, [dynamic context = null]) {
+  dynamic visit(AstVisitor visitor, [dynamic context]) {
     return this.ast.visit(visitor, context);
   }
 
