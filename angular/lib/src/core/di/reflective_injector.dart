@@ -388,7 +388,7 @@ abstract class ReflectiveInjector implements Injector {
   ///
   static ReflectiveInjector resolveAndCreate(
       List<dynamic /* Type | Provider | List < dynamic > */ > providers,
-      [Injector parent = null]) {
+      [Injector parent]) {
     var ResolvedReflectiveProviders = ReflectiveInjector.resolve(providers);
     return ReflectiveInjector.fromResolvedProviders(
         ResolvedReflectiveProviders, parent);
@@ -414,7 +414,7 @@ abstract class ReflectiveInjector implements Injector {
   ///
   static ReflectiveInjector fromResolvedProviders(
       List<ResolvedReflectiveProvider> providers,
-      [Injector parent = null]) {
+      [Injector parent]) {
     return new ReflectiveInjectorImpl(
         ReflectiveProtoInjector.fromResolvedProviders(providers), parent);
   }
@@ -517,8 +517,7 @@ class ReflectiveInjectorImpl implements ReflectiveInjector {
   ReflectiveInjectorStrategy _strategy;
   num _constructionCounter = 0;
 
-  ReflectiveInjectorImpl(this._proto,
-      [this._parent = null, this._debugContext = null]) {
+  ReflectiveInjectorImpl(this._proto, [this._parent, this._debugContext]) {
     _strategy = _proto._strategy.createInjectorStrategy(this);
   }
 

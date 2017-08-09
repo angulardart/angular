@@ -1,9 +1,9 @@
 import 'package:source_span/source_span.dart';
 import '../../core/linker/view_type.dart';
 import '../expression_parser/parser.dart';
+import '../html_events.dart';
 import '../output/output_ast.dart' as o;
 import '../schema/element_schema_registry.dart';
-import '../html_events.dart';
 import "../template_ast.dart"
     show
         TemplateAst,
@@ -46,7 +46,7 @@ import 'property_binder.dart'
         bindDirectiveInputs,
         bindDirectiveHostProps;
 
-import 'view_compiler_utils.dart' show unwrapDirective, unwrapDirectiveInstance;
+import 'view_compiler_utils.dart' show unwrapDirectiveInstance;
 
 /// Visits view nodes to generate code for bindings.
 ///

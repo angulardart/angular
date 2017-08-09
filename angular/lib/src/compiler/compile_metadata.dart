@@ -8,8 +8,8 @@ import '../core/url_resolver.dart' show getUrlScheme;
 import '../facade/exceptions.dart' show BaseException;
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
-import 'selector.dart' show CssSelector;
 import 'html_events.dart';
+import 'selector.dart' show CssSelector;
 
 // group 1: 'property' from '[property]'
 // group 2: 'event' from '(event)'

@@ -68,7 +68,7 @@ class ComponentFactory {
 
   // https://github.com/dart-lang/sdk/issues/21553
   const ComponentFactory(this.selector, this._viewFactory, this._componentType,
-      [this._metadataPairs = null]);
+      [this._metadataPairs]);
 
   Type get componentType => _componentType;
 

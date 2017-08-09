@@ -49,7 +49,7 @@ class FormBuilder {
   ///
   /// See the [ControlGroup] constructor for more details.
   model_module.ControlGroup group(Map<String, dynamic> controlsConfig,
-      [Map<String, dynamic> extra = null]) {
+      [Map<String, dynamic> extra]) {
     var controls = _reduceControls(controlsConfig);
     var optionals =
         ((extra != null ? extra['optionals'] : null) as Map<String, bool>);
@@ -59,14 +59,14 @@ class FormBuilder {
   }
 
   /// Construct a new [Control] with the given [value], and [validator].
-  model_module.Control control(Object value, [ValidatorFn validator = null]) {
+  model_module.Control control(Object value, [ValidatorFn validator]) {
     return new model_module.Control(value, validator);
   }
 
   /// Construct an array of [Control]s from the given [controlsConfig] array of
   /// configuration, with the given optional [validator].
   model_module.ControlArray array(List<dynamic> controlsConfig,
-      [ValidatorFn validator = null]) {
+      [ValidatorFn validator]) {
     var controls = controlsConfig.map((c) => _createControl(c)).toList();
     return new model_module.ControlArray(controls, validator);
   }

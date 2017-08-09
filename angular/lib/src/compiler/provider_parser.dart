@@ -257,7 +257,7 @@ class ProviderElementContext implements ElementProviderUsage {
 
   CompileDiDependencyMetadata _getLocalDependency(
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep,
-      [bool eager = null]) {
+      [bool eager]) {
     if (dep.isAttribute) {
       var attrValue = this._attrs[dep.token.value];
       return new CompileDiDependencyMetadata(isValue: true, value: attrValue);
@@ -297,7 +297,7 @@ class ProviderElementContext implements ElementProviderUsage {
 
   CompileDiDependencyMetadata _getDependency(
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep,
-      [bool eager = null]) {
+      [bool eager]) {
     ProviderElementContext currElement = this;
     bool currEager = eager;
     CompileDiDependencyMetadata result;
@@ -376,7 +376,7 @@ List<CompileProviderMetadata> _normalizeProviders(
         providers,
     SourceSpan sourceSpan,
     List<ParseError> targetErrors,
-    [List<CompileProviderMetadata> targetProviders = null]) {
+    [List<CompileProviderMetadata> targetProviders]) {
   targetProviders ??= <CompileProviderMetadata>[];
   if (providers != null) {
     for (var provider in providers) {

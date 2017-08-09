@@ -53,7 +53,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 /// The second example uses the string `'abcdefghij'`.
 @Pipe('slice', pure: false)
 class SlicePipe implements PipeTransform {
-  dynamic transform(dynamic value, num start, [num end = null]) {
+  dynamic transform(dynamic value, num start, [num end]) {
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(SlicePipe, value);
     }

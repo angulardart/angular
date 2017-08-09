@@ -10,9 +10,8 @@ import '../html_events.dart';
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;
-import 'constants.dart'
-    show EventHandlerVars, DetectChangesVars, appViewRootElementName;
-import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
+import 'constants.dart' show EventHandlerVars;
+import 'event_binder.dart' show convertStmtIntoExpression;
 import 'expression_converter.dart';
 import 'parse_utils.dart';
 

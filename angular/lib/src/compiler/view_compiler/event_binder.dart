@@ -1,6 +1,6 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
-import '../identifiers.dart' show Identifiers;
 import '../html_events.dart';
+import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_element.dart' show CompileElement;
