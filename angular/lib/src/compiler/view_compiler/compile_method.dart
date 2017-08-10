@@ -2,6 +2,7 @@ import 'package:source_span/source_span.dart';
 
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show TemplateAst;
+import "compile_view.dart" show CompileView;
 
 class _DebugState {
   num nodeIndex;
@@ -9,7 +10,7 @@ class _DebugState {
   _DebugState(this.nodeIndex, this.sourceAst);
 }
 
-var _nullDebugState = new _DebugState(null, null);
+var NULL_DEBUG_STATE = new _DebugState(null, null);
 
 /// Creates a list of statements for a method body that include debug context.
 ///
@@ -18,15 +19,16 @@ var _nullDebugState = new _DebugState(null, null);
 ///
 /// Use addStmt/addStmts to add statements at the current checkpoint.
 class CompileMethod {
+  _DebugState _newState = NULL_DEBUG_STATE;
+  _DebugState _currState = NULL_DEBUG_STATE;
+  bool _debugEnabled;
   final _bodyStatements = <o.Statement>[];
-  final bool genDebugInfo;
-  _DebugState _newState = _nullDebugState;
-  _DebugState _currState = _nullDebugState;
   int _curNodeIndex;
   SourceLocation _curSourceLocation;
 
-  CompileMethod(this.genDebugInfo);
-
+  CompileMethod(CompileView view) {
+    _debugEnabled = view.genConfig.genDebugInfo;
+  }
   void _updateDebugContextIfNeeded() {
     if ((_newState.nodeIndex != _currState.nodeIndex) ||
         (_newState.sourceAst != _currState.sourceAst)) {
@@ -39,7 +41,7 @@ class CompileMethod {
 
   o.Expression _updateDebugContext(_DebugState newState) {
     _currState = _newState = newState;
-    if (genDebugInfo) {
+    if (_debugEnabled) {
       var sourceLocation = newState.sourceAst != null
           ? newState.sourceAst.sourceSpan.start
           : null;
@@ -75,7 +77,6 @@ class CompileMethod {
   }
 
   void addStmts(List<o.Statement> stmts) {
-    if (stmts.isEmpty) return;
     _updateDebugContextIfNeeded();
     _bodyStatements.addAll(stmts);
   }

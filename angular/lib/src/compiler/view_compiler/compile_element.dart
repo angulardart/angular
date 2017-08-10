@@ -144,7 +144,7 @@ class CompileElement extends CompileNode {
     var parentNodeIndex = isRootElement ? null : parent.nodeIndex;
 
     // Create instance field for app element.
-    view.nameResolver.addField(new o.ClassField(fieldName,
+    view.fields.add(new o.ClassField(fieldName,
         outputType: o.importType(Identifiers.ViewContainer),
         modifiers: [o.StmtModifier.Private]));
 
@@ -623,7 +623,7 @@ o.Expression createProviderProperty(
         compileElement.hasTemplateRefQuery ||
         provider.dynamicallyReachable) {
       if (providerHasChangeDetector) {
-        view.nameResolver.addField(new o.ClassField(propName,
+        view.fields.add(new o.ClassField(propName,
             outputType: o.importType(changeDetectorType),
             modifiers: const [o.StmtModifier.Private]));
         view.createMethod.addStmt(new o.WriteClassMemberExpr(
@@ -637,7 +637,7 @@ o.Expression createProviderProperty(
             'instance',
             outputType: forceDynamic ? o.DYNAMIC_TYPE : type);
       } else {
-        view.nameResolver.addField(new o.ClassField(propName,
+        view.fields.add(new o.ClassField(propName,
             outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
             modifiers: const [o.StmtModifier.Private]));
         view.createMethod.addStmt(
@@ -656,14 +656,14 @@ o.Expression createProviderProperty(
     // We don't have to eagerly initialize this object. Add an uninitialized
     // class field and provide a getter to construct the provider on demand.
     var internalField = '_$propName';
-    view.nameResolver.addField(new o.ClassField(internalField,
+    view.fields.add(new o.ClassField(internalField,
         outputType: forceDynamic
             ? o.DYNAMIC_TYPE
             : (providerHasChangeDetector
                 ? o.importType(changeDetectorType)
                 : type),
         modifiers: const [o.StmtModifier.Private]));
-    var getter = new CompileMethod(view.genDebugInfo);
+    var getter = new CompileMethod(view);
     getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
 
     if (providerHasChangeDetector) {

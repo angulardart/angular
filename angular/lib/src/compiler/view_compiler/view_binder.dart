@@ -202,21 +202,16 @@ void bindViewHostProperties(CompileView view, Parser parser,
         elementName, propName, exprAst, span, schemaRegistry, errorCallback));
   });
 
-  final CompileMethod method = new CompileMethod(view.genDebugInfo);
-  var compileElement = view.componentView.declarationElement;
-  var renderNode = view.componentView.declarationElement.renderNode;
+  var hostMethod = new CompileMethod(view);
   bindAndWriteToRenderer(
       hostProperties,
       o.THIS_EXPR,
       new o.ReadClassMemberExpr('ctx'),
-      view.component,
-      renderNode,
-      compileElement.isHtmlElement,
-      view.nameResolver,
-      method,
-      view.genDebugInfo,
+      view,
+      view.componentView.declarationElement,
+      hostMethod,
       updatingHost: true);
-  if (method.isNotEmpty) {
-    view.detectHostChangesMethod = method;
+  if (hostMethod.isNotEmpty) {
+    view.detectHostChangesMethod = hostMethod;
   }
 }

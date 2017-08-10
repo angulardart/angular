@@ -56,7 +56,7 @@ class CompilePipe {
       }
       return injectFromViewParentInjector(this.view, diDep.token, false);
     }).toList();
-    this.view.nameResolver.addField(new o.ClassField(this.instance.name,
+    this.view.fields.add(new o.ClassField(this.instance.name,
         outputType: o.importType(this.meta.type),
         modifiers: [o.StmtModifier.Private]));
     this.view.createMethod.resetDebugInfo(null, null);

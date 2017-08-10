@@ -31,7 +31,6 @@ class TestDirectiveNgCd extends DirectiveChangeDetector {
   external _user.TestDirective get instance;
   external void deliverChanges();
   external TestDirectiveNgCd(_user.TestDirective instance);
-  external void detectHostChanges(AppView view, Element node, bool firstCheck);
 }
 
 external void initReflector();

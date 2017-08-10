@@ -40,7 +40,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_HostComponent0) {
     rootEl = import7.document.createElement('host');
-    createAttr(rootEl, 'aria-title', 'title');
+    createAttr(this.rootEl, 'aria-title', 'title');
     _renderType ??= import8.appViewUtils.createRenderType(
         'asset:_tests/test/source_gen/template_compiler/test_files/host.dart class HostComponent - inline template',
         ViewEncapsulation.None,
@@ -58,6 +58,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   }
 
   void detectHostChanges(bool firstCheck) {
+    dbg(null, 0, 0);
     final currVal_0 = ctx.title;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       setProp(rootEl, 'title', currVal_0);

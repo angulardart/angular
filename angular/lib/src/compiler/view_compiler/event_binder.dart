@@ -44,7 +44,7 @@ class CompileEventListener {
   }
 
   CompileEventListener(this.compileElement, this.eventName, int listenerIndex) {
-    _method = new CompileMethod(compileElement.view.genDebugInfo);
+    _method = new CompileMethod(compileElement.view);
     _methodName =
         '_handle_${sanitizeEventName(eventName)}_${compileElement.nodeIndex}_'
         '$listenerIndex';
