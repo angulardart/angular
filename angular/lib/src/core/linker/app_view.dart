@@ -511,10 +511,20 @@ abstract class AppView<T> {
     if (contentClass != null) element.classes.add(contentClass);
   }
 
-  /// Adds host shim class.
-  void addShimH(Element element) {
-    String hostClass = componentType.hostAttr;
-    if (hostClass != null) element.classes.add(hostClass);
+  /// Called by change detector to apply correct host and content shimming
+  /// after node's className is changed.
+  void updateChildClass(Element element, String newClass) {
+    if (element == rootEl) {
+      String hostClass = componentType.hostAttr;
+      element.className = hostClass == null ? newClass : '$newClass $hostClass';
+      if (parentView != null) {
+        parentView.addShimE(element);
+      }
+    } else {
+      String contentClass = componentType.contentAttr;
+      element.className =
+          contentClass == null ? newClass : '$newClass $contentClass';
+    }
   }
 
   // Marks DOM dirty so that end of zone turn we can detect if DOM was updated

@@ -203,8 +203,13 @@ void bindViewHostProperties(CompileView view, Parser parser,
   });
 
   var hostMethod = new CompileMethod(view);
-  bindAndWriteToRenderer(hostProperties, new o.ReadClassMemberExpr('ctx'), view,
-      view.componentView.declarationElement, hostMethod,
+  bindAndWriteToRenderer(
+      hostProperties,
+      o.THIS_EXPR,
+      new o.ReadClassMemberExpr('ctx'),
+      view,
+      view.componentView.declarationElement,
+      hostMethod,
       updatingHost: true);
   if (hostMethod.isNotEmpty) {
     view.detectHostChangesMethod = hostMethod;

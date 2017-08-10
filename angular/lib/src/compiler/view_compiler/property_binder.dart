@@ -3,10 +3,8 @@ import 'package:angular/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     show NAMESPACE_URIS;
-import "package:angular/src/core/linker/view_type.dart";
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
-import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/transform/common/names.dart'
     show toTemplateExtension;
@@ -187,6 +185,7 @@ void bindRenderText(
 ///     }
 void bindAndWriteToRenderer(
     List<BoundElementPropertyAst> boundProps,
+    o.Expression appViewInstance,
     o.Expression context,
     CompileView compileView,
     CompileElement compileElement,
@@ -221,9 +220,9 @@ void bindAndWriteToRenderer(
         // If user asked for logging bindings, generate code to log them.
         if (boundProp.name == 'className') {
           // Handle className special case for class="binding".
-          updateStmts.addAll(_createSetClassNameStmt(
-              compileElement, renderValue,
-              updatingHost: updatingHost));
+          var updateClassExpr = appViewInstance.callMethod(
+              'updateChildClass', [compileElement.renderNode, renderValue]);
+          updateStmts.add(updateClassExpr.toStmt());
           fieldType = o.STRING_TYPE;
         } else {
           updateStmts.add(new o.InvokeMemberMethodExpr('setProp',
@@ -241,9 +240,9 @@ void bindAndWriteToRenderer(
 
         if (attrName == 'class') {
           // Handle [attr.class].
-          updateStmts.addAll(_createSetClassNameStmt(
-              compileElement, renderValue,
-              updatingHost: updatingHost));
+          var updateClassExpr = appViewInstance.callMethod(
+              'updateChildClass', [compileElement.renderNode, renderValue]);
+          updateStmts.add(updateClassExpr.toStmt());
         } else {
           // For attributes other than class convert value to a string.
           // TODO: Once we have analyzer summaries and know the type is already
@@ -298,38 +297,6 @@ void bindAndWriteToRenderer(
   }
 }
 
-List<o.Statement> _createSetClassNameStmt(
-    CompileElement compileElement, o.Expression renderValue,
-    {bool updatingHost: false}) {
-  var updateStmts = <o.Statement>[];
-  var renderNode = compileElement.renderNode;
-  // TODO: upgrade to codebuilder / build string interpolation to
-  // move into single expression.
-  updateStmts.add(renderNode.prop('className').set(renderValue).toStmt());
-  var view = compileElement.view;
-  bool isHostRootView =
-      compileElement.nodeIndex == 0 && view.viewType == ViewType.HOST;
-  // _ngcontent- class should be applied to every element other than host's
-  // main node.
-  if (!isHostRootView &&
-      view != null &&
-      view.component.template.encapsulation == ViewEncapsulation.Emulated) {
-    updateStmts
-        .add((new o.InvokeMemberMethodExpr('addShimC', [renderNode])).toStmt());
-  }
-  // Since we are overriding component className above with bound value we need
-  // to add host class.
-  if (compileElement.component != null) {
-    updateStmts.add(
-        (compileElement.componentView.callMethod('addShimH', [renderNode]))
-            .toStmt());
-  } else if (updatingHost) {
-    updateStmts
-        .add(new o.InvokeMemberMethodExpr('addShimH', [renderNode]).toStmt());
-  }
-  return updateStmts;
-}
-
 o.Expression sanitizedValue(
     BoundElementPropertyAst boundProp, o.Expression renderValue) {
   String methodName;
@@ -361,8 +328,12 @@ o.Expression sanitizedValue(
 
 void bindRenderInputs(
     List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {
+  var appViewInstance = compileElement.component == null
+      ? o.THIS_EXPR
+      : compileElement.componentView;
   bindAndWriteToRenderer(
       boundProps,
+      appViewInstance,
       DetectChangesVars.cachedCtx,
       compileElement.view,
       compileElement,
@@ -383,8 +354,12 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
     }
     return;
   }
+  var appViewInstance = (compileElement.component == null)
+      ? o.THIS_EXPR
+      : compileElement.componentView;
   bindAndWriteToRenderer(
       directiveAst.hostProperties,
+      appViewInstance,
       directiveInstance,
       compileElement.view,
       compileElement,
