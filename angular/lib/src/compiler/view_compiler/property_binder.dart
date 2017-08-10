@@ -27,7 +27,7 @@ import 'expression_converter.dart'
     show ExpressionWithWrappedValueInfo, convertCdExpressionToIr;
 import 'view_builder.dart' show buildUpdaterFunctionName;
 import 'view_compiler_utils.dart'
-    show createSetAttributeParams, unwrapDirective;
+    show createSetAttributeParams, unwrapDirective, outlinerDeprecated;
 import 'view_name_resolver.dart';
 
 o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
@@ -443,7 +443,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           .toStmt());
       continue;
     }
-    if (isStatefulComp) {
+    if (isStatefulComp && directive.isComponent && outlinerDeprecated) {
       // Write code for components that extend ComponentState:
       // Since we are not going to call markAsCheckOnce anymore we need to
       // generate a call to property updater that will invoke setState() on the

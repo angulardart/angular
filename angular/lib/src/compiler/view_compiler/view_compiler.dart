@@ -18,6 +18,7 @@ import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'view_binder.dart' show bindView, bindViewHostProperties;
 import 'view_builder.dart';
+import 'view_compiler_utils.dart' show outlinerDeprecated;
 
 class ViewCompileResult {
   List<o.Statement> statements;
@@ -121,7 +122,8 @@ class ViewCompiler {
 
     if (creatingMainView &&
         view.component.inputs != null &&
-        view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
+        view.component.changeDetection == ChangeDetectionStrategy.Stateful &&
+        outlinerDeprecated) {
       writeInputUpdaters(view, targetStatements);
     }
   }

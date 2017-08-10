@@ -10,6 +10,11 @@ import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;
 
+/// Creating outlines for faster builds is preventing auto input change
+/// detection for now. The following flag should be removed to reenable in the
+/// future.
+const bool outlinerDeprecated = false;
+
 // Creates method parameters list for AppView set attribute calls.
 List<o.Expression> createSetAttributeParams(
     String fieldName, String attrNs, String attrName, o.Expression valueExpr) {
