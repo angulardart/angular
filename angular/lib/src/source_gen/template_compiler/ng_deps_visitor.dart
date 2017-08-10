@@ -30,7 +30,7 @@ import 'compile_metadata.dart';
 Future<NgDepsModel> resolveNgDepsFor(
   LibraryElement library, {
   @required FutureOr<bool> hasInput(String uri),
-  @required bool isLibrary(String uri),
+  @required FutureOr<bool> isLibrary(String uri),
   bool checkUnresolvedImports: true,
 }) async {
   // Visit and find all 'reflectables'.
@@ -73,7 +73,7 @@ Future<NgDepsModel> resolveNgDepsFor(
       final template = ''
           '${uri.substring(0, uri.length - '.dart'.length)}'
           '$TEMPLATE_EXTENSION';
-      if (isLibrary(template) || await hasInput(uri)) {
+      if (await isLibrary(template) || await hasInput(uri)) {
         templateDeps.add(new ImportModel(uri: template));
       }
     }
