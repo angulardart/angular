@@ -17,9 +17,7 @@ void main() {
       });
 
       test('writeRegistration', () {
-        expectRegistration(
-            reflectionModel,
-            r'''
+        expectRegistration(reflectionModel, r'''
             _i1.reflector.registerSimpleType(_i2.Foo, () => new _i2.Foo());
             ''');
       });
@@ -35,9 +33,7 @@ void main() {
       });
 
       test('writeRegistration', () {
-        expectRegistration(
-            reflectionModel,
-            r'''
+        expectRegistration(reflectionModel, r'''
             _i1.reflector.registerType(Foo, new _i1.ReflectionInfo(
               const <dynamic> [const Bar()], const [], () => new Foo()));
             ''');
@@ -56,9 +52,7 @@ void main() {
       });
 
       test('writeRegistration', () {
-        expectRegistration(
-            reflectionModel,
-            r'''
+        expectRegistration(reflectionModel, r'''
             _i1.reflector.registerType(Foo, new _i1.ReflectionInfo(
               const <dynamic> [const Bar(), Baz], const [], () => new Foo()));
             ''');
@@ -78,9 +72,7 @@ void main() {
       });
 
       test('writeRegistration', () {
-        expectRegistration(
-            reflectionModel,
-            r'''
+        expectRegistration(reflectionModel, r'''
             _i1.reflector.registerType(Foo, new _i1.ReflectionInfo(
               const <dynamic> [const Bar(), const TestNgFactory()],
               const [],
@@ -99,9 +91,7 @@ void main() {
       });
 
       test('writeRegistration', () {
-        expectRegistration(
-            reflectionModel,
-            r'''
+        expectRegistration(reflectionModel, r'''
             _i1.reflector.registerType(Foo, new _i1.ReflectionInfo(
               const <dynamic> [],
               const [const <dynamic> [Bar]],
@@ -122,9 +112,7 @@ void main() {
       });
 
       test('writeRegistration', () {
-        expectRegistration(
-            reflectionModel,
-            r'''
+        expectRegistration(reflectionModel, r'''
             _i1.reflector.registerType(Foo, new _i1.ReflectionInfo(
               const <dynamic> [],
               const [const <dynamic> [Bar], const <dynamic> [Baz]],
@@ -141,9 +129,7 @@ void main() {
       });
 
       test('writeRegistration', () {
-        expectRegistration(
-            reflectionModel,
-            r'''
+        expectRegistration(reflectionModel, r'''
             _i1.reflector.registerFunction(
               Foo, new _i1.ReflectionInfo(const <dynamic> [], const []));
             ''');

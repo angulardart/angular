@@ -16,7 +16,6 @@ import "compile_query.dart"
     show CompileQuery, createQueryListField, addQueryToTokenMap;
 import "compile_view.dart" show CompileView;
 import "constants.dart" show appViewRootElementName, InjectMethodVars;
-import "directive_compiler.dart";
 import "view_compiler_utils.dart"
     show
         getPropertyInView,
@@ -243,7 +242,7 @@ class CompileElement extends CompileNode {
     if (referenceTokens != null) {
       referenceTokens.forEach((String varName, token) {
         var varValue = token != null ? _instances.get(token) : renderNode;
-        view.locals[varName] = varValue;
+        view.nameResolver.addLocal(varName, varValue);
         var varToken = new CompileTokenMetadata(value: varName);
         queriesWithReads.addAll(_getQueriesFor(varToken)
             .map((query) => new _QueryWithRead(query, varToken)));
@@ -607,7 +606,7 @@ o.Expression createProviderProperty(
   bool providerHasChangeDetector =
       provider.providerType == ProviderAstType.Directive &&
           directiveMetadata != null &&
-          requiresDirectiveChangeDetector(directiveMetadata);
+          directiveMetadata.requiresDirectiveChangeDetector;
 
   CompileIdentifierMetadata changeDetectorType;
   if (providerHasChangeDetector) {

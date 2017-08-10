@@ -13,8 +13,7 @@ const angular = 'package:angular/angular.dart';
 ///
 /// Returns the resolved library as `package:test_lib/test_lib.dart`.
 Future<LibraryElement> resolveLibrary(String source) async {
-  final resolved = await resolveSource(
-      '''
+  final resolved = await resolveSource('''
       library _test;
       import '$angular';\n\n$source''',
       inputId: new AssetId('test_lib', 'lib/test_lib.dart'));

@@ -21,9 +21,7 @@ void main() {
       });
 
       test('setupMethod', () {
-        expectSetupMethod(
-            ngDepsModel,
-            r'''
+        expectSetupMethod(ngDepsModel, r'''
             var _visited = false;
             void initReflector() {
               if (_visited) {
@@ -42,18 +40,14 @@ void main() {
         new ReflectionInfoModel(type: reference('Bar'))
       ]);
       test('local metadata map', () {
-        expectLocalMetadataMap(
-            ngDepsModel,
-            r'''
+        expectLocalMetadataMap(ngDepsModel, r'''
             const _METADATA =
               const <dynamic>[Foo, const <dynamic> [], Bar, const <dynamic> []];
             ''');
       });
 
       test('setupMethod', () {
-        expectSetupMethod(
-            ngDepsModel,
-            r'''
+        expectSetupMethod(ngDepsModel, r'''
             var _visited = false;
             void initReflector() {
               if (_visited) {
@@ -77,9 +71,7 @@ void main() {
       });
 
       test('setupMethod', () {
-        expectSetupMethod(
-            ngDepsModel,
-            r'''
+        expectSetupMethod(ngDepsModel, r'''
             var _visited = false;
             void initReflector() {
               if (_visited) {
@@ -104,9 +96,7 @@ void main() {
       });
 
       test('setupMethod', () {
-        expectSetupMethod(
-            ngDepsModel,
-            r'''
+        expectSetupMethod(ngDepsModel, r'''
             var _visited = false;
             void initReflector() {
               if (_visited) {

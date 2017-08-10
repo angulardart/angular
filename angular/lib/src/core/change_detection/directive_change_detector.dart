@@ -18,7 +18,7 @@ class DirectiveChangeDetector {
   }
 
   /// Delivers ngOnChanges to directive and clears map.
-  void ngOnChanges() {
+  void deliverChanges() {
     OnChanges target = directive;
     if (changes != null) {
       target.ngOnChanges(changes);

@@ -509,6 +509,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   List<CompileQueryMetadata> viewQueries;
   CompileTemplateMetadata template;
   final AnalyzedClass analyzedClass;
+  bool _requiresDirectiveChangeDetector;
 
   CompileDirectiveMetadata(
       {this.type,
@@ -545,6 +546,23 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   @override
   CompileIdentifierMetadata get identifier => type;
+
+  /// Returns true if the directive requires a ChangeDetector class to be
+  /// generated.
+  ///
+  /// DirectiveChangeDetector classes should only be generated if they
+  /// reduce the amount of duplicate code. Therefore we check for the presence
+  /// of either inputs (to reduce change detection code) or outputs that
+  /// are DOM events to add listeners inside a initHostEvents method.
+  bool get requiresDirectiveChangeDetector {
+    if (_requiresDirectiveChangeDetector == null) {
+      bool hasInputsWithNgOnChanges = inputs.isNotEmpty &&
+          lifecycleHooks.contains(LifecycleHooks.OnChanges);
+      _requiresDirectiveChangeDetector =
+          !isComponent && identifier.name != 'NgIf' && hasInputsWithNgOnChanges;
+    }
+    return _requiresDirectiveChangeDetector;
+  }
 }
 
 /// Construct [CompileDirectiveMetadata] from [ComponentTypeMetadata] and a

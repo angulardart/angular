@@ -31,14 +31,13 @@ class ViewInputFormTest0 extends AppView<_user.InputFormTest> {
 // For @Directive class ChildDirective.
 class ChildDirectiveNgCd extends DirectiveChangeDetector {
   external _user.ChildDirective get instance;
+  external void deliverChanges();
   external ChildDirectiveNgCd(_user.ChildDirective instance);
-  external void ngSet$input1WithString(String value);
-  external void ngSet$inputWithIterable(Iterable<int> value);
-  external void ngSet$gridRow(String value);
 }
 // For @Directive class DirectiveWithOutput.
 class DirectiveWithOutputNgCd extends DirectiveChangeDetector {
   external _user.DirectiveWithOutput get instance;
+  external void deliverChanges();
   external DirectiveWithOutputNgCd(_user.DirectiveWithOutput instance);
 }
 

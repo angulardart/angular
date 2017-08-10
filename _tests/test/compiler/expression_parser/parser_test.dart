@@ -453,11 +453,9 @@ void main() {
         checkInterpolation("{{ a < b ? a : b }}");
       });
       test("should parse expression with newline characters", () {
-        checkInterpolation(
-            '''{{ \'foo\' +
+        checkInterpolation('''{{ \'foo\' +
  \'bar\' +
- \'baz\' }}''',
-            '''{{ "foo" + "bar" + "baz" }}''');
+ \'baz\' }}''', '''{{ "foo" + "bar" + "baz" }}''');
       });
       group("comments", () {
         test("should ignore comments in interpolation expressions", () {

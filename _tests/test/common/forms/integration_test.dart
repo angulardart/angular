@@ -871,9 +871,7 @@ class InputWithoutTypeTest {
 }
 
 @Component(
-    selector: 'textarea-test',
-    directives: const [formDirectives],
-    template: '''
+    selector: 'textarea-test', directives: const [formDirectives], template: '''
 <div [ngFormModel]="form">
   <textarea ngControl="text"></textarea>
 </div>''')
@@ -882,9 +880,7 @@ class TextAreaTest {
 }
 
 @Component(
-    selector: 'checkbox-test',
-    directives: const [formDirectives],
-    template: '''
+    selector: 'checkbox-test', directives: const [formDirectives], template: '''
 <div [ngFormModel]="form">
   <input type="checkbox" ngControl="checkbox">
 </div>''')
@@ -893,9 +889,7 @@ class CheckboxTest {
 }
 
 @Component(
-    selector: 'number-test',
-    directives: const [formDirectives],
-    template: '''
+    selector: 'number-test', directives: const [formDirectives], template: '''
 <div [ngFormModel]="form">
   <input type="number" ngControl="num">
 </div>''')

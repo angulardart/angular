@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:path/path.dart' as p;
 
@@ -122,13 +121,8 @@ class TemplateOutliner implements Builder {
           ..writeln('// For @Directive class $directive.')
           ..writeln('class $name extends DirectiveChangeDetector {')
           ..writeln('  external _user.$directive get instance;')
+          ..writeln('  external void deliverChanges();')
           ..writeln('  external $name(_user.$directive instance);');
-        _findInputs(library.getType(directive), annotation).forEach((
-          name,
-          type,
-        ) {
-          output.writeln('  external void ngSet\$$name($type value);');
-        });
         output.writeln('}');
       });
     }
@@ -137,76 +131,6 @@ class TemplateOutliner implements Builder {
       buildStep.inputId.changeExtension(_extension),
       output.toString(),
     );
-  }
-
-  static String _inferTypeField(FieldElement element) {
-    final node = element.computeNode();
-    TypeAnnotation type;
-    if (node is VariableDeclaration) {
-      type = (node.parent as VariableDeclarationList).type;
-    } else {
-      // Failed to "infer" type.
-      return '/* FAILED TO INFER: ${node.runtimeType} from $element */ dynamic';
-    }
-    return '$type';
-  }
-
-  static String _inferTypeMethod(PropertyAccessorElement element) {
-    final node = element.computeNode();
-    TypeAnnotation type;
-    if (node is MethodDeclaration) {
-      final parameter = node.parameters.parameters.first;
-      if (parameter is SimpleFormalParameter) {
-        type = parameter.type;
-      } else {
-        // Failed to "infer" type.
-        return '/* FAILED TO INFER: ${parameter.runtimeType} from $element */ dynamic';
-      }
-    } else {
-      // Failed to "infer" type.
-      return '/* FAILED TO INFER: ${node.runtimeType} from $element */ dynamic';
-    }
-    return '$type';
-  }
-
-  static String _normalize(String n) =>
-      n.endsWith('=') ? n.substring(0, n.length - 1) : n;
-
-  Map<String, String> _findInputs(ClassElement element, DartObject annotation) {
-    final inputs = <String, String>{};
-    for (final interface in getInheritanceHierarchy(element.type)) {
-      for (final accessor in interface.accessors) {
-        final input = $Input.firstAnnotationOfExact(
-          accessor,
-          throwOnUnresolved: false,
-        );
-        if (input != null) {
-          inputs[_normalize(accessor.name)] = _inferTypeMethod(accessor);
-        }
-      }
-      for (final field in interface.element.fields) {
-        final input = $Input.firstAnnotationOfExact(
-          field,
-          throwOnUnresolved: false,
-        );
-        if (input != null) {
-          inputs[field.name] = _inferTypeField(field);
-        }
-      }
-    }
-    final onClass = annotation.getField('inputs')?.toListValue() ?? const [];
-    for (final classInput in onClass) {
-      final inputName = classInput.toStringValue();
-      // These are specifically not typed (dynamic), because we'd have to walk
-      // the hierarchy and "find" the type, which isn't doable in the outliner.
-      const canNotInfer = '/* CAN NOT INFER: Class level. */ dynamic';
-      if (inputName.contains(':')) {
-        inputs[inputName.split(':').first.trim()] = canNotInfer;
-      } else {
-        inputs[inputName.trim()] = canNotInfer;
-      }
-    }
-    return inputs;
   }
 
   @override
