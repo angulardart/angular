@@ -59,7 +59,6 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   }
 
   void detectHostChanges(bool firstCheck) {
-    dbg(null, 0, 0);
     final currVal_0 = ctx.id;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       setProp(rootEl, 'id', currVal_0);

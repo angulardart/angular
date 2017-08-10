@@ -33,12 +33,14 @@ class ChildDirectiveNgCd extends DirectiveChangeDetector {
   external _user.ChildDirective get instance;
   external void deliverChanges();
   external ChildDirectiveNgCd(_user.ChildDirective instance);
+  external void detectHostChanges(AppView view, Element node, bool firstCheck);
 }
 // For @Directive class DirectiveWithOutput.
 class DirectiveWithOutputNgCd extends DirectiveChangeDetector {
   external _user.DirectiveWithOutput get instance;
   external void deliverChanges();
   external DirectiveWithOutputNgCd(_user.DirectiveWithOutput instance);
+  external void detectHostChanges(AppView view, Element node, bool firstCheck);
 }
 
 external void initReflector();

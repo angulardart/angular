@@ -26,7 +26,9 @@ import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart'
     show ExpressionWithWrappedValueInfo, convertCdExpressionToIr;
 import 'view_builder.dart' show buildUpdaterFunctionName;
-import 'view_compiler_utils.dart' show createSetAttributeParams;
+import 'view_compiler_utils.dart'
+    show createSetAttributeParams, unwrapDirective;
+import 'view_name_resolver.dart';
 
 o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
     new o.ReadClassMemberExpr('_expr_$exprIndex');
@@ -50,7 +52,8 @@ o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
 /// Otherwise statements are added to method to be executed on
 /// each change detection cycle.
 void bind(
-    CompileView view,
+    CompileDirectiveMetadata viewDirective,
+    ViewNameResolver nameResolver,
     o.ReadVarExpr currValExpr,
     o.ReadClassMemberExpr fieldExpr,
     ast.AST parsedExpression,
@@ -58,19 +61,20 @@ void bind(
     List<o.Statement> actions,
     CompileMethod method,
     CompileMethod literalMethod,
+    bool genDebugInfo,
     {o.OutputType fieldType}) {
   var checkExpression = convertCdExpressionToIr(
-      view.nameResolver,
+      nameResolver,
       context,
       parsedExpression,
       DetectChangesVars.valUnwrapper,
-      view.component.template.preserveWhitespace,
+      viewDirective.template.preserveWhitespace,
       _isBoolType(fieldType));
-  if (isImmutable(parsedExpression, view.component.analyzedClass)) {
+  if (isImmutable(parsedExpression, viewDirective.analyzedClass)) {
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
-    _bindLiteral(checkExpression, literalMethod, actions, currValExpr.name,
-        fieldExpr.name, isNullable(parsedExpression));
+    _bindLiteral(checkExpression, actions, currValExpr.name, fieldExpr.name,
+        literalMethod, isNullable(parsedExpression));
     return;
   }
   if (checkExpression.expression == null) {
@@ -78,7 +82,7 @@ void bind(
     return;
   }
   bool isPrimitive = isPrimitiveFieldType(fieldType);
-  view.fields.add(new o.ClassField(fieldExpr.name,
+  nameResolver.addField(new o.ClassField(fieldExpr.name,
       modifiers: const [o.StmtModifier.Private],
       outputType: isPrimitive ? fieldType : null));
   if (checkExpression.needsValueUnwrapper) {
@@ -90,7 +94,7 @@ void bind(
       .set(checkExpression.expression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
   o.Expression condition;
-  if (view.genConfig.genDebugInfo) {
+  if (genDebugInfo) {
     condition =
         o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
   } else {
@@ -118,10 +122,10 @@ void bind(
 /// the [actions] and run them once on the first change detection run.
 void _bindLiteral(
     ExpressionWithWrappedValueInfo checkExpression,
-    CompileMethod method,
     List<o.Statement> actions,
     String currValName,
     String fieldName,
+    CompileMethod method,
     bool isNullable) {
   var expr = checkExpression.expression;
   if (expr == o.NULL_EXPR || (expr is o.LiteralExpr && expr.value == null)) {
@@ -147,23 +151,26 @@ void _bindLiteral(
 
 void bindRenderText(
     BoundTextAst boundText, CompileNode compileNode, CompileView view) {
-  int bindingIndex = view.addBinding(compileNode, boundText);
+  view.addBinding(compileNode, boundText);
+  int bindingIndex = view.nameResolver.createUniqueBindIndex();
   // Expression for current value of expression when value is re-read.
   var currValExpr = createCurrValueExpr(bindingIndex);
   // Expression that points to _expr_## stored value.
   var valueField = createBindFieldExpr(bindingIndex);
-  var dynamicRenderMethod = new CompileMethod(view);
+  var dynamicRenderMethod = new CompileMethod(view.genDebugInfo);
   dynamicRenderMethod.resetDebugInfo(compileNode.nodeIndex, boundText);
-  var constantRenderMethod = new CompileMethod(view);
+  var constantRenderMethod = new CompileMethod(view.genDebugInfo);
   bind(
-      view,
+      view.component,
+      view.nameResolver,
       currValExpr,
       valueField,
       boundText.value,
       DetectChangesVars.cachedCtx,
       [compileNode.renderNode.prop('text').set(currValExpr).toStmt()],
       dynamicRenderMethod,
-      constantRenderMethod);
+      constantRenderMethod,
+      view.genDebugInfo);
   if (constantRenderMethod.isNotEmpty) {
     view.detectChangesRenderPropertiesMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck, constantRenderMethod.finish()));
@@ -187,20 +194,18 @@ void bindAndWriteToRenderer(
     List<BoundElementPropertyAst> boundProps,
     o.Expression appViewInstance,
     o.Expression context,
-    CompileView compileView,
-    CompileElement compileElement,
+    CompileDirectiveMetadata directiveMeta,
+    o.Expression renderNode,
+    bool isHtmlElement,
+    ViewNameResolver nameResolver,
     CompileMethod targetMethod,
+    bool genDebugInfo,
     {bool updatingHost: false}) {
-  var view = compileView;
-  var renderNode = compileElement.renderNode;
-  var dynamicPropertiesMethod = new CompileMethod(view);
-  var constantPropertiesMethod = new CompileMethod(view);
+  final dynamicPropertiesMethod = new CompileMethod(genDebugInfo);
+  final constantPropertiesMethod = new CompileMethod(genDebugInfo);
   for (var boundProp in boundProps) {
     // Add to view bindings collection.
-    int bindingIndex = view.addBinding(compileElement, boundProp);
-
-    // Generate call to this.debug(index, column, row);
-    dynamicPropertiesMethod.resetDebugInfo(compileElement.nodeIndex, boundProp);
+    int bindingIndex = nameResolver.createUniqueBindIndex();
 
     // Expression that points to _expr_## stored value.
     var fieldExpr = createBindFieldExpr(bindingIndex);
@@ -220,8 +225,8 @@ void bindAndWriteToRenderer(
         // If user asked for logging bindings, generate code to log them.
         if (boundProp.name == 'className') {
           // Handle className special case for class="binding".
-          var updateClassExpr = appViewInstance.callMethod(
-              'updateChildClass', [compileElement.renderNode, renderValue]);
+          var updateClassExpr = appViewInstance
+              .callMethod('updateChildClass', [renderNode, renderValue]);
           updateStmts.add(updateClassExpr.toStmt());
           fieldType = o.STRING_TYPE;
         } else {
@@ -240,8 +245,8 @@ void bindAndWriteToRenderer(
 
         if (attrName == 'class') {
           // Handle [attr.class].
-          var updateClassExpr = appViewInstance.callMethod(
-              'updateChildClass', [compileElement.renderNode, renderValue]);
+          var updateClassExpr = appViewInstance
+              .callMethod('updateChildClass', [renderNode, renderValue]);
           updateStmts.add(updateClassExpr.toStmt());
         } else {
           // For attributes other than class convert value to a string.
@@ -250,11 +255,11 @@ void bindAndWriteToRenderer(
           renderValue =
               renderValue.callMethod('toString', const [], checked: true);
 
+          String renderNodeName = renderNode is o.ReadClassMemberExpr
+              ? renderNode.name
+              : (renderNode as o.ReadVarExpr).name;
           var params = createSetAttributeParams(
-              compileElement.renderNodeFieldName,
-              attrNs,
-              attrName,
-              renderValue);
+              renderNodeName, attrNs, attrName, renderValue);
 
           updateStmts.add(new o.InvokeMemberMethodExpr(
                   attrNs == null ? 'setAttr' : 'setAttrNS', params)
@@ -263,8 +268,7 @@ void bindAndWriteToRenderer(
         break;
       case PropertyBindingType.Class:
         fieldType = o.BOOL_TYPE;
-        renderMethod =
-            compileElement.isHtmlElement ? 'updateClass' : 'updateElemClass';
+        renderMethod = isHtmlElement ? 'updateClass' : 'updateElemClass';
         updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod,
             [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
@@ -284,8 +288,17 @@ void bindAndWriteToRenderer(
         break;
     }
 
-    bind(view, currValExpr, fieldExpr, boundProp.value, context, updateStmts,
-        dynamicPropertiesMethod, constantPropertiesMethod,
+    bind(
+        directiveMeta,
+        nameResolver,
+        currValExpr,
+        fieldExpr,
+        boundProp.value,
+        context,
+        updateStmts,
+        dynamicPropertiesMethod,
+        constantPropertiesMethod,
+        genDebugInfo,
         fieldType: fieldType);
   }
   if (constantPropertiesMethod.isNotEmpty) {
@@ -331,39 +344,46 @@ void bindRenderInputs(
   var appViewInstance = compileElement.component == null
       ? o.THIS_EXPR
       : compileElement.componentView;
+  var renderNode = compileElement.renderNode;
+  var view = compileElement.view;
   bindAndWriteToRenderer(
       boundProps,
       appViewInstance,
       DetectChangesVars.cachedCtx,
-      compileElement.view,
-      compileElement,
-      compileElement.view.detectChangesRenderPropertiesMethod);
+      view.component,
+      renderNode,
+      compileElement.isHtmlElement,
+      view.nameResolver,
+      view.detectChangesRenderPropertiesMethod,
+      view.genDebugInfo);
 }
 
+// Component or directive level host properties are change detected inside
+// the component itself inside detectHostChanges method, no need to
+// generate code at call-site.
 void bindDirectiveHostProps(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
-  if (directiveAst.directive.isComponent) {
-    // Component level host properties are change detected inside the component
-    // itself inside detectHostChanges method, no need to generate code
-    // at call-site.
-    if (directiveAst.hostProperties.isNotEmpty) {
-      var callDetectHostPropertiesExpr = compileElement.componentView
-          .callMethod('detectHostChanges', [DetectChangesVars.firstCheck]);
-      compileElement.view.detectChangesRenderPropertiesMethod
-          .addStmt(callDetectHostPropertiesExpr.toStmt());
-    }
-    return;
+  if (directiveAst.hostProperties.isEmpty) return;
+  bool isComponent = directiveAst.directive.isComponent;
+  var target = isComponent
+      ? compileElement.componentView
+      : unwrapDirective(directiveInstance);
+  o.Expression callDetectHostPropertiesExpr;
+  if (isComponent) {
+    callDetectHostPropertiesExpr =
+        target.callMethod('detectHostChanges', [DetectChangesVars.firstCheck]);
+  } else {
+    assert(directiveAst.directive.requiresDirectiveChangeDetector);
+    callDetectHostPropertiesExpr = target.callMethod('detectHostChanges', [
+      compileElement.component != null
+          ? compileElement.componentView
+          : o.THIS_EXPR,
+      compileElement.renderNode,
+      DetectChangesVars.firstCheck
+    ]);
   }
-  var appViewInstance = (compileElement.component == null)
-      ? o.THIS_EXPR
-      : compileElement.componentView;
-  bindAndWriteToRenderer(
-      directiveAst.hostProperties,
-      appViewInstance,
-      directiveInstance,
-      compileElement.view,
-      compileElement,
-      compileElement.view.detectChangesRenderPropertiesMethod);
+  compileElement.view.detectChangesRenderPropertiesMethod
+      .addStmt(callDetectHostPropertiesExpr.toStmt());
 }
 
 void bindDirectiveInputs(DirectiveAst directiveAst,
@@ -375,8 +395,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
 
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var dynamicInputsMethod = new CompileMethod(view);
-  var constantInputsMethod = new CompileMethod(view);
+  var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
+  var constantInputsMethod = new CompileMethod(view.genDebugInfo);
   dynamicInputsMethod.resetDebugInfo(
       compileElement.nodeIndex, compileElement.sourceAst);
   var lifecycleHooks = directive.lifecycleHooks;
@@ -399,7 +419,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   // directiveAst contains the target directive we are updating.
   // input is a BoundPropertyAst that contains binding metadata.
   for (var input in directiveAst.inputs) {
-    var bindingIndex = view.addBinding(compileElement, input);
+    view.addBinding(compileElement, input);
+    var bindingIndex = view.nameResolver.createUniqueBindIndex();
     dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
     var fieldExpr = createBindFieldExpr(bindingIndex);
     var currValExpr = createCurrValueExpr(bindingIndex);
@@ -471,7 +492,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           fieldType: inputType);
     } else {
       bind(
-          view,
+          view.component,
+          view.nameResolver,
           currValExpr,
           fieldExpr,
           input.value,
@@ -479,6 +501,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           statements,
           dynamicInputsMethod,
           constantInputsMethod,
+          view.genDebugInfo,
           fieldType: inputType);
     }
   }
@@ -519,7 +542,7 @@ void bindToUpdateMethod(
   }
   // Add class field to store previous value.
   bool isPrimitive = isPrimitiveFieldType(fieldType);
-  view.fields.add(new o.ClassField(fieldExpr.name,
+  view.nameResolver.addField(new o.ClassField(fieldExpr.name,
       outputType: isPrimitive ? fieldType : null,
       modifiers: const [o.StmtModifier.Private]));
   if (checkExpression.needsValueUnwrapper) {

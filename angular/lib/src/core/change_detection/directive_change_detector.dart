@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:js_util' as js_util;
+
 import '../metadata/lifecycle_hooks.dart';
 import 'change_detection_util.dart';
 
@@ -24,5 +27,41 @@ class DirectiveChangeDetector {
       target.ngOnChanges(changes);
       changes = null;
     }
+  }
+
+  // Updates classes for non html nodes such as svg.
+  void updateElemClass(Element element, String className, bool isAdd) {
+    if (isAdd) {
+      element.classes.add(className);
+    } else {
+      element.classes.remove(className);
+    }
+  }
+
+  void setAttr(
+      Element renderElement, String attributeName, String attributeValue) {
+    if (attributeValue != null) {
+      renderElement.setAttribute(attributeName, attributeValue);
+    } else {
+      renderElement.attributes.remove(attributeName);
+    }
+  }
+
+  void createAttr(
+      Element renderElement, String attributeName, String attributeValue) {
+    renderElement.setAttribute(attributeName, attributeValue);
+  }
+
+  void setAttrNS(Element renderElement, String attrNS, String attributeName,
+      String attributeValue) {
+    if (attributeValue != null) {
+      renderElement.setAttributeNS(attrNS, attributeName, attributeValue);
+    } else {
+      renderElement.getNamespacedAttributes(attrNS).remove(attributeName);
+    }
+  }
+
+  void setProp(Element element, String name, Object value) {
+    js_util.setProperty(element, name, value);
   }
 }
