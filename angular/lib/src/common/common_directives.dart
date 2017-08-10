@@ -1,9 +1,8 @@
-import "directives.dart" show CORE_DIRECTIVES;
-import "forms.dart" show formDirectives;
+import 'directives.dart' show CORE_DIRECTIVES;
 
 /// A collection of Angular core directives that are likely to be used in each
 /// and every Angular application. This includes core directives
-/// (e.g., NgIf and NgFor), and forms directives (e.g., NgModel).
+/// (e.g., NgIf and NgFor).
 ///
 /// This collection can be used to quickly enumerate all the built-in directives
 /// in the `directives` property of the `@Component` annotation.
@@ -13,16 +12,14 @@ import "forms.dart" show formDirectives;
 /// Instead of writing:
 ///
 /// ```dart
-/// import 'package:angular/common.dart'
+/// import 'package:angular/angular.dart'
 ///     show
 ///         NgClass,
 ///         NgIf,
 ///         NgFor,
 ///         NgSwitch,
 ///         NgSwitchWhen,
-///         NgSwitchDefault,
-///         NgModel,
-///         NgForm;
+///         NgSwitchDefault;
 /// import 'my_directives.dart' show OtherDirective;
 ///
 /// @Component(
@@ -35,8 +32,6 @@ import "forms.dart" show formDirectives;
 ///       NgSwitch,
 ///       NgSwitchWhen,
 ///       NgSwitchDefault,
-///       NgModel,
-///       NgForm,
 ///       OtherDirective
 ///     ])
 /// class MyComponent {
@@ -47,7 +42,7 @@ import "forms.dart" show formDirectives;
 /// One could import all the core directives at once:
 ///
 /// ```dart
-/// import 'package:angular/common.dart' show COMMON_DIRECTIVES;
+/// import 'package:angular/angular.dart' show COMMON_DIRECTIVES;
 /// import 'my_directives.dart' show OtherDirective;
 ///
 /// @Component(
@@ -60,5 +55,4 @@ import "forms.dart" show formDirectives;
 /// ```
 const List<List<Type>> COMMON_DIRECTIVES = const [
   CORE_DIRECTIVES,
-  formDirectives
 ];
