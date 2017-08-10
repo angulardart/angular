@@ -10,9 +10,9 @@ import 'package:angular/src/core/reflection/reflection.dart'
     as _ngRef;
 import 'package:angular/di.template.dart'
     as di_lib;
-import 'example_of_file_that_is_not_generated_yet.template.dart' as _i1;
 import 'package:angular/angular.template.dart'
-    as _i2;
+    as _i1;
+import 'example_of_file_that_is_not_generated_yet.template.dart' as _i2;
 import 'package:angular/di.template.dart' as _i3;
 export 'component_loader_pattern.dart';
 import 'package:angular/src/core/linker/app_view.dart';
