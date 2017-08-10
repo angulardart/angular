@@ -1,3 +1,10 @@
+## 4.0.0-alpha+3
+### Breaking changes
+
+* Removed `formDirectives` from `COMMON_DIRECTIVES` list; replace
+  `COMMON_DIRECTIVES` with `[CORE_DIRECTIVES, formDirectives]` for components
+  that use forms directives.
+
 ## 4.0.0-alpha+2
 
 ### New features
