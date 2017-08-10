@@ -1,4 +1,5 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
+import '../html_events.dart';
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
@@ -65,7 +66,7 @@ class CompileEventListener {
     _method.resetDebugInfo(compileElement.nodeIndex, hostEvent);
     var context = directiveInstance ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(
-        compileElement.view,
+        compileElement.view.nameResolver,
         context,
         hostEvent.handler,
         this.compileElement.view.component.template.preserveWhitespace);
@@ -204,88 +205,4 @@ o.Expression _extractFunction(o.Expression returnExpr) {
   assert(returnExpr is o.InvokeMethodExpr);
   var callExpr = returnExpr as o.InvokeMethodExpr;
   return new o.ReadPropExpr(callExpr.receiver, callExpr.name);
-}
-
-Set<String> _nativeEventSet;
-
-/// Returns true if event is an html event that is handled by DOM apis
-/// directly and doesn't need to go through plugin system.
-bool isNativeHtmlEvent(String eventName) {
-  const commonEvents = const <String>[
-    'abort',
-    'afterprint',
-    'animationend',
-    'animationiteration',
-    'animationstart',
-    'appinstalled',
-    'audioend',
-    'audiostart',
-    'beforeprint',
-    'beforeunload',
-    'blur',
-    'change',
-    'click',
-    'compositionend',
-    'compositionstart',
-    'compositionupdate',
-    'contextmenu',
-    'copy',
-    'cut',
-    'dblclick',
-    'drag',
-    'dragend',
-    'dragenter',
-    'dragleave',
-    'dragover',
-    'dragstart',
-    'drop',
-    'error',
-    'focus',
-    'fullscreenchange',
-    'fullscreenerror',
-    'gotpointercapture',
-    'lostpointercapture',
-    'input',
-    'invalid',
-    'keydown',
-    'keypress',
-    'keyup',
-    'languagechange',
-    'load',
-    'mousedown',
-    'mouseenter',
-    'mouseleave',
-    'mousemove',
-    'mouseout',
-    'mouseover',
-    'mouseup',
-    'notificationclick',
-    'orientationchange',
-    'paste',
-    'pause',
-    'pointercancel',
-    'pointerdown',
-    'pointerenter',
-    'pointerleave',
-    'pointerlockchange',
-    'pointerlockerror',
-    'pointermove',
-    'pointerout',
-    'pointerover',
-    'pointerup',
-    'reset',
-    'resize',
-    'scroll',
-    'select',
-    'show',
-    'touchcancel',
-    'touchend',
-    'touchmove',
-    'touchstart',
-    'transitionend',
-    'unload',
-    'wheel'
-  ];
-  _nativeEventSet ??= new Set<String>.from(commonEvents);
-  return _nativeEventSet.contains(eventName);
 }

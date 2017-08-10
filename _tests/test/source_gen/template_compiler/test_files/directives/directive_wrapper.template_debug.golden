@@ -52,8 +52,9 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
 
 class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   import3.DivElement _el_0;
-  ChildDirectiveNgCd _ChildDirective_0_4;
+  import1.ChildDirective _ChildDirective_0_4;
   import1.DirectiveWithOutput _DirectiveWithOutput_0_5;
+  String _expr_4;
   var _expr_5;
   var _expr_6;
   bool _expr_7;
@@ -82,21 +83,20 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     createAttr(_el_0, 'role', 'button');
     createAttr(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
-    _ChildDirective_0_4 = new ChildDirectiveNgCd(
-        new import1.ChildDirective(_el_0, new ElementRef(_el_0)));
+    _ChildDirective_0_4 =
+        new import1.ChildDirective(_el_0, new ElementRef(_el_0));
     _DirectiveWithOutput_0_5 = new import1.DirectiveWithOutput();
     import3.Text _text_1 = new import3.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 87);
     _el_0.addEventListener(
-        'click', eventHandler1(_ChildDirective_0_4.instance.handleClick));
+        'click', eventHandler1(_ChildDirective_0_4.handleClick));
     _el_0.addEventListener(
-        'keypress', eventHandler1(_ChildDirective_0_4.instance.handleKeyPress));
-    final subscription_0 = _ChildDirective_0_4.instance.trigger
-        .listen(eventHandler1(_handle_trigger_0_0));
+        'keypress', eventHandler1(_ChildDirective_0_4.handleKeyPress));
+    final subscription_0 =
+        _ChildDirective_0_4.trigger.listen(eventHandler1(_handle_trigger_0_0));
     final subscription_1 = _DirectiveWithOutput_0_5.eventXyz.listen(
-        eventHandler1(
-            _ChildDirective_0_4.instance.handleXyzEventFromOtherDirective));
+        eventHandler1(_ChildDirective_0_4.handleXyzEventFromOtherDirective));
     init(const [], [subscription_0, subscription_1], [_el_0, _text_1]);
     return null;
   }
@@ -106,7 +106,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.ChildDirective) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _ChildDirective_0_4.instance;
+      return _ChildDirective_0_4;
     }
     if ((identical(token, import1.DirectiveWithOutput) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
@@ -119,19 +119,23 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final import1.TestFooComponent _ctx = ctx;
     dbg(0, 0, 48);
-    _ChildDirective_0_4.ngSet$gridRow(_ctx.rowIndex);
+    final currVal_4 = _ctx.rowIndex;
+    if (import8.checkBinding(_expr_4, currVal_4)) {
+      _ChildDirective_0_4.gridRow = currVal_4;
+      _expr_4 = currVal_4;
+    }
     dbg(0, 0, 0);
-    final currVal_5 = _ChildDirective_0_4.instance.tabIndex;
+    final currVal_5 = _ChildDirective_0_4.tabIndex;
     if (import8.checkBinding(_expr_5, currVal_5)) {
       setProp(_el_0, 'tabIndex', currVal_5);
       _expr_5 = currVal_5;
     }
-    final currVal_6 = _ChildDirective_0_4.instance.disabledStr;
+    final currVal_6 = _ChildDirective_0_4.disabledStr;
     if (import8.checkBinding(_expr_6, currVal_6)) {
       setAttr(_el_0, 'aria-disabled', currVal_6?.toString());
       _expr_6 = currVal_6;
     }
-    final currVal_7 = _ChildDirective_0_4.instance.disabled;
+    final currVal_7 = _ChildDirective_0_4.disabled;
     if (import8.checkBinding(_expr_7, currVal_7)) {
       updateClass(_el_0, 'is-disabled', currVal_7);
       _expr_7 = currVal_7;
@@ -238,6 +242,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   import13.DefaultValueAccessor _DefaultValueAccessor_2_4;
   List<dynamic> _const_OpaqueToken__NgValueAccessor___2_5;
   import17.NgControlNameNgCd _NgControlName_2_6;
+  var _expr_1;
   static RenderComponentType _renderType;
   ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -314,15 +319,29 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   @override
   void detectChangesInternal() {
     final import1.InputFormTest _ctx = ctx;
+    Map<String, SimpleChange> changes;
     bool firstCheck = (this.cdState == 0);
+    changes = null;
     dbg(0, 0, 5);
-    _NgFormModel_0_4.ngSet$form(_ctx.form);
-    _NgFormModel_0_4.ngOnChanges();
-    dbg(2, 1, 21);
-    if (firstCheck) {
-      _NgControlName_2_6.ngSet$name('login');
+    final currVal_1 = _ctx.form;
+    if (import8.checkBinding(_expr_1, currVal_1)) {
+      _NgFormModel_0_4.instance.form = currVal_1;
+      changes ??= <String, SimpleChange>{};
+      changes['form'] = new SimpleChange(_expr_1, currVal_1);
+      _expr_1 = currVal_1;
     }
-    _NgControlName_2_6.ngOnChanges();
+    if (!identical(changes, null)) {
+      _NgFormModel_0_4.instance.ngOnChanges(changes);
+    }
+    changes = null;
+    if (firstCheck) {
+      _NgControlName_2_6.instance.name = 'login';
+      changes ??= {};
+      changes['name'] = new SimpleChange(null, 'login');
+    }
+    if (!identical(changes, null)) {
+      _NgControlName_2_6.instance.ngOnChanges(changes);
+    }
   }
 
   @override
@@ -406,44 +425,6 @@ const ComponentFactory _InputFormTestNgFactory = const ComponentFactory(
     import1.InputFormTest,
     _METADATA);
 final ComponentFactory InputFormTestNgFactory = _InputFormTestNgFactory;
-
-class ChildDirectiveNgCd {
-  final import1.ChildDirective instance;
-  String _expr_0;
-  var _expr_1;
-  String _expr_2;
-  ChildDirectiveNgCd(import1.ChildDirective this.instance);
-  void ngSet$input1WithString(String value) {
-    if (import8.checkBinding(_expr_0, value)) {
-      instance.input1WithString = value;
-      _expr_0 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-
-  void ngSet$inputWithIterable(value) {
-    if (import8.checkBinding(_expr_1, value)) {
-      instance.inputWithIterable = value;
-      _expr_1 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-
-  void ngSet$gridRow(String value) {
-    if (import8.checkBinding(_expr_2, value)) {
-      instance.gridRow = value;
-      _expr_2 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-}
-
 const _METADATA = const <dynamic>[
   ChildDirective,
   const <dynamic>[],

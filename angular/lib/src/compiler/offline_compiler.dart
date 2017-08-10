@@ -146,9 +146,9 @@ class OfflineCompiler {
     }
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
-      if (!requiresDirectiveChangeDetector(directive)) continue;
-      DirectiveCompiler comp =
-          new DirectiveCompiler(directive, _viewCompiler.genDebugInfo);
+      if (!directive.requiresDirectiveChangeDetector) continue;
+      DirectiveCompiler comp = new DirectiveCompiler(
+          directive, _viewCompiler.parser, _viewCompiler.genDebugInfo);
       DirectiveCompileResult res = comp.compile();
       statements.addAll(res.statements);
       exportedVars.add(comp.changeDetectorClassName);

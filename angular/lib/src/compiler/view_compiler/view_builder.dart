@@ -15,6 +15,7 @@ import 'package:angular_compiler/angular_compiler.dart';
 import '../compile_metadata.dart'
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
 import '../expression_parser/parser.dart' show Parser;
+import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
 import '../output/output_ast.dart' as o;
 import '../provider_parser.dart' show ngIfTokenMetadata, ngForTokenMetadata;
@@ -49,7 +50,7 @@ import 'constants.dart'
         InjectMethodVars,
         ViewConstructorVars,
         ViewProperties;
-import 'event_binder.dart' show convertStmtIntoExpression, isNativeHtmlEvent;
+import 'event_binder.dart' show convertStmtIntoExpression;
 import 'expression_converter.dart';
 import 'parse_utils.dart';
 import 'perf_profiler.dart';
@@ -413,7 +414,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     if (component != null) {
       compileElement.componentView = compViewExpr;
-      view.viewChildren.add(compViewExpr);
+      view.addViewChild(compViewExpr);
     }
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
@@ -1159,7 +1160,8 @@ void _writeComponentHostEventListeners(
     if (handlerType == HandlerType.notSimple) {
       var context = new o.ReadClassMemberExpr('ctx');
       var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view, context, handlerAst, false).last);
+          convertCdStatementToIr(view.nameResolver, context, handlerAst, false)
+              .last);
       List<o.Statement> stmts = <o.Statement>[
         new o.ReturnStatement(actionExpr)
       ];
@@ -1175,7 +1177,8 @@ void _writeComponentHostEventListeners(
     } else {
       var context = DetectChangesVars.cachedCtx;
       var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view, context, handlerAst, false).last);
+          convertCdStatementToIr(view.nameResolver, context, handlerAst, false)
+              .last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;
       handlerExpr = new o.ReadPropExpr(callExpr.receiver, callExpr.name);

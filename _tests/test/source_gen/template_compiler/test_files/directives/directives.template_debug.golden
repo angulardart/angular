@@ -13,75 +13,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/angular.template.dart'
     as _i1;
 export 'directives.dart';
-import 'directives.dart' as import0;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import1;
 
-class TestDirectiveWithInputsNgCd {
-  final import0.TestDirectiveWithInputs instance;
-  var _expr_0;
-  String _expr_1;
-  var _expr_2;
-  String _expr_3;
-  var _expr_4;
-  TestDirectiveWithInputsNgCd(import0.TestDirectiveWithInputs this.instance);
-  void ngSet$input3(value) {
-    if (import1.checkBinding(_expr_0, value)) {
-      instance.input3 = value;
-      _expr_0 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-
-  void ngSet$input1(String value) {
-    if (import1.checkBinding(_expr_1, value)) {
-      instance.input1 = value;
-      _expr_1 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-
-  void ngSet$input4(value) {
-    if (import1.checkBinding(_expr_2, value)) {
-      instance.input4 = value;
-      _expr_2 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-
-  void ngSet$input2(String value) {
-    if (import1.checkBinding(_expr_3, value)) {
-      instance.input2 = value;
-      _expr_3 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-
-  void ngSet$input5(value) {
-    if (import1.checkBinding(_expr_4, value)) {
-      instance.input5 = value;
-      _expr_4 = value;
-    }
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-  }
-}
-
-const _METADATA = const <dynamic>[
-  TestDirective,
-  const <dynamic>[],
-  TestDirectiveWithInputs,
-  const <dynamic>[]
-];
 var _visited = false;
 void initReflector() {
   if (_visited) {

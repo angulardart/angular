@@ -121,12 +121,8 @@ void main() {
     });
     group('corner and error cases', () {
       test('should encode URLs before resolving', () {
-        expect(
-            resolver.resolve(
-                'foo/baz',
-                '''<p #p>Hello
-        </p>'''),
-            'foo/%3Cp%20#p%3EHello%0A%20%20%20%20%20%20%20%20%3C/p%3E');
+        expect(resolver.resolve('foo/baz', '''<p #p>Hello
+        </p>'''), 'foo/%3Cp%20#p%3EHello%0A%20%20%20%20%20%20%20%20%3C/p%3E');
       });
     });
   });

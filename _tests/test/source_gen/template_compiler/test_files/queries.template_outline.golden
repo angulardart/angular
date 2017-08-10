@@ -23,6 +23,7 @@ class ViewQueriesComponent0 extends AppView<_user.QueriesComponent> {
 // For @Directive class AnotherDirective.
 class AnotherDirectiveNgCd extends DirectiveChangeDetector {
   external _user.AnotherDirective get instance;
+  external void deliverChanges();
   external AnotherDirectiveNgCd(_user.AnotherDirective instance);
 }
 

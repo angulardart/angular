@@ -1,9 +1,9 @@
 import "package:angular/src/facade/exceptions.dart" show BaseException;
 
-import "../chars.dart";
-import "../expression_parser/ast.dart" as compiler_ast;
-import "../identifiers.dart" show Identifiers;
-import "../output/output_ast.dart" as o;
+import '../chars.dart';
+import '../expression_parser/ast.dart' as compiler_ast;
+import '../identifiers.dart' show Identifiers;
+import '../output/output_ast.dart' as o;
 
 var IMPLICIT_RECEIVER = o.variable("#implicit");
 
@@ -31,6 +31,7 @@ ExpressionWithWrappedValueInfo convertCdExpressionToIr(
     o.ReadVarExpr valueUnwrapper,
     bool preserveWhitespace,
     bool emptyIsTrue) {
+  assert(nameResolver != null);
   var visitor = new _AstToIrVisitor(nameResolver, implicitReceiver,
       valueUnwrapper, preserveWhitespace, emptyIsTrue);
   o.Expression irAst = expression.visit(visitor, _Mode.Expression);
@@ -43,6 +44,7 @@ List<o.Statement> convertCdStatementToIr(
     o.Expression implicitReceiver,
     compiler_ast.AST stmt,
     bool preserveWhitespace) {
+  assert(nameResolver != null);
   var visitor = new _AstToIrVisitor(
       nameResolver, implicitReceiver, null, preserveWhitespace, false);
   var statements = <o.Statement>[];
@@ -86,7 +88,9 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   bool anyExplicit = false;
 
   _AstToIrVisitor(this._nameResolver, this._implicitReceiver,
-      this._valueUnwrapper, this.preserveWhitespace, this.emptyIsTrue);
+      this._valueUnwrapper, this.preserveWhitespace, this.emptyIsTrue) {
+    assert(_nameResolver != null);
+  }
 
   dynamic visitBinary(compiler_ast.Binary ast, dynamic context) {
     _Mode mode = context;
