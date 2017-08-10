@@ -48,7 +48,28 @@ class ReflectableEmitter {
     if (_isNoop) {
       return '// No initReflector() needed.\nvoid initReflector() {}\n';
     }
-    final output = new StringBuffer('void initReflector() {\n');
+    // _ExampleMetadata
+    final output = new StringBuffer();
+    for (final element in _output.registerClasses) {
+      if (!element.registerComponentFactory) {
+        continue;
+      }
+      if (element.registerAnnotation == null) {
+        output.writeln('const _${element.name}Metadata = const [];');
+      } else {
+        var source = (element.factory.bound.returnType.element as ClassElement)
+            .computeNode()
+            .metadata
+            .firstWhere((a) => a.name.name == 'RouteConfig')
+            .toSource();
+        source = 'const ${source.substring(1)}';
+        output
+          ..writeln('const _${element.name}Metadata = const [')
+          ..writeln('  $source,')
+          ..writeln('];');
+      }
+    }
+    output.writeln('void initReflector() {');
     if (_linkingNeeded) {
       for (var i = 0; i < _output.urlsNeedingInitReflector.length; i++) {
         output.writeln('  _ref$i.initReflector();');
