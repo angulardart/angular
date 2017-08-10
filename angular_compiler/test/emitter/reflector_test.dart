@@ -137,6 +137,7 @@ void main() {
     expect(
       emitter.emitInitReflector(),
       ''
+          'const _ExampleMetadata = const [];\n'
           'void initReflector() {\n'
           '  _ngRef.registerComponent(\n'
           '    Example,\n'
@@ -155,8 +156,100 @@ void main() {
     );
   });
 
-  // TODO(matanl): Add remaining test cases:
-  // 1. @RouteConfig.
-  // 2. @Directive.
-  // 3. @Pipe.
+  test('should support directives and pipe factories', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      @Directive(selector: 'example')
+      class ExampleDirective {}
+
+      @Pipe('example')
+      class ExamplePipe {}
+    '''));
+    final emitter = new ReflectableEmitter(
+      output,
+      reflectorSource: libReflection,
+    );
+    expect(
+      emitter.emitInitReflector(),
+      ''
+          'void initReflector() {\n'
+          '  _ngRef.registerFactory(\n'
+          '    ExampleDirective,\n'
+          '    () => new ExampleDirective(),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    ExampleDirective,\n'
+          '    const [],\n'
+          '  );\n'
+          '\n'
+          '  _ngRef.registerFactory(\n'
+          '    ExamplePipe,\n'
+          '    () => new ExamplePipe(),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    ExamplePipe,\n'
+          '    const [],\n'
+          '  );\n'
+          '\n'
+          '}\n',
+    );
+  });
+
+  test('should emit @RouteConfig annotations', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      // Inlined a minimal version here to simplify the test setup.
+      class RouteConfig {
+        final List<Route> configs;
+        const RouteConfig(this.configs);
+      }
+      class Route {
+        final dynamic component;
+        final String path;
+        final String name;
+
+        const Route({
+          this.name,
+          this path,
+          this.component,
+        });
+      }
+
+      @Component(selector: 'example')
+      @RouteConfig(const [
+        const Route(
+          path: '/dashboard',
+          name: 'Dashboard',
+          component: Example,
+        ),
+      ])
+      class Example {}
+    '''));
+    final emitter = new ReflectableEmitter(
+      output,
+      reflectorSource: libReflection,
+    );
+    expect(
+      emitter.emitInitReflector(),
+      ''
+          'const _ExampleMetadata = const [\n'
+          "  const RouteConfig(const [const Route(path: '/dashboard', name: 'Dashboard', component: Example)]),\n"
+          '];\n'
+          'void initReflector() {\n'
+          '  _ngRef.registerComponent(\n'
+          '    Example,\n'
+          '    ExampleNgFactory,\n'
+          '  );\n'
+          '  _ngRef.registerFactory(\n'
+          '    Example,\n'
+          '    () => new Example(),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    Example,\n'
+          '    const [],\n'
+          '  );\n'
+          '\n'
+          '}\n',
+    );
+  });
 }
