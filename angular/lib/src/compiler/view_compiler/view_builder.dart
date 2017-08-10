@@ -171,7 +171,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // build method and write reference to class member.
     // Otherwise we can create a local variable and not balloon class prototype.
     if (isBound) {
-      view.nameResolver.addField(new o.ClassField(fieldName,
+      view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(Identifiers.HTML_TEXT_NODE),
           modifiers: const [o.StmtModifier.Private]));
       renderNode = new o.ReadClassMemberExpr(fieldName);
@@ -260,7 +260,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         : identifierFromTagName(ast.name);
 
     if (!isRootHostElement) {
-      view.nameResolver.addField(new o.ClassField(fieldName,
+      view.fields.add(new o.ClassField(fieldName,
           outputType: o.importType(elementType),
           modifiers: const [o.StmtModifier.Private]));
     }
@@ -288,8 +288,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       var viewType = isDeferred
           ? o.importType(Identifiers.AppView, null)
           : o.importType(componentViewIdentifier);
-      view.nameResolver
-          .addField(new o.ClassField(compViewName, outputType: viewType));
+      view.fields.add(new o.ClassField(compViewName, outputType: viewType));
 
       if (isDeferred) {
         // When deferred, we use AppView<dynamic> as type to store instance
@@ -864,7 +863,7 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
   var viewClass = new o.ClassStmt(
       view.className,
       o.importExpr(superClass, typeParams: [getContextType(view)]),
-      view.nameResolver.fields,
+      view.fields,
       view.getters,
       viewConstructor,
       viewMethods

@@ -87,10 +87,10 @@ class TemplateParseResult {
 /// Converts Html AST to TemplateAST nodes.
 class TemplateParser {
   final Parser _exprParser;
-  final ElementSchemaRegistry schemaRegistry;
+  final ElementSchemaRegistry _schemaRegistry;
   final HtmlParser _htmlParser;
 
-  TemplateParser(this._exprParser, this.schemaRegistry, this._htmlParser);
+  TemplateParser(this._exprParser, this._schemaRegistry, this._htmlParser);
 
   /// Parses template and checks for warnings and errors.
   ///
@@ -149,7 +149,7 @@ class TemplateParser {
             uniqDirectives,
             uniquePipes,
             _exprParser,
-            schemaRegistry,
+            _schemaRegistry,
             component.template?.preserveWhitespace ?? false);
         result = htmlVisitAll(parseVisitor, htmlAstWithErrors.rootNodes,
             EMPTY_ELEMENT_CONTEXT) as List<TemplateAst>;

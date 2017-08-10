@@ -12,12 +12,8 @@ import '../output/output_ast.dart' as o;
 class ViewNameResolver implements NameResolver {
   final CompileView view;
   final _locals = new Map<String, o.Expression>();
-  final List<o.ClassField> _fields = [];
-
   var literalArrayCount = 0;
   var literalMapCount = 0;
-  // Used to generate unique index to use in bound class fields.
-  int _bindingIndexCounter = 0;
 
   ViewNameResolver(this.view);
 
@@ -25,13 +21,6 @@ class ViewNameResolver implements NameResolver {
     _locals[name] = e;
   }
 
-  void addField(o.ClassField field) {
-    _fields.add(field);
-  }
-
-  List<o.ClassField> get fields => _fields;
-
-  @override
   o.Expression getLocal(String name) {
     if (name == EventHandlerVars.event.name) {
       return EventHandlerVars.event;
@@ -49,13 +38,11 @@ class ViewNameResolver implements NameResolver {
     }
   }
 
-  @override
   o.Expression callPipe(
       String name, o.Expression input, List<o.Expression> args) {
     return CompilePipe.call(view, name, (new List.from([input])..addAll(args)));
   }
 
-  @override
   o.Expression createLiteralArray(List<o.Expression> values) {
     if (identical(values.length, 0)) {
       return o.importExpr(Identifiers.EMPTY_ARRAY);
@@ -79,7 +66,6 @@ class ViewNameResolver implements NameResolver {
     return proxyExpr.callFn(values);
   }
 
-  @override
   o.Expression createLiteralMap(
       List<List<dynamic /* String | o . Expression */ >> entries) {
     if (identical(entries.length, 0)) {
@@ -105,7 +91,4 @@ class ViewNameResolver implements NameResolver {
         view);
     return proxyExpr.callFn(values);
   }
-
-  @override
-  int createUniqueBindIndex() => _bindingIndexCounter++;
 }

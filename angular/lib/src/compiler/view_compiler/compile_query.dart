@@ -143,7 +143,7 @@ o.Expression createQueryListField(
     o.Expression directiveInstance,
     String propertyName,
     CompileView compileView) {
-  compileView.nameResolver.addField(new o.ClassField(propertyName,
+  compileView.fields.add(new o.ClassField(propertyName,
       outputType: o.importType(Identifiers.QueryList),
       modifiers: [o.StmtModifier.Private]));
   compileView.createMethod.addStmt(new o.WriteClassMemberExpr(

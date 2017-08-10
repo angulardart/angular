@@ -20,13 +20,17 @@ List<o.Expression> createSetAttributeParams(
     String fieldName, String attrNs, String attrName, o.Expression valueExpr) {
   if (attrNs != null) {
     return [
-      o.variable(fieldName),
+      new o.ReadClassMemberExpr(fieldName),
       o.literal(attrNs),
       o.literal(attrName),
       valueExpr
     ];
   } else {
-    return [o.variable(fieldName), o.literal(attrName), valueExpr];
+    return [
+      new o.ReadClassMemberExpr(fieldName),
+      o.literal(attrName),
+      valueExpr
+    ];
   }
 }
 
@@ -54,7 +58,7 @@ o.Expression getPropertyInView(
 
     if (readMemberExpr != null) {
       // Note: Don't cast for members of the AppView base class...
-      if (definedView.nameResolver.fields
+      if (definedView.fields
               .any((field) => field.name == readMemberExpr.name) ||
           definedView.getters
               .any((field) => field.name == readMemberExpr.name)) {
@@ -178,7 +182,7 @@ o.Expression convertValueToOutputAst(dynamic value) {
 
 void createPureProxy(o.Expression fn, num argCount,
     o.ReadClassMemberExpr pureProxyProp, CompileView view) {
-  view.nameResolver.addField(new o.ClassField(pureProxyProp.name,
+  view.fields.add(new o.ClassField(pureProxyProp.name,
       modifiers: const [o.StmtModifier.Private]));
   var pureProxyId = argCount < Identifiers.pureProxies.length
       ? Identifiers.pureProxies[argCount]

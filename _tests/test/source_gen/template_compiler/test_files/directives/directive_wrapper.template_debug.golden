@@ -40,8 +40,6 @@ import 'package:angular/src/common/forms/directives/ng_form_model.template.dart'
     as import16;
 import 'package:angular/src/common/forms/directives/ng_control_name.template.dart'
     as import17;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart'
-    as import18;
 
 const List<dynamic> styles$TestFooComponent = const [
   'div._ngcontent-%COMP% { font-size:10px; }'
@@ -54,9 +52,12 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
 
 class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   import3.DivElement _el_0;
-  ChildDirectiveNgCd _ChildDirective_0_4;
+  import1.ChildDirective _ChildDirective_0_4;
   import1.DirectiveWithOutput _DirectiveWithOutput_0_5;
-  String _expr_0;
+  String _expr_4;
+  var _expr_5;
+  var _expr_6;
+  bool _expr_7;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -82,21 +83,20 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     createAttr(_el_0, 'role', 'button');
     createAttr(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
-    _ChildDirective_0_4 = new ChildDirectiveNgCd(
-        new import1.ChildDirective(_el_0, new ElementRef(_el_0)));
+    _ChildDirective_0_4 =
+        new import1.ChildDirective(_el_0, new ElementRef(_el_0));
     _DirectiveWithOutput_0_5 = new import1.DirectiveWithOutput();
     import3.Text _text_1 = new import3.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 87);
     _el_0.addEventListener(
-        'click', eventHandler1(_ChildDirective_0_4.instance.handleClick));
+        'click', eventHandler1(_ChildDirective_0_4.handleClick));
     _el_0.addEventListener(
-        'keypress', eventHandler1(_ChildDirective_0_4.instance.handleKeyPress));
-    final subscription_0 = _ChildDirective_0_4.instance.trigger
-        .listen(eventHandler1(_handle_trigger_0_0));
+        'keypress', eventHandler1(_ChildDirective_0_4.handleKeyPress));
+    final subscription_0 =
+        _ChildDirective_0_4.trigger.listen(eventHandler1(_handle_trigger_0_0));
     final subscription_1 = _DirectiveWithOutput_0_5.eventXyz.listen(
-        eventHandler1(
-            _ChildDirective_0_4.instance.handleXyzEventFromOtherDirective));
+        eventHandler1(_ChildDirective_0_4.handleXyzEventFromOtherDirective));
     init(const [], [subscription_0, subscription_1], [_el_0, _text_1]);
     return null;
   }
@@ -106,7 +106,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
       dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.ChildDirective) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _ChildDirective_0_4.instance;
+      return _ChildDirective_0_4;
     }
     if ((identical(token, import1.DirectiveWithOutput) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
@@ -118,14 +118,28 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   @override
   void detectChangesInternal() {
     final import1.TestFooComponent _ctx = ctx;
-    bool firstCheck = (this.cdState == 0);
     dbg(0, 0, 48);
-    final currVal_0 = _ctx.rowIndex;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      _ChildDirective_0_4.instance.gridRow = currVal_0;
-      _expr_0 = currVal_0;
+    final currVal_4 = _ctx.rowIndex;
+    if (import8.checkBinding(_expr_4, currVal_4)) {
+      _ChildDirective_0_4.gridRow = currVal_4;
+      _expr_4 = currVal_4;
     }
-    _ChildDirective_0_4.detectHostChanges(this, _el_0, firstCheck);
+    dbg(0, 0, 0);
+    final currVal_5 = _ChildDirective_0_4.tabIndex;
+    if (import8.checkBinding(_expr_5, currVal_5)) {
+      setProp(_el_0, 'tabIndex', currVal_5);
+      _expr_5 = currVal_5;
+    }
+    final currVal_6 = _ChildDirective_0_4.disabledStr;
+    if (import8.checkBinding(_expr_6, currVal_6)) {
+      setAttr(_el_0, 'aria-disabled', currVal_6?.toString());
+      _expr_6 = currVal_6;
+    }
+    final currVal_7 = _ChildDirective_0_4.disabled;
+    if (import8.checkBinding(_expr_7, currVal_7)) {
+      updateClass(_el_0, 'is-disabled', currVal_7);
+      _expr_7 = currVal_7;
+    }
   }
 
   void _handle_trigger_0_0($event) {
@@ -228,7 +242,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   import13.DefaultValueAccessor _DefaultValueAccessor_2_4;
   List<dynamic> _const_OpaqueToken__NgValueAccessor___2_5;
   import17.NgControlNameNgCd _NgControlName_2_6;
-  var _expr_0;
+  var _expr_1;
   static RenderComponentType _renderType;
   ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -309,12 +323,12 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     bool firstCheck = (this.cdState == 0);
     changes = null;
     dbg(0, 0, 5);
-    final currVal_0 = _ctx.form;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      _NgFormModel_0_4.instance.form = currVal_0;
+    final currVal_1 = _ctx.form;
+    if (import8.checkBinding(_expr_1, currVal_1)) {
+      _NgFormModel_0_4.instance.form = currVal_1;
       changes ??= <String, SimpleChange>{};
-      changes['form'] = new SimpleChange(_expr_0, currVal_0);
-      _expr_0 = currVal_0;
+      changes['form'] = new SimpleChange(_expr_1, currVal_1);
+      _expr_1 = currVal_1;
     }
     if (!identical(changes, null)) {
       _NgFormModel_0_4.instance.ngOnChanges(changes);
@@ -411,33 +425,6 @@ const ComponentFactory _InputFormTestNgFactory = const ComponentFactory(
     import1.InputFormTest,
     _METADATA);
 final ComponentFactory InputFormTestNgFactory = _InputFormTestNgFactory;
-
-class ChildDirectiveNgCd extends import18.DirectiveChangeDetector {
-  final import1.ChildDirective instance;
-  var _expr_0;
-  var _expr_1;
-  bool _expr_2;
-  ChildDirectiveNgCd(import1.ChildDirective this.instance);
-  void detectHostChanges(
-      AppView<dynamic> view, import3.Element el, bool firstCheck) {
-    final currVal_0 = instance.tabIndex;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      setProp(el, 'tabIndex', currVal_0);
-      _expr_0 = currVal_0;
-    }
-    final currVal_1 = instance.disabledStr;
-    if (import8.checkBinding(_expr_1, currVal_1)) {
-      setAttr(el, 'aria-disabled', currVal_1?.toString());
-      _expr_1 = currVal_1;
-    }
-    final currVal_2 = instance.disabled;
-    if (import8.checkBinding(_expr_2, currVal_2)) {
-      updateElemClass(el, 'is-disabled', currVal_2);
-      _expr_2 = currVal_2;
-    }
-  }
-}
-
 const _METADATA = const <dynamic>[
   ChildDirective,
   const <dynamic>[],
