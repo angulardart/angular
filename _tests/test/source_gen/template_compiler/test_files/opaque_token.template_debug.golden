@@ -60,7 +60,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
     final import2.HasOpaqueTokens _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_text_0.text = import8.interpolate0(_ctx.baseUrl));
+      (_text_0.text = (_ctx.baseUrl ?? ''));
     }
   }
 }

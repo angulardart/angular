@@ -49,7 +49,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
     final import1.HasOpaqueTokens _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_text_0.text = import6.interpolate0(_ctx.baseUrl));
+      (_text_0.text = (_ctx.baseUrl ?? ''));
     }
   }
 }
