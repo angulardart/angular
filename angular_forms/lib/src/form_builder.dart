@@ -1,4 +1,4 @@
-import 'package:angular/di.dart' show Injectable;
+import 'package:angular/angular.dart' show Injectable;
 
 import 'directives/validators.dart';
 import 'model.dart' as model_module;

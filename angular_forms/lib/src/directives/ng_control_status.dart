@@ -1,5 +1,4 @@
-import 'package:angular/core.dart' show Directive;
-import 'package:angular/di.dart' show Self;
+import 'package:angular/angular.dart' show Directive, Self;
 
 import 'ng_control.dart' show NgControl;
 

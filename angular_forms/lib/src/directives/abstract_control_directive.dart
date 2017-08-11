@@ -2,7 +2,7 @@ import '../model.dart' show AbstractControl;
 
 /// Base class for control directives.
 ///
-/// Only used internally in the forms module.
+/// Only used internally in the forms package.
 abstract class AbstractControlDirective<T extends AbstractControl> {
   T get control;
 

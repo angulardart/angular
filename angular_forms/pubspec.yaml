@@ -1,0 +1,21 @@
+name: angular_forms
+author: Dart Team <misc@dartlang.org>
+homepage: https://github.com/dart-lang/angular
+description: Forms framework for AngularDart.
+version: 0.1.0
+
+environment:
+  sdk: '>=1.24.0 <2.0.0'
+
+dependencies:
+  angular: '^4.0.0-alpha'
+
+# === vvv REMOVE WHEN PUBLISHING vvv ===
+dependency_overrides:
+  angular:
+    path: ../angular
+# === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
+
+transformers:
+  # Run the code generator on the entire package.
+  - angular/transform/codegen

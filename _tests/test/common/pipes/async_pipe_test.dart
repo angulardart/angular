@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:_tests/control_mocks.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/angular.dart';
 
@@ -172,3 +171,6 @@ void main() {
     });
   });
 }
+
+@proxy
+class MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}

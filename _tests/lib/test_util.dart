@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
 import 'package:angular/src/common/pipes/invalid_pipe_argument_exception.dart';
-import 'package:angular/src/facade/exceptions.dart';
 
 Matcher throwsWith(Pattern message) => new _ThrowsWith(message);
 
@@ -8,19 +7,6 @@ final Matcher throwsAnInvalidPipeArgumentException =
     throwsA(new isInstanceOf<InvalidPipeArgumentException>());
 
 final Matcher throwsATypeError = throwsA(new isInstanceOf<TypeError>());
-
-Matcher throwsABaseException(messageMatcher) {
-  return throwsA(allOf(new isInstanceOf<BaseException>(),
-      new _BaseExceptionFun(wrapMatcher(messageMatcher))));
-}
-
-class _BaseExceptionFun extends CustomMatcher {
-  _BaseExceptionFun(Matcher matcher)
-      : super("BaseException has message matcher", "message", matcher);
-
-  @override
-  featureValueOf(exception) => (exception as BaseException).message;
-}
 
 class _ThrowsWith extends Matcher {
   // RegExp or String.

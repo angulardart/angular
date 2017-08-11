@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:html' show Event;
 
 import 'package:meta/meta.dart';
-import 'package:angular/core.dart' show Directive, Provider, Output;
-import 'package:angular/di.dart' show Optional, Inject, Self;
+import 'package:angular/angular.dart'
+    show Directive, Inject, Optional, Output, Provider, Self;
 
 import '../model.dart' show AbstractControl, ControlGroup, Control;
 import '../validators.dart' show NG_VALIDATORS;

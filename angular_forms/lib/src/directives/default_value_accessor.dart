@@ -2,7 +2,7 @@ import 'dart:html';
 import 'dart:js_util' as js_util;
 
 import 'package:func/func.dart' show VoidFunc0, VoidFunc1;
-import 'package:angular/core.dart' show Directive, Provider;
+import 'package:angular/angular.dart' show Directive, Provider;
 
 import 'control_value_accessor.dart';
 

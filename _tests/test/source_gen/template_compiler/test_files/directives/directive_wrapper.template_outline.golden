@@ -13,6 +13,7 @@ import 'directive_wrapper.dart' as _user;
 import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 // For @Component class TestFooComponent.
 const List<dynamic> styles$TestFooComponent = const [];
