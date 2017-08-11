@@ -2,9 +2,8 @@ import 'dart:html';
 import 'dart:js_util' as js_util;
 
 import 'package:func/func.dart' show Func0, VoidFunc0;
-import 'package:angular/core.dart'
-    show Directive, Provider, Input, OnInit, OnDestroy, Injector;
-import 'package:angular/di.dart' show Injectable;
+import 'package:angular/angular.dart'
+    show Directive, Injectable, Injector, Input, OnInit, OnDestroy, Provider;
 
 import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;

@@ -5,6 +5,7 @@ environment:
   sdk: '>=1.24.0 <2.0.0'
 dev_dependencies:
   angular: 4.0.0-dev
+  angular_forms: 0.1.0
   angular_test: '^1.0.0-beta'
   build_runner: ^0.3.4
   build_test: ^0.6.0
@@ -19,6 +20,8 @@ dependency_overrides:
     path: ../angular
   angular_compiler:
     path: ../angular_compiler
+  angular_forms:
+    path: ../angular_forms
   angular_router:
     path: ../angular_router
   angular_test:

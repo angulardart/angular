@@ -4,7 +4,7 @@ import 'form_interface.dart' show Form;
 
 /// A directive that contains multiple [NgControl]s.
 ///
-/// Only used by the forms module.
+/// Only used by the forms package.
 class ControlContainer<T extends AbstractControl>
     extends AbstractControlDirective<T> {
   String name;

@@ -1,8 +1,16 @@
 import 'dart:async';
 
-import 'package:angular/core.dart'
-    show OnChanges, OnInit, SimpleChange, Directive, Provider, Output;
-import 'package:angular/di.dart' show Inject, Optional, Self;
+import 'package:angular/angular.dart'
+    show
+        Directive,
+        Inject,
+        OnChanges,
+        OnInit,
+        Optional,
+        Output,
+        Provider,
+        Self,
+        SimpleChange;
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;

@@ -10,8 +10,11 @@ import 'package:angular/src/core/reflection/reflection.dart'
     as _ngRef;
 import 'dart:async';
 import 'dart:html';
+import 'package:angular_forms/angular_forms.dart';
 import 'package:angular/angular.template.dart'
     as _i1;
+import 'package:angular_forms/angular_forms.template.dart'
+    as _i2;
 export 'directive_wrapper.dart';
 import 'package:angular/src/debug/debug_context.dart';
 import 'directive_wrapper.dart' as import1;
@@ -26,19 +29,19 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
     as import8;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/common/forms/directives/ng_form_model.dart'
+import 'package:angular_forms/src/directives/ng_form_model.dart'
     as import11;
-import 'package:angular/src/common/forms/directives/control_container.dart'
+import 'package:angular_forms/src/directives/control_container.dart'
     as import12;
-import 'package:angular/src/common/forms/directives/default_value_accessor.dart'
+import 'package:angular_forms/src/directives/default_value_accessor.dart'
     as import13;
-import 'package:angular/src/common/forms/directives/ng_control_name.dart'
+import 'package:angular_forms/src/directives/ng_control_name.dart'
     as import14;
-import 'package:angular/src/common/forms/directives/ng_control.dart'
+import 'package:angular_forms/src/directives/ng_control.dart'
     as import15;
-import 'package:angular/src/common/forms/directives/ng_form_model.template.dart'
+import 'package:angular_forms/src/directives/ng_form_model.template.dart'
     as import16;
-import 'package:angular/src/common/forms/directives/ng_control_name.template.dart'
+import 'package:angular_forms/src/directives/ng_control_name.template.dart'
     as import17;
 
 const List<dynamic> styles$TestFooComponent = const [
@@ -468,4 +471,5 @@ void initReflector() {
       new _ngRef.ReflectionInfo(const <dynamic>[_InputFormTestNgFactory],
           const [], () => new InputFormTest()));
   _i1.initReflector();
+  _i2.initReflector();
 }

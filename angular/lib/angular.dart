@@ -4,7 +4,6 @@ library angular;
 export 'core.dart';
 export 'src/common/common_directives.dart';
 export 'src/common/directives.dart';
-export 'src/common/forms.dart';
 export 'src/common/pipes.dart';
 export 'src/core/angular_entrypoint.dart' show AngularEntrypoint;
 export 'src/core/application_tokens.dart' hide APP_ID_RANDOM_PROVIDER;

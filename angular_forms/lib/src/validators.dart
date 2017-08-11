@@ -1,4 +1,4 @@
-import 'package:angular/di.dart' show OpaqueToken;
+import 'package:angular/angular.dart' show OpaqueToken;
 
 import 'directives/validators.dart' show ValidatorFn;
 import 'model.dart' as model_module;

@@ -1,4 +1,4 @@
-import 'package:angular/core.dart';
+import 'package:angular/angular.dart';
 
 import '../model.dart' show AbstractControl;
 import '../validators.dart' show Validators, NG_VALIDATORS;

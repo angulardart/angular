@@ -1,6 +1,6 @@
 @TestOn('browser')
 import 'package:test/test.dart';
-import 'package:angular/angular.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 void main() {
   var validator = (String key, dynamic error) {

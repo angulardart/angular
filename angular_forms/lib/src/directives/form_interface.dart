@@ -4,7 +4,7 @@ import 'ng_control_group.dart' show NgControlGroup;
 
 /// An interface that [NgFormModel] and [NgForm] implement.
 ///
-/// Only used by the forms module.
+/// Only used by the forms package.
 abstract class Form {
   /// Add a control to this form.
   void addControl(NgControl dir);

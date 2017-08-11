@@ -1,9 +1,16 @@
 import 'dart:async';
 import 'dart:html' show Event;
 
-import 'package:angular/core.dart'
-    show SimpleChange, OnChanges, Directive, Provider, Output;
-import 'package:angular/di.dart' show Optional, Inject, Self;
+import 'package:angular/angular.dart'
+    show
+        Directive,
+        Inject,
+        OnChanges,
+        Optional,
+        Output,
+        Provider,
+        Self,
+        SimpleChange;
 
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;

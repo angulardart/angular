@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 @Directive(selector: '[some-child-directive]', host: const {
   '(click)': r'handleClick($event)',

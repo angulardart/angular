@@ -5,10 +5,10 @@ library angular2.test.common.forms.accessor_test;
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/common/forms/directives/control_value_accessor.dart';
+import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_test/angular_test.dart';
 
 void main() {
   group('accessor test', () {
