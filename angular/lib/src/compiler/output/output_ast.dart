@@ -917,7 +917,7 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
 
   @override
   dynamic visitIfNullExpr(IfNullExpr ast, dynamic context) {
-    return new ConditionalExpr(ast.condition.visitExpression(this, context),
+    return new IfNullExpr(ast.condition.visitExpression(this, context),
         ast.nullCase.visitExpression(this, context));
   }
 

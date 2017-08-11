@@ -60,6 +60,8 @@ void bind(
     CompileMethod method,
     CompileMethod literalMethod,
     {o.OutputType fieldType}) {
+  parsedExpression =
+      rewriteInterpolate(parsedExpression, view.component.analyzedClass);
   var checkExpression = convertCdExpressionToIr(
       view.nameResolver,
       context,
@@ -71,7 +73,7 @@ void bind(
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
     _bindLiteral(checkExpression, literalMethod, actions, currValExpr.name,
-        fieldExpr.name, isNullable(parsedExpression));
+        fieldExpr.name, canBeNull(parsedExpression));
     return;
   }
   if (checkExpression.expression == null) {
