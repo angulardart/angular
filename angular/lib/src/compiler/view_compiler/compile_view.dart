@@ -66,7 +66,6 @@ class CompileView {
   /// List of methods used to handle events with non standard parameters in
   /// handlers or events with multiple actions.
   List<o.ClassMethod> eventHandlerMethods = [];
-  List<o.ClassField> fields = [];
   List<o.ClassGetter> getters = [];
   List<o.Expression> subscriptions = [];
   bool subscribesToMockLike = false;
@@ -89,16 +88,16 @@ class CompileView {
       this.declarationElement,
       this.templateVariableBindings,
       this.deferredModules) {
-    createMethod = new CompileMethod(this);
-    injectorGetMethod = new CompileMethod(this);
-    updateContentQueriesMethod = new CompileMethod(this);
-    dirtyParentQueriesMethod = new CompileMethod(this);
-    updateViewQueriesMethod = new CompileMethod(this);
-    detectChangesInInputsMethod = new CompileMethod(this);
-    detectChangesRenderPropertiesMethod = new CompileMethod(this);
-    afterContentLifecycleCallbacksMethod = new CompileMethod(this);
-    afterViewLifecycleCallbacksMethod = new CompileMethod(this);
-    destroyMethod = new CompileMethod(this);
+    createMethod = new CompileMethod(genDebugInfo);
+    injectorGetMethod = new CompileMethod(genDebugInfo);
+    updateContentQueriesMethod = new CompileMethod(genDebugInfo);
+    dirtyParentQueriesMethod = new CompileMethod(genDebugInfo);
+    updateViewQueriesMethod = new CompileMethod(genDebugInfo);
+    detectChangesInInputsMethod = new CompileMethod(genDebugInfo);
+    detectChangesRenderPropertiesMethod = new CompileMethod(genDebugInfo);
+    afterContentLifecycleCallbacksMethod = new CompileMethod(genDebugInfo);
+    afterViewLifecycleCallbacksMethod = new CompileMethod(genDebugInfo);
+    destroyMethod = new CompileMethod(genDebugInfo);
     nameResolver = new ViewNameResolver(this);
     viewType = getViewType(component, viewIndex);
     className = '${viewIndex == 0 && viewType != ViewType.HOST ? '' : '_'}'
@@ -141,6 +140,8 @@ class CompileView {
       throw new ArgumentError();
     }
   }
+
+  bool get genDebugInfo => genConfig.genDebugInfo;
 
   // Adds reference to a child view.
   void addViewChild(o.Expression componentViewExpr) {

@@ -34,7 +34,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
       : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
-    createAttr(this.rootEl, 'aria-title', 'title');
+    createAttr(rootEl, 'aria-title', 'title');
     _renderType ??= import6.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$HostComponent);
     setupComponentType(_renderType);

@@ -558,8 +558,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     if (_requiresDirectiveChangeDetector == null) {
       bool hasInputsWithNgOnChanges = inputs.isNotEmpty &&
           lifecycleHooks.contains(LifecycleHooks.OnChanges);
-      _requiresDirectiveChangeDetector =
-          !isComponent && identifier.name != 'NgIf' && hasInputsWithNgOnChanges;
+      _requiresDirectiveChangeDetector = !isComponent &&
+          identifier.name != 'NgIf' &&
+          (hasInputsWithNgOnChanges || hostProperties.isNotEmpty);
     }
     return _requiresDirectiveChangeDetector;
   }

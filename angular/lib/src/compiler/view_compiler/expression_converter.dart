@@ -14,6 +14,7 @@ abstract class NameResolver {
   o.Expression createLiteralArray(List<o.Expression> values);
   o.Expression createLiteralMap(
       List<List<dynamic /* String | o . Expression */ >> values);
+  int createUniqueBindIndex();
 }
 
 class ExpressionWithWrappedValueInfo {
