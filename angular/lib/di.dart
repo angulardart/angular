@@ -1,3 +1,5 @@
+/// This library exists for compatibility reasons; use angular.dart instead.
+
 export 'src/core/change_detection/pipe_transform.dart';
 export 'src/core/di.dart';
 export 'src/core/metadata.dart' show Component, Directive, Input, Output;
