@@ -7,7 +7,7 @@ dev_dependencies:
   angular: 4.0.0-dev
   angular_forms: 0.1.0
   angular_test: '^1.0.0-beta'
-  build_runner: ^0.3.4
+  build_runner: ^0.4.0
   build_test: ^0.6.0
   cli_util: ^0.1.0
   mockito: '>=0.11.0 <3.0.0'
@@ -26,8 +26,6 @@ dependency_overrides:
     path: ../angular_router
   angular_test:
     path: ../angular_test
-  # TODO: Publish a new `build_runner` to remove this override.
-  build_barback: 0.3.0
 
 transformers:
   - angular:
