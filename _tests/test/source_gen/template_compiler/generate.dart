@@ -21,32 +21,35 @@ Future main(List<String> args) async {
   var parser = new ArgParser()..addFlag(_updateGoldens, defaultsTo: false);
   var results = parser.parse(args);
   var updateGoldens = results[_updateGoldens];
-  var inputs =
-      new InputSet('_tests', ['$testFiles/*.dart', '$testFiles/**/*.dart']);
-  var phaseGroup = new PhaseGroup()
-    ..addPhase(new Phase()
-      ..addAction(
-          new LibraryBuilder(
-              new TemplateGenerator(const CompilerFlags(
-                  genDebugInfo: false, usePlaceholder: false)),
-              generatedExtension: updateGoldens
-                  ? '.template_release.golden'
-                  : '.template_release.check'),
-          inputs)
-      ..addAction(
-          new LibraryBuilder(
-              new TemplateGenerator(const CompilerFlags(
-                  genDebugInfo: true, usePlaceholder: false)),
-              generatedExtension: updateGoldens
-                  ? '.template_debug.golden'
-                  : '.template_debug.check'),
-          inputs)
-      ..addAction(
-          new TemplateOutliner(
-              const CompilerFlags(genDebugInfo: false, usePlaceholder: false),
-              extension: updateGoldens
-                  ? '.template_outline.golden'
-                  : '.template_outline.check'),
-          inputs));
-  await build(phaseGroup, deleteFilesByDefault: updateGoldens);
+  var package = '_tests';
+  var inputs = ['$testFiles/*.dart', '$testFiles/**/*.dart'];
+  var buildActions = [
+    new BuildAction(
+        new LibraryBuilder(
+            new TemplateGenerator(const CompilerFlags(
+                genDebugInfo: false, usePlaceholder: false)),
+            generatedExtension: updateGoldens
+                ? '.template_release.golden'
+                : '.template_release.check'),
+        package,
+        inputs: inputs),
+    new BuildAction(
+        new LibraryBuilder(
+            new TemplateGenerator(
+                const CompilerFlags(genDebugInfo: true, usePlaceholder: false)),
+            generatedExtension: updateGoldens
+                ? '.template_debug.golden'
+                : '.template_debug.check'),
+        package,
+        inputs: inputs),
+    new BuildAction(
+        new TemplateOutliner(
+            const CompilerFlags(genDebugInfo: false, usePlaceholder: false),
+            extension: updateGoldens
+                ? '.template_outline.golden'
+                : '.template_outline.check'),
+        package,
+        inputs: inputs)
+  ];
+  await build(buildActions, deleteFilesByDefault: updateGoldens);
 }
