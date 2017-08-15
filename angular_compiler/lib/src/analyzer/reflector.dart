@@ -9,6 +9,9 @@ import 'package:source_gen/source_gen.dart';
 import 'di/dependencies.dart';
 import 'types.dart';
 
+typedef FutureOr<bool> _HasInput(String uri);
+typedef bool _IsLibrary(String uri);
+
 /// Determines how to generate and link to `initReflector` in other files.
 ///
 /// AngularDart's `initReflector` is used to create a graph of all generated
@@ -29,13 +32,13 @@ class ReflectableReader {
   /// Used to determine whether [uri] (i.e. `foo.dart`) _will_ generate a future
   /// output (i.e. `foo.template.dart`). It should be assumed the [uri]
   /// parameter, if a relative URI, is relative to the library being analyzed.
-  final FutureOr<bool> Function(String uri) hasInput;
+  final _HasInput hasInput;
 
   /// Returns whether [uri] represents a summarized/analyzed dart library.
   ///
   /// It should be assumed the [uri] parameter, if a relative URI, is relative
   /// to the library being analyzed.
-  final bool Function(String uri) isLibrary;
+  final _IsLibrary isLibrary;
 
   /// File extension used when compiling AngularDart files.
   ///
