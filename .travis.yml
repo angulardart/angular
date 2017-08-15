@@ -9,6 +9,7 @@ env:
   - PKG=_tests
   - PKG=angular
   - PKG=angular_compiler
+  - PKG=angular_forms
   - PKG=angular_router
   - PKG=angular_test
 
