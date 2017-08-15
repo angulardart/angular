@@ -610,6 +610,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       compileElement.writeDeferredLoader(
           embeddedView, compileElement.appViewContainer, statements);
       view.createMethod.addStmts(statements);
+      view.detectChangesRenderPropertiesMethod.addStmt(compileElement
+          .appViewContainer
+          .callMethod('detectChangesInNestedViews', const []).toStmt());
     }
     return null;
   }

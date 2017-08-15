@@ -70,6 +70,11 @@ class ViewTestContainerComponent0
     init(const [], const [], [_anchor_0]);
     return null;
   }
+
+  @override
+  void detectChangesInternal() {
+    _appEl_0.detectChangesInNestedViews();
+  }
 }
 
 AppView<import3.TestContainerComponent> viewFactory_TestContainerComponent0(
