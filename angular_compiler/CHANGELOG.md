@@ -1,3 +1,7 @@
+## 0.2.0+1
+
+- Various changes internal to the compiler.
+
 ## 0.2.0
 
 - Added various classes and helpers to form the new compile infrastructure:
