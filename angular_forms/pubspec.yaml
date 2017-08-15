@@ -14,8 +14,10 @@ dependencies:
 dependency_overrides:
   angular:
     path: ../angular
+  angular_compiler:
+      path: ../angular_compiler
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
   # Run the code generator on the entire package.
-  - angular/transform/codegen
+  - angular
