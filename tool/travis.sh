@@ -27,8 +27,3 @@ if [ "$PKG" == "angular_test" ]; then
   dartium --version
   dart test/test_on_travis.dart
 fi
-
-if [ "$TRAVIS_DART_VERSION" == "stable" ]; then
-  echo Any unformatted files?
-  dartfmt -n --set-exit-if-changed .
-fi
