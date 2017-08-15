@@ -61,6 +61,6 @@ Future<NormalizedComponentWithViewDirectives> resolveAndFindComponent(
     inputId: testAssetId,
   );
   final artifacts =
-      findComponentsAndDirectives(resolver.getLibrary(testAssetId));
+      findComponentsAndDirectives(await resolver.libraryFor(testAssetId));
   return artifacts.components.first;
 }
