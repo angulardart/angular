@@ -1,9 +1,19 @@
 ## 4.0.0-alpha+3
+
 ### Breaking changes
 
 * Removed `formDirectives` from `COMMON_DIRECTIVES` list; replace
   `COMMON_DIRECTIVES` with `[CORE_DIRECTIVES, formDirectives]` for components
   that use forms directives.
+
+* Forms API has been moved to a new package, `angular_forms`, which is going to
+  be versioned and maintained alongside the core framework. This should allow
+  better segmentation of code and easier contributions.
+
+### Bug Fixes
+
+* Fixed a bug in `@deferred` when nested views has DI bindings. Fixes
+  [#578](https://github.com/dart-lang/angular/issues/578).
 
 ## 4.0.0-alpha+2
 
