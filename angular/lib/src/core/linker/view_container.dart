@@ -36,7 +36,10 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
   /// The number of Views currently attached to this container.
   @override
-  int get length => nestedViews?.length ?? 0;
+  int get length {
+    var nested = nestedViews;
+    return nested == null ? 0 : nested.length;
+  }
 
   /// Anchor element that specifies the location of this container in the
   /// containing View.

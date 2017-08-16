@@ -34,8 +34,7 @@ import 'package:angular/security.dart';
 class SafeInnerHtmlDirective {
   final Element _element;
 
-  SafeInnerHtmlDirective(ElementRef elementRef)
-      : _element = elementRef.nativeElement;
+  SafeInnerHtmlDirective(this._element);
 
   @Input()
   set safeInnerHtml(safeInnerHtml) {
@@ -47,8 +46,12 @@ class SafeInnerHtmlDirective {
     } else if (safeInnerHtml == null) {
       _element.setInnerHtml('');
     } else {
-      // TODO(matanl): Should support `String` but sanitize it first.
-      // i.e. using <strong>Hello World</strong> is totally fine.
+      // A regular string is not allowed since a security audit needs to be able
+      // to search for SafeHtml and identify all locations where we are
+      // bypassing sanitization. This also enforces SafeHtml usage at the
+      // origin instead of passing a primitive string through layers
+      // of code which could introduce mutations making security auditing
+      // hard.
       throw new UnsupportedError(
         'SafeHtml required (got ${safeInnerHtml.runtimeType})',
       );
