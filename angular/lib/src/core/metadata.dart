@@ -961,15 +961,17 @@ class Input {
 /// ```dart
 /// @Directive(selector: 'interval-dir')
 /// class IntervalDir {
+///   final _everySecond = new StreamController<String>();
 ///   @Output()
-///   final everySecond = new EventEmitter<String>();
+///   final get everySecond => _everySecond.stream;
 ///
+///   final _every5Secs = new StreamController<Null>();
 ///   @Output('everyFiveSeconds')
-///   final every5Secs = new EventEmitter<String>();
+///   final get every5Secs => _every5Secs.stream;
 ///
 ///   IntervalDir() {
-///     setInterval(() => everySecond.emit("event"), 1000);
-///     setInterval(() => every5Secs.emit("event"), 5000);
+///     setInterval(() => _everySecond.add("event"), 1000);
+///     setInterval(() => _every5Secs.add(null), 5000);
 ///   }
 /// }
 ///
