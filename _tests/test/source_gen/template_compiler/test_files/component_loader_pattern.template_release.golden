@@ -4,17 +4,21 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'component_loader_pattern.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
+export 'component_loader_pattern.dart';
+import 'package:angular/angular.dart';
 import 'package:angular/di.template.dart'
     as di_lib;
+import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'example_of_file_that_is_not_generated_yet.template.dart' as _ref0;
 import 'package:angular/angular.template.dart'
-    as _i1;
-import 'example_of_file_that_is_not_generated_yet.template.dart' as _i2;
-import 'package:angular/di.template.dart' as _i3;
-export 'component_loader_pattern.dart';
+    as _ref1;
+import 'package:angular/di.template.dart' as _ref2;
+
 import 'package:angular/src/core/linker/app_view.dart';
 import 'component_loader_pattern.dart' as import1;
 import 'package:angular/src/core/render/api.dart';
@@ -100,20 +104,31 @@ AppView viewFactory_TestComponentHost0(
 }
 
 const ComponentFactory _TestComponentNgFactory = const ComponentFactory(
-    'test', viewFactory_TestComponentHost0, import1.TestComponent, _METADATA);
+    'test',
+    viewFactory_TestComponentHost0,
+    import1.TestComponent,
+    _TestComponentMetadata);
 final ComponentFactory TestComponentNgFactory = _TestComponentNgFactory;
-const _METADATA = const <dynamic>[TestComponent, const <dynamic>[]];
+const _TestComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      TestComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_TestComponentNgFactory],
-          const [], () => new TestComponent()));
-  _i1.initReflector();
-  _i2.initReflector();
-  _i3.initReflector();
+  _ref0.initReflector();
+  _ref1.initReflector();
+  _ref2.initReflector();
+  _ngRef.registerComponent(
+    TestComponent,
+    TestComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    TestComponent,
+    () => new TestComponent(),
+  );
+  _ngRef.registerDependencies(
+    TestComponent,
+    const [],
+  );
 }

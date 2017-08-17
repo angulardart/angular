@@ -29,6 +29,7 @@ class TemplateGenerator extends Generator {
       var outputs = await processTemplates(library.element, buildStep, _flags);
       if (outputs == null) return _emptyNgDepsContents;
       return buildGeneratedCode(
+        library.element,
         outputs,
         fileName(buildStep.inputId),
         library.element.name,

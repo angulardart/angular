@@ -227,7 +227,7 @@ void main() {
       _fakeIsLibrary = new Set<String>();
       reader = new ReflectableReader(
         hasInput: _fakeInputs.contains,
-        isLibrary: _fakeIsLibrary.contains,
+        isLibrary: (lib) async => _fakeIsLibrary.contains(lib),
       );
     });
 

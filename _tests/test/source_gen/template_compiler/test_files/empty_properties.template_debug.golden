@@ -4,13 +4,16 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'empty_properties.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
+export 'empty_properties.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
-export 'empty_properties.dart';
+    as _ref0;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'empty_properties.dart' as import1;
 import 'package:angular/src/debug/debug_app_view.dart';
@@ -233,7 +236,7 @@ const ComponentFactory _EmptyPropertiesComponentNgFactory =
         'empty-properties',
         viewFactory_EmptyPropertiesComponentHost0,
         import1.EmptyPropertiesComponent,
-        _METADATA);
+        _EmptyPropertiesComponentMetadata);
 final ComponentFactory EmptyPropertiesComponentNgFactory =
     _EmptyPropertiesComponentNgFactory;
 const List<dynamic> styles$FancyButtonComponent = const [];
@@ -332,30 +335,41 @@ const ComponentFactory _FancyButtonComponentNgFactory = const ComponentFactory(
     'fancy-button',
     viewFactory_FancyButtonComponentHost0,
     import1.FancyButtonComponent,
-    _METADATA);
+    _FancyButtonComponentMetadata);
 final ComponentFactory FancyButtonComponentNgFactory =
     _FancyButtonComponentNgFactory;
-const _METADATA = const <dynamic>[
-  EmptyPropertiesComponent,
-  const <dynamic>[],
-  FancyButtonComponent,
-  const <dynamic>[]
-];
+const _EmptyPropertiesComponentMetadata = const [];
+const _FancyButtonComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      EmptyPropertiesComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[_EmptyPropertiesComponentNgFactory],
-          const [],
-          () => new EmptyPropertiesComponent()));
-  _ngRef.reflector.registerType(
-      FancyButtonComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_FancyButtonComponentNgFactory],
-          const [], () => new FancyButtonComponent()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    EmptyPropertiesComponent,
+    EmptyPropertiesComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    EmptyPropertiesComponent,
+    () => new EmptyPropertiesComponent(),
+  );
+  _ngRef.registerDependencies(
+    EmptyPropertiesComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    FancyButtonComponent,
+    FancyButtonComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    FancyButtonComponent,
+    () => new FancyButtonComponent(),
+  );
+  _ngRef.registerDependencies(
+    FancyButtonComponent,
+    const [],
+  );
 }

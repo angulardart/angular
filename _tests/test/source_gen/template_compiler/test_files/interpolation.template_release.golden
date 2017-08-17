@@ -4,13 +4,16 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'interpolation.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
+export 'interpolation.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
-export 'interpolation.dart';
+    as _ref0;
+
 import 'package:angular/src/core/linker/app_view.dart';
 import 'interpolation.dart' as import1;
 import 'dart:html' as import2;
@@ -123,7 +126,7 @@ const ComponentFactory _InterpolationComponentNgFactory =
         'interpolation',
         viewFactory_InterpolationComponentHost0,
         import1.InterpolationComponent,
-        _METADATA);
+        _InterpolationComponentMetadata);
 final ComponentFactory InterpolationComponentNgFactory =
     _InterpolationComponentNgFactory;
 const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
@@ -233,32 +236,41 @@ const ComponentFactory _InterpolationComponentNoWhitespaceNgFactory =
         'interpolation',
         viewFactory_InterpolationComponentNoWhitespaceHost0,
         import1.InterpolationComponentNoWhitespace,
-        _METADATA);
+        _InterpolationComponentNoWhitespaceMetadata);
 final ComponentFactory InterpolationComponentNoWhitespaceNgFactory =
     _InterpolationComponentNoWhitespaceNgFactory;
-const _METADATA = const <dynamic>[
-  InterpolationComponent,
-  const <dynamic>[],
-  InterpolationComponentNoWhitespace,
-  const <dynamic>[]
-];
+const _InterpolationComponentMetadata = const [];
+const _InterpolationComponentNoWhitespaceMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      InterpolationComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[_InterpolationComponentNgFactory],
-          const [],
-          () => new InterpolationComponent()));
-  _ngRef.reflector.registerType(
-      InterpolationComponentNoWhitespace,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[_InterpolationComponentNoWhitespaceNgFactory],
-          const [],
-          () => new InterpolationComponentNoWhitespace()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    InterpolationComponent,
+    InterpolationComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    InterpolationComponent,
+    () => new InterpolationComponent(),
+  );
+  _ngRef.registerDependencies(
+    InterpolationComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    InterpolationComponentNoWhitespace,
+    InterpolationComponentNoWhitespaceNgFactory,
+  );
+  _ngRef.registerFactory(
+    InterpolationComponentNoWhitespace,
+    () => new InterpolationComponentNoWhitespace(),
+  );
+  _ngRef.registerDependencies(
+    InterpolationComponentNoWhitespace,
+    const [],
+  );
 }

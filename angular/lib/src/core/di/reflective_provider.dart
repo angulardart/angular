@@ -1,4 +1,4 @@
-import 'package:angular/src/core/reflection/reflection.dart' show reflector;
+import 'package:angular/src/di/reflector.dart' as reflector;
 
 import 'decorators.dart';
 import 'provider.dart' show Provider, noValueProvided;
@@ -95,7 +95,7 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
   } else {
     var useClass = provider.useClass;
     if (useClass != null) {
-      factoryFn = reflector.factory(useClass);
+      factoryFn = reflector.getFactory(useClass);
       resolvedDeps = _dependenciesFor(useClass);
     } else {
       var useValue = provider.useValue;
@@ -104,7 +104,7 @@ ResolvedReflectiveFactory resolveReflectiveFactory(Provider provider) {
         resolvedDeps = const <ReflectiveDependency>[];
       } else if (provider.token is Type) {
         var useClass = provider.token;
-        factoryFn = reflector.factory(useClass);
+        factoryFn = reflector.getFactory(useClass);
         resolvedDeps = _dependenciesFor(useClass);
       } else {
         throw new InvalidProviderError.withCustomMessage(
@@ -209,7 +209,7 @@ List<ReflectiveDependency> constructDependencies(
 }
 
 List<ReflectiveDependency> _dependenciesFor(dynamic typeOrFunc) {
-  var params = reflector.parameters(typeOrFunc);
+  var params = reflector.getDependencies(typeOrFunc);
   var deps = <ReflectiveDependency>[];
   if (params != null) {
     int paramCount = params.length;

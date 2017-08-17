@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:angular/src/core/di.dart' show Injectable;
-import 'package:angular/src/core/reflection/reflection.dart' show reflector;
+import 'package:angular/src/di/reflector.dart' as reflector;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'component_factory.dart' show ComponentFactory;
@@ -11,19 +11,30 @@ import 'component_factory.dart' show ComponentFactory;
 abstract class ComponentResolver {
   Future<ComponentFactory> resolveComponent(Type componentType);
 
+  ComponentFactory resolveComponentSync(Type componentType);
+
   void clearCache();
 }
 
 @Injectable()
 class ReflectorComponentResolver implements ComponentResolver {
+  const ReflectorComponentResolver();
+
   Future<ComponentFactory> resolveComponent(Type componentType) {
-    var metadatas = reflector.annotations(componentType);
-    var componentFactory = metadatas
-        .firstWhere((type) => type is ComponentFactory, orElse: () => null);
-    if (componentFactory == null) {
+    final component = reflector.getComponent(componentType) as ComponentFactory;
+    if (component == null) {
       throw new BaseException('No precompiled component $componentType found');
     }
-    return new Future<ComponentFactory>.value(componentFactory);
+    return new Future<ComponentFactory>.value(component);
+  }
+
+  @override
+  ComponentFactory resolveComponentSync(Type componentType) {
+    final component = reflector.getComponent(componentType) as ComponentFactory;
+    if (component == null) {
+      throw new BaseException('No precompiled component $componentType found');
+    }
+    return component;
   }
 
   @override

@@ -1,6 +1,4 @@
-import 'package:angular/angular.dart' show ComponentFactory, reflector;
-
-import 'lifecycle/lifecycle_annotations.dart' show CanActivate;
+import 'package:angular/angular.dart' show ComponentFactory, ComponentResolver;
 
 class TouchMap {
   Map<String, String> map = {};
@@ -30,25 +28,28 @@ class TouchMap {
 String normalizeString(Object obj) => obj?.toString();
 
 List<dynamic> getComponentAnnotations(
-    dynamic /* Type | ComponentFactory */ comp) {
-  if (comp is ComponentFactory) {
-    return comp.metadata;
-  } else {
-    return reflector.annotations(comp);
+  Object componentOrType,
+  ComponentResolver resolver,
+) {
+  if (componentOrType == null) {
+    return const [];
   }
+  ComponentFactory component;
+  if (componentOrType is ComponentFactory) {
+    component = componentOrType;
+  } else if (componentOrType is Type) {
+    component = resolver.resolveComponentSync(componentOrType);
+  } else {
+    throw new ArgumentError('Expected ComponentFactory or Type for '
+        '"componentOrType", got: ${componentOrType.runtimeType}');
+  }
+  return component.metadata;
 }
 
 Type getComponentType(dynamic /* Type | ComponentFactory */ comp) {
   return comp is ComponentFactory ? comp.componentType : comp;
 }
 
-Function getCanActivateHook(component) {
-  var annotations = getComponentAnnotations(component);
-  for (var i = 0; i < annotations.length; i += 1) {
-    var annotation = annotations[i];
-    if (annotation is CanActivate) {
-      return annotation.fn;
-    }
-  }
-  return null;
-}
+// TODO(matanl): Remove; this feature is no longer supported.
+@deprecated
+Function getCanActivateHook(_) => null;

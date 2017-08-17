@@ -69,7 +69,14 @@ class ReflectableEmitter {
           ..writeln('];');
       }
     }
-    output.writeln('void initReflector() {');
+    output
+      // Can't write "bool", in case `import 'dart:core' as core` is used.
+      ..writeln('var _visited = false;')
+      ..writeln('void initReflector() {')
+      ..writeln('  if (_visited) {')
+      ..writeln('    return;')
+      ..writeln('  }')
+      ..writeln('  _visited = true;');
     if (_linkingNeeded) {
       for (var i = 0; i < _output.urlsNeedingInitReflector.length; i++) {
         output.writeln('  _ref$i.initReflector();');
@@ -86,9 +93,6 @@ class ReflectableEmitter {
         if (element.factory != null) {
           output.writeln(_registerFactory(element.factory));
         }
-        if (element.registerAnnotation != null) {
-          // TODO(matanl): Complete.
-        }
       }
     }
     return (output..writeln('}')).toString();
@@ -97,10 +101,17 @@ class ReflectableEmitter {
   String _registerComponent(String name) =>
       '  _ngRef.registerComponent(\n    $name,\n    ${name}NgFactory,\n  );';
 
-  String _nameOfInvocation(DependencyInvocation invocation) {
+  String _nameOfInvocation(
+    DependencyInvocation invocation, {
+    bool checkNamedConstructor: false,
+  }) {
     final bound = invocation.bound;
     if (bound is ConstructorElement) {
-      return bound.returnType.element.name;
+      final clazz = bound.returnType.element.name;
+      if (checkNamedConstructor && bound?.name?.isNotEmpty == true) {
+        return '$clazz.${bound.name}';
+      }
+      return clazz;
     }
     if (bound is FunctionElement) {
       return bound.name;
@@ -113,16 +124,20 @@ class ReflectableEmitter {
           .join(', ');
 
   String _generateFactory(DependencyInvocation invocation) =>
-      '(${_generateParameters(invocation.positional).join(',\n')}) => '
-      '${_invocationOf(invocation)}(${_invocationParams(invocation)})';
+      invocation.bound is FunctionElement
+          ? invocation.bound.name
+          : '(${_generateParameters(invocation.positional).join(', ')}) => '
+          '${_invocationOf(invocation)}(${_invocationParams(invocation)})';
 
   Iterable<String> _generateParameters(List<DependencyElement> params) sync* {
     for (var i = 0; i < params.length; i++) {
-      String type = 'dynamic';
+      String type = '';
       final element = params[i];
-      final token = element.token;
-      if (token is TypeTokenElement) {
-        type = token.url.fragment;
+      final token = element.type ?? element.token;
+      if (token is TypeTokenElement && !token.isDynamic) {
+        type = token.prefix != null
+            ? '${token.prefix}${token.url.fragment}'
+            : token.url.fragment;
       }
       yield '$type p$i';
     }
@@ -131,7 +146,11 @@ class ReflectableEmitter {
   String _invocationOf(DependencyInvocation invocation) {
     final bound = invocation.bound;
     if (bound is ConstructorElement) {
-      return 'new ${_nameOfInvocation(invocation)}';
+      final expression = _nameOfInvocation(
+        invocation,
+        checkNamedConstructor: true,
+      );
+      return 'new $expression';
     }
     if (bound is FunctionElement) {
       return bound.name;
@@ -154,16 +173,37 @@ class ReflectableEmitter {
   String _generateDependencies(DependencyInvocation invocation) {
     final output = new StringBuffer('const [');
     for (final param in invocation.positional) {
-      output
-        ..write('const [')
-        ..write(_generateToken(param.token))
-        ..write(',')
-        ..write('],');
+      output..write('const [')..write(_generateToken(param.token))..write(',');
+      if (param.skipSelf) {
+        output.write('const _ngRef.SkipSelf(),');
+      }
+      if (param.optional) {
+        output.write('const _ngRef.Optional(),');
+      }
+      if (param.self) {
+        output.write('const _ngRef.Self(),');
+      }
+      if (param.host) {
+        output.write('const _ngRef.Host(),');
+      }
+      output..write('],');
     }
     return (output..write(']')).toString();
   }
 
-  String _generateToken(TokenElement token) => token is TypeTokenElement
-      ? token.url.fragment
-      : 'const OpaqueToken(${(token as OpaqueTokenElement).identifier})';
+  String _generateToken(TokenElement token) {
+    if (token is LiteralTokenElement) {
+      return 'const _ngRef.Inject(${token.literal})';
+    }
+    if (token is OpaqueTokenElement) {
+      final expression = 'const _ngRef.OpaqueToken(r\'${token.identifier}\')';
+      return 'const _ngRef.Inject($expression)';
+    }
+    if (token is TypeTokenElement) {
+      return token.prefix != null
+          ? '${token.prefix}${token.url.fragment}'
+          : token.url.fragment;
+    }
+    throw new UnsupportedError('Invalid token type: $token.');
+  }
 }

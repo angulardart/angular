@@ -123,7 +123,7 @@ class OfflineCompiler {
                 o.literal(compMeta.selector),
                 o.variable(hostViewFactoryVar),
                 o.importExpr(compMeta.type),
-                o.METADATA_MAP
+                new o.ReadVarExpr('_${compMeta.type.name}Metadata'),
               ],
               o.importType(
                 Identifiers.ComponentFactory,

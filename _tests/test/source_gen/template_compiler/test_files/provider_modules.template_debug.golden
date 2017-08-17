@@ -4,13 +4,16 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'provider_modules.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
+export 'provider_modules.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
-export 'provider_modules.dart';
+    as _ref0;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'provider_modules.dart' as import2;
@@ -180,34 +183,45 @@ const ComponentFactory _ProviderModulesComponentNgFactory =
         'provider-modules',
         viewFactory_ProviderModulesComponentHost0,
         import2.ProviderModulesComponent,
-        _METADATA);
+        _ProviderModulesComponentMetadata);
 final ComponentFactory ProviderModulesComponentNgFactory =
     _ProviderModulesComponentNgFactory;
-const _METADATA = const <dynamic>[
-  getSomeValues,
-  const <dynamic>[const Injectable()],
-  FooService,
-  const <dynamic>[const Injectable()],
-  ProviderModulesComponent,
-  const <dynamic>[]
-];
+const _ProviderModulesComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerFunction(getSomeValues,
-      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const []));
-  _ngRef.reflector.registerType(
-      FooService,
-      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
-          () => new FooService()));
-  _ngRef.reflector.registerType(
-      ProviderModulesComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[_ProviderModulesComponentNgFactory],
-          const [],
-          () => new ProviderModulesComponent()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerFactory(
+    getSomeValues,
+    getSomeValues,
+  );
+  _ngRef.registerDependencies(
+    getSomeValues,
+    const [],
+  );
+
+  _ngRef.registerFactory(
+    FooService,
+    () => new FooService(),
+  );
+  _ngRef.registerDependencies(
+    FooService,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    ProviderModulesComponent,
+    ProviderModulesComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    ProviderModulesComponent,
+    () => new ProviderModulesComponent(),
+  );
+  _ngRef.registerDependencies(
+    ProviderModulesComponent,
+    const [],
+  );
 }

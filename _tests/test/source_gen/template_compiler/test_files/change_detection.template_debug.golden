@@ -4,13 +4,16 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'change_detection.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
+export 'change_detection.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
-export 'change_detection.dart';
+    as _ref0;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'change_detection.dart' as import2;
@@ -136,7 +139,7 @@ const ComponentFactory _CheckOnceComponentNgFactory = const ComponentFactory(
     'CheckOnce',
     viewFactory_CheckOnceComponentHost0,
     import2.CheckOnceComponent,
-    _METADATA);
+    _CheckOnceComponentMetadata);
 final ComponentFactory CheckOnceComponentNgFactory =
     _CheckOnceComponentNgFactory;
 const List<dynamic> styles$CheckedComponent = const [];
@@ -240,7 +243,7 @@ const ComponentFactory _CheckedComponentNgFactory = const ComponentFactory(
     'Checked',
     viewFactory_CheckedComponentHost0,
     import2.CheckedComponent,
-    _METADATA);
+    _CheckedComponentMetadata);
 final ComponentFactory CheckedComponentNgFactory = _CheckedComponentNgFactory;
 const List<dynamic> styles$CheckAlwaysComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
@@ -344,7 +347,7 @@ const ComponentFactory _CheckAlwaysComponentNgFactory = const ComponentFactory(
     'CheckAlways',
     viewFactory_CheckAlwaysComponentHost0,
     import2.CheckAlwaysComponent,
-    _METADATA);
+    _CheckAlwaysComponentMetadata);
 final ComponentFactory CheckAlwaysComponentNgFactory =
     _CheckAlwaysComponentNgFactory;
 const List<dynamic> styles$DetachedComponent = const [];
@@ -448,7 +451,7 @@ const ComponentFactory _DetachedComponentNgFactory = const ComponentFactory(
     'Detached',
     viewFactory_DetachedComponentHost0,
     import2.DetachedComponent,
-    _METADATA);
+    _DetachedComponentMetadata);
 final ComponentFactory DetachedComponentNgFactory = _DetachedComponentNgFactory;
 const List<dynamic> styles$OnPushComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
@@ -551,7 +554,7 @@ const ComponentFactory _OnPushComponentNgFactory = const ComponentFactory(
     'OnPush',
     viewFactory_OnPushComponentHost0,
     import2.OnPushComponent,
-    _METADATA);
+    _OnPushComponentMetadata);
 final ComponentFactory OnPushComponentNgFactory = _OnPushComponentNgFactory;
 const List<dynamic> styles$StatefulComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
@@ -656,7 +659,7 @@ const ComponentFactory _StatefulComponentNgFactory = const ComponentFactory(
     'Stateful',
     viewFactory_StatefulComponentHost0,
     import2.StatefulComponent,
-    _METADATA);
+    _StatefulComponentMetadata);
 final ComponentFactory StatefulComponentNgFactory = _StatefulComponentNgFactory;
 const List<dynamic> styles$DefaultComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
@@ -759,57 +762,110 @@ const ComponentFactory _DefaultComponentNgFactory = const ComponentFactory(
     'Default',
     viewFactory_DefaultComponentHost0,
     import2.DefaultComponent,
-    _METADATA);
+    _DefaultComponentMetadata);
 final ComponentFactory DefaultComponentNgFactory = _DefaultComponentNgFactory;
-const _METADATA = const <dynamic>[
-  CheckOnceComponent,
-  const <dynamic>[],
-  CheckedComponent,
-  const <dynamic>[],
-  CheckAlwaysComponent,
-  const <dynamic>[],
-  DetachedComponent,
-  const <dynamic>[],
-  OnPushComponent,
-  const <dynamic>[],
-  StatefulComponent,
-  const <dynamic>[],
-  DefaultComponent,
-  const <dynamic>[]
-];
+const _CheckOnceComponentMetadata = const [];
+const _CheckedComponentMetadata = const [];
+const _CheckAlwaysComponentMetadata = const [];
+const _DetachedComponentMetadata = const [];
+const _OnPushComponentMetadata = const [];
+const _StatefulComponentMetadata = const [];
+const _DefaultComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      CheckOnceComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_CheckOnceComponentNgFactory],
-          const [], () => new CheckOnceComponent()));
-  _ngRef.reflector.registerType(
-      CheckedComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_CheckedComponentNgFactory],
-          const [], () => new CheckedComponent()));
-  _ngRef.reflector.registerType(
-      CheckAlwaysComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_CheckAlwaysComponentNgFactory],
-          const [], () => new CheckAlwaysComponent()));
-  _ngRef.reflector.registerType(
-      DetachedComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_DetachedComponentNgFactory],
-          const [], () => new DetachedComponent()));
-  _ngRef.reflector.registerType(
-      OnPushComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_OnPushComponentNgFactory],
-          const [], () => new OnPushComponent()));
-  _ngRef.reflector.registerType(
-      StatefulComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_StatefulComponentNgFactory],
-          const [], () => new StatefulComponent()));
-  _ngRef.reflector.registerType(
-      DefaultComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_DefaultComponentNgFactory],
-          const [], () => new DefaultComponent()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    CheckOnceComponent,
+    CheckOnceComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    CheckOnceComponent,
+    () => new CheckOnceComponent(),
+  );
+  _ngRef.registerDependencies(
+    CheckOnceComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    CheckedComponent,
+    CheckedComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    CheckedComponent,
+    () => new CheckedComponent(),
+  );
+  _ngRef.registerDependencies(
+    CheckedComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    CheckAlwaysComponent,
+    CheckAlwaysComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    CheckAlwaysComponent,
+    () => new CheckAlwaysComponent(),
+  );
+  _ngRef.registerDependencies(
+    CheckAlwaysComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    DetachedComponent,
+    DetachedComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    DetachedComponent,
+    () => new DetachedComponent(),
+  );
+  _ngRef.registerDependencies(
+    DetachedComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    OnPushComponent,
+    OnPushComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    OnPushComponent,
+    () => new OnPushComponent(),
+  );
+  _ngRef.registerDependencies(
+    OnPushComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    StatefulComponent,
+    StatefulComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    StatefulComponent,
+    () => new StatefulComponent(),
+  );
+  _ngRef.registerDependencies(
+    StatefulComponent,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    DefaultComponent,
+    DefaultComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    DefaultComponent,
+    () => new DefaultComponent(),
+  );
+  _ngRef.registerDependencies(
+    DefaultComponent,
+    const [],
+  );
 }

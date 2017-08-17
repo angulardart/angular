@@ -4,18 +4,21 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'directive_wrapper.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
+export 'directive_wrapper.dart';
 import 'dart:async';
 import 'dart:html';
+import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
+    as _ref0;
 import 'package:angular_forms/angular_forms.template.dart'
-    as _i2;
-export 'directive_wrapper.dart';
+    as _ref1;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'directive_wrapper.dart' as import1;
 import 'package:angular/src/debug/debug_app_view.dart';
@@ -204,7 +207,7 @@ const ComponentFactory _TestFooComponentNgFactory = const ComponentFactory(
     'test-foo',
     viewFactory_TestFooComponentHost0,
     import1.TestFooComponent,
-    _METADATA);
+    _TestFooComponentMetadata);
 final ComponentFactory TestFooComponentNgFactory = _TestFooComponentNgFactory;
 const List<dynamic> styles$InputFormTest = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTest0 = [
@@ -412,7 +415,7 @@ const ComponentFactory _InputFormTestNgFactory = const ComponentFactory(
     'input-form-test',
     viewFactory_InputFormTestHost0,
     import1.InputFormTest,
-    _METADATA);
+    _InputFormTestMetadata);
 final ComponentFactory InputFormTestNgFactory = _InputFormTestNgFactory;
 
 class ChildDirectiveNgCd extends import18.DirectiveChangeDetector {
@@ -441,48 +444,73 @@ class ChildDirectiveNgCd extends import18.DirectiveChangeDetector {
   }
 }
 
-const _METADATA = const <dynamic>[
-  ChildDirective,
-  const <dynamic>[],
-  DirectiveWithOutput,
-  const <dynamic>[],
-  TestFooComponent,
-  const <dynamic>[],
-  MyInjectableClass,
-  const <dynamic>[const Injectable()],
-  InputFormTest,
-  const <dynamic>[]
-];
+const _TestFooComponentMetadata = const [];
+const _InputFormTestMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      ChildDirective,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[],
-          const [
-            const <dynamic>[Element],
-            const <dynamic>[ElementRef]
-          ],
-          (Element element, ElementRef elementRef) =>
-              new ChildDirective(element, elementRef)));
-  _ngRef.reflector
-      .registerSimpleType(DirectiveWithOutput, () => new DirectiveWithOutput());
-  _ngRef.reflector.registerType(
-      TestFooComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_TestFooComponentNgFactory],
-          const [], () => new TestFooComponent()));
-  _ngRef.reflector.registerType(
-      MyInjectableClass,
-      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
-          () => new MyInjectableClass()));
-  _ngRef.reflector.registerType(
-      InputFormTest,
-      new _ngRef.ReflectionInfo(const <dynamic>[_InputFormTestNgFactory],
-          const [], () => new InputFormTest()));
-  _i1.initReflector();
-  _i2.initReflector();
+  _ref0.initReflector();
+  _ref1.initReflector();
+  _ngRef.registerFactory(
+    ChildDirective,
+    (Element p0, ElementRef p1) => new ChildDirective(p0, p1),
+  );
+  _ngRef.registerDependencies(
+    ChildDirective,
+    const [
+      const [
+        Element,
+      ],
+      const [
+        ElementRef,
+      ],
+    ],
+  );
+
+  _ngRef.registerFactory(
+    DirectiveWithOutput,
+    () => new DirectiveWithOutput(),
+  );
+  _ngRef.registerDependencies(
+    DirectiveWithOutput,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    TestFooComponent,
+    TestFooComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    TestFooComponent,
+    () => new TestFooComponent(),
+  );
+  _ngRef.registerDependencies(
+    TestFooComponent,
+    const [],
+  );
+
+  _ngRef.registerFactory(
+    MyInjectableClass,
+    () => new MyInjectableClass(),
+  );
+  _ngRef.registerDependencies(
+    MyInjectableClass,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    InputFormTest,
+    InputFormTestNgFactory,
+  );
+  _ngRef.registerFactory(
+    InputFormTest,
+    () => new InputFormTest(),
+  );
+  _ngRef.registerDependencies(
+    InputFormTest,
+    const [],
+  );
 }

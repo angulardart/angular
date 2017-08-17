@@ -1,7 +1,6 @@
 import 'dart:html';
 
 import 'package:angular/src/core/di.dart' show Injector;
-import 'package:angular/src/core/reflection/reflection.dart' show reflector;
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';
@@ -58,33 +57,17 @@ class ComponentFactory {
   final String selector;
   final NgViewFactory _viewFactory;
   final Type _componentType;
-  final List<dynamic /* Type | List < dynamic > */ > _metadataPairs;
-  static ComponentFactory cloneWithMetadata(
-      ComponentFactory original, List<dynamic> metadata) {
-    return new ComponentFactory(original.selector, original._viewFactory,
-        original._componentType, [original.componentType, metadata]);
-  }
-  // Note: can't use a Map for the metadata due to
 
-  // https://github.com/dart-lang/sdk/issues/21553
-  const ComponentFactory(this.selector, this._viewFactory, this._componentType,
-      [this._metadataPairs]);
+  const ComponentFactory(
+    this.selector,
+    this._viewFactory,
+    this._componentType, [
+    this.metadata = const [],
+  ]);
 
   Type get componentType => _componentType;
 
-  List get metadata {
-    if (_metadataPairs == null) {
-      // TODO: investigate why we can't do this upstream.
-      return reflector.annotations(_componentType);
-    }
-    int pairCount = _metadataPairs.length;
-    for (var i = 0; i < pairCount; i += 2) {
-      if (identical(_metadataPairs[i], _componentType)) {
-        return (_metadataPairs[i + 1] as List);
-      }
-    }
-    return const [];
-  }
+  final List<dynamic> metadata;
 
   /// Creates a new component.
   ComponentRef create(Injector injector, [List<List> projectableNodes]) {

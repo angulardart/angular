@@ -188,6 +188,9 @@ class _MockComponentResolver implements ComponentResolver {
   }
 
   @override
+  ComponentFactory resolveComponentSync(Type type) => _compFactory;
+
+  @override
   void clearCache() {}
 }
 

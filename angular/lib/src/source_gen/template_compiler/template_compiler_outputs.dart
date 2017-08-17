@@ -1,9 +1,9 @@
 import 'package:angular/src/compiler/source_module.dart';
-import 'package:angular/src/source_gen/common/ng_deps_model.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
 class TemplateCompilerOutputs {
   final SourceModule templatesSource;
-  final NgDepsModel ngDepsModel;
+  final ReflectableOutput reflectableOutput;
 
-  TemplateCompilerOutputs(this.templatesSource, this.ngDepsModel);
+  TemplateCompilerOutputs(this.templatesSource, this.reflectableOutput);
 }

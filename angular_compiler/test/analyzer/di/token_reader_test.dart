@@ -15,10 +15,15 @@ void main() {
         Example,
         const OpaqueToken('exampleToken'),
         #fooBar,
+        'someString',
+        1234,
+        const Example(),
       ];
 
       @tokens
-      class Example {}
+      class Example {
+        const Example();
+      }
     ''')).metadata.first.computeConstantValue().toListValue();
     });
 
@@ -38,6 +43,35 @@ void main() {
         '${(token as OpaqueTokenElement).identifier}',
         'exampleToken',
       );
+    });
+
+    group('LiteralToken', () {
+      test('for a String', () {
+        final token = reader.parseTokenObject(tokens[3]);
+        expect(token, const isInstanceOf<LiteralTokenElement>());
+        expect(
+          '${(token as LiteralTokenElement).literal}',
+          'r\'someString\'',
+        );
+      });
+
+      test('for an int', () {
+        final token = reader.parseTokenObject(tokens[4]);
+        expect(token, const isInstanceOf<LiteralTokenElement>());
+        expect(
+          '${(token as LiteralTokenElement).literal}',
+          '1234',
+        );
+      });
+
+      test('for an arbitrary class', () {
+        final token = reader.parseTokenObject(tokens[5]);
+        expect(token, const isInstanceOf<LiteralTokenElement>());
+        expect(
+          '${(token as LiteralTokenElement).literal}',
+          'const Example()',
+        );
+      });
     });
 
     test('invalid token type', () {
