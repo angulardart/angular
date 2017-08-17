@@ -12,17 +12,11 @@ const angular = 'package:angular/angular.dart';
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///
 /// Returns the resolved library as `package:test_lib/test_lib.dart`.
-Future<LibraryElement> resolveLibrary(String source) async {
-  final resolverDone = new Completer<Null>();
-  final resolved = await resolveSource('''
+Future<LibraryElement> resolveLibrary(String source) => resolveSource('''
       library _test;
       import '$angular';\n\n$source''',
-      inputId: new AssetId('test_lib', 'lib/test_lib.dart'),
-      tearDown: resolverDone.future);
-  final library = await resolved.findLibraryByName('_test');
-  resolverDone.complete();
-  return library;
-}
+    (resolver) => resolver.findLibraryByName('_test'),
+    inputId: new AssetId('test_lib', 'lib/test_lib.dart'));
 
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///
