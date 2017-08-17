@@ -4,15 +4,16 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'directives.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
+export 'directives.dart';
 import 'dart:collection' as collection_lib;
 import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
-export 'directives.dart';
+    as _ref0;
 
 var _visited = false;
 void initReflector() {
@@ -20,8 +21,22 @@ void initReflector() {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerSimpleType(TestDirective, () => new TestDirective());
-  _ngRef.reflector.registerSimpleType(
-      TestDirectiveWithInputs, () => new TestDirectiveWithInputs());
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerFactory(
+    TestDirective,
+    () => new TestDirective(),
+  );
+  _ngRef.registerDependencies(
+    TestDirective,
+    const [],
+  );
+
+  _ngRef.registerFactory(
+    TestDirectiveWithInputs,
+    () => new TestDirectiveWithInputs(),
+  );
+  _ngRef.registerDependencies(
+    TestDirectiveWithInputs,
+    const [],
+  );
 }

@@ -10,7 +10,7 @@ import 'di/dependencies.dart';
 import 'types.dart';
 
 typedef FutureOr<bool> _HasInput(String uri);
-typedef bool _IsLibrary(String uri);
+typedef Future<bool> _IsLibrary(String uri);
 
 /// Determines how to generate and link to `initReflector` in other files.
 ///
@@ -99,22 +99,28 @@ class ReflectableReader {
         isLibrary = _nullIsLibrary;
 
   static FutureOr<bool> _nullHasInput(_) => false;
-  static bool _nullIsLibrary(_) => false;
+  static Future<bool> _nullIsLibrary(_) async => false;
+
+  static Iterable<CompilationUnitElement> _allUnits(LibraryElement lib) sync* {
+    yield lib.definingCompilationUnit;
+    yield* lib.parts;
+  }
 
   /// Returns information needed to write `.template.dart` files.
   Future<ReflectableOutput> resolve(LibraryElement library) async {
-    final unit = library.definingCompilationUnit;
     final registerClasses = <ReflectableClass>[];
-    for (final type in unit.types) {
-      final reflectable = _resolveClass(type);
-      if (reflectable != null) {
-        registerClasses.add(reflectable);
+    final registerFunctions = <DependencyInvocation<FunctionElement>>[];
+    for (final unit in _allUnits(library)) {
+      for (final type in unit.types) {
+        final reflectable = _resolveClass(type);
+        if (reflectable != null) {
+          registerClasses.add(reflectable);
+        }
       }
+      registerFunctions.addAll(unit.functions
+          .where((e) => $Injectable.firstAnnotationOfExact(e) != null)
+          .map(dependencyReader.parseDependencies));
     }
-    final registerFunctions = unit.functions
-        .where((e) => $Injectable.firstAnnotationOfExact(e) != null)
-        .map(dependencyReader.parseDependencies)
-        .toList();
     return new ReflectableOutput(
       urlsNeedingInitReflector: await _resolveNeedsReflector(library),
       registerClasses: registerClasses,
@@ -163,7 +169,7 @@ class ReflectableReader {
     final directives = library.definingCompilationUnit.computeNode().directives;
     final results = <String>[];
     await Future.wait(directives.map((d) async {
-      if (await _needsInitReflector(d)) {
+      if (d is! ast.PartDirective && await _needsInitReflector(d)) {
         var uri = (d as ast.UriBasedDirective).uri.stringValue;
         // Always link to the .template.dart file equivalent of a file.
         if (!uri.endsWith(outputExtension)) {
@@ -195,7 +201,7 @@ class ReflectableReader {
         return false;
       }
       final outputUri = _withOutputExtension(uri);
-      return isLibrary(outputUri) || await hasInput(uri);
+      return await isLibrary(outputUri) || await hasInput(uri);
     }
     return false;
   }

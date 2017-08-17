@@ -20,7 +20,6 @@ export 'src/core/linker.dart';
 export 'src/core/metadata.dart';
 export 'src/core/platform_common_providers.dart' show PLATFORM_COMMON_PROVIDERS;
 export 'src/core/platform_directives_and_pipes.dart';
-export 'src/core/reflection/reflection.dart';
 export 'src/core/render.dart';
 export 'src/core/testability/testability.dart';
 export 'src/core/zone.dart';

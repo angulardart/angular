@@ -7,7 +7,6 @@ import 'instruction.dart' show ComponentInstruction, Instruction;
 import 'location.dart' show Location, PathLocationStrategy;
 import 'route_config/route_config_decorator.dart' show RouteDefinition;
 import 'route_registry.dart' show RouteRegistry, ROUTER_PRIMARY_COMPONENT;
-import 'utils.dart' show getCanActivateHook;
 
 final _resolveToTrue = new Future<bool>.value(true);
 final _resolveToFalse = new Future<bool>.value(false);
@@ -520,28 +519,6 @@ class ChildRouter extends Router {
   }
 }
 
-Future<bool> canActivateOne(
-    Instruction nextInstruction, Instruction prevInstruction) {
-  var next = new Future<bool>.value(true);
-  if (nextInstruction.component == null) {
-    return next;
-  }
-  if (nextInstruction.child != null) {
-    next = canActivateOne(nextInstruction.child,
-        prevInstruction != null ? prevInstruction.child : null);
-  }
-  return next.then(/* bool */ (bool result) {
-    if (result == false) {
-      return false;
-    }
-    if (nextInstruction.component.reuse) {
-      return true;
-    }
-    var hook = getCanActivateHook(nextInstruction.component.componentType);
-    if (hook != null) {
-      return hook(nextInstruction.component,
-          prevInstruction != null ? prevInstruction.component : null);
-    }
-    return true;
-  });
-}
+// TODO(matanl): Remove, CanActivate is no longer supported.
+@deprecated
+Future<bool> canActivateOne(_, __) => new Future.value(true);

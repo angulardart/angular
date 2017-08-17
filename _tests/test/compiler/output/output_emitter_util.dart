@@ -196,7 +196,6 @@ List<o.Statement> _getExpressionsStmts = [
     ["dynamicInstance", o.variable("dynamicInstance")],
     ["throwError", o.variable("throwError")],
     ["catchError", o.variable("catchError")],
-    ["metadataMap", o.METADATA_MAP],
     [
       "operators",
       o.literalMap([

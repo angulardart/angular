@@ -4,13 +4,16 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'host.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
+export 'host.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
-export 'host.dart';
+    as _ref0;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'host.dart' as import2;
@@ -137,18 +140,29 @@ AppView viewFactory_HostComponentHost0(
 }
 
 const ComponentFactory _HostComponentNgFactory = const ComponentFactory(
-    'host', viewFactory_HostComponentHost0, import2.HostComponent, _METADATA);
+    'host',
+    viewFactory_HostComponentHost0,
+    import2.HostComponent,
+    _HostComponentMetadata);
 final ComponentFactory HostComponentNgFactory = _HostComponentNgFactory;
-const _METADATA = const <dynamic>[HostComponent, const <dynamic>[]];
+const _HostComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      HostComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_HostComponentNgFactory],
-          const [], () => new HostComponent()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    HostComponent,
+    HostComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    HostComponent,
+    () => new HostComponent(),
+  );
+  _ngRef.registerDependencies(
+    HostComponent,
+    const [],
+  );
 }

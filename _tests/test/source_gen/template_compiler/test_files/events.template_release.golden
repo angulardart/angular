@@ -4,14 +4,17 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'events.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
-import 'dart:async';
-import 'package:angular/angular.template.dart'
-    as _i1;
 export 'events.dart';
+import 'dart:async';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'package:angular/angular.template.dart'
+    as _ref0;
+
 import 'package:angular/src/core/linker/app_view.dart';
 import 'events.dart' as import1;
 import 'dart:html' as import2;
@@ -110,7 +113,7 @@ const ComponentFactory _UsesNativeEventsNgFactory = const ComponentFactory(
     'uses-native-events',
     viewFactory_UsesNativeEventsHost0,
     import1.UsesNativeEvents,
-    _METADATA);
+    _UsesNativeEventsMetadata);
 final ComponentFactory UsesNativeEventsNgFactory = _UsesNativeEventsNgFactory;
 const List<dynamic> styles$UsesAngularEvents = const [];
 
@@ -222,7 +225,7 @@ const ComponentFactory _UsesAngularEventsNgFactory = const ComponentFactory(
     'uses-angular-events',
     viewFactory_UsesAngularEventsHost0,
     import1.UsesAngularEvents,
-    _METADATA);
+    _UsesAngularEventsMetadata);
 final ComponentFactory UsesAngularEventsNgFactory = _UsesAngularEventsNgFactory;
 const List<dynamic> styles$HasAngularEvents = const [];
 
@@ -301,33 +304,54 @@ const ComponentFactory _HasAngularEventsNgFactory = const ComponentFactory(
     'has-angular-events',
     viewFactory_HasAngularEventsHost0,
     import1.HasAngularEvents,
-    _METADATA);
+    _HasAngularEventsMetadata);
 final ComponentFactory HasAngularEventsNgFactory = _HasAngularEventsNgFactory;
-const _METADATA = const <dynamic>[
-  UsesNativeEvents,
-  const <dynamic>[],
-  UsesAngularEvents,
-  const <dynamic>[],
-  HasAngularEvents,
-  const <dynamic>[]
-];
+const _UsesNativeEventsMetadata = const [];
+const _UsesAngularEventsMetadata = const [];
+const _HasAngularEventsMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      UsesNativeEvents,
-      new _ngRef.ReflectionInfo(const <dynamic>[_UsesNativeEventsNgFactory],
-          const [], () => new UsesNativeEvents()));
-  _ngRef.reflector.registerType(
-      UsesAngularEvents,
-      new _ngRef.ReflectionInfo(const <dynamic>[_UsesAngularEventsNgFactory],
-          const [], () => new UsesAngularEvents()));
-  _ngRef.reflector.registerType(
-      HasAngularEvents,
-      new _ngRef.ReflectionInfo(const <dynamic>[_HasAngularEventsNgFactory],
-          const [], () => new HasAngularEvents()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    UsesNativeEvents,
+    UsesNativeEventsNgFactory,
+  );
+  _ngRef.registerFactory(
+    UsesNativeEvents,
+    () => new UsesNativeEvents(),
+  );
+  _ngRef.registerDependencies(
+    UsesNativeEvents,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    UsesAngularEvents,
+    UsesAngularEventsNgFactory,
+  );
+  _ngRef.registerFactory(
+    UsesAngularEvents,
+    () => new UsesAngularEvents(),
+  );
+  _ngRef.registerDependencies(
+    UsesAngularEvents,
+    const [],
+  );
+
+  _ngRef.registerComponent(
+    HasAngularEvents,
+    HasAngularEventsNgFactory,
+  );
+  _ngRef.registerFactory(
+    HasAngularEvents,
+    () => new HasAngularEvents(),
+  );
+  _ngRef.registerDependencies(
+    HasAngularEvents,
+    const [],
+  );
 }

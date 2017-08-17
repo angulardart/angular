@@ -4,16 +4,17 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'injectables.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
-import 'package:angular/src/core/di/decorators.dart'
-    as _di;
-import 'dart:html' as html;
-import 'package:angular/angular.template.dart'
-    as _i1;
 export 'injectables.dart';
+import 'dart:html' as html;
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'package:angular/angular.template.dart'
+    as _ref0;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'injectables.dart' as import2;
@@ -175,65 +176,80 @@ const ComponentFactory _InjectableComponentNgFactory = const ComponentFactory(
     'test-injectables',
     viewFactory_InjectableComponentHost0,
     import2.InjectableComponent,
-    _METADATA);
+    _InjectableComponentMetadata);
 final ComponentFactory InjectableComponentNgFactory =
     _InjectableComponentNgFactory;
-const _METADATA = const <dynamic>[
-  injectableFactory,
-  const <dynamic>[const Injectable()],
-  InjectableComponent,
-  const <dynamic>[],
-  SomeDep,
-  const <dynamic>[const Injectable()],
-  BaseService,
-  const <dynamic>[const Injectable()],
-  InjectableService,
-  const <dynamic>[const Injectable()]
-];
+const _InjectableComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerFunction(
-      injectableFactory,
-      new _ngRef.ReflectionInfo(const <dynamic>[
-        const Injectable()
-      ], const [
-        const <dynamic>[html.Window]
-      ]));
-  _ngRef.reflector.registerType(
-      InjectableComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[
-            _InjectableComponentNgFactory
-          ],
-          const [
-            const <dynamic>[
-              BaseService,
-              const Attribute('baseService'),
-              optional
-            ],
-            const <dynamic>[InjectableService, const Optional()],
-            const <dynamic>[bool, const Inject(testToken)],
-            const <dynamic>[String, const _di.Optional()]
-          ],
-          (BaseService service, InjectableService injectableService,
-                  bool isTest, String foo) =>
-              new InjectableComponent(
-                  service, injectableService, isTest, foo)));
-  _ngRef.reflector.registerType(
-      SomeDep,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[const Injectable()], const [], () => new SomeDep()));
-  _ngRef.reflector.registerType(
-      BaseService,
-      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
-          () => new BaseService()));
-  _ngRef.reflector.registerType(
-      InjectableService,
-      new _ngRef.ReflectionInfo(const <dynamic>[const Injectable()], const [],
-          () => new InjectableService()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerFactory(
+    injectableFactory,
+    injectableFactory,
+  );
+  _ngRef.registerDependencies(
+    injectableFactory,
+    const [
+      const [
+        html.Window,
+      ],
+    ],
+  );
+
+  _ngRef.registerComponent(
+    InjectableComponent,
+    InjectableComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    InjectableComponent,
+    (BaseService p0, InjectableService p1, bool p2) =>
+        new InjectableComponent(p0, p1, p2),
+  );
+  _ngRef.registerDependencies(
+    InjectableComponent,
+    const [
+      const [
+        BaseService,
+        const _ngRef.Optional(),
+      ],
+      const [
+        InjectableService,
+        const _ngRef.Optional(),
+      ],
+      const [
+        const _ngRef.Inject(const _ngRef.OpaqueToken(r'test')),
+      ],
+    ],
+  );
+
+  _ngRef.registerFactory(
+    SomeDep,
+    () => new SomeDep(),
+  );
+  _ngRef.registerDependencies(
+    SomeDep,
+    const [],
+  );
+
+  _ngRef.registerFactory(
+    BaseService,
+    () => new BaseService(),
+  );
+  _ngRef.registerDependencies(
+    BaseService,
+    const [],
+  );
+
+  _ngRef.registerFactory(
+    InjectableService,
+    () => new InjectableService(),
+  );
+  _ngRef.registerDependencies(
+    InjectableService,
+    const [],
+  );
 }

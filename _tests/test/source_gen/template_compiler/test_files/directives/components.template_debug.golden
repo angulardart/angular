@@ -4,13 +4,16 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'components.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
+export 'components.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
-    as _i1;
-export 'components.dart';
+    as _ref0;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'components.dart' as import2;
@@ -125,18 +128,26 @@ const ComponentFactory _TestSubComponentNgFactory = const ComponentFactory(
     'test-bar',
     viewFactory_TestSubComponentHost0,
     import2.TestSubComponent,
-    _METADATA);
+    _TestSubComponentMetadata);
 final ComponentFactory TestSubComponentNgFactory = _TestSubComponentNgFactory;
-const _METADATA = const <dynamic>[TestSubComponent, const <dynamic>[]];
+const _TestSubComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      TestSubComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_TestSubComponentNgFactory],
-          const [], () => new TestSubComponent()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    TestSubComponent,
+    TestSubComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    TestSubComponent,
+    () => new TestSubComponent(),
+  );
+  _ngRef.registerDependencies(
+    TestSubComponent,
+    const [],
+  );
 }

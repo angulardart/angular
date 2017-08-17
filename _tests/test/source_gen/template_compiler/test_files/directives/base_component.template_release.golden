@@ -4,17 +4,20 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'base_component.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
+export 'base_component.dart';
+import 'package:angular/angular.dart';
 import 'components.dart';
 import 'directives.dart' as directive;
-import 'components.template.dart' as _i1;
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'components.template.dart' as _ref0;
+import 'directives.template.dart' as _ref1;
 import 'package:angular/angular.template.dart'
-    as _i2;
-import 'directives.template.dart' as _i3;
-export 'base_component.dart';
+    as _ref2;
+
 import 'package:angular/src/core/linker/app_view.dart';
 import 'base_component.dart' as import1;
 import 'dart:html' as import2;
@@ -137,20 +140,28 @@ const ComponentFactory _TestFooComponentNgFactory = const ComponentFactory(
     'test-foo',
     viewFactory_TestFooComponentHost0,
     import1.TestFooComponent,
-    _METADATA);
+    _TestFooComponentMetadata);
 final ComponentFactory TestFooComponentNgFactory = _TestFooComponentNgFactory;
-const _METADATA = const <dynamic>[TestFooComponent, const <dynamic>[]];
+const _TestFooComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      TestFooComponent,
-      new _ngRef.ReflectionInfo(const <dynamic>[_TestFooComponentNgFactory],
-          const [], () => new TestFooComponent()));
-  _i1.initReflector();
-  _i2.initReflector();
-  _i3.initReflector();
+  _ref0.initReflector();
+  _ref1.initReflector();
+  _ref2.initReflector();
+  _ngRef.registerComponent(
+    TestFooComponent,
+    TestFooComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    TestFooComponent,
+    () => new TestFooComponent(),
+  );
+  _ngRef.registerDependencies(
+    TestFooComponent,
+    const [],
+  );
 }

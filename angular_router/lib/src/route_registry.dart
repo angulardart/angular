@@ -2,7 +2,14 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:angular/angular.dart'
-    show OpaqueToken, ComponentFactory, Injectable, Inject;
+    show
+        ComponentFactory,
+        ComponentResolver,
+        Inject,
+        Injectable,
+        OpaqueToken,
+        Optional;
+import 'package:angular/src/core/linker/component_resolver.dart';
 
 import 'instruction.dart'
     show
@@ -73,7 +80,13 @@ const OpaqueToken ROUTER_PRIMARY_COMPONENT =
 class RouteRegistry {
   dynamic /* Type | ComponentFactory */ _rootComponent;
   final _rules = new Map<dynamic, RuleSet>();
-  RouteRegistry(@Inject(ROUTER_PRIMARY_COMPONENT) this._rootComponent);
+  final ComponentResolver _resolver;
+
+  RouteRegistry(
+    @Inject(ROUTER_PRIMARY_COMPONENT) this._rootComponent, [
+    // Users may have overloaded this class.
+    @Optional() this._resolver = const ReflectorComponentResolver(),
+  ]);
 
   /// Given a component and a configuration object, add the route to this
   /// registry.
@@ -93,7 +106,7 @@ class RouteRegistry {
     var terminal = rules.config(config);
     if (config is Route) {
       if (terminal) {
-        assertTerminalComponent(config.component, config.path);
+        assertTerminalComponent(config.component, config.path, _resolver);
       } else {
         this.configFromComponent(config.component);
       }
@@ -111,7 +124,7 @@ class RouteRegistry {
     if (this._rules.containsKey(component)) {
       return;
     }
-    var annotations = getComponentAnnotations(component);
+    var annotations = getComponentAnnotations(component, _resolver);
     if (annotations != null) {
       for (var i = 0; i < annotations.length; i++) {
         var annotation = annotations[i];
@@ -507,11 +520,11 @@ num compareSpecificityStrings(String a, String b) {
   return a.length - b.length;
 }
 
-void assertTerminalComponent(component, path) {
+void assertTerminalComponent(component, path, ComponentResolver resolver) {
   if (component is! Type && !(component is ComponentFactory)) {
     return;
   }
-  var annotations = getComponentAnnotations(component);
+  var annotations = getComponentAnnotations(component, resolver);
   if (annotations != null) {
     for (var i = 0; i < annotations.length; i++) {
       var annotation = annotations[i];

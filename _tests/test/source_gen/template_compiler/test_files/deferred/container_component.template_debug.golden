@@ -4,14 +4,18 @@
 // Generator: TemplateGenerator
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'container_component.dart';
-import 'package:angular/src/core/reflection/reflection.dart'
-    as _ngRef;
-import 'deferred_component.dart';
-import 'package:angular/angular.template.dart'
-    as _i1;
 export 'container_component.dart';
+import 'package:angular/angular.dart';
+import 'deferred_component.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'deferred_component.template.dart' as _ref0;
+import 'package:angular/angular.template.dart'
+    as _ref1;
+
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
@@ -206,21 +210,28 @@ const ComponentFactory _TestContainerComponentNgFactory =
         'test-container',
         viewFactory_TestContainerComponentHost0,
         import3.TestContainerComponent,
-        _METADATA);
+        _TestContainerComponentMetadata);
 final ComponentFactory TestContainerComponentNgFactory =
     _TestContainerComponentNgFactory;
-const _METADATA = const <dynamic>[TestContainerComponent, const <dynamic>[]];
+const _TestContainerComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
     return;
   }
   _visited = true;
-  _ngRef.reflector.registerType(
-      TestContainerComponent,
-      new _ngRef.ReflectionInfo(
-          const <dynamic>[_TestContainerComponentNgFactory],
-          const [],
-          () => new TestContainerComponent()));
-  _i1.initReflector();
+  _ref0.initReflector();
+  _ref1.initReflector();
+  _ngRef.registerComponent(
+    TestContainerComponent,
+    TestContainerComponentNgFactory,
+  );
+  _ngRef.registerFactory(
+    TestContainerComponent,
+    () => new TestContainerComponent(),
+  );
+  _ngRef.registerDependencies(
+    TestContainerComponent,
+    const [],
+  );
 }

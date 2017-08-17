@@ -11,37 +11,53 @@
 //   injection.
 //
 // **DO NOT USE**: The API of this library can and will change at any time.
-import 'package:angular/src/core/linker/component_factory.dart';
+export '../core/di/decorators.dart' show Host, Inject, Optional, Self, SkipSelf;
+export '../core/di/opaque_token.dart' show OpaqueToken;
 
-final _components = <Object, ComponentFactory>{};
+// This would ideally be typed, but the lib/di.dart is used by some users in a
+// VM environment where dart:html cannot be imported. Since the reflector is
+// already considered the "slow" path, this isn't a regression.
+final _components = <Object, dynamic /*ComponentFactory*/ >{};
 
 /// Registers [component] as the static factory for [type].
 ///
 /// This is done entirely to support `SlowComponentLoader`; applications may be
 /// able to opt-out of generating this code if they do not use it.
-void registerComponent(Type type, ComponentFactory component) {
+void registerComponent(Type type, dynamic /*ComponentFactory*/ component) {
   _components[type] = component;
 }
 
 /// Returns the static factory for [type].
-ComponentFactory getComponent(Type type) {
+/*ComponentFactory*/ dynamic getComponent(Type type) {
   final component = _components[type];
-  assert(component != null, 'Could not find a component factory for $type.');
+  assert(() {
+    if (component == null) {
+      throw new StateError('Could not find a component factory for $type.');
+    }
+    return true;
+  });
   return component;
 }
 
-final _factories = <Type, Function>{};
+final _factories = <Object, Function>{};
 
-/// Registers [factory] as a factory function for creating [type].
+/// Registers [factory] as a factory function for creating [typeOrFunc].
 ///
 /// This is done entirely to support `ReflectiveInjector`; applications may be
 /// able to opt-out of generating this code if they do not use it.
-void registerFactory(Type type, Function factory) => _factories[type] = factory;
+void registerFactory(Object typeOrFunc, Function factory) {
+  _factories[typeOrFunc] = factory;
+}
 
 /// Returns a factory function for creating [type].
 Function getFactory(Type type) {
   final factory = _factories[type];
-  assert(factory != null, 'Could not find a factory for $type.');
+  assert(() {
+    if (factory == null) {
+      throw new StateError('Could not find a factory for $type.');
+    }
+    return true;
+  });
   return factory;
 }
 
@@ -65,6 +81,11 @@ void registerDependencies(Object invokable, List<List<Object>> dependencies) {
 /// Returns dependencies needed to invoke [object].
 List<List<Object>> getDependencies(Object object) {
   final dependencies = _dependencies[object];
-  assert(dependencies != null, 'Could not find dependencies for $object.');
+  assert(() {
+    if (dependencies == null) {
+      throw new StateError('Could not find a factory for $object.');
+    }
+    return true;
+  });
   return dependencies;
 }
