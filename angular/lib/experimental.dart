@@ -2,9 +2,9 @@
 ///
 /// Internal APIs that are considered "public" for other packages to consume but
 /// not for standard consumer use. For example, we might alter or remove any API
-/// from this package at any time, without revving sem-ver.
+/// from this package at any time, without changing the version.
 ///
-/// **WARNING**: No API exposed as part of this package is considered stable.
+/// **Warning:** No API exposed as part of this package is considered stable.
 @experimental
 library angular.experimental;
 

@@ -1,3 +1,4 @@
+/// @nodoc
 library angular.core;
 
 export 'src/core/angular_entrypoint.dart' show AngularEntrypoint;
