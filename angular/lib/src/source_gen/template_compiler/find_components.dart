@@ -175,13 +175,16 @@ class ComponentVisitor
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
-    final matchesDirective = safeMatcher(isDirective, log);
-    for (var annotation in element.metadata) {
-      if (matchesDirective(annotation)) {
-        return _createCompileDirectiveMetadata(annotation, element);
-      }
+    final annotation = element.metadata.firstWhere(
+      safeMatcher(isDirective, log),
+      orElse: () => null,
+    );
+    if (annotation == null) return null;
+    if (element.isPrivate) {
+      log.severe('Components and directives must be public: $element');
+      return null;
     }
-    return null;
+    return _createCompileDirectiveMetadata(annotation, element);
   }
 
   @override
