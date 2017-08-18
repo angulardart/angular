@@ -199,26 +199,14 @@ void initReflector() {
     SomeDep,
     () => new SomeDep(),
   );
-  _ngRef.registerDependencies(
-    SomeDep,
-    const [],
-  );
 
   _ngRef.registerFactory(
     BaseService,
     () => new BaseService(),
   );
-  _ngRef.registerDependencies(
-    BaseService,
-    const [],
-  );
 
   _ngRef.registerFactory(
     InjectableService,
     () => new InjectableService(),
-  );
-  _ngRef.registerDependencies(
-    InjectableService,
-    const [],
   );
 }

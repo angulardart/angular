@@ -26,17 +26,9 @@ void initReflector() {
     TestDirective,
     () => new TestDirective(),
   );
-  _ngRef.registerDependencies(
-    TestDirective,
-    const [],
-  );
 
   _ngRef.registerFactory(
     TestDirectiveWithInputs,
     () => new TestDirectiveWithInputs(),
-  );
-  _ngRef.registerDependencies(
-    TestDirectiveWithInputs,
-    const [],
   );
 }

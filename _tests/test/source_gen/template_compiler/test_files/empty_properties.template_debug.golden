@@ -355,10 +355,6 @@ void initReflector() {
     EmptyPropertiesComponent,
     () => new EmptyPropertiesComponent(),
   );
-  _ngRef.registerDependencies(
-    EmptyPropertiesComponent,
-    const [],
-  );
 
   _ngRef.registerComponent(
     FancyButtonComponent,
@@ -367,9 +363,5 @@ void initReflector() {
   _ngRef.registerFactory(
     FancyButtonComponent,
     () => new FancyButtonComponent(),
-  );
-  _ngRef.registerDependencies(
-    FancyButtonComponent,
-    const [],
   );
 }

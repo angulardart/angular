@@ -134,8 +134,4 @@ void initReflector() {
     HasTemplateFileComponent,
     () => new HasTemplateFileComponent(),
   );
-  _ngRef.registerDependencies(
-    HasTemplateFileComponent,
-    const [],
-  );
 }

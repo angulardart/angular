@@ -198,18 +198,10 @@ void initReflector() {
     getSomeValues,
     getSomeValues,
   );
-  _ngRef.registerDependencies(
-    getSomeValues,
-    const [],
-  );
 
   _ngRef.registerFactory(
     FooService,
     () => new FooService(),
-  );
-  _ngRef.registerDependencies(
-    FooService,
-    const [],
   );
 
   _ngRef.registerComponent(
@@ -219,9 +211,5 @@ void initReflector() {
   _ngRef.registerFactory(
     ProviderModulesComponent,
     () => new ProviderModulesComponent(),
-  );
-  _ngRef.registerDependencies(
-    ProviderModulesComponent,
-    const [],
   );
 }

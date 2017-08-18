@@ -786,10 +786,6 @@ void initReflector() {
     CheckOnceComponent,
     () => new CheckOnceComponent(),
   );
-  _ngRef.registerDependencies(
-    CheckOnceComponent,
-    const [],
-  );
 
   _ngRef.registerComponent(
     CheckedComponent,
@@ -798,10 +794,6 @@ void initReflector() {
   _ngRef.registerFactory(
     CheckedComponent,
     () => new CheckedComponent(),
-  );
-  _ngRef.registerDependencies(
-    CheckedComponent,
-    const [],
   );
 
   _ngRef.registerComponent(
@@ -812,10 +804,6 @@ void initReflector() {
     CheckAlwaysComponent,
     () => new CheckAlwaysComponent(),
   );
-  _ngRef.registerDependencies(
-    CheckAlwaysComponent,
-    const [],
-  );
 
   _ngRef.registerComponent(
     DetachedComponent,
@@ -824,10 +812,6 @@ void initReflector() {
   _ngRef.registerFactory(
     DetachedComponent,
     () => new DetachedComponent(),
-  );
-  _ngRef.registerDependencies(
-    DetachedComponent,
-    const [],
   );
 
   _ngRef.registerComponent(
@@ -838,10 +822,6 @@ void initReflector() {
     OnPushComponent,
     () => new OnPushComponent(),
   );
-  _ngRef.registerDependencies(
-    OnPushComponent,
-    const [],
-  );
 
   _ngRef.registerComponent(
     StatefulComponent,
@@ -851,10 +831,6 @@ void initReflector() {
     StatefulComponent,
     () => new StatefulComponent(),
   );
-  _ngRef.registerDependencies(
-    StatefulComponent,
-    const [],
-  );
 
   _ngRef.registerComponent(
     DefaultComponent,
@@ -863,9 +839,5 @@ void initReflector() {
   _ngRef.registerFactory(
     DefaultComponent,
     () => new DefaultComponent(),
-  );
-  _ngRef.registerDependencies(
-    DefaultComponent,
-    const [],
   );
 }

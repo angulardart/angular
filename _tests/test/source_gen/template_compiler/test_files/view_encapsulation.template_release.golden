@@ -210,10 +210,6 @@ void initReflector() {
     EmulatedComponent,
     () => new EmulatedComponent(),
   );
-  _ngRef.registerDependencies(
-    EmulatedComponent,
-    const [],
-  );
 
   _ngRef.registerComponent(
     NoneComponent,
@@ -222,9 +218,5 @@ void initReflector() {
   _ngRef.registerFactory(
     NoneComponent,
     () => new NoneComponent(),
-  );
-  _ngRef.registerDependencies(
-    NoneComponent,
-    const [],
   );
 }

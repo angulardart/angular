@@ -285,17 +285,9 @@ void initReflector() {
     ProvidersComponent,
     () => new ProvidersComponent(),
   );
-  _ngRef.registerDependencies(
-    ProvidersComponent,
-    const [],
-  );
 
   _ngRef.registerFactory(
     MyInjectableTypeAnnotation,
     () => new MyInjectableTypeAnnotation(),
-  );
-  _ngRef.registerDependencies(
-    MyInjectableTypeAnnotation,
-    const [],
   );
 }

@@ -339,17 +339,9 @@ void initReflector() {
     QueriesComponent,
     () => new QueriesComponent(),
   );
-  _ngRef.registerDependencies(
-    QueriesComponent,
-    const [],
-  );
 
   _ngRef.registerFactory(
     AnotherDirective,
     () => new AnotherDirective(),
-  );
-  _ngRef.registerDependencies(
-    AnotherDirective,
-    const [],
   );
 }

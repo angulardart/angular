@@ -139,8 +139,4 @@ void initReflector() {
     LifecycleHooksComponent,
     () => new LifecycleHooksComponent(),
   );
-  _ngRef.registerDependencies(
-    LifecycleHooksComponent,
-    const [],
-  );
 }

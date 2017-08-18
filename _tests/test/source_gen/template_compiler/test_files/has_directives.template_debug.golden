@@ -309,18 +309,10 @@ void initReflector() {
     TestFooComponent,
     () => new TestFooComponent(),
   );
-  _ngRef.registerDependencies(
-    TestFooComponent,
-    const [],
-  );
 
   _ngRef.registerFactory(
     TestDirective,
     () => new TestDirective(),
-  );
-  _ngRef.registerDependencies(
-    TestDirective,
-    const [],
   );
 
   _ngRef.registerComponent(
@@ -330,9 +322,5 @@ void initReflector() {
   _ngRef.registerFactory(
     TestSubComponent,
     () => new TestSubComponent(),
-  );
-  _ngRef.registerDependencies(
-    TestSubComponent,
-    const [],
   );
 }

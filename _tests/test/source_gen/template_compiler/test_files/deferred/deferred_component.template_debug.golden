@@ -150,8 +150,4 @@ void initReflector() {
     DeferredChildComponent,
     () => new DeferredChildComponent(),
   );
-  _ngRef.registerDependencies(
-    DeferredChildComponent,
-    const [],
-  );
 }

@@ -80,12 +80,5 @@ void registerDependencies(Object invokable, List<List<Object>> dependencies) {
 
 /// Returns dependencies needed to invoke [object].
 List<List<Object>> getDependencies(Object object) {
-  final dependencies = _dependencies[object];
-  assert(() {
-    if (dependencies == null) {
-      throw new StateError('Could not find a factory for $object.');
-    }
-    return true;
-  });
-  return dependencies;
+  return _dependencies[object] ?? const <List<Object>>[];
 }

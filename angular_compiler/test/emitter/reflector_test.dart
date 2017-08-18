@@ -86,10 +86,6 @@ void main() {
           '    Example,\n'
           '    () => new Example(),\n'
           '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [],\n'
-          '  );\n'
           '\n'
           '}\n',
     );
@@ -119,10 +115,6 @@ void main() {
           '  _ngRef.registerFactory(\n'
           '    Example,\n'
           '    () => new Example.namedConstructor(),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [],\n'
           '  );\n'
           '\n'
           '}\n',
@@ -167,10 +159,6 @@ void main() {
           '  _ngRef.registerFactory(\n'
           '    Example,\n'
           '    () => new Example(),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [],\n'
           '  );\n'
           '\n'
           '}\n',
@@ -331,10 +319,6 @@ void main() {
           '    Example,\n'
           '    () => new Example(),\n'
           '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [],\n'
-          '  );\n'
           '\n'
           '}\n',
     );
@@ -366,18 +350,10 @@ void main() {
           '    ExampleDirective,\n'
           '    () => new ExampleDirective(),\n'
           '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    ExampleDirective,\n'
-          '    const [],\n'
-          '  );\n'
           '\n'
           '  _ngRef.registerFactory(\n'
           '    ExamplePipe,\n'
           '    () => new ExamplePipe(),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    ExamplePipe,\n'
-          '    const [],\n'
           '  );\n'
           '\n'
           '}\n',
@@ -437,10 +413,6 @@ void main() {
           '  _ngRef.registerFactory(\n'
           '    Example,\n'
           '    () => new Example(),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [],\n'
           '  );\n'
           '\n'
           '}\n',
