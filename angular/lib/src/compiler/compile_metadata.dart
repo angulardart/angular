@@ -445,61 +445,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     });
   }
 
-  static CompileDirectiveMetadata create(
-      {CompileTypeMetadata type,
-      CompileDirectiveMetadataType metadataType,
-      String selector,
-      String exportAs,
-      int changeDetection,
-      List<String> inputs,
-      List<String> outputs,
-      Map<String, String> host,
-      List<LifecycleHooks> lifecycleHooks,
-      // CompileProviderMetadata | CompileTypeMetadata |
-      // CompileIdentifierMetadata | List
-      List providers,
-      // CompileProviderMetadata | CompileTypeMetadata |
-      // CompileIdentifierMetadata | List
-      List viewProviders,
-      List<CompileIdentifierMetadata> exports,
-      List<CompileQueryMetadata> queries,
-      List<CompileQueryMetadata> viewQueries,
-      CompileTemplateMetadata template,
-      AnalyzedClass analyzedClass}) {
-    final hostListeners = <String, String>{};
-    final hostProperties = <String, String>{};
-    final hostAttributes = <String, String>{};
-    deserializeHost(host, hostAttributes, hostListeners, hostProperties);
-
-    final inputsMap = <String, String>{};
-    final inputTypeMap = <String, String>{};
-    deserializeInputs(inputs, inputsMap, inputTypeMap);
-
-    final outputsMap = <String, String>{};
-    deserializeOutputs(outputs, outputsMap);
-
-    return new CompileDirectiveMetadata(
-        type: type,
-        metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
-        selector: selector,
-        exportAs: exportAs,
-        changeDetection: changeDetection,
-        inputs: inputsMap,
-        inputTypes: inputTypeMap,
-        outputs: outputsMap,
-        hostListeners: hostListeners,
-        hostProperties: hostProperties,
-        hostAttributes: hostAttributes,
-        lifecycleHooks: lifecycleHooks ?? <LifecycleHooks>[],
-        providers: providers,
-        viewProviders: viewProviders,
-        exports: exports,
-        queries: queries,
-        viewQueries: viewQueries,
-        template: template,
-        analyzedClass: analyzedClass);
-  }
-
   @override
   CompileTypeMetadata type;
   final CompileDirectiveMetadataType metadataType;
@@ -589,30 +534,28 @@ CompileDirectiveMetadata createHostComponentMeta(
     bool preserveWhitespace) {
   var template =
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
-  return CompileDirectiveMetadata.create(
-      type: new CompileTypeMetadata(
-          name: '${componentType.name}Host',
-          moduleUrl: componentType.moduleUrl,
-          isHost: true),
-      template: new CompileTemplateMetadata(
-          template: template,
-          templateUrl: '',
-          preserveWhitespace: preserveWhitespace,
-          styles: [],
-          styleUrls: [],
-          ngContentSelectors: []),
-      changeDetection: ChangeDetectionStrategy.Default,
-      inputs: [],
-      outputs: [],
-      host: {},
-      lifecycleHooks: [],
-      metadataType: CompileDirectiveMetadataType.Component,
-      selector: '*',
-      providers: [],
-      viewProviders: [],
-      exports: [],
-      queries: [],
-      viewQueries: []);
+  return new CompileDirectiveMetadata(
+    type: new CompileTypeMetadata(
+        name: '${componentType.name}Host',
+        moduleUrl: componentType.moduleUrl,
+        isHost: true),
+    template: new CompileTemplateMetadata(
+        template: template,
+        templateUrl: '',
+        preserveWhitespace: preserveWhitespace,
+        styles: const [],
+        styleUrls: const [],
+        ngContentSelectors: const []),
+    changeDetection: ChangeDetectionStrategy.Default,
+    inputs: const {},
+    inputTypes: const {},
+    outputs: const {},
+    hostAttributes: const {},
+    hostListeners: const {},
+    hostProperties: const {},
+    metadataType: CompileDirectiveMetadataType.Component,
+    selector: '*',
+  );
 }
 
 class CompilePipeMetadata implements CompileMetadataWithType {
