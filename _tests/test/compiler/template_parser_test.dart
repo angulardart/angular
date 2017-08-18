@@ -56,11 +56,11 @@ class ArrayConsole {
 
 void main() {
   final console = new ArrayConsole();
-  final ngIf = CompileDirectiveMetadata.create(
+  final ngIf = createCompileDirectiveMetadata(
       selector: '[ngIf]',
       type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'NgIf'),
       inputs: ['ngIf']);
-  final component = CompileDirectiveMetadata.create(
+  final component = createCompileDirectiveMetadata(
       selector: 'root',
       type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Root'),
       metadataType: CompileDirectiveMetadataType.Component);
@@ -307,7 +307,7 @@ void main() {
         test(
             'should allow events on explicit embedded templates that are '
             'emitted by a directive', () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "template",
               outputs: ["e"],
               type: new CompileTypeMetadata(
@@ -357,15 +357,15 @@ void main() {
         test(
             'should order directives by the directives array in the View '
             'and match them only once', () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "[a]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"));
-          var dirB = CompileDirectiveMetadata.create(
+          var dirB = createCompileDirectiveMetadata(
               selector: "[b]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirB"));
-          var dirC = CompileDirectiveMetadata.create(
+          var dirC = createCompileDirectiveMetadata(
               selector: "[c]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirC"));
@@ -382,11 +382,11 @@ void main() {
           ]);
         });
         test("should locate directives in property bindings", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "[a=b]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"));
-          var dirB = CompileDirectiveMetadata.create(
+          var dirB = createCompileDirectiveMetadata(
               selector: "[b]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirB"));
@@ -403,7 +403,7 @@ void main() {
           ]);
         });
         test("should locate directives in event bindings", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "[a]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirB"));
@@ -414,7 +414,7 @@ void main() {
           ]);
         });
         test("should parse directive host properties", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "div",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -432,7 +432,7 @@ void main() {
           ]);
         });
         test("should parse directive host listeners", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "div",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -444,7 +444,7 @@ void main() {
           ]);
         });
         test("should parse directive properties", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "div",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -457,7 +457,7 @@ void main() {
           ]);
         });
         test("should parse renamed directive properties", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "div",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -469,7 +469,7 @@ void main() {
           ]);
         });
         test("should parse literal directive properties", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "div",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -483,7 +483,7 @@ void main() {
         });
         test("should favor explicit bound properties over literal properties",
             () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "div",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -499,7 +499,7 @@ void main() {
               ]);
         });
         test("should support optional directive properties", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "div",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -563,7 +563,7 @@ void main() {
             List<String> deps: const [],
             List<String> queries: const []}) {
           var isComponent = !selector.startsWith("[");
-          return CompileDirectiveMetadata.create(
+          return createCompileDirectiveMetadata(
               selector: selector,
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl,
@@ -880,7 +880,7 @@ void main() {
           ]);
         });
         test("should assign references to directives via exportAs", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "[a]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
@@ -922,7 +922,7 @@ void main() {
                   '^^^^^'));
         });
         test("should assign references with empty value to components", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "[a]",
               metadataType: CompileDirectiveMetadataType.Component,
               type: new CompileTypeMetadata(
@@ -939,7 +939,7 @@ void main() {
               ].toString());
         });
         test("should not locate directives in references", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "[a]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"));
@@ -1007,7 +1007,7 @@ void main() {
           ]);
         });
         test("should not locate directives in variables", () {
-          var dirA = CompileDirectiveMetadata.create(
+          var dirA = createCompileDirectiveMetadata(
               selector: "[a]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"));
@@ -1083,12 +1083,12 @@ void main() {
         });
         group("directives", () {
           test("should locate directives in property bindings", () {
-            var dirA = CompileDirectiveMetadata.create(
+            var dirA = createCompileDirectiveMetadata(
                 selector: "[a=b]",
                 type: new CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: "DirA"),
                 inputs: ["a"]);
-            var dirB = CompileDirectiveMetadata.create(
+            var dirB = createCompileDirectiveMetadata(
                 selector: "[b]",
                 type: new CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: "DirB"));
@@ -1104,7 +1104,7 @@ void main() {
                 ]);
           });
           test("should not locate directives in variables", () {
-            var dirA = CompileDirectiveMetadata.create(
+            var dirA = createCompileDirectiveMetadata(
                 selector: "[a]",
                 type: new CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: "DirA"));
@@ -1116,7 +1116,7 @@ void main() {
             ]);
           });
           test("should not locate directives in references", () {
-            var dirA = CompileDirectiveMetadata.create(
+            var dirA = createCompileDirectiveMetadata(
                 selector: "[a]",
                 type: new CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: "DirA"));
@@ -1153,7 +1153,7 @@ void main() {
       });
       CompileDirectiveMetadata createComp(
           String selector, List<String> ngContentSelectors) {
-        return CompileDirectiveMetadata.create(
+        return createCompileDirectiveMetadata(
             selector: selector,
             metadataType: CompileDirectiveMetadataType.Component,
             type: new CompileTypeMetadata(
@@ -1164,7 +1164,7 @@ void main() {
       }
 
       CompileDirectiveMetadata createDir(String selector) {
-        return CompileDirectiveMetadata.create(
+        return createCompileDirectiveMetadata(
             selector: selector,
             type: new CompileTypeMetadata(
                 moduleUrl: someModuleUrl,
@@ -1429,7 +1429,7 @@ void main() {
       test(
           'should not throw on invalid property names if the property is '
           'used by a directive', () {
-        var dirA = CompileDirectiveMetadata.create(
+        var dirA = createCompileDirectiveMetadata(
             selector: "div",
             type:
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "DirA"),
@@ -1438,13 +1438,13 @@ void main() {
         parse("<div [invalid-prop]></div>", [dirA]);
       });
       test("should not allow more than 1 component per element", () {
-        var dirA = CompileDirectiveMetadata.create(
+        var dirA = createCompileDirectiveMetadata(
             selector: "div",
             metadataType: CompileDirectiveMetadataType.Component,
             type:
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "DirA"),
             template: new CompileTemplateMetadata(ngContentSelectors: []));
-        var dirB = CompileDirectiveMetadata.create(
+        var dirB = createCompileDirectiveMetadata(
             selector: "div",
             metadataType: CompileDirectiveMetadataType.Component,
             type:
@@ -1460,7 +1460,7 @@ void main() {
       test(
           'should not allow components or element bindings nor dom events '
           'on explicit embedded templates', () {
-        var dirA = CompileDirectiveMetadata.create(
+        var dirA = createCompileDirectiveMetadata(
             selector: "[a]",
             metadataType: CompileDirectiveMetadataType.Component,
             type:
@@ -1482,7 +1482,7 @@ void main() {
       test(
           'should not allow components or element bindings on inline '
           'embedded templates', () {
-        var dirA = CompileDirectiveMetadata.create(
+        var dirA = createCompileDirectiveMetadata(
             selector: "[a]",
             metadataType: CompileDirectiveMetadataType.Component,
             type:
@@ -1718,11 +1718,11 @@ void main() {
         ]);
       });
       test("should support directive", () {
-        var dirA = CompileDirectiveMetadata.create(
+        var dirA = createCompileDirectiveMetadata(
             selector: "[a]",
             type: new CompileTypeMetadata(
                 moduleUrl: someModuleUrl, name: "DirA"));
-        var comp = CompileDirectiveMetadata.create(
+        var comp = createCompileDirectiveMetadata(
             selector: "div",
             metadataType: CompileDirectiveMetadataType.Component,
             type: new CompileTypeMetadata(
@@ -1736,11 +1736,11 @@ void main() {
         ]);
       });
       test("should support directive in namespace", () {
-        var tagSel = CompileDirectiveMetadata.create(
+        var tagSel = createCompileDirectiveMetadata(
             selector: "circle",
             type: new CompileTypeMetadata(
                 moduleUrl: someModuleUrl, name: "elDir"));
-        var attrSel = CompileDirectiveMetadata.create(
+        var attrSel = createCompileDirectiveMetadata(
             selector: "[href]",
             type: new CompileTypeMetadata(
                 moduleUrl: someModuleUrl, name: "attrDir"));
@@ -1758,7 +1758,7 @@ void main() {
             ]);
       });
       test("should support directive property", () {
-        var dirA = CompileDirectiveMetadata.create(
+        var dirA = createCompileDirectiveMetadata(
             selector: "div",
             type:
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "DirA"),
@@ -1812,4 +1812,53 @@ void main() {
       }, skip: 'Re-enable. Does not throw.');
     });
   });
+}
+
+CompileDirectiveMetadata createCompileDirectiveMetadata({
+  CompileTypeMetadata type,
+  CompileDirectiveMetadataType metadataType,
+  String selector,
+  String exportAs,
+  List<String> inputs,
+  List<String> outputs,
+  Map<String, String> host,
+  // CompileProviderMetadata | CompileTypeMetadata |
+  // CompileIdentifierMetadata | List
+  List providers,
+  // CompileProviderMetadata | CompileTypeMetadata |
+  // CompileIdentifierMetadata | List
+  List viewProviders,
+  List<CompileQueryMetadata> queries,
+  CompileTemplateMetadata template,
+}) {
+  final hostListeners = <String, String>{};
+  final hostProperties = <String, String>{};
+  final hostAttributes = <String, String>{};
+  CompileDirectiveMetadata.deserializeHost(
+      host, hostAttributes, hostListeners, hostProperties);
+
+  final inputsMap = <String, String>{};
+  final inputTypeMap = <String, String>{};
+  CompileDirectiveMetadata.deserializeInputs(inputs, inputsMap, inputTypeMap);
+
+  final outputsMap = <String, String>{};
+  CompileDirectiveMetadata.deserializeOutputs(outputs, outputsMap);
+
+  return new CompileDirectiveMetadata(
+    type: type,
+    metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
+    selector: selector,
+    exportAs: exportAs,
+    inputs: inputsMap,
+    inputTypes: inputTypeMap,
+    outputs: outputsMap,
+    hostListeners: hostListeners,
+    hostProperties: hostProperties,
+    hostAttributes: hostAttributes,
+    lifecycleHooks: [],
+    providers: providers,
+    viewProviders: viewProviders,
+    queries: queries,
+    template: template,
+  );
 }
