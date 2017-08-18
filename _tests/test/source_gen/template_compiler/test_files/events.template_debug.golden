@@ -390,10 +390,6 @@ void initReflector() {
     UsesNativeEvents,
     () => new UsesNativeEvents(),
   );
-  _ngRef.registerDependencies(
-    UsesNativeEvents,
-    const [],
-  );
 
   _ngRef.registerComponent(
     UsesAngularEvents,
@@ -403,10 +399,6 @@ void initReflector() {
     UsesAngularEvents,
     () => new UsesAngularEvents(),
   );
-  _ngRef.registerDependencies(
-    UsesAngularEvents,
-    const [],
-  );
 
   _ngRef.registerComponent(
     HasAngularEvents,
@@ -415,9 +407,5 @@ void initReflector() {
   _ngRef.registerFactory(
     HasAngularEvents,
     () => new HasAngularEvents(),
-  );
-  _ngRef.registerDependencies(
-    HasAngularEvents,
-    const [],
   );
 }

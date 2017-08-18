@@ -161,8 +161,4 @@ void initReflector() {
     HostComponent,
     () => new HostComponent(),
   );
-  _ngRef.registerDependencies(
-    HostComponent,
-    const [],
-  );
 }

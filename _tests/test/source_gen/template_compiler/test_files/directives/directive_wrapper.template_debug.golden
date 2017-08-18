@@ -474,10 +474,6 @@ void initReflector() {
     DirectiveWithOutput,
     () => new DirectiveWithOutput(),
   );
-  _ngRef.registerDependencies(
-    DirectiveWithOutput,
-    const [],
-  );
 
   _ngRef.registerComponent(
     TestFooComponent,
@@ -487,18 +483,10 @@ void initReflector() {
     TestFooComponent,
     () => new TestFooComponent(),
   );
-  _ngRef.registerDependencies(
-    TestFooComponent,
-    const [],
-  );
 
   _ngRef.registerFactory(
     MyInjectableClass,
     () => new MyInjectableClass(),
-  );
-  _ngRef.registerDependencies(
-    MyInjectableClass,
-    const [],
   );
 
   _ngRef.registerComponent(
@@ -508,9 +496,5 @@ void initReflector() {
   _ngRef.registerFactory(
     InputFormTest,
     () => new InputFormTest(),
-  );
-  _ngRef.registerDependencies(
-    InputFormTest,
-    const [],
   );
 }

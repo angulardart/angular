@@ -146,8 +146,4 @@ void initReflector() {
     TestFooComponent,
     () => new TestFooComponent(),
   );
-  _ngRef.registerDependencies(
-    TestFooComponent,
-    const [],
-  );
 }

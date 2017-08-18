@@ -167,8 +167,4 @@ void initReflector() {
     Comp,
     () => new Comp(),
   );
-  _ngRef.registerDependencies(
-    Comp,
-    const [],
-  );
 }

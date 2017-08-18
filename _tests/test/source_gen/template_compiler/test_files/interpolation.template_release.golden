@@ -256,10 +256,6 @@ void initReflector() {
     InterpolationComponent,
     () => new InterpolationComponent(),
   );
-  _ngRef.registerDependencies(
-    InterpolationComponent,
-    const [],
-  );
 
   _ngRef.registerComponent(
     InterpolationComponentNoWhitespace,
@@ -268,9 +264,5 @@ void initReflector() {
   _ngRef.registerFactory(
     InterpolationComponentNoWhitespace,
     () => new InterpolationComponentNoWhitespace(),
-  );
-  _ngRef.registerDependencies(
-    InterpolationComponentNoWhitespace,
-    const [],
   );
 }

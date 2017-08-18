@@ -157,11 +157,6 @@ void main() {
     test("should throw when no type and not @Inject (class case)", () {
       expect(() => createInjector([NoAnnotations]), throwsStateError);
     });
-    test("should throw when no type and not @Inject (factory case)", () {
-      expect(
-          () => createInjector([provide("someToken", useFactory: factoryFn)]),
-          throwsStateError);
-    });
     test("should cache instances", () {
       var injector = createInjector([Engine]);
       var e1 = injector.get(Engine);
@@ -630,11 +625,6 @@ void main() {
     });
     test("should throw when no type and not @Inject (class case)", () {
       expect(() => createInjector([NoAnnotations]), throwsStateError);
-    });
-    test("should throw when no type and not @Inject (factory case)", () {
-      expect(
-          () => createInjector([provide("someToken", useFactory: factoryFn)]),
-          throwsStateError);
     });
     test("should cache instances", () {
       var injector = createInjector([Engine]);

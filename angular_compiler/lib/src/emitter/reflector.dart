@@ -158,17 +158,21 @@ class ReflectableEmitter {
     throw new UnsupportedError('Invalid type: ${bound.runtimeType}.');
   }
 
-  String _registerFactory(DependencyInvocation invocation) =>
-      (new StringBuffer()
-            ..writeln('  _ngRef.registerFactory(')
-            ..writeln('    ${_nameOfInvocation(invocation)},')
-            ..writeln('    ${_generateFactory(invocation)},')
-            ..writeln('  );')
-            ..writeln('  _ngRef.registerDependencies(')
-            ..writeln('    ${_nameOfInvocation(invocation)},')
-            ..writeln('    ${_generateDependencies(invocation)},')
-            ..writeln('  );'))
-          .toString();
+  String _registerFactory(DependencyInvocation invocation) {
+    final buffer = new StringBuffer()
+      ..writeln('  _ngRef.registerFactory(')
+      ..writeln('    ${_nameOfInvocation(invocation)},')
+      ..writeln('    ${_generateFactory(invocation)},')
+      ..writeln('  );');
+    if (invocation.positional.isNotEmpty) {
+      buffer
+        ..writeln('  _ngRef.registerDependencies(')
+        ..writeln('    ${_nameOfInvocation(invocation)},')
+        ..writeln('    ${_generateDependencies(invocation)},')
+        ..writeln('  );');
+    }
+    return buffer.toString();
+  }
 
   String _generateDependencies(DependencyInvocation invocation) {
     final output = new StringBuffer('const [');
