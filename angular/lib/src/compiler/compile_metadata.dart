@@ -330,6 +330,17 @@ class CompileTemplateMetadata {
   }
 }
 
+enum CompileDirectiveMetadataType {
+  /// Metadata type for a class annotated with `@Component`.
+  Component,
+
+  /// Metadata type for a class annotated with `@Directive`.
+  Directive,
+
+  /// Metadata type for a function annotated with `@Directive`.
+  FunctionalDirective,
+}
+
 /// Metadata regarding compilation of a directive.
 class CompileDirectiveMetadata implements CompileMetadataWithType {
   /// Maps host attributes, listeners, and properties from a serialized map.
@@ -436,7 +447,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   static CompileDirectiveMetadata create(
       {CompileTypeMetadata type,
-      bool isComponent,
+      CompileDirectiveMetadataType metadataType,
       String selector,
       String exportAs,
       int changeDetection,
@@ -469,7 +480,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
     return new CompileDirectiveMetadata(
         type: type,
-        isComponent: isComponent == true,
+        metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
         selector: selector,
         exportAs: exportAs,
         changeDetection: changeDetection,
@@ -491,7 +502,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   @override
   CompileTypeMetadata type;
-  bool isComponent;
+  final CompileDirectiveMetadataType metadataType;
   String selector;
   String exportAs;
   int changeDetection;
@@ -513,7 +524,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   CompileDirectiveMetadata(
       {this.type,
-      this.isComponent,
+      this.metadataType,
       this.selector,
       this.exportAs,
       this.changeDetection,
@@ -547,6 +558,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   @override
   CompileIdentifierMetadata get identifier => type;
 
+  bool get isComponent =>
+      metadataType == CompileDirectiveMetadataType.Component;
+
   /// Returns true if the directive requires a ChangeDetector class to be
   /// generated.
   ///
@@ -558,9 +572,10 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     if (_requiresDirectiveChangeDetector == null) {
       bool hasInputsWithNgOnChanges = inputs.isNotEmpty &&
           lifecycleHooks.contains(LifecycleHooks.OnChanges);
-      _requiresDirectiveChangeDetector = !isComponent &&
-          identifier.name != 'NgIf' &&
-          (hasInputsWithNgOnChanges || hostProperties.isNotEmpty);
+      _requiresDirectiveChangeDetector =
+          metadataType == CompileDirectiveMetadataType.Directive &&
+              identifier.name != 'NgIf' &&
+              (hasInputsWithNgOnChanges || hostProperties.isNotEmpty);
     }
     return _requiresDirectiveChangeDetector;
   }
@@ -591,7 +606,7 @@ CompileDirectiveMetadata createHostComponentMeta(
       outputs: [],
       host: {},
       lifecycleHooks: [],
-      isComponent: true,
+      metadataType: CompileDirectiveMetadataType.Component,
       selector: '*',
       providers: [],
       viewProviders: [],

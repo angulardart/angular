@@ -21,6 +21,12 @@ import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
 
 const String _directivesProperty = 'directives';
+const _statefulDirectiveFields = const [
+  'exportAs',
+  'host',
+  'inputs',
+  'outputs',
+];
 
 AngularArtifacts findComponentsAndDirectives(Element element) {
   var componentVisitor = new NormalizedComponentVisitor();
@@ -44,6 +50,15 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       } else {
         directives.add(directive);
       }
+    }
+    return null;
+  }
+
+  @override
+  Null visitFunctionElement(FunctionElement element) {
+    final directive = element.accept(new ComponentVisitor());
+    if (directive != null) {
+      directives.add(directive);
     }
     return null;
   }
@@ -135,15 +150,9 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       }
     }
     return visitAll<T>(directives, (obj) {
-      var type = obj.toTypeValue();
-      if (type != null &&
-          type.element != null &&
-          type.element.metadata.any(safeMatcher(
-            annotationMatcher,
-            log,
-          ))) {
-        return type.element.accept(visitor());
-      }
+      // For functions, `toTypeValue()` is null so we fall back on `type`.
+      final type = obj.toTypeValue() ?? obj.type;
+      return type?.element?.accept(visitor());
     });
   }
 }
@@ -173,6 +182,46 @@ class ComponentVisitor
       }
     }
     return null;
+  }
+
+  @override
+  CompileDirectiveMetadata visitFunctionElement(FunctionElement element) {
+    final annotation = element.metadata.firstWhere(
+      safeMatcherType(Directive, log),
+      orElse: () => null,
+    );
+    if (annotation == null) return null;
+    var invalid = false;
+    if (element.isPrivate) {
+      log.severe('Functional directives must be public: $element');
+      invalid = true;
+    }
+    if (!element.returnType.isVoid) {
+      log.severe('Functional directives must return void: $element');
+      invalid = true;
+    }
+    final annotationValue = annotation.computeConstantValue();
+    for (var field in _statefulDirectiveFields) {
+      if (!annotationValue.getField(field).isNull) {
+        log.severe("Functional directives don't support '$field': $element");
+        invalid = true;
+      }
+    }
+    if (invalid) return null;
+    final type = element.accept(new CompileTypeMetadataVisitor(log));
+    final selector = coerceString(annotationValue, 'selector');
+    return new CompileDirectiveMetadata(
+      type: type,
+      metadataType: CompileDirectiveMetadataType.FunctionalDirective,
+      selector: selector,
+      inputs: const {},
+      inputTypes: const {},
+      outputs: const {},
+      hostListeners: const {},
+      hostProperties: const {},
+      hostAttributes: const {},
+      providers: _extractProviders(annotationValue, 'providers'),
+    );
   }
 
   @override
@@ -429,7 +478,9 @@ class ComponentVisitor
         new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
     return new CompileDirectiveMetadata(
       type: element.accept(new CompileTypeMetadataVisitor(log)),
-      isComponent: isComp,
+      metadataType: isComp
+          ? CompileDirectiveMetadataType.Component
+          : CompileDirectiveMetadataType.Directive,
       selector: coerceString(annotationValue, 'selector'),
       exportAs: coerceString(annotationValue, 'exportAs'),
       // Even for directives, we want change detection set to the default.

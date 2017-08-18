@@ -263,6 +263,9 @@ enum ProviderAstType {
   /// A provider that represents a Directive type.
   Directive,
 
+  /// A provider for a functional directive only visible within a template.
+  FunctionalDirective,
+
   /// Provider that is used by compiled code itself such as TemplateRef.
   Builtin
 }
