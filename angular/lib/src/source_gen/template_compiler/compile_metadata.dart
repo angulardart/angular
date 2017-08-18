@@ -27,10 +27,14 @@ class CompileTypeMetadataVisitor
   CompileTypeMetadataVisitor(this._logger);
 
   @override
-  CompileTypeMetadata visitClassElement(ClassElement element) =>
-      annotation_matcher.isInjectable(element)
-          ? _getCompileTypeMetadata(element)
-          : null;
+  CompileTypeMetadata visitClassElement(ClassElement element) {
+    if (!annotation_matcher.isInjectable(element)) return null;
+    if (element.isPrivate) {
+      _logger.severe('Injectables must be public: $element');
+      return null;
+    }
+    return _getCompileTypeMetadata(element);
+  }
 
   @override
   CompileTypeMetadata visitFunctionElement(FunctionElement element) =>

@@ -15,12 +15,13 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
 
   @override
   CompilePipeMetadata visitClassElement(ClassElement element) {
-    for (ElementAnnotation annotation in element.metadata) {
-      if (isPipe(annotation)) {
-        return _createPipeMetadata(annotation, element);
-      }
+    final annotation = element.metadata.firstWhere(isPipe, orElse: () => null);
+    if (annotation == null) return null;
+    if (element.isPrivate) {
+      _logger.severe('Pipes must be public: $element');
+      return null;
     }
-    return null;
+    return _createPipeMetadata(annotation, element);
   }
 
   CompilePipeMetadata _createPipeMetadata(
