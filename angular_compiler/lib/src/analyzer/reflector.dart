@@ -79,7 +79,7 @@ class ReflectableReader {
     this.outputExtension: _defaultOutputExtension,
     this.recordComponentsAsInjectables: true,
     this.recordDirectivesAsInjectables: true,
-    this.recordPipesAsInjectables: true,
+    this.recordPipesAsInjectables: false,
     this.recordRouterAnnotationsForComponents: true,
   });
 
