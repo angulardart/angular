@@ -8,7 +8,7 @@ dev_dependencies:
   angular_forms: 0.1.0
   angular_test: '^1.0.0-beta'
   build_runner: ^0.4.0
-  build_test: ^0.6.0
+  build_test: ^0.7.0
   cli_util: ^0.1.0
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
