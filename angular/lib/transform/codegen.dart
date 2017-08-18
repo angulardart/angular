@@ -1,3 +1,5 @@
+/// @nodoc
+
 import 'package:barback/barback.dart';
 import 'package:build_barback/build_barback.dart';
 import 'package:angular/source_gen.dart';

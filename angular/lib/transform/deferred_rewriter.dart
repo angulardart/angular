@@ -1,3 +1,4 @@
+/// @nodoc
 library angular.transform.deferred_rewriter.dart;
 
 import 'dart:async';

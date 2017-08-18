@@ -1,3 +1,5 @@
+/// @nodoc
+
 import 'dart:async';
 
 import 'package:barback/barback.dart';
