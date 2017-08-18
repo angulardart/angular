@@ -282,6 +282,20 @@ class CompileElement extends CompileNode {
     // some as getters (eager=false). We rely on the fact that they are
     // already sorted topologically.
     for (ProviderAst resolvedProvider in _resolvedProvidersArray) {
+      if (resolvedProvider.providerType ==
+          ProviderAstType.FunctionalDirective) {
+        // Get function parameter dependencies.
+        final parameters = <o.Expression>[];
+        final provider = resolvedProvider.providers.first;
+        for (var dep in provider.deps) {
+          parameters.add(_getDependency(resolvedProvider.providerType, dep));
+        }
+        // Add functional directive invocation.
+        final invokeExpr = o.importExpr(provider.useClass).callFn(parameters);
+        view.createMethod.addStmt(invokeExpr.toStmt());
+        // Skip creating a provider instance or getter.
+        continue;
+      }
       var providerValueExpressions = <o.Expression>[];
       var isLocalAlias = false;
       CompileDirectiveMetadata directiveMetadata;

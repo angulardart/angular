@@ -1,3 +1,28 @@
+## 4.0.0-alpha+4
+
+### New features
+
+* Added support for functional directives: lightweight, stateless directives
+  that apply a one-time transformation.
+
+  * One is defined by annotating a public, top-level function with
+    `@Directive()`.
+
+  * The function parameters specify its dependencies, similar to the constructor
+    of a regular directive.
+
+  * Only the `selector` and `providers` parameters of the `@Directive()`
+    annotation are permitted, because the other parameters are stateful.
+
+  * The function return type must be `void`.
+
+```dart
+@Directive(selector: '[autoId]')
+void autoIdDirective(Element element, IdGenerator generator) {
+  element.id = generator.next();
+}
+```
+
 ## 4.0.0-alpha+3
 
 ### Breaking changes

@@ -4,6 +4,7 @@ import "compile_metadata.dart"
     show
         CompileDiDependencyMetadata,
         CompileDirectiveMetadata,
+        CompileDirectiveMetadataType,
         CompileProviderMetadata,
         CompileQueryMetadata,
         CompileTokenMap,
@@ -265,7 +266,8 @@ class ProviderElementContext implements ElementProviderUsage {
     if (dep.token != null) {
       // access built-ins
       if ((requestingProviderType == ProviderAstType.Directive ||
-          requestingProviderType == ProviderAstType.Component)) {
+          requestingProviderType == ProviderAstType.Component ||
+          requestingProviderType == ProviderAstType.FunctionalDirective)) {
         if (dep.token.equalsTo(Identifiers.ElementRefToken) ||
             dep.token.equalsTo(Identifiers.HtmlElementToken) ||
             dep.token.equalsTo(Identifiers.ElementToken) ||
@@ -423,13 +425,9 @@ class _ProviderResolver {
       var dirProvider = new CompileProviderMetadata(
           token: new CompileTokenMetadata(identifier: directive.type),
           useClass: directive.type);
-      _resolveProviders(
-        [dirProvider],
-        directive.isComponent
-            ? ProviderAstType.Component
-            : ProviderAstType.Directive,
-        eager: true,
-      );
+      final providerAstType =
+          providerAstTypeFromMetadataType(directive.metadataType);
+      _resolveProviders([dirProvider], providerAstType, eager: true);
     }
     // Note: We need an ordered list where components preceded directives so
     // directives are able to overwrite providers of a component!
@@ -468,12 +466,14 @@ class _ProviderResolver {
             sourceSpan));
       }
       if (resolvedProvider == null) {
-        // Temporarily we mark NgIf/NgFor as visibility local until @Directive
-        // has parameter to mark them explicitly.
+        // Temporarily we mark NgIf/NgFor and functional directives as
+        // visibility local until @Directive has parameter to mark them
+        // explicitly.
         // TODO: Add @Directive visibility parameter.
         bool visibleToViewHierarchy =
             !(provider.token.equalsTo(ngIfTokenMetadata) ||
-                provider.token.equalsTo(ngForTokenMetadata));
+                provider.token.equalsTo(ngForTokenMetadata) ||
+                providerType == ProviderAstType.FunctionalDirective);
         resolvedProvider = new ProviderAst(provider.token, provider.multi,
             [provider], providerType, sourceSpan,
             eager: eager, visibleToViewHierarchy: visibleToViewHierarchy);
@@ -520,6 +520,20 @@ void _addQueryToTokenMap(CompileTokenMap<List<CompileQueryMetadata>> map,
     }
     entry.add(query);
   }
+}
+
+ProviderAstType providerAstTypeFromMetadataType(
+  CompileDirectiveMetadataType type,
+) {
+  switch (type) {
+    case CompileDirectiveMetadataType.Component:
+      return ProviderAstType.Component;
+    case CompileDirectiveMetadataType.Directive:
+      return ProviderAstType.Directive;
+    case CompileDirectiveMetadataType.FunctionalDirective:
+      return ProviderAstType.FunctionalDirective;
+  }
+  throw new ArgumentError("Can't create '$ProviderAstType' from '$type'");
 }
 
 final CompileTokenMetadata ngIfTokenMetadata =

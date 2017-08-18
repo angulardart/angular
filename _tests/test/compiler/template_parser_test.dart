@@ -63,7 +63,7 @@ void main() {
   final component = CompileDirectiveMetadata.create(
       selector: 'root',
       type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Root'),
-      isComponent: true);
+      metadataType: CompileDirectiveMetadataType.Component);
 
   ParseTemplate parse;
 
@@ -558,8 +558,8 @@ void main() {
         }
 
         CompileDirectiveMetadata createDir(String selector,
-            {List<CompileProviderMetadata> providers: null,
-            List<CompileProviderMetadata> viewProviders: null,
+            {List<CompileProviderMetadata> providers,
+            List<CompileProviderMetadata> viewProviders,
             List<String> deps: const [],
             List<String> queries: const []}) {
           var isComponent = !selector.startsWith("[");
@@ -569,7 +569,9 @@ void main() {
                   moduleUrl: someModuleUrl,
                   name: selector,
                   diDeps: deps.map(createDep).toList()),
-              isComponent: isComponent,
+              metadataType: isComponent
+                  ? CompileDirectiveMetadataType.Component
+                  : CompileDirectiveMetadataType.Directive,
               template: new CompileTemplateMetadata(ngContentSelectors: []),
               providers: providers,
               viewProviders: viewProviders,
@@ -922,7 +924,7 @@ void main() {
         test("should assign references with empty value to components", () {
           var dirA = CompileDirectiveMetadata.create(
               selector: "[a]",
-              isComponent: true,
+              metadataType: CompileDirectiveMetadataType.Component,
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
               exportAs: "dirA",
@@ -1153,7 +1155,7 @@ void main() {
           String selector, List<String> ngContentSelectors) {
         return CompileDirectiveMetadata.create(
             selector: selector,
-            isComponent: true,
+            metadataType: CompileDirectiveMetadataType.Component,
             type: new CompileTypeMetadata(
                 moduleUrl: someModuleUrl,
                 name: '''SomeComp${ compCounter ++}'''),
@@ -1438,13 +1440,13 @@ void main() {
       test("should not allow more than 1 component per element", () {
         var dirA = CompileDirectiveMetadata.create(
             selector: "div",
-            isComponent: true,
+            metadataType: CompileDirectiveMetadataType.Component,
             type:
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "DirA"),
             template: new CompileTemplateMetadata(ngContentSelectors: []));
         var dirB = CompileDirectiveMetadata.create(
             selector: "div",
-            isComponent: true,
+            metadataType: CompileDirectiveMetadataType.Component,
             type:
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "DirB"),
             template: new CompileTemplateMetadata(ngContentSelectors: []));
@@ -1460,7 +1462,7 @@ void main() {
           'on explicit embedded templates', () {
         var dirA = CompileDirectiveMetadata.create(
             selector: "[a]",
-            isComponent: true,
+            metadataType: CompileDirectiveMetadataType.Component,
             type:
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "DirA"),
             template: new CompileTemplateMetadata(ngContentSelectors: []));
@@ -1482,7 +1484,7 @@ void main() {
           'embedded templates', () {
         var dirA = CompileDirectiveMetadata.create(
             selector: "[a]",
-            isComponent: true,
+            metadataType: CompileDirectiveMetadataType.Component,
             type:
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: "DirA"),
             template: new CompileTemplateMetadata(ngContentSelectors: []));
@@ -1722,7 +1724,7 @@ void main() {
                 moduleUrl: someModuleUrl, name: "DirA"));
         var comp = CompileDirectiveMetadata.create(
             selector: "div",
-            isComponent: true,
+            metadataType: CompileDirectiveMetadataType.Component,
             type: new CompileTypeMetadata(
                 moduleUrl: someModuleUrl, name: "ZComp"),
             template: new CompileTemplateMetadata(ngContentSelectors: []));

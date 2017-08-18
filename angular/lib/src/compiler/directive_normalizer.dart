@@ -33,7 +33,7 @@ class DirectiveNormalizer {
         (CompileTemplateMetadata normalizedTemplate) =>
             new CompileDirectiveMetadata(
                 type: directive.type,
-                isComponent: directive.isComponent,
+                metadataType: directive.metadataType,
                 selector: directive.selector,
                 exportAs: directive.exportAs,
                 changeDetection: directive.changeDetection,
