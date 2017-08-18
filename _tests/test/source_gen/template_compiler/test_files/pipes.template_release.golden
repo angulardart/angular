@@ -150,33 +150,6 @@ void initReflector() {
   }
   _visited = true;
   _ref0.initReflector();
-  _ngRef.registerFactory(
-    PurePipe,
-    () => new PurePipe(),
-  );
-  _ngRef.registerDependencies(
-    PurePipe,
-    const [],
-  );
-
-  _ngRef.registerFactory(
-    DirtyPipe,
-    () => new DirtyPipe(),
-  );
-  _ngRef.registerDependencies(
-    DirtyPipe,
-    const [],
-  );
-
-  _ngRef.registerFactory(
-    LifecyclePipe,
-    () => new LifecyclePipe(),
-  );
-  _ngRef.registerDependencies(
-    LifecyclePipe,
-    const [],
-  );
-
   _ngRef.registerComponent(
     Comp,
     CompNgFactory,
