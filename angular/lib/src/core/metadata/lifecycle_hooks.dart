@@ -97,9 +97,12 @@ abstract class OnChanges {
 /// }
 /// ```
 ///
-/// **WARNING**: As part of [crash detection](go/angular-dart-docs/crash_detection.md)
-/// AngularDart may execute [ngOnInit] a second time if part of the application
-/// threw an exception during change detection.
+/// **Warning:** As part of [crash detection][] AngularDart may execute
+/// [ngOnInit] a second time if part of the application threw an exception
+/// during change detection.
+///
+/// [crash detection]: https://github.com/dart-lang/angular/blob/master/doc/crash_detection.md#crash-safety-for-angulardart
+///
 abstract class OnInit {
   /// Executed after the first change detection run for a directive.
   ///
@@ -137,10 +140,13 @@ abstract class OnInit {
 /// }
 /// ```
 ///
-/// **WARNING**: As part of [crash detection](go/angular-dart-docs/crash_detection.md)
-/// AngularDart may execute [ngOnDestroy] a second time if part of the
-/// application threw an exception during change detection. It is
-/// _not recommended_ to set values to `null` as a result.
+/// **Warning:** As part of [crash detection][] AngularDart may execute
+/// [ngOnDestroy] a second time if part of the application threw an exception
+/// during change detection. It is _not recommended_ to set values to `null`
+/// as a result.
+///
+/// [crash detection]: https://github.com/dart-lang/angular/blob/master/doc/crash_detection.md#crash-safety-for-angulardart
+///
 abstract class OnDestroy {
   /// Executed before the directive is removed from the DOM and destroyed.
   ///
