@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:analyzer/dart/element/element.dart';
+import 'package:logging/logging.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:build_test/build_test.dart';
 import 'package:test/test.dart';
 
 import '../../src/resolve.dart';
@@ -53,6 +57,13 @@ void main() {
         class Logger {
           // Has a named constructor.
           Logger.named();
+        }
+
+        @Injectable()
+        class BadField {
+          final String fieldA;
+
+          BadField(this._fieldA);
         }
       ''');
     });
@@ -231,6 +242,20 @@ void main() {
       expect(deps.bound, const isInstanceOf<ConstructorElement>());
       expect(deps.positional, isEmpty);
       expect(deps.named, isEmpty);
+    });
+
+    test('a class with an invalid field formal parameter', () async {
+      final logs = <String>[];
+      final logger = new Logger('test')
+        ..onRecord.listen((r) {
+          logs.add(r.message);
+        });
+      scopeLog(() {
+        reader.parseDependencies(classNamed('BadField'));
+      }, logger);
+      await new Future.value();
+      final allLogs = logs.join('\n');
+      expect(allLogs, contains('Could not find corresponding field "_fieldA"'));
     });
   });
 }
