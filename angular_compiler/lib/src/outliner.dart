@@ -18,7 +18,7 @@ const _directiveChangeImport =
     "import 'package:angular/src/core/change_detection/directive_change_detector.dart';";
 
 const _analyzerIgnores =
-    '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import';
+    '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name';
 
 /// Generates an _outline_ of the public API of a `.template.dart` file.
 ///
