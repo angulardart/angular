@@ -1,7 +1,9 @@
+// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import
 // The .template.dart files also export the user code.
 export 'container_component.dart';
 
-// Required for implementing AppView.
+// Required for referencing AppView.
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/change_detection/directive_change_detector.dart';
 import 'package:angular/src/core/linker/app_view.dart';

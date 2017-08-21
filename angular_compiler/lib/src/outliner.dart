@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'analyzer.dart';
 import 'flags.dart';
 
+const _htmlImport = "import 'dart:html';";
 const _angularImport = "import 'package:angular/angular.dart';";
 const _appViewImport =
     "import 'package:angular/src/core/linker/app_view.dart';";
@@ -15,6 +16,9 @@ const _debugAppViewImport =
     "import 'package:angular/src/debug/debug_app_view.dart';";
 const _directiveChangeImport =
     "import 'package:angular/src/core/change_detection/directive_change_detector.dart';";
+
+const _analyzerIgnores =
+    '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import';
 
 /// Generates an _outline_ of the public API of a `.template.dart` file.
 ///
@@ -28,7 +32,7 @@ class TemplateOutliner implements Builder {
   String get _angularImports {
     var appViewImport =
         _compilerFlags.genDebugInfo ? _debugAppViewImport : _appViewImport;
-    return '$_angularImport\n$_directiveChangeImport\n$appViewImport';
+    return '$_htmlImport\n$_angularImport\n$_directiveChangeImport\n$appViewImport';
   }
 
   String get _appViewClass =>
@@ -73,18 +77,16 @@ class TemplateOutliner implements Builder {
         }
       }
     }
-    final output = new StringBuffer();
+    final output = new StringBuffer('$_analyzerIgnores\n');
     output
       ..writeln('// The .template.dart files also export the user code.')
       ..writeln("export '${p.basename(buildStep.inputId.path)}';")
       ..writeln();
-    if (components.isNotEmpty) {
+    if (components.isNotEmpty || directives.isNotEmpty) {
       output
-        ..writeln('// Required for implementing $_appViewClass.')
+        ..writeln('// Required for referencing $_appViewClass.')
         ..writeln(_angularImports)
         ..writeln();
-    }
-    if (components.isNotEmpty || directives.isNotEmpty) {
       final userLandCode = p.basename(buildStep.inputId.path);
       output
         ..writeln('// Required for specifically referencing user code.')

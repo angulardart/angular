@@ -1,4 +1,8 @@
-## 0.2.0+1
+## 0.2.2
+
+- Fixed the outliner to instruct the analyzer to ignore unused imports.
+
+## 0.2.1
 
 - Various changes internal to the compiler.
 
