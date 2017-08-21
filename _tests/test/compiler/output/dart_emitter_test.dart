@@ -27,7 +27,7 @@ void main() {
       emitter = new DartEmitter();
       someVar = o.variable('someVar');
     });
-    String emitStmt(o.Statement stmt, [List<String> exportedVars = null]) {
+    String emitStmt(o.Statement stmt, [List<String> exportedVars]) {
       exportedVars ??= [];
       return emitter.emitStatements(someModuleUrl, [stmt], exportedVars, {});
     }

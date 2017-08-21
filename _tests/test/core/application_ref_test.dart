@@ -172,8 +172,8 @@ class _MockComponentFactory extends ComponentFactory {
   final ComponentRef _compRef;
   _MockComponentFactory(this._compRef) : super(null, null, null);
   ComponentRef create(Injector injector,
-      [List<List<dynamic>> projectableNodes = null,
-      dynamic /* String | dynamic */ rootSelectorOrNode = null]) {
+      [List<List<dynamic>> projectableNodes,
+      dynamic /* String | dynamic */ rootSelectorOrNode]) {
     return this._compRef;
   }
 }
