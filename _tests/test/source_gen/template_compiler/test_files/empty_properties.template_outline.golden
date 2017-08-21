@@ -1,4 +1,4 @@
-// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import
+// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name
 // The .template.dart files also export the user code.
 export 'empty_properties.dart';
 
