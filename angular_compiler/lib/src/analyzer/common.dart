@@ -1,6 +1,8 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:build/build.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:source_gen/src/utils.dart';
 
 /// Returns the inheritance hierarchy of [type] in an ordered list.
@@ -58,7 +60,14 @@ String _identifierOfAst(AstNode astNode, ParameterElement element) {
   } else if (astNode is FieldFormalParameter) {
     final parameter = element as FieldFormalParameterElement;
     final clazz = (element.enclosingElement.enclosingElement) as ClassElement;
-    final field = clazz.getField(parameter.name).computeNode();
+    final fieldElement = clazz.getField(parameter.name);
+    if (fieldElement == null) {
+      log.severe(spanForElement(element).message(
+          'Could not find corresponding field "${parameter.name}" in class '
+          '"${clazz.name}".'));
+      return null;
+    }
+    final field = fieldElement.computeNode();
     return ((field as VariableDeclaration).parent as VariableDeclarationList)
         ?.type
         ?.toSource();
