@@ -81,6 +81,17 @@ void main() {
       });
       expect(testFixture.text.trim(), 'when default;');
     });
+    test('should match equal, but not identical, string cases', () async {
+      final testBed = new NgTestBed<SwitchEqualStringsTest>();
+      final testFixture = await testBed.create(beforeChangeDetection: (comp) {
+        comp.switchCase = 'one';
+      });
+      expect(testFixture.text, 'first case');
+      await testFixture.update((comp) {
+        comp.switchCase = 'two';
+      });
+      expect(testFixture.text, 'second case');
+    });
   });
 }
 
@@ -137,4 +148,20 @@ class SwitchWhenValueTest {
   String switchValue;
   String when1;
   String when2;
+}
+
+@Component(
+  selector: 'switch-equal-strings-test',
+  directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
+  template: '''
+  <div [ngSwitch]="'case-' + switchCase">
+    <template ngSwitchCase="case-one">first case</template>
+    <template ngSwitchCase="case-two">second case</template>
+    <template ngSwitchDefault>default case</template>
+  </div>
+  ''',
+  preserveWhitespace: false,
+)
+class SwitchEqualStringsTest {
+  String switchCase;
 }
