@@ -110,10 +110,10 @@ class NgSwitch {
   void _onWhenValueChanged(dynamic oldWhen, dynamic newWhen, SwitchView view) {
     this._deregisterView(oldWhen, view);
     this._registerView(newWhen, view);
-    if (identical(oldWhen, this._switchValue)) {
+    if (looseIdentical(oldWhen, this._switchValue)) {
       view.destroy();
       _activeViews.remove(view);
-    } else if (identical(newWhen, this._switchValue)) {
+    } else if (looseIdentical(newWhen, this._switchValue)) {
       if (this._useDefault) {
         this._useDefault = false;
         this._emptyAllActiveViews();
