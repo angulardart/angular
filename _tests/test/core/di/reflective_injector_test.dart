@@ -117,7 +117,7 @@ void main() {
       };
       await inject([], () {
         createInjector =
-            (List<dynamic> providers, [ReflectiveInjector parent = null]) {
+            (List<dynamic> providers, [ReflectiveInjector parent]) {
           var resolvedProviders = ReflectiveInjector.resolve(
               (new List.from(providers)..addAll(context["providers"])));
           if (parent != null) {
@@ -586,8 +586,7 @@ void main() {
         "providers": dynamicProviders,
         "strategyClass": ReflectiveInjectorDynamicStrategy
       };
-      createInjector =
-          (List<dynamic> providers, [ReflectiveInjector parent = null]) {
+      createInjector = (List<dynamic> providers, [ReflectiveInjector parent]) {
         var resolvedProviders = ReflectiveInjector
             .resolve((new List.from(providers)..addAll(context["providers"])));
         if (parent != null) {

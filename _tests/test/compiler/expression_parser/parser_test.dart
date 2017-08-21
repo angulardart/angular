@@ -13,24 +13,24 @@ void main() {
     return new Parser(new Lexer());
   }
 
-  dynamic parseAction(text, [location = null]) {
+  dynamic parseAction(text, [location]) {
     return createParser().parseAction(text, location, []);
   }
 
-  dynamic parseBinding(text, [location = null]) {
+  dynamic parseBinding(text, [location]) {
     return createParser().parseBinding(text, location, []);
   }
 
-  dynamic parseTemplateBindings(text, [location = null]) {
+  dynamic parseTemplateBindings(text, [location]) {
     return createParser()
         .parseTemplateBindings(text, location, []).templateBindings;
   }
 
-  dynamic parseInterpolation(text, [location = null]) {
+  dynamic parseInterpolation(text, [location]) {
     return createParser().parseInterpolation(text, location, []);
   }
 
-  dynamic parseSimpleBinding(text, [location = null]) {
+  dynamic parseSimpleBinding(text, [location]) {
     return createParser().parseSimpleBinding(text, location, []);
   }
 
