@@ -53,22 +53,19 @@ bool _inTest = false;
 // Set on one-time initialization of tests for platform.
 bool _bootstrap_initialized = false;
 // Providers for specific Platform.
-List _platformProviders;
 List _applicationProviders;
 
 void _bootstrapInternalTests() {
-  _platformProviders ??= PLATFORM_COMMON_PROVIDERS;
   _applicationProviders ??= _testBrowserApplicationProviders;
   if (_bootstrap_initialized) return;
   _bootstrap_initialized = true;
-  _setBaseTestProviders(_platformProviders, _applicationProviders);
+  _setBaseTestProviders(_applicationProviders);
 }
 
 /// Set the providers that the test injector should use.
 ///
 /// These should be providers common to every test in the suite.
 void _setBaseTestProviders(
-    List<dynamic /* Type | Provider | List < dynamic > */ > platformProviders,
     List<dynamic /* Type | Provider | List < dynamic > */ >
         applicationProviders) {
   var testInjector = TestInjector.singleton();
@@ -79,7 +76,7 @@ void _setBaseTestProviders(
     throw new StateError(
         'Cannot set base providers because it has already been called');
   }
-  testInjector.platformProviders = platformProviders;
+  testInjector.platformProviders = const [];
   testInjector.applicationProviders = applicationProviders;
   var injector = testInjector.createInjector();
   List<Function> initializers =

@@ -495,11 +495,6 @@ class ApplicationRefImpl extends ApplicationRef {
   List<ComponentFactory> get componentFactories => _rootComponentFactories;
 }
 
-const PLATFORM_CORE_PROVIDERS = const [
-  PlatformRefImpl,
-  const Provider(PlatformRef, useExisting: PlatformRefImpl)
-];
-
 const APPLICATION_CORE_PROVIDERS = const [
   const Provider(NgZone, useFactory: createNgZone, deps: const []),
   ApplicationRefImpl,
