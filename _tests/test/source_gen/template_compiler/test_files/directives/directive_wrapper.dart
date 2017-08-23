@@ -44,11 +44,12 @@ class ChildDirective {
   bool get disabled => false;
 }
 
-@Directive(selector: '[directive-with-output]', outputs: const ['eventXyz'])
+@Directive(selector: '[directive-with-output]')
 class DirectiveWithOutput {
   String msg;
   final _streamController = new StreamController<String>();
 
+  @Output()
   Stream get eventXyz => _streamController.stream;
 
   fireEvent(String msg) {

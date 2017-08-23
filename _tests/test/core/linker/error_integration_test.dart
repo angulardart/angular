@@ -289,11 +289,13 @@ class MyCompWithEventException {
   }
 }
 
-@Directive(selector: '[emitter]', outputs: const ['event'])
+@Directive(selector: '[emitter]')
 class DirectiveEmittingEvent {
   String msg = '';
 
   final _onEvent = new StreamController<String>.broadcast();
+
+  @Output()
   Stream<String> get event => _onEvent.stream;
 
   void fireEvent(String msg) {
