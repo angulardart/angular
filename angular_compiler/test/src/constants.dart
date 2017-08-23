@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:source_gen/source_gen.dart';
 
 dynamic _toLiteral(DartObject o) {
-  final literal = new ConstantReader(o).anyValue;
+  final literal = new ConstantReader(o).literalValue;
   if (literal is List) {
     return literalList(literal);
   }
