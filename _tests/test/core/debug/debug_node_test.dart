@@ -171,13 +171,15 @@ void main() {
 }
 
 /// Directive that logs bound value.
-@Directive(selector: "[message]", inputs: const ["message"])
+@Directive(selector: "[message]")
 class MessageDir {
   Logger logger;
 
   MessageDir() {
     logger = new Logger("debug_element_test_logger");
   }
+
+  @Input()
   set message(newMessage) {
     logger.info(newMessage);
   }
@@ -287,9 +289,11 @@ class MyDir {}
     directives: const [MyDir])
 class LocalsComp {}
 
-@Directive(selector: "custom-emitter", outputs: const ["myevent"])
+@Directive(selector: "custom-emitter")
 class CustomEmitter {
   final _myEvent = new StreamController<dynamic>.broadcast();
+
+  @Output()
   Stream<dynamic> get myevent => _myEvent.stream;
 }
 

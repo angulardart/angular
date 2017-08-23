@@ -75,11 +75,12 @@ void main() {
   });
 }
 
-@Directive(selector: '[emitter]', outputs: const ['event'])
+@Directive(selector: '[emitter]')
 class EventEmitterDirective {
   String msg;
   final _streamController = new StreamController<String>();
 
+  @Output()
   Stream get event => _streamController.stream;
 
   fireEvent(String msg) {
@@ -114,13 +115,14 @@ class TemplateWithEventDirectivesComponent {
 
 @Directive(
   selector: '[two-way]',
-  inputs: const ['control'],
-  outputs: const ['controlChange'],
 )
 class DirectiveWithTwoWayBinding {
   final _streamController = new StreamController<String>();
+
+  @Input()
   var control;
 
+  @Output()
   get controlChange => _streamController.stream;
 
   triggerChange(String value) {
