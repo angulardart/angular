@@ -15,6 +15,7 @@ export 'metadata/lifecycle_hooks.dart'
         OnInit,
         DoCheck;
 export 'metadata/view.dart';
+export 'metadata/visibility.dart';
 
 /// An annotation that marks a class as an Angular directive, allowing you to
 /// attach behavior to elements in the DOM.
