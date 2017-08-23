@@ -22,6 +22,17 @@ void autoIdDirective(Element element, IdGenerator generator) {
   element.id = generator.next();
 }
 ```
+* Added `visibility` property to `Directive`. Directives and components that
+  don't need to be injected can set `visibility: Visibility.none` in their
+  annotation. This prevents the compiler from generating code necessary to
+  support injection, making the directive or component non-injectable and
+  reducing the size of your application.
+
+```dart
+// This component can not be injected by other directives or components.
+@Component(selector: '[my-component]', visibility: Visibility.none)
+class MyComponent { ... }
+```
 
 ## 4.0.0-alpha+3
 
