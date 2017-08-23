@@ -29,8 +29,8 @@ void autoIdDirective(Element element, IdGenerator generator) {
   reducing the size of your application.
 
 ```dart
-// This component can not be injected by other directives or components.
-@Component(selector: '[my-component]', visibility: Visibility.none)
+// This component can't be injected by other directives or components.
+@Component(selector: 'my-component', visibility: Visibility.none)
 class MyComponent { ... }
 ```
 
