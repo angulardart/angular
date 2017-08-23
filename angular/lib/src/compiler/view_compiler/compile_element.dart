@@ -384,7 +384,7 @@ class CompileElement extends CompileNode {
   void afterChildren(int childNodeCount) {
     for (ProviderAst resolvedProvider in _resolvedProviders.values) {
       if (!resolvedProvider.dynamicallyReachable ||
-          !resolvedProvider.visibleToViewHierarchy ||
+          !resolvedProvider.visibleForInjection ||
           _aliasedProviders.containsKey(resolvedProvider.token)) continue;
 
       // Note: afterChildren is called after recursing into children.
@@ -512,26 +512,32 @@ class CompileElement extends CompileNode {
 
   o.Expression _getLocalDependency(
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep) {
-    o.Expression result;
-    if (dep.token != null) {
-      // access builtins with special visibility
-      if (dep.token.equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
-        if (identical(requestingProviderType, ProviderAstType.Component)) {
-          return _compViewExpr.prop("ref");
-        } else {
-          return new o.ReadClassMemberExpr('ref');
-        }
+    if (dep.token == null) return null;
+
+    // Access builtins with special visibility.
+    if (dep.token.equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
+      if (identical(requestingProviderType, ProviderAstType.Component)) {
+        return _compViewExpr.prop('ref');
+      } else {
+        return new o.ReadClassMemberExpr('ref');
       }
-      // ComponentLoader is currently just an alias for ViewContainerRef with
-      // a smaller API that is also usable outside of the context of a
-      // structural directive.
-      if (dep.token.equalsTo(identifierToken(Identifiers.ComponentLoader))) {
-        return appViewContainer;
-      }
-      // access regular providers on the element
-      result ??= _instances.get(dep.token);
     }
-    return result;
+
+    // ComponentLoader is currently just an alias for ViewContainerRef with
+    // a smaller API that is also usable outside of the context of a
+    // structural directive.
+    if (dep.token.equalsTo(identifierToken(Identifiers.ComponentLoader))) {
+      return appViewContainer;
+    }
+
+    // Access regular providers on the element. For provider instances with an
+    // associated provider AST, ensure the provider is visible for injection.
+    final providerAst = _resolvedProviders.get(dep.token);
+    if (providerAst == null || providerAst.visibleForInjection) {
+      return _instances.get(dep.token);
+    }
+
+    return null;
   }
 
   o.Expression _getDependency(

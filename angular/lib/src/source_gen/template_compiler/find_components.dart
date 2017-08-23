@@ -21,11 +21,13 @@ import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
 
 const String _directivesProperty = 'directives';
+const String _visibilityProperty = 'visibility';
 const _statefulDirectiveFields = const [
   'exportAs',
   'host',
   'inputs',
   'outputs',
+  _visibilityProperty,
 ];
 
 AngularArtifacts findComponentsAndDirectives(Element element) {
@@ -224,6 +226,7 @@ class ComponentVisitor
       hostProperties: const {},
       hostAttributes: const {},
       providers: _extractProviders(annotationValue, 'providers'),
+      visibility: Visibility.none,
     );
   }
 
@@ -503,6 +506,8 @@ class ComponentVisitor
       queries: _queries,
       viewQueries: _viewQueries,
       template: template,
+      visibility:
+          coerceEnum(annotationValue, _visibilityProperty, Visibility.values),
     );
   }
 

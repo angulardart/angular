@@ -1,6 +1,7 @@
 import 'package:source_span/source_span.dart';
 
-import "compile_metadata.dart"
+import '../core/metadata/visibility.dart';
+import 'compile_metadata.dart'
     show
         CompileDiDependencyMetadata,
         CompileDirectiveMetadata,
@@ -10,9 +11,9 @@ import "compile_metadata.dart"
         CompileTokenMap,
         CompileTokenMetadata,
         CompileTypeMetadata;
-import "identifiers.dart" show Identifiers, identifierToken;
-import "parse_util.dart" show ParseError;
-import "template_ast.dart"
+import 'identifiers.dart' show Identifiers, identifierToken;
+import 'parse_util.dart' show ParseError;
+import 'template_ast.dart'
     show
         ReferenceAst,
         AttrAst,
@@ -368,7 +369,7 @@ ProviderAst _transformProviderAst(ProviderAst provider,
       provider.providerType, provider.sourceSpan,
       eager: provider.eager || forceEager,
       dynamicallyReachable: provider.dynamicallyReachable,
-      visibleToViewHierarchy: provider.visibleToViewHierarchy);
+      visibleForInjection: provider.visibleForInjection);
 }
 
 // Flattens list of lists of providers and converts entries that contain Type to
@@ -424,7 +425,8 @@ class _ProviderResolver {
     for (CompileDirectiveMetadata directive in directives) {
       var dirProvider = new CompileProviderMetadata(
           token: new CompileTokenMetadata(identifier: directive.type),
-          useClass: directive.type);
+          useClass: directive.type,
+          visibility: directive.visibility);
       final providerAstType =
           providerAstTypeFromMetadataType(directive.metadataType);
       _resolveProviders([dirProvider], providerAstType, eager: true);
@@ -466,17 +468,15 @@ class _ProviderResolver {
             sourceSpan));
       }
       if (resolvedProvider == null) {
-        // Temporarily we mark NgIf/NgFor and functional directives as
-        // visibility local until @Directive has parameter to mark them
-        // explicitly.
-        // TODO: Add @Directive visibility parameter.
-        bool visibleToViewHierarchy =
-            !(provider.token.equalsTo(ngIfTokenMetadata) ||
-                provider.token.equalsTo(ngForTokenMetadata) ||
-                providerType == ProviderAstType.FunctionalDirective);
-        resolvedProvider = new ProviderAst(provider.token, provider.multi,
-            [provider], providerType, sourceSpan,
-            eager: eager, visibleToViewHierarchy: visibleToViewHierarchy);
+        resolvedProvider = new ProviderAst(
+          provider.token,
+          provider.multi,
+          [provider],
+          providerType,
+          sourceSpan,
+          eager: eager,
+          visibleForInjection: provider.visibility != Visibility.none,
+        );
         _providersByToken.add(provider.token, resolvedProvider);
       } else {
         if (!provider.multi) {

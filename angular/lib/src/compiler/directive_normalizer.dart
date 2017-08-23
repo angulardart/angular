@@ -32,25 +32,27 @@ class DirectiveNormalizer {
     return normalizeTemplate(directive.type, directive.template).then(
         (CompileTemplateMetadata normalizedTemplate) =>
             new CompileDirectiveMetadata(
-                type: directive.type,
-                metadataType: directive.metadataType,
-                selector: directive.selector,
-                exportAs: directive.exportAs,
-                changeDetection: directive.changeDetection,
-                inputs: directive.inputs,
-                inputTypes: directive.inputTypes,
-                outputs: directive.outputs,
-                hostListeners: directive.hostListeners,
-                hostProperties: directive.hostProperties,
-                hostAttributes: directive.hostAttributes,
-                lifecycleHooks: directive.lifecycleHooks,
-                providers: directive.providers,
-                viewProviders: directive.viewProviders,
-                exports: directive.exports,
-                queries: directive.queries,
-                viewQueries: directive.viewQueries,
-                template: normalizedTemplate,
-                analyzedClass: directive.analyzedClass));
+              type: directive.type,
+              metadataType: directive.metadataType,
+              selector: directive.selector,
+              exportAs: directive.exportAs,
+              changeDetection: directive.changeDetection,
+              inputs: directive.inputs,
+              inputTypes: directive.inputTypes,
+              outputs: directive.outputs,
+              hostListeners: directive.hostListeners,
+              hostProperties: directive.hostProperties,
+              hostAttributes: directive.hostAttributes,
+              lifecycleHooks: directive.lifecycleHooks,
+              providers: directive.providers,
+              viewProviders: directive.viewProviders,
+              exports: directive.exports,
+              queries: directive.queries,
+              viewQueries: directive.viewQueries,
+              template: normalizedTemplate,
+              analyzedClass: directive.analyzedClass,
+              visibility: directive.visibility,
+            ));
   }
 
   Future<CompileTemplateMetadata> normalizeTemplate(
