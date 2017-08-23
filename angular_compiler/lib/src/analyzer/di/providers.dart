@@ -147,7 +147,7 @@ class ProviderReader {
         reader.isInt ||
         reader.isNull ||
         reader.isSymbol) {
-      return reader.anyValue;
+      return reader.literalValue;
     }
     if (reader.isList) {
       return reader.listValue.map(_reviveInvocationsOf).toList();
