@@ -5,7 +5,8 @@ import 'package:angular/core.dart'
         ViewContainerRef,
         ViewRef,
         TemplateRef,
-        EmbeddedViewRef;
+        EmbeddedViewRef,
+        Visibility;
 
 import '../../core/change_detection/differs/default_iterable_differ.dart'
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
@@ -94,8 +95,10 @@ import '../../core/change_detection/differs/default_iterable_differ.dart'
 ///
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngFor
 @Directive(
-    selector: '[ngFor][ngForOf]',
-    inputs: const ['ngForTrackBy', 'ngForOf', 'ngForTemplate'])
+  selector: '[ngFor][ngForOf]',
+  inputs: const ['ngForTrackBy', 'ngForOf', 'ngForTemplate'],
+  visibility: Visibility.none,
+)
 class NgFor implements DoCheck {
   final ViewContainerRef _viewContainer;
 

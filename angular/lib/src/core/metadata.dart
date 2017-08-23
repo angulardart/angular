@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 
 import 'change_detection/change_detection.dart';
 import 'metadata/view.dart';
+import 'metadata/visibility.dart';
 
 export 'di/decorators.dart';
 export 'metadata/lifecycle_hooks.dart'
@@ -304,18 +305,18 @@ class Directive {
   /// ```
   final String exportAs;
 
+  /// Whether this directive will be provided for injection.
+  final Visibility visibility;
+
   const Directive({
-    @required String selector,
+    @required this.selector,
     this.inputs,
     this.outputs,
-    Map<String, String> host,
+    this.host,
     this.providers,
-    String exportAs,
-  })
-      : selector = selector,
-        host = host,
-        exportAs = exportAs,
-        super();
+    this.exportAs,
+    this.visibility,
+  });
 }
 
 /// Declare reusable UI building blocks for an application.
@@ -420,6 +421,7 @@ class Component extends Directive {
     Map<String, String> host,
     String exportAs,
     List providers,
+    Visibility visibility,
     this.viewProviders,
     this.exports,
     this.changeDetection: ChangeDetectionStrategy.Default,
@@ -439,6 +441,7 @@ class Component extends Directive {
           host: host,
           exportAs: exportAs,
           providers: providers,
+          visibility: visibility,
         );
 }
 

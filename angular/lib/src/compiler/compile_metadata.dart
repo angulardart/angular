@@ -3,7 +3,8 @@ import 'package:quiver/collection.dart';
 import '../core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
 import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
-import '../core/metadata/view.dart' show ViewEncapsulation;
+import '../core/metadata/view.dart';
+import '../core/metadata/visibility.dart';
 import '../core/url_resolver.dart' show getUrlScheme;
 import '../facade/exceptions.dart' show BaseException;
 import 'analyzed_class.dart';
@@ -81,14 +82,20 @@ class CompileProviderMetadata {
   CompileFactoryMetadata useFactory;
   List<CompileDiDependencyMetadata> deps;
   bool multi;
-  CompileProviderMetadata(
-      {this.token,
-      this.useClass,
-      this.useValue,
-      this.useExisting,
-      this.useFactory,
-      this.deps,
-      bool multi})
+
+  /// Restricts where the provider is injectable.
+  final Visibility visibility;
+
+  CompileProviderMetadata({
+    this.token,
+    this.useClass,
+    this.useValue,
+    this.useExisting,
+    this.useFactory,
+    this.deps,
+    this.visibility,
+    bool multi,
+  })
       : this.multi = multi == true;
 
   @override
@@ -467,37 +474,41 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   final AnalyzedClass analyzedClass;
   bool _requiresDirectiveChangeDetector;
 
-  CompileDirectiveMetadata(
-      {this.type,
-      this.metadataType,
-      this.selector,
-      this.exportAs,
-      this.changeDetection,
-      this.inputs,
-      this.inputTypes,
-      this.outputs,
-      this.hostListeners,
-      this.hostProperties,
-      this.hostAttributes,
-      this.analyzedClass,
-      List<LifecycleHooks> lifecycleHooks,
-      // CompileProviderMetadata | CompileTypeMetadata |
-      // CompileIdentifierMetadata | List
-      List providers,
-      // CompileProviderMetadata | CompileTypeMetadata |
-      // CompileIdentifierMetadata | List
-      List viewProviders,
-      List exports,
-      List<CompileQueryMetadata> queries,
-      List<CompileQueryMetadata> viewQueries,
-      CompileTemplateMetadata template}) {
+  /// Restricts where the directive is injectable.
+  final Visibility visibility;
+
+  CompileDirectiveMetadata({
+    this.type,
+    this.metadataType,
+    this.selector,
+    this.exportAs,
+    this.changeDetection,
+    this.inputs,
+    this.inputTypes,
+    this.outputs,
+    this.hostListeners,
+    this.hostProperties,
+    this.hostAttributes,
+    this.analyzedClass,
+    this.template,
+    this.visibility,
+    List<LifecycleHooks> lifecycleHooks,
+    // CompileProviderMetadata | CompileTypeMetadata |
+    // CompileIdentifierMetadata | List
+    List providers,
+    // CompileProviderMetadata | CompileTypeMetadata |
+    // CompileIdentifierMetadata | List
+    List viewProviders,
+    List exports,
+    List<CompileQueryMetadata> queries,
+    List<CompileQueryMetadata> viewQueries,
+  }) {
     this.lifecycleHooks = lifecycleHooks ?? [];
     this.providers = providers as List<CompileProviderMetadata> ?? [];
     this.viewProviders = viewProviders as List<CompileProviderMetadata> ?? [];
     this.exports = exports as List<CompileIdentifierMetadata> ?? [];
     this.queries = queries ?? [];
     this.viewQueries = viewQueries ?? [];
-    this.template = template;
   }
 
   @override

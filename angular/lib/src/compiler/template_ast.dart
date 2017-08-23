@@ -224,19 +224,27 @@ class ProviderAst implements TemplateAst {
   /// optimal code by skipping these.
   bool dynamicallyReachable;
 
-  /// If false, provider is only reachable on the node it is defined on.
-  /// And doesn't support injection through view hierarchy.
-  bool visibleToViewHierarchy;
+  /// Whether the provider is visible for injection.
+  ///
+  /// If false, no code is generated to return this provider from an injector,
+  /// nor will the instance be used as a parameter to satisfy local
+  /// dependencies.
+  bool visibleForInjection;
 
   List<CompileProviderMetadata> providers;
   ProviderAstType providerType;
   SourceSpan sourceSpan;
 
-  ProviderAst(this.token, this.multiProvider, this.providers, this.providerType,
-      this.sourceSpan,
-      {this.eager,
-      this.dynamicallyReachable: true,
-      this.visibleToViewHierarchy: true});
+  ProviderAst(
+    this.token,
+    this.multiProvider,
+    this.providers,
+    this.providerType,
+    this.sourceSpan, {
+    this.eager,
+    this.dynamicallyReachable: true,
+    this.visibleForInjection: true,
+  });
 
   // No visit method in the visitor for now...
   dynamic visit(TemplateAstVisitor visitor, dynamic context) => null;
