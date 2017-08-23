@@ -24,11 +24,11 @@ import 'package:angular/core.dart'
         ChangeDetectorRef;
 import 'package:angular/src/core/application_ref.dart'
     show
-        ApplicationRefImpl,
+        APPLICATION_CORE_PROVIDERS,
         ApplicationRef,
+        ApplicationRefImpl,
         PlatformRef,
-        PLATFORM_CORE_PROVIDERS,
-        APPLICATION_CORE_PROVIDERS;
+        PlatformRefImpl;
 import 'package:angular/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular/src/core/linker/component_factory.dart';
 import 'package:angular/src/facade/exception_handler.dart'
@@ -56,8 +56,10 @@ void main() {
     });
 
     ApplicationRefImpl createApplication(List<dynamic> providers) {
-      platform = createPlatform(
-          ReflectiveInjector.resolveAndCreate(PLATFORM_CORE_PROVIDERS));
+      platform = createPlatform(ReflectiveInjector.resolveAndCreate([
+        PlatformRefImpl,
+        const Provider(PlatformRef, useExisting: PlatformRefImpl),
+      ]));
       someCompFactory = new _MockComponentFactory(
           new _MockComponentRef(ReflectiveInjector.resolveAndCreate([])));
       var appInjector = ReflectiveInjector.resolveAndCreate([
