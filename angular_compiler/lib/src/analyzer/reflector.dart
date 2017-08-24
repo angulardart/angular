@@ -183,6 +183,11 @@ class ReflectableReader {
 
   // Determines whether initReflector needs to link to [directive].
   Future<bool> _needsInitReflector(ast.Directive directive) async {
+    if (directive is ast.ExportDirective &&
+        directive.uri.stringValue.endsWith(outputExtension)) {
+      // Always link when manually exporting .template.dart files.
+      return true;
+    }
     if (directive is ast.ImportDirective) {
       // Do not link to deferred code.
       if (directive.deferredKeyword != null) {

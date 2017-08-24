@@ -239,9 +239,10 @@ void main() {
       final output = await reader.resolve(testLib);
       expect(
         output.urlsNeedingInitReflector,
-        [
+        unorderedEquals([
           'foo.template.dart',
-        ],
+          'bar.template.dart',
+        ]),
       );
     });
 
