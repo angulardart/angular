@@ -9,6 +9,7 @@ import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import '../expression_parser/parser.dart';
 import '../identifiers.dart';
+import '../logging.dart';
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart';
@@ -75,8 +76,6 @@ class ViewCompiler {
     bindViewHostProperties(view, parser, _schemaRegistry, errorHandler);
   }
 
-  Logger get logger => _logger ??= new Logger('View Compiler');
-
   /// Builds the view and returns number of nested views generated.
   int buildView(
       CompileView view,
@@ -114,8 +113,7 @@ class ViewCompiler {
     // Example: RenderComponentType renderType_MaterialButtonComponent;
     bool creatingMainView = view.viewIndex == 0;
 
-    o.ClassStmt viewClass =
-        createViewClass(view, nodeDebugInfosVar, parser, logger);
+    o.ClassStmt viewClass = createViewClass(view, nodeDebugInfosVar, parser);
     targetStatements.add(viewClass);
 
     targetStatements.add(createViewFactory(view, viewClass));
