@@ -12,7 +12,9 @@ It's built on [Dart][dart_web] and used extensively by Google
 [AdWords][ad_words], [AdSense][ad_sense], [Fiber][fiber],
 and many more projects.
 
-[<img src="https://2.bp.blogspot.com/-T50YZP5hlW4/Vv07k1PPVmI/AAAAAAAAM_Q/kVo8eImMOFUWLYqXg_xGzaWPvvlO7lhng/s0/adwords-dart.png" width="800" alt="Built with AngularDart">][ad_words]
+<a href="http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html">
+<img src="https://2.bp.blogspot.com/-T50YZP5hlW4/Vv07k1PPVmI/AAAAAAAAM_Q/kVo8eImMOFUWLYqXg_xGzaWPvvlO7lhng/s0/adwords-dart.png" width="800" alt="Built with AngularDart">
+</a>
 
 ## New to AngularDart?
 
