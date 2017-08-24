@@ -1,4 +1,5 @@
-import "../compile_metadata.dart"
+import 'package:logging/logging.dart';
+import '../compile_metadata.dart'
     show
         CompileTokenMap,
         CompileDirectiveMetadata,
@@ -7,16 +8,16 @@ import "../compile_metadata.dart"
         CompileQueryMetadata,
         CompileProviderMetadata,
         CompileDiDependencyMetadata;
-import "../identifiers.dart" show Identifiers, identifierToken;
-import "../output/output_ast.dart" as o;
-import "../template_ast.dart"
-    show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst;
-import "compile_method.dart" show CompileMethod;
-import "compile_query.dart"
+import '../identifiers.dart' show Identifiers, identifierToken;
+import '../output/output_ast.dart' as o;
+import '../template_ast.dart'
+    show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst, ElementAst;
+import 'compile_method.dart' show CompileMethod;
+import 'compile_query.dart'
     show CompileQuery, createQueryListField, addQueryToTokenMap;
-import "compile_view.dart" show CompileView;
-import "constants.dart" show appViewRootElementName, InjectMethodVars;
-import "view_compiler_utils.dart"
+import 'compile_view.dart' show CompileView;
+import 'constants.dart' show appViewRootElementName, InjectMethodVars;
+import 'view_compiler_utils.dart'
     show
         getPropertyInView,
         getViewFactoryName,
@@ -77,6 +78,8 @@ class CompileElement extends CompileNode {
   CompileTokenMap<ProviderAst> _resolvedProviders;
   var _queryCount = 0;
   final _queries = new CompileTokenMap<List<CompileQuery>>();
+  final Logger _logger;
+
   List<List<o.Expression>> contentNodesByNgContentIndex;
   CompileView embeddedView;
   List<o.Expression> directiveInstances;
@@ -98,6 +101,7 @@ class CompileElement extends CompileNode {
       this.hasViewContainer,
       this.hasEmbeddedView,
       List<ReferenceAst> references,
+      this._logger,
       {this.isHtmlElement: false,
       this.hasTemplateRefQuery: false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
@@ -137,7 +141,8 @@ class CompileElement extends CompileNode {
             [],
             false,
             false,
-            []);
+            [],
+            null);
 
   void _createViewContainer() {
     var fieldName = '_appEl_$nodeIndex';
@@ -418,6 +423,11 @@ class CompileElement extends CompileNode {
       o.Expression viewContainerExpr, List<o.Statement> stmts) {
     CompileElement deferredElement = embeddedView.nodes[0] as CompileElement;
     CompileDirectiveMetadata deferredMeta = deferredElement.component;
+    if (deferredMeta == null) {
+      ElementAst elemAst = deferredElement.sourceAst;
+      _logger.severe('Cannot defer Unknown component type <${elemAst.name}>');
+      return;
+    }
     String deferredModuleUrl = deferredMeta.identifier.moduleUrl;
     String prefix = embeddedView.deferredModules[deferredModuleUrl];
     String templatePrefix;

@@ -1,4 +1,3 @@
-import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/output/output_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
@@ -17,6 +16,7 @@ import '../compile_metadata.dart'
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
+import '../logging.dart';
 import '../output/output_ast.dart' as o;
 import '../provider_parser.dart' show ngIfTokenMetadata, ngForTokenMetadata;
 import '../style_compiler.dart' show StylesCompileResult;
@@ -409,6 +409,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.hasViewContainer,
         false,
         ast.references,
+        logger,
         isHtmlElement: isHtmlElement,
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
     view.nodes.add(compileElement);
@@ -579,6 +580,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         ast.hasViewContainer,
         true,
         ast.references,
+        logger,
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
     view.nodes.add(compileElement);
     nestedViewCount++;
@@ -828,10 +830,9 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
 
 /// Generates output ast for a CompileView and returns a [ClassStmt] for the
 /// view of embedded template.
-o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
-    Parser parser, Logger logger) {
-  var viewConstructor =
-      _createViewClassConstructor(view, nodeDebugInfosVar, logger);
+o.ClassStmt createViewClass(
+    CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
+  var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
   var viewMethods = (new List.from([
     new o.ClassMethod("build", [], generateBuildMethod(view, parser),
         o.importType(Identifiers.ComponentRef, null), null, ['override']),
@@ -879,7 +880,7 @@ o.ClassStmt createViewClass(CompileView view, o.Expression nodeDebugInfosVar,
 }
 
 o.ClassMethod _createViewClassConstructor(
-    CompileView view, o.Expression nodeDebugInfosVar, Logger logger) {
+    CompileView view, o.Expression nodeDebugInfosVar) {
   var emptyTemplateVariableBindings = view.templateVariableBindings
       .map((List entry) => [entry[0], o.NULL_EXPR])
       .toList();
