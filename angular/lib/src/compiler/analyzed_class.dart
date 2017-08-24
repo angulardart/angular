@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 
-import 'expression_parser/ast.dart' as ast;
 import 'package:source_gen/src/type_checker.dart';
+import 'expression_parser/ast.dart' as ast;
 
 final stringTypeChecker = new TypeChecker.fromRuntime(String);
 
