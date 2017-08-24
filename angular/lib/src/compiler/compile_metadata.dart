@@ -5,7 +5,6 @@ import '../core/change_detection/change_detection.dart'
 import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
 import '../core/metadata/view.dart';
 import '../core/metadata/visibility.dart';
-import '../core/url_resolver.dart' show getUrlScheme;
 import '../facade/exceptions.dart' show BaseException;
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
@@ -159,7 +158,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   dynamic get assetCacheKey {
     if (identifier != null) {
       return identifier.moduleUrl != null &&
-              getUrlScheme(identifier.moduleUrl) != null
+              Uri.parse(identifier.moduleUrl).scheme != null
           ? '${identifier.name}|${identifier.moduleUrl}|$identifierIsInstance'
           : null;
     } else {

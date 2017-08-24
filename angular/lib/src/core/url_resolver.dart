@@ -1,34 +1,12 @@
-// This was originally only supposed to be used in the compiler and reflective
-// runtime, but it is being used by clients as a utility class. We should make
-// a specialized version for the compiler (i.e. we know that _packagePrefix is
-// always going to be 'asset:' so we can avoid the if-statement) and a utility
-// version that doesn't know about 'asset:'.
-@Deprecated('This may move in a future version of Angular.')
-library angular2.core.url_resolver;
+import 'package:angular/core.dart';
 
-import 'package:angular/src/core/application_tokens.dart' show PACKAGE_ROOT_URL;
-import 'package:angular/src/core/di.dart' show Injectable, Inject, Provider;
-
-const _ASSET_SCHEME = 'asset:';
-
-UrlResolver createUrlResolverWithoutPackagePrefix() {
-  return new UrlResolver.withUrlPrefix(null);
-}
-
-UrlResolver createOfflineCompileUrlResolver() {
-  return new UrlResolver.withUrlPrefix(_ASSET_SCHEME);
-}
-
-const DEFAULT_PACKAGE_URL_PROVIDER =
-    const Provider(PACKAGE_ROOT_URL, useValue: "packages");
-
+@Deprecated('No longer supported.')
 @Injectable()
 class UrlResolver {
-  /// This will be the location where 'package:' Urls will resolve. Default is
-  /// '/packages'
+  /// This will be the location where 'package:' Urls will resolve.
   final String _packagePrefix;
 
-  UrlResolver([@Inject(PACKAGE_ROOT_URL) this._packagePrefix]);
+  const UrlResolver([this._packagePrefix = 'packages']);
 
   /// Creates a UrlResolver that will resolve 'package:' Urls to a different
   /// prefixed location.
@@ -46,22 +24,15 @@ class UrlResolver {
   /// @returns {string} the resolved URL
   String resolve(String baseUrl, String url) {
     Uri uri = Uri.parse(url);
-
     if (baseUrl != null && baseUrl.length > 0) {
       Uri baseUri = Uri.parse(baseUrl);
       uri = baseUri.resolveUri(uri);
     }
-
     var prefix = this._packagePrefix;
     if (prefix != null && uri.scheme == 'package') {
-      if (prefix == _ASSET_SCHEME) {
-        var pathSegments = uri.pathSegments.toList()..insert(1, 'lib');
-        return new Uri(scheme: 'asset', pathSegments: pathSegments).toString();
-      } else {
-        prefix = _removeTrailingSlash(prefix);
-        var path = _removeLeadingChars(uri.path);
-        return '$prefix/$path';
-      }
+      prefix = _removeTrailingSlash(prefix);
+      var path = _removeLeadingChars(uri.path);
+      return '$prefix/$path';
     } else {
       return uri.toString();
     }
@@ -93,8 +64,4 @@ String _removeTrailingSlash(String s) {
     s = s.substring(0, pos);
   }
   return s;
-}
-
-String getUrlScheme(String url) {
-  return Uri.parse(url).scheme;
 }

@@ -10,25 +10,19 @@ import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular/src/compiler/style_compiler.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler.dart';
-import 'package:angular/src/core/url_resolver.dart';
-
-import 'xhr_impl.dart';
 
 OfflineCompiler createTemplateCompiler(
     BuildStep buildStep, CompilerFlags flags) {
-  var reader = new XhrImpl(buildStep);
-  var urlResolver = createOfflineCompileUrlResolver();
-
   // TODO(yjbanov): add router AST transformer when ready
   var parser = new ng.Parser(new ng.Lexer());
   var htmlParser = new HtmlParser();
   var schemaRegistry = new DomElementSchemaRegistry();
-
   var templateParser = new TemplateParser(parser, schemaRegistry, htmlParser);
+  final reader = new NgAssetReader.fromBuildStep(buildStep);
   return new OfflineCompiler(
-      new DirectiveNormalizer(reader, urlResolver, htmlParser),
+      new DirectiveNormalizer(htmlParser, reader),
       templateParser,
-      new StyleCompiler(flags, urlResolver),
+      new StyleCompiler(flags),
       new ViewCompiler(flags, parser, schemaRegistry),
       new DartEmitter(), {});
 }

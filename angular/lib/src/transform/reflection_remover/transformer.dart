@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:barback/barback.dart';
-import 'package:angular/src/transform/common/annotation_matcher.dart';
-import 'package:angular/src/transform/common/asset_reader.dart';
 import 'package:angular/src/transform/common/zone.dart' as zone;
 import 'package:angular_compiler/angular_compiler.dart';
 
@@ -41,9 +39,8 @@ class ReflectionRemover extends Transformer implements LazyTransformer {
     return zone.exec(() async {
       var primaryId = transform.primaryInput.id;
       var transformedCode = await removeReflectionCapabilities(
-        new AssetReader.fromTransform(transform),
+        new NgAssetReader.fromBarback(transform),
         primaryId,
-        new AnnotationMatcher(),
       );
       transform.addOutput(new Asset.fromString(primaryId, transformedCode));
     }, log: transform.logger);

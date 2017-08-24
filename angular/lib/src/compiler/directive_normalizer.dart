@@ -1,8 +1,8 @@
 import "dart:async";
 
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular/src/core/url_resolver.dart" show UrlResolver;
 import "package:angular/src/facade/exceptions.dart" show BaseException;
+import "package:angular_compiler/angular_compiler.dart";
 
 import "compile_metadata.dart"
     show CompileTypeMetadata, CompileDirectiveMetadata, CompileTemplateMetadata;
@@ -10,18 +10,16 @@ import "html_ast.dart";
 import "html_parser.dart" show HtmlParser;
 import "style_url_resolver.dart" show extractStyleUrls, isStyleUrlResolvable;
 import "template_preparser.dart" show preparseElement;
-import 'xhr.dart' show XHR;
 
 /// Loads contents of templateUrls, styleUrls to convert
 /// CompileDirectiveMetadata into a normalized form where template content and
 /// styles are available to compilation step as simple strings.
 /// The normalizer also resolves inline style and stylesheets in the template.
 class DirectiveNormalizer {
-  final XHR _xhr;
-  final UrlResolver _urlResolver;
   final HtmlParser _htmlParser;
+  final NgAssetReader _reader;
 
-  DirectiveNormalizer(this._xhr, this._urlResolver, this._htmlParser);
+  DirectiveNormalizer(this._htmlParser, this._reader);
 
   Future<CompileDirectiveMetadata> normalizeDirective(
       CompileDirectiveMetadata directive) {
@@ -71,9 +69,9 @@ class DirectiveNormalizer {
           template.preserveWhitespace));
     } else if (template.templateUrl != null) {
       var sourceAbsUrl = this
-          ._urlResolver
-          .resolve(directiveType.moduleUrl, template.templateUrl);
-      return this._xhr.get(sourceAbsUrl).then((templateContent) => this
+          ._reader
+          .resolveUrl(directiveType.moduleUrl, template.templateUrl);
+      return this._reader.readText(sourceAbsUrl).then((templateContent) => this
           .normalizeLoadedTemplate(directiveType, template, templateContent,
               sourceAbsUrl, template.preserveWhitespace));
     } else {
@@ -100,16 +98,15 @@ class DirectiveNormalizer {
     List<String> allStyleAbsUrls = (new List.from(visitor.styleUrls
         .where(isStyleUrlResolvable)
         .toList()
-        .map((url) => _urlResolver.resolve(templateAbsUrl, url))
+        .map((url) => _reader.resolveUrl(templateAbsUrl, url))
         .toList())
       ..addAll(templateMeta.styleUrls
           .where(isStyleUrlResolvable)
           .toList()
-          .map((url) => _urlResolver.resolve(directiveType.moduleUrl, url))
+          .map((url) => _reader.resolveUrl(directiveType.moduleUrl, url))
           .toList()));
     var allResolvedStyles = allStyles.map((style) {
-      var styleWithImports =
-          extractStyleUrls(_urlResolver, templateAbsUrl, style);
+      var styleWithImports = extractStyleUrls(templateAbsUrl, style);
       styleWithImports.styleUrls
           .forEach((styleUrl) => allStyleAbsUrls.add(styleUrl));
       return styleWithImports.style;

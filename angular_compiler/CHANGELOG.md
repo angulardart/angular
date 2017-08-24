@@ -8,6 +8,7 @@
 ## 0.2.2
 
 - Fixed the outliner to instruct the analyzer to ignore unused imports.
+- Add `NgAssetReader`.
 
 ## 0.2.1
 

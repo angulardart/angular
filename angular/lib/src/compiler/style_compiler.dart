@@ -1,5 +1,4 @@
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
-import "package:angular/src/core/url_resolver.dart" show UrlResolver;
 import 'package:angular_compiler/angular_compiler.dart';
 
 import "compile_metadata.dart"
@@ -34,11 +33,11 @@ class StylesCompileResult {
 
 class StyleCompiler {
   final CompilerFlags _config;
-  final UrlResolver _urlResolver;
+
   bool usesContentAttribute;
   bool usesHostAttribute;
 
-  StyleCompiler(this._config, this._urlResolver);
+  StyleCompiler(this._config);
 
   /// Compile styles to a set of statements that will initialize the global
   /// styles_ComponentName variable that will be passed to component factory.
@@ -57,8 +56,7 @@ class StyleCompiler {
 
   StylesCompileResult compileStylesheet(
       String stylesheetUrl, String cssText, bool isShimmed) {
-    var styleWithImports =
-        extractStyleUrls(this._urlResolver, stylesheetUrl, cssText);
+    var styleWithImports = extractStyleUrls(stylesheetUrl, cssText);
     return this._compileStyles(getStylesVarName(null), [styleWithImports.style],
         styleWithImports.styleUrls, isShimmed);
   }
