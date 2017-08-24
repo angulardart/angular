@@ -10,7 +10,8 @@ import 'package:angular/angular.dart'
         ViewContainerRef,
         OnDestroy,
         Output,
-        Injector;
+        Injector,
+        Visibility;
 import 'package:collection/collection.dart' show MapEquality;
 
 import '../instruction.dart' show ComponentInstruction, RouteParams, RouteData;
@@ -40,7 +41,7 @@ var _resolveToTrue = new Future<bool>.value(true);
 /// ```
 ///
 /// [routing]: https://webdev.dartlang.org/angular/tutorial/toh-pt5.html#router-outlet
-@Directive(selector: "router-outlet")
+@Directive(selector: "router-outlet", visibility: Visibility.none)
 class RouterOutlet implements OnDestroy {
   ViewContainerRef _viewContainerRef;
   ComponentResolver _loader;

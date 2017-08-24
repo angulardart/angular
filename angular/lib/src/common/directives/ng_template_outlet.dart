@@ -1,11 +1,11 @@
 import 'package:angular/core.dart'
-    show Directive, Input, ViewContainerRef, ViewRef, TemplateRef;
+    show Directive, Input, ViewContainerRef, ViewRef, TemplateRef, Visibility;
 
 /// Creates and inserts an embedded view based on a prepared `TemplateRef`.
 ///
 /// ### Syntax
 /// - `<template [ngTemplateOutlet]="templateRefExpression"></template>`
-@Directive(selector: '[ngTemplateOutlet]')
+@Directive(selector: '[ngTemplateOutlet]', visibility: Visibility.none)
 class NgTemplateOutlet {
   final ViewContainerRef _viewContainerRef;
 

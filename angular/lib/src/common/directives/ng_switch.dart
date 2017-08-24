@@ -175,8 +175,10 @@ class NgSwitch {
 /// See [NgSwitch] for more details and example.
 ///
 @Directive(
-    selector: '[ngSwitchWhen],[ngSwitchCase]',
-    inputs: const ['ngSwitchWhen', 'ngSwitchCase'])
+  selector: '[ngSwitchWhen],[ngSwitchCase]',
+  inputs: const ['ngSwitchWhen', 'ngSwitchCase'],
+  visibility: Visibility.none,
+)
 class NgSwitchWhen {
   // `_WHEN_DEFAULT` is used as a marker for a not yet initialized value
 
@@ -205,7 +207,7 @@ class NgSwitchWhen {
 ///
 /// See [NgSwitch] for more details and example.
 ///
-@Directive(selector: '[ngSwitchDefault]')
+@Directive(selector: '[ngSwitchDefault]', visibility: Visibility.none)
 class NgSwitchDefault {
   NgSwitchDefault(ViewContainerRef viewContainer, TemplateRef templateRef,
       @Host() NgSwitch switchDirective) {

@@ -1,5 +1,6 @@
 import 'dart:html';
-import 'package:angular/core.dart' show DoCheck, OnDestroy, Directive;
+import 'package:angular/core.dart'
+    show DoCheck, OnDestroy, Directive, Visibility;
 import 'package:angular/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:angular/src/core/change_detection/differs/default_keyvalue_differ.dart';
 
@@ -47,8 +48,10 @@ import 'package:angular/src/core/change_detection/differs/default_keyvalue_diffe
 /// [ex]: http://angular-examples.github.io/template-syntax/#ngClass
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngClass
 @Directive(
-    selector: '[ngClass]',
-    inputs: const ['rawClass: ngClass', 'initialClasses: class'])
+  selector: '[ngClass]',
+  inputs: const ['rawClass: ngClass', 'initialClasses: class'],
+  visibility: Visibility.none,
+)
 class NgClass implements DoCheck, OnDestroy {
   // Separator used to split string to parts - can be any number of
   // whitespaces, new lines or tabs.
