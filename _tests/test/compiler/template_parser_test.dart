@@ -1838,7 +1838,7 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
       host, hostAttributes, hostListeners, hostProperties);
 
   final inputsMap = <String, String>{};
-  final inputTypeMap = <String, String>{};
+  final inputTypeMap = <String, CompileTypeMetadata>{};
   CompileDirectiveMetadata.deserializeInputs(inputs, inputsMap, inputTypeMap);
 
   final outputsMap = <String, String>{};

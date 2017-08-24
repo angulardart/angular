@@ -412,7 +412,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   static void deserializeInputs(
     List<String> inputs,
     Map<String, String> outBindingNames,
-    Map<String, String> outTypes,
+    Map<String, CompileTypeMetadata> outTypes,
   ) {
     assert(outBindingNames != null);
     assert(outTypes != null);
@@ -425,7 +425,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       outBindingNames[bindingParts[0]] = bindingParts[1];
 
       if (inputParts.length > 1) {
-        outTypes[bindingParts[0]] = inputParts[1];
+        outTypes[bindingParts[0]] =
+            new CompileTypeMetadata(name: inputParts[1]);
       }
     });
   }
@@ -459,7 +460,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   String exportAs;
   int changeDetection;
   Map<String, String> inputs;
-  Map<String, String> inputTypes;
+  Map<String, CompileTypeMetadata> inputTypes;
   Map<String, String> outputs;
   Map<String, String> hostListeners;
   Map<String, String> hostProperties;

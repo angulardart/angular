@@ -19,6 +19,8 @@ import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
+import '../../compiler/view_compiler/property_binder.dart'
+    show isPrimitiveTypeName;
 
 const String _directivesProperty = 'directives';
 const String _visibilityProperty = 'visibility';
@@ -164,7 +166,7 @@ class ComponentVisitor
   final _fieldInputs = <String, String>{};
   final _setterInputs = <String, String>{};
   final _inputs = <String, String>{};
-  final _inputTypes = <String, String>{};
+  final _inputTypes = <String, CompileTypeMetadata>{};
   final _outputs = <String, String>{};
   final _hostAttributes = <String, String>{};
   final _hostListeners = <String, String>{};
@@ -285,7 +287,13 @@ class ComponentVisitor
               isField ? _fieldInputs : _setterInputs, annotation, element,
               immutableBindings: _inputs);
           if (typeName != null) {
-            _inputTypes[element.displayName] = typeName;
+            if (isPrimitiveTypeName(typeName)) {
+              _inputTypes[element.displayName] =
+                  new CompileTypeMetadata(name: typeName);
+            } else {
+              _inputTypes[element.displayName] = new CompileTypeMetadata(
+                  moduleUrl: moduleUrl(element), name: typeName);
+            }
           }
         } else {
           log.severe('@Input can only be used on a setter or non-final '

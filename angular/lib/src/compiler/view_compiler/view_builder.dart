@@ -12,7 +12,10 @@ import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular_compiler/angular_compiler.dart';
 
 import '../compile_metadata.dart'
-    show CompileIdentifierMetadata, CompileDirectiveMetadata;
+    show
+        CompileIdentifierMetadata,
+        CompileDirectiveMetadata,
+        CompileTypeMetadata;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
@@ -54,7 +57,6 @@ import 'event_binder.dart' show convertStmtIntoExpression;
 import 'expression_converter.dart';
 import 'parse_utils.dart';
 import 'perf_profiler.dart';
-import 'property_binder.dart';
 import 'view_compiler_utils.dart'
     show
         getViewFactoryName,
@@ -1490,12 +1492,10 @@ void writeInputUpdaters(CompileView view, List<o.Statement> targetStatements) {
 void writeInputUpdater(
     CompileView view, String inputName, List<o.Statement> targetStatements) {
   var prevValueVarName = 'prev$inputName';
-  String inputTypeName = view.component.inputTypes != null
+  CompileTypeMetadata inputTypeMeta = view.component.inputTypes != null
       ? view.component.inputTypes[inputName]
       : null;
-  var inputType = inputTypeName != null
-      ? o.importType(new CompileIdentifierMetadata(name: inputTypeName))
-      : null;
+  var inputType = inputTypeMeta != null ? o.importType(inputTypeMeta) : null;
   var arguments = [
     new o.FnParam('component', getContextType(view)),
     new o.FnParam(prevValueVarName, inputType),
@@ -1514,13 +1514,8 @@ void writeInputUpdater(
         .importExpr(Identifiers.checkBinding)
         .callFn([prevValueExpr, newValueExpr]);
   } else {
-    if (inputTypeName != null && isPrimitiveTypeName(inputTypeName.trim())) {
-      conditionExpr = new o.ReadVarExpr(prevValueVarName)
-          .notIdentical(new o.ReadVarExpr(inputName));
-    } else {
-      conditionExpr = new o.ReadVarExpr(prevValueVarName)
-          .notEquals(new o.ReadVarExpr(inputName));
-    }
+    conditionExpr = new o.ReadVarExpr(prevValueVarName)
+        .notIdentical(new o.ReadVarExpr(inputName));
   }
   // Generates: bool changed = !identical(prevValue, newValue);
   statements.add(o

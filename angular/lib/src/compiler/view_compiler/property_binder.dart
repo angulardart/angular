@@ -486,12 +486,10 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
     // Execute actions and assign result to fieldExpr which hold previous value.
-    String inputTypeName = directive.inputTypes != null
+    CompileTypeMetadata inputTypeMeta = directive.inputTypes != null
         ? directive.inputTypes[input.directiveName]
         : null;
-    var inputType = inputTypeName != null
-        ? o.importType(new CompileIdentifierMetadata(name: inputTypeName))
-        : null;
+    var inputType = inputTypeMeta != null ? o.importType(inputTypeMeta) : null;
     if (isStatefulComp) {
       bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
           DetectChangesVars.cachedCtx, statements, dynamicInputsMethod,
