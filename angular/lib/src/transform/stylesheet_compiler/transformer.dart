@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:barback/barback.dart';
-import 'package:angular/src/transform/common/asset_reader.dart';
 import 'package:angular/src/transform/common/names.dart';
 import 'package:angular/src/transform/common/zone.dart' as zone;
 import 'package:angular_compiler/angular_compiler.dart';
@@ -30,7 +29,7 @@ class StylesheetCompiler extends Transformer implements LazyTransformer {
 
   @override
   Future apply(Transform transform) async {
-    final reader = new AssetReader.fromTransform(transform);
+    final reader = new NgAssetReader.fromBarback(transform);
     return zone.exec(() async {
       var primaryId = transform.primaryInput.id;
       var outputs = await processStylesheet(reader, primaryId, _flags);

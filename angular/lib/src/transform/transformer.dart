@@ -4,7 +4,6 @@ import 'package:build_barback/build_barback.dart';
 
 import '../../source_gen.dart';
 import 'common/eager_transformer_wrapper.dart';
-import 'deferred_rewriter/transformer.dart';
 import 'reflection_remover/transformer.dart';
 import 'stylesheet_compiler/transformer.dart';
 
@@ -17,7 +16,6 @@ class AngularTransformerGroup extends TransformerGroup {
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
       [new ReflectionRemover(flags)],
       [
-        new DeferredRewriter(),
         new StylesheetCompiler(flags),
         new BuilderTransformer(
           createSourceGenTemplateCompiler(flags),

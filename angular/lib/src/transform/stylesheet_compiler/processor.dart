@@ -5,7 +5,6 @@ import 'package:barback/barback.dart';
 import 'package:build/build.dart' as build;
 import 'package:angular/src/compiler/source_module.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
-import 'package:angular/src/transform/common/asset_reader.dart';
 import 'package:angular/src/transform/common/logging.dart';
 import 'package:angular/src/transform/common/names.dart';
 import 'package:angular/src/transform/common/ng_compiler.dart';
@@ -31,13 +30,13 @@ AssetId nonShimmedStylesheetAssetId(AssetId cssAssetId) => new AssetId(
     cssAssetId.package, toNonShimmedStylesheetExtension(cssAssetId.path));
 
 Future<Iterable<Asset>> processStylesheet(
-    AssetReader reader, AssetId stylesheetId, CompilerFlags flags) async {
+    NgAssetReader reader, AssetId stylesheetId, CompilerFlags flags) async {
   final stylesheetUrl = _assetIdToUrl(stylesheetId);
   var templateCompiler = zone.templateCompiler;
   if (templateCompiler == null) {
     templateCompiler = createTemplateCompiler(reader, flags);
   }
-  final cssText = await reader.readAsString(stylesheetId);
+  final cssText = await reader.readText(stylesheetId.toString());
   return logElapsedAsync(() async {
     final sourceModules =
         templateCompiler.compileStylesheet(stylesheetUrl, cssText);

@@ -1,20 +1,15 @@
 import 'package:analyzer/analyzer.dart';
 import 'package:barback/barback.dart';
-import 'package:angular/src/transform/common/annotation_matcher.dart';
 import 'package:angular/src/transform/common/naive_eval.dart';
 
 /// Determines if a [FunctionDeclaration] or [MethodDeclaration] is an
 /// `AngularEntrypoint`.
 class EntrypointMatcher {
   final AssetId _assetId;
-  final AnnotationMatcher _annotationMatcher;
 
-  EntrypointMatcher(this._assetId, this._annotationMatcher) {
+  EntrypointMatcher(this._assetId) {
     if (_assetId == null) {
       throw new ArgumentError.notNull('AssetId');
-    }
-    if (_annotationMatcher == null) {
-      throw new ArgumentError.notNull('AnnotationMatcher');
     }
   }
 
@@ -24,16 +19,17 @@ class EntrypointMatcher {
       return false;
     }
     return node is FunctionDeclaration && node.name.name == 'main' ||
-        node.metadata.any((a) => _annotationMatcher.isEntrypoint(a, _assetId));
+        node.metadata.any(_isEntrypoint);
   }
+
+  bool _isEntrypoint(Annotation a) => a.name.name == 'AngularEntrypoint';
 
   /// Gets the name assigned to the `AngularEntrypoint`.
   ///
   /// This method assumes the name is the first argument to `AngularEntrypoint`;
   String getName(AnnotatedNode node) {
-    final annotation = node.metadata.firstWhere(
-        (a) => _annotationMatcher.isEntrypoint(a, _assetId),
-        orElse: () => null);
+    final annotation =
+        node.metadata.firstWhere(_isEntrypoint, orElse: () => null);
     if (annotation == null) return null;
     if (annotation.arguments == null ||
         annotation.arguments.arguments == null ||
