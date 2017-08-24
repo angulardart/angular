@@ -1,4 +1,20 @@
-## 4.0.0-alpha+4
+## 4.0.0-beta
+
+AngularDart will start tracking the upcoming Dart 2.0 alpha SDK, and as such,
+4.0.0 will be the _last_ stable release that fully supports Dart 1.24.0. We may
+release small patches if needed, but otherwise the plan is to release 4.0.0 and
+then immediately start working on `5.0.0-alpha`, which uses the new Dart SDK.
+
+### Breaking changes
+
+* `@Pipe`-annotated classes are no longer considered `@Injectable`, in that they
+  aren't usable within a `ReflectiveInjector`. You can get this behavior back by
+  adding the `@Injectable()` annotation to the `@Pipe`-annotated class. Similar
+  changes are in progress for `@Component` and `@Directive`.
+
+* `PLATFORM_{PIPES|DIRECTIVES|PROVIDERS}`, which was only supported in an older
+  version of the compiler, was removed. All of these must be manually included
+  in lists in an `@Directive` or `@Component` annotation.
 
 ### New features
 
@@ -33,6 +49,16 @@ void autoIdDirective(Element element, IdGenerator generator) {
 @Component(selector: 'my-component', visibility: Visibility.none)
 class MyComponent { ... }
 ```
+
+### Bug fixes
+
+* Compiler now warns when annotations are added to private classes or functions.
+* Compiler now warns when injecting into a field that is non-existent.
+* Fixed a long-standing bug on `ngSwitch` behavior in Dartium.
+
+### Performance
+
+* Various small reductions to the size of generated code and the runtime.
 
 ## 4.0.0-alpha+3
 

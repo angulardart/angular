@@ -1,5 +1,5 @@
 name: angular
-version: 4.0.0-alpha+3
+version: 4.0.0-beta
 author: Dart Team <web@dartlang.org>
 description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
@@ -8,7 +8,7 @@ environment:
   sdk: '>=1.24.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.31.0'
-  angular_compiler: ^0.2.0
+  angular_compiler: ^0.3.0
   barback: ^0.15.2+2
   build: ^0.10.0
   build_barback: ^0.4.0

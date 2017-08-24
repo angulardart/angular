@@ -1,3 +1,10 @@
+## 0.3.0
+
+- Always link to `export "...template.dart" files` in `initReflector()`.
+- Catch missing field-formal (`this.`) fields and warn in the compiler.
+- Does not emit a `registerDependencies` function call for empty constructors.
+- `initReflector()` no longer treats `@Pipe` as an `@Injectable` service.
+
 ## 0.2.2
 
 - Fixed the outliner to instruct the analyzer to ignore unused imports.
