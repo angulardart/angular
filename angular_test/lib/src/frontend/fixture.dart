@@ -22,13 +22,6 @@ T injectFromFixture<T>(NgTestFixture fixture, tokenOrType) {
   return fixture._rootComponentRef.injector.get(tokenOrType);
 }
 
-/// Returns the component instance backing [fixture].
-///
-/// This is for compatibility reasons only and should not be used otherwise.
-T componentOfFixture<T>(NgTestFixture<T> fixture) {
-  return fixture._rootComponentRef.instance;
-}
-
 class NgTestFixture<T> {
   final ApplicationRef _applicationRef;
   final Func2<Element, NgTestFixture<T>, PageLoader> _pageLoaderFactory;
@@ -169,4 +162,22 @@ class NgTestFixture<T> {
   ///
   /// Provided as a convenience to do simple `expect` matchers.
   String get text => rootElement.text;
+
+  /// A component instance to used for read-only opperations (expect, assert)
+  /// ONLY.
+  ///
+  /// Warning this instance is not stabalized and so the test will not be in a
+  /// stable state likely leading to unexpected results. State changes to
+  /// the instance should be done through the `update` call, or external
+  /// stablalized mechanism such as page objects. Use this **ONLY** for simple
+  /// expects of the instance state.
+  ///
+  /// #Example
+  /// ```dart
+  /// await fixture.update((c) {
+  ///   c.value = 5;
+  /// });
+  /// expect(fixture.assertOnlyInstance.square, 25, reason:
+  ///     'Instance should square the number');
+  T get assertOnlyInstance => _rootComponentRef.instance;
 }

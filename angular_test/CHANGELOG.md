@@ -1,3 +1,8 @@
+## 1.0.0-beta+6
+
+- Add assertOnlyInstance to fixture to remove some boilerplate around testing
+  the state of a instance. Only use to test state, not to update it.
+
 ## 1.0.0-beta+5
 
 - Workaround for `pub {serve|build}` hanging on `angular_test` as a dependency.

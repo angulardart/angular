@@ -14,4 +14,4 @@ import 'package:meta/meta.dart';
 
 export 'src/bootstrap.dart' show bootstrapForTest, createTestInjector;
 export 'src/frontend/bed.dart' show createDynamicFixture, createDynamicTestBed;
-export 'src/frontend/fixture.dart' show componentOfFixture, injectFromFixture;
+export 'src/frontend/fixture.dart' show injectFromFixture;
