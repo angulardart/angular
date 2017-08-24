@@ -15,6 +15,14 @@ void main() {
       expect(testBed.create(), throwsInAngular(anything));
     });
 
+    test('directive should be accessible via a query', () async {
+      final testBed = new NgTestBed<ShouldQueryDirective>();
+      final testFixture = await testBed.create();
+      await testFixture.update((component) {
+        expect(component.directive, isNotNull);
+      });
+    });
+
     test('directive should not be injectable on same element', () async {
       final testBed = new NgTestBed<ShouldFailToInjectFromElement>();
       expect(testBed.create(), throwsInAngular(anything));
@@ -51,6 +59,16 @@ class ShouldFailToInjectParentComponent {}
 
 @Directive(selector: '[visibility-none]', visibility: Visibility.none)
 class VisibilityNoneDirective {}
+
+@Component(
+  selector: 'should-query-directive',
+  template: '<div visibility-none></div>',
+  directives: const [VisibilityNoneDirective],
+)
+class ShouldQueryDirective {
+  @ViewChild(VisibilityNoneDirective)
+  VisibilityNoneDirective directive;
+}
 
 @Component(
   selector: 'injects-directive',
