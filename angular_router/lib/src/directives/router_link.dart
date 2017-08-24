@@ -1,6 +1,6 @@
 import 'dart:html' show MouseEvent;
 
-import 'package:angular/angular.dart' show Directive;
+import 'package:angular/angular.dart' show Directive, Visibility;
 
 import '../instruction.dart' show Instruction;
 import '../location.dart' show Location;
@@ -37,14 +37,16 @@ import '../router.dart' show Router;
 /// If the route begins with `./`, the router will instead look in the current component's
 /// children for the route. And if the route begins with `../`, the router will look at the
 /// current component's parent.
-@Directive(selector: "[routerLink]", inputs: const [
-  "routeParams: routerLink",
-  "target: target"
-], host: const {
-  "(click)": "onClick(\$event)",
-  "[attr.href]": "visibleHref",
-  "[class.router-link-active]": "isRouteActive"
-})
+@Directive(
+  selector: "[routerLink]",
+  inputs: const ["routeParams: routerLink", "target: target"],
+  host: const {
+    "(click)": "onClick(\$event)",
+    "[attr.href]": "visibleHref",
+    "[class.router-link-active]": "isRouteActive"
+  },
+  visibility: Visibility.none,
+)
 class RouterLink {
   Router _router;
   Location _location;
