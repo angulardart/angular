@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
-import '../../di/injector/injector.dart';
 import '../di/decorators.dart';
+import '../di/injector.dart';
 import 'component_factory.dart';
 import 'view_container_ref.dart';
 
