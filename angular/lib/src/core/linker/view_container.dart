@@ -1,4 +1,4 @@
-import 'package:angular/src/di/injector/injector.dart' show Injector;
+import 'package:angular/src/core/di.dart' show Injector;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'app_view.dart';

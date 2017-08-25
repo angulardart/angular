@@ -67,7 +67,7 @@ class Identifiers {
       name: "ValueUnwrapper", moduleUrl: CD_MODULE_URL);
   static final Injector = new CompileIdentifierMetadata<dynamic>(
       name: "Injector",
-      moduleUrl: 'asset:angular/lib/src/di/injector/injector.dart');
+      moduleUrl: 'asset:angular/lib/src/core/di/injector.dart');
   static final InjectorToken = identifierToken(Identifiers.Injector);
   static final ViewEncapsulation = new CompileIdentifierMetadata<dynamic>(
       name: "ViewEncapsulation", moduleUrl: ANGULAR_ROOT_URL);

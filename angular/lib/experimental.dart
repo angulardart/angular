@@ -10,9 +10,9 @@ library angular.experimental;
 
 import 'package:meta/meta.dart';
 
+import 'src/core/di/injector.dart';
 import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
-import 'src/di/injector/injector.dart';
 
 /// Initializes the global application state from an application [injector].
 ///
