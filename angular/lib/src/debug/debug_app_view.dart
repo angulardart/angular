@@ -9,8 +9,8 @@ import 'package:js/js.dart' as js;
 import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorState;
-import 'package:angular/src/core/di.dart' show Injector;
-import 'package:angular/src/core/di/injector.dart' show THROW_IF_NOT_FOUND;
+import 'package:angular/src/di/injector/injector.dart'
+    show throwIfNotFound, Injector;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/component_factory.dart';
 import 'package:angular/src/core/linker/exceptions.dart'
@@ -95,7 +95,7 @@ class DebugAppView<T> extends AppView<T> {
 
   @override
   dynamic injectorGet(dynamic token, int nodeIndex,
-      [dynamic notFoundResult = THROW_IF_NOT_FOUND]) {
+      [dynamic notFoundResult = throwIfNotFound]) {
     _resetDebug();
     try {
       return super.injectorGet(token, nodeIndex, notFoundResult);
