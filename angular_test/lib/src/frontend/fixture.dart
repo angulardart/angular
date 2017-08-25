@@ -163,7 +163,7 @@ class NgTestFixture<T> {
   /// Provided as a convenience to do simple `expect` matchers.
   String get text => rootElement.text;
 
-  /// A component instance to used for read-only opperations (expect, assert)
+  /// A component instance to use for read-only operations (expect, assert)
   /// ONLY.
   ///
   /// Warning this instance is not stabalized and so the test will not be in a
