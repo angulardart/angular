@@ -11,7 +11,10 @@ const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 /// The accessor for writing a value and listening to changes on a checkbox input element.
 ///
 /// ### Example
-///     <input type='checkbox" ngControl="rememberLogin">
+///
+/// ```html
+/// <input type="checkbox" ngControl="rememberLogin">
+/// ```
 @Directive(
     selector: 'input[type=checkbox][ngControl],'
         'input[type=checkbox][ngFormControl],'
