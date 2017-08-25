@@ -54,13 +54,10 @@ Future<NormalizedComponentWithViewDirectives> resolveAndFindComponent(
   String source,
 ) async {
   final testAssetId = new AssetId('find_components_test', 'lib/test.dart');
-  final library = await resolveSource(
-    '''
+  final library = await resolveSource('''
     import 'package:angular/angular.dart';
-    $source''',
-    (resolver) => resolver.libraryFor(testAssetId),
-    inputId: testAssetId,
-  );
+    $source
+  ''', (r) => r.libraryFor(testAssetId), inputId: testAssetId);
   final artifacts = findComponentsAndDirectives(library);
   return artifacts.components.first;
 }
