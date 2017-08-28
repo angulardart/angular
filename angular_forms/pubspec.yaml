@@ -2,13 +2,13 @@ name: angular_forms
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Forms framework for AngularDart.
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: '>=1.24.0 <2.0.0'
 
 dependencies:
-  angular: '^4.0.0-alpha'
+  angular: ^4.0.0
   func: '>=0.1.0 <2.0.0'
   meta: ^1.0.3
 
