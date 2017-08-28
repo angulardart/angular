@@ -568,7 +568,6 @@ class CompileElement extends CompileNode {
           new CompileDiDependencyMetadata(token: dep.token));
     }
     result ??= injectFromViewParentInjector(view, dep.token, dep.isOptional);
-    result ??= o.NULL_EXPR;
     return getPropertyInView(result, view, currElement.view);
   }
 }
