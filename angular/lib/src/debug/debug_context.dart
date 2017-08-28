@@ -31,7 +31,12 @@ class DebugContext<T> implements RenderDebugInfo {
   dynamic get component {
     var staticNodeInfo = _staticNodeInfo;
     if (staticNodeInfo?.componentToken != null) {
-      return injector.get(staticNodeInfo.componentToken);
+      // If the component has Visibility.none, the injector will fail to return
+      // an instance, so we explicitly return null instead of throwing. This is
+      // done to support a common testing pattern where a query is run over
+      // every DebugContext in a hierarchy of views to find an instance of a
+      // specific component.
+      return injector.get(staticNodeInfo.componentToken, null);
     }
     return null;
   }
