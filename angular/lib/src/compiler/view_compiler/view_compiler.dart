@@ -3,7 +3,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart'
 import 'package:angular_compiler/angular_compiler.dart';
 
 import 'package:source_span/source_span.dart';
-import 'package:logging/logging.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
@@ -39,7 +38,6 @@ class ViewCompiler {
   final CompilerFlags _genConfig;
   final ElementSchemaRegistry _schemaRegistry;
   Parser parser;
-  Logger _logger;
 
   ViewCompiler(this._genConfig, this.parser, this._schemaRegistry);
 

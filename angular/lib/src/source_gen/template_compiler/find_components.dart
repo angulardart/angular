@@ -4,7 +4,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
-import 'package:angular_compiler/angular_compiler.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
@@ -15,12 +14,13 @@ import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
+import '../../compiler/view_compiler/property_binder.dart'
+    show isPrimitiveTypeName;
 import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
-import '../../compiler/view_compiler/property_binder.dart'
-    show isPrimitiveTypeName;
 
 const String _directivesProperty = 'directives';
 const String _visibilityProperty = 'visibility';

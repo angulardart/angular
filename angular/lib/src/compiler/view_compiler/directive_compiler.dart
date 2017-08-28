@@ -2,11 +2,6 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 
-import 'compile_method.dart';
-import 'constants.dart' show EventHandlerVars;
-import 'property_binder.dart' show bindAndWriteToRenderer;
-import 'view_name_resolver.dart';
-
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../expression_parser/parser.dart' show Parser;
 import '../identifiers.dart';
@@ -15,6 +10,10 @@ import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import "../template_ast.dart" show BoundElementPropertyAst;
 import '../template_parser.dart';
+import 'compile_method.dart';
+import 'constants.dart' show EventHandlerVars;
+import 'property_binder.dart' show bindAndWriteToRenderer;
+import 'view_name_resolver.dart';
 
 class DirectiveCompileResult {
   final o.ClassStmt _changeDetectorClass;

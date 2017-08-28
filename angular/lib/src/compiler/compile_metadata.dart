@@ -98,6 +98,7 @@ class CompileProviderMetadata {
       : this.multi = multi == true;
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(other) {
     if (other is! CompileProviderMetadata) return false;
     return token == other.token &&
@@ -176,6 +177,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   }
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(other) {
     if (other is! CompileTokenMetadata) return false;
     return value == other.value &&
@@ -256,6 +258,7 @@ class CompileTypeMetadata
   CompileTypeMetadata get type => this;
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(other) {
     if (other is! CompileTypeMetadata) return false;
     return name == other.name &&
