@@ -1,10 +1,10 @@
-import 'compile_view.dart' show CompileView;
+import '../identifiers.dart';
+import '../output/output_ast.dart' as o;
 import 'compile_pipe.dart' show CompilePipe;
+import 'compile_view.dart' show CompileView;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart';
 import "view_compiler_utils.dart" show getPropertyInView, createPureProxy;
-import '../identifiers.dart';
-import '../output/output_ast.dart' as o;
 
 /// Name resolver for binding expressions that resolves locals and pipes.
 ///

@@ -8,7 +8,6 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
-
 import '../output/output_ast.dart' as o;
 import "../template_ast.dart" show TemplateAst;
 import 'compile_binding.dart' show CompileBinding;
@@ -38,7 +37,7 @@ class CompileView {
 
   /// Contains references to view children so we can generate code for
   /// change detection and destroy.
-  List<o.Expression> _viewChildren = [];
+  final List<o.Expression> _viewChildren = [];
 
   /// Flat list of all nodes inside the template including text nodes.
   List<CompileNode> nodes = [];

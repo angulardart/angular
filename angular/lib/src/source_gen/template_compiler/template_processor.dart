@@ -16,7 +16,7 @@ Future<TemplateCompilerOutputs> processTemplates(
   CompilerFlags flags,
 ) async {
   final templateCompiler = createTemplateCompiler(buildStep, flags);
-  final resolver = await buildStep.resolver;
+  final resolver = buildStep.resolver;
   final reflectables = await new ReflectableReader(
     // For a given import or export directive, return whether we have the
     // Dart file's URI in our inputs (for Bazel, it will be in the srcs =
