@@ -2,7 +2,7 @@
 
 <!-- Badges -->
 
-[![Pub Package](https://img.shields.io/pub/v/angular2.svg)](https://pub.dartlang.org/packages/angular2)
+[![Pub Package](https://img.shields.io/pub/v/angular.svg)](https://pub.dartlang.org/packages/angular)
 [![Build Status](https://travis-ci.org/dart-lang/angular.svg?branch=master)](https://travis-ci.org/dart-lang/angular)
 [![Gitter](https://img.shields.io/gitter/room/dart-lang/angular.svg)](https://gitter.im/dart-lang/angular)
 

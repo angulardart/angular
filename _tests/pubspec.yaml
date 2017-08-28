@@ -4,9 +4,10 @@ description: Tests for AngularDart.
 environment:
   sdk: '>=1.24.0 <2.0.0'
 dev_dependencies:
-  angular: 4.0.0-dev
-  angular_forms: 0.1.0
-  angular_test: '^1.0.0-beta'
+  angular: '^4.0.0'
+  angular_forms: '^1.0.0'
+  angular_forms: '^1.0.2'
+  angular_test: '^1.0.0'
   build_runner: ^0.4.0
   build_test: ^0.7.0
   cli_util: ^0.1.0
