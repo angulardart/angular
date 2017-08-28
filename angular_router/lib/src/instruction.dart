@@ -170,7 +170,7 @@ abstract class Instruction {
   }
 
   String _stringifyPathMatrixAux() {
-    if (urlPath.isEmpty) return '';
+    if (component == null) return '';
     return urlPath + _stringifyMatrixParams() + _stringifyAux();
   }
 
@@ -228,6 +228,11 @@ class UnresolvedInstruction extends Instruction {
     if (component != null) return component.urlParams;
     if (_urlParams != null) return _urlParams;
     return [];
+  }
+
+  String _stringifyPathMatrixAux() {
+    if (urlPath.isEmpty) return '';
+    return urlPath + _stringifyMatrixParams() + _stringifyAux();
   }
 
   Future<ComponentInstruction> resolveComponent() async {
