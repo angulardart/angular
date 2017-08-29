@@ -1,10 +1,11 @@
-// This module is used for handling user input, by defining and building a
-// [ControlGroup] that consists of [Control] objects, and mapping them onto
-// the DOM. [Control] objects can then be used to read information from the
-// form DOM elements.
-//
-// This module is not included in the `angular2` module; you must import the
-// forms module explicitly.
+/// This module is used for handling user input, by defining and building a
+/// [ControlGroup] that consists of [Control] objects, and mapping them onto
+/// the DOM. [Control] objects can then be used to read information from the
+/// form DOM elements.
+///
+/// This module is not included in the `angular` module; you must import the
+/// forms module explicitly.
+library angular_forms; // name the library so we can run dartdoc on it by name.
 
 import 'src/directives/radio_control_value_accessor.dart'
     show RadioControlRegistry;
