@@ -28,7 +28,6 @@ const _statefulDirectiveFields = const [
   'exportAs',
   'host',
   'inputs',
-  'outputs',
   _visibilityProperty,
 ];
 
@@ -459,8 +458,6 @@ class ComponentVisitor
           _prohibitBindingChange(element, propertyName, bindingName, _inputs);
           _inputs[propertyName] = bindingName;
         }
-        final outputs = coerceStringList(annotationValue, 'outputs');
-        CompileDirectiveMetadata.deserializeOutputs(outputs, _outputs);
       }
       // Collect metadata from field and property accessor annotations.
       super.visitClassElement(element);

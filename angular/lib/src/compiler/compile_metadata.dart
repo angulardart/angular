@@ -433,28 +433,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     });
   }
 
-  /// Maps binding names from a list of serialized outputs.
-  ///
-  /// Serialized output grammar:
-  ///
-  ///     <output> :=
-  ///         <dirProp> |
-  ///         <dirProp> ':' <elProp>
-  ///
-  /// For each <output> in [outputs], (<dirProp>, <elProp>) is added to
-  /// [outBindingNames]. If omitted, <elProp> defaults to <dirProp>.
-  static void deserializeOutputs(
-    List<String> outputs,
-    Map<String, String> outBindingNames,
-  ) {
-    assert(outBindingNames != null);
-
-    outputs?.forEach((output) {
-      final bindingParts = splitAtColon(output, [output, output]);
-      outBindingNames[bindingParts[0]] = bindingParts[1];
-    });
-  }
-
   @override
   CompileTypeMetadata type;
   final CompileDirectiveMetadataType metadataType;
