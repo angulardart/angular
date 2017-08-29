@@ -6,8 +6,7 @@ environment:
 dev_dependencies:
   angular: '^4.0.0'
   angular_forms: '^1.0.0'
-  angular_forms: '^1.0.2'
-  angular_test: '^1.0.0'
+  angular_test: '^1.0.2'
   build_runner: ^0.4.0
   build_test: ^0.7.0
   cli_util: ^0.1.0
