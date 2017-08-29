@@ -51,8 +51,7 @@ class TemplateOutliner implements Builder {
   Future<Null> build(BuildStep buildStep) async {
     final library = await buildStep.inputLibrary;
     if (library == null) {
-      buildStep.writeAsString(
-          buildStep.inputId.changeExtension('.outline.template.dart'),
+      buildStep.writeAsString(buildStep.inputId.changeExtension(_extension),
           'external void initReflector();');
       return;
     }
