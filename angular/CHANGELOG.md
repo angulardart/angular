@@ -1,3 +1,10 @@
+## 5.0.0-alpha
+
+### Breaking changes
+
+* Removed `outputs` field from `Directive`. Outputs now must be declared using
+  inline `Output` annotations.
+
 ## 4.0.0
 
 **We are now named `package:angular` instead of `package:angular2`**. As such

@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/compiler_utils.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart';
 import 'package:angular/src/compiler/expression_parser/parser.dart';
 import 'package:angular/src/compiler/html_parser.dart';
@@ -1842,7 +1843,10 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   CompileDirectiveMetadata.deserializeInputs(inputs, inputsMap, inputTypeMap);
 
   final outputsMap = <String, String>{};
-  CompileDirectiveMetadata.deserializeOutputs(outputs, outputsMap);
+  outputs?.forEach((output) {
+    final bindingParts = splitAtColon(output, [output, output]);
+    outputsMap[bindingParts[0]] = bindingParts[1];
+  });
 
   return new CompileDirectiveMetadata(
     type: type,

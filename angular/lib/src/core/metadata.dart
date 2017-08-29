@@ -123,48 +123,6 @@ class Directive {
   @Deprecated('Use @Input() on a setter or field instead')
   final List<String> inputs;
 
-  /// The directive's event-bound output properties.
-  ///
-  /// When an output property emits an event, an event handler attached to
-  /// that event the template is invoked.
-  ///
-  /// The [outputs] property defines a set of _directiveProperty_ to
-  /// _bindingProperty_ configuration:
-  ///
-  /// - _directiveProperty_ specifies the component property that emits events.
-  /// - _bindingProperty_ specifies the DOM property the event handler is
-  ///   attached to.
-  ///
-  /// ```dart
-  /// @Directive(
-  ///   selector: 'interval-dir',
-  ///   outputs: const ['everySecond', 'five5Secs: everyFiveSeconds'])
-  /// class IntervalDir {
-  ///   final everySecond = new EventEmitter<String>();
-  ///
-  ///   final five5Secs = new EventEmitter<String>();
-  ///
-  ///   IntervalDir() {
-  ///     setInterval(() => everySecond.emit("event"), 1000);
-  ///     setInterval(() => five5Secs.emit("event"), 5000);
-  ///   }
-  /// }
-  ///
-  /// @Component(
-  ///   selector: 'app',
-  ///   template: '''
-  ///     <interval-dir (everySecond)="everySecond()" (everyFiveSeconds)="everyFiveSeconds()">
-  ///     </interval-dir>
-  ///   ''',
-  ///   directives: const [IntervalDir])
-  /// class App {
-  ///   everySecond() { print('second'); }
-  ///   everyFiveSeconds() { print('five seconds'); }
-  /// }
-  /// ```
-  @Deprecated('Use @Output() on a getter or field instead')
-  final List<String> outputs;
-
   /// Events, actions, properties, and attributes related to the host element.
   ///
   /// ## Host listeners
@@ -311,7 +269,6 @@ class Directive {
   const Directive({
     @required this.selector,
     this.inputs,
-    this.outputs,
     this.host,
     this.providers,
     this.exportAs,
@@ -417,7 +374,6 @@ class Component extends Directive {
   const Component({
     String selector,
     List<String> inputs,
-    List<String> outputs,
     Map<String, String> host,
     String exportAs,
     List providers,
@@ -437,7 +393,6 @@ class Component extends Directive {
       : super(
           selector: selector,
           inputs: inputs,
-          outputs: outputs,
           host: host,
           exportAs: exportAs,
           providers: providers,
