@@ -93,7 +93,13 @@ String matchUrlSegment(String str) {
   return match != null ? match[0] : '';
 }
 
-final RegExp QUERY_PARAM_VALUE_RE = new RegExp('^[^\\(\\)\\?;&#]+');
+final RegExp QUERY_PARAM_KEY_RE = new RegExp('^[^\\(\\);=&#]+');
+String matchUrlQueryParamKey(String str) {
+  var match = QUERY_PARAM_KEY_RE.firstMatch(str);
+  return match != null ? match[0] : '';
+}
+
+final RegExp QUERY_PARAM_VALUE_RE = new RegExp('^[^\\(\\);&#]+');
 String matchUrlQueryParamValue(String str) {
   var match = QUERY_PARAM_VALUE_RE.firstMatch(str);
   return match != null ? match[0] : '';
@@ -194,7 +200,7 @@ class UrlParser {
   }
 
   void parseParam(Map<String, dynamic> params) {
-    var key = matchUrlSegment(this._remaining);
+    var key = matchUrlQueryParamKey(this._remaining);
     if (key == null) {
       return;
     }
