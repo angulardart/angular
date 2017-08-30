@@ -15,7 +15,7 @@ void main() {
 
   test('should support page objects and page loader', () async {
     final fixture = await new NgTestBed<TestComponent>().create();
-    final pageObject = await fixture.resolvePageObject/*<ClickCounterPO>*/(
+    final pageObject = await fixture.resolvePageObject<ClickCounterPO>(
       ClickCounterPO,
     );
     expect(await pageObject.button.visibleText, 'Click count: 0');
