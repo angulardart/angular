@@ -1,10 +1,3 @@
-## 5.0.0-alpha
-
-### Breaking changes
-
-* Removed `outputs` field from `Directive`. Outputs now must be declared using
-  inline `Output` annotations.
-
 ## 4.0.0
 
 **We are now named `package:angular` instead of `package:angular2`**. As such
@@ -107,6 +100,9 @@ then immediately start working on `5.0.0-alpha`, which uses the new Dart SDK.
 
 *   Removed the second parameter to `ExceptionHandler`, which was a no-op
     anyway.
+
+*   Removed `outputs` field from `Directive`. Outputs now must be declared using
+    inline `Output` annotations.
 
 ### New features
 
