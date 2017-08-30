@@ -24,7 +24,7 @@ void main() {
 
   test('should call a handler before initial load', () async {
     final host = new Element.div();
-    final test = await bootstrapForTest/*<BeforeChangeDetection>*/(
+    final test = await bootstrapForTest<BeforeChangeDetection>(
       BeforeChangeDetection,
       host,
       beforeChangeDetection: (comp) => comp.users.add('Mati'),
