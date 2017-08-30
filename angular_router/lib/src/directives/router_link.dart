@@ -1,6 +1,6 @@
 import 'dart:html' show MouseEvent;
 
-import 'package:angular/angular.dart' show Directive, Visibility;
+import 'package:angular/angular.dart' show Directive, Input, Visibility;
 
 import '../instruction.dart' show Instruction;
 import '../location.dart' show Location;
@@ -39,7 +39,6 @@ import '../router.dart' show Router;
 /// current component's parent.
 @Directive(
   selector: "[routerLink]",
-  inputs: const ["routeParams: routerLink", "target: target"],
   host: const {
     "(click)": "onClick(\$event)",
     "[attr.href]": "visibleHref",
@@ -53,6 +52,7 @@ class RouterLink {
   List<dynamic> _routeParams;
   // the url displayed on the anchor element.
   String visibleHref;
+  @Input()
   String target;
   // the instruction passed to the router to navigate
   Instruction _navigationInstruction;
@@ -73,6 +73,7 @@ class RouterLink {
     return this._router.isRouteActive(this._navigationInstruction);
   }
 
+  @Input('routerLink')
   set routeParams(List<dynamic> changes) {
     this._routeParams = changes;
     this._updateLink();
