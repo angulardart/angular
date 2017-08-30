@@ -10,6 +10,12 @@ set -e
 pushd $PKG
 pub upgrade
 
+if [ "$PKG" == "angular" ]; then
+  pushd tools/analyzer_plugin
+  pub upgrade
+  popd
+fi
+
 dartanalyzer --fatal-warnings .
 
 if [ "$PKG" == "_tests" ]; then
