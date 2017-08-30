@@ -10,7 +10,19 @@ set -e
 pushd $PKG
 pub upgrade
 
-dartanalyzer --fatal-warnings .
+if [ "$PKG" == "angular" ]; then
+  # Analyze the lib directory seperately...
+  dartanalyzer --fatal-warnings lib
+
+  # ...from the tool directory
+  pushd tools/analyzer_plugin
+  pub upgrade
+  dartanalyzer --fatal-warnings .
+  popd
+else
+  dartanalyzer --fatal-warnings .
+fi
+
 
 if [ "$PKG" == "_tests" ]; then
   dartium --version
