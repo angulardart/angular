@@ -27,3 +27,9 @@ if [ "$PKG" == "angular_test" ]; then
   dartium --version
   dart test/test_on_travis.dart
 fi
+
+if [ "$PKG" == "angular" ]; then
+  pushd tools/analyzer_plugin
+  pub upgrade
+  dartanalyzer --fatal-warnings .
+fi
