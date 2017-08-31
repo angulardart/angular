@@ -1,5 +1,5 @@
 import 'package:angular/core.dart'
-    show Directive, ViewContainerRef, TemplateRef, Visibility;
+    show Directive, Input, ViewContainerRef, TemplateRef, Visibility;
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/facade/lang.dart';
 
@@ -35,7 +35,6 @@ import 'package:angular/src/facade/lang.dart';
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngIf
 @Directive(
   selector: '[ngIf]',
-  inputs: const ['ngIf'],
   visibility: Visibility.none,
 )
 class NgIf {
@@ -47,6 +46,7 @@ class NgIf {
   NgIf(this._viewContainer, this._templateRef);
 
   /// Whether the content of the directive should be visible.
+  @Input()
   set ngIf(bool newCondition) {
     // Legacy support for cases where `null` is still passed to NgIf.
     newCondition = newCondition == true;

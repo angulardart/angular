@@ -111,12 +111,13 @@ class ToolbarPart {
   ToolbarPart(this.templateRef);
 }
 
-@Directive(selector: '[toolbarVc]', inputs: const ['toolbarVc'])
+@Directive(selector: '[toolbarVc]')
 class ToolbarViewContainer {
   final ViewContainerRef vc;
 
   ToolbarViewContainer(this.vc);
 
+  @Input()
   set toolbarVc(ToolbarPart part) {
     final view = vc.insertEmbeddedView(part.templateRef, 0);
     view.setLocal('toolbarProp', 'From toolbar');

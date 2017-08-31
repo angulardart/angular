@@ -1,6 +1,6 @@
 import 'dart:html';
 import 'package:angular/core.dart'
-    show DoCheck, OnDestroy, Directive, Visibility;
+    show DoCheck, Input, OnDestroy, Directive, Visibility;
 import 'package:angular/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:angular/src/core/change_detection/differs/default_keyvalue_differ.dart';
 
@@ -49,7 +49,6 @@ import 'package:angular/src/core/change_detection/differs/default_keyvalue_diffe
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngClass
 @Directive(
   selector: '[ngClass]',
-  inputs: const ['rawClass: ngClass', 'initialClasses: class'],
   visibility: Visibility.none,
 )
 class NgClass implements DoCheck, OnDestroy {
@@ -63,6 +62,7 @@ class NgClass implements DoCheck, OnDestroy {
   dynamic /* List < String > | Set< String > */ _rawClass;
   NgClass(this._ngEl);
 
+  @Input('class')
   set initialClasses(String v) {
     this._applyInitialClasses(true);
     this._initialClasses = v is String ? v.split(' ') : [];
@@ -70,6 +70,7 @@ class NgClass implements DoCheck, OnDestroy {
     this._applyClasses(this._rawClass, false);
   }
 
+  @Input('ngClass')
   set rawClass(
       dynamic /* String | List < String > | Set< String > | Map < String , dynamic > */ v) {
     this._cleanupClasses(this._rawClass);

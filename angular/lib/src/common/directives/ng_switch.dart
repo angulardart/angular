@@ -83,13 +83,15 @@ class SwitchView {
 /// [ex]: http://angular-examples.github.io/template-syntax/#ngSwitch
 /// [guide]: https://webdev.dartlang.org/angular/guide/structural-directives.html#ngSwitch
 ///
-@Directive(selector: '[ngSwitch]', inputs: const ['ngSwitch'])
+@Directive(selector: '[ngSwitch]')
 class NgSwitch {
   dynamic _switchValue;
   bool _useDefault = false;
   final _valueViews = new Map<dynamic, List<SwitchView>>();
 
   List<SwitchView> _activeViews = [];
+
+  @Input()
   set ngSwitch(dynamic value) {
     // Calculate set of views to display for this value.
     var views = _valueViews[value];
@@ -176,25 +178,26 @@ class NgSwitch {
 ///
 @Directive(
   selector: '[ngSwitchWhen],[ngSwitchCase]',
-  inputs: const ['ngSwitchWhen', 'ngSwitchCase'],
   visibility: Visibility.none,
 )
 class NgSwitchWhen {
-  // `_WHEN_DEFAULT` is used as a marker for a not yet initialized value
-
+  /// Used as a marker for an uninitialized value.
   dynamic _value = _WHEN_DEFAULT;
   SwitchView _view;
   NgSwitch _switch;
+
   NgSwitchWhen(ViewContainerRef viewContainer, TemplateRef templateRef,
       @Host() NgSwitch ngSwitch) {
     this._switch = ngSwitch;
     this._view = new SwitchView(viewContainer, templateRef);
   }
 
+  @Input()
   set ngSwitchCase(dynamic value) {
     ngSwitchWhen = value;
   }
 
+  @Input()
   set ngSwitchWhen(dynamic value) {
     if (looseIdentical(value, _value)) return;
     this._switch._onWhenValueChanged(this._value, value, this._view);
