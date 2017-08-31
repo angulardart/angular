@@ -28,6 +28,14 @@ void main() {
       reason: '"A" should have been resolved with the older "C" binding',
     );
   });
+
+  test('should use user-default value on ElementInjector.get', () async {
+    final fixture = await new NgTestBed<UsingElementInjector>().create();
+    await fixture.update((comp) {
+      final foo = comp.injector.get(#foo, 'someValue');
+      expect(foo, 'someValue');
+    });
+  });
 }
 
 @Component(
@@ -109,4 +117,14 @@ class C {
 
   @override
   String toString() => 'C: $debugMessage';
+}
+
+@Component(
+  selector: 'using-element-injector',
+  template: '',
+)
+class UsingElementInjector {
+  final Injector injector;
+
+  UsingElementInjector(this.injector);
 }

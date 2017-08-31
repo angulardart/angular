@@ -4,6 +4,9 @@ import '../../core/linker/app_view.dart';
 import 'hierarchical.dart';
 import 'injector.dart';
 
+/// Sentinel object representing the need to invoke "orElse" if returned.
+final Object _useOrElse = new Object();
+
 /// **INTERNAL ONLY**: Adapts the [AppView] interfaces as an injector.
 @Immutable()
 class ElementInjector extends Injector implements HierarchicalInjector {
@@ -14,27 +17,32 @@ class ElementInjector extends Injector implements HierarchicalInjector {
 
   ElementInjector(this._view, this._nodeIndex);
 
+  T _injectFrom<T>(
+    AppView view,
+    int nodeIndex,
+    Object token,
+    OrElseInject<T> orElse,
+  ) {
+    final result = view.injectorGet(token, nodeIndex, _useOrElse);
+    if (identical(result, _useOrElse)) {
+      return orElse(this, token);
+    }
+    return result;
+  }
+
   @override
   T inject<T>({
     @required Object token,
     OrElseInject<T> orElse: throwsNotFound,
   }) =>
-      _view.injectorGet(
-        token,
-        _nodeIndex,
-        identical(orElse, throwsNotFound) ? throwIfNotFound : null,
-      );
+      _injectFrom(_view, _nodeIndex, token, orElse);
 
   @override
   T injectFromAncestry<T>(
     Object token, {
     OrElseInject<T> orElse: throwsNotFound,
   }) =>
-      _view.parentView.injectorGet(
-        token,
-        _view.viewData.parentIndex,
-        identical(orElse, throwsNotFound) ? throwIfNotFound : null,
-      );
+      _injectFrom(_view.parentView, _view.viewData.parentIndex, token, orElse);
 
   @override
   T injectFromParent<T>(
