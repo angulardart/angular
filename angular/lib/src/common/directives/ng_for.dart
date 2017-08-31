@@ -2,6 +2,7 @@ import 'package:angular/core.dart'
     show
         DoCheck,
         Directive,
+        Input,
         ViewContainerRef,
         ViewRef,
         TemplateRef,
@@ -96,7 +97,6 @@ import '../../core/change_detection/differs/default_iterable_differ.dart'
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngFor
 @Directive(
   selector: '[ngFor][ngForOf]',
-  inputs: const ['ngForTrackBy', 'ngForOf', 'ngForTemplate'],
   visibility: Visibility.none,
 )
 class NgFor implements DoCheck {
@@ -109,6 +109,7 @@ class NgFor implements DoCheck {
 
   NgFor(this._viewContainer, this._templateRef);
 
+  @Input()
   set ngForOf(value) {
     assert(
         value == null || value is Iterable,
@@ -121,12 +122,14 @@ class NgFor implements DoCheck {
     }
   }
 
+  @Input()
   set ngForTemplate(TemplateRef value) {
     if (value != null) {
       _templateRef = value;
     }
   }
 
+  @Input()
   set ngForTrackBy(TrackByFn value) {
     _ngForTrackBy = value;
     if (_ngForOf != null) {

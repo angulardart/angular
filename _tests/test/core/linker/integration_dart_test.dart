@@ -128,11 +128,11 @@ class NoPropertyAccess {
 
 @Component(
   selector: 'on-change',
-  inputs: const ['prop'],
   template: '',
 )
 class OnChangeComponent implements OnChanges {
   Map changes;
+  @Input()
   String prop;
 
   @override

@@ -148,7 +148,7 @@ class SimpleImperativeViewComponent {
 
 const ANCHOR_ELEMENT = const OpaqueToken('AnchorElement');
 
-@Directive(selector: '[someImpvp]', inputs: const ['someImpvp'])
+@Directive(selector: '[someImpvp]')
 class SomeImperativeViewport {
   ViewContainerRef vc;
   TemplateRef templateRef;
@@ -158,6 +158,7 @@ class SomeImperativeViewport {
   SomeImperativeViewport(
       this.vc, this.templateRef, @Inject(ANCHOR_ELEMENT) this.anchor);
 
+  @Input()
   set someImpvp(bool value) {
     if (view != null) {
       vc.clear();
@@ -182,11 +183,9 @@ class MovesEmbeddedViewComponent {
   bool ctxBoolProp = false;
 }
 
-@Directive(
-  selector: '[has-property]',
-  inputs: const ['value: property'],
-)
+@Directive(selector: '[has-property]')
 class PropertyDirective {
+  @Input('property')
   String value;
 }
 
@@ -199,8 +198,9 @@ class UnknownPropertyOnDirectiveComponent {
   String value = 'Hello world!';
 }
 
-@Directive(selector: '[title]', inputs: const ['title'])
+@Directive(selector: '[title]')
 class DirectiveWithTitle {
+  @Input()
   String title;
 }
 
@@ -215,10 +215,10 @@ class OverriddenPropertyComponent {
 
 @Directive(
   selector: '[title]',
-  inputs: const ['title'],
   host: const {'[title]': 'title'},
 )
 class DirectiveWithTitleAndHostProperty {
+  @Input()
   String title;
 }
 

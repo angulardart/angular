@@ -66,7 +66,6 @@ class LifecycleDir implements DoCheck {
 
 @Component(
     selector: "lifecycle",
-    inputs: const ["field"],
     template: '<div lifecycle-dir></div>',
     directives: const [LifecycleDir])
 class LifecycleCmp
@@ -79,6 +78,7 @@ class LifecycleCmp
         AfterViewInit,
         AfterViewChecked {
   Log _log;
+  @Input()
   var field;
 
   LifecycleCmp(this._log);

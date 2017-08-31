@@ -82,13 +82,13 @@ void main() {
 
 @Component(
   selector: 'push-cmp-with-ref',
-  inputs: const ['prop'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field}}',
 )
 class PushCmpWithRef {
   int numberOfChecks;
   ChangeDetectorRef ref;
+  @Input()
   var prop;
 
   PushCmpWithRef(this.ref) {
@@ -119,7 +119,6 @@ class EventCmp {
 
 @Component(
   selector: 'push-cmp',
-  inputs: const ['prop'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field}}<div (click)="noop()"></div><div *ngIf="true" '
       '(click)="noop()"></div><event-cmp></event-cmp>',
@@ -127,6 +126,7 @@ class EventCmp {
 )
 class PushCmp {
   int numberOfChecks;
+  @Input()
   var prop;
 
   PushCmp() {

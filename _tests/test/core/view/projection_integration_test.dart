@@ -9,6 +9,7 @@ import 'package:angular/core.dart'
         Component,
         Directive,
         ElementRef,
+        Input,
         QueryList,
         TemplateRef,
         ViewChild,
@@ -357,9 +358,9 @@ class TextNodeAfterContentTest {}
 @Component(
   selector: 'simple',
   template: '<ng-content></ng-content><p>P,</p>{{stringProp}}',
-  inputs: const ['stringProp'],
 )
 class TextNodeAfterContentComponent {
+  @Input()
   String stringProp = '';
 }
 
@@ -373,9 +374,9 @@ class TextNodeAfterStyleTest {}
 @Component(
   selector: 'simple',
   template: '<style></style><p>P,</p>{{stringProp}}',
-  inputs: const ['stringProp'],
 )
 class TextNodeAfterStyleComponent {
+  @Input()
   String stringProp = '';
 }
 
@@ -487,10 +488,10 @@ class NestedProjectionTest {
 
 @Component(
     selector: 'simple',
-    inputs: const ['stringProp'],
     template: 'SIMPLE(<ng-content></ng-content>)',
     directives: const [])
 class Simple {
+  @Input()
   String stringProp = '';
 }
 
@@ -593,10 +594,10 @@ class ConditionalTextComponent {
 
 @Component(
     selector: 'tree2',
-    inputs: const ['depth'],
     template: 'TREE2({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
     directives: const [ManualViewportDirective, RecursiveTree])
 class Tree2 {
+  @Input()
   var depth = 0;
 
   @ViewChild(ManualViewportDirective)
@@ -605,10 +606,10 @@ class Tree2 {
 
 @Component(
     selector: 'tree',
-    inputs: const ['depth'],
     template: 'TREE({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
     directives: const [ManualViewportDirective, Tree])
 class Tree {
+  @Input()
   var depth = 0;
 
   @ViewChild(ManualViewportDirective)
@@ -617,11 +618,11 @@ class Tree {
 
 @Component(
   selector: 'tree',
-  inputs: const ['depth'],
   template: 'TREE({{depth}}:<tree2 *manual [depth]="depth+1"></tree2>)',
   directives: const [ManualViewportDirective, Tree2],
 )
 class RecursiveTree {
+  @Input()
   var depth = 0;
 
   @ViewChild(ManualViewportDirective)

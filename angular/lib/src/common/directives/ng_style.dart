@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/core.dart' show DoCheck, Directive, Visibility;
+import 'package:angular/core.dart' show DoCheck, Directive, Input, Visibility;
 
 import '../../core/change_detection/differs/default_keyvalue_differ.dart'
     show DefaultKeyValueDiffer, KeyValueChangeRecord;
@@ -56,7 +56,6 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// [ex]: http://angular-examples.github.io/template-syntax/#ngStyle
 @Directive(
   selector: '[ngStyle]',
-  inputs: const ['rawStyle: ngStyle'],
   visibility: Visibility.none,
 )
 class NgStyle implements DoCheck {
@@ -66,6 +65,7 @@ class NgStyle implements DoCheck {
 
   NgStyle(this._ngElement);
 
+  @Input('ngStyle')
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;
     if (_differ == null && v != null) {
