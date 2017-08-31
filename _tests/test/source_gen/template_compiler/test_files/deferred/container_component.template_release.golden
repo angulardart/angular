@@ -111,7 +111,7 @@ class _ViewTestContainerComponent1
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -160,7 +160,7 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 

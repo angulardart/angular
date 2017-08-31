@@ -122,7 +122,7 @@ class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -202,7 +202,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
 
   @override
   void destroyInternal() {
-    _compView_1.destroy();
+    _compView_1?.destroy();
   }
 }
 
@@ -260,7 +260,7 @@ class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -357,7 +357,7 @@ class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
