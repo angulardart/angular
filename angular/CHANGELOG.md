@@ -1,3 +1,11 @@
+## 4.0.1
+
+### Bug fixes
+
+*   Fixed a bug where injecting the `Injector` in a component/directive and
+    passing a second argument (as a default value) always returned `null`. It
+    now correctly returns the second argument (closes [#626](https://github.com/dart-lang/angular/issues/612)).
+
 ## 4.0.0
 
 **We are now named `package:angular` instead of `package:angular2`**. As such
