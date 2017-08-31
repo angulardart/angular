@@ -149,15 +149,14 @@ abstract class ChangeDetectorRef {
   ///
   /// @Component(
   ///     selector: 'live-data',
-  ///     inputs: const ['live'],
-  ///     template: 'Data: {{dataProvider.data}}'
-  /// )
+  ///     template: 'Data: {{dataProvider.data}}')
   /// class LiveData {
   ///   final ChangeDetectorRef ref;
   ///   final DataProvider dataProvider;
   ///
   ///   LiveData(this.ref, this.dataProvider);
   ///
+  ///   @Input()
   ///   set live(bool value) {
   ///     if (value) {
   ///       ref.reattach();
