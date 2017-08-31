@@ -197,9 +197,13 @@ class BlogArticleComponent implements OnInit {
   ngOnInit() async {
     if (_adService.showExample1) {
       await example_1.loadLibrary();
+      // Is not done automatically, because we don't know when you will load.
+      example_1.initReflector();
       component = example_1.Example1ComponentNgFactory;
     } else {
       await example_2.loadLibrary();
+      // Is not done automatically, because we don't know when you will load.
+      example_2.initReflector();
       component = example_2.Example2ComponentNgFactory;
     }
   }
