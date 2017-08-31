@@ -126,7 +126,7 @@ class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -230,7 +230,7 @@ class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -334,7 +334,7 @@ class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -438,7 +438,7 @@ class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -541,7 +541,7 @@ class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -646,7 +646,7 @@ class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -749,7 +749,7 @@ class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 

@@ -308,7 +308,7 @@ class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 

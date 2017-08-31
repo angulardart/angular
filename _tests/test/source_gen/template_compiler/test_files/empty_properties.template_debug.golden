@@ -159,10 +159,10 @@ class ViewEmptyPropertiesComponent0
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
-    _compView_2.destroy();
-    _compView_4.destroy();
-    _compView_6.destroy();
+    _compView_0?.destroy();
+    _compView_2?.destroy();
+    _compView_4?.destroy();
+    _compView_6?.destroy();
   }
 }
 
@@ -222,7 +222,7 @@ class _ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -322,7 +322,7 @@ class _ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 

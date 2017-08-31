@@ -137,7 +137,7 @@ class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 
@@ -271,7 +271,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
   }
 }
 

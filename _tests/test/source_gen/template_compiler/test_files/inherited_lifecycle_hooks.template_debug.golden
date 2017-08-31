@@ -133,7 +133,7 @@ class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0?.destroy();
     dbg(0, 0, 0);
     _LifecycleHooksComponent_0_4.ngOnDestroy();
   }
