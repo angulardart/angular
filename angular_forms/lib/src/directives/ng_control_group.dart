@@ -2,6 +2,7 @@ import 'package:angular/angular.dart'
     show
         Directive,
         Inject,
+        Input,
         OnDestroy,
         OnInit,
         Optional,
@@ -66,13 +67,18 @@ const controlGroupProvider =
 @Directive(
     selector: '[ngControlGroup]',
     providers: const [controlGroupProvider],
-    inputs: const ['name: ngControlGroup'],
     exportAs: 'ngForm')
 class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
   final List<dynamic> _validators;
   final ControlContainer _parent;
   NgControlGroup(@SkipSelf() this._parent,
       @Optional() @Self() @Inject(NG_VALIDATORS) this._validators);
+
+  @Input('ngControlGroup')
+  @override
+  set name(String value) {
+    super.name = value;
+  }
 
   @override
   void ngOnInit() {

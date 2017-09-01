@@ -5,6 +5,7 @@ import 'package:angular/angular.dart'
     show
         Directive,
         Inject,
+        Input,
         OnChanges,
         Optional,
         Output,
@@ -96,11 +97,11 @@ const formDirectiveProvider =
 @Directive(
     selector: '[ngFormModel]',
     providers: const [formDirectiveProvider],
-    inputs: const ['form: ngFormModel'],
     host: const {'(submit)': 'onSubmit(\$event)'},
     exportAs: 'ngForm')
 class NgFormModel extends ControlContainer implements Form, OnChanges {
   final List<dynamic> _validators;
+  @Input('ngFormModel')
   ControlGroup form;
   List<NgControl> directives = [];
   final _ngSubmit = new StreamController<ControlGroup>.broadcast(sync: true);

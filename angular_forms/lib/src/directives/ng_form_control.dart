@@ -4,6 +4,7 @@ import 'package:angular/angular.dart'
     show
         Directive,
         Inject,
+        Input,
         OnChanges,
         Optional,
         Output,
@@ -76,12 +77,13 @@ const formControlBinding =
 @Directive(
     selector: '[ngFormControl]',
     providers: const [formControlBinding],
-    inputs: const ['form: ngFormControl', 'model: ngModel'],
     exportAs: 'ngForm')
 class NgFormControl extends NgControl implements OnChanges {
   final /* Array<Validator|Function> */ List<dynamic> _validators;
+  @Input('ngFormControl')
   Control form;
   final _update = new StreamController.broadcast();
+  @Input('ngModel')
   dynamic model;
   dynamic viewModel;
 
