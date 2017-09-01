@@ -1,5 +1,3 @@
-# angular_test
-
 [![Pub package](https://img.shields.io/pub/v/angular_test.svg)][pub_angular_test]
 
 Testing infrastructure and runner for [AngularDart][webdev_angular],

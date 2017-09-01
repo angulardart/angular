@@ -1,4 +1,3 @@
-# angular_router
 <!-- Badges -->
 
 [![Pub package](https://img.shields.io/pub/v/angular_router.svg)][pub_angular_router]
@@ -11,7 +10,7 @@ the core `angular` package. Only critical bug fixes are planned for the 1.0
 router. A significant refactoring is in progress, which is expected to result
 in a 2.0 version of `angular_router`.
 
-Resources:
+### Resources:
 
 * Documentation:
   [routing guide][webdev_router],
