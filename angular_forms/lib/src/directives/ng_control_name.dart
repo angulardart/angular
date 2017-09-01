@@ -4,6 +4,7 @@ import 'package:angular/angular.dart'
     show
         Directive,
         Inject,
+        Input,
         OnChanges,
         OnDestroy,
         Optional,
@@ -83,12 +84,12 @@ const controlNameBinding =
 @Directive(
     selector: '[ngControl]',
     providers: const [controlNameBinding],
-    inputs: const ['name: ngControl', 'model: ngModel'],
     exportAs: 'ngForm')
 class NgControlName extends NgControl implements OnChanges, OnDestroy {
   final ControlContainer _parent;
   final /* Array<Validator|Function> */ List<dynamic> _validators;
   final _update = new StreamController.broadcast();
+  @Input('ngModel')
   dynamic model;
   dynamic viewModel;
   var _added = false;
@@ -105,6 +106,12 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors) {
     valueAccessor = selectValueAccessor(this, valueAccessors);
+  }
+
+  @Input('ngControl')
+  @override
+  set name(String value) {
+    super.name = value;
   }
 
   @Output('ngModelChange')
