@@ -28,21 +28,24 @@ import 'location_strategy.dart' show LocationStrategy;
 /// import 'package:angular_router/angular_router.dart'
 ///   show
 ///     Location,
+///     RouteConfig,
 ///     ROUTER_DIRECTIVES,
-///     ROUTER_PROVIDERS,
-///     RouteConfig;
+///     ROUTER_PROVIDERS;
 ///
-/// @Component({directives: [ROUTER_DIRECTIVES]})
-/// @RouteConfig([
-///  {...},
+/// @Component(
+///   ...
+///   directives: [ROUTER_DIRECTIVES],
+/// )
+/// @RouteConfig(const [
+///   ...
 /// ])
-/// class AppCmp {
-///   constructor(location: Location) {
+/// class AppComponent {
+///   AppComponent(Location location) {
 ///     location.go('/foo');
 ///   }
 /// }
 ///
-/// bootstrap(AppCmp, [ROUTER_PROVIDERS]);
+/// bootstrap(AppComponent, [ROUTER_PROVIDERS]);
 /// ```
 @Injectable()
 class Location {
