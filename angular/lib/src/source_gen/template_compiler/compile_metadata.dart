@@ -405,7 +405,7 @@ class CompileTypeMetadataVisitor
 
   CompileFactoryMetadata _factoryForFunction(
     FunctionTypedElement function, [
-    List typesOrTokens,
+    List<DartObject> typesOrTokens,
   ]) {
     String prefix;
     if (function.enclosingElement is ClassElement) {
