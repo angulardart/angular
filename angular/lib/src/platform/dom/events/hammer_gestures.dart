@@ -17,14 +17,15 @@ void overrideDefault(js.JsObject mc, String eventName, Object config) {
 @Injectable()
 class HammerGestureConfig {
   List<String> events = [];
-  Map overrides = {};
+  Map<Object, String> overrides = <Object, String>{};
 
   js.JsObject buildHammer(Element element) {
     var mc = new js.JsObject(js.context['Hammer'], [element]);
     overrideDefault(mc, 'pinch', {'enable': true});
     overrideDefault(mc, 'rotate', {'enable': true});
-    this.overrides.forEach((Object config, String eventName) =>
-        overrideDefault(mc, eventName, config));
+    this
+        .overrides
+        .forEach((config, eventName) => overrideDefault(mc, eventName, config));
     return mc;
   }
 }

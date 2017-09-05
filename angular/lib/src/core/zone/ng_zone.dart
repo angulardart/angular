@@ -98,8 +98,8 @@ class NgZone {
       new StreamController.broadcast(sync: true);
   final StreamController _onStableController =
       new StreamController.broadcast(sync: true);
-  final StreamController _onErrorController =
-      new StreamController.broadcast(sync: true);
+  final StreamController<NgZoneError> _onErrorController =
+      new StreamController<NgZoneError>.broadcast(sync: true);
 
   Zone _outerZone;
   Zone _innerZone;
@@ -330,10 +330,12 @@ class NgZone {
   bool get isRunning => _isRunning;
 
   /// Notify that an error has been delivered.
-  Stream get onError => _onErrorController.stream;
+  Stream<NgZoneError> get onError => _onErrorController.stream;
 
   /// Notifies when there is no more microtasks enqueue in the current VM Turn.
-  /// This is a hint for Angular to do change detection, which may enqueue more microtasks.
+  ///
+  /// This is a hint for Angular to do change detection, which may enqueue more
+  /// microtasks.
   /// For this reason this event can fire multiple times per VM Turn.
   Stream get onMicrotaskEmpty => _onMicrotaskEmptyController.stream;
 
