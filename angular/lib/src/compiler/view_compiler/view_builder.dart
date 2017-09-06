@@ -835,7 +835,7 @@ o.Expression createStaticNodeDebugInfo(CompileNode node) {
 o.ClassStmt createViewClass(
     CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
   var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
-  var viewMethods = (new List.from([
+  var viewMethods = <o.ClassMethod>[
     new o.ClassMethod("build", [], generateBuildMethod(view, parser),
         o.importType(Identifiers.ComponentRef, null), null, ['override']),
     new o.ClassMethod(
@@ -856,8 +856,7 @@ o.ClassStmt createViewClass(
         view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
     new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view), null,
         null, ['override'])
-  ])
-    ..addAll(view.eventHandlerMethods));
+  ]..addAll(view.eventHandlerMethods);
   if (view.detectHostChangesMethod != null) {
     viewMethods.add(new o.ClassMethod(
         'detectHostChanges',
@@ -874,9 +873,8 @@ o.ClassStmt createViewClass(
       view.getters,
       viewConstructor,
       viewMethods
-          .where((o.ClassMethod method) =>
-              method.body != null && method.body.length > 0)
-          .toList() as List<o.ClassMethod>);
+          .where((method) => method.body != null && method.body.isNotEmpty)
+          .toList());
   _addRenderTypeCtorInitialization(view, viewClass);
   return viewClass;
 }
