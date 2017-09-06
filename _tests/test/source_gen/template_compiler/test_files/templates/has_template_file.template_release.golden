@@ -50,7 +50,7 @@ class ViewHasTemplateFileComponent0
     _el_0.append(_text_1);
     import3.Text _text_2 = new import3.Text('\n');
     parentRenderNode.append(_text_2);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 }
@@ -80,7 +80,7 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _HasTemplateFileComponent_0_4 = new import2.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_4);
   }
 

@@ -59,7 +59,7 @@ class ViewInjectableComponent0
     import3.Text _text_1 = new import3.Text('Inject!');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    init(const [], const [], [_el_0, _text_1]);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 }
@@ -134,7 +134,7 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
         _const_OpaqueToken__test___0_4,
         this.injectorGet(String, viewData.parentIndex, null));
     _compView_0.create(_InjectableComponent_0_5, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _InjectableComponent_0_5);
   }
 

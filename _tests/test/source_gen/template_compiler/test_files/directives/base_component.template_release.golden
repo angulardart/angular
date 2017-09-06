@@ -59,7 +59,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     parentRenderNode.append(_el_2);
     _TestSubComponent_2_4 = new import4.TestSubComponent();
     _compView_2.create(_TestSubComponent_2_4, []);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -107,7 +107,7 @@ class _ViewTestFooComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_4 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_4);
   }
 

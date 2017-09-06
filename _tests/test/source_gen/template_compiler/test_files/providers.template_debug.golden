@@ -55,7 +55,7 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
     import7.Text _text_0 = new import7.Text('Hello');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
-    init(const [], const [], [_text_0]);
+    init(const [], null, [_text_0]);
     return null;
   }
 }
@@ -199,7 +199,7 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _ProvidersComponent_0_4 = new import2.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _ProvidersComponent_0_4);
   }
 

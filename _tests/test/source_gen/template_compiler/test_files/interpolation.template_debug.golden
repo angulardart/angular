@@ -66,7 +66,7 @@ class ViewInterpolationComponent0
     import3.Text _text_2 = new import3.Text('\n');
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 2, 6);
-    init(const [], const [], [_el_0, _text_1, _text_2]);
+    init(const [], null, [_el_0, _text_1, _text_2]);
     return null;
   }
 
@@ -116,7 +116,7 @@ class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _InterpolationComponent_0_4 = new import2.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_4);
   }
 
@@ -190,7 +190,7 @@ class ViewInterpolationComponentNoWhitespace0
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    init(const [], const [], [_el_0, _text_1]);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 
@@ -249,7 +249,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0
         new import2.InterpolationComponentNoWhitespace();
     _compView_0.create(
         _InterpolationComponentNoWhitespace_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(
         0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
   }

@@ -50,7 +50,7 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
     import2.Text _text_2 = new import2.Text('\n  ');
     parentRenderNode.append(_text_2);
     _el_1.addEventListener('click', eventHandler0(ctx.onClick));
-    init(const [], const []);
+    init(const [], null);
     rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
   }
@@ -80,7 +80,7 @@ class _ViewUsesNativeEventsHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _UsesNativeEvents_0_4 = new import1.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_4);
   }
 
@@ -192,7 +192,7 @@ class _ViewUsesAngularEventsHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _UsesAngularEvents_0_4 = new import1.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_4);
   }
 
@@ -242,7 +242,7 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
   @override
   ComponentRef build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 }
@@ -271,7 +271,7 @@ class _ViewHasAngularEventsHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _HasAngularEvents_0_4 = new import1.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_4);
   }
 

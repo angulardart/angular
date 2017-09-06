@@ -54,7 +54,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   ComponentRef build() {
     final import2.HostComponent _ctx = ctx;
     final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init(const [], const [], []);
+    init(const [], null, []);
     rootEl.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
     rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
     return null;
@@ -108,7 +108,7 @@ class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _HostComponent_0_4 = new import2.HostComponent();
     _compView_0.create(_HostComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _HostComponent_0_4);
   }
 

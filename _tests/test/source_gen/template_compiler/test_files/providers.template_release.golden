@@ -44,7 +44,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
     import5.Text _text_0 = new import5.Text('Hello');
     parentRenderNode.append(_text_0);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 }
@@ -154,7 +154,7 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _ProvidersComponent_0_4 = new import1.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _ProvidersComponent_0_4);
   }
 

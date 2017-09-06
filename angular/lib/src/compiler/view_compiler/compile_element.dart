@@ -19,11 +19,12 @@ import 'compile_view.dart' show CompileView;
 import 'constants.dart' show appViewRootElementName, InjectMethodVars;
 import 'view_compiler_utils.dart'
     show
-        getPropertyInView,
-        getViewFactoryName,
+        cachedParentIndexVarName,
         createDiTokenExpression,
+        convertValueToOutputAst,
         injectFromViewParentInjector,
-        convertValueToOutputAst;
+        getPropertyInView,
+        getViewFactoryName;
 
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
@@ -701,11 +702,19 @@ o.Expression createProviderProperty(
           .instantiate([resolvedProviderValueExpr]);
     }
     // Note: Equals is important for JS so that it also checks the undefined case!
-    getter.addStmt(new o.IfStmt(
-        new o.ReadClassMemberExpr(internalField).isBlank(), [
+    var statements = <o.Statement>[
       new o.WriteClassMemberExpr(internalField, resolvedProviderValueExpr)
           .toStmt()
-    ]));
+    ];
+    var readVars = o.findReadVarNames(statements);
+    if (readVars.contains(cachedParentIndexVarName)) {
+      statements.insert(
+          0,
+          new o.DeclareVarStmt(cachedParentIndexVarName,
+              new o.ReadClassMemberExpr('viewData').prop('parentIndex')));
+    }
+    getter.addStmt(new o.IfStmt(
+        new o.ReadClassMemberExpr(internalField).isBlank(), statements));
     getter.addStmt(
         new o.ReturnStatement(new o.ReadClassMemberExpr(internalField)));
     view.getters.add(new o.ClassGetter(

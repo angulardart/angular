@@ -149,7 +149,7 @@ class _ViewTestFooComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_4 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_4);
   }
 
@@ -229,7 +229,7 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
     _el_2.addEventListener('input', eventHandler1(_handle_input_2_0));
     _el_2.addEventListener(
         'blur', eventHandler0(_DefaultValueAccessor_2_4.touchHandler));
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -320,7 +320,7 @@ class _ViewInputFormTestHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _InputFormTest_0_4 = new import1.InputFormTest();
     _compView_0.create(_InputFormTest_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _InputFormTest_0_4);
   }
 

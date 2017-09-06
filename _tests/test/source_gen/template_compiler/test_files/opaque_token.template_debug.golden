@@ -54,7 +54,7 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
     _text_0 = new import3.Text('');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
-    init(const [], const [], [_text_0]);
+    init(const [], null, [_text_0]);
     return null;
   }
 
@@ -107,7 +107,7 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
     _HasOpaqueTokens_0_5 = new import2.HasOpaqueTokens(
         _const_OpaqueToken__baseUrlDescription___0_4);
     _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_5);
   }
 

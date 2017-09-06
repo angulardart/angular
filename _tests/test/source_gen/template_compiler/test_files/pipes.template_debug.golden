@@ -60,7 +60,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
     _pipe_dirty_1 = new import2.DirtyPipe();
     _pipe_lifecycle_2 = new import2.LifecyclePipe();
     this._pipe_lifecycle_2_0 = import8.pureProxy1(_pipe_lifecycle_2.transform);
-    init(const [], const [], [_text_0]);
+    init(const [], null, [_text_0]);
     return null;
   }
 
@@ -120,7 +120,7 @@ class _ViewCompHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _Comp_0_4 = new import2.Comp();
     _compView_0.create(_Comp_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _Comp_0_4);
   }
 
