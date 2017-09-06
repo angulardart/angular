@@ -115,7 +115,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     ctx.readDIFromElement = _viewQuery_q8_3.first;
     _viewQuery_q8_4.reset([_el_15]);
     ctx.readDIFromHtmlElement = _viewQuery_q8_4.first;
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -203,7 +203,7 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
     _query_q7_0_1.reset([]);
     _QueriesComponent_0_4.contentChildFromField = _query_q7_0_1.first;
     _compView_0.create(_QueriesComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _QueriesComponent_0_4);
   }
 

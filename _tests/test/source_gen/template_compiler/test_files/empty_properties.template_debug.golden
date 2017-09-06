@@ -113,7 +113,7 @@ class ViewEmptyPropertiesComponent0
     import3.Text _text_7 = new import3.Text('\n');
     parentRenderNode.append(_text_7);
     dbgElm(this, _text_7, 7, 3, 46);
-    init(const [], const [],
+    init(const [], null,
         [_el_0, _text_1, _el_2, _text_3, _el_4, _text_5, _el_6, _text_7]);
     return null;
   }
@@ -201,7 +201,7 @@ class _ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _EmptyPropertiesComponent_0_4 = new import1.EmptyPropertiesComponent();
     _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _EmptyPropertiesComponent_0_4);
   }
 
@@ -263,7 +263,7 @@ class ViewFancyButtonComponent0
   @override
   ComponentRef build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init(const [], const [], []);
+    init(const [], null, []);
     return null;
   }
 }
@@ -302,7 +302,7 @@ class _ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _FancyButtonComponent_0_4);
   }
 

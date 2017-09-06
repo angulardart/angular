@@ -56,7 +56,7 @@ class ViewComp0 extends AppView<import1.Comp> {
     _pipe_dirty_1 = new import1.DirtyPipe();
     _pipe_lifecycle_2 = new import1.LifecyclePipe();
     this._pipe_lifecycle_2_0 = import6.pureProxy1(_pipe_lifecycle_2.transform);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -111,7 +111,7 @@ class _ViewCompHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _Comp_0_4 = new import1.Comp();
     _compView_0.create(_Comp_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _Comp_0_4);
   }
 

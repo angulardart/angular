@@ -52,7 +52,7 @@ class ViewInterpolationComponent0
     _el_0.append(_text_1);
     import2.Text _text_2 = new import2.Text('\n');
     parentRenderNode.append(_text_2);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -91,7 +91,7 @@ class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _InterpolationComponent_0_4 = new import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_4);
   }
 
@@ -153,7 +153,7 @@ class ViewInterpolationComponentNoWhitespace0
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     _text_1 = new import2.Text('');
     _el_0.append(_text_1);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -199,7 +199,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
         new import1.InterpolationComponentNoWhitespace();
     _compView_0.create(
         _InterpolationComponentNoWhitespace_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(
         0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
   }

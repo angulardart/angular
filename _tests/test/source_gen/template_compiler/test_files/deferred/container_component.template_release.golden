@@ -58,7 +58,7 @@ class ViewTestContainerComponent0
         () {
       deflib1.initReflector();
     });
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -90,7 +90,7 @@ class _ViewTestContainerComponent1
     _DeferredChildComponent_0_4 = new deflib0.DeferredChildComponent();
     import6.Text _text_1 = new import6.Text('Foo');
     _compView_0.create(_DeferredChildComponent_0_4, []);
-    init([_el_0], const []);
+    init0(_el_0);
     return null;
   }
 
@@ -139,7 +139,7 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _TestContainerComponent_0_4 = new import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _TestContainerComponent_0_4);
   }
 

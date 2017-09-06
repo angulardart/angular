@@ -46,7 +46,7 @@ class ViewDeferredChildComponent0
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     import2.Text _text_1 = new import2.Text('Child');
     _el_0.append(_text_1);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 }
@@ -75,7 +75,7 @@ class _ViewDeferredChildComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _DeferredChildComponent_0_4 = new import1.DeferredChildComponent();
     _compView_0.create(_DeferredChildComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _DeferredChildComponent_0_4);
   }
 

@@ -46,7 +46,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   ComponentRef build() {
     final import1.HostComponent _ctx = ctx;
     final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init(const [], const []);
+    init(const [], null);
     rootEl.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
     rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
     return null;
@@ -90,7 +90,7 @@ class _ViewHostComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _HostComponent_0_4 = new import1.HostComponent();
     _compView_0.create(_HostComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _HostComponent_0_4);
   }
 

@@ -57,7 +57,7 @@ class ViewDeferredChildComponent0
     import3.Text _text_1 = new import3.Text('Child');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    init(const [], const [], [_el_0, _text_1]);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 }
@@ -96,7 +96,7 @@ class _ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _DeferredChildComponent_0_4 = new import2.DeferredChildComponent();
     _compView_0.create(_DeferredChildComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _DeferredChildComponent_0_4);
   }
 

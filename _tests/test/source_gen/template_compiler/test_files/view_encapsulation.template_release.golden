@@ -45,7 +45,7 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     import2.Text _text_1 = new import2.Text('Emulated');
     _el_0.append(_text_1);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 }
@@ -74,7 +74,7 @@ class _ViewEmulatedComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _EmulatedComponent_0_4 = new import1.EmulatedComponent();
     _compView_0.create(_EmulatedComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _EmulatedComponent_0_4);
   }
 
@@ -129,7 +129,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     import2.Text _text_1 = new import2.Text('None');
     _el_0.append(_text_1);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 }
@@ -158,7 +158,7 @@ class _ViewNoneComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _NoneComponent_0_4 = new import1.NoneComponent();
     _compView_0.create(_NoneComponent_0_4, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _NoneComponent_0_4);
   }
 

@@ -51,7 +51,7 @@ class ViewLifecycleHooksComponent0
   @override
   ComponentRef build() {
     final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init(const [], const [], []);
+    init(const [], null, []);
     return null;
   }
 }
@@ -91,7 +91,7 @@ class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _LifecycleHooksComponent_0_4 = new import2.LifecycleHooksComponent();
     _compView_0.create(_LifecycleHooksComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_4);
   }
 

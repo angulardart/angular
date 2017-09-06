@@ -15,6 +15,9 @@ import 'compile_view.dart' show CompileView;
 /// future.
 const bool outlinerDeprecated = false;
 
+/// Variable name used to read viewData.parentIndex in build functions.
+const String cachedParentIndexVarName = 'parentIdx';
+
 // Creates method parameters list for AppView set attribute calls.
 List<o.Expression> createSetAttributeParams(
     String fieldName, String attrNs, String attrName, o.Expression valueExpr) {

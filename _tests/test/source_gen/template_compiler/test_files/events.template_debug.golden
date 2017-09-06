@@ -62,7 +62,7 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 41);
     _el_1.addEventListener('click', eventHandler0(ctx.onClick));
-    init(const [], const [], [_text_0, _el_1, _text_2]);
+    init(const [], null, [_text_0, _el_1, _text_2]);
     rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
   }
@@ -102,7 +102,7 @@ class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _UsesNativeEvents_0_4 = new import2.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_4);
   }
 
@@ -240,7 +240,7 @@ class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _UsesAngularEvents_0_4 = new import2.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_4);
   }
 
@@ -298,7 +298,7 @@ class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
   @override
   ComponentRef build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    init(const [], const [], []);
+    init(const [], null, []);
     return null;
   }
 }
@@ -337,7 +337,7 @@ class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _HasAngularEvents_0_4 = new import2.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_4);
   }
 

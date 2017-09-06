@@ -43,7 +43,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
-    init(const [], const []);
+    init(const [], null);
     return null;
   }
 
@@ -84,7 +84,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
     _HasOpaqueTokens_0_5 = new import1.HasOpaqueTokens(
         _const_OpaqueToken__baseUrlDescription___0_4);
     _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
-    init([rootEl], const []);
+    init0(rootEl);
     return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_5);
   }
 

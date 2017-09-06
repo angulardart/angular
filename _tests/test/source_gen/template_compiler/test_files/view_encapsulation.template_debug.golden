@@ -56,7 +56,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
     import3.Text _text_1 = new import3.Text('Emulated');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    init(const [], const [], [_el_0, _text_1]);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 }
@@ -95,7 +95,7 @@ class _ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _EmulatedComponent_0_4 = new import2.EmulatedComponent();
     _compView_0.create(_EmulatedComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _EmulatedComponent_0_4);
   }
 
@@ -159,7 +159,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
     import3.Text _text_1 = new import3.Text('None');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    init(const [], const [], [_el_0, _text_1]);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 }
@@ -198,7 +198,7 @@ class _ViewNoneComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _NoneComponent_0_4 = new import2.NoneComponent();
     _compView_0.create(_NoneComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _NoneComponent_0_4);
   }
 

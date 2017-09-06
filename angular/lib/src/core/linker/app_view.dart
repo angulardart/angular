@@ -136,6 +136,7 @@ class AppViewData<T> {
         _onDestroyCallbacks[i]();
       }
     }
+    if (subscriptions == null) return;
     for (var i = 0, len = subscriptions.length; i < len; i++) {
       subscriptions[i].cancel();
     }

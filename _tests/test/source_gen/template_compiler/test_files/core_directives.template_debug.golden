@@ -89,7 +89,7 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     import11.Text _text_4 = new import11.Text('\n    ');
     parentRenderNode.append(_text_4);
     dbgElm(this, _text_4, 4, 3, 10);
-    init(const [], const [], [_text_0, _anchor_1, _text_2, _anchor_3, _text_4]);
+    init(const [], null, [_text_0, _anchor_1, _text_2, _anchor_3, _text_4]);
     return null;
   }
 
@@ -145,7 +145,7 @@ class _ViewTestFooComponent1 extends DebugAppView<import5.TestFooComponent> {
     import11.Text _text_1 = new import11.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 21);
-    init([_el_0], const [], [_el_0, _text_1]);
+    init([_el_0], null, [_el_0, _text_1]);
     return null;
   }
 }
@@ -193,7 +193,7 @@ class _ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
     import11.Text _text_4 = new import11.Text('\n    ');
     _el_0.append(_text_4);
     dbgElm(this, _text_4, 4, 2, 26);
-    init([_el_0], const [], [_el_0, _text_1, _el_2, _text_3, _text_4]);
+    init([_el_0], null, [_el_0, _text_1, _el_2, _text_3, _text_4]);
     return null;
   }
 
@@ -242,7 +242,7 @@ class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _TestFooComponent_0_4 = new import5.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_4, projectableNodes);
-    init([rootEl], const [], [rootEl]);
+    init([rootEl], null, [rootEl]);
     return new ComponentRef(0, this, rootEl, _TestFooComponent_0_4);
   }
 

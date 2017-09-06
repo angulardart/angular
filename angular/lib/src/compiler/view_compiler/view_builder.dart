@@ -59,11 +59,12 @@ import 'parse_utils.dart';
 import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
-        getViewFactoryName,
+        cachedParentIndexVarName,
         createFlatArray,
         createDebugInfoTokenExpression,
         createSetAttributeParams,
-        componentFromDirectives;
+        componentFromDirectives,
+        getViewFactoryName;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 const CLASS_ATTR = "class";
@@ -1082,13 +1083,11 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
 
-  final initParams = [createFlatArray(view.rootNodesOrViewContainers)];
-  final subscriptions = o.literalArr(
-    view.subscriptions,
-    view.subscriptions.isEmpty
-        ? new o.ArrayType(null, const [o.TypeModifier.Const])
-        : null,
-  );
+  final rootElements = view.rootNodesOrViewContainers;
+  final initParams = [createFlatArray(rootElements)];
+  final subscriptions = view.subscriptions.isEmpty
+      ? o.NULL_EXPR
+      : o.literalArr(view.subscriptions, null);
 
   if (view.subscribesToMockLike) {
     // Mock-like directives may have null subscriptions which must be
@@ -1113,12 +1112,20 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   // In RELEASE mode we call:
   //
   // init(rootNodes, subscriptions);
+  // or init0 if we have a single root node with no subscriptions.
   if (view.genConfig.genDebugInfo) {
     final renderNodes = view.nodes.map((node) => node.renderNode).toList();
     initParams.add(o.literalArr(renderNodes));
   }
 
-  statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
+  if (view.genConfig.genDebugInfo == false &&
+      rootElements.length == 1 &&
+      rootElements[0] is! o.ArrayType) {
+    statements
+        .add(new o.InvokeMemberMethodExpr('init0', [rootElements[0]]).toStmt());
+  } else {
+    statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
+  }
 
   if (isComponentRoot) {
     _writeComponentHostEventListeners(view, parser, statements);
@@ -1149,6 +1156,14 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     genProfileBuildEnd(view, statements);
   }
   statements.add(new o.ReturnStatement(resultExpr));
+
+  var readVars = o.findReadVarNames(statements);
+  if (readVars.contains(cachedParentIndexVarName)) {
+    statements.insert(
+        0,
+        new o.DeclareVarStmt(cachedParentIndexVarName,
+            new ReadClassMemberExpr('viewData').prop('parentIndex')));
+  }
   return statements;
 }
 
@@ -1267,6 +1282,10 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   }
   var varStmts = [];
   var readVars = o.findReadVarNames(stmts);
+  if (readVars.contains(cachedParentIndexVarName)) {
+    varStmts.add(new o.DeclareVarStmt(cachedParentIndexVarName,
+        new ReadClassMemberExpr('viewData').prop('parentIndex')));
+  }
   if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
     // Cache [ctx] class field member as typed [_ctx] local for change detection
     // code to consume.
