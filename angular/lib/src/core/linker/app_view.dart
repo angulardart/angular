@@ -239,6 +239,14 @@ abstract class AppView<T> {
   /// Overwritten by implementations.
   ComponentRef build() => null;
 
+  /// Specialized init when component has a single root node.
+  void init0(dynamic e) {
+    viewData.rootNodesOrViewContainers = <dynamic>[e];
+    if (viewData.type == ViewType.COMPONENT) {
+      dirtyParentQueriesInternal();
+    }
+  }
+
   /// Called by build once all dom nodes are available.
   void init(List rootNodesOrViewContainers, List subscriptions) {
     viewData.rootNodesOrViewContainers = rootNodesOrViewContainers;
