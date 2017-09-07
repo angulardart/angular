@@ -84,7 +84,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
     _HasOpaqueTokens_0_5 = new import1.HasOpaqueTokens(
         _const_OpaqueToken__baseUrlDescription___0_4);
     _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
-    init0(rootEl);
+    init([rootEl], null);
     return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_5);
   }
 
