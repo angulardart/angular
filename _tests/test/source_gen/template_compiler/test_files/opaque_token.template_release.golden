@@ -135,16 +135,4 @@ void initReflector() {
     HasOpaqueTokens,
     HasOpaqueTokensNgFactory,
   );
-  _ngRef.registerFactory(
-    HasOpaqueTokens,
-    (String p0) => new HasOpaqueTokens(p0),
-  );
-  _ngRef.registerDependencies(
-    HasOpaqueTokens,
-    const [
-      const [
-        const _ngRef.Inject(const _ngRef.OpaqueToken(r'baseUrlDescription')),
-      ],
-    ],
-  );
 }

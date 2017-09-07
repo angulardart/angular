@@ -292,7 +292,9 @@ void main() {
   });
 
   test('should support component registration', () async {
-    final reflector = new ReflectableReader.noLinking();
+    final reflector = new ReflectableReader.noLinking(
+      recordComponentsAsInjectables: false,
+    );
     final output = await reflector.resolve(await resolveLibrary(r'''
       @Component(selector: 'example')
       class Example {}
@@ -315,11 +317,6 @@ void main() {
           '    Example,\n'
           '    ExampleNgFactory,\n'
           '  );\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    () => new Example(),\n'
-          '  );\n'
-          '\n'
           '}\n',
     );
   });
@@ -361,7 +358,9 @@ void main() {
   });
 
   test('should emit @RouteConfig annotations', () async {
-    final reflector = new ReflectableReader.noLinking();
+    final reflector = new ReflectableReader.noLinking(
+      recordComponentsAsInjectables: false,
+    );
     final output = await reflector.resolve(await resolveLibrary(r'''
       // Inlined a minimal version here to simplify the test setup.
       class RouteConfig {
@@ -410,11 +409,6 @@ void main() {
           '    Example,\n'
           '    ExampleNgFactory,\n'
           '  );\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    () => new Example(),\n'
-          '  );\n'
-          '\n'
           '}\n',
     );
   });

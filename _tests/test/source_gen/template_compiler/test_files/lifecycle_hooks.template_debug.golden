@@ -164,8 +164,4 @@ void initReflector() {
     LifecycleHooksComponent,
     LifecycleHooksComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    LifecycleHooksComponent,
-    () => new LifecycleHooksComponent(),
-  );
 }

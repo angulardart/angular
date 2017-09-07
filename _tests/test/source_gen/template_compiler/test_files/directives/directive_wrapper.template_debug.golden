@@ -480,11 +480,6 @@ void initReflector() {
     TestFooComponentNgFactory,
   );
   _ngRef.registerFactory(
-    TestFooComponent,
-    () => new TestFooComponent(),
-  );
-
-  _ngRef.registerFactory(
     MyInjectableClass,
     () => new MyInjectableClass(),
   );
@@ -492,9 +487,5 @@ void initReflector() {
   _ngRef.registerComponent(
     InputFormTest,
     InputFormTestNgFactory,
-  );
-  _ngRef.registerFactory(
-    InputFormTest,
-    () => new InputFormTest(),
   );
 }

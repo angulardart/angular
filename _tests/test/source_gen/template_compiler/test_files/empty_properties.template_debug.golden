@@ -351,17 +351,8 @@ void initReflector() {
     EmptyPropertiesComponent,
     EmptyPropertiesComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    EmptyPropertiesComponent,
-    () => new EmptyPropertiesComponent(),
-  );
-
   _ngRef.registerComponent(
     FancyButtonComponent,
     FancyButtonComponentNgFactory,
-  );
-  _ngRef.registerFactory(
-    FancyButtonComponent,
-    () => new FancyButtonComponent(),
   );
 }

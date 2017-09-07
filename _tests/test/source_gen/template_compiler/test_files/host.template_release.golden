@@ -139,8 +139,4 @@ void initReflector() {
     HostComponent,
     HostComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    HostComponent,
-    () => new HostComponent(),
-  );
 }

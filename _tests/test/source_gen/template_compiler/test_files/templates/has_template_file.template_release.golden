@@ -130,8 +130,4 @@ void initReflector() {
     HasTemplateFileComponent,
     HasTemplateFileComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    HasTemplateFileComponent,
-    () => new HasTemplateFileComponent(),
-  );
 }

@@ -125,8 +125,4 @@ void initReflector() {
     DeferredChildComponent,
     DeferredChildComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    DeferredChildComponent,
-    () => new DeferredChildComponent(),
-  );
 }

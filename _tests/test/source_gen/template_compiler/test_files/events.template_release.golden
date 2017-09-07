@@ -320,26 +320,12 @@ void initReflector() {
     UsesNativeEvents,
     UsesNativeEventsNgFactory,
   );
-  _ngRef.registerFactory(
-    UsesNativeEvents,
-    () => new UsesNativeEvents(),
-  );
-
   _ngRef.registerComponent(
     UsesAngularEvents,
     UsesAngularEventsNgFactory,
   );
-  _ngRef.registerFactory(
-    UsesAngularEvents,
-    () => new UsesAngularEvents(),
-  );
-
   _ngRef.registerComponent(
     HasAngularEvents,
     HasAngularEventsNgFactory,
-  );
-  _ngRef.registerFactory(
-    HasAngularEvents,
-    () => new HasAngularEvents(),
   );
 }

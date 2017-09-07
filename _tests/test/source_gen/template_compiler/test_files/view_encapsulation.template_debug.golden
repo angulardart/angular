@@ -246,17 +246,8 @@ void initReflector() {
     EmulatedComponent,
     EmulatedComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    EmulatedComponent,
-    () => new EmulatedComponent(),
-  );
-
   _ngRef.registerComponent(
     NoneComponent,
     NoneComponentNgFactory,
-  );
-  _ngRef.registerFactory(
-    NoneComponent,
-    () => new NoneComponent(),
   );
 }
