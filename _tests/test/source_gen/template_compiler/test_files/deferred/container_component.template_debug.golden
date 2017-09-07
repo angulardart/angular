@@ -226,8 +226,4 @@ void initReflector() {
     TestContainerComponent,
     TestContainerComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    TestContainerComponent,
-    () => new TestContainerComponent(),
-  );
 }

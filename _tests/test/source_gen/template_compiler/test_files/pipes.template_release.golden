@@ -154,8 +154,4 @@ void initReflector() {
     Comp,
     CompNgFactory,
   );
-  _ngRef.registerFactory(
-    Comp,
-    () => new Comp(),
-  );
 }

@@ -174,28 +174,6 @@ void initReflector() {
     InjectableComponentNgFactory,
   );
   _ngRef.registerFactory(
-    InjectableComponent,
-    (BaseService p0, InjectableService p1, bool p2) =>
-        new InjectableComponent(p0, p1, p2),
-  );
-  _ngRef.registerDependencies(
-    InjectableComponent,
-    const [
-      const [
-        BaseService,
-        const _ngRef.Optional(),
-      ],
-      const [
-        InjectableService,
-        const _ngRef.Optional(),
-      ],
-      const [
-        const _ngRef.Inject(const _ngRef.OpaqueToken(r'test')),
-      ],
-    ],
-  );
-
-  _ngRef.registerFactory(
     SomeDep,
     () => new SomeDep(),
   );

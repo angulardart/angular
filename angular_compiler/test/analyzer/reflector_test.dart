@@ -56,6 +56,7 @@ void main() {
       output,
       new ReflectableOutput(registerClasses: [
         new ReflectableClass(
+          element: clazz,
           name: 'Example',
           factory: new DependencyInvocation(
             clazz.unnamedConstructor,
@@ -85,6 +86,7 @@ void main() {
       output,
       new ReflectableOutput(registerClasses: [
         new ReflectableClass(
+          element: clazz,
           name: 'Example',
           factory: new DependencyInvocation(
             clazz.unnamedConstructor,
@@ -114,6 +116,7 @@ void main() {
       output,
       new ReflectableOutput(registerClasses: [
         new ReflectableClass(
+          element: clazz,
           name: 'Example',
           factory: new DependencyInvocation(
             clazz.unnamedConstructor,
@@ -143,6 +146,7 @@ void main() {
       output,
       new ReflectableOutput(registerClasses: [
         new ReflectableClass(
+          element: clazz,
           name: 'Example',
           factory: new DependencyInvocation(
             clazz.unnamedConstructor,
@@ -197,6 +201,7 @@ void main() {
       output,
       new ReflectableOutput(registerClasses: [
         new ReflectableClass(
+          element: clazz,
           name: 'Example',
           factory: new DependencyInvocation(
             clazz.unnamedConstructor,

@@ -77,7 +77,7 @@ class ReflectableReader {
     @required this.hasInput,
     @required this.isLibrary,
     this.outputExtension: _defaultOutputExtension,
-    this.recordComponentsAsInjectables: true,
+    this.recordComponentsAsInjectables: false,
     this.recordDirectivesAsInjectables: true,
     this.recordPipesAsInjectables: false,
     this.recordRouterAnnotationsForComponents: true,
@@ -138,6 +138,7 @@ class ReflectableReader {
       return null;
     }
     return new ReflectableClass(
+      element: element,
       factory: factory,
       name: element.name,
       registerAnnotation: recordRouterAnnotationsForComponents && isComponent
@@ -263,6 +264,9 @@ class ReflectableOutput {
 }
 
 class ReflectableClass {
+  /// Actual class element.
+  final ClassElement element;
+
   /// Factory required to invoke the constructor of the class.
   final DependencyInvocation<ConstructorElement> factory;
 
@@ -277,6 +281,7 @@ class ReflectableClass {
 
   @visibleForTesting
   const ReflectableClass({
+    @required this.element,
     this.factory,
     @required this.name,
     this.registerAnnotation,

@@ -282,11 +282,6 @@ void initReflector() {
     ProvidersComponentNgFactory,
   );
   _ngRef.registerFactory(
-    ProvidersComponent,
-    () => new ProvidersComponent(),
-  );
-
-  _ngRef.registerFactory(
     MyInjectableTypeAnnotation,
     () => new MyInjectableTypeAnnotation(),
   );

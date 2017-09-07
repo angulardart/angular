@@ -782,62 +782,28 @@ void initReflector() {
     CheckOnceComponent,
     CheckOnceComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    CheckOnceComponent,
-    () => new CheckOnceComponent(),
-  );
-
   _ngRef.registerComponent(
     CheckedComponent,
     CheckedComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    CheckedComponent,
-    () => new CheckedComponent(),
-  );
-
   _ngRef.registerComponent(
     CheckAlwaysComponent,
     CheckAlwaysComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    CheckAlwaysComponent,
-    () => new CheckAlwaysComponent(),
-  );
-
   _ngRef.registerComponent(
     DetachedComponent,
     DetachedComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    DetachedComponent,
-    () => new DetachedComponent(),
-  );
-
   _ngRef.registerComponent(
     OnPushComponent,
     OnPushComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    OnPushComponent,
-    () => new OnPushComponent(),
-  );
-
   _ngRef.registerComponent(
     StatefulComponent,
     StatefulComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    StatefulComponent,
-    () => new StatefulComponent(),
-  );
-
   _ngRef.registerComponent(
     DefaultComponent,
     DefaultComponentNgFactory,
-  );
-  _ngRef.registerFactory(
-    DefaultComponent,
-    () => new DefaultComponent(),
   );
 }

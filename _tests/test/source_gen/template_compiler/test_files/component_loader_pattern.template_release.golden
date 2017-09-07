@@ -123,8 +123,4 @@ void initReflector() {
     TestComponent,
     TestComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    TestComponent,
-    () => new TestComponent(),
-  );
 }

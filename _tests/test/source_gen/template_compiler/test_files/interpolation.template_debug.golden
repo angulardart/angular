@@ -302,17 +302,8 @@ void initReflector() {
     InterpolationComponent,
     InterpolationComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    InterpolationComponent,
-    () => new InterpolationComponent(),
-  );
-
   _ngRef.registerComponent(
     InterpolationComponentNoWhitespace,
     InterpolationComponentNoWhitespaceNgFactory,
-  );
-  _ngRef.registerFactory(
-    InterpolationComponentNoWhitespace,
-    () => new InterpolationComponentNoWhitespace(),
   );
 }

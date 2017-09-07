@@ -208,8 +208,4 @@ void initReflector() {
     ProviderModulesComponent,
     ProviderModulesComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    ProviderModulesComponent,
-    () => new ProviderModulesComponent(),
-  );
 }

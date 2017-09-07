@@ -256,11 +256,6 @@ void initReflector() {
     QueriesComponentNgFactory,
   );
   _ngRef.registerFactory(
-    QueriesComponent,
-    () => new QueriesComponent(),
-  );
-
-  _ngRef.registerFactory(
     AnotherDirective,
     () => new AnotherDirective(),
   );

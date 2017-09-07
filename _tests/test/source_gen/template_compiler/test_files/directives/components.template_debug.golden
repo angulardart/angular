@@ -142,8 +142,4 @@ void initReflector() {
     TestSubComponent,
     TestSubComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    TestSubComponent,
-    () => new TestSubComponent(),
-  );
 }

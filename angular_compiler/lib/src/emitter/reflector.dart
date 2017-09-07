@@ -57,7 +57,7 @@ class ReflectableEmitter {
       if (element.registerAnnotation == null) {
         output.writeln('const _${element.name}Metadata = const [];');
       } else {
-        var source = (element.factory.bound.returnType.element as ClassElement)
+        var source = element.element
             .computeNode()
             .metadata
             .firstWhere((a) => a.name.name == 'RouteConfig')
