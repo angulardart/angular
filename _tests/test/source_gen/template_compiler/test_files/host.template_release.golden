@@ -90,7 +90,7 @@ class _ViewHostComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _HostComponent_0_4 = new import1.HostComponent();
     _compView_0.create(_HostComponent_0_4, projectableNodes);
-    init0(rootEl);
+    init([rootEl], null);
     return new ComponentRef(0, this, rootEl, _HostComponent_0_4);
   }
 

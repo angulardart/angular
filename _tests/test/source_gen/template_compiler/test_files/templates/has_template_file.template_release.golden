@@ -80,7 +80,7 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _HasTemplateFileComponent_0_4 = new import2.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_4, projectableNodes);
-    init0(rootEl);
+    init([rootEl], null);
     return new ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_4);
   }
 

@@ -159,7 +159,7 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _EmptyPropertiesComponent_0_4 = new import1.EmptyPropertiesComponent();
     _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
-    init0(rootEl);
+    init([rootEl], null);
     return new ComponentRef(0, this, rootEl, _EmptyPropertiesComponent_0_4);
   }
 
@@ -241,7 +241,7 @@ class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
-    init0(rootEl);
+    init([rootEl], null);
     return new ComponentRef(0, this, rootEl, _FancyButtonComponent_0_4);
   }
 

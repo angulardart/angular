@@ -1118,14 +1118,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     initParams.add(o.literalArr(renderNodes));
   }
 
-  if (view.genConfig.genDebugInfo == false &&
-      rootElements.length == 1 &&
-      rootElements[0] is! o.ArrayType) {
-    statements
-        .add(new o.InvokeMemberMethodExpr('init0', [rootElements[0]]).toStmt());
-  } else {
-    statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
-  }
+  statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
 
   if (isComponentRoot) {
     _writeComponentHostEventListeners(view, parser, statements);
