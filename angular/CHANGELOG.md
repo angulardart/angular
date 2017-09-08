@@ -1,11 +1,17 @@
 ## 5.0.0-alpha
 
-### Breaking changes
+**We are now tracking the Dart 2.0 SDK**. It is _not_ recommended to use the
+_5.0.0-alpha_ series of releases unless you are using a recent dev release of
+the Dart SDK. We plan to exit an alpha state once Dart 2.0 is released.
+
+### Breaking cahnges
+
+*   Classes annotated `@Component` can no longer be treated like services that
+    were annotated with `@Injectable()`, and now fail when they are used within
+    a `ReflectiveInjector`. Similar changes are planned for `@Directive`.
 
 *   Removed `inputs` field from `Directive`. Inputs now must be declared using
-    inline `Input` annotations.
-
-## 4.0.1
+    inline `@Input` annotations.
 
 ### Bug fixes
 
