@@ -1,4 +1,5 @@
-/// This library exists for compatibility reasons; use angular.dart instead.
+/// This library exists for vm targets, which cannot depend on angular.dart.
+/// Other targets should use angular.dart instead.
 /// @nodoc
 
 export 'src/core/change_detection/pipe_transform.dart';
