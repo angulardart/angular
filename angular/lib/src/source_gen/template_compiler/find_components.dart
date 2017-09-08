@@ -27,7 +27,6 @@ const String _visibilityProperty = 'visibility';
 const _statefulDirectiveFields = const [
   'exportAs',
   'host',
-  'inputs',
   _visibilityProperty,
 ];
 
@@ -449,15 +448,6 @@ class ComponentVisitor
         final host = coerceStringMap(annotationValue, 'host');
         CompileDirectiveMetadata.deserializeHost(
             host, _hostAttributes, _hostListeners, _hostProperties);
-        final inputs = coerceStringList(annotationValue, 'inputs');
-        final unboundInputs = <String, String>{};
-        CompileDirectiveMetadata.deserializeInputs(
-            inputs, unboundInputs, _inputTypes);
-        for (var propertyName in unboundInputs.keys) {
-          final bindingName = unboundInputs[propertyName];
-          _prohibitBindingChange(element, propertyName, bindingName, _inputs);
-          _inputs[propertyName] = bindingName;
-        }
       }
       // Collect metadata from field and property accessor annotations.
       super.visitClassElement(element);

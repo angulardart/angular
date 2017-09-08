@@ -1840,7 +1840,16 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
 
   final inputsMap = <String, String>{};
   final inputTypeMap = <String, CompileTypeMetadata>{};
-  CompileDirectiveMetadata.deserializeInputs(inputs, inputsMap, inputTypeMap);
+  inputs?.forEach((input) {
+    final inputParts = input.split(';');
+    final inputName = inputParts[0];
+    final bindingParts = splitAtColon(inputName, [inputName, inputName]);
+    inputsMap[bindingParts[0]] = bindingParts[1];
+    if (inputParts.length > 1) {
+      inputTypeMap[bindingParts[0]] =
+          new CompileTypeMetadata(name: inputParts[1]);
+    }
+  });
 
   final outputsMap = <String, String>{};
   outputs?.forEach((output) {
