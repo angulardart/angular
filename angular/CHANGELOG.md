@@ -1,3 +1,10 @@
+## 5.0.0-alpha
+
+### Breaking changes
+
+*   Removed `inputs` field from `Directive`. Inputs now must be declared using
+    inline `Input` annotations.
+
 ## 4.0.1
 
 ### Bug fixes

@@ -79,50 +79,6 @@ class Directive {
   /// element.
   final String selector;
 
-  /// The directive's data-bound input properties.
-  ///
-  /// Angular automatically updates input properties during change detection.
-  ///
-  /// The [inputs] property defines a set of _directiveProperty_ to
-  /// _bindingProperty_ configuration:
-  ///
-  /// - _directiveProperty_ specifies the component property where the value
-  ///   is written.
-  /// - _bindingProperty_ specifies the DOM property where the value is read
-  ///   from.
-  ///
-  /// When _bindingProperty_ is not provided, it is assumed to be equal to
-  /// _directiveProperty_.
-  ///
-  /// The following example creates a component with two data-bound properties.
-  ///
-  /// ```dart
-  /// @Component(
-  ///   selector: 'bank-account',
-  ///   inputs: const ['bankName', 'id: account-id'],
-  ///   template: '''
-  ///     Bank Name: {{bankName}}
-  ///     Account Id: {{id}}
-  ///   ''')
-  /// class BankAccount {
-  ///   String bankName, id;
-  ///
-  ///   // This property is not bound, and won't be automatically updated by
-  ///   // Angular
-  ///   String normalizedBankName;
-  /// }
-  ///
-  /// @Component(
-  ///   selector: 'app',
-  ///   template: '''
-  ///     <bank-account bank-name="RBC" account-id="4747"></bank-account>
-  ///   ''',
-  ///   directives: const [BankAccount])
-  /// class App {}
-  /// ```
-  @Deprecated('Use @Input() on a setter or field instead')
-  final List<String> inputs;
-
   /// Events, actions, properties, and attributes related to the host element.
   ///
   /// ## Host listeners
@@ -268,7 +224,6 @@ class Directive {
 
   const Directive({
     @required this.selector,
-    this.inputs,
     this.host,
     this.providers,
     this.exportAs,
@@ -373,7 +328,6 @@ class Component extends Directive {
 
   const Component({
     String selector,
-    List<String> inputs,
     Map<String, String> host,
     String exportAs,
     List providers,
@@ -392,7 +346,6 @@ class Component extends Directive {
   })
       : super(
           selector: selector,
-          inputs: inputs,
           host: host,
           exportAs: exportAs,
           providers: providers,

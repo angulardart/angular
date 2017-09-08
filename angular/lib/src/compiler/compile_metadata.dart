@@ -397,42 +397,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     });
   }
 
-  /// Maps binding names and types from a list of serialized inputs.
-  ///
-  /// Serialized input grammar:
-  ///
-  ///     <input> :=
-  ///         <input-binding> [; <type>]
-  ///
-  ///     <input-binding> :=
-  ///         <dirProp> |
-  ///         <dirProp> ':' <elProp>
-  ///
-  /// For each <input> in [inputs], (<dirProp>, <elProp>) is added to
-  /// [outBindingNames], and (<dirProp>, <type>) is added to [outTypes]. If
-  /// omitted, <elProp> defaults to <dirProp>.
-  static void deserializeInputs(
-    List<String> inputs,
-    Map<String, String> outBindingNames,
-    Map<String, CompileTypeMetadata> outTypes,
-  ) {
-    assert(outBindingNames != null);
-    assert(outTypes != null);
-
-    inputs?.forEach((input) {
-      final inputParts = input.split(';');
-      final inputName = inputParts[0];
-      final bindingParts = splitAtColon(inputName, [inputName, inputName]);
-
-      outBindingNames[bindingParts[0]] = bindingParts[1];
-
-      if (inputParts.length > 1) {
-        outTypes[bindingParts[0]] =
-            new CompileTypeMetadata(name: inputParts[1]);
-      }
-    });
-  }
-
   @override
   CompileTypeMetadata type;
   final CompileDirectiveMetadataType metadataType;
