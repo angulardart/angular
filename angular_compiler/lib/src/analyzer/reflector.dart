@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:analyzer/dart/ast/ast.dart' as ast;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:collection/collection.dart';
+import 'package:glob/glob.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -40,6 +41,16 @@ class ReflectableReader {
   /// to the library being analyzed.
   final _IsLibrary isLibrary;
 
+  /// Inputs to the generator per package.
+  ///
+  /// For example: `[new Glob('*.dart', recursive: true)]`
+  ///
+  /// May be excluded (`null`) to not use a file glob as a source of what files
+  /// are or will be genreated, and instead use [hasInput] and [isLibrary] only.
+  /// On build systems such as a `barback`, _not_ using `generatorInputs` has a
+  /// significant build-time cost.
+  final List<Glob> generatorInputs;
+
   /// File extension used when compiling AngularDart files.
   ///
   /// By default this is `.template.dart`.
@@ -76,6 +87,7 @@ class ReflectableReader {
     this.dependencyReader: const DependencyReader(),
     @required this.hasInput,
     @required this.isLibrary,
+    this.generatorInputs: const [],
     this.outputExtension: _defaultOutputExtension,
     this.recordComponentsAsInjectables: true,
     this.recordDirectivesAsInjectables: true,
@@ -90,6 +102,7 @@ class ReflectableReader {
   const ReflectableReader.noLinking({
     this.dependencyReader: const DependencyReader(),
     this.outputExtension: _defaultOutputExtension,
+    this.generatorInputs: const [],
     this.recordComponentsAsInjectables: true,
     this.recordDirectivesAsInjectables: true,
     this.recordPipesAsInjectables: true,
@@ -206,7 +219,9 @@ class ReflectableReader {
         return false;
       }
       final outputUri = _withOutputExtension(uri);
-      return await isLibrary(outputUri) || await hasInput(uri);
+      return generatorInputs.any((g) => g.matches(uri)) ||
+          await isLibrary(outputUri) ||
+          await hasInput(uri);
     }
     return false;
   }

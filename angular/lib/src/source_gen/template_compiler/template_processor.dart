@@ -26,23 +26,25 @@ Future<TemplateCompilerOutputs> processTemplates(
     // of generate_for = [a.dart, b.dart], and we are currently running on
     // a.dart, and a.dart imports b.dart, we can assume that there will be
     // a generated b.template.dart that we need to import/initReflector().
-    hasInput: (uri) async {
-      if (flags.usePlaceholder) {
-        final placeholder = ''
-            '${uri.substring(0, uri.length - '.dart'.length)}'
-            '.ng_placeholder';
-        return await buildStep
-            .canRead(new AssetId.resolve(placeholder, from: buildStep.inputId));
-      } else {
-        return await buildStep
-            .canRead(new AssetId.resolve(uri, from: buildStep.inputId));
-      }
+    hasInput: (uri) {
+      final fileName = flags.usePlaceholder
+          ? '${uri.substring(0, uri.length - '.dart'.length)}'
+              '.ng_placeholder'
+          : uri;
+      final checkAsset = new AssetId.resolve(fileName, from: buildStep.inputId);
+      return logElapsedAsync(() {
+        return buildStep.canRead(checkAsset);
+      }, operationName: 'hasInput($checkAsset)');
     },
+
     // For a given import or export directive, return whether a generated
     // .template.dart file already exists. If it does we will need to link
     // to it and call initReflector().
-    isLibrary: (uri) =>
-        resolver.isLibrary(new AssetId.resolve(uri, from: buildStep.inputId)),
+    isLibrary: (uri) => logElapsedAsync(
+          () => resolver
+              .isLibrary(new AssetId.resolve(uri, from: buildStep.inputId)),
+          operationName: 'isLibrary($uri)',
+        ),
   ).resolve(element);
   final AngularArtifacts compileComponentsData = logElapsedSync(
       () => findComponentsAndDirectives(element),
