@@ -74,7 +74,7 @@ class _ViewEmulatedComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _EmulatedComponent_0_4 = new import1.EmulatedComponent();
     _compView_0.create(_EmulatedComponent_0_4, projectableNodes);
-    init0(rootEl);
+    init([rootEl], null);
     return new ComponentRef(0, this, rootEl, _EmulatedComponent_0_4);
   }
 
@@ -158,7 +158,7 @@ class _ViewNoneComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _NoneComponent_0_4 = new import1.NoneComponent();
     _compView_0.create(_NoneComponent_0_4, projectableNodes);
-    init0(rootEl);
+    init([rootEl], null);
     return new ComponentRef(0, this, rootEl, _NoneComponent_0_4);
   }
 
