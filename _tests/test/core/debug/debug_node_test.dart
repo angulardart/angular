@@ -239,20 +239,27 @@ class ConditionalContentComp {
   bool myBool = false;
 }
 
-@Component(selector: "conditional-parent-comp", template: '''
+@Component(
+    selector: "conditional-parent-comp",
+    template: '''
         <span class="parent" [innerHtml]="parentBinding"></span>
         <cond-content-comp class="cond-content-comp-class">
           <span class="from-parent"></span>
-        </cond-content-comp>''', directives: const [ConditionalContentComp])
+        </cond-content-comp>''',
+    directives: const [ConditionalContentComp])
 class ConditionalParentComp {
   String parentBinding = "OriginalParent";
 }
 
-@Component(selector: "using-for", viewProviders: const [], template: '''
+@Component(
+    selector: "using-for",
+    viewProviders: const [],
+    template: '''
         <span *ngFor="let thing of stuff" [innerHtml]="thing"></span>
         <ul message="list">
            <li *ngFor="let item of stuff" [innerHtml]="item"></li>
-        </ul>''', directives: const [NgFor, MessageDir])
+        </ul>''',
+    directives: const [NgFor, MessageDir])
 class UsingFor {
   List<String> stuff;
   UsingFor() {
@@ -260,7 +267,9 @@ class UsingFor {
   }
 }
 
-@Component(selector: "bank-account", template: '''
+@Component(
+    selector: "bank-account",
+    template: '''
    Bank Name: {{bank}}
    Account Id: {{id}}
  ''')
@@ -297,7 +306,9 @@ class CustomEmitter {
   Stream<dynamic> get myevent => _myEvent.stream;
 }
 
-@Component(selector: "events-comp", template: '''
+@Component(
+    selector: "events-comp",
+    template: '''
         <button (click)="handleClick()"></button>''')
 class EventsComp {
   bool clicked;

@@ -12,7 +12,8 @@ const angular = 'package:angular/angular.dart';
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///
 /// Returns the resolved library as `package:test_lib/test_lib.dart`.
-Future<LibraryElement> resolveLibrary(String source) => resolveSource('''
+Future<LibraryElement> resolveLibrary(String source) => resolveSource(
+    '''
       library _test;
       import '$angular';\n\n$source''',
     (resolver) => resolver.findLibraryByName('_test'),

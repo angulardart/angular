@@ -544,15 +544,18 @@ class TestsTranscludedContentChildrenComponent {}
 @Directive(selector: '[inert]')
 class InertDirective {}
 
-@Component(selector: 'unrelated-changes', template: '''
+@Component(
+    selector: 'unrelated-changes',
+    template: '''
 <div text="1"></div>
 <div *ngIf="showInertDirective" inert></div>
 <div>{{text}}</div>
-  ''', directives: const [
-  InertDirective,
-  NgIf,
-  TextDirective,
-])
+  ''',
+    directives: const [
+      InertDirective,
+      NgIf,
+      TextDirective,
+    ])
 class UnrelatedChangesComponent extends TextDirectivesRenderer {
   bool showInertDirective = true;
 
