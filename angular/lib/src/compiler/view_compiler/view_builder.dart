@@ -1083,8 +1083,8 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
 
-  final rootElements = createFlatArray(view.rootNodesOrViewContainers);
-  final initParams = [rootElements];
+  final rootElements = view.rootNodesOrViewContainers;
+  final initParams = [createFlatArray(rootElements)];
   final subscriptions = view.subscriptions.isEmpty
       ? o.NULL_EXPR
       : o.literalArr(view.subscriptions, null);
@@ -1118,15 +1118,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     initParams.add(o.literalArr(renderNodes));
   }
 
-  if (view.genConfig.genDebugInfo == false &&
-      rootElements is o.LiteralArrayExpr &&
-      rootElements.entries.length == 1) {
-    statements.add(
-        new o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]])
-            .toStmt());
-  } else {
-    statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
-  }
+  statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
 
   if (isComponentRoot) {
     _writeComponentHostEventListeners(view, parser, statements);
