@@ -149,3 +149,49 @@ void visit(element) {
   if (visited.add(element)) { /* ... */ }
 }
 ```
+
+## Use a traditional `for` loop over `for-in` and methods on `List` types
+
+While nicer to look at, a `for (var x in items)` and `items.forEach(...)`
+performs worse, and allocates more memory in both Dart2JS and DDC than using a
+traditional `for` loop when the type of `items` has efficient length and
+operator `[]` access (for example, a `List`).
+
+**BAD**:
+
+```dart
+void checkProviders(List<Provider> providers) {
+  for (var provider in providers) {
+    _doCheck(provider);
+  }
+}
+```
+
+**BAD**:
+
+```dart
+void checkProviders(List<Provider> providers) {
+  providers.forEach(_doCheck);
+}
+```
+
+**OK**:
+
+```dart
+void checkProviders(List<Provider> providers) {
+  for (var i = 0, l = providers.length; i < l; i++) {
+    _doCheck(providers[i]);
+  }
+}
+```
+
+**OK**:
+
+```dart
+// OK: We don't know if providers is a List (might be a lazy Iterable).
+void checkProviders(Iterable<Provider> providers) {
+  for (var provider in providers) {
+    _doCheck(provider);
+  }
+}
+```
