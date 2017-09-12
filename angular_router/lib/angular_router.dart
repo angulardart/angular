@@ -2,4 +2,17 @@
 /// navigation.
 library angular_router;
 
+export 'src/constants.dart'
+    show routerDirectives, routerProviders, routerProvidersHash;
+export 'src/directives/router_link_active_directive.dart' show RouterLinkActive;
+export 'src/directives/router_link_directive.dart' show RouterLink;
+export 'src/directives/router_outlet_directive.dart' show RouterOutlet;
+export 'src/lifecycle.dart'
+    show CanActivate, CanDeactivate, CanReuse, OnActivate, OnDeactivate;
 export 'src/location.dart';
+export 'src/route_definition.dart' show RouteDefinition;
+export 'src/route_library.dart' show RouteLibrary;
+export 'src/router/navigation_params.dart' show NavigationParams;
+export 'src/router/router.dart' show Router, NavigationResult;
+export 'src/router/router_state.dart' show RouterState;
+export 'src/router_hook.dart' show RouterHook;
