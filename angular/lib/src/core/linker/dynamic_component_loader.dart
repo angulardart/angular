@@ -21,11 +21,11 @@ class SlowComponentLoader {
   /// Creates and loads a new instance of the component defined by [type].
   ///
   /// See [ComponentLoader.loadDetached] for a similar example.
-  Future<ComponentRef> load(Type type, Injector injector) {
+  Future<ComponentRef<T>> load<T>(Type type, Injector injector) {
     // Purposefully don't use async/await to retain timing.
     return _resolver.resolveComponent(type).then((component) {
       _resolver.resolveComponent(type);
-      final reference = _loader.loadDetached(component, injector: injector);
+      final reference = _loader.loadDetached<T>(component, injector: injector);
       reference.onDestroy(() {
         reference.location.remove();
       });
@@ -36,7 +36,7 @@ class SlowComponentLoader {
   /// Creates and loads a new instance of component [type] next to [location].
   ///
   /// See [ComponentLoader.loadNextToLocation] for a similar example.
-  Future<ComponentRef> loadNextToLocation(
+  Future<ComponentRef<T>> loadNextToLocation<T>(
     Type type,
     ViewContainerRef location, [
     Injector injector,

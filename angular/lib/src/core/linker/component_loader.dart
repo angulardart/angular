@@ -45,8 +45,8 @@ class ComponentLoader {
   ///
   /// See also [loadNextToLocation].
   @mustCallSuper
-  ComponentRef loadDetached(
-    ComponentFactory component, {
+  ComponentRef<T> loadDetached<T>(
+    ComponentFactory<T> component, {
     Injector injector,
   }) =>
       component.create(injector ?? const Injector.empty());
@@ -59,8 +59,8 @@ class ComponentLoader {
   /// [UnsupportedError].
   ///
   /// See also [loadNextToLocation].
-  ComponentRef loadNextTo(
-    ComponentFactory component, {
+  ComponentRef<T> loadNextTo<T>(
+    ComponentFactory<T> component, {
     Injector injector,
   }) =>
       throw new UnsupportedError('Not used within a structural directive');
@@ -98,8 +98,8 @@ class ComponentLoader {
   /// May optionally define the parent [injector], otherwise defaults to the
   /// DI hierarchy that is present where in the view container [location].
   @mustCallSuper
-  ComponentRef loadNextToLocation(
-    ComponentFactory component,
+  ComponentRef<T> loadNextToLocation<T>(
+    ComponentFactory<T> component,
     ViewContainerRef location, {
     Injector injector,
   }) {
