@@ -227,7 +227,7 @@ class CompilerFlags {
           ? defaultTo.entryPoints
           : (entryPoints as Iterable<String>).map((e) => new Glob(e)).toList(),
       generatorInputs: generatorInputs == null
-          ? generatorInputs.entryPoints
+          ? defaultTo.entryPoints
           : (generatorInputs as Iterable<String>)
               .map((e) => new Glob(e))
               .toList(),
