@@ -90,7 +90,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     return viewRef;
   }
 
-  ComponentRef createComponent(ComponentFactory componentFactory,
+  ComponentRef<T> createComponent<T>(ComponentFactory<T> componentFactory,
       [num index = -1,
       Injector injector,
       List<List<dynamic>> projectableNodes]) {
@@ -230,8 +230,8 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   @override
-  ComponentRef loadNextTo(
-    ComponentFactory component, {
+  ComponentRef<T> loadNextTo<T>(
+    ComponentFactory<T> component, {
     Injector injector,
   }) =>
       loadNextToLocation(component, this, injector: injector);

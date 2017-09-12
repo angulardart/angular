@@ -19,7 +19,11 @@ class ComponentRef<C> {
   final C _component;
 
   ComponentRef(
-      this._nodeIndex, this._parentView, this._nativeElement, this._component);
+    this._nodeIndex,
+    this._parentView,
+    this._nativeElement,
+    this._component,
+  );
 
   /// Location of the Host Element of this Component Instance.
   Element get location => _nativeElement;

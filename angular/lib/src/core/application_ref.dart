@@ -69,8 +69,10 @@ PlatformRef getPlatform() =>
 /// Shortcut for ApplicationRef.bootstrap.
 ///
 /// Requires a platform the be created first.
-ComponentRef coreBootstrap(
-    Injector injector, ComponentFactory componentFactory) {
+ComponentRef<T> coreBootstrap<T>(
+  Injector injector,
+  ComponentFactory<T> componentFactory,
+) {
   appViewUtils = injector.get(AppViewUtils);
   ApplicationRef appRef = injector.get(ApplicationRef);
   return appRef.bootstrap(componentFactory);
@@ -80,8 +82,10 @@ ComponentRef coreBootstrap(
 /// waits for asynchronous initializers and bootstraps the component.
 ///
 /// Requires a platform the be created first.
-Future<ComponentRef> coreLoadAndBootstrap(
-    Injector injector, Type componentType) async {
+Future<ComponentRef<T>> coreLoadAndBootstrap<T>(
+  Injector injector,
+  Type componentType,
+) async {
   appViewUtils = injector.get(AppViewUtils);
   ApplicationRef appRef = injector.get(ApplicationRef);
   return await appRef.run(() async {
@@ -173,7 +177,7 @@ class PlatformRefImpl extends PlatformRef {
 abstract class ApplicationRef {
   /// Register a listener to be called each time `bootstrap()` is called to bootstrap
   /// a new root component.
-  void registerBootstrapListener(void listener(ComponentRef ref));
+  void registerBootstrapListener(void listener(ComponentRef<Null> ref));
 
   /// Register a listener to be called when the application is disposed.
   void registerDisposeListener(void dispose());
@@ -193,7 +197,7 @@ abstract class ApplicationRef {
   /// Angular mounts the specified application component onto DOM elements
   /// identified by the [ComponentFactory.componentType]'s selector and kicks
   /// off automatic change detection to finish initializing the component.
-  ComponentRef bootstrap(ComponentFactory componentFactory);
+  ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory);
 
   /// Retrieve the application [Injector].
   Injector get injector;
@@ -278,7 +282,7 @@ class ApplicationRefImpl extends ApplicationRef {
       });
     }));
   }
-  void registerBootstrapListener(void listener(ComponentRef ref)) {
+  void registerBootstrapListener(void listener(ComponentRef<Null> ref)) {
     _bootstrapListeners.add(listener);
   }
 
@@ -333,7 +337,7 @@ class ApplicationRefImpl extends ApplicationRef {
     return result is Future ? completer.future : result;
   }
 
-  ComponentRef bootstrap(ComponentFactory componentFactory) {
+  ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory) {
     assert(() {
       if (!_asyncInitDone) {
         throw new BaseException(
@@ -379,7 +383,7 @@ class ApplicationRefImpl extends ApplicationRef {
     });
   }
 
-  void _loadComponent(ComponentRef componentRef) {
+  void _loadComponent(ComponentRef<dynamic> componentRef) {
     _changeDetectorRefs.add(componentRef.changeDetectorRef);
     tick();
     _rootComponents.add(componentRef);
@@ -388,7 +392,7 @@ class ApplicationRefImpl extends ApplicationRef {
     }
   }
 
-  void _unloadComponent(ComponentRef componentRef) {
+  void _unloadComponent(ComponentRef<dynamic> componentRef) {
     if (!_rootComponents.contains(componentRef)) {
       return;
     }

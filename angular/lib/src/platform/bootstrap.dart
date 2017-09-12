@@ -103,7 +103,10 @@ const BROWSER_APP_PROVIDERS = const [
 ///   app injector to override default injection behavior.
 ///
 /// Returns a [Future] of [ComponentRef].
-Future<ComponentRef> bootstrap(Type appComponentType, [List customProviders]) =>
+Future<ComponentRef<T>> bootstrap<T>(
+  Type appComponentType, [
+  List customProviders,
+]) =>
     throw new UnsupportedError('''
 Using the 'angular2' transformer is required.
 
@@ -112,7 +115,7 @@ and ensure your 'pubspec.yaml' file is configured to invoke the 'angular2'
 transformer on your application's entry point.''');
 
 /// See [bootstrap] for more information.
-Future<ComponentRef> bootstrapStatic(
+Future<ComponentRef<T>> bootstrapStatic<T>(
   Type appComponentType, [
   List customProviders,
   Function initReflector,
@@ -126,7 +129,7 @@ Future<ComponentRef> bootstrapStatic(
   final platformRef = browserStaticPlatform();
   final appInjector =
       ReflectiveInjector.resolveAndCreate(appProviders, platformRef.injector);
-  return coreLoadAndBootstrap(appInjector, appComponentType);
+  return coreLoadAndBootstrap<T>(appInjector, appComponentType);
 }
 
 HtmlDocument createDocument() => document;
