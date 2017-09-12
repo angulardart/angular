@@ -10,9 +10,25 @@ library angular.experimental;
 
 import 'package:meta/meta.dart';
 
+import 'src/core/linker.dart' show ComponentFactory, ComponentRef;
 import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
 import 'src/di/injector/injector.dart';
+
+/// Bootstrap a new AngularDart application.
+///
+/// Uses a pre-compiled [factory] as the root component, instead of looking up
+/// via [Type] at runtime, which requires `initReflector`. May optionally define
+/// root-level services by providing a [rootInjector].
+///
+/// **WARNING**: This API is not considered part of the stable API.
+@experimental
+ComponentRef<T> bootstrapFactory<T>(
+  ComponentFactory /* TODO(matanl): <T> */ factory, [
+  Injector rootInjector,
+]) {
+  throw new UnimplementedError('Not yet implemented. Use "bootstrapStatic".');
+}
 
 /// Initializes the global application state from an application [injector].
 ///
