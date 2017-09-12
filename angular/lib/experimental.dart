@@ -10,24 +10,40 @@ library angular.experimental;
 
 import 'package:meta/meta.dart';
 
+import 'src/core/application_ref.dart';
 import 'src/core/linker.dart' show ComponentFactory, ComponentRef;
 import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
 import 'src/di/injector/injector.dart';
 
+// Create a new injector for platform-level services.
+//
+// This injector is cached and re-used across every bootstrap(...) call.
+final Injector _platformInjector = const Injector.empty(/*TODO: Implement.*/);
+
+// Create a new injector for application-level (root) services.
+//
+// TODO(matanl): Convert this to a generated injector once available.
+Injector _appInjector(Injector platform) => throw new UnimplementedError();
+
 /// Bootstrap a new AngularDart application.
 ///
 /// Uses a pre-compiled [factory] as the root component, instead of looking up
 /// via [Type] at runtime, which requires `initReflector`. May optionally define
-/// root-level services by providing a [rootInjector].
+/// root-level services by providing a [createAppInjector].
 ///
 /// **WARNING**: This API is not considered part of the stable API.
 @experimental
 ComponentRef<T> bootstrapFactory<T>(
-  ComponentFactory /* TODO(matanl): <T> */ factory, [
-  Injector rootInjector,
+  ComponentFactory<T> factory, [
+  Injector createAppInjector(Injector parent),
 ]) {
-  throw new UnimplementedError('Not yet implemented. Use "bootstrapStatic".');
+  final appInjector = createAppInjector == null
+      ? _appInjector(_platformInjector)
+      : createAppInjector(_appInjector(_platformInjector));
+  initAngular(appInjector);
+  final appRef = appInjector.get(ApplicationRef) as ApplicationRef;
+  return appRef.bootstrap(factory);
 }
 
 /// Initializes the global application state from an application [injector].
