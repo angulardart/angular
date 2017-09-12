@@ -16,7 +16,7 @@ class AngularTransformerGroup extends TransformerGroup {
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
       [new ReflectionRemover(flags)],
       [
-        new StylesheetCompiler(flags),
+        new BuilderTransformer(new StylesheetCompiler(flags)),
         new BuilderTransformer(
           createSourceGenTemplateCompiler(flags),
         )

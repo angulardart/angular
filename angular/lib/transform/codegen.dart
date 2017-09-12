@@ -24,7 +24,7 @@ class CodegenTransformer extends TransformerGroup {
       [new AssetConsumer()],
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
       [
-        new StylesheetCompiler(flags),
+        new BuilderTransformer(new StylesheetCompiler(flags)),
         new BuilderTransformer(createSourceGenTemplateCompiler(flags)),
       ],
     ];

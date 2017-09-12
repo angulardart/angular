@@ -45,14 +45,6 @@ String toDeferredExtension(String uri) =>
 String toTemplateExtension(String uri) =>
     _toExtension(uri, ALL_EXTENSIONS, TEMPLATE_EXTENSION);
 
-/// Returns `uri` with its extension updated to [SHIMMED_STYLESHEET_EXTENSION].
-String toShimmedStylesheetExtension(String uri) =>
-    _toExtension(uri, const [CSS_EXTENSION], SHIMMED_STYLESHEET_EXTENSION);
-
-/// Returns `uri` with its extension updated to [NON_SHIMMED_STYLESHEET_EXTENSION].
-String toNonShimmedStylesheetExtension(String uri) =>
-    _toExtension(uri, const [CSS_EXTENSION], NON_SHIMMED_STYLESHEET_EXTENSION);
-
 /// Returns `uri` with its extension updated to `toExtension` if its
 /// extension is currently in `fromExtension`.
 String _toExtension(
