@@ -7,6 +7,10 @@
 # Fast fail the script on failures.
 set -e
 
-pushd $PKG
+# Analyze the lib directory seperately...
+dartanalyzer --fatal-warnings lib
+
+# ...from the tool directory
+pushd tools/analyzer_plugin
 pub upgrade
-./tool/travis.sh
+dartanalyzer --fatal-warnings .

@@ -7,6 +7,4 @@
 # Fast fail the script on failures.
 set -e
 
-pushd $PKG
-pub upgrade
-./tool/travis.sh
+dartanalyzer --fatal-warnings .
