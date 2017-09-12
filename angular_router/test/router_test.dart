@@ -5,8 +5,8 @@
 import 'dart:async';
 
 import 'package:test/test.dart';
-import 'package:third_party.dart.angular_router.example/app_component.dart';
-import 'package:third_party.dart.angular_router.example/testing/app_component_po.dart';
+import 'package:angular_router.example/app_component.dart';
+import 'package:angular_router.example/testing/app_component_po.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_test/angular_test.dart';
