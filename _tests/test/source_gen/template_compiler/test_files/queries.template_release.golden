@@ -64,7 +64,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.QueriesComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     _viewQuery_q6_0 = new import2.QueryList();
     _viewQuery_q8_1 = new import2.QueryList();
@@ -204,7 +204,8 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
     _QueriesComponent_0_4.contentChildFromField = _query_q7_0_1.first;
     _compView_0.create(_QueriesComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _QueriesComponent_0_4);
+    return new ComponentRef<import1.QueriesComponent>(
+        0, this, rootEl, _QueriesComponent_0_4);
   }
 
   @override
@@ -237,12 +238,9 @@ AppView viewFactory_QueriesComponentHost0(
   return new _ViewQueriesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _QueriesComponentNgFactory = const ComponentFactory(
-    'queries',
-    viewFactory_QueriesComponentHost0,
-    import1.QueriesComponent,
-    _QueriesComponentMetadata);
-final ComponentFactory QueriesComponentNgFactory = _QueriesComponentNgFactory;
+const ComponentFactory<import1.QueriesComponent> QueriesComponentNgFactory =
+    const ComponentFactory<import1.QueriesComponent>('queries',
+        viewFactory_QueriesComponentHost0, _QueriesComponentMetadata);
 const _QueriesComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

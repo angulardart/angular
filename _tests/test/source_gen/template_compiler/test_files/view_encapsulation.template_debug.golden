@@ -49,7 +49,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.EmulatedComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -96,7 +96,8 @@ class _ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
     _EmulatedComponent_0_4 = new import2.EmulatedComponent();
     _compView_0.create(_EmulatedComponent_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _EmulatedComponent_0_4);
+    return new ComponentRef<import2.EmulatedComponent>(
+        0, this, rootEl, _EmulatedComponent_0_4);
   }
 
   @override
@@ -124,12 +125,9 @@ AppView viewFactory_EmulatedComponentHost0(
   return new _ViewEmulatedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _EmulatedComponentNgFactory = const ComponentFactory(
-    'Emulated',
-    viewFactory_EmulatedComponentHost0,
-    import2.EmulatedComponent,
-    _EmulatedComponentMetadata);
-final ComponentFactory EmulatedComponentNgFactory = _EmulatedComponentNgFactory;
+const ComponentFactory<import2.EmulatedComponent> EmulatedComponentNgFactory =
+    const ComponentFactory<import2.EmulatedComponent>('Emulated',
+        viewFactory_EmulatedComponentHost0, _EmulatedComponentMetadata);
 const List<dynamic> styles$NoneComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = [null, null];
 
@@ -152,7 +150,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.NoneComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -199,7 +197,8 @@ class _ViewNoneComponentHost0 extends DebugAppView<dynamic> {
     _NoneComponent_0_4 = new import2.NoneComponent();
     _compView_0.create(_NoneComponent_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _NoneComponent_0_4);
+    return new ComponentRef<import2.NoneComponent>(
+        0, this, rootEl, _NoneComponent_0_4);
   }
 
   @override
@@ -227,12 +226,9 @@ AppView viewFactory_NoneComponentHost0(
   return new _ViewNoneComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _NoneComponentNgFactory = const ComponentFactory(
-    'None',
-    viewFactory_NoneComponentHost0,
-    import2.NoneComponent,
-    _NoneComponentMetadata);
-final ComponentFactory NoneComponentNgFactory = _NoneComponentNgFactory;
+const ComponentFactory<import2.NoneComponent> NoneComponentNgFactory =
+    const ComponentFactory<import2.NoneComponent>(
+        'None', viewFactory_NoneComponentHost0, _NoneComponentMetadata);
 const _EmulatedComponentMetadata = const [];
 const _NoneComponentMetadata = const [];
 var _visited = false;

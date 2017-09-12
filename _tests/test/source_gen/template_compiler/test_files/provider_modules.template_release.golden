@@ -40,7 +40,7 @@ class ViewProviderModulesComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.ProviderModulesComponent> build() {
     final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], null);
     return null;
@@ -105,7 +105,8 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
     _ProviderModulesComponent_0_4 = new import1.ProviderModulesComponent();
     _compView_0.create(_ProviderModulesComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_4);
+    return new ComponentRef<import1.ProviderModulesComponent>(
+        0, this, rootEl, _ProviderModulesComponent_0_4);
   }
 
   @override
@@ -146,14 +147,12 @@ AppView viewFactory_ProviderModulesComponentHost0(
   return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _ProviderModulesComponentNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import1.ProviderModulesComponent>
+    ProviderModulesComponentNgFactory =
+    const ComponentFactory<import1.ProviderModulesComponent>(
         'provider-modules',
         viewFactory_ProviderModulesComponentHost0,
-        import1.ProviderModulesComponent,
         _ProviderModulesComponentMetadata);
-final ComponentFactory ProviderModulesComponentNgFactory =
-    _ProviderModulesComponentNgFactory;
 const _ProviderModulesComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

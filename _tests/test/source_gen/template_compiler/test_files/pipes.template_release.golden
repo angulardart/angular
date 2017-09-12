@@ -47,7 +47,7 @@ class ViewComp0 extends AppView<import1.Comp> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.Comp> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
@@ -112,7 +112,7 @@ class _ViewCompHost0 extends AppView<dynamic> {
     _Comp_0_4 = new import1.Comp();
     _compView_0.create(_Comp_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _Comp_0_4);
+    return new ComponentRef<import1.Comp>(0, this, rootEl, _Comp_0_4);
   }
 
   @override
@@ -139,9 +139,9 @@ AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _CompNgFactory = const ComponentFactory(
-    'comp', viewFactory_CompHost0, import1.Comp, _CompMetadata);
-final ComponentFactory CompNgFactory = _CompNgFactory;
+const ComponentFactory<import1.Comp> CompNgFactory =
+    const ComponentFactory<import1.Comp>(
+        'comp', viewFactory_CompHost0, _CompMetadata);
 const _CompMetadata = const [];
 var _visited = false;
 void initReflector() {

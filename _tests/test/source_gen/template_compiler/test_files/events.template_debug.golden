@@ -50,7 +50,7 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.UsesNativeEvents> build() {
     final import2.UsesNativeEvents _ctx = ctx;
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     import3.Text _text_0 = new import3.Text('    ');
@@ -103,7 +103,8 @@ class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
     _UsesNativeEvents_0_4 = new import2.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_4);
+    return new ComponentRef<import2.UsesNativeEvents>(
+        0, this, rootEl, _UsesNativeEvents_0_4);
   }
 
   @override
@@ -131,12 +132,9 @@ AppView viewFactory_UsesNativeEventsHost0(
   return new _ViewUsesNativeEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _UsesNativeEventsNgFactory = const ComponentFactory(
-    'uses-native-events',
-    viewFactory_UsesNativeEventsHost0,
-    import2.UsesNativeEvents,
-    _UsesNativeEventsMetadata);
-final ComponentFactory UsesNativeEventsNgFactory = _UsesNativeEventsNgFactory;
+const ComponentFactory<import2.UsesNativeEvents> UsesNativeEventsNgFactory =
+    const ComponentFactory<import2.UsesNativeEvents>('uses-native-events',
+        viewFactory_UsesNativeEventsHost0, _UsesNativeEventsMetadata);
 const List<dynamic> styles$UsesAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = [
   null,
@@ -166,7 +164,7 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.UsesAngularEvents> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     import3.Text _text_0 = new import3.Text('    ');
     parentRenderNode.append(_text_0);
@@ -241,7 +239,8 @@ class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
     _UsesAngularEvents_0_4 = new import2.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_4);
+    return new ComponentRef<import2.UsesAngularEvents>(
+        0, this, rootEl, _UsesAngularEvents_0_4);
   }
 
   @override
@@ -269,12 +268,9 @@ AppView viewFactory_UsesAngularEventsHost0(
   return new _ViewUsesAngularEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _UsesAngularEventsNgFactory = const ComponentFactory(
-    'uses-angular-events',
-    viewFactory_UsesAngularEventsHost0,
-    import2.UsesAngularEvents,
-    _UsesAngularEventsMetadata);
-final ComponentFactory UsesAngularEventsNgFactory = _UsesAngularEventsNgFactory;
+const ComponentFactory<import2.UsesAngularEvents> UsesAngularEventsNgFactory =
+    const ComponentFactory<import2.UsesAngularEvents>('uses-angular-events',
+        viewFactory_UsesAngularEventsHost0, _UsesAngularEventsMetadata);
 const List<dynamic> styles$HasAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEvents0 = [];
 
@@ -296,7 +292,7 @@ class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.HasAngularEvents> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], null, []);
     return null;
@@ -338,7 +334,8 @@ class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
     _HasAngularEvents_0_4 = new import2.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_4);
+    return new ComponentRef<import2.HasAngularEvents>(
+        0, this, rootEl, _HasAngularEvents_0_4);
   }
 
   @override
@@ -366,12 +363,9 @@ AppView viewFactory_HasAngularEventsHost0(
   return new _ViewHasAngularEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _HasAngularEventsNgFactory = const ComponentFactory(
-    'has-angular-events',
-    viewFactory_HasAngularEventsHost0,
-    import2.HasAngularEvents,
-    _HasAngularEventsMetadata);
-final ComponentFactory HasAngularEventsNgFactory = _HasAngularEventsNgFactory;
+const ComponentFactory<import2.HasAngularEvents> HasAngularEventsNgFactory =
+    const ComponentFactory<import2.HasAngularEvents>('has-angular-events',
+        viewFactory_HasAngularEventsHost0, _HasAngularEventsMetadata);
 const _UsesNativeEventsMetadata = const [];
 const _UsesAngularEventsMetadata = const [];
 const _HasAngularEventsMetadata = const [];

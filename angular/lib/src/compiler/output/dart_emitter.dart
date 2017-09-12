@@ -424,6 +424,17 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     ctx.print(isConstType(ast.type) ? 'const' : 'new');
     ctx.print(" ");
     ast.classExpr.visitExpression(this, ctx);
+    var types = ast.types;
+    if (types != null) {
+      ctx.print('<');
+      for (var i = 0; i < types.length; i++) {
+        types[i].visitType(this, ctx);
+        if (i < types.length - 1) {
+          ctx.print(', ');
+        }
+      }
+      ctx.print('>');
+    }
     ctx.print('(');
     this.visitAllExpressions(ast.args, ctx, ',');
     ctx.print(')');

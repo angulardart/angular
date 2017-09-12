@@ -399,6 +399,10 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   @override
   CompileTypeMetadata type;
+
+  /// User-land class where the component annotation originated.
+  CompileTypeMetadata originType;
+
   final CompileDirectiveMetadataType metadataType;
   String selector;
   String exportAs;
@@ -424,6 +428,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   CompileDirectiveMetadata({
     this.type,
+    this.originType,
     this.metadataType,
     this.selector,
     this.exportAs,
@@ -491,6 +496,7 @@ CompileDirectiveMetadata createHostComponentMeta(
   var template =
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
   return new CompileDirectiveMetadata(
+    originType: componentType,
     type: new CompileTypeMetadata(
         name: '${componentType.name}Host',
         moduleUrl: componentType.moduleUrl,

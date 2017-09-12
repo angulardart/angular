@@ -53,28 +53,34 @@ class ComponentRef<C> {
   }
 }
 
-class ComponentFactory {
+class ComponentFactory<T> {
   final String selector;
-  final NgViewFactory _viewFactory;
-  final Type _componentType;
+
+  // Not intuitive, but the _Host{Comp}View0 is NOT AppView<{Comp}>, but is a
+  // special (not-typed to a user-defined class) AppView that itself creates a
+  // AppView<{Comp}> as a child view.
+  final NgViewFactory<dynamic> _viewFactory;
 
   const ComponentFactory(
     this.selector,
-    this._viewFactory,
-    this._componentType, [
+    this._viewFactory, [
     this.metadata = const [],
   ]);
 
-  Type get componentType => _componentType;
+  @Deprecated('Used for the deprecated router only.')
+  Type get componentType => T;
 
+  @Deprecated('Used for the deprecated router only.')
   final List<dynamic> metadata;
 
   /// Creates a new component.
-  ComponentRef create(Injector injector, [List<List> projectableNodes]) {
-    projectableNodes ??= [];
+  ComponentRef<T> create(
+    Injector injector, [
+    List<List> projectableNodes,
+  ]) {
     // Note: Host views don't need a declarationViewContainer!
-    AppView hostView = _viewFactory(null, null);
-    return hostView.createHostView(injector, projectableNodes);
+    final AppView<dynamic> hostView = _viewFactory(null, null);
+    return hostView.createHostView(injector, projectableNodes ?? []);
   }
 }
 
@@ -91,4 +97,4 @@ class ComponentFactory {
 ///     const ComponentFactory('material-fab',
 ///         viewFactory_MaterialFabComponentHost0,
 ///         import5.MaterialFabComponent,_METADATA);
-typedef AppView NgViewFactory(AppView parentView, int parentIndex);
+typedef AppView<T> NgViewFactory<T>(AppView<T> parentView, int parentIndex);

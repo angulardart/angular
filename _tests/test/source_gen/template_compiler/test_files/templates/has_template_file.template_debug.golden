@@ -55,7 +55,7 @@ class ViewHasTemplateFileComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import3.HasTemplateFileComponent> build() {
     final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import4.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -107,7 +107,8 @@ class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
     _HasTemplateFileComponent_0_4 = new import3.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_4);
+    return new ComponentRef<import3.HasTemplateFileComponent>(
+        0, this, rootEl, _HasTemplateFileComponent_0_4);
   }
 
   @override
@@ -136,14 +137,12 @@ AppView viewFactory_HasTemplateFileComponentHost0(
   return new _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _HasTemplateFileComponentNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import3.HasTemplateFileComponent>
+    HasTemplateFileComponentNgFactory =
+    const ComponentFactory<import3.HasTemplateFileComponent>(
         'has-template-file',
         viewFactory_HasTemplateFileComponentHost0,
-        import3.HasTemplateFileComponent,
         _HasTemplateFileComponentMetadata);
-final ComponentFactory HasTemplateFileComponentNgFactory =
-    _HasTemplateFileComponentNgFactory;
 const _HasTemplateFileComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

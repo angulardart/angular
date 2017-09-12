@@ -39,7 +39,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.HasOpaqueTokens> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
@@ -85,7 +85,8 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
         _const_OpaqueToken__baseUrlDescription___0_4);
     _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_5);
+    return new ComponentRef<import1.HasOpaqueTokens>(
+        0, this, rootEl, _HasOpaqueTokens_0_5);
   }
 
   @override
@@ -117,12 +118,9 @@ AppView viewFactory_HasOpaqueTokensHost0(
   return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _HasOpaqueTokensNgFactory = const ComponentFactory(
-    'has-opaque-tokens',
-    viewFactory_HasOpaqueTokensHost0,
-    import1.HasOpaqueTokens,
-    _HasOpaqueTokensMetadata);
-final ComponentFactory HasOpaqueTokensNgFactory = _HasOpaqueTokensNgFactory;
+const ComponentFactory<import1.HasOpaqueTokens> HasOpaqueTokensNgFactory =
+    const ComponentFactory<import1.HasOpaqueTokens>('has-opaque-tokens',
+        viewFactory_HasOpaqueTokensHost0, _HasOpaqueTokensMetadata);
 const _HasOpaqueTokensMetadata = const [];
 var _visited = false;
 void initReflector() {

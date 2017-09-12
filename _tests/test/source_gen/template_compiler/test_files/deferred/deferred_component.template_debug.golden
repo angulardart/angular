@@ -50,7 +50,7 @@ class ViewDeferredChildComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.DeferredChildComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -97,7 +97,8 @@ class _ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
     _DeferredChildComponent_0_4 = new import2.DeferredChildComponent();
     _compView_0.create(_DeferredChildComponent_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _DeferredChildComponent_0_4);
+    return new ComponentRef<import2.DeferredChildComponent>(
+        0, this, rootEl, _DeferredChildComponent_0_4);
   }
 
   @override
@@ -126,14 +127,12 @@ AppView viewFactory_DeferredChildComponentHost0(
   return new _ViewDeferredChildComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _DeferredChildComponentNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import2.DeferredChildComponent>
+    DeferredChildComponentNgFactory =
+    const ComponentFactory<import2.DeferredChildComponent>(
         'deferred-component',
         viewFactory_DeferredChildComponentHost0,
-        import2.DeferredChildComponent,
         _DeferredChildComponentMetadata);
-final ComponentFactory DeferredChildComponentNgFactory =
-    _DeferredChildComponentNgFactory;
 const _DeferredChildComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

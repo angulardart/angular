@@ -40,7 +40,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.ProvidersComponent> build() {
     final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
     import5.Text _text_0 = new import5.Text('Hello');
     parentRenderNode.append(_text_0);
@@ -155,7 +155,8 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
     _ProvidersComponent_0_4 = new import1.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _ProvidersComponent_0_4);
+    return new ComponentRef<import1.ProvidersComponent>(
+        0, this, rootEl, _ProvidersComponent_0_4);
   }
 
   @override
@@ -217,13 +218,9 @@ AppView viewFactory_ProvidersComponentHost0(
   return new _ViewProvidersComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _ProvidersComponentNgFactory = const ComponentFactory(
-    'providers',
-    viewFactory_ProvidersComponentHost0,
-    import1.ProvidersComponent,
-    _ProvidersComponentMetadata);
-final ComponentFactory ProvidersComponentNgFactory =
-    _ProvidersComponentNgFactory;
+const ComponentFactory<import1.ProvidersComponent> ProvidersComponentNgFactory =
+    const ComponentFactory<import1.ProvidersComponent>('providers',
+        viewFactory_ProvidersComponentHost0, _ProvidersComponentMetadata);
 const _ProvidersComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
