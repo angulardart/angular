@@ -466,9 +466,13 @@ class ApplicationRefImpl extends ApplicationRef {
       }
     }
 
-    // TODO: Call ExceptionHandler.onCrash(...) here for logging.
     lastGuardedView?.cdState = ChangeDetectorState.Errored;
-    _exceptionHandler.call(caughtException, caughtStack);
+
+    // Original exception was already caught and will trickle up.
+    if (caughtException != null) {
+      _exceptionHandler.call(caughtException, caughtStack);
+      caughtException = caughtStack = null;
+    }
   }
 
   @override
