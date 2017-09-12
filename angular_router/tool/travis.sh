@@ -7,6 +7,6 @@
 # Fast fail the script on failures.
 set -e
 
-pushd $PKG
-pub upgrade
-./tool/travis.sh
+dartanalyzer --fatal-warnings lib
+
+# TODO(alorenzen): Add pubspec for examples and run tests here.

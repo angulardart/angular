@@ -7,6 +7,7 @@
 # Fast fail the script on failures.
 set -e
 
-pushd $PKG
-pub upgrade
-./tool/travis.sh
+dartanalyzer --fatal-warnings .
+
+dartium --version
+dart test/test_on_travis.dart
