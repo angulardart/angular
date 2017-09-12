@@ -7,12 +7,8 @@ const CSS_EXTENSION = '.css';
 const DEFERRED_EXTENSION = '.dart.deferredCount';
 const SHIMMED_STYLESHEET_EXTENSION = '.css.shim.dart';
 const NON_SHIMMED_STYLESHEET_EXTENSION = '.css.dart';
-const META_EXTENSION = '.ng_meta.json';
 const REFLECTION_CAPABILITIES_NAME = 'ReflectionCapabilities';
 const REFLECTOR_IMPORT = 'package:angular/src/core/reflection/reflection.dart';
-const REFLECTOR_PREFIX = '_ngRef';
-const REGISTER_TYPE_METHOD_NAME = 'registerType';
-const SUMMARY_META_EXTENSION = '.ng_summary.json';
 const TEMPLATE_EXTENSION = '.template.dart';
 
 /// Note that due to the implementation of `_toExtension`, ordering is
@@ -21,8 +17,6 @@ const TEMPLATE_EXTENSION = '.template.dart';
 /// files.
 const ALL_EXTENSIONS = const [
   DEFERRED_EXTENSION,
-  META_EXTENSION,
-  SUMMARY_META_EXTENSION,
   TEMPLATE_EXTENSION,
   '.ng_placeholder',
   '.dart'
@@ -36,10 +30,8 @@ const ALL_EXTENSIONS = const [
 bool isGenerated(String uri) {
   return const [
     DEFERRED_EXTENSION,
-    META_EXTENSION,
     NON_SHIMMED_STYLESHEET_EXTENSION,
     SHIMMED_STYLESHEET_EXTENSION,
-    SUMMARY_META_EXTENSION,
     TEMPLATE_EXTENSION,
     '.ng_placeholder',
   ].any((ext) => uri.endsWith(ext));
@@ -48,10 +40,6 @@ bool isGenerated(String uri) {
 /// Returns `uri` with its extension updated to [DEFERRED_EXTENSION].
 String toDeferredExtension(String uri) =>
     _toExtension(uri, ALL_EXTENSIONS, DEFERRED_EXTENSION);
-
-/// Returns `uri` with its extension updated to [META_EXTENSION].
-String toMetaExtension(String uri) =>
-    _toExtension(uri, ALL_EXTENSIONS, META_EXTENSION);
 
 /// Returns `uri` with its extension updated to [TEMPLATES_EXTENSION].
 String toTemplateExtension(String uri) =>
@@ -64,10 +52,6 @@ String toShimmedStylesheetExtension(String uri) =>
 /// Returns `uri` with its extension updated to [NON_SHIMMED_STYLESHEET_EXTENSION].
 String toNonShimmedStylesheetExtension(String uri) =>
     _toExtension(uri, const [CSS_EXTENSION], NON_SHIMMED_STYLESHEET_EXTENSION);
-
-/// Returns `uri` with its extension updated to [SUMMARY_META_EXTENSION].
-String toSummaryExtension(String uri) =>
-    _toExtension(uri, ALL_EXTENSIONS, SUMMARY_META_EXTENSION);
 
 /// Returns `uri` with its extension updated to `toExtension` if its
 /// extension is currently in `fromExtension`.
