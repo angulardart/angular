@@ -1,3 +1,4 @@
+import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:test/test.dart';
@@ -279,6 +280,26 @@ void main() {
           'foo.template.dart',
         ],
       );
+    });
+
+    test('should allow using "generatorInputs" to bypass I/O checks', () async {
+      // Purposefully do not add any inputs, to ensure they are not used.
+      reader = new ReflectableReader.noLinking(
+        generatorInputs: [
+          new Glob('**.dart'),
+        ],
+      );
+      final testLib = await resolveLibrary(r'''
+        // Do not link.
+        import 'package:quiver/core.dart';
+        
+        // Link expected.
+        import 'foo.dart';
+      ''');
+      final output = await reader.resolve(testLib);
+      expect(output.urlsNeedingInitReflector, [
+        'foo.template.dart',
+      ]);
     });
   });
 }
