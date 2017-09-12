@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:analyzer/dart/ast/ast.dart' as ast;
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
 import 'package:collection/collection.dart';
+import 'package:glob/glob.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -26,6 +28,13 @@ class ReflectableReader {
 
   /// Used to read dependencies from dart objects.
   final DependencyReader dependencyReader;
+
+  /// Optional: A list of files that should expect `.template.dart` outputs.
+  ///
+  /// If specified, the compiler may optimize and omit calls to [hasInput] and
+  /// [isLibrary]. In some build systems like Barback, this may lead to a
+  /// significant performance improvement.
+  final List<Glob> generatorInputs;
 
   /// Returns whether [uri] is a file part of the same build process.
   ///
@@ -74,6 +83,7 @@ class ReflectableReader {
 
   const ReflectableReader({
     this.dependencyReader: const DependencyReader(),
+    this.generatorInputs: const [],
     @required this.hasInput,
     @required this.isLibrary,
     this.outputExtension: _defaultOutputExtension,
@@ -89,6 +99,7 @@ class ReflectableReader {
   @visibleForTesting
   const ReflectableReader.noLinking({
     this.dependencyReader: const DependencyReader(),
+    this.generatorInputs: const [],
     this.outputExtension: _defaultOutputExtension,
     this.recordComponentsAsInjectables: true,
     this.recordDirectivesAsInjectables: true,
@@ -170,7 +181,8 @@ class ReflectableReader {
     final directives = library.definingCompilationUnit.computeNode().directives;
     final results = <String>[];
     await Future.wait(directives.map((d) async {
-      if (d is! ast.PartDirective && await _needsInitReflector(d)) {
+      if (d is! ast.PartDirective &&
+          await _needsInitReflector(d, library.source.uri.toString())) {
         var uri = (d as ast.UriBasedDirective).uri.stringValue;
         // Always link to the .template.dart file equivalent of a file.
         if (!uri.endsWith(outputExtension)) {
@@ -183,7 +195,10 @@ class ReflectableReader {
   }
 
   // Determines whether initReflector needs to link to [directive].
-  Future<bool> _needsInitReflector(ast.Directive directive) async {
+  Future<bool> _needsInitReflector(
+    ast.Directive directive,
+    String sourceUri,
+  ) async {
     if (directive is ast.ExportDirective &&
         directive.uri.stringValue.endsWith(outputExtension)) {
       // Always link when manually exporting .template.dart files.
@@ -207,9 +222,24 @@ class ReflectableReader {
         return false;
       }
       final outputUri = _withOutputExtension(uri);
-      return await isLibrary(outputUri) || await hasInput(uri);
+      return _isGeneratorInput(uri, sourceUri) ||
+          await isLibrary(outputUri) ||
+          await hasInput(uri);
     }
     return false;
+  }
+
+  bool _isGeneratorInput(String sourceUri, String fromUri) {
+    if (generatorInputs.isEmpty) {
+      return false;
+    }
+    // Given the export/import [sourceUri] and [fromUri], resolve to a path that
+    // looks like something you would write in a configuration file; for example
+    // "lib/some_file.dart" instead of "package:some_lib/some_file.dart".
+    final from = new AssetId.resolve(fromUri);
+    final source = new AssetId.resolve(sourceUri, from: from);
+    return source.package == from.package &&
+        generatorInputs.any((glob) => glob.matches(source.path));
   }
 
   bool _shouldRecordFactory(ClassElement element) =>
