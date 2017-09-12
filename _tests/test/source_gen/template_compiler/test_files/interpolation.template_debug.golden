@@ -56,7 +56,7 @@ class ViewInterpolationComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.InterpolationComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -117,7 +117,8 @@ class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
     _InterpolationComponent_0_4 = new import2.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_4);
+    return new ComponentRef<import2.InterpolationComponent>(
+        0, this, rootEl, _InterpolationComponent_0_4);
   }
 
   @override
@@ -146,14 +147,12 @@ AppView viewFactory_InterpolationComponentHost0(
   return new _ViewInterpolationComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _InterpolationComponentNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import2.InterpolationComponent>
+    InterpolationComponentNgFactory =
+    const ComponentFactory<import2.InterpolationComponent>(
         'interpolation',
         viewFactory_InterpolationComponentHost0,
-        import2.InterpolationComponent,
         _InterpolationComponentMetadata);
-final ComponentFactory InterpolationComponentNgFactory =
-    _InterpolationComponentNgFactory;
 const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespace0 = [
   null,
@@ -183,7 +182,7 @@ class ViewInterpolationComponentNoWhitespace0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.InterpolationComponentNoWhitespace> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -250,7 +249,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0
     _compView_0.create(
         _InterpolationComponentNoWhitespace_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(
+    return new ComponentRef<import2.InterpolationComponentNoWhitespace>(
         0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
   }
 
@@ -281,14 +280,12 @@ AppView viewFactory_InterpolationComponentNoWhitespaceHost0(
       parentView, parentIndex);
 }
 
-const ComponentFactory _InterpolationComponentNoWhitespaceNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import2.InterpolationComponentNoWhitespace>
+    InterpolationComponentNoWhitespaceNgFactory =
+    const ComponentFactory<import2.InterpolationComponentNoWhitespace>(
         'interpolation',
         viewFactory_InterpolationComponentNoWhitespaceHost0,
-        import2.InterpolationComponentNoWhitespace,
         _InterpolationComponentNoWhitespaceMetadata);
-final ComponentFactory InterpolationComponentNoWhitespaceNgFactory =
-    _InterpolationComponentNoWhitespaceNgFactory;
 const _InterpolationComponentMetadata = const [];
 const _InterpolationComponentNoWhitespaceMetadata = const [];
 var _visited = false;

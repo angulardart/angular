@@ -42,7 +42,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.CheckOnceComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -86,7 +86,8 @@ class _ViewCheckOnceComponentHost0 extends AppView<dynamic> {
     _CheckOnceComponent_0_4 = new import1.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _CheckOnceComponent_0_4);
+    return new ComponentRef<import1.CheckOnceComponent>(
+        0, this, rootEl, _CheckOnceComponent_0_4);
   }
 
   @override
@@ -116,13 +117,9 @@ AppView viewFactory_CheckOnceComponentHost0(
   return new _ViewCheckOnceComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _CheckOnceComponentNgFactory = const ComponentFactory(
-    'CheckOnce',
-    viewFactory_CheckOnceComponentHost0,
-    import1.CheckOnceComponent,
-    _CheckOnceComponentMetadata);
-final ComponentFactory CheckOnceComponentNgFactory =
-    _CheckOnceComponentNgFactory;
+const ComponentFactory<import1.CheckOnceComponent> CheckOnceComponentNgFactory =
+    const ComponentFactory<import1.CheckOnceComponent>('CheckOnce',
+        viewFactory_CheckOnceComponentHost0, _CheckOnceComponentMetadata);
 const List<dynamic> styles$CheckedComponent = const [];
 
 class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
@@ -137,7 +134,7 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.CheckedComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -173,7 +170,8 @@ class _ViewCheckedComponentHost0 extends AppView<dynamic> {
     _CheckedComponent_0_4 = new import1.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _CheckedComponent_0_4);
+    return new ComponentRef<import1.CheckedComponent>(
+        0, this, rootEl, _CheckedComponent_0_4);
   }
 
   @override
@@ -201,12 +199,9 @@ AppView viewFactory_CheckedComponentHost0(
   return new _ViewCheckedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _CheckedComponentNgFactory = const ComponentFactory(
-    'Checked',
-    viewFactory_CheckedComponentHost0,
-    import1.CheckedComponent,
-    _CheckedComponentMetadata);
-final ComponentFactory CheckedComponentNgFactory = _CheckedComponentNgFactory;
+const ComponentFactory<import1.CheckedComponent> CheckedComponentNgFactory =
+    const ComponentFactory<import1.CheckedComponent>('Checked',
+        viewFactory_CheckedComponentHost0, _CheckedComponentMetadata);
 const List<dynamic> styles$CheckAlwaysComponent = const [];
 
 class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
@@ -221,7 +216,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.CheckAlwaysComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -257,7 +252,8 @@ class _ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
     _CheckAlwaysComponent_0_4 = new import1.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_4);
+    return new ComponentRef<import1.CheckAlwaysComponent>(
+        0, this, rootEl, _CheckAlwaysComponent_0_4);
   }
 
   @override
@@ -285,13 +281,10 @@ AppView viewFactory_CheckAlwaysComponentHost0(
   return new _ViewCheckAlwaysComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _CheckAlwaysComponentNgFactory = const ComponentFactory(
-    'CheckAlways',
-    viewFactory_CheckAlwaysComponentHost0,
-    import1.CheckAlwaysComponent,
-    _CheckAlwaysComponentMetadata);
-final ComponentFactory CheckAlwaysComponentNgFactory =
-    _CheckAlwaysComponentNgFactory;
+const ComponentFactory<import1.CheckAlwaysComponent>
+    CheckAlwaysComponentNgFactory =
+    const ComponentFactory<import1.CheckAlwaysComponent>('CheckAlways',
+        viewFactory_CheckAlwaysComponentHost0, _CheckAlwaysComponentMetadata);
 const List<dynamic> styles$DetachedComponent = const [];
 
 class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
@@ -306,7 +299,7 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.DetachedComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -342,7 +335,8 @@ class _ViewDetachedComponentHost0 extends AppView<dynamic> {
     _DetachedComponent_0_4 = new import1.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _DetachedComponent_0_4);
+    return new ComponentRef<import1.DetachedComponent>(
+        0, this, rootEl, _DetachedComponent_0_4);
   }
 
   @override
@@ -370,12 +364,9 @@ AppView viewFactory_DetachedComponentHost0(
   return new _ViewDetachedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _DetachedComponentNgFactory = const ComponentFactory(
-    'Detached',
-    viewFactory_DetachedComponentHost0,
-    import1.DetachedComponent,
-    _DetachedComponentMetadata);
-final ComponentFactory DetachedComponentNgFactory = _DetachedComponentNgFactory;
+const ComponentFactory<import1.DetachedComponent> DetachedComponentNgFactory =
+    const ComponentFactory<import1.DetachedComponent>('Detached',
+        viewFactory_DetachedComponentHost0, _DetachedComponentMetadata);
 const List<dynamic> styles$OnPushComponent = const [];
 
 class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
@@ -390,7 +381,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.OnPushComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -426,7 +417,8 @@ class _ViewOnPushComponentHost0 extends AppView<dynamic> {
     _OnPushComponent_0_4 = new import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _OnPushComponent_0_4);
+    return new ComponentRef<import1.OnPushComponent>(
+        0, this, rootEl, _OnPushComponent_0_4);
   }
 
   @override
@@ -454,12 +446,9 @@ AppView viewFactory_OnPushComponentHost0(
   return new _ViewOnPushComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _OnPushComponentNgFactory = const ComponentFactory(
-    'OnPush',
-    viewFactory_OnPushComponentHost0,
-    import1.OnPushComponent,
-    _OnPushComponentMetadata);
-final ComponentFactory OnPushComponentNgFactory = _OnPushComponentNgFactory;
+const ComponentFactory<import1.OnPushComponent> OnPushComponentNgFactory =
+    const ComponentFactory<import1.OnPushComponent>(
+        'OnPush', viewFactory_OnPushComponentHost0, _OnPushComponentMetadata);
 const List<dynamic> styles$StatefulComponent = const [];
 
 class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
@@ -474,7 +463,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.StatefulComponent> build() {
     final import1.StatefulComponent _ctx = ctx;
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
@@ -512,7 +501,8 @@ class _ViewStatefulComponentHost0 extends AppView<dynamic> {
     _StatefulComponent_0_4 = new import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _StatefulComponent_0_4);
+    return new ComponentRef<import1.StatefulComponent>(
+        0, this, rootEl, _StatefulComponent_0_4);
   }
 
   @override
@@ -540,12 +530,9 @@ AppView viewFactory_StatefulComponentHost0(
   return new _ViewStatefulComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _StatefulComponentNgFactory = const ComponentFactory(
-    'Stateful',
-    viewFactory_StatefulComponentHost0,
-    import1.StatefulComponent,
-    _StatefulComponentMetadata);
-final ComponentFactory StatefulComponentNgFactory = _StatefulComponentNgFactory;
+const ComponentFactory<import1.StatefulComponent> StatefulComponentNgFactory =
+    const ComponentFactory<import1.StatefulComponent>('Stateful',
+        viewFactory_StatefulComponentHost0, _StatefulComponentMetadata);
 const List<dynamic> styles$DefaultComponent = const [];
 
 class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
@@ -560,7 +547,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.DefaultComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -596,7 +583,8 @@ class _ViewDefaultComponentHost0 extends AppView<dynamic> {
     _DefaultComponent_0_4 = new import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _DefaultComponent_0_4);
+    return new ComponentRef<import1.DefaultComponent>(
+        0, this, rootEl, _DefaultComponent_0_4);
   }
 
   @override
@@ -624,12 +612,9 @@ AppView viewFactory_DefaultComponentHost0(
   return new _ViewDefaultComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _DefaultComponentNgFactory = const ComponentFactory(
-    'Default',
-    viewFactory_DefaultComponentHost0,
-    import1.DefaultComponent,
-    _DefaultComponentMetadata);
-final ComponentFactory DefaultComponentNgFactory = _DefaultComponentNgFactory;
+const ComponentFactory<import1.DefaultComponent> DefaultComponentNgFactory =
+    const ComponentFactory<import1.DefaultComponent>('Default',
+        viewFactory_DefaultComponentHost0, _DefaultComponentMetadata);
 const _CheckOnceComponentMetadata = const [];
 const _CheckedComponentMetadata = const [];
 const _CheckAlwaysComponentMetadata = const [];

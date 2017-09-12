@@ -80,7 +80,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.TestFooComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -175,7 +175,8 @@ class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     _TestFooComponent_0_4 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _TestFooComponent_0_4);
+    return new ComponentRef<import1.TestFooComponent>(
+        0, this, rootEl, _TestFooComponent_0_4);
   }
 
   @override
@@ -203,12 +204,9 @@ AppView viewFactory_TestFooComponentHost0(
   return new _ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _TestFooComponentNgFactory = const ComponentFactory(
-    'test-foo',
-    viewFactory_TestFooComponentHost0,
-    import1.TestFooComponent,
-    _TestFooComponentMetadata);
-final ComponentFactory TestFooComponentNgFactory = _TestFooComponentNgFactory;
+const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory =
+    const ComponentFactory<import1.TestFooComponent>('test-foo',
+        viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
 const List<dynamic> styles$InputFormTest = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTest0 = [
   new StaticNodeDebugInfo([import11.NgFormModel, import12.ControlContainer],
@@ -252,7 +250,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.InputFormTest> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -383,7 +381,8 @@ class _ViewInputFormTestHost0 extends DebugAppView<dynamic> {
     _InputFormTest_0_4 = new import1.InputFormTest();
     _compView_0.create(_InputFormTest_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _InputFormTest_0_4);
+    return new ComponentRef<import1.InputFormTest>(
+        0, this, rootEl, _InputFormTest_0_4);
   }
 
   @override
@@ -411,12 +410,9 @@ AppView viewFactory_InputFormTestHost0(
   return new _ViewInputFormTestHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _InputFormTestNgFactory = const ComponentFactory(
-    'input-form-test',
-    viewFactory_InputFormTestHost0,
-    import1.InputFormTest,
-    _InputFormTestMetadata);
-final ComponentFactory InputFormTestNgFactory = _InputFormTestNgFactory;
+const ComponentFactory<import1.InputFormTest> InputFormTestNgFactory =
+    const ComponentFactory<import1.InputFormTest>('input-form-test',
+        viewFactory_InputFormTestHost0, _InputFormTestMetadata);
 
 class ChildDirectiveNgCd extends import18.DirectiveChangeDetector {
   final import1.ChildDirective instance;

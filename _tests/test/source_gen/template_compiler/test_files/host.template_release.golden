@@ -43,7 +43,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.HostComponent> build() {
     final import1.HostComponent _ctx = ctx;
     final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], null);
@@ -91,7 +91,8 @@ class _ViewHostComponentHost0 extends AppView<dynamic> {
     _HostComponent_0_4 = new import1.HostComponent();
     _compView_0.create(_HostComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _HostComponent_0_4);
+    return new ComponentRef<import1.HostComponent>(
+        0, this, rootEl, _HostComponent_0_4);
   }
 
   @override
@@ -121,12 +122,9 @@ AppView viewFactory_HostComponentHost0(
   return new _ViewHostComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _HostComponentNgFactory = const ComponentFactory(
-    'host',
-    viewFactory_HostComponentHost0,
-    import1.HostComponent,
-    _HostComponentMetadata);
-final ComponentFactory HostComponentNgFactory = _HostComponentNgFactory;
+const ComponentFactory<import1.HostComponent> HostComponentNgFactory =
+    const ComponentFactory<import1.HostComponent>(
+        'host', viewFactory_HostComponentHost0, _HostComponentMetadata);
 const _HostComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

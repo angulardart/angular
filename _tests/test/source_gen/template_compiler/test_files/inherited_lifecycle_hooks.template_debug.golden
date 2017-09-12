@@ -49,7 +49,7 @@ class ViewLifecycleHooksComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.LifecycleHooksComponent> build() {
     final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], null, []);
     return null;
@@ -92,7 +92,8 @@ class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
     _LifecycleHooksComponent_0_4 = new import2.LifecycleHooksComponent();
     _compView_0.create(_LifecycleHooksComponent_0_4, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_4);
+    return new ComponentRef<import2.LifecycleHooksComponent>(
+        0, this, rootEl, _LifecycleHooksComponent_0_4);
   }
 
   @override
@@ -144,14 +145,12 @@ AppView viewFactory_LifecycleHooksComponentHost0(
   return new _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _LifecycleHooksComponentNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import2.LifecycleHooksComponent>
+    LifecycleHooksComponentNgFactory =
+    const ComponentFactory<import2.LifecycleHooksComponent>(
         'lifecycle-hooks',
         viewFactory_LifecycleHooksComponentHost0,
-        import2.LifecycleHooksComponent,
         _LifecycleHooksComponentMetadata);
-final ComponentFactory LifecycleHooksComponentNgFactory =
-    _LifecycleHooksComponentNgFactory;
 const _LifecycleHooksComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

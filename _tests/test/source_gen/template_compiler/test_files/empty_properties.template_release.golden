@@ -51,7 +51,7 @@ class ViewEmptyPropertiesComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.EmptyPropertiesComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
@@ -160,7 +160,8 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
     _EmptyPropertiesComponent_0_4 = new import1.EmptyPropertiesComponent();
     _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _EmptyPropertiesComponent_0_4);
+    return new ComponentRef<import1.EmptyPropertiesComponent>(
+        0, this, rootEl, _EmptyPropertiesComponent_0_4);
   }
 
   @override
@@ -189,14 +190,12 @@ AppView viewFactory_EmptyPropertiesComponentHost0(
   return new _ViewEmptyPropertiesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _EmptyPropertiesComponentNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import1.EmptyPropertiesComponent>
+    EmptyPropertiesComponentNgFactory =
+    const ComponentFactory<import1.EmptyPropertiesComponent>(
         'empty-properties',
         viewFactory_EmptyPropertiesComponentHost0,
-        import1.EmptyPropertiesComponent,
         _EmptyPropertiesComponentMetadata);
-final ComponentFactory EmptyPropertiesComponentNgFactory =
-    _EmptyPropertiesComponentNgFactory;
 const List<dynamic> styles$FancyButtonComponent = const [];
 
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
@@ -210,7 +209,7 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.FancyButtonComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     init(const [], null);
     return null;
@@ -242,7 +241,8 @@ class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
     _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _FancyButtonComponent_0_4);
+    return new ComponentRef<import1.FancyButtonComponent>(
+        0, this, rootEl, _FancyButtonComponent_0_4);
   }
 
   @override
@@ -270,13 +270,10 @@ AppView viewFactory_FancyButtonComponentHost0(
   return new _ViewFancyButtonComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _FancyButtonComponentNgFactory = const ComponentFactory(
-    'fancy-button',
-    viewFactory_FancyButtonComponentHost0,
-    import1.FancyButtonComponent,
-    _FancyButtonComponentMetadata);
-final ComponentFactory FancyButtonComponentNgFactory =
-    _FancyButtonComponentNgFactory;
+const ComponentFactory<import1.FancyButtonComponent>
+    FancyButtonComponentNgFactory =
+    const ComponentFactory<import1.FancyButtonComponent>('fancy-button',
+        viewFactory_FancyButtonComponentHost0, _FancyButtonComponentMetadata);
 const _EmptyPropertiesComponentMetadata = const [];
 const _FancyButtonComponentMetadata = const [];
 var _visited = false;

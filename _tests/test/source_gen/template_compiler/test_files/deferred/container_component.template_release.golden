@@ -46,7 +46,7 @@ class ViewTestContainerComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.TestContainerComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
@@ -84,7 +84,7 @@ class _ViewTestContainerComponent1
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     _DeferredChildComponent_0_4 = new deflib0.DeferredChildComponent();
@@ -140,7 +140,8 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
     _TestContainerComponent_0_4 = new import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _TestContainerComponent_0_4);
+    return new ComponentRef<import1.TestContainerComponent>(
+        0, this, rootEl, _TestContainerComponent_0_4);
   }
 
   @override
@@ -169,14 +170,12 @@ AppView viewFactory_TestContainerComponentHost0(
   return new _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _TestContainerComponentNgFactory =
-    const ComponentFactory(
+const ComponentFactory<import1.TestContainerComponent>
+    TestContainerComponentNgFactory =
+    const ComponentFactory<import1.TestContainerComponent>(
         'test-container',
         viewFactory_TestContainerComponentHost0,
-        import1.TestContainerComponent,
         _TestContainerComponentMetadata);
-final ComponentFactory TestContainerComponentNgFactory =
-    _TestContainerComponentNgFactory;
 const _TestContainerComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

@@ -837,8 +837,20 @@ o.ClassStmt createViewClass(
     CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
   var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
   var viewMethods = <o.ClassMethod>[
-    new o.ClassMethod("build", [], generateBuildMethod(view, parser),
-        o.importType(Identifiers.ComponentRef, null), null, ['override']),
+    new o.ClassMethod(
+        "build",
+        [],
+        generateBuildMethod(view, parser),
+        o.importType(
+          Identifiers.ComponentRef,
+          // The 'HOST' view is a <dynamic> view that "hosts" the actual
+          // component view, therefore it is not typed.
+          view.viewType != ViewType.HOST
+              ? [o.importType(view.component.type)]
+              : const [],
+        ),
+        null,
+        ['override']),
     new o.ClassMethod(
         "injectorGetInternal",
         [
@@ -1136,12 +1148,16 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   o.Expression resultExpr;
   if (identical(view.viewType, ViewType.HOST)) {
     var hostElement = view.nodes[0] as CompileElement;
-    resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate([
-      o.literal(hostElement.nodeIndex),
-      o.THIS_EXPR,
-      hostElement.renderNode,
-      hostElement.getComponent()
-    ]);
+    resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate(
+          [
+            o.literal(hostElement.nodeIndex),
+            o.THIS_EXPR,
+            hostElement.renderNode,
+            hostElement.getComponent()
+          ],
+          null,
+          [o.importType(view.component.originType.type)],
+        );
   } else {
     resultExpr = o.NULL_EXPR;
   }

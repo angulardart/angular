@@ -219,16 +219,20 @@ abstract class AppView<T> {
   List<dynamic /* dynamic | List < dynamic > */ > get projectableNodes =>
       viewData.projectableNodes;
 
-  ComponentRef create(T context,
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
+  ComponentRef<T> create(
+    T context,
+    List<dynamic> givenProjectableNodes,
+  ) {
     ctx = context;
     viewData.projectableNodes = givenProjectableNodes;
     return build();
   }
 
   /// Builds host level view.
-  ComponentRef createHostView(Injector hostInjector,
-      List<dynamic /* dynamic | List < dynamic > */ > givenProjectableNodes) {
+  ComponentRef<T> createHostView(
+    Injector hostInjector,
+    List<dynamic> givenProjectableNodes,
+  ) {
     viewData._hostInjector = hostInjector;
     viewData.projectableNodes = givenProjectableNodes;
     return build();
@@ -237,7 +241,7 @@ abstract class AppView<T> {
   /// Returns the ComponentRef for the host element for ViewType.HOST.
   ///
   /// Overwritten by implementations.
-  ComponentRef build() => null;
+  ComponentRef<T> build() => null;
 
   /// Specialized init when component has a single root node.
   void init0(dynamic e) {

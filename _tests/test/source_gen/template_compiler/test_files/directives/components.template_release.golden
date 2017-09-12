@@ -39,7 +39,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import1.TestSubComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
@@ -75,7 +75,8 @@ class _ViewTestSubComponentHost0 extends AppView<dynamic> {
     _TestSubComponent_0_4 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_4, projectableNodes);
     init([rootEl], null);
-    return new ComponentRef(0, this, rootEl, _TestSubComponent_0_4);
+    return new ComponentRef<import1.TestSubComponent>(
+        0, this, rootEl, _TestSubComponent_0_4);
   }
 
   @override
@@ -103,12 +104,9 @@ AppView viewFactory_TestSubComponentHost0(
   return new _ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _TestSubComponentNgFactory = const ComponentFactory(
-    'test-bar',
-    viewFactory_TestSubComponentHost0,
-    import1.TestSubComponent,
-    _TestSubComponentMetadata);
-final ComponentFactory TestSubComponentNgFactory = _TestSubComponentNgFactory;
+const ComponentFactory<import1.TestSubComponent> TestSubComponentNgFactory =
+    const ComponentFactory<import1.TestSubComponent>('test-bar',
+        viewFactory_TestSubComponentHost0, _TestSubComponentMetadata);
 const _TestSubComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

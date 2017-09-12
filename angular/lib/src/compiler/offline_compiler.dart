@@ -112,35 +112,26 @@ class OfflineCompiler {
       var hostViewFactoryVar = _compileComponent(
           hostMeta, [compMeta], [], statements, _deferredModules);
       var compFactoryVar = '${compMeta.type.name}NgFactory';
+      var factoryType = [o.importType(compMeta.type)];
 
-      // Adds const _SomeComponentNgFactory = ...
+      // Adds const FooNgFactory = const ComponentFactory<Foo>(...).
       //
-      // This is referenced in `initReflector/METADATA` _and_ below.
+      // This is referenced in `initReflector/METADATA` and by user-code.
       statements.add(o
-          .variable('_$compFactoryVar')
+          .variable('$compFactoryVar')
           .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
               <o.Expression>[
                 o.literal(compMeta.selector),
                 o.variable(hostViewFactoryVar),
-                o.importExpr(compMeta.type),
                 new o.ReadVarExpr('_${compMeta.type.name}Metadata'),
               ],
               o.importType(
                 Identifiers.ComponentFactory,
-                null,
+                factoryType,
                 [o.TypeModifier.Const],
-              )))
+              ),
+              factoryType))
           .toDeclStmt(null, [o.StmtModifier.Const]));
-
-      // User-visible SomeComponentNgFactory.
-      //
-      // This is not `const`.
-      statements.add(o
-          .variable(compFactoryVar)
-          .set(new o.ReadVarExpr('_$compFactoryVar'))
-          .toDeclStmt(o.importType(Identifiers.ComponentFactory), [
-        o.StmtModifier.Final,
-      ]));
 
       exportedVars.add(compFactoryVar);
     }

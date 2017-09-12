@@ -52,7 +52,7 @@ class ViewInjectableComponent0
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef build() {
+  ComponentRef<import2.InjectableComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
@@ -135,7 +135,8 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
         this.injectorGet(String, viewData.parentIndex, null));
     _compView_0.create(_InjectableComponent_0_5, projectableNodes);
     init([rootEl], null, [rootEl]);
-    return new ComponentRef(0, this, rootEl, _InjectableComponent_0_5);
+    return new ComponentRef<import2.InjectableComponent>(
+        0, this, rootEl, _InjectableComponent_0_5);
   }
 
   @override
@@ -172,13 +173,10 @@ AppView viewFactory_InjectableComponentHost0(
   return new _ViewInjectableComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory _InjectableComponentNgFactory = const ComponentFactory(
-    'test-injectables',
-    viewFactory_InjectableComponentHost0,
-    import2.InjectableComponent,
-    _InjectableComponentMetadata);
-final ComponentFactory InjectableComponentNgFactory =
-    _InjectableComponentNgFactory;
+const ComponentFactory<import2.InjectableComponent>
+    InjectableComponentNgFactory =
+    const ComponentFactory<import2.InjectableComponent>('test-injectables',
+        viewFactory_InjectableComponentHost0, _InjectableComponentMetadata);
 const _InjectableComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

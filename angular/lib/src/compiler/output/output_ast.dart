@@ -116,8 +116,12 @@ abstract class Expression {
     return new InvokeFunctionExpr(this, params);
   }
 
-  InstantiateExpr instantiate(List<Expression> params, [OutputType type]) {
-    return new InstantiateExpr(this, params, type);
+  InstantiateExpr instantiate(
+    List<Expression> params, [
+    OutputType type,
+    List<OutputType> genericTypes,
+  ]) {
+    return new InstantiateExpr(this, params, type, genericTypes);
   }
 
   ConditionalExpr conditional(Expression trueCase, [Expression falseCase]) {
@@ -398,7 +402,10 @@ class InvokeFunctionExpr extends Expression {
 class InstantiateExpr extends Expression {
   final Expression classExpr;
   final List<Expression> args;
-  InstantiateExpr(this.classExpr, this.args, [OutputType type]) : super(type);
+  final List<OutputType> types;
+
+  InstantiateExpr(this.classExpr, this.args, [OutputType type, this.types])
+      : super(type);
 
   @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
