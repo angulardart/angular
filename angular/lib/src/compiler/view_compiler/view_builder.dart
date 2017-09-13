@@ -415,6 +415,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         logger,
         isHtmlElement: isHtmlElement,
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
+
     view.nodes.add(compileElement);
 
     if (component != null) {
@@ -1147,6 +1148,9 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
 
   o.Expression resultExpr;
   if (identical(view.viewType, ViewType.HOST)) {
+    if (view.nodes.isEmpty) {
+      logger.severe('Template parser has crashed for ${view.className}');
+    }
     var hostElement = view.nodes[0] as CompileElement;
     resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate(
           [

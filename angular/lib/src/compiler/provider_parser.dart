@@ -369,7 +369,9 @@ ProviderAst _transformProviderAst(ProviderAst provider,
       provider.providerType, provider.sourceSpan,
       eager: provider.eager || forceEager,
       dynamicallyReachable: provider.dynamicallyReachable,
-      visibleForInjection: provider.visibleForInjection);
+      visibleForInjection: provider.visibleForInjection,
+      implementedByDirectiveWithNoVisibility:
+          provider.implementedByDirectiveWithNoVisibility);
 }
 
 // Flattens list of lists of providers and converts entries that contain Type to
@@ -429,7 +431,7 @@ class _ProviderResolver {
           visibility: directive.visibility);
       final providerAstType =
           providerAstTypeFromMetadataType(directive.metadataType);
-      _resolveProviders([dirProvider], providerAstType, eager: true);
+      _resolveProviders(directive, [dirProvider], providerAstType, eager: true);
     }
     // Note: We need an ordered list where components preceded directives so
     // directives are able to overwrite providers of a component!
@@ -442,10 +444,12 @@ class _ProviderResolver {
     }
     for (var directive in orderedList) {
       _resolveProviders(
+          directive,
           _normalizeProviders(directive.providers, sourceSpan, errors),
           ProviderAstType.PublicService,
           eager: false);
       _resolveProviders(
+          directive,
           _normalizeProviders(directive.viewProviders, sourceSpan, errors),
           ProviderAstType.PrivateService,
           eager: false);
@@ -455,7 +459,7 @@ class _ProviderResolver {
 
   // Updates tokenMap by creating new ProviderAst or by adding/replacing new entry
   // for existing ProviderAst.
-  void _resolveProviders(
+  void _resolveProviders(CompileDirectiveMetadata directiveContext,
       List<CompileProviderMetadata> providers, ProviderAstType providerType,
       {bool eager}) {
     for (var provider in providers) {
@@ -468,6 +472,14 @@ class _ProviderResolver {
             sourceSpan));
       }
       if (resolvedProvider == null) {
+        bool implementedByDirectiveWithNoVisibility =
+            provider.useExisting != null &&
+                provider.useExisting.identifier != null &&
+                provider.useExisting.identifier.name ==
+                    directiveContext.type.name &&
+                provider.useExisting.identifier.moduleUrl ==
+                    directiveContext.type.moduleUrl &&
+                directiveContext.visibility == Visibility.none;
         resolvedProvider = new ProviderAst(
           provider.token,
           provider.multi,
@@ -475,6 +487,8 @@ class _ProviderResolver {
           providerType,
           sourceSpan,
           eager: eager,
+          implementedByDirectiveWithNoVisibility:
+              implementedByDirectiveWithNoVisibility,
           visibleForInjection: provider.visibility != Visibility.none,
         );
         _providersByToken.add(provider.token, resolvedProvider);
