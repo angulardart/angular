@@ -37,6 +37,12 @@ void main() {
       final testBed = new NgTestBed<ShouldFailToInjectFromParentView>();
       expect(testBed.create(), throwsInAngular(anything));
     });
+
+    test('service on Visibility.none component is injectable', () async {
+      final testBed = new NgTestBed<MyComponentWithServiceTest>();
+      var testFixture = await testBed.create();
+      expect(testFixture.rootElement, isNotNull);
+    });
   });
 }
 
@@ -117,3 +123,38 @@ class InjectsDirectiveHostComponent {}
   ],
 )
 class ShouldFailToInjectFromParentView {}
+
+/// This service is exposed through a component that is marked Visibility.none.
+/// The test verifies that injectorGet calls in compiler use the service not
+/// useExisting token.
+abstract class SomeService {
+  void foo();
+}
+
+@Component(
+  selector: 'my-component-with-service-test',
+  template: '<child-component-provides-service>'
+      '<div *dirNeedsService></div>'
+      '</child-component-provides-service>',
+  directives: const [MyChildComponentProvidesService, MyDirectiveNeedsService],
+)
+class MyComponentWithServiceTest {}
+
+@Component(
+    selector: 'child-component-provides-service',
+    providers: const [
+      const Provider(SomeService, useExisting: MyChildComponentProvidesService)
+    ],
+    template: '<div></div>',
+    visibility: Visibility.none)
+class MyChildComponentProvidesService implements SomeService {
+  @override
+  foo() {}
+}
+
+@Directive(selector: '[dirNeedsService]')
+class MyDirectiveNeedsService {
+  final SomeService someService;
+  MyDirectiveNeedsService(
+      this.someService, ViewContainerRef ref, TemplateRef templateRef);
+}

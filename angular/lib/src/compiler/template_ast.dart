@@ -231,6 +231,10 @@ class ProviderAst implements TemplateAst {
   /// dependencies.
   bool visibleForInjection;
 
+  /// Whether the provider is implemented as an alias to a directive
+  /// with no visibility.
+  bool implementedByDirectiveWithNoVisibility;
+
   List<CompileProviderMetadata> providers;
   ProviderAstType providerType;
   SourceSpan sourceSpan;
@@ -244,6 +248,7 @@ class ProviderAst implements TemplateAst {
     this.eager,
     this.dynamicallyReachable: true,
     this.visibleForInjection: true,
+    this.implementedByDirectiveWithNoVisibility: false,
   });
 
   // No visit method in the visitor for now...

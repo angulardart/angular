@@ -319,7 +319,11 @@ class CompileElement extends CompileNode {
           // Given the token and visibility defined by providerType,
           // get value based on existing expression mapped to token.
           providerValue = _getDependency(resolvedProvider.providerType,
-              new CompileDiDependencyMetadata(token: provider.useExisting));
+              new CompileDiDependencyMetadata(token: provider.useExisting),
+              requestOrigin:
+                  resolvedProvider.implementedByDirectiveWithNoVisibility
+                      ? provider.token
+                      : null);
           directiveMetadata = null;
         } else if (provider.useFactory != null) {
           var parameters = <o.Expression>[];
@@ -522,11 +526,11 @@ class CompileElement extends CompileNode {
   }
 
   o.Expression _getLocalDependency(
-      ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep) {
-    if (dep.token == null) return null;
+      ProviderAstType requestingProviderType, CompileTokenMetadata token) {
+    if (token == null) return null;
 
     // Access builtins with special visibility.
-    if (dep.token.equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
+    if (token.equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
       if (identical(requestingProviderType, ProviderAstType.Component)) {
         return _compViewExpr.prop('ref');
       } else {
@@ -537,38 +541,66 @@ class CompileElement extends CompileNode {
     // ComponentLoader is currently just an alias for ViewContainerRef with
     // a smaller API that is also usable outside of the context of a
     // structural directive.
-    if (dep.token.equalsTo(identifierToken(Identifiers.ComponentLoader))) {
+    if (token.equalsTo(identifierToken(Identifiers.ComponentLoader))) {
       return appViewContainer;
     }
 
     // Access regular providers on the element. For provider instances with an
     // associated provider AST, ensure the provider is visible for injection.
-    final providerAst = _resolvedProviders.get(dep.token);
+    final providerAst = _resolvedProviders.get(token);
     if (providerAst == null || providerAst.visibleForInjection) {
-      return _instances.get(dep.token);
+      return _instances.get(token);
     }
 
     return null;
   }
 
   o.Expression _getDependency(
-      ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep) {
+      ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep,
+      {CompileTokenMetadata requestOrigin}) {
     CompileElement currElement = this;
     var result;
     if (dep.isValue) {
       result = o.literal(dep.value);
     }
     if (result == null && !dep.isSkipSelf) {
-      result = _getLocalDependency(requestingProviderType, dep);
+      result = _getLocalDependency(requestingProviderType, dep.token);
     }
 
     // check parent elements
     while (result == null && currElement.parent.parent != null) {
       currElement = currElement.parent;
-      result = currElement._getLocalDependency(ProviderAstType.PublicService,
-          new CompileDiDependencyMetadata(token: dep.token));
+      result = currElement._getLocalDependency(
+          ProviderAstType.PublicService, dep.token);
     }
-    result ??= injectFromViewParentInjector(view, dep.token, dep.isOptional);
+
+    // If component has a service with useExisting: provider pointing to itself,
+    // we need to search for providerAst using the service interface but
+    // query _instances with the component type to get correct instance.
+    // [requestOrigin] below points to the service whereas dep.token will
+    // reference the component type.
+    if (result == null && requestOrigin != null) {
+      currElement = this;
+      if (!dep.isSkipSelf) {
+        final providerAst = _resolvedProviders.get(requestOrigin);
+        if (providerAst == null || providerAst.visibleForInjection) {
+          result = _instances.get(dep.token);
+        }
+      }
+      // See if we have local dependency to origin service.
+      while (result == null && currElement.parent.parent != null) {
+        currElement = currElement.parent;
+        final providerAst = currElement._resolvedProviders.get(requestOrigin);
+        if (providerAst == null || providerAst.visibleForInjection) {
+          result = currElement._instances.get(dep.token);
+        }
+      }
+    }
+    // If request was made on a service resolving to a private directive,
+    // use requested dependency to call injectorGet instead of directive
+    // that redirects using useExisting type provider.
+    result ??= injectFromViewParentInjector(
+        view, requestOrigin ?? dep.token, dep.isOptional);
     return getPropertyInView(result, view, currElement.view);
   }
 }
