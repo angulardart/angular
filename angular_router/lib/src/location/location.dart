@@ -110,8 +110,11 @@ class Location {
   }
 
   /// Subscribe to the platform's `popState` events.
-  Object subscribe(void onNext(dynamic value),
-      [void onThrow(dynamic exception) = null, void onReturn() = null]) {
+  Object subscribe(
+    void onNext(dynamic value), [
+    void onThrow(dynamic exception),
+    void onReturn(),
+  ]) {
     return _subject.stream.listen(onNext, onError: onThrow, onDone: onReturn);
   }
 
