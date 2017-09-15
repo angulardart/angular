@@ -73,8 +73,11 @@ class SpyLocation implements Location {
 
   void forward() {}
   void back() {}
-  Object subscribe(void onNext(dynamic value),
-      [void onThrow(dynamic error) = null, void onReturn() = null]) {
+  Object subscribe(
+    void onNext(dynamic value), [
+    void onThrow(dynamic error),
+    void onReturn(),
+  ]) {
     return _subject.stream.listen(onNext, onError: onThrow, onDone: onReturn);
   }
 
