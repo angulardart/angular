@@ -15,7 +15,6 @@ dependencies:
   barback: ^0.15.2+2
   build: ^0.10.0
   build_barback: ^0.4.0
-  code_builder: '^1.0.0-beta+4'
   collection: '^1.12.0'
   csslib: ^0.14.0
   dart_style: '>=0.1.8 <2.0.0'

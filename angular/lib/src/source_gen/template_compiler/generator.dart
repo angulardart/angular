@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:build/build.dart';
-import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/logging.dart' show loggerKey;
 import 'package:angular/src/source_gen/common/url_resolver.dart';
@@ -27,7 +26,7 @@ class TemplateGenerator extends Generator {
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     return runZoned(() async {
       var outputs = await processTemplates(library.element, buildStep, _flags);
-      if (outputs == null) return _emptyNgDepsContents;
+      if (outputs == null) return 'void initReflector() {}';
       return buildGeneratedCode(
         library.element,
         outputs,
@@ -44,9 +43,6 @@ class TemplateGenerator extends Generator {
     });
   }
 }
-
-final String _emptyNgDepsContents = prettyToSource(
-    new MethodBuilder.returnVoid('initReflector').buildTopLevelAst());
 
 /// Generates an empty `.ng_placeholder` file which is used as a signal to later
 /// builders which files will eventually get `.template.dart` generated.
