@@ -1,6 +1,15 @@
 import 'package:angular/src/core/change_detection/change_detection_util.dart'
     show SimpleChange;
 
+/// Lifecycle hooks are guaranteed to be called in the following order:
+/// - `OnChanges` (if any bindings have changed),
+/// - `OnInit` (after the first check only),
+/// - `DoCheck`,
+/// - `AfterContentInit`,
+/// - `AfterContentChecked`,
+/// - `AfterViewInit`,
+/// - `AfterViewChecked`,
+/// - `OnDestroy` (at the very end before destruction)
 enum LifecycleHooks {
   OnInit,
   OnDestroy,
@@ -11,26 +20,6 @@ enum LifecycleHooks {
   AfterViewInit,
   AfterViewChecked
 }
-
-/// Lifecycle hooks are guaranteed to be called in the following order:
-/// - `OnChanges` (if any bindings have changed),
-/// - `OnInit` (after the first check only),
-/// - `DoCheck`,
-/// - `AfterContentInit`,
-/// - `AfterContentChecked`,
-/// - `AfterViewInit`,
-/// - `AfterViewChecked`,
-/// - `OnDestroy` (at the very end before destruction)
-var LIFECYCLE_HOOKS_VALUES = [
-  LifecycleHooks.OnInit,
-  LifecycleHooks.OnDestroy,
-  LifecycleHooks.DoCheck,
-  LifecycleHooks.OnChanges,
-  LifecycleHooks.AfterContentInit,
-  LifecycleHooks.AfterContentChecked,
-  LifecycleHooks.AfterViewInit,
-  LifecycleHooks.AfterViewChecked
-];
 
 /// Implement this interface to get notified when any data-bound property of
 /// your directive changes.
