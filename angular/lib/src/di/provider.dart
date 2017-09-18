@@ -22,6 +22,44 @@ abstract class Provider<T> implements RuntimeProvider<T> {
   }) = SlowProvider<T>._;
 }
 
+/// Describes at compile-time implementing injecting [T1] by creating a [T2].
+///
+/// ```dart
+/// const stringSink = ProviderUseClass<StringSink, StringBuffer>();
+/// ```
+///
+/// **WARNING**: This API is experimental and not currently supported.
+@experimental
+class ProviderUseClass<T1, T2 extends T1> implements StaticProvider<T1> {
+  @override
+  final bool multi;
+
+  /// Create a new configuration binding [T1] to creating a [T2] at runtime.
+  ///
+  /// __NOTE__: Once constructors support generic arguments, this will become
+  /// `const factory Provider.useClass<T1, T2 extends T1>` instead, and this
+  /// class will be deprecated.
+  const ProviderUseClass({this.multi: false});
+
+  @override
+  Object get token => T1;
+
+  @override
+  Type get useClass => T2;
+
+  @override
+  Object get useValue => noValueProvided;
+
+  @override
+  Object get useExisting => null;
+
+  @override
+  Function get useFactory => null;
+
+  @override
+  List<Object> get dependencies => null;
+}
+
 /// An alias for `new Provider`; see [Provider].
 Provider<dynamic> provide(
   Object token, {
@@ -39,6 +77,11 @@ Provider<dynamic> provide(
         useFactory: useFactory,
         deps: deps,
         multi: multi);
+
+/// A marker interface that says the provider can be inspected at compile-time.
+@optionalTypeArgs
+@visibleForTesting
+abstract class StaticProvider<T> implements Provider<T> {}
 
 /// A marker interface that says the provider can be inspected at runtime.
 @optionalTypeArgs
