@@ -92,6 +92,13 @@ class TokenReader {
     return _parseType(element.type, prefix);
   }
 
+  /// Returns the type parameter [element] as a [TokenElement].
+  ///
+  /// Does not support [TypeTokenElement.prefix], it will always be `null`.
+  TypeTokenElement parseTokenTypeOf(DartType type) {
+    return _parseType(type, null);
+  }
+
   TypeTokenElement _parseType(
     DartType type, [
     String prefix,

@@ -1,5 +1,8 @@
+import 'dart:collection';
+
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
@@ -19,6 +22,8 @@ class ProviderReader {
       TokenReader tokenReader: const TokenReader()})
       : _dependencyReader = dependencyReader,
         _tokenReader = tokenReader;
+
+  static bool _isNullOrDynamic(DartType t) => t.isDynamic || t.isDartCoreNull;
 
   /// Returns whether an object represents a constant [List].
   @protected
@@ -40,9 +45,26 @@ class ProviderReader {
   ///
   /// Validation may not be performed on the underlying elements.
   @protected
-  bool isModule(DartObject o) => isList(o);
+  bool isModule(DartObject o) => isList(o) || $Module.isExactlyType(o.type);
+
+  /// Returns a unique ordered-set based off of [providers].
+  ///
+  /// [ProviderElement.token] is used to determine uniqueness.
+  Set<ProviderElement> deduplicateProviders(
+    Iterable<ProviderElement> providers,
+  ) {
+    return new LinkedHashSet<ProviderElement>(
+      equals: (a, b) => a.token == b.token,
+      hashCode: (e) => e.token.hashCode,
+      isValidKey: (e) => e is ProviderElement,
+    )..addAll(providers);
+  }
 
   /// Parses a static object representing a list of providers.
+  ///
+  /// The returned providers _may_ have duplicate tokens, and an optimizing
+  /// implementation should consider using [deduplicateProviders] before
+  /// generating code.
   List<ProviderElement> parseModule(DartObject o) {
     if (!isModule(o)) {
       throw new FormatException('Expceted Module, got "${o.type.name}".');
@@ -55,6 +77,14 @@ class ProviderReader {
       yield* o.toListValue().map(_parseModule).expand((i) => i);
     } else if (isProvider(o) || isType(o)) {
       yield parseProvider(o);
+    } else if ($Module.isExactlyType(o.type)) {
+      final reader = new ConstantReader(o);
+      for (final include in reader.read('include').listValue) {
+        yield* _parseModule(include);
+      }
+      for (final provide in reader.read('provide').listValue) {
+        yield parseProvider(provide);
+      }
     } else {
       throw new FormatException('Expected Provider, got "${o.type.name}".');
     }
@@ -78,6 +108,9 @@ class ProviderReader {
 
   ProviderElement _parseProvider(DartObject o) {
     final reader = new ConstantReader(o);
+    if (reader.instanceOf($StaticProvider)) {
+      return _parseStaticProvider(reader);
+    }
     final token = _tokenReader.parseTokenObject(o.getField('token'));
     final useClass = reader.read('useClass');
     if (!useClass.isNull) {
@@ -97,6 +130,26 @@ class ProviderReader {
       return _parseUseClass(token, reader.read('token').typeValue.element);
     }
     throw new UnsupportedError('Could not parse provider: $o.');
+  }
+
+  ProviderElement _parseStaticProvider(ConstantReader reader) {
+    final object = reader.objectValue;
+    if (reader.instanceOf($ProviderUseClass)) {
+      final token = _tokenReader.parseTokenTypeOf(
+        object.type.typeArguments[0],
+      );
+      if (object.type.typeArguments.any(_isNullOrDynamic)) {
+        throw new UnsupportedError(
+          'Unresolved types: ${object.type.typeArguments} on $object.',
+        );
+      }
+      return _parseUseClass(
+        token,
+        object.type.typeArguments[1].element,
+      );
+    } else {
+      throw new UnsupportedError('Could not parse provider: $object');
+    }
   }
 
   // const Provider(<token>, useClass: Foo)
