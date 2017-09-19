@@ -104,10 +104,10 @@ String internalSanitizeStyle(String value) {
     }
     if (!failed) return value;
   }
-  assert(() {
+  assert((() {
     _logger.warning('Sanitizing unsafe style value $value '
         '(see http://g.co/ng/security#xss).');
     return true;
-  });
+  })());
   return 'unsafe';
 }

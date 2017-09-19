@@ -369,12 +369,12 @@ abstract class AppView<T> {
     }
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
-    assert(() {
+    assert((() {
       if (viewData.destroyed) {
         throw new ViewDestroyedException('detectChanges');
       }
       return true;
-    });
+    })());
 
     if (lastGuardedView != null) {
       // Run change detection in "slow-mode" to catch thrown exceptions.
