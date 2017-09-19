@@ -149,7 +149,11 @@ class NgClass implements DoCheck, OnDestroy {
       dynamic /* List < String > | Set< String > | Map < String , dynamic > */ rawClassVal,
       bool isCleanup) {
     if (rawClassVal != null) {
-      if (rawClassVal is Iterable) {
+      if (rawClassVal is List) {
+        for (int i = 0, len = rawClassVal.length; i < len; i++) {
+          _toggleClass(rawClassVal[i], !isCleanup);
+        }
+      } else if (rawClassVal is Iterable) {
         for (var className in (rawClassVal as Iterable<String>)) {
           _toggleClass(className, !isCleanup);
         }

@@ -35,8 +35,11 @@ class DefaultIterableDiffer {
   CollectionChangeRecord _identityChangesHead;
   CollectionChangeRecord _identityChangesTail;
 
+  // Detect DartVM to special case string identical.
+  static const bool _useIdentity = identical(1.0, 1);
+
   DefaultIterableDiffer([TrackByFn trackByFn])
-      : this._trackByFn = trackByFn ?? trackByIdentity;
+      : _trackByFn = trackByFn ?? trackByIdentity;
 
   DefaultIterableDiffer clone(TrackByFn trackByFn) {
     var differ = new DefaultIterableDiffer(trackByFn);
@@ -482,10 +485,9 @@ class DefaultIterableDiffer {
     } else {
       prevRecord._next = record;
     }
-    if (identical(this._linkedRecords, null)) {
-      this._linkedRecords = new _DuplicateMap();
-    }
-    this._linkedRecords.put(record);
+    _linkedRecords ??=
+        _useIdentity ? new _DuplicateMap() : new _DuplicateMap.withHashcode();
+    _linkedRecords.put(record);
     record.currentIndex = index;
     return record;
   }
@@ -495,9 +497,7 @@ class DefaultIterableDiffer {
   }
 
   CollectionChangeRecord _unlink(CollectionChangeRecord record) {
-    if (!identical(this._linkedRecords, null)) {
-      this._linkedRecords.remove(record);
-    }
+    _linkedRecords?.remove(record);
     var prev = record._prev;
     var next = record._next;
     // todo(vicb)
@@ -541,10 +541,9 @@ class DefaultIterableDiffer {
   }
 
   CollectionChangeRecord _addToRemovals(CollectionChangeRecord record) {
-    if (identical(this._unlinkedRecords, null)) {
-      this._unlinkedRecords = new _DuplicateMap();
-    }
-    this._unlinkedRecords.put(record);
+    _unlinkedRecords ??=
+        _useIdentity ? new _DuplicateMap() : new _DuplicateMap.withHashcode();
+    _unlinkedRecords.put(record);
     record.currentIndex = null;
     record._nextRemoved = null;
     if (identical(this._removalsTail, null)) {
@@ -717,7 +716,11 @@ class _DuplicateItemRecordList {
 }
 
 class _DuplicateMap {
-  final _map = new Map<dynamic, _DuplicateItemRecordList>();
+  Map _map;
+  _DuplicateMap()
+      : _map = new Map<dynamic, _DuplicateItemRecordList>.identity();
+  _DuplicateMap.withHashcode()
+      : _map = new Map<dynamic, _DuplicateItemRecordList>();
   void put(CollectionChangeRecord record) {
     // todo(vicb) handle corner cases
     var key = record.trackById;

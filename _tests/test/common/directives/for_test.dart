@@ -2,6 +2,7 @@
 @TestOn('browser')
 library angular2.test.common.directives.for_test;
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:test/test.dart';
@@ -424,6 +425,42 @@ void main() {
           component.removeEdited(2);
         });
       });
+
+      test(
+          "should remove item if hash code is changed before "
+          "removing element from list", () async {
+        var testBed = new NgTestBed<NgForHashcodeTest>();
+        NgTestFixture<NgForHashcodeTest> testFixture = await testBed.create();
+        var testItems = [
+          new HashcodeTestItem(1),
+          new HashcodeTestItem(2),
+          new HashcodeTestItem(3),
+          new HashcodeTestItem(4),
+          new HashcodeTestItem(5)
+        ];
+
+        await testFixture.update((NgForHashcodeTest component) {
+          component.items = testItems;
+        });
+
+        expect(testFixture.rootElement, hasTextContent('1;2;3;4;5;'));
+
+        await testFixture.update((NgForHashcodeTest component) async {
+          Completer completer = new Completer();
+          scheduleMicrotask(() {
+            testItems[2].hashMultiplier = 3;
+            completer.complete();
+          });
+          await completer.future;
+        });
+        if (identical(1.0, 1)) {
+          // Skip for Dartium tests.
+          await testFixture.update((NgForHashcodeTest component) {
+            testItems.removeAt(2);
+          });
+          expect(testFixture.rootElement, hasTextContent('1;2;4;5;'));
+        }
+      });
     });
   });
 }
@@ -708,4 +745,35 @@ class ObjectToEdit {
   set objectId(dynamic value) {
     _value = value;
   }
+}
+
+@Component(
+    selector: 'ngfor-hashcode-test',
+    template: '<div><span template="ngFor let item of items">'
+        '{{item.toString()}};</span></div>',
+    directives: const [NgFor])
+class NgForHashcodeTest {
+  List<HashcodeTestItem> items;
+
+  @ContentChild(TemplateRef)
+  TemplateRef contentTpl;
+}
+
+class HashcodeTestItem {
+  int value;
+  int hashMultiplier = 1;
+  HashcodeTestItem(this.value);
+
+  @override
+  operator ==(other) {
+    if (other is! HashcodeTestItem) return false;
+    return value == (other as HashcodeTestItem).value &&
+        hashMultiplier == (other as HashcodeTestItem).hashMultiplier;
+  }
+
+  @override
+  int get hashCode => value * hashMultiplier;
+
+  @override
+  toString() => '${value * hashMultiplier}';
 }
