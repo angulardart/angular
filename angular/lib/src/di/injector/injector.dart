@@ -36,6 +36,26 @@ abstract class Injector {
   /// implementation (for provider not found).
   const factory Injector.empty([HierarchicalInjector parent]) = EmptyInjector;
 
+  /// An _annotation_ used to generate an [Injector] at compile-time.
+  ///
+  /// **EXPERIMENTAL**: Not yet supported.
+  ///
+  /// Example use:
+  /// ```
+  /// @Injector.generate(const [
+  ///   const Provider(A, useClass: APrime),
+  /// ])
+  /// Injector fooInjector([HierarchicalInjector parent]) {
+  ///   return fooInjector$Generated(parent);
+  /// }
+  /// ```
+  ///
+  /// It is a **runtime error** to use the resulting [Injector] object, so make
+  /// sure to _only_ use `@Injector.generate` as an annotation on a top-level
+  /// or static method.
+  @experimental
+  const factory Injector.generate(List<Object> providers) = _GenerateInjector;
+
   /// Create a new [Injector] that uses a basic [map] of token->instance.
   ///
   /// Optionally specify the [parent] injector.
@@ -104,4 +124,21 @@ abstract class Injector {
     @required Object token,
     OrElseInject<T> orElse: throwsNotFound,
   });
+}
+
+// Used as a token-type for the AngularDart compiler.
+class _GenerateInjector implements Injector {
+  final List<Object> providersOrModules;
+
+  const _GenerateInjector(this.providersOrModules);
+
+  @override
+  get(Object token, [Object notFoundValue = throwIfNotFound]) {
+    throw new UnsupportedError('Not a runtime class.');
+  }
+
+  @override
+  T inject<T>({Object token, OrElseInject<T> orElse: throwsNotFound}) {
+    throw new UnsupportedError('Not a runtime class.');
+  }
 }
