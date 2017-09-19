@@ -27,7 +27,7 @@ bool _inPlatformCreate = false;
 /// Creates a platform.
 /// Platforms have to be eagerly created via this function.
 PlatformRefImpl createPlatform(Injector injector) {
-  assert(() {
+  assert((() {
     if (_inPlatformCreate) {
       throw new BaseException('Already creating a platform...');
     }
@@ -36,7 +36,7 @@ PlatformRefImpl createPlatform(Injector injector) {
           'previous one to create a new one.');
     }
     return true;
-  });
+  })());
   if (isDartVM && !assertionsEnabled()) {
     window.console.warn(''
         'When using Dartium, CHECKED mode is recommended to catch type and '
@@ -126,13 +126,13 @@ class PlatformRefImpl extends PlatformRef {
 
   /// Given an injector, gets platform initializers to initialize at bootstrap.
   void init(Injector injector) {
-    assert(() {
+    assert((() {
       if (!_inPlatformCreate) {
         throw new BaseException(
             'Platforms have to be initialized via `createPlatform`!');
       }
       return true;
-    });
+    })());
     _injector = injector;
 
     List initializers = injector.get(PLATFORM_INITIALIZER, null);
@@ -338,14 +338,14 @@ class ApplicationRefImpl extends ApplicationRef {
   }
 
   ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory) {
-    assert(() {
+    assert((() {
       if (!_asyncInitDone) {
         throw new BaseException(
             'Cannot bootstrap as there are still asynchronous initializers '
             'running. Wait for them using waitForAsyncInitializers().');
       }
       return true;
-    });
+    })());
 
     return run(() {
       _rootComponentFactories.add(componentFactory);
@@ -413,12 +413,12 @@ class ApplicationRefImpl extends ApplicationRef {
     // Protect against tick being called recursively in development mode.
     //
     // This is mostly to assert valid changes to the framework, not user code.
-    assert(() {
+    assert((() {
       if (_runningTick) {
         throw new BaseException('ApplicationRef.tick is called recursively');
       }
       return true;
-    });
+    })());
 
     // Run the top-level 'tick' (i.e. detectChanges on root components).
     try {
