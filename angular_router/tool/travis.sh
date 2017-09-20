@@ -7,6 +7,15 @@
 # Fast fail the script on failures.
 set -e
 
-dartanalyzer --fatal-warnings lib
+dartanalyzer --fatal-warnings lib test
 
-# TODO(alorenzen): Add pubspec for examples and run tests here.
+pushd example
+pub upgrade
+dartanalyzer --fatal-warnings .
+popd
+
+dartium --version
+pub run test -p vm
+pub run angular_test \
+    --serve-arg=--port=8080 \
+    --test-arg=--platform=dartium
