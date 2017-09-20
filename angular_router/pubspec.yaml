@@ -25,6 +25,8 @@ dependency_overrides:
     path: ../angular
   angular_compiler:
       path: ../angular_compiler
+  angular_forms:
+      path: ../angular_forms
   angular_router.example:
       path: example
   angular_test:
