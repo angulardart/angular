@@ -33,4 +33,7 @@ dependency_overrides:
 
 transformers:
   # Run the code generator on the entire package.
-  - angular
+  - angular:
+      entry_points: test/**_test.dart
+      $exclude:
+          - test/url_test.dart

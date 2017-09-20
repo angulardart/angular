@@ -1,7 +1,7 @@
 name: angular_router.example
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
-description: Router for AngularDart.
+description: Router example for AngularDart.
 version: 1.0.0
 
 environment:
