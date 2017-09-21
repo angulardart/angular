@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'router/navigation_params.dart';
+import 'router/router_state.dart';
 
 /// An interface that can be extended in order to hook into a route navigation.
 ///
@@ -73,5 +74,30 @@ abstract class RouterHook {
       String path, NavigationParams params) async {
     // Provided as a default if someone extends or mixes-in this interface.
     return params;
+  }
+
+  /// Called by the router programmatically indicate if a component canReuse.
+  ///
+  /// The client should return a future that completes with the whether the
+  /// componentInstance should be reused. If the component extends the
+  /// CanReuse lifecycle, that will override this behavior.
+  ///
+  /// You can use `async` in order to simplify when returning synchronously:
+  ///
+  /// ```
+  /// @Injectable
+  /// class MyHook implements RouterHook {
+  ///   @override
+  ///   Future<NavigationParams> navigationParams(
+  ///       Object _, RouterState __, RouterState ___) async {
+  ///     // Make the default behavior to always reuse the component.
+  ///     return true;
+  ///   }
+  /// }
+  /// ```
+  Future<bool> canReuse(Object componentInstance, RouterState oldState,
+      RouterState newState) async {
+    // Provided as a default if someone extends or mixes-in this interface.
+    return false;
   }
 }
