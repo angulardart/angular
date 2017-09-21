@@ -159,11 +159,15 @@ class ReflectableEmitter {
   }
 
   String _registerFactory(DependencyInvocation invocation) {
-    final buffer = new StringBuffer()
-      ..writeln('  _ngRef.registerFactory(')
-      ..writeln('    ${_nameOfInvocation(invocation)},')
-      ..writeln('    ${_generateFactory(invocation)},')
-      ..writeln('  );');
+    final buffer = new StringBuffer();
+    if (invocation.bound is ConstructorElement) {
+      // Only store the factory function for constructors (useClass: ...).
+      buffer
+        ..writeln('  _ngRef.registerFactory(')
+        ..writeln('    ${_nameOfInvocation(invocation)},')
+        ..writeln('    ${_generateFactory(invocation)},')
+        ..writeln('  );');
+    }
     if (invocation.positional.isNotEmpty) {
       buffer
         ..writeln('  _ngRef.registerDependencies(')

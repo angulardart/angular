@@ -193,10 +193,6 @@ void initReflector() {
   }
   _visited = true;
   _ref0.initReflector();
-  _ngRef.registerFactory(
-    getSomeValues,
-    getSomeValues,
-  );
 
   _ngRef.registerFactory(
     FooService,
