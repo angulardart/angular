@@ -22,7 +22,7 @@ class ComponentReader {
   ///
   /// i.e. `<comp dir1 dir2></comp>`, should have `[Dir1, Dir2]`.
   @protected
-  final List<ClassElement> directives;
+  final List<ClassElement> appliedDirectives;
 
   @protected
   final DependencyReader dependencyReader;
@@ -31,13 +31,14 @@ class ComponentReader {
   final ProviderReader providerReader;
 
   DependencyInvocation<ConstructorElement> _dependencies;
+  List<ClassElement> _directives;
   List<ProviderElement> _providers;
   List<ProviderElement> _viewProviders;
 
   ComponentReader(
     this.component, {
     this.dependencyReader: const DependencyReader(),
-    this.directives: const [],
+    this.appliedDirectives: const [],
     this.providerReader: const ProviderReader(),
   })
       : this.annotation = new ConstantReader(
@@ -85,7 +86,8 @@ class ComponentReader {
   bool providesForContent(TokenElement token) =>
       providers.any((e) => e.token == token);
 
-  /// Providers that are provided as part of `providers: [ ... ]` or directives.
+  /// Providers that are provided as part of `providers: [ ... ]` or
+  /// appliedDirectives.
   Iterable<ProviderElement> get providers {
     if (_providers == null) {
       final providers = annotation.read('providers');
@@ -94,7 +96,7 @@ class ComponentReader {
       } else {
         _providers = providerReader.parseModule(providers.objectValue);
       }
-      for (final directive in directives) {
+      for (final directive in appliedDirectives) {
         final annotation = $Directive.firstAnnotationOfExact(directive);
         final providers = new ConstantReader(annotation).read('providers');
         if (!providers.isNull) {
@@ -116,5 +118,20 @@ class ComponentReader {
       }
     }
     return _viewProviders;
+  }
+
+  /// Directives that are included as part of `directives: [ ... ]`.
+  Iterable<ClassElement> get directives {
+    if (_directives == null) {
+      final directives = annotation.read('directives');
+      if (directives.isNull) {
+        _directives = <ClassElement>[];
+      } else {
+        _directives = directives.listValue
+            .map((directive) => directive.toTypeValue().element)
+            .toList();
+      }
+    }
+    return _directives;
   }
 }
