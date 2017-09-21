@@ -15,7 +15,6 @@ dependencies:
   quiver: '>=0.22.0 <0.26.0'
 
 dev_dependencies:
-  angular_router.example: ^1.0.0
   angular_test: ^1.0.2
   test: ^0.12.6
 
@@ -27,8 +26,6 @@ dependency_overrides:
       path: ../angular_compiler
   angular_forms:
       path: ../angular_forms
-  angular_router.example:
-      path: example
   angular_test:
       path: ../angular_test
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
@@ -39,3 +36,5 @@ transformers:
       entry_points: test/**_test.dart
       $exclude:
           - test/url_test.dart
+  - test/pub_serve:
+      $include: test/**_test.dart
