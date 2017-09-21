@@ -8,7 +8,7 @@ environment:
   # We are currently tracking the Dart 2 SDK pre-releases, hence the strange
   # constraint. At some point during the 5.0.0-alpha, the lower-bounds will be
   # bumped.
-  sdk: '>=1.24.0 <2.0.0-dev.infinity'
+  sdk: '>=1.24.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.31.0'
   angular_compiler: ^0.3.0
