@@ -34,19 +34,19 @@ class AppComponent {
   String title = 'Tour of Heroes';
   final List<RouteDefinition> routes = [
     new RouteDefinition(
-      library: app_routes.dashboard,
+      routePath: app_routes.dashboard,
       component: dashboard_component.DashboardComponentNgFactory,
     ),
     new RouteDefinition(
-      library: app_routes.heroes,
+      routePath: app_routes.heroes,
       component: heroes_component.HeroesComponentNgFactory,
     ),
     new RouteDefinition(
-      library: app_routes.detail,
+      routePath: app_routes.detail,
       component: hero_detail_component.HeroDetailComponentNgFactory,
     ),
     new RouteDefinition.defer(
-      library: app_routes.admin,
+      routePath: app_routes.admin,
       loader: () async {
         await admin_lib.loadLibrary();
         admin_lib.initReflector();
@@ -54,7 +54,7 @@ class AppComponent {
       },
     ),
     new RouteDefinition(
-      library: app_routes.login,
+      routePath: app_routes.login,
       component: login_component.LoginComponentNgFactory,
     ),
   ];
