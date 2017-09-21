@@ -25,6 +25,16 @@ void main() {
 
       @Injectable()
       class ExampleService {}
+
+      @Component(
+        directives: const [
+          ChildComp,
+        ],
+      )
+      class CompWithDirective {}
+
+      @Component()
+      class ChildComp {}
     ''');
   });
 
@@ -57,5 +67,10 @@ void main() {
       isFalse,
       reason: '"ExampleService" should not be visible to <ng-content>.',
     );
+  });
+
+  test('should resolve directives', () {
+    final component = new ComponentReader(getClass('CompWithDirective'));
+    expect(component.directives, [getClass('ChildComp')]);
   });
 }
