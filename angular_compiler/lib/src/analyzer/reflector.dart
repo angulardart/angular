@@ -88,7 +88,7 @@ class ReflectableReader {
     @required this.isLibrary,
     this.outputExtension: _defaultOutputExtension,
     this.recordComponentsAsInjectables: false,
-    this.recordDirectivesAsInjectables: true,
+    this.recordDirectivesAsInjectables: false,
     this.recordPipesAsInjectables: false,
     this.recordRouterAnnotationsForComponents: true,
   });

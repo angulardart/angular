@@ -301,11 +301,6 @@ void initReflector() {
     TestFooComponent,
     TestFooComponentNgFactory,
   );
-  _ngRef.registerFactory(
-    TestDirective,
-    () => new TestDirective(),
-  );
-
   _ngRef.registerComponent(
     TestSubComponent,
     TestSubComponentNgFactory,

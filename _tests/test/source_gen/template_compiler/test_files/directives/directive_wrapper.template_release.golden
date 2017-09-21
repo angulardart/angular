@@ -388,27 +388,6 @@ void initReflector() {
   _visited = true;
   _ref0.initReflector();
   _ref1.initReflector();
-  _ngRef.registerFactory(
-    ChildDirective,
-    (Element p0, ElementRef p1) => new ChildDirective(p0, p1),
-  );
-  _ngRef.registerDependencies(
-    ChildDirective,
-    const [
-      const [
-        Element,
-      ],
-      const [
-        ElementRef,
-      ],
-    ],
-  );
-
-  _ngRef.registerFactory(
-    DirectiveWithOutput,
-    () => new DirectiveWithOutput(),
-  );
-
   _ngRef.registerComponent(
     TestFooComponent,
     TestFooComponentNgFactory,
