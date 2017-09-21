@@ -14,10 +14,13 @@ import '../url.dart';
 /// Creates a listener on the target element that routes to a specified link.
 ///
 /// ```html
-/// <a [routerLink]="/heroes">Heroes</a>
+/// <a routerLink="/heroes">Heroes</a>
+/// ```
+/// Can also be used with [RouterPath].
+/// ```html
+/// <a [routerLink]="heroPath.toUrl()">Heroes</a>
 /// ```
 ///
-/// Using [RouterLink] is *optional* (plain `<a>` tags are also supported).
 /// The [routerLink] can contain queryParameters or a fragment, ie: /heroes?a=1.
 @Directive(selector: "[routerLink]", visibility: Visibility.none)
 class RouterLink {
