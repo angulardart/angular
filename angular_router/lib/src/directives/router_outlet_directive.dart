@@ -12,6 +12,7 @@ import '../router/router.dart';
 import '../router/router_impl.dart';
 import '../router/router_outlet_token.dart';
 import '../router/router_state.dart';
+import '../router_hook.dart';
 
 /// Reserves a location in the DOM as an outlet for the AngularDart [Router].
 ///
@@ -36,6 +37,7 @@ class RouterOutlet implements OnInit, OnDestroy {
   final ComponentResolver _componentResolver;
   final Router _router;
   final bool isRootOutlet;
+  final RouterHook _routerHook;
 
   // A mapping of {ComponentFactory} -> created {ComponentRef}.
   final _loadedComponents = <ComponentFactory, ComponentRef>{};
@@ -52,6 +54,7 @@ class RouterOutlet implements OnInit, OnDestroy {
     this._viewContainerRef,
     this._componentResolver,
     this._router,
+    @Optional() this._routerHook,
   )
       : isRootOutlet = parentOutlet == null {
     token?.routerOutlet = this;
@@ -160,6 +163,14 @@ class RouterOutlet implements OnInit, OnDestroy {
     Object instance,
     RouterState oldState,
     RouterState newState,
-  ) async =>
-      instance is CanReuse && await instance.canReuse(oldState, newState);
+  ) async {
+    if (instance is CanReuse) {
+      return await instance.canReuse(oldState, newState);
+    }
+    if (_routerHook != null) {
+      return await _routerHook.canReuse(instance, oldState, newState);
+    }
+
+    return false;
+  }
 }
