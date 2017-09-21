@@ -143,14 +143,6 @@ void main() {
           '    return;\n'
           '  }\n'
           '  _visited = true;\n'
-          // TODO(matanl): Make this a flag that can be disabled.
-          // It's here primarily for legacy reasons (compatibility with the
-          // current implementation of ReflectiveInjector), but it should be
-          // possible to change.
-          '  _ngRef.registerFactory(\n'
-          '    createExample,\n'
-          '    createExample,\n'
-          '  );\n'
           '  _ngRef.registerDependencies(\n'
           '    createExample,\n'
           '    const [const [String,],],\n'
@@ -196,10 +188,6 @@ void main() {
           '    return;\n'
           '  }\n'
           '  _visited = true;\n'
-          '  _ngRef.registerFactory(\n'
-          '    getComponentLoader,\n'
-          '    getComponentLoader,\n'
-          '  );\n'
           '  _ngRef.registerDependencies(\n'
           '    getComponentLoader,\n'
           '    const [const [ng_prefixed.ComponentLoader,const _ngRef.SkipSelf(),const _ngRef.Optional(),],],\n'

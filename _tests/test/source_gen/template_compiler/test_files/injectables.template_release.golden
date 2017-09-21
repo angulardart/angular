@@ -154,10 +154,6 @@ void initReflector() {
   }
   _visited = true;
   _ref0.initReflector();
-  _ngRef.registerFactory(
-    injectableFactory,
-    injectableFactory,
-  );
   _ngRef.registerDependencies(
     injectableFactory,
     const [
