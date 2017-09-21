@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 import 'package:quiver/core.dart';
 import 'package:angular/angular.dart';
 
-import 'route_library.dart';
+import 'route_path.dart';
 import 'url.dart';
 
 /// A user defined route [path] for a router.
@@ -36,10 +36,10 @@ abstract class RouteDefinition {
       {String path,
       bool useAsDefault,
       dynamic additionalData,
-      RouteLibrary library})
-      : this.path = Url.trimSlashes(path ?? library?.path),
-        this.useAsDefault = useAsDefault ?? library?.useAsDefault ?? false,
-        this.additionalData = additionalData ?? library?.additionalData;
+      RoutePath routePath})
+      : this.path = Url.trimSlashes(path ?? routePath?.path),
+        this.useAsDefault = useAsDefault ?? routePath?.useAsDefault ?? false,
+        this.additionalData = additionalData ?? routePath?.additionalData;
 
   /// Runs a dev-mode assertion that the definition is valid.
   ///
@@ -70,15 +70,15 @@ abstract class RouteDefinition {
   /// automatically inferred to be in use if there are no matching routes for a
   /// given outlet.
   ///
-  /// Another way to create a RouteDefinition is by using a [RouteLibrary]. The
-  /// library can also be used for other applications, such as creating URLs.
+  /// Another way to create a RouteDefinition is by using a [RoutePath]. The
+  /// routePath can also be used for other applications, such as creating URLs.
   /// ```
-  /// RouteLibrary contactRoute = new RouteLibrary(
+  /// RoutePath contactRoute = new RoutePath(
   ///   path: 'contact',
   /// );
   ///
   /// new RouteDefinition(
-  ///   library: contactRoute,
+  ///   routePath: contactRoute,
   ///   component: ContactViewComponentNgFactory,
   /// );
   /// ```
@@ -87,7 +87,7 @@ abstract class RouteDefinition {
     ComponentFactory component,
     bool useAsDefault,
     additionalData,
-    RouteLibrary library,
+    RoutePath routePath,
   }) = ComponentRouteDefinition._;
 
   /// Define a route from [path] that uses [loader] to resolve a component.
@@ -116,7 +116,7 @@ abstract class RouteDefinition {
     LoadComponentAsync loader,
     bool useAsDefault,
     additionalData,
-    RouteLibrary library,
+    RoutePath routePath,
   }) = DeferredRouteDefinition._;
 
   /// Configures a redirect from a [path] --> [to] another one.
@@ -133,7 +133,7 @@ abstract class RouteDefinition {
     String redirectTo,
     bool useAsDefault,
     additionalData,
-    RouteLibrary library,
+    RoutePath routePath,
   }) = RedirectRouteDefinition._;
 
   @override
@@ -182,13 +182,13 @@ class ComponentRouteDefinition extends RouteDefinition {
     this.component,
     bool useAsDefault,
     additionalData,
-    RouteLibrary library,
+    RoutePath routePath,
   })
       : super._(
           path: path,
           useAsDefault: useAsDefault,
           additionalData: additionalData,
-          library: library,
+          routePath: routePath,
         );
 
   @override
@@ -226,13 +226,13 @@ class DeferredRouteDefinition extends RouteDefinition {
     this.loader,
     bool useAsDefault,
     additionalData,
-    RouteLibrary library,
+    RoutePath routePath,
   })
       : super._(
             path: path,
             useAsDefault: useAsDefault,
             additionalData: additionalData,
-            library: library);
+            routePath: routePath);
 
   @override
   bool operator ==(Object o) {
@@ -267,13 +267,13 @@ class RedirectRouteDefinition extends RouteDefinition {
     this.redirectTo,
     bool useAsDefault,
     additionalData,
-    RouteLibrary library,
+    RoutePath routePath,
   })
       : super._(
             path: path,
             useAsDefault: useAsDefault,
             additionalData: additionalData,
-            library: library);
+            routePath: routePath);
 
   @override
   bool operator ==(Object o) {

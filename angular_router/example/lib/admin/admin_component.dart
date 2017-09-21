@@ -23,11 +23,11 @@ class AdminComponent implements CanActivate {
   String adminHeroRoute = app_routes.adminHero.toUrl();
   final List<RouteDefinition> routes = [
     new RouteDefinition(
-      library: app_routes.adminDashboard,
+      routePath: app_routes.adminDashboard,
       component: admin_dashboard_component.AdminDashboardComponentNgFactory,
     ),
     new RouteDefinition(
-      library: app_routes.adminHero,
+      routePath: app_routes.adminHero,
       component: admin_heroes_component.AdminHeroesComponentNgFactory,
     ),
     new RouteDefinition.redirect(path: '/.*', redirectTo: './dashboard'),

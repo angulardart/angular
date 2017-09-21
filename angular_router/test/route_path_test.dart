@@ -6,94 +6,92 @@ import 'package:test/test.dart';
 import 'package:angular_router/angular_router.dart';
 
 void main() {
-  group('$RouteLibrary', () {
+  group('$RoutePath', () {
     test('should set all properties', () {
-      RouteLibrary parent = new RouteLibrary();
-      RouteLibrary library = new RouteLibrary(
+      RoutePath parent = new RoutePath();
+      RoutePath routePath = new RoutePath(
           path: 'path',
           useAsDefault: true,
           additionalData: 'data',
           parent: parent);
-      expect(library.path, 'path');
-      expect(library.useAsDefault, true);
-      expect(library.additionalData, 'data');
-      expect(library.parent, parent);
+      expect(routePath.path, 'path');
+      expect(routePath.useAsDefault, true);
+      expect(routePath.additionalData, 'data');
+      expect(routePath.parent, parent);
     });
 
     group('fromRoutes', () {
       test('should set all properties from routes', () {
-        RouteLibrary library = new RouteLibrary.fromRoutes([
+        RoutePath routePath = new RoutePath.fromRoutes([
           new RouteDefinition(
               path: 'path', useAsDefault: true, additionalData: 'data')
         ]);
-        expect(library.path, 'path');
-        expect(library.useAsDefault, true);
-        expect(library.additionalData, 'data');
-        expect(library.parent, isNull);
+        expect(routePath.path, 'path');
+        expect(routePath.useAsDefault, true);
+        expect(routePath.additionalData, 'data');
+        expect(routePath.parent, isNull);
       });
 
       test('should take properties from last route', () {
-        RouteLibrary library = new RouteLibrary.fromRoutes([
+        RoutePath routePath = new RoutePath.fromRoutes([
           new RouteDefinition(),
           new RouteDefinition(
               path: 'path', useAsDefault: true, additionalData: 'data')
         ]);
-        expect(library.path, 'path');
-        expect(library.useAsDefault, true);
-        expect(library.additionalData, 'data');
-        expect(library.parent, isNotNull);
+        expect(routePath.path, 'path');
+        expect(routePath.useAsDefault, true);
+        expect(routePath.additionalData, 'data');
+        expect(routePath.parent, isNotNull);
       });
 
       test('should construct with an empty list', () {
-        RouteLibrary library = new RouteLibrary.fromRoutes([]);
-        expect(library.path, '');
-        expect(library.useAsDefault, false);
-        expect(library.additionalData, isNull);
-        expect(library.parent, isNull);
+        RoutePath routePath = new RoutePath.fromRoutes([]);
+        expect(routePath.path, '');
+        expect(routePath.useAsDefault, false);
+        expect(routePath.additionalData, isNull);
+        expect(routePath.parent, isNull);
       });
 
       test('should chain libraries', () {
-        RouteLibrary library = new RouteLibrary.fromRoutes([
+        RoutePath routePath = new RoutePath.fromRoutes([
           new RouteDefinition(path: 'path1'),
           new RouteDefinition(path: 'path2'),
           new RouteDefinition(path: 'path3')
         ]);
-        expect(library.path, 'path3');
-        expect(library.parent.path, 'path2');
-        expect(library.parent.parent.path, 'path1');
-        expect(library.parent.parent.parent, isNull);
+        expect(routePath.path, 'path3');
+        expect(routePath.parent.path, 'path2');
+        expect(routePath.parent.parent.path, 'path1');
+        expect(routePath.parent.parent.parent, isNull);
       });
     });
 
     group('path', () {
       test('path should return a slash-trimmed version of the path', () {
-        RouteLibrary library = new RouteLibrary(path: '/path/');
-        expect(library.path, 'path');
-        library =
-            new RouteLibrary.fromRoutes([new RouteDefinition(path: '/path/')]);
-        expect(library.path, 'path');
+        RoutePath routePath = new RoutePath(path: '/path/');
+        expect(routePath.path, 'path');
+        routePath =
+            new RoutePath.fromRoutes([new RouteDefinition(path: '/path/')]);
+        expect(routePath.path, 'path');
       });
     });
 
     group('toUrl', () {
-      RouteLibrary library;
+      RoutePath routePath;
 
       setUpAll(() {
-        RouteLibrary parentParentLibrary =
-            new RouteLibrary(path: 'path1/:param1');
-        RouteLibrary parentLibrary = new RouteLibrary(
-            path: 'path2/:param2', parent: parentParentLibrary);
-        library =
-            new RouteLibrary(path: 'path3/:param3', parent: parentLibrary);
+        RoutePath parentParentPath = new RoutePath(path: 'path1/:param1');
+        RoutePath parentPath =
+            new RoutePath(path: 'path2/:param2', parent: parentParentPath);
+        routePath = new RoutePath(path: 'path3/:param3', parent: parentPath);
       });
 
       test('should join the parent paths and the last path', () {
-        expect(library.toUrl(), '/path1/:param1/path2/:param2/path3/:param3');
+        expect(routePath.toUrl(), '/path1/:param1/path2/:param2/path3/:param3');
       });
 
       test('should replace parameters', () {
         expect(
-            library.toUrl(parameters: {
+            routePath.toUrl(parameters: {
               'param1': 'one',
               'param2': 'two',
               'param3': 'three',
@@ -104,20 +102,20 @@ void main() {
 
       test('should append queryParameters and fragment', () {
         expect(
-            library.toUrl(queryParameters: {
+            routePath.toUrl(queryParameters: {
               'param': 'one',
             }, fragment: 'frag'),
             '/path1/:param1/path2/:param2/path3/:param3?param=one#frag');
       });
 
       test('should url encode parameters', () {
-        expect(library.toUrl(parameters: {'param1': 'one two'}),
+        expect(routePath.toUrl(parameters: {'param1': 'one two'}),
             '/path1/one%20two/path2/:param2/path3/:param3');
       });
 
       test('should url encode queryParameters', () {
         expect(
-            library.toUrl(queryParameters: {
+            routePath.toUrl(queryParameters: {
               'param 1': 'one',
             }),
             '/path1/:param1/path2/:param2/path3/:param3?param%201=one');

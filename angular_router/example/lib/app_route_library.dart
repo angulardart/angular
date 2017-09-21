@@ -1,26 +1,28 @@
 import 'package:angular_router/angular_router.dart';
 
-final dashboard = new RouteLibrary(
+final dashboard = new RoutePath(
   path: 'dashboard',
   useAsDefault: true,
 );
-final heroes = new RouteLibrary(
+final heroes = new RoutePath(
   path: 'heroes',
 );
-final detail = new RouteLibrary(
+final detail = new RoutePath(
   path: 'detail/:id',
 );
-final admin = new RouteLibrary(
+final admin = new RoutePath(
   path: 'admin',
 );
-final login = new RouteLibrary(
+final login = new RoutePath(
   path: 'login',
 );
 
-final adminDashboard = new RouteLibrary(
+final adminDashboard = new RoutePath(
+  parent: admin,
   path: 'dashboard',
   useAsDefault: true,
 );
-final adminHero = new RouteLibrary(
+final adminHero = new RoutePath(
+  parent: admin,
   path: 'heroes',
 );

@@ -11,7 +11,7 @@ export 'src/lifecycle.dart'
     show CanActivate, CanDeactivate, CanReuse, OnActivate, OnDeactivate;
 export 'src/location.dart';
 export 'src/route_definition.dart' show RouteDefinition;
-export 'src/route_library.dart' show RouteLibrary;
+export 'src/route_path.dart' show RoutePath;
 export 'src/router/navigation_params.dart' show NavigationParams;
 export 'src/router/router.dart' show Router, NavigationResult;
 export 'src/router/router_state.dart' show RouterState;

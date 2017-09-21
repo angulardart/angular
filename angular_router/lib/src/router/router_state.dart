@@ -7,7 +7,7 @@ import 'package:quiver/core.dart';
 import 'package:angular/angular.dart' show ComponentFactory, ComponentRef;
 
 import '../route_definition.dart';
-import '../route_library.dart';
+import '../route_path.dart';
 import '../url.dart';
 
 /// Represents the state of the router, which is a URL and matching [routes].
@@ -21,9 +21,9 @@ class RouterState extends Url {
   /// '/customer/5', parameters would equal { 'id': '5' }.
   final Map<String, String> parameters;
 
-  RouteLibrary _library;
-  RouteLibrary get library {
-    return _library ??= new RouteLibrary.fromRoutes(routes);
+  RoutePath _routePath;
+  RoutePath get routePath {
+    return _routePath ??= new RoutePath.fromRoutes(routes);
   }
 
   RouterState(
