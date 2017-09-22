@@ -40,6 +40,15 @@ class Url {
     return path;
   }
 
+  /// Normalizes hashes so they are standardized.
+  static String normalizeHash(String hash) {
+    if (hash.startsWith('#')) {
+      return hash.substring(1);
+    }
+
+    return hash;
+  }
+
   static String trimSlashes(String path) {
     if (path == null) return null;
     if (path.startsWith('/')) path = path.substring(1);
