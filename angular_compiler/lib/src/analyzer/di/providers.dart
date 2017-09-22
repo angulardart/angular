@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -25,10 +23,6 @@ class ProviderReader {
 
   static bool _isNullOrDynamic(DartType t) => t.isDynamic || t.isDartCoreNull;
 
-  /// Returns whether an object represents a constant [List].
-  @protected
-  bool isList(DartObject o) => o.toListValue() != null;
-
   /// Returns whether an object represents a `Provider`.
   @protected
   bool isProvider(DartObject o) => $Provider.isAssignableFromType(o.type);
@@ -36,59 +30,6 @@ class ProviderReader {
   /// Returns whether an object represents a [Type].
   @protected
   bool isType(DartObject o) => o.toTypeValue() != null;
-
-  /// Returns whether an object is abstractly a "module" of providers.
-  ///
-  /// In AngularDart, this is currently represented as a `List<Object>` where
-  /// the elements of the list can be other `List<Object>`, a `Provider`, or a
-  /// `Type`.
-  ///
-  /// Validation may not be performed on the underlying elements.
-  @protected
-  bool isModule(DartObject o) => isList(o) || $Module.isExactlyType(o.type);
-
-  /// Returns a unique ordered-set based off of [providers].
-  ///
-  /// [ProviderElement.token] is used to determine uniqueness.
-  Set<ProviderElement> deduplicateProviders(
-    Iterable<ProviderElement> providers,
-  ) {
-    return new LinkedHashSet<ProviderElement>(
-      equals: (a, b) => a.token == b.token,
-      hashCode: (e) => e.token.hashCode,
-      isValidKey: (e) => e is ProviderElement,
-    )..addAll(providers);
-  }
-
-  /// Parses a static object representing a list of providers.
-  ///
-  /// The returned providers _may_ have duplicate tokens, and an optimizing
-  /// implementation should consider using [deduplicateProviders] before
-  /// generating code.
-  List<ProviderElement> parseModule(DartObject o) {
-    if (!isModule(o)) {
-      throw new FormatException('Expceted Module, got "${o.type.name}".');
-    }
-    return _parseModule(o).toList();
-  }
-
-  Iterable<ProviderElement> _parseModule(DartObject o) sync* {
-    if (isList(o)) {
-      yield* o.toListValue().map(_parseModule).expand((i) => i);
-    } else if (isProvider(o) || isType(o)) {
-      yield parseProvider(o);
-    } else if ($Module.isExactlyType(o.type)) {
-      final reader = new ConstantReader(o);
-      for (final include in reader.read('include').listValue) {
-        yield* _parseModule(include);
-      }
-      for (final provide in reader.read('provide').listValue) {
-        yield parseProvider(provide);
-      }
-    } else {
-      throw new FormatException('Expected Provider, got "${o.type.name}".');
-    }
-  }
 
   /// Parses a static object representing a `Provider`.
   ProviderElement parseProvider(DartObject o) {
