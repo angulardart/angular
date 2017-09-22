@@ -362,6 +362,11 @@ class RouterImpl extends Router {
           !(await component.canDeactivate(_activeState, nextState))) {
         return false;
       }
+      if (_routerHook != null &&
+          !(await _routerHook.canDeactivate(
+              component, _activeState, nextState))) {
+        return false;
+      }
     }
 
     return true;
@@ -374,6 +379,11 @@ class RouterImpl extends Router {
       var component = componentRef.instance;
       if (component is CanActivate &&
           !(await component.canActivate(_activeState, nextState))) {
+        return false;
+      }
+      if (_routerHook != null &&
+          !(await _routerHook.canActivate(
+              component, _activeState, nextState))) {
         return false;
       }
     }
