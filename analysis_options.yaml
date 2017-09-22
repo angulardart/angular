@@ -5,7 +5,9 @@ analyzer:
     # See `tool/travis.sh` for this is handled on Travis
     - tools/analyzer_plugin/bin/plugin.dart
  errors:
-   unused_element: error
+   # Ignoring for v4 branch - there were missing cases in stable that cause
+   # crashes in Dart v2-dev
+   #unused_element: error
    unused_import: error
    unused_local_variable: error
    dead_code: error
