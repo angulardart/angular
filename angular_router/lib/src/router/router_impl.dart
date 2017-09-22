@@ -49,14 +49,16 @@ class RouterImpl extends Router {
     Url.isHashStrategy = locationStrategy is HashLocationStrategy;
 
     _coordinatorIndex = RouterCoordinator.INSTANCE.registerRouter(this);
-    _location.subscribe((event) async {
-      var url = Url.parse(event['url']);
+    _location.subscribe((_) async {
+      var url = Url.parse(_location.path());
 
       var navigationResult = await navigateRouter(
           Location.joinWithSlash(_baseHref, url.path),
           new NavigationParams(
               queryParameters: url.queryParameters,
-              fragment: url.fragment,
+              fragment: Url.isHashStrategy
+                  ? url.fragment
+                  : Url.normalizeHash(_location.hash()),
               updateUrl: false));
 
       // If the back navigation was blocked (DeactivateGuard), push the
@@ -80,7 +82,9 @@ class RouterImpl extends Router {
           Location.joinWithSlash(_baseHref, url.path),
           new NavigationParams(
               queryParameters: url.queryParameters,
-              fragment: url.fragment,
+              fragment: Url.isHashStrategy
+                  ? url.fragment
+                  : Url.normalizeHash(_location.hash()),
               updateUrl: false));
     }
   }
@@ -168,7 +172,7 @@ class RouterImpl extends Router {
   String _getAbsolutePath(String path, RouterState state) {
     if (path.startsWith('./')) {
       var currentRoutes = state.routes.take(state.routes.length - 1);
-      var currentPath = currentRoutes.fold(
+      String currentPath = currentRoutes.fold(
           '', (soFar, route) => soFar + route.toUrl(state.parameters));
 
       return Location.joinWithSlash(currentPath, path.substring(2));
@@ -357,9 +361,14 @@ class RouterImpl extends Router {
   Future<bool> _canDeactivate(MutableRouterState mutableNextState) async {
     RouterState nextState = mutableNextState.build();
     for (ComponentRef componentRef in _activeComponentRefs) {
-      var component = componentRef.instance;
+      Object component = componentRef.instance;
       if (component is CanDeactivate &&
           !(await component.canDeactivate(_activeState, nextState))) {
+        return false;
+      }
+      if (_routerHook != null &&
+          !(await _routerHook.canDeactivate(
+              component, _activeState, nextState))) {
         return false;
       }
     }
@@ -371,9 +380,14 @@ class RouterImpl extends Router {
   Future<bool> _canActivate(MutableRouterState mutableNextState) async {
     RouterState nextState = mutableNextState.build();
     for (ComponentRef componentRef in mutableNextState.components) {
-      var component = componentRef.instance;
+      Object component = componentRef.instance;
       if (component is CanActivate &&
           !(await component.canActivate(_activeState, nextState))) {
+        return false;
+      }
+      if (_routerHook != null &&
+          !(await _routerHook.canActivate(
+              component, _activeState, nextState))) {
         return false;
       }
     }
