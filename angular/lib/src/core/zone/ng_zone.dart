@@ -136,7 +136,7 @@ class NgZone {
   bool get inOuterZone => Zone.current == _outerZone;
 
   Zone _createInnerZone(Zone zone,
-      {handleUncaughtError(
+      {void handleUncaughtError(
           Zone _, ZoneDelegate __, Zone ___, dynamic ____, StackTrace s)}) {
     return zone.fork(
         specification: new ZoneSpecification(
@@ -169,7 +169,7 @@ class NgZone {
     parent.scheduleMicrotask(zone, safeMicrotask);
   }
 
-  dynamic _run(Zone self, ZoneDelegate parent, Zone zone, fn()) {
+  R _run<R>(Zone self, ZoneDelegate parent, Zone zone, R fn()) {
     try {
       _onEnter();
       return parent.run(zone, fn);
@@ -178,7 +178,8 @@ class NgZone {
     }
   }
 
-  dynamic _runUnary(Zone self, ZoneDelegate parent, Zone zone, fn(arg), arg) {
+  R _runUnary<R, T>(
+      Zone self, ZoneDelegate parent, Zone zone, R fn(T arg), T arg) {
     try {
       _onEnter();
       return parent.runUnary(zone, fn, arg);
@@ -187,8 +188,8 @@ class NgZone {
     }
   }
 
-  dynamic _runBinary(
-      Zone self, ZoneDelegate parent, Zone zone, fn(arg1, arg2), arg1, arg2) {
+  R _runBinary<R, T1, T2>(Zone self, ZoneDelegate parent, Zone zone,
+      R fn(T1 arg1, T2 arg2), T1 arg1, T2 arg2) {
     try {
       _onEnter();
       return parent.runBinary(zone, fn, arg1, arg2);
@@ -306,7 +307,7 @@ class NgZone {
 
   /// Same as #run, except that synchronous errors are caught and forwarded
   /// via `onError` and not rethrown.
-  R runGuarded<R>(R fn()) {
+  void runGuarded(void fn()) {
     return _innerZone.runGuarded(fn);
   }
 
