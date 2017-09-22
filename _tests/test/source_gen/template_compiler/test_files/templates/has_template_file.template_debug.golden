@@ -106,7 +106,7 @@ class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _HasTemplateFileComponent_0_4 = new import3.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import3.HasTemplateFileComponent>(
         0, this, rootEl, _HasTemplateFileComponent_0_4);
   }

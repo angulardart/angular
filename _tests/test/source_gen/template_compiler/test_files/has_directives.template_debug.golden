@@ -154,7 +154,7 @@ class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _TestFooComponent_0_4 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import1.TestFooComponent>(
         0, this, rootEl, _TestFooComponent_0_4);
   }
@@ -255,7 +255,7 @@ class _ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _TestSubComponent_0_4 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import1.TestSubComponent>(
         0, this, rootEl, _TestSubComponent_0_4);
   }

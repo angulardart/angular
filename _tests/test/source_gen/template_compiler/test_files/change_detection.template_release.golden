@@ -85,7 +85,7 @@ class _ViewCheckOnceComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _CheckOnceComponent_0_4 = new import1.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.CheckOnceComponent>(
         0, this, rootEl, _CheckOnceComponent_0_4);
   }
@@ -169,7 +169,7 @@ class _ViewCheckedComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _CheckedComponent_0_4 = new import1.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.CheckedComponent>(
         0, this, rootEl, _CheckedComponent_0_4);
   }
@@ -251,7 +251,7 @@ class _ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _CheckAlwaysComponent_0_4 = new import1.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.CheckAlwaysComponent>(
         0, this, rootEl, _CheckAlwaysComponent_0_4);
   }
@@ -334,7 +334,7 @@ class _ViewDetachedComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _DetachedComponent_0_4 = new import1.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.DetachedComponent>(
         0, this, rootEl, _DetachedComponent_0_4);
   }
@@ -416,7 +416,7 @@ class _ViewOnPushComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _OnPushComponent_0_4 = new import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.OnPushComponent>(
         0, this, rootEl, _OnPushComponent_0_4);
   }
@@ -500,7 +500,7 @@ class _ViewStatefulComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _StatefulComponent_0_4 = new import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.StatefulComponent>(
         0, this, rootEl, _StatefulComponent_0_4);
   }
@@ -582,7 +582,7 @@ class _ViewDefaultComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _DefaultComponent_0_4 = new import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.DefaultComponent>(
         0, this, rootEl, _DefaultComponent_0_4);
   }

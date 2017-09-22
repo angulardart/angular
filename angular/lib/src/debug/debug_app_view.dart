@@ -116,6 +116,18 @@ class DebugAppView<T> extends AppView<T> {
     allNodes = allNodesForDebug;
   }
 
+  void init0Dbg(dynamic e, [List allNodesForDebug = const []]) {
+    viewData.rootNodesOrViewContainers = <dynamic>[e];
+    allNodes = allNodesForDebug;
+    if (viewData.type == ViewType.COMPONENT) {
+      dirtyParentQueriesInternal();
+    }
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+  }
+
   @override
   void destroy() {
     _resetDebug();

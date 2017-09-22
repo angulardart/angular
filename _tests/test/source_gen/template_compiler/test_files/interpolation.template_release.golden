@@ -91,7 +91,7 @@ class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
     rootEl = _compView_0.rootEl;
     _InterpolationComponent_0_4 = new import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.InterpolationComponent>(
         0, this, rootEl, _InterpolationComponent_0_4);
   }
@@ -198,7 +198,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
         new import1.InterpolationComponentNoWhitespace();
     _compView_0.create(
         _InterpolationComponentNoWhitespace_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.InterpolationComponentNoWhitespace>(
         0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
   }

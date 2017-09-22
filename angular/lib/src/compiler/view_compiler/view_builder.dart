@@ -1096,8 +1096,8 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   statements.addAll(parentRenderNodeStmts);
   statements.addAll(view.createMethod.finish());
 
-  final rootElements = view.rootNodesOrViewContainers;
-  final initParams = [createFlatArray(rootElements)];
+  final rootElements = createFlatArray(view.rootNodesOrViewContainers);
+  final initParams = [rootElements];
   final subscriptions = view.subscriptions.isEmpty
       ? o.NULL_EXPR
       : o.literalArr(view.subscriptions, null);
@@ -1126,12 +1126,28 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   //
   // init(rootNodes, subscriptions);
   // or init0 if we have a single root node with no subscriptions.
+  var renderNodesArrayExpr;
   if (view.genConfig.genDebugInfo) {
     final renderNodes = view.nodes.map((node) => node.renderNode).toList();
-    initParams.add(o.literalArr(renderNodes));
+    renderNodesArrayExpr = o.literalArr(renderNodes);
+    initParams.add(renderNodesArrayExpr);
   }
 
-  statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
+  if (rootElements is o.LiteralArrayExpr &&
+      rootElements.entries.length == 1 &&
+      subscriptions == o.NULL_EXPR) {
+    if (view.genConfig.genDebugInfo) {
+      statements.add(new o.InvokeMemberMethodExpr(
+              'init0Dbg', [rootElements.entries[0], renderNodesArrayExpr])
+          .toStmt());
+    } else {
+      statements.add(
+          new o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]])
+              .toStmt());
+    }
+  } else {
+    statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
+  }
 
   if (isComponentRoot) {
     _writeComponentHostEventListeners(view, parser, statements);

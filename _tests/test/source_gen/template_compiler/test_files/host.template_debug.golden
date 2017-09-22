@@ -108,7 +108,7 @@ class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _HostComponent_0_4 = new import2.HostComponent();
     _compView_0.create(_HostComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.HostComponent>(
         0, this, rootEl, _HostComponent_0_4);
   }

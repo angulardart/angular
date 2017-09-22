@@ -203,7 +203,7 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
     _query_q7_0_1.reset([]);
     _QueriesComponent_0_4.contentChildFromField = _query_q7_0_1.first;
     _compView_0.create(_QueriesComponent_0_4, projectableNodes);
-    init([rootEl], null);
+    init0(rootEl);
     return new ComponentRef<import1.QueriesComponent>(
         0, this, rootEl, _QueriesComponent_0_4);
   }

@@ -116,7 +116,7 @@ class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _InterpolationComponent_0_4 = new import2.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.InterpolationComponent>(
         0, this, rootEl, _InterpolationComponent_0_4);
   }
@@ -248,7 +248,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0
         new import2.InterpolationComponentNoWhitespace();
     _compView_0.create(
         _InterpolationComponentNoWhitespace_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.InterpolationComponentNoWhitespace>(
         0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
   }
