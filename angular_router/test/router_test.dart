@@ -5,10 +5,10 @@
 import 'dart:async';
 
 import 'package:test/test.dart';
-import 'package:angular_router.example/app_component.dart';
-import 'package:angular_router.example/testing/app_component_po.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:angular_router.example/app_component.dart';
+import 'package:angular_router.example/testing/app_component_po.dart';
 import 'package:angular_test/angular_test.dart';
 
 void main() {
@@ -32,7 +32,7 @@ void main() {
           .addProviders([provide(APP_BASE_HREF, useValue: ''), routerProviders]
             ..addAll(providers))
           .create();
-      fixture.update((component) => router = component.router);
+      fixture.update((TestRouter component) => router = component.router);
       pageObject = await fixture.resolvePageObject(AppComponentPO);
     }
 
@@ -43,6 +43,33 @@ void main() {
       expect(await router.navigate('/'), NavigationResult.SUCCESS);
       expect(await pageObject.dashboard(), isNotNull);
       expect(router.current.path, '');
+    });
+
+    group('the router should navigate to the initialized URL', () {
+      test('path strategy', () async {
+        await setUp([
+          provide(PlatformLocation,
+              useValue: new FakePlatformLocation(
+                  '/dashboard', '?param1=value', '#fragment'))
+        ]);
+        expect(router.current.path, '/dashboard');
+        expect(router.current.queryParameters, {'param1': 'value'});
+        expect(router.current.fragment, 'fragment');
+        expect(await pageObject.dashboard(), isNotNull);
+      });
+
+      test('path strategy', () async {
+        await setUp([
+          routerProvidersHash,
+          provide(PlatformLocation,
+              useValue: new FakePlatformLocation(
+                  '', '', '#dashboard?param1=value#fragment'))
+        ]);
+        expect(router.current.path, 'dashboard');
+        expect(router.current.queryParameters, {'param1': 'value'});
+        expect(router.current.fragment, 'fragment');
+        expect(await pageObject.dashboard(), isNotNull);
+      });
     });
 
     test('navigation works the same with a base_href', () async {
@@ -90,6 +117,26 @@ void main() {
       expect(router.current.path, '/admin/dashboard');
     });
   });
+}
+
+class FakePlatformLocation implements PlatformLocation {
+  final String _pathname;
+  final String _search;
+  final String _hash;
+
+  const FakePlatformLocation(this._pathname, this._search, this._hash);
+
+  @override
+  String get pathname => _pathname;
+
+  @override
+  String get search => _search;
+
+  @override
+  String get hash => _hash;
+
+  @override
+  noSuchMethod(i) => null;
 }
 
 @Component(
