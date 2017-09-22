@@ -175,6 +175,11 @@ class ComponentVisitor
   /// Whether the component being visited re-implements 'noSuchMethod'.
   bool _implementsNoSuchMethod = false;
 
+  /// Element of the current directive being visited.
+  ///
+  /// This is used to look up resolved type information.
+  ClassElement _directiveClassElement;
+
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
     final annotation = element.metadata.firstWhere(
@@ -273,14 +278,15 @@ class ComponentVisitor
     for (ElementAnnotation annotation in element.metadata) {
       if (safeMatcherType(Input, log)(annotation)) {
         if (isSetter) {
-          String typeName;
-          bool isField = false;
-          if (element is FieldElement) {
-            typeName = element.type?.name;
-            isField = true;
-          } else if (element is PropertyAccessorElement) {
-            typeName = element.parameters.first.type?.name;
-          }
+          final isField = element is FieldElement;
+          // Resolves specified generic type parameters.
+          final setter = _directiveClassElement.type
+              .lookUpInheritedSetter(element.displayName);
+          final propertyType = setter.parameters.first.type;
+          final dynamicType = setter.context.typeProvider.dynamicType;
+          // Resolves unspecified or bounded generic type parameters.
+          final resolvedType = propertyType.resolveToBound(dynamicType);
+          final typeName = resolvedType.name;
           _addPropertyBindingTo(
               isField ? _fieldInputs : _setterInputs, annotation, element,
               immutableBindings: _inputs);
@@ -467,6 +473,7 @@ class ComponentVisitor
     ElementAnnotation annotation,
     ClassElement element,
   ) {
+    _directiveClassElement = element;
     _collectInheritableMetadata(element.type);
     final isComp = safeMatcher(isComponent, log)(annotation);
     final annotationValue = annotation.computeConstantValue();
