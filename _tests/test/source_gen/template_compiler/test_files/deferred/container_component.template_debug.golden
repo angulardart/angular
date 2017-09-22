@@ -116,7 +116,7 @@ class _ViewTestContainerComponent1
     import9.Text _text_1 = new import9.Text('Foo');
     dbgElm(this, _text_1, 1, 0, 30);
     _compView_0.create(_DeferredChildComponent_0_4, []);
-    init([_el_0], null, [_el_0, _text_1]);
+    init0Dbg(_el_0, [_el_0, _text_1]);
     return null;
   }
 
@@ -175,7 +175,7 @@ class _ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _TestContainerComponent_0_4 = new import3.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import3.TestContainerComponent>(
         0, this, rootEl, _TestContainerComponent_0_4);
   }

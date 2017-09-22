@@ -134,7 +134,7 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
         _const_OpaqueToken__test___0_4,
         this.injectorGet(String, viewData.parentIndex, null));
     _compView_0.create(_InjectableComponent_0_5, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.InjectableComponent>(
         0, this, rootEl, _InjectableComponent_0_5);
   }

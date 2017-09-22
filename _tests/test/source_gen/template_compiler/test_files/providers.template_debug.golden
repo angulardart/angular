@@ -199,7 +199,7 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _ProvidersComponent_0_4 = new import2.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.ProvidersComponent>(
         0, this, rootEl, _ProvidersComponent_0_4);
   }

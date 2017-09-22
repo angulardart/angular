@@ -249,6 +249,20 @@ abstract class AppView<T> {
     if (viewData.type == ViewType.COMPONENT) {
       dirtyParentQueriesInternal();
     }
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+  }
+
+  /// Specialized init when component has a single root node.
+  void init0WithSub(dynamic e, List subscriptions) {
+    viewData.subscriptions = subscriptions;
+    init0(e);
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 
   /// Called by build once all dom nodes are available.
@@ -258,6 +272,10 @@ abstract class AppView<T> {
     if (viewData.type == ViewType.COMPONENT) {
       dirtyParentQueriesInternal();
     }
+    // Workaround since package expect/@NoInline not available outside sdk.
+    return; // ignore: dead_code
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 
   dynamic createElement(

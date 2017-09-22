@@ -96,7 +96,7 @@ class _ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _DeferredChildComponent_0_4 = new import2.DeferredChildComponent();
     _compView_0.create(_DeferredChildComponent_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.DeferredChildComponent>(
         0, this, rootEl, _DeferredChildComponent_0_4);
   }

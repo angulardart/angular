@@ -102,7 +102,7 @@ class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _UsesNativeEvents_0_4 = new import2.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.UsesNativeEvents>(
         0, this, rootEl, _UsesNativeEvents_0_4);
   }
@@ -238,7 +238,7 @@ class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _UsesAngularEvents_0_4 = new import2.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.UsesAngularEvents>(
         0, this, rootEl, _UsesAngularEvents_0_4);
   }
@@ -333,7 +333,7 @@ class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
     dbgIdx(rootEl, 0);
     _HasAngularEvents_0_4 = new import2.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_4, projectableNodes);
-    init([rootEl], null, [rootEl]);
+    init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.HasAngularEvents>(
         0, this, rootEl, _HasAngularEvents_0_4);
   }
