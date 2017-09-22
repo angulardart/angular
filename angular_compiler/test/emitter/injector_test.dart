@@ -23,9 +23,10 @@ void main() {
         const Provider(Example, useClass: ExamplePrime),  
       ];
     ''');
-    final providers = const ProviderReader().parseModule(
+    final module = const ModuleReader().parseModule(
       library.getType('Example').metadata.first.computeConstantValue(),
     );
+    final providers = module.flatten();
     final injector = new InjectorEmitter({
       'ExampleInjector': providers,
     });

@@ -7,6 +7,8 @@ export 'src/analyzer.dart'
         DependencyInvocation,
         DependencyReader,
         LiteralTokenElement,
+        ModuleElement,
+        ModuleReader,
         OpaqueTokenElement,
         ProviderElement,
         ProviderReader,

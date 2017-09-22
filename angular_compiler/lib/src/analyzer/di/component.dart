@@ -4,6 +4,7 @@ import 'package:source_gen/source_gen.dart';
 
 import '../types.dart';
 import 'dependencies.dart';
+import 'modules.dart';
 import 'providers.dart';
 import 'tokens.dart';
 
@@ -28,7 +29,7 @@ class ComponentReader {
   final DependencyReader dependencyReader;
 
   @protected
-  final ProviderReader providerReader;
+  final ModuleReader moduleReader;
 
   DependencyInvocation<ConstructorElement> _dependencies;
   List<ClassElement> _directives;
@@ -39,7 +40,7 @@ class ComponentReader {
     this.component, {
     this.dependencyReader: const DependencyReader(),
     this.appliedDirectives: const [],
-    this.providerReader: const ProviderReader(),
+    this.moduleReader: const ModuleReader(),
   })
       : this.annotation = new ConstantReader(
           $Component.firstAnnotationOfExact(component),
@@ -94,13 +95,14 @@ class ComponentReader {
       if (providers.isNull) {
         _providers = <ProviderElement>[];
       } else {
-        _providers = providerReader.parseModule(providers.objectValue);
+        _providers = moduleReader.parseModule(providers.objectValue).flatten();
       }
       for (final directive in appliedDirectives) {
         final annotation = $Directive.firstAnnotationOfExact(directive);
         final providers = new ConstantReader(annotation).read('providers');
         if (!providers.isNull) {
-          _providers.addAll(providerReader.parseModule(providers.objectValue));
+          _providers.addAll(
+              moduleReader.parseModule(providers.objectValue).flatten());
         }
       }
     }
@@ -114,7 +116,8 @@ class ComponentReader {
       if (providers.isNull) {
         _viewProviders = <ProviderElement>[];
       } else {
-        _viewProviders = providerReader.parseModule(providers.objectValue);
+        _viewProviders =
+            moduleReader.parseModule(providers.objectValue).flatten();
       }
     }
     return _viewProviders;

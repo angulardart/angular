@@ -16,8 +16,6 @@ void main() {
     ClassElement $ExamplePrime;
     ClassElement $DependencyA;
     ClassElement $DependencyB;
-    DartObject $newModuleA;
-    DartObject $newModuleB;
     FunctionElement $createExample;
 
     setUpAll(() async {
@@ -76,30 +74,12 @@ void main() {
           // [9] New ProviderUseClass
           const ProviderUseClass<Example, ExamplePrime>(),
         ];
-
-        const newModuleA = const Module(
-          provide: const [
-            const ProviderUseClass<Example, ExamplePrime>(),
-          ],
-        );
-
-        const newModuleB = const Module(
-          include: const [
-            newModuleA,
-          ],
-
-          provide: const [
-            const ProviderUseClass<Example, ExamplePrime>(),
-          ],
-        );
       ''');
       $Example = testLib.getType('Example');
       $ExamplePrime = testLib.getType('ExamplePrime');
       $DependencyA = testLib.getType('DependencyA');
       $DependencyB = testLib.getType('DependencyB');
       $createExample = testLib.definingCompilationUnit.functions.first;
-      $newModuleA = $Example.metadata[1].computeConstantValue();
-      $newModuleB = $Example.metadata[2].computeConstantValue();
       providers = $Example.metadata.first.computeConstantValue().toListValue();
     });
 
@@ -249,49 +229,6 @@ void main() {
           ),
         ),
       );
-    });
-
-    group('using the new "Module" syntax', () {
-      test('with just "provide"', () {
-        final providers = reader.parseModule($newModuleA);
-        expect(providers, [
-          new UseClassProviderElement(
-            new TypeTokenElement(urlOf($Example)),
-            urlOf($ExamplePrime),
-            dependencies: new DependencyInvocation(
-              $ExamplePrime.unnamedConstructor,
-              const [],
-            ),
-          ),
-        ]);
-      });
-
-      test('with both "provide" and "include"', () {
-        Iterable<ProviderElement> providers = reader.parseModule($newModuleB);
-
-        // Purposefully not de-duplicated, tooling might want to know.
-        expect(providers, [
-          new UseClassProviderElement(
-            new TypeTokenElement(urlOf($Example)),
-            urlOf($ExamplePrime),
-            dependencies: new DependencyInvocation(
-              $ExamplePrime.unnamedConstructor,
-              const [],
-            ),
-          ),
-          new UseClassProviderElement(
-            new TypeTokenElement(urlOf($Example)),
-            urlOf($ExamplePrime),
-            dependencies: new DependencyInvocation(
-              $ExamplePrime.unnamedConstructor,
-              const [],
-            ),
-          ),
-        ]);
-
-        providers = reader.deduplicateProviders(providers);
-        expect(providers, hasLength(1));
-      });
     });
   });
 }
