@@ -76,11 +76,66 @@ abstract class RouterHook {
     return params;
   }
 
-  /// Called by the router programmatically indicate if a component canReuse.
+  /// Called by the router to indicate if a component canActivate.
+  ///
+  /// The client should return a future that completes with the whether the
+  /// componentInstance should be activated. If the component extends the
+  /// [CanActivate] lifecycle, that will override this behavior.
+  ///
+  /// You can use `async` in order to simplify when returning synchronously:
+  ///
+  /// ```
+  /// @Injectable
+  /// class MyHook implements RouterHook {
+  ///   final AuthService _authService;
+  ///
+  ///   @override
+  ///   Future<bool> canActivate(
+  ///       Object component, RouterState _, RouterState __) async {
+  ///     // Make the default behavior to block all LoginRequired components
+  ///     // unless logged in.
+  ///     return _authService.isLoggedIn || component is! LoginRequired;
+  ///   }
+  /// }
+  /// ```
+  Future<bool> canActivate(Object componentInstance, RouterState oldState,
+      RouterState newState) async {
+    // Provided as a default if someone extends or mixes-in this interface.
+    return true;
+  }
+
+  /// Called by the router to indicate if a component canDeactivate.
+  ///
+  /// The client should return a future that completes with the whether the
+  /// componentInstance should be deactivated. If the component extends the
+  /// [CanDeactivate] lifecycle, that will override this behavior.
+  ///
+  /// You can use `async` in order to simplify when returning synchronously:
+  ///
+  /// ```
+  /// @Injectable
+  /// class MyHook implements RouterHook {
+  ///   final Window _window;
+  ///
+  ///   @override
+  ///   Future<bool> canDeactivate(
+  ///       Object component, RouterState _, RouterState __) async {
+  ///     // Always ask if the user wants to navigate away from the page.
+  ///     return _window.confirm('Discard changes?');
+  ///   }
+  /// }
+  /// ```
+  Future<bool> canDeactivate(Object componentInstance, RouterState oldState,
+      RouterState newState) async {
+    // Provided as a default if someone extends or mixes-in this interface.
+    return true;
+  }
+
+  /// Called by the router to indicate if a component canReuse.
   ///
   /// The client should return a future that completes with the whether the
   /// componentInstance should be reused. If the component extends the
-  /// CanReuse lifecycle, that will override this behavior.
+  /// [CanReuse] lifecycle, that will override this behavior.
   ///
   /// You can use `async` in order to simplify when returning synchronously:
   ///
@@ -88,7 +143,7 @@ abstract class RouterHook {
   /// @Injectable
   /// class MyHook implements RouterHook {
   ///   @override
-  ///   Future<NavigationParams> navigationParams(
+  ///   Future<bool> canReuse(
   ///       Object _, RouterState __, RouterState ___) async {
   ///     // Make the default behavior to always reuse the component.
   ///     return true;
