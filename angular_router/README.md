@@ -5,11 +5,6 @@
 The [AngularDart][webdev_angular] router enables navigation from one view to
 the next as users perform application tasks.
 
-The 1.0 version of `angular_router` is just a port of the router that was in
-the core `angular` package. Only critical bug fixes are planned for the 1.0
-router. A significant refactoring is in progress, which is expected to result
-in a 2.0 version of `angular_router`.
-
 ### Resources:
 
 * Documentation:

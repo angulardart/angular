@@ -2,7 +2,7 @@ name: angular_router
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Router for AngularDart.
-version: 2.0.0
+version: 2.0.0-alpha
 
 environment:
   sdk: '>=1.24.0 <2.0.0'
@@ -15,7 +15,7 @@ dependencies:
   quiver: '>=0.22.0 <0.26.0'
 
 dev_dependencies:
-  angular_test: ^1.0.2
+  angular_test: ^1.0.1
   test: ^0.12.6
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
