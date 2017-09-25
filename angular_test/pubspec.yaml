@@ -2,7 +2,7 @@ name: angular_test
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Testing runner and library for AngularDart
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: '>=1.24.0 <2.0.0'

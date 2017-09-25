@@ -1,3 +1,7 @@
+## 1.0.1
+### Cleanup
+- Remove dependency on `angular_router`.
+
 ## 1.0.0
 
 ### Breaking Changes & Deprecations

@@ -1,3 +1,8 @@
+## 2.0.0-alpha
+- Major refactoring of the `angular_router` package. For a migration guide from
+`angular_router` v1, see
+https://github.com/dart-lang/angular/blob/master/angular_router/g3doc/migration_guide.md.
+
 ## 1.0.2
 - Support for angular 4.0.0.
 
