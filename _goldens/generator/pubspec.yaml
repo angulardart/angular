@@ -1,0 +1,26 @@
+name: _goldens.generator
+author: Dart Team <web@dartlang.org>
+description: Golden file generator for AngularDart.
+environment:
+  sdk: '>=1.24.0 <2.0.0'
+dev_dependencies:
+  angular: '^4.0.0'
+  build_runner: ^0.5.0
+  build_test: ^0.7.0
+  cli_util: ^0.1.0
+  mockito: '>=0.11.0 <3.0.0'
+  source_span: ^1.4.0
+  test: ^0.12.6
+
+# DO NOT REMOVE. We don't publish this package, it is just for testing.
+dependency_overrides:
+  angular:
+    path: ../../angular
+  angular_compiler:
+    path: ../../angular_compiler
+  angular_forms:
+    path: ../../angular_forms
+  angular_router:
+    path: ../../angular_router
+  angular_test:
+    path: ../../angular_test
