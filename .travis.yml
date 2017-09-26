@@ -5,6 +5,7 @@ dart:
   - stable
 
 env:
+  - PKG=_goldens
   - PKG=_tests
   - PKG=angular
   - PKG=angular_compiler
