@@ -1,0 +1,308 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'has_directives.dart';
+export 'has_directives.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'package:angular/angular.template.dart'
+    as _ref0;
+
+import 'package:angular/src/debug/debug_context.dart';
+import 'has_directives.dart' as import1;
+import 'package:angular/src/debug/debug_app_view.dart';
+import 'dart:html' as import3;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/view_type.dart'
+    as import6;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart'
+    as import8;
+import 'package:angular/angular.dart';
+
+const List<dynamic> styles$TestFooComponent = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
+  null,
+  null,
+  null,
+  null,
+  new StaticNodeDebugInfo([import1.TestDirective], null, <String, dynamic>{}),
+  null,
+  new StaticNodeDebugInfo([import1.TestSubComponent], import1.TestSubComponent,
+      <String, dynamic>{}),
+  null
+];
+
+class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
+  import3.DivElement _el_1;
+  import3.Element _el_4;
+  import1.TestDirective _TestDirective_4_4;
+  import3.Element _el_6;
+  ViewTestSubComponent0 _compView_6;
+  import1.TestSubComponent _TestSubComponent_6_4;
+  static RenderComponentType _renderType;
+  ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_TestFooComponent0) {
+    rootEl = import3.document.createElement('test-foo');
+    _renderType ??= import8.appViewUtils.createRenderType(
+        'asset:_goldens/test_files/has_directives.dart class TestFooComponent - inline template',
+        ViewEncapsulation.None,
+        styles$TestFooComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.TestFooComponent> build() {
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    import3.Text _text_0 = new import3.Text('    ');
+    parentRenderNode.append(_text_0);
+    dbgElm(this, _text_0, 0, 0, 0);
+    var doc = import3.document;
+    _el_1 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 1, 0, 4);
+    import3.Text _text_2 = new import3.Text('My own template');
+    _el_1.append(_text_2);
+    dbgElm(this, _text_2, 2, 0, 9);
+    import3.Text _text_3 = new import3.Text('\n    A directive: ');
+    parentRenderNode.append(_text_3);
+    dbgElm(this, _text_3, 3, 0, 30);
+    _el_4 =
+        createAndAppendDbg(this, doc, 'directive', parentRenderNode, 4, 1, 17);
+    _TestDirective_4_4 = new import1.TestDirective();
+    import3.Text _text_5 = new import3.Text('\n    A component: ');
+    parentRenderNode.append(_text_5);
+    dbgElm(this, _text_5, 5, 1, 40);
+    _compView_6 = new ViewTestSubComponent0(this, 6);
+    _el_6 = _compView_6.rootEl;
+    parentRenderNode.append(_el_6);
+    dbgElm(this, _el_6, 6, 2, 17);
+    _TestSubComponent_6_4 = new import1.TestSubComponent();
+    _compView_6.create(_TestSubComponent_6_4, []);
+    import3.Text _text_7 = new import3.Text('\n  ');
+    parentRenderNode.append(_text_7);
+    dbgElm(this, _text_7, 7, 2, 38);
+    init(const [], null,
+        [_text_0, _el_1, _text_2, _text_3, _el_4, _text_5, _el_6, _text_7]);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestDirective) && (4 == nodeIndex))) {
+      return _TestDirective_4_4;
+    }
+    if ((identical(token, import1.TestSubComponent) && (6 == nodeIndex))) {
+      return _TestSubComponent_6_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_6.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_6?.destroy();
+  }
+}
+
+AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewTestFooComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$TestFooComponentHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import1.TestFooComponent], import1.TestFooComponent, <String, dynamic>{})
+];
+
+class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
+  ViewTestFooComponent0 _compView_0;
+  import1.TestFooComponent _TestFooComponent_0_4;
+  static RenderComponentType _renderType;
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_TestFooComponentHost0) {
+    _renderType ??= import8.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$TestFooComponentHost);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewTestFooComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _TestFooComponent_0_4 = new import1.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import1.TestFooComponent>(
+        0, this, rootEl, _TestFooComponent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
+      return _TestFooComponent_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_TestFooComponentHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewTestFooComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory =
+    const ComponentFactory<import1.TestFooComponent>('test-foo',
+        viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
+const List<dynamic> styles$TestSubComponent = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = [null, null];
+
+class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
+  import3.DivElement _el_0;
+  static RenderComponentType _renderType;
+  ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_TestSubComponent0) {
+    rootEl = import3.document.createElement('test-bar');
+    _renderType ??= import8.appViewUtils.createRenderType(
+        'asset:_goldens/test_files/has_directives.dart class TestSubComponent - inline template',
+        ViewEncapsulation.None,
+        styles$TestSubComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.TestSubComponent> build() {
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import3.document;
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    import3.Text _text_1 = new import3.Text('Bar');
+    _el_0.append(_text_1);
+    dbgElm(this, _text_1, 1, 0, 5);
+    init(const [], null, [_el_0, _text_1]);
+    return null;
+  }
+}
+
+AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewTestSubComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$TestSubComponentHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
+  new StaticNodeDebugInfo(
+      [import1.TestSubComponent], import1.TestSubComponent, <String, dynamic>{})
+];
+
+class _ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
+  ViewTestSubComponent0 _compView_0;
+  import1.TestSubComponent _TestSubComponent_0_4;
+  static RenderComponentType _renderType;
+  _ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_TestSubComponentHost0) {
+    _renderType ??= import8.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$TestSubComponentHost);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewTestSubComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _TestSubComponent_0_4 = new import1.TestSubComponent();
+    _compView_0.create(_TestSubComponent_0_4, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import1.TestSubComponent>(
+        0, this, rootEl, _TestSubComponent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestSubComponent) && (0 == nodeIndex))) {
+      return _TestSubComponent_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_TestSubComponentHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewTestSubComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.TestSubComponent> TestSubComponentNgFactory =
+    const ComponentFactory<import1.TestSubComponent>('test-bar',
+        viewFactory_TestSubComponentHost0, _TestSubComponentMetadata);
+const _TestFooComponentMetadata = const [];
+const _TestSubComponentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    TestFooComponent,
+    TestFooComponentNgFactory,
+  );
+  _ngRef.registerComponent(
+    TestSubComponent,
+    TestSubComponentNgFactory,
+  );
+}

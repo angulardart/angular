@@ -7,12 +7,12 @@
 # Fast fail the script on failures.
 set -e
 
-dartanalyzer --fatal-warnings .
+dartanalyzer --fatal-warnings test
 
-dartium --version
-pub run test -p vm -x codegen
-pub run angular_test \
-    --serve-arg=--port=8080 \
-    --test-arg=--platform=dartium \
-    --test-arg=--tags=codegen \
-    --test-arg=--exclude-tags=known_pub_serve_failure
+pushd generator
+pub upgrade
+dartanalyzer --fatal-warnings bin
+popd
+
+dart generator/bin/generate.dart
+pub run test -p vm

@@ -1,0 +1,159 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'opaque_token.dart';
+export 'opaque_token.dart';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'package:angular/angular.template.dart'
+    as _ref0;
+
+import 'package:angular/src/debug/debug_context.dart';
+import 'package:angular/src/debug/debug_app_view.dart';
+import 'opaque_token.dart' as import2;
+import 'dart:html' as import3;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/view_type.dart'
+    as import6;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart'
+    as import8;
+import 'package:angular/angular.dart';
+
+const List<dynamic> styles$HasOpaqueTokens = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = [null];
+
+class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
+  import3.Text _text_0;
+  static RenderComponentType _renderType;
+  ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_HasOpaqueTokens0) {
+    rootEl = import3.document.createElement('has-opaque-tokens');
+    _renderType ??= import8.appViewUtils.createRenderType(
+        'asset:_goldens/test_files/opaque_token.dart class HasOpaqueTokens - inline template',
+        ViewEncapsulation.None,
+        styles$HasOpaqueTokens);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import2.HasOpaqueTokens> build() {
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _text_0 = new import3.Text('');
+    parentRenderNode.append(_text_0);
+    dbgElm(this, _text_0, 0, 0, 0);
+    init(const [], null, [_text_0]);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import2.HasOpaqueTokens _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_text_0.text = (_ctx.baseUrl ?? ''));
+    }
+  }
+}
+
+AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasOpaqueTokens0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$HasOpaqueTokensHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
+  new StaticNodeDebugInfo(
+      [const OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens],
+      import2.HasOpaqueTokens,
+      <String, dynamic>{})
+];
+
+class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
+  ViewHasOpaqueTokens0 _compView_0;
+  String _const_OpaqueToken__baseUrlDescription___0_4;
+  import2.HasOpaqueTokens _HasOpaqueTokens_0_5;
+  static RenderComponentType _renderType;
+  _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import6.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_HasOpaqueTokensHost0) {
+    _renderType ??= import8.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$HasOpaqueTokensHost);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewHasOpaqueTokens0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _const_OpaqueToken__baseUrlDescription___0_4 = 'https://localhost';
+    _HasOpaqueTokens_0_5 = new import2.HasOpaqueTokens(
+        _const_OpaqueToken__baseUrlDescription___0_4);
+    _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import2.HasOpaqueTokens>(
+        0, this, rootEl, _HasOpaqueTokens_0_5);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken__baseUrlDescription___0_4;
+    }
+    if ((identical(token, import2.HasOpaqueTokens) && (0 == nodeIndex))) {
+      return _HasOpaqueTokens_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_HasOpaqueTokensHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import2.HasOpaqueTokens> HasOpaqueTokensNgFactory =
+    const ComponentFactory<import2.HasOpaqueTokens>('has-opaque-tokens',
+        viewFactory_HasOpaqueTokensHost0, _HasOpaqueTokensMetadata);
+const _HasOpaqueTokensMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ref0.initReflector();
+  _ngRef.registerComponent(
+    HasOpaqueTokens,
+    HasOpaqueTokensNgFactory,
+  );
+}
