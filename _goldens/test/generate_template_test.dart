@@ -38,7 +38,6 @@ main() {
         'provider_modules',
         'providers',
         'queries',
-        'test_foo',
         'view_encapsulation',
         'deferred/container_component',
         'deferred/deferred_component',
