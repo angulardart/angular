@@ -53,13 +53,20 @@ void main() {
 }
 
 @Component(
-    selector: 'my-comp-with-tref',
-    template: '<template ref-alice>Unstamped tmp</template>'
-        '<ref-reader [ref1]="alice"></ref-reader>',
-    directives: const [RefReaderComponent])
+  selector: 'my-comp-with-tref',
+  template: '<template ref-alice>Unstamped tmp</template>'
+      '<ref-reader [ref1]="alice"></ref-reader>',
+  directives: const [RefReaderComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithTemplateRef {}
 
-@Component(selector: 'ref-reader', template: '<div></div>')
+@Component(
+  selector: 'ref-reader', template: '<div></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class RefReaderComponent {
   @Input()
   TemplateRef ref1;
@@ -75,25 +82,34 @@ class NonError {
 }
 
 @Component(
-    selector: 'container-with-propertyaccess',
-    template: '<property-access></property-access>',
-    directives: const [PropertyAccess])
+  selector: 'container-with-propertyaccess',
+  template: '<property-access></property-access>',
+  directives: const [PropertyAccess],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ContainerWithPropertyAccess {
   dynamic value;
 }
 
 @Component(
-    selector: 'container-with-no-propertyaccess',
-    template: '<no-property-access></no-property-access>',
-    directives: const [NoPropertyAccess])
+  selector: 'container-with-no-propertyaccess',
+  template: '<no-property-access></no-property-access>',
+  directives: const [NoPropertyAccess],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ContainerWithNoPropertyAccess {
   dynamic value;
 }
 
 @Component(
-    selector: 'container-with-onchange',
-    template: '<on-change [prop]="\'hello\'"></on-change>',
-    directives: const [OnChangeComponent])
+  selector: 'container-with-onchange',
+  template: '<on-change [prop]="\'hello\'"></on-change>',
+  directives: const [OnChangeComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class OnChangeContainer {
   dynamic value;
 }
@@ -113,6 +129,8 @@ class PropModel implements Map {
 @Component(
   selector: 'property-access',
   template: '''prop:{{model.foo}};map:{{model['foo']}}''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PropertyAccess {
   final model = new PropModel();
@@ -121,6 +139,8 @@ class PropertyAccess {
 @Component(
   selector: 'no-property-access',
   template: '''{{model.doesNotExist}}''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NoPropertyAccess {
   final model = new PropModel();
@@ -129,6 +149,8 @@ class NoPropertyAccess {
 @Component(
   selector: 'on-change',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class OnChangeComponent implements OnChanges {
   Map changes;

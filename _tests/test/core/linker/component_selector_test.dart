@@ -85,17 +85,20 @@ void main() {
 }
 
 @Component(
-    selector: 'tr-tag-test',
-    template: '<table>'
-        '<thead><tr><th>Repairs:</th></tr>'
-        '</thead>'
-        '<tbody>'
-        '  <template ngFor let-repair [ngForOf]="repairs">'
-        '    <tr repaired-part>{{repair["id"]}}</tr>'
-        '  </template>'
-        '</tbody>'
-        '</table>',
-    directives: const [NgFor, RepairedPartComponent])
+  selector: 'tr-tag-test',
+  template: '<table>'
+      '<thead><tr><th>Repairs:</th></tr>'
+      '</thead>'
+      '<tbody>'
+      '  <template ngFor let-repair [ngForOf]="repairs">'
+      '    <tr repaired-part>{{repair["id"]}}</tr>'
+      '  </template>'
+      '</tbody>'
+      '</table>',
+  directives: const [NgFor, RepairedPartComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TrTagTest {
   List<Map<String, String>> repairs;
   TrTagTest() {
@@ -107,12 +110,18 @@ class TrTagTest {
   }
 }
 
-@Component(selector: 'tr[repaired-part]', template: '<td>Repaired</td>')
+@Component(
+  selector: 'tr[repaired-part]', template: '<td>Repaired</td>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class RepairedPartComponent {}
 
 @Component(
   selector: 'div[foo=bar]',
   template: '<p>Matched!</p>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ExactAttributeSelectorComponent {}
 
@@ -125,12 +134,16 @@ class ExactAttributeSelectorComponent {}
   directives: const [
     ExactAttributeSelectorComponent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ExactAttributeSelectorTestComponent {}
 
 @Component(
   selector: 'div[foo|=bar]',
   template: '<p>Matched!</p>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class HyphenAttributeSelectorComponent {}
 
@@ -143,12 +156,16 @@ class HyphenAttributeSelectorComponent {}
   directives: const [
     HyphenAttributeSelectorComponent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class HyphenAttributeSelectorTestComponent {}
 
 @Component(
   selector: 'div[foo~=bar]',
   template: '<p>Matched!</p>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ListAttributeSelectorComponent {}
 
@@ -162,12 +179,16 @@ class ListAttributeSelectorComponent {}
   directives: const [
     ListAttributeSelectorComponent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ListAttributeSelectorTestComponent {}
 
 @Component(
   selector: 'div[foo^=bar]',
   template: '<p>Matched!</p>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PrefixAttributeSelectorComponent {}
 
@@ -180,12 +201,16 @@ class PrefixAttributeSelectorComponent {}
   directives: const [
     PrefixAttributeSelectorComponent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PrefixAttributeSelectorTestComponent {}
 
 @Component(
   selector: 'div[foo]',
   template: '<p>Matched!</p>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SetAttributeSelectorComponent {}
 
@@ -199,12 +224,16 @@ class SetAttributeSelectorComponent {}
   directives: const [
     SetAttributeSelectorComponent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SetAttributeSelectorTestComponent {}
 
 @Component(
   selector: r'div[foo*=bar]',
   template: '<p>Matched!</p>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SubstringAttributeSelectorComponent {}
 
@@ -218,12 +247,16 @@ class SubstringAttributeSelectorComponent {}
   directives: const [
     SubstringAttributeSelectorComponent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SubstringAttributeSelectorTestComponent {}
 
 @Component(
   selector: r'div[foo$=bar]',
   template: '<p>Matched!</p>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SuffixAttributeSelectorComponent {}
 
@@ -236,5 +269,7 @@ class SuffixAttributeSelectorComponent {}
   directives: const [
     SuffixAttributeSelectorComponent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SuffixAttributeSelectorTestComponent {}

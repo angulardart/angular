@@ -10,6 +10,8 @@ import 'package:angular/angular.dart';
       Title: {{title}}
     </button>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class DeferredChildComponent extends SomeBaseClass {
   final _onSelected = new StreamController<bool>.broadcast(sync: true);

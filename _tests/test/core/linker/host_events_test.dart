@@ -73,6 +73,8 @@ void main() {
   selector: 'component-with-event-test',
   template: '<component-with-event></component-with-event>',
   directives: const [ComponentWithEvent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ComponentWithEventTest {}
 
@@ -86,6 +88,8 @@ class ComponentWithEventTest {}
       (blur)="onBlur()"
       [attr.has-focus]="hasFocus">
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ComponentWithEvent {
   bool hasFocus = false;
@@ -107,6 +111,8 @@ class ComponentWithEvent {
     '(blur)': 'onBlur()',
   },
   template: '<div [attr.has-focus]="hasFocus"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ComponentWithHostEvent {
   bool hasFocus = false;
@@ -124,6 +130,8 @@ class ComponentWithHostEvent {
 @Component(
   selector: 'component-with-annotation',
   template: '<div [attr.has-focus]="hasFocus"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ComponentWithHostAnnotation {
   bool hasFocus = false;
@@ -142,6 +150,8 @@ class ComponentWithHostAnnotation {
 @Component(
   selector: 'component-with-annotation2',
   template: '<div [attr.was-clicked]="wasClicked"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ComponentWithHost$Event {
   bool wasClicked = false;

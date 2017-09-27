@@ -78,51 +78,74 @@ void main() {
 }
 
 @Component(
-    selector: 'host-attr-on-comp',
-    template: '<component-with-attr></component-with-attr>',
-    directives: const [ComponentWithAttr])
+  selector: 'host-attr-on-comp',
+  template: '<component-with-attr></component-with-attr>',
+  directives: const [ComponentWithAttr],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostAttrOnComponentTest {}
 
 @Component(
-    selector: 'host-attr-on-directive',
-    template: '<div id="my_element" directive-with-attr>'
-        '</div>',
-    directives: const [DirectiveWithAttr])
+  selector: 'host-attr-on-directive',
+  template: '<div id="my_element" directive-with-attr>'
+      '</div>',
+  directives: const [DirectiveWithAttr],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostAttrOnDirectiveTest {}
 
 @Component(
-    selector: 'host-attr-merged',
-    template: '<component-with-attr id="merged" directive-with-attr>'
-        '</component-with-attr>',
-    directives: const [ComponentWithAttr, DirectiveWithAttr])
+  selector: 'host-attr-merged',
+  template: '<component-with-attr id="merged" directive-with-attr>'
+      '</component-with-attr>',
+  directives: const [ComponentWithAttr, DirectiveWithAttr],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostAttrMergedTest {}
 
 @Component(
-    selector: 'host-attr-on-comp-and-element',
-    template: '<component-with-attr class="base"></component-with-attr>',
-    directives: const [ComponentWithAttr])
+  selector: 'host-attr-on-comp-and-element',
+  template: '<component-with-attr class="base"></component-with-attr>',
+  directives: const [ComponentWithAttr],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostAttrOnComponentAndElementTest {}
 
 @Component(
-    selector: 'host-attr-on-directive',
-    template: '<div id="my_element" class="base" directive-with-attr>'
-        '</div>',
-    directives: const [DirectiveWithAttr])
+  selector: 'host-attr-on-directive',
+  template: '<div id="my_element" class="base" directive-with-attr>'
+      '</div>',
+  directives: const [DirectiveWithAttr],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostAttrOnDirectiveAndElementTest {}
 
 @Component(
-    selector: 'host-attr-merged',
-    template:
-        '<component-with-attr id="merged" class="base" directive-with-attr>'
-        '</component-with-attr>',
-    directives: const [ComponentWithAttr, DirectiveWithAttr])
+  selector: 'host-attr-merged',
+  template: '<component-with-attr id="merged" class="base" directive-with-attr>'
+      '</component-with-attr>',
+  directives: const [ComponentWithAttr, DirectiveWithAttr],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostAttrMergedAndElementTest {}
 
-@Component(host: const {
-  'role': 'listbox',
-  'style': 'background-color: red;',
-  'class': 'themeable'
-}, selector: 'component-with-attr', template: '<div>{{message}}</div>')
+@Component(
+  host: const {
+    'role': 'listbox',
+    'style': 'background-color: red;',
+    'class': 'themeable'
+  },
+  selector: 'component-with-attr',
+  template: '<div>{{message}}</div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ComponentWithAttr {
   final String message = 'Hello World';
 }

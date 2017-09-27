@@ -63,6 +63,8 @@ void main() {
       <my-deferred-view @deferred></my-deferred-view>
     </section>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SimpleContainerTest {
   final ChangeDetectorRef cdRef;
@@ -85,6 +87,8 @@ class SimpleContainerTest {
       <my-deferred-view @deferred></my-deferred-view>
     </section>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NestedContainerTest {
   bool show = false;
@@ -98,6 +102,8 @@ class NestedContainerTest {
       <my-deferred-view @deferred [title]="'Hello World'"></my-deferred-view>
     </section>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PropertyContainerTest {}
 
@@ -110,6 +116,8 @@ class PropertyContainerTest {}
       <my-deferred-view @deferred (selected)="onSelected()"></my-deferred-view>
     </section>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class EventContainerTest {
   int count = 0;

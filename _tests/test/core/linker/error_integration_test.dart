@@ -137,9 +137,12 @@ void main() {
 class SomeDirectiveMissingAnnotation {}
 
 @Component(
-    selector: 'my-comp-missing-dir-annotation',
-    template: '',
-    directives: const [SomeDirectiveMissingAnnotation])
+  selector: 'my-comp-missing-dir-annotation',
+  template: '',
+  directives: const [SomeDirectiveMissingAnnotation],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithDirectiveMissingAnnotation {
   String ctxProp;
   num ctxNumProp;
@@ -158,9 +161,12 @@ class MyCompWithDirectiveMissingAnnotation {
 }
 
 @Component(
-    selector: 'my-comp-with-throwing-directive',
-    directives: const [DirectiveThrowingAnError],
-    template: '<directive-throwing-error></directive-throwing-error>')
+  selector: 'my-comp-with-throwing-directive',
+  directives: const [DirectiveThrowingAnError],
+  template: '<directive-throwing-error></directive-throwing-error>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithThrowingDirective {}
 
 @Directive(selector: 'directive-throwing-error')
@@ -205,6 +211,8 @@ void functionThatThrowsNonError() {
 @Component(
   selector: 'throwing-component',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ThrowingComponent {
   ThrowingComponent() {
@@ -215,6 +223,8 @@ class ThrowingComponent {
 @Component(
   selector: 'throwing-component2',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ThrowingComponent2 {
   ThrowingComponent2() {
@@ -223,24 +233,33 @@ class ThrowingComponent2 {
 }
 
 @Component(
-    selector: 'container-with-throwing',
-    template: '<throwing-component></throwing-component>',
-    directives: const [ThrowingComponent])
+  selector: 'container-with-throwing',
+  template: '<throwing-component></throwing-component>',
+  directives: const [ThrowingComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ContainerWithThrowingComponent {
   dynamic value;
 }
 
 @Component(
-    selector: 'container-with-throwing2',
-    template: '<throwing-component></throwing-component>',
-    directives: const [ThrowingComponent2])
+  selector: 'container-with-throwing2',
+  template: '<throwing-component></throwing-component>',
+  directives: const [ThrowingComponent2],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ContainerWithThrowingComponent2 {
   dynamic value;
 }
 
 @Component(
-    selector: 'mycomp-with-cd-exception',
-    template: '<input [value]="one.two" #local>')
+  selector: 'mycomp-with-cd-exception',
+  template: '<input [value]="one.two" #local>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithCdException {
   SomeModel one = new SomeModel('initial value');
 }
@@ -251,36 +270,52 @@ class SomeModel {
 }
 
 @Component(
-    selector: 'mycomp-with-cd-exception-interpolation',
-    template: '<div>{{one.two}}</div>')
+  selector: 'mycomp-with-cd-exception-interpolation',
+  template: '<div>{{one.two}}</div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithCdExceptionInterpolate {
   SomeModel one = new SomeModel('initial value');
 }
 
 @Component(
-    selector: 'mycomp-with-cd-exception-onelement',
-    template: '<div [title]="one.two"></div>')
+  selector: 'mycomp-with-cd-exception-onelement',
+  template: '<div [title]="one.two"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithCdExceptionOnElement {
   SomeModel one = new SomeModel('initial value');
 }
 
 @Component(
-    selector: 'mycomp-with-cd-exception-onproperty',
-    template: '<mycomp-child [prop1]="one.two"></mycomp-child>')
+  selector: 'mycomp-with-cd-exception-onproperty',
+  template: '<mycomp-child [prop1]="one.two"></mycomp-child>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithCdExceptionOnProperty {
   SomeModel one = new SomeModel('initial value');
 }
 
-@Component(selector: 'mycomp-child', template: '<div>{{prop1}}</div>')
+@Component(
+  selector: 'mycomp-child', template: '<div>{{prop1}}</div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompChild {
   String prop1 = 'defaultProp1';
 }
 
 @Component(
-    selector: 'mycomp-with-event-exception',
-    template: '<span emitter listener (event)="throwError()" #local>'
-        '</span>',
-    directives: const [DirectiveEmittingEvent, DirectiveListeningEvent])
+  selector: 'mycomp-with-event-exception',
+  template: '<span emitter listener (event)="throwError()" #local>'
+      '</span>',
+  directives: const [DirectiveEmittingEvent, DirectiveListeningEvent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyCompWithEventException {
   bool eventHandlerCalled = false;
   void throwError() {
