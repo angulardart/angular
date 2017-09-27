@@ -68,6 +68,8 @@ void main() {
 @Component(
   selector: 'unsafe-attribute',
   template: '<a [href]="href">Link Title</a>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class UnsafeAttributeComponent {
   String href = 'hello';
@@ -76,6 +78,8 @@ class UnsafeAttributeComponent {
 @Component(
   selector: 'trusted-value',
   template: '<a [href]="href">Link Title</a>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TrustedValueComponent {
   SafeUrl href;
@@ -88,6 +92,8 @@ class TrustedValueComponent {
 @Component(
   selector: 'wrong-trusted-value',
   template: '<a [href]="href">Link Title</a>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class WrongTrustedValueComponent {
   SafeScript href;
@@ -100,6 +106,8 @@ class WrongTrustedValueComponent {
 @Component(
   selector: 'unsafe-style',
   template: '<div [style.background]="backgroundStyle"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class UnsafeStyleComponent {
   String backgroundStyle = 'red';
@@ -108,6 +116,8 @@ class UnsafeStyleComponent {
 @Component(
   selector: 'unsafe-html',
   template: '<div [innerHtml]="html"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class UnsafeHtmlComponent {
   String html = 'some <p>text</p>';

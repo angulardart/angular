@@ -32,6 +32,8 @@ void main() {
   directives: const [DeferredInputComponent],
   template: r'<my-deferred-input [attr.data-xyz]="testValue" @deferred>'
       '</my-deferred-input>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestContainerComponent {
   String testValue = 'testValue';

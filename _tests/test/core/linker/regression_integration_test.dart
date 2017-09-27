@@ -58,6 +58,8 @@ void main() {
 @Component(
   selector: 'right-precedence-conditional',
   template: '{{"red" + (hasBorder ? " border" : "")}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class RightPrecedenceConditionalComponent {
   bool hasBorder = false;
@@ -66,12 +68,16 @@ class RightPrecedenceConditionalComponent {
 @Component(
   selector: 'interpolate-class-binding',
   template: '<div [class.foo]="true" #element>{{element.className}}</div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class InterpolateClassBindingComponent {}
 
 @Component(
   selector: 'content-host',
   template: '<ng-content></ng-content>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ContentHostComponent {}
 
@@ -83,5 +89,7 @@ class ContentHostComponent {}
     NgClass,
     NgIf,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ContentProviderComponent {}
