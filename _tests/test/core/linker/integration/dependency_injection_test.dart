@@ -85,6 +85,8 @@ class InjectableService {}
 @Component(
   selector: 'directive-consuming-injectable',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class DirectiveConsumingInjectable {
   InjectableService injectable;
@@ -109,6 +111,8 @@ class DirectiveProvidingInjectable {}
     DirectiveConsumingInjectable,
     DirectiveProvidingInjectable,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ProvideConsumeInjectableComponent {}
 
@@ -119,6 +123,8 @@ class ProvideConsumeInjectableComponent {}
 </directive-consuming-injectable>''',
   directives: const [DirectiveConsumingInjectable],
   viewProviders: const [InjectableService],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ProvidesInjectableInViewComponent {}
 
@@ -128,12 +134,18 @@ class ProvidesInjectableInViewComponent {}
 <directive-consuming-injectable-unbounded>
 </directive-consuming-injectable-unbounded>''',
   directives: const [DirectiveConsumingInjectableUnbounded],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class DirectiveContainingDirectiveConsumingAnInjectable {
   var directive;
 }
 
-@Component(selector: 'directive-consuming-injectable-unbounded', template: '')
+@Component(
+  selector: 'directive-consuming-injectable-unbounded', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class DirectiveConsumingInjectableUnbounded {
   InjectableService injectable;
 
@@ -154,6 +166,8 @@ class DirectiveConsumingInjectableUnbounded {
     DirectiveProvidingInjectable,
     DirectiveContainingDirectiveConsumingAnInjectable,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ProvidesInjectableUnboundedComponent {}
 
@@ -191,6 +205,8 @@ EventBus createParentBus(EventBus parentEventBus) {
   ],
   directives: const [ChildConsumingEventBus],
   template: '<child-consuming-event-bus></child-consuming-event-bus>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ParentProvidingEventBus {
   EventBus bus;
@@ -216,6 +232,8 @@ class ChildConsumingEventBus {
     GrandParentProvidingEventBus,
     ParentProvidingEventBus,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class EventBusComponent {}
 
@@ -231,6 +249,8 @@ InjectableService createInjectableWithLogging(Injector injector) {
         useFactory: createInjectableWithLogging, deps: const [Injector])
   ],
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ComponentProvidingLoggingInjectable {
   bool created = false;
@@ -248,6 +268,8 @@ class ComponentProvidingLoggingInjectable {
     DirectiveConsumingInjectable,
     NgIf,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class LazyBindingsComponent {
   bool visible = false;
@@ -257,9 +279,12 @@ class LazyBindingsComponent {
 class SomeDirective {}
 
 @Component(
-    selector: 'cmp-with-host',
-    template: '<p>Component with an injected host</p>',
-    directives: const [SomeDirective])
+  selector: 'cmp-with-host',
+  template: '<p>Component with an injected host</p>',
+  directives: const [SomeDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class CompWithHost {
   SomeDirective myHost;
 
@@ -273,6 +298,8 @@ class CompWithHost {
   template:
       '<some-directive><cmp-with-host #cmp></cmp-with-host></some-directive>',
   directives: const [CompWithHost, SomeDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class InjectsHostComponent {}
 
@@ -285,5 +312,7 @@ class InjectsHostComponent {}
   </p>
 </some-directive>''',
   directives: const [CompWithHost, NgIf, SomeDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class InjectsHostThroughViewContainer {}

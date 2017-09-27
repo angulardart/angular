@@ -74,45 +74,60 @@ class CaptureTplRefs {
 }
 
 @Component(
-    selector: "test-cmp",
-    directives: const [NgTemplateOutlet, CaptureTplRefs],
-    template: "")
+  selector: "test-cmp",
+  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  template: "",
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TestComponent {
   TemplateRef currentTplRef;
 }
 
 @Component(
-    selector: "test-cmp-null",
-    directives: const [NgTemplateOutlet, CaptureTplRefs],
-    template: '<template [ngTemplateOutlet]="null"></template>')
+  selector: "test-cmp-null",
+  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  template: '<template [ngTemplateOutlet]="null"></template>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TestWithNullComponent {
   TemplateRef currentTplRef;
 }
 
 @Component(
-    selector: "test-cmp-insert-content",
-    directives: const [NgTemplateOutlet, CaptureTplRefs],
-    template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
-        '<template [ngTemplateOutlet]="currentTplRef"></template>')
+  selector: "test-cmp-insert-content",
+  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
+      '<template [ngTemplateOutlet]="currentTplRef"></template>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TestInsertContentComponent {
   TemplateRef currentTplRef;
 }
 
 @Component(
-    selector: 'test-clear-content',
-    directives: const [NgTemplateOutlet, CaptureTplRefs],
-    template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
-        '<template [ngTemplateOutlet]="currentTplRef"></template>')
+  selector: 'test-clear-content',
+  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
+      '<template [ngTemplateOutlet]="currentTplRef"></template>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TestClearContentComponent {
   TemplateRef currentTplRef;
 }
 
 @Component(
-    selector: 'test-change-content',
-    directives: const [NgTemplateOutlet, CaptureTplRefs],
-    template: '<tpl-refs #refs="tplRefs"><template>foo</template><template>'
-        'bar</template></tpl-refs><template '
-        '[ngTemplateOutlet]="currentTplRef"></template>')
+  selector: 'test-change-content',
+  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  template: '<tpl-refs #refs="tplRefs"><template>foo</template><template>'
+      'bar</template></tpl-refs><template '
+      '[ngTemplateOutlet]="currentTplRef"></template>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TestChangeContentComponent {
   TemplateRef currentTplRef;
 }

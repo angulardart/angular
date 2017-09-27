@@ -106,6 +106,8 @@ class ValueService {
   selector: 'no-crash',
   template: '<child></child>',
   directives: const [ChildComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NoCrash {}
 
@@ -113,6 +115,8 @@ class NoCrash {}
 @Component(
   selector: 'child',
   template: 'Value: {{service.value}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ChildComponent {
   final ValueService service;
@@ -131,6 +135,8 @@ class ChildComponent {
     ErrorComponent,
     NgIf,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class Crash {
   bool startCrashing = false;
@@ -139,6 +145,8 @@ class Crash {
 @Component(
   selector: 'error',
   template: 'Error({{first}})',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ErrorComponent {
   List<int> listThatWillNPE;
@@ -170,6 +178,8 @@ class RpcService {
     <oninit *ngIf="startCrashing"></oninit>
     <error *ngIf="startCrashing"></error>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CrashOnInit {
   bool startCrashing = false;
@@ -178,6 +188,8 @@ class CrashOnInit {
 @Component(
   selector: 'oninit',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class OnInitComponent implements OnInit {
   final RpcService _rpc;

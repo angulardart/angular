@@ -84,6 +84,8 @@ void main() {
   selector: 'push-cmp-with-ref',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PushCmpWithRef {
   int numberOfChecks;
@@ -109,10 +111,16 @@ class PushCmpWithRef {
   selector: 'manual-check',
   template: '<push-cmp-with-ref #cmp></push-cmp-with-ref>',
   directives: const [PushCmpWithRef],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ManualCheckComponent {}
 
-@Component(selector: 'event-cmp', template: '<div (click)="noop()"></div>')
+@Component(
+  selector: 'event-cmp', template: '<div (click)="noop()"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class EventCmp {
   void noop() {}
 }
@@ -123,6 +131,8 @@ class EventCmp {
   template: '{{field}}<div (click)="noop()"></div><div *ngIf="true" '
       '(click)="noop()"></div><event-cmp></event-cmp>',
   directives: const [EventCmp, NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PushCmp {
   int numberOfChecks;
@@ -145,6 +155,8 @@ class PushCmp {
   selector: 'push-cmp-host',
   template: '<push-cmp [prop]="ctxProp" #cmp></push-cmp>',
   directives: const [PushCmp],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PushCmpHostComponent {
   String ctxProp = 'one';
@@ -154,6 +166,8 @@ class PushCmpHostComponent {
   selector: 'push-cmp-with-ref-host',
   template: '<push-cmp-with-ref [prop]="ctxProp" #cmp></push-cmp-with-ref>',
   directives: const [PushCmpWithRef],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PushCmpWithRefHostComponent {
   String ctxProp = 'one';
@@ -164,6 +178,8 @@ class PushCmpWithRefHostComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field | async}}',
   pipes: const [AsyncPipe],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PushCmpWithAsyncPipe {
   int numberOfChecks = 0;
@@ -189,5 +205,7 @@ class PushCmpWithAsyncPipe {
   selector: 'push-cmp-with-async-host',
   template: '<push-cmp-with-async #cmp></push-cmp-with-async>',
   directives: const [PushCmpWithAsyncPipe],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class PushCmpWithAsyncPipeHostCmp {}

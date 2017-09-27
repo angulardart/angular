@@ -57,7 +57,11 @@ void main() {
   });
 }
 
-@Component(selector: 'child-cmp-no-template', template: '')
+@Component(
+  selector: 'child-cmp-no-template', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ChildCompNoTemplate {
   String ctxProp = 'hello';
 }
@@ -68,6 +72,8 @@ class ChildCompNoTemplate {
       '<child-cmp-no-template #cmp></child-cmp-no-template>'
       '{{i}}-{{cmp.ctxProp}}</template>',
   directives: const [ChildCompNoTemplate, NgFor],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class VarInLoopComponent {}
 
@@ -78,6 +84,8 @@ class DirectiveUpdatingHostAttributes {}
   selector: 'directive-host-attributes',
   template: '<div update-host-attributes></div>',
   directives: const [DirectiveUpdatingHostAttributes],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class HostAttributeFromDirectiveComponent {}
 
@@ -90,6 +98,8 @@ class DirectiveUpdatingHostProperties {
   selector: 'directive-host-properties',
   template: '<div update-host-properties></div>',
   directives: const [DirectiveUpdatingHostProperties],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class HostPropertyFromDirectiveComponent {}
 
@@ -98,7 +108,11 @@ class MyService {
   String greeting = 'hello';
 }
 
-@Component(selector: 'child-cmp-svc', template: '{{ctxProp}}')
+@Component(
+  selector: 'child-cmp-svc', template: '{{ctxProp}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ChildCompUsingService {
   String ctxProp;
 
@@ -128,6 +142,8 @@ class DynamicViewport {
   directives: const [
     DynamicViewport,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class DynamicChildComponent {}
 
@@ -147,6 +163,8 @@ class NeedsAttribute {
   selector: 'static-attributes',
   template: '<input static type="text" title>',
   directives: const [NeedsAttribute],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class StaticAttributesComponent {}
 
@@ -157,5 +175,7 @@ class StaticAttributesComponent {}
 <div>
   <script>alert("Ooops");</script>
 </div>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class UnsafeComponent {}

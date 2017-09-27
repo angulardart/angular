@@ -65,9 +65,12 @@ class LifecycleDir implements DoCheck {
 }
 
 @Component(
-    selector: "lifecycle",
-    template: '<div lifecycle-dir></div>',
-    directives: const [LifecycleDir])
+  selector: "lifecycle",
+  template: '<div lifecycle-dir></div>',
+  directives: const [LifecycleDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class LifecycleCmp
     implements
         OnChanges,
@@ -113,7 +116,10 @@ class LifecycleCmp
 }
 
 @Component(
-    selector: "my-comp",
-    template: '<lifecycle [field]="123"></lifecycle>',
-    directives: const [LifecycleCmp])
+  selector: "my-comp",
+  template: '<lifecycle [field]="123"></lifecycle>',
+  directives: const [LifecycleCmp],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyComp {}

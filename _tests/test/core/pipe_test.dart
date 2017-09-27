@@ -21,6 +21,8 @@ void main() {
   pipes: const [
     DatePipe,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class Example {
   // April 29, 2014, 6:04am.

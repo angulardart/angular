@@ -92,6 +92,8 @@ void addChildDivDirective(Element element) {
   selector: 'test-invoke-once',
   template: '<div id="test" addChildDiv></div>',
   directives: const [addChildDivDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestInvokeOnceComponent {}
 
@@ -99,6 +101,8 @@ class TestInvokeOnceComponent {}
   selector: 'test-invoke-each-build',
   template: '<div id="test" *ngIf="visible" addChildDiv></div>',
   directives: const [addChildDivDirective, NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestInvokeEachBuildComponent {
   bool visible = true;
@@ -123,6 +127,8 @@ void addAttributesDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes>',
   directives: const [addAttributesDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestDependencyInjectionComponent {}
 
@@ -138,6 +144,8 @@ void addAttributesForTokenDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes>',
   directives: const [addAttributesForTokenDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestDependencyInjectionViaTokenComponent {}
 
@@ -150,12 +158,16 @@ void embedTextDirective(Element element, @Attribute('embedText') String text) {
   selector: 'test-attribute-injection',
   template: '<div embedText="hello world"></div>',
   directives: const [embedTextDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestAttributeInjectionComponent {}
 
 @Component(
   selector: 'content-host',
   template: '<ng-content></ng-content>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ContentHostComponent {}
 
@@ -163,6 +175,8 @@ class ContentHostComponent {}
   selector: 'test-content-projection',
   template: '<content-host><div id="test" addAttributes></div></content-host>',
   directives: const [addAttributesDirective, ContentHostComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestContentProjectionComponent {}
 
@@ -184,5 +198,7 @@ void ifDirective(
     <template if="false"><div id="second"></div></template>
   ''',
   directives: const [ifDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestFunctionalStructuralDirectiveComponent {}

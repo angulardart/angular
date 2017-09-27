@@ -96,33 +96,39 @@ void main() {
 }
 
 @Component(
-    selector: 'switch-when-test',
-    directives: const [NgSwitch, NgSwitchWhen],
-    template: '''<div>
+  selector: 'switch-when-test',
+  directives: const [NgSwitch, NgSwitchWhen],
+  template: '''<div>
   <ul [ngSwitch]="switchValue">
     <template ngSwitchCase="a"><li>when a</li></template>
     <template ngSwitchCase="b"><li>when b</li></template>
-  </ul></div>''')
+  </ul></div>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class SwitchWhenTest {
   String switchValue;
 }
 
 @Component(
-    selector: 'switch-default-test',
-    directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
-    template: '''<div>
+  selector: 'switch-default-test',
+  directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
+  template: '''<div>
   <ul [ngSwitch]="switchValue">
     <li template="ngSwitchCase 'a'">when a</li>
     <li template="ngSwitchDefault">when default</li>
-  </ul></div>''')
+  </ul></div>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class SwitchDefaultTest {
   String switchValue;
 }
 
 @Component(
-    selector: 'switch-multiple-when-test',
-    directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
-    template: '''<div>
+  selector: 'switch-multiple-when-test',
+  directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
+  template: '''<div>
   <ul [ngSwitch]="switchValue">
     <template ngSwitchCase="a"><li>when a1;</li></template>
     <template ngSwitchCase="b"><li>when b1;</li></template>
@@ -130,20 +136,26 @@ class SwitchDefaultTest {
     <template ngSwitchCase="b"><li>when b2;</li></template>
     <template ngSwitchDefault><li>when default1;</li></template>
     <template ngSwitchDefault><li>when default2;</li></template>
-  </ul></div>''')
+  </ul></div>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class SwitchMultipleWhenTest {
   String switchValue;
 }
 
 @Component(
-    selector: 'switch-when-value-test',
-    directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
-    template: '''<div>
+  selector: 'switch-when-value-test',
+  directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
+  template: '''<div>
   <ul [ngSwitch]="switchValue">
     <template [ngSwitchCase]="when1"><li>when 1;</li></template>
     <template [ngSwitchCase]="when2"><li>when 2;</li></template>
     <template ngSwitchDefault><li>when default;</li></template>
-  </ul></div>''')
+  </ul></div>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class SwitchWhenValueTest {
   String switchValue;
   String when1;

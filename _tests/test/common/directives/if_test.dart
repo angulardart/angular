@@ -128,51 +128,66 @@ const isExpressionChanged =
     const isInstanceOf<ExpressionChangedAfterItHasBeenCheckedException>();
 
 @Component(
-    selector: 'ngif-intemplate-attr-test',
-    template: '<div><copy-me template="ngIf booleanCondition">'
-        'hello</copy-me></div>',
-    directives: const [NgIf])
+  selector: 'ngif-intemplate-attr-test',
+  template: '<div><copy-me template="ngIf booleanCondition">'
+      'hello</copy-me></div>',
+  directives: const [NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class NgIfInTemplateAttributeComponent {
   bool booleanCondition = true;
 }
 
 @Component(
-    selector: 'ngif-intemplate-test',
-    template: '<div><template [ngIf]="booleanCondition">'
-        '<copy-me>hello2</copy-me></template></div>',
-    directives: const [NgIf])
+  selector: 'ngif-intemplate-test',
+  template: '<div><template [ngIf]="booleanCondition">'
+      '<copy-me>hello2</copy-me></template></div>',
+  directives: const [NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class NgIfInTemplateComponent {
   bool booleanCondition = true;
 }
 
 @Component(
-    selector: 'ngif-toggle-test',
-    template: '<div><copy-me template="ngIf booleanCondition">hello</copy-me>'
-        '</div>',
-    directives: const [NgIf])
+  selector: 'ngif-toggle-test',
+  template: '<div><copy-me template="ngIf booleanCondition">hello</copy-me>'
+      '</div>',
+  directives: const [NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class NgIfToggleTestComponent {
   bool booleanCondition = true;
 }
 
 @Component(
-    selector: 'ngif-nested-test',
-    template: '<div><template [ngIf]="booleanCondition">'
-        '<copy-me *ngIf="nestedBooleanCondition">hello</copy-me>'
-        '</template></div>',
-    directives: const [NgIf])
+  selector: 'ngif-nested-test',
+  template: '<div><template [ngIf]="booleanCondition">'
+      '<copy-me *ngIf="nestedBooleanCondition">hello</copy-me>'
+      '</template></div>',
+  directives: const [NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class NgIfNestedTestComponent {
   bool booleanCondition = true;
   bool nestedBooleanCondition = true;
 }
 
 @Component(
-    selector: 'ngif-multiupdate-test',
-    template: '<div>'
-        '<copy-me template="ngIf numberCondition + 1 >= 2">helloNumber</copy-me>'
-        '<copy-me template="ngIf stringCondition == \'foo\'">helloString</copy-me>'
-        '<copy-me template="ngIf functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
-        '</div>',
-    directives: const [NgIf])
+  selector: 'ngif-multiupdate-test',
+  template: '<div>'
+      '<copy-me template="ngIf numberCondition + 1 >= 2">helloNumber</copy-me>'
+      '<copy-me template="ngIf stringCondition == \'foo\'">helloString</copy-me>'
+      '<copy-me template="ngIf functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
+      '</div>',
+  directives: const [NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class NgIfMultiUpdateTestComponent {
   bool booleanCondition = true;
   bool nestedBooleanCondition = true;
@@ -189,6 +204,8 @@ class NgIfMultiUpdateTestComponent {
     </template>
   ''',
   directives: const [NgIf],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NgIfThrowsDuringChangeDetection {
   bool _value = false;
