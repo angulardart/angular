@@ -11,6 +11,8 @@ import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
 @Component(
   selector: 'test',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestComponent {
   TestComponent() {

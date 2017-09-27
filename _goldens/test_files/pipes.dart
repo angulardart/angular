@@ -30,5 +30,7 @@ class LifecyclePipe implements PipeTransform, OnDestroy {
     {{ "bar" | dirty }}
     {{ "lifecycle" | lifecycle }}
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class Comp {}
