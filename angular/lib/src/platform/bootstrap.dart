@@ -108,10 +108,10 @@ Future<ComponentRef<T>> bootstrap<T>(
   List customProviders,
 ]) =>
     throw new UnsupportedError('''
-Using the 'angular2' transformer is required.
+Using the 'angular' transformer is required.
 
 Please see https://webdev.dartlang.org/angular/tutorial for setup instructions,
-and ensure your 'pubspec.yaml' file is configured to invoke the 'angular2'
+and ensure your 'pubspec.yaml' file is configured to invoke the 'angular'
 transformer on your application's entry point.''');
 
 /// See [bootstrap] for more information.
