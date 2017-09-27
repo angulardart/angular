@@ -7,6 +7,8 @@ import 'package:angular/angular.dart';
   {{foo}}
 </div>
 ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class InterpolationComponent {
   String foo = 'hello';

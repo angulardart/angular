@@ -7,6 +7,8 @@ import 'package:angular/angular.dart';
   template: r'''
     <button (click)="onClick()"></button>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class UsesNativeEvents {
   @HostListener('focus')
@@ -23,12 +25,16 @@ class UsesNativeEvents {
   template: r'''
     <has-angular-events (foo)="onFoo()"></has-angular-events>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class UsesAngularEvents {}
 
 @Component(
   selector: 'has-angular-events',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class HasAngularEvents {
   @Output()

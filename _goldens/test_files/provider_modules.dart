@@ -27,5 +27,7 @@ const barProviders = const [
   selector: 'provider-modules',
   providers: const [barProviders],
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ProviderModulesComponent {}
