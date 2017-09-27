@@ -350,11 +350,11 @@ T castByValue<T>(dynamic input, T value) => input as T;
 
 const EMPTY_ARRAY = const [];
 const EMPTY_MAP = const {};
-dynamic pureProxy1(dynamic fn(dynamic p0)) {
-  dynamic result;
+T Function(S0) pureProxy1<T, S0>(T Function(S0) fn) {
+  T result;
   var first = true;
-  var v0;
-  return ([p0, _, __]) {
+  S0 v0;
+  return ([S0 p0, _, __]) {
     if (first || !looseIdentical(v0, p0)) {
       first = false;
       v0 = p0;
@@ -364,11 +364,12 @@ dynamic pureProxy1(dynamic fn(dynamic p0)) {
   };
 }
 
-dynamic pureProxy2(dynamic fn(dynamic p0, dynamic p1)) {
-  dynamic result;
+T Function(S0, S1) pureProxy2<T, S0, S1>(T Function(S0, S1) fn) {
+  T result;
   var first = true;
-  var v0, v1;
-  return ([p0, p1, _, __]) {
+  S0 v0;
+  S1 v1;
+  return ([S0 p0, S1 p1, _, __]) {
     if (first || !looseIdentical(v0, p0) || !looseIdentical(v1, p1)) {
       first = false;
       v0 = p0;
@@ -379,11 +380,13 @@ dynamic pureProxy2(dynamic fn(dynamic p0, dynamic p1)) {
   };
 }
 
-dynamic pureProxy3(dynamic fn(dynamic p0, dynamic p1, dynamic p2)) {
-  dynamic result;
+T Function(S0, S1, S2) pureProxy3<T, S0, S1, S2>(T Function(S0, S1, S2) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2;
-  return ([p0, p1, p2, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  return ([S0 p0, S1 p1, S2 p2, _, __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -398,11 +401,15 @@ dynamic pureProxy3(dynamic fn(dynamic p0, dynamic p1, dynamic p2)) {
   };
 }
 
-dynamic pureProxy4(dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3)) {
-  dynamic result;
+T Function(S0, S1, S2, S3) pureProxy4<T, S0, S1, S2, S3>(
+    T Function(S0, S1, S2, S3) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2, v3;
-  return ([p0, p1, p2, p3, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  S3 v3;
+  return ([S0 p0, S1 p1, S2 p2, S3 p3, _, __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -419,12 +426,16 @@ dynamic pureProxy4(dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3)) {
   };
 }
 
-dynamic pureProxy5(
-    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4)) {
-  dynamic result;
+T Function(S0, S1, S2, S3, S4) pureProxy5<T, S0, S1, S2, S3, S4>(
+    T Function(S0, S1, S2, S3, S4) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2, v3, v4;
-  return ([p0, p1, p2, p3, p4, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  S3 v3;
+  S4 v4;
+  return ([S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, _, __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -443,13 +454,17 @@ dynamic pureProxy5(
   };
 }
 
-dynamic pureProxy6(
-    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
-        dynamic p5)) {
-  dynamic result;
+T Function(S0, S1, S2, S3, S4, S5) pureProxy6<T, S0, S1, S2, S3, S4, S5>(
+    T Function(S0, S1, S2, S3, S4, S5) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2, v3, v4, v5;
-  return ([p0, p1, p2, p3, p4, p5, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  S3 v3;
+  S4 v4;
+  S5 v5;
+  return ([S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5, _, __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -470,13 +485,19 @@ dynamic pureProxy6(
   };
 }
 
-dynamic pureProxy7(
-    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
-        dynamic p5, dynamic p6)) {
-  dynamic result;
+T Function(S0, S1, S2, S3, S4, S5, S6)
+    pureProxy7<T, S0, S1, S2, S3, S4, S5, S6>(
+        T Function(S0, S1, S2, S3, S4, S5, S6) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2, v3, v4, v5, v6;
-  return ([p0, p1, p2, p3, p4, p5, p6, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  S3 v3;
+  S4 v4;
+  S5 v5;
+  S6 v6;
+  return ([S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5, S6 p6, _, __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -499,13 +520,20 @@ dynamic pureProxy7(
   };
 }
 
-dynamic pureProxy8(
-    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
-        dynamic p5, dynamic p6, dynamic p7)) {
-  dynamic result;
+T Function(S0, S1, S2, S3, S4, S5, S6, S7)
+    pureProxy8<T, S0, S1, S2, S3, S4, S5, S6, S7>(
+        T Function(S0, S1, S2, S3, S4, S5, S6, S7) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2, v3, v4, v5, v6, v7;
-  return ([p0, p1, p2, p3, p4, p5, p6, p7, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  S3 v3;
+  S4 v4;
+  S5 v5;
+  S6 v6;
+  S7 v7;
+  return ([S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5, S6 p6, S7 p7, _, __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -530,13 +558,22 @@ dynamic pureProxy8(
   };
 }
 
-dynamic pureProxy9(
-    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
-        dynamic p5, dynamic p6, dynamic p7, dynamic p8)) {
-  dynamic result;
+T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8)
+    pureProxy9<T, S0, S1, S2, S3, S4, S5, S6, S7, S8>(
+        T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2, v3, v4, v5, v6, v7, v8;
-  return ([p0, p1, p2, p3, p4, p5, p6, p7, p8, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  S3 v3;
+  S4 v4;
+  S5 v5;
+  S6 v6;
+  S7 v7;
+  S8 v8;
+  return (
+      [S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5, S6 p6, S7 p7, S8 p8, _, __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
@@ -563,13 +600,34 @@ dynamic pureProxy9(
   };
 }
 
-dynamic pureProxy10(
-    dynamic fn(dynamic p0, dynamic p1, dynamic p2, dynamic p3, dynamic p4,
-        dynamic p5, dynamic p6, dynamic p7, dynamic p8, dynamic p9)) {
-  dynamic result;
+T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8, S9)
+    pureProxy10<T, S0, S1, S2, S3, S4, S5, S6, S7, S8, S9>(
+        T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8, S9) fn) {
+  T result;
   var first = true;
-  var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9;
-  return ([p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, _, __]) {
+  S0 v0;
+  S1 v1;
+  S2 v2;
+  S3 v3;
+  S4 v4;
+  S5 v5;
+  S6 v6;
+  S7 v7;
+  S8 v8;
+  S9 v9;
+  return (
+      [S0 p0,
+      S1 p1,
+      S2 p2,
+      S3 p3,
+      S4 p4,
+      S5 p5,
+      S6 p6,
+      S7 p7,
+      S8 p8,
+      S9 p9,
+      _,
+      __]) {
     if (first ||
         !looseIdentical(v0, p0) ||
         !looseIdentical(v1, p1) ||
