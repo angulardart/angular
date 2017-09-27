@@ -9,10 +9,13 @@ import 'hero.dart';
 import 'hero_service.dart';
 
 @Component(
-    selector: 'my-hero-detail',
-    directives: const [NgIf, formDirectives],
-    templateUrl: 'hero_detail_component.html',
-    styleUrls: const ['hero_detail_component.css'])
+  selector: 'my-hero-detail',
+  directives: const [NgIf, formDirectives],
+  templateUrl: 'hero_detail_component.html',
+  styleUrls: const ['hero_detail_component.css'],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HeroDetailComponent implements CanDeactivate, OnActivate {
   final HeroService _heroService;
   final Window _window;

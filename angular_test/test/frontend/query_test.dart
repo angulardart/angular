@@ -46,6 +46,8 @@ void main() {
 @Component(
   selector: 'child',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ChildComponent {}
 
@@ -53,6 +55,8 @@ class ChildComponent {}
   selector: 'single',
   directives: const [ChildComponent],
   template: '<child></child>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SingleComponentTest {}
 
@@ -64,5 +68,7 @@ class SingleComponentTest {}
     <child></child>
     <child></child>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ManyComponentTest {}

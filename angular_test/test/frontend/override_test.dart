@@ -20,9 +20,12 @@ void main() {
 }
 
 @Component(
-    selector: 'view-comp',
-    providers: const [DataService],
-    template: '{{value}}')
+  selector: 'view-comp',
+  providers: const [DataService],
+  template: '{{value}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ViewComponent implements OnInit {
   final DataService _service;
 
@@ -41,6 +44,8 @@ class ViewComponent implements OnInit {
     ViewComponent,
   ],
   template: '<view-comp override></view-comp>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestViewComponent {}
 

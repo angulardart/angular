@@ -28,18 +28,22 @@ void main() {
 }
 
 @Component(
-    selector: 'test-container',
-    template: '<child-component class="mytarget" someDirective>'
-        '</child-component>',
-    directives: const [ChildComponent, SomeDirective])
+  selector: 'test-container',
+  template: '<child-component class="mytarget" someDirective>'
+      '</child-component>',
+  directives: const [ChildComponent, SomeDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TestContainer {}
 
 @Component(
-    selector: 'child-component',
-    template: '<div>ChildHello</div>',
-    providers: const [
-      const Provider(SomeDirective, useExisting: ChildComponent)
-    ])
+  selector: 'child-component',
+  template: '<div>ChildHello</div>',
+  providers: const [const Provider(SomeDirective, useExisting: ChildComponent)],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ChildComponent extends SomeDirective {}
 
 @Directive(selector: '[someDirective]', host: const {

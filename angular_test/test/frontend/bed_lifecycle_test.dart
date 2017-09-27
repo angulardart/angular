@@ -53,6 +53,8 @@ void main() {
 @Component(
   selector: 'test',
   template: '{{value}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class AngularLifecycle {
   String value = '';
@@ -62,6 +64,8 @@ class AngularLifecycle {
   selector: 'test',
   directives: const [ChildWithLifeCycles],
   template: '<child [name]="name"></child>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NgOnChangesInitOrder {
   String name;
@@ -70,6 +74,8 @@ class NgOnChangesInitOrder {
 @Component(
   selector: 'child',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ChildWithLifeCycles implements OnChanges, OnInit {
   final events = <String>[];

@@ -12,10 +12,10 @@ import 'heroes_component.template.dart' as heroes_component;
 import 'login_component.template.dart' as login_component;
 
 @Component(
-    selector: 'my-app',
-    directives: const [routerDirectives],
-    providers: const [AuthService, HeroService],
-    template: '''
+  selector: 'my-app',
+  directives: const [routerDirectives],
+  providers: const [AuthService, HeroService],
+  template: '''
       <h1>{{title}}</h1>
       <nav>
         <a [routerLink]="dashboardRoute" routerLinkActive="router-link-active">Dashboard</a>
@@ -25,7 +25,10 @@ import 'login_component.template.dart' as login_component;
       </nav>
       <router-outlet [routes]="routes"></router-outlet>
     ''',
-    styleUrls: const ['app_component.css'])
+  styleUrls: const ['app_component.css'],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class AppComponent {
   String adminRoute = app_routes.admin.toUrl();
   String dashboardRoute = app_routes.dashboard.toUrl();

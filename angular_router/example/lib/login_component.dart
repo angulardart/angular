@@ -5,7 +5,10 @@ import 'package:angular_router/angular_router.dart';
 
 import 'auth_service.dart';
 
-@Component(selector: 'login', directives: const [NgIf], template: '''
+@Component(
+  selector: 'login',
+  directives: const [NgIf],
+  template: '''
     <h2>LOGIN</h2>
     <p>{{message}}</p>
     <div *ngIf="!loggedIn">
@@ -16,7 +19,10 @@ import 'auth_service.dart';
         <button class="login-button" (click)="login()" >Login</button>
     </div>
     <button (click)="logout()" *ngIf="loggedIn">Logout</button>
-  ''')
+  ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class LoginComponent implements CanReuse {
   final AuthService _authService;
   final Router _router;
