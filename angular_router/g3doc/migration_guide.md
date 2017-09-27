@@ -14,9 +14,16 @@
 ## Migration steps
 
 1.  Change the RouteConfig to a routes Input() on the router-outlet.
-    1.  Create a [RouteLibrary](https://github.com/dart-lang/angular/blob/master/angular_router/lib/src/route_library.dart). This will contain all information about component routes, minus the component itself.
-    1.  Create a list of [RouteDefinition](https://github.com/dart-lang/angular/blob/master/angular_router/lib/src/route_definition.dart) objects.
-    1.  Add the `[routes]` to `<router-outlet>`. Example: `<router-outlet [routes]="routes">`
+
+    1.  Create a
+        [RoutePath](https://github.com/dart-lang/angular/blob/master/angular_router/lib/src/route_path.dart).
+        This will contain all information about component routes, minus the
+        component itself.
+    1.  Create a list of
+        [RouteDefinition](https://github.com/dart-lang/angular/blob/master/angular_router/lib/src/route_definition.dart)
+        objects.
+    1.  Add the `[routes]` to `<router-outlet>`. Example: `<router-outlet
+        [routes]="routes">`
 
     **Old code:** \
     **root/lib/root.dart**
@@ -50,20 +57,20 @@
     ```
     static const planTypeParameter = 'planType';
 
-    static final overviewRoute = new RouteLibrary(
+    static final overviewRoute = new RoutePath(
       path: "overview",
       useAsDefault: true,
     );
-    static final planningRoute = new RouteLibrary(
+    static final planningRoute = new RoutePath(
       path: "planning/:$planTypeParameter",
     );
-    static final clientRoute = new RouteLibrary(
+    static final clientRoute = new RoutePath(
       path: "client",
     );
     ```
 
     **root/lib/root.dart**
-    
+
     ```
     import 'root_routes.dart' as root_routes;
     import 'overview_component.template.dart' as overview_component;
@@ -77,15 +84,15 @@
     class RootComponent {
       final List<RouteDefinition> routes = [
         new RouteDefinition(
-          library: root_routes.overviewRoute,
+          routePath: root_routes.overviewRoute,
           component: overview_component.OverviewComponentNgFactory,
         ),
         new RouteDefinition(
-          library: root_routes.planningRoute,
+          routePath: root_routes.planningRoute,
           component: planning_component.PlanningComponentNgFactory,
         ),
         new RouteDefinition.defer(
-          library: root_routes.clientRoute,
+          routePath: root_routes.clientRoute,
           loader: loadClients
         ),
         new RouteDefinition.redirect(
@@ -96,8 +103,9 @@
     }
     ```
 
-1.  For nested routes, define and use parent route libraries.
-    The following example builds on the earlier one, assuming PlanningComponent also has a router-outlet.
+1.  For nested routes, define and use parent route paths. The following example
+    builds on the earlier one, assuming PlanningComponent also has a
+    router-outlet.
 
     **New code:** \
     **routes/lib/planning_routes.dart**
@@ -105,12 +113,12 @@
     ```
     import 'root_routes.dart' as root_routes;
 
-    static final homeRoute = new RouteLibrary(
+    static final homeRoute = new RoutePath(
       path: "home",
       useAsDefault: true,
       parent: root_routes.planningRoute
     );
-    static final detailRoute = new RouteLibrary(
+    static final detailRoute = new RoutePath(
       path: "details",
       parent: root_routes.planningRoute
     );
@@ -131,17 +139,16 @@
     class PlanningComponent {
       final List<RouteDefinition> routes = [
         new RouteDefinition(
-          library: planning_routes.homeRoute,
+          routePath: planning_routes.homeRoute,
           component: home_component.PlanningHomeComponentNgFactory,
         ),
         new RouteDefinition(
-          library: planning_routes.detailRoute,
+          routePath: planning_routes.detailRoute,
           component: details_component.PlanningDetailsComponentNgFactory,
         ),
       ]
     }
     ```
-
 
 1.  Use RouterState to retrieve parameters.
 
@@ -149,7 +156,7 @@
 
     ```
     class PlanningHomeComponent {
-      final RouteParams params;  
+      final RouteParams params;
       PlanningHomeComponent(this.params);
       void handleClick() {
         print(params.get('planType'));
@@ -169,7 +176,6 @@
       }
     }
     ```
-
 
 1.  Use OnActivate instead of OnInit.
 
@@ -195,10 +201,12 @@
     }
     ```
 
+1.  Create
+    [Lifecycle](https://github.com/dart-lang/angular/blob/master/angular_router/lib/src/lifecycle.dart)
+    hooks.
 
-1.  Create [Lifecycle](https://github.com/dart-lang/angular/blob/master/angular_router/lib/src/lifecycle.dart) hooks.
-
-    Supported hooks: CanActivate, CanDeactivate, CanReuse, OnActivate, OnDeactivate
+    Supported hooks: CanActivate, CanDeactivate, CanReuse, OnActivate,
+    OnDeactivate
 
     **Example:**
 
@@ -219,10 +227,11 @@
 
 ## FAQ
 
+### Why RoutePath in another file?
 
-### Why RouteLibrary in another file?
-
-This deals with circular dependencies. Other files can use these RouteLibrary objects to know the URL of certain paths. This allows any component to access navigate to any URL.
+This deals with circular dependencies. Other files can use these RoutePath
+objects to know the URL of certain paths. This allows any component to access
+navigate to any URL.
 
 For example: `overviewRoute.toUrl() == '/overview'`. We can do things like:
 
