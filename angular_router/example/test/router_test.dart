@@ -141,9 +141,14 @@ class FakePlatformLocation implements PlatformLocation {
 }
 
 @Component(
-    selector: 'test-router', directives: const [AppComponent], template: r'''
+  selector: 'test-router',
+  directives: const [AppComponent],
+  template: r'''
 <my-app></my-app>
-''')
+''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class TestRouter {
   Router router;
 

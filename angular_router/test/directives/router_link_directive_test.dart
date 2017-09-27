@@ -79,6 +79,8 @@ void main() {
   template: r'''
     <a [routerLink]="routerLink"></a>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestRouterLink {
   String routerLink;
@@ -92,6 +94,8 @@ class TestRouterLink {
   template: r'''
     <a [routerLink]="routerLink" target="_parent"></a>
   ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestRouterLinkWithTarget {
   String routerLink;

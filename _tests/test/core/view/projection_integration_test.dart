@@ -235,6 +235,8 @@ void main() {
   selector: 'non-bound-interpolation-test',
   template: '<simple>{{text}}</simple>',
   directives: const [NonBoundInterpolationChild],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NonBoundInterpolationTest {
   String text = '';
@@ -245,6 +247,8 @@ class NonBoundInterpolationTest {
   template: 'SIMPLE('
       '<div><ng-content></ng-content></div>'
       '<div [tabIndex]="0">EL</div>)',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NonBoundInterpolationChild {
   String text = '';
@@ -254,18 +258,24 @@ class NonBoundInterpolationChild {
   selector: 'project-component-test',
   template: '<simple><other></other></simple>',
   directives: const [ProjectComponentSimple, ProjectComponentOther],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ProjectComponentTest {}
 
 @Component(
   selector: 'simple',
   template: 'SIMPLE({{0}}|<ng-content></ng-content>|{{2}})',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ProjectComponentSimple {}
 
 @Component(
   selector: 'other',
   template: '{{1}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ProjectComponentOther {}
 
@@ -273,6 +283,8 @@ class ProjectComponentOther {}
   selector: 'no-light-dom-test',
   template: '<empty>A</empty>',
   directives: const [Empty],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NoLightDomTest {}
 
@@ -284,6 +296,8 @@ class NoLightDomTest {}
       '<div class="left">A</div>'
       '</multiple-content-tags>',
   directives: const [MultipleContentTagsComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MultipleContentTagsTest {}
 
@@ -294,6 +308,8 @@ class MultipleContentTagsTest {}
       '<div>C</div>'
       '</multiple-content-tags>',
   directives: const [MultipleContentTagsComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class OnlyDirectChildrenTest {}
 
@@ -304,6 +320,8 @@ class OnlyDirectChildrenTest {}
       '<div>B</div>'
       '</multiple-content-tags>',
   directives: const [ManualViewportDirective, MultipleContentTagsComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class LightDomChangeTest {
   @ViewChildren(ManualViewportDirective)
@@ -317,6 +335,8 @@ class LightDomChangeTest {
       '<div>B</div>'
       '</outer-with-indirect-nested>',
   directives: const [OuterWithIndirectNestedComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NestedComponentTest {}
 
@@ -328,6 +348,8 @@ class NestedComponentTest {}
       '<div>C</div>'
       '</outer>',
   directives: const [OuterComponent, ManualViewportDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NestedDirectChildTest {
   @ViewChild(ManualViewportDirective)
@@ -342,6 +364,8 @@ class NestedDirectChildTest {
       '<div>C</div>'
       '</conditional-content>',
   directives: const [ConditionalContentComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ShadowDomChangeTest {
   @ViewChild(ConditionalContentComponent)
@@ -352,12 +376,16 @@ class ShadowDomChangeTest {
   selector: 'text-node-after-content-test',
   template: '<simple stringProp="text"></simple>',
   directives: const [TextNodeAfterContentComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TextNodeAfterContentTest {}
 
 @Component(
   selector: 'simple',
   template: '<ng-content></ng-content><p>P,</p>{{stringProp}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TextNodeAfterContentComponent {
   @Input()
@@ -368,12 +396,16 @@ class TextNodeAfterContentComponent {
   selector: 'text-node-after-style-test',
   template: '<simple stringProp="text"></simple>',
   directives: const [TextNodeAfterStyleComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TextNodeAfterStyleTest {}
 
 @Component(
   selector: 'simple',
   template: '<style></style><p>P,</p>{{stringProp}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TextNodeAfterStyleComponent {
   @Input()
@@ -387,6 +419,8 @@ class TextNodeAfterStyleComponent {
       '</empty>'
       'START(<div project></div>)END',
   directives: const [Empty, ProjectDirective, ManualViewportDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MoveLightDomTest {
   @ViewChild(ProjectDirective)
@@ -398,6 +432,8 @@ class MoveLightDomTest {
   template: '<simple><template manual><div>A</div></template></simple>'
       'START(<div project></div>)END',
   directives: const [Simple, ManualViewportDirective, ProjectDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MoveProjectedLightDomTest {
   @ViewChild(ManualViewportDirective)
@@ -415,6 +451,8 @@ class MoveProjectedLightDomTest {
       '</conditional-content>'
       'START(<div project></div>)END',
   directives: const [ConditionalContentComponent, ProjectDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MoveNgContentTest {
   @ViewChild(ProjectDirective)
@@ -428,6 +466,8 @@ class MoveNgContentTest {
   selector: 'recursive-tree-test',
   template: '<tree></tree>',
   directives: const [Tree],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class RecursiveTreeTest {
   @ViewChild(Tree)
@@ -438,6 +478,8 @@ class RecursiveTreeTest {
   selector: 'recursive-tree-multiple-component-test',
   template: '<tree></tree>',
   directives: const [RecursiveTree],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class RecursiveTreeMultipleComponentTest {
   @ViewChild(RecursiveTree)
@@ -448,6 +490,8 @@ class RecursiveTreeMultipleComponentTest {
   selector: 'nested-conditional-test',
   template: '<conditional-text>a</conditional-text>',
   directives: const [ConditionalTextComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NestedConditionalTest {
   @ViewChild(ConditionalTextComponent)
@@ -458,6 +502,8 @@ class NestedConditionalTest {
   selector: 'switch-order-test',
   template: '<cmp-a><cmp-b></cmp-b></cmp-a>',
   directives: const [CmpA, CmpB],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SwitchOrderTest {}
 
@@ -465,6 +511,8 @@ class SwitchOrderTest {}
   selector: 'correct-order-test',
   template: '<cmp-a1></cmp-a1><cmp-a2></cmp-a2>',
   directives: const [CmpA1, CmpA2],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CorrectOrderTest {}
 
@@ -477,6 +525,8 @@ class CorrectOrderTest {}
       '<div>D</div>'
       '</conditional-content>',
   directives: const [ConditionalContentComponent, ManualViewportDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NestedProjectionTest {
   @ViewChild(ConditionalContentComponent)
@@ -487,9 +537,12 @@ class NestedProjectionTest {
 }
 
 @Component(
-    selector: 'simple',
-    template: 'SIMPLE(<ng-content></ng-content>)',
-    directives: const [])
+  selector: 'simple',
+  template: 'SIMPLE(<ng-content></ng-content>)',
+  directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class Simple {
   @Input()
   String stringProp = '';
@@ -499,6 +552,8 @@ class Simple {
   selector: 'empty',
   template: '',
   directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class Empty {}
 
@@ -507,6 +562,8 @@ class Empty {}
   template:
       '(<ng-content select=".left"></ng-content>, <ng-content></ng-content>)',
   directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MultipleContentTagsComponent {}
 
@@ -540,62 +597,83 @@ class ProjectDirective {
 }
 
 @Component(
-    selector: 'outer-with-indirect-nested',
-    template: 'OUTER(<simple><div><ng-content></ng-content></div></simple>)',
-    directives: const [Simple])
+  selector: 'outer-with-indirect-nested',
+  template: 'OUTER(<simple><div><ng-content></ng-content></div></simple>)',
+  directives: const [Simple],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class OuterWithIndirectNestedComponent {}
 
 @Component(
-    selector: 'outer',
-    template: 'OUTER(<inner>'
-        '<ng-content select=".left" class="left"></ng-content>'
-        '<ng-content></ng-content>'
-        '</inner>)',
-    directives: const [InnerComponent])
+  selector: 'outer',
+  template: 'OUTER(<inner>'
+      '<ng-content select=".left" class="left"></ng-content>'
+      '<ng-content></ng-content>'
+      '</inner>)',
+  directives: const [InnerComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class OuterComponent {}
 
 @Component(
-    selector: 'inner',
-    template: 'INNER(<innerinner>'
-        '<ng-content select=".left" class="left"></ng-content>'
-        '<ng-content></ng-content></innerinner>)',
-    directives: const [InnerInnerComponent])
+  selector: 'inner',
+  template: 'INNER(<innerinner>'
+      '<ng-content select=".left" class="left"></ng-content>'
+      '<ng-content></ng-content></innerinner>)',
+  directives: const [InnerInnerComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class InnerComponent {}
 
 @Component(
-    selector: 'innerinner',
-    template: 'INNERINNER('
-        '<ng-content select=".left"></ng-content>,'
-        '<ng-content></ng-content>)',
-    directives: const [])
+  selector: 'innerinner',
+  template: 'INNERINNER('
+      '<ng-content select=".left"></ng-content>,'
+      '<ng-content></ng-content>)',
+  directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class InnerInnerComponent {}
 
 @Component(
-    selector: 'conditional-content',
-    template: '<div>(<div *manual>'
-        '<ng-content select=".left"></ng-content></div>, '
-        '<ng-content></ng-content>)</div>',
-    directives: const [ManualViewportDirective])
+  selector: 'conditional-content',
+  template: '<div>(<div *manual>'
+      '<ng-content select=".left"></ng-content></div>, '
+      '<ng-content></ng-content>)</div>',
+  directives: const [ManualViewportDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ConditionalContentComponent {
   @ViewChild(ManualViewportDirective)
   ManualViewportDirective viewport;
 }
 
 @Component(
-    selector: 'conditional-text',
-    template: 'MAIN(<template manual>'
-        'FIRST(<template manual>SECOND(<ng-content></ng-content>)</template>)'
-        '</template>)',
-    directives: const [ManualViewportDirective])
+  selector: 'conditional-text',
+  template: 'MAIN(<template manual>'
+      'FIRST(<template manual>SECOND(<ng-content></ng-content>)</template>)'
+      '</template>)',
+  directives: const [ManualViewportDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ConditionalTextComponent {
   @ViewChildren(ManualViewportDirective)
   QueryList<ManualViewportDirective> viewports;
 }
 
 @Component(
-    selector: 'tree2',
-    template: 'TREE2({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
-    directives: const [ManualViewportDirective, RecursiveTree])
+  selector: 'tree2',
+  template: 'TREE2({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
+  directives: const [ManualViewportDirective, RecursiveTree],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class Tree2 {
   @Input()
   var depth = 0;
@@ -605,9 +683,12 @@ class Tree2 {
 }
 
 @Component(
-    selector: 'tree',
-    template: 'TREE({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
-    directives: const [ManualViewportDirective, Tree])
+  selector: 'tree',
+  template: 'TREE({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
+  directives: const [ManualViewportDirective, Tree],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class Tree {
   @Input()
   var depth = 0;
@@ -620,6 +701,8 @@ class Tree {
   selector: 'tree',
   template: 'TREE({{depth}}:<tree2 *manual [depth]="depth+1"></tree2>)',
   directives: const [ManualViewportDirective, Tree2],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class RecursiveTree {
   @Input()
@@ -635,6 +718,8 @@ class RecursiveTree {
 @Component(
   selector: 'cmp-d',
   template: '<d>{{tagName}}</d>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpD {
   String tagName;
@@ -646,6 +731,8 @@ class CmpD {
 @Component(
   selector: 'cmp-c',
   template: '<c>{{tagName}}</c>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpC {
   String tagName;
@@ -658,6 +745,8 @@ class CmpC {
   selector: 'cmp-b',
   template: '<ng-content></ng-content><cmp-d></cmp-d>',
   directives: const [CmpD],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpB {}
 
@@ -665,6 +754,8 @@ class CmpB {}
   selector: 'cmp-a',
   template: '<ng-content></ng-content><cmp-c></cmp-c>',
   directives: const [CmpC],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpA {}
 
@@ -672,6 +763,8 @@ class CmpA {}
   selector: 'cmp-b11',
   template: '{{\'b11\'}}',
   directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpB11 {}
 
@@ -679,6 +772,8 @@ class CmpB11 {}
   selector: 'cmp-b12',
   template: '{{\'b12\'}}',
   directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpB12 {}
 
@@ -686,6 +781,8 @@ class CmpB12 {}
   selector: 'cmp-b21',
   template: '{{\'b21\'}}',
   directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpB21 {}
 
@@ -693,6 +790,8 @@ class CmpB21 {}
   selector: 'cmp-b22',
   template: '{{\'b22\'}}',
   directives: const [],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpB22 {}
 
@@ -700,6 +799,8 @@ class CmpB22 {}
   selector: 'cmp-a1',
   template: '{{\'a1\'}}<cmp-b11></cmp-b11><cmp-b12></cmp-b12>',
   directives: const [CmpB11, CmpB12],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpA1 {}
 
@@ -707,5 +808,7 @@ class CmpA1 {}
   selector: 'cmp-a2',
   template: '{{\'a2\'}}<cmp-b21></cmp-b21><cmp-b22></cmp-b22>',
   directives: const [CmpB21, CmpB22],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CmpA2 {}

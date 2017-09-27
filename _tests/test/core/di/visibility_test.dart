@@ -49,6 +49,8 @@ void main() {
 @Component(
   selector: 'injects-parent',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class InjectsParentComponent {
   ShouldFailToInjectParentComponent parent;
@@ -60,6 +62,8 @@ class InjectsParentComponent {
   template: '<injects-parent></injects-parent>',
   directives: const [InjectsParentComponent],
   visibility: Visibility.none,
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ShouldFailToInjectParentComponent {}
 
@@ -70,6 +74,8 @@ class VisibilityNoneDirective {}
   selector: 'should-query-directive',
   template: '<div visibility-none></div>',
   directives: const [VisibilityNoneDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ShouldQueryDirective {
   @ViewChild(VisibilityNoneDirective)
@@ -79,6 +85,8 @@ class ShouldQueryDirective {
 @Component(
   selector: 'injects-directive',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class InjectsDirectiveComponent {
   VisibilityNoneDirective directive;
@@ -89,6 +97,8 @@ class InjectsDirectiveComponent {
   selector: 'should-fail-to-inject-from-element',
   template: '<injects-directive visibility-none></injects-directive>',
   directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ShouldFailToInjectFromElement {}
 
@@ -100,6 +110,8 @@ class ShouldFailToInjectFromElement {}
   </div>
   ''',
   directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ShouldFailToInjectFromView {}
 
@@ -107,6 +119,8 @@ class ShouldFailToInjectFromView {}
   selector: 'injects-directive-host',
   template: '<injects-directive></injects-directive>',
   directives: const [InjectsDirectiveComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class InjectsDirectiveHostComponent {}
 
@@ -121,6 +135,8 @@ class InjectsDirectiveHostComponent {}
     InjectsDirectiveHostComponent,
     VisibilityNoneDirective,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ShouldFailToInjectFromParentView {}
 
@@ -137,16 +153,21 @@ abstract class SomeService {
       '<div *dirNeedsService></div>'
       '</child-component-provides-service>',
   directives: const [MyChildComponentProvidesService, MyDirectiveNeedsService],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MyComponentWithServiceTest {}
 
 @Component(
-    selector: 'child-component-provides-service',
-    providers: const [
-      const Provider(SomeService, useExisting: MyChildComponentProvidesService)
-    ],
-    template: '<div></div>',
-    visibility: Visibility.none)
+  selector: 'child-component-provides-service',
+  providers: const [
+    const Provider(SomeService, useExisting: MyChildComponentProvidesService)
+  ],
+  template: '<div></div>',
+  visibility: Visibility.none,
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class MyChildComponentProvidesService implements SomeService {
   @override
   foo() {}

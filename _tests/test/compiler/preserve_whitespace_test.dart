@@ -59,22 +59,28 @@ String defaultWithWhitespace = '\n'
     '     V1 V2\n';
 
 @Component(
-    selector: 'test-default',
-    template: '<span class="other-element">\n'
-        '       Hello</span>\n'
-        '     <div> <span>  </span>  <span> </span>  World</div>\n'
-        '     <div>{{value1}} {{value2}}</div>\n')
+  selector: 'test-default',
+  template: '<span class="other-element">\n'
+      '       Hello</span>\n'
+      '     <div> <span>  </span>  <span> </span>  World</div>\n'
+      '     <div>{{value1}} {{value2}}</div>\n',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class DefaultWhiteSpaceComponent {
   String get value1 => 'V1';
   String get value2 => 'V2';
 }
 
 @Component(
-    selector: 'test-ngspace',
-    // First div covers interpolate path.
-    // Second div covers simple visitText path.
-    template: '<div>{{value1}}&ngsp;&ngsp;test1 &ngsp; test2{{value2}}</div>\n'
-        '<div>test0&ngsp;&ngsp;test1 &ngsp; test2</div>\n')
+  selector: 'test-ngspace',
+  // First div covers interpolate path.
+  // Second div covers simple visitText path.
+  template: '<div>{{value1}}&ngsp;&ngsp;test1 &ngsp; test2{{value2}}</div>\n'
+      '<div>test0&ngsp;&ngsp;test1 &ngsp; test2</div>\n',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class NgSpaceComponent {
   String get value1 => 'V1';
   String get value2 => 'V2';

@@ -175,10 +175,18 @@ void main() {
   });
 }
 
-@Component(selector: 'heroes', template: '')
+@Component(
+  selector: 'heroes', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HeroesComponent {}
 
-@Component(selector: 'villains', template: '')
+@Component(
+  selector: 'villains', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class VillainsComponent {}
 
 // Examples of a deferred loader function.
