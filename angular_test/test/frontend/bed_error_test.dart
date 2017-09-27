@@ -39,7 +39,11 @@ void main() {
   });
 }
 
-@Component(selector: 'test', template: '')
+@Component(
+  selector: 'test', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class CatchSynchronousErrors {
   static _runTest() async {
     final fixture = await new NgTestBed<CatchSynchronousErrors>().create();
@@ -50,7 +54,11 @@ class CatchSynchronousErrors {
   }
 }
 
-@Component(selector: 'test', template: '')
+@Component(
+  selector: 'test', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class CatchAsynchronousErrors {
   static _runTest() async {
     final fixture = await new NgTestBed<CatchAsynchronousErrors>().create();
@@ -61,7 +69,11 @@ class CatchAsynchronousErrors {
   }
 }
 
-@Component(selector: 'test', template: '')
+@Component(
+  selector: 'test', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class CatchConstructorErrors {
   static _runTest() async {
     final testBed = new NgTestBed<CatchConstructorErrors>();
@@ -76,7 +88,11 @@ class CatchConstructorErrors {
   }
 }
 
-@Component(selector: 'test', template: '')
+@Component(
+  selector: 'test', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class CatchConstructorAsyncErrors {
   static _runTest() async {
     final testBed = new NgTestBed<CatchConstructorAsyncErrors>();
@@ -93,7 +109,11 @@ class CatchConstructorAsyncErrors {
   }
 }
 
-@Component(selector: 'test', template: '')
+@Component(
+  selector: 'test', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class CatchOnInitErrors implements OnInit {
   static _runTest() async {
     final testBed = new NgTestBed<CatchOnInitErrors>();
@@ -113,6 +133,8 @@ class CatchOnInitErrors implements OnInit {
   selector: 'test',
   template: '<child [trueToError]="value"></child>',
   directives: const [ChildChangeDetectionError],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CatchInChangeDetection {
   static _runTest() async {
@@ -126,7 +148,11 @@ class CatchInChangeDetection {
   bool value = false;
 }
 
-@Component(selector: 'child', template: '')
+@Component(
+  selector: 'child', template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ChildChangeDetectionError {
   @Input()
   set trueToError(bool trueToError) {

@@ -10,14 +10,19 @@ import 'admin_dashboard_component.template.dart' as admin_dashboard_component;
 import 'admin_heroes_component.template.dart' as admin_heroes_component;
 
 @Component(
-    selector: 'admin', directives: const [routerDirectives], template: '''
+  selector: 'admin',
+  directives: const [routerDirectives],
+  template: '''
       <h3>ADMIN</h3>
       <nav>
         <a routerLink="adminDashboardRoute">Dashboard</a>
         <a routerLink="adminHeroRoute">Manage Heroes</a>
       </nav>
       <router-outlet [routes]="routes"></router-outlet>
-    ''')
+    ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class AdminComponent implements CanActivate {
   String adminDashboardRoute = app_routes.adminDashboard.toUrl();
   String adminHeroRoute = app_routes.adminHero.toUrl();

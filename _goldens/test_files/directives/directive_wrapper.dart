@@ -76,12 +76,15 @@ class MyInjectableClass {
 }
 
 @Component(
-    selector: 'input-form-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'input-form-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input type="text" ngControl="login">
-</div>''')
+</div>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class InputFormTest {
   ControlGroup form;
 }

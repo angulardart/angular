@@ -86,6 +86,8 @@ void main() {
 @Component(
   selector: 'child',
   template: r'{{value}}',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ChildComponent {
   var _value;
@@ -104,6 +106,8 @@ class ChildComponent {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="boundValue"></child>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class BoundValueTest {
   var boundValue;
@@ -116,6 +120,8 @@ class BoundValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="{'key': value}"></child>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class BoundMapTest {
   var value;
@@ -128,6 +134,8 @@ class BoundMapTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="[value]"></child>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class BoundListTest {
   var value;

@@ -8,10 +8,13 @@ import 'hero.dart';
 import 'hero_service.dart';
 
 @Component(
-    selector: 'my-heroes',
-    directives: const [NgFor, NgIf, RouterLink],
-    templateUrl: 'heroes_component.html',
-    styleUrls: const ['heroes_component.css'])
+  selector: 'my-heroes',
+  directives: const [NgFor, NgIf, RouterLink],
+  templateUrl: 'heroes_component.html',
+  styleUrls: const ['heroes_component.css'],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HeroesComponent implements OnInit {
   final HeroService _heroService;
   List<Hero> heroes;
