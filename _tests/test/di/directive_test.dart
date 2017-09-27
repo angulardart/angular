@@ -44,6 +44,8 @@ void main() {
   directives: const [
     CompParent,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestParent {
   @ViewChild(CompParent)
@@ -61,6 +63,8 @@ class TestParent {
     B,
     const Provider(C, useValue: const C('oldC')),
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CompParent {
   @ViewChild(CompChild1)
@@ -77,6 +81,8 @@ class CompParent {
     B,
     const Provider(C, useValue: const C('newC')),
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CompChild1 {
   final B b;
@@ -90,6 +96,8 @@ class CompChild1 {
 @Component(
   selector: 'child-2',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class CompChild2 {
   final A a;
@@ -122,6 +130,8 @@ class C {
 @Component(
   selector: 'using-element-injector',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class UsingElementInjector {
   final Injector injector;

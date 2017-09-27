@@ -121,65 +121,84 @@ void main() {
 }
 
 @Component(
-    selector: 'host-test',
-    template: '<div id="item1">Test1</div><ng-content></ng-content>',
-    styles: const [':host { color: rgb(64, 255, 127); }'])
+  selector: 'host-test',
+  template: '<div id="item1">Test1</div><ng-content></ng-content>',
+  styles: const [':host { color: rgb(64, 255, 127); }'],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostStyleTestComponent {}
 
 @Component(
-    selector: 'host-test2',
-    template: '<div id="item1">Test2</div>',
-    styles: const [':host { color: red; }'])
+  selector: 'host-test2',
+  template: '<div id="item1">Test2</div>',
+  styles: const [':host { color: red; }'],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostStyle2TestComponent {}
 
 /// Nests one host inside other.
 @Component(
-    selector: 'host-container',
-    template: '<host-test><host-test2></host-test2></host-test>',
-    styles: const [':host { color: rgb(0, 0, 0); }'],
-    directives: const [HostStyleTestComponent, HostStyle2TestComponent])
+  selector: 'host-container',
+  template: '<host-test><host-test2></host-test2></host-test>',
+  styles: const [':host { color: rgb(0, 0, 0); }'],
+  directives: const [HostStyleTestComponent, HostStyle2TestComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostStyleContainerComponent {}
 
 @Component(
-    selector: 'host-element-selector-test',
-    template: '<div id="item1">Hello</div>'
-        '<section class="disabled" id="item2">Hello</section>',
-    styles: const [
-      ':host > div { color: red; }'
-          ':host section { color: blue; }'
-    ])
+  selector: 'host-element-selector-test',
+  template: '<div id="item1">Hello</div>'
+      '<section class="disabled" id="item2">Hello</section>',
+  styles: const [
+    ':host > div { color: red; }'
+        ':host section { color: blue; }'
+  ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class HostElementSelectorTestComponent {}
 
 @Component(
-    selector: 'element-selector-test',
-    template: '<div id="item1">Hello</div>'
-        '<section class="disabled" id="item2">Hello</section>',
-    styles: const [
-      'div { color: #A0B0C0; }'
-          'section { color: #C0B0A0; }'
-    ])
+  selector: 'element-selector-test',
+  template: '<div id="item1">Hello</div>'
+      '<section class="disabled" id="item2">Hello</section>',
+  styles: const [
+    'div { color: #A0B0C0; }'
+        'section { color: #C0B0A0; }'
+  ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ElementSelectorTestComponent {}
 
 @Component(
-    selector: 'content-selector-test',
-    template: '<section class="sec1" id="section1">Section1</section>'
-        '<section class="sec2 activated" id="section2">Section2</section>'
-        '<section class="sec3" id="section3">Section3</section>'
-        '<content-selector-test-child></content-selector-test-child>',
-    styles: const [
-      'section { color: green; }'
-          'section.activated { color: red; }'
-          'section.disabled { color: blue; }'
-    ],
-    directives: const [
-      ContentSelectorChildComponent
-    ])
+  selector: 'content-selector-test',
+  template: '<section class="sec1" id="section1">Section1</section>'
+      '<section class="sec2 activated" id="section2">Section2</section>'
+      '<section class="sec3" id="section3">Section3</section>'
+      '<content-selector-test-child></content-selector-test-child>',
+  styles: const [
+    'section { color: green; }'
+        'section.activated { color: red; }'
+        'section.disabled { color: blue; }'
+  ],
+  directives: const [ContentSelectorChildComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ContentSelectorTestComponent {}
 
 @Component(
-    selector: 'content-selector-test-child',
-    template: '<section class="secA" id="sectionA">SectionA</section>'
-        '<content-selector-test-child></content-selector-test-child>')
+  selector: 'content-selector-test-child',
+  template: '<section class="secA" id="sectionA">SectionA</section>'
+      '<content-selector-test-child></content-selector-test-child>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ContentSelectorChildComponent {}
 
 @Component(
@@ -187,6 +206,8 @@ class ContentSelectorChildComponent {}
   template: '<div id="item1">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
   host: const {'class': 'customhostclass'},
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ClassOnHostTestComponent {}
 
@@ -194,6 +215,8 @@ class ClassOnHostTestComponent {}
   selector: 'class-attrib-binding',
   template: '<div id="item1" [attr.class]="someClass">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ClassAttribBindingComponent {
   String get someClass => 'xyz';
@@ -204,18 +227,23 @@ class ClassAttribBindingComponent {
   template: '<div id="item1" class="prefix {{someClass}} postfix">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
   host: const {'class': 'customhostclass'},
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ClassInterpolateComponent {
   String get someClass => 'xyz';
 }
 
 @Component(
-    selector: 'component-container1',
-    template: '<div><child-component1 class="{{activeClass}}">'
-        '<div class="mobile"></div>'
-        '</child-component1></div>',
-    styles: const [':host { color: rgb(0, 0, 0); }'],
-    directives: const [ChildComponent])
+  selector: 'component-container1',
+  template: '<div><child-component1 class="{{activeClass}}">'
+      '<div class="mobile"></div>'
+      '</child-component1></div>',
+  styles: const [':host { color: rgb(0, 0, 0); }'],
+  directives: const [ChildComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ComponentContainerTestComponent {
   String get activeClass => 'active';
 }
@@ -224,6 +252,8 @@ class ComponentContainerTestComponent {
   selector: 'child-component1',
   template: '<div id="child-div1"><ng-content></ng-content></div>',
   styles: const [':host { color: #FF0000; }'],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ChildComponent {}
 
@@ -268,21 +298,27 @@ String colorToHex(String value) {
 }
 
 @Component(
-    selector: 'feature-promo',
-    host: const {'[attr.class]': 'positionClass'},
-    styles: const [':host {position: absolute;}'],
-    template: '<div>Hello</div>')
+  selector: 'feature-promo',
+  host: const {'[attr.class]': 'positionClass'},
+  styles: const [':host {position: absolute;}'],
+  template: '<div>Hello</div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class FeaturePromoComponent {
   @Input()
   String positionClass;
 }
 
 @Component(
-    selector: 'feature-promo-test',
-    directives: const [FeaturePromoComponent],
-    template: '''<div>
+  selector: 'feature-promo-test',
+  directives: const [FeaturePromoComponent],
+  template: '''<div>
       <feature-promo [positionClass]="myposition"></feature-promo>
-    </div>''')
+    </div>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class NgHostAttribShimTest {
   String myposition;
   NgHostAttribShimTest() {

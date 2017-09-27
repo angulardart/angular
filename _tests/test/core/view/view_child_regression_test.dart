@@ -33,6 +33,8 @@ void main() {
     ChildHostDirective,
     NgIf,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ViewChildTest {
   @ViewChild('portal')

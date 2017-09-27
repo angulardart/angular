@@ -107,13 +107,16 @@ void main() {
 }
 
 @Component(
-    selector: 'keydown-listener',
-    host: const {
-      '(keydown)': 'receivedKeydown = true',
-      '(keydown.a)': 'receivedKeydownA = true',
-      '(keydown.shift.a)': 'receivedKeydownShiftA = true',
-    },
-    template: '<div></div>')
+  selector: 'keydown-listener',
+  host: const {
+    '(keydown)': 'receivedKeydown = true',
+    '(keydown.a)': 'receivedKeydownA = true',
+    '(keydown.shift.a)': 'receivedKeydownShiftA = true',
+  },
+  template: '<div></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class KeydownListenerComponent {
   bool receivedKeydown = false;
   bool receivedKeydownA = false;
@@ -121,23 +124,29 @@ class KeydownListenerComponent {
 }
 
 @Component(
-    selector: 'keypress-listener',
-    host: const {
-      '(keypress)': 'receivedKeypress = true',
-    },
-    template: '<div></div>')
+  selector: 'keypress-listener',
+  host: const {
+    '(keypress)': 'receivedKeypress = true',
+  },
+  template: '<div></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class KeypressListenerComponent {
   bool receivedKeypress = false;
 }
 
 @Component(
-    selector: 'keyup-listener',
-    host: const {
-      '(keyup)': 'receivedKeyup = true',
-      '(keyup.enter)': 'receivedKeyupEnter = true',
-      '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
-    },
-    template: '<div></div>')
+  selector: 'keyup-listener',
+  host: const {
+    '(keyup)': 'receivedKeyup = true',
+    '(keyup.enter)': 'receivedKeyupEnter = true',
+    '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
+  },
+  template: '<div></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class KeyupListenerComponent {
   bool receivedKeyup = false;
   bool receivedKeyupEnter = false;
@@ -145,11 +154,14 @@ class KeyupListenerComponent {
 }
 
 @Component(
-    selector: 'modifiers-listener',
-    host: const {
-      '(keyup.alt.meta.0)': 'receivedModifiers = true',
-    },
-    template: '<div></div>')
+  selector: 'modifiers-listener',
+  host: const {
+    '(keyup.alt.meta.0)': 'receivedModifiers = true',
+  },
+  template: '<div></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ModifiersListener {
   bool receivedModifiers = false;
 }

@@ -186,13 +186,16 @@ class MessageDir {
 }
 
 @Component(
-    selector: 'child-comp',
-    template: '''
+  selector: 'child-comp',
+  template: '''
         <div class="child" message="child">
           <span class="childnested" message="nestedchild">Child</span>
         </div>
         <span class="child" [innerHtml]="childBinding"></span>''',
-    directives: const [MessageDir])
+  directives: const [MessageDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ChildComp {
   final String childBinding = "Original";
 }
@@ -203,56 +206,78 @@ class ParentCompProvider {
 }
 
 @Component(
-    selector: "parent-comp",
-    viewProviders: const [ParentCompProvider],
-    template: '''
+  selector: "parent-comp",
+  viewProviders: const [ParentCompProvider],
+  template: '''
         <div class="parent1" message="parent">
           <span class="parentnested" message="nestedparent">Parent</span>
         </div>
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
-    directives: const [ChildComp, MessageDir])
+  directives: const [ChildComp, MessageDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ParentComp {
   final String parentBinding = "OriginalParent";
 }
 
 @Component(
-    selector: "parent-comp-no-ws",
-    template: '''
+  selector: "parent-comp-no-ws",
+  template: '''
         <div class="parent1" message="parent">
           <span class="parentnested" message="nestedparent">Parent</span>
         </div>
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
-    directives: const [ChildComp, MessageDir])
+  directives: const [ChildComp, MessageDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ParentCompNoWhitespace {
   final String parentBinding = "OriginalParent";
 }
 
 @Component(
-    selector: "cond-content-comp",
-    template: '<div class="child" message="child" *ngIf="myBool">'
-        '  <ng-content></ng-content>'
-        '</div>',
-    directives: const [NgIf, MessageDir])
+  selector: "cond-content-comp",
+  template: '<div class="child" message="child" *ngIf="myBool">'
+      '  <ng-content></ng-content>'
+      '</div>',
+  directives: const [NgIf, MessageDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ConditionalContentComp {
   bool myBool = false;
 }
 
-@Component(selector: "conditional-parent-comp", template: '''
+@Component(
+  selector: "conditional-parent-comp",
+  template: '''
         <span class="parent" [innerHtml]="parentBinding"></span>
         <cond-content-comp class="cond-content-comp-class">
           <span class="from-parent"></span>
-        </cond-content-comp>''', directives: const [ConditionalContentComp])
+        </cond-content-comp>''',
+  directives: const [ConditionalContentComp],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ConditionalParentComp {
   String parentBinding = "OriginalParent";
 }
 
-@Component(selector: "using-for", viewProviders: const [], template: '''
+@Component(
+  selector: "using-for",
+  viewProviders: const [],
+  template: '''
         <span *ngFor="let thing of stuff" [innerHtml]="thing"></span>
         <ul message="list">
            <li *ngFor="let item of stuff" [innerHtml]="item"></li>
-        </ul>''', directives: const [NgFor, MessageDir])
+        </ul>''',
+  directives: const [NgFor, MessageDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class UsingFor {
   List<String> stuff;
   UsingFor() {
@@ -260,10 +285,15 @@ class UsingFor {
   }
 }
 
-@Component(selector: "bank-account", template: '''
+@Component(
+  selector: "bank-account",
+  template: '''
    Bank Name: {{bank}}
    Account Id: {{id}}
- ''')
+ ''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class BankAccount {
   @Input()
   String bank;
@@ -275,18 +305,24 @@ class BankAccount {
 }
 
 @Component(
-    selector: "bank-account-app",
-    template: '<bank-account bank="RBC" account="4747"></bank-account>',
-    directives: const [BankAccount])
+  selector: "bank-account-app",
+  template: '<bank-account bank="RBC" account="4747"></bank-account>',
+  directives: const [BankAccount],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class BankAccountApp {}
 
 @Directive(selector: "[mydir]", exportAs: "mydir")
 class MyDir {}
 
 @Component(
-    selector: "locals-comp",
-    template: '<div mydir #alice="mydir"></div>',
-    directives: const [MyDir])
+  selector: "locals-comp",
+  template: '<div mydir #alice="mydir"></div>',
+  directives: const [MyDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class LocalsComp {}
 
 @Directive(selector: "custom-emitter")
@@ -297,8 +333,13 @@ class CustomEmitter {
   Stream<dynamic> get myevent => _myEvent.stream;
 }
 
-@Component(selector: "events-comp", template: '''
-        <button (click)="handleClick()"></button>''')
+@Component(
+  selector: "events-comp",
+  template: '''
+        <button (click)="handleClick()"></button>''',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class EventsComp {
   bool clicked;
   bool customed;
@@ -311,15 +352,18 @@ class EventsComp {
 }
 
 @Component(
-    selector: "    parent-comp-bad-selector",
-    viewProviders: const [ParentCompProvider],
-    template: '''
+  selector: "    parent-comp-bad-selector",
+  viewProviders: const [ParentCompProvider],
+  template: '''
         <div class="parent1" message="parent">
           <span class="parentnested" message="nestedparent">Parent</span>
         </div>
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
-    directives: const [ChildComp, MessageDir])
+  directives: const [ChildComp, MessageDir],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class ParentCompWithBadSelector {
   final String parentBinding = "OriginalParent";
 }

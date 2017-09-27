@@ -46,9 +46,12 @@ void main() {
 }
 
 @Component(
-    selector: 'accessor-test',
-    template: '<input type="text" integer [(ngModel)]="value">',
-    directives: const [IntValueAccessor, NgModel])
+  selector: 'accessor-test',
+  template: '<input type="text" integer [(ngModel)]="value">',
+  directives: const [IntValueAccessor, NgModel],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class AccessorTestComponent {
   @ViewChild(NgModel)
   NgModel model;
