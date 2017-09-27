@@ -368,9 +368,12 @@ class Base {
 }
 
 @Component(
-    selector: 'ngclass-destroy',
-    directives: const [NgClass, NgFor],
-    template: '<div *ngFor="let item of items" [ngClass]="item"></div>')
+  selector: 'ngclass-destroy',
+  directives: const [NgClass, NgFor],
+  template: '<div *ngFor="let item of items" [ngClass]="item"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class DestroyClassTest {
   List<List<String>> items;
 }
@@ -379,6 +382,8 @@ class DestroyClassTest {
   selector: 'map-literal-test',
   directives: const [NgClass],
   template: '<div [ngClass]="{foo: true, bar: false}"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MapLiteralTest {}
 
@@ -386,6 +391,8 @@ class MapLiteralTest {}
   selector: 'class-with-names',
   directives: const [NgClass],
   template: '<div [ngClass]="{\'foo-bar\': true, \'fooBar\': true}"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ClassWithNames {}
 
@@ -393,6 +400,8 @@ class ClassWithNames {}
   selector: 'condition-map-test',
   directives: const [NgClass],
   template: '<div [ngClass]="{foo: condition, bar: !condition}"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ConditionMapTest extends Base {}
 
@@ -400,6 +409,8 @@ class ConditionMapTest extends Base {}
   selector: 'map-update-test',
   directives: const [NgClass],
   template: '<div [ngClass]="map"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MapUpdateTest extends Base {}
 
@@ -408,6 +419,8 @@ class MapUpdateTest extends Base {}
   directives: const [NgClass],
   template:
       '<div [ngClass]="[\'foo\', \'bar\', \'foo-bar\', \'fooBar\']"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ListLiteralTest {}
 
@@ -415,6 +428,8 @@ class ListLiteralTest {}
   selector: 'list-update-test',
   directives: const [NgClass],
   template: '<div [ngClass]="list"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ListUpdateTest extends Base {}
 
@@ -422,6 +437,8 @@ class ListUpdateTest extends Base {}
   selector: 'list-update-with-initial-test',
   directives: const [NgClass],
   template: '<div class="foo" [ngClass]="list"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ListUpdateWithInitialTest extends Base {}
 
@@ -429,6 +446,8 @@ class ListUpdateWithInitialTest extends Base {}
   selector: 'list-update-test',
   directives: const [NgClass],
   template: '<div [ngClass]="set"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class SetUpdateTest extends Base {}
 
@@ -436,6 +455,8 @@ class SetUpdateTest extends Base {}
   selector: 'string-literal-test',
   directives: const [NgClass],
   template: '<div [ngClass]="\'foo bar foo-bar fooBar\'"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class StringLiteralTest {}
 
@@ -443,6 +464,8 @@ class StringLiteralTest {}
   selector: 'string-update-test',
   directives: const [NgClass],
   template: '<div [ngClass]="string"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class StringUpdateTest extends Base {}
 
@@ -450,6 +473,8 @@ class StringUpdateTest extends Base {}
   selector: 'string-update-with-initial-test',
   directives: const [NgClass],
   template: '<div class="foo" [ngClass]="string"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class StringUpdateWithInitialTest extends Base {}
 
@@ -457,6 +482,8 @@ class StringUpdateWithInitialTest extends Base {}
   selector: 'map-update-with-initial-test',
   directives: const [NgClass],
   template: '<div [ngClass]="map" class="init foo"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MapUpdateWithInitialTest extends Base {}
 
@@ -464,6 +491,8 @@ class MapUpdateWithInitialTest extends Base {}
   selector: 'map-update-with-initial-interpolation-test',
   directives: const [NgClass],
   template: '<div [ngClass]="map" class="{{\'init foo\'}}"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MapUpdateWithInitialInterpolationTest extends Base {}
 
@@ -471,6 +500,8 @@ class MapUpdateWithInitialInterpolationTest extends Base {}
   selector: 'map-update-with-initial-binding-test',
   directives: const [NgClass],
   template: '<div [ngClass]="map" class="init" [class]="\'foo\'"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MapUpdateWithInitialBindingTest extends Base {}
 
@@ -479,6 +510,8 @@ class MapUpdateWithInitialBindingTest extends Base {}
   directives: const [NgClass],
   template:
       '<div class="init foo" [ngClass]="map" [class.baz]="condition"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MapUpdateWithConditionBindingTest extends Base {}
 
@@ -486,5 +519,7 @@ class MapUpdateWithConditionBindingTest extends Base {}
   selector: 'map-update-with-string-binding-test',
   directives: const [NgClass],
   template: '<div class="init" [ngClass]="map" [class]="string"></div>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MapUpdateWithStringBindingTest extends Base {}

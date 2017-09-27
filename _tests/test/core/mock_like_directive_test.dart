@@ -25,6 +25,8 @@ void main() {
 @Component(
   selector: 'notifier',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class NotifierComponent {
   final StreamController<String> _notificationsController =
@@ -37,6 +39,8 @@ class NotifierComponent {
 @Component(
   selector: 'notifier',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class MockNotifierComponent implements NotifierComponent {
   noSuchMethod(Invocation invocation) => null;
@@ -48,6 +52,8 @@ class MockNotifierComponent implements NotifierComponent {
     <notifier (notifications)="notify(\$event)">'
     </notifier>''',
   directives: const [MockNotifierComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestMockNotificationComponent {
   void notify(String notification) {}
@@ -56,6 +62,8 @@ class TestMockNotificationComponent {
 @Component(
   selector: 'notifier',
   template: '',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class FakeNotifierComponent extends NotifierComponent {
   Stream<String> get notifications => null;
@@ -67,6 +75,8 @@ class FakeNotifierComponent extends NotifierComponent {
     <notifier (notifications)="notify(\$event)">'
     </notifier>''',
   directives: const [FakeNotifierComponent],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TestFakeNotificationComponent {
   void notify(String notification) {}

@@ -75,6 +75,8 @@ class SomeViewport {
   directives: const [
     SomeViewport,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TemplateDirectiveComponent {}
 
@@ -87,12 +89,18 @@ class TemplateDirectiveComponent {}
     NgIf,
     SomeViewport,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class DestroyParentViewComponent {
   bool visible = true;
 }
 
-@Component(selector: 'empty-template', template: '<template></template>')
+@Component(
+  selector: 'empty-template', template: '<template></template>',
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class EmptyTemplateComponent {}
 
 @Component(
@@ -101,6 +109,8 @@ class EmptyTemplateComponent {}
   directives: const [
     SomeViewport,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TemplatePropertyComponent {}
 
@@ -131,6 +141,8 @@ class ToolbarViewContainer {
     NgFor,
     ToolbarViewContainer,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class ToolbarComponent {
   @ContentChildren(ToolbarPart)
@@ -143,9 +155,12 @@ class ToolbarComponent {
 class SomeDirective {}
 
 @Component(
-    selector: 'cmp-with-host',
-    template: '<p>Component with an injected host</p>',
-    directives: const [SomeDirective])
+  selector: 'cmp-with-host',
+  template: '<p>Component with an injected host</p>',
+  directives: const [SomeDirective],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
+)
 class CompWithHost {
   SomeDirective myHost;
 
@@ -167,6 +182,8 @@ class CompWithHost {
     ToolbarComponent,
     ToolbarPart,
   ],
+  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
+  preserveWhitespace: true,
 )
 class TemplateRefTransplantComponent {
   String prop = 'From component';
