@@ -337,7 +337,7 @@ class Component extends Directive {
     this.changeDetection: ChangeDetectionStrategy.Default,
     this.templateUrl,
     this.template,
-    this.preserveWhitespace: true,
+    this.preserveWhitespace: false,
     this.styleUrls,
     this.styles,
     this.directives,

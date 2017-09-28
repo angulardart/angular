@@ -524,7 +524,7 @@ class ComponentVisitor
       preserveWhitespace: coerceBool(
         component,
         'preserveWhitespace',
-        defaultTo: true,
+        defaultTo: false,
       ),
     );
   }

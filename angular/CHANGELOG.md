@@ -20,6 +20,9 @@ dependencies:
 
 ### Breaking changes
 
+*   `preserveWhitespace` is now `false` by default in `@Component`. The old
+    default behavior can be achieved by setting `preserveWhitespace` to `true`.
+
 *   Classes annotated `@Component` can no longer be treated like services that
     were annotated with `@Injectable()`, and now fail when they are used within
     a `ReflectiveInjector`. Similar changes are planned for `@Directive`.

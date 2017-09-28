@@ -335,7 +335,7 @@ class CompileTemplateMetadata {
     this.styles = styles ?? <String>[];
     this.styleUrls = styleUrls ?? <String>[];
     this.ngContentSelectors = ngContentSelectors ?? <String>[];
-    this.preserveWhitespace = preserveWhitespace ?? true;
+    this.preserveWhitespace = preserveWhitespace ?? false;
   }
 }
 
