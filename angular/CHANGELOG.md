@@ -4,7 +4,21 @@
 _5.0.0-alpha_ series of releases unless you are using a recent dev release of
 the Dart SDK. We plan to exit an alpha state once Dart 2.0 is released.
 
-### Breaking cahnges
+If you are individually depending on `angular_compiler`, we require:
+
+```yaml
+dependencies:
+  angular_compiler: '^0.4.0-alpha`
+```
+
+### New features
+
+*   Both `ComponentFactory` and `ComponentRef` are now properly typed `<T>`
+    where `T` is the type of the `@Component`-annotated class. Prior to this
+    release, `ComponentFactory` did not have a type, and `ComponentRef<T>` was
+    always `ComponentRef<dynamic>`.
+
+### Breaking changes
 
 *   Classes annotated `@Component` can no longer be treated like services that
     were annotated with `@Injectable()`, and now fail when they are used within
@@ -18,6 +32,39 @@ the Dart SDK. We plan to exit an alpha state once Dart 2.0 is released.
 *   Fixed a bug where injecting the `Injector` in a component/directive and
     passing a second argument (as a default value) always returned `null`. It
     now correctly returns the second argument (closes [#626](https://github.com/dart-lang/angular/issues/612)).
+
+*   No longer invoke `ExceptionHandler#call` with a `null` exception.
+
+*   Using `Visibility.none` no longer applies to providers directly on the
+    `@Component` or `@Directive`; in practice this makes `none` closer to the
+    `local` visibility in AngularDart v1, or `self` elsewhere in AngularDart;
+    we might consider a rename in the future.
+
+*   Fixed a bug where the hashcode of an item passed via `ngFor` changing would
+    cause a strange runtime exception; while it is considered unsupported for
+    a mutable object to have an overriden `hashCode`, we wanted the exception
+    to be much better.
+
+### Refactors
+
+*   The `StylesheetCompiler` is now a `Builder`, and is being integrated as part
+    of the template code genreator instead of a separate build action. This will
+    let us further optimize the generated code.
+
+### Performance
+
+*   Types bound from generics are now properly resolved in a component when
+    inheriting from a class with a generic type. For example, the following used
+    to be untyped:
+
+```dart
+class Container<T> {
+  @Input()
+  T value;
+}
+
+class StringContainerComponent implements Container<String> {}
+```
 
 ## 4.0.0
 
