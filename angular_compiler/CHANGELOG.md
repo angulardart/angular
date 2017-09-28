@@ -1,4 +1,24 @@
-## 0.3.1-alpha
+## 0.4.0-alpha
+
+While _technically_ a breaking change from `0.3.0`, it will likely be safe for
+most users to set bound constraints that include `0.4.0`; this will allow users
+of the `4.0.0` AngularDart release to utilize the new `generator_inputs`
+optimization.
+
+```yaml
+dependencies:
+  angular_compiler: '>=0.3.0 <0.5.0'
+```
+
+### Breaking changes
+
+* `@Component` and `@Directive` annotated classes are no longer `@Injectable`.
+  In practice this means they can no loger be provided as an implicit
+  `const Provider(FooComponent)` without either manually adding `@Injectable`
+  or refactoring your code. We found this didn't really affect users, and most
+  uses of components and directives in these lists were accidental.
+
+### New features
 
 * Add `generator_inputs` flag support to `CompilerFlags`, to speed up builds
   that use `barback` (i.e. pub transformers). By default in `pub` it assumed
@@ -34,6 +54,12 @@ transformers:
         - lib/foo.dart      # Only foo.dart, not bar.dart.
         - lib/src/**.dart   # But include everything else.
 ```
+
+* Started adding experimental support for a new `Module` syntax.
+
+### Bug fixes
+
+* Fix a bug in the _outliner_ that did not the correct output extension.
 
 ## 0.3.0
 
