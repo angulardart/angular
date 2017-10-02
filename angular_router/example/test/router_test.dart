@@ -14,7 +14,7 @@ import 'package:angular_test/angular_test.dart';
 
 void main() {
   group('$Router', () {
-    NgTestFixture fixture;
+    NgTestFixture<TestRouter> fixture;
     AppComponentPO pageObject;
     Router router;
 
