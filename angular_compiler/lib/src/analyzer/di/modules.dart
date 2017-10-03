@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../common.dart';
 import '../types.dart';
 import 'providers.dart';
 
@@ -49,7 +50,8 @@ class ModuleReader {
     } else if ($Module.isExactlyType(o.type)) {
       return _parseModule(o);
     } else {
-      throw new FormatException('Expected Module, got "${o.type.name}".');
+      final typeName = getTypeName(o.type);
+      throw new FormatException('Expected Module, got "$typeName".');
     }
   }
 

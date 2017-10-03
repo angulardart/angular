@@ -17,6 +17,7 @@ import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular/src/source_gen/common/url_resolver.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
 import 'dart_object_utils.dart' as dart_objects;
 
@@ -318,7 +319,7 @@ class CompileTypeMetadataVisitor
 
   CompileIdentifierMetadata _idFor(ParameterizedType type) =>
       new CompileIdentifierMetadata(
-          name: type.name, moduleUrl: moduleUrl(type.element));
+          name: getTypeName(type), moduleUrl: moduleUrl(type.element));
 
   o.Expression _useValueExpression(DartObject token) {
     if (token.isNull) {
