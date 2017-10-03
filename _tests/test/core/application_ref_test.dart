@@ -16,11 +16,6 @@ import 'package:angular/core.dart'
         APP_INITIALIZER,
         Component,
         ReflectiveInjector,
-        coreLoadAndBootstrap,
-        PlatformRef,
-        createPlatform,
-        disposePlatform,
-        ComponentResolver,
         ChangeDetectorRef;
 import 'package:angular/src/core/application_ref.dart'
     show
@@ -28,9 +23,13 @@ import 'package:angular/src/core/application_ref.dart'
         ApplicationRef,
         ApplicationRefImpl,
         PlatformRef,
-        PlatformRefImpl;
+        PlatformRefImpl,
+        coreLoadAndBootstrap,
+        createPlatform,
+        disposePlatform;
 import 'package:angular/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular/src/core/linker/component_factory.dart';
+import 'package:angular/src/core/linker/component_resolver.dart';
 import 'package:angular/src/facade/exception_handler.dart'
     show ExceptionHandler;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;

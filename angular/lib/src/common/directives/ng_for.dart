@@ -1,16 +1,9 @@
-import 'package:angular/core.dart'
-    show
-        DoCheck,
-        Directive,
-        Input,
-        ViewContainerRef,
-        ViewRef,
-        TemplateRef,
-        EmbeddedViewRef,
-        Visibility;
+import 'package:angular/core.dart' show DoCheck, Directive, Input, Visibility;
 
 import '../../core/change_detection/differs/default_iterable_differ.dart'
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
+import '../../core/linker.dart'
+    show ViewContainerRef, ViewRef, TemplateRef, EmbeddedViewRef;
 
 /// The `NgFor` directive instantiates a template once per item from an
 /// iterable. The context for each instantiated template inherits from the outer

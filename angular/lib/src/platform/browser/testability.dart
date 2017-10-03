@@ -2,10 +2,10 @@
 library browser.testability;
 
 import 'dart:html';
+
 import 'package:js/js.dart';
 import 'package:js/js_util.dart' as js_util;
-
-import 'package:angular/di.dart';
+import 'package:angular/src/core/testability/testability.dart';
 
 @JS('self')
 external get _self;

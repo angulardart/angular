@@ -1,5 +1,6 @@
-import 'package:angular/core.dart'
-    show Directive, Input, ViewContainerRef, ViewRef, TemplateRef, Visibility;
+import 'package:angular/core.dart' show Directive, Input, Visibility;
+import 'package:angular/src/core/linker.dart'
+    show ViewContainerRef, ViewRef, TemplateRef;
 
 /// Creates and inserts an embedded view based on a prepared `TemplateRef`.
 ///

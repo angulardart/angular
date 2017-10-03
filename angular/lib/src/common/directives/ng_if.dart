@@ -1,5 +1,6 @@
-import 'package:angular/core.dart'
-    show Directive, Input, ViewContainerRef, TemplateRef, Visibility;
+import 'package:angular/core.dart' show Directive, Input, Visibility;
+import 'package:angular/src/core/linker.dart'
+    show ViewContainerRef, TemplateRef;
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/facade/lang.dart';
 

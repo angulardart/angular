@@ -3,6 +3,8 @@ import 'dart:html';
 
 import 'package:angular/core.dart';
 import 'package:angular/src/core/application_ref.dart';
+import 'package:angular/src/core/linker.dart' show ComponentRef;
+import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/di/injector/reflective.dart';
 import 'package:angular/src/platform/browser_common.dart';
 

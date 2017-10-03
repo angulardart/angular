@@ -2,20 +2,13 @@
 @TestOn('browser')
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/core.dart'
-    show
-        Component,
-        Directive,
-        ElementRef,
-        Input,
-        QueryList,
-        TemplateRef,
-        ViewChild,
-        ViewChildren,
-        ViewContainerRef;
+    show Component, Directive, Input, ViewChild, ViewChildren;
+import 'package:angular/src/core/linker.dart'
+    show ElementRef, QueryList, TemplateRef, ViewContainerRef;
 import 'package:angular/src/debug/debug_node.dart' show getAllDebugNodes;
+import 'package:angular_test/angular_test.dart';
 
 void main() {
   group('projection', () {
