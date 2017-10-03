@@ -28,6 +28,23 @@ List<InterfaceType> getInheritanceHierarchy(InterfaceType type) {
   return types;
 }
 
+/// Forwards and backwards-compatible method of getting the "name" of [type].
+String getTypeName(DartType type) {
+  // Crux of the issue is that the latest dart analyzer/kernel/frontend does not
+  // retain the name of a typedef, for example:
+  //   typedef void InterestingFn();
+  //
+  // Is retained as "typedef InterestingFn = void Function()", where the
+  // DartType itself no longer has a "name" property (it always returns null).
+  if (type is FunctionType) {
+    final element = type.element;
+    if (element is GenericFunctionTypeElement) {
+      return element.enclosingElement.name;
+    }
+  }
+  return type.name;
+}
+
 /// Returns the prefix used to decorate [element], if imported with one.
 String prefixOf(Element element) {
   String identifier;
@@ -78,9 +95,10 @@ String _identifierOfAst(AstNode astNode, ParameterElement element) {
 /// Returns a canonical URL pointing to [element].
 ///
 /// For example, `List` would be `'dart:core#List'`.
-Uri urlOf(Element element) {
+Uri urlOf(Element element, [String name]) {
   if (element?.source == null) {
     return new Uri(scheme: 'dart', path: 'core', fragment: 'dynamic');
   }
-  return normalizeUrl(element.source.uri).replace(fragment: element.name);
+  name ??= element.name;
+  return normalizeUrl(element.source.uri).replace(fragment: name);
 }

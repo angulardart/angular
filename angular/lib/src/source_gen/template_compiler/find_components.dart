@@ -286,7 +286,7 @@ class ComponentVisitor
           final dynamicType = setter.context.typeProvider.dynamicType;
           // Resolves unspecified or bounded generic type parameters.
           final resolvedType = propertyType.resolveToBound(dynamicType);
-          final typeName = resolvedType.name;
+          final typeName = getTypeName(resolvedType);
           _addPropertyBindingTo(
               isField ? _fieldInputs : _setterInputs, annotation, element,
               immutableBindings: _inputs);

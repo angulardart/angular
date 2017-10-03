@@ -104,7 +104,7 @@ class TokenReader {
     String prefix,
   ]) =>
       new TypeTokenElement(
-        urlOf(type.element),
+        urlOf(type.element, getTypeName(type)),
         generics: type is ParameterizedType
             ? type.typeParameters.map((p) => _parseType(p.type)).toList()
             : const [],
