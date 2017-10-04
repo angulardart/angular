@@ -7,6 +7,9 @@ import 'package:test/test.dart';
 import 'package:angular/src/di/reflector.dart' as reflector;
 
 void main() {
+  bool _isReified<T>() => !identical(T, dynamic);
+  final isStrongMode = _isReified<String>();
+
   group('Injector', () {
     test('.get should delegate token to .inject', () {
       final injector = new CaptureInjectInjector();
@@ -214,6 +217,15 @@ void main() {
         expect(newA.b, isNot(newB), reason: 'Expected an old "B" binding');
         expect(newA.b.c, oldC, reason: 'Expected an old "C" binding');
       });
+
+      test('should reify a MultiProvider<T> in strong-mode runtimes', () {
+        const usPresidents = const OpaqueToken<String>('usPresidents');
+        final injector = new Injector.slowReflective([
+          const ProviderUseMulti.ofTokenToValue(usPresidents, 'George W.'),
+          const ProviderUseMulti.ofTokenToValue(usPresidents, 'Abraham L.'),
+        ]);
+        expect(injector.get(usPresidents), const isInstanceOf<List<String>>());
+      }, skip: !isStrongMode ? 'Skipped in non-strong runtime' : false);
     });
   });
 }

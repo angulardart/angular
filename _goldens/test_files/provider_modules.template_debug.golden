@@ -68,9 +68,9 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 = [
       [
         import2.ProviderModulesComponent,
         import2.FooService,
-        const OpaqueToken('fooToken'),
-        const OpaqueToken('barToken'),
-        const OpaqueToken('bazToken')
+        const OpaqueToken<dynamic>('fooToken'),
+        const OpaqueToken<dynamic>('barToken'),
+        const OpaqueToken<dynamic>('bazToken')
       ],
       import2.ProviderModulesComponent,
       <String, dynamic>{})
@@ -80,9 +80,9 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   ViewProviderModulesComponent0 _compView_0;
   import2.ProviderModulesComponent _ProviderModulesComponent_0_4;
   import2.FooService __FooService_0_5;
-  Duration __const_OpaqueToken__fooToken___0_6;
-  List<dynamic> __const_OpaqueToken__barToken___0_7;
-  dynamic __const_OpaqueToken__bazToken___0_8;
+  Duration __const_OpaqueToken_dynamic___fooToken___0_6;
+  List<dynamic> __const_OpaqueToken_dynamic___barToken___0_7;
+  dynamic __const_OpaqueToken_dynamic___bazToken___0_8;
   static RenderComponentType _renderType;
   _ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
@@ -105,28 +105,29 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
     return this.__FooService_0_5;
   }
 
-  Duration get _const_OpaqueToken__fooToken___0_6 {
+  Duration get _const_OpaqueToken_dynamic___fooToken___0_6 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__fooToken___0_6 == null)) {
-      (__const_OpaqueToken__fooToken___0_6 = const Duration(seconds: 500));
+    if ((this.__const_OpaqueToken_dynamic___fooToken___0_6 == null)) {
+      (__const_OpaqueToken_dynamic___fooToken___0_6 =
+          const Duration(seconds: 500));
     }
-    return this.__const_OpaqueToken__fooToken___0_6;
+    return this.__const_OpaqueToken_dynamic___fooToken___0_6;
   }
 
-  List<dynamic> get _const_OpaqueToken__barToken___0_7 {
+  List<dynamic> get _const_OpaqueToken_dynamic___barToken___0_7 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__barToken___0_7 == null)) {
-      (__const_OpaqueToken__barToken___0_7 = const ['a', 'b', 'c']);
+    if ((this.__const_OpaqueToken_dynamic___barToken___0_7 == null)) {
+      (__const_OpaqueToken_dynamic___barToken___0_7 = const ['a', 'b', 'c']);
     }
-    return this.__const_OpaqueToken__barToken___0_7;
+    return this.__const_OpaqueToken_dynamic___barToken___0_7;
   }
 
-  dynamic get _const_OpaqueToken__bazToken___0_8 {
+  dynamic get _const_OpaqueToken_dynamic___bazToken___0_8 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__bazToken___0_8 == null)) {
-      (__const_OpaqueToken__bazToken___0_8 = import2.getSomeValues());
+    if ((this.__const_OpaqueToken_dynamic___bazToken___0_8 == null)) {
+      (__const_OpaqueToken_dynamic___bazToken___0_8 = import2.getSomeValues());
     }
-    return this.__const_OpaqueToken__bazToken___0_8;
+    return this.__const_OpaqueToken_dynamic___bazToken___0_8;
   }
 
   @override
@@ -151,14 +152,17 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, import2.FooService) && (0 == nodeIndex))) {
       return _FooService_0_5;
     }
-    if ((identical(token, const OpaqueToken('fooToken')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__fooToken___0_6;
+    if ((identical(token, const OpaqueToken<dynamic>('fooToken')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken_dynamic___fooToken___0_6;
     }
-    if ((identical(token, const OpaqueToken('barToken')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__barToken___0_7;
+    if ((identical(token, const OpaqueToken<dynamic>('barToken')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken_dynamic___barToken___0_7;
     }
-    if ((identical(token, const OpaqueToken('bazToken')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__bazToken___0_8;
+    if ((identical(token, const OpaqueToken<dynamic>('bazToken')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken_dynamic___bazToken___0_8;
     }
     return notFoundResult;
   }

@@ -1,5 +1,7 @@
 import 'package:meta/meta.dart';
 
+import '../core/di/opaque_token.dart';
+
 /// A marker that represents a lack-of-value for the `useValue` parameter.
 @visibleForTesting
 const Object noValueProvided = '__noValueProvided__';
@@ -31,15 +33,15 @@ abstract class Provider<T> implements RuntimeProvider<T> {
 /// **WARNING**: This API is experimental and not currently supported.
 @experimental
 class ProviderUseClass<T1, T2 extends T1> implements StaticProvider<T1> {
-  @override
-  final bool multi;
-
   /// Create a new configuration binding [T1] to creating a [T2] at runtime.
   ///
   /// __NOTE__: Once constructors support generic arguments, this will become
   /// `const factory Provider.useClass<T1, T2 extends T1>` instead, and this
   /// class will be deprecated.
-  const ProviderUseClass({this.multi: false});
+  const ProviderUseClass();
+
+  @override
+  bool get multi => false;
 
   @override
   Object get token => T1;
@@ -109,11 +111,75 @@ abstract class RuntimeProvider<T> {
   bool get multi;
 }
 
+/// Describes at compile-time how an Injector should be generated.
+///
+/// Unlike [Provider], a [ProviderUseMulti] always returns a `List<T>`, where `T`
+/// is a collection of all [token]s that are configured for a particular
+/// injector. For example:
+/// ```dart
+/// const usPresidents = const OpaqueToken<String>('usPresidents');
+///
+/// const presidentialProviders = const [
+///   const MultiProvider.ofTokenToValue(usPresidents, 'George Washington'),
+///   const MultiProvider.ofTokenToValue(usPresidents, 'Abraham Lincoln'),
+/// ];
+///
+/// // Later on, inside an Injector.
+/// void printPresidents(Injector injector) {
+///   List<String> presidents = injector.get(usPresidents);
+///   print(presidents.join(', '));
+/// }
+/// ```
+@experimental
+class ProviderUseMulti<T> extends SlowProvider<T> {
+  /// Binds [type] as a token.
+  ///
+  /// If [useClass] is provided, is used to instantiate a new instance.
+  ///
+  /// Example:
+  /// ```dart
+  /// const MultiProvider.ofType(Map);
+  ///
+  /// const MultiProvider.ofType(Map, useClass: LinkedHashMap)
+  /// ```
+  const ProviderUseMulti.ofType(Type type, {Type useClass})
+      : super._(
+          type,
+          useClass: useClass,
+          multi: true,
+        );
+
+  const ProviderUseMulti.ofTokenToExisting(
+      OpaqueToken<T> token, Object existing)
+      : super._(
+          token,
+          useExisting: existing,
+          multi: true,
+        );
+
+  /// Binds [token] to a concrete [value] of [T].
+  const ProviderUseMulti.ofTokenToValue(OpaqueToken<T> token, T value)
+      : super._(
+          token,
+          useValue: value,
+          multi: true,
+        );
+
+  // Internal. See `listOfMulti`.
+  List<T> _listOfMulti() => <T>[];
+}
+
+/// **INTERNAL ONLY**: Used to provide type inference for `multi: true`.
+@visibleForTesting
+List<T> listOfMulti<T>(ProviderUseMulti<T> provider) => provider._listOfMulti();
+
 /// Legacy implementation of [Provider].
 ///
 /// Contains configuration for every possibility of provider, requiring that
 /// runtime injector implementations need to inspect the various properties and
 /// determine how to configure themselves.
+///
+/// **WARNING**: This API is experimental and not currently supported.
 @optionalTypeArgs
 @visibleForTesting
 class SlowProvider<T> implements Provider<T> {
