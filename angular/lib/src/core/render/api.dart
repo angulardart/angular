@@ -92,7 +92,7 @@ abstract class RenderDebugInfo {
 
   List<dynamic> get providerTokens;
 
-  Map<String, String> get locals;
+  Map<String, dynamic> get locals;
 
   String get source;
 }
