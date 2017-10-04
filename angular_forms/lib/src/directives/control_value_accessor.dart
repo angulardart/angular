@@ -20,7 +20,8 @@ abstract class ControlValueAccessor<T> {
 /// Used to provide a [ControlValueAccessor] for form controls.
 ///
 /// See [DefaultValueAccessor] for how to implement one.
-const OpaqueToken NG_VALUE_ACCESSOR = const OpaqueToken('NgValueAccessor');
+const NG_VALUE_ACCESSOR =
+    const OpaqueToken<ControlValueAccessor>('NgValueAccessor');
 
 /// Type of the function to be called when the control receives a change event.
 typedef dynamic ChangeFunction<T>(T value, {String rawValue});

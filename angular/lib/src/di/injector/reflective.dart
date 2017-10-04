@@ -142,7 +142,13 @@ class ReflectiveInjector extends HierarchicalInjector {
   }
 
   List<dynamic> _resolveWithReflectorMulti(RuntimeProvider<dynamic> provider) {
-    final results = <dynamic>[];
+    List results;
+    if (provider is ProviderUseMulti) {
+      results = listOfMulti(provider);
+    } else {
+      // Backwards compatibility.
+      results = <dynamic>[];
+    }
     for (final multiProvider in _multiProviders) {
       if (identical(multiProvider.token, provider.token)) {
         results.add(_resolveWithReflector(multiProvider));

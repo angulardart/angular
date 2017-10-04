@@ -64,8 +64,14 @@ typedef dynamic ChangeFunctionSimple(value);
   "(input)": "onChange(\$event.target.value)",
   "(blur)": "touchHandler()"
 }, providers: const [
-  const Provider(NG_VALUE_ACCESSOR, useExisting: IntValueAccessor, multi: true),
-  const Provider(NG_VALIDATORS, useExisting: IntValueAccessor, multi: true)
+  const ProviderUseMulti.ofTokenToExisting(
+    NG_VALUE_ACCESSOR,
+    IntValueAccessor,
+  ),
+  const ProviderUseMulti.ofTokenToExisting(
+    NG_VALIDATORS,
+    IntValueAccessor,
+  )
 ])
 class IntValueAccessor implements ControlValueAccessor, Validator {
   HtmlElement _elementRef;

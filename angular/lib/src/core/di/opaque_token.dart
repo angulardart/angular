@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Creates a token that can be used in a DI Provider.
 ///
 /// ### Example ([live demo](http://plnkr.co/edit/Ys9ezXpj2Mnoy3Uc8KBp?p=preview))
@@ -16,7 +18,8 @@
 ///
 /// Using an `OpaqueToken` is preferable to using an `Object` as tokens because
 /// it provides better error messages.
-class OpaqueToken {
+@optionalTypeArgs
+class OpaqueToken<T> {
   final String _desc;
 
   const OpaqueToken(this._desc);
@@ -31,6 +34,6 @@ class OpaqueToken {
   toJson() => toString();
 
   String toString() {
-    return "const OpaqueToken('$_desc')";
+    return "const OpaqueToken<$T>('$_desc')";
   }
 }

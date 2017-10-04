@@ -41,4 +41,5 @@ const $Module = const TypeChecker.fromUrl('$_module#Module');
 const $Provider = const TypeChecker.fromUrl('$_provider#Provider');
 const $StaticProvider = const TypeChecker.fromUrl('$_provider#StaticProvider');
 const $ProviderUseClass = const TypeChecker.fromUrl('${_providerOf}UseClass');
+const $ProviderUseMulti = const TypeChecker.fromUrl('${_providerOf}UseMulti');
 const $OpaqueToken = const TypeChecker.fromUrl('$_token#OpaqueToken');

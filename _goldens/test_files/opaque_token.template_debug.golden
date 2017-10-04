@@ -76,14 +76,17 @@ AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(
 const List<dynamic> styles$HasOpaqueTokensHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
   new StaticNodeDebugInfo(
-      [const OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens],
+      [
+        const OpaqueToken<dynamic>('baseUrlDescription'),
+        import2.HasOpaqueTokens
+      ],
       import2.HasOpaqueTokens,
       <String, dynamic>{})
 ];
 
 class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
-  String _const_OpaqueToken__baseUrlDescription___0_4;
+  String _const_OpaqueToken_dynamic___baseUrlDescription___0_4;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_5;
   static RenderComponentType _renderType;
   _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
@@ -103,9 +106,9 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _const_OpaqueToken__baseUrlDescription___0_4 = 'https://localhost';
+    _const_OpaqueToken_dynamic___baseUrlDescription___0_4 = 'https://localhost';
     _HasOpaqueTokens_0_5 = new import2.HasOpaqueTokens(
-        _const_OpaqueToken__baseUrlDescription___0_4);
+        _const_OpaqueToken_dynamic___baseUrlDescription___0_4);
     _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.HasOpaqueTokens>(
@@ -115,9 +118,9 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const OpaqueToken('baseUrlDescription')) &&
+    if ((identical(token, const OpaqueToken<dynamic>('baseUrlDescription')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken__baseUrlDescription___0_4;
+      return _const_OpaqueToken_dynamic___baseUrlDescription___0_4;
     }
     if ((identical(token, import2.HasOpaqueTokens) && (0 == nodeIndex))) {
       return _HasOpaqueTokens_0_5;
