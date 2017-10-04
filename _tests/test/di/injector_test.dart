@@ -15,7 +15,7 @@ void main() {
       final injector = new CaptureInjectInjector();
       injector.get(ExampleService);
       expect(injector.lastToken, ExampleService);
-      expect(injector.lastOrElse, throwsNotFound);
+      expect(injector.lastOrElse, throwIfNotFound);
     });
 
     group('.get should delegate', () {
@@ -26,14 +26,13 @@ void main() {
       test('token to .inject', () {
         injector.get(ExampleService);
         expect(injector.lastToken, ExampleService);
-        expect(injector.lastOrElse, throwsNotFound);
+        expect(injector.lastOrElse, throwIfNotFound);
       });
 
       test('orElse to .inject (partially, not API compatible)', () {
         injector.get(ExampleService, #customValue);
         expect(injector.lastToken, ExampleService);
-        expect(injector.lastOrElse, isNot(throwsNotFound));
-        expect(injector.lastOrElse(null, null), #customValue);
+        expect(injector.lastOrElse, #customValue);
       });
     });
 
@@ -43,7 +42,7 @@ void main() {
       test('should throw by default', () {
         i = new Injector.empty();
         expect(() => i.get(ExampleService), throwsArgumentError);
-        expect(() => i.inject(token: ExampleService), throwsArgumentError);
+        expect(() => i.inject(ExampleService), throwsArgumentError);
         expect(() => i.injectFromSelf(ExampleService), throwsArgumentError);
         expect(() => i.injectFromAncestry(ExampleService), throwsArgumentError);
         expect(() => i.injectFromParent(ExampleService), throwsArgumentError);
@@ -51,19 +50,18 @@ void main() {
 
       test('should use orElse if provided', () {
         i = new Injector.empty();
-        customOrElse(_, __) => 123;
         expect(i.get(ExampleService, 123), 123);
-        expect(i.inject(token: ExampleService, orElse: customOrElse), 123);
-        expect(i.injectFromSelf(ExampleService, orElse: customOrElse), 123);
-        expect(i.injectFromAncestry(ExampleService, orElse: customOrElse), 123);
-        expect(i.injectFromParent(ExampleService, orElse: customOrElse), 123);
+        expect(i.injectOptional(ExampleService, 123), 123);
+        expect(i.injectFromSelfOptional(ExampleService, 123), 123);
+        expect(i.injectFromAncestryOptional(ExampleService, 123), 123);
+        expect(i.injectFromParentOptional(ExampleService, 123), 123);
       });
 
       test('should fallback to the parent injector if provided', () {
         final parent = new Injector.map({ExampleService: 123});
         i = new Injector.empty(parent);
         expect(i.get(ExampleService), 123);
-        expect(i.inject(token: ExampleService), 123);
+        expect(i.inject(ExampleService), 123);
         expect(() => i.injectFromSelf(ExampleService), throwsArgumentError);
         expect(i.injectFromAncestry(ExampleService), 123);
         expect(i.injectFromParent(ExampleService), 123);
@@ -81,7 +79,7 @@ void main() {
       test('should return a provided key-value pair', () {
         i = new Injector.map({ExampleService: 123});
         expect(i.get(ExampleService), 123);
-        expect(i.inject(token: ExampleService), 123);
+        expect(i.inject(ExampleService), 123);
         expect(i.injectFromSelf(ExampleService), 123);
         expect(() => i.injectFromAncestry(ExampleService), throwsArgumentError);
         expect(() => i.injectFromParent(ExampleService), throwsArgumentError);
@@ -233,10 +231,13 @@ void main() {
 /// Implementation of [Injector] that captures [lastToken] and [lastOrElse].
 class CaptureInjectInjector extends Injector {
   Object lastToken;
-  OrElseInject lastOrElse;
+  Object lastOrElse;
 
   @override
-  T inject<T>({Object token, OrElseInject<T> orElse}) {
+  T inject<T>(Object token) => injectOptional(token);
+
+  @override
+  Object injectOptional(Object token, [Object orElse]) {
     lastToken = token;
     lastOrElse = orElse;
     return null;

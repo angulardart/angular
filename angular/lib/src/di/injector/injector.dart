@@ -97,10 +97,11 @@ abstract class Injector {
   ///
   /// An injector always returns itself if [Injector] is given as a token.
   dynamic get(Object token, [Object notFoundValue = throwIfNotFound]) {
-    final OrElseInject orElse = identical(notFoundValue, throwIfNotFound)
-        ? throwsNotFound
-        : (_, __) => notFoundValue;
-    return inject<dynamic>(token: token, orElse: orElse);
+    final result = injectOptional(token, notFoundValue);
+    if (identical(result, throwIfNotFound)) {
+      return throwsNotFound(this, token);
+    }
+    return result;
   }
 
   /// Injects and returns an object representing [token].
@@ -120,10 +121,12 @@ abstract class Injector {
   /// [fallbackToken] is currently required to be used.
   @experimental
   @protected
-  T inject<T>({
-    @required Object token,
-    OrElseInject<T> orElse: throwsNotFound,
-  });
+  T inject<T>(Object token);
+
+  /// Injects and returns an object representing [token].
+  ///
+  /// If the key was not found, returns [orElse] (default is `null`).
+  Object injectOptional(Object token, [Object orElse]);
 }
 
 // Used as a token-type for the AngularDart compiler.
@@ -138,7 +141,12 @@ class _GenerateInjector implements Injector {
   }
 
   @override
-  T inject<T>({Object token, OrElseInject<T> orElse: throwsNotFound}) {
+  T inject<T>(Object token) {
+    throw new UnsupportedError('Not a runtime class.');
+  }
+
+  @override
+  injectOptional(Object token, [Object orElse]) {
     throw new UnsupportedError('Not a runtime class.');
   }
 }

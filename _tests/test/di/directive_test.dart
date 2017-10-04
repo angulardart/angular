@@ -36,6 +36,31 @@ void main() {
       expect(foo, 'someValue');
     });
   });
+
+  group('should support optional values', () {
+    NgTestBed<UsingInjectAndOptional> testBed;
+
+    setUp(() => testBed = new NgTestBed<UsingInjectAndOptional>());
+
+    test('when provided', () async {
+      testBed = testBed.addProviders([
+        provide(urlToken, useValue: 'https://google.com'),
+      ]);
+      final fixture = await testBed.create();
+      expect(
+        fixture.assertOnlyInstance.service.urlFromToken,
+        'https://google.com',
+      );
+    });
+
+    test('when omitted', () async {
+      final fixture = await testBed.create();
+      expect(
+        fixture.assertOnlyInstance.service.urlFromToken,
+        isNull,
+      );
+    });
+  });
 }
 
 @Component(
@@ -130,11 +155,32 @@ class C {
 @Component(
   selector: 'using-element-injector',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class UsingElementInjector {
   final Injector injector;
 
   UsingElementInjector(this.injector);
+}
+
+@Component(
+  selector: 'using-inject-and-optional',
+  template: '',
+  providers: const [
+    const Provider(ExampleServiceOptionals, useClass: ExampleServiceOptionals),
+  ],
+)
+class UsingInjectAndOptional {
+  final ExampleServiceOptionals service;
+
+  UsingInjectAndOptional(this.service);
+}
+
+const urlToken = const OpaqueToken('urlToken');
+
+class ExampleServiceOptionals {
+  final String urlFromToken;
+
+  ExampleServiceOptionals(
+    @Inject(urlToken) @Optional() this.urlFromToken,
+  );
 }

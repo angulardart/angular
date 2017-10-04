@@ -12,23 +12,31 @@ class EmptyInjector extends HierarchicalInjector {
   const EmptyInjector([HierarchicalInjector parent]) : super.maybeEmpty(parent);
 
   @override
-  T injectFromSelf<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
-      identical(token, Injector) ? this : orElse(this, token);
+  Object injectFromSelfOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) =>
+      identical(token, Injector) ? this : orElse;
 
   @override
-  T injectFromParent<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
-      parent?.injectFromSelf(token, orElse: orElse) ?? orElse(this, token);
+  Object injectFromParentOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) {
+    if (parent == null) {
+      return orElse;
+    }
+    return parent.injectFromSelfOptional(token, orElse);
+  }
 
   @override
-  T injectFromAncestry<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
-      parent?.inject(token: token, orElse: orElse) ?? orElse(this, token);
+  Object injectFromAncestryOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) {
+    if (parent == null) {
+      return orElse;
+    }
+    return parent.injectOptional(token, orElse);
+  }
 }

@@ -4,12 +4,9 @@ import '../../core/linker/app_view.dart';
 import 'hierarchical.dart';
 import 'injector.dart';
 
-/// Sentinel object representing the need to invoke "orElse" if returned.
-final Object _useOrElse = new Object();
-
 /// **INTERNAL ONLY**: Adapts the [AppView] interfaces as an injector.
 @Immutable()
-class ElementInjector extends Injector implements HierarchicalInjector {
+class ElementInjector extends HierarchicalInjector {
   final AppView _view;
   final int _nodeIndex;
 
@@ -17,45 +14,41 @@ class ElementInjector extends Injector implements HierarchicalInjector {
 
   ElementInjector(this._view, this._nodeIndex);
 
-  T _injectFrom<T>(
+  dynamic _injectFrom(
     AppView view,
     int nodeIndex,
     Object token,
-    OrElseInject<T> orElse,
+    Object orElse,
   ) {
-    final result = view.injectorGet(token, nodeIndex, _useOrElse);
-    if (identical(result, _useOrElse)) {
-      return orElse(this, token);
-    }
-    return result;
+    return view.injectorGet(token, nodeIndex, orElse);
   }
 
   @override
-  T inject<T>({
-    @required Object token,
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
+  dynamic injectOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) =>
       _injectFrom(_view, _nodeIndex, token, orElse);
 
   @override
-  T injectFromAncestry<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
+  injectFromAncestryOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) =>
       _injectFrom(_view.parentView, _view.viewData.parentIndex, token, orElse);
 
   @override
-  T injectFromParent<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
+  injectFromParentOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) =>
       throw new UnimplementedError();
 
   @override
-  T injectFromSelf<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
+  injectFromSelfOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) =>
       throw new UnimplementedError();
 
   @override
