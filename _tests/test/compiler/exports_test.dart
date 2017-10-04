@@ -92,6 +92,16 @@ void main() {
       expect(fixture.text, 'goodbye');
     });
 
+    test('can refer to own statics automatically with @HostBinding', () async {
+      var testBed = new NgTestBed<SelfReferHostBindingTest>();
+      var fixture = await testBed.create();
+      expect(fixture.rootElement.title, 'hello');
+      await fixture.update((_) {
+        SelfReferHostBindingTest.staticField = 'goodbye';
+      });
+      expect(fixture.rootElement.title, 'goodbye');
+    });
+
     group('can be prefixed', () {
       test('with library prefix', () async {
         var testBed = new NgTestBed<StaticLibraryPrefixTest>();
@@ -106,8 +116,6 @@ void main() {
   selector: 'interpolate-constant-test',
   template: '<div>{{myConst}}</div>',
   exports: const [myConst],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InterpolateConstantTest {}
 
@@ -115,8 +123,6 @@ class InterpolateConstantTest {}
   selector: 'interpolate-static-field-test',
   template: '<div>{{MyClass.staticField}}</div>',
   exports: const [MyClass],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InterpolateStaticFieldTest {}
 
@@ -124,8 +130,6 @@ class InterpolateStaticFieldTest {}
   selector: 'interpolate-enum-test',
   template: '<div>{{MyEnum.a}}</div>',
   exports: const [MyEnum],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InterpolateEnumTest {}
 
@@ -133,8 +137,6 @@ class InterpolateEnumTest {}
   selector: 'interpolate-top-level-function-test',
   template: '<div>{{myFunc("hello")}}</div>',
   exports: const [myFunc],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InterpolateTopLevelFunctionTest {}
 
@@ -142,8 +144,6 @@ class InterpolateTopLevelFunctionTest {}
   selector: 'interpolate-static-function-test',
   template: '<div>{{MyClass.staticFunc("hello")}}</div>',
   exports: const [MyClass],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InterpolateStaticFunctionTest {}
 
@@ -152,8 +152,6 @@ class InterpolateStaticFunctionTest {}
   template: '<div *ngFor="let item of myList">{{item}}</div>',
   exports: const [myList],
   directives: const [NgFor],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class StaticNgForTest {}
 
@@ -161,8 +159,6 @@ class StaticNgForTest {}
   selector: 'static-event-handler-test',
   template: '<div (click)="staticClickHandler()"></div>',
   exports: const [staticClickHandler],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class StaticEventHandlerTest {}
 
@@ -170,8 +166,6 @@ class StaticEventHandlerTest {}
   selector: 'static-event-handler-target-test',
   template: '<div (click)="MyClass.clickHandled = true"></div>',
   exports: const [MyClass],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class StaticEventHandlerTargetTest {}
 
@@ -179,8 +173,6 @@ class StaticEventHandlerTargetTest {}
   selector: 'static-event-handle-arg-test',
   template: '<div (click)="handleClick(myList)"></div>',
   exports: const [myList],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class StaticEventHandlerArgTest {
   Function clickHandler;
@@ -194,17 +186,22 @@ class StaticEventHandlerArgTest {
   selector: 'static-library-prefix-test',
   template: '<p>{{lib.myConst}}</p>',
   exports: const [lib.myConst],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class StaticLibraryPrefixTest {}
 
 @Component(
   selector: 'self-refer-test',
   template: '<p>{{SelfReferTest.staticField}}</p>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SelfReferTest {
   static String staticField = 'hello';
+}
+
+@Component(
+  selector: 'self-refer-host-binding-test',
+  template: '',
+)
+class SelfReferHostBindingTest {
+  @HostBinding('title')
+  static var staticField = 'hello';
 }

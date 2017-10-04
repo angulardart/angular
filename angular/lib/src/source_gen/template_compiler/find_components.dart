@@ -399,10 +399,24 @@ class ComponentVisitor
   }
 
   void _addHostBinding(ElementAnnotation annotation, Element element) {
-    var value = annotation.computeConstantValue();
-    var property =
-        coerceString(value, 'hostPropertyName', defaultTo: element.name);
-    _hostProperties[property] = element.name;
+    final value = annotation.computeConstantValue();
+    final property = coerceString(
+      value,
+      'hostPropertyName',
+      defaultTo: element.name,
+    );
+    // Allows using static members for @HostBinding. For example:
+    //
+    // class Foo {
+    //   @HostBinding('title')
+    //   static const title = 'Hello';
+    // }
+    var bindTo = element.name;
+    if (element is PropertyAccessorElement && element.isStatic ||
+        element is FieldElement && element.isStatic) {
+      bindTo = '${_directiveClassElement.name}.$bindTo';
+    }
+    _hostProperties[property] = bindTo;
   }
 
   void _addHostListener(ElementAnnotation annotation, Element element) {
