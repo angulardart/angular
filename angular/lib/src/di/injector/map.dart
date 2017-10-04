@@ -18,10 +18,17 @@ class MapInjector extends HierarchicalInjector {
       : super(parent);
 
   @override
-  T injectFromSelf<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) =>
-      _providers[token] ??
-      (identical(token, Injector) ? this : orElse(this, token));
+  Object injectFromSelfOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) {
+    var result = _providers[token];
+    if (result == null) {
+      if (identical(token, Injector)) {
+        return this;
+      }
+      result = orElse;
+    }
+    return result;
+  }
 }
