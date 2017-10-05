@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:js';
 
 import 'package:js/js.dart';
+import 'package:js/js_util.dart';
 
 import 'navigation_params.dart';
 import 'router.dart';
@@ -83,7 +84,9 @@ class _RouterJs {
               navigationParams == null
                   ? null
                   : new NavigationParams(
-                      queryParameters: _objToMap(navigationParams['queryParameters']) ?? const {},
+                      queryParameters:
+                          _objToMap(navigationParams['queryParameters']) ??
+                              const {},
                       fragment: navigationParams['fragment'] ?? '',
                       updateUrl: navigationParams['updateUrl'] ?? true))
           .then((result) => callBack.callMethod('onCompletion', [result]));
@@ -126,10 +129,9 @@ class _NavigationParamsJs {
   external bool get updateUrl;
 }
 
-Map _objToMap(o) => o == null ? o : new Map.fromIterable(_jsKeys(o), value: (key) => _jsGetProp(o, key));
-
-@JS('Object.getProperty')
-external List<String> _jsGetProp(jsObject, key);
+Map _objToMap(o) => o == null
+    ? o
+    : new Map.fromIterable(_jsKeys(o), value: (key) => getProperty(o, key));
 
 @JS('Object.keys')
 external List<String> _jsKeys(jsObject);
