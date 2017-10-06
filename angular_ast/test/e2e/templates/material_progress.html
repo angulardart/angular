@@ -1,0 +1,17 @@
+<!--
+ Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
+ for details. All rights reserved. Use of this source code is governed by a
+ BSD-style license that can be found in the LICENSE file.
+-->
+<div
+        class="progress-container"
+        role="progressbar"
+        attr.aria-valuemin="{{min}}"
+        attr.aria-valuemax="{{max}}"
+        [attr.aria-valuenow]="ariaValue"
+        [class.indeterminate]="indeterminate">
+    <div class="secondary-progress"
+         [style.transform]="secondaryTransform"></div>
+    <div class="active-progress"
+         [style.transform]="primaryTransform"></div>
+</div>

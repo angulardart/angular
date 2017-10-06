@@ -1,0 +1,28 @@
+<!--
+ Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
+ for details. All rights reserved. Use of this source code is governed by a
+ BSD-style license that can be found in the LICENSE file.
+-->
+<div attr.aria-pressed="{{checked}}"
+     attr.aria-disabled="{{disabled}}"
+     attr.aria-label="{{ariaLabel}}"
+     class="material-toggle"
+     [ngClass]="themeClass"
+     [class.checked]="checked"
+     [class.disabled]="disabled"
+     (blur)="hasFocus=false"
+     (focus)="hasFocus=true"
+     (mouseenter)="isHovered=true"
+     (mouseleave)="isHovered=false"
+     role="button"
+     [tabindex]="disabled ? '-1': '0'">
+    <div class="tgl-lbl" *ngIf="hasLabel">{{label}}</div>
+    <div class="tgl-container">
+        <div class="tgl-bar" animated attr.elevation="{{shadow_z}}"></div>
+        <div class="tgl-btn-container">
+            <div class="tgl-btn" animated attr.elevation="{{shadow_z}}">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+</div>
