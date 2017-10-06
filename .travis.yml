@@ -8,6 +8,7 @@ env:
   - PKG=_goldens
   - PKG=_tests
   - PKG=angular
+  - PKG=angular_ast
   - PKG=angular_compiler
   - PKG=angular_forms
   - PKG=angular_router

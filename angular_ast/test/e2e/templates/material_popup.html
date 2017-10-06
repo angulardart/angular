@@ -1,0 +1,33 @@
+<!--
+ Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
+ for details. All rights reserved. Use of this source code is governed by a
+ BSD-style license that can be found in the LICENSE file.
+-->
+<template [popupRef]="resolvedPopupRef">
+    <div [attr.elevation]="z"
+         class="popup-wrapper mixin"
+         [class.shadow]="hasBox"
+         [class.full-width]="matchMinSourceWidth"
+         [class.ink]="inkBackground"
+         [attr.slide]="slide"
+         [attr.z-index]="zIndex"
+         [style.transform-origin]="transformOrigin"
+         [class.visible]="showPopup"
+         [ngClass]="shadowCssClass">
+        <div class="popup"
+             [style.max-height.px]="contentHeight"
+             [style.max-width.px]="contentWidth">
+            <div class="material-popup-content content">
+                <header>
+                    <ng-content select="[header]"></ng-content>
+                </header>
+                <main>
+                    <ng-content></ng-content>
+                </main>
+                <footer>
+                    <ng-content select="[footer]"></ng-content>
+                </footer>
+            </div>
+        </div>
+    </div>
+</template>

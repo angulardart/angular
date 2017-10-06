@@ -1,0 +1,105 @@
+<!--
+ Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
+ for details. All rights reserved. Use of this source code is governed by a
+ BSD-style license that can be found in the LICENSE file.
+-->
+<div class="baseline" #popupSourceEl>
+    <div class="top-section">
+    <span *ngIf="hasLeadingGlyph"
+          class="leading-text"
+          [class.floated-label]="floatingLabel">
+      <glyph class="glyph leading"
+             icon="{{leadingGlyph}}"
+             [attr.disabled]="disabled">
+      </glyph>
+    </span>
+        <span *ngIf="hasLeadingText"
+              class="leading-text"
+              [class.floated-label]="floatingLabel">
+      {{leadingText}}
+    </span>
+
+        <div class="input-container"
+             [class.floated-label]="floatingLabel">
+            <div class="label"
+                 aria-hidden="true"
+                 [class.right-align]="rightAlign">
+                <!-- needed for floating label animation measurement -->
+                <span class="label-text"
+                      [class.invisible]="!labelVisible"
+                      [class.animated]="labelAnimated"
+                      [class.reset]="labelAnimationReset"
+                      [class.focused]="focused && floatingLabelVisible"
+                      [class.invalid]="invalid && floatingLabelVisible">
+          {{label}}
+        </span>
+            </div>
+
+            <input #inputEl
+                   focusableElement
+                   class="input"
+                   [class.disabledInput]="disabled"
+                   [class.right-align]="rightAlign"
+                   [type]="type"
+                   attr.aria-invalid="{{invalid}}"
+                   [attr.aria-label]="ariaLabel"
+                   [disabled]="disabled"
+                   [required]="required"
+                   [ngModel]="inputText"
+                   (blur)="inputBlurAction($event, inputEl.validity.valid, inputEl.validationMessage)"
+                   (change)="inputChange(inputEl.value, inputEl.validity.valid, inputEl.validationMessage);$event.stopPropagation()"
+                   (focus)="inputFocusAction($event)"
+                   (input)="inputKeypress(inputEl.value, inputEl.validity.valid, inputEl.validationMessage)">
+        </div>
+        <span *ngIf="hasTrailingText"
+              class="trailing-text"
+              [class.floated-label]="floatingLabel">
+      {{trailingText}}
+    </span>
+        <span *ngIf="hasTrailingGlyph"
+              class="trailing-text"
+              [class.floated-label]="floatingLabel">
+      <glyph class="glyph trailing"
+             icon="{{trailingGlyph}}"
+             [attr.disabled]="disabled">
+      </glyph>
+    </span>
+        <ng-content select="[trailing]"></ng-content>
+    </div>
+
+    <div class="underline">
+        <div class="disabled-underline" [class.invisible]="!disabled">
+        </div>
+        <div class="unfocused-underline"
+             [class.invisible]="disabled" [class.invalid]="invalid"></div>
+        <div class="focused-underline"
+             [class.invisible]="!focused" [class.invalid]="invalid"
+             [class.animated]="underlineAnimated"></div>
+    </div>
+</div>
+
+<div class="bottom-section" *ngIf="displayBottomPanel" [ngSwitch]="bottomPanelState">
+    <div class="error-text"
+         role="alert"
+         attr.aria-hidden="{{!invalid}}"
+         [class.focused]="focused"
+         [class.invalid]="invalid"
+         *ngSwitchWhen="errorState">
+        {{errorMessage}}
+    </div>
+    <div class="hint-text" *ngSwitchWhen="hintState">
+        {{hintText}}
+    </div>
+    <div class="spaceholder"
+         *ngSwitchWhen="emptyState"
+         tabindex="-1"
+         (focus)="$event.stopPropagation()">
+        &nbsp;
+    </div>
+    <div *ngIf="maxCount != null && focused"
+         class="counter"
+         aria-hidden="true"
+         [class.invalid]="invalid">
+        {{msgCharacterCounter(inputTextLength, maxCount)}}
+    </div>
+</div>
