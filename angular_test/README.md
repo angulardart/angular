@@ -82,18 +82,16 @@ To use `angular_test`, configure your package's `pubspec.yaml` as follows:
 
 ```yaml
 transformers:
-  # Run the code generator on the entire package.
-  - angular/transform/codegen
-
-  # Run the reflection remover on tests that have AOT enabled.
-  - angular/transform/reflection_remover:
-      $include:
-          - test/test_using_angular_test.dart
-
+  - angular:
+      entry_points:
+        - web/main.dart
+        - test/**_test.dart
+        
   # Allow test to proxy-load files so we can run AOT tests with pub serve.
   - test/pub_serve:
       $include: test/**_test.dart
-
+      
+  - dart_to_js_script_rewriter
 ```
 
 To run tests, use `pub run angular_test`. It automatically runs `pub serve` to
