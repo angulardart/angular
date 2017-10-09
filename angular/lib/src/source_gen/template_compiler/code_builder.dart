@@ -31,6 +31,14 @@ String buildGeneratedCode(
   // Generated code.
   final compilerOutput = outputs.templatesSource?.source ?? '';
   final reflectableOutput = new ReflectableEmitter(outputs.reflectableOutput);
+  final generateInjectors = new InjectorEmitter(
+    new Map<String, List<ProviderElement>>.fromIterable(
+      outputs.injectorsOutput,
+      // Fuzzy arrows.
+      key: (r) => (r as InjectorReader).name,
+      value: (r) => (r as InjectorReader).providers.toList(),
+    ),
+  );
 
   // Write the input file as an import and an export.
   buffer.writeln("import '$sourceFile';");
@@ -45,14 +53,19 @@ String buildGeneratedCode(
     }
   }
 
-  // Write imports required for initReflector.
-  buffer.writeln(reflectableOutput.emitImports());
+  // Write imports required for initReflector AND generated injectors.
+  buffer
+    ..writeln(reflectableOutput.emitImports())
+    ..writeln(generateInjectors.emitImports());
 
   // Write generated code.
   buffer.writeln(compilerOutput);
 
   // Write initReflector.
   buffer.writeln(reflectableOutput.emitInitReflector());
+
+  // Write generated injectors.
+  buffer.writeln(generateInjectors.emitInjector());
 
   return buffer.toString();
 }

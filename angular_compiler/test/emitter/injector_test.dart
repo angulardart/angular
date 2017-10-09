@@ -5,7 +5,7 @@ import '../src/resolve.dart';
 
 void main() {
   const angular = 'package:angular';
-  const libInjector = '$angular/src/di/injector.dart';
+  const libInjector = '$angular/src/di/injector/injector.dart';
 
   test('should support a no-op', () {
     final emitter = new InjectorEmitter({});
@@ -28,7 +28,7 @@ void main() {
     );
     final providers = module.flatten();
     final injector = new InjectorEmitter({
-      'ExampleInjector': providers,
+      'doExample\$Injector': providers,
     });
     expect(
       injector.emitImports(),
@@ -37,18 +37,19 @@ void main() {
     expect(
         injector.emitInjector(),
         ''
-        'class ExampleInjector\$Generated extends _injector.GeneratedInjector {\n'
-        '  ExampleInjector\$Generated([_injector.Injector parent]) : super(parent);\n'
+        '_injector.Injector doExample\$Injector([_injector.Injector parent]) => new _doExample\$Injector(parent);\n'
+        'class _doExample\$Injector extends _injector.GeneratedInjector {\n'
+        '  _doExample\$Injector([_injector.Injector parent]) : super(parent);\n'
         '  @override\n'
-        '  T injectFromSelf<T>(\n'
-        '    Object token, {\n'
-        '    _injector.OrElseInject<T> orElse: _injector.throwsNotFound,\n'
-        '  }) {\n'
+        '  Object injectFromSelfOptional(\n'
+        '    Object token, [\n'
+        '    Object orElse = _injector.throwIfNotFound,\n'
+        '  ]) {\n'
         '    switch (token) {\n'
         '      case Example:\n'
         '        return _provide0();\n'
         '      default:\n'
-        '        return orElse(this, token);\n'
+        '        return orElse;\n'
         '    }\n'
         '  }\n'
         '  Example _field0;\n'
