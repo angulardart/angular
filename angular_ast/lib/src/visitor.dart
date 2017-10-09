@@ -3,10 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'ast.dart';
-export 'visitors/humanizing.dart';
-export 'visitors/identity.dart';
+
 export 'visitors/desugar_visitor.dart';
 export 'visitors/expression_parser_visitor.dart';
+export 'visitors/humanizing.dart';
+export 'visitors/identity.dart';
 
 /// A visitor for [TemplateAst] trees that may process each node.
 ///

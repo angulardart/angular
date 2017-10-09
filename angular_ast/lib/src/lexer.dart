@@ -4,9 +4,9 @@
 
 import 'package:meta/meta.dart';
 
+import 'exception_handler/exception_handler.dart';
 import 'scanner.dart';
 import 'token/tokens.dart';
-import 'exception_handler/exception_handler.dart';
 
 /// Separates an Angular template into a series of lexical tokens.
 ///

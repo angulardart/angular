@@ -5,13 +5,13 @@
 library angular_ast.src.expression.ng_dart_ast;
 
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/src/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/src/dart/ast/ast.dart';
 
-import 'visitor.dart';
 import '../exception_handler/exception_handler.dart';
+import 'visitor.dart';
 
 /// A list of arguments in the invocation of a pipe.
 ///
@@ -110,55 +110,6 @@ class PipeOptionalArgumentListImpl extends AstNodeImpl
   @override
   void visitChildren(AstVisitor visitor) {
     _arguments.accept(visitor);
-  }
-
-  /// If
-  ///   the given [expression] is a child of this list,
-  ///   the AST structure has been resolved,
-  ///   the function being invoked is known based on propagated type
-  ///   information,
-  ///   and the expression corresponds to one of the parameters of the function
-  ///   being invoked,
-  /// then return the parameter element representing the parameter to
-  /// which the value of the given expression will be bound.
-  /// Otherwise return `null`.
-  ParameterElement _getPropagatedParameterElementFor(Expression expression) {
-    if (_correspondingPropagatedParameters == null ||
-        _correspondingPropagatedParameters.length != _arguments.length) {
-      // Either the AST structure has not been resolved, the invocation of which
-      // this list is a part could not be resolved, or the argument list was
-      // modified after the parameters were set.
-      return null;
-    }
-    int index = _arguments.indexOf(expression);
-    if (index < 0) {
-      // The expression isn't a child of this node.
-      return null;
-    }
-    return _correspondingPropagatedParameters[index];
-  }
-
-  /// If
-  ///   the given [expression] is the child of this list, the AST structure
-  ///   has been resolved, the function being invoked is known on static type
-  ///   information, and the expression corresponds to one of the parameters
-  ///   of the function being invoked,
-  /// then return the parameter element representing the parameter to which
-  /// the value of the given expression will be bound. Otherwise, return `null`.
-  ParameterElement _getStaticParameterElementFor(Expression expression) {
-    if (_correspondingStaticParameters == null ||
-        _correspondingStaticParameters.length != _arguments.length) {
-      // Either the AST structure has not been resolved, the invocation of which
-      // this list is a part could not be resolved, or the argument list was
-      // modified after the parameters were set.
-      return null;
-    }
-    int index = _arguments.indexOf(expression);
-    if (index < 0) {
-      // The expression isn't a child of this node.
-      return null;
-    }
-    return _correspondingStaticParameters[index];
   }
 
   @override
@@ -324,6 +275,7 @@ class PipeInvocationExpressionImpl extends ExpressionImpl
     final args = pipeOptionalArgumentList == null
         ? ''
         : pipeOptionalArgumentList.toSource();
-    return '${requiredArgument.toSource()} ${bar.toString()} ${pipe.toSource()}${args}';
+    return '${requiredArgument.toSource()} ${bar.toString()} ${pipe
+        .toSource()}$args';
   }
 }

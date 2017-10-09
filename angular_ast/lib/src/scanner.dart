@@ -3,14 +3,14 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:meta/meta.dart';
-import 'package:string_scanner/string_scanner.dart';
 import 'package:source_span/source_span.dart';
+import 'package:string_scanner/string_scanner.dart';
 
-import 'token/tokens.dart';
-import 'simple_tokenizer.dart';
+import 'exception_handler/exception_handler.dart';
 import 'parser/reader.dart';
 import 'recovery_protocol/recovery_protocol.dart';
-import 'exception_handler/exception_handler.dart';
+import 'simple_tokenizer.dart';
+import 'token/tokens.dart';
 
 /// A wrapper around [StringScanner] that scans tokens from an HTML string.
 class NgScanner {
@@ -19,7 +19,7 @@ class NgScanner {
   final ExceptionHandler exceptionHandler;
 
   final bool _recoverErrors;
-  RecoveryProtocol _rp = new NgAnalyzerRecoveryProtocol();
+  final RecoveryProtocol _rp = new NgAnalyzerRecoveryProtocol();
 
   NgSimpleToken _current;
   NgSimpleToken _lastToken;

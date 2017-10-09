@@ -4,11 +4,11 @@
 
 import 'package:meta/meta.dart';
 
+import '../../ast.dart';
+import '../../exception_handler/exception_handler.dart';
 import 'ast.dart';
 import 'lexer.dart';
 import 'token.dart';
-import '../../ast.dart';
-import '../../exception_handler/exception_handler.dart';
 
 class NgMicroParser {
   @literal
@@ -75,7 +75,7 @@ class _RecursiveMicroAstParser {
     }
     var value = _tokens.current.lexeme;
     properties.add(new PropertyAst(
-      '${_directive}${name[0].toUpperCase()}${name.substring(1)}',
+      '$_directive${name[0].toUpperCase()}${name.substring(1)}',
       value,
     ));
   }
@@ -111,7 +111,7 @@ class _RecursiveMicroAstParser {
       }
       var expression = _tokens.current.lexeme;
       properties.add(new PropertyAst(
-        '${_directive}${property[0].toUpperCase()}${property.substring(1)}',
+        '$_directive${property[0].toUpperCase()}${property.substring(1)}',
         expression,
       ));
     }

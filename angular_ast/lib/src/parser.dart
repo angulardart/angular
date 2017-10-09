@@ -6,9 +6,9 @@ import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
 import 'ast.dart';
+import 'exception_handler/exception_handler.dart';
 import 'lexer.dart';
 import 'parser/recursive.dart';
-import 'exception_handler/exception_handler.dart';
 import 'visitor.dart';
 
 class NgParser {
