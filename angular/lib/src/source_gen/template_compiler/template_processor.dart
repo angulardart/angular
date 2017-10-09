@@ -50,7 +50,11 @@ Future<TemplateCompilerOutputs> processTemplates(
       assetId: buildStep.inputId,
       log: log);
   if (compileComponentsData.isEmpty) {
-    return new TemplateCompilerOutputs(null, reflectables);
+    return new TemplateCompilerOutputs(
+      null,
+      reflectables,
+      InjectorReader.findInjectors(element),
+    );
   }
 
   // Normalize directive meta data for component and directives.
@@ -69,5 +73,9 @@ Future<TemplateCompilerOutputs> processTemplates(
     return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: buildStep.inputId);
 
-  return new TemplateCompilerOutputs(compiledTemplates, reflectables);
+  return new TemplateCompilerOutputs(
+    compiledTemplates,
+    reflectables,
+    InjectorReader.findInjectors(element),
+  );
 }

@@ -1,10 +1,13 @@
 // ignore_for_file: invalid_use_of_protected_member
+@Tags(const ['codegen'])
 @TestOn('browser')
-import 'package:angular/di.dart';
+import 'package:angular/angular.dart';
 import 'package:angular/src/di/injector/hierarchical.dart';
 import 'package:angular/src/di/injector/injector.dart';
 import 'package:test/test.dart';
 import 'package:angular/src/di/reflector.dart' as reflector;
+
+import 'injector_test.template.dart' as ng;
 
 void main() {
   bool _isReified<T>() => !identical(T, dynamic);
@@ -225,6 +228,16 @@ void main() {
         expect(injector.get(usPresidents), const isInstanceOf<List<String>>());
       }, skip: !isStrongMode ? 'Skipped in non-strong runtime' : false);
     });
+
+    group('.generate', () {
+      test('should support "useClass"', () {
+        final injector = exampleGenerated();
+        expect(
+          injector.get(ExampleService),
+          const isInstanceOf<ExampleService2>(),
+        );
+      });
+    });
   });
 }
 
@@ -247,6 +260,11 @@ class CaptureInjectInjector extends Injector {
 class ExampleService {}
 
 class ExampleService2 implements ExampleService {}
+
+@Injector.generate(const [
+  const Provider(ExampleService, useClass: ExampleService2),
+])
+Injector exampleGenerated() => ng.exampleGenerated$Injector();
 
 ExampleService createExampleService() => new ExampleService();
 List createListWith(String item) => [item];

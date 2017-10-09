@@ -129,6 +129,11 @@ abstract class Injector {
   Object injectOptional(Object token, [Object orElse]);
 }
 
+/// Used as a compiler-only base class for inheritance.
+abstract class GeneratedInjector extends HierarchicalInjector {
+  GeneratedInjector([Injector parent]) : super(parent);
+}
+
 // Used as a token-type for the AngularDart compiler.
 class _GenerateInjector implements Injector {
   final List<Object> providersOrModules;
