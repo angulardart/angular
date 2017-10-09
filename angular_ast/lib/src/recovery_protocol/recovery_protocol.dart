@@ -3,9 +3,9 @@
 // BSD-style license that can be found in the LICENSE file.
 library angular_ast.src.recovery_protocol.recovery_protocol;
 
-import '../token/tokens.dart';
 import '../parser/reader.dart';
 import '../scanner.dart';
+import '../token/tokens.dart';
 
 part 'angular_analyzer_protocol.dart';
 

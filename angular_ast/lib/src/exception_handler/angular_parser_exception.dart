@@ -10,7 +10,7 @@ class AngularParserException {
   final int length;
 
   /// Reasoning for exception to be raised.
-  final NgParserWarningCode errorCode;
+  final ErrorCode errorCode;
 
   /// Offset of where the exception was detected.
   final int offset;

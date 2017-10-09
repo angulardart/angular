@@ -200,7 +200,7 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
   String get lexeme => lexemeMap[type];
 
   @override
-  String toString() => '#$NgSimpleToken(${type}) {$offset:$lexeme}';
+  String toString() => '#$NgSimpleToken($type) {$offset:$lexeme}';
 }
 
 class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
@@ -268,7 +268,7 @@ class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
   int get hashCode => hash4(super.hashCode, lexeme, contentOffset, end);
 
   @override
-  String toString() => '#$NgSimpleQuoteToken(${type}) {$offset:$lexeme}';
+  String toString() => '#$NgSimpleQuoteToken($type) {$offset:$lexeme}';
 }
 
 /// Represents a Angular text/token entities.
@@ -493,7 +493,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
   final bool errorSynthetic;
 
   @override
-  String toString() => '#$NgToken(${type}) {$offset:$lexeme}';
+  String toString() => '#$NgToken($type) {$offset:$lexeme}';
 }
 
 class NgAttributeValueToken extends NgToken {
@@ -539,7 +539,7 @@ class NgAttributeValueToken extends NgToken {
   String get lexeme => leftQuote.lexeme + innerValue.lexeme + rightQuote.lexeme;
 
   @override
-  String toString() => '#$NgAttributeValueToken(${type}) {$offset:$lexeme} '
+  String toString() => '#$NgAttributeValueToken($type) {$offset:$lexeme} '
       '[\n\t$leftQuote,\n\t$innerValue,\n\t$rightQuote]';
 
   bool get isDoubleQuote => leftQuote.type == NgTokenType.doubleQuote;
