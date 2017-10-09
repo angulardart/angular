@@ -6,6 +6,11 @@ import 'package:angular_compiler/angular_compiler.dart';
 
 import 'processor.dart';
 
+Builder stylesheetCompiler(List<String> args) {
+  final flags = new CompilerFlags.parseArgs(args);
+  return new StylesheetCompiler(flags);
+}
+
 /// Pre-compiles CSS stylesheet files to Dart code for Angular 2.
 class StylesheetCompiler implements Builder {
   final CompilerFlags _flags;
