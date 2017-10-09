@@ -100,6 +100,14 @@ class CompileTypeMetadataVisitor
         useClass: metadata,
       );
     }
+    CompileTypeMetadata multiType;
+    final typeArguments = provider.type?.typeArguments;
+    if (typeArguments != null && typeArguments.isNotEmpty) {
+      final genericType = typeArguments.first;
+      if (!genericType.isDynamic) {
+        multiType = _getCompileTypeMetadata(genericType.element);
+      }
+    }
     return new CompileProviderMetadata(
       token: _token(dart_objects.getField(provider, 'token')),
       useClass: _getUseClass(provider),
@@ -111,6 +119,7 @@ class CompileTypeMetadataVisitor
         'multi',
         defaultTo: false,
       ),
+      multiType: multiType,
     );
   }
 
@@ -168,7 +177,7 @@ class CompileTypeMetadataVisitor
           diDeps: _getCompileDiDependencyMetadata(element.parameters, element));
 
   o.Expression _getUseValue(DartObject provider) {
-    var maybeUseValue = provider.getField('useValue');
+    var maybeUseValue = dart_objects.getField(provider, 'useValue');
     if (!dart_objects.isNull(maybeUseValue)) {
       if (maybeUseValue.toStringValue() == noValueProvided) return null;
       try {

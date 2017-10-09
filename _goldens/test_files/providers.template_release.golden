@@ -64,7 +64,7 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
   import1.MyUseClass __MyUseClass_0_7;
   import1.MyUseValue __MyUseValue_0_10;
   String __const_OpaqueToken_dynamic___useValueString___0_11;
-  List<dynamic> __MyMulti_0_12;
+  List<import1.MyMulti> __MyMulti_0_12;
   List<dynamic> __const_OpaqueToken_dynamic___useValueList___0_13;
   Map<String, dynamic> __const_OpaqueToken_dynamic___useValueMap___0_14;
   dynamic __const_OpaqueToken_dynamic___useEnums___0_15;
@@ -113,7 +113,7 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
     return this.__const_OpaqueToken_dynamic___useValueString___0_11;
   }
 
-  List<dynamic> get _MyMulti_0_12 {
+  List<import1.MyMulti> get _MyMulti_0_12 {
     if ((this.__MyMulti_0_12 == null)) {
       (__MyMulti_0_12 = [null]);
     }

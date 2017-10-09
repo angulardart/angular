@@ -7,6 +7,9 @@ import 'package:angular_test/angular_test.dart';
 
 /// Verifies whether injection through directives/components is correct.
 void main() {
+  bool _isReified<T>() => !identical(T, dynamic);
+  final isStrongMode = _isReified<String>();
+
   tearDown(disposeAnyRunningTest);
 
   test('should use the proper provider bindings in a hierarchy', () async {
@@ -35,6 +38,25 @@ void main() {
       final foo = comp.injector.get(#foo, 'someValue');
       expect(foo, 'someValue');
     });
+  });
+
+  test('should support multi: true without reified generics', () async {
+    final fixture = await new NgTestBed<ErasedMultiGenerics>().create();
+    expect(
+      fixture.assertOnlyInstance.usPresidents,
+      const isInstanceOf<List>(),
+    );
+    expect(fixture.text, '[George, Abraham]');
+  });
+
+  test('should reify a MultiProvider<T> in strong-mode runtimes', () async {
+    final fixture = await new NgTestBed<ReifiedMultiGenerics>().create();
+    expect(
+      fixture.assertOnlyInstance.usPresidents,
+      const isInstanceOf<List<String>>(),
+      skip: !isStrongMode ? 'Skipped in non-strong runtime' : false,
+    );
+    expect(fixture.text, '[George, Abraham]');
   });
 
   group('should support optional values', () {
@@ -183,4 +205,34 @@ class ExampleServiceOptionals {
   ExampleServiceOptionals(
     @Inject(urlToken) @Optional() this.urlFromToken,
   );
+}
+
+const usPresidentsToken = const OpaqueToken<String>('usPresidents');
+
+@Component(
+  selector: 'reified-multi-generics',
+  providers: const [
+    const Provider(usPresidentsToken, useValue: 'George', multi: true),
+    const Provider(usPresidentsToken, useValue: 'Abraham', multi: true),
+  ],
+  template: "{{usPresidents}}",
+)
+class ErasedMultiGenerics {
+  final List<dynamic> usPresidents;
+
+  ErasedMultiGenerics(@Inject(usPresidentsToken) this.usPresidents);
+}
+
+@Component(
+  selector: 'reified-multi-generics',
+  providers: const [
+    const ProviderUseMulti.ofTokenToValue(usPresidentsToken, 'George'),
+    const ProviderUseMulti.ofTokenToValue(usPresidentsToken, 'Abraham'),
+  ],
+  template: "{{usPresidents}}",
+)
+class ReifiedMultiGenerics {
+  final List<String> usPresidents;
+
+  ReifiedMultiGenerics(@Inject(usPresidentsToken) this.usPresidents);
 }

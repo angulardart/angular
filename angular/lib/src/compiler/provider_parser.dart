@@ -352,26 +352,34 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
     dynamic useValue,
     List<CompileDiDependencyMetadata> deps}) {
   return new CompileProviderMetadata(
-      token: provider.token,
-      useClass: provider.useClass,
-      useExisting: useExisting,
-      useFactory: provider.useFactory,
-      useValue: useValue,
-      deps: deps,
-      multi: provider.multi);
+    token: provider.token,
+    useClass: provider.useClass,
+    useExisting: useExisting,
+    useFactory: provider.useFactory,
+    useValue: useValue,
+    deps: deps,
+    multi: provider.multi,
+    multiType: provider.multiType,
+  );
 }
 
 /// Creates a new provider ast node by overriding eager and providers members
 /// of existing ProviderAst.
 ProviderAst _transformProviderAst(ProviderAst provider,
     {bool forceEager, List<CompileProviderMetadata> providers}) {
-  return new ProviderAst(provider.token, provider.multiProvider, providers,
-      provider.providerType, provider.sourceSpan,
-      eager: provider.eager || forceEager,
-      dynamicallyReachable: provider.dynamicallyReachable,
-      visibleForInjection: provider.visibleForInjection,
-      implementedByDirectiveWithNoVisibility:
-          provider.implementedByDirectiveWithNoVisibility);
+  return new ProviderAst(
+    provider.token,
+    provider.multiProvider,
+    providers,
+    provider.providerType,
+    provider.sourceSpan,
+    eager: provider.eager || forceEager,
+    dynamicallyReachable: provider.dynamicallyReachable,
+    visibleForInjection: provider.visibleForInjection,
+    multiProviderType: provider.multiProviderType,
+    implementedByDirectiveWithNoVisibility:
+        provider.implementedByDirectiveWithNoVisibility,
+  );
 }
 
 // Flattens list of lists of providers and converts entries that contain Type to
@@ -489,6 +497,7 @@ class _ProviderResolver {
           eager: eager,
           implementedByDirectiveWithNoVisibility:
               implementedByDirectiveWithNoVisibility,
+          multiProviderType: provider.multiType,
           visibleForInjection: provider.visibility != Visibility.none,
         );
         _providersByToken.add(provider.token, resolvedProvider);
