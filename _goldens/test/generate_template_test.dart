@@ -41,6 +41,7 @@ main() {
         'view_encapsulation',
         'deferred/container_component',
         'deferred/deferred_component',
+        'di/generated_injectors',
         'directives/base_component',
         'directives/components',
         'directives/directive_wrapper',

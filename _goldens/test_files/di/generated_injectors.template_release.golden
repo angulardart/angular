@@ -33,15 +33,15 @@ _injector.Injector doGenerate$Injector([_injector.Injector parent]) =>
 class _doGenerate$Injector extends _injector.GeneratedInjector {
   _doGenerate$Injector([_injector.Injector parent]) : super(parent);
   @override
-  T injectFromSelf<T>(
-    Object token, {
-    _injector.OrElseInject<T> orElse: _injector.throwsNotFound,
-  }) {
+  Object injectFromSelfOptional(
+    Object token, [
+    Object orElse = _injector.throwIfNotFound,
+  ]) {
     switch (token) {
       case Example:
-        return _provide0() as T;
+        return _provide0();
       default:
-        return orElse(this, token);
+        return orElse;
     }
   }
 
