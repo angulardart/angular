@@ -206,9 +206,15 @@ class CompileElement extends CompileNode {
       _resolvedProvidersArray
         ..insert(
             0,
-            new ProviderAst(provider.token, false, [provider],
-                ProviderAstType.Builtin, this.sourceAst.sourceSpan,
-                eager: true, dynamicallyReachable: isReachable));
+            new ProviderAst(
+              provider.token,
+              false,
+              [provider],
+              ProviderAstType.Builtin,
+              this.sourceAst.sourceSpan,
+              eager: true,
+              dynamicallyReachable: isReachable,
+            ));
     }
   }
 
@@ -657,7 +663,9 @@ o.Expression createProviderProperty(
   var type;
   if (isMulti) {
     resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
-    type = new o.ArrayType(o.DYNAMIC_TYPE);
+    type = new o.ArrayType(provider.multiProviderType != null
+        ? o.importType(provider.multiProviderType)
+        : o.DYNAMIC_TYPE);
   } else {
     resolvedProviderValueExpr = providerValueExpressions[0];
     type = providerValueExpressions[0].type;

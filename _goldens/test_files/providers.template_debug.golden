@@ -94,7 +94,7 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   import2.MyUseClass __MyUseClass_0_7;
   import2.MyUseValue __MyUseValue_0_10;
   String __const_OpaqueToken_dynamic___useValueString___0_11;
-  List<dynamic> __MyMulti_0_12;
+  List<import2.MyMulti> __MyMulti_0_12;
   List<dynamic> __const_OpaqueToken_dynamic___useValueList___0_13;
   Map<String, dynamic> __const_OpaqueToken_dynamic___useValueMap___0_14;
   dynamic __const_OpaqueToken_dynamic___useEnums___0_15;
@@ -153,7 +153,7 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__const_OpaqueToken_dynamic___useValueString___0_11;
   }
 
-  List<dynamic> get _MyMulti_0_12 {
+  List<import2.MyMulti> get _MyMulti_0_12 {
     dbg(0, 0, 0);
     if ((this.__MyMulti_0_12 == null)) {
       (__MyMulti_0_12 = [null]);
