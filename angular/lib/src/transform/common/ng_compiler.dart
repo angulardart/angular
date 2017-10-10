@@ -1,3 +1,4 @@
+import 'package:angular/src/compiler/ast_template_parser.dart';
 import 'package:angular/src/compiler/directive_normalizer.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart' as ng;
 import 'package:angular/src/compiler/expression_parser/parser.dart' as ng;
@@ -14,11 +15,12 @@ OfflineCompiler createTemplateCompiler(
   NgAssetReader reader,
   CompilerFlags flags,
 ) {
-  // TODO(yjbanov): add router AST transformer when ready
   final parser = new ng.Parser(new ng.Lexer());
   final htmlParser = new HtmlParser();
   final schemaRegistry = new DomElementSchemaRegistry();
-  final templateParser = new TemplateParser(parser, schemaRegistry, htmlParser);
+  final templateParser = flags.useAstPkg
+      ? new AstTemplateParser(schemaRegistry)
+      : new TemplateParserImpl(parser, schemaRegistry, htmlParser);
   return new OfflineCompiler(
       new DirectiveNormalizer(htmlParser, reader),
       templateParser,
