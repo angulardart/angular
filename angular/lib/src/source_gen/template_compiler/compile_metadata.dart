@@ -124,7 +124,7 @@ class CompileTypeMetadataVisitor
   }
 
   CompileTypeMetadata _getUseClass(DartObject provider) {
-    var maybeUseClass = provider.getField('useClass');
+    var maybeUseClass = dart_objects.getField(provider, 'useClass');
     if (!dart_objects.isNull(maybeUseClass)) {
       var type = maybeUseClass.toTypeValue();
       if (type is InterfaceType) {
@@ -139,7 +139,7 @@ class CompileTypeMetadataVisitor
   }
 
   CompileTokenMetadata _getUseExisting(DartObject provider) {
-    var maybeUseExisting = provider.getField('useExisting');
+    var maybeUseExisting = dart_objects.getField(provider, 'useExisting');
     if (!dart_objects.isNull(maybeUseExisting)) {
       return _token(maybeUseExisting);
     }
@@ -147,7 +147,7 @@ class CompileTypeMetadataVisitor
   }
 
   CompileFactoryMetadata _getUseFactory(DartObject provider) {
-    var maybeUseFactory = provider.getField('useFactory');
+    var maybeUseFactory = dart_objects.getField(provider, 'useFactory');
     if (!dart_objects.isNull(maybeUseFactory)) {
       if (maybeUseFactory.type.element is FunctionTypedElement) {
         return _factoryForFunction(

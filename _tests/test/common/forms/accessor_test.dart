@@ -42,15 +42,13 @@ void main() {
             reason: 'Valid value should not have an error');
       });
     });
-  }, skip: 'Test currently broken'); // TODO(matanl): Investigate failure.
+  });
 }
 
 @Component(
   selector: 'accessor-test',
   template: '<input type="text" integer [(ngModel)]="value">',
   directives: const [IntValueAccessor, NgModel],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AccessorTestComponent {
   @ViewChild(NgModel)
@@ -60,29 +58,34 @@ class AccessorTestComponent {
 
 typedef dynamic ChangeFunctionSimple(value);
 
-@Directive(selector: "input[integer]", host: const {
-  "(input)": "onChange(\$event.target.value)",
-  "(blur)": "touchHandler()"
-}, providers: const [
-  const ProviderUseMulti.ofTokenToExisting(
-    NG_VALUE_ACCESSOR,
-    IntValueAccessor,
-  ),
-  const ProviderUseMulti.ofTokenToExisting(
-    NG_VALIDATORS,
-    IntValueAccessor,
-  )
-])
+@Directive(
+  selector: "input[integer]",
+  providers: const [
+    const ProviderUseMulti.ofTokenToExisting(
+      NG_VALUE_ACCESSOR,
+      IntValueAccessor,
+    ),
+    const ProviderUseMulti.ofTokenToExisting(
+      NG_VALIDATORS,
+      IntValueAccessor,
+    ),
+  ],
+)
 class IntValueAccessor implements ControlValueAccessor, Validator {
   HtmlElement _elementRef;
+
+  @HostListener('input', const ['\$event.target.value'])
   ChangeFunctionSimple onChange = (_) {};
 
+  @HostListener('blur')
   void touchHandler() {
     onTouched();
   }
 
   TouchFunction onTouched = () {};
+
   IntValueAccessor(this._elementRef);
+
   @override
   void writeValue(dynamic value) {
     var normalizedValue = value.toString() ?? '';
