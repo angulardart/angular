@@ -11,6 +11,7 @@ const _argLegacyStyle = 'use_legacy_style_encapsulation';
 const _argPlaceholder = 'use_placeholder';
 const _argEntryPoints = 'entry_points';
 const _argGeneratorInputs = 'generator_inputs';
+const _argAstPkg = 'use_new_template_parser';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
@@ -55,7 +56,13 @@ class CompilerFlags {
         help: 'Optional globs of files that will have the AngularDart '
             'generator run on them. By default this is not required, but for '
             'the "barback" (pub transformer) build system may be needed if '
-            'an "\$include" or "\$exclude" parameter is used.');
+            'an "\$include" or "\$exclude" parameter is used.')
+    ..addFlag(_argAstPkg,
+        defaultsTo: null,
+        hide: true,
+        help:
+            'Whether to use pkg:angular_ast for parsing template files instead '
+            'of the existing template parser.');
 
   /// Entrypoint(s) of the application (i.e. where `bootstrap` is invoked).
   ///
@@ -95,6 +102,10 @@ class CompilerFlags {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
+  /// Whether to opt-in to using the new angular_ast package for parsing
+  /// template files.
+  final bool useAstPkg;
+
   const CompilerFlags({
     @required this.genDebugInfo,
     this.entryPoints: const [],
@@ -102,6 +113,7 @@ class CompilerFlags {
     this.profileFor: Profile.none,
     this.useLegacyStyleEncapsulation: false,
     this.usePlaceholder: true,
+    this.useAstPkg: false,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -172,6 +184,7 @@ class CompilerFlags {
         _argPlaceholder,
         _argEntryPoints,
         _argGeneratorInputs,
+        _argAstPkg,
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -221,6 +234,11 @@ class CompilerFlags {
       log('Invalid value for "$_argLegacyStyle": $useLegacyStyle');
       useLegacyStyle = null;
     }
+    var useAstPkg = options[_argAstPkg];
+    if (useAstPkg != null && useAstPkg is! bool) {
+      log('Invalid value for "$_argAstPkg": $useAstPkg');
+      useAstPkg = null;
+    }
     return new CompilerFlags(
       genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
       entryPoints: entryPoints == null
@@ -235,6 +253,7 @@ class CompilerFlags {
       usePlaceholder: usePlaceholder ?? defaultTo.usePlaceholder,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
+      useAstPkg: useAstPkg ?? defaultTo.useAstPkg,
     );
   }
 }

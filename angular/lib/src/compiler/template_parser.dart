@@ -81,20 +81,34 @@ class TemplateParseError extends ParseError {
 class TemplateParseResult {
   List<TemplateAst> templateAst;
   List<ParseError> errors;
+
   TemplateParseResult([this.templateAst, this.errors]);
 }
 
 /// Converts Html AST to TemplateAST nodes.
-class TemplateParser {
+abstract class TemplateParser {
+  ElementSchemaRegistry get schemaRegistry;
+
+  List<TemplateAst> parse(
+      CompileDirectiveMetadata compMeta,
+      String template,
+      List<CompileDirectiveMetadata> directives,
+      List<CompilePipeMetadata> pipes,
+      String name);
+}
+
+class TemplateParserImpl implements TemplateParser {
   final Parser _exprParser;
+  @override
   final ElementSchemaRegistry schemaRegistry;
   final HtmlParser _htmlParser;
 
-  TemplateParser(this._exprParser, this.schemaRegistry, this._htmlParser);
+  TemplateParserImpl(this._exprParser, this.schemaRegistry, this._htmlParser);
 
   /// Parses template and checks for warnings and errors.
   ///
   /// Warnings are logged, errors will throw BaseException.
+  @override
   List<TemplateAst> parse(
       CompileDirectiveMetadata component,
       String template,
@@ -1080,6 +1094,7 @@ class BoundElementOrDirectiveProperty {
   AST expression;
   bool isLiteral;
   SourceSpan sourceSpan;
+
   BoundElementOrDirectiveProperty(
       this.name, this.expression, this.isLiteral, this.sourceSpan);
 }
@@ -1088,6 +1103,7 @@ class ElementOrDirectiveRef {
   String name;
   String value;
   SourceSpan sourceSpan;
+
   ElementOrDirectiveRef(this.name, this.value, this.sourceSpan);
 }
 
@@ -1174,6 +1190,7 @@ var NON_BINDABLE_VISITOR = new NonBindableVisitor();
 
 class PipeCollector extends RecursiveAstVisitor {
   Set<String> pipes = new Set<String>();
+
   dynamic visitPipe(BindingPipe ast, dynamic context) {
     this.pipes.add(ast.name);
     ast.exp.visit(this);
