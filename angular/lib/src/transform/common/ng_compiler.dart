@@ -19,7 +19,7 @@ OfflineCompiler createTemplateCompiler(
   final htmlParser = new HtmlParser();
   final schemaRegistry = new DomElementSchemaRegistry();
   final templateParser = flags.useAstPkg
-      ? new AstTemplateParser(schemaRegistry)
+      ? new AstTemplateParser(schemaRegistry, parser)
       : new TemplateParserImpl(parser, schemaRegistry, htmlParser);
   return new OfflineCompiler(
       new DirectiveNormalizer(htmlParser, reader),

@@ -8,6 +8,7 @@ environment:
   sdk: '>=1.24.0 <2.0.0'
 dependencies:
   analyzer: '>=0.29.10 <0.31.0'
+  angular_ast: ^0.4.0-alpha.0
   angular_compiler: ^0.4.0-alpha
   barback: ^0.15.2+2
   build: ^0.10.0
@@ -31,6 +32,8 @@ dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
+  angular_ast:
+      path: ../angular_ast
   angular_compiler:
       path: ../angular_compiler
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===

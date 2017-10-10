@@ -18,7 +18,7 @@ OfflineCompiler createTemplateCompiler(
   var htmlParser = new HtmlParser();
   var schemaRegistry = new DomElementSchemaRegistry();
   var templateParser = flags.useAstPkg
-      ? new AstTemplateParser(schemaRegistry)
+      ? new AstTemplateParser(schemaRegistry, parser)
       : new TemplateParserImpl(parser, schemaRegistry, htmlParser);
   final reader = new NgAssetReader.fromBuildStep(buildStep);
   return new OfflineCompiler(

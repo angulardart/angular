@@ -16,6 +16,8 @@ dev_dependencies:
 dependency_overrides:
   angular:
     path: ../../angular
+  angular_ast:
+    path: ../../angular_ast
   angular_compiler:
     path: ../../angular_compiler
   angular_forms:
