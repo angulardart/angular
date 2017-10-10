@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0-alpha+1
+- New code location! angular_ast is now part of the angular mono-repo on
+  https://github.com/dart-lang/angular.
+### Bug fix
+- Fixed event name for banana syntax `[(name)]` from `nameChanged` to
+  `nameChange`.
+
 ## 0.2.0
 
 - Add an experimental flag to `NgParser` (`toolFriendlyAstOrigin`) which
