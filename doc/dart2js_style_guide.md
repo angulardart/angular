@@ -195,3 +195,120 @@ void checkProviders(Iterable<Provider> providers) {
   }
 }
 ```
+
+## Always _cast_ a `dynamic` or `Function` to a concrete type before using
+
+In JIT-environments (like the standalone VM), dynamically invoked code can be
+optimized into better performing "hot" code, particularly when the methods are
+invoked monomorphically.
+
+However, in AOT-environments (like Dart2JS or DDC), these optimizations are not
+possible (though Dart2JS tries with global type inference) - and Dart's calling
+conventions are too different from JavaScript to rely on JavaScript VM's to
+optimize in all cases.
+
+**BAD**:
+
+```dart
+void printName(/*dynamic*/ person) => print(person.name);
+```
+
+**BAD**:
+
+```dart
+void printLazyString(/*dynamic*/ getString) => print(getString());
+```
+
+```dart
+void printLazyString(Function getString) => print(getString());
+```
+
+**OK**:
+
+```dart
+void printName(Person person) => print(person.name);
+```
+
+```dart
+void printName(Object personOrPlace) {
+  if (personOrPlace is Person) {
+    print(person.name);
+  } else {
+    print((person as Place).name);
+  }
+}
+```
+
+**OK**:
+
+```dart
+void printLazyString(String Function() getString) => print(getString());
+```
+
+## Never access `.runtimeType` without `assertionsEnabled()`
+
+Dart implements [reified types][what_are_reified_types], known in some languages
+as RTTI, or run-time type information. Optimizing compilers like Dart2JS try to
+eliminate RTTI when they can definitively tell retaining the type is not
+significant to the program.
+
+[what_are_reified_types]: http://beust.com/weblog/2011/07/29/erasure-vs-reification/
+
+Howevever `.runtimeType`, especially on bottom types like `Object`, can cause
+_all_ reified types to need to be retained to implement Dart semantics. In
+Dart2JS's production mode all symbols are minified, so this information is not
+too useful anyway. It is OK to use in developer mode.
+
+**BAD**:
+
+```dart
+void findJob(Person person) {
+  if (person.jobs.isEmpty) {
+    throw 'UNSUPPORTED: ${person.runtimeType} does not have "jobs".';
+  }
+}
+```
+
+**OK**:
+
+```dart
+void findJob(Person person) {
+  if (person.jobs.isEmpty) {
+    throw 'UNSUPPORTED.';
+  }
+}
+```
+
+**OK**:
+
+```dart
+void findJob(Person person) {
+  if (person.jobs.isEmpty) {
+    if (assertionsEnabled()) {
+      throw 'UNSUPPORTED: ${person.runtimeType} does not have "jobs".';
+    } else {
+      throw 'UNSUPPORTED';
+    }
+  }
+}
+```
+
+_NOTE_, there is _also_ a (smaller) cost to using a class's own reified generics
+at runtime, so it should be kept to an absolute minimum. Consider the following:
+
+```dart
+class Container<T> {
+  Type get type => T;
+}
+
+void main() {
+  var a = new Container<String>();
+  print(a.type);
+}
+```
+
+Unless the `Type` is important to the production mode of the application,
+consider adopting a different pattern or only supporting this feature in
+development mode.
+
+
