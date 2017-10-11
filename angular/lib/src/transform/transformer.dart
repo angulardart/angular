@@ -22,8 +22,9 @@ class AngularTransformerGroup extends TransformerGroup {
         )
       ],
     ];
-    phases =
-        phases.map((phase) => phase.map((t) => new EagerTransformerWrapper(t)));
+    phases = phases.map(
+      (phase) => phase.map((t) => new EagerTransformerWrapper(t)),
+    );
     return new AngularTransformerGroup._(phases);
   }
 

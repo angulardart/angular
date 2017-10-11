@@ -98,7 +98,7 @@ class CompilerFlags {
   const CompilerFlags({
     @required this.genDebugInfo,
     this.entryPoints: const [],
-    this.generatorInputs: const [],
+    this.generatorInputs,
     this.profileFor: Profile.none,
     this.useLegacyStyleEncapsulation: false,
     this.usePlaceholder: true,
@@ -227,7 +227,7 @@ class CompilerFlags {
           ? defaultTo.entryPoints
           : (entryPoints as Iterable<String>).map((e) => new Glob(e)).toList(),
       generatorInputs: generatorInputs == null
-          ? defaultTo.entryPoints
+          ? defaultTo.generatorInputs
           : (generatorInputs as Iterable<String>)
               .map((e) => new Glob(e))
               .toList(),
