@@ -32,6 +32,7 @@ dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
+  analyzer: '^0.31.0-alpha.1'
   angular_ast:
       path: ../angular_ast
   angular_compiler:
