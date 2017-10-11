@@ -1,0 +1,25 @@
+<!--
+ Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
+ for details. All rights reserved. Use of this source code is governed by a
+ BSD-style license that can be found in the LICENSE file.
+-->
+<focus-trap>
+    <div class="wrapper">
+        <header *ngIf="shouldShowHeader">
+            <ng-content select="[header]"></ng-content>
+        </header>
+
+        <div class="error" [class.expanded]="error != null">{{error}}</div>
+
+        <main #main
+              (scroll)="onScroll()"
+              [class.top-scroll-stroke]="shouldShowTopScrollStroke"
+              [class.bottom-scroll-stroke]="shouldShowBottomScrollStroke">
+            <ng-content></ng-content>
+        </main>
+
+        <footer *ngIf="shouldShowFooter">
+            <ng-content select="[footer]"></ng-content>
+        </footer>
+    </div>
+</focus-trap>

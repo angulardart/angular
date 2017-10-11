@@ -16,25 +16,23 @@ import 'package:angular/core.dart'
         APP_INITIALIZER,
         Component,
         ReflectiveInjector,
-        coreLoadAndBootstrap,
-        PlatformRef,
-        createPlatform,
-        disposePlatform,
-        ComponentResolver,
         ChangeDetectorRef;
+import 'package:angular/experimental.dart';
 import 'package:angular/src/core/application_ref.dart'
     show
-        APPLICATION_CORE_PROVIDERS,
         ApplicationRef,
         ApplicationRefImpl,
         PlatformRef,
-        PlatformRefImpl;
+        PlatformRefImpl,
+        coreLoadAndBootstrap,
+        createPlatform,
+        disposePlatform;
 import 'package:angular/src/core/linker/app_view_utils.dart' show AppViewUtils;
 import 'package:angular/src/core/linker/component_factory.dart';
+import 'package:angular/src/core/linker/component_resolver.dart';
 import 'package:angular/src/facade/exception_handler.dart'
     show ExceptionHandler;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
-import 'package:angular/src/platform/browser_common.dart';
 
 import 'core_mocks.dart';
 
@@ -63,8 +61,7 @@ void main() {
       someCompFactory = new _MockComponentFactory(
           new _MockComponentRef(ReflectiveInjector.resolveAndCreate([])));
       var appInjector = ReflectiveInjector.resolveAndCreate([
-        APPLICATION_CORE_PROVIDERS,
-        BROWSER_APP_COMMON_PROVIDERS,
+        bootstrapLegacyModule,
         new Provider(ExceptionHandler,
             useValue: new ExceptionHandler(errorLogger)),
         new Provider(ComponentResolver,

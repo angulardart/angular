@@ -10,11 +10,14 @@ library angular.experimental;
 
 import 'package:meta/meta.dart';
 
+import 'src/bootstrap/modules.dart';
 import 'src/core/application_ref.dart';
 import 'src/core/linker.dart' show ComponentFactory, ComponentRef;
 import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
 import 'src/di/injector/injector.dart';
+
+export 'src/bootstrap/modules.dart' show bootstrapLegacyModule;
 
 // Create a new injector for platform-level services.
 //
@@ -44,6 +47,31 @@ ComponentRef<T> bootstrapFactory<T>(
   initAngular(appInjector);
   final appRef = appInjector.get(ApplicationRef) as ApplicationRef;
   return appRef.bootstrap(factory);
+}
+
+/// Bootstraps a new AngularDart application.
+///
+/// This is a transitional API to [bootstrapFactory] that removes some
+/// `initReflector()`-based services from the initial bootstrap, but still
+/// allows passing in [userProviders] at runtime.
+///
+/// It will be removed as soon as [bootstrapFactory] is better supported.
+///
+/// **WARNING**: This API is not considered part of the stable API.
+@experimental
+ComponentRef<T> bootstrapMinimal<T>(
+  ComponentFactory<T> factory,
+  void initReflector(), [
+  List<Object> userProviders = const [],
+]) {
+  // Still required, not ReflectiveInjector-free.
+  initReflector();
+  return bootstrapFactory(factory, (parent) {
+    return new Injector.slowReflective([
+      bootstrapMinimalModule,
+      userProviders,
+    ], parent);
+  });
 }
 
 /// Initializes the global application state from an application [injector].

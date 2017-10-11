@@ -1,0 +1,72 @@
+<!--
+ Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
+ for details. All rights reserved. Use of this source code is governed by a
+ BSD-style license that can be found in the LICENSE file.
+-->
+<div class="panel themeable"
+     role="group"
+     [attr.aria-label]="name"
+     [attr.aria-expanded]="isExpanded"
+     [class.open]="isExpanded"
+     [class.background]="anotherExpanded">
+
+    <!-- Title section -->
+    <header buttonDecorator
+            #expandCollapseButton
+            *ngIf="!isExpanded || !hideExpandedHeader"
+            [disabled]="disabled"
+            [class.closed] = "!isExpanded"
+            [class.disable-header-expansion]="disableHeaderExpansion"
+            [attr.aria-label]="headerMsg"
+            (trigger)="handleHeaderClick()">
+        <div class="panel-name">
+            <p class="primary-text">{{name}}</p>
+            <p class="secondary-text" *ngIf="secondaryText != null">{{secondaryText}}</p>
+            <ng-content select="[name]"></ng-content>
+        </div>
+
+        <div class="panel-description">
+            <ng-content select="[value]"></ng-content>
+        </div>
+
+        <glyph buttonDecorator
+               *ngIf="shouldShowExpandIcon"
+               class="expand-button"
+               [icon]="expandIcon"
+               [class.expand-more]="shouldFlipExpandIcon"
+               (trigger)="handleExpandIconClick()">
+        </glyph>
+    </header>
+
+    <!-- Expanded section -->
+    <main [class.hidden]="!isExpanded">
+        <div class="content-wrapper" [class.hidden-header]="hideExpandedHeader">
+            <div class="content">
+                <ng-content></ng-content>
+            </div>
+            <glyph *ngIf="shouldShowHiddenHeaderExpandIcon"
+                   #expandCollapseButton
+                   [icon]="expandIcon"
+                   class="expand-button"
+                   buttonDecorator
+                   (trigger)="collapse()"
+                   [attr.aria-label]="closePanelMsg">
+            </glyph>
+        </div>
+
+        <div *ngIf="!showSaveCancel" class="toolbelt">
+            <ng-content select="[toolbelt]"></ng-content>
+        </div>
+
+        <material-yes-no-buttons
+                *ngIf="showSaveCancel"
+                [pending]="activeSaveCancelAction"
+                [yesText]="saveText"
+                [noText]="cancelText"
+                [yesDisabled]="saveDisabled"
+                (yes)="doSave()"
+                (no)="doCancel()">
+        </material-yes-no-buttons>
+    </main>
+
+</div>

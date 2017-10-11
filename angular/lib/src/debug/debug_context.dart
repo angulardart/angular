@@ -61,8 +61,8 @@ class DebugContext<T> implements RenderDebugInfo {
     return '${_view.componentType.templateUrl}:$_tplRow:$_tplCol';
   }
 
-  Map<String, String> get locals {
-    Map<String, String> varValues = {};
+  Map<String, dynamic> get locals {
+    Map<String, dynamic> varValues = {};
 
     // There are many instances of:
     // StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),

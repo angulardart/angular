@@ -30,10 +30,7 @@ import 'package:angular/angular.dart';
       useValueString,
       useValue: 'foo',
     ),
-    const Provider(
-      MyMulti,
-      multi: true,
-    ),
+    const ProviderUseMulti<MyMulti>.ofType(MyMulti),
     const Provider(useValueList, useValue: const [
       const MyUseValue('Andrew'),
       const MyUseValue('Matan'),

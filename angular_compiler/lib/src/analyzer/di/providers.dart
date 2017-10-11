@@ -42,7 +42,8 @@ class ProviderReader {
       return _parseType(o);
     }
     if (!isProvider(o)) {
-      throw new FormatException('Expected Provider, got "${o.type.name}".');
+      final typeName = getTypeName(o.type);
+      throw new FormatException('Expected Provider, got "$typeName".');
     }
     return _parseProvider(o);
   }

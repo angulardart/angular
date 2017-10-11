@@ -1,11 +1,13 @@
 export 'src/analyzer.dart'
     show
         getInheritanceHierarchy,
+        getTypeName,
         urlOf,
         ComponentReader,
         DependencyElement,
         DependencyInvocation,
         DependencyReader,
+        InjectorReader,
         LiteralTokenElement,
         ModuleElement,
         ModuleReader,

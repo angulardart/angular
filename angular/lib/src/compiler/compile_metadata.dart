@@ -80,7 +80,11 @@ class CompileProviderMetadata {
   CompileTokenMetadata useExisting;
   CompileFactoryMetadata useFactory;
   List<CompileDiDependencyMetadata> deps;
+
   bool multi;
+
+  // TODO(matanl): Refactor to avoid two fields for multi-providers.
+  CompileTypeMetadata multiType;
 
   /// Restricts where the provider is injectable.
   final Visibility visibility;
@@ -94,6 +98,7 @@ class CompileProviderMetadata {
     this.deps,
     this.visibility,
     bool multi,
+    this.multiType,
   })
       : this.multi = multi == true;
 

@@ -22,7 +22,19 @@ export 'src/common/common_directives.dart';
 export 'src/common/directives.dart';
 export 'src/common/pipes.dart';
 export 'src/core/angular_entrypoint.dart' show AngularEntrypoint;
+export 'src/core/application_common_providers.dart';
+export 'src/core/application_ref.dart'
+    show
+        createPlatform,
+        disposePlatform,
+        getPlatform,
+        coreLoadAndBootstrap,
+        coreBootstrap,
+        createNgZone,
+        PlatformRef,
+        ApplicationRef;
 export 'src/core/application_tokens.dart' hide APP_ID_RANDOM_PROVIDER;
+export 'src/core/linker.dart';
+export 'src/core/testability/testability.dart';
 export 'src/platform/bootstrap.dart';
-export 'src/platform/dom/dom_tokens.dart';
 export 'src/platform/dom/events/event_manager.dart' show EventManagerPlugin;

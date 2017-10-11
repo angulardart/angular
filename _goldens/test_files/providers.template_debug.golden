@@ -76,11 +76,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
         import2.MyUseExisting,
         import2.MyUseExistingNested,
         import2.MyUseValue,
-        const OpaqueToken('useValueString'),
+        const OpaqueToken<dynamic>('useValueString'),
         import2.MyMulti,
-        const OpaqueToken('useValueList'),
-        const OpaqueToken('useValueMap'),
-        const OpaqueToken('useEnums')
+        const OpaqueToken<dynamic>('useValueList'),
+        const OpaqueToken<dynamic>('useValueMap'),
+        const OpaqueToken<dynamic>('useEnums')
       ],
       import2.ProvidersComponent,
       <String, dynamic>{})
@@ -93,11 +93,11 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   dynamic __MyUseFactory_0_6;
   import2.MyUseClass __MyUseClass_0_7;
   import2.MyUseValue __MyUseValue_0_10;
-  String __const_OpaqueToken__useValueString___0_11;
-  List<dynamic> __MyMulti_0_12;
-  List<dynamic> __const_OpaqueToken__useValueList___0_13;
-  Map<String, dynamic> __const_OpaqueToken__useValueMap___0_14;
-  dynamic __const_OpaqueToken__useEnums___0_15;
+  String __const_OpaqueToken_dynamic___useValueString___0_11;
+  List<import2.MyMulti> __MyMulti_0_12;
+  List<dynamic> __const_OpaqueToken_dynamic___useValueList___0_13;
+  Map<String, dynamic> __const_OpaqueToken_dynamic___useValueMap___0_14;
+  dynamic __const_OpaqueToken_dynamic___useEnums___0_15;
   static RenderComponentType _renderType;
   _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -145,15 +145,15 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyUseValue_0_10;
   }
 
-  String get _const_OpaqueToken__useValueString___0_11 {
+  String get _const_OpaqueToken_dynamic___useValueString___0_11 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__useValueString___0_11 == null)) {
-      (__const_OpaqueToken__useValueString___0_11 = 'foo');
+    if ((this.__const_OpaqueToken_dynamic___useValueString___0_11 == null)) {
+      (__const_OpaqueToken_dynamic___useValueString___0_11 = 'foo');
     }
-    return this.__const_OpaqueToken__useValueString___0_11;
+    return this.__const_OpaqueToken_dynamic___useValueString___0_11;
   }
 
-  List<dynamic> get _MyMulti_0_12 {
+  List<import2.MyMulti> get _MyMulti_0_12 {
     dbg(0, 0, 0);
     if ((this.__MyMulti_0_12 == null)) {
       (__MyMulti_0_12 = [null]);
@@ -161,35 +161,35 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     return this.__MyMulti_0_12;
   }
 
-  List<dynamic> get _const_OpaqueToken__useValueList___0_13 {
+  List<dynamic> get _const_OpaqueToken_dynamic___useValueList___0_13 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__useValueList___0_13 == null)) {
-      (__const_OpaqueToken__useValueList___0_13 = const [
+    if ((this.__const_OpaqueToken_dynamic___useValueList___0_13 == null)) {
+      (__const_OpaqueToken_dynamic___useValueList___0_13 = const [
         const import2.MyUseValue('Andrew'),
         const import2.MyUseValue('Matan'),
         const import2.MyUseValue.named(optional: true)
       ]);
     }
-    return this.__const_OpaqueToken__useValueList___0_13;
+    return this.__const_OpaqueToken_dynamic___useValueList___0_13;
   }
 
-  Map<String, dynamic> get _const_OpaqueToken__useValueMap___0_14 {
+  Map<String, dynamic> get _const_OpaqueToken_dynamic___useValueMap___0_14 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__useValueMap___0_14 == null)) {
-      (__const_OpaqueToken__useValueMap___0_14 = const {
+    if ((this.__const_OpaqueToken_dynamic___useValueMap___0_14 == null)) {
+      (__const_OpaqueToken_dynamic___useValueMap___0_14 = const {
         'Andrew': const import2.MyUseValue('Andrew'),
         'Matan': const import2.MyUseValue('Matan')
       });
     }
-    return this.__const_OpaqueToken__useValueMap___0_14;
+    return this.__const_OpaqueToken_dynamic___useValueMap___0_14;
   }
 
-  dynamic get _const_OpaqueToken__useEnums___0_15 {
+  dynamic get _const_OpaqueToken_dynamic___useEnums___0_15 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken__useEnums___0_15 == null)) {
-      (__const_OpaqueToken__useEnums___0_15 = import2.MyEnum.first);
+    if ((this.__const_OpaqueToken_dynamic___useEnums___0_15 == null)) {
+      (__const_OpaqueToken_dynamic___useEnums___0_15 = import2.MyEnum.first);
     }
-    return this.__const_OpaqueToken__useEnums___0_15;
+    return this.__const_OpaqueToken_dynamic___useEnums___0_15;
   }
 
   @override
@@ -226,23 +226,24 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, import2.MyUseValue) && (0 == nodeIndex))) {
       return _MyUseValue_0_10;
     }
-    if ((identical(token, const OpaqueToken('useValueString')) &&
+    if ((identical(token, const OpaqueToken<dynamic>('useValueString')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken__useValueString___0_11;
+      return _const_OpaqueToken_dynamic___useValueString___0_11;
     }
     if ((identical(token, import2.MyMulti) && (0 == nodeIndex))) {
       return _MyMulti_0_12;
     }
-    if ((identical(token, const OpaqueToken('useValueList')) &&
+    if ((identical(token, const OpaqueToken<dynamic>('useValueList')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken__useValueList___0_13;
+      return _const_OpaqueToken_dynamic___useValueList___0_13;
     }
-    if ((identical(token, const OpaqueToken('useValueMap')) &&
+    if ((identical(token, const OpaqueToken<dynamic>('useValueMap')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken__useValueMap___0_14;
+      return _const_OpaqueToken_dynamic___useValueMap___0_14;
     }
-    if ((identical(token, const OpaqueToken('useEnums')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__useEnums___0_15;
+    if ((identical(token, const OpaqueToken<dynamic>('useEnums')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken_dynamic___useEnums___0_15;
     }
     return notFoundResult;
   }

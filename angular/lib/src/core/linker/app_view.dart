@@ -4,6 +4,7 @@ import 'dart:js_util' as js_util;
 
 import 'package:func/func.dart';
 import 'package:meta/meta.dart';
+import 'package:angular/src/core/app_view_consts.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/di/injector/element.dart';

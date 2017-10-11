@@ -18,7 +18,7 @@ class InjectorEmitter {
 
   const InjectorEmitter(
     this._providers, {
-    this.importSource: '$_package/src/di/injector.dart',
+    this.importSource: '$_package/src/di/injector/injector.dart',
   });
 
   /// Writes `import` statements needed for [emitInjectors].
@@ -34,18 +34,19 @@ class InjectorEmitter {
   String emitInjector() {
     const $GeneratedInjector = '$_prefix.GeneratedInjector';
     const $Injector = '$_prefix.Injector';
-    const $OrElseInject = '$_prefix.OrElseInject';
-    const $throwsNotFound = '$_prefix.throwsNotFound';
+    const throwIfNotFound = '$_prefix.throwIfNotFound';
     return _providers.keys.map((name) {
       final methods = new StringBuffer();
       final output = new StringBuffer()
-        ..writeln('class $name\$Generated extends ${$GeneratedInjector} {')
-        ..writeln('  $name\$Generated([${$Injector} parent]) : super(parent);')
+        ..writeln(
+            '${$Injector} $name([${$Injector} parent]) => new _$name(parent);')
+        ..writeln('class _$name extends ${$GeneratedInjector} {')
+        ..writeln('  _$name([${$Injector} parent]) : super(parent);')
         ..writeln('  @override')
-        ..writeln('  T injectFromSelf<T>(')
-        ..writeln('    Object token, {')
-        ..writeln('    ${$OrElseInject}<T> orElse: ${$throwsNotFound},')
-        ..writeln('  }) {')
+        ..writeln('  Object injectFromSelfOptional(')
+        ..writeln('    Object token, [')
+        ..writeln('    Object orElse = $throwIfNotFound,')
+        ..writeln('  ]) {')
         ..writeln('    switch (token) {');
       var index = 0;
       for (final provider in _providers[name]) {
@@ -53,7 +54,7 @@ class InjectorEmitter {
       }
       output
         ..writeln('      default:')
-        ..writeln('        return orElse(this, token);')
+        ..writeln('        return orElse;')
         ..writeln('    }')
         ..writeln('  }')
         ..writeln('$methods')

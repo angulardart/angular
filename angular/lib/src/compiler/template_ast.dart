@@ -6,8 +6,9 @@ import '../core/security.dart';
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
+        CompileProviderMetadata,
         CompileTokenMetadata,
-        CompileProviderMetadata;
+        CompileTypeMetadata;
 import 'expression_parser/ast.dart' show AST;
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
@@ -208,7 +209,12 @@ class DirectiveAst implements TemplateAst {
 /// A provider declared on an element.
 class ProviderAst implements TemplateAst {
   CompileTokenMetadata token;
+
+  /// Whether the provider is `multi: true`.
   bool multiProvider;
+
+  /// May be non-null if [multiProvider] is `true`.
+  CompileTypeMetadata multiProviderType;
 
   /// Whether provider should be eagerly created at build time.
   ///
@@ -247,6 +253,7 @@ class ProviderAst implements TemplateAst {
     this.sourceSpan, {
     this.eager,
     this.dynamicallyReachable: true,
+    this.multiProviderType,
     this.visibleForInjection: true,
     this.implementedByDirectiveWithNoVisibility: false,
   });

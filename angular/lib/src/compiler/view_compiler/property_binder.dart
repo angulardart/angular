@@ -1,8 +1,7 @@
 import 'package:angular/src/compiler/analyzed_class.dart';
+import 'package:angular/src/core/app_view_consts.dart' show NAMESPACE_URIS;
 import 'package:angular/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    show NAMESPACE_URIS;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';

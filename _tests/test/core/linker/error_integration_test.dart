@@ -60,8 +60,8 @@ void main() {
         c.one = null;
       }).catchError((e) {
         updateFailed = true;
-        expect(e.toString(),
-            contains("NoSuchMethodError: The getter 'two' was called on null"));
+        // Intentionally less-specific, varies between Dart2JS/DDC/Dart VM.
+        expect(e.toString(), contains("'two'"));
       });
       assert(updateFailed);
     });
@@ -76,8 +76,8 @@ void main() {
         c.one = null;
       }).catchError((e) {
         updateFailed = true;
-        expect(e.toString(),
-            contains("NoSuchMethodError: The getter 'two' was called on null"));
+        // Intentionally less-specific, varies between Dart2JS/DDC/Dart VM.
+        expect(e.toString(), contains("'two'"));
       });
       assert(updateFailed);
     });
@@ -111,8 +111,8 @@ void main() {
         c.one = null;
       }).catchError((e) {
         updateFailed = true;
-        expect(e.toString(),
-            contains("NoSuchMethodError: The getter 'two' was called on null"));
+        // Intentionally less-specific, varies between Dart2JS/DDC/Dart VM.
+        expect(e.toString(), contains("'two'"));
       });
       assert(updateFailed);
     });
@@ -126,8 +126,8 @@ void main() {
         c.one = null;
       }).catchError((e) {
         updateFailed = true;
-        expect(e.toString(),
-            contains("NoSuchMethodError: The getter 'two' was called on null"));
+        // Intentionally less-specific, varies between Dart2JS/DDC/Dart VM.
+        expect(e.toString(), contains("'two'"));
       });
       assert(updateFailed);
     });

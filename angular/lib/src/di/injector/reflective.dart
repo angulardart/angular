@@ -38,9 +38,9 @@ class ReflectiveInjector extends HierarchicalInjector {
 
   ReflectiveInjector._(
     this._providers,
-    this._multiProviders, [
+    this._multiProviders,
     HierarchicalInjector parent,
-  ])
+  )
       : super(parent) {
     assert(parent != null, 'A parent injector is always required.');
     // Injectors as a contract must return themselves if `Injector` is a token.
@@ -53,26 +53,22 @@ class ReflectiveInjector extends HierarchicalInjector {
   }
 
   @override
-  T inject<T>({
-    Object token,
-    OrElseInject<T> orElse: throwsNotFound,
-  }) {
-    return injectFromSelf(
-      token,
-      orElse: (_, token) {
-        return injectFromAncestry(
-          token,
-          orElse: (_, token) => orElse(this, token),
-        );
-      },
-    );
+  Object injectOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) {
+    var result = injectFromSelfOptional(token);
+    if (identical(result, throwIfNotFound)) {
+      result = injectFromAncestryOptional(token, orElse);
+    }
+    return result;
   }
 
   @override
-  T injectFromSelf<T>(
-    Object token, {
-    OrElseInject<T> orElse: throwsNotFound,
-  }) {
+  Object injectFromSelfOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) {
     // Look for a previously instantiated instance.
     var instance = _instances[token];
     // If not found (and was truly a cache miss) resolve and create one.
@@ -80,7 +76,7 @@ class ReflectiveInjector extends HierarchicalInjector {
       final provider = _providers[token];
       // Provider not found, default to "orElse".
       if (provider == null) {
-        return orElse(this, token);
+        return orElse;
       }
       // Resolve the provider and cache the instance.
       if (provider.multi) {
@@ -132,7 +128,7 @@ class ReflectiveInjector extends HierarchicalInjector {
     }
     // useExisting (Redirect).
     if (provider.useExisting != null) {
-      return inject(token: provider.useExisting);
+      return inject(provider.useExisting);
     }
     assert(useClass != null, 'Only valid option is "useClass" here.');
     return _newInstanceOrInvoke(
@@ -142,7 +138,13 @@ class ReflectiveInjector extends HierarchicalInjector {
   }
 
   List<dynamic> _resolveWithReflectorMulti(RuntimeProvider<dynamic> provider) {
-    final results = <dynamic>[];
+    List results;
+    if (provider is ProviderUseMulti) {
+      results = listOfMulti(provider);
+    } else {
+      // Backwards compatibility.
+      results = <dynamic>[];
+    }
     for (final multiProvider in _multiProviders) {
       if (identical(multiProvider.token, provider.token)) {
         results.add(_resolveWithReflector(multiProvider));
@@ -177,20 +179,17 @@ class ReflectiveInjector extends HierarchicalInjector {
         }
         if (metadata.length == 1) {
           // Most common case: no "annotations" on this token.
-          dependency = inject(token: token);
+          dependency = inject(token);
         } else {
           dependency = _resolveArgumentWithAnnotations(token, metadata);
         }
       } else {
-        dependency = inject(token: metadata);
+        dependency = inject(metadata);
       }
       results[i] = dependency;
     }
     return results;
   }
-
-  // Default `OrElseInject` implementation for backing @Optional().
-  static Null _orElseNull(_, __) => null;
 
   // Iterates over the token metadata to call the appropriate injector method.
   dynamic _resolveArgumentWithAnnotations(Object token, List<Object> metadata) {
@@ -213,17 +212,17 @@ class ReflectiveInjector extends HierarchicalInjector {
       }
     }
     // TODO(matanl): Assert that there is no invalid combination.
-    final OrElseInject orElse = isOptional ? _orElseNull : throwsNotFound;
+    final orElse = isOptional ? null : throwIfNotFound;
     if (isSkipSelf) {
-      return injectFromAncestry<dynamic>(token, orElse: orElse);
+      return injectFromAncestryOptional(token, orElse);
     }
     if (isSelf) {
-      return injectFromSelf<dynamic>(token, orElse: orElse);
+      return injectFromSelfOptional(token, orElse);
     }
     if (isHost) {
-      return injectFromParent<dynamic>(token, orElse: orElse);
+      return injectFromParentOptional(token, orElse);
     }
-    return inject<dynamic>(token: token, orElse: orElse);
+    return injectOptional(token, orElse);
   }
 }
 

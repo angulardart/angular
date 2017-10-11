@@ -288,8 +288,6 @@ String interpolate9(
     _toStringWithNull(a9) +
     c9;
 
-const MAX_INTERPOLATION_VALUES = 9;
-
 String _toStringWithNull(dynamic v) => v == null ? '' : '$v';
 
 /// Returns whether [newValue] has changed since being [oldValue].
@@ -655,13 +653,6 @@ T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8, S9)
     return result;
   };
 }
-
-// List of supported namespaces.
-const NAMESPACE_URIS = const {
-  'xlink': 'http://www.w3.org/1999/xlink',
-  'svg': 'http://www.w3.org/2000/svg',
-  'xhtml': 'http://www.w3.org/1999/xhtml'
-};
 
 var NS_PREFIX_RE = new RegExp(r'^@([^:]+):(.+)');
 List<String> splitNamespace(String name) {

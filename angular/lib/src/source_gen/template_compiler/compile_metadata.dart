@@ -17,6 +17,7 @@ import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular/src/source_gen/common/url_resolver.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 
 import 'dart_object_utils.dart' as dart_objects;
 
@@ -99,6 +100,14 @@ class CompileTypeMetadataVisitor
         useClass: metadata,
       );
     }
+    CompileTypeMetadata multiType;
+    final typeArguments = provider.type?.typeArguments;
+    if (typeArguments != null && typeArguments.isNotEmpty) {
+      final genericType = typeArguments.first;
+      if (!genericType.isDynamic) {
+        multiType = _getCompileTypeMetadata(genericType.element);
+      }
+    }
     return new CompileProviderMetadata(
       token: _token(dart_objects.getField(provider, 'token')),
       useClass: _getUseClass(provider),
@@ -110,6 +119,7 @@ class CompileTypeMetadataVisitor
         'multi',
         defaultTo: false,
       ),
+      multiType: multiType,
     );
   }
 
@@ -167,7 +177,7 @@ class CompileTypeMetadataVisitor
           diDeps: _getCompileDiDependencyMetadata(element.parameters, element));
 
   o.Expression _getUseValue(DartObject provider) {
-    var maybeUseValue = provider.getField('useValue');
+    var maybeUseValue = dart_objects.getField(provider, 'useValue');
     if (!dart_objects.isNull(maybeUseValue)) {
       if (maybeUseValue.toStringValue() == noValueProvided) return null;
       try {
@@ -318,7 +328,7 @@ class CompileTypeMetadataVisitor
 
   CompileIdentifierMetadata _idFor(ParameterizedType type) =>
       new CompileIdentifierMetadata(
-          name: type.name, moduleUrl: moduleUrl(type.element));
+          name: getTypeName(type), moduleUrl: moduleUrl(type.element));
 
   o.Expression _useValueExpression(DartObject token) {
     if (token.isNull) {

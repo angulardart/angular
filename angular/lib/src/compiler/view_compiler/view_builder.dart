@@ -1,12 +1,11 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/output/output_ast.dart';
+import 'package:angular/src/core/app_view_consts.dart' show NAMESPACE_URIS;
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show
         ChangeDetectorState,
         ChangeDetectionStrategy,
         isDefaultChangeDetectionStrategy;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    show NAMESPACE_URIS;
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular_compiler/angular_compiler.dart';

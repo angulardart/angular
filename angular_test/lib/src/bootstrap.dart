@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
@@ -16,7 +17,7 @@ import 'package:angular/src/core/linker/view_ref.dart';
 /// Optionally can include the deprecated router APIs [withRouter].
 Injector createTestInjector(List<dynamic> providers) {
   final appInjector = ReflectiveInjector.resolveAndCreate([
-    BROWSER_APP_PROVIDERS,
+    bootstrapLegacyModule,
     providers,
   ], browserStaticPlatform().injector);
   appViewUtils ??= appInjector.get(AppViewUtils);

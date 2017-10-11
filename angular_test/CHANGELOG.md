@@ -1,3 +1,6 @@
+## 1.0.2-alpha
+- Support breaking changes in angular 5.0.0-alpha
+
 ## 1.0.1
 ### Cleanup
 - Remove dependency on `angular_router`.

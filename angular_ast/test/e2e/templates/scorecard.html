@@ -1,0 +1,28 @@
+<!--
+ Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
+ for details. All rights reserved. Use of this source code is governed by a
+ BSD-style license that can be found in the LICENSE file.
+-->
+<div class="acx-scoreboard">
+    <material-button class="scroll-button scroll-left-button"
+                     (trigger)="scrollScorecardBarLeft()"
+                     [class.hide]="atScorecardBarStart"
+                     *ngIf="isScrollable">
+        <glyph class="scroll-icon"
+               icon="chevron_left"
+               [attr.aria-label]="scrollScorecardBarBack">
+        </glyph>
+    </material-button>
+    <div scorecardBar class="scorecard-bar">
+        <ng-content></ng-content>
+    </div>
+    <material-button class="scroll-button scroll-right-button"
+                     (trigger)="scrollScorecardBarRight()"
+                     [class.hide]="atScorecardBarEnd"
+                     *ngIf="isScrollable">
+        <glyph class="scroll-icon"
+               icon="chevron_right"
+               [attr.aria-label]="scrollScorecardBarForward">
+        </glyph>
+    </material-button>
+</div>

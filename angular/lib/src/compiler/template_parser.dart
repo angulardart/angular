@@ -1,5 +1,5 @@
 import 'package:source_span/source_span.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart'
+import 'package:angular/src/core/app_view_consts.dart'
     show MAX_INTERPOLATION_VALUES;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/facade/lang.dart' show jsSplit;

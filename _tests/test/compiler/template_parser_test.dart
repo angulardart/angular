@@ -548,11 +548,16 @@ void main() {
               isHost: isHost);
         }
 
-        CompileProviderMetadata createProvider(String token,
-            {bool multi: false, List<String> deps: const []}) {
+        CompileProviderMetadata createProvider(
+          String token, {
+          bool multi,
+          CompileTypeMetadata multiType,
+          List<String> deps: const [],
+        }) {
           return new CompileProviderMetadata(
               token: createToken(token),
               multi: multi,
+              multiType: multiType,
               useClass: new CompileTypeMetadata(
                   name: '''provider${ nextProviderId ++}'''),
               deps: deps.map(createDep).toList());

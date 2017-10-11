@@ -22,6 +22,10 @@ This repository is the home of a set of packages for AngularDart:
 
 The web framework.
 
+### [angular_forms](angular_forms/README.md)
+
+A forms framework for use with Angular.
+
 ### [angular_router](angular_router/README.md)
 
 A routing framework for use with Angular.

@@ -2,18 +2,20 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/core.dart';
+import 'package:angular/src/bootstrap/modules.dart';
 import 'package:angular/src/core/application_ref.dart';
+import 'package:angular/src/core/linker.dart' show ComponentRef;
+import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/di/injector/reflective.dart';
 import 'package:angular/src/platform/browser_common.dart';
 
-export 'package:angular/src/platform/browser_common.dart'
-    show disableDebugTools, enableDebugTools;
+export 'browser/tools/tools.dart' show enableDebugTools, disableDebugTools;
 
-/// Providers that should be injected when bootstrapping a component.
-const BROWSER_APP_PROVIDERS = const [
-  BROWSER_APP_COMMON_PROVIDERS,
-  const Provider(DOCUMENT, useFactory: createDocument, deps: const []),
-];
+@Deprecated('No longer supported to use this list in end-user code')
+const BROWSER_APP_PROVIDERS = bootstrapLegacyModule;
+
+@Deprecated('No longer supported to use this list in end-user code')
+const BROWSER_APP_COMMON_PROVIDERS = bootstrapLegacyModule;
 
 /// Bootstrapping for Angular applications.
 ///
@@ -124,8 +126,8 @@ Future<ComponentRef<T>> bootstrapStatic<T>(
     initReflector();
   }
   final appProviders = customProviders != null && customProviders.isNotEmpty
-      ? [BROWSER_APP_PROVIDERS, customProviders]
-      : BROWSER_APP_PROVIDERS;
+      ? [bootstrapLegacyModule, customProviders]
+      : bootstrapLegacyModule;
   final platformRef = browserStaticPlatform();
   final appInjector =
       ReflectiveInjector.resolveAndCreate(appProviders, platformRef.injector);

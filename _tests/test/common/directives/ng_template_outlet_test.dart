@@ -26,7 +26,7 @@ void main() {
       Element element = testFixture.rootElement;
       expect(element, hasTextContent(""));
       DebugElement debugElement = getDebugNode(element);
-      var refs = debugElement.children[0].getLocal("refs");
+      CaptureTplRefs refs = debugElement.children[0].getLocal("refs");
       await testFixture.update((TestInsertContentComponent componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
@@ -37,7 +37,7 @@ void main() {
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       DebugElement debugElement = getDebugNode(element);
-      var refs = debugElement.children[0].getLocal("refs");
+      CaptureTplRefs refs = debugElement.children[0].getLocal("refs");
       await testFixture.update((TestClearContentComponent componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
@@ -54,7 +54,7 @@ void main() {
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       DebugElement debugElement = getDebugNode(element);
-      var refs = debugElement.children[0].getLocal("refs");
+      CaptureTplRefs refs = debugElement.children[0].getLocal("refs");
       await testFixture.update((TestChangeContentComponent componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });

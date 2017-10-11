@@ -57,8 +57,10 @@ class TemplateOutliner implements Builder {
     }
     final components = <String>[];
     final directives = <String, DartObject>{};
+    final injectors = <String>[];
     var units = [library.definingCompilationUnit]..addAll(library.parts);
     var types = units.expand((unit) => unit.types);
+    var methods = units.expand((unit) => unit.functions);
     for (final clazz in types) {
       final component = $Component.firstAnnotationOfExact(
         clazz,
@@ -76,14 +78,24 @@ class TemplateOutliner implements Builder {
         }
       }
     }
+    for (final method in methods) {
+      if ($_GenerateInjector.hasAnnotationOfExact(
+        method,
+        throwOnUnresolved: false,
+      )) {
+        injectors.add('${method.name}\$Injector');
+      }
+    }
     final output = new StringBuffer('$_analyzerIgnores\n');
     output
       ..writeln('// The .template.dart files also export the user code.')
       ..writeln("export '${p.basename(buildStep.inputId.path)}';")
       ..writeln();
-    if (components.isNotEmpty || directives.isNotEmpty) {
+    if (components.isNotEmpty ||
+        directives.isNotEmpty ||
+        injectors.isNotEmpty) {
       output
-        ..writeln('// Required for referencing $_appViewClass.')
+        ..writeln('// Required for referencing runtime code.')
         ..writeln(_angularImports)
         ..writeln();
       final userLandCode = p.basename(buildStep.inputId.path);
@@ -128,6 +140,11 @@ class TemplateOutliner implements Builder {
               'Element node, bool firstCheck);');
         output.writeln('}');
       });
+    }
+    if (injectors.isNotEmpty) {
+      for (final injector in injectors) {
+        output.writeln('external Injector $injector([Injector parent]);');
+      }
     }
     output..writeln()..writeln('external void initReflector();');
     buildStep.writeAsString(

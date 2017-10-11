@@ -73,7 +73,7 @@ const List<dynamic> styles$InjectableComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
   new StaticNodeDebugInfo(
       [
-        const OpaqueToken('test'),
+        const OpaqueToken<dynamic>('test'),
         import2.InjectableComponent,
         import2.SomeDep,
         import2.BaseService
@@ -84,7 +84,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
 
 class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   ViewInjectableComponent0 _compView_0;
-  dynamic _const_OpaqueToken__test___0_4;
+  dynamic _const_OpaqueToken_dynamic___test___0_4;
   import2.InjectableComponent _InjectableComponent_0_5;
   dynamic __SomeDep_0_6;
   dynamic __BaseService_0_7;
@@ -104,8 +104,8 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   dynamic get _SomeDep_0_6 {
     dbg(0, 0, 0);
     if ((this.__SomeDep_0_6 == null)) {
-      (__SomeDep_0_6 =
-          import2.createLinkedHashMap(this._const_OpaqueToken__test___0_4));
+      (__SomeDep_0_6 = import2
+          .createLinkedHashMap(this._const_OpaqueToken_dynamic___test___0_4));
     }
     return this.__SomeDep_0_6;
   }
@@ -126,12 +126,12 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _const_OpaqueToken__test___0_4 = import2.injectableFactory(
+    _const_OpaqueToken_dynamic___test___0_4 = import2.injectableFactory(
         this.injectorGet(import3.Window, viewData.parentIndex));
     _InjectableComponent_0_5 = new import2.InjectableComponent(
         null,
         this.injectorGet(import2.InjectableService, viewData.parentIndex, null),
-        _const_OpaqueToken__test___0_4,
+        _const_OpaqueToken_dynamic___test___0_4,
         this.injectorGet(String, viewData.parentIndex, null));
     _compView_0.create(_InjectableComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -142,8 +142,9 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const OpaqueToken('test')) && (0 == nodeIndex))) {
-      return _const_OpaqueToken__test___0_4;
+    if ((identical(token, const OpaqueToken<dynamic>('test')) &&
+        (0 == nodeIndex))) {
+      return _const_OpaqueToken_dynamic___test___0_4;
     }
     if ((identical(token, import2.InjectableComponent) && (0 == nodeIndex))) {
       return _InjectableComponent_0_5;
