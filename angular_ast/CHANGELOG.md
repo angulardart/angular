@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0-alpha+2
+
+- Requires `analyzer: ^0.31.0-alpha.1`.
+
 ## 0.4.0-alpha+1
 
 - New code location! angular_ast is now part of the angular mono-repo on

@@ -1,3 +1,9 @@
+## 5.0.0-alpha+1
+
+### Bug fixes
+
+*   Correctly depend on `analyzer: ^0.31.0-alpha.1`.
+
 ## 5.0.0-alpha
 
 **We are now tracking the Dart 2.0 SDK**. It is _not_ recommended to use the
