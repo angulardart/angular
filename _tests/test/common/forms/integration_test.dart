@@ -492,10 +492,10 @@ void main() {
         });
         var required =
             fixture.rootElement.querySelector('[required]') as InputElement;
-        var minLength =
-            fixture.rootElement.querySelector('[minlength]') as InputElement;
-        var maxLength =
-            fixture.rootElement.querySelector('[maxlength]') as InputElement;
+        var minLength = fixture.rootElement.querySelector('[ngControl=min]')
+            as InputElement;
+        var maxLength = fixture.rootElement.querySelector('[ngControl=max]')
+            as InputElement;
         await fixture.update((_) {
           required.value = '';
           minLength.value = '1';
@@ -1060,8 +1060,8 @@ class MyInputTest {
     template: '''
 <div [ngFormModel]="form" login-is-empty-validator>
   <input type="text" ngControl="login" required>
-  <input type="text" ngControl="min" minlength="3">
-  <input type="text" ngControl="max" maxlength="3">
+  <input type="text" ngControl="min" [minlength]="3">
+  <input type="text" ngControl="max" [maxlength]="3">
 </div>''')
 class SyncValidatorsHtmlTest {
   ControlGroup form;
