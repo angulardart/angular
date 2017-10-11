@@ -96,13 +96,29 @@ class RequiredValidator {}
   ],
 )
 class MinLengthValidator implements Validator {
-  final ValidatorFn _validator;
+  @HostBinding('attr.minlength')
+  String minLengthAttr;
 
-  MinLengthValidator(@Attribute('minlength') String minLength)
-      : _validator = Validators.minLength(int.parse(minLength, radix: 10));
+  int _minLength;
+  int get minLength => _minLength;
+
+  @Input('minlength')
+  set minLength(int value) {
+    _minLength = value;
+    minLengthAttr = value?.toString();
+  }
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) => _validator(c);
+  Map<String, dynamic> validate(AbstractControl c) {
+    final v = c?.value?.toString();
+    if (v == null || v == '') return null;
+    final length = v.length;
+    return v.length < minLength
+        ? {
+            'minlength': {'requiredLength': minLength, 'actualLength': v.length}
+          }
+        : null;
+  }
 }
 
 /// A [Directive] adding minimum-length validator to controls with `maxlength`.
@@ -124,13 +140,28 @@ class MinLengthValidator implements Validator {
   ],
 )
 class MaxLengthValidator implements Validator {
-  final ValidatorFn _validator;
+  @HostBinding('attr.maxlength')
+  String maxLengthAttr;
 
-  MaxLengthValidator(@Attribute('maxlength') String maxLength)
-      : _validator = Validators.maxLength(int.parse(maxLength, radix: 10));
+  int _maxLength;
+  int get maxLength => _maxLength;
+
+  @Input('maxlength')
+  set maxlength(int value) {
+    _maxLength = value;
+    maxLengthAttr = value?.toString();
+  }
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) => _validator(c);
+  Map<String, dynamic> validate(AbstractControl c) {
+    final v = c?.value?.toString();
+    if (v == null || v == '') return null;
+    return v.length > maxLength
+        ? {
+            'maxlength': {'requiredLength': maxLength, 'actualLength': v.length}
+          }
+        : null;
+  }
 }
 
 /// A [Directive] that adds a pattern validator to any controls with `pattern`:
