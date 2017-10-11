@@ -2,13 +2,13 @@ name: angular_ast
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Parser and utilities for AngularDart templates
-version: 0.4.0-alpha+1
+version: 0.4.0-alpha+2
 
 environment:
   sdk: '>=1.21.0 <2.0.0'
 
 dependencies:
-  analyzer: '0.31.0-alpha.1'
+  analyzer: '^0.31.0-alpha.1'
   charcode: '^1.1.0'
   collection: '^1.12.0'
   string_scanner: '^1.0.0'

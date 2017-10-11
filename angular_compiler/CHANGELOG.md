@@ -1,3 +1,9 @@
+## 0.4.0-alpha+1
+
+### Bug Fixes
+
+* Correctly depend on `analyzer: ^0.31.0-alpha.1`.
+
 ## 0.4.0-alpha
 
 While _technically_ a breaking change from `0.3.0`, it will likely be safe for
