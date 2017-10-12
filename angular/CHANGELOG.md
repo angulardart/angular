@@ -1,5 +1,11 @@
 ## 5.0.0-alpha+1
 
+### Breaking Changes
+
+*   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
+    `WrappedValue` when the transformed result changes, and instead will rely on
+    regular change detection.
+
 ### Bug fixes
 
 *   Correctly depend on `analyzer: ^0.31.0-alpha.1`.

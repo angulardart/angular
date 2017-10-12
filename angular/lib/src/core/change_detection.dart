@@ -4,7 +4,6 @@ export "change_detection/change_detection.dart"
     show
         ChangeDetectionStrategy,
         ChangeDetectorRef,
-        WrappedValue,
         SimpleChange,
         PipeTransform;
 export "change_detection/component_state.dart";

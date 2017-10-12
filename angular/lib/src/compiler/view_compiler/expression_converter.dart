@@ -19,25 +19,21 @@ abstract class NameResolver {
 
 class ExpressionWithWrappedValueInfo {
   final o.Expression expression;
-  final bool needsValueUnwrapper;
   final bool anyExplicit;
-  ExpressionWithWrappedValueInfo(
-      this.expression, this.needsValueUnwrapper, this.anyExplicit);
+  ExpressionWithWrappedValueInfo(this.expression, this.anyExplicit);
 }
 
 ExpressionWithWrappedValueInfo convertCdExpressionToIr(
     NameResolver nameResolver,
     o.Expression implicitReceiver,
     compiler_ast.AST expression,
-    o.ReadVarExpr valueUnwrapper,
     bool preserveWhitespace,
     bool emptyIsTrue) {
   assert(nameResolver != null);
-  var visitor = new _AstToIrVisitor(nameResolver, implicitReceiver,
-      valueUnwrapper, preserveWhitespace, emptyIsTrue);
+  var visitor = new _AstToIrVisitor(
+      nameResolver, implicitReceiver, preserveWhitespace, emptyIsTrue);
   o.Expression irAst = expression.visit(visitor, _Mode.Expression);
-  return new ExpressionWithWrappedValueInfo(
-      irAst, visitor.needsValueUnwrapper, visitor.anyExplicit);
+  return new ExpressionWithWrappedValueInfo(irAst, visitor.anyExplicit);
 }
 
 List<o.Statement> convertCdStatementToIr(
@@ -47,7 +43,7 @@ List<o.Statement> convertCdStatementToIr(
     bool preserveWhitespace) {
   assert(nameResolver != null);
   var visitor = new _AstToIrVisitor(
-      nameResolver, implicitReceiver, null, preserveWhitespace, false);
+      nameResolver, implicitReceiver, preserveWhitespace, false);
   var statements = <o.Statement>[];
   flattenStatements(stmt.visit(visitor, _Mode.Statement), statements);
   return statements;
@@ -82,14 +78,15 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   final bool preserveWhitespace;
   final bool emptyIsTrue;
 
-  final o.ReadVarExpr _valueUnwrapper;
-  bool needsValueUnwrapper = false;
-
   // Whether the [_implicitReceiver] is ever referred to explicitly.
   bool anyExplicit = false;
 
-  _AstToIrVisitor(this._nameResolver, this._implicitReceiver,
-      this._valueUnwrapper, this.preserveWhitespace, this.emptyIsTrue) {
+  _AstToIrVisitor(
+    this._nameResolver,
+    this._implicitReceiver,
+    this.preserveWhitespace,
+    this.emptyIsTrue,
+  ) {
     assert(_nameResolver != null);
   }
 
@@ -181,9 +178,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
         this.visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
             as List<o.Expression>;
     var value = this._nameResolver.callPipe(ast.name, input, args);
-    this.needsValueUnwrapper = true;
-    return convertToStatementIfNeeded(
-        mode, this._valueUnwrapper.callMethod("unwrap", [value]));
+    return convertToStatementIfNeeded(mode, value);
   }
 
   dynamic visitFunctionCall(compiler_ast.FunctionCall ast, dynamic context) {

@@ -72,7 +72,6 @@ void bind(
       nameResolver,
       context,
       parsedExpression,
-      DetectChangesVars.valUnwrapper,
       viewDirective.template.preserveWhitespace,
       _isBoolType(fieldType));
   if (isImmutable(parsedExpression, viewDirective.analyzedClass)) {
@@ -90,11 +89,6 @@ void bind(
   nameResolver.addField(new o.ClassField(fieldExpr.name,
       modifiers: const [o.StmtModifier.Private],
       outputType: isPrimitive ? fieldType : null));
-  if (checkExpression.needsValueUnwrapper) {
-    var initValueUnwrapperStmt =
-        DetectChangesVars.valUnwrapper.callMethod('reset', []).toStmt();
-    method.addStmt(initValueUnwrapperStmt);
-  }
   method.addStmt(currValExpr
       .set(checkExpression.expression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
@@ -106,10 +100,6 @@ void bind(
     condition = new o.NotExpr(o
         .importExpr(Identifiers.looseIdentical)
         .callFn([fieldExpr, currValExpr]));
-  }
-  if (checkExpression.needsValueUnwrapper) {
-    condition =
-        DetectChangesVars.valUnwrapper.prop('hasWrappedValue').or(condition);
   }
   method.addStmt(new o.IfStmt(
       condition,
@@ -439,7 +429,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           view.nameResolver,
           DetectChangesVars.cachedCtx,
           input.value,
-          DetectChangesVars.valUnwrapper,
           view.component.template.preserveWhitespace,
           true);
       dynamicInputsMethod.addStmt(directiveInstance
@@ -536,7 +525,6 @@ void bindToUpdateMethod(
       view.nameResolver,
       context,
       parsedExpression,
-      DetectChangesVars.valUnwrapper,
       view.component.template.preserveWhitespace,
       _isBoolType(fieldType));
   if (checkExpression.expression == null) {
@@ -548,11 +536,6 @@ void bindToUpdateMethod(
   view.nameResolver.addField(new o.ClassField(fieldExpr.name,
       outputType: isPrimitive ? fieldType : null,
       modifiers: const [o.StmtModifier.Private]));
-  if (checkExpression.needsValueUnwrapper) {
-    var initValueUnwrapperStmt =
-        DetectChangesVars.valUnwrapper.callMethod('reset', []).toStmt();
-    method.addStmt(initValueUnwrapperStmt);
-  }
   // Generate: final currVal_0 = ctx.expression.
   method.addStmt(currValExpr
       .set(checkExpression.expression)
@@ -560,7 +543,7 @@ void bindToUpdateMethod(
 
   // If we have only setter action, we can simply call updater and assign
   // newValue to previous value.
-  if (checkExpression.needsValueUnwrapper == false && actions.length == 1) {
+  if (actions.length == 1) {
     method.addStmt(actions.first);
     method.addStmt(
         new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt());
@@ -575,11 +558,6 @@ void bindToUpdateMethod(
       condition = new o.NotExpr(o
           .importExpr(Identifiers.looseIdentical)
           .callFn([fieldExpr, currValExpr]));
-    }
-
-    if (checkExpression.needsValueUnwrapper) {
-      condition =
-          DetectChangesVars.valUnwrapper.prop('hasWrappedValue').or(condition);
     }
     method.addStmt(new o.IfStmt(
         condition,

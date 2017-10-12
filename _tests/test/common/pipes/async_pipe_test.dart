@@ -8,7 +8,7 @@ import 'package:_tests/test_util.dart';
 import 'package:angular/angular.dart';
 
 void main() {
-  group('AsyncPipe AutoObservable', () {
+  group('Stream', () {
     StreamController emitter;
     AsyncPipe pipe;
     ChangeDetectorRef ref;
@@ -22,12 +22,12 @@ void main() {
       test('should return null when subscribing to an observable', () {
         expect(pipe.transform(emitter.stream), isNull);
       });
-      test('should return the latest available value wrapped', () async {
+      test('should return the latest available value', () async {
         pipe.transform(emitter.stream);
         emitter.add(message);
         Timer.run(expectAsync0(() {
-          WrappedValue res = pipe.transform(emitter.stream);
-          expect(res.wrapped, message);
+          final res = pipe.transform(emitter.stream);
+          expect(res, message);
         }));
       });
       test(
@@ -105,8 +105,8 @@ void main() {
         pipe.transform(completer.future);
         completer.complete(message);
         new Timer(new Duration(milliseconds: timer), expectAsync0(() {
-          WrappedValue res = pipe.transform(completer.future);
-          expect(res.wrapped, message);
+          final res = pipe.transform(completer.future);
+          expect(res, message);
         }));
       });
       test(
@@ -148,8 +148,8 @@ void main() {
           expect(pipe.transform(completer.future), isNull);
           completer.complete(message);
           new Timer(new Duration(milliseconds: timer), expectAsync0(() {
-            WrappedValue res = pipe.transform(completer.future);
-            expect(res.wrapped, message);
+            final res = pipe.transform(completer.future);
+            expect(res, message);
             pipe.ngOnDestroy();
             expect(pipe.transform(completer.future), isNull);
           }));

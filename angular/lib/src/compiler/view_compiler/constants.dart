@@ -59,5 +59,4 @@ class DetectChangesVars {
   static final changes = o.variable('changes');
   static final changed = o.variable('changed');
   static final firstCheck = o.variable('firstCheck');
-  static final valUnwrapper = o.variable('valUnwrapper');
 }
