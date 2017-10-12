@@ -245,7 +245,7 @@ void printName(Object personOrPlace) {
 void printLazyString(String Function() getString) => print(getString());
 ```
 
-## Never access `.runtimeType` without `assertionsEnabled()`
+## Never access `.runtimeType`
 
 Dart implements [reified types][what_are_reified_types], known in some languages
 as RTTI, or run-time type information. Optimizing compilers like Dart2JS try to
@@ -257,7 +257,11 @@ significant to the program.
 Howevever `.runtimeType`, especially on bottom types like `Object`, can cause
 _all_ reified types to need to be retained to implement Dart semantics. In
 Dart2JS's production mode all symbols are minified, so this information is not
-too useful anyway. It is OK to use in developer mode.
+too useful anyway.
+
+**NOTE**: It is also should **not** be used in `assertionsEnabled()`. As of
+2017/10/12, Dart2JS determines what types are "active" in the program before
+stripping out assertions.
 
 **BAD**:
 
@@ -269,12 +273,12 @@ void findJob(Person person) {
 }
 ```
 
-**OK**:
+**BAD**:
 
 ```dart
 void findJob(Person person) {
-  if (person.jobs.isEmpty) {
-    throw 'UNSUPPORTED.';
+  if (person.jobs.isEmpty && assertionsEnabled()) {
+    throw 'UNSUPPORTED: ${person.runtimeType} does not have "jobs".';
   }
 }
 ```
@@ -284,11 +288,7 @@ void findJob(Person person) {
 ```dart
 void findJob(Person person) {
   if (person.jobs.isEmpty) {
-    if (assertionsEnabled()) {
-      throw 'UNSUPPORTED: ${person.runtimeType} does not have "jobs".';
-    } else {
-      throw 'UNSUPPORTED';
-    }
+    throw 'UNSUPPORTED.';
   }
 }
 ```
@@ -311,4 +311,7 @@ Unless the `Type` is important to the production mode of the application,
 consider adopting a different pattern or only supporting this feature in
 development mode.
 
+## Do not use the built-in `enum` type
 
+It adds extra overhead on top of constant strings or integers that don't help
+much for framework-internal code (nobody will use `switch`, for example).
