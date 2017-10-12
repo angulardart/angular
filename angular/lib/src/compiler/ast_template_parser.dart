@@ -63,17 +63,17 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
       throw new UnimplementedError('Don\'t know how to handle comments.');
 
   @override
-  ng.TemplateAst visitElement(ast.ElementAst astNode, [ParseContext _]) =>
+  ng.TemplateAst visitElement(ast.ElementAst astNode, [ParseContext context]) =>
       new ng.ElementAst(
           astNode.name,
-          astNode.attributes.map(visitAttribute).toList(),
-          astNode.properties.map(visitProperty).toList(),
-          astNode.events.map(visitEvent).toList(),
-          astNode.references.map(visitReference).toList(),
+          _visitAll(astNode.attributes, context),
+          _visitAll(astNode.properties, context),
+          _visitAll(astNode.events, context),
+          _visitAll(astNode.references, context),
           [] /*directives */,
           [] /* providers */,
           null /* elementProviderUsage */,
-          astNode.childNodes.map(_visitThis).toList(),
+          _visitAll(astNode.childNodes, context),
           0 /* ngContentIndex */,
           astNode.sourceSpan);
 
@@ -85,16 +85,16 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
-          [ParseContext _]) =>
+          [ParseContext context]) =>
       new ng.EmbeddedTemplateAst(
-          astNode.attributes.map(visitAttribute).toList(),
-          astNode.events.map(visitEvent).toList(),
-          astNode.references.map(visitReference).toList(),
-          [] /* variables */,
+          _visitAll(astNode.attributes, context),
+          _visitAll(astNode.events, context),
+          _visitAll(astNode.references, context),
+          _visitAll(astNode.letBindings, context),
           [] /* directives */,
           [] /* providers */,
           null /* elementProviderUsage */,
-          [] /* children */,
+          _visitAll(astNode.childNodes, context),
           0 /* ngContentIndex */,
           astNode.sourceSpan);
 
@@ -119,7 +119,7 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
 
   @override
   ng.TemplateAst visitLetBinding(ast.LetBindingAst astNode, [ParseContext _]) =>
-      throw new UnimplementedError('Don\'t know how to handle let bindings.');
+      new ng.VariableAst(astNode.name, astNode.value, astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitProperty(ast.PropertyAst astNode, [ParseContext _]) {
@@ -153,7 +153,14 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
   ng.TemplateAst visitText(ast.TextAst astNode, [ParseContext _]) =>
       new ng.TextAst(astNode.value, 0 /* ngContentIndex */, astNode.sourceSpan);
 
-  ng.TemplateAst _visitThis(ast.TemplateAst astNode) => astNode.accept(this);
+  List<T> _visitAll<T extends ng.TemplateAst>(
+      List<ast.TemplateAst> astNodes, ParseContext context) {
+    final results = <T>[];
+    for (final astNode in astNodes) {
+      results.add(astNode.accept(this, context) as T);
+    }
+    return results;
+  }
 
   static String _location(ast.TemplateAst astNode) =>
       astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
