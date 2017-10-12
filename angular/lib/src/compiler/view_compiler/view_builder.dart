@@ -1342,11 +1342,6 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
             .equals(o.literal(ChangeDetectorState.NeverChecked)),
         o.BOOL_TYPE));
   }
-  if (readVars.contains(DetectChangesVars.valUnwrapper.name)) {
-    varStmts.add(DetectChangesVars.valUnwrapper
-        .set(o.importExpr(Identifiers.ValueUnwrapper).instantiate([]))
-        .toDeclStmt(null, [o.StmtModifier.Final]));
-  }
   if (view.genConfig.profileFor == Profile.build) {
     genProfileCdEnd(view, stmts);
   }

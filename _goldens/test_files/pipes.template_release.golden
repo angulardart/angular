@@ -62,20 +62,16 @@ class ViewComp0 extends AppView<import1.Comp> {
 
   @override
   void detectChangesInternal() {
-    final valUnwrapper = new ValueUnwrapper();
-    valUnwrapper.reset();
     final currVal_0 = import6.interpolate3(
         '    ',
-        valUnwrapper.unwrap(
-            import6.castByValue(_pipe_pure_0_0, _pipe_pure_0.transform)('foo')),
+        import6.castByValue(_pipe_pure_0_0, _pipe_pure_0.transform)('foo'),
         '\n    ',
-        valUnwrapper.unwrap(_pipe_dirty_1.transform('bar')),
+        _pipe_dirty_1.transform('bar'),
         '\n    ',
-        valUnwrapper.unwrap(import6.castByValue(
-            _pipe_lifecycle_2_0, _pipe_lifecycle_2.transform)('lifecycle')),
+        import6.castByValue(
+            _pipe_lifecycle_2_0, _pipe_lifecycle_2.transform)('lifecycle'),
         '\n  ');
-    if ((valUnwrapper.hasWrappedValue ||
-        !import8.looseIdentical(_expr_0, currVal_0))) {
+    if (!import8.looseIdentical(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:angular/core.dart'
-    show Pipe, ChangeDetectorRef, OnDestroy, WrappedValue;
+import 'package:angular/core.dart' show Pipe, ChangeDetectorRef, OnDestroy;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
@@ -81,54 +80,40 @@ final _observableStrategy = new ObservableStrategy();
 @Pipe('async', pure: false)
 class AsyncPipe implements OnDestroy {
   Object _latestValue;
-  Object _latestReturnedValue;
   Object _subscription;
-  dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ _obj;
+  dynamic /* Stream | Future | EventEmitter */ _obj;
   dynamic _strategy;
   ChangeDetectorRef _ref;
-  AsyncPipe(ChangeDetectorRef _ref) {
-    this._ref = _ref;
-  }
+
+  AsyncPipe(this._ref);
+
   @override
   void ngOnDestroy() {
-    if (this._subscription != null) {
-      this._dispose();
+    if (_subscription != null) {
+      _dispose();
     }
   }
 
-  dynamic transform(
-      dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ obj) {
+  dynamic transform(dynamic /* Stream | Future | EventEmitter */ obj) {
     if (_obj == null) {
       if (obj != null) {
-        this._subscribe(obj);
+        _subscribe(obj);
       }
-      this._latestReturnedValue = this._latestValue;
-      return this._latestValue;
+    } else if (!_maybeStreamIdentical(obj, _obj)) {
+      _dispose();
+      return transform(obj);
     }
-    // StreamController.stream getter always returns new Stream instance,
-    // operator== check is also needed. See https://github.com/dart-lang/angular2/issues/260
-    if (!_maybeStreamIdentical(obj, this._obj)) {
-      this._dispose();
-      return this.transform(obj);
-    }
-    if (identical(this._latestValue, this._latestReturnedValue)) {
-      return this._latestReturnedValue;
-    } else {
-      this._latestReturnedValue = this._latestValue;
-      return WrappedValue.wrap(this._latestValue);
-    }
+    return _latestValue;
   }
 
-  void _subscribe(
-      dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ obj) {
-    this._obj = obj;
-    this._strategy = this._selectStrategy(obj);
-    this._subscription = this._strategy.createSubscription(
-        obj, (Object value) => this._updateLatestValue(obj, value));
+  void _subscribe(dynamic /* Stream | Future | EventEmitter */ obj) {
+    _obj = obj;
+    _strategy = _selectStrategy(obj);
+    _subscription = _strategy.createSubscription(
+        obj, (Object value) => _updateLatestValue(obj, value));
   }
 
-  dynamic _selectStrategy(
-      dynamic /* Stream< dynamic > | Future< dynamic > | EventEmitter< dynamic > */ obj) {
+  dynamic _selectStrategy(dynamic /* Stream | Future | EventEmitter */ obj) {
     if (obj is Future) {
       return _promiseStrategy;
     } else if (obj is Stream) {
@@ -139,20 +124,22 @@ class AsyncPipe implements OnDestroy {
   }
 
   void _dispose() {
-    this._strategy.dispose(this._subscription);
-    this._latestValue = null;
-    this._latestReturnedValue = null;
-    this._subscription = null;
-    this._obj = null;
+    _strategy.dispose(_subscription);
+    _latestValue = null;
+    _subscription = null;
+    _obj = null;
   }
 
   void _updateLatestValue(dynamic async, Object value) {
-    if (identical(async, this._obj)) {
-      this._latestValue = value;
-      this._ref.markForCheck();
+    if (identical(async, _obj)) {
+      _latestValue = value;
+      _ref.markForCheck();
     }
   }
 
+  // StreamController.stream getter always returns new Stream instance,
+  // operator== check is also needed. See
+  // https://github.com/dart-lang/angular2/issues/260
   static bool _maybeStreamIdentical(a, b) {
     if (!identical(a, b)) {
       return a is Stream && b is Stream && a == b;

@@ -1,10 +1,5 @@
 export "change_detection_util.dart"
-    show
-        WrappedValue,
-        ValueUnwrapper,
-        SimpleChange,
-        devModeEqual,
-        looseIdentical;
+    show SimpleChange, devModeEqual, looseIdentical;
 export "change_detector_ref.dart" show ChangeDetectorRef;
 export "constants.dart"
     show
