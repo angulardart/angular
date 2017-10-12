@@ -112,7 +112,6 @@ class MinLengthValidator implements Validator {
   Map<String, dynamic> validate(AbstractControl c) {
     final v = c?.value?.toString();
     if (v == null || v == '') return null;
-    final length = v.length;
     return v.length < minLength
         ? {
             'minlength': {'requiredLength': minLength, 'actualLength': v.length}
