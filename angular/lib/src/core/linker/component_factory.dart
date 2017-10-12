@@ -84,7 +84,7 @@ class ComponentFactory<T> {
   ]) {
     // Note: Host views don't need a declarationViewContainer!
     final AppView<dynamic> hostView = _viewFactory(null, null);
-    return hostView.createHostView(injector, projectableNodes ?? []);
+    return hostView.createHostView(injector, projectableNodes ?? const []);
   }
 }
 
