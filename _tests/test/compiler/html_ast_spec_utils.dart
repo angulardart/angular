@@ -38,17 +38,17 @@ String humanizeLineColumn(SourceLocation location) {
   return '${location.line }:${location.column}';
 }
 
-class _Humanizer implements HtmlAstVisitor {
+class _Humanizer implements HtmlAstVisitor<Null, Null> {
   bool includeSourceSpan;
   List<dynamic> result = [];
   num elDepth = 0;
   _Humanizer(this.includeSourceSpan);
 
   @override
-  bool visit(HtmlAst ast, dynamic context) => false;
+  bool visit(HtmlAst ast, Null _) => false;
 
   @override
-  dynamic visitElement(HtmlElementAst ast, dynamic context) {
+  Null visitElement(HtmlElementAst ast, Null _) {
     var res =
         this._appendContext(ast, [HtmlElementAst, ast.name, this.elDepth++]);
     this.result.add(res);
@@ -59,21 +59,21 @@ class _Humanizer implements HtmlAstVisitor {
   }
 
   @override
-  dynamic visitAttr(HtmlAttrAst ast, dynamic context) {
+  Null visitAttr(HtmlAttrAst ast, Null _) {
     var res = this._appendContext(ast, [HtmlAttrAst, ast.name, ast.value]);
     this.result.add(res);
     return null;
   }
 
   @override
-  dynamic visitText(HtmlTextAst ast, dynamic context) {
+  Null visitText(HtmlTextAst ast, Null _) {
     var res = this._appendContext(ast, [HtmlTextAst, ast.value, this.elDepth]);
     this.result.add(res);
     return null;
   }
 
   @override
-  dynamic visitComment(HtmlCommentAst ast, dynamic context) {
+  Null visitComment(HtmlCommentAst ast, Null _) {
     var res =
         this._appendContext(ast, [HtmlCommentAst, ast.value, this.elDepth]);
     this.result.add(res);

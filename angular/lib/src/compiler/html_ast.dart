@@ -3,7 +3,7 @@ import 'package:source_span/source_span.dart';
 abstract class HtmlAst {
   SourceSpan get sourceSpan;
 
-  visit(HtmlAstVisitor visitor, dynamic context);
+  R visit<R, C>(HtmlAstVisitor<R, C> visitor, C context);
 }
 
 class HtmlTextAst implements HtmlAst {
@@ -14,7 +14,7 @@ class HtmlTextAst implements HtmlAst {
   HtmlTextAst(this.value, this.sourceSpan);
 
   @override
-  visit(HtmlAstVisitor visitor, dynamic context) {
+  R visit<R, C>(HtmlAstVisitor<R, C> visitor, C context) {
     return visitor.visitText(this, context);
   }
 }
@@ -32,7 +32,7 @@ class HtmlAttrAst implements HtmlAst {
   HtmlAttrAst(this.name, this.value, this.sourceSpan, this.hasValue);
 
   @override
-  visit(HtmlAstVisitor visitor, dynamic context) {
+  R visit<R, C>(HtmlAstVisitor<R, C> visitor, C context) {
     return visitor.visitAttr(this, context);
   }
 }
@@ -57,7 +57,7 @@ class HtmlElementAst implements HtmlAst {
   );
 
   @override
-  visit(HtmlAstVisitor visitor, dynamic context) {
+  R visit<R, C>(HtmlAstVisitor<R, C> visitor, C context) {
     return visitor.visitElement(this, context);
   }
 }
@@ -70,28 +70,28 @@ class HtmlCommentAst implements HtmlAst {
   HtmlCommentAst(this.value, this.sourceSpan);
 
   @override
-  visit(HtmlAstVisitor visitor, dynamic context) {
+  R visit<R, C>(HtmlAstVisitor<R, C> visitor, C context) {
     return visitor.visitComment(this, context);
   }
 }
 
-abstract class HtmlAstVisitor {
+abstract class HtmlAstVisitor<R, C> {
   /// Intercepts node visit for all nodes. If [visit] returns true, it indicates
   /// that the ast node was handled and will prevent visitAll from calling
   /// specific typed visit methods for that node.
-  bool visit(HtmlAst astNode, dynamic context) => false;
-  dynamic visitElement(HtmlElementAst ast, dynamic context);
-  dynamic visitAttr(HtmlAttrAst ast, dynamic context);
-  dynamic visitText(HtmlTextAst ast, dynamic context);
-  dynamic visitComment(HtmlCommentAst ast, dynamic context);
+  bool visit(HtmlAst astNode, C context) => false;
+  R visitElement(HtmlElementAst ast, C context);
+  R visitAttr(HtmlAttrAst ast, C context);
+  R visitText(HtmlTextAst ast, C context);
+  R visitComment(HtmlCommentAst ast, C context);
 }
 
-List htmlVisitAll(
-  HtmlAstVisitor visitor,
+List<R> htmlVisitAll<R, C>(
+  HtmlAstVisitor<R, C> visitor,
   List<HtmlAst> asts, [
-  context,
+  C context,
 ]) {
-  var result = [];
+  var result = <R>[];
   for (var ast in asts) {
     bool handled = visitor.visit(ast, context);
     if (!handled) {

@@ -8,4 +8,4 @@ const loggerKey = #loggerKey;
 /// [Logger] of the current zone.
 ///
 /// If the current zone has no [Logger], a default singleton is returned.
-Logger get logger => Zone.current[loggerKey] ?? new Logger('ng');
+Logger get logger => Zone.current[loggerKey] as Logger ?? new Logger('ng');

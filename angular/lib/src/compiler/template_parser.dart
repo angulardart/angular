@@ -165,8 +165,8 @@ class TemplateParserImpl implements TemplateParser {
             _exprParser,
             schemaRegistry,
             component.template?.preserveWhitespace ?? false);
-        result = htmlVisitAll(parseVisitor, htmlAstWithErrors.rootNodes,
-            EMPTY_ELEMENT_CONTEXT) as List<TemplateAst>;
+        result = htmlVisitAll(
+            parseVisitor, htmlAstWithErrors.rootNodes, EMPTY_ELEMENT_CONTEXT);
         errors = new List.from(errors)
           ..addAll(parseVisitor.errors)
           ..addAll(providerViewContext.errors);
@@ -185,7 +185,8 @@ class TemplateParserImpl implements TemplateParser {
 ///
 /// - Uses expression parser for interpolations, event actions and bindings.
 /// - Validates pipe names.
-class TemplateParseVisitor implements HtmlAstVisitor {
+class TemplateParseVisitor
+    implements HtmlAstVisitor<TemplateAst, ElementContext> {
   final ProviderViewContext providerViewContext;
   final Parser _exprParser;
   final ElementSchemaRegistry _schemaRegistry;
@@ -229,10 +230,9 @@ class TemplateParseVisitor implements HtmlAstVisitor {
   bool visit(HtmlAst ast, dynamic context) => false;
 
   @override
-  dynamic visitText(HtmlTextAst ast, dynamic context) {
-    ElementContext parent = context;
-    var ngContentIndex = parent.findNgContentIndex(TEXT_CSS_SELECTOR);
-    var expr = _parseInterpolation(ast.value, ast.sourceSpan, parent.exports);
+  TemplateAst visitText(HtmlTextAst ast, ElementContext context) {
+    var ngContentIndex = context.findNgContentIndex(TEXT_CSS_SELECTOR);
+    var expr = _parseInterpolation(ast.value, ast.sourceSpan, context.exports);
     if (expr != null) {
       return new BoundTextAst(expr, ngContentIndex, ast.sourceSpan);
     } else {
@@ -264,16 +264,15 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     return true;
   }
 
-  dynamic visitAttr(HtmlAttrAst ast, dynamic context) {
+  AttrAst visitAttr(HtmlAttrAst ast, ElementContext context) {
     return new AttrAst(ast.name, ast.value, ast.sourceSpan);
   }
 
-  dynamic visitComment(HtmlCommentAst ast, dynamic context) {
+  TemplateAst visitComment(HtmlCommentAst ast, ElementContext context) {
     return null;
   }
 
-  dynamic visitElement(HtmlElementAst element, dynamic context) {
-    ElementContext parent = context;
+  TemplateAst visitElement(HtmlElementAst element, ElementContext context) {
     var nodeName = element.name;
     var preparsedElement = preparseElement(element);
     if (preparsedElement.isScript || preparsedElement.isStyle) {
@@ -344,10 +343,10 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     List<BoundElementPropertyAst> elementProps = this
         ._createElementPropertyAsts(
             element.name, elementOrDirectiveProps, directiveAsts);
-    var isViewRoot = parent.isTemplateElement || hasInlineTemplates;
+    var isViewRoot = context.isTemplateElement || hasInlineTemplates;
     var providerContext = new ProviderElementContext(
         providerViewContext,
-        parent.providerContext,
+        context.providerContext,
         isViewRoot,
         directiveAsts,
         attrs,
@@ -359,14 +358,14 @@ class TemplateParseVisitor implements HtmlAstVisitor {
         ElementContext.create(
             isTemplateElement,
             directiveAsts,
-            isTemplateElement ? parent.providerContext : providerContext,
-            providerViewContext.component.exports)) as List<TemplateAst>;
+            isTemplateElement ? context.providerContext : providerContext,
+            providerViewContext.component.exports));
     providerContext.afterElement();
     // Override the actual selector when the `ngProjectAs` attribute is provided
     var projectionSelector = preparsedElement.projectAs != null
         ? CssSelector.parse(preparsedElement.projectAs)[0]
         : elementCssSelector;
-    var ngContentIndex = parent.findNgContentIndex(projectionSelector);
+    var ngContentIndex = context.findNgContentIndex(projectionSelector);
     TemplateAst parsedElement;
     if (preparsedElement.isNgContent) {
       var elementChildren = element.children;
@@ -397,7 +396,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       this._assertOnlyOneComponent(directiveAsts, element.sourceSpan);
       var ngContentIndex = hasInlineTemplates
           ? null
-          : parent.findNgContentIndex(projectionSelector);
+          : context.findNgContentIndex(projectionSelector);
       parsedElement = new ElementAst(
           nodeName,
           attrs,
@@ -432,8 +431,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
           templateDirectiveAsts, templateElementProps, element.sourceSpan);
       var templateProviderContext = new ProviderElementContext(
           this.providerViewContext,
-          parent.providerContext,
-          parent.isTemplateElement,
+          context.providerContext,
+          context.isTemplateElement,
           templateDirectiveAsts,
           [],
           [],
@@ -540,7 +539,7 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       List<BoundElementOrDirectiveProperty> targetProps,
       List<VariableAst> targetVars,
       List<CompileIdentifierMetadata> exports) {
-    var templateBindingsSource;
+    String templateBindingsSource;
     bool isDeferredAttr = false;
     if (attr.name == TEMPLATE_ATTR) {
       templateBindingsSource = attr.value;
@@ -765,12 +764,14 @@ class TemplateParseVisitor implements HtmlAstVisitor {
     // Need to sort the directives so that we get consistent results throughout,
     // as selectorMatcher uses Maps inside.
     // Also dedupe directives as they might match more than one time!
-    var directives = new List(this.directivesIndex.length);
+    var directives =
+        new List<CompileDirectiveMetadata>(this.directivesIndex.length);
     selectorMatcher.match(elementCssSelector, (selector, directive) {
-      directives[directivesIndex[directive]] = directive;
+      directives[directivesIndex[directive]] =
+          directive as CompileDirectiveMetadata;
     });
     var result = <CompileDirectiveMetadata>[];
-    for (CompileDirectiveMetadata dir in directives) {
+    for (var dir in directives) {
       if (dir != null) result.add(dir);
     }
     return result;
@@ -820,10 +821,8 @@ class TemplateParseVisitor implements HtmlAstVisitor {
               elOrDirRef.sourceSpan);
         }
       } else if (component == null) {
-        var refToken;
-        if (isTemplateElement) {
-          refToken = identifierToken(Identifiers.TemplateRef);
-        }
+        var refToken =
+            isTemplateElement ? identifierToken(Identifiers.TemplateRef) : null;
         targetReferences.add(
             new ReferenceAst(elOrDirRef.name, refToken, elOrDirRef.sourceSpan));
       }
@@ -972,8 +971,8 @@ BoundElementPropertyAst createElementPropertyAst(
     SourceSpan sourceSpan,
     ElementSchemaRegistry schemaRegistry,
     ErrorCallback reportError) {
-  var unit;
-  var bindingType;
+  String unit;
+  PropertyBindingType bindingType;
   String boundPropertyName;
   TemplateSecurityContext securityContext;
   var parts = name.split(PROPERTY_PARTS_SEPARATOR);
@@ -1035,13 +1034,13 @@ BoundElementPropertyAst createElementPropertyAst(
       securityContext, valueExpr, unit, sourceSpan);
 }
 
-class NonBindableVisitor implements HtmlAstVisitor {
+class NonBindableVisitor
+    implements HtmlAstVisitor<TemplateAst, ElementContext> {
   @override
-  bool visit(HtmlAst ast, dynamic context) => false;
+  bool visit(HtmlAst _, ElementContext __) => false;
 
   @override
-  ElementAst visitElement(HtmlElementAst ast, dynamic context) {
-    ElementContext parent = context;
+  ElementAst visitElement(HtmlElementAst ast, ElementContext context) {
     var preparsedElement = preparseElement(ast);
     if (preparsedElement.isScript ||
         preparsedElement.isStyle ||
@@ -1054,9 +1053,8 @@ class NonBindableVisitor implements HtmlAstVisitor {
     var attrNameAndValues =
         ast.attrs.map((attrAst) => [attrAst.name, attrAst.value]).toList();
     var selector = createElementCssSelector(ast.name, attrNameAndValues);
-    var ngContentIndex = parent.findNgContentIndex(selector);
-    var children = htmlVisitAll(this, ast.children, EMPTY_ELEMENT_CONTEXT)
-        as List<TemplateAst>;
+    var ngContentIndex = context.findNgContentIndex(selector);
+    var children = htmlVisitAll(this, ast.children, EMPTY_ELEMENT_CONTEXT);
     return new ElementAst(
         ast.name,
         htmlVisitAll(this, ast.attrs) as List<AttrAst>,
@@ -1072,19 +1070,18 @@ class NonBindableVisitor implements HtmlAstVisitor {
   }
 
   @override
-  dynamic visitComment(HtmlCommentAst ast, dynamic context) {
+  TemplateAst visitComment(HtmlCommentAst _, ElementContext __) {
     return null;
   }
 
   @override
-  AttrAst visitAttr(HtmlAttrAst ast, dynamic context) {
+  AttrAst visitAttr(HtmlAttrAst ast, ElementContext context) {
     return new AttrAst(ast.name, ast.value, ast.sourceSpan);
   }
 
   @override
-  TextAst visitText(HtmlTextAst ast, dynamic context) {
-    ElementContext parent = context;
-    var ngContentIndex = parent.findNgContentIndex(TEXT_CSS_SELECTOR);
+  TextAst visitText(HtmlTextAst ast, ElementContext context) {
+    var ngContentIndex = context.findNgContentIndex(TEXT_CSS_SELECTOR);
     return new TextAst(ast.value, ngContentIndex, ast.sourceSpan);
   }
 }

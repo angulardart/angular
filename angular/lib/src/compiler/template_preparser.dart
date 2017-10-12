@@ -18,8 +18,8 @@ const defaultNgContentSelector = '*';
 
 PreparsedElement preparseElement(HtmlElementAst ast) {
   var selectAttr = defaultNgContentSelector;
-  var hrefAttr;
-  var relAttr;
+  String hrefAttr;
+  String relAttr;
   var nonBindable = false;
   String projectAs;
 

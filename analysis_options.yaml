@@ -1,5 +1,9 @@
 analyzer:
- strong-mode: true
+ strong-mode:
+   true
+   ### Useful to uncomment during development to catch errors.
+   # implicit-dynamic: false
+   # implicit-casts: false
  exclude:
     # This exclude does not work on Dart 1.24.x
     # See `tool/travis.sh` for this is handled on Travis

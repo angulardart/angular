@@ -549,7 +549,7 @@ class ShadowTransformer extends Visitor {
     }
   }
 
-  visitSelectorGroup(SelectorGroup node) {
+  void visitSelectorGroup(SelectorGroup node) {
     var complexSelectors = <ComplexSelector>[];
     for (var selector in node.selectors) {
       // Convert [Selector] to [ComplexSelector] to facilitate shimming
@@ -663,28 +663,28 @@ class LegacyShadowTransformer extends ShadowTransformer {
     _unscopedSelectorGroups.clear();
   }
 
-  visitDeclarationGroup(DeclarationGroup node) {
+  void visitDeclarationGroup(DeclarationGroup node) {
     shimPolyfillNextSelector(node.declarations);
     super.visitDeclarationGroup(node);
   }
 
-  visitMediaDirective(MediaDirective node) {
+  void visitMediaDirective(MediaDirective node) {
     shimPolyfillNextSelector(node.rules);
     super.visitMediaDirective(node);
   }
 
-  visitRuleSet(RuleSet node) {
+  void visitRuleSet(RuleSet node) {
     shimPolyfillUnscopedRule(node);
     super.visitRuleSet(node);
   }
 
-  visitSelectorGroup(SelectorGroup node) {
+  void visitSelectorGroup(SelectorGroup node) {
     if (!_unscopedSelectorGroups.contains(node)) {
       super.visitSelectorGroup(node);
     }
   }
 
-  visitStyleSheet(StyleSheet node) {
+  void visitStyleSheet(StyleSheet node) {
     shimPolyfillNextSelector(node.topLevels);
     super.visitStyleSheet(node);
   }
