@@ -133,7 +133,7 @@ class DirectiveNormalizer {
 
 /// Extracts a list of inline styles, stylesheet links and content selectors
 /// from a template to use for normalization of templates.
-class TemplatePreparseVisitor implements HtmlAstVisitor {
+class TemplatePreparseVisitor implements HtmlAstVisitor<Null, Null> {
   List<String> ngContentSelectors = [];
   List<String> styles = [];
   List<String> styleUrls = [];
@@ -143,7 +143,7 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
   bool visit(HtmlAst ast, dynamic context) => false;
 
   @override
-  dynamic visitElement(HtmlElementAst ast, dynamic context) {
+  Null visitElement(HtmlElementAst ast, Null _) {
     var preparsedElement = preparseElement(ast);
     if (preparsedElement.isNgContent) {
       if (inLiteralHtmlArea == 0) {
@@ -174,17 +174,17 @@ class TemplatePreparseVisitor implements HtmlAstVisitor {
   }
 
   @override
-  dynamic visitComment(HtmlCommentAst ast, dynamic context) {
+  Null visitComment(HtmlCommentAst _, Null __) {
     return null;
   }
 
   @override
-  dynamic visitAttr(HtmlAttrAst ast, dynamic context) {
+  Null visitAttr(HtmlAttrAst _, Null __) {
     return null;
   }
 
   @override
-  dynamic visitText(HtmlTextAst ast, dynamic context) {
+  Null visitText(HtmlTextAst _, Null __) {
     return null;
   }
 }

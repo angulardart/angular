@@ -38,7 +38,7 @@ class NormalizedComponentWithViewDirectives {
   NormalizedComponentWithViewDirectives(
       this.component, this.directives, this.pipes);
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'class': 'NormalizedComponentWithViewDirectives',
         'component': component,
         'directives': directives,
