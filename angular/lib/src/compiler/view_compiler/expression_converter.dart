@@ -174,8 +174,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
-        ast.target.visit(this, _Mode.Expression).callFn(this
-            .visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)));
+        ast.target.visit(this, _Mode.Expression).callFn(
+            visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)));
   }
 
   dynamic visitIfNull(compiler_ast.IfNull ast, dynamic context) {

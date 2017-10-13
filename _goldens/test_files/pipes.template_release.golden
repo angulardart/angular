@@ -17,15 +17,16 @@ import 'package:angular/angular.template.dart'
 import 'package:angular/src/core/linker/app_view.dart';
 import 'pipes.dart' as import1;
 import 'dart:html' as import2;
+import 'dart:core';
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart'
-    as import4;
+    as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+    as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/facade/lang.dart'
-    as import8;
+    as import9;
 
 const List<dynamic> styles$Comp = const [];
 
@@ -33,16 +34,19 @@ class ViewComp0 extends AppView<import1.Comp> {
   import2.Text _text_0;
   var _expr_0;
   import1.PurePipe _pipe_pure_0;
-  var _pipe_pure_0_0;
+  dynamic Function(dynamic) _pipe_pure_0_0;
   import1.DirtyPipe _pipe_dirty_1;
   import1.LifecyclePipe _pipe_lifecycle_2;
-  var _pipe_lifecycle_2_0;
+  dynamic Function(dynamic) _pipe_lifecycle_2_0;
+  import1.TypesPipe _pipe_types_3;
+  String Function(String, int, dynamic, import1.C, void Function(String))
+      _pipe_types_3_0;
   static RenderComponentType _renderType;
   ViewComp0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+      : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp');
-    _renderType ??= import6.appViewUtils
+    _renderType ??= import7.appViewUtils
         .createRenderType('', ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
   }
@@ -52,26 +56,30 @@ class ViewComp0 extends AppView<import1.Comp> {
     _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
     _pipe_pure_0 = new import1.PurePipe();
-    this._pipe_pure_0_0 = import6.pureProxy1(_pipe_pure_0.transform);
+    _pipe_pure_0_0 = import7.pureProxy1(_pipe_pure_0.transform);
     _pipe_dirty_1 = new import1.DirtyPipe();
     _pipe_lifecycle_2 = new import1.LifecyclePipe();
-    this._pipe_lifecycle_2_0 = import6.pureProxy1(_pipe_lifecycle_2.transform);
+    _pipe_lifecycle_2_0 = import7.pureProxy1(_pipe_lifecycle_2.transform);
+    _pipe_types_3 = new import1.TypesPipe();
+    _pipe_types_3_0 = import7.pureProxy5(_pipe_types_3.transform);
     init(const [], null);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final currVal_0 = import6.interpolate3(
+    final import1.Comp _ctx = ctx;
+    final currVal_0 = import7.interpolate4(
         '    ',
-        import6.castByValue(_pipe_pure_0_0, _pipe_pure_0.transform)('foo'),
+        _pipe_pure_0_0('foo'),
         '\n    ',
         _pipe_dirty_1.transform('bar'),
         '\n    ',
-        import6.castByValue(
-            _pipe_lifecycle_2_0, _pipe_lifecycle_2.transform)('lifecycle'),
+        _pipe_lifecycle_2_0('lifecycle'),
+        '\n    ',
+        _pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d),
         '\n  ');
-    if (!import8.looseIdentical(_expr_0, currVal_0)) {
+    if (!import9.looseIdentical(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -95,9 +103,9 @@ class _ViewCompHost0 extends AppView<dynamic> {
   import1.Comp _Comp_0_4;
   static RenderComponentType _renderType;
   _ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+      : super(import5.ViewType.HOST, {}, parentView, parentIndex,
             ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import6.appViewUtils
+    _renderType ??= import7.appViewUtils
         .createRenderType('', ViewEncapsulation.Emulated, styles$CompHost);
     setupComponentType(_renderType);
   }

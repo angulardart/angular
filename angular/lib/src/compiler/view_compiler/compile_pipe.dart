@@ -8,15 +8,19 @@ import "view_compiler_utils.dart"
     show injectFromViewParentInjector, createPureProxy, getPropertyInView;
 
 class _PurePipeProxy {
-  CompileView view;
-  o.ReadClassMemberExpr instance;
-  num argCount;
+  final CompileView view;
+  final o.ReadClassMemberExpr instance;
+  final int argCount;
+
   _PurePipeProxy(this.view, this.instance, this.argCount);
 }
 
 class CompilePipe {
-  CompileView view;
-  CompilePipeMetadata meta;
+  final CompileView view;
+  final CompilePipeMetadata meta;
+  final _purePipeProxies = <_PurePipeProxy>[];
+  o.ReadClassMemberExpr instance;
+
   static o.Expression call(
       CompileView view, String name, List<o.Expression> args) {
     var compView = view.componentView;
@@ -38,14 +42,9 @@ class CompilePipe {
     return pipe._call(view, args);
   }
 
-  o.ReadClassMemberExpr instance;
-  final _purePipeProxies = <_PurePipeProxy>[];
   CompilePipe(this.view, this.meta) {
-    this.instance =
+    instance =
         new o.ReadClassMemberExpr('_pipe_${meta.name}_${view.pipeCount++}');
-  }
-  bool get pure {
-    return this.meta.pure;
   }
 
   void create() {
@@ -54,43 +53,48 @@ class CompilePipe {
           .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
         return new o.ReadClassMemberExpr('ref');
       }
-      return injectFromViewParentInjector(this.view, diDep.token, false);
+      return injectFromViewParentInjector(view, diDep.token, false);
     }).toList();
-    this.view.nameResolver.addField(new o.ClassField(this.instance.name,
-        outputType: o.importType(this.meta.type),
+    view.nameResolver.addField(new o.ClassField(instance.name,
+        outputType: o.importType(meta.type),
         modifiers: [o.StmtModifier.Private]));
-    this.view.createMethod.resetDebugInfo(null, null);
-    this.view.createMethod.addStmt(new o.WriteClassMemberExpr(
-            instance.name, o.importExpr(this.meta.type).instantiate(deps))
+    view.createMethod.resetDebugInfo(null, null);
+    view.createMethod.addStmt(new o.WriteClassMemberExpr(
+            instance.name, o.importExpr(meta.type).instantiate(deps))
         .toStmt());
-    this._purePipeProxies.forEach((purePipeProxy) {
-      var pipeInstanceSeenFromPureProxy =
-          getPropertyInView(this.instance, purePipeProxy.view, this.view);
-      createPureProxy(pipeInstanceSeenFromPureProxy.prop("transform"),
-          purePipeProxy.argCount, purePipeProxy.instance, purePipeProxy.view);
-    });
+    for (var purePipeProxy in _purePipeProxies) {
+      final pipeInstanceSeenFromPureProxy =
+          getPropertyInView(instance, purePipeProxy.view, view);
+      // A pipe transform method has one required argument, and a variable
+      // number of optional arguments. However, each call site will always
+      // invoke the transform method with a fixed number of arguments, so we
+      // can use a pure proxy with the same number of required arguments.
+      final pureProxyType = new o.FunctionType(
+        meta.transformType.returnType,
+        meta.transformType.paramTypes.sublist(0, purePipeProxy.argCount),
+      );
+      createPureProxy(
+        pipeInstanceSeenFromPureProxy.prop("transform"),
+        purePipeProxy.argCount,
+        purePipeProxy.instance,
+        purePipeProxy.view,
+        pureProxyType: pureProxyType,
+      );
+    }
   }
 
   o.Expression _call(CompileView callingView, List<o.Expression> args) {
-    if (this.meta.pure) {
+    if (meta.pure) {
       // PurePipeProxies live on the view that called them.
-      var purePipeProxy = new _PurePipeProxy(
+      final purePipeProxy = new _PurePipeProxy(
           callingView,
           new o.ReadClassMemberExpr(
-              '${this.instance.name}_${this._purePipeProxies.length}'),
+              '${instance.name}_${_purePipeProxies.length}'),
           args.length);
-      this._purePipeProxies.add(purePipeProxy);
-      return o.importExpr(Identifiers.castByValue).callFn([
-        purePipeProxy.instance,
-        getPropertyInView(
-          this.instance.prop("transform"),
-          callingView,
-          this.view,
-          forceCast: true,
-        )
-      ]).callFn(args);
+      _purePipeProxies.add(purePipeProxy);
+      return purePipeProxy.instance.callFn(args);
     } else {
-      return getPropertyInView(this.instance, callingView, this.view)
+      return getPropertyInView(instance, callingView, view)
           .callMethod("transform", args);
     }
   }

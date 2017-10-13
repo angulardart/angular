@@ -2,20 +2,34 @@ import 'package:angular/angular.dart';
 
 @Pipe('pure', pure: true)
 class PurePipe implements PipeTransform {
-  transform(value, _, __) => value;
+  transform(value) => value;
 }
 
 @Pipe('dirty', pure: false)
 class DirtyPipe implements PipeTransform {
-  transform(value, _, __) => value;
+  transform(value) => value;
 }
 
 @Pipe('lifecycle')
 class LifecyclePipe implements PipeTransform, OnDestroy {
-  transform(value, _, __) => value;
+  transform(value) => value;
 
   @override
   void ngOnDestroy() {}
+}
+
+class C {}
+
+@Pipe('types')
+class TypesPipe implements PipeTransform {
+  String transform(
+    String value, [
+    int a,
+    dynamic b,
+    C c,
+    void Function(String) d,
+  ]) =>
+      value;
 }
 
 @Component(
@@ -24,13 +38,19 @@ class LifecyclePipe implements PipeTransform, OnDestroy {
     PurePipe,
     DirtyPipe,
     LifecyclePipe,
+    TypesPipe,
   ],
   template: r'''
     {{ "foo" | pure }}
     {{ "bar" | dirty }}
     {{ "lifecycle" | lifecycle }}
+    {{ "types" | types:1:2:c:d }}
   ''',
   // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
   preserveWhitespace: true,
 )
-class Comp {}
+class Comp {
+  C c;
+
+  void d(String value) {}
+}

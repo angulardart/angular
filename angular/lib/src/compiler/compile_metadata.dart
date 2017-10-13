@@ -8,6 +8,7 @@ import '../core/metadata/visibility.dart';
 import '../facade/exceptions.dart' show BaseException;
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
+import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
 // group 1: 'property' from '[property]'
@@ -528,12 +529,18 @@ CompileDirectiveMetadata createHostComponentMeta(
 class CompilePipeMetadata implements CompileMetadataWithType {
   @override
   final CompileTypeMetadata type;
+  final o.FunctionType transformType;
   final String name;
   final bool pure;
   final List<LifecycleHooks> lifecycleHooks;
 
-  CompilePipeMetadata(
-      {this.type, this.name, bool pure, List<LifecycleHooks> lifecycleHooks})
+  CompilePipeMetadata({
+    this.type,
+    this.transformType,
+    this.name,
+    bool pure,
+    List<LifecycleHooks> lifecycleHooks,
+  })
       : this.pure = pure ?? true,
         this.lifecycleHooks = lifecycleHooks ?? const [];
 
