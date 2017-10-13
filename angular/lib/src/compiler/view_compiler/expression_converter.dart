@@ -17,13 +17,7 @@ abstract class NameResolver {
   int createUniqueBindIndex();
 }
 
-class ExpressionWithWrappedValueInfo {
-  final o.Expression expression;
-  final bool anyExplicit;
-  ExpressionWithWrappedValueInfo(this.expression, this.anyExplicit);
-}
-
-ExpressionWithWrappedValueInfo convertCdExpressionToIr(
+o.Expression convertCdExpressionToIr(
     NameResolver nameResolver,
     o.Expression implicitReceiver,
     compiler_ast.AST expression,
@@ -32,8 +26,7 @@ ExpressionWithWrappedValueInfo convertCdExpressionToIr(
   assert(nameResolver != null);
   var visitor = new _AstToIrVisitor(
       nameResolver, implicitReceiver, preserveWhitespace, emptyIsTrue);
-  o.Expression irAst = expression.visit(visitor, _Mode.Expression);
-  return new ExpressionWithWrappedValueInfo(irAst, visitor.anyExplicit);
+  return expression.visit(visitor, _Mode.Expression);
 }
 
 List<o.Statement> convertCdStatementToIr(
@@ -77,9 +70,6 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   final o.Expression _implicitReceiver;
   final bool preserveWhitespace;
   final bool emptyIsTrue;
-
-  // Whether the [_implicitReceiver] is ever referred to explicitly.
-  bool anyExplicit = false;
 
   _AstToIrVisitor(
     this._nameResolver,
@@ -151,7 +141,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   dynamic visitChain(compiler_ast.Chain ast, dynamic context) {
     _Mode mode = context;
     ensureStatementMode(mode, ast);
-    return this.visitAll(ast.expressions as List<compiler_ast.AST>, mode);
+    return visitAll(ast.expressions as List<compiler_ast.AST>, mode);
   }
 
   dynamic visitConditional(compiler_ast.Conditional ast, dynamic context) {
@@ -174,10 +164,9 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   dynamic visitPipe(compiler_ast.BindingPipe ast, dynamic context) {
     _Mode mode = context;
     var input = ast.exp.visit(this, _Mode.Expression);
-    var args =
-        this.visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
-            as List<o.Expression>;
-    var value = this._nameResolver.callPipe(ast.name, input, args);
+    var args = visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
+        as List<o.Expression>;
+    var value = _nameResolver.callPipe(ast.name, input, args);
     return convertToStatementIfNeeded(mode, value);
   }
 
@@ -270,7 +259,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     return convertToStatementIfNeeded(
         mode,
         _nameResolver.createLiteralArray(
-            this.visitAll(ast.expressions as List<compiler_ast.AST>, mode)
+            visitAll(ast.expressions as List<compiler_ast.AST>, mode)
                 as List<o.Expression>));
   }
 
@@ -281,7 +270,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
       parts.add([ast.keys[i], ast.values[i].visit(this, _Mode.Expression)]);
     }
     return convertToStatementIfNeeded(
-        mode, this._nameResolver.createLiteralMap(parts));
+        mode, _nameResolver.createLiteralMap(parts));
   }
 
   dynamic visitLiteralPrimitive(
@@ -292,18 +281,16 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
 
   dynamic visitMethodCall(compiler_ast.MethodCall ast, dynamic context) {
     _Mode mode = context;
-    var args =
-        this.visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
-            as List<o.Expression>;
+    var args = visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
+        as List<o.Expression>;
     var result;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
-      var varExpr = this._nameResolver.getLocal(ast.name);
+      var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
         result = varExpr.callFn(args);
       } else {
-        anyExplicit = true;
-        receiver = this._implicitReceiver;
+        receiver = _implicitReceiver;
       }
     }
     result ??= receiver.callMethod(ast.name, args);
@@ -322,10 +309,9 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     var result;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
-      result = this._nameResolver.getLocal(ast.name);
+      result = _nameResolver.getLocal(ast.name);
       if (result == null) {
-        receiver = this._implicitReceiver;
-        anyExplicit = true;
+        receiver = _implicitReceiver;
       }
     }
     result ??= receiver.prop(ast.name);
@@ -336,12 +322,11 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _Mode mode = context;
     o.Expression receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
-      var varExpr = this._nameResolver.getLocal(ast.name);
+      var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
         throw new BaseException("Cannot assign to a reference or variable!");
       }
-      receiver = this._implicitReceiver;
-      anyExplicit = true;
+      receiver = _implicitReceiver;
     }
     return convertToStatementIfNeeded(mode,
         receiver.prop(ast.name).set(ast.value.visit(this, _Mode.Expression)));
@@ -359,8 +344,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
       compiler_ast.SafeMethodCall ast, dynamic context) {
     _Mode mode = context;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
-    var args =
-        this.visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression);
+    var args = visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression);
     return convertToStatementIfNeeded(
         mode,
         receiver
