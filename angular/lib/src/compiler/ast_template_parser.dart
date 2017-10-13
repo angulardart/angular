@@ -67,19 +67,21 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
       throw new UnimplementedError('Don\'t know how to handle comments.');
 
   @override
-  ng.TemplateAst visitElement(ast.ElementAst astNode, [ParseContext context]) =>
-      new ng.ElementAst(
-          astNode.name,
-          _visitAll(astNode.attributes, context),
-          _visitAll(astNode.properties, context),
-          _visitAll(astNode.events, context),
-          _visitAll(astNode.references, context),
-          [] /*directives */,
-          [] /* providers */,
-          null /* elementProviderUsage */,
-          _visitAll(astNode.childNodes, context),
-          0 /* ngContentIndex */,
-          astNode.sourceSpan);
+  ng.TemplateAst visitElement(ast.ElementAst astNode, [ParseContext context]) {
+    final elementContext = context.withElementName(astNode.name);
+    return new ng.ElementAst(
+        astNode.name,
+        _visitAll(astNode.attributes, elementContext),
+        _visitAll(astNode.properties, elementContext),
+        _visitAll(astNode.events, elementContext),
+        _visitAll(astNode.references, elementContext),
+        [] /*directives */,
+        [] /* providers */,
+        null /* elementProviderUsage */,
+        _visitAll(astNode.childNodes, elementContext),
+        0 /* ngContentIndex */,
+        astNode.sourceSpan);
+  }
 
   @override
   ng.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
@@ -89,18 +91,20 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
-          [ParseContext context]) =>
-      new ng.EmbeddedTemplateAst(
-          _visitAll(astNode.attributes, context),
-          _visitAll(astNode.events, context),
-          _visitAll(astNode.references, context),
-          _visitAll(astNode.letBindings, context),
-          [] /* directives */,
-          [] /* providers */,
-          null /* elementProviderUsage */,
-          _visitAll(astNode.childNodes, context),
-          0 /* ngContentIndex */,
-          astNode.sourceSpan);
+      [ParseContext context]) {
+    final embeddedContext = context.withElementName(TEMPLATE_ELEMENT);
+    return new ng.EmbeddedTemplateAst(
+        _visitAll(astNode.attributes, embeddedContext),
+        _visitAll(astNode.events, embeddedContext),
+        _visitAll(astNode.references, embeddedContext),
+        _visitAll(astNode.letBindings, embeddedContext),
+        [] /* directives */,
+        [] /* providers */,
+        null /* elementProviderUsage */,
+        _visitAll(astNode.childNodes, embeddedContext),
+        0 /* ngContentIndex */,
+        astNode.sourceSpan);
+  }
 
   @override
   ng.TemplateAst visitEvent(ast.EventAst astNode, [ParseContext _]) {
@@ -126,12 +130,11 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
       new ng.VariableAst(astNode.name, astNode.value, astNode.sourceSpan);
 
   @override
-  ng.TemplateAst visitProperty(ast.PropertyAst astNode, [ParseContext _]) {
-    // TODO(alorenzen): Determine elementName;
-    var elementName = 'div';
+  ng.TemplateAst visitProperty(ast.PropertyAst astNode,
+      [ParseContext context]) {
     var value = parser.parseBinding(astNode.value, _location(astNode), []);
-    return createElementPropertyAst(elementName, _getName(astNode), value,
-        astNode.sourceSpan, schemaRegistry, (_, __, [___]) {});
+    return createElementPropertyAst(context.elementName, _getName(astNode),
+        value, astNode.sourceSpan, schemaRegistry, (_, __, [___]) {});
   }
 
   static String _getName(ast.PropertyAst astNode) {
@@ -170,7 +173,14 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
       astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
 }
 
-class ParseContext {}
+class ParseContext {
+  final String elementName;
+
+  ParseContext({this.elementName});
+
+  ParseContext withElementName(String name) =>
+      new ParseContext(elementName: name);
+}
 
 /// Visitor which filters elements that are not supported in angular templates.
 class ElementFilter implements ast.TemplateAstVisitor<ast.TemplateAst, bool> {
