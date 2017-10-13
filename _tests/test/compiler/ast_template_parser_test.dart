@@ -1058,7 +1058,7 @@ void main() {
         test('should support references via ref-...', () {
           expect(humanizeTplAst(parse('<template ref-a></template>', [])), [
             [EmbeddedTemplateAst],
-            [AttrAst, 'ref-a', null]
+            [AttrAst, 'ref-a', '']
           ]);
         });
 
@@ -1772,7 +1772,7 @@ void main() {
               [TextAst, 'a']
             ]);
       });
-    }, skip: 'Don\'t support ignore elements yet.');
+    });
 
     group('source spans', () {
       test('should support ng-content', () {

@@ -3,8 +3,10 @@ import 'package:angular_ast/angular_ast.dart' as ast;
 import 'compile_metadata.dart';
 import 'expression_parser/parser.dart';
 import 'schema/element_schema_registry.dart';
+import 'style_url_resolver.dart';
 import 'template_ast.dart' as ng;
 import 'template_parser.dart';
+import 'template_preparser.dart';
 
 /// A [TemplateParser] which uses the `angular_ast` package to parse angular
 /// templates.
@@ -31,9 +33,11 @@ class AstTemplateParser implements TemplateParser {
         parseExpressions: false);
     // TODO(alorenzen): Remove once all tests are passing.
     parsedAst.forEach(print);
+    final filter = new ElementFilter();
+    final filteredAst = filter.visitAll(parsedAst);
     final visitor = new Visitor(parser, schemaRegistry);
     final context = new ParseContext();
-    return parsedAst
+    return filteredAst
         .map((templateAst) => templateAst.accept(visitor, context))
         .toList();
   }
@@ -47,7 +51,7 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
 
   @override
   ng.TemplateAst visitAttribute(ast.AttributeAst astNode, [ParseContext _]) =>
-      new ng.AttrAst(astNode.name, astNode.value, astNode.sourceSpan);
+      new ng.AttrAst(astNode.name, astNode.value ?? '', astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitBanana(ast.BananaAst astNode, [ParseContext _]) =>
@@ -167,3 +171,124 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
 }
 
 class ParseContext {}
+
+/// Visitor which filters elements that are not supported in angular templates.
+class ElementFilter implements ast.TemplateAstVisitor<ast.TemplateAst, bool> {
+  List<T> visitAll<T extends ast.TemplateAst>(Iterable<T> astNodes,
+      [bool hasNgNonBindable = false]) {
+    final result = <T>[];
+    for (final node in astNodes) {
+      final visited = node.accept(this, hasNgNonBindable);
+      if (visited != null) result.add(visited);
+    }
+    return result;
+  }
+
+  @override
+  ast.TemplateAst visitElement(ast.ElementAst astNode,
+      [bool hasNgNonBindable]) {
+    if (_filterElement(astNode, hasNgNonBindable)) {
+      return null;
+    }
+    hasNgNonBindable =
+        hasNgNonBindable || _hasNgNOnBindable(astNode.attributes);
+    return new ast.ElementAst.from(
+        astNode, astNode.name, astNode.closeComplement,
+        attributes: visitAll(astNode.attributes, hasNgNonBindable),
+        childNodes: visitAll(astNode.childNodes, hasNgNonBindable),
+        events: visitAll(astNode.events, hasNgNonBindable),
+        properties: visitAll(astNode.properties, hasNgNonBindable),
+        references: visitAll(astNode.references, hasNgNonBindable),
+        bananas: visitAll(astNode.bananas, hasNgNonBindable),
+        stars: visitAll(astNode.stars, hasNgNonBindable));
+  }
+
+  @override
+  ast.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
+          [bool hasNgNonBindable]) =>
+      hasNgNonBindable
+          ? new ast.ElementAst.from(
+              astNode, NG_CONTENT_ELEMENT, astNode.closeComplement,
+              childNodes: visitAll(astNode.childNodes, hasNgNonBindable))
+          : astNode;
+
+  @override
+  ast.TemplateAst visitInterpolation(ast.InterpolationAst astNode,
+          [bool hasNgNonBindable]) =>
+      hasNgNonBindable
+          ? new ast.TextAst.from(astNode, '{{${astNode.value}}}')
+          : astNode;
+
+  static bool _filterElement(ast.ElementAst astNode, bool hasNgNonBindable) =>
+      _filterScripts(astNode) ||
+      _filterStyles(astNode) ||
+      _filterStyleSheets(astNode, hasNgNonBindable);
+
+  static bool _filterStyles(ast.ElementAst astNode) =>
+      astNode.name.toLowerCase() == STYLE_ELEMENT;
+
+  static bool _filterScripts(ast.ElementAst astNode) =>
+      astNode.name.toLowerCase() == SCRIPT_ELEMENT;
+
+  static bool _filterStyleSheets(
+      ast.ElementAst astNode, bool hasNgNonBindable) {
+    if (astNode.name != LINK_ELEMENT) return false;
+    var href = _findHref(astNode.attributes);
+    return hasNgNonBindable || isStyleUrlResolvable(href?.value);
+  }
+
+  static ast.AttributeAst _findHref(List<ast.AttributeAst> attributes) {
+    for (var attr in attributes) {
+      if (attr.name.toLowerCase() == LINK_STYLE_HREF_ATTR) return attr;
+    }
+    return null;
+  }
+
+  bool _hasNgNOnBindable(List<ast.AttributeAst> attributes) {
+    for (var attr in attributes) {
+      if (attr.name == NG_NON_BINDABLE_ATTR) return true;
+    }
+    return false;
+  }
+
+  @override
+  ast.TemplateAst visitAttribute(ast.AttributeAst astNode, [bool _]) => astNode;
+
+  @override
+  ast.TemplateAst visitBanana(ast.BananaAst astNode, [bool _]) => astNode;
+
+  @override
+  ast.TemplateAst visitCloseElement(ast.CloseElementAst astNode, [bool _]) =>
+      astNode;
+
+  @override
+  ast.TemplateAst visitComment(ast.CommentAst astNode, [bool _]) => astNode;
+
+  @override
+  ast.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
+          [bool _]) =>
+      astNode;
+
+  @override
+  ast.TemplateAst visitEvent(ast.EventAst astNode, [bool _]) => astNode;
+
+  @override
+  ast.TemplateAst visitExpression(ast.ExpressionAst astNode, [bool _]) =>
+      astNode;
+
+  @override
+  ast.TemplateAst visitLetBinding(ast.LetBindingAst astNode, [bool _]) =>
+      astNode;
+
+  @override
+  ast.TemplateAst visitProperty(ast.PropertyAst astNode, [bool _]) => astNode;
+
+  @override
+  ast.TemplateAst visitReference(ast.ReferenceAst astNode, [bool _]) => astNode;
+
+  @override
+  ast.TemplateAst visitStar(ast.StarAst astNode, [bool _]) => astNode;
+
+  @override
+  ast.TemplateAst visitText(ast.TextAst astNode, [bool _]) => astNode;
+}
