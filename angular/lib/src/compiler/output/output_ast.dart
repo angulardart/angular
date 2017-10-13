@@ -38,6 +38,18 @@ class ExternalType extends OutputType {
       visitor.visitExternalType(this, context);
 }
 
+class FunctionType extends OutputType {
+  final OutputType returnType;
+  final List<OutputType> paramTypes; // Required and named/positional optional.
+
+  FunctionType(this.returnType, this.paramTypes, [List<TypeModifier> modifiers])
+      : super(modifiers);
+
+  @override
+  dynamic visitType(TypeVisitor visitor, dynamic context) =>
+      visitor.visitFunctionType(this, context);
+}
+
 class ArrayType extends OutputType {
   final OutputType of;
   ArrayType(this.of, [List<TypeModifier> modifiers]) : super(modifiers);
@@ -67,6 +79,7 @@ const FUNCTION_TYPE = const BuiltinType(BuiltinTypeName.Function);
 abstract class TypeVisitor {
   dynamic visitBuiltinType(BuiltinType type, dynamic context);
   dynamic visitExternalType(ExternalType type, dynamic context);
+  dynamic visitFunctionType(FunctionType type, dynamic context);
   dynamic visitArrayType(ArrayType type, dynamic context);
   dynamic visitMapType(MapType type, dynamic context);
 }

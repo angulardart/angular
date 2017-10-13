@@ -179,10 +179,20 @@ o.Expression convertValueToOutputAst(dynamic value) {
   }
 }
 
-void createPureProxy(o.Expression fn, num argCount,
-    o.ReadClassMemberExpr pureProxyProp, CompileView view) {
-  view.nameResolver.addField(new o.ClassField(pureProxyProp.name,
-      modifiers: const [o.StmtModifier.Private]));
+void createPureProxy(
+  o.Expression fn,
+  int argCount,
+  o.ReadClassMemberExpr pureProxyProp,
+  CompileView view, {
+  o.OutputType pureProxyType,
+}) {
+  view.nameResolver.addField(
+    new o.ClassField(
+      pureProxyProp.name,
+      outputType: pureProxyType,
+      modifiers: const [o.StmtModifier.Private],
+    ),
+  );
   var pureProxyId = argCount < Identifiers.pureProxies.length
       ? Identifiers.pureProxies[argCount]
       : null;
@@ -190,8 +200,7 @@ void createPureProxy(o.Expression fn, num argCount,
     throw new BaseException(
         'Unsupported number of argument for pure functions: $argCount');
   }
-  view.createMethod.addStmt(o.THIS_EXPR
-      .prop(pureProxyProp.name)
+  view.createMethod.addStmt(new o.ReadClassMemberExpr(pureProxyProp.name)
       .set(o.importExpr(pureProxyId).callFn([fn]))
       .toStmt());
 }

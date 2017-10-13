@@ -41,7 +41,7 @@ class DartEmitter implements OutputEmitter {
       List<String> exportedVars, Map<String, String> deferredModules) {
     var srcParts = [];
     // Note: We are not creating a library here as Dart does not need it.
-    // Dart analzyer might complain about it though.
+    // Dart analyzer might complain about it though.
     var converter = new _DartEmitterVisitor(moduleUrl);
     var ctx = EmitterVisitorContext.createRoot(exportedVars, deferredModules);
     converter.visitAllStatements(stmts, ctx);
@@ -478,6 +478,22 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   dynamic visitExternalType(o.ExternalType ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     this._visitIdentifier(ast.value, ast.typeParams, ctx);
+    return null;
+  }
+
+  @override
+  dynamic visitFunctionType(o.FunctionType type, dynamic context) {
+    EmitterVisitorContext ctx = context;
+    if (type.returnType != null) {
+      type.returnType.visitType(this, ctx);
+    } else {
+      ctx.print('void');
+    }
+    ctx.print(' Function(');
+    visitAllObjects((o.OutputType param) {
+      param.visitType(this, ctx);
+    }, type.paramTypes, ctx, ',');
+    ctx.print(')');
     return null;
   }
 

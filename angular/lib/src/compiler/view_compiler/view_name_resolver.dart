@@ -52,7 +52,7 @@ class ViewNameResolver implements NameResolver {
   @override
   o.Expression callPipe(
       String name, o.Expression input, List<o.Expression> args) {
-    return CompilePipe.call(view, name, (new List.from([input])..addAll(args)));
+    return CompilePipe.call(view, name, [input]..addAll(args));
   }
 
   @override

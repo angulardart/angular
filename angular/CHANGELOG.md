@@ -6,6 +6,10 @@
     `WrappedValue` when the transformed result changes, and instead will rely on
     regular change detection.
 
+*   Pipes no longer support private types in their `transform` method signature.
+    This method's type is now used to generate a type annotation in the
+    generated code, which can't import private types from another library.
+
 ### Bug fixes
 
 *   Correctly depend on `analyzer: ^0.31.0-alpha.1`.
