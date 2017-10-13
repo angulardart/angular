@@ -2,8 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:source_span/source_span.dart';
 import 'package:quiver/core.dart';
+import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
 import '../token/tokens.dart';
@@ -29,7 +29,6 @@ abstract class ReferenceAst implements TemplateAst {
   /// Create new reference from tokens in [sourceFile].
   factory ReferenceAst.parsed(
     SourceFile sourceFile,
-    NgToken beginToken,
     NgToken prefixToken,
     NgToken elementDecoratorToken, [
     NgAttributeValueToken valueToken,
@@ -97,14 +96,13 @@ class ParsedReferenceAst extends TemplateAst
 
   ParsedReferenceAst(
     SourceFile sourceFile,
-    NgToken beginToken,
     this.prefixToken,
     this.nameToken, [
     this.valueToken,
     this.equalSignToken,
   ])
       : super.parsed(
-          beginToken,
+          prefixToken,
           valueToken != null ? valueToken.rightQuote : nameToken,
           sourceFile,
         );

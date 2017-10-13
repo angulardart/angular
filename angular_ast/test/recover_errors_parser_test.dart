@@ -527,8 +527,8 @@ void main() {
     var e = exceptions[0];
 
     expect(e.errorCode, NgParserWarningCode.INVALID_LET_BINDING_IN_NONTEMPLATE);
-    expect(e.offset, 4);
-    expect(e.length, 12);
+    expect(e.offset, 5);
+    expect(e.length, 11);
   });
 
   test('Should flag let- binding without variable name', () {

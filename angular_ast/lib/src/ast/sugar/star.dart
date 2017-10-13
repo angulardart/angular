@@ -2,8 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:source_span/source_span.dart';
 import 'package:quiver/core.dart';
+import 'package:source_span/source_span.dart';
 
 import '../../ast.dart';
 import '../../token/tokens.dart';
@@ -32,7 +32,6 @@ abstract class StarAst implements TemplateAst {
   /// Create a new property assignment parsed from tokens in [sourceFile].
   factory StarAst.parsed(
     SourceFile sourceFile,
-    NgToken beginToken,
     NgToken prefixToken,
     NgToken elementDecoratorToken, [
     NgAttributeValueToken valueToken,
@@ -99,13 +98,12 @@ class ParsedStarAst extends TemplateAst
 
   ParsedStarAst(
     SourceFile sourceFile,
-    NgToken beginToken,
     this.prefixToken,
     this.nameToken, [
     this.valueToken,
     this.equalSignToken,
   ])
-      : super.parsed(beginToken,
+      : super.parsed(prefixToken,
             valueToken != null ? valueToken.rightQuote : nameToken, sourceFile);
 
   /// Name `directive` in `*directive`.

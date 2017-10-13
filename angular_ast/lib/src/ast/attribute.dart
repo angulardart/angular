@@ -3,8 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:collection/collection.dart';
-import 'package:source_span/source_span.dart';
 import 'package:quiver/core.dart';
+import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
 import '../token/tokens.dart';
@@ -34,7 +34,6 @@ abstract class AttributeAst implements TemplateAst {
   /// Create a new [AttributeAst] parsed from tokens from [sourceFile].
   factory AttributeAst.parsed(
     SourceFile sourceFile,
-    NgToken beginToken,
     NgToken nameToken, [
     NgAttributeValueToken valueToken,
     NgToken equalSignToken,
@@ -103,14 +102,13 @@ class ParsedAttributeAst extends TemplateAst
 
   ParsedAttributeAst(
     SourceFile sourceFile,
-    NgToken beginToken,
     this.nameToken, [
     this.valueToken,
     this.equalSignToken,
     this.mustaches,
   ])
       : super.parsed(
-          beginToken,
+          nameToken,
           (valueToken == null ? nameToken : valueToken.rightQuote),
           sourceFile,
         );
