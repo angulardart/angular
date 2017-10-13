@@ -22,8 +22,7 @@ import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
-import 'expression_converter.dart'
-    show ExpressionWithWrappedValueInfo, convertCdExpressionToIr;
+import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'view_builder.dart' show buildUpdaterFunctionName;
 import 'view_compiler_utils.dart'
     show
@@ -81,7 +80,7 @@ void bind(
         literalMethod, canBeNull(parsedExpression));
     return;
   }
-  if (checkExpression.expression == null) {
+  if (checkExpression == null) {
     // e.g. an empty expression was given
     return;
   }
@@ -90,7 +89,7 @@ void bind(
       modifiers: const [o.StmtModifier.Private],
       outputType: isPrimitive ? fieldType : null));
   method.addStmt(currValExpr
-      .set(checkExpression.expression)
+      .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
   o.Expression condition;
   if (genDebugInfo) {
@@ -116,14 +115,14 @@ void bind(
 /// [null] to whatever the value of [checkExpression] is. So we can just output
 /// the [actions] and run them once on the first change detection run.
 void _bindLiteral(
-    ExpressionWithWrappedValueInfo checkExpression,
+    o.Expression checkExpression,
     List<o.Statement> actions,
     String currValName,
     String fieldName,
     CompileMethod method,
     bool isNullable) {
-  var expr = checkExpression.expression;
-  if (expr == o.NULL_EXPR || (expr is o.LiteralExpr && expr.value == null)) {
+  if (checkExpression == o.NULL_EXPR ||
+      (checkExpression is o.LiteralExpr && checkExpression.value == null)) {
     // In this case, there is no transition, since change detection variables
     // are initialized to null.
     return;
@@ -131,14 +130,13 @@ void _bindLiteral(
 
   var mappedActions = actions
       // Replace all 'currVal_X' with the actual expression
-      .map((stmt) => o.replaceVarInStatement(
-          currValName, checkExpression.expression, stmt))
+      .map(
+          (stmt) => o.replaceVarInStatement(currValName, checkExpression, stmt))
       // Replace all 'expr_X' with 'null'
       .map((stmt) => o.replaceVarInStatement(fieldName, o.NULL_EXPR, stmt));
   if (isNullable) {
     method.addStmt(new o.IfStmt(
-        checkExpression.expression.notIdentical(o.NULL_EXPR),
-        mappedActions.toList()));
+        checkExpression.notIdentical(o.NULL_EXPR), mappedActions.toList()));
   } else {
     method.addStmts(mappedActions.toList());
   }
@@ -433,7 +431,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           true);
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
-          .set(checkExpression.expression)
+          .set(checkExpression)
           .toStmt());
       continue;
     }
@@ -527,7 +525,7 @@ void bindToUpdateMethod(
       parsedExpression,
       view.component.template.preserveWhitespace,
       _isBoolType(fieldType));
-  if (checkExpression.expression == null) {
+  if (checkExpression == null) {
     // e.g. an empty expression was given
     return;
   }
@@ -538,7 +536,7 @@ void bindToUpdateMethod(
       modifiers: const [o.StmtModifier.Private]));
   // Generate: final currVal_0 = ctx.expression.
   method.addStmt(currValExpr
-      .set(checkExpression.expression)
+      .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
 
   // If we have only setter action, we can simply call updater and assign
