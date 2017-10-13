@@ -1776,7 +1776,7 @@ void main() {
 
     group('source spans', () {
       test('should support ng-content', () {
-        var parsed = parse('<ng-content select="a">', []);
+        var parsed = parse('<ng-content select="a"></ng-content>', []);
         expect(humanizeTplAstSourceSpans(parsed), [
           [NgContentAst, '<ng-content select="a">']
         ]);
@@ -1789,9 +1789,10 @@ void main() {
       });
 
       test('should support element and attributes', () {
-        expect(humanizeTplAstSourceSpans(parse('<div key=value>', [])), [
-          [ElementAst, 'div', '<div key=value>'],
-          [AttrAst, 'key', 'value', 'key=value']
+        expect(
+            humanizeTplAstSourceSpans(parse('<div key="value"></div>', [])), [
+          [ElementAst, 'div', '<div key="value">'],
+          [AttrAst, 'key', 'value', 'key="value"']
         ]);
       });
 
@@ -1813,17 +1814,19 @@ void main() {
       });
 
       test('should support element property', () {
-        expect(humanizeTplAstSourceSpans(parse('<div [someProp]="v">', [])), [
-          [ElementAst, 'div', '<div [someProp]="v">'],
-          [
-            BoundElementPropertyAst,
-            PropertyBindingType.Property,
-            'someProp',
-            'v',
-            null,
-            '[someProp]="v"'
-          ]
-        ]);
+        expect(
+            humanizeTplAstSourceSpans(parse('<div [someProp]="v"></div>', [])),
+            [
+              [ElementAst, 'div', '<div [someProp]="v">'],
+              [
+                BoundElementPropertyAst,
+                PropertyBindingType.Property,
+                'someProp',
+                'v',
+                null,
+                '[someProp]="v"'
+              ]
+            ]);
       });
 
       test('should support bound text', () {
@@ -1849,13 +1852,14 @@ void main() {
             type: new CompileTypeMetadata(
                 moduleUrl: someModuleUrl, name: 'ZComp'),
             template: new CompileTemplateMetadata(ngContentSelectors: []));
-        expect(humanizeTplAstSourceSpans(parse('<div a>', [dirA, comp])), [
+        expect(
+            humanizeTplAstSourceSpans(parse('<div a></div>', [dirA, comp])), [
           [ElementAst, 'div', '<div a>'],
           [AttrAst, 'a', '', 'a'],
           [DirectiveAst, dirA, '<div a>'],
           [DirectiveAst, comp, '<div a>']
         ]);
-      });
+      }, skip: 'Don\'t yet support directives.');
 
       test('should support directive in namespace', () {
         var tagSel = createCompileDirectiveMetadata(
@@ -1878,7 +1882,7 @@ void main() {
               [AttrAst, '@xlink:href', 'Port', 'xlink:href="Port"'],
               [DirectiveAst, attrSel, '<use xlink:href="Port" />']
             ]);
-      });
+      }, skip: 'Don\'t yet support namespaces.');
 
       test('should support directive property', () {
         var dirA = createCompileDirectiveMetadata(
@@ -1894,8 +1898,8 @@ void main() {
               [DirectiveAst, dirA, '<div [aProp]="foo">'],
               [BoundDirectivePropertyAst, 'aProp', 'foo', '[aProp]="foo"']
             ]);
-      });
-    }, skip: 'Don\'t support source spans yet.');
+      }, skip: 'Don\'t yet support directives.');
+    });
 
     group('pipes', () {
       test('should allow pipes that have been defined as dependencies', () {

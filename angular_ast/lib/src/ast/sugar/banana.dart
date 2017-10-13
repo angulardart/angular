@@ -2,8 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:source_span/source_span.dart';
 import 'package:quiver/core.dart';
+import 'package:source_span/source_span.dart';
 
 import '../../ast.dart';
 import '../../token/tokens.dart';
@@ -32,7 +32,6 @@ abstract class BananaAst implements TemplateAst {
   /// Create a new [BananaAst] parsed from tokens from [sourceFile].
   factory BananaAst.parsed(
     SourceFile sourceFile,
-    NgToken beginToken,
     NgToken prefixToken,
     NgToken elementDecoratorToken,
     NgToken suffixToken,
@@ -98,7 +97,6 @@ class ParsedBananaAst extends TemplateAst
 
   ParsedBananaAst(
     SourceFile sourceFile,
-    NgToken beginToken,
     this.prefixToken,
     this.nameToken,
     this.suffixToken,
@@ -106,7 +104,7 @@ class ParsedBananaAst extends TemplateAst
     this.equalSignToken,
   )
       : super.parsed(
-            beginToken,
+            prefixToken,
             (valueToken != null ? valueToken.rightQuote : suffixToken),
             sourceFile);
 

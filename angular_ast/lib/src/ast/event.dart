@@ -3,8 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:collection/collection.dart';
-import 'package:source_span/source_span.dart';
 import 'package:quiver/core.dart';
+import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
 import '../token/tokens.dart';
@@ -37,7 +37,6 @@ abstract class EventAst implements TemplateAst {
   /// Create a new [EventAst] parsed from tokens in [sourceFile].
   factory EventAst.parsed(
     SourceFile sourceFile,
-    NgToken beginToken,
     NgToken prefixToken,
     NgToken elementDecoratorToken,
     NgToken suffixToken, [
@@ -112,7 +111,6 @@ class ParsedEventAst extends TemplateAst
 
   ParsedEventAst(
     SourceFile sourceFile,
-    NgToken beginToken,
     this.prefixToken,
     this.nameToken,
     this.suffixToken, [
@@ -120,7 +118,7 @@ class ParsedEventAst extends TemplateAst
     this.equalSignToken,
   ])
       : super.parsed(
-          beginToken,
+          prefixToken,
           valueToken == null ? suffixToken : valueToken.rightQuote,
           sourceFile,
         );

@@ -2,8 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:source_span/source_span.dart';
 import 'package:quiver/core.dart';
+import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
 import '../token/tokens.dart';
@@ -36,7 +36,6 @@ abstract class PropertyAst implements TemplateAst {
   /// Create a new property assignment parsed from tokens in [sourceFile].
   factory PropertyAst.parsed(
     SourceFile sourceFile,
-    NgToken beginToken,
     NgToken prefixToken,
     NgToken elementDecoratorToken,
     NgToken suffixToken, [
@@ -136,7 +135,6 @@ class ParsedPropertyAst extends TemplateAst
 
   ParsedPropertyAst(
     SourceFile sourceFile,
-    NgToken beginToken,
     this.prefixToken,
     this.nameToken,
     this.suffixToken, [
@@ -144,7 +142,7 @@ class ParsedPropertyAst extends TemplateAst
     this.equalSignToken,
   ])
       : super.parsed(
-            beginToken,
+            prefixToken,
             valueToken == null ? suffixToken : valueToken.rightQuote,
             sourceFile) {
     if (_nameWithoutBrackets.split('.').length > 3) {}

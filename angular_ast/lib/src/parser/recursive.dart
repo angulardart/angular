@@ -126,7 +126,6 @@ class RecursiveAstParser {
       if (prefixType == NgTokenType.bananaPrefix) {
         return new BananaAst.parsed(
           _source,
-          beginToken,
           prefixToken,
           decoratorToken,
           suffixToken,
@@ -146,7 +145,6 @@ class RecursiveAstParser {
 
         return new EventAst.parsed(
           _source,
-          beginToken,
           prefixToken,
           decoratorToken,
           suffixToken,
@@ -164,7 +162,6 @@ class RecursiveAstParser {
 
         return new PropertyAst.parsed(
           _source,
-          beginToken,
           prefixToken,
           decoratorToken,
           suffixToken,
@@ -174,7 +171,6 @@ class RecursiveAstParser {
       } else if (prefixType == NgTokenType.referencePrefix) {
         return new ReferenceAst.parsed(
           _source,
-          beginToken,
           prefixToken,
           decoratorToken,
           valueToken,
@@ -183,7 +179,6 @@ class RecursiveAstParser {
       } else if (prefixType == NgTokenType.templatePrefix) {
         return new StarAst.parsed(
           _source,
-          beginToken,
           prefixToken,
           decoratorToken,
           valueToken,
@@ -209,7 +204,6 @@ class RecursiveAstParser {
       }
       return new EventAst.parsed(
         _source,
-        beginToken,
         onToken,
         decoratorToken,
         null,
@@ -232,7 +226,6 @@ class RecursiveAstParser {
       }
       return new PropertyAst.parsed(
         _source,
-        beginToken,
         bindToken,
         decoratorToken,
         null,
@@ -248,7 +241,6 @@ class RecursiveAstParser {
       );
       return new LetBindingAst.parsed(
         _source,
-        beginToken,
         letToken,
         decoratorToken,
         valueToken,
@@ -263,7 +255,6 @@ class RecursiveAstParser {
     }
     return new AttributeAst.parsed(
       _source,
-      beginToken,
       decoratorToken,
       valueToken,
       equalSignToken,
