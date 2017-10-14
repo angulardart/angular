@@ -411,7 +411,7 @@ void main() {
                 [DirectiveAst, dirB],
                 [DirectiveAst, dirC]
               ]);
-        });
+        }, skip: 'Order is not correct yet.');
 
         test('should locate directives in property bindings', () {
           var dirA = createCompileDirectiveMetadata(
@@ -464,7 +464,7 @@ void main() {
               null
             ]
           ]);
-        });
+        }, skip: 'Don\'t yet handle directive properties.');
 
         test('should parse directive host listeners', () {
           var dirA = createCompileDirectiveMetadata(
@@ -477,7 +477,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundEventAst, 'a', null, 'expr']
           ]);
-        });
+        }, skip: 'Don\'t yet handle directive properties.');
 
         test('should parse directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -490,7 +490,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundDirectivePropertyAst, 'aProp', 'expr']
           ]);
-        });
+        }, skip: 'Don\'t yet handle directive properties.');
 
         test('should parse renamed directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -503,7 +503,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundDirectivePropertyAst, 'b', 'expr']
           ]);
-        });
+        }, skip: 'Don\'t yet handle directive properties.');
 
         test('should parse literal directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -517,7 +517,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundDirectivePropertyAst, 'a', '"literal"']
           ]);
-        });
+        }, skip: 'Don\'t yet handle directive properties.');
 
         test('should favor explicit bound properties over literal properties',
             () {
@@ -535,7 +535,7 @@ void main() {
                 [DirectiveAst, dirA],
                 [BoundDirectivePropertyAst, 'a', '"literal2"']
               ]);
-        });
+        }, skip: 'Don\'t yet handle directive properties.');
 
         test('should support optional directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -548,7 +548,7 @@ void main() {
             [DirectiveAst, dirA]
           ]);
         });
-      }, skip: 'Don\'t yet handle directives.');
+      });
 
       group('providers', () {
         var nextProviderId;
