@@ -26,8 +26,10 @@ const flat20Bindings = const [
 ```
 
 May be run either with `@Component(providers: const [ ... ])` or
-`ReflectiveInjector`. * `create_20_bindings_directive.dart` *
-`create_20_bindings_reflective.dart`
+`ReflectiveInjector`.
+
+* `create_20_bindings_directive.dart`
+* `create_20_bindings_reflective.dart`
 
 #### Create Tree
 
@@ -44,5 +46,7 @@ Configures dependency injection for a simple web-like application tree.
 ```
 
 May be run either with `@Component(providers: const [ ... ])` or
-`ReflectiveInjector`. * `create_tree_bindings_directive.dart` *
-`create_tree_bindings_reflective.dart`
+`ReflectiveInjector`.
+
+* `create_tree_bindings_directive.dart`
+* `create_tree_bindings_reflective.dart`
