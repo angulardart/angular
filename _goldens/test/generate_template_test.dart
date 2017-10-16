@@ -46,6 +46,7 @@ main() {
         'directives/components',
         'directives/directive_wrapper',
         'directives/directives',
+        'directives/functional_directives',
         'templates/has_template_file',
       ]) {
         if (isBazel || !bazelOnlyFiles.contains(file)) {
