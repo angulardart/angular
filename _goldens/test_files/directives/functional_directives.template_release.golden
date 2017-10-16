@@ -1,0 +1,139 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: TemplateGenerator
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'functional_directives.dart';
+export 'functional_directives.dart';
+import 'dart:html';
+import 'package:angular/angular.dart';
+// Required for initReflector().
+import 'package:angular/src/di/reflector.dart'
+    as _ngRef;
+import 'package:angular/angular.template.dart'
+    as _ref0;
+
+import 'package:angular/src/core/linker/app_view.dart';
+import 'functional_directives.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart'
+    as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart'
+    as import6;
+import 'package:angular/angular.dart';
+
+const List<dynamic> styles$AppComponent = const [];
+
+class ViewAppComponent0 extends AppView<import1.AppComponent> {
+  import2.DivElement _el_0;
+  import2.DivElement _el_1;
+  static RenderComponentType _renderType;
+  ViewAppComponent0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('app');
+    _renderType ??= import6.appViewUtils
+        .createRenderType('', ViewEncapsulation.None, styles$AppComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.AppComponent> build() {
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
+    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    createAttr(_el_0, 'generateText', '');
+    import1.generateTextDirective(_el_0,
+        parentView.injectorGet(import1.TextService, viewData.parentIndex));
+    _el_1 = createAndAppend(doc, 'div', _el_0);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.AppComponent> viewFactory_AppComponent0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewAppComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$AppComponentHost = const [];
+
+class _ViewAppComponentHost0 extends AppView<dynamic> {
+  ViewAppComponent0 _compView_0;
+  import1.AppComponent _AppComponent_0_4;
+  import1.TextService __TextService_0_5;
+  static RenderComponentType _renderType;
+  _ViewAppComponentHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    _renderType ??= import6.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$AppComponentHost);
+    setupComponentType(_renderType);
+  }
+  import1.TextService get _TextService_0_5 {
+    if ((this.__TextService_0_5 == null)) {
+      (__TextService_0_5 = new import1.TextService());
+    }
+    return this.__TextService_0_5;
+  }
+
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewAppComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _AppComponent_0_4 = new import1.AppComponent();
+    _compView_0.create(_AppComponent_0_4, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.AppComponent>(
+        0, this, rootEl, _AppComponent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TextService) && (0 == nodeIndex))) {
+      return _TextService_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_AppComponentHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewAppComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.AppComponent> AppComponentNgFactory =
+    const ComponentFactory<import1.AppComponent>(
+        'app', viewFactory_AppComponentHost0, _AppComponentMetadata);
+const _AppComponentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+  _ref0.initReflector();
+  _ngRef.registerFactory(
+    TextService,
+    () => new TextService(),
+  );
+
+  _ngRef.registerComponent(
+    AppComponent,
+    AppComponentNgFactory,
+  );
+}
