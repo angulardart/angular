@@ -55,9 +55,9 @@ class ViewAppComponent0 extends DebugAppView<import1.AppComponent> {
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
     createAttr(_el_0, 'generateText', '');
+    _el_1 = createAndAppendDbg(this, doc, 'div', _el_0, 1, 0, 18);
     import1.generateTextDirective(_el_0,
         parentView.injectorGet(import1.TextService, viewData.parentIndex));
-    _el_1 = createAndAppendDbg(this, doc, 'div', _el_0, 1, 0, 18);
     init(const [], null, [_el_0, _el_1]);
     return null;
   }

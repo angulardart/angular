@@ -244,7 +244,7 @@ class CompileElement extends CompileNode {
     }
 
     List<_QueryWithRead> queriesWithReads = [];
-    for (var resolvedProvider in _resolvedProviders.values) {
+    for (var resolvedProvider in _resolvedProvidersArray) {
       var queriesForProvider = _getQueriesFor(resolvedProvider.token);
       queriesWithReads.addAll(queriesForProvider
           .map((query) => new _QueryWithRead(query, resolvedProvider.token)));
@@ -296,16 +296,6 @@ class CompileElement extends CompileNode {
     for (ProviderAst resolvedProvider in _resolvedProvidersArray) {
       if (resolvedProvider.providerType ==
           ProviderAstType.FunctionalDirective) {
-        // Get function parameter dependencies.
-        final parameters = <o.Expression>[];
-        final provider = resolvedProvider.providers.first;
-        for (var dep in provider.deps) {
-          parameters.add(_getDependency(resolvedProvider.providerType, dep));
-        }
-        // Add functional directive invocation.
-        final invokeExpr = o.importExpr(provider.useClass).callFn(parameters);
-        view.createMethod.addStmt(invokeExpr.toStmt());
-        // Skip creating a provider instance or getter.
         continue;
       }
       var providerValueExpressions = <o.Expression>[];
@@ -398,7 +388,21 @@ class CompileElement extends CompileNode {
   }
 
   void afterChildren(int childNodeCount) {
-    for (ProviderAst resolvedProvider in _resolvedProviders.values) {
+    for (ProviderAst resolvedProvider in _resolvedProvidersArray) {
+      if (resolvedProvider.providerType ==
+          ProviderAstType.FunctionalDirective) {
+        // Get function parameter dependencies.
+        final parameters = <o.Expression>[];
+        final provider = resolvedProvider.providers.first;
+        for (var dep in provider.deps) {
+          parameters.add(_getDependency(resolvedProvider.providerType, dep));
+        }
+        // Add functional directive invocation.
+        final invokeExpr = o.importExpr(provider.useClass).callFn(parameters);
+        view.createMethod.addStmt(invokeExpr.toStmt());
+        continue;
+      }
+
       if (!resolvedProvider.dynamicallyReachable ||
           !resolvedProvider.visibleForInjection ||
           _aliasedProviders.containsKey(resolvedProvider.token)) continue;
@@ -493,7 +497,7 @@ class CompileElement extends CompileNode {
       : null;
 
   List<o.Expression> getProviderTokens() {
-    return _resolvedProviders.values
+    return _resolvedProvidersArray
         .map((resolvedProvider) =>
             createDiTokenExpression(resolvedProvider.token))
         .toList();
