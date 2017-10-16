@@ -46,7 +46,7 @@ Future<ComponentRef> bootstrapForTest<E>(
   }
   // This should be kept in sync with 'bootstrapStatic' as much as possible.
   final appInjector = createTestInjector([
-    BROWSER_APP_PROVIDERS,
+    bootstrapLegacyModule,
     addProviders,
   ]);
   final ApplicationRefImpl appRef = appInjector.get(ApplicationRef);
