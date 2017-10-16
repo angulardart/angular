@@ -1,9 +1,14 @@
+-   Use the new generic function syntax, stop using `package:func`.
+
 ## 1.0.2-alpha
-- Support breaking changes in angular 5.0.0-alpha
+
+-   Support breaking changes in angular 5.0.0-alpha
 
 ## 1.0.1
+
 ### Cleanup
-- Remove dependency on `angular_router`.
+
+-   Remove dependency on `angular_router`.
 
 ## 1.0.0
 

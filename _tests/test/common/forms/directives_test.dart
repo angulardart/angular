@@ -357,5 +357,4 @@ void main() {
   });
 }
 
-@proxy
 class MockValueAccessor extends Mock implements ControlValueAccessor {}

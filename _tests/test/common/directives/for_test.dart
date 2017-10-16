@@ -765,10 +765,11 @@ class HashcodeTestItem {
   HashcodeTestItem(this.value);
 
   @override
-  operator ==(other) {
-    if (other is! HashcodeTestItem) return false;
-    return value == (other as HashcodeTestItem).value &&
-        hashMultiplier == (other as HashcodeTestItem).hashMultiplier;
+  bool operator ==(other) {
+    if (other is HashcodeTestItem) {
+      return value == other.value && hashMultiplier == other.hashMultiplier;
+    }
+    return false;
   }
 
   @override

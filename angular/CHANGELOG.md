@@ -1,5 +1,3 @@
-## 5.0.0-alpha+1
-
 ### Breaking Changes
 
 *   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
@@ -13,6 +11,10 @@
 ### Bug fixes
 
 *   Correctly depend on `analyzer: ^0.31.0-alpha.1`.
+
+### Refactors
+
+*   Use the new generic function syntax, stop using `package:func`.
 
 ## 5.0.0-alpha
 
