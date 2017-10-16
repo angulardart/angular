@@ -374,6 +374,14 @@ class InvokeMethodExpr extends Expression {
       this.receiver, dynamic /* String | BuiltinMethod */ method, this.args,
       {OutputType outputType, this.checked})
       : super(outputType) {
+    assert(() {
+      for (int len = args.length, i = 0; i < len; i++) {
+        if (args[i] == null) {
+          throw new ArgumentError('Expecting non-null arguments');
+        }
+      }
+      return true;
+    });
     if (method is String) {
       this.name = method;
       this.builtin = null;
@@ -418,7 +426,16 @@ class InstantiateExpr extends Expression {
   final List<OutputType> types;
 
   InstantiateExpr(this.classExpr, this.args, [OutputType type, this.types])
-      : super(type);
+      : super(type) {
+    assert(() {
+      for (int len = args.length, i = 0; i < len; i++) {
+        if (args[i] == null) {
+          throw new ArgumentError('Expecting non-null arguments');
+        }
+      }
+      return true;
+    });
+  }
 
   @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
@@ -542,7 +559,9 @@ class ReadPropExpr extends Expression {
   final String name;
 
   ReadPropExpr(this.receiver, this.name, {OutputType outputType})
-      : super(outputType);
+      : super(outputType) {
+    assert(name != null, 'Expecting name in ReadPropExpr');
+  }
 
   @override
   dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
