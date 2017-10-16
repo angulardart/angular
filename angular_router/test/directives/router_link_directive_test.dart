@@ -37,8 +37,7 @@ void main() {
   });
 
   test('should parse out query params and fragment', () async {
-    final fixture =
-        await new NgTestBed<TestRouterLinkWithTarget>().addProviders([
+    final fixture = await new NgTestBed<TestRouterLink>().addProviders([
       provide(Location, useValue: const FakeLocation()),
       provide(Router, useValue: fakeRouter),
     ]).create(beforeChangeDetection: (comp) {
@@ -79,8 +78,6 @@ void main() {
   template: r'''
     <a [routerLink]="routerLink"></a>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestRouterLink {
   String routerLink;
@@ -92,13 +89,16 @@ class TestRouterLink {
     RouterLink,
   ],
   template: r'''
-    <a [routerLink]="routerLink" target="_parent"></a>
+    <a (click)="onClick($event)" [routerLink]="routerLink" target="_parent"></a>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestRouterLinkWithTarget {
   String routerLink;
+
+  void onClick(MouseEvent event) {
+    // Prevent navigating away from test page.
+    event.preventDefault();
+  }
 }
 
 class FakeRouter implements Router {
