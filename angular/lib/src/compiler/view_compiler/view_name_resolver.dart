@@ -4,7 +4,7 @@ import 'compile_pipe.dart' show CompilePipe;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart';
-import "view_compiler_utils.dart" show getPropertyInView, createPureProxy;
+import "view_compiler_utils.dart" show getPropertyInView;
 
 /// Name resolver for binding expressions that resolves locals and pipes.
 ///
@@ -52,7 +52,7 @@ class ViewNameResolver implements NameResolver {
   @override
   o.Expression callPipe(
       String name, o.Expression input, List<o.Expression> args) {
-    return CompilePipe.call(view, name, [input]..addAll(args));
+    return CompilePipe.createCallPipeExpression(view, name, input, args);
   }
 
   @override
@@ -68,14 +68,13 @@ class ViewNameResolver implements NameResolver {
       proxyParams.add(new o.FnParam(paramName));
       proxyReturnEntries.add(o.variable(paramName));
     }
-    createPureProxy(
+    view.createPureProxy(
         o.fn(
             proxyParams,
             [new o.ReturnStatement(o.literalArr(proxyReturnEntries))],
             new o.ArrayType(o.DYNAMIC_TYPE)),
         values.length,
-        proxyExpr,
-        view);
+        proxyExpr);
     return proxyExpr.callFn(values);
   }
 
@@ -95,14 +94,13 @@ class ViewNameResolver implements NameResolver {
       proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
       values.add((entries[i][1] as o.Expression));
     }
-    createPureProxy(
+    view.createPureProxy(
         o.fn(
             proxyParams,
             [new o.ReturnStatement(o.literalMap(proxyReturnEntries))],
             new o.MapType(o.DYNAMIC_TYPE)),
         entries.length,
-        proxyExpr,
-        view);
+        proxyExpr);
     return proxyExpr.callFn(values);
   }
 
