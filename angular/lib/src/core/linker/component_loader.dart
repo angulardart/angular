@@ -69,7 +69,6 @@ class ComponentLoader {
   ///
   /// The returned [ComponentRef] is attached _next to_ the provided [location]
   /// in the DOM, similar to how `*ngIf` and `*ngFor` operate.
-  /// ```
   ///
   /// The following API would load a new component next to `currentAd`:
   /// ```dart
@@ -86,7 +85,7 @@ class ComponentLoader {
   ///   @ViewChild('currentAd', read: ViewContainerRef)
   ///   ViewContainerRef currentAd;
   ///
-  ///   AdViewDirective(this._loader);
+  ///   AdViewComponent(this._loader);
   ///
   ///   @Input()
   ///   set component(ComponentFactory component) {
