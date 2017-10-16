@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 
+import '../common.dart';
 import 'src/flat_20_bindings.dart';
 
 /// Initializes and injects 20 DI bindings when [ready] is turned to `true`.
@@ -15,8 +16,8 @@ import 'src/flat_20_bindings.dart';
     <create-20-bindings-eager *ngIf="ready"></create-20-bindings-eager>
   ''',
 )
-class Create20BindingsEagerBenchmark {
-  @Input()
+class Create20BindingsEagerBenchmark extends Benchmark {
+  @override
   bool ready = false;
 }
 
@@ -65,8 +66,8 @@ class Create20BindingsEagerComponent {
     <create-20-bindings-lazy *ngIf="ready"></create-20-bindings-lazy>
   ''',
 )
-class Create20BindingsLazyBenchmark {
-  @Input()
+class Create20BindingsLazyBenchmark implements Benchmark {
+  @override
   bool ready = false;
 }
 
