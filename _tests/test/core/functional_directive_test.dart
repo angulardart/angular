@@ -81,6 +81,19 @@ void main() {
     expect(testFixture.rootElement.querySelector('#first'), isNotNull);
     expect(testFixture.rootElement.querySelector('#second'), isNull);
   });
+
+  test("should be invoked after creation of host element's subtree", () async {
+    final textRecorder = new TextRecorder();
+    final testBed = new NgTestBed<TestInvocationAfterSubtreeCreationComponent>()
+        .addProviders([provide(TextRecorder, useValue: textRecorder)]);
+    await testBed.create();
+    expect(textRecorder.texts, containsAllInOrder(['Child', 'ParentChild']));
+  });
+
+  test('should provide service for injection by children', () async {
+    final testBed = new NgTestBed<TestProvidesServiceComponent>();
+    await testBed.create(); // Fails if directive doesn't provide service.
+  });
 }
 
 @Directive(selector: '[addChildDiv]')
@@ -92,8 +105,8 @@ void addChildDivDirective(Element element) {
   selector: 'test-invoke-once',
   template: '<div id="test" addChildDiv></div>',
   directives: const [addChildDivDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class TestInvokeOnceComponent {}
 
@@ -101,8 +114,8 @@ class TestInvokeOnceComponent {}
   selector: 'test-invoke-each-build',
   template: '<div id="test" *ngIf="visible" addChildDiv></div>',
   directives: const [addChildDivDirective, NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class TestInvokeEachBuildComponent {
   bool visible = true;
@@ -127,8 +140,8 @@ void addAttributesDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes>',
   directives: const [addAttributesDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class TestDependencyInjectionComponent {}
 
@@ -144,8 +157,8 @@ void addAttributesForTokenDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes>',
   directives: const [addAttributesForTokenDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class TestDependencyInjectionViaTokenComponent {}
 
@@ -158,16 +171,16 @@ void embedTextDirective(Element element, @Attribute('embedText') String text) {
   selector: 'test-attribute-injection',
   template: '<div embedText="hello world"></div>',
   directives: const [embedTextDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class TestAttributeInjectionComponent {}
 
 @Component(
   selector: 'content-host',
   template: '<ng-content></ng-content>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class ContentHostComponent {}
 
@@ -175,8 +188,8 @@ class ContentHostComponent {}
   selector: 'test-content-projection',
   template: '<content-host><div id="test" addAttributes></div></content-host>',
   directives: const [addAttributesDirective, ContentHostComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class TestContentProjectionComponent {}
 
@@ -198,7 +211,64 @@ void ifDirective(
     <template if="false"><div id="second"></div></template>
   ''',
   directives: const [ifDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  preserveWhitespace: false,
+  visibility: Visibility.none,
 )
 class TestFunctionalStructuralDirectiveComponent {}
+
+class TextRecorder {
+  final _texts = <String>[];
+
+  List<String> get texts => new List<String>.unmodifiable(_texts);
+
+  void recordText(String text) => _texts.add(text);
+}
+
+@Directive(selector: '[recordText]')
+void recordTextDirective(HtmlElement element, TextRecorder textRecorder) {
+  textRecorder.recordText(element.text);
+}
+
+@Component(
+  selector: 'test-invocation-after-subtree-creation',
+  template: '''
+    <div recordText>
+      Parent
+      <div recordText>Child</div>
+    </div>
+  ''',
+  directives: const [recordTextDirective],
+  preserveWhitespace: false,
+  visibility: Visibility.none,
+)
+class TestInvocationAfterSubtreeCreationComponent {}
+
+@Injectable()
+class Service {}
+
+@Directive(selector: '[serviceProvider]', providers: const [Service])
+void serviceProviderDirective() {}
+
+@Component(
+  selector: 'service-consumer',
+  template: '',
+  preserveWhitespace: false,
+  visibility: Visibility.none,
+)
+class ServiceConsumerComponent {
+  final Service service;
+  ServiceConsumerComponent(this.service);
+}
+
+@Component(
+  selector: 'test-provides-service',
+  template: '''
+    <div serviceProvider>
+      <service-consumer></service-consumer>
+    </div>
+  ''',
+  directives: const [serviceProviderDirective, ServiceConsumerComponent],
+  preserveWhitespace: false,
+  visibility: Visibility.none,
+)
+class TestProvidesServiceComponent {}
