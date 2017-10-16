@@ -172,5 +172,4 @@ void main() {
   });
 }
 
-@proxy
 class MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}

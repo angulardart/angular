@@ -1,6 +1,5 @@
 import 'dart:html';
 
-import 'package:func/func.dart' show Func0, VoidFunc1;
 import 'package:angular/angular.dart'
     show Directive, Provider, ElementRef, Input, OnDestroy, Host, Optional;
 import 'package:angular/src/facade/lang.dart' show isPrimitive, looseIdentical;
@@ -44,13 +43,14 @@ class SelectControlValueAccessor implements ControlValueAccessor {
   dynamic value;
   final Map<String, dynamic> _optionMap = new Map<String, dynamic>();
   num _idCounter = 0;
-  VoidFunc1 onChange = (dynamic _) {};
+
+  void Function(String value) onChange = (_) {};
 
   void touchHandler() {
     onTouched();
   }
 
-  Func0 onTouched = () {};
+  void Function() onTouched = () {};
   SelectControlValueAccessor(this._elementRef);
 
   @override

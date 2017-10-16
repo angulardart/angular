@@ -1,7 +1,6 @@
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:func/func.dart' show Func0, VoidFunc0;
 import 'package:angular/angular.dart'
     show Directive, Injectable, Injector, Input, OnInit, OnDestroy, Provider;
 
@@ -89,8 +88,8 @@ class RadioControlValueAccessor
     onTouched();
   }
 
-  VoidFunc0 onChange = () {};
-  Func0 onTouched = () {};
+  void Function() onChange = () {};
+  void Function() onTouched = () {};
   RadioControlValueAccessor(this._element, this._registry, this._injector);
 
   @override

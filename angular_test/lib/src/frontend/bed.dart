@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:func/func.dart';
 import 'package:pageloader/html.dart';
 
 import '../bootstrap.dart';
@@ -132,7 +131,7 @@ class NgTestBed<T> {
   static const _lifecycleStabilizers = const <Type>[NgZoneStabilizer];
 
   final Element _host;
-  final Func2<Element, NgTestFixture<T>, PageLoader> _pageLoaderFactory;
+  final PageLoader Function(Element, NgTestFixture<T>) _pageLoaderFactory;
   final List _providers;
   final List _stabilizers;
 
