@@ -1,7 +1,6 @@
 import 'package:analyzer/analyzer.dart' hide Directive;
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
@@ -452,35 +451,40 @@ class ComponentVisitor
     bindings[propertyName] = bindingName;
   }
 
-  void _collectInheritableMetadata(InterfaceType type) {
-    final inheritanceHierarchy = getInheritanceHierarchy(type);
-    final isDirectiveAnnotation = safeMatcher(isDirective, log);
-    // Traverse inheritance hierarchy from top to bottom so that inherited
-    // annotations are bound to the most derived implementation of the element
-    // they annotate.
-    for (var currentType in inheritanceHierarchy.reversed) {
-      final element = currentType.element;
-      final annotation = element.metadata
-          .firstWhere(isDirectiveAnnotation, orElse: () => null);
-      // Collect metadata from class annotation.
-      if (annotation != null) {
-        final annotationValue = annotation.computeConstantValue();
-        final host = coerceStringMap(annotationValue, 'host');
-        CompileDirectiveMetadata.deserializeHost(
-            host, _hostAttributes, _hostListeners, _hostProperties);
-      }
-      // Collect metadata from field and property accessor annotations.
-      super.visitClassElement(element);
-      // Merge field and setter inputs at each inheritance level, so that a
-      // derived field input binding is not overridden by an inherited setter
-      // input.
-      _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
-      _fieldInputs..clear();
-      _setterInputs..clear();
-      if (currentType.getMethod('noSuchMethod') != null) {
-        _implementsNoSuchMethod = true;
-      }
+  /// Collects inheritable metadata declared on [element].
+  void _collectInheritableMetadataOn(ClassElement element) {
+    // Skip 'Object' since it can't have metadata and we only want to record
+    // whether a user type implements 'noSuchMethod'.
+    if (element.type.isObject) return;
+    if (element.getMethod('noSuchMethod') != null) {
+      _implementsNoSuchMethod = true;
     }
+    final annotation = element.metadata
+        .firstWhere(safeMatcher(isDirective, log), orElse: () => null);
+    if (annotation != null) {
+      // Collect metadata from class annotation.
+      final annotationValue = annotation.computeConstantValue();
+      final host = coerceStringMap(annotationValue, 'host');
+      CompileDirectiveMetadata.deserializeHost(
+          host, _hostAttributes, _hostListeners, _hostProperties);
+    }
+    // Collect metadata from field and property accessor annotations.
+    super.visitClassElement(element);
+    // Merge field and setter inputs, so that a derived field input binding is
+    // not overridden by an inherited setter input.
+    _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
+    _fieldInputs..clear();
+    _setterInputs..clear();
+  }
+
+  /// Collects inheritable metadata from [element] and its supertypes.
+  void _collectInheritableMetadata(ClassElement element) {
+    // Reverse supertypes to traverse inheritance hierarchy from top to bottom
+    // so that derived bindings overwrite their inherited definition.
+    for (var type in element.allSupertypes.reversed) {
+      _collectInheritableMetadataOn(type.element);
+    }
+    _collectInheritableMetadataOn(element);
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
@@ -488,7 +492,7 @@ class ComponentVisitor
     ClassElement element,
   ) {
     _directiveClassElement = element;
-    _collectInheritableMetadata(element.type);
+    _collectInheritableMetadata(element);
     final isComp = safeMatcher(isComponent, log)(annotation);
     final annotationValue = annotation.computeConstantValue();
     // Some directives won't have templates but the template parser is going to
