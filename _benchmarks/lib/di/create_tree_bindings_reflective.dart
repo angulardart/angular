@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 
+import '../common.dart';
 import 'src/tree_bindings.dart';
 
 /// Initializes and injects a tree of DI services typical to a small web app.
@@ -12,8 +13,8 @@ import 'src/tree_bindings.dart';
   ],
   template: r'',
 )
-class CreateTreeBindingsReflectiveBenchmark {
-  @Input()
+class CreateTreeBindingsReflectiveBenchmark implements Benchmark {
+  @override
   set ready(bool ready) {
     if (ready) {
       runBenchmark();

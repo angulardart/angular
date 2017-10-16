@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 
+import '../common.dart';
 import 'src/flat_20_bindings.dart';
 
 /// Initializes and injects 20 DI bindings when [ready] is turned to `true`.
@@ -12,8 +13,8 @@ import 'src/flat_20_bindings.dart';
   ],
   template: '',
 )
-class Create20BindingsReflectiveBenchmark {
-  @Input()
+class Create20BindingsReflectiveBenchmark implements Benchmark {
+  @override
   set ready(bool ready) {
     if (ready) {
       final injector = ReflectiveInjector.resolveAndCreate(flat20Bindings);
