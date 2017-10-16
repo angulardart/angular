@@ -1,6 +1,5 @@
 export 'src/analyzer.dart'
     show
-        getInheritanceHierarchy,
         getTypeName,
         urlOf,
         ComponentReader,
