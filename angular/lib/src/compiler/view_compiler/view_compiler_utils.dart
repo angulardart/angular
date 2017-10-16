@@ -6,7 +6,6 @@ import '../compile_metadata.dart'
         CompileTokenMetadata,
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
-import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;
 
@@ -177,32 +176,6 @@ o.Expression convertValueToOutputAst(dynamic value) {
   } else {
     return o.literal(value);
   }
-}
-
-void createPureProxy(
-  o.Expression fn,
-  int argCount,
-  o.ReadClassMemberExpr pureProxyProp,
-  CompileView view, {
-  o.OutputType pureProxyType,
-}) {
-  view.nameResolver.addField(
-    new o.ClassField(
-      pureProxyProp.name,
-      outputType: pureProxyType,
-      modifiers: const [o.StmtModifier.Private],
-    ),
-  );
-  var pureProxyId = argCount < Identifiers.pureProxies.length
-      ? Identifiers.pureProxies[argCount]
-      : null;
-  if (pureProxyId == null) {
-    throw new BaseException(
-        'Unsupported number of argument for pure functions: $argCount');
-  }
-  view.createMethod.addStmt(new o.ReadClassMemberExpr(pureProxyProp.name)
-      .set(o.importExpr(pureProxyId).callFn([fn]))
-      .toStmt());
 }
 
 CompileDirectiveMetadata componentFromDirectives(

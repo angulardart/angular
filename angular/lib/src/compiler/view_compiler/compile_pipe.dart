@@ -1,11 +1,9 @@
 import "package:angular/src/facade/exceptions.dart" show BaseException;
 
 import "../compile_metadata.dart" show CompilePipeMetadata;
-import "../identifiers.dart" show Identifiers, identifierToken;
 import "../output/output_ast.dart" as o;
 import "compile_view.dart" show CompileView;
-import "view_compiler_utils.dart"
-    show injectFromViewParentInjector, createPureProxy, getPropertyInView;
+import "view_compiler_utils.dart" show getPropertyInView;
 
 class _PurePipeProxy {
   final CompileView view;
@@ -21,8 +19,8 @@ class CompilePipe {
   final _purePipeProxies = <_PurePipeProxy>[];
   o.ReadClassMemberExpr instance;
 
-  static o.Expression call(
-      CompileView view, String name, List<o.Expression> args) {
+  static o.Expression createCallPipeExpression(CompileView view, String name,
+      o.Expression input, List<o.Expression> args) {
     var compView = view.componentView;
     var meta = _findPipeMeta(compView, name);
     CompilePipe pipe;
@@ -39,7 +37,7 @@ class CompilePipe {
       pipe = new CompilePipe(view, meta);
       view.pipes.add(pipe);
     }
-    return pipe._call(view, args);
+    return pipe._call(view, [input]..addAll(args));
   }
 
   CompilePipe(this.view, this.meta) {
@@ -48,20 +46,7 @@ class CompilePipe {
   }
 
   void create() {
-    var deps = this.meta.type.diDeps.map((diDep) {
-      if (diDep.token
-          .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
-        return new o.ReadClassMemberExpr('ref');
-      }
-      return injectFromViewParentInjector(view, diDep.token, false);
-    }).toList();
-    view.nameResolver.addField(new o.ClassField(instance.name,
-        outputType: o.importType(meta.type),
-        modifiers: [o.StmtModifier.Private]));
-    view.createMethod.resetDebugInfo(null, null);
-    view.createMethod.addStmt(new o.WriteClassMemberExpr(
-            instance.name, o.importExpr(meta.type).instantiate(deps))
-        .toStmt());
+    view.createPipeInstance(instance.name, meta);
     for (var purePipeProxy in _purePipeProxies) {
       final pipeInstanceSeenFromPureProxy =
           getPropertyInView(instance, purePipeProxy.view, view);
@@ -73,11 +58,10 @@ class CompilePipe {
         meta.transformType.returnType,
         meta.transformType.paramTypes.sublist(0, purePipeProxy.argCount),
       );
-      createPureProxy(
+      purePipeProxy.view.createPureProxy(
         pipeInstanceSeenFromPureProxy.prop("transform"),
         purePipeProxy.argCount,
         purePipeProxy.instance,
-        purePipeProxy.view,
         pureProxyType: pureProxyType,
       );
     }

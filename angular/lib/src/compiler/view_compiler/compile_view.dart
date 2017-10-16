@@ -1,5 +1,6 @@
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import '../compile_metadata.dart'
     show
@@ -8,21 +9,33 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
+import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
-import "../template_ast.dart" show TemplateAst;
+import '../template_ast.dart' show TemplateAst;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart'
     show CompileQuery, createQueryListField, addQueryToTokenMap;
-import 'view_compiler_utils.dart' show getViewFactoryName;
+import 'view_compiler_utils.dart'
+    show getViewFactoryName, injectFromViewParentInjector;
 import 'view_name_resolver.dart';
+
+/// Interface to generate a build function for an AppView.
+abstract class AppViewBuilder {
+  /// Creates a pipe and stores reference expression in fieldName.
+  void createPipeInstance(String pipeFieldName, CompilePipeMetadata pipeMeta);
+
+  /// Constructs a pure proxy and stores instance in class member.
+  void createPureProxy(
+      o.Expression fn, num argCount, o.ReadClassMemberExpr pureProxyProp);
+}
 
 /// Represents data to generate a host, component or embedded AppView.
 ///
 /// Members and method builders are populated by ViewBuilder.
-class CompileView {
+class CompileView implements AppViewBuilder {
   final CompileDirectiveMetadata component;
   final CompilerFlags genConfig;
   final List<CompilePipeMetadata> pipeMetas;
@@ -166,6 +179,50 @@ class CompileView {
         query.generateDynamicUpdate(updateContentQueriesMethod);
       }
     }
+  }
+
+  @override
+  void createPipeInstance(String name, CompilePipeMetadata pipeMeta) {
+    var deps = pipeMeta.type.diDeps.map((diDep) {
+      if (diDep.token
+          .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
+        return new o.ReadClassMemberExpr('ref');
+      }
+      return injectFromViewParentInjector(this, diDep.token, false);
+    }).toList();
+    nameResolver.addField(new o.ClassField(name,
+        outputType: o.importType(pipeMeta.type),
+        modifiers: [o.StmtModifier.Private]));
+    createMethod.resetDebugInfo(null, null);
+    createMethod.addStmt(new o.WriteClassMemberExpr(
+            name, o.importExpr(pipeMeta.type).instantiate(deps))
+        .toStmt());
+  }
+
+  @override
+  void createPureProxy(
+    o.Expression fn,
+    num argCount,
+    o.ReadClassMemberExpr pureProxyProp, {
+    o.OutputType pureProxyType,
+  }) {
+    nameResolver.addField(
+      new o.ClassField(
+        pureProxyProp.name,
+        outputType: pureProxyType,
+        modifiers: const [o.StmtModifier.Private],
+      ),
+    );
+    var pureProxyId = argCount < Identifiers.pureProxies.length
+        ? Identifiers.pureProxies[argCount]
+        : null;
+    if (pureProxyId == null) {
+      throw new BaseException(
+          'Unsupported number of argument for pure functions: $argCount');
+    }
+    createMethod.addStmt(new o.ReadClassMemberExpr(pureProxyProp.name)
+        .set(o.importExpr(pureProxyId).callFn([fn]))
+        .toStmt());
   }
 }
 
