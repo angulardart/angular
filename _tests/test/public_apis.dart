@@ -96,7 +96,6 @@ const angularApis = const [
   'bootstrap',
   'bootstrapStatic',
   'browserStaticPlatform',
-  'BROWSER_APP_COMMON_PROVIDERS',
   'BROWSER_APP_PROVIDERS',
   'COMMON_DIRECTIVES',
   'COMMON_PIPES',

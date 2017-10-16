@@ -1,5 +1,13 @@
 ### Breaking Changes
 
+*   Removed `BROWSER_APP_COMMON_PROVIDERS`. In practice, this was never
+    intended to be a public API, and probably didn't have any application
+    outside of the core framework.
+
+## 5.0.0-alpha+1
+
+### Breaking Changes
+
 *   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
     `WrappedValue` when the transformed result changes, and instead will rely on
     regular change detection.
