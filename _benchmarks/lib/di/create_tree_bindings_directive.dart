@@ -17,8 +17,14 @@ import 'src/tree_bindings.dart';
   ''',
 )
 class CreateTreeBindingsBenchmark implements Benchmark {
-  @override
+  @Input()
   bool ready = false;
+
+  @override
+  void start() => ready = true;
+
+  @override
+  void reset() => ready = false;
 }
 
 @Component(
