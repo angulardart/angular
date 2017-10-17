@@ -13,7 +13,7 @@ dependencies:
   collection: '^1.12.0'
   string_scanner: '^1.0.0'
   meta: '^1.0.5'
-  quiver: '>=0.22.0 <0.24.0'
+  quiver: '>=0.22.0 <0.26.0'
   source_span: '^1.4.0'
 
 dev_dependencies:
