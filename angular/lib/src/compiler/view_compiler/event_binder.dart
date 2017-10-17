@@ -1,6 +1,5 @@
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../html_events.dart';
-import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_element.dart' show CompileElement;
@@ -87,19 +86,13 @@ class CompileEventListener {
 
   void listenToRenderer() {
     final handlerExpr = _createEventHandlerExpr();
-    var listenExpr;
-
     if (isNativeHtmlEvent(eventName)) {
-      listenExpr = compileElement.renderNode
-          .callMethod('addEventListener', [o.literal(eventName), handlerExpr]);
+      compileElement.view.addDomEventListener(
+          compileElement.renderNode, eventName, handlerExpr);
     } else {
-      final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
-      final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
-      listenExpr = eventManagerExpr.callMethod('addEventListener',
-          [compileElement.renderNode, o.literal(eventName), handlerExpr]);
+      compileElement.view.addCustomEventListener(
+          compileElement.renderNode, eventName, handlerExpr);
     }
-
-    compileElement.view.createMethod.addStmt(listenExpr.toStmt());
   }
 
   void listenToDirective(
@@ -107,20 +100,10 @@ class CompileEventListener {
     o.Expression directiveInstance,
     String observablePropName,
   ) {
-    final subscription =
-        o.variable('subscription_${compileElement.view.subscriptions.length}');
     final handlerExpr = _createEventHandlerExpr();
-    final isMockLike = directiveAst.directive.analyzedClass.isMockLike;
-    compileElement.view
-      ..subscriptions.add(subscription)
-      ..createMethod.addStmt(subscription
-          .set(directiveInstance.prop(observablePropName).callMethod(
-              o.BuiltinMethod.SubscribeObservable, [handlerExpr],
-              checked: isMockLike))
-          .toDeclStmt(null, [o.StmtModifier.Final]));
-    if (isMockLike) {
-      compileElement.view.subscribesToMockLike = true;
-    }
+    compileElement.view.createSubscription(
+        directiveInstance.prop(observablePropName), handlerExpr,
+        isMockLike: directiveAst.directive.analyzedClass.isMockLike);
   }
 
   o.Expression _createEventHandlerExpr() {
