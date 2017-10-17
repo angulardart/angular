@@ -15,6 +15,12 @@ import 'src/flat_20_bindings.dart';
 )
 class Create20BindingsReflectiveBenchmark implements Benchmark {
   @override
+  void start() => ready = true;
+
+  @override
+  void reset() => ready = false;
+
+  @Input()
   set ready(bool ready) {
     if (ready) {
       final injector = ReflectiveInjector.resolveAndCreate(flat20Bindings);

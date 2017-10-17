@@ -17,8 +17,14 @@ import 'src/flat_20_bindings.dart';
   ''',
 )
 class Create20BindingsEagerBenchmark extends Benchmark {
-  @override
+  @Input()
   bool ready = false;
+
+  @override
+  void start() => ready = true;
+
+  @override
+  void reset() => ready = false;
 }
 
 @Component(
@@ -67,8 +73,14 @@ class Create20BindingsEagerComponent {
   ''',
 )
 class Create20BindingsLazyBenchmark implements Benchmark {
-  @override
+  @Input()
   bool ready = false;
+
+  @override
+  void start() => ready = true;
+
+  @override
+  void reset() => ready = false;
 }
 
 @Component(

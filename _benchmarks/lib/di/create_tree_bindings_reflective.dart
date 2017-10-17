@@ -15,6 +15,11 @@ import 'src/tree_bindings.dart';
 )
 class CreateTreeBindingsReflectiveBenchmark implements Benchmark {
   @override
+  void start() => ready = true;
+
+  @override
+  void reset() => ready = false;
+
   set ready(bool ready) {
     if (ready) {
       runBenchmark();
