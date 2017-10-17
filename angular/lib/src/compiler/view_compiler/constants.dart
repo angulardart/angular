@@ -3,6 +3,9 @@ import "../identifiers.dart";
 import "../output/output_ast.dart" as o;
 
 const String appViewRootElementName = 'rootEl';
+const classAttrName = "class";
+const styleAttrName = "style";
+var parentRenderNodeVar = o.variable("parentRenderNode");
 
 o.Expression createEnumExpression(
     CompileIdentifierMetadata classIdentifier, dynamic value) {

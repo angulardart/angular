@@ -1,13 +1,17 @@
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 
 import '../compile_metadata.dart'
     show
         CompileTokenMetadata,
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
+import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
+import '../template_ast.dart' show AttrAst, TemplateAst;
 import 'compile_view.dart' show CompileView;
+import 'constants.dart';
 
 /// Creating outlines for faster builds is preventing auto input change
 /// detection for now. The following flag should be removed to reenable in the
@@ -17,18 +21,20 @@ const bool outlinerDeprecated = false;
 /// Variable name used to read viewData.parentIndex in build functions.
 const String cachedParentIndexVarName = 'parentIdx';
 
+/// Component dependency and associated identifier.
+class ViewCompileDependency {
+  CompileDirectiveMetadata comp;
+  CompileIdentifierMetadata factoryPlaceholder;
+  ViewCompileDependency(this.comp, this.factoryPlaceholder);
+}
+
 // Creates method parameters list for AppView set attribute calls.
-List<o.Expression> createSetAttributeParams(
-    String fieldName, String attrNs, String attrName, o.Expression valueExpr) {
+List<o.Expression> createSetAttributeParams(o.Expression renderNode,
+    String attrNs, String attrName, o.Expression valueExpr) {
   if (attrNs != null) {
-    return [
-      o.variable(fieldName),
-      o.literal(attrNs),
-      o.literal(attrName),
-      valueExpr
-    ];
+    return [renderNode, o.literal(attrNs), o.literal(attrName), valueExpr];
   } else {
-    return [o.variable(fieldName), o.literal(attrName), valueExpr];
+    return [renderNode, o.literal(attrName), valueExpr];
   }
 }
 
@@ -209,4 +215,140 @@ o.Expression unwrapDirective(o.Expression directiveInstance) {
     return directiveInstance;
   }
   return null;
+}
+
+String toTemplateExtension(String moduleUrl) {
+  if (!moduleUrl.endsWith('.dart')) return moduleUrl;
+  return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
+}
+
+Map<String, String> astAttribListToMap(List<AttrAst> attrs) {
+  Map<String, String> htmlAttrs = {};
+  for (AttrAst attr in attrs) {
+    htmlAttrs[attr.name] = attr.value;
+  }
+  return htmlAttrs;
+}
+
+String mergeAttributeValue(
+    String attrName, String attrValue1, String attrValue2) {
+  if (attrName == classAttrName || attrName == styleAttrName) {
+    return '$attrValue1 $attrValue2';
+  } else {
+    return attrValue2;
+  }
+}
+
+o.Statement createSetAttributeStatement(String astNodeName,
+    o.Expression renderNode, String attrName, String attrValue) {
+  var attrNs;
+  if (attrName.startsWith('@') && attrName.contains(':')) {
+    var nameParts = attrName.substring(1).split(':');
+    attrNs = namespaceUris[nameParts[0]];
+    attrName = nameParts[1];
+  }
+
+  /// Optimization for common attributes. Call dart:html directly without
+  /// going through setAttr wrapper.
+  if (attrNs == null) {
+    switch (attrName) {
+      case 'class':
+        // Remove check below after SVGSVGElement DDC bug is fixed b2/32931607
+        bool hasNamespace =
+            astNodeName.startsWith('@') || astNodeName.contains(':');
+        if (!hasNamespace) {
+          return renderNode
+              .prop('className')
+              .set(o.literal(attrValue))
+              .toStmt();
+        }
+        break;
+      case 'tabindex':
+        try {
+          int tabValue = int.parse(attrValue);
+          return renderNode.prop('tabIndex').set(o.literal(tabValue)).toStmt();
+        } catch (_) {
+          // fallthrough to default handler since index is not int.
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  var params = createSetAttributeParams(
+      renderNode, attrNs, attrName, o.literal(attrValue));
+  return new o.InvokeMemberMethodExpr(
+          attrNs == null ? "createAttr" : "setAttrNS", params)
+      .toStmt();
+}
+
+List<List<String>> mapToKeyValueArray(Map<String, String> data) {
+  var entryArray = <List<String>>[];
+  data.forEach((String name, String value) {
+    entryArray.add([name, value]);
+  });
+  // We need to sort to get a defined output order
+  // for tests and for caching generated artifacts...
+  entryArray.sort((entry1, entry2) => entry1[0].compareTo(entry2[0]));
+  var keyValueArray = <List<String>>[];
+  for (var entry in entryArray) {
+    keyValueArray.add([entry[0], entry[1]]);
+  }
+  return keyValueArray;
+}
+
+// Reads hostAttributes from each directive and merges with declaredHtmlAttrs
+// to return a single map from name to value(expression).
+List<List<String>> mergeHtmlAndDirectiveAttrs(
+    Map<String, String> declaredHtmlAttrs,
+    List<CompileDirectiveMetadata> directives,
+    {bool excludeComponent: false}) {
+  Map<String, String> result = {};
+  var mergeCount = <String, int>{};
+  declaredHtmlAttrs.forEach((name, value) {
+    result[name] = value;
+    if (mergeCount.containsKey(name)) {
+      mergeCount[name]++;
+    } else {
+      mergeCount[name] = 1;
+    }
+  });
+  for (CompileDirectiveMetadata directiveMeta in directives) {
+    directiveMeta.hostAttributes.forEach((name, value) {
+      if (mergeCount.containsKey(name)) {
+        mergeCount[name]++;
+      } else {
+        mergeCount[name] = 1;
+      }
+    });
+  }
+  for (CompileDirectiveMetadata directiveMeta in directives) {
+    bool isComponent = directiveMeta.isComponent;
+    for (String name in directiveMeta.hostAttributes.keys) {
+      var value = directiveMeta.hostAttributes[name];
+      if (excludeComponent &&
+          isComponent &&
+          !((name == classAttrName || name == styleAttrName) &&
+              mergeCount[name] > 1)) {
+        continue;
+      }
+      var prevValue = result[name];
+      result[name] = prevValue != null
+          ? mergeAttributeValue(name, prevValue, value)
+          : value;
+    }
+  }
+  return mapToKeyValueArray(result);
+}
+
+o.Statement createDbgElementCall(
+    o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
+  var sourceLocation = ast?.sourceSpan?.start;
+  return o.importExpr(Identifiers.dbgElm).callFn([
+    o.THIS_EXPR,
+    nodeExpr,
+    o.literal(nodeIndex),
+    sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),
+    sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.column)
+  ]).toStmt();
 }

@@ -1,5 +1,5 @@
 import 'package:angular/src/compiler/analyzed_class.dart';
-import 'package:angular/src/core/app_view_consts.dart' show NAMESPACE_URIS;
+import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
@@ -232,7 +232,7 @@ void bindAndWriteToRenderer(
         String attrName = boundProp.name;
         if (attrName.startsWith('@') && attrName.contains(':')) {
           var nameParts = attrName.substring(1).split(':');
-          attrNs = NAMESPACE_URIS[nameParts[0]];
+          attrNs = namespaceUris[nameParts[0]];
           attrName = nameParts[1];
         }
 
@@ -248,11 +248,8 @@ void bindAndWriteToRenderer(
           renderValue =
               renderValue.callMethod('toString', const [], checked: true);
 
-          String renderNodeName = renderNode is o.ReadClassMemberExpr
-              ? renderNode.name
-              : (renderNode as o.ReadVarExpr).name;
           var params = createSetAttributeParams(
-              renderNodeName, attrNs, attrName, renderValue);
+              renderNode, attrNs, attrName, renderValue);
 
           updateStmts.add(new o.InvokeMemberMethodExpr(
                   attrNs == null ? 'setAttr' : 'setAttrNS', params)

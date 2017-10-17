@@ -282,7 +282,7 @@ abstract class AppView<T> {
       dynamic parent, String name, RenderDebugInfo debugInfo) {
     var nsAndName = splitNamespace(name);
     var el = nsAndName[0] != null
-        ? document.createElementNS(NAMESPACE_URIS[nsAndName[0]], nsAndName[1])
+        ? document.createElementNS(namespaceUris[nsAndName[0]], nsAndName[1])
         : document.createElement(nsAndName[1]);
     String contentAttr = componentType.contentAttr;
     if (contentAttr != null) {

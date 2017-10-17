@@ -24,7 +24,8 @@ import 'view_compiler_utils.dart'
         convertValueToOutputAst,
         injectFromViewParentInjector,
         getPropertyInView,
-        getViewFactoryName;
+        getViewFactoryName,
+        toTemplateExtension;
 
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
@@ -450,11 +451,11 @@ class CompileElement extends CompileNode {
       prefix = 'deflib${embeddedView.deferredModules.length}';
       embeddedView.deferredModules[deferredModuleUrl] = prefix;
       templatePrefix = 'deflib${view.deferredModules.length}';
-      embeddedView.deferredModules[_toTemplateExtension(deferredModuleUrl)] =
+      embeddedView.deferredModules[toTemplateExtension(deferredModuleUrl)] =
           templatePrefix;
     } else {
       templatePrefix =
-          embeddedView.deferredModules[_toTemplateExtension(deferredModuleUrl)];
+          embeddedView.deferredModules[toTemplateExtension(deferredModuleUrl)];
     }
 
     CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
@@ -686,8 +687,7 @@ o.Expression createProviderProperty(
   if (providerHasChangeDetector) {
     changeDetectorType = new CompileIdentifierMetadata(
         name: directiveMetadata.identifier.name + 'NgCd',
-        moduleUrl:
-            _toTemplateExtension(directiveMetadata.identifier.moduleUrl));
+        moduleUrl: toTemplateExtension(directiveMetadata.identifier.moduleUrl));
   }
 
   if (isEager) {
@@ -777,9 +777,4 @@ class _QueryWithRead {
   _QueryWithRead(this.query, CompileTokenMetadata match) {
     read = query.meta.read ?? match;
   }
-}
-
-String _toTemplateExtension(String moduleUrl) {
-  if (!moduleUrl.endsWith('.dart')) return moduleUrl;
-  return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
 }

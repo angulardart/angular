@@ -18,6 +18,7 @@ import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart'
     show CompileQuery, createQueryListField, addQueryToTokenMap;
+import 'constants.dart' show parentRenderNodeVar;
 import 'view_compiler_utils.dart'
     show getViewFactoryName, injectFromViewParentInjector;
 import 'view_name_resolver.dart';
@@ -223,6 +224,26 @@ class CompileView implements AppViewBuilder {
     createMethod.addStmt(new o.ReadClassMemberExpr(pureProxyProp.name)
         .set(o.importExpr(pureProxyId).callFn([fn]))
         .toStmt());
+  }
+
+  bool _isRootNode(CompileElement parent) {
+    return !identical(parent.view, this);
+  }
+
+  // TODO: make private after all call sites move into AppViewBuilder interface.
+  // Returns reference for compile element or null if compile element
+  // has no attached node (root node of embedded or host view).
+  o.Expression getParentRenderNode(CompileElement parent) {
+    if (_isRootNode(parent)) {
+      if (viewType == ViewType.COMPONENT) {
+        return parentRenderNodeVar;
+      } else {
+        // root node of an embedded/host view
+        return o.NULL_EXPR;
+      }
+    } else {
+      return parent.component != null ? o.NULL_EXPR : parent.renderNode;
+    }
   }
 }
 
