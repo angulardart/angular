@@ -16,8 +16,7 @@ import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
-import 'compile_query.dart'
-    show CompileQuery, createQueryListField, addQueryToTokenMap;
+import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'constants.dart' show parentRenderNodeVar;
 import 'view_compiler_utils.dart'
     show getViewFactoryName, injectFromViewParentInjector;
@@ -25,6 +24,23 @@ import 'view_name_resolver.dart';
 
 /// Interface to generate a build function for an AppView.
 abstract class AppViewBuilder {
+  /// Creates a field to store a stream subscription to be destroyed.
+  void createSubscription(o.Expression streamReference, o.Expression handler,
+      {bool isMockLike: false});
+
+  /// Add DOM event listener.
+  void addDomEventListener(
+      o.Expression instance, String eventName, o.Expression handler);
+
+  /// Adds event listener that is routed through EventManager for custom
+  /// events.
+  void addCustomEventListener(
+      o.Expression nodeInstance, String eventName, o.Expression handler);
+
+  /// Create a QueryList instance to update matches.
+  o.Expression createQueryListField(
+      CompileQueryMetadata query, String propertyName);
+
   /// Creates a pipe and stores reference expression in fieldName.
   void createPipeInstance(String pipeFieldName, CompilePipeMetadata pipeMeta);
 
@@ -134,8 +150,7 @@ class CompileView implements AppViewBuilder {
       for (CompileQueryMetadata queryMeta in component.viewQueries) {
         queryIndex++;
         var propName = '_viewQuery_${queryMeta.selectors[0].name}_$queryIndex';
-        var queryList =
-            createQueryListField(queryMeta, directiveInstance, propName, this);
+        var queryList = createQueryListField(queryMeta, propName);
         var query =
             new CompileQuery(queryMeta, queryList, directiveInstance, this);
         addQueryToTokenMap(viewQueries, query);
@@ -180,6 +195,51 @@ class CompileView implements AppViewBuilder {
         query.generateDynamicUpdate(updateContentQueriesMethod);
       }
     }
+  }
+
+  @override
+  void createSubscription(o.Expression streamReference, o.Expression handler,
+      {bool isMockLike: false}) {
+    final subscription = o.variable('subscription_${subscriptions.length}');
+    subscriptions.add(subscription);
+    createMethod.addStmt(subscription
+        .set(streamReference.callMethod(
+            o.BuiltinMethod.SubscribeObservable, [handler],
+            checked: isMockLike))
+        .toDeclStmt(null, [o.StmtModifier.Final]));
+    if (isMockLike) {
+      subscribesToMockLike = true;
+    }
+  }
+
+  @override
+  void addDomEventListener(
+      o.Expression nodeInstance, String eventName, o.Expression handler) {
+    var listenExpr = nodeInstance
+        .callMethod('addEventListener', [o.literal(eventName), handler]);
+    createMethod.addStmt(listenExpr.toStmt());
+  }
+
+  @override
+  void addCustomEventListener(
+      o.Expression nodeInstance, String eventName, o.Expression handler) {
+    final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
+    final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
+    var listenExpr = eventManagerExpr.callMethod(
+        'addEventListener', [nodeInstance, o.literal(eventName), handler]);
+    createMethod.addStmt(listenExpr.toStmt());
+  }
+
+  @override
+  o.Expression createQueryListField(
+      CompileQueryMetadata query, String propertyName) {
+    nameResolver.addField(new o.ClassField(propertyName,
+        outputType: o.importType(Identifiers.QueryList),
+        modifiers: [o.StmtModifier.Private]));
+    createMethod.addStmt(new o.WriteClassMemberExpr(
+            propertyName, o.importExpr(Identifiers.QueryList).instantiate([]))
+        .toStmt());
+    return new o.ReadClassMemberExpr(propertyName);
   }
 
   @override

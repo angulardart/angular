@@ -1,5 +1,4 @@
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
-import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
@@ -136,20 +135,6 @@ o.Expression mapNestedViews(o.Expression declarationViewContainer,
     o.fn([new o.FnParam("nestedView", view.classType)],
         [new o.ReturnStatement(o.literalArr(adjustedExpressions))])
   ]);
-}
-
-o.Expression createQueryListField(
-    CompileQueryMetadata query,
-    o.Expression directiveInstance,
-    String propertyName,
-    CompileView compileView) {
-  compileView.nameResolver.addField(new o.ClassField(propertyName,
-      outputType: o.importType(Identifiers.QueryList),
-      modifiers: [o.StmtModifier.Private]));
-  compileView.createMethod.addStmt(new o.WriteClassMemberExpr(
-          propertyName, o.importExpr(Identifiers.QueryList).instantiate([]))
-      .toStmt());
-  return new o.ReadClassMemberExpr(propertyName);
 }
 
 void addQueryToTokenMap(
