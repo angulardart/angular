@@ -1,6 +1,6 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/output/output_ast.dart';
-import 'package:angular/src/core/app_view_consts.dart' show NAMESPACE_URIS;
+import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show
         ChangeDetectorState,
@@ -47,6 +47,7 @@ import 'constants.dart'
         appViewRootElementName,
         createEnumExpression,
         changeDetectionStrategyToConst,
+        parentRenderNodeVar,
         DetectChangesVars,
         EventHandlerVars,
         InjectMethodVars,
@@ -58,28 +59,22 @@ import 'parse_utils.dart';
 import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
+        astAttribListToMap,
         cachedParentIndexVarName,
         createFlatArray,
         createDebugInfoTokenExpression,
-        createSetAttributeParams,
+        createDbgElementCall,
+        createSetAttributeStatement,
         componentFromDirectives,
-        getViewFactoryName;
+        getViewFactoryName,
+        mergeHtmlAndDirectiveAttrs,
+        ViewCompileDependency;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
-const CLASS_ATTR = "class";
-const STYLE_ATTR = "style";
 var cloneAnchorNodeExpr =
     o.importExpr(Identifiers.ngAnchor).callMethod('clone', [o.literal(false)]);
-var parentRenderNodeVar = o.variable("parentRenderNode");
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
-
-/// Component dependency and associated identifier.
-class ViewCompileDependency {
-  CompileDirectiveMetadata comp;
-  CompileIdentifierMetadata factoryPlaceholder;
-  ViewCompileDependency(this.comp, this.factoryPlaceholder);
-}
 
 class ViewBuilderVisitor implements TemplateAstVisitor {
   final CompileView view;
@@ -140,19 +135,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     }
   }
 
-  o.Expression _getParentRenderNode(CompileElement parent) {
-    if (this._isRootNode(parent)) {
-      if (identical(this.view.viewType, ViewType.COMPONENT)) {
-        return parentRenderNodeVar;
-      } else {
-        // root node of an embedded/host view
-        return o.NULL_EXPR;
-      }
-    } else {
-      return parent.component != null ? o.NULL_EXPR : parent.renderNode;
-    }
-  }
-
   dynamic visitBoundText(BoundTextAst ast, dynamic context) {
     CompileElement parent = context;
     return this._visitText(ast, "", ast.ngContentIndex, parent, isBound: true);
@@ -188,7 +170,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     }
     var compileNode =
         new CompileNode(parent, view, this.view.nodes.length, renderNode, ast);
-    var parentRenderNodeExpr = _getParentRenderNode(parent);
+    var parentRenderNodeExpr = view.getParentRenderNode(parent);
     if (isBound) {
       var createRenderNodeExpr = new o.ReadClassMemberExpr(fieldName).set(o
           .importExpr(Identifiers.HTML_TEXT_NODE)
@@ -216,7 +198,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
     this.view.createMethod.resetDebugInfo(null, ast);
-    var parentRenderNode = this._getParentRenderNode(parent);
+    var parentRenderNode = view.getParentRenderNode(parent);
     // AppView.projectableNodes property contains the list of nodes
     // to project for each NgContent.
     // Creates a call to project(parentNode, nodeIndex).
@@ -332,7 +314,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       isHtmlElement = false;
     } else {
       isHtmlElement = detectHtmlElementFromTagName(ast.name);
-      var parentRenderNodeExpr = _getParentRenderNode(parent);
+      var parentRenderNodeExpr = view.getParentRenderNode(parent);
       final generateDebugInfo = view.genConfig.genDebugInfo;
       if (component == null) {
         // Create element or elementNS. AST encodes svg path element as
@@ -341,7 +323,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             ast.name.startsWith('@') && ast.name.contains(':');
         if (isNamespacedElement) {
           var nameParts = ast.name.substring(1).split(':');
-          String ns = NAMESPACE_URIS[nameParts[0]];
+          String ns = namespaceUris[nameParts[0]];
           createRenderNodeExpr = o
               .importExpr(Identifiers.HTML_DOCUMENT)
               .callMethod(
@@ -384,7 +366,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
     var renderNode = new o.ReadClassMemberExpr(fieldName);
 
-    _writeLiteralAttributeValues(ast, fieldName, directives, view.createMethod);
+    _writeLiteralAttributeValues(
+        ast, renderNode, directives, view.createMethod);
 
     if (!isHostRootView &&
         view.component.template.encapsulation == ViewEncapsulation.Emulated) {
@@ -520,18 +503,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     }
   }
 
-  o.Statement createDbgElementCall(
-      o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
-    var sourceLocation = ast?.sourceSpan?.start;
-    return o.importExpr(Identifiers.dbgElm).callFn([
-      o.THIS_EXPR,
-      nodeExpr,
-      o.literal(nodeIndex),
-      sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),
-      sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.column)
-    ]).toStmt();
-  }
-
   o.Statement createDbgIndexElementCall(
       o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
     return new o.InvokeMemberMethodExpr(
@@ -549,7 +520,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     anchorVarExpr = readVarExpr;
     var assignCloneAnchorNodeExpr = readVarExpr.set(cloneAnchorNodeExpr);
     view.createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
-    var parentNode = _getParentRenderNode(parent);
+    var parentNode = view.getParentRenderNode(parent);
     if (parentNode != o.NULL_EXPR) {
       var addCommentStmt =
           parentNode.callMethod('append', [anchorVarExpr]).toStmt();
@@ -652,145 +623,23 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   }
 }
 
-// Reads hostAttributes from each directive and merges with declaredHtmlAttrs
-// to return a single map from name to value(expression).
-List<List<String>> _mergeHtmlAndDirectiveAttrs(
-    Map<String, String> declaredHtmlAttrs,
-    List<CompileDirectiveMetadata> directives,
-    {bool excludeComponent: false}) {
-  Map<String, String> result = {};
-  var mergeCount = <String, int>{};
-  declaredHtmlAttrs.forEach((name, value) {
-    result[name] = value;
-    if (mergeCount.containsKey(name)) {
-      mergeCount[name]++;
-    } else {
-      mergeCount[name] = 1;
-    }
-  });
-  for (CompileDirectiveMetadata directiveMeta in directives) {
-    directiveMeta.hostAttributes.forEach((name, value) {
-      if (mergeCount.containsKey(name)) {
-        mergeCount[name]++;
-      } else {
-        mergeCount[name] = 1;
-      }
-    });
-  }
-  for (CompileDirectiveMetadata directiveMeta in directives) {
-    bool isComponent = directiveMeta.isComponent;
-    for (String name in directiveMeta.hostAttributes.keys) {
-      var value = directiveMeta.hostAttributes[name];
-      if (excludeComponent &&
-          isComponent &&
-          !((name == CLASS_ATTR || name == STYLE_ATTR) &&
-              mergeCount[name] > 1)) {
-        continue;
-      }
-      var prevValue = result[name];
-      result[name] = prevValue != null
-          ? mergeAttributeValue(name, prevValue, value)
-          : value;
-    }
-  }
-  return mapToKeyValueArray(result);
-}
-
-Map<String, String> _attribListToMap(List<AttrAst> attrs) {
-  Map<String, String> htmlAttrs = {};
-  for (AttrAst attr in attrs) {
-    htmlAttrs[attr.name] = attr.value;
-  }
-  return htmlAttrs;
-}
-
-String mergeAttributeValue(
-    String attrName, String attrValue1, String attrValue2) {
-  if (attrName == CLASS_ATTR || attrName == STYLE_ATTR) {
-    return '$attrValue1 $attrValue2';
-  } else {
-    return attrValue2;
-  }
-}
-
 /// Writes literal attribute values on the element itself and those
 /// contributed from directives on the ast node.
 ///
 /// !Component level attributes are excluded since we want to avoid per
 //  call site duplication.
-void _writeLiteralAttributeValues(ElementAst ast, String elementFieldName,
+void _writeLiteralAttributeValues(ElementAst ast, o.Expression renderNode,
     List<CompileDirectiveMetadata> directives, CompileMethod method) {
-  var htmlAttrs = _attribListToMap(ast.attrs);
+  var htmlAttrs = astAttribListToMap(ast.attrs);
   // Create statements to initialize literal attribute values.
   // For example, a directive may have hostAttributes setting class name.
-  var attrNameAndValues = _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives,
-      excludeComponent: true);
+  var attrNameAndValues =
+      mergeHtmlAndDirectiveAttrs(htmlAttrs, directives, excludeComponent: true);
   for (int i = 0, len = attrNameAndValues.length; i < len; i++) {
-    o.Statement stmt = _createSetAttributeStatement(ast.name, elementFieldName,
-        attrNameAndValues[i][0], attrNameAndValues[i][1]);
+    o.Statement stmt = createSetAttributeStatement(
+        ast.name, renderNode, attrNameAndValues[i][0], attrNameAndValues[i][1]);
     method.addStmt(stmt);
   }
-}
-
-o.Statement _createSetAttributeStatement(String astNodeName,
-    String elementFieldName, String attrName, String attrValue) {
-  var attrNs;
-  if (attrName.startsWith('@') && attrName.contains(':')) {
-    var nameParts = attrName.substring(1).split(':');
-    attrNs = NAMESPACE_URIS[nameParts[0]];
-    attrName = nameParts[1];
-  }
-
-  /// Optimization for common attributes. Call dart:html directly without
-  /// going through setAttr wrapper.
-  if (attrNs == null) {
-    switch (attrName) {
-      case 'class':
-        // Remove check below after SVGSVGElement DDC bug is fixed b2/32931607
-        bool hasNamespace =
-            astNodeName.startsWith('@') || astNodeName.contains(':');
-        if (!hasNamespace) {
-          return new o.ReadClassMemberExpr(elementFieldName)
-              .prop('className')
-              .set(o.literal(attrValue))
-              .toStmt();
-        }
-        break;
-      case 'tabindex':
-        try {
-          int tabValue = int.parse(attrValue);
-          return new o.ReadClassMemberExpr(elementFieldName)
-              .prop('tabIndex')
-              .set(o.literal(tabValue))
-              .toStmt();
-        } catch (_) {
-          // fallthrough to default handler since index is not int.
-        }
-        break;
-      default:
-        break;
-    }
-  }
-  var params = createSetAttributeParams(
-      elementFieldName, attrNs, attrName, o.literal(attrValue));
-  return new o.InvokeMemberMethodExpr(
-          attrNs == null ? "createAttr" : "setAttrNS", params)
-      .toStmt();
-}
-
-List<List<String>> mapToKeyValueArray(Map<String, String> data) {
-  var entryArray = <List<String>>[];
-  data.forEach((String name, String value) {
-    entryArray.add([name, value]);
-  });
-  // We need to sort to get a defined output order
-  // for tests and for caching generated artifacts...
-  entryArray.sort((entry1, entry2) => entry1[0].compareTo(entry2[0]));
-  var keyValueArray = <List<String>>[];
-  for (var entry in entryArray) {
-    keyValueArray.add([entry[0], entry[1]]);
-  }
-  return keyValueArray;
 }
 
 o.Expression createStaticNodeDebugInfo(CompileNode node) {
@@ -933,8 +782,8 @@ o.ClassMethod _createViewClassConstructor(
     // Write literal attribute values on element.
     CompileDirectiveMetadata componentMeta = view.component;
     componentMeta.hostAttributes.forEach((String name, String value) {
-      o.Statement stmt = _createSetAttributeStatement(
-          tagName, appViewRootElementName, name, value);
+      o.Statement stmt = createSetAttributeStatement(
+          tagName, o.variable(appViewRootElementName), name, value);
       ctor.body.add(stmt);
     });
     if (view.genConfig.profileFor != Profile.none) {
