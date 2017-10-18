@@ -11,9 +11,6 @@ import 'package:angular/src/platform/browser_common.dart';
 
 export 'browser/tools/tools.dart' show enableDebugTools, disableDebugTools;
 
-@Deprecated('No longer supported to use this list in end-user code')
-const BROWSER_APP_PROVIDERS = bootstrapLegacyModule;
-
 /// Bootstrapping for Angular applications.
 ///
 /// You instantiate an Angular application by explicitly specifying a component
