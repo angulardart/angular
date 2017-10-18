@@ -1,8 +1,8 @@
 ### Breaking Changes
 
-*   Removed `BROWSER_APP_COMMON_PROVIDERS`. In practice, this was never
-    intended to be a public API, and probably didn't have any application
-    outside of the core framework.
+*   Removed `BROWSER_APP_COMMON_PROVIDERS` and `BROWSER_APP_PROVIDERS`. In
+    practice, this was never intended to be a public API, and probably didn't
+    have any application outside of the core framework.
 
 ## 5.0.0-alpha+1
 
