@@ -99,8 +99,6 @@ class MyDir {
   directives: const [
     MyDir,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class BoundDirectiveInputComponent {
   String value = 'Initial value';
@@ -117,8 +115,6 @@ class MyService {
   viewProviders: const [
     MyService,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ChildComponent {
   String value;
@@ -134,8 +130,6 @@ class ChildComponent {
   directives: const [
     ChildComponent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ParentComponent {}
 
@@ -146,8 +140,6 @@ class ParentComponent {}
     ChildComponent,
     MyDir,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MultipleDirectivesComponent {
   String value = 'Hello world!';
@@ -159,8 +151,6 @@ class MultipleDirectivesComponent {
   directives: const [
     MyDir,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class UnboundDirectiveInputComponent {}
 
@@ -178,8 +168,6 @@ class DuplicateDir {
     DuplicateDir,
     DuplicateDir,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DuplicateDirectivesComponent {}
 
@@ -195,8 +183,6 @@ class IdDir {
   directives: const [
     IdDir,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class OverrideNativePropertyComponent {
   String value = 'some_id';
@@ -216,8 +202,6 @@ class EventDir {
   directives: const [
     EventDir,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class EventDirectiveComponent {
   void doNothing() {}
@@ -245,8 +229,6 @@ class NeedsPublicApi {
     PrivateImpl,
     NeedsPublicApi,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class RetrievesDependencyFromHostComponent {}
 
@@ -264,8 +246,6 @@ class DoublePipe implements PipeTransform {
   pipes: const [
     DoublePipe,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class PipedDirectiveInputComponent {
   String value = 'a';

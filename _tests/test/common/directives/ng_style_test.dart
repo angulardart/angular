@@ -79,8 +79,6 @@ void main() {
   selector: 'map-literal-test',
   directives: const [NgStyle],
   template: '<div [ngStyle]="{\'max-width\': \'40px\'}"></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MapLiteralTest {}
 
@@ -88,8 +86,6 @@ class MapLiteralTest {}
   selector: 'map-update-test',
   directives: const [NgStyle],
   template: '<div [ngStyle]="map"></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MapUpdateTest {
   Map<String, String> map;
@@ -99,8 +95,6 @@ class MapUpdateTest {
   selector: 'map-update-with-default-test',
   directives: const [NgStyle],
   template: '<div style="font-size: 12px" [ngStyle]="map"></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MapUpdateWithDefaultTest {
   Map<String, String> map;
@@ -110,8 +104,6 @@ class MapUpdateWithDefaultTest {
   selector: 'map-update-with-style-expr-test',
   directives: const [NgStyle],
   template: '<div [style.font-size.px]="12" [ngStyle]="map"></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MapUpdateWithStyleExprTest {
   Map<String, String> map;

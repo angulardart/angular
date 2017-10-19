@@ -240,8 +240,6 @@ void main() {
 @Component(
   selector: 'root',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class RootComponent {
   final StreamController<String> _outputController =
@@ -283,16 +281,12 @@ class RootComponent {
     <query-target #view></query-target>
     <query-target #view></query-target>''',
   directives: const [QueryTargetComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DerivedComponent extends RootComponent {}
 
 @Component(
   selector: 'query-target',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class QueryTargetComponent {}
 
@@ -307,8 +301,6 @@ class QueryTargetComponent {}
       <query-target #content></query-target>
     </derived>''',
   directives: const [DerivedComponent, QueryTargetComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestDerivedComponent {
   @ViewChild(DerivedComponent)
@@ -322,8 +314,6 @@ class TestDerivedComponent {
 @Component(
   selector: 'override',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class OverrideComponent extends RootComponent {
   String get title => 'overridden';
@@ -347,8 +337,6 @@ class OverrideComponent extends RootComponent {
         (output)="receivedOutput = \$event">
     </override>''',
   directives: const [OverrideComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestOverrideComponent {
   @ViewChild(OverrideComponent)
@@ -366,8 +354,6 @@ class TestOverrideComponent {
     <query-target #view></query-target>
     <query-target #view></query-target>''',
   directives: const [QueryTargetComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AnnotatedDerivedComponent extends RootComponent {
   @HostBinding('id')
@@ -393,8 +379,6 @@ class AnnotatedDerivedComponent extends RootComponent {
       <query-target #content></query-target>
     </annotated-derived>''',
   directives: const [AnnotatedDerivedComponent, QueryTargetComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestAnnotatedDerivedComponent {
   @ViewChild(AnnotatedDerivedComponent)
@@ -412,8 +396,6 @@ class BaseDirective {
 @Component(
   selector: 'directive-derived',
   template: '<div>{{input}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveDerivedComponent extends BaseDirective {}
 
@@ -421,8 +403,6 @@ class DirectiveDerivedComponent extends BaseDirective {}
   selector: 'test-directive-derived',
   template: '<directive-derived [input]="input"></directive-derived>',
   directives: const [DirectiveDerivedComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestDirectiveDerivedComponent {
   String input;
@@ -436,8 +416,6 @@ class DescriptionInput {
 @Component(
   selector: 'inherit-metadata',
   template: '<div>{{description}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InheritMetadataComponent extends DescriptionInput {}
 
@@ -445,8 +423,6 @@ class InheritMetadataComponent extends DescriptionInput {}
   selector: 'test-inherit-metadata',
   template: '<inherit-metadata [description]="description"></inherit-metadata>',
   directives: const [InheritMetadataComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestInheritMetadataComponent {
   String description;
@@ -455,8 +431,6 @@ class TestInheritMetadataComponent {
 @Component(
   selector: 'implement-metadata',
   template: '<div>{{description}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ImplementMetadataComponent implements DescriptionInput {
   String description;
@@ -467,8 +441,6 @@ class ImplementMetadataComponent implements DescriptionInput {
   template:
       '<implement-metadata [description]="description"></implement-metadata>',
   directives: const [ImplementMetadataComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestImplementMetadataComponent {
   String description;
@@ -477,8 +449,6 @@ class TestImplementMetadataComponent {
 @Component(
   selector: 'mixin-metadata',
   template: '<div>{{description}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MixinMetadataComponent extends Object with DescriptionInput {}
 
@@ -486,8 +456,6 @@ class MixinMetadataComponent extends Object with DescriptionInput {}
   selector: 'test-mixin-metadata',
   template: '<mixin-metadata [description]="description"></mixin-metadata>',
   directives: const [MixinMetadataComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestMixinMetadataComponent {
   String description;
@@ -511,8 +479,6 @@ class BazAttribute {
 @Component(
   selector: 'multiple-supertypes',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MultipleSupertypesComponent extends FooAttribute
     with BarAttribute
@@ -524,8 +490,6 @@ class MultipleSupertypesComponent extends FooAttribute
   selector: 'test-multiple-supertypes',
   template: '<multiple-supertypes></multiple-supertypes>',
   directives: const [MultipleSupertypesComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestMultipleSupertypesComponent {
   @ViewChild(MultipleSupertypesComponent)
@@ -546,8 +510,6 @@ class OverrideFooAttributes extends Attributes {
 @Component(
   selector: 'test-most-derived-metadata',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestMostDerivedMetadataComponent extends OverrideFooAttributes {}
 
@@ -567,8 +529,6 @@ class FancyTooltipDirective extends TooltipDirective {
   selector: 'test-directive-inherit-metadata',
   template: '<div fancyTooltip [tooltip]="tooltipMessage"></div>',
   directives: const [FancyTooltipDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestDirectiveInheritMetadataComponent {
   @ViewChild(FancyTooltipDirective)
@@ -581,8 +541,6 @@ class TestDirectiveInheritMetadataComponent {
   selector: 'test-directive-override-binding',
   template: '<div [fancyTooltip]="tooltipMessage"></div>',
   directives: const [FancyTooltipDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestDirectiveAliasInputComponent {
   @ViewChild(FancyTooltipDirective)
@@ -603,8 +561,6 @@ class MixinImplementsInterface implements MixinInterface {
 @Component(
   selector: 'mixes-in-interface',
   template: '<div>{{input}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MixesInInterface extends Object with MixinImplementsInterface {}
 
@@ -612,8 +568,6 @@ class MixesInInterface extends Object with MixinImplementsInterface {}
   selector: 'test-mixes-in-interface',
   template: '<mixes-in-interface [input]="input"></mixes-in-interface>',
   directives: const [MixesInInterface],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestMixesInInterface {
   String input;

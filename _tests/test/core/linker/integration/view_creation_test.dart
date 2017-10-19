@@ -139,9 +139,8 @@ void main() {
 }
 
 @Component(
-  selector: 'simple-imp-cmp', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'simple-imp-cmp',
+  template: '',
 )
 class SimpleImperativeViewComponent {
   SimpleImperativeViewComponent(ElementRef elementRef) {
@@ -182,8 +181,6 @@ class SomeImperativeViewport {
   selector: 'moves-embedded-view',
   template: '<div><div *someImpvp="ctxBoolProp">hello</div></div>',
   directives: const [SomeImperativeViewport],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MovesEmbeddedViewComponent {
   bool ctxBoolProp = false;
@@ -199,8 +196,6 @@ class PropertyDirective {
   selector: 'unknown-property-on-directive',
   template: '<div has-property [property]="value"></div>',
   directives: const [PropertyDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class UnknownPropertyOnDirectiveComponent {
   String value = 'Hello world!';
@@ -216,8 +211,6 @@ class DirectiveWithTitle {
   selector: 'overridden-property',
   template: '<span [title]="name"></span>',
   directives: const [DirectiveWithTitle],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class OverriddenPropertyComponent {
   String name = 'TITLE';
@@ -236,8 +229,6 @@ class DirectiveWithTitleAndHostProperty {
   selector: 'directive-updates-dom',
   template: '<span [title]="name"></span>',
   directives: const [DirectiveWithTitleAndHostProperty],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveUpdatesDomComponent {
   String name = 'TITLE';
@@ -274,8 +265,6 @@ class DirectiveWithPropDecorators {
 <with-prop-decorators elProp="foo" (elEvent)="value='called'">
 </with-prop-decorators>''',
   directives: const [DirectiveWithPropDecorators],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DecoratorsComponent {
   String value;
@@ -295,24 +284,18 @@ class DecoratorsComponent {
   </foreignObject>
 </svg>
 ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SvgElementsComponent {}
 
 @Component(
   selector: 'namespace-attribute',
   template: '<svg:use xlink:href="#id"/>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NamespaceAttributeComponent {}
 
 @Component(
   selector: 'namespace-attribute-binding',
   template: '<svg:use [attr.xlink:href]="value"/>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NamespaceAttributeBindingComponent {
   String value;

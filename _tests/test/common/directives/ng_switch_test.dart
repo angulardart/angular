@@ -103,8 +103,6 @@ void main() {
     <template ngSwitchCase="a"><li>when a</li></template>
     <template ngSwitchCase="b"><li>when b</li></template>
   </ul></div>''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SwitchWhenTest {
   String switchValue;
@@ -118,8 +116,6 @@ class SwitchWhenTest {
     <li template="ngSwitchCase 'a'">when a</li>
     <li template="ngSwitchDefault">when default</li>
   </ul></div>''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SwitchDefaultTest {
   String switchValue;
@@ -137,8 +133,6 @@ class SwitchDefaultTest {
     <template ngSwitchDefault><li>when default1;</li></template>
     <template ngSwitchDefault><li>when default2;</li></template>
   </ul></div>''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SwitchMultipleWhenTest {
   String switchValue;
@@ -153,8 +147,6 @@ class SwitchMultipleWhenTest {
     <template [ngSwitchCase]="when2"><li>when 2;</li></template>
     <template ngSwitchDefault><li>when default;</li></template>
   </ul></div>''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SwitchWhenValueTest {
   String switchValue;

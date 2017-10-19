@@ -41,8 +41,6 @@ class TestDirective {
 @Component(
   selector: 'no-interpolation-test',
   template: '<div>{{text}}<span ngNonBindable>{{text}}</span></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NoInterpolationTest {
   String text = 'foo';
@@ -52,8 +50,6 @@ class NoInterpolationTest {
   selector: 'ignore-directives-test',
   directives: const [TestDirective],
   template: '<div ngNonBindable><span id=child test-dec>{{text}}</span></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class IgnoreDirectivesTest {
   String text = 'foo';
@@ -63,8 +59,6 @@ class IgnoreDirectivesTest {
   selector: 'directive-same-node-test',
   directives: const [TestDirective],
   template: '<div><span id=child ngNonBindable test-dec>{{text}}</span></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveSameNodeTest {
   String text = 'foo';

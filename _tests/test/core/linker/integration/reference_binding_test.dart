@@ -74,8 +74,6 @@ class MyService {
   viewProviders: const [
     MyService,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ChildComponent {
   String value;
@@ -89,8 +87,6 @@ class ChildComponent {
   selector: 'component-reference-binding',
   template: '<p><child ref-alice></child></p>',
   directives: const [ChildComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ComponentReferenceBindingComponent {}
 
@@ -104,16 +100,12 @@ class ExportDir {}
   selector: 'directive-reference-binding',
   template: '<div><div export-dir #localdir="dir"></div></div>',
   directives: const [ExportDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveReferenceBindingComponent {}
 
 @Component(
   selector: 'element-reference-binding',
   template: '<div><div ref-alice><i>Hello</i></div></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ElementReferenceBindingComponent {}
 
@@ -125,8 +117,6 @@ class ElementReferenceBindingComponent {}
     ChildComponent,
     NgIf,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class UseRefBeforeDeclarationComponent {}
 
@@ -134,8 +124,6 @@ class UseRefBeforeDeclarationComponent {}
   selector: 'two-component-references',
   template: '<p><child ref-alice></child><child ref-bob></child></p>',
   directives: const [ChildComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TwoComponentReferencesComponent {}
 
@@ -143,8 +131,6 @@ class TwoComponentReferencesComponent {}
   selector: 'shorthand-ref',
   template: '<child #alice></child>',
   directives: const [ChildComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ShorthandRefComponent {}
 
@@ -152,7 +138,5 @@ class ShorthandRefComponent {}
   selector: 'case-sensitive-ref',
   template: '<child ref-superAlice></child>',
   directives: const [ChildComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class CaseSensitiveRefComponent {}

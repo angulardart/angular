@@ -77,8 +77,6 @@ class CaptureTplRefs {
   selector: "test-cmp",
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: "",
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestComponent {
   TemplateRef currentTplRef;
@@ -88,8 +86,6 @@ class TestComponent {
   selector: "test-cmp-null",
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: '<template [ngTemplateOutlet]="null"></template>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestWithNullComponent {
   TemplateRef currentTplRef;
@@ -100,8 +96,6 @@ class TestWithNullComponent {
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestInsertContentComponent {
   TemplateRef currentTplRef;
@@ -112,8 +106,6 @@ class TestInsertContentComponent {
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestClearContentComponent {
   TemplateRef currentTplRef;
@@ -125,8 +117,6 @@ class TestClearContentComponent {
   template: '<tpl-refs #refs="tplRefs"><template>foo</template><template>'
       'bar</template></tpl-refs><template '
       '[ngTemplateOutlet]="currentTplRef"></template>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestChangeContentComponent {
   TemplateRef currentTplRef;
