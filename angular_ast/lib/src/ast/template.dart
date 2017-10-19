@@ -217,7 +217,8 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.references: const [],
     this.letBindings: const [],
   })
-      : closeComplement = new CloseElementAst('template');
+      : closeComplement = new CloseElementAst('template'),
+        super.from(origin);
 
   @override
   final List<AttributeAst> attributes;

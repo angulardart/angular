@@ -95,6 +95,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
             starExpression,
             expressionOffset,
             sourceUrl: astNode.sourceUrl,
+            origin: origin,
           );
         } catch (e) {
           exceptionHandler.handle(e);
@@ -111,13 +112,14 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
             astNode,
           ],
           attributes: [
-            new AttributeAst(directiveName),
+            new AttributeAst.from(origin, directiveName),
           ],
           properties: propertiesToAdd,
           letBindings: letBindingsToAdd,
         );
       } else {
-        propertiesToAdd.add(new PropertyAst(
+        propertiesToAdd.add(new PropertyAst.from(
+          origin,
           directiveName,
           starExpression,
         ));

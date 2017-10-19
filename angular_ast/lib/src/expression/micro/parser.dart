@@ -21,6 +21,7 @@ class NgMicroParser {
     String expression,
     int expressionOffset, {
     @required String sourceUrl,
+    TemplateAst origin,
   }) {
     var paddedExpression = ' ' * expressionOffset + expression;
     var tokens = const NgMicroLexer().tokenize(paddedExpression).iterator;
@@ -29,6 +30,7 @@ class NgMicroParser {
       expressionOffset,
       expression.length,
       tokens,
+      origin,
     )
         .parse();
   }
@@ -44,11 +46,14 @@ class _RecursiveMicroAstParser {
   final letBindings = <LetBindingAst>[];
   final properties = <PropertyAst>[];
 
+  final TemplateAst _origin;
+
   _RecursiveMicroAstParser(
     this._directive,
     this._expressionOffset,
     this._expressionLength,
     this._tokens,
+    this._origin,
   );
 
   NgMicroAst parse() {
@@ -74,7 +79,8 @@ class _RecursiveMicroAstParser {
       throw _unexpected();
     }
     var value = _tokens.current.lexeme;
-    properties.add(new PropertyAst(
+    properties.add(new PropertyAst.from(
+      _origin,
       '$_directive${name[0].toUpperCase()}${name.substring(1)}',
       value,
     ));
@@ -92,13 +98,14 @@ class _RecursiveMicroAstParser {
     if (!_tokens.moveNext() ||
         !_tokens.moveNext() ||
         _tokens.current.type == NgMicroTokenType.endExpression) {
-      letBindings.add(new LetBindingAst(identifier));
+      letBindings.add(new LetBindingAst.from(_origin, identifier));
       return;
     }
     if (_tokens.current.type == NgMicroTokenType.letAssignment) {
-      letBindings.add(new LetBindingAst(identifier, _tokens.current.lexeme));
+      letBindings.add(
+          new LetBindingAst.from(_origin, identifier, _tokens.current.lexeme));
     } else {
-      letBindings.add(new LetBindingAst(identifier));
+      letBindings.add(new LetBindingAst.from(_origin, identifier));
       if (_tokens.current.type != NgMicroTokenType.bindIdentifier) {
         throw _unexpected();
       }
@@ -110,7 +117,8 @@ class _RecursiveMicroAstParser {
         throw _unexpected();
       }
       var expression = _tokens.current.lexeme;
-      properties.add(new PropertyAst(
+      properties.add(new PropertyAst.from(
+        _origin,
         '$_directive${property[0].toUpperCase()}${property.substring(1)}',
         expression,
       ));
