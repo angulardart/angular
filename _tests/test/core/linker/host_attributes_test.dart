@@ -81,8 +81,6 @@ void main() {
   selector: 'host-attr-on-comp',
   template: '<component-with-attr></component-with-attr>',
   directives: const [ComponentWithAttr],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostAttrOnComponentTest {}
 
@@ -91,8 +89,6 @@ class HostAttrOnComponentTest {}
   template: '<div id="my_element" directive-with-attr>'
       '</div>',
   directives: const [DirectiveWithAttr],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostAttrOnDirectiveTest {}
 
@@ -101,8 +97,6 @@ class HostAttrOnDirectiveTest {}
   template: '<component-with-attr id="merged" directive-with-attr>'
       '</component-with-attr>',
   directives: const [ComponentWithAttr, DirectiveWithAttr],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostAttrMergedTest {}
 
@@ -110,8 +104,6 @@ class HostAttrMergedTest {}
   selector: 'host-attr-on-comp-and-element',
   template: '<component-with-attr class="base"></component-with-attr>',
   directives: const [ComponentWithAttr],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostAttrOnComponentAndElementTest {}
 
@@ -120,8 +112,6 @@ class HostAttrOnComponentAndElementTest {}
   template: '<div id="my_element" class="base" directive-with-attr>'
       '</div>',
   directives: const [DirectiveWithAttr],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostAttrOnDirectiveAndElementTest {}
 
@@ -130,8 +120,6 @@ class HostAttrOnDirectiveAndElementTest {}
   template: '<component-with-attr id="merged" class="base" directive-with-attr>'
       '</component-with-attr>',
   directives: const [ComponentWithAttr, DirectiveWithAttr],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostAttrMergedAndElementTest {}
 
@@ -143,8 +131,6 @@ class HostAttrMergedAndElementTest {}
   },
   selector: 'component-with-attr',
   template: '<div>{{message}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ComponentWithAttr {
   final String message = 'Hello World';

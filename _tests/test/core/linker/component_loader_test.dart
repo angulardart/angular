@@ -42,8 +42,6 @@ void main() {
 @Component(
   selector: 'comp-with-custom-location',
   template: r'Before<template #location></template>After',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class CompWithCustomLocation {
   final ComponentLoader loader;
@@ -60,8 +58,6 @@ class CompWithCustomLocation {
     DirectiveThatIsLocation,
   ],
   template: r'Before<template location></template>After',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class CompWithDirective {}
 
@@ -78,8 +74,6 @@ class DirectiveThatIsLocation {
   selector: 'comp-with-service',
   providers: const [Service],
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class CompWithService {
   final Service service;
@@ -97,7 +91,5 @@ class Service {
 @Component(
   selector: 'dynamic-comp',
   template: 'Dynamic',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DynamicComp {}
