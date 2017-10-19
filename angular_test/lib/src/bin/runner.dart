@@ -30,24 +30,24 @@ Future<Null> run(List<String> args) async {
     initFileWriting(logFile.openWrite());
   }
 
-  Process pubServeProcess;
+  Process serveProcess;
 
   void killPub() {
-    if (pubServeProcess == null) return;
+    if (serveProcess == null) return;
     log('Shutting down...');
-    if (!pubServeProcess.kill() != null) {
+    if (!serveProcess.kill() != null) {
       warn('`pub serve` was not terminated');
     }
-    pubServeProcess = null;
+    serveProcess = null;
   }
 
   await Chain.capture(() async {
-    log('${options.pubBin} ${options.pubArgs.join(' ')}');
-    pubServeProcess = await Process.start(options.pubBin, options.pubArgs);
+    log('${options.serveBin} ${options.serveArgs.join(' ')}');
+    serveProcess = await Process.start(options.serveBin, options.serveArgs);
     Uri serveUri;
     var testsRunning = false;
 
-    final stdOutDone = _toLines(pubServeProcess.stdout).forEach((line) async {
+    final stdOutDone = _toLines(serveProcess.stdout).forEach((line) async {
       if (serveUri == null) {
         final serveMatch = _serveRegExp.firstMatch(line);
         if (serveMatch != null) {
@@ -72,13 +72,13 @@ Future<Null> run(List<String> args) async {
         log(line, verbose: options.verbose);
       }
     });
-    final stdErrDone = _toLines(pubServeProcess.stderr).forEach((line) {
+    final stdErrDone = _toLines(serveProcess.stderr).forEach((line) {
       error(line, verbose: options.verbose);
     });
     await Future.wait([
       stdOutDone,
       stdErrDone,
-      pubServeProcess.exitCode,
+      serveProcess.exitCode,
     ]).whenComplete(() async {
       await closeIOSink();
     });
@@ -93,7 +93,7 @@ Future<int> _runTests(CliOptions options, int port) async {
   if (port == 0) {
     throw new ArgumentError.value(port, 'port must not be `0`');
   }
-  final testArgs = options.testArgs.toList()..add('--pub-serve=$port');
+  final testArgs = options.testArgs;
   log('${options.pubBin} ${testArgs.join(' ')}');
   final process = await Process.start(options.pubBin, testArgs);
   await Future.wait([

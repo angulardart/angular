@@ -15,17 +15,19 @@ class CliOptions {
   static void printUsage() => log(_argParser.usage);
 
   final String pubBin;
+  final String serveBin;
   final String package;
   final bool verbose;
 
-  final List<String> pubArgs;
+  final List<String> serveArgs;
   final List<String> testArgs;
 
   const CliOptions._(
     this.pubBin,
+    this.serveBin,
     this.package,
     this.verbose,
-    this.pubArgs,
+    this.serveArgs,
     this.testArgs,
   );
 
@@ -34,6 +36,7 @@ class CliOptions {
     @required String pubBin,
     @required String package,
     @required bool verbose,
+    @required String serveBin,
 
     // Translated into `pub run test` arguments.
     @required List<String> runTestFlags,
@@ -43,32 +46,31 @@ class CliOptions {
     @required List<String> runTestArgs,
 
     // Translated into `pub serve` arguments.
-    @required String pubServePort,
-    @required List<String> pubServeArgs,
+    @required String servePort,
+    @required List<String> serveArgs,
   }) {
-    final pubArgs = new List<String>.from(pubServeArgs);
-    final testArgs = new List<String>.from(runTestArgs);
+    serveArgs = serveArgs.toList();
+    final testArgs = runTestArgs.toList();
 
-    if (pubServePort != null) {
-      pubArgs.add('--port=$pubServePort');
-    } else if (!pubArgs.any((p) => p.contains('--port='))) {
-      pubArgs.add('--port=0');
+    if (servePort != null) {
+      serveArgs.add('--port=$servePort');
+    } else if (!serveArgs.any((p) => p.contains('--port='))) {
+      serveArgs.add('--port=0');
     }
 
     testArgs
       ..addAll(runTestFlags.map((t) => '--tags=$t'))
       ..addAll(runTestPlatforms.map((p) => '--platform=$p'))
       ..addAll(runTestNames.map((n) => '--name=$n'))
-      ..addAll(runTestPlainNames.map((n) => '--plain-name=$n'));
+      ..addAll(runTestPlainNames.map((n) => '--plain-name=$n'))
+      ..add('--pub-serve=$servePort');
 
     return new CliOptions._(
       pubBin,
+      serveBin,
       package,
       verbose,
-      new CombinedListView([
-        const ['serve', 'test'],
-        pubArgs
-      ]),
+      serveArgs,
       new CombinedListView([
         const ['run', 'test'],
         testArgs,
@@ -91,8 +93,20 @@ class CliOptions {
     ].where(results.wasParsed).forEach((option) {
       warn('"$option" is deprecated.');
     });
+
+    String serveBin;
+    var serveArgs = results['serve-arg'] as List<String>;
+    var pubBin = results['pub-path'] as String;
+    if (results.wasParsed('experimental-serve-script')) {
+      serveBin = results['experimental-serve-script'];
+    } else {
+      serveBin = pubBin;
+      serveArgs.insertAll(0, ['serve', 'test']);
+    }
+
     return new CliOptions(
-      pubBin: results['pub-path'] as String,
+      pubBin: pubBin,
+      serveBin: serveBin,
       package: results['package'] as String,
       verbose: results['verbose'] as bool,
       runTestFlags: results['run-test-flag'] as List<String>,
@@ -100,8 +114,8 @@ class CliOptions {
       runTestNames: results['name'] as List<String>,
       runTestPlainNames: results['plain-name'] as List<String>,
       runTestArgs: results['test-arg'] as List<String>,
-      pubServePort: results['port'] as String,
-      pubServeArgs: results['serve-arg'] as List<String>,
+      servePort: results['port'] as String,
+      serveArgs: serveArgs,
     );
   }
 }
@@ -199,4 +213,9 @@ final _argParser = new ArgParser()
         'Pass an additional argument=value to `pub run test`\n\n'
         'Example: --test-arg=--name=ngIf',
     allowMultiple: true,
-  );
+  )
+  ..addOption('experimental-serve-script',
+      help: ''
+          'A custom build server script to run instead of pub serve. '
+          'Path should be relative to --package if provided.'
+          'Example: --experimental-serve-script=tool/build.dart');
