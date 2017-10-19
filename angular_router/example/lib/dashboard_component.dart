@@ -12,8 +12,6 @@ import 'hero_service.dart';
   directives: const [NgFor, RouterLink],
   templateUrl: 'dashboard_component.html',
   styleUrls: const ['dashboard_component.css'],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DashboardComponent implements OnInit {
   List<Hero> heroes;

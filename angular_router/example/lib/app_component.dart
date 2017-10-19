@@ -26,8 +26,6 @@ import 'login_component.template.dart' as login_component;
       <router-outlet [routes]="routes"></router-outlet>
     ''',
   styleUrls: const ['app_component.css'],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AppComponent {
   String adminRoute = app_routes.admin.toUrl();

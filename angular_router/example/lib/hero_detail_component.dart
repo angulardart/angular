@@ -13,8 +13,6 @@ import 'hero_service.dart';
   directives: const [NgIf, formDirectives],
   templateUrl: 'hero_detail_component.html',
   styleUrls: const ['hero_detail_component.css'],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HeroDetailComponent implements CanDeactivate, OnActivate {
   final HeroService _heroService;

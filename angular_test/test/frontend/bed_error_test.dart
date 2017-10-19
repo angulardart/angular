@@ -40,9 +40,8 @@ void main() {
 }
 
 @Component(
-  selector: 'test', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'test',
+  template: '',
 )
 class CatchSynchronousErrors {
   static _runTest() async {
@@ -55,9 +54,8 @@ class CatchSynchronousErrors {
 }
 
 @Component(
-  selector: 'test', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'test',
+  template: '',
 )
 class CatchAsynchronousErrors {
   static _runTest() async {
@@ -70,9 +68,8 @@ class CatchAsynchronousErrors {
 }
 
 @Component(
-  selector: 'test', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'test',
+  template: '',
 )
 class CatchConstructorErrors {
   static _runTest() async {
@@ -89,9 +86,8 @@ class CatchConstructorErrors {
 }
 
 @Component(
-  selector: 'test', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'test',
+  template: '',
 )
 class CatchConstructorAsyncErrors {
   static _runTest() async {
@@ -110,9 +106,8 @@ class CatchConstructorAsyncErrors {
 }
 
 @Component(
-  selector: 'test', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'test',
+  template: '',
 )
 class CatchOnInitErrors implements OnInit {
   static _runTest() async {
@@ -133,8 +128,6 @@ class CatchOnInitErrors implements OnInit {
   selector: 'test',
   template: '<child [trueToError]="value"></child>',
   directives: const [ChildChangeDetectionError],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class CatchInChangeDetection {
   static _runTest() async {
@@ -149,9 +142,8 @@ class CatchInChangeDetection {
 }
 
 @Component(
-  selector: 'child', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'child',
+  template: '',
 )
 class ChildChangeDetectionError {
   @Input()

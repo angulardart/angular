@@ -20,8 +20,6 @@ import 'auth_service.dart';
     </div>
     <button (click)="logout()" *ngIf="loggedIn">Logout</button>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class LoginComponent implements CanReuse {
   final AuthService _authService;

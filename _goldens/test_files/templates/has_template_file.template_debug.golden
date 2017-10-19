@@ -31,7 +31,6 @@ import 'package:angular/angular.dart';
 const List<dynamic> styles$HasTemplateFileComponent = const [import0.styles];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [
   null,
-  null,
   null
 ];
 
@@ -63,10 +62,7 @@ class ViewHasTemplateFileComponent0
     import4.Text _text_1 = new import4.Text('Has Template File!');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    import4.Text _text_2 = new import4.Text('\n');
-    parentRenderNode.append(_text_2);
-    dbgElm(this, _text_2, 2, 0, 29);
-    init(const [], null, [_el_0, _text_1, _text_2]);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 }

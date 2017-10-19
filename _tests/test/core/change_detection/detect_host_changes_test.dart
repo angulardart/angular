@@ -32,8 +32,6 @@ void main() {
   template: '<child-component class="mytarget" someDirective>'
       '</child-component>',
   directives: const [ChildComponent, SomeDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestContainer {}
 
@@ -41,8 +39,6 @@ class TestContainer {}
   selector: 'child-component',
   template: '<div>ChildHello</div>',
   providers: const [const Provider(SomeDirective, useExisting: ChildComponent)],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ChildComponent extends SomeDirective {}
 
