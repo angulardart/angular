@@ -258,8 +258,6 @@ abstract class TextDirectivesRenderer {
 @Component(
   selector: 'content-children',
   template: '<div>{{text}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren(TextDirective)
@@ -281,16 +279,12 @@ class ContentChildrenComponent extends TextDirectivesRenderer {
     ContentChildrenComponent,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsContentChildrenComponent {}
 
 @Component(
   selector: 'content-children-descendants',
   template: '<div>{{text}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ContentChildrenDescendantsComponent extends TextDirectivesRenderer {
   @ContentChildren(TextDirective, descendants: true)
@@ -312,16 +306,12 @@ class ContentChildrenDescendantsComponent extends TextDirectivesRenderer {
     ContentChildrenDescendantsComponent,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsContentChildrenDescendantsComponent {}
 
 @Component(
   selector: 'content-child',
   template: '<div>{{textDirective?.text}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ContentChildComponent {
   @ContentChild(TextDirective)
@@ -343,8 +333,6 @@ class ContentChildComponent {
     ContentChildComponent,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsContentChildComponent {}
 
@@ -359,8 +347,6 @@ class TestsContentChildComponent {}
   directives: const [
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren(TextDirective)
@@ -379,8 +365,6 @@ class ViewChildrenComponent extends TextDirectivesRenderer {
     TextDirective,
     ViewChildrenComponent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsViewChildrenComponent {}
 
@@ -395,8 +379,6 @@ class TestsViewChildrenComponent {}
   directives: const [
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewChildComponent {
   @ViewChild(TextDirective)
@@ -415,8 +397,6 @@ class ViewChildComponent {
     TextDirective,
     ViewChildComponent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsViewChildComponent {}
 
@@ -436,8 +416,6 @@ class TestsViewChildComponent {}
     NgIf,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsEmbeddedContentChildrenComponent {
   bool showContent = false;
@@ -459,8 +437,6 @@ class TestsEmbeddedContentChildrenComponent {
     NgIf,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsEmbeddedContentChildrenDescendantsComponent {
   bool showContent = false;
@@ -479,8 +455,6 @@ class TestsEmbeddedContentChildrenDescendantsComponent {
     NgIf,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsEmbeddedContentChildComponent {
   bool showContent = false;
@@ -500,8 +474,6 @@ class TestsEmbeddedContentChildComponent {
     NgIf,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsEmbeddedViewChildrenComponent extends TextDirectivesRenderer {
   bool showView = false;
@@ -522,8 +494,6 @@ class TestsEmbeddedViewChildrenComponent extends TextDirectivesRenderer {
     NgIf,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsEmbeddedViewChildComponent {
   bool showView = false;
@@ -543,8 +513,6 @@ class TestsEmbeddedViewChildComponent {
     NgFor,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MovesDirectiveComponent {
   List<String> list = <String>['1', '2', '3'];
@@ -553,8 +521,6 @@ class MovesDirectiveComponent {
 @Component(
   selector: 'transcluded-content-children',
   template: '<ng-content></ng-content><div>{{text}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TranscludedContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren(TextDirective)
@@ -572,8 +538,6 @@ class TranscludedContentChildrenComponent extends TextDirectivesRenderer {
     TextDirective,
     TranscludedContentChildrenComponent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsTranscludedContentChildrenComponent {}
 
@@ -592,8 +556,6 @@ class InertDirective {}
     NgIf,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class UnrelatedChangesComponent extends TextDirectivesRenderer {
   bool showInertDirective = true;
@@ -612,8 +574,6 @@ class UnrelatedChangesComponent extends TextDirectivesRenderer {
     NgFor,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class LongNgForCycleComponent extends TextDirectivesRenderer {
   List<String> list = <String>[];
@@ -630,8 +590,6 @@ class LongNgForCycleComponent extends TextDirectivesRenderer {
   directives: const [
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class FourQueriesComponent {
   @ViewChild(TextDirective)
@@ -657,8 +615,6 @@ class FourQueriesComponent {
   <div class="embedded-from-view"></div>
 </template>
 ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TemplateRefComponent implements AfterViewInit {
   final ViewContainerRef viewContainerRef;
@@ -698,8 +654,6 @@ class TemplateRefComponent implements AfterViewInit {
   directives: const [
     TemplateRefComponent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsTemplateRefComponent {}
 
@@ -710,8 +664,6 @@ class TestsTemplateRefComponent {}
   <div class="embedded-from-view"></div>
 </template>
 ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NamedTemplateRefComponent implements AfterViewInit {
   final ViewContainerRef viewContainerRef;
@@ -742,16 +694,12 @@ class NamedTemplateRefComponent implements AfterViewInit {
   directives: const [
     NamedTemplateRefComponent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsNamedTemplateRefComponent {}
 
 @Component(
   selector: 'reads-content-children',
   template: '<div>{{text}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ReadsContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren('hasText', read: TextDirective)
@@ -769,16 +717,12 @@ class ReadsContentChildrenComponent extends TextDirectivesRenderer {
     ReadsContentChildrenComponent,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsReadsContentChildrenComponent {}
 
 @Component(
   selector: 'reads-content-child',
   template: '<div>{{textDirective.text}}</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ReadsContentChildComponent {
   @ContentChild('hasText', read: TextDirective)
@@ -797,8 +741,6 @@ class ReadsContentChildComponent {
     ReadsContentChildComponent,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsReadsContentChildComponent {}
 
@@ -812,8 +754,6 @@ class TestsReadsContentChildComponent {}
   directives: const [
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ReadsViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren('hasText', read: TextDirective)
@@ -830,8 +770,6 @@ class ReadsViewChildrenComponent extends TextDirectivesRenderer {
   directives: const [
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ReadsViewChildComponent {
   @ViewChild('hasText', read: TextDirective)
@@ -841,8 +779,6 @@ class ReadsViewChildComponent {
 @Component(
   selector: 'reads-view-container-ref',
   template: '<div #hasViewContainerRef></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ReadsViewContainerRefComponent implements AfterViewInit {
   @ContentChild(TemplateRef)
@@ -866,8 +802,6 @@ class ReadsViewContainerRefComponent implements AfterViewInit {
   directives: const [
     ReadsViewContainerRefComponent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestsReadsViewContainerRefComponent {}
 
@@ -883,8 +817,6 @@ class TestsReadsViewContainerRefComponent {}
   directives: const [
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ChangesViewChildrenComponent extends TextDirectivesRenderer {
   String x = '1';
@@ -905,8 +837,6 @@ class ChangesViewChildrenComponent extends TextDirectivesRenderer {
     NgIf,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DestroysViewChildrenComponent {
   bool showView = true;
@@ -928,8 +858,6 @@ class DestroysViewChildrenComponent {
     NgFor,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class LabeledViewChildrenComponent extends TextDirectivesRenderer {
   List<String> list = <String>['1', '2', '4', '8'];
@@ -948,8 +876,6 @@ class LabeledViewChildrenComponent extends TextDirectivesRenderer {
     NgFor,
     TextDirective,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MultipleLabeledViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren('textLabel1,textLabel2')
@@ -965,8 +891,6 @@ class MultipleLabeledViewChildrenComponent extends TextDirectivesRenderer {
   directives: const [
     NgFor,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class LabeledElementViewChildrenComponent {
   List<String> list = <String>['3', '1', '4'];

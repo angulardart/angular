@@ -127,9 +127,8 @@ _Predicate<DebugElement> filterByDirective(Type type) {
 }
 
 @Component(
-  selector: 'child-cmp', template: 'CHILD_{{ctxProp}}',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'child-cmp',
+  template: 'CHILD_{{ctxProp}}',
 )
 class ChildComp {
   Element element;
@@ -140,16 +139,14 @@ class ChildComp {
 }
 
 @Component(
-  selector: 'dummy', template: 'DynamicallyLoaded;',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'dummy',
+  template: 'DynamicallyLoaded;',
 )
 class DynamicallyLoaded {}
 
 @Component(
-  selector: 'dummy', template: 'DynamicallyLoaded;',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'dummy',
+  template: 'DynamicallyLoaded;',
 )
 class DynamicallyLoadedThrows {
   DynamicallyLoadedThrows() {
@@ -158,9 +155,8 @@ class DynamicallyLoadedThrows {
 }
 
 @Component(
-  selector: 'dummy', template: 'DynamicallyLoaded2;',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'dummy',
+  template: 'DynamicallyLoaded2;',
 )
 class DynamicallyLoaded2 {}
 
@@ -168,8 +164,6 @@ class DynamicallyLoaded2 {}
   selector: 'dummy',
   host: const {'[id]': 'id'},
   template: 'DynamicallyLoadedWithHostProps;',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DynamicallyLoadedWithHostProps {
   String id;
@@ -179,9 +173,8 @@ class DynamicallyLoadedWithHostProps {
 }
 
 @Component(
-  selector: 'dummy', template: 'dynamic(<ng-content></ng-content>)',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'dummy',
+  template: 'dynamic(<ng-content></ng-content>)',
 )
 class DynamicallyLoadedWithNgContent {
   String id;
@@ -191,9 +184,9 @@ class DynamicallyLoadedWithNgContent {
 }
 
 @Component(
-  selector: 'my-comp', directives: const [], template: '<div #loc></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'my-comp',
+  directives: const [],
+  template: '<div #loc></div>',
 )
 class MyComp {
   bool ctxBoolProp;

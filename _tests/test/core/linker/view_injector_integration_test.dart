@@ -422,8 +422,6 @@ class NeedsAppService {
 @Component(
   selector: 'needsHostAppService',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NeedsHostAppService {
   dynamic service;
@@ -513,8 +511,6 @@ class DirectiveNeedsChangeDetectorRef {
   selector: 'componentNeedsChangeDetectorRef',
   template: '{{counter}}',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class PushComponentNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
@@ -575,8 +571,6 @@ class DuplicatePipe2 implements PipeTransform {
   selector: 'no-dependency-test',
   template: '<div simpleDirective>',
   directives: const [SimpleDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NoDependencyTest {}
 
@@ -584,8 +578,6 @@ class NoDependencyTest {}
   selector: 'simple-dependency-test',
   template: '<div simpleDirective needsDirective>',
   directives: const [SimpleDirective, NeedsDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SimpleDependencyTest {}
 
@@ -614,8 +606,6 @@ String skipSelfFactory(@SkipSelf() @Inject('injectable1') val) =>
   selector: 'skip-self-test',
   template: '<div simpleDirective><span someOtherDirective></span></div>',
   directives: const [SkipSelfSimpleDirective, SkipSelfSomeOtherDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class SkipSelfTest {}
 
@@ -623,8 +613,6 @@ class SkipSelfTest {}
   selector: 'provider-dependency-test',
   template: '<div simpleDirective></div>',
   directives: const [ProviderDependencySimpleDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ProviderDependencyTest {}
 
@@ -647,8 +635,6 @@ String providerDependencyFactory(@Inject('injectable1') val) =>
   selector: 'view-provider-dependency-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [ViewProviderSimpleComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProviderDependencyTest {}
 
@@ -659,8 +645,6 @@ class ViewProviderDependencyTest {}
     const Provider('injectable1', useValue: 'injectable1'),
     const Provider('injectable2', useFactory: viewProviderDependencyFactory),
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProviderSimpleComponent {}
 
@@ -671,8 +655,6 @@ String viewProviderDependencyFactory(@Inject('injectable1') val) =>
   selector: 'view-provider-provider-test',
   template: '<needsServiceComponent></needsServiceComponent>',
   directives: const [ViewProviderProviderNeedsServiceComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProviderProviderTest {}
 
@@ -680,8 +662,6 @@ class ViewProviderProviderTest {}
   selector: 'needsServiceComponent',
   template: '',
   viewProviders: const [const Provider('service', useValue: 'service')],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProviderProviderNeedsServiceComponent {
   dynamic service;
@@ -694,8 +674,6 @@ class ViewProviderProviderNeedsServiceComponent {
   selector: 'multi-provider-test',
   template: '<div simpleDirective></div>',
   directives: const [MultiProviderSimpleDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MultiProviderTest {}
 
@@ -712,8 +690,6 @@ class MultiProviderSimpleDirective {}
   selector: 'lazy-initialization-test',
   template: '<div simpleDirective></div>',
   directives: const [LazyInitializationSimpleDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class LazyInitializationTest {}
 
@@ -732,8 +708,6 @@ lazyCreationFactory() => _lazilyCreated = true;
   selector: 'lazy-initialization-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [ViewProviderLazyInitializationSimpleComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProviderLazyInitializationTest {}
 
@@ -743,8 +717,6 @@ class ViewProviderLazyInitializationTest {}
   providers: const [
     const Provider('service', useFactory: lazyCreationFactory),
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProviderLazyInitializationSimpleComponent {}
 
@@ -752,8 +724,6 @@ class ViewProviderLazyInitializationSimpleComponent {}
   selector: 'view-providers-fail-test',
   template: '<simpleComponent needsService></simpleComponent>',
   directives: const [ViewProvidersFailSimpleComponent, NeedsService],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProvidersFailTest {}
 
@@ -763,8 +733,6 @@ class ViewProvidersFailTest {}
   viewProviders: const [
     const Provider('service', useValue: 'service'),
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ViewProvidersFailSimpleComponent {}
 
@@ -772,8 +740,6 @@ class ViewProvidersFailSimpleComponent {}
   selector: 'nested-directive-provide-test',
   template: '<div simpleDirective><div needsService></div></div>',
   directives: const [ParentServiceSimpleDirective, NeedsService],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NestedDirectiveProvideTest {}
 
@@ -790,8 +756,6 @@ class ParentServiceSimpleDirective {}
   template: '<div simpleDirective><template [ngIf]="true">'
       '<div *ngIf="true" needsService></div></template></div>',
   directives: const [ParentServiceSimpleDirective, NeedsService, NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ParentViewProvideTest {}
 
@@ -799,8 +763,6 @@ class ParentViewProvideTest {}
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveProviderSimpleComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveProviderTest {}
 
@@ -811,8 +773,6 @@ class DirectiveProviderTest {}
   providers: const [
     const Provider('service', useValue: 'hostService'),
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveProviderSimpleComponent {}
 
@@ -820,8 +780,6 @@ class DirectiveProviderSimpleComponent {}
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveViewProviderSimpleComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveViewProviderTest {}
 
@@ -832,8 +790,6 @@ class DirectiveViewProviderTest {}
   viewProviders: const [
     const Provider('service', useValue: 'hostService'),
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveViewProviderSimpleComponent {}
 
@@ -841,8 +797,6 @@ class DirectiveViewProviderSimpleComponent {}
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveEmbeddedViewProviderSimpleComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveEmbeddedViewProviderTest {}
 
@@ -853,8 +807,6 @@ class DirectiveEmbeddedViewProviderTest {}
   viewProviders: const [
     const Provider('service', useValue: 'hostService'),
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DirectiveEmbeddedViewProviderSimpleComponent {}
 
@@ -862,8 +814,6 @@ class DirectiveEmbeddedViewProviderSimpleComponent {}
   selector: 'app-provider-test',
   template: '<div needsAppService></div>',
   directives: const [NeedsAppService],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AppProviderTest {}
 
@@ -871,8 +821,6 @@ class AppProviderTest {}
   selector: 'depend-on-other-directive-test',
   template: '<div simpleDirective><div needsDirective></div></div>',
   directives: const [SimpleDirective, NeedsDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DependOnOtherDirectiveTest {}
 
@@ -880,8 +828,6 @@ class DependOnOtherDirectiveTest {}
   selector: 'throw-when-unresolved-dependency-test',
   template: '<div needsService></div>',
   directives: const [NeedsService],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ThrowWhenUnresolvedDependencyTest {}
 
@@ -889,8 +835,6 @@ class ThrowWhenUnresolvedDependencyTest {}
   selector: 'inject-missing-optional-test',
   template: '<div optionallyNeedsDirective></div>',
   directives: const [OptionallyNeedsDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectMissingOptionalTest {}
 
@@ -898,8 +842,6 @@ class InjectMissingOptionalTest {}
   selector: 'depend-on-host-component-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DependOnHostSimpleComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DependOnHostComponentTest {}
 
@@ -907,8 +849,6 @@ class DependOnHostComponentTest {}
   selector: 'simpleComponent',
   template: '<div needsComponentFromHost></div>',
   directives: const [NeedsComponentFromHost],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DependOnHostSimpleComponent {}
 
@@ -916,8 +856,6 @@ class DependOnHostSimpleComponent {}
   selector: 'inject-static-attribute-test',
   template: '<div needsAttribute type="text" title></div>',
   directives: const [NeedsAttribute],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectStaticAttributeTest {}
 
@@ -925,8 +863,6 @@ class InjectStaticAttributeTest {}
   selector: 'inject-static-attribute-no-type-test',
   template: '<div needsAttributeNoType foo=\'bar\'></div>',
   directives: const [NeedsAttributeNoType],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectStaticAttributeNoTypeTest {}
 
@@ -934,8 +870,6 @@ class InjectStaticAttributeNoTypeTest {}
   selector: 'inject-element-ref-test',
   template: '<div needsElementRef></div>',
   directives: const [NeedsElementRef],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectElementRefTest {}
 
@@ -943,8 +877,6 @@ class InjectElementRefTest {}
   selector: 'inject-element-test',
   template: '<div needsElement></div>',
   directives: const [NeedsElement],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectElementTest {}
 
@@ -952,8 +884,6 @@ class InjectElementTest {}
   selector: 'inject-html-element-test',
   template: '<div needsHtmlElement></div>',
   directives: const [NeedsHtmlElement],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectHtmlElementTest {}
 
@@ -962,8 +892,6 @@ class InjectHtmlElementTest {}
   template:
       '<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>',
   directives: const [PushComponentNeedsChangeDetectorRef],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectChangeDetectorTest {}
 
@@ -972,8 +900,6 @@ class InjectChangeDetectorTest {}
   template:
       '<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>',
   directives: const [PushComponentWithChangeDetectorDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectChangeDetectorDirectiveTest {}
 
@@ -982,8 +908,6 @@ class InjectChangeDetectorDirectiveTest {}
   template: '{{counter}}<div directiveNeedsChangeDetectorRef></div>',
   directives: const [DirectiveNeedsChangeDetectorRef],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class PushComponentWithChangeDetectorDirective {
   num counter = 0;
@@ -994,8 +918,6 @@ class PushComponentWithChangeDetectorDirective {
   selector: 'inject-view-container-ref-test',
   template: '<div needsViewContainerRef></div>',
   directives: const [NeedsViewContainerRef],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectViewContainerRefTest {}
 
@@ -1003,8 +925,6 @@ class InjectViewContainerRefTest {}
   selector: 'inject-template-ref-test',
   template: '<template needsViewContainerRef needsTemplateRef></template>',
   directives: const [NeedsViewContainerRef, NeedsTemplateRef],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class InjectTemplateRefTest {}
 
@@ -1012,8 +932,6 @@ class InjectTemplateRefTest {}
   selector: 'throw-if-no-template-ref-test',
   template: '<div needsTemplateRef></div>',
   directives: const [NeedsTemplateRef],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ThrowIfNoTemplateRefTest {}
 
@@ -1021,8 +939,6 @@ class ThrowIfNoTemplateRefTest {}
   selector: 'optional-template-ref-test',
   template: '<div optionallyNeedsTemplateRef></div>',
   directives: const [OptionallyNeedsTemplateRef],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class OptionalTemplateRefTest {}
 
@@ -1032,8 +948,6 @@ class OptionalTemplateRefTest {}
   directives: const [SimpleDirective],
   pipes: const [PipeNeedsService],
   providers: const [const Provider('service', useValue: 'pipeService')],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class PipeDependencyTest {}
 
@@ -1042,8 +956,6 @@ class PipeDependencyTest {}
   template: '<div [simpleDirective]="true | duplicatePipe"></div>',
   directives: const [SimpleDirective],
   pipes: const [DuplicatePipe1, DuplicatePipe2],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DuplicatePipeTest {}
 
@@ -1053,8 +965,6 @@ class DuplicatePipeTest {}
       'directiveNeedsChangeDetectorRef></div>',
   directives: const [SimpleDirective, DirectiveNeedsChangeDetectorRef],
   pipes: const [PipeNeedsChangeDetectorRef],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class PipeChangeDetectorRefTest {}
 
@@ -1066,8 +976,6 @@ class PipeChangeDetectorRefTest {}
       '</div>',
   directives: const [SimpleDirective, NgFor],
   pipes: const [PurePipe],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class CachePurePipesTest {}
 
@@ -1079,7 +987,5 @@ class CachePurePipesTest {}
       '</div>',
   directives: const [SimpleDirective, NgFor],
   pipes: const [ImpurePipe],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NoCacheImpurePipesTest {}

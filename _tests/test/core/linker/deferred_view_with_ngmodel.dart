@@ -8,8 +8,6 @@ import 'package:angular_forms/angular_forms.dart';
   template: r'<template [ngIf]="inputEnabled">'
       '<input [(ngModel)]="model"> {{ model }}'
       '</template>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class DeferredInputComponent {
   String model = 'initial text';
