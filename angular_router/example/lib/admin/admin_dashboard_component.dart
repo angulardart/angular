@@ -10,8 +10,6 @@ import 'package:angular_router/angular_router.dart';
       <a id="anchor"></a>
       <p>Token: {{token}}</p>
     ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AdminDashboardComponent implements OnActivate {
   String sessionId;

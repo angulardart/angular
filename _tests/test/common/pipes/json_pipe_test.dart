@@ -68,9 +68,9 @@ void main() {
 }
 
 @Component(
-  selector: 'test-comp', template: '{{data | json}}', pipes: const [JsonPipe],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'test-comp',
+  template: '{{data | json}}',
+  pipes: const [JsonPipe],
 )
 class TestComp {
   dynamic data;

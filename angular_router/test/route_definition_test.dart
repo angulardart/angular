@@ -176,16 +176,14 @@ void main() {
 }
 
 @Component(
-  selector: 'heroes', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'heroes',
+  template: '',
 )
 class HeroesComponent {}
 
 @Component(
-  selector: 'villains', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'villains',
+  template: '',
 )
 class VillainsComponent {}
 

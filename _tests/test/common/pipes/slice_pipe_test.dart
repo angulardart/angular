@@ -96,8 +96,6 @@ void main() {
   selector: 'test-comp',
   template: '{{(data | slice:1).join(\',\') }}',
   pipes: const [SlicePipe],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestComp {
   dynamic data = [];

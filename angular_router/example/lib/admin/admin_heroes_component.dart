@@ -5,7 +5,5 @@ import 'package:angular/angular.dart';
   template: '''
       <p>Manage your heroes here</p>
     ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AdminHeroesComponent {}

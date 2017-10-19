@@ -64,7 +64,6 @@ String defaultWithWhitespace = '\n'
       '       Hello</span>\n'
       '     <div> <span>  </span>  <span> </span>  World</div>\n'
       '     <div>{{value1}} {{value2}}</div>\n',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
   preserveWhitespace: true,
 )
 class DefaultWhiteSpaceComponent {
@@ -78,7 +77,6 @@ class DefaultWhiteSpaceComponent {
   // Second div covers simple visitText path.
   template: '<div>{{value1}}&ngsp;&ngsp;test1 &ngsp; test2{{value2}}</div>\n'
       '<div>test0&ngsp;&ngsp;test1 &ngsp; test2</div>\n',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
   preserveWhitespace: true,
 )
 class NgSpaceComponent {

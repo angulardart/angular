@@ -20,8 +20,6 @@ import 'admin_heroes_component.template.dart' as admin_heroes_component;
       </nav>
       <router-outlet [routes]="routes"></router-outlet>
     ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AdminComponent implements CanActivate {
   String adminDashboardRoute = app_routes.adminDashboard.toUrl();
