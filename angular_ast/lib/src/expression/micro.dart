@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import '../ast.dart';
 import 'micro/ast.dart';
 import 'micro/parser.dart';
 
@@ -24,11 +25,13 @@ NgMicroAst parseMicroExpression(
   String expression,
   int expressionOffset, {
   String sourceUrl,
+  TemplateAst origin,
 }) {
   return const NgMicroParser().parse(
     directive,
     expression,
     expressionOffset,
     sourceUrl: sourceUrl,
+    origin: origin,
   );
 }
