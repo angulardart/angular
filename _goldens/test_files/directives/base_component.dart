@@ -7,7 +7,5 @@ import 'directives.dart' as directive;
   selector: 'test-foo',
   template: '<div>Foo</div><test-bar></test-bar>',
   directives: const [directive.TestDirective, TestSubComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestFooComponent {}

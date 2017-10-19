@@ -48,8 +48,6 @@ class ViewHasTemplateFileComponent0
     addShimC(_el_0);
     import3.Text _text_1 = new import3.Text('Has Template File!');
     _el_0.append(_text_1);
-    import3.Text _text_2 = new import3.Text('\n');
-    parentRenderNode.append(_text_2);
     init(const [], null);
     return null;
   }

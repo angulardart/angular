@@ -32,8 +32,6 @@ void main() {
   template: r'''
     <counter></counter>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestComponent {}
 
@@ -42,8 +40,6 @@ class TestComponent {}
   template: r'''
     <button (click)="onClick()">Click count: {{count}}</button>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ClickCounterComponent {
   var count = 0;
