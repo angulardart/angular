@@ -124,8 +124,6 @@ void main() {
   selector: 'host-test',
   template: '<div id="item1">Test1</div><ng-content></ng-content>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostStyleTestComponent {}
 
@@ -133,8 +131,6 @@ class HostStyleTestComponent {}
   selector: 'host-test2',
   template: '<div id="item1">Test2</div>',
   styles: const [':host { color: red; }'],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostStyle2TestComponent {}
 
@@ -144,8 +140,6 @@ class HostStyle2TestComponent {}
   template: '<host-test><host-test2></host-test2></host-test>',
   styles: const [':host { color: rgb(0, 0, 0); }'],
   directives: const [HostStyleTestComponent, HostStyle2TestComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostStyleContainerComponent {}
 
@@ -157,8 +151,6 @@ class HostStyleContainerComponent {}
     ':host > div { color: red; }'
         ':host section { color: blue; }'
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class HostElementSelectorTestComponent {}
 
@@ -170,8 +162,6 @@ class HostElementSelectorTestComponent {}
     'div { color: #A0B0C0; }'
         'section { color: #C0B0A0; }'
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ElementSelectorTestComponent {}
 
@@ -187,8 +177,6 @@ class ElementSelectorTestComponent {}
         'section.disabled { color: blue; }'
   ],
   directives: const [ContentSelectorChildComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ContentSelectorTestComponent {}
 
@@ -196,8 +184,6 @@ class ContentSelectorTestComponent {}
   selector: 'content-selector-test-child',
   template: '<section class="secA" id="sectionA">SectionA</section>'
       '<content-selector-test-child></content-selector-test-child>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ContentSelectorChildComponent {}
 
@@ -206,8 +192,6 @@ class ContentSelectorChildComponent {}
   template: '<div id="item1">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
   host: const {'class': 'customhostclass'},
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ClassOnHostTestComponent {}
 
@@ -215,8 +199,6 @@ class ClassOnHostTestComponent {}
   selector: 'class-attrib-binding',
   template: '<div id="item1" [attr.class]="someClass">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ClassAttribBindingComponent {
   String get someClass => 'xyz';
@@ -227,8 +209,6 @@ class ClassAttribBindingComponent {
   template: '<div id="item1" class="prefix {{someClass}} postfix">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
   host: const {'class': 'customhostclass'},
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ClassInterpolateComponent {
   String get someClass => 'xyz';
@@ -241,8 +221,6 @@ class ClassInterpolateComponent {
       '</child-component1></div>',
   styles: const [':host { color: rgb(0, 0, 0); }'],
   directives: const [ChildComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ComponentContainerTestComponent {
   String get activeClass => 'active';
@@ -252,8 +230,6 @@ class ComponentContainerTestComponent {
   selector: 'child-component1',
   template: '<div id="child-div1"><ng-content></ng-content></div>',
   styles: const [':host { color: #FF0000; }'],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ChildComponent {}
 
@@ -302,8 +278,6 @@ String colorToHex(String value) {
   host: const {'[attr.class]': 'positionClass'},
   styles: const [':host {position: absolute;}'],
   template: '<div>Hello</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class FeaturePromoComponent {
   @Input()
@@ -316,8 +290,6 @@ class FeaturePromoComponent {
   template: '''<div>
       <feature-promo [positionClass]="myposition"></feature-promo>
     </div>''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NgHostAttribShimTest {
   String myposition;

@@ -114,8 +114,6 @@ void main() {
     '(keydown.shift.a)': 'receivedKeydownShiftA = true',
   },
   template: '<div></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class KeydownListenerComponent {
   bool receivedKeydown = false;
@@ -129,8 +127,6 @@ class KeydownListenerComponent {
     '(keypress)': 'receivedKeypress = true',
   },
   template: '<div></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class KeypressListenerComponent {
   bool receivedKeypress = false;
@@ -144,8 +140,6 @@ class KeypressListenerComponent {
     '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
   },
   template: '<div></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class KeyupListenerComponent {
   bool receivedKeyup = false;
@@ -159,8 +153,6 @@ class KeyupListenerComponent {
     '(keyup.alt.meta.0)': 'receivedModifiers = true',
   },
   template: '<div></div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ModifiersListener {
   bool receivedModifiers = false;

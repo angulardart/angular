@@ -146,8 +146,6 @@ class FakePlatformLocation implements PlatformLocation {
   template: r'''
 <my-app></my-app>
 ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestRouter {
   Router router;

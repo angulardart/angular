@@ -193,8 +193,6 @@ class MessageDir {
         </div>
         <span class="child" [innerHtml]="childBinding"></span>''',
   directives: const [MessageDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ChildComp {
   final String childBinding = "Original";
@@ -215,8 +213,6 @@ class ParentCompProvider {
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
   directives: const [ChildComp, MessageDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ParentComp {
   final String parentBinding = "OriginalParent";
@@ -231,8 +227,6 @@ class ParentComp {
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
   directives: const [ChildComp, MessageDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ParentCompNoWhitespace {
   final String parentBinding = "OriginalParent";
@@ -244,8 +238,6 @@ class ParentCompNoWhitespace {
       '  <ng-content></ng-content>'
       '</div>',
   directives: const [NgIf, MessageDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ConditionalContentComp {
   bool myBool = false;
@@ -259,8 +251,6 @@ class ConditionalContentComp {
           <span class="from-parent"></span>
         </cond-content-comp>''',
   directives: const [ConditionalContentComp],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ConditionalParentComp {
   String parentBinding = "OriginalParent";
@@ -275,8 +265,6 @@ class ConditionalParentComp {
            <li *ngFor="let item of stuff" [innerHtml]="item"></li>
         </ul>''',
   directives: const [NgFor, MessageDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class UsingFor {
   List<String> stuff;
@@ -291,8 +279,6 @@ class UsingFor {
    Bank Name: {{bank}}
    Account Id: {{id}}
  ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class BankAccount {
   @Input()
@@ -308,8 +294,6 @@ class BankAccount {
   selector: "bank-account-app",
   template: '<bank-account bank="RBC" account="4747"></bank-account>',
   directives: const [BankAccount],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class BankAccountApp {}
 
@@ -320,8 +304,6 @@ class MyDir {}
   selector: "locals-comp",
   template: '<div mydir #alice="mydir"></div>',
   directives: const [MyDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class LocalsComp {}
 
@@ -337,8 +319,6 @@ class CustomEmitter {
   selector: "events-comp",
   template: '''
         <button (click)="handleClick()"></button>''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class EventsComp {
   bool clicked;
@@ -361,8 +341,6 @@ class EventsComp {
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
   directives: const [ChildComp, MessageDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ParentCompWithBadSelector {
   final String parentBinding = "OriginalParent";

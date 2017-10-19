@@ -37,8 +37,6 @@ void main() {
        <span class="other-element">Secure</span>
        <div [innerHtml]="trustedHtml"></div>
     ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NormalInnerHtmlTest {
   String get trustedHtml => r'''
@@ -55,8 +53,6 @@ class NormalInnerHtmlTest {
        <span class="other-element">Secure</span>
        <div [safeInnerHtml]="trustedHtml"></div>
     ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TrustedInnerHtmlTest {
   /// Value will be bound directly to the DOM.
@@ -76,8 +72,6 @@ class TrustedInnerHtmlTest {
   template: r'''
     <div [safeInnerHtml]="untrustedHtml"></div>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class UntrustedInnerHtmlTest {
   String untrustedHtml = '<script>Bad thing</script>';

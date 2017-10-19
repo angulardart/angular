@@ -58,16 +58,12 @@ void main() {
 @Component(
   selector: 'test',
   template: 'Hello World',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NewComponentInDom {}
 
 @Component(
   selector: 'test',
   template: 'Hello {{users.first}}!',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class BeforeChangeDetection {
   // This will fail with an NPE if not initialized before change detection.
@@ -77,8 +73,6 @@ class BeforeChangeDetection {
 @Component(
   selector: 'test',
   template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AddProviders {
   final TestService _testService;
@@ -93,8 +87,6 @@ class TestService {}
   selector: 'test',
   template: '{{"Hello World"}}',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class OnPushComponent {}
 
@@ -102,7 +94,5 @@ class OnPushComponent {}
   selector: 'test',
   template: '',
   changeDetection: ChangeDetectionStrategy.Stateful,
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class XXXComponent extends ComponentState {}

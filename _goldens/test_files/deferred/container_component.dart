@@ -6,7 +6,5 @@ import 'deferred_component.dart';
   selector: 'test-container',
   template: '<deferred-component @deferred>Foo</deferred-component>',
   directives: const [DeferredChildComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestContainerComponent {}

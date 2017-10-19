@@ -34,8 +34,6 @@ void main() {
              title="Input #{{idx}}:{{val}}">
     </form>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class AppComponent {
   Iterable<String> values;
