@@ -28,11 +28,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$InterpolationComponent = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponent0 = [
-  null,
-  null,
-  null
-];
+List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponent0 = [null, null];
 
 class ViewInterpolationComponent0
     extends DebugAppView<import2.InterpolationComponent> {
@@ -63,10 +59,7 @@ class ViewInterpolationComponent0
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
-    import3.Text _text_2 = new import3.Text('\n');
-    parentRenderNode.append(_text_2);
-    dbgElm(this, _text_2, 2, 2, 6);
-    init(const [], null, [_el_0, _text_1, _text_2]);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 
@@ -74,7 +67,7 @@ class ViewInterpolationComponent0
   void detectChangesInternal() {
     final import2.InterpolationComponent _ctx = ctx;
     dbg(1, 0, 5);
-    final currVal_0 = import8.interpolate1('\n  ', _ctx.foo, '\n');
+    final currVal_0 = import8.interpolate0(_ctx.foo);
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;

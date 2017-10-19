@@ -9,8 +9,6 @@ import 'package:angular/angular.dart';
     </div>
     ''',
   directives: const [NgIf, NgFor],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestFooComponent {
   final bool foo = true;

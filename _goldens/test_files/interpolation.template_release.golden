@@ -50,8 +50,6 @@ class ViewInterpolationComponent0
     _el_0 = createAndAppend(doc, 'div', parentRenderNode);
     _text_1 = new import2.Text('');
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text('\n');
-    parentRenderNode.append(_text_2);
     init(const [], null);
     return null;
   }
@@ -59,7 +57,7 @@ class ViewInterpolationComponent0
   @override
   void detectChangesInternal() {
     final import1.InterpolationComponent _ctx = ctx;
-    final currVal_0 = import6.interpolate1('\n  ', _ctx.foo, '\n');
+    final currVal_0 = import6.interpolate0(_ctx.foo);
     if (!import8.looseIdentical(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;

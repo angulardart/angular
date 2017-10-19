@@ -38,22 +38,22 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   import2.QueryList _viewQuery_q8_3;
   import2.QueryList _viewQuery_q8_4;
   import2.QueryList _viewQuery_AnotherDirective_5;
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_4;
   import3.Element _el_1;
   import1.AnotherDirective _AnotherDirective_1_4;
+  import3.Element _el_2;
+  import1.AnotherDirective _AnotherDirective_2_4;
   import3.Element _el_3;
   import1.AnotherDirective _AnotherDirective_3_4;
+  import3.Element _el_4;
+  import1.AnotherDirective _AnotherDirective_4_4;
   import3.Element _el_5;
   import1.AnotherDirective _AnotherDirective_5_4;
+  import3.Element _el_6;
+  import1.AnotherDirective _AnotherDirective_6_4;
   import3.Element _el_7;
   import1.AnotherDirective _AnotherDirective_7_4;
-  import3.Element _el_9;
-  import1.AnotherDirective _AnotherDirective_9_4;
-  import3.Element _el_11;
-  import1.AnotherDirective _AnotherDirective_11_4;
-  import3.Element _el_13;
-  import1.AnotherDirective _AnotherDirective_13_4;
-  import3.Element _el_15;
-  import1.AnotherDirective _AnotherDirective_15_4;
   static RenderComponentType _renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -72,48 +72,30 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     _viewQuery_q8_3 = new import2.QueryList();
     _viewQuery_q8_4 = new import2.QueryList();
     _viewQuery_AnotherDirective_5 = new import2.QueryList();
-    import3.Text _text_0 = new import3.Text('    ');
-    parentRenderNode.append(_text_0);
     var doc = import3.document;
+    _el_0 = createAndAppend(doc, 'another', parentRenderNode);
+    _AnotherDirective_0_4 = new import1.AnotherDirective();
     _el_1 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_1_4 = new import1.AnotherDirective();
-    import3.Text _text_2 = new import3.Text('\n    ');
-    parentRenderNode.append(_text_2);
+    _el_2 = createAndAppend(doc, 'another', parentRenderNode);
+    _AnotherDirective_2_4 = new import1.AnotherDirective();
     _el_3 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_3_4 = new import1.AnotherDirective();
-    import3.Text _text_4 = new import3.Text('\n    ');
-    parentRenderNode.append(_text_4);
+    _el_4 = createAndAppend(doc, 'another', parentRenderNode);
+    _AnotherDirective_4_4 = new import1.AnotherDirective();
     _el_5 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_5_4 = new import1.AnotherDirective();
-    import3.Text _text_6 = new import3.Text('\n    ');
-    parentRenderNode.append(_text_6);
+    _el_6 = createAndAppend(doc, 'another', parentRenderNode);
+    _AnotherDirective_6_4 = new import1.AnotherDirective();
     _el_7 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_7_4 = new import1.AnotherDirective();
-    import3.Text _text_8 = new import3.Text('\n    ');
-    parentRenderNode.append(_text_8);
-    _el_9 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_9_4 = new import1.AnotherDirective();
-    import3.Text _text_10 = new import3.Text('\n    ');
-    parentRenderNode.append(_text_10);
-    _el_11 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_11_4 = new import1.AnotherDirective();
-    import3.Text _text_12 = new import3.Text('\n    ');
-    parentRenderNode.append(_text_12);
-    _el_13 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_13_4 = new import1.AnotherDirective();
-    import3.Text _text_14 = new import3.Text('\n    ');
-    parentRenderNode.append(_text_14);
-    _el_15 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_15_4 = new import1.AnotherDirective();
-    import3.Text _text_16 = new import3.Text('\n  ');
-    parentRenderNode.append(_text_16);
-    _viewQuery_q8_1.reset([new ElementRef(_el_15)]);
+    _viewQuery_q8_1.reset([new ElementRef(_el_7)]);
     ctx.viewChildFromField = _viewQuery_q8_1.first;
-    _viewQuery_q8_2.reset([new ElementRef(_el_15)]);
+    _viewQuery_q8_2.reset([new ElementRef(_el_7)]);
     ctx.readDIFromElementRef = _viewQuery_q8_2.first;
-    _viewQuery_q8_3.reset([_el_15]);
+    _viewQuery_q8_3.reset([_el_7]);
     ctx.readDIFromElement = _viewQuery_q8_3.first;
-    _viewQuery_q8_4.reset([_el_15]);
+    _viewQuery_q8_4.reset([_el_7]);
     ctx.readDIFromHtmlElement = _viewQuery_q8_4.first;
     init(const [], null);
     return null;
@@ -122,29 +104,29 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
+      return _AnotherDirective_0_4;
+    }
     if ((identical(token, import1.AnotherDirective) && (1 == nodeIndex))) {
       return _AnotherDirective_1_4;
+    }
+    if ((identical(token, import1.AnotherDirective) && (2 == nodeIndex))) {
+      return _AnotherDirective_2_4;
     }
     if ((identical(token, import1.AnotherDirective) && (3 == nodeIndex))) {
       return _AnotherDirective_3_4;
     }
+    if ((identical(token, import1.AnotherDirective) && (4 == nodeIndex))) {
+      return _AnotherDirective_4_4;
+    }
     if ((identical(token, import1.AnotherDirective) && (5 == nodeIndex))) {
       return _AnotherDirective_5_4;
     }
+    if ((identical(token, import1.AnotherDirective) && (6 == nodeIndex))) {
+      return _AnotherDirective_6_4;
+    }
     if ((identical(token, import1.AnotherDirective) && (7 == nodeIndex))) {
       return _AnotherDirective_7_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (9 == nodeIndex))) {
-      return _AnotherDirective_9_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (11 == nodeIndex))) {
-      return _AnotherDirective_11_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (13 == nodeIndex))) {
-      return _AnotherDirective_13_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (15 == nodeIndex))) {
-      return _AnotherDirective_15_4;
     }
     return notFoundResult;
   }
@@ -152,20 +134,20 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   @override
   void detectChangesInternal() {
     if (_viewQuery_q6_0.dirty) {
-      _viewQuery_q6_0.reset([new ElementRef(_el_11)]);
+      _viewQuery_q6_0.reset([new ElementRef(_el_5)]);
       ctx.viewChildrenFromField = _viewQuery_q6_0;
       _viewQuery_q6_0.notifyOnChanges();
     }
     if (_viewQuery_AnotherDirective_5.dirty) {
       _viewQuery_AnotherDirective_5.reset([
+        _AnotherDirective_0_4,
         _AnotherDirective_1_4,
+        _AnotherDirective_2_4,
         _AnotherDirective_3_4,
+        _AnotherDirective_4_4,
         _AnotherDirective_5_4,
-        _AnotherDirective_7_4,
-        _AnotherDirective_9_4,
-        _AnotherDirective_11_4,
-        _AnotherDirective_13_4,
-        _AnotherDirective_15_4
+        _AnotherDirective_6_4,
+        _AnotherDirective_7_4
       ]);
       ctx.usingTypeFromField = _viewQuery_AnotherDirective_5;
       _viewQuery_AnotherDirective_5.notifyOnChanges();

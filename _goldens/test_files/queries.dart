@@ -14,8 +14,6 @@ import 'package:angular/angular.dart';
     <another #q7></another>
     <another #q8></another>
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class QueriesComponent {
   @ContentChildren('q5')

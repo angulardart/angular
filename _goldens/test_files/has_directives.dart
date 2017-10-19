@@ -8,8 +8,6 @@ import 'package:angular/angular.dart';
     A component: <test-bar></test-bar>
   ''',
   directives: const [TestDirective, TestSubComponent],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestFooComponent {}
 
@@ -17,8 +15,7 @@ class TestFooComponent {}
 class TestDirective {}
 
 @Component(
-  selector: 'test-bar', template: '<div>Bar</div>',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'test-bar',
+  template: '<div>Bar</div>',
 )
 class TestSubComponent {}

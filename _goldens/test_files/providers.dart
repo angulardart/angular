@@ -45,8 +45,6 @@ import 'package:angular/angular.dart';
   viewProviders: const [
     const Provider(MyUseValue, useValue: const MyUseValue('Matan'))
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ProvidersComponent {
   static MyUseFactory createService(NgZone ngZone, {bool optional}) =>

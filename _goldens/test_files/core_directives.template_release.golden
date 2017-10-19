@@ -35,10 +35,10 @@ import 'package:angular/src/facade/lang.dart'
 const List<dynamic> styles$TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_7;
   ViewContainer _appEl_1;
-  NgIf _NgIf_1_7;
-  ViewContainer _appEl_3;
-  import4.NgFor _NgFor_3_7;
+  import4.NgFor _NgFor_1_7;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -51,24 +51,18 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   @override
   ComponentRef<import1.TestFooComponent> build() {
     final import8.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    import8.Text _text_0 = new import8.Text('    ');
-    parentRenderNode.append(_text_0);
+    var _anchor_0 = ngAnchor.clone(false);
+    parentRenderNode.append(_anchor_0);
+    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_6 =
+        new TemplateRef(_appEl_0, viewFactory_TestFooComponent1);
+    _NgIf_0_7 = new NgIf(_appEl_0, _TemplateRef_0_6);
     var _anchor_1 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_6 =
-        new TemplateRef(_appEl_1, viewFactory_TestFooComponent1);
-    _NgIf_1_7 = new NgIf(_appEl_1, _TemplateRef_1_6);
-    import8.Text _text_2 = new import8.Text('\n    ');
-    parentRenderNode.append(_text_2);
-    var _anchor_3 = ngAnchor.clone(false);
-    parentRenderNode.append(_anchor_3);
-    _appEl_3 = new ViewContainer(3, null, this, _anchor_3);
-    TemplateRef _TemplateRef_3_6 =
-        new TemplateRef(_appEl_3, viewFactory_TestFooComponent2);
-    _NgFor_3_7 = new import4.NgFor(_appEl_3, _TemplateRef_3_6);
-    import8.Text _text_4 = new import8.Text('\n    ');
-    parentRenderNode.append(_text_4);
+        new TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
+    _NgFor_1_7 = new import4.NgFor(_appEl_1, _TemplateRef_1_6);
     init(const [], null);
     return null;
   }
@@ -77,21 +71,21 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final import1.TestFooComponent _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
-    _NgIf_1_7.ngIf = _ctx.foo;
+    _NgIf_0_7.ngIf = _ctx.foo;
     if (firstCheck) {
       if (!identical(_ctx.bars, null)) {
-        (_NgFor_3_7.ngForOf = _ctx.bars);
+        (_NgFor_1_7.ngForOf = _ctx.bars);
       }
     }
-    _NgFor_3_7.ngDoCheck();
+    _NgFor_1_7.ngDoCheck();
+    _appEl_0.detectChangesInNestedViews();
     _appEl_1.detectChangesInNestedViews();
-    _appEl_3.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
+    _appEl_0?.destroyNestedViews();
     _appEl_1?.destroyNestedViews();
-    _appEl_3?.destroyNestedViews();
   }
 }
 
@@ -125,8 +119,8 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent1(
 
 class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   import8.DivElement _el_0;
-  import8.Element _el_2;
-  import8.Text _text_3;
+  import8.Element _el_1;
+  import8.Text _text_2;
   var _expr_0;
   _ViewTestFooComponent2(AppView<dynamic> parentView, num parentIndex)
       : super(import6.ViewType.EMBEDDED, {'\$implicit': null}, parentView,
@@ -137,13 +131,9 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     var doc = import8.document;
     _el_0 = doc.createElement('div');
-    import8.Text _text_1 = new import8.Text('\n      ');
-    _el_0.append(_text_1);
-    _el_2 = createAndAppend(doc, 'span', _el_0);
-    _text_3 = new import8.Text('');
-    _el_2.append(_text_3);
-    import8.Text _text_4 = new import8.Text('\n    ');
-    _el_0.append(_text_4);
+    _el_1 = createAndAppend(doc, 'span', _el_0);
+    _text_2 = new import8.Text('');
+    _el_1.append(_text_2);
     init0(_el_0);
     return null;
   }
@@ -152,7 +142,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final currVal_0 = import9.interpolate0(locals['\$implicit']);
     if (!import12.looseIdentical(_expr_0, currVal_0)) {
-      _text_3.text = currVal_0;
+      _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }

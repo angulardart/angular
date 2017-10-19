@@ -32,21 +32,19 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
   null,
   null,
   null,
-  null,
   new StaticNodeDebugInfo([import1.TestDirective], null, <String, dynamic>{}),
   null,
-  new StaticNodeDebugInfo([import1.TestSubComponent], import1.TestSubComponent,
-      <String, dynamic>{}),
-  null
+  new StaticNodeDebugInfo(
+      [import1.TestSubComponent], import1.TestSubComponent, <String, dynamic>{})
 ];
 
 class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
-  import3.DivElement _el_1;
-  import3.Element _el_4;
-  import1.TestDirective _TestDirective_4_4;
-  import3.Element _el_6;
-  ViewTestSubComponent0 _compView_6;
-  import1.TestSubComponent _TestSubComponent_6_4;
+  import3.DivElement _el_0;
+  import3.Element _el_3;
+  import1.TestDirective _TestDirective_3_4;
+  import3.Element _el_5;
+  ViewTestSubComponent0 _compView_5;
+  import1.TestSubComponent _TestSubComponent_5_4;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -66,57 +64,50 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   @override
   ComponentRef<import1.TestFooComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    import3.Text _text_0 = new import3.Text('    ');
-    parentRenderNode.append(_text_0);
-    dbgElm(this, _text_0, 0, 0, 0);
     var doc = import3.document;
-    _el_1 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 1, 0, 4);
-    import3.Text _text_2 = new import3.Text('My own template');
-    _el_1.append(_text_2);
-    dbgElm(this, _text_2, 2, 0, 9);
-    import3.Text _text_3 = new import3.Text('\n    A directive: ');
-    parentRenderNode.append(_text_3);
-    dbgElm(this, _text_3, 3, 0, 30);
-    _el_4 =
-        createAndAppendDbg(this, doc, 'directive', parentRenderNode, 4, 1, 17);
-    _TestDirective_4_4 = new import1.TestDirective();
-    import3.Text _text_5 = new import3.Text('\n    A component: ');
-    parentRenderNode.append(_text_5);
-    dbgElm(this, _text_5, 5, 1, 40);
-    _compView_6 = new ViewTestSubComponent0(this, 6);
-    _el_6 = _compView_6.rootEl;
-    parentRenderNode.append(_el_6);
-    dbgElm(this, _el_6, 6, 2, 17);
-    _TestSubComponent_6_4 = new import1.TestSubComponent();
-    _compView_6.create(_TestSubComponent_6_4, []);
-    import3.Text _text_7 = new import3.Text('\n  ');
-    parentRenderNode.append(_text_7);
-    dbgElm(this, _text_7, 7, 2, 38);
-    init(const [], null,
-        [_text_0, _el_1, _text_2, _text_3, _el_4, _text_5, _el_6, _text_7]);
+    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 4);
+    import3.Text _text_1 = new import3.Text('My own template');
+    _el_0.append(_text_1);
+    dbgElm(this, _text_1, 1, 0, 9);
+    import3.Text _text_2 = new import3.Text('A directive:');
+    parentRenderNode.append(_text_2);
+    dbgElm(this, _text_2, 2, 0, 30);
+    _el_3 =
+        createAndAppendDbg(this, doc, 'directive', parentRenderNode, 3, 1, 17);
+    _TestDirective_3_4 = new import1.TestDirective();
+    import3.Text _text_4 = new import3.Text('A component:');
+    parentRenderNode.append(_text_4);
+    dbgElm(this, _text_4, 4, 1, 40);
+    _compView_5 = new ViewTestSubComponent0(this, 5);
+    _el_5 = _compView_5.rootEl;
+    parentRenderNode.append(_el_5);
+    dbgElm(this, _el_5, 5, 2, 17);
+    _TestSubComponent_5_4 = new import1.TestSubComponent();
+    _compView_5.create(_TestSubComponent_5_4, []);
+    init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4, _el_5]);
     return null;
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestDirective) && (4 == nodeIndex))) {
-      return _TestDirective_4_4;
+    if ((identical(token, import1.TestDirective) && (3 == nodeIndex))) {
+      return _TestDirective_3_4;
     }
-    if ((identical(token, import1.TestSubComponent) && (6 == nodeIndex))) {
-      return _TestSubComponent_6_4;
+    if ((identical(token, import1.TestSubComponent) && (5 == nodeIndex))) {
+      return _TestSubComponent_5_4;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_6.detectChanges();
+    _compView_5.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_6?.destroy();
+    _compView_5?.destroy();
   }
 }
 

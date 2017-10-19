@@ -29,10 +29,10 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$UsesNativeEvents = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = [null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = [null];
 
 class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
-  import3.ButtonElement _el_1;
+  import3.ButtonElement _el_0;
   static RenderComponentType _renderType;
   ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -53,16 +53,10 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
   ComponentRef<import2.UsesNativeEvents> build() {
     final import2.UsesNativeEvents _ctx = ctx;
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    import3.Text _text_0 = new import3.Text('    ');
-    parentRenderNode.append(_text_0);
-    dbgElm(this, _text_0, 0, 0, 0);
     var doc = import3.document;
-    _el_1 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 1, 0, 4);
-    import3.Text _text_2 = new import3.Text('\n  ');
-    parentRenderNode.append(_text_2);
-    dbgElm(this, _text_2, 2, 0, 41);
-    _el_1.addEventListener('click', eventHandler0(ctx.onClick));
-    init(const [], null, [_text_0, _el_1, _text_2]);
+    _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
+    _el_0.addEventListener('click', eventHandler0(ctx.onClick));
+    init(const [], null, [_el_0]);
     rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
   }
@@ -137,16 +131,14 @@ const ComponentFactory<import2.UsesNativeEvents> UsesNativeEventsNgFactory =
         viewFactory_UsesNativeEventsHost0, _UsesNativeEventsMetadata);
 const List<dynamic> styles$UsesAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = [
-  null,
-  new StaticNodeDebugInfo([import2.HasAngularEvents], import2.HasAngularEvents,
-      <String, dynamic>{}),
-  null
+  new StaticNodeDebugInfo(
+      [import2.HasAngularEvents], import2.HasAngularEvents, <String, dynamic>{})
 ];
 
 class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
-  import3.Element _el_1;
-  ViewHasAngularEvents0 _compView_1;
-  import2.HasAngularEvents _HasAngularEvents_1_4;
+  import3.Element _el_0;
+  ViewHasAngularEvents0 _compView_0;
+  import2.HasAngularEvents _HasAngularEvents_0_4;
   static RenderComponentType _renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -166,41 +158,35 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
   @override
   ComponentRef<import2.UsesAngularEvents> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    import3.Text _text_0 = new import3.Text('    ');
-    parentRenderNode.append(_text_0);
-    dbgElm(this, _text_0, 0, 0, 0);
-    _compView_1 = new ViewHasAngularEvents0(this, 1);
-    _el_1 = _compView_1.rootEl;
-    parentRenderNode.append(_el_1);
-    dbgElm(this, _el_1, 1, 0, 4);
-    _HasAngularEvents_1_4 = new import2.HasAngularEvents();
-    _compView_1.create(_HasAngularEvents_1_4, []);
-    import3.Text _text_2 = new import3.Text('\n  ');
-    parentRenderNode.append(_text_2);
-    dbgElm(this, _text_2, 2, 0, 61);
+    _compView_0 = new ViewHasAngularEvents0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    dbgElm(this, _el_0, 0, 0, 4);
+    _HasAngularEvents_0_4 = new import2.HasAngularEvents();
+    _compView_0.create(_HasAngularEvents_0_4, []);
     final subscription_0 =
-        _HasAngularEvents_1_4.foo.listen(eventHandler0(ctx.onFoo));
-    init(const [], [subscription_0], [_text_0, _el_1, _text_2]);
+        _HasAngularEvents_0_4.foo.listen(eventHandler0(ctx.onFoo));
+    init(const [], [subscription_0], [_el_0]);
     return null;
   }
 
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.HasAngularEvents) && (1 == nodeIndex))) {
-      return _HasAngularEvents_1_4;
+    if ((identical(token, import2.HasAngularEvents) && (0 == nodeIndex))) {
+      return _HasAngularEvents_0_4;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_1.detectChanges();
+    _compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_1?.destroy();
+    _compView_0?.destroy();
   }
 }
 

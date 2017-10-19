@@ -46,8 +46,6 @@ class TypesPipe implements PipeTransform {
     {{ "lifecycle" | lifecycle }}
     {{ "types" | types:1:2:c:d }}
   ''',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class Comp {
   C c;
