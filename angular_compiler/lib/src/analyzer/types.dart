@@ -11,7 +11,6 @@ const _providerOf = '$_provider#Provider';
 const _token = '$_angular/src/core/di/opaque_token.dart';
 
 const _router = 'package:angular_router';
-const _routerMeta = '$_router/src/route_config/route_config_decorator.dart';
 
 // Class metadata.
 const $Directive = const TypeChecker.fromUrl('$_meta#Directive');
