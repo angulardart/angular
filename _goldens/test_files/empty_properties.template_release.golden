@@ -32,15 +32,15 @@ class ViewEmptyPropertiesComponent0
   import2.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_4;
+  import2.Element _el_1;
+  ViewFancyButtonComponent0 _compView_1;
+  import1.FancyButtonComponent _FancyButtonComponent_1_4;
   import2.Element _el_2;
   ViewFancyButtonComponent0 _compView_2;
   import1.FancyButtonComponent _FancyButtonComponent_2_4;
-  import2.Element _el_4;
-  ViewFancyButtonComponent0 _compView_4;
-  import1.FancyButtonComponent _FancyButtonComponent_4_4;
-  import2.Element _el_6;
-  ViewFancyButtonComponent0 _compView_6;
-  import1.FancyButtonComponent _FancyButtonComponent_6_4;
+  import2.Element _el_3;
+  ViewFancyButtonComponent0 _compView_3;
+  import1.FancyButtonComponent _FancyButtonComponent_3_4;
   static RenderComponentType _renderType;
   ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -59,29 +59,21 @@ class ViewEmptyPropertiesComponent0
     createAttr(_el_0, 'raised', '');
     _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_4, []);
-    import2.Text _text_1 = new import2.Text('\n');
-    parentRenderNode.append(_text_1);
+    _compView_1 = new ViewFancyButtonComponent0(this, 1);
+    _el_1 = _compView_1.rootEl;
+    parentRenderNode.append(_el_1);
+    _FancyButtonComponent_1_4 = new import1.FancyButtonComponent();
+    _compView_1.create(_FancyButtonComponent_1_4, []);
     _compView_2 = new ViewFancyButtonComponent0(this, 2);
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     _FancyButtonComponent_2_4 = new import1.FancyButtonComponent();
     _compView_2.create(_FancyButtonComponent_2_4, []);
-    import2.Text _text_3 = new import2.Text('\n');
-    parentRenderNode.append(_text_3);
-    _compView_4 = new ViewFancyButtonComponent0(this, 4);
-    _el_4 = _compView_4.rootEl;
-    parentRenderNode.append(_el_4);
-    _FancyButtonComponent_4_4 = new import1.FancyButtonComponent();
-    _compView_4.create(_FancyButtonComponent_4_4, []);
-    import2.Text _text_5 = new import2.Text('\n');
-    parentRenderNode.append(_text_5);
-    _compView_6 = new ViewFancyButtonComponent0(this, 6);
-    _el_6 = _compView_6.rootEl;
-    parentRenderNode.append(_el_6);
-    _FancyButtonComponent_6_4 = new import1.FancyButtonComponent();
-    _compView_6.create(_FancyButtonComponent_6_4, []);
-    import2.Text _text_7 = new import2.Text('\n');
-    parentRenderNode.append(_text_7);
+    _compView_3 = new ViewFancyButtonComponent0(this, 3);
+    _el_3 = _compView_3.rootEl;
+    parentRenderNode.append(_el_3);
+    _FancyButtonComponent_3_4 = new import1.FancyButtonComponent();
+    _compView_3.create(_FancyButtonComponent_3_4, []);
     init(const [], null);
     return null;
   }
@@ -92,14 +84,14 @@ class ViewEmptyPropertiesComponent0
     if ((identical(token, import1.FancyButtonComponent) && (0 == nodeIndex))) {
       return _FancyButtonComponent_0_4;
     }
+    if ((identical(token, import1.FancyButtonComponent) && (1 == nodeIndex))) {
+      return _FancyButtonComponent_1_4;
+    }
     if ((identical(token, import1.FancyButtonComponent) && (2 == nodeIndex))) {
       return _FancyButtonComponent_2_4;
     }
-    if ((identical(token, import1.FancyButtonComponent) && (4 == nodeIndex))) {
-      return _FancyButtonComponent_4_4;
-    }
-    if ((identical(token, import1.FancyButtonComponent) && (6 == nodeIndex))) {
-      return _FancyButtonComponent_6_4;
+    if ((identical(token, import1.FancyButtonComponent) && (3 == nodeIndex))) {
+      return _FancyButtonComponent_3_4;
     }
     return notFoundResult;
   }
@@ -111,26 +103,26 @@ class ViewEmptyPropertiesComponent0
       (_FancyButtonComponent_0_4.raised = true);
     }
     if (firstCheck) {
+      (_FancyButtonComponent_1_4.raised = true);
+    }
+    if (firstCheck) {
       (_FancyButtonComponent_2_4.raised = true);
     }
     if (firstCheck) {
-      (_FancyButtonComponent_4_4.raised = true);
-    }
-    if (firstCheck) {
-      (_FancyButtonComponent_6_4.raised = false);
+      (_FancyButtonComponent_3_4.raised = false);
     }
     _compView_0.detectChanges();
+    _compView_1.detectChanges();
     _compView_2.detectChanges();
-    _compView_4.detectChanges();
-    _compView_6.detectChanges();
+    _compView_3.detectChanges();
   }
 
   @override
   void destroyInternal() {
     _compView_0?.destroy();
+    _compView_1?.destroy();
     _compView_2?.destroy();
-    _compView_4?.destroy();
-    _compView_6?.destroy();
+    _compView_3?.destroy();
   }
 }
 

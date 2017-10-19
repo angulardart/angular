@@ -29,7 +29,7 @@ import 'package:angular/angular.dart';
 const List<dynamic> styles$UsesNativeEvents = const [];
 
 class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
-  import2.ButtonElement _el_1;
+  import2.ButtonElement _el_0;
   static RenderComponentType _renderType;
   ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -43,13 +43,9 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   ComponentRef<import1.UsesNativeEvents> build() {
     final import1.UsesNativeEvents _ctx = ctx;
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    import2.Text _text_0 = new import2.Text('    ');
-    parentRenderNode.append(_text_0);
     var doc = import2.document;
-    _el_1 = createAndAppend(doc, 'button', parentRenderNode);
-    import2.Text _text_2 = new import2.Text('\n  ');
-    parentRenderNode.append(_text_2);
-    _el_1.addEventListener('click', eventHandler0(ctx.onClick));
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    _el_0.addEventListener('click', eventHandler0(ctx.onClick));
     init(const [], null);
     rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
@@ -116,9 +112,9 @@ const ComponentFactory<import1.UsesNativeEvents> UsesNativeEventsNgFactory =
 const List<dynamic> styles$UsesAngularEvents = const [];
 
 class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
-  import2.Element _el_1;
-  ViewHasAngularEvents0 _compView_1;
-  import1.HasAngularEvents _HasAngularEvents_1_4;
+  import2.Element _el_0;
+  ViewHasAngularEvents0 _compView_0;
+  import1.HasAngularEvents _HasAngularEvents_0_4;
   static RenderComponentType _renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
@@ -131,17 +127,13 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   @override
   ComponentRef<import1.UsesAngularEvents> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    import2.Text _text_0 = new import2.Text('    ');
-    parentRenderNode.append(_text_0);
-    _compView_1 = new ViewHasAngularEvents0(this, 1);
-    _el_1 = _compView_1.rootEl;
-    parentRenderNode.append(_el_1);
-    _HasAngularEvents_1_4 = new import1.HasAngularEvents();
-    _compView_1.create(_HasAngularEvents_1_4, []);
-    import2.Text _text_2 = new import2.Text('\n  ');
-    parentRenderNode.append(_text_2);
+    _compView_0 = new ViewHasAngularEvents0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _HasAngularEvents_0_4 = new import1.HasAngularEvents();
+    _compView_0.create(_HasAngularEvents_0_4, []);
     final subscription_0 =
-        _HasAngularEvents_1_4.foo.listen(eventHandler0(ctx.onFoo));
+        _HasAngularEvents_0_4.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
     return null;
   }
@@ -149,20 +141,20 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.HasAngularEvents) && (1 == nodeIndex))) {
-      return _HasAngularEvents_1_4;
+    if ((identical(token, import1.HasAngularEvents) && (0 == nodeIndex))) {
+      return _HasAngularEvents_0_4;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_1.detectChanges();
+    _compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_1?.destroy();
+    _compView_0?.destroy();
   }
 }
 
