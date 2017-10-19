@@ -68,8 +68,6 @@ class LifecycleDir implements DoCheck {
   selector: "lifecycle",
   template: '<div lifecycle-dir></div>',
   directives: const [LifecycleDir],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class LifecycleCmp
     implements
@@ -119,7 +117,5 @@ class LifecycleCmp
   selector: "my-comp",
   template: '<lifecycle [field]="123"></lifecycle>',
   directives: const [LifecycleCmp],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class MyComp {}

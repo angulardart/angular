@@ -24,14 +24,12 @@ void main() {
 @Component(
   selector: 'example',
   template: r'''
-    Unpiped: {{now}}
-    Piped: {{now | date}}
+    Unpiped:&ngsp;{{now}}
+    Piped:&ngsp;{{now | date}}
   ''',
   pipes: const [
     DatePipe,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class Example {
   // April 29, 2014, 6:04am.

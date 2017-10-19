@@ -165,9 +165,8 @@ void main() {
 }
 
 @Component(
-  selector: 'my-comp', template: '',
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
+  selector: 'my-comp',
+  template: '',
 )
 class MyComp {}
 

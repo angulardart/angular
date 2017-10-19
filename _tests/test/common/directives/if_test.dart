@@ -132,8 +132,6 @@ const isExpressionChanged =
   template: '<div><copy-me template="ngIf booleanCondition">'
       'hello</copy-me></div>',
   directives: const [NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NgIfInTemplateAttributeComponent {
   bool booleanCondition = true;
@@ -144,8 +142,6 @@ class NgIfInTemplateAttributeComponent {
   template: '<div><template [ngIf]="booleanCondition">'
       '<copy-me>hello2</copy-me></template></div>',
   directives: const [NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NgIfInTemplateComponent {
   bool booleanCondition = true;
@@ -156,8 +152,6 @@ class NgIfInTemplateComponent {
   template: '<div><copy-me template="ngIf booleanCondition">hello</copy-me>'
       '</div>',
   directives: const [NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NgIfToggleTestComponent {
   bool booleanCondition = true;
@@ -169,8 +163,6 @@ class NgIfToggleTestComponent {
       '<copy-me *ngIf="nestedBooleanCondition">hello</copy-me>'
       '</template></div>',
   directives: const [NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NgIfNestedTestComponent {
   bool booleanCondition = true;
@@ -185,8 +177,6 @@ class NgIfNestedTestComponent {
       '<copy-me template="ngIf functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
       '</div>',
   directives: const [NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NgIfMultiUpdateTestComponent {
   bool booleanCondition = true;
@@ -204,8 +194,6 @@ class NgIfMultiUpdateTestComponent {
     </template>
   ''',
   directives: const [NgIf],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class NgIfThrowsDuringChangeDetection {
   bool _value = false;

@@ -101,8 +101,6 @@ class EventListenerDirective {
   selector: 'event-directives',
   template: '<div emitter listener></div>',
   directives: const [EventEmitterDirective, EventListenerDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ElementWithEventDirectivesComponent {}
 
@@ -110,8 +108,6 @@ class ElementWithEventDirectivesComponent {}
   selector: 'template-event-directives',
   template: '<template emitter listener (event)="msg=\$event"></template>',
   directives: const [EventEmitterDirective, EventListenerDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TemplateWithEventDirectivesComponent {
   String msg;
@@ -138,8 +134,6 @@ class DirectiveWithTwoWayBinding {
   selector: 'two-way-binding',
   template: '<div [(control)]="ctxProp" two-way></div>',
   directives: const [DirectiveWithTwoWayBinding],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TwoWayBindingComponent {
   String ctxProp = 'one';
@@ -163,8 +157,6 @@ class DomEventListenerDirective {
   selector: 'element-with-dom-event',
   template: '<div listener></div>',
   directives: const [DomEventListenerDirective],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class ElementWithDomEventComponent {}
 
@@ -194,7 +186,5 @@ class DirectiveListeningDomEventNoPrevent {
     DirectiveListeningDomEventNoPrevent,
     DirectiveListeningDomEventPrevent,
   ],
-  // TODO(b/65383776): Change preserveWhitespace to false to improve codesize.
-  preserveWhitespace: true,
 )
 class TestPreventDefaultComponent {}
