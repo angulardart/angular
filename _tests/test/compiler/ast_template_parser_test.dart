@@ -411,7 +411,7 @@ void main() {
                 [DirectiveAst, dirB],
                 [DirectiveAst, dirC]
               ]);
-        }, skip: 'Order is not correct yet.');
+        });
 
         test('should locate directives in property bindings', () {
           var dirA = createCompileDirectiveMetadata(
