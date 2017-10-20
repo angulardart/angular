@@ -160,7 +160,13 @@ void bindRenderText(
       valueField,
       boundText.value,
       DetectChangesVars.cachedCtx,
-      [compileNode.renderNode.prop('text').set(currValExpr).toStmt()],
+      [
+        compileNode.renderNode
+            .toReadExpr()
+            .prop('text')
+            .set(currValExpr)
+            .toStmt()
+      ],
       dynamicRenderMethod,
       constantRenderMethod,
       view.genDebugInfo);
@@ -341,7 +347,7 @@ void bindRenderInputs(
       appViewInstance,
       DetectChangesVars.cachedCtx,
       view.component,
-      renderNode,
+      renderNode.toReadExpr(),
       compileElement.isHtmlElement,
       view.nameResolver,
       view.detectChangesRenderPropertiesMethod,
@@ -368,7 +374,7 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
       compileElement.component != null
           ? compileElement.componentView
           : o.THIS_EXPR,
-      compileElement.renderNode,
+      compileElement.renderNode.toReadExpr(),
       DetectChangesVars.firstCheck
     ]);
   }

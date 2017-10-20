@@ -10,6 +10,7 @@ import '../compile_metadata.dart'
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show AttrAst, TemplateAst;
+import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart';
 
@@ -351,4 +352,60 @@ o.Statement createDbgElementCall(
     sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),
     sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.column)
   ]).toStmt();
+}
+
+bool _isRootNode(CompileView view, CompileElement parent) {
+  return !identical(parent.view, view);
+}
+
+// TODO: make private after all call sites move into AppViewBuilder interface.
+// Returns reference for compile element or null if compile element
+// has no attached node (root node of embedded or host view).
+o.Expression getParentRenderNode(CompileView view, CompileElement parent) {
+  if (_isRootNode(view, parent)) {
+    if (view.viewType == ViewType.COMPONENT) {
+      return parentRenderNodeVar;
+    } else {
+      // root node of an embedded/host view
+      return o.NULL_EXPR;
+    }
+  } else {
+    return parent.component != null
+        ? o.NULL_EXPR
+        : parent.renderNode.toReadExpr();
+  }
+}
+
+Map<String, CompileIdentifierMetadata> tagNameToIdentifier;
+
+/// Returns strongly typed html elements to improve code generation.
+CompileIdentifierMetadata identifierFromTagName(String name) {
+  tagNameToIdentifier ??= {
+    'a': Identifiers.HTML_ANCHOR_ELEMENT,
+    'area': Identifiers.HTML_AREA_ELEMENT,
+    'audio': Identifiers.HTML_AUDIO_ELEMENT,
+    'button': Identifiers.HTML_BUTTON_ELEMENT,
+    'canvas': Identifiers.HTML_CANVAS_ELEMENT,
+    'div': Identifiers.HTML_DIV_ELEMENT,
+    'form': Identifiers.HTML_FORM_ELEMENT,
+    'iframe': Identifiers.HTML_IFRAME_ELEMENT,
+    'input': Identifiers.HTML_INPUT_ELEMENT,
+    'image': Identifiers.HTML_IMAGE_ELEMENT,
+    'media': Identifiers.HTML_MEDIA_ELEMENT,
+    'menu': Identifiers.HTML_MENU_ELEMENT,
+    'ol': Identifiers.HTML_OLIST_ELEMENT,
+    'option': Identifiers.HTML_OPTION_ELEMENT,
+    'col': Identifiers.HTML_TABLE_COL_ELEMENT,
+    'row': Identifiers.HTML_TABLE_ROW_ELEMENT,
+    'select': Identifiers.HTML_SELECT_ELEMENT,
+    'table': Identifiers.HTML_TABLE_ELEMENT,
+    'text': Identifiers.HTML_TEXT_NODE,
+    'textarea': Identifiers.HTML_TEXTAREA_ELEMENT,
+    'ul': Identifiers.HTML_ULIST_ELEMENT,
+  };
+  String tagName = name.toLowerCase();
+  var elementType = tagNameToIdentifier[tagName];
+  elementType ??= Identifiers.HTML_ELEMENT;
+  // TODO: classify as HtmlElement or SvgElement to improve further.
+  return elementType;
 }

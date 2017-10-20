@@ -11,10 +11,7 @@ import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular_compiler/angular_compiler.dart';
 
 import '../compile_metadata.dart'
-    show
-        CompileIdentifierMetadata,
-        CompileDirectiveMetadata,
-        CompileTypeMetadata;
+    show CompileDirectiveMetadata, CompileTypeMetadata;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
@@ -66,13 +63,12 @@ import 'view_compiler_utils.dart'
         createDbgElementCall,
         createSetAttributeStatement,
         componentFromDirectives,
-        getViewFactoryName,
+        getParentRenderNode,
+        identifierFromTagName,
         mergeHtmlAndDirectiveAttrs,
         ViewCompileDependency;
 
 const IMPLICIT_TEMPLATE_VAR = "\$implicit";
-var cloneAnchorNodeExpr =
-    o.importExpr(Identifiers.ngAnchor).callMethod('clone', [o.literal(false)]);
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
@@ -81,7 +77,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   final Parser parser;
   final List<ViewCompileDependency> targetDependencies;
   final StylesCompileResult stylesCompileResult;
-  static Map<String, CompileIdentifierMetadata> tagNameToIdentifier;
 
   int nestedViewCount = 0;
 
@@ -90,31 +85,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   String docVarName;
 
   ViewBuilderVisitor(this.view, this.parser, this.targetDependencies,
-      this.stylesCompileResult) {
-    tagNameToIdentifier ??= {
-      'a': Identifiers.HTML_ANCHOR_ELEMENT,
-      'area': Identifiers.HTML_AREA_ELEMENT,
-      'audio': Identifiers.HTML_AUDIO_ELEMENT,
-      'button': Identifiers.HTML_BUTTON_ELEMENT,
-      'canvas': Identifiers.HTML_CANVAS_ELEMENT,
-      'div': Identifiers.HTML_DIV_ELEMENT,
-      'form': Identifiers.HTML_FORM_ELEMENT,
-      'iframe': Identifiers.HTML_IFRAME_ELEMENT,
-      'input': Identifiers.HTML_INPUT_ELEMENT,
-      'image': Identifiers.HTML_IMAGE_ELEMENT,
-      'media': Identifiers.HTML_MEDIA_ELEMENT,
-      'menu': Identifiers.HTML_MENU_ELEMENT,
-      'ol': Identifiers.HTML_OLIST_ELEMENT,
-      'option': Identifiers.HTML_OPTION_ELEMENT,
-      'col': Identifiers.HTML_TABLE_COL_ELEMENT,
-      'row': Identifiers.HTML_TABLE_ROW_ELEMENT,
-      'select': Identifiers.HTML_SELECT_ELEMENT,
-      'table': Identifiers.HTML_TABLE_ELEMENT,
-      'text': Identifiers.HTML_TEXT_NODE,
-      'textarea': Identifiers.HTML_TEXTAREA_ELEMENT,
-      'ul': Identifiers.HTML_ULIST_ELEMENT,
-    };
-  }
+      this.stylesCompileResult);
 
   bool _isRootNode(CompileElement parent) {
     return !identical(parent.view, this.view);
@@ -128,69 +99,34 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     if (_isRootNode(parent)) {
       // store appElement as root node only for ViewContainers
       if (view.viewType != ViewType.COMPONENT) {
-        view.rootNodesOrViewContainers.add(vcAppEl ?? node.renderNode);
+        view.rootNodesOrViewContainers
+            .add(vcAppEl ?? node.renderNode.toReadExpr());
       }
     } else if (parent.component != null && ngContentIndex != null) {
-      parent.addContentNode(ngContentIndex, vcAppEl ?? node.renderNode);
+      parent.addContentNode(
+          ngContentIndex, vcAppEl ?? node.renderNode.toReadExpr());
     }
   }
 
   dynamic visitBoundText(BoundTextAst ast, dynamic context) {
     CompileElement parent = context;
-    return this._visitText(ast, "", ast.ngContentIndex, parent, isBound: true);
+    int nodeIndex = view.nodes.length;
+    NodeReference renderNode = view.createBoundTextNode(parent, nodeIndex, ast);
+    var compileNode = new CompileNode(parent, view, nodeIndex, renderNode, ast);
+    view.nodes.add(compileNode);
+    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+    return null;
   }
 
   dynamic visitText(TextAst ast, dynamic context) {
     CompileElement parent = context;
-    return this
-        ._visitText(ast, ast.value, ast.ngContentIndex, parent, isBound: false);
-  }
-
-  o.Expression _visitText(
-      TemplateAst ast, String value, num ngContentIndex, CompileElement parent,
-      {bool isBound}) {
-    var fieldName = '_text_${this.view.nodes.length}';
-    o.Expression renderNode;
-    // If Text field is bound, we need access to the renderNode beyond
-    // build method and write reference to class member.
-    // Otherwise we can create a local variable and not balloon class prototype.
-    if (isBound) {
-      view.nameResolver.addField(new o.ClassField(fieldName,
-          outputType: o.importType(Identifiers.HTML_TEXT_NODE),
-          modifiers: const [o.StmtModifier.Private]));
-      renderNode = new o.ReadClassMemberExpr(fieldName);
-    } else {
-      view.createMethod.addStmt(new o.DeclareVarStmt(
-          fieldName,
-          o
-              .importExpr(Identifiers.HTML_TEXT_NODE)
-              .instantiate([o.literal(value)]),
-          o.importType(Identifiers.HTML_TEXT_NODE)));
-      renderNode = new o.ReadVarExpr(fieldName);
-    }
-    var compileNode =
-        new CompileNode(parent, view, this.view.nodes.length, renderNode, ast);
-    var parentRenderNodeExpr = view.getParentRenderNode(parent);
-    if (isBound) {
-      var createRenderNodeExpr = new o.ReadClassMemberExpr(fieldName).set(o
-          .importExpr(Identifiers.HTML_TEXT_NODE)
-          .instantiate([o.literal(value)]));
-      view.nodes.add(compileNode);
-      view.createMethod.addStmt(createRenderNodeExpr.toStmt());
-    } else {
-      view.nodes.add(compileNode);
-    }
-    if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-      // Write append code.
-      view.createMethod.addStmt(
-          parentRenderNodeExpr.callMethod('append', [renderNode]).toStmt());
-    }
-    if (view.genConfig.genDebugInfo) {
-      view.createMethod.addStmt(
-          createDbgElementCall(renderNode, view.nodes.length - 1, ast));
-    }
-    _addRootNodeAndProject(compileNode, ngContentIndex, parent);
-    return renderNode;
+    int nodeIndex = view.nodes.length;
+    NodeReference renderNode =
+        view.createTextNode(parent, nodeIndex, ast.value, ast);
+    var compileNode = new CompileNode(parent, view, nodeIndex, renderNode, ast);
+    view.nodes.add(compileNode);
+    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+    return null;
   }
 
   dynamic visitNgContent(NgContentAst ast, dynamic context) {
@@ -198,7 +134,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
     this.view.createMethod.resetDebugInfo(null, ast);
-    var parentRenderNode = view.getParentRenderNode(parent);
+    var parentRenderNode = getParentRenderNode(view, parent);
     // AppView.projectableNodes property contains the list of nodes
     // to project for each NgContent.
     // Creates a call to project(parentNode, nodeIndex).
@@ -221,163 +157,86 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     return null;
   }
 
-  /// Returns strongly typed html elements to improve code generation.
-  CompileIdentifierMetadata identifierFromTagName(String name) {
-    String tagName = name.toLowerCase();
-    var elementType = tagNameToIdentifier[tagName];
-    elementType ??= Identifiers.HTML_ELEMENT;
-    // TODO: classify as HtmlElement or SvgElement to improve further.
-    return elementType;
-  }
-
   dynamic visitElement(ElementAst ast, dynamic context) {
     CompileElement parent = context;
     var nodeIndex = view.nodes.length;
 
-    bool isRootHostElement = nodeIndex == 0 && view.viewType == ViewType.HOST;
-    var fieldName =
-        isRootHostElement ? appViewRootElementName : '_el_$nodeIndex';
-
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
-    var elementType = isHostRootView
-        ? Identifiers.HTML_HTML_ELEMENT
-        : identifierFromTagName(ast.name);
-
-    if (!isRootHostElement) {
-      view.nameResolver.addField(new o.ClassField(fieldName,
-          outputType: o.importType(elementType),
-          modifiers: const [o.StmtModifier.Private]));
-    }
+    NodeReference elementRef = isHostRootView
+        ? new NodeReference.appViewRoot()
+        : new NodeReference(parent, nodeIndex, ast);
 
     var directives = <CompileDirectiveMetadata>[];
     for (var dir in ast.directives) directives.add(dir.directive);
     CompileDirectiveMetadata component = componentFromDirectives(directives);
 
-    o.Expression compViewExpr;
-    bool isDeferred = false;
     if (component != null) {
+      bool isDeferred = false;
       isDeferred = nodeIndex == 0 &&
           (view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
           (view.declarationElement.sourceAst as EmbeddedTemplateAst)
               .hasDeferredComponent;
-
-      String compViewName = '_compView_$nodeIndex';
-      compViewExpr = new o.ReadClassMemberExpr(compViewName);
-
-      CompileIdentifierMetadata componentViewIdentifier =
-          new CompileIdentifierMetadata(name: 'View${component.type.name}0');
-      targetDependencies
-          .add(new ViewCompileDependency(component, componentViewIdentifier));
-
-      var viewType = isDeferred
-          ? o.importType(Identifiers.AppView, null)
-          : o.importType(componentViewIdentifier);
-      view.nameResolver
-          .addField(new o.ClassField(compViewName, outputType: viewType));
-
-      if (isDeferred) {
-        // When deferred, we use AppView<dynamic> as type to store instance
-        // of component and create the instance using:
-        // deferredLibName.viewFactory_SomeComponent(...)
-        CompileIdentifierMetadata nestedComponentIdentifier =
-            new CompileIdentifierMetadata(
-                name: getViewFactoryName(component, 0));
-        targetDependencies.add(
-            new ViewCompileDependency(component, nestedComponentIdentifier));
-
-        var importExpr = o.importExpr(nestedComponentIdentifier);
-        view.createMethod.addStmt(new o.WriteClassMemberExpr(compViewName,
-            importExpr.callFn([o.THIS_EXPR, o.literal(nodeIndex)])).toStmt());
-      } else {
-        // Create instance of component using ViewSomeComponent0 AppView.
-        var createComponentInstanceExpr = o
-            .importExpr(componentViewIdentifier)
-            .instantiate([o.THIS_EXPR, o.literal(nodeIndex)]);
-        view.createMethod.addStmt(new o.WriteClassMemberExpr(
-                compViewName, createComponentInstanceExpr)
-            .toStmt());
-      }
+      _visitComponentElement(
+          parent, nodeIndex, component, elementRef, directives, ast,
+          isDeferred: isDeferred);
+    } else {
+      _visitHtmlElement(parent, nodeIndex, elementRef, directives, ast);
     }
+    return null;
+  }
 
-    var createRenderNodeExpr;
-    o.Expression tagNameExpr = o.literal(ast.name);
+  void _visitComponentElement(
+      CompileElement parent,
+      int nodeIndex,
+      CompileDirectiveMetadata component,
+      NodeReference elementRef,
+      List<CompileDirectiveMetadata> directives,
+      ElementAst ast,
+      {bool isDeferred: false}) {
+    AppViewReference compAppViewExpr = view.createAppView(parent, component,
+        elementRef, nodeIndex, isDeferred, ast, targetDependencies);
+
     bool isHtmlElement;
+    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
     if (isHostRootView) {
       // Assign root element created by viewfactory call to our own root.
-      view.createMethod.addStmt(new o.WriteClassMemberExpr(
-              fieldName, compViewExpr.prop(appViewRootElementName))
+      view.createMethod.addStmt(elementRef
+          .toWriteExpr(
+              compAppViewExpr.toReadExpr().prop(appViewRootElementName))
           .toStmt());
       if (view.genConfig.genDebugInfo) {
         view.createMethod.addStmt(createDbgIndexElementCall(
-            new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
+            elementRef.toReadExpr(), view.nodes.length, ast));
       }
       isHtmlElement = false;
     } else {
       isHtmlElement = detectHtmlElementFromTagName(ast.name);
-      var parentRenderNodeExpr = view.getParentRenderNode(parent);
+      var parentRenderNodeExpr = getParentRenderNode(view, parent);
       final generateDebugInfo = view.genConfig.genDebugInfo;
-      if (component == null) {
-        // Create element or elementNS. AST encodes svg path element as
-        // @svg:path.
-        bool isNamespacedElement =
-            ast.name.startsWith('@') && ast.name.contains(':');
-        if (isNamespacedElement) {
-          var nameParts = ast.name.substring(1).split(':');
-          String ns = namespaceUris[nameParts[0]];
-          createRenderNodeExpr = o
-              .importExpr(Identifiers.HTML_DOCUMENT)
-              .callMethod(
-                  'createElementNS', [o.literal(ns), o.literal(nameParts[1])]);
-          view.createMethod.addStmt(
-              new o.WriteClassMemberExpr(fieldName, createRenderNodeExpr)
-                  .toStmt());
-          if (parentRenderNodeExpr != null &&
-              parentRenderNodeExpr != o.NULL_EXPR) {
-            // Write code to append to parent node.
-            view.createMethod.addStmt(parentRenderNodeExpr.callMethod(
-                'append', [new o.ReadClassMemberExpr(fieldName)]).toStmt());
-          }
-          if (generateDebugInfo) {
-            view.createMethod.addStmt(createDbgElementCall(
-                new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
-          }
-        } else {
-          // Generate code to create Html element, append to parent and
-          // optionally add dbg info in single call.
-          _createElementAndAppend(tagNameExpr, parentRenderNodeExpr, fieldName,
-              generateDebugInfo, ast.sourceSpan, nodeIndex);
-        }
-      } else {
-        view.createMethod.addStmt(new o.WriteClassMemberExpr(
-                fieldName, compViewExpr.prop(appViewRootElementName))
-            .toStmt());
-        if (parentRenderNodeExpr != null &&
-            parentRenderNodeExpr != o.NULL_EXPR) {
-          // Write code to append to parent node.
-          view.createMethod.addStmt(parentRenderNodeExpr.callMethod(
-              'append', [new o.ReadClassMemberExpr(fieldName)]).toStmt());
-        }
-        if (generateDebugInfo) {
-          view.createMethod.addStmt(createDbgElementCall(
-              new o.ReadClassMemberExpr(fieldName), view.nodes.length, ast));
-        }
+      view.createMethod.addStmt(elementRef
+          .toWriteExpr(
+              compAppViewExpr.toReadExpr().prop(appViewRootElementName))
+          .toStmt());
+      if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
+        // Write code to append to parent node.
+        view.createMethod.addStmt(parentRenderNodeExpr
+            .callMethod('append', [elementRef.toReadExpr()]).toStmt());
+      }
+      if (generateDebugInfo) {
+        view.createMethod.addStmt(createDbgElementCall(
+            elementRef.toReadExpr(), view.nodes.length, ast));
       }
     }
 
-    var renderNode = new o.ReadClassMemberExpr(fieldName);
-
     _writeLiteralAttributeValues(
-        ast, renderNode, directives, view.createMethod);
+        ast, elementRef.toReadExpr(), directives, view.createMethod);
 
     if (!isHostRootView &&
         view.component.template.encapsulation == ViewEncapsulation.Emulated) {
       // Set ng_content class for CSS shim.
-      String shimMethod =
-          elementType != Identifiers.HTML_ELEMENT || (component != null)
-              ? 'addShimC'
-              : 'addShimE';
-      o.Expression shimClassExpr = new o.InvokeMemberMethodExpr(
-          shimMethod, [new o.ReadClassMemberExpr(fieldName)]);
+      String shimMethod = 'addShimC';
+      o.Expression shimClassExpr =
+          new o.InvokeMemberMethodExpr(shimMethod, [elementRef.toReadExpr()]);
       view.createMethod.addStmt(shimClassExpr.toStmt());
     }
 
@@ -385,8 +244,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         parent,
         this.view,
         nodeIndex,
-        renderNode,
-        fieldName,
+        elementRef,
         ast,
         component,
         directives,
@@ -401,8 +259,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     view.nodes.add(compileElement);
 
     if (component != null) {
-      compileElement.componentView = compViewExpr;
-      view.addViewChild(compViewExpr);
+      compileElement.componentView = compAppViewExpr.toReadExpr();
+      view.addViewChild(compAppViewExpr.toReadExpr());
     }
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
@@ -412,7 +270,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
 
-    if (compViewExpr != null) {
+    if (compAppViewExpr != null) {
       o.Expression codeGenContentNodes;
       if (this.view.component.type.isHost) {
         codeGenContentNodes = ViewProperties.projectableNodes;
@@ -422,17 +280,105 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             .map((nodes) => createFlatArray(nodes))
             .toList());
       }
-
-      view.createMethod.addStmt(compViewExpr.callMethod('create',
+      view.createMethod.addStmt(compAppViewExpr.toReadExpr().callMethod(
+          'create',
           [compileElement.getComponent(), codeGenContentNodes]).toStmt());
     }
-    return null;
+  }
+
+  void _visitHtmlElement(
+      CompileElement parent,
+      int nodeIndex,
+      NodeReference elementRef,
+      List<CompileDirectiveMetadata> directives,
+      ElementAst ast) {
+    var createRenderNodeExpr;
+
+    String tagName = ast.name;
+    var parentRenderNodeExpr = getParentRenderNode(view, parent);
+    final generateDebugInfo = view.genConfig.genDebugInfo;
+
+    bool isHostRoot = nodeIndex == 0 && view.viewType == ViewType.HOST;
+    if (!isHostRoot) {
+      // TODO: move to compile_view.
+      String name = (elementRef.toReadExpr() as o.ReadClassMemberExpr).name;
+      view.nameResolver.addField(new o.ClassField(name,
+          outputType: o.importType(identifierFromTagName(tagName)),
+          modifiers: const [o.StmtModifier.Private]));
+    }
+
+    // Create element or elementNS. AST encodes svg path element as
+    // @svg:path.
+    bool isNamespacedElement = tagName.startsWith('@') && tagName.contains(':');
+    if (isNamespacedElement) {
+      var nameParts = tagName.substring(1).split(':');
+      String ns = namespaceUris[nameParts[0]];
+      createRenderNodeExpr = o.importExpr(Identifiers.HTML_DOCUMENT).callMethod(
+          'createElementNS', [o.literal(ns), o.literal(nameParts[1])]);
+      view.createMethod
+          .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
+      if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
+        // Write code to append to parent node.
+        view.createMethod.addStmt(parentRenderNodeExpr
+            .callMethod('append', [elementRef.toReadExpr()]).toStmt());
+      }
+      if (generateDebugInfo) {
+        view.createMethod.addStmt(createDbgElementCall(
+            elementRef.toReadExpr(), view.nodes.length, ast));
+      }
+    } else {
+      // Generate code to create Html element, append to parent and
+      // optionally add dbg info in single call.
+      _createElementAndAppend(o.literal(tagName), parentRenderNodeExpr,
+          elementRef, generateDebugInfo, ast.sourceSpan, nodeIndex);
+    }
+
+    _writeLiteralAttributeValues(
+        ast, elementRef.toReadExpr(), directives, view.createMethod);
+
+    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
+    if (!isHostRootView &&
+        view.component.template.encapsulation == ViewEncapsulation.Emulated) {
+      // Set ng_content class for CSS shim.
+      var elementType = isHostRootView
+          ? Identifiers.HTML_HTML_ELEMENT
+          : identifierFromTagName(ast.name);
+      String shimMethod =
+          elementType != Identifiers.HTML_ELEMENT ? 'addShimC' : 'addShimE';
+      o.Expression shimClassExpr =
+          new o.InvokeMemberMethodExpr(shimMethod, [elementRef.toReadExpr()]);
+      view.createMethod.addStmt(shimClassExpr.toStmt());
+    }
+
+    var compileElement = new CompileElement(
+        parent,
+        this.view,
+        nodeIndex,
+        elementRef,
+        ast,
+        null,
+        directives,
+        ast.providers,
+        ast.hasViewContainer,
+        false,
+        ast.references,
+        logger,
+        isHtmlElement: detectHtmlElementFromTagName(tagName),
+        hasTemplateRefQuery: parent.hasTemplateRefQuery);
+
+    view.nodes.add(compileElement);
+    // beforeChildren() -> _prepareProviderInstances will create the actual
+    // directive and component instances.
+    compileElement.beforeChildren(false);
+    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
+    templateVisitAll(this, ast.children, compileElement);
+    compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
   }
 
   void _createElementAndAppend(
       o.Expression tagName,
       o.Expression parent,
-      String targetFieldName,
+      NodeReference elementRef,
       bool generateDebugInfo,
       SourceSpan debugSpan,
       int debugNodeIndex) {
@@ -461,19 +407,17 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
             .importExpr(Identifiers.createAndAppend)
             .callFn([new o.ReadVarExpr(docVarName), tagName, parent]);
       }
-      view.createMethod.addStmt(
-          new o.WriteClassMemberExpr(targetFieldName, createExpr).toStmt());
+      view.createMethod.addStmt(elementRef.toWriteExpr(createExpr).toStmt());
     } else {
       // No parent node, just create element and assign.
       var createRenderNodeExpr =
           new o.ReadVarExpr(docVarName).callMethod('createElement', [tagName]);
-      view.createMethod.addStmt(
-          new o.WriteClassMemberExpr(targetFieldName, createRenderNodeExpr)
-              .toStmt());
+      view.createMethod
+          .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
       if (generateDebugInfo) {
         view.createMethod.addStmt(o.importExpr(Identifiers.dbgElm).callFn([
           o.THIS_EXPR,
-          new o.ReadClassMemberExpr(targetFieldName),
+          elementRef.toReadExpr(),
           o.literal(debugNodeIndex),
           debugSpan?.start == null
               ? o.NULL_EXPR
@@ -492,17 +436,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         docVarName, o.importExpr(Identifiers.HTML_DOCUMENT));
   }
 
-  String attributeNameToDartHtmlMember(String attrName) {
-    switch (attrName) {
-      case 'class':
-        return 'className';
-      case 'tabindex':
-        return 'tabIndex';
-      default:
-        return null;
-    }
-  }
-
   o.Statement createDbgIndexElementCall(
       o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
     return new o.InvokeMemberMethodExpr(
@@ -514,25 +447,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     // When logging updates, we need to create anchor as a field to be able
     // to update the comment, otherwise we can create simple local field.
     var nodeIndex = this.view.nodes.length;
-    var fieldName = '_anchor_$nodeIndex';
-    o.Expression anchorVarExpr;
-    var readVarExpr = o.variable(fieldName);
-    anchorVarExpr = readVarExpr;
-    var assignCloneAnchorNodeExpr = readVarExpr.set(cloneAnchorNodeExpr);
-    view.createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
-    var parentNode = view.getParentRenderNode(parent);
-    if (parentNode != o.NULL_EXPR) {
-      var addCommentStmt =
-          parentNode.callMethod('append', [anchorVarExpr]).toStmt();
-      view.createMethod.addStmt(addCommentStmt);
-    }
-
-    if (view.genConfig.genDebugInfo) {
-      view.createMethod
-          .addStmt(createDbgElementCall(anchorVarExpr, nodeIndex, ast));
-    }
-
-    var renderNode = anchorVarExpr;
+    NodeReference nodeReference =
+        view.createViewContainerAnchor(parent, nodeIndex, ast);
     var templateVariableBindings = ast.variables
         .map((VariableAst varAst) => [
               varAst.value.length > 0 ? varAst.value : IMPLICIT_TEMPLATE_VAR,
@@ -545,8 +461,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         parent,
         this.view,
         nodeIndex,
-        renderNode,
-        fieldName,
+        nodeReference,
         ast,
         null,
         directives,
@@ -976,7 +891,8 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   // or init0 if we have a single root node with no subscriptions.
   var renderNodesArrayExpr;
   if (view.genConfig.genDebugInfo) {
-    final renderNodes = view.nodes.map((node) => node.renderNode).toList();
+    final renderNodes =
+        view.nodes.map((node) => node.renderNode.toReadExpr()).toList();
     renderNodesArrayExpr = o.literalArr(renderNodes);
     initParams.add(renderNodesArrayExpr);
   }
@@ -1020,7 +936,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
           [
             o.literal(hostElement.nodeIndex),
             o.THIS_EXPR,
-            hostElement.renderNode,
+            hostElement.renderNode.toReadExpr(),
             hostElement.getComponent()
           ],
           null,

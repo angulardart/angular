@@ -14,8 +14,8 @@ import '../template_ast.dart'
     show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst, ElementAst;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
-import 'compile_view.dart' show CompileView;
-import 'constants.dart' show appViewRootElementName, InjectMethodVars;
+import 'compile_view.dart' show CompileView, NodeReference;
+import 'constants.dart' show InjectMethodVars;
 import 'view_compiler_utils.dart'
     show
         cachedParentIndexVarName,
@@ -34,7 +34,7 @@ class CompileNode {
   final int nodeIndex;
 
   /// Expression that resolves to reference to instance of of node.
-  final o.Expression renderNode;
+  final NodeReference renderNode;
 
   /// Source location in template.
   final TemplateAst sourceAst;
@@ -48,7 +48,6 @@ class CompileNode {
 
 /// Compiled element in the view.
 class CompileElement extends CompileNode {
-  final String renderNodeFieldName;
   // If true, we know for sure it is html and not svg or other type
   // so we can create code for more exact type HtmlElement.
   final bool isHtmlElement;
@@ -93,8 +92,7 @@ class CompileElement extends CompileNode {
       CompileElement parent,
       CompileView view,
       int nodeIndex,
-      o.Expression renderNode,
-      this.renderNodeFieldName,
+      NodeReference renderNode,
       TemplateAst sourceAst,
       this.component,
       this._directives,
@@ -115,11 +113,12 @@ class CompileElement extends CompileNode {
       }
     }
     // Create new ElementRef(_el_#) expression and provide as instance.
-    elementRef =
-        o.importExpr(Identifiers.ElementRef).instantiate([this.renderNode]);
+    elementRef = o
+        .importExpr(Identifiers.ElementRef)
+        .instantiate([renderNode.toReadExpr()]);
     _instances.add(Identifiers.ElementRefToken, this.elementRef);
-    _instances.add(Identifiers.ElementToken, this.renderNode);
-    _instances.add(Identifiers.HtmlElementToken, this.renderNode);
+    _instances.add(Identifiers.ElementToken, renderNode.toReadExpr());
+    _instances.add(Identifiers.HtmlElementToken, renderNode.toReadExpr());
     var readInjectorExpr =
         new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
     _instances.add(Identifiers.InjectorToken, readInjectorExpr);
@@ -130,20 +129,8 @@ class CompileElement extends CompileNode {
   }
 
   CompileElement.root()
-      : this(
-            null,
-            null,
-            null,
-            new o.ReadClassMemberExpr(appViewRootElementName),
-            appViewRootElementName,
-            null,
-            null,
-            [],
-            [],
-            false,
-            false,
-            [],
-            null);
+      : this(null, null, null, new NodeReference.appViewRoot(), null, null, [],
+            [], false, false, [], null);
 
   void _createViewContainer() {
     var fieldName = '_appEl_$nodeIndex';
@@ -163,7 +150,7 @@ class CompileElement extends CompileNode {
           o.literal(nodeIndex),
           o.literal(parentNodeIndex),
           o.THIS_EXPR,
-          renderNode
+          renderNode.toReadExpr()
         ])).toStmt();
     view.createMethod.addStmt(statement);
     appViewContainer = new o.ReadClassMemberExpr(fieldName);
@@ -253,7 +240,8 @@ class CompileElement extends CompileNode {
     // For each reference token create CompileTokenMetadata to read query.
     if (referenceTokens != null) {
       referenceTokens.forEach((String varName, token) {
-        var varValue = token != null ? _instances.get(token) : renderNode;
+        var varValue =
+            token != null ? _instances.get(token) : renderNode.toReadExpr();
         view.nameResolver.addLocal(varName, varValue);
         var varToken = new CompileTokenMetadata(value: varName);
         queriesWithReads.addAll(_getQueriesFor(varToken)
