@@ -366,6 +366,11 @@ class NgZone {
   ///   cause an infinite loop.
   Stream get onEventDone => _onMicrotaskEmptyController.stream;
 
+  /// App is disposed stop sending events.
+  void dispose() {
+    _disposed = true;
+  }
+
   @Deprecated('Use onTurnDone')
   Stream get onStable => _onStableController.stream;
 
