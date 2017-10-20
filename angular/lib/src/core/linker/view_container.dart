@@ -76,7 +76,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// Returns the [ViewRef] for the newly created View.
   @override
   EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView(parentView.ctx);
+    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
     insert(viewRef, index);
     return viewRef;
   }
@@ -85,7 +85,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// and appends it into this container.
   @override
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView(parentView.ctx);
+    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
     attachView((viewRef as ViewRefImpl).appView, length);
     return viewRef;
   }
