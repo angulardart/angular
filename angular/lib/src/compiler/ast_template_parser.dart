@@ -175,52 +175,49 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
     return results;
   }
 
-  Set<CompileDirectiveMetadata> _matchElementDirectives(
+  List<CompileDirectiveMetadata> _matchElementDirectives(
           ParseContext context, ast.ElementAst astNode) =>
-      _parseDirectives(
-          _selector(context.directives), _elementSelector(astNode));
+      _parseDirectives(context.directives, _elementSelector(astNode));
 
-  Set<CompileDirectiveMetadata> _matchTemplateDirectives(
+  List<CompileDirectiveMetadata> _matchTemplateDirectives(
           ParseContext context, ast.EmbeddedTemplateAst astNode) =>
-      _parseDirectives(
-          _selector(context.directives), _templateSelector(astNode));
+      _parseDirectives(context.directives, _templateSelector(astNode));
 
-  List<ng.DirectiveAst> _toAst(Set<CompileDirectiveMetadata> directiveMetas,
-          SourceSpan sourceSpan) =>
-      directiveMetas
-          .map((directive) => new ng.DirectiveAst(directive, [] /* inputs */,
-              [] /* hostProperties */, [] /* hostEvents */, sourceSpan))
-          .toList();
+  CssSelector _elementSelector(ast.ElementAst astNode) => _selector(
+      astNode.name, astNode.attributes, astNode.properties, astNode.events);
 
-  CssSelector _elementSelector(ast.ElementAst astNode) {
-    final attributes = [];
-    for (var attr in astNode.attributes) {
-      attributes.add([attr.name, attr.value]);
+  CssSelector _templateSelector(ast.EmbeddedTemplateAst astNode) => _selector(
+      TEMPLATE_ELEMENT, astNode.attributes, astNode.properties, astNode.events);
+
+  CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
+      List<ast.PropertyAst> properties, List<ast.EventAst> events) {
+    final matchableAttributes = [];
+    for (var attr in attributes) {
+      matchableAttributes.add([attr.name, attr.value]);
     }
-    for (var property in astNode.properties) {
-      attributes.add([property.name, property.value]);
+    for (var property in properties) {
+      matchableAttributes.add([property.name, property.value]);
     }
-    for (var event in astNode.events) {
-      attributes.add([event.name, event.value]);
+    for (var event in events) {
+      matchableAttributes.add([event.name, event.value]);
     }
-    return createElementCssSelector(astNode.name, attributes);
+    return createElementCssSelector(elementName, matchableAttributes);
   }
 
-  CssSelector _templateSelector(ast.EmbeddedTemplateAst astNode) {
-    final attributes = [];
-    for (var attr in astNode.attributes) {
-      attributes.add([attr.name, attr.value]);
-    }
-    for (var property in astNode.properties) {
-      attributes.add([property.name, property.value]);
-    }
-    for (var event in astNode.events) {
-      attributes.add([event.name, event.value]);
-    }
-    return createElementCssSelector(TEMPLATE_ELEMENT, attributes);
+  List<CompileDirectiveMetadata> _parseDirectives(
+      List<CompileDirectiveMetadata> directives,
+      CssSelector elementCssSelector) {
+    var matchedDirectives = new Set();
+    _selectorMatcher(directives).match(elementCssSelector,
+        (selector, directive) {
+      matchedDirectives.add(directive);
+    });
+    // We return the directives in the same order that they are present in the
+    // Component, not the order that they match in the html.
+    return directives.where(matchedDirectives.contains).toList();
   }
 
-  SelectorMatcher _selector(List<CompileDirectiveMetadata> directives) {
+  SelectorMatcher _selectorMatcher(List<CompileDirectiveMetadata> directives) {
     final SelectorMatcher selectorMatcher = new SelectorMatcher();
     for (var directive in directives) {
       var selector = CssSelector.parse(directive.selector);
@@ -229,15 +226,13 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
     return selectorMatcher;
   }
 
-  Set<CompileDirectiveMetadata> _parseDirectives(
-      SelectorMatcher selectorMatcher, CssSelector elementCssSelector) {
-    var directives = new Set();
-    selectorMatcher.match(elementCssSelector, (selector, directive) {
-      directives.add(directive);
-    });
-    // TODO(alorenzen): Sort to match order in file.
-    return directives;
-  }
+  List<ng.DirectiveAst> _toAst(
+          Iterable<CompileDirectiveMetadata> directiveMetas,
+          SourceSpan sourceSpan) =>
+      directiveMetas
+          .map((directive) => new ng.DirectiveAst(directive, [] /* inputs */,
+              [] /* hostProperties */, [] /* hostEvents */, sourceSpan))
+          .toList();
 
   static String _location(ast.TemplateAst astNode) =>
       astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
