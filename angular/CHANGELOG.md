@@ -1,13 +1,5 @@
 ### Breaking Changes
 
-*   Removed `BROWSER_APP_COMMON_PROVIDERS` and `BROWSER_APP_PROVIDERS`. In
-    practice, this was never intended to be a public API, and probably didn't
-    have any application outside of the core framework.
-
-## 5.0.0-alpha+1
-
-### Breaking Changes
-
 *   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
     `WrappedValue` when the transformed result changes, and instead will rely on
     regular change detection.
@@ -15,6 +7,12 @@
 *   Pipes no longer support private types in their `transform` method signature.
     This method's type is now used to generate a type annotation in the
     generated code, which can't import private types from another library.
+
+*   Removed `BROWSER_APP_COMMON_PROVIDERS` and `BROWSER_APP_PROVIDERS`. In
+    practice, this was never intended to be a public API, and probably didn't
+    have any application outside of the core framework.
+
+*   Removed unused `context` parameter from `TemplateRef.createEmbeddedView`.
 
 ### Bug fixes
 
