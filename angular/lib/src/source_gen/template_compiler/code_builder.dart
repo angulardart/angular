@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:code_builder/code_builder.dart';
 
 import 'template_compiler_outputs.dart';
 
@@ -31,14 +32,6 @@ String buildGeneratedCode(
   // Generated code.
   final compilerOutput = outputs.templatesSource?.source ?? '';
   final reflectableOutput = new ReflectableEmitter(outputs.reflectableOutput);
-  final generateInjectors = new InjectorEmitter(
-    new Map<String, List<ProviderElement>>.fromIterable(
-      outputs.injectorsOutput,
-      // Fuzzy arrows.
-      key: (r) => (r as InjectorReader).name,
-      value: (r) => (r as InjectorReader).providers.toList(),
-    ),
-  );
 
   // Write the input file as an import and an export.
   buffer.writeln("import '$sourceFile';");
@@ -53,19 +46,33 @@ String buildGeneratedCode(
     }
   }
 
-  // Write imports required for initReflector AND generated injectors.
-  buffer
-    ..writeln(reflectableOutput.emitImports())
-    ..writeln(generateInjectors.emitImports());
+  // Write imports required for initReflector.
+  buffer.writeln(reflectableOutput.emitImports());
+
+  if (outputs.injectorsOutput.isNotEmpty) {
+    buffer.writeln('// *** EXPERIMENTAL ** Injector Generator [START]');
+    final file = new FileBuilder();
+    final dart = new DartEmitter.scoped();
+
+    for (final injector in outputs.injectorsOutput) {
+      final emitter = new InjectorEmitter();
+      injector.accept(emitter);
+      file.body.addAll([
+        emitter.createFactory(),
+        emitter.createClass(),
+      ]);
+    }
+
+    // Write imports AND backing code required for generated injectors.
+    file.build().accept(dart, buffer);
+    buffer.writeln('// *** EXPERIMENTAL ** Injector Generator [END]');
+  }
 
   // Write generated code.
   buffer.writeln(compilerOutput);
 
   // Write initReflector.
   buffer.writeln(reflectableOutput.emitInitReflector());
-
-  // Write generated injectors.
-  buffer.writeln(generateInjectors.emitInjector());
 
   return buffer.toString();
 }

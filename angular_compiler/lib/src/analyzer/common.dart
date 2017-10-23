@@ -2,6 +2,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
+import 'package:code_builder/code_builder.dart' show refer, Reference;
 import 'package:source_gen/source_gen.dart';
 import 'package:source_gen/src/utils.dart';
 
@@ -78,4 +79,10 @@ Uri urlOf(Element element, [String name]) {
   }
   name ??= element.name;
   return normalizeUrl(element.source.uri).replace(fragment: name);
+}
+
+/// Create a `code_builder` [Reference] to [assetUri].
+Reference referTo(Uri assetUri) {
+  final dartUrl = assetToPackageUrl(assetUri);
+  return refer(dartUrl.fragment, dartUrl.removeFragment().toString());
 }

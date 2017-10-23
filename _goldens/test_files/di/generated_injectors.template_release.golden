@@ -14,8 +14,29 @@ import 'generated_injectors.template.dart' as _ref0;
 import 'package:angular/angular.template.dart'
     as _ref1;
 
+// *** EXPERIMENTAL ** Injector Generator [START]
 import 'package:angular/src/di/injector/injector.dart'
-    as _injector;
+    as _1;
+import 'generated_injectors.dart' as _2;
+
+_1.Injector doGenerate$Injector([_1.Injector parent]) =>
+    new _Injector$doGenerate._(parent);
+
+class _Injector$doGenerate extends _1.GeneratedInjector {
+  _Injector$doGenerate._([_1.Injector parent]) : super(parent);
+
+  _2.ExamplePrime _field0;
+
+  @override
+  Object injectFromSelfOptional(Object token,
+      [Object orElse = _1.throwIfNotFound]) {
+    if (identical(token, _2.Example)) {
+      return _field0 ??= new _2.ExamplePrime();
+    }
+    return orElse;
+  }
+}
+// *** EXPERIMENTAL ** Injector Generator [END]
 
 var _visited = false;
 void initReflector() {
@@ -25,28 +46,4 @@ void initReflector() {
   _visited = true;
   _ref0.initReflector();
   _ref1.initReflector();
-}
-
-_injector.Injector doGenerate$Injector([_injector.Injector parent]) =>
-    new _doGenerate$Injector(parent);
-
-class _doGenerate$Injector extends _injector.GeneratedInjector {
-  _doGenerate$Injector([_injector.Injector parent]) : super(parent);
-  @override
-  Object injectFromSelfOptional(
-    Object token, [
-    Object orElse = _injector.throwIfNotFound,
-  ]) {
-    switch (token) {
-      case Example:
-        return _provide0();
-      default:
-        return orElse;
-    }
-  }
-
-  Example _field0;
-  Example _provide0() {
-    return _field0 ??= new ExamplePrime();
-  }
 }
