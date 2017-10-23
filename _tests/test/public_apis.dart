@@ -61,7 +61,6 @@ const NG_CORE = const [
   'SkipSelf',
   'SimpleChange',
   'UrlResolver',
-  'PACKAGE_ROOT_URL',
   'ViewChild',
   'ViewChildren',
   'ViewEncapsulation',
@@ -82,7 +81,6 @@ const NG_CORE = const [
   'noValueProvided',
 ];
 const angularApis = const [
-  'APPLICATION_COMMON_PROVIDERS',
   'APP_ID',
   'APP_INITIALIZER',
   'AfterContentChecked',
@@ -151,7 +149,6 @@ const angularApis = const [
   'OpaqueToken',
   'Optional',
   'Output',
-  'PACKAGE_ROOT_URL',
   'PLATFORM_INITIALIZER',
   'PercentPipe',
   'Pipe',
@@ -182,20 +179,12 @@ const angularApis = const [
   'ViewRef',
   'Visibility',
   'WrappedException',
-  'appIdRandomProviderFactory',
-  'coreBootstrap',
-  'coreLoadAndBootstrap',
-  'createNgZone',
-  'createPlatform',
-  'disposePlatform',
-  'getPlatform',
   'noValueProvided',
   'provide',
 ];
 const diApis = const [
   'Component',
   'Directive',
-  'ErrorHandlingFn',
   'EventEmitter',
   'ExceptionHandler',
   'Host',
@@ -218,8 +207,6 @@ const diApis = const [
   'Self',
   'SkipSelf',
   'WrappedException',
-  'WrappedTimer',
-  'ZeroArgFunction',
   'noValueProvided',
   'provide'
 ];
