@@ -67,6 +67,10 @@ class ProviderReader {
     if (!useValue.isString || useValue.stringValue != '__noValueProvided__') {
       return _parseUseValue(token, useValue.objectValue);
     }
+    final useExisting = reader.read('useExisting');
+    if (!useExisting.isNull) {
+      return _parseUseExisting(token, useExisting.objectValue);
+    }
     // Base case: const Provider(Foo) with no fields set.
     if (token is TypeTokenElement) {
       return _parseUseClass(token, reader.read('token').typeValue.element);
@@ -104,6 +108,17 @@ class ProviderReader {
       token,
       urlOf(clazz),
       dependencies: _dependencyReader.parseDependencies(clazz),
+    );
+  }
+
+  // const Provider(<token>, useExisting: <other>)
+  ProviderElement _parseUseExisting(
+    TokenElement token,
+    DartObject object,
+  ) {
+    return new UseExistingProviderElement(
+      token,
+      _tokenReader.parseTokenObject(object),
     );
   }
 
@@ -217,6 +232,32 @@ class UseClassProviderElement extends ProviderElement {
         'token': '$token',
         'useClass': '$useClass',
         'dependencies': '$dependencies',
+      }.toString();
+}
+
+/// A statically parsed `Provider` that redirects one token to another.
+class UseExistingProviderElement extends ProviderElement {
+  final TokenElement redirect;
+
+  const UseExistingProviderElement(
+    TokenElement e,
+    this.redirect,
+  )
+      : super._(e);
+
+  @override
+  bool operator ==(Object o) =>
+      o is UseExistingProviderElement && o.redirect == redirect && super == o;
+
+  @override
+  int get hashCode => redirect.hashCode ^ super.hashCode;
+
+  @override
+  String toString() =>
+      'UseFactoryProviderElement ' +
+      {
+        'token': '$token',
+        'redirect': '$redirect',
       }.toString();
 }
 

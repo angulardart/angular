@@ -1,134 +1,146 @@
+import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
 
-import '../analyzer/di/dependencies.dart';
-import '../analyzer/di/providers.dart';
-import '../analyzer/di/tokens.dart';
+import '../analyzer/di/injector.dart';
 
 /// Generates `.dart` source code given a list of providers to bind.
-class InjectorEmitter {
+///
+/// **NOTE**: This class is _stateful_, and should be used once per injector.
+class InjectorEmitter implements InjectorVisitor {
   static const _package = 'package:angular';
-  static const _prefix = '_injector';
+  static const _runtime = '$_package/src/di/injector/injector.dart';
+  static const _$override = const Reference('override', 'dart:core');
+  static const _$Object = const Reference('Object', 'dart:core');
 
-  /// What file to import in order to access symbols for `Injector`.
+  static const _$Injector = const Reference('Injector', _runtime);
+  static const _$GeneratedInjector =
+      const Reference('GeneratedInjector', _runtime);
+  static const _$throwIfNotFound = const Reference('throwIfNotFound', _runtime);
+
+  String _className;
+  String _factoryName;
+  final _fieldCache = <Field>[];
+  final _injectSelfBody = <Code>[];
+
+  /// Returns the `class ... { ... }` for this generated injector.
+  Class createClass() => new Class((b) => b
+    ..name = _className
+    ..extend = _$GeneratedInjector
+    ..constructors.add(new Constructor((b) => b
+      ..name = '_'
+      ..optionalParameters.add(new Parameter((b) => b
+        ..name = 'parent'
+        ..type = _$Injector))
+      ..initializers.add(refer('super').call([refer('parent')]).code)))
+    ..methods.add(createInjectSelfOptional())
+    ..fields.addAll(_fieldCache));
+
+  /// Returns the function that will return a new instance of the class.
+  Method createFactory() => new Method((b) => b
+    ..name = _factoryName
+    ..returns = _$Injector
+    ..lambda = true
+    ..optionalParameters.add(new Parameter((b) => b
+      ..name = 'parent'
+      ..type = _$Injector))
+    ..body = refer(_className).newInstanceNamed('_', [
+      refer('parent'),
+    ]).code);
+
+  /// Returns the `Object injectSelfOptional(...)` method for the `class`.
+  @visibleForTesting
+  Method createInjectSelfOptional() => new Method((b) => b
+    ..name = 'injectFromSelfOptional'
+    ..returns = _$Object
+    ..annotations.add(_$override.annotation())
+    ..requiredParameters.add(new Parameter((b) => b
+      ..name = 'token'
+      ..type = _$Object))
+    ..optionalParameters.add(new Parameter((b) => b
+      ..name = 'orElse'
+      ..type = _$Object
+      ..defaultTo = _$throwIfNotFound.expression.code))
+    ..body = new Block((b) => b
+      ..statements.addAll(_injectSelfBody)
+      ..statements.add(refer('orElse').returned.statement)));
+
+  /// Returns the fields needed to cache instances in this injector.
+  @visibleForTesting
+  List<Field> createFields() => _fieldCache;
+
+  @override
+  void visitMeta(String className, String factoryName) {
+    _className = className;
+    _factoryName = factoryName;
+  }
+
   @protected
-  final String importSource;
+  static Code _ifIsTokenThen(Expression token, Code then) => new Block((b) => b
+    ..statements.addAll([
+      new Code.lazy((visitor_) {
+        final visitor = visitor_ as ExpressionVisitor;
+        return 'if (identical(token, ${token.accept(visitor)})) {';
+      }),
+      then,
+      const Code('}'),
+    ]));
 
-  /// What providers to generate named injectors for.
-  final Map<String, List<ProviderElement>> _providers;
-
-  const InjectorEmitter(
-    this._providers, {
-    this.importSource: '$_package/src/di/injector/injector.dart',
-  });
-
-  /// Writes `import` statements needed for [emitInjectors].
-  ///
-  /// Prefixed in such a way that will not conflict with others.
-  String emitImports() {
-    if (_providers.isEmpty) {
-      return '';
-    }
-    return "import '$importSource' as $_prefix;";
-  }
-
-  String emitInjector() {
-    const $GeneratedInjector = '$_prefix.GeneratedInjector';
-    const $Injector = '$_prefix.Injector';
-    const throwIfNotFound = '$_prefix.throwIfNotFound';
-    return _providers.keys.map((name) {
-      final methods = new StringBuffer();
-      final output = new StringBuffer()
-        ..writeln(
-            '${$Injector} $name([${$Injector} parent]) => new _$name(parent);')
-        ..writeln('class _$name extends ${$GeneratedInjector} {')
-        ..writeln('  _$name([${$Injector} parent]) : super(parent);')
-        ..writeln('  @override')
-        ..writeln('  Object injectFromSelfOptional(')
-        ..writeln('    Object token, [')
-        ..writeln('    Object orElse = $throwIfNotFound,')
-        ..writeln('  ]) {')
-        ..writeln('    switch (token) {');
-      var index = 0;
-      for (final provider in _providers[name]) {
-        _emitProvider(output, provider, index++, methods);
-      }
-      output
-        ..writeln('      default:')
-        ..writeln('        return orElse;')
-        ..writeln('    }')
-        ..writeln('  }')
-        ..writeln('$methods')
-        ..writeln('}');
-      return output.toString();
-    }).join('\n');
-  }
-
-  void _emitProvider(
-    StringSink caseStatements,
-    ProviderElement element,
+  @override
+  void visitProvideClass(
     int index,
-    StringSink classMethods,
+    Expression token,
+    Reference type,
+    String constructor,
+    List<Expression> dependencies,
   ) {
-    caseStatements
-      ..writeln('      case ${_tokenToString(element.token)}:')
-      ..writeln('        return _provide$index();');
-    classMethods
-      ..writeln('  ${_returnTypeOf(element.token)} _field$index;')
-      ..writeln('  ${_returnTypeOf(element.token)} _provide$index() {')
-      ..writeln('    return _field$index ??= ${_createA(element)};')
-      ..writeln('  }');
+    _fieldCache.add(new Field((b) => b
+      ..name = '_field$index'
+      ..type = type));
+    _injectSelfBody.add(
+      _ifIsTokenThen(
+        token,
+        refer('_field$index')
+            .assignNullAware(type.newInstanceNamed(constructor, dependencies))
+            .returned
+            .statement,
+      ),
+    );
   }
 
-  static String _tokenToString(TokenElement token) {
-    const $OpaqueToken = '$_prefix.OpaqueToken';
-    if (token is OpaqueTokenElement) {
-      return "const ${$OpaqueToken}('${token.identifier}')";
-    }
-    if (token is TypeTokenElement) {
-      if (token.prefix != null) {
-        return '${token.prefix}.${token.url.fragment}';
-      }
-      return token.url.fragment;
-    }
-    if (token is LiteralTokenElement) {
-      return '${token.literal}';
-    }
-    throw new ArgumentError('Unsupported type: ${token.runtimeType}.');
+  @override
+  void visitProvideExisting(int index, Expression token, Expression redirect) {
+    _injectSelfBody.add(
+      _ifIsTokenThen(
+        token,
+        refer('inject').call([redirect]).returned.statement,
+      ),
+    );
   }
 
-  static String _returnTypeOf(TokenElement token) {
-    if (token is TypeTokenElement) {
-      return _tokenToString(token);
-    }
-    return 'dynamic';
+  @override
+  void visitProvideFactory(
+    int index,
+    Expression token,
+    Reference returnType,
+    Reference function,
+    List<Expression> dependencies,
+  ) {
+    _fieldCache.add(new Field((b) => b
+      ..name = '_field$index'
+      ..type = returnType));
+    _injectSelfBody.add(
+      _ifIsTokenThen(
+        token,
+        refer('_field$index')
+            .assignNullAware(function.call(dependencies))
+            .returned
+            .statement,
+      ),
+    );
   }
 
-  static String _createA(ProviderElement element) {
-    if (element is UseValueProviderElement) {
-      return '${element.useValue}';
-    }
-    String function;
-    final arguments = <String>[];
-    void computeArguments(List<DependencyElement> positional) {
-      // TODO(matanl): Support annotations (@self, @skipSelf, @optional, etc.).
-      for (final dependency in positional) {
-        arguments.add('inject(${_tokenToString(dependency.token)})');
-      }
-    }
-
-    if (element is UseFactoryProviderElement) {
-      function = element.useFactory.fragment;
-      computeArguments(element.dependencies.positional);
-    } else if (element is UseClassProviderElement) {
-      function = 'new ${element.useClass.fragment}';
-      if (!element.dependencies.bound.isDefaultConstructor) {
-        function += '.${element.dependencies.bound.name}';
-      }
-      computeArguments(element.dependencies.positional);
-    }
-    if (function == null) {
-      throw new ArgumentError('Unsupported type: ${element.runtimeType}.');
-    }
-    return '$function(${arguments.join(', ')})';
+  @override
+  void visitProvideValue(int index, Expression token, Expression value) {
+    _injectSelfBody.add(_ifIsTokenThen(token, value.returned.statement));
   }
 }
