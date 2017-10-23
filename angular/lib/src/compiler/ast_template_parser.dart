@@ -49,6 +49,12 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
   final Parser parser;
   final ElementSchemaRegistry schemaRegistry;
 
+  /// A count of how many <ng-content> elements have been seen so far.
+  ///
+  /// This is necessary so that we can assign a unique index to each one as we
+  /// visit it.
+  int ngContentIndex = 0;
+
   Visitor(this.parser, this.schemaRegistry);
 
   @override
@@ -91,7 +97,7 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
   ng.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
           [ParseContext _]) =>
       new ng.NgContentAst(
-          0 /* index */, 0 /* ngContentIndex */, astNode.sourceSpan);
+          ngContentIndex++, 0 /* ngContentIndex */, astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
