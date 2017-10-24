@@ -1864,7 +1864,7 @@ void main() {
           [DirectiveAst, dirA, '<div a>'],
           [DirectiveAst, comp, '<div a>']
         ]);
-      }, skip: 'Don\'t yet support directives.');
+      });
 
       test('should support directive in namespace', () {
         var tagSel = createCompileDirectiveMetadata(
@@ -1903,7 +1903,7 @@ void main() {
               [DirectiveAst, dirA, '<div [aProp]="foo">'],
               [BoundDirectivePropertyAst, 'aProp', 'foo', '[aProp]="foo"']
             ]);
-      }, skip: 'Don\'t yet support directives.');
+      });
     });
 
     group('pipes', () {
