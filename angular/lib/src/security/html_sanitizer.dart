@@ -1,7 +1,6 @@
 import 'dart:html';
 
 Node _inertElement;
-bool _inertIsTemplate = false;
 
 Node _getInertElement() {
   if (_inertElement == null) {
@@ -11,7 +10,6 @@ Node _getInertElement() {
       // TODO: investigate template.children.clear and remove extra div.
       _inertElement = document.createElement('div');
       templateEl.append(_inertElement);
-      _inertIsTemplate = false;
     } else {
       _inertElement = new DocumentFragment();
     }

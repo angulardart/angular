@@ -12,7 +12,6 @@ class StaticNodeDebugInfo {
 }
 
 var _EMPTY_DEBUG_PROVIDERS = const [];
-var _EMPTY_REF_TOKENS = <String, dynamic>{};
 
 class DebugContext<T> implements RenderDebugInfo {
   DebugAppView<T> _view;

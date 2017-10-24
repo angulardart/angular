@@ -3,7 +3,6 @@ import 'package:tuple/tuple.dart';
 
 import 'attribute_matcher.dart';
 
-const _EMPTY_ATTR_VALUE = '';
 final _SELECTOR_REGEXP = new RegExp(r'(:not\()|' + // ":not("
         r'([-\w]+)|' + // "tag-name"
         r'(?:\.([-\w]+))|' + // ".class"
