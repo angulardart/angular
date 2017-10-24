@@ -319,6 +319,10 @@ class Component extends Directive {
 
   /// Removes all whitespace except `&ngsp;` and `&nbsp;` from template if set
   /// to false.
+  ///
+  /// &ngsp; (Angular space) can be used to insert regular space character into
+  /// a template.
+  /// &nbsp; represents the standard non-breaking space entity in html markup.
   final bool preserveWhitespace;
   final List<String> styleUrls;
   final List<String> styles;
