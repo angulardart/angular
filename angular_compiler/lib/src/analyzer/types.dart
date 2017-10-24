@@ -10,8 +10,6 @@ const _provider = '$_angular/src/di/provider.dart';
 const _providerOf = '$_provider#Provider';
 const _token = '$_angular/src/core/di/opaque_token.dart';
 
-const _router = 'package:angular_router';
-
 // Class metadata.
 const $Directive = const TypeChecker.fromUrl('$_meta#Directive');
 const $Component = const TypeChecker.fromUrl('$_meta#Component');

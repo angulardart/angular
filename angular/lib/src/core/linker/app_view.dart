@@ -756,7 +756,3 @@ Element createAndAppendToShadowRoot(
     Document doc, String tagName, ShadowRoot parent) {
   return parent.append(doc.createElement(tagName));
 }
-
-/// TODO(ferhat): Remove once dynamic(s) are changed in codegen and class.
-/// This prevents unused import error in dart_library build.
-Element _temporaryTodo;
