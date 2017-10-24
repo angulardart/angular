@@ -2,7 +2,9 @@ import 'package:source_span/source_span.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 
 import 'compile_metadata.dart';
+import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart';
+import 'identifiers.dart';
 import 'schema/element_schema_registry.dart';
 import 'selector.dart';
 import 'style_url_resolver.dart';
@@ -41,7 +43,8 @@ class AstTemplateParser implements TemplateParser {
     final context = new _ParseContext.forRoot(new _TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
-        directives: directives));
+        directives: directives,
+        exports: compMeta.exports));
     return filteredAst
         .map((templateAst) => templateAst.accept(visitor, context))
         .toList();
@@ -106,14 +109,19 @@ class _Visitor
   }
 
   @override
-  ng.TemplateAst visitAttribute(ast.AttributeAst astNode, [_ParseContext _]) =>
-      new ng.AttrAst(astNode.name, astNode.value ?? '', astNode.sourceSpan);
+  ng.TemplateAst visitAttribute(ast.AttributeAst astNode,
+      [_ParseContext context]) {
+    context.bindLiteralToDirective(astNode);
+    return new ng.AttrAst(
+        astNode.name, astNode.value ?? '', astNode.sourceSpan);
+  }
 
   @override
   ng.TemplateAst visitProperty(ast.PropertyAst astNode,
       [_ParseContext context]) {
     var value = context.templateContext.parser
         .parseBinding(astNode.value, _location(astNode), []);
+    if (context.bindPropertyToDirective(astNode, value)) return null;
     return createElementPropertyAst(
         context.elementName,
         _getPropertyName(astNode),
@@ -139,9 +147,12 @@ class _Visitor
       new ng.VariableAst(astNode.name, astNode.value, astNode.sourceSpan);
 
   @override
-  ng.TemplateAst visitReference(ast.ReferenceAst astNode, [_ParseContext _]) =>
+  ng.TemplateAst visitReference(ast.ReferenceAst astNode,
+          [_ParseContext context]) =>
       new ng.ReferenceAst(
-          astNode.variable, null /* value */, astNode.sourceSpan);
+          astNode.variable,
+          context.identifierForReference(astNode.identifier),
+          astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitText(ast.TextAst astNode, [_ParseContext _]) =>
@@ -182,57 +193,113 @@ class _Visitor
       List<ast.TemplateAst> astNodes, _ParseContext context) {
     final results = <T>[];
     for (final astNode in astNodes) {
-      results.add(astNode.accept(this, context) as T);
+      var value = astNode.accept(this, context) as T;
+      if (value != null) {
+        results.add(value);
+      }
     }
     return results;
   }
-
-  static String _location(ast.TemplateAst astNode) =>
-      astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
 }
 
 class _TemplateContext {
   final Parser parser;
   final ElementSchemaRegistry schemaRegistry;
   final List<CompileDirectiveMetadata> directives;
+  final List<CompileIdentifierMetadata> exports;
 
-  _TemplateContext({this.parser, this.schemaRegistry, this.directives});
+  _TemplateContext(
+      {this.parser, this.schemaRegistry, this.directives, this.exports});
 }
 
 class _ParseContext {
   final _TemplateContext templateContext;
   final String elementName;
   final List<ng.DirectiveAst> boundDirectives;
+  final bool _isTemplate;
 
-  _ParseContext._(this.templateContext, this.elementName, this.boundDirectives);
+  _ParseContext._(this.templateContext, this.elementName, this.boundDirectives,
+      this._isTemplate);
 
   _ParseContext.forRoot(this.templateContext)
       : elementName = '',
-        boundDirectives = const [];
+        boundDirectives = const [],
+        _isTemplate = false;
 
   factory _ParseContext.forElement(
       ast.ElementAst element, _TemplateContext templateContext) {
     var boundDirectives = _toAst(
         _matchElementDirectives(templateContext.directives, element),
-        element.sourceSpan);
-    return new _ParseContext._(templateContext, element.name, boundDirectives);
+        element.sourceSpan,
+        element.name,
+        _location(element),
+        templateContext);
+    return new _ParseContext._(
+        templateContext, element.name, boundDirectives, false);
   }
 
   factory _ParseContext.forTemplate(
       ast.EmbeddedTemplateAst template, _TemplateContext templateContext) {
     var boundDirectives = _toAst(
         _matchTemplateDirectives(templateContext.directives, template),
-        template.sourceSpan);
+        template.sourceSpan,
+        TEMPLATE_ELEMENT,
+        _location(template),
+        templateContext);
     return new _ParseContext._(
-        templateContext, TEMPLATE_ELEMENT, boundDirectives);
+        templateContext, TEMPLATE_ELEMENT, boundDirectives, true);
+  }
+
+  CompileTokenMetadata identifierForReference(String identifier) {
+    for (var directive in boundDirectives) {
+      if (identifier == null || identifier == directive.directive.exportAs) {
+        return identifierToken(directive.directive.type);
+      }
+    }
+    return _isTemplate ? identifierToken(Identifiers.TemplateRef) : null;
+  }
+
+  void bindLiteralToDirective(ast.AttributeAst astNode) => _bindToDirective(
+      boundDirectives,
+      astNode.name,
+      templateContext.parser
+          .wrapLiteralPrimitive(astNode.value, _location(astNode)),
+      astNode.sourceSpan);
+
+  bool bindPropertyToDirective(ast.PropertyAst astNode, ASTWithSource value) =>
+      _bindToDirective(
+          boundDirectives, astNode.name, value, astNode.sourceSpan);
+
+  bool _bindToDirective(List<ng.DirectiveAst> directives, String name,
+      ASTWithSource value, SourceSpan sourceSpan) {
+    for (var directive in directives) {
+      for (var directiveName in directive.directive.inputs.keys) {
+        var templateName = directive.directive.inputs[directiveName];
+        if (templateName == name) {
+          directive.inputs.add(new ng.BoundDirectivePropertyAst(
+              directiveName, templateName, value, sourceSpan));
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   static List<ng.DirectiveAst> _toAst(
           Iterable<CompileDirectiveMetadata> directiveMetas,
-          SourceSpan sourceSpan) =>
+          SourceSpan sourceSpan,
+          String elementName,
+          String location,
+          _TemplateContext templateContext) =>
       directiveMetas
-          .map((directive) => new ng.DirectiveAst(directive, [] /* inputs */,
-              [] /* hostProperties */, [] /* hostEvents */, sourceSpan))
+          .map((directive) => new ng.DirectiveAst(
+              directive,
+              [] /* inputs */,
+              _bindProperties(directive, sourceSpan, elementName, location,
+                  templateContext),
+              _bindEvents(directive, sourceSpan, elementName, location,
+                  templateContext),
+              sourceSpan))
           .toList();
 
   static List<CompileDirectiveMetadata> _matchElementDirectives(
@@ -266,6 +333,39 @@ class _ParseContext {
     }
     return selectorMatcher;
   }
+
+  static List<ng.BoundElementPropertyAst> _bindProperties(
+      CompileDirectiveMetadata directive,
+      SourceSpan sourceSpan,
+      String elementName,
+      String location,
+      _TemplateContext templateContext) {
+    var result = [];
+    for (var propName in directive.hostProperties.keys) {
+      var expression = directive.hostProperties[propName];
+      var exprAst = templateContext.parser
+          .parseBinding(expression, location, templateContext.exports);
+      result.add(createElementPropertyAst(elementName, propName, exprAst,
+          sourceSpan, templateContext.schemaRegistry, (_, __, [___]) {}));
+    }
+    return result;
+  }
+
+  static List<ng.BoundEventAst> _bindEvents(
+      CompileDirectiveMetadata directive,
+      SourceSpan sourceSpan,
+      String elementName,
+      String location,
+      _TemplateContext templateContext) {
+    var result = [];
+    for (var eventName in directive.hostListeners.keys) {
+      var expression = directive.hostListeners[eventName];
+      var value = templateContext.parser
+          .parseAction(expression, location, templateContext.exports);
+      result.add(new ng.BoundEventAst(eventName, value, sourceSpan));
+    }
+    return result;
+  }
 }
 
 CssSelector _elementSelector(ast.ElementAst astNode) => _selector(
@@ -288,6 +388,9 @@ CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
   }
   return createElementCssSelector(elementName, matchableAttributes);
 }
+
+String _location(ast.TemplateAst astNode) =>
+    astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
 
 /// Visitor which filters elements that are not supported in angular templates.
 class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
