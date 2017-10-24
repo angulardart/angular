@@ -50,6 +50,25 @@ void main() {
       testRoot = await testBed.create();
       expect(testRoot.text, 'V1  V2');
     });
+
+    test('should not remove whitespace between text and interpolation',
+        () async {
+      var testBed = new NgTestBed<InterpolateBetweenTextComponent>();
+      testRoot = await testBed.create();
+      expect(testRoot.text, ' prefix V1 postfix ');
+    });
+    test(
+        'should not remove whitespace between text and interpolation '
+        'across lines', () async {
+      var testBed = new NgTestBed<InterpolateBetweenTextNewlineComponent>();
+      testRoot = await testBed.create();
+      expect(testRoot.text, 'prefix V1 postfix');
+    });
+    test('should not remove whitespace before interpolation', () async {
+      var testBed = new NgTestBed<TextBeforeInterpolateComponent>();
+      testRoot = await testBed.create();
+      expect(testRoot.text, ' prefix V1');
+    });
   });
 }
 
@@ -127,4 +146,31 @@ class Interpolate1LeftComponent {
 class InterpolateComponent {
   String get value1 => 'V1';
   String get value2 => 'V2';
+}
+
+/// Should preserve the space between interpolation.
+@Component(
+    selector: 'test-interpolatebetweentext',
+    template: '<span> prefix {{value1}} postfix </span>\n      ',
+    preserveWhitespace: false)
+class InterpolateBetweenTextComponent {
+  String get value1 => 'V1';
+}
+
+/// Should preserve the space between interpolation within newlines.
+@Component(
+    selector: 'test-interpolatebetweentextnewline',
+    template: '<span>\n prefix {{value1}} postfix \n</span>\n      ',
+    preserveWhitespace: false)
+class InterpolateBetweenTextNewlineComponent {
+  String get value1 => 'V1';
+}
+
+/// Should preserve the space between prefix and interpolation.
+@Component(
+    selector: 'test-textbeforeinterpolate',
+    template: '<span> prefix {{value1}}</span>\n      ',
+    preserveWhitespace: false)
+class TextBeforeInterpolateComponent {
+  String get value1 => 'V1';
 }

@@ -77,11 +77,11 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
     final currVal_0 = import9.interpolate4(
         '    ',
         _pipe_pure_0_0('foo'),
-        '',
+        '\n    ',
         _pipe_dirty_1.transform('bar'),
-        '',
+        '\n    ',
         _pipe_lifecycle_2_0('lifecycle'),
-        '',
+        '\n    ',
         _pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d),
         '');
     if (import9.checkBinding(_expr_0, currVal_0)) {

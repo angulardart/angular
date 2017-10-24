@@ -192,14 +192,24 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     return IMPLICIT_RECEIVER;
   }
 
-  /// Trim text in preserve whitespace mode if it contains \n preceding or
-  /// following an interpolation.
-  String compressWhitespace(String value) {
+  /// Trim text in preserve whitespace mode if it contains \n preceding
+  /// interpolation.
+  String compressWhitespacePreceding(String value) {
     if (preserveWhitespace ||
         value.contains('\u00A0') ||
         value.contains(ngSpace) ||
         !value.contains('\n')) return replaceNgSpace(value);
-    return replaceNgSpace(value.replaceAll('\n', '').trim());
+    return replaceNgSpace(value.replaceAll('\n', '').trimLeft());
+  }
+
+  /// Trim text in preserve whitespace mode if it contains \n following
+  /// interpolation.
+  String compressWhitespaceFollowing(String value) {
+    if (preserveWhitespace ||
+        value.contains('\u00A0') ||
+        value.contains(ngSpace) ||
+        !value.contains('\n')) return replaceNgSpace(value);
+    return replaceNgSpace(value.replaceAll('\n', '').trimRight());
   }
 
   dynamic visitInterpolation(compiler_ast.Interpolation ast, dynamic context) {
@@ -208,8 +218,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
 
     /// Handle most common case where prefix and postfix are empty.
     if (ast.expressions.length == 1) {
-      String firstArg = compressWhitespace(ast.strings[0]);
-      String secondArg = compressWhitespace(ast.strings[1]);
+      String firstArg = compressWhitespacePreceding(ast.strings[0]);
+      String secondArg = compressWhitespaceFollowing(ast.strings[1]);
       if (firstArg.isEmpty && secondArg.isEmpty) {
         var args = <o.Expression>[
           ast.expressions[0].visit(this, _Mode.Expression)
@@ -226,11 +236,14 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     } else {
       var args = <o.Expression>[];
       for (var i = 0; i < ast.strings.length - 1; i++) {
-        args.add(o.literal(compressWhitespace(ast.strings[i])));
+        String literalText = i == 0
+            ? compressWhitespacePreceding(ast.strings[i])
+            : replaceNgSpace(ast.strings[i]);
+        args.add(o.literal(literalText));
         args.add(ast.expressions[i].visit(this, _Mode.Expression));
       }
-      args.add(
-          o.literal(compressWhitespace(ast.strings[ast.strings.length - 1])));
+      args.add(o.literal(
+          compressWhitespaceFollowing(ast.strings[ast.strings.length - 1])));
       return o
           .importExpr(Identifiers.interpolate[ast.expressions.length])
           .callFn(args);
