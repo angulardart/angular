@@ -70,9 +70,7 @@ List<BuildAction> _angularBuildActions(PackageGraph graph) {
   var builders = [
     const TemplatePlaceholderBuilder(),
     createSourceGenTemplateCompiler(flags),
-    new TransformerBuilder(new StylesheetCompiler(flags), const {
-      '.css': const ['.css.dart', '.css.shim.dart']
-    })
+    new StylesheetCompiler(flags),
   ];
   var packages = ['angular']
     ..addAll(graph.dependentsOf('angular').map((n) => n.name));
