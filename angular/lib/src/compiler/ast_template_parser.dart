@@ -59,16 +59,14 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
 
   @override
   ng.TemplateAst visitElement(ast.ElementAst astNode, [ParseContext context]) {
-    var matchedDirectives = _matchElementDirectives(context, astNode);
-    var directiveAsts = _toAst(matchedDirectives, astNode.sourceSpan);
-    final elementContext = context.withElementName(astNode.name);
+    final elementContext = new ParseContext.forElement(astNode, context);
     return new ng.ElementAst(
         astNode.name,
         _visitAll(astNode.attributes, elementContext),
         _visitAll(astNode.properties, elementContext),
         _visitAll(astNode.events, elementContext),
         _visitAll(astNode.references, elementContext),
-        directiveAsts,
+        elementContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
         _visitAll(astNode.childNodes, elementContext),
@@ -79,15 +77,13 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
       [ParseContext context]) {
-    var matchedDirectives = _matchTemplateDirectives(context, astNode);
-    var directiveAsts = _toAst(matchedDirectives, astNode.sourceSpan);
-    final embeddedContext = context.withElementName(TEMPLATE_ELEMENT);
+    final embeddedContext = new ParseContext.forTemplate(astNode, context);
     return new ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
         _visitAll(astNode.events, embeddedContext),
         _visitAll(astNode.references, embeddedContext),
         _visitAll(astNode.letBindings, embeddedContext),
-        directiveAsts,
+        embeddedContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
         _visitAll(astNode.childNodes, embeddedContext),
@@ -186,36 +182,56 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
     return results;
   }
 
-  List<CompileDirectiveMetadata> _matchElementDirectives(
-          ParseContext context, ast.ElementAst astNode) =>
-      _parseDirectives(context.directives, _elementSelector(astNode));
+  static String _location(ast.TemplateAst astNode) =>
+      astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
+}
 
-  List<CompileDirectiveMetadata> _matchTemplateDirectives(
-          ParseContext context, ast.EmbeddedTemplateAst astNode) =>
-      _parseDirectives(context.directives, _templateSelector(astNode));
+class ParseContext {
+  final List<CompileDirectiveMetadata> directives;
+  final String elementName;
+  final List<ng.DirectiveAst> boundDirectives;
 
-  CssSelector _elementSelector(ast.ElementAst astNode) => _selector(
-      astNode.name, astNode.attributes, astNode.properties, astNode.events);
+  ParseContext({this.directives, this.elementName, this.boundDirectives});
 
-  CssSelector _templateSelector(ast.EmbeddedTemplateAst astNode) => _selector(
-      TEMPLATE_ELEMENT, astNode.attributes, astNode.properties, astNode.events);
-
-  CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
-      List<ast.PropertyAst> properties, List<ast.EventAst> events) {
-    final matchableAttributes = [];
-    for (var attr in attributes) {
-      matchableAttributes.add([attr.name, attr.value]);
-    }
-    for (var property in properties) {
-      matchableAttributes.add([property.name, property.value]);
-    }
-    for (var event in events) {
-      matchableAttributes.add([event.name, event.value]);
-    }
-    return createElementCssSelector(elementName, matchableAttributes);
+  factory ParseContext.forElement(ast.ElementAst element, ParseContext parent) {
+    var boundDirectives = _toAst(
+        _matchElementDirectives(parent.directives, element),
+        element.sourceSpan);
+    return new ParseContext(
+        directives: parent.directives,
+        elementName: element.name,
+        boundDirectives: boundDirectives);
   }
 
-  List<CompileDirectiveMetadata> _parseDirectives(
+  factory ParseContext.forTemplate(
+      ast.EmbeddedTemplateAst template, ParseContext parent) {
+    var boundDirectives = _toAst(
+        _matchTemplateDirectives(parent.directives, template),
+        template.sourceSpan);
+    return new ParseContext(
+        directives: parent.directives,
+        elementName: TEMPLATE_ELEMENT,
+        boundDirectives: boundDirectives);
+  }
+
+  static List<ng.DirectiveAst> _toAst(
+          Iterable<CompileDirectiveMetadata> directiveMetas,
+          SourceSpan sourceSpan) =>
+      directiveMetas
+          .map((directive) => new ng.DirectiveAst(directive, [] /* inputs */,
+              [] /* hostProperties */, [] /* hostEvents */, sourceSpan))
+          .toList();
+
+  static List<CompileDirectiveMetadata> _matchElementDirectives(
+          List<CompileDirectiveMetadata> directives, ast.ElementAst astNode) =>
+      _parseDirectives(directives, _elementSelector(astNode));
+
+  static List<CompileDirectiveMetadata> _matchTemplateDirectives(
+          List<CompileDirectiveMetadata> directives,
+          ast.EmbeddedTemplateAst astNode) =>
+      _parseDirectives(directives, _templateSelector(astNode));
+
+  static List<CompileDirectiveMetadata> _parseDirectives(
       List<CompileDirectiveMetadata> directives,
       CssSelector elementCssSelector) {
     var matchedDirectives = new Set();
@@ -228,7 +244,8 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
     return directives.where(matchedDirectives.contains).toList();
   }
 
-  SelectorMatcher _selectorMatcher(List<CompileDirectiveMetadata> directives) {
+  static SelectorMatcher _selectorMatcher(
+      List<CompileDirectiveMetadata> directives) {
     final SelectorMatcher selectorMatcher = new SelectorMatcher();
     for (var directive in directives) {
       var selector = CssSelector.parse(directive.selector);
@@ -236,27 +253,27 @@ class Visitor implements ast.TemplateAstVisitor<ng.TemplateAst, ParseContext> {
     }
     return selectorMatcher;
   }
-
-  List<ng.DirectiveAst> _toAst(
-          Iterable<CompileDirectiveMetadata> directiveMetas,
-          SourceSpan sourceSpan) =>
-      directiveMetas
-          .map((directive) => new ng.DirectiveAst(directive, [] /* inputs */,
-              [] /* hostProperties */, [] /* hostEvents */, sourceSpan))
-          .toList();
-
-  static String _location(ast.TemplateAst astNode) =>
-      astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
 }
 
-class ParseContext {
-  final List<CompileDirectiveMetadata> directives;
-  final String elementName;
+CssSelector _elementSelector(ast.ElementAst astNode) => _selector(
+    astNode.name, astNode.attributes, astNode.properties, astNode.events);
 
-  ParseContext({this.directives, this.elementName});
+CssSelector _templateSelector(ast.EmbeddedTemplateAst astNode) => _selector(
+    TEMPLATE_ELEMENT, astNode.attributes, astNode.properties, astNode.events);
 
-  ParseContext withElementName(String name) =>
-      new ParseContext(elementName: name, directives: directives);
+CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
+    List<ast.PropertyAst> properties, List<ast.EventAst> events) {
+  final matchableAttributes = [];
+  for (var attr in attributes) {
+    matchableAttributes.add([attr.name, attr.value]);
+  }
+  for (var property in properties) {
+    matchableAttributes.add([property.name, property.value]);
+  }
+  for (var event in events) {
+    matchableAttributes.add([event.name, event.value]);
+  }
+  return createElementCssSelector(elementName, matchableAttributes);
 }
 
 /// Visitor which filters elements that are not supported in angular templates.
