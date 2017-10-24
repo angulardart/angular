@@ -342,7 +342,7 @@ void main() {
             [BoundEventAst, 'e', null, 'f'],
             [DirectiveAst, dirA]
           ]);
-        }, skip: 'Don\'t handle directives yet');
+        });
       });
 
       group('bindon', () {
@@ -464,7 +464,7 @@ void main() {
               null
             ]
           ]);
-        }, skip: 'Don\'t yet handle directive properties.');
+        });
 
         test('should parse directive host listeners', () {
           var dirA = createCompileDirectiveMetadata(
@@ -477,7 +477,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundEventAst, 'a', null, 'expr']
           ]);
-        }, skip: 'Don\'t yet handle directive properties.');
+        });
 
         test('should parse directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -490,7 +490,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundDirectivePropertyAst, 'aProp', 'expr']
           ]);
-        }, skip: 'Don\'t yet handle directive properties.');
+        });
 
         test('should parse renamed directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -503,7 +503,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundDirectivePropertyAst, 'b', 'expr']
           ]);
-        }, skip: 'Don\'t yet handle directive properties.');
+        });
 
         test('should parse literal directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -517,7 +517,7 @@ void main() {
             [DirectiveAst, dirA],
             [BoundDirectivePropertyAst, 'a', '"literal"']
           ]);
-        }, skip: 'Don\'t yet handle directive properties.');
+        });
 
         test('should favor explicit bound properties over literal properties',
             () {
@@ -535,7 +535,7 @@ void main() {
                 [DirectiveAst, dirA],
                 [BoundDirectivePropertyAst, 'a', '"literal2"']
               ]);
-        }, skip: 'Don\'t yet handle directive properties.');
+        }, skip: 'Don\'t yet dedupe bound properties.');
 
         test('should support optional directive properties', () {
           var dirA = createCompileDirectiveMetadata(
@@ -969,7 +969,7 @@ void main() {
             [ReferenceAst, 'a', identifierToken(dirA.type)],
             [DirectiveAst, dirA]
           ]);
-        }, skip: 'Don\'t handle directives yet.');
+        });
 
         test(
             'should report references with values that dont match a '
@@ -1014,18 +1014,23 @@ void main() {
             [ReferenceAst, 'a', identifierToken(dirA.type)],
             [DirectiveAst, dirA]
           ]);
-        }, skip: 'Don\'t handle directives yet.');
+        });
 
         test('should not locate directives in references', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: 'DirA'));
-          expect(humanizeTplAst(parse('<div ref-a></div>', [dirA])), [
+          expect(humanizeTplAst(parse('<div #a></div>', [dirA])), [
             [ElementAst, 'div'],
             [ReferenceAst, 'a', null]
           ]);
-        }, skip: 'Don\'t handle directives yet.');
+
+          expect(humanizeTplAst(parse('<div ref-a></div>', [dirA])), [
+            [ElementAst, 'div'],
+            [AttrAst, 'ref-a', '']
+          ]);
+        });
       });
 
       group('explicit templates', () {
@@ -1053,7 +1058,7 @@ void main() {
             [EmbeddedTemplateAst],
             [ReferenceAst, 'a', identifierToken(Identifiers.TemplateRef)]
           ]);
-        }, skip: 'Don\'t yet support identifiers.');
+        });
 
         test('should support references via ref-...', () {
           expect(humanizeTplAst(parse('<template ref-a></template>', [])), [
