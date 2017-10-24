@@ -132,7 +132,7 @@ class DirectiveCompiler {
         _nameResolver,
         method,
         genDebugInfo,
-        updatingHost: true);
+        updatingHostAttribute: true);
 
     viewMethods.add(new o.ClassMethod(
         'detectHostChanges',

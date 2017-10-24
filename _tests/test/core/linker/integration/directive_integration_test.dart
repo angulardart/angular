@@ -79,6 +79,37 @@ void main() {
     final div = getDebugNode(testFixture.rootElement.querySelector('div'));
     expect(div.getLocal('dir').dirProp, 'aa');
   });
+
+  test('should not bind attribute matcher when generating host view', () async {
+    // This test will fail on DDC if [width] in host template generates
+    // invalid code to initialize width.
+    final testBed = new NgTestBed<SimpleButton>();
+    await testBed.create();
+  });
+  test('should not bind attribute matcher when generating host view', () async {
+    // This test will fail on DDC if [width] in host template generates
+    // invalid code to initialize width.
+    final testBed = new NgTestBed<SimpleInput>();
+    await testBed.create();
+  });
+}
+
+@Component(
+  selector: 'input[type=text][width]',
+  template: 'Test',
+)
+class SimpleInput {
+  @Input()
+  int width;
+}
+
+@Component(
+  selector: 'button[width]',
+  template: 'Test',
+)
+class SimpleButton {
+  @Input()
+  int width;
 }
 
 @Directive(

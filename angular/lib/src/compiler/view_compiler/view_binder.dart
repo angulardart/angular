@@ -106,7 +106,8 @@ class ViewBinderVisitor implements TemplateAstVisitor {
     for (var directiveAst in ast.directives) {
       index++;
       var directiveInstance = compileElement.directiveInstances[index];
-      bindDirectiveInputs(directiveAst, directiveInstance, compileElement);
+      bindDirectiveInputs(directiveAst, directiveInstance, compileElement,
+          isHostComponent: compileElement.view.viewType == ViewType.HOST);
       bindDirectiveDetectChangesLifecycleCallbacks(
           directiveAst, directiveInstance, compileElement);
       bindDirectiveHostProps(directiveAst, directiveInstance, compileElement);
@@ -215,7 +216,7 @@ void bindViewHostProperties(CompileView view, Parser parser,
       view.nameResolver,
       method,
       view.genDebugInfo,
-      updatingHost: true);
+      updatingHostAttribute: true);
   if (method.isNotEmpty) {
     view.detectHostChangesMethod = method;
   }

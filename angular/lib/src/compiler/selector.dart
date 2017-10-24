@@ -1,6 +1,6 @@
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:tuple/tuple.dart';
-
+import 'html_tags.dart' show getHtmlTagDefinition;
 import 'attribute_matcher.dart';
 
 final _SELECTOR_REGEXP = new RegExp(r'(:not\()|' + // ":not("
@@ -102,8 +102,9 @@ class CssSelector {
         attributeBuffer..write('="')..write(attr.value)..write('"');
       }
     }
-
-    return '<$tagName$attributeBuffer></$tagName>';
+    return (getHtmlTagDefinition(tagName).isVoid)
+        ? '<$tagName$attributeBuffer>'
+        : '<$tagName$attributeBuffer></$tagName>';
   }
 
   void addAttribute(String name, String matcher, String value) {
