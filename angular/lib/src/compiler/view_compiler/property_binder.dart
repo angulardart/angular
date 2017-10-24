@@ -64,7 +64,8 @@ void bind(
     CompileMethod method,
     CompileMethod literalMethod,
     bool genDebugInfo,
-    {o.OutputType fieldType}) {
+    {o.OutputType fieldType,
+    bool isHostComponent: false}) {
   parsedExpression =
       rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
   var checkExpression = convertCdExpressionToIr(
@@ -76,8 +77,10 @@ void bind(
   if (isImmutable(parsedExpression, viewDirective.analyzedClass)) {
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
-    _bindLiteral(checkExpression, actions, currValExpr.name, fieldExpr.name,
-        literalMethod, canBeNull(parsedExpression));
+    if (!isHostComponent) {
+      _bindLiteral(checkExpression, actions, currValExpr.name, fieldExpr.name,
+          literalMethod, canBeNull(parsedExpression));
+    }
     return;
   }
   if (checkExpression == null) {
@@ -199,7 +202,8 @@ void bindAndWriteToRenderer(
     ViewNameResolver nameResolver,
     CompileMethod targetMethod,
     bool genDebugInfo,
-    {bool updatingHost: false}) {
+    {bool updatingHostAttribute: false,
+    bool isHostComponent: false}) {
   final dynamicPropertiesMethod = new CompileMethod(genDebugInfo);
   final constantPropertiesMethod = new CompileMethod(genDebugInfo);
   for (var boundProp in boundProps) {
@@ -295,7 +299,8 @@ void bindAndWriteToRenderer(
         dynamicPropertiesMethod,
         constantPropertiesMethod,
         genDebugInfo,
-        fieldType: fieldType);
+        fieldType: fieldType,
+        isHostComponent: isHostComponent);
   }
   if (constantPropertiesMethod.isNotEmpty) {
     targetMethod.addStmt(new o.IfStmt(
@@ -383,7 +388,8 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
 }
 
 void bindDirectiveInputs(DirectiveAst directiveAst,
-    o.Expression directiveInstance, CompileElement compileElement) {
+    o.Expression directiveInstance, CompileElement compileElement,
+    {bool isHostComponent: false}) {
   var directive = directiveAst.directive;
   if (directive.inputs.isEmpty) {
     return;
@@ -495,7 +501,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           dynamicInputsMethod,
           constantInputsMethod,
           view.genDebugInfo,
-          fieldType: inputType);
+          fieldType: inputType,
+          isHostComponent: isHostComponent);
     }
   }
   if (constantInputsMethod.isNotEmpty) {

@@ -228,8 +228,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       }
     }
 
-    _writeLiteralAttributeValues(
-        ast, elementRef.toReadExpr(), directives, view.createMethod);
+    if (view.viewType != ViewType.HOST) {
+      _writeLiteralAttributeValues(
+          ast, elementRef.toReadExpr(), directives, view.createMethod);
+    }
 
     if (!isHostRootView &&
         view.component.template.encapsulation == ViewEncapsulation.Emulated) {
