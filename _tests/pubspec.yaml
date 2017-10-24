@@ -28,6 +28,26 @@ dependency_overrides:
     path: ../angular_router
   angular_test:
     path: ../angular_test
+  build:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build
+  build_barback:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_barback
+  build_compilers:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_compilers
+  build_runner:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_runner
+  build_test:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_test
 
 transformers:
   - angular:
