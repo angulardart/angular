@@ -585,7 +585,18 @@ abstract class AppView<T> {
         }
       } else if (projectable is List) {
         for (int n = 0, len = projectable.length; n < len; n++) {
-          parentElement.append(projectable[n]);
+          var node = projectable[n];
+          if (node is ViewContainer) {
+            if (node.nestedViews == null) {
+              Node nativeNode = node.nativeElement;
+              parentElement.append(nativeNode);
+            } else {
+              _appendNestedViewRenderNodes(parentElement, node);
+            }
+          } else {
+            Node nativeNode = node;
+            parentElement.append(nativeNode);
+          }
         }
       } else {
         Node child = projectable;

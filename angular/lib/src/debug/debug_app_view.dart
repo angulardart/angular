@@ -266,9 +266,20 @@ class DebugAppView<T> extends AppView<T> {
         }
       } else if (projectable is List) {
         for (int n = 0, len = projectable.length; n < len; n++) {
-          Node node = projectable[n];
-          parentElement.append(node);
-          debugParent.addChild(getDebugNode(node));
+          var node = projectable[n];
+          if (node is ViewContainer) {
+            if (node.nestedViews == null) {
+              Node child = node.nativeElement;
+              parentElement.append(child);
+              debugParent.addChild(getDebugNode(child));
+            } else {
+              _appendDebugNestedViewRenderNodes(
+                  debugParent, parentElement, node);
+            }
+          } else {
+            parentElement.append(node);
+            debugParent.addChild(getDebugNode(node));
+          }
         }
       } else {
         Node child = projectable;
