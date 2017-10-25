@@ -22,6 +22,8 @@ consumption. Others have been made obsolete by new language features in Dart.
 
 *   Removed unused `context` parameter from `TemplateRef.createEmbeddedView`.
 
+*   Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
+
 ## 5.0.0-alpha+1
 
 ### Breaking Changes

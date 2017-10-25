@@ -75,15 +75,15 @@ class InjectorEmitter implements InjectorVisitor {
   }
 
   @protected
-  static Code _ifIsTokenThen(Expression token, Code then) => new Block((b) => b
-    ..statements.addAll([
-      new Code.lazy((visitor_) {
-        final visitor = visitor_ as ExpressionVisitor;
-        return 'if (identical(token, ${token.accept(visitor)})) {';
-      }),
+  static Code _ifIsTokenThen(Expression token, Code then) {
+    return new Block.of([
+      const Code('if (identical(token, '),
+      lazyCode(() => token.code),
+      const Code(')) {'),
       then,
       const Code('}'),
-    ]));
+    ]);
+  }
 
   @override
   void visitProvideClass(
