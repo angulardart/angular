@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:meta/meta.dart';
+
 import '../facade/exceptions.dart' show BaseException, ExceptionHandler;
 import '../facade/lang.dart' show assertionsEnabled, isDartVM;
 import '../platform/dom/shared_styles_host.dart';
@@ -197,7 +199,22 @@ abstract class ApplicationRef {
   /// Angular mounts the specified application component onto DOM elements
   /// identified by the [ComponentFactory.componentType]'s selector and kicks
   /// off automatic change detection to finish initializing the component.
-  ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory);
+  ComponentRef<T> bootstrap<T>(
+    ComponentFactory<T> componentFactory, [
+    // TODO(matanl): Remove from the public API before 5.x.
+    //
+    // In a normal application (bootstrapStatic), we always use the same
+    // injector that contains ApplicationRef (root injector) to bootstrap the
+    // root component.
+    //
+    // In an experimental application (bootstrapFactory), we have tiers:
+    //   {empty} <-- platformInjector <-- bootstrapInjector <-- appInjector
+    //
+    // ... where appInjector is the user-defined set of modules that are
+    // expected to be used when you bootstrap the root component. The "parent"
+    // field may be set in that case.
+    @experimental Injector parent,
+  ]);
 
   /// Retrieve the application [Injector].
   Injector get injector;
@@ -337,7 +354,10 @@ class ApplicationRefImpl extends ApplicationRef {
     return result is Future ? completer.future : result;
   }
 
-  ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory) {
+  ComponentRef<T> bootstrap<T>(
+    ComponentFactory<T> componentFactory, [
+    Injector parent,
+  ]) {
     assert((() {
       if (!_asyncInitDone) {
         throw new BaseException(
@@ -349,7 +369,7 @@ class ApplicationRefImpl extends ApplicationRef {
 
     return run(() {
       _rootComponentFactories.add(componentFactory);
-      var compRef = componentFactory.create(_injector, const []);
+      var compRef = componentFactory.create(parent ?? _injector, const []);
       Element existingElement =
           document.querySelector(componentFactory.selector);
       Element replacement;

@@ -7,7 +7,7 @@ import 'package:angular/angular.dart';
 import 'directives/router_link_active_directive.dart';
 import 'directives/router_link_directive.dart';
 import 'directives/router_outlet_directive.dart';
-import 'location.dart' as platform;
+import 'location.dart';
 import 'router/router.dart';
 import 'router/router_impl.dart';
 
@@ -33,12 +33,10 @@ const routerDirectives = const [RouterOutlet, RouterLink, RouterLinkActive];
 /// bootstrap(MyAppComponent, [routerProviders]);
 /// ```
 const routerProviders = const [
-  const Provider(platform.LocationStrategy,
-      useClass: platform.PathLocationStrategy),
-  const Provider(platform.PlatformLocation,
-      useClass: platform.BrowserPlatformLocation),
+  const Provider(LocationStrategy, useClass: PathLocationStrategy),
+  const Provider(PlatformLocation, useClass: BrowserPlatformLocation),
   // Requires `useClass`: https://github.com/dart-lang/angular/issues/579
-  const Provider(platform.Location, useClass: platform.Location),
+  const Provider(Location, useClass: Location),
   const Provider(Router, useClass: RouterImpl)
 ];
 
@@ -50,11 +48,9 @@ const routerProviders = const [
 /// bootstrap(MyAppComponent, [routerProvidersHash]);
 /// ```
 const routerProvidersHash = const [
-  const Provider(platform.LocationStrategy,
-      useClass: platform.HashLocationStrategy),
-  const Provider(platform.PlatformLocation,
-      useClass: platform.BrowserPlatformLocation),
+  const Provider(LocationStrategy, useClass: HashLocationStrategy),
+  const Provider(PlatformLocation, useClass: BrowserPlatformLocation),
   // Requires `useClass`: https://github.com/dart-lang/angular/issues/579
-  const Provider(platform.Location, useClass: platform.Location),
+  const Provider(Location, useClass: Location),
   const Provider(Router, useClass: RouterImpl)
 ];

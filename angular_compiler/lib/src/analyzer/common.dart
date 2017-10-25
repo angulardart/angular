@@ -27,7 +27,13 @@ String getTypeName(DartType type) {
 String prefixOf(Element element) {
   String identifier;
   if (element is ParameterElement) {
-    final astNode = element.computeNode();
+    AstNode astNode;
+    // TODO(matanl): https://b2.corp.google.com/issues/67906224.
+    try {
+      astNode = element.computeNode();
+    } catch (_) {
+      return null;
+    }
     if (astNode is DefaultFormalParameter) {
       identifier = _identifierOfAst(astNode.parameter, element);
     } else {

@@ -64,6 +64,15 @@ class ProviderReader {
     }
     // const Provider(<token>, useValue: constExpression)
     final useValue = reader.read('useValue');
+    if (useValue == null || useValue.isNull) {
+      // const Provider(<token>, useValue: null)
+      //
+      // This pattern is used to "disable" a service, for example:
+      //  const Provider(TimingService, useValue: null)
+      //
+      // Teams that inject `TimingService` @Optional() will stop using it.
+      return _parseUseValue(token, null);
+    }
     if (!useValue.isString || useValue.stringValue != '__noValueProvided__') {
       return _parseUseValue(token, useValue.objectValue);
     }

@@ -6,6 +6,7 @@ import 'dart:math';
 
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/application_tokens.dart';
+import 'package:angular/src/core/di.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
 import 'package:angular/src/core/linker/component_resolver.dart';
@@ -24,6 +25,8 @@ import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
 
 import 'package:meta/meta.dart';
+
+import 'modules.template.dart' as ng;
 
 /// Adds support for runtime event plugins.
 ///
@@ -66,8 +69,14 @@ const bootstrapMinimalModule = const <Object>[
   const Provider(APP_ID, useFactory: createRandomAppId, deps: const []),
   const Provider(AppViewUtils),
   const Provider(ComponentLoader),
-  const Provider(Testability),
+
+  // Disable Testability.
+  const Provider(Testability, useValue: null),
 ];
+
+/// An experimental application [Injector] that is statically generated.
+@Injector.generate(const [bootstrapMinimalModule])
+Injector minimalApp([Injector parent]) => ng.minimalApp$Injector(parent);
 
 /// Returns the current [Document] of the browser.
 HtmlDocument getDocument() => document;

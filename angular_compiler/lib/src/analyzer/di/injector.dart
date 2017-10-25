@@ -15,6 +15,7 @@ import 'tokens.dart';
 class InjectorReader {
   static const _package = 'package:angular';
   static const _runtime = '$_package/src/di/injector/injector.dart';
+  static const _$Injector = const Reference('Injector', _runtime);
 
   static bool _shouldGenerateInjector(FunctionElement element) {
     return $_GenerateInjector.hasAnnotationOfExact(element);
@@ -183,6 +184,12 @@ class InjectorReader {
       }
       index++;
     }
+    // Implicit provider: provide(Injector).
+    visitor.visitProvideValue(
+      index,
+      _$Injector,
+      refer('this'),
+    );
   }
 }
 

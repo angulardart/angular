@@ -5,6 +5,9 @@ import 'hierarchical.dart';
 import 'map.dart';
 import 'reflective.dart';
 
+// TODO(matanl): Remove export after we have a 'runtime.dart' import.
+export '../../core/di/opaque_token.dart' show OpaqueToken;
+
 /// **INTERNAL ONLY**: Work in progress.
 class InjectionToken<T> {}
 
