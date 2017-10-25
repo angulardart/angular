@@ -34,7 +34,6 @@ import '../router_hook.dart';
 )
 class RouterOutlet implements OnInit, OnDestroy {
   final ViewContainerRef _viewContainerRef;
-  final ComponentResolver _componentResolver;
   final Router _router;
   final bool isRootOutlet;
   final RouterHook _routerHook;
@@ -52,7 +51,6 @@ class RouterOutlet implements OnInit, OnDestroy {
     @Optional() @SkipSelf() RouterOutlet parentOutlet,
     @Optional() RouterOutletToken token,
     this._viewContainerRef,
-    this._componentResolver,
     this._router,
     @Optional() this._routerHook,
   )
@@ -106,9 +104,6 @@ class RouterOutlet implements OnInit, OnDestroy {
   Future<ComponentFactory> _coerceFactory(Object typeOrFactory) async {
     if (typeOrFactory is ComponentFactory) {
       return typeOrFactory;
-    }
-    if (typeOrFactory is Type) {
-      return _componentResolver.resolveComponent(typeOrFactory);
     }
     throw new ArgumentError('Invalid type: $typeOrFactory.');
   }

@@ -33,6 +33,9 @@ class _Injector$doGenerate extends _1.GeneratedInjector {
     if (identical(token, _2.Example)) {
       return _field0 ??= new _2.ExamplePrime();
     }
+    if (identical(token, _1.Injector)) {
+      return this;
+    }
     return orElse;
   }
 }
