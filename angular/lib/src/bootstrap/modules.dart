@@ -101,4 +101,5 @@ const bootstrapLegacyModule = const <Object>[
   bootstrapMinimalModule,
   const Provider(ComponentResolver, useClass: ReflectorComponentResolver),
   const Provider(SlowComponentLoader),
+  const Provider(Testability, useClass: Testability),
 ];
