@@ -6,6 +6,7 @@
     *    `BROWSER_APP_PROVIDERS`
     *    `PACKAGE_ROOT_URL`
     *    `ErrorHandlingFn`
+    *    `UrlResolver`
     *    `WrappedTimer`
     *    `ZeroArgFunction`
     *    `appIdRandomProviderFactory`
@@ -19,6 +20,11 @@
 In practice, most of these APIs were never intended to be public and never had
 a documentation or support, and primarily existed for framework-internal
 consumption. Others have been made obsolete by new language features in Dart.
+
+In particular, the `UrlResolver` class was no longer needed by the framework
+itself, and there is a cost to supplying APIs that we don't use. Clients that
+need this code (_deprecated as of 4.x_) can copy it safely into their own
+projects.
 
 *   Removed unused `context` parameter from `TemplateRef.createEmbeddedView`.
 
