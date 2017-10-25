@@ -443,13 +443,15 @@ class ApplicationRefImpl extends ApplicationRef {
     // Run the top-level 'tick' (i.e. detectChanges on root components).
     try {
       _runTick();
-    } catch (_) {
+    } catch (e, s) {
       // A crash (uncaught exception) was found. That means at least one
       // directive in the application tree is throwing. We need to re-run
       // change detection to disable offending directives.
-      _runTickGuarded();
-
-      // Propagate the original exception/stack upwards.
+      if (!_runTickGuarded()) {
+        // Propagate the original exception/stack upwards.
+        _exceptionHandler.call(e, s, 'Tick');
+      }
+      // And re-throw.
       rethrow;
     } finally {
       // Tick is complete.
@@ -478,7 +480,9 @@ class ApplicationRefImpl extends ApplicationRef {
   /// Unlike `_runTick`, this enters a guarded mode that checks a view tree
   /// for exceptions, trying to find the leaf-most node that throws during
   /// change detection.
-  void _runTickGuarded() {
+  ///
+  /// Returns whether an exception was caught.
+  bool _runTickGuarded() {
     _runningTick = true;
 
     // For all ViewRefImpls (i.e. concrete AppViews), run change detection.
@@ -496,7 +500,10 @@ class ApplicationRefImpl extends ApplicationRef {
     if (caughtException != null) {
       _exceptionHandler.call(caughtException, caughtStack);
       caughtException = caughtStack = null;
+      return true;
     }
+
+    return false;
   }
 
   @override
