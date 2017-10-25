@@ -47,7 +47,7 @@ class ViewInterpolationComponent0
   ComponentRef<import1.InterpolationComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = new import2.Text('');
     _el_0.append(_text_1);
     init(const [], null);
@@ -147,7 +147,7 @@ class ViewInterpolationComponentNoWhitespace0
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = new import2.Text('');
     _el_0.append(_text_1);
     init(const [], null);

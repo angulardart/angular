@@ -43,7 +43,7 @@ class ViewDeferredChildComponent0
   ComponentRef<import1.DeferredChildComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('Child');
     _el_0.append(_text_1);
     init(const [], null);

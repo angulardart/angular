@@ -131,7 +131,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     var doc = import8.document;
     _el_0 = doc.createElement('div');
-    _el_1 = createAndAppend(doc, 'span', _el_0);
+    _el_1 = createSpanAndAppend(doc, _el_0);
     _text_2 = new import8.Text('');
     _el_1.append(_text_2);
     init0(_el_0);

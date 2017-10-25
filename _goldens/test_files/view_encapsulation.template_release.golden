@@ -42,7 +42,7 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
   ComponentRef<import1.EmulatedComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('Emulated');
     _el_0.append(_text_1);
     init(const [], null);
@@ -124,7 +124,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
   ComponentRef<import1.NoneComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('None');
     _el_0.append(_text_1);
     init(const [], null);

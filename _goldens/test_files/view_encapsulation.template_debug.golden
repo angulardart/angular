@@ -52,7 +52,7 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
   ComponentRef<import2.EmulatedComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Emulated');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -153,7 +153,7 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
   ComponentRef<import2.NoneComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('None');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);

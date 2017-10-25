@@ -83,7 +83,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     createAttr(_el_0, 'directive-with-output', '');
     createAttr(_el_0, 'role', 'button');
     createAttr(_el_0, 'some-child-directive', '');
@@ -251,7 +251,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   ComponentRef<import1.InputFormTest> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _NgFormModel_0_4 =
         new import16.NgFormModelNgCd(new import11.NgFormModel(null));
     _ControlContainer_0_5 = _NgFormModel_0_4.instance;
