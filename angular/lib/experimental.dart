@@ -19,6 +19,7 @@ import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
 import 'src/core/render/api.dart';
 import 'src/di/injector/injector.dart';
+import 'src/platform/bootstrap.dart';
 import 'src/platform/dom/shared_styles_host.dart';
 
 export 'src/bootstrap/modules.dart' show bootstrapLegacyModule;
@@ -56,6 +57,23 @@ ComponentRef<T> bootstrapFactory<T>(
   sharedStylesHost ??= new DomSharedStylesHost(document);
   final appRef = appInjector.get(ApplicationRef) as ApplicationRef;
   return appRef.bootstrap(factory, appInjector);
+}
+
+/// Creates a root application injector by invoking [createAppInjector].
+///
+/// ```dart
+/// main() {
+///   var injector = rootInjector((parent) {
+///     return new Injector.map({ /* ... */ }, parent);
+///   });
+/// }
+/// ```
+///
+/// **WARNING**: This API is not considered part of the stable API.
+@experimental
+Injector rootInjector(Injector createAppInjector(Injector parent)) {
+  // TODO(matanl): Use a generated injector once the API is stable.
+  return createAppInjector(browserStaticPlatform().injector);
 }
 
 /// Initializes the global application state from an application [injector].
