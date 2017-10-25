@@ -165,7 +165,7 @@ class _ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
     var doc = import11.document;
     _el_0 = doc.createElement('div');
     dbgElm(this, _el_0, 0, 1, 4);
-    _el_1 = createAndAppendDbg(this, doc, 'span', _el_0, 1, 2, 6);
+    _el_1 = createSpanAndAppendDbg(this, doc, _el_0, 1, 2, 6);
     _text_2 = new import11.Text('');
     _el_1.append(_text_2);
     dbgElm(this, _text_2, 2, 2, 12);

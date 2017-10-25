@@ -11,7 +11,10 @@ import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular_compiler/angular_compiler.dart';
 
 import '../compile_metadata.dart'
-    show CompileDirectiveMetadata, CompileTypeMetadata;
+    show
+        CompileDirectiveMetadata,
+        CompileTypeMetadata,
+        CompileIdentifierMetadata;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
@@ -331,8 +334,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     } else {
       // Generate code to create Html element, append to parent and
       // optionally add dbg info in single call.
-      _createElementAndAppend(o.literal(tagName), parentRenderNodeExpr,
-          elementRef, generateDebugInfo, ast.sourceSpan, nodeIndex);
+      _createElementAndAppend(tagName, parentRenderNodeExpr, elementRef,
+          generateDebugInfo, ast.sourceSpan, nodeIndex);
     }
 
     _writeLiteralAttributeValues(
@@ -378,7 +381,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   }
 
   void _createElementAndAppend(
-      o.Expression tagName,
+      String tagName,
       o.Expression parent,
       NodeReference elementRef,
       bool generateDebugInfo,
@@ -390,12 +393,38 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     }
     if (parent != null && parent != o.NULL_EXPR) {
       o.Expression createExpr;
+      List<o.Expression> createParams;
       if (generateDebugInfo) {
-        createExpr = o.importExpr(Identifiers.createAndAppendDbg).callFn([
+        createParams = <o.Expression>[
           o.THIS_EXPR,
-          new o.ReadVarExpr(docVarName),
-          tagName,
-          parent,
+          new o.ReadVarExpr(docVarName)
+        ];
+      } else {
+        createParams = <o.Expression>[new ReadVarExpr(docVarName)];
+      }
+
+      CompileIdentifierMetadata createAndAppendMethod;
+      switch (tagName) {
+        case 'div':
+          createAndAppendMethod = generateDebugInfo
+              ? Identifiers.createDivAndAppendDbg
+              : Identifiers.createDivAndAppend;
+          break;
+        case 'span':
+          createAndAppendMethod = generateDebugInfo
+              ? Identifiers.createSpanAndAppendDbg
+              : Identifiers.createSpanAndAppend;
+          break;
+        default:
+          createAndAppendMethod = generateDebugInfo
+              ? Identifiers.createAndAppendDbg
+              : Identifiers.createAndAppend;
+          createParams.add(o.literal(tagName));
+          break;
+      }
+      createParams.add(parent);
+      if (generateDebugInfo) {
+        createParams.addAll([
           o.literal(debugNodeIndex),
           debugSpan?.start == null
               ? o.NULL_EXPR
@@ -404,16 +433,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
               ? o.NULL_EXPR
               : o.literal(debugSpan.start.column)
         ]);
-      } else {
-        createExpr = o
-            .importExpr(Identifiers.createAndAppend)
-            .callFn([new o.ReadVarExpr(docVarName), tagName, parent]);
       }
+      createExpr = o.importExpr(createAndAppendMethod).callFn(createParams);
       view.createMethod.addStmt(elementRef.toWriteExpr(createExpr).toStmt());
     } else {
       // No parent node, just create element and assign.
-      var createRenderNodeExpr =
-          new o.ReadVarExpr(docVarName).callMethod('createElement', [tagName]);
+      var createRenderNodeExpr = new o.ReadVarExpr(docVarName)
+          .callMethod('createElement', [o.literal(tagName)]);
       view.createMethod
           .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
       if (generateDebugInfo) {

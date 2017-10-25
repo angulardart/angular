@@ -65,7 +65,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 4);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 4);
     import3.Text _text_1 = new import3.Text('My own template');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 9);
@@ -203,7 +203,7 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
   ComponentRef<import1.TestSubComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Bar');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);

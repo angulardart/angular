@@ -95,6 +95,14 @@ class Identifiers {
       name: "createAndAppend", moduleUrl: APP_VIEW_MODULE_URL);
   static final createAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
       name: "createAndAppendDbg", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
+  static final createDivAndAppend = new CompileIdentifierMetadata<dynamic>(
+      name: "createDivAndAppend", moduleUrl: APP_VIEW_MODULE_URL);
+  static final createDivAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
+      name: "createDivAndAppendDbg", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
+  static final createSpanAndAppend = new CompileIdentifierMetadata<dynamic>(
+      name: "createSpanAndAppend", moduleUrl: APP_VIEW_MODULE_URL);
+  static final createSpanAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
+      name: "createSpanAndAppendDbg", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final createAndAppendToShadowRoot =
       new CompileIdentifierMetadata<dynamic>(
           name: "createAndAppendToShadowRoot", moduleUrl: APP_VIEW_MODULE_URL);

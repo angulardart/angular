@@ -66,7 +66,7 @@ class ViewTestFooComponent0 extends DebugAppView<import3.TestFooComponent> {
   ComponentRef<import3.TestFooComponent> build() {
     final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import4.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import4.Text _text_1 = new import4.Text('Foo');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);

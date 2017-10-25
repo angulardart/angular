@@ -53,7 +53,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   ComponentRef<import2.CheckOnceComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('CheckOnce');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -164,7 +164,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   ComponentRef<import2.CheckedComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Checked');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -266,7 +266,7 @@ class ViewCheckAlwaysComponent0
   ComponentRef<import2.CheckAlwaysComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('CheckAlways');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -368,7 +368,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   ComponentRef<import2.DetachedComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Detached');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -469,7 +469,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   ComponentRef<import2.OnPushComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('OnPush');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -571,7 +571,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     final import2.StatefulComponent _ctx = ctx;
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Stateful');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -673,7 +673,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   ComponentRef<import2.DefaultComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Default');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);

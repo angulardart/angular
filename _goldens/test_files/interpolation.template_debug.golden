@@ -55,7 +55,7 @@ class ViewInterpolationComponent0
   ComponentRef<import2.InterpolationComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);
@@ -178,7 +178,7 @@ class ViewInterpolationComponentNoWhitespace0
   ComponentRef<import2.InterpolationComponentNoWhitespace> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 5);

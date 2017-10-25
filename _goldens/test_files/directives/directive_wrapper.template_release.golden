@@ -71,7 +71,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     createAttr(_el_0, 'directive-with-output', '');
     createAttr(_el_0, 'role', 'button');
     createAttr(_el_0, 'some-child-directive', '');
@@ -206,7 +206,7 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
   ComponentRef<import1.InputFormTest> build() {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'div', parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     _NgFormModel_0_4 =
         new import10.NgFormModelNgCd(new import11.NgFormModel(null));
     _ControlContainer_0_5 = _NgFormModel_0_4.instance;

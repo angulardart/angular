@@ -57,7 +57,7 @@ class ViewHasTemplateFileComponent0
   ComponentRef<import3.HasTemplateFileComponent> build() {
     final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import4.document;
-    _el_0 = createAndAppendDbg(this, doc, 'div', parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     addShimC(_el_0);
     import4.Text _text_1 = new import4.Text('Has Template File!');
     _el_0.append(_text_1);

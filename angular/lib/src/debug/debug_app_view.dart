@@ -405,10 +405,29 @@ Element createAndAppendDbg(AppView view, Document doc, String tagName,
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code
+}
+
+/// Helper function called by DebugAppView.build to reduce code size.
+DivElement createDivAndAppendDbg(AppView view, Document doc, Element parent,
+    int nodeIndex, int line, int column) {
+  var elm = doc.createElement('div');
+  parent.append(elm);
+  dbgElm(view, elm, nodeIndex, line, column);
+  return elm;
+  // Workaround since package expect/@NoInline not available outside sdk.
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code
-  return null; // ignore: dead_code
+}
+
+/// Helper function called by DebugAppView.build to reduce code size.
+SpanElement createSpanAndAppendDbg(AppView view, Document doc, Element parent,
+    int nodeIndex, int line, int column) {
+  var elm = doc.createElement('span');
+  parent.append(elm);
+  dbgElm(view, elm, nodeIndex, line, column);
+  return elm;
+  // Workaround since package expect/@NoInline not available outside sdk.
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code

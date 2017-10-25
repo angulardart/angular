@@ -742,10 +742,21 @@ Element createAndAppend(Document doc, String tagName, Element parent) {
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code
+}
+
+/// Helper function called by AppView.build to reduce code size.
+DivElement createDivAndAppend(Document doc, Element parent) {
+  return parent.append(doc.createElement('div'));
+  // Workaround since package expect/@NoInline not available outside sdk.
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code
-  return null; // ignore: dead_code
+}
+
+/// Helper function called by AppView.build to reduce code size.
+SpanElement createSpanAndAppend(Document doc, Element parent) {
+  return parent.append(doc.createElement('span'));
+  // Workaround since package expect/@NoInline not available outside sdk.
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code
