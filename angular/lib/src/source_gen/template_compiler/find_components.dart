@@ -497,13 +497,15 @@ class ComponentVisitor
     final annotationValue = annotation.computeConstantValue();
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
+    CompileTypeMetadata componentType =
+        element.accept(new CompileTypeMetadataVisitor(log));
     final template = isComp
-        ? _createTemplateMetadata(annotationValue)
+        ? _createTemplateMetadata(annotationValue, componentType)
         : new CompileTemplateMetadata();
     final analyzedClass =
         new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
     return new CompileDirectiveMetadata(
-      type: element.accept(new CompileTypeMetadataVisitor(log)),
+      type: componentType,
       metadataType: isComp
           ? CompileDirectiveMetadataType.Component
           : CompileDirectiveMetadataType.Directive,
@@ -531,12 +533,22 @@ class ComponentVisitor
     );
   }
 
-  CompileTemplateMetadata _createTemplateMetadata(DartObject component) {
+  CompileTemplateMetadata _createTemplateMetadata(
+      DartObject component, CompileTypeMetadata componentType) {
     var template = component;
+    String templateContent = coerceString(template, 'template');
+    String templateUrl = coerceString(template, 'templateUrl');
+    if (templateContent != null &&
+        templateContent.isNotEmpty &&
+        templateUrl != null &&
+        templateUrl.isNotEmpty) {
+      throw new Exception('${componentType.name} @Component should either '
+          'provide template or templateUrl, not both.');
+    }
     return new CompileTemplateMetadata(
       encapsulation: _encapsulation(template),
-      template: coerceString(template, 'template'),
-      templateUrl: coerceString(template, 'templateUrl'),
+      template: templateContent,
+      templateUrl: templateUrl,
       styles: coerceStringList(template, 'styles'),
       styleUrls: coerceStringList(template, 'styleUrls'),
       preserveWhitespace: coerceBool(
