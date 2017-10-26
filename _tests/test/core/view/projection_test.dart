@@ -264,29 +264,29 @@ class ContainerWithStyleEmulated {}
 class ContainerWithStyleNotEmulated {}
 
 @Component(
-    selector: 'mylist-user',
-    template: '<mylist>'
-        '<span list-item>item1</span>'
-        '<span list-item>item2</span>'
-        '</mylist>',
-    directives: const [MyListComponent, MyListItemComponent],
-    preserveWhitespace: false)
+  selector: 'mylist-user',
+  template: '<mylist>'
+      '<span list-item>item1</span>'
+      '<span list-item>item2</span>'
+      '</mylist>',
+  directives: const [MyListComponent, MyListItemComponent],
+)
 class MyListUserProjectionTest {}
 
 @Component(
-    selector: 'mylist',
-    template: '<mylist-item>'
-        '<ng-content select="[list-item]"></ng-content>'
-        '</mylist-item>'
-        '<div>TheEnd</div>',
-    directives: const [MyListItemComponent],
-    preserveWhitespace: false)
+  selector: 'mylist',
+  template: '<mylist-item>'
+      '<ng-content select="[list-item]"></ng-content>'
+      '</mylist-item>'
+      '<div>TheEnd</div>',
+  directives: const [MyListItemComponent],
+)
 class MyListComponent {}
 
 @Component(
-    selector: 'mylist-item',
-    template: '<ng-content></ng-content>',
-    preserveWhitespace: false)
+  selector: 'mylist-item',
+  template: '<ng-content></ng-content>',
+)
 class MyListItemComponent {}
 
 @Component(

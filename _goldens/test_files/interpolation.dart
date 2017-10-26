@@ -19,7 +19,6 @@ class InterpolationComponent {
   {{foo}}
 </div>
 ''',
-  preserveWhitespace: false,
 )
 class InterpolationComponentNoWhitespace {
   String foo = 'hello';
