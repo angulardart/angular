@@ -104,14 +104,14 @@ class NgSpaceComponent {
 }
 
 @Component(
-    selector: 'test-explicit-false',
-    template: r'''
+  selector: 'test-explicit-false',
+  template: r'''
         <span class="other-element">
         Hello</span>
         <div> <span>  </span>  <span> </span>  World</div>
         <div>{{value1}} {{value2}}</div>
      ''',
-    preserveWhitespace: false)
+)
 class WhiteSpaceComponentExplicitFalse {
   String get value1 => 'V1';
   String get value2 => 'V2';
@@ -130,9 +130,9 @@ class WhiteSpaceComponentExplicitTrue {
 }
 
 @Component(
-    selector: 'test-interpolate1-leftspace',
-    template: '\n    \n    {{value1}}',
-    preserveWhitespace: false)
+  selector: 'test-interpolate1-leftspace',
+  template: '\n    \n    {{value1}}',
+)
 class Interpolate1LeftComponent {
   String get value1 => 'V1';
 }
@@ -140,9 +140,9 @@ class Interpolate1LeftComponent {
 /// Should preserve the space between interpolation but not in surrounding
 /// area with new lines.
 @Component(
-    selector: 'test-interpolate',
-    template: '\n    \n    {{value1}}  {{value2}}  \n      ',
-    preserveWhitespace: false)
+  selector: 'test-interpolate',
+  template: '\n    \n    {{value1}}  {{value2}}  \n      ',
+)
 class InterpolateComponent {
   String get value1 => 'V1';
   String get value2 => 'V2';
@@ -150,27 +150,27 @@ class InterpolateComponent {
 
 /// Should preserve the space between interpolation.
 @Component(
-    selector: 'test-interpolatebetweentext',
-    template: '<span> prefix {{value1}} postfix </span>\n      ',
-    preserveWhitespace: false)
+  selector: 'test-interpolatebetweentext',
+  template: '<span> prefix {{value1}} postfix </span>\n      ',
+)
 class InterpolateBetweenTextComponent {
   String get value1 => 'V1';
 }
 
 /// Should preserve the space between interpolation within newlines.
 @Component(
-    selector: 'test-interpolatebetweentextnewline',
-    template: '<span>\n prefix {{value1}} postfix \n</span>\n      ',
-    preserveWhitespace: false)
+  selector: 'test-interpolatebetweentextnewline',
+  template: '<span>\n prefix {{value1}} postfix \n</span>\n      ',
+)
 class InterpolateBetweenTextNewlineComponent {
   String get value1 => 'V1';
 }
 
 /// Should preserve the space between prefix and interpolation.
 @Component(
-    selector: 'test-textbeforeinterpolate',
-    template: '<span> prefix {{value1}}</span>\n      ',
-    preserveWhitespace: false)
+  selector: 'test-textbeforeinterpolate',
+  template: '<span> prefix {{value1}}</span>\n      ',
+)
 class TextBeforeInterpolateComponent {
   String get value1 => 'V1';
 }

@@ -105,7 +105,6 @@ void addChildDivDirective(Element element) {
   selector: 'test-invoke-once',
   template: '<div id="test" addChildDiv></div>',
   directives: const [addChildDivDirective],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestInvokeOnceComponent {}
@@ -114,7 +113,6 @@ class TestInvokeOnceComponent {}
   selector: 'test-invoke-each-build',
   template: '<div id="test" *ngIf="visible" addChildDiv></div>',
   directives: const [addChildDivDirective, NgIf],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestInvokeEachBuildComponent {
@@ -140,7 +138,6 @@ void addAttributesDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes>',
   directives: const [addAttributesDirective],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestDependencyInjectionComponent {}
@@ -157,7 +154,6 @@ void addAttributesForTokenDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes>',
   directives: const [addAttributesForTokenDirective],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestDependencyInjectionViaTokenComponent {}
@@ -171,7 +167,6 @@ void embedTextDirective(Element element, @Attribute('embedText') String text) {
   selector: 'test-attribute-injection',
   template: '<div embedText="hello world"></div>',
   directives: const [embedTextDirective],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestAttributeInjectionComponent {}
@@ -179,7 +174,6 @@ class TestAttributeInjectionComponent {}
 @Component(
   selector: 'content-host',
   template: '<ng-content></ng-content>',
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class ContentHostComponent {}
@@ -188,7 +182,6 @@ class ContentHostComponent {}
   selector: 'test-content-projection',
   template: '<content-host><div id="test" addAttributes></div></content-host>',
   directives: const [addAttributesDirective, ContentHostComponent],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestContentProjectionComponent {}
@@ -211,7 +204,6 @@ void ifDirective(
     <template if="false"><div id="second"></div></template>
   ''',
   directives: const [ifDirective],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestFunctionalStructuralDirectiveComponent {}
@@ -238,7 +230,6 @@ void recordTextDirective(HtmlElement element, TextRecorder textRecorder) {
     </div>
   ''',
   directives: const [recordTextDirective],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestInvocationAfterSubtreeCreationComponent {}
@@ -252,7 +243,6 @@ void serviceProviderDirective() {}
 @Component(
   selector: 'service-consumer',
   template: '',
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class ServiceConsumerComponent {
@@ -268,7 +258,6 @@ class ServiceConsumerComponent {
     </div>
   ''',
   directives: const [serviceProviderDirective, ServiceConsumerComponent],
-  preserveWhitespace: false,
   visibility: Visibility.none,
 )
 class TestProvidesServiceComponent {}

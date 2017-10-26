@@ -59,7 +59,6 @@ class DirectiveWithOutput {
 
 @Component(
   selector: 'test-foo',
-  preserveWhitespace: false,
   template:
       '<div some-child-directive directive-with-output [row]="rowIndex" (trigger)="onTrigger">Foo</div>',
   directives: const [ChildDirective, DirectiveWithOutput],

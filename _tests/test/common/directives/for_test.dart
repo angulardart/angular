@@ -539,40 +539,40 @@ class NgForObjectItemInstanceTest {
 }
 
 @Component(
-    selector: 'ng-for-nested',
-    template: '<div>'
-        '<div template="ngFor let item of items">'
-        '<div template="ngFor let subitem of item">'
-        '{{subitem}}-{{item.length}};'
-        '</div>|'
-        '</div>'
-        '</div>',
-    directives: const [NgFor],
-    preserveWhitespace: false)
+  selector: 'ng-for-nested',
+  template: '<div>'
+      '<div template="ngFor let item of items">'
+      '<div template="ngFor let subitem of item">'
+      '{{subitem}}-{{item.length}};'
+      '</div>|'
+      '</div>'
+      '</div>',
+  directives: const [NgFor],
+)
 class NgForNestedTest {
   List items;
 }
 
 @Component(
-    selector: 'ng-for-nested-template',
-    template: '<div>'
-        '<template ngFor let-item [ngForOf]="items">'
-        '<div template="ngFor let subitem of item">'
-        '{{subitem}}-{{item.length}};'
-        '</div>|</template></div>',
-    directives: const [NgFor],
-    preserveWhitespace: false)
+  selector: 'ng-for-nested-template',
+  template: '<div>'
+      '<template ngFor let-item [ngForOf]="items">'
+      '<div template="ngFor let subitem of item">'
+      '{{subitem}}-{{item.length}};'
+      '</div>|</template></div>',
+  directives: const [NgFor],
+)
 class NgForNestedTemplateTest {
   List items;
 }
 
 @Component(
-    selector: 'ng-for-nested-lastif',
-    template: '<div><template ngFor let-item [ngForOf]="items" '
-        'let-i="index"><div>{{i}}|</div>'
-        '<div *ngIf="i % 2 == 0">even|</div></template></div>',
-    directives: const [NgIf, NgFor],
-    preserveWhitespace: false)
+  selector: 'ng-for-nested-lastif',
+  template: '<div><template ngFor let-item [ngForOf]="items" '
+      'let-i="index"><div>{{i}}|</div>'
+      '<div *ngIf="i % 2 == 0">even|</div></template></div>',
+  directives: const [NgIf, NgFor],
+)
 class NgForNestedLastIfTest {
   List items;
 }

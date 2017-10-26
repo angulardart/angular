@@ -164,7 +164,6 @@ class SwitchWhenValueTest {
     <template ngSwitchDefault>default case</template>
   </div>
   ''',
-  preserveWhitespace: false,
 )
 class SwitchEqualStringsTest {
   String switchCase;

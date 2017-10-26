@@ -45,7 +45,6 @@ class NopPipe {
   selector: 'nop',
   template: '{{values | nop}}',
   pipes: const [NopPipe],
-  preserveWhitespace: false,
 )
 class NopComponent {
   final values = [1, 2, 3];
