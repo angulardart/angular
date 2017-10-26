@@ -93,7 +93,7 @@ Future<int> _runTests(CliOptions options, int port) async {
   if (port == 0) {
     throw new ArgumentError.value(port, 'port must not be `0`');
   }
-  final testArgs = options.testArgs;
+  final testArgs = options.testArgs.toList()..add('--pub-serve=$port');
   log('${options.pubBin} ${testArgs.join(' ')}');
   final process = await Process.start(options.pubBin, testArgs);
   await Future.wait([

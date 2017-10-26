@@ -18,7 +18,7 @@ void main() {
     final options = new CliOptions.fromArgs([]);
     expect(
       options.testArgs,
-      ['run', 'test', '--pub-serve=null'],
+      ['run', 'test'],
     );
     expect(
       options.serveArgs,
@@ -90,7 +90,7 @@ void main() {
     final options = new CliOptions.fromArgs(['--run-test-flag=angular']);
     expect(
       options.testArgs,
-      ['run', 'test', '--tags=angular', '--pub-serve=null'],
+      ['run', 'test', '--tags=angular'],
     );
     expect(logs.join('\n'), contains('"run-test-flag" is deprecated'));
   });
@@ -99,7 +99,7 @@ void main() {
     final options = new CliOptions.fromArgs(['--platform=chrome']);
     expect(
       options.testArgs,
-      ['run', 'test', '--platform=chrome', '--pub-serve=null'],
+      ['run', 'test', '--platform=chrome'],
     );
     expect(logs.join('\n'), contains('"platform" is deprecated'));
   });
@@ -108,7 +108,7 @@ void main() {
     final options = new CliOptions.fromArgs(['--name=ngIf']);
     expect(
       options.testArgs,
-      ['run', 'test', '--name=ngIf', '--pub-serve=null'],
+      ['run', 'test', '--name=ngIf'],
     );
     expect(logs.join('\n'), contains('"name" is deprecated'));
   });
@@ -117,7 +117,7 @@ void main() {
     final options = new CliOptions.fromArgs(['--plain-name=ngIf']);
     expect(
       options.testArgs,
-      ['run', 'test', '--plain-name=ngIf', '--pub-serve=null'],
+      ['run', 'test', '--plain-name=ngIf'],
     );
     expect(logs.join('\n'), contains('"plain-name" is deprecated'));
   });
@@ -130,14 +130,7 @@ void main() {
     ]);
     expect(
       options.testArgs,
-      [
-        'run',
-        'test',
-        '--platform=chrome',
-        '--tags=angular',
-        '--name=ngIf',
-        '--pub-serve=null'
-      ],
+      ['run', 'test', '--platform=chrome', '--tags=angular', '--name=ngIf'],
     );
   });
 }
