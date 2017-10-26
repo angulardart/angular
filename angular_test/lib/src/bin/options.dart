@@ -62,8 +62,7 @@ class CliOptions {
       ..addAll(runTestFlags.map((t) => '--tags=$t'))
       ..addAll(runTestPlatforms.map((p) => '--platform=$p'))
       ..addAll(runTestNames.map((n) => '--name=$n'))
-      ..addAll(runTestPlainNames.map((n) => '--plain-name=$n'))
-      ..add('--pub-serve=$servePort');
+      ..addAll(runTestPlainNames.map((n) => '--plain-name=$n'));
 
     return new CliOptions._(
       pubBin,
