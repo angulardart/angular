@@ -1353,7 +1353,7 @@ void main() {
                 ['ng-content', 0],
                 ['ng-content', null]
               ]);
-        });
+        }, skip: 'Not a valid ng-content element.');
       });
 
       test('should project into the first matching ng-content', () {
@@ -1432,7 +1432,7 @@ void main() {
               ['template', 1],
               ['b', null]
             ]);
-      });
+      }, skip: 'Don\'t yet handle inline templates.');
 
       group('ngProjectAs', () {
         test('should override elements', () {
@@ -1457,7 +1457,7 @@ void main() {
                 ['div', null],
                 ['ng-content', 1]
               ]);
-        });
+        }, skip: 'Don\'t yet support attrs on ng-content.');
 
         test('should override <template>', () {
           expect(
@@ -1483,7 +1483,7 @@ void main() {
                 ['template', 1],
                 ['a', null]
               ]);
-        });
+        }, skip: 'Don\'t yet handle inline templates.');
       });
 
       test('should support other directives before the component', () {
@@ -1497,7 +1497,7 @@ void main() {
               ['#text(hello)', 0]
             ]);
       });
-    }, skip: 'Don\'t support content projection yet.');
+    });
 
     group('error cases', () {
       test('should report when ng-content has content', () {
