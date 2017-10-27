@@ -57,12 +57,13 @@ class _Visitor
   ///
   /// This is necessary so that we can assign a unique index to each one as we
   /// visit it.
-  int ngContentIndex = 0;
+  int ngContentCount = 0;
 
   @override
-  ng.TemplateAst visitElement(ast.ElementAst astNode, [_ParseContext context]) {
+  ng.TemplateAst visitElement(ast.ElementAst astNode,
+      [_ParseContext parentContext]) {
     final elementContext =
-        new _ParseContext.forElement(astNode, context.templateContext);
+        new _ParseContext.forElement(astNode, parentContext.templateContext);
     return new ng.ElementAst(
         astNode.name,
         _visitAll(astNode.attributes, elementContext),
@@ -73,15 +74,30 @@ class _Visitor
         [] /* providers */,
         null /* elementProviderUsage */,
         _visitAll(astNode.childNodes, elementContext),
-        0 /* ngContentIndex */,
+        _findNgContentIndexForElement(astNode, parentContext),
         astNode.sourceSpan);
+  }
+
+  int _findNgContentIndexForElement(
+      ast.ElementAst astNode, _ParseContext context) {
+    return context
+        .findNgContentIndex(_projectAs(astNode) ?? _elementSelector(astNode));
+  }
+
+  _projectAs(ast.ElementAst astNode) {
+    for (var attr in astNode.attributes) {
+      if (attr.name == NG_PROJECT_AS) {
+        return CssSelector.parse(attr.value)[0];
+      }
+    }
+    return null;
   }
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
-      [_ParseContext context]) {
+      [_ParseContext parentContext]) {
     final embeddedContext =
-        new _ParseContext.forTemplate(astNode, context.templateContext);
+        new _ParseContext.forTemplate(astNode, parentContext.templateContext);
     return new ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
         _visitAll(astNode.events, embeddedContext),
@@ -91,15 +107,32 @@ class _Visitor
         [] /* providers */,
         null /* elementProviderUsage */,
         _visitAll(astNode.childNodes, embeddedContext),
-        0 /* ngContentIndex */,
+        _findNgContentIndexForTemplate(astNode, parentContext),
         astNode.sourceSpan);
+  }
+
+  int _findNgContentIndexForTemplate(
+      ast.EmbeddedTemplateAst astNode, _ParseContext context) {
+    return context.findNgContentIndex(
+        _templateProjectAs(astNode) ?? _templateSelector(astNode));
+  }
+
+  _templateProjectAs(ast.EmbeddedTemplateAst astNode) {
+    for (var attr in astNode.attributes) {
+      if (attr.name == NG_PROJECT_AS) {
+        return CssSelector.parse(attr.value)[0];
+      }
+    }
+    return null;
   }
 
   @override
   ng.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
-          [_ParseContext _]) =>
+          [_ParseContext context]) =>
       new ng.NgContentAst(
-          ngContentIndex++, 0 /* ngContentIndex */, astNode.sourceSpan);
+          ngContentCount++,
+          context.findNgContentIndex(CssSelector.parse(astNode.selector)[0]),
+          astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitEvent(ast.EventAst astNode, [_ParseContext context]) {
@@ -155,16 +188,17 @@ class _Visitor
           astNode.sourceSpan);
 
   @override
-  ng.TemplateAst visitText(ast.TextAst astNode, [_ParseContext _]) =>
-      new ng.TextAst(astNode.value, 0 /* ngContentIndex */, astNode.sourceSpan);
+  ng.TemplateAst visitText(ast.TextAst astNode, [_ParseContext context]) =>
+      new ng.TextAst(astNode.value,
+          context.findNgContentIndex(TEXT_CSS_SELECTOR), astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitInterpolation(ast.InterpolationAst astNode,
       [_ParseContext context]) {
     var element = context.templateContext.parser
         .parseInterpolation('{{${astNode.value}}}', _location(astNode), []);
-    return new ng.BoundTextAst(
-        element, 0 /* ngContentIndex */, astNode.sourceSpan);
+    return new ng.BoundTextAst(element,
+        context.findNgContentIndex(TEXT_CSS_SELECTOR), astNode.sourceSpan);
   }
 
   @override
@@ -217,14 +251,23 @@ class _ParseContext {
   final String elementName;
   final List<ng.DirectiveAst> boundDirectives;
   final bool _isTemplate;
+  final SelectorMatcher _ngContentIndexMatcher;
+  final int _wildcardNgContentIndex;
 
-  _ParseContext._(this.templateContext, this.elementName, this.boundDirectives,
-      this._isTemplate);
+  _ParseContext._(
+      this.templateContext,
+      this.elementName,
+      this.boundDirectives,
+      this._isTemplate,
+      this._ngContentIndexMatcher,
+      this._wildcardNgContentIndex);
 
   _ParseContext.forRoot(this.templateContext)
       : elementName = '',
         boundDirectives = const [],
-        _isTemplate = false;
+        _isTemplate = false,
+        _ngContentIndexMatcher = null,
+        _wildcardNgContentIndex = null;
 
   factory _ParseContext.forElement(
       ast.ElementAst element, _TemplateContext templateContext) {
@@ -234,8 +277,14 @@ class _ParseContext {
         element.name,
         _location(element),
         templateContext);
+    var firstComponent = _firstComponent(boundDirectives);
     return new _ParseContext._(
-        templateContext, element.name, boundDirectives, false);
+        templateContext,
+        element.name,
+        boundDirectives,
+        false,
+        _createSelector(firstComponent),
+        _findWildcardIndex(firstComponent));
   }
 
   factory _ParseContext.forTemplate(
@@ -246,8 +295,14 @@ class _ParseContext {
         TEMPLATE_ELEMENT,
         _location(template),
         templateContext);
+    var firstComponent = _firstComponent(boundDirectives);
     return new _ParseContext._(
-        templateContext, TEMPLATE_ELEMENT, boundDirectives, true);
+        templateContext,
+        TEMPLATE_ELEMENT,
+        boundDirectives,
+        true,
+        _createSelector(firstComponent),
+        _findWildcardIndex(firstComponent));
   }
 
   CompileTokenMetadata identifierForReference(String identifier) {
@@ -283,6 +338,18 @@ class _ParseContext {
       }
     }
     return false;
+  }
+
+  int findNgContentIndex(CssSelector selector) {
+    if (_ngContentIndexMatcher == null) return _wildcardNgContentIndex;
+    var ngContentIndices = [];
+    _ngContentIndexMatcher.match(selector, (selector, ngContentIndex) {
+      ngContentIndices.add(ngContentIndex);
+    });
+    ngContentIndices.sort();
+    return ngContentIndices.isNotEmpty
+        ? ngContentIndices.first
+        : _wildcardNgContentIndex;
   }
 
   static List<ng.DirectiveAst> _toAst(
@@ -365,6 +432,35 @@ class _ParseContext {
       result.add(new ng.BoundEventAst(eventName, value, sourceSpan));
     }
     return result;
+  }
+
+  static SelectorMatcher _createSelector(ng.DirectiveAst component) {
+    if (component == null) return null;
+    var matcher = new SelectorMatcher();
+    var ngContextSelectors = component.directive.template.ngContentSelectors;
+    for (var i = 0; i < ngContextSelectors.length; i++) {
+      var selector = ngContextSelectors[i];
+      if (selector != '*') {
+        matcher.addSelectables(CssSelector.parse(selector), i);
+      }
+    }
+    return matcher;
+  }
+
+  static int _findWildcardIndex(ng.DirectiveAst component) {
+    if (component == null) return null;
+    var ngContextSelectors = component.directive.template.ngContentSelectors;
+    for (var i = 0; i < ngContextSelectors.length; i++) {
+      if (ngContextSelectors[i] == '*') return i;
+    }
+    return null;
+  }
+
+  static ng.DirectiveAst _firstComponent(List<ng.DirectiveAst> directiveAsts) {
+    var component = directiveAsts.firstWhere(
+        (directive) => directive.directive.isComponent,
+        orElse: () => null);
+    return component;
   }
 }
 
