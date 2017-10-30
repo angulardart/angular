@@ -19,6 +19,19 @@ void main() {
     final testFixture = await testBed.create();
     expect(testFixture.text, '[1, 2, 3]');
   });
+
+  test('pure pipe should only be invoked when its input changes', () async {
+    final testBed = new NgTestBed<TestPurePipeComponent>();
+    final testFixture = await testBed.create();
+    // Initial invocation.
+    expect(PurePipe.singleton.invocations, equals(1));
+    // Shouldn't be invoked again with the same value to transform.
+    await testFixture.update();
+    expect(PurePipe.singleton.invocations, equals(1));
+    // Should be invoked again with the new value to transform.
+    await testFixture.update((component) => component.value = '');
+    expect(PurePipe.singleton.invocations, equals(2));
+  });
 }
 
 @Component(
@@ -48,4 +61,30 @@ class NopPipe {
 )
 class NopComponent {
   final values = [1, 2, 3];
+}
+
+@Pipe('pure')
+class PurePipe {
+  static PurePipe singleton = new PurePipe._();
+
+  int _invocations = 0;
+  int get invocations => _invocations;
+
+  factory PurePipe() => singleton;
+
+  PurePipe._();
+
+  Null transform(_) {
+    _invocations++;
+    return null;
+  }
+}
+
+@Component(
+  selector: 'test-pure-pipe',
+  template: '{{value | pure}}',
+  pipes: const [PurePipe],
+)
+class TestPurePipeComponent {
+  String value;
 }
