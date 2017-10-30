@@ -1,7 +1,8 @@
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:tuple/tuple.dart';
-import 'html_tags.dart' show getHtmlTagDefinition;
+
 import 'attribute_matcher.dart';
+import 'html_tags.dart' show getHtmlTagDefinition;
 
 final _SELECTOR_REGEXP = new RegExp(r'(:not\()|' + // ":not("
         r'([-\w]+)|' + // "tag-name"
