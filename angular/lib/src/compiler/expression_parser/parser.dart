@@ -655,8 +655,6 @@ class _ParseAST {
       if (keyIsVar) {
         if (optionalOperator('=')) {
           name = expectTemplateBindingKey();
-        } else {
-          name = '\$implicit';
         }
       } else if (!identical(next, EOF) &&
           !peekKeywordLet() &&
