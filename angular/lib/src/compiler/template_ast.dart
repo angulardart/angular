@@ -107,11 +107,15 @@ class ReferenceAst implements TemplateAst {
 
 /// A variable declaration on a <template> (e.g. var-someName='someLocalName').
 class VariableAst implements TemplateAst {
+  /// A variable's default [value] if unassigned or assigned an empty value.
+  static const implicitValue = r'$implicit';
+
   final String name;
   final String value;
   final SourceSpan sourceSpan;
 
-  VariableAst(this.name, this.value, this.sourceSpan);
+  VariableAst(this.name, String value, this.sourceSpan)
+      : value = value != null && value.isNotEmpty ? value : implicitValue;
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
       visitor.visitVariable(this, context);

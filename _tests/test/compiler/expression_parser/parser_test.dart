@@ -307,7 +307,7 @@ void main() {
           if (binding.keyIsVar) {
             return "let " +
                 binding.key +
-                (binding.name == null ? "=null" : "=" + binding.name);
+                (binding.name == null ? "" : "=" + binding.name);
           } else {
             return binding.key +
                 (binding.expression == null ? "" : '=${binding.expression}');
@@ -354,7 +354,7 @@ void main() {
       });
       test("should detect names as value", () {
         var bindings = parseTemplateBindings("a:let b");
-        expect(keyValues(bindings), ["a", "let b=\$implicit"]);
+        expect(keyValues(bindings), ["a", "let b"]);
       });
       test("should allow space and colon as separators", () {
         var bindings = parseTemplateBindings("a:b");
@@ -380,40 +380,38 @@ void main() {
       });
       test("should support var notation with a deprecation warning", () {
         var bindings = createParser().parseTemplateBindings("var i", null, []);
-        expect(keyValues(bindings.templateBindings), ["let i=\$implicit"]);
+        expect(keyValues(bindings.templateBindings), ["let i"]);
         expect(bindings.warnings, [
           "\"var\" inside of expressions is deprecated. Use \"let\" instead!"
         ]);
       });
       test("should support # notation with a deprecation warning", () {
         var bindings = createParser().parseTemplateBindings("#i", null, []);
-        expect(keyValues(bindings.templateBindings), ["let i=\$implicit"]);
+        expect(keyValues(bindings.templateBindings), ["let i"]);
         expect(bindings.warnings, [
           "\"#\" inside of expressions is deprecated. Use \"let\" instead!"
         ]);
       });
       test("should support let notation", () {
         var bindings = parseTemplateBindings("let i");
-        expect(keyValues(bindings), ["let i=\$implicit"]);
+        expect(keyValues(bindings), ["let i"]);
         bindings = parseTemplateBindings("let i");
-        expect(keyValues(bindings), ["let i=\$implicit"]);
+        expect(keyValues(bindings), ["let i"]);
         bindings = parseTemplateBindings("let a; let b");
-        expect(keyValues(bindings), ["let a=\$implicit", "let b=\$implicit"]);
+        expect(keyValues(bindings), ["let a", "let b"]);
         bindings = parseTemplateBindings("let a; let b;");
-        expect(keyValues(bindings), ["let a=\$implicit", "let b=\$implicit"]);
+        expect(keyValues(bindings), ["let a", "let b"]);
         bindings = parseTemplateBindings("let i-a = k-a");
         expect(keyValues(bindings), ["let i-a=k-a"]);
         bindings = parseTemplateBindings("keyword let item; let i = k");
-        expect(
-            keyValues(bindings), ["keyword", "let item=\$implicit", "let i=k"]);
+        expect(keyValues(bindings), ["keyword", "let item", "let i=k"]);
         bindings = parseTemplateBindings("keyword: let item; let i = k");
-        expect(
-            keyValues(bindings), ["keyword", "let item=\$implicit", "let i=k"]);
+        expect(keyValues(bindings), ["keyword", "let item", "let i=k"]);
         bindings = parseTemplateBindings(
             "directive: let item in expr; let a = b", "location");
         expect(keyValues(bindings), [
           "directive",
-          "let item=\$implicit",
+          "let item",
           "directiveIn=expr in location",
           "let a=b"
         ]);

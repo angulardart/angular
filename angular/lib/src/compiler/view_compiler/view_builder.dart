@@ -71,7 +71,6 @@ import 'view_compiler_utils.dart'
         mergeHtmlAndDirectiveAttrs,
         ViewCompileDependency;
 
-const IMPLICIT_TEMPLATE_VAR = "\$implicit";
 var rootSelectorVar = o.variable("rootSelector");
 var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
@@ -478,10 +477,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     NodeReference nodeReference =
         view.createViewContainerAnchor(parent, nodeIndex, ast);
     var templateVariableBindings = ast.variables
-        .map((VariableAst varAst) => [
-              varAst.value.length > 0 ? varAst.value : IMPLICIT_TEMPLATE_VAR,
-              varAst.name
-            ])
+        .map((VariableAst varAst) => [varAst.value, varAst.name])
         .toList();
     var directives =
         ast.directives.map((directiveAst) => directiveAst.directive).toList();
