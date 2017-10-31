@@ -11,7 +11,7 @@ import '../compile_metadata.dart'
         CompileTokenMap;
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show TemplateAst, ElementAst;
+import '../template_ast.dart' show TemplateAst, ElementAst, VariableAst;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
@@ -157,7 +157,7 @@ class CompileView implements AppViewBuilder {
 
   int viewIndex;
   CompileElement declarationElement;
-  List<List<String>> templateVariableBindings;
+  List<VariableAst> templateVariables;
   ViewType viewType;
   CompileTokenMap<List<CompileQuery>> viewQueries;
 
@@ -211,7 +211,7 @@ class CompileView implements AppViewBuilder {
       this.styles,
       this.viewIndex,
       this.declarationElement,
-      this.templateVariableBindings,
+      this.templateVariables,
       this.deferredModules) {
     createMethod = new CompileMethod(genDebugInfo);
     injectorGetMethod = new CompileMethod(genDebugInfo);
@@ -253,9 +253,9 @@ class CompileView implements AppViewBuilder {
       }
     }
 
-    for (List<String> entry in templateVariableBindings) {
-      nameResolver.addLocal(entry[1],
-          new o.ReadClassMemberExpr('locals').key(o.literal(entry[0])));
+    for (var variable in templateVariables) {
+      nameResolver.addLocal(variable.name,
+          new o.ReadClassMemberExpr('locals').key(o.literal(variable.value)));
     }
     if (declarationElement.parent != null) {
       declarationElement.setEmbeddedView(this);

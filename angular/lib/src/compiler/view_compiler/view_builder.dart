@@ -476,9 +476,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     var nodeIndex = this.view.nodes.length;
     NodeReference nodeReference =
         view.createViewContainerAnchor(parent, nodeIndex, ast);
-    var templateVariableBindings = ast.variables
-        .map((VariableAst varAst) => [varAst.value, varAst.name])
-        .toList();
     var directives =
         ast.directives.map((directiveAst) => directiveAst.directive).toList();
     var compileElement = new CompileElement(
@@ -504,7 +501,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         o.NULL_EXPR,
         view.viewIndex + nestedViewCount,
         compileElement,
-        templateVariableBindings,
+        ast.variables,
         view.deferredModules);
 
     // Create a visitor for embedded view and visit all nodes.
@@ -682,8 +679,8 @@ o.ClassStmt createViewClass(
 
 o.ClassMethod _createViewClassConstructor(
     CompileView view, o.Expression nodeDebugInfosVar) {
-  var emptyTemplateVariableBindings = view.templateVariableBindings
-      .map((List entry) => [entry[0], o.NULL_EXPR])
+  var emptyTemplateVariableBindings = view.templateVariables
+      .map((variable) => [variable.value, o.NULL_EXPR])
       .toList();
   var viewConstructorArgs = [
     new o.FnParam(ViewConstructorVars.parentView.name,
