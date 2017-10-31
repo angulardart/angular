@@ -5,7 +5,7 @@ import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
 import 'constants.dart' show EventHandlerVars;
-import 'expression_converter.dart' show convertCdStatementToIr;
+import 'expression_converter.dart' show convertCdStatementToIr, NameResolver;
 import 'parse_utils.dart';
 
 /// Generates code to listen to a single eventName on a [CompileElement].
@@ -16,6 +16,12 @@ import 'parse_utils.dart';
 /// handlers and then applies logical AND to determine resulting
 /// prevent default value.
 class CompileEventListener {
+  /// Resolves names used in actions of this event listener.
+  ///
+  /// Each event listener needs a scoped copy of its view's [NameResolver] to
+  /// ensure locals are cached only in the methods they're used.
+  final NameResolver _nameResolver;
+
   CompileElement compileElement;
   String eventName;
   CompileMethod _method;
@@ -42,7 +48,8 @@ class CompileEventListener {
     return listener;
   }
 
-  CompileEventListener(this.compileElement, this.eventName, int listenerIndex) {
+  CompileEventListener(this.compileElement, this.eventName, int listenerIndex)
+      : _nameResolver = compileElement.view.nameResolver.scope() {
     _method = new CompileMethod(compileElement.view.genDebugInfo);
     _methodName =
         '_handle_${sanitizeEventName(eventName)}_${compileElement.nodeIndex}_'
@@ -65,7 +72,7 @@ class CompileEventListener {
     _method.resetDebugInfo(compileElement.nodeIndex, hostEvent);
     var context = directiveInstance ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(
-        compileElement.view.nameResolver,
+        _nameResolver,
         context,
         hostEvent.handler,
         this.compileElement.view.component.template.preserveWhitespace);
