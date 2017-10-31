@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('vm')
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';

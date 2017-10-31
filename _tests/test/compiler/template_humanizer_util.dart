@@ -1,6 +1,6 @@
-import "package:angular/src/compiler/template_ast.dart";
+import 'package:angular/src/compiler/template_ast.dart';
 
-import "expression_parser/unparser.dart" show Unparser;
+import 'expression_parser/unparser.dart' show Unparser;
 
 var expressionUnparser = new Unparser();
 

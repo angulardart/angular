@@ -1,7 +1,5 @@
 @Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.compiler.preserve_whitespace_test;
-
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';

@@ -1,6 +1,4 @@
-@TestOn('browser')
-library angular2.test.compiler.shadow_css_test;
-
+@TestOn('vm')
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/shadow_css.dart';
 

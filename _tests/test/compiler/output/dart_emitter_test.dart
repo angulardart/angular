@@ -1,5 +1,4 @@
-library angular2.test.compiler.output.dart_emitter_test;
-
+@TestOn('vm')
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;

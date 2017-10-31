@@ -1,7 +1,6 @@
-library angular2.test.compiler.output.abstract_emitter_test;
-
-import "package:test/test.dart";
-import "package:angular/src/compiler/output/abstract_emitter.dart"
+@TestOn('vm')
+import 'package:test/test.dart';
+import 'package:angular/src/compiler/output/abstract_emitter.dart'
     show escapeSingleQuoteString;
 
 void main() {
