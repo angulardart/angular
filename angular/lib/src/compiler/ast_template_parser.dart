@@ -5,6 +5,7 @@ import 'compile_metadata.dart';
 import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart';
 import 'identifiers.dart';
+import 'provider_parser.dart';
 import 'schema/element_schema_registry.dart';
 import 'selector.dart';
 import 'style_url_resolver.dart';
@@ -29,6 +30,14 @@ class AstTemplateParser implements TemplateParser {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String name) {
+    final parsedAst = _parseTemplate(template);
+    final filteredAst = _filterElements(parsedAst);
+    final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
+    _bindProviders(compMeta, parsedAst, boundAsts);
+    return boundAsts;
+  }
+
+  List<ast.TemplateAst> _parseTemplate(String template) {
     final parsedAst = ast.parse(template,
         // TODO(alorenzen): Use real sourceUrl.
         sourceUrl: '/test#inline',
@@ -37,9 +46,17 @@ class AstTemplateParser implements TemplateParser {
         parseExpressions: false);
     // TODO(alorenzen): Remove once all tests are passing.
     parsedAst.forEach(print);
-    final filter = new _ElementFilter();
-    final filteredAst = filter.visitAll(parsedAst);
-    final visitor = new _Visitor();
+    return parsedAst;
+  }
+
+  List<ast.TemplateAst> _filterElements(List<ast.TemplateAst> parsedAst) =>
+      new _ElementFilter().visitAll(parsedAst);
+
+  List<ng.TemplateAst> _bindDirectives(
+      List<CompileDirectiveMetadata> directives,
+      CompileDirectiveMetadata compMeta,
+      List<ast.TemplateAst> filteredAst) {
+    final visitor = new _BindDirectivesVisitor();
     final context = new _ParseContext.forRoot(new _TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
@@ -49,9 +66,25 @@ class AstTemplateParser implements TemplateParser {
         .map((templateAst) => templateAst.accept(visitor, context))
         .toList();
   }
+
+  void _bindProviders(CompileDirectiveMetadata compMeta,
+      List<ast.TemplateAst> parsedAst, List<ng.TemplateAst> visitedAsts) {
+    var providerViewContext =
+        new ProviderViewContext(compMeta, parsedAst.first.sourceSpan);
+    final providerVisitor = new _ProviderVisitor(providerViewContext);
+    final ProviderElementContext providerContext = new ProviderElementContext(
+        providerViewContext, null, false, [], [], [], null);
+    for (var astNode in visitedAsts) {
+      astNode.visit(providerVisitor, providerContext);
+    }
+  }
 }
 
-class _Visitor
+/// A visitor which binds directives to element nodes.
+///
+/// This visitor also converts from the pkg:angular_ast types to the angular
+/// compiler types.
+class _BindDirectivesVisitor
     implements ast.TemplateAstVisitor<ng.TemplateAst, _ParseContext> {
   /// A count of how many <ng-content> elements have been seen so far.
   ///
@@ -566,4 +599,70 @@ class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
     }
     return false;
   }
+}
+
+/// Visitor which binds providers to element nodes.
+///
+/// These providers are provided by the bound directives on the element or by
+/// parent elements.
+class _ProviderVisitor
+    implements ng.TemplateAstVisitor<Null, ProviderElementContext> {
+  final ProviderViewContext _rootContext;
+
+  _ProviderVisitor(this._rootContext);
+
+  @override
+  visitElement(ng.ElementAst ast, ProviderElementContext context) {
+    var elementContext = new ProviderElementContext(_rootContext, context,
+        false, ast.directives, ast.attrs, ast.references, ast.sourceSpan);
+    for (var child in ast.children) {
+      child.visit(this, elementContext);
+    }
+    elementContext.afterElement();
+    ast.providers.addAll(elementContext.transformProviders);
+  }
+
+  @override
+  visitEmbeddedTemplate(
+      ng.EmbeddedTemplateAst ast, ProviderElementContext context) {
+    var elementContext = new ProviderElementContext(_rootContext, context, true,
+        ast.directives, ast.attrs, ast.references, ast.sourceSpan);
+    for (var child in ast.children) {
+      child.visit(this, elementContext);
+    }
+    elementContext.afterElement();
+    ast.providers.addAll(elementContext.transformProviders);
+  }
+
+  @override
+  visitAttr(ng.AttrAst ast, ProviderElementContext context) {}
+
+  @override
+  visitBoundText(ng.BoundTextAst ast, ProviderElementContext context) {}
+
+  @override
+  visitDirective(ng.DirectiveAst ast, ProviderElementContext context) {}
+
+  @override
+  visitDirectiveProperty(
+      ng.BoundDirectivePropertyAst ast, ProviderElementContext context) {}
+
+  @override
+  visitElementProperty(
+      ng.BoundElementPropertyAst ast, ProviderElementContext context) {}
+
+  @override
+  visitEvent(ng.BoundEventAst ast, ProviderElementContext context) {}
+
+  @override
+  visitNgContent(ng.NgContentAst ast, ProviderElementContext context) {}
+
+  @override
+  visitReference(ng.ReferenceAst ast, ProviderElementContext context) {}
+
+  @override
+  visitText(ng.TextAst ast, ProviderElementContext context) {}
+
+  @override
+  visitVariable(ng.VariableAst ast, ProviderElementContext context) {}
 }
