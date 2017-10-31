@@ -1,17 +1,21 @@
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/transform/common/names.dart'
+    show toTemplateExtension;
 
 import '../compile_metadata.dart'
     show
         CompileDirectiveMetadata,
-        CompilePipeMetadata,
         CompileIdentifierMetadata,
+        CompilePipeMetadata,
+        CompileProviderMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show TemplateAst, ElementAst, VariableAst;
+import '../template_ast.dart'
+    show TemplateAst, ElementAst, VariableAst, ProviderAst, ProviderAstType;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
@@ -21,6 +25,7 @@ import 'constants.dart' show appViewRootElementName;
 import 'view_compiler_utils.dart'
     show
         createDbgElementCall,
+        cachedParentIndexVarName,
         getViewFactoryName,
         injectFromViewParentInjector,
         getParentRenderNode,
@@ -117,6 +122,14 @@ abstract class AppViewBuilder {
       ElementAst ast,
       List<ViewCompileDependency> targetDeps);
 
+  /// Create a view container for a given node reference and index.
+  ///
+  /// isPrivate indicates that the view container is only used for an embedded
+  /// view and is not publicly shared through injection or view query.
+  o.Expression createViewContainer(
+      NodeReference nodeReference, int nodeIndex, bool isPrivate,
+      [int parentNodeIndex]);
+
   /// Creates a field to store a stream subscription to be destroyed.
   void createSubscription(o.Expression streamReference, o.Expression handler,
       {bool isMockLike: false});
@@ -133,6 +146,21 @@ abstract class AppViewBuilder {
   /// Create a QueryList instance to update matches.
   o.Expression createQueryListField(
       CompileQueryMetadata query, String propertyName);
+
+  /// Creates a provider as a field or local expression.
+  o.Expression createProvider(
+      String propName,
+      CompileDirectiveMetadata directiveMetadata,
+      ProviderAst provider,
+      List<o.Expression> providerValueExpressions,
+      bool isMulti,
+      bool isEager,
+      CompileElement compileElement,
+      {bool forceDynamic: false});
+
+  /// Calls function directive on view startup.
+  void callFunctionalDirective(
+      CompileProviderMetadata provider, List<o.Expression> parameters);
 
   /// Creates a pipe and stores reference expression in fieldName.
   void createPipeInstance(String pipeFieldName, CompilePipeMetadata pipeMeta);
@@ -423,6 +451,36 @@ class CompileView implements AppViewBuilder {
   }
 
   @override
+  o.Expression createViewContainer(
+      NodeReference nodeReference, int nodeIndex, bool isPrivate,
+      [int parentNodeIndex]) {
+    o.Expression renderNode = nodeReference.toReadExpr();
+    var fieldName = '_appEl_$nodeIndex';
+    // Create instance field for app element.
+    nameResolver.addField(new o.ClassField(fieldName,
+        outputType: o.importType(Identifiers.ViewContainer),
+        modifiers: [o.StmtModifier.Private]));
+
+    // Write code to create an instance of ViewContainer.
+    // Example:
+    //     this._appEl_2 = new import7.ViewContainer(2,0,this,this._anchor_2);
+    var statement = new o.WriteClassMemberExpr(
+        fieldName,
+        o.importExpr(Identifiers.ViewContainer).instantiate([
+          o.literal(nodeIndex),
+          o.literal(parentNodeIndex),
+          o.THIS_EXPR,
+          renderNode
+        ])).toStmt();
+    createMethod.addStmt(statement);
+    var appViewContainer = new o.ReadClassMemberExpr(fieldName);
+    if (!isPrivate) {
+      viewContainers.add(appViewContainer);
+    }
+    return appViewContainer;
+  }
+
+  @override
   void createSubscription(o.Expression streamReference, o.Expression handler,
       {bool isMockLike: false}) {
     final subscription = o.variable('subscription_${subscriptions.length}');
@@ -466,6 +524,143 @@ class CompileView implements AppViewBuilder {
             propertyName, o.importExpr(Identifiers.QueryList).instantiate([]))
         .toStmt());
     return new o.ReadClassMemberExpr(propertyName);
+  }
+
+  /// Creates a class field and assigns the resolvedProviderValueExpr.
+  ///
+  /// Eager Example:
+  ///   _TemplateRef_9_4 =
+  ///       new TemplateRef(_appEl_9,viewFactory_SampleComponent7);
+  ///
+  /// Lazy:
+  ///
+  /// TemplateRef _TemplateRef_9_4;
+  ///
+  @override
+  o.Expression createProvider(
+      String propName,
+      CompileDirectiveMetadata directiveMetadata,
+      ProviderAst provider,
+      List<o.Expression> providerValueExpressions,
+      bool isMulti,
+      bool isEager,
+      CompileElement compileElement,
+      {bool forceDynamic: false}) {
+    var resolvedProviderValueExpr;
+    var type;
+    if (isMulti) {
+      resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
+      type = new o.ArrayType(provider.multiProviderType != null
+          ? o.importType(provider.multiProviderType)
+          : o.DYNAMIC_TYPE);
+    } else {
+      resolvedProviderValueExpr = providerValueExpressions[0];
+      type = providerValueExpressions[0].type;
+    }
+
+    type ??= o.DYNAMIC_TYPE;
+
+    bool providerHasChangeDetector =
+        provider.providerType == ProviderAstType.Directive &&
+            directiveMetadata != null &&
+            directiveMetadata.requiresDirectiveChangeDetector;
+
+    CompileIdentifierMetadata changeDetectorType;
+    if (providerHasChangeDetector) {
+      changeDetectorType = new CompileIdentifierMetadata(
+          name: directiveMetadata.identifier.name + 'NgCd',
+          moduleUrl:
+              toTemplateExtension(directiveMetadata.identifier.moduleUrl));
+    }
+
+    if (isEager) {
+      // Check if we need to reach this directive or component beyond the
+      // contents of the build() function. Otherwise allocate locally.
+      if (compileElement.publishesTemplateRef ||
+          compileElement.hasTemplateRefQuery ||
+          provider.dynamicallyReachable) {
+        if (providerHasChangeDetector) {
+          nameResolver.addField(new o.ClassField(propName,
+              outputType: o.importType(changeDetectorType),
+              modifiers: const [o.StmtModifier.Private]));
+          createMethod.addStmt(new o.WriteClassMemberExpr(
+              propName,
+              o
+                  .importExpr(changeDetectorType)
+                  .instantiate([resolvedProviderValueExpr])).toStmt());
+          return new o.ReadPropExpr(
+              new o.ReadClassMemberExpr(
+                  propName, o.importType(changeDetectorType)),
+              'instance',
+              outputType: forceDynamic ? o.DYNAMIC_TYPE : type);
+        } else {
+          nameResolver.addField(new o.ClassField(propName,
+              outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
+              modifiers: const [o.StmtModifier.Private]));
+          createMethod.addStmt(
+              new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
+                  .toStmt());
+        }
+      } else {
+        // Since provider is not dynamically reachable and we only need
+        // the provider locally in build, create a local var.
+        var localVar =
+            o.variable(propName, forceDynamic ? o.DYNAMIC_TYPE : type);
+        createMethod
+            .addStmt(localVar.set(resolvedProviderValueExpr).toDeclStmt());
+        return localVar;
+      }
+    } else {
+      // We don't have to eagerly initialize this object. Add an uninitialized
+      // class field and provide a getter to construct the provider on demand.
+      var internalField = '_$propName';
+      nameResolver.addField(new o.ClassField(internalField,
+          outputType: forceDynamic
+              ? o.DYNAMIC_TYPE
+              : (providerHasChangeDetector
+                  ? o.importType(changeDetectorType)
+                  : type),
+          modifiers: const [o.StmtModifier.Private]));
+      var getter = new CompileMethod(genDebugInfo);
+      getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
+
+      if (providerHasChangeDetector) {
+        resolvedProviderValueExpr = o
+            .importExpr(changeDetectorType)
+            .instantiate([resolvedProviderValueExpr]);
+      }
+      // Note: Equals is important for JS so that it also checks the undefined case!
+      var statements = <o.Statement>[
+        new o.WriteClassMemberExpr(internalField, resolvedProviderValueExpr)
+            .toStmt()
+      ];
+      var readVars = o.findReadVarNames(statements);
+      if (readVars.contains(cachedParentIndexVarName)) {
+        statements.insert(
+            0,
+            new o.DeclareVarStmt(cachedParentIndexVarName,
+                new o.ReadClassMemberExpr('viewData').prop('parentIndex')));
+      }
+      getter.addStmt(new o.IfStmt(
+          new o.ReadClassMemberExpr(internalField).isBlank(), statements));
+      getter.addStmt(
+          new o.ReturnStatement(new o.ReadClassMemberExpr(internalField)));
+      getters.add(new o.ClassGetter(
+          propName,
+          getter.finish(),
+          forceDynamic
+              ? o.DYNAMIC_TYPE
+              : (providerHasChangeDetector ? changeDetectorType : type)));
+    }
+    return new o.ReadClassMemberExpr(propName);
+  }
+
+  @override
+  void callFunctionalDirective(
+      CompileProviderMetadata provider, List<o.Expression> parameters) {
+    // Add functional directive invocation.
+    final invokeExpr = o.importExpr(provider.useClass).callFn(parameters);
+    createMethod.addStmt(invokeExpr.toStmt());
   }
 
   @override
