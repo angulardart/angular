@@ -2,7 +2,6 @@ language: dart
 
 dart:
   - dev
-  - stable
 
 env:
   - PKG=_goldens
