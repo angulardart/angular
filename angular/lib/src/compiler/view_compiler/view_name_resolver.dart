@@ -6,44 +6,59 @@ import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart';
 import "view_compiler_utils.dart" show getPropertyInView;
 
+/// State shared amongst all name resolvers of a view, regardless of scope.
+class _ViewState {
+  final List<o.ClassField> fields = [];
+  final Map<String, o.Expression> locals = {};
+  final CompileView view;
+
+  /// Used to generate unique field names for literal list bindings.
+  int literalListCount = 0;
+
+  /// Used to generate unique field names for literal map bindings.
+  int literalMapCount = 0;
+
+  /// Used to generate unique field names for property bindings.
+  int bindingCount = 0;
+
+  _ViewState(this.view);
+}
+
 /// Name resolver for binding expressions that resolves locals and pipes.
 ///
 /// Provides unique names for literal arrays and maps for the view.
 class ViewNameResolver implements NameResolver {
-  final CompileView view;
-  final _locals = new Map<String, o.Expression>();
-  final List<o.ClassField> _fields = [];
+  final _ViewState _state;
 
-  var literalArrayCount = 0;
-  var literalMapCount = 0;
-  // Used to generate unique index to use in bound class fields.
-  int _bindingIndexCounter = 0;
+  /// Creates a name resolver for [view].
+  ViewNameResolver(CompileView view) : _state = new _ViewState(view);
 
-  ViewNameResolver(this.view);
+  /// Creates a scoped name resolver with shared [_state].
+  ViewNameResolver._scope(this._state);
 
   void addLocal(String name, o.Expression e) {
-    _locals[name] = e;
+    _state.locals[name] = e;
   }
 
   void addField(o.ClassField field) {
-    _fields.add(field);
+    _state.fields.add(field);
   }
 
-  List<o.ClassField> get fields => _fields;
+  List<o.ClassField> get fields => _state.fields;
 
   @override
   o.Expression getLocal(String name) {
     if (name == EventHandlerVars.event.name) {
       return EventHandlerVars.event;
     }
-    CompileView currView = view;
-    var result = _locals[name];
+    CompileView currView = _state.view;
+    var result = _state.locals[name];
     while (result == null && currView.declarationElement.view != null) {
       currView = currView.declarationElement.view;
-      result = currView.nameResolver._locals[name];
+      result = currView.nameResolver._state.locals[name];
     }
     if (result != null) {
-      return getPropertyInView(result, view, currView);
+      return getPropertyInView(result, _state.view, currView);
     } else {
       return null;
     }
@@ -52,15 +67,16 @@ class ViewNameResolver implements NameResolver {
   @override
   o.Expression callPipe(
       String name, o.Expression input, List<o.Expression> args) {
-    return CompilePipe.createCallPipeExpression(view, name, input, args);
+    return CompilePipe.createCallPipeExpression(_state.view, name, input, args);
   }
 
   @override
-  o.Expression createLiteralArray(List<o.Expression> values) {
+  o.Expression createLiteralList(List<o.Expression> values) {
     if (identical(values.length, 0)) {
       return o.importExpr(Identifiers.EMPTY_ARRAY);
     }
-    var proxyExpr = new o.ReadClassMemberExpr('_arr_${literalArrayCount++}');
+    var proxyExpr =
+        new o.ReadClassMemberExpr('_arr_${_state.literalListCount++}');
     List<o.FnParam> proxyParams = [];
     List<o.Expression> proxyReturnEntries = [];
     for (var i = 0; i < values.length; i++) {
@@ -68,7 +84,7 @@ class ViewNameResolver implements NameResolver {
       proxyParams.add(new o.FnParam(paramName));
       proxyReturnEntries.add(o.variable(paramName));
     }
-    view.createPureProxy(
+    _state.view.createPureProxy(
         o.fn(
             proxyParams,
             [new o.ReturnStatement(o.literalArr(proxyReturnEntries))],
@@ -84,7 +100,8 @@ class ViewNameResolver implements NameResolver {
     if (identical(entries.length, 0)) {
       return o.importExpr(Identifiers.EMPTY_MAP);
     }
-    var proxyExpr = new o.ReadClassMemberExpr('_map_${this.literalMapCount++}');
+    var proxyExpr =
+        new o.ReadClassMemberExpr('_map_${_state.literalMapCount++}');
     List<o.FnParam> proxyParams = [];
     List<List<dynamic /* String | o . Expression */ >> proxyReturnEntries = [];
     List<o.Expression> values = [];
@@ -94,7 +111,7 @@ class ViewNameResolver implements NameResolver {
       proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
       values.add((entries[i][1] as o.Expression));
     }
-    view.createPureProxy(
+    _state.view.createPureProxy(
         o.fn(
             proxyParams,
             [new o.ReturnStatement(o.literalMap(proxyReturnEntries))],
@@ -105,5 +122,8 @@ class ViewNameResolver implements NameResolver {
   }
 
   @override
-  int createUniqueBindIndex() => _bindingIndexCounter++;
+  int createUniqueBindIndex() => _state.bindingCount++;
+
+  @override
+  ViewNameResolver scope() => new ViewNameResolver._scope(_state);
 }

@@ -11,10 +11,13 @@ abstract class NameResolver {
   o.Expression callPipe(
       String name, o.Expression input, List<o.Expression> args);
   o.Expression getLocal(String name);
-  o.Expression createLiteralArray(List<o.Expression> values);
+  o.Expression createLiteralList(List<o.Expression> values);
   o.Expression createLiteralMap(
       List<List<dynamic /* String | o . Expression */ >> values);
   int createUniqueBindIndex();
+
+  /// Creates a name resolver with shared state for use in a new method scope.
+  NameResolver scope();
 }
 
 o.Expression convertCdExpressionToIr(
@@ -271,7 +274,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
-        _nameResolver.createLiteralArray(
+        _nameResolver.createLiteralList(
             visitAll(ast.expressions as List<compiler_ast.AST>, mode)
                 as List<o.Expression>));
   }
