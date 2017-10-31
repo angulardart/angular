@@ -5,6 +5,7 @@ import 'package:angular_ast/src/expression/micro.dart';
 import 'compile_metadata.dart';
 import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart';
+import 'html_tags.dart';
 import 'identifiers.dart';
 import 'provider_parser.dart';
 import 'schema/element_schema_registry.dart';
@@ -32,7 +33,8 @@ class AstTemplateParser implements TemplateParser {
       List<CompilePipeMetadata> pipes,
       String name) {
     final parsedAst = _parseTemplate(template);
-    final desugaredAst = _inlineTemplates(parsedAst);
+    final implicNamespace = _applyImplicitNamespace(parsedAst);
+    final desugaredAst = _inlineTemplates(implicNamespace);
     final filteredAst = _filterElements(desugaredAst);
     final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
     _bindProviders(compMeta, desugaredAst, boundAsts);
@@ -89,6 +91,12 @@ class AstTemplateParser implements TemplateParser {
       astNode.visit(providerVisitor, providerContext);
     }
   }
+
+  List<ast.TemplateAst> _applyImplicitNamespace(
+          List<ast.TemplateAst> parsedAst) =>
+      parsedAst
+          .map((asNode) => asNode.accept(new _NamespaceVisitor()))
+          .toList();
 }
 
 /// A visitor which binds directives to element nodes.
@@ -757,4 +765,27 @@ class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
     if (value.substring(0, spaceIndex) == 'let') return value;
     return value.substring(spaceIndex + 1);
   }
+}
+
+/// Visitor that applies default namespaces to elements.
+// TODO(alorenzen): Refactor this into pkg:angular_ast.
+class _NamespaceVisitor extends ast.IdentityTemplateAstVisitor<String> {
+  @override
+  visitElement(ast.ElementAst element, [String parentPrefix]) {
+    var prefix = _getNamespace(element.name) ?? parentPrefix;
+    var children =
+        element.childNodes.map((child) => child.accept(this, prefix)).toList();
+    return new ast.ElementAst.from(
+        element, mergeNsAndName(prefix, element.name), element.closeComplement,
+        attributes: element.attributes,
+        childNodes: children,
+        events: element.events,
+        properties: element.properties,
+        references: element.references,
+        bananas: element.bananas,
+        stars: element.stars);
+  }
+
+  String _getNamespace(String name) =>
+      getHtmlTagDefinition(name).implicitNamespacePrefix;
 }
