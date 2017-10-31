@@ -12,13 +12,11 @@ import '../identifiers.dart' show Identifiers, identifierToken;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
     show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst, ElementAst;
-import 'compile_method.dart' show CompileMethod;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'compile_view.dart' show CompileView, NodeReference;
 import 'constants.dart' show InjectMethodVars;
 import 'view_compiler_utils.dart'
     show
-        cachedParentIndexVarName,
         createDiTokenExpression,
         convertValueToOutputAst,
         injectFromViewParentInjector,
@@ -124,42 +122,16 @@ class CompileElement extends CompileNode {
     _instances.add(Identifiers.InjectorToken, readInjectorExpr);
 
     if (hasViewContainer || hasEmbeddedView) {
-      _createViewContainer();
+      appViewContainer = view.createViewContainer(renderNode, nodeIndex,
+          !hasViewContainer, isRootElement ? null : parent.nodeIndex);
+      _instances.add(
+          identifierToken(Identifiers.ViewContainer), appViewContainer);
     }
   }
 
   CompileElement.root()
       : this(null, null, null, new NodeReference.appViewRoot(), null, null, [],
             [], false, false, [], null);
-
-  void _createViewContainer() {
-    var fieldName = '_appEl_$nodeIndex';
-    var parentNodeIndex = isRootElement ? null : parent.nodeIndex;
-
-    // Create instance field for app element.
-    view.nameResolver.addField(new o.ClassField(fieldName,
-        outputType: o.importType(Identifiers.ViewContainer),
-        modifiers: [o.StmtModifier.Private]));
-
-    // Write code to create an instance of ViewContainer.
-    // Example:
-    //     this._appEl_2 = new import7.ViewContainer(2,0,this,this._anchor_2);
-    var statement = new o.WriteClassMemberExpr(
-        fieldName,
-        o.importExpr(Identifiers.ViewContainer).instantiate([
-          o.literal(nodeIndex),
-          o.literal(parentNodeIndex),
-          o.THIS_EXPR,
-          renderNode.toReadExpr()
-        ])).toStmt();
-    view.createMethod.addStmt(statement);
-    appViewContainer = new o.ReadClassMemberExpr(fieldName);
-    _instances.add(
-        identifierToken(Identifiers.ViewContainer), appViewContainer);
-    if (hasViewContainer) {
-      view.viewContainers.add(appViewContainer);
-    }
-  }
 
   set componentView(o.Expression componentViewExpr) {
     _compViewExpr = componentViewExpr;
@@ -174,6 +146,13 @@ class CompileElement extends CompileNode {
   o.Expression get componentView => _compViewExpr;
 
   void setEmbeddedView(CompileView view) {
+    if (appViewContainer == null) {
+      throw new StateError('Expecting appView container to host view');
+    }
+    if (view.viewFactory == null) {
+      throw new StateError('Expecting viewFactory initialization before '
+          'embedding view');
+    }
     embeddedView = view;
     if (view != null) {
       var createTemplateRefExpr = o
@@ -359,7 +338,7 @@ class CompileElement extends CompileNode {
         // Create a new field property for this provider.
         var propName =
             '_${resolvedProvider.token.name}_${nodeIndex}_${_instances.size}';
-        var instance = createProviderProperty(
+        var instance = view.createProvider(
             propName,
             directiveMetadata,
             resolvedProvider,
@@ -386,8 +365,7 @@ class CompileElement extends CompileNode {
           parameters.add(_getDependency(resolvedProvider.providerType, dep));
         }
         // Add functional directive invocation.
-        final invokeExpr = o.importExpr(provider.useClass).callFn(parameters);
-        view.createMethod.addStmt(invokeExpr.toStmt());
+        view.callFunctionalDirective(provider, parameters);
         continue;
       }
 
@@ -629,132 +607,6 @@ o.Statement _createInjectInternalCondition(
 
   return new o.IfStmt(tokenCondition.and(indexCondition),
       [new o.ReturnStatement(providerExpr)]);
-}
-
-/// Creates a class field and assigns the resolvedProviderValueExpr.
-///
-/// Eager Example:
-///   _TemplateRef_9_4 = new TemplateRef(_appEl_9,viewFactory_SampleComponent7);
-///
-/// Lazy:
-///
-/// TemplateRef _TemplateRef_9_4;
-///
-o.Expression createProviderProperty(
-    String propName,
-    CompileDirectiveMetadata directiveMetadata,
-    ProviderAst provider,
-    List<o.Expression> providerValueExpressions,
-    bool isMulti,
-    bool isEager,
-    CompileElement compileElement,
-    {bool forceDynamic: false}) {
-  var view = compileElement.view;
-  var resolvedProviderValueExpr;
-  var type;
-  if (isMulti) {
-    resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
-    type = new o.ArrayType(provider.multiProviderType != null
-        ? o.importType(provider.multiProviderType)
-        : o.DYNAMIC_TYPE);
-  } else {
-    resolvedProviderValueExpr = providerValueExpressions[0];
-    type = providerValueExpressions[0].type;
-  }
-
-  type ??= o.DYNAMIC_TYPE;
-
-  bool providerHasChangeDetector =
-      provider.providerType == ProviderAstType.Directive &&
-          directiveMetadata != null &&
-          directiveMetadata.requiresDirectiveChangeDetector;
-
-  CompileIdentifierMetadata changeDetectorType;
-  if (providerHasChangeDetector) {
-    changeDetectorType = new CompileIdentifierMetadata(
-        name: directiveMetadata.identifier.name + 'NgCd',
-        moduleUrl: toTemplateExtension(directiveMetadata.identifier.moduleUrl));
-  }
-
-  if (isEager) {
-    // Check if we need to reach this directive or component beyond the
-    // contents of the build() function. Otherwise allocate locally.
-    if (compileElement.publishesTemplateRef ||
-        compileElement.hasTemplateRefQuery ||
-        provider.dynamicallyReachable) {
-      if (providerHasChangeDetector) {
-        view.nameResolver.addField(new o.ClassField(propName,
-            outputType: o.importType(changeDetectorType),
-            modifiers: const [o.StmtModifier.Private]));
-        view.createMethod.addStmt(new o.WriteClassMemberExpr(
-            propName,
-            o
-                .importExpr(changeDetectorType)
-                .instantiate([resolvedProviderValueExpr])).toStmt());
-        return new o.ReadPropExpr(
-            new o.ReadClassMemberExpr(
-                propName, o.importType(changeDetectorType)),
-            'instance',
-            outputType: forceDynamic ? o.DYNAMIC_TYPE : type);
-      } else {
-        view.nameResolver.addField(new o.ClassField(propName,
-            outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
-            modifiers: const [o.StmtModifier.Private]));
-        view.createMethod.addStmt(
-            new o.WriteClassMemberExpr(propName, resolvedProviderValueExpr)
-                .toStmt());
-      }
-    } else {
-      // Since provider is not dynamically reachable and we only need
-      // the provider locally in build, create a local var.
-      var localVar = o.variable(propName, forceDynamic ? o.DYNAMIC_TYPE : type);
-      view.createMethod
-          .addStmt(localVar.set(resolvedProviderValueExpr).toDeclStmt());
-      return localVar;
-    }
-  } else {
-    // We don't have to eagerly initialize this object. Add an uninitialized
-    // class field and provide a getter to construct the provider on demand.
-    var internalField = '_$propName';
-    view.nameResolver.addField(new o.ClassField(internalField,
-        outputType: forceDynamic
-            ? o.DYNAMIC_TYPE
-            : (providerHasChangeDetector
-                ? o.importType(changeDetectorType)
-                : type),
-        modifiers: const [o.StmtModifier.Private]));
-    var getter = new CompileMethod(view.genDebugInfo);
-    getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
-
-    if (providerHasChangeDetector) {
-      resolvedProviderValueExpr = o
-          .importExpr(changeDetectorType)
-          .instantiate([resolvedProviderValueExpr]);
-    }
-    // Note: Equals is important for JS so that it also checks the undefined case!
-    var statements = <o.Statement>[
-      new o.WriteClassMemberExpr(internalField, resolvedProviderValueExpr)
-          .toStmt()
-    ];
-    var readVars = o.findReadVarNames(statements);
-    if (readVars.contains(cachedParentIndexVarName)) {
-      statements.insert(
-          0,
-          new o.DeclareVarStmt(cachedParentIndexVarName,
-              new o.ReadClassMemberExpr('viewData').prop('parentIndex')));
-    }
-    getter.addStmt(new o.IfStmt(
-        new o.ReadClassMemberExpr(internalField).isBlank(), statements));
-    getter.addStmt(
-        new o.ReturnStatement(new o.ReadClassMemberExpr(internalField)));
-    view.getters.add(new o.ClassGetter(
-        propName,
-        getter.finish(),
-        forceDynamic
-            ? o.DYNAMIC_TYPE
-            : (providerHasChangeDetector ? changeDetectorType : type)));
-  }
-  return new o.ReadClassMemberExpr(propName);
 }
 
 class _QueryWithRead {
