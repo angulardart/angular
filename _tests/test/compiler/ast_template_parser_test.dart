@@ -627,7 +627,8 @@ void main() {
 
         test('should provide a component', () {
           var comp = createDir('my-comp');
-          ElementAst elAst = parse('<my-comp>', [comp])[0] as ElementAst;
+          ElementAst elAst =
+              parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providerType, ProviderAstType.Component);
           expect(elAst.providers[0].providers[0].useClass, comp.type);
@@ -635,7 +636,8 @@ void main() {
 
         test('should provide a directive', () {
           var dirA = createDir('[dirA]');
-          ElementAst elAst = (parse('<div dirA>', [dirA])[0] as ElementAst);
+          ElementAst elAst =
+              (parse('<div dirA></div>', [dirA])[0] as ElementAst);
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providerType, ProviderAstType.Directive);
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
@@ -644,7 +646,8 @@ void main() {
         test('should use the public providers of a directive', () {
           var provider = createProvider('service');
           var dirA = createDir('[dirA]', providers: [provider]);
-          ElementAst elAst = (parse('<div dirA>', [dirA])[0] as ElementAst);
+          ElementAst elAst =
+              (parse('<div dirA></div>', [dirA])[0] as ElementAst);
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PublicService);
@@ -654,7 +657,8 @@ void main() {
         test('should use the private providers of a component', () {
           var provider = createProvider('service');
           var comp = createDir('my-comp', viewProviders: [provider]);
-          ElementAst elAst = (parse('<my-comp>', [comp])[0] as ElementAst);
+          ElementAst elAst =
+              (parse('<my-comp></my-comp>', [comp])[0] as ElementAst);
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PrivateService);
@@ -668,7 +672,7 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider0, provider1]);
           var dirB = createDir('[dirB]', providers: [provider2]);
           ElementAst elAst =
-              (parse('<div dirA dirB>', [dirA, dirB])[0] as ElementAst);
+              (parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst);
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[2].providers,
               orderedEquals([provider0, provider2]));
@@ -682,7 +686,7 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider1, provider2]);
           var dirB = createDir('[dirB]', providers: [provider3]);
           ElementAst elAst =
-              (parse('<div dirA dirB>', [dirA, dirB])[0] as ElementAst);
+              (parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst);
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[2].providers, orderedEquals([provider3]));
           expect(elAst.providers[3].providers, orderedEquals([provider2]));
@@ -693,8 +697,8 @@ void main() {
           var dirProvider = createProvider('service0');
           var comp = createDir('my-comp', providers: [compProvider]);
           var dirA = createDir('[dirA]', providers: [dirProvider]);
-          ElementAst elAst =
-              (parse('<my-comp dirA>', [dirA, comp])[0] as ElementAst);
+          ElementAst elAst = (parse('<my-comp dirA></my-comp>', [dirA, comp])[0]
+              as ElementAst);
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
         });
@@ -704,8 +708,8 @@ void main() {
           var dirProvider = createProvider('service0');
           var comp = createDir('my-comp', viewProviders: [viewProvider]);
           var dirA = createDir('[dirA]', providers: [dirProvider]);
-          ElementAst elAst =
-              (parse('<my-comp dirA>', [dirA, comp])[0] as ElementAst);
+          ElementAst elAst = (parse('<my-comp dirA></my-comp>', [dirA, comp])[0]
+              as ElementAst);
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
         });
@@ -713,7 +717,8 @@ void main() {
         test('should overwrite directives by providers', () {
           var dirProvider = createProvider('type:my-comp');
           var comp = createDir('my-comp', providers: [dirProvider]);
-          ElementAst elAst = (parse('<my-comp>', [comp])[0] as ElementAst);
+          ElementAst elAst =
+              (parse('<my-comp></my-comp>', [comp])[0] as ElementAst);
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providers, orderedEquals([dirProvider]));
         });
@@ -724,12 +729,12 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider0]);
           var dirB = createDir('[dirB]', providers: [provider1]);
           expect(
-              () => parse('<div dirA dirB>', [dirA, dirB]),
+              () => parse('<div dirA dirB></div>', [dirA, dirB]),
               throwsWith('Template parse errors:\n'
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Mixing multi and non multi provider is not possible for token service0\n'
                   '<div dirA dirB>\n'
                   '^^^^^^^^^^^^^^^'));
-        });
+        }, skip: 'Don\'t yet handle errors.');
 
         test('should sort providers by their DI order', () {
           var provider0 = createProvider('service0', deps: ['type:[dir2]']);
@@ -737,7 +742,7 @@ void main() {
           var dir2 = createDir('[dir2]', deps: ['service1']);
           var comp = createDir('my-comp', providers: [provider0, provider1]);
           ElementAst elAst =
-              parse('<my-comp dir2>', [comp, dir2])[0] as ElementAst;
+              parse('<my-comp dir2></my-comp>', [comp, dir2])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[0].providers[0].useClass, comp.type);
           expect(elAst.providers[1].providers, orderedEquals([provider1]));
@@ -750,15 +755,14 @@ void main() {
           var dir1 = createDir('[dir1]', deps: ['type:[dir0]']);
           var dir2 = createDir('[dir2]', deps: ['type:[dir1]']);
           var comp = createDir('my-comp');
-          ElementAst elAst =
-              parse('<my-comp dir2 dir0 dir1>', [comp, dir2, dir0, dir1])[0]
-                  as ElementAst;
+          ElementAst elAst = parse('<my-comp dir2 dir0 dir1></my-comp>',
+              [comp, dir2, dir0, dir1])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.directives[0].directive, comp);
           expect(elAst.directives[1].directive, dir0);
           expect(elAst.directives[2].directive, dir1);
           expect(elAst.directives[3].directive, dir2);
-        });
+        }, skip: 'Don\'t yet sort properly.');
 
         test('should mark directives and dependencies of directives as eager',
             () {
@@ -766,7 +770,7 @@ void main() {
           var provider1 = createProvider('service1');
           var dirA = createDir('[dirA]',
               providers: [provider0, provider1], deps: ['service0']);
-          ElementAst elAst = parse('<div dirA>', [dirA])[0] as ElementAst;
+          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers, orderedEquals([provider0]));
           expect(elAst.providers[0].eager, true);
@@ -832,7 +836,7 @@ void main() {
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: No provider for provider0\n'
                   '<div dirA>\n'
                   '^^^^^^^^^^'));
-        });
+        }, skip: 'Don\'t yet handle errors.');
 
         test('should change missing @Self() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:self:provider0']);
@@ -850,7 +854,7 @@ void main() {
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: No provider for provider0\n'
                   '<div dirA>\n'
                   '^^^^^^^^^^'));
-        });
+        }, skip: 'Don\'t yet handle errors.');
 
         test('should change missing @Host() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:host:provider0']);
@@ -869,7 +873,7 @@ void main() {
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: '
                   'Cannot instantiate cyclic dependency! [cycleDirective]\n'
                   '<div cycleDirective>\n'));
-        });
+        }, skip: 'Don\'t yet handle errors.');
 
         test('should report missing @Host() deps in providers as errors', () {
           var needsHost = createDir('[needsHost]', deps: ['host:service']);
@@ -879,7 +883,7 @@ void main() {
                   'line 1, column 1 of TestComp: '
                   'ParseErrorLevel.FATAL: No provider for service\n'
                   '<div needsHost>\n'));
-        });
+        }, skip: 'Don\'t yet handle errors.');
 
         test('should report missing @Self() deps as errors', () {
           var needsDirectiveFromSelf = createDir('[needsDirectiveFromSelf]',
@@ -895,8 +899,8 @@ void main() {
                   'line 1, column 22 of TestComp: '
                   'ParseErrorLevel.FATAL: No provider for [simpleDirective]\n'
                   '<div needsDirectiveFromSelf>\n'));
-        });
-      }, skip: 'Don\'t yet handle proviers');
+        }, skip: 'Don\'t yet handle errors.');
+      });
 
       group('references', () {
         test(
