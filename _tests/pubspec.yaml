@@ -2,7 +2,7 @@ name: _tests
 author: Dart Team <web@dartlang.org>
 description: Tests for AngularDart.
 environment:
-  sdk: '>=1.24.0 <2.0.0'
+  sdk: '>=2.0.0-dev.3.0 <2.0.0'
 dev_dependencies:
   angular: '^4.0.0'
   angular_forms: '^1.0.0'
