@@ -113,7 +113,7 @@ void main() {
           [ElementAst, '@svg:svg'],
           [NgContentAst]
         ]);
-      }, skip: 'Doesn\'t namespace yet.');
+      });
 
       test('should parse bound text nodes', () {
         expect(humanizeTplAst(parse('{{a}}', [])), [
@@ -1055,7 +1055,7 @@ void main() {
             [ElementAst, '@svg:svg'],
             [EmbeddedTemplateAst]
           ]);
-        }, skip: 'Don\'t handle namespaces yet.');
+        });
 
         test('should support references via #...', () {
           expect(humanizeTplAst(parse('<template #a></template>', [])), [
