@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
-
+import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/src/type_checker.dart';
+
 import 'expression_parser/ast.dart' as ast;
 
 final stringTypeChecker = new TypeChecker.fromRuntime(String);
@@ -21,6 +22,35 @@ class AnalyzedClass {
     this._classElement, {
     this.isMockLike: false,
   });
+}
+
+/// Returns the [expression] type evaluated within context of [analyzedClass].
+///
+/// Type resolution is only implemented for the following ASTs:
+///
+/// * `MethodCall` with implicit receiver
+/// * `PropertyRead` with implicit receiver
+///
+/// Returns dynamic if [expression] can't be resolved.
+DartType getExpressionType(ast.AST expression, AnalyzedClass analyzedClass) {
+  final classElement = analyzedClass._classElement;
+  final expr = expression is ast.ASTWithSource ? expression.ast : expression;
+  if (expr is ast.PropertyRead) {
+    if (expr.receiver is ast.ImplicitReceiver) {
+      final getterElement = classElement.type.lookUpInheritedGetter(expr.name);
+      if (getterElement != null) {
+        return getterElement.returnType;
+      }
+    }
+  } else if (expr is ast.MethodCall) {
+    if (expr.receiver is ast.ImplicitReceiver) {
+      final methodElement = classElement.type.lookUpInheritedMethod(expr.name);
+      if (methodElement != null) {
+        return methodElement.returnType;
+      }
+    }
+  }
+  return classElement.context.typeProvider.dynamicType;
 }
 
 // TODO(het): Make this work with chained expressions.
