@@ -1,6 +1,4 @@
-@TestOn('browser')
-import 'dart:html';
-
+@TestOn('vm')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/attribute_matcher.dart';
@@ -104,17 +102,7 @@ void main() {
           isTrue);
       expect(matched, [s1[0], 1, s2[0], 2]);
     });
-    test('should select by attr name only once if the value is from the DOM',
-        () {
-      matcher.addSelectables(s1 = CssSelector.parse('[some-decor]'), 1);
-      var elementSelector = new CssSelector();
-      var element = new DivElement();
-      element.attributes['attr'] = '';
-      var empty = element.attributes['attr'];
-      elementSelector.addAttribute('some-decor', '=', empty);
-      matcher.match(elementSelector, selectableCollector);
-      expect(matched, [s1[0], 1]);
-    });
+
     test('should select by attr name case sensitive and value case insensitive',
         () {
       matcher.addSelectables(s1 = CssSelector.parse('[someAttr=someValue]'), 1);

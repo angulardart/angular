@@ -1,5 +1,4 @@
 @TestOn('vm')
-
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';

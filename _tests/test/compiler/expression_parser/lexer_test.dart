@@ -1,4 +1,4 @@
-@TestOn('browser')
+@TestOn('vm')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart'

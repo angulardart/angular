@@ -1,5 +1,4 @@
-library angular2.test.compiler.compile_metadata_test;
-
+@TestOn('vm')
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;

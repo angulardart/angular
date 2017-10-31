@@ -1,9 +1,7 @@
-library angular2.test.compiler.output.output_emitter_util;
-
-import "package:angular/src/compiler/compile_metadata.dart"
+import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
-import "package:angular/src/compiler/compiler_utils.dart" show MODULE_SUFFIX;
-import "package:angular/src/compiler/output/output_ast.dart" as o;
+import 'package:angular/src/compiler/compiler_utils.dart' show MODULE_SUFFIX;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 
 class ExternalClass {
   dynamic data;

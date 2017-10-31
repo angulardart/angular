@@ -1,9 +1,8 @@
-library angular2.test.compiler.style_url_resolver_test;
-
+@TestOn('vm')
 import 'dart:async';
 
 import 'package:test/test.dart';
-import "package:angular/src/compiler/style_url_resolver.dart"
+import 'package:angular/src/compiler/style_url_resolver.dart'
     show extractStyleUrls, isStyleUrlResolvable;
 import 'package:angular_compiler/angular_compiler.dart';
 

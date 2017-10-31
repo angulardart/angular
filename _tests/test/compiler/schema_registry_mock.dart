@@ -1,5 +1,3 @@
-library angular2.test.compiler.schema_registry_mock;
-
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/core/security.dart';
 

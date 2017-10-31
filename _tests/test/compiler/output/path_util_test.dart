@@ -1,6 +1,4 @@
-@TestOn('browser')
-library angular2.test.compiler.output.path_util_test;
-
+@TestOn('vm')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/output/path_util.dart'

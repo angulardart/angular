@@ -1,7 +1,5 @@
-library angular2.test.compiler.html_ast_spec_utils;
-
 import 'package:source_span/source_span.dart';
-import "package:angular/src/compiler/html_ast.dart"
+import 'package:angular/src/compiler/html_ast.dart'
     show
         HtmlAst,
         HtmlAstVisitor,
@@ -10,8 +8,8 @@ import "package:angular/src/compiler/html_ast.dart"
         HtmlTextAst,
         HtmlCommentAst,
         htmlVisitAll;
-import "package:angular/src/compiler/html_parser.dart" show HtmlParseTreeResult;
-import "package:angular/src/facade/exceptions.dart" show BaseException;
+import 'package:angular/src/compiler/html_parser.dart' show HtmlParseTreeResult;
+import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 List<dynamic> humanizeDom(HtmlParseTreeResult parseResult) {
   if (parseResult.errors.length > 0) {

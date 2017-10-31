@@ -1,9 +1,8 @@
-library angular2.test.compiler.schema.dom_element_schema_registry_test;
-
+@TestOn('vm')
 import 'package:test/test.dart';
-import "package:angular/src/compiler/schema/dom_element_schema_registry.dart"
+import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart'
     show DomElementSchemaRegistry;
-import "package:angular/src/core/security.dart";
+import 'package:angular/src/core/security.dart';
 
 void main() {
   group("DOMElementSchema", () {

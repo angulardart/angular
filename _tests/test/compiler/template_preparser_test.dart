@@ -1,3 +1,4 @@
+@TestOn('vm')
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/html_parser.dart' show HtmlParser;
 import 'package:angular/src/compiler/template_preparser.dart'
