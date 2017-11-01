@@ -12,6 +12,7 @@ import 'schema/element_schema_registry.dart';
 import 'selector.dart';
 import 'style_url_resolver.dart';
 import 'template_ast.dart' as ng;
+import 'template_optimize.dart';
 import 'template_parser.dart';
 import 'template_preparser.dart';
 
@@ -38,6 +39,7 @@ class AstTemplateParser implements TemplateParser {
     final filteredAst = _filterElements(desugaredAst);
     final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
     _bindProviders(compMeta, desugaredAst, boundAsts);
+    _optimize(compMeta, boundAsts);
     return boundAsts;
   }
 
@@ -90,6 +92,11 @@ class AstTemplateParser implements TemplateParser {
     for (var astNode in visitedAsts) {
       astNode.visit(providerVisitor, providerContext);
     }
+  }
+
+  void _optimize(CompileDirectiveMetadata compMeta, List<ng.TemplateAst> asts) {
+    final optimizerVisitor = new OptimizeTemplateAstVisitor(compMeta);
+    ng.templateVisitAll(optimizerVisitor, asts);
   }
 
   List<ast.TemplateAst> _applyImplicitNamespace(

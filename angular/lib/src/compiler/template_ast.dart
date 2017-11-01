@@ -10,6 +10,7 @@ import 'compile_metadata.dart'
         CompileTokenMetadata,
         CompileTypeMetadata;
 import 'expression_parser/ast.dart' show AST;
+import 'output/output_ast.dart' show OutputType;
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
 abstract class TemplateAst {
@@ -93,7 +94,7 @@ class BoundEventAst implements TemplateAst {
   HandlerType get handlerType => handlerTypeFromExpression(handler);
 }
 
-/// A reference declaration on an element (e.g. let someName='expression').
+/// A reference declaration on an element (e.g. #someName='expression').
 class ReferenceAst implements TemplateAst {
   final String name;
   final CompileTokenMetadata value;
@@ -105,7 +106,7 @@ class ReferenceAst implements TemplateAst {
       visitor.visitReference(this, context);
 }
 
-/// A variable declaration on a <template> (e.g. var-someName='someLocalName').
+/// A variable declaration on a <template> (e.g. let-someName='someLocalName').
 class VariableAst implements TemplateAst {
   /// A variable's default [value] if unassigned or assigned an empty value.
   static const implicitValue = r'$implicit';
@@ -113,6 +114,13 @@ class VariableAst implements TemplateAst {
   final String name;
   final String value;
   final SourceSpan sourceSpan;
+
+  /// Optional type for optimizing generated code if [value] references a local.
+  ///
+  /// Locals are stored in a dynamic map, thus retain no type annotation. If
+  /// [type] is non-null, it's used to generate a type annotation for the local
+  /// variable declaration.
+  OutputType type;
 
   VariableAst(this.name, String value, this.sourceSpan)
       : value = value != null && value.isNotEmpty ? value : implicitValue;

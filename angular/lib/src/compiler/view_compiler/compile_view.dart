@@ -282,8 +282,11 @@ class CompileView implements AppViewBuilder {
     }
 
     for (var variable in templateVariables) {
-      nameResolver.addLocal(variable.name,
-          new o.ReadClassMemberExpr('locals').key(o.literal(variable.value)));
+      nameResolver.addLocal(
+        variable.name,
+        new o.ReadClassMemberExpr('locals').key(o.literal(variable.value)),
+        variable.type, // NgFor locals are augmented with type information.
+      );
     }
     if (declarationElement.parent != null) {
       declarationElement.setEmbeddedView(this);

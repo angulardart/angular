@@ -153,7 +153,7 @@ class DirectiveCompiler {
 class DirectiveNameResolver extends ViewNameResolver {
   DirectiveNameResolver() : super(null);
 
-  void addLocal(String name, o.Expression e) {
+  void addLocal(String name, o.Expression e, [o.OutputType type]) {
     throw new UnsupportedError('Locals are not supported in directives');
   }
 
