@@ -1,4 +1,14 @@
+## 5.0.0-alpha+1
+
 ### Breaking Changes
+
+*   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
+    `WrappedValue` when the transformed result changes, and instead will rely on
+    regular change detection.
+
+*   Pipes no longer support private types in their `transform` method signature.
+    This method's type is now used to generate a type annotation in the
+    generated code, which can't import private types from another library.
 
 *   Removed the following from the public API:
     *    `APPLICATION_COMMON_PROVIDERS`
@@ -28,20 +38,6 @@ projects.
 
 *   Removed unused `context` parameter from `TemplateRef.createEmbeddedView`.
 
-*   Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
-
-## 5.0.0-alpha+1
-
-### Breaking Changes
-
-*   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
-    `WrappedValue` when the transformed result changes, and instead will rely on
-    regular change detection.
-
-*   Pipes no longer support private types in their `transform` method signature.
-    This method's type is now used to generate a type annotation in the
-    generated code, which can't import private types from another library.
-
 ### Bug fixes
 
 *   Correctly depend on `analyzer: ^0.31.0-alpha.1`.
@@ -49,6 +45,7 @@ projects.
 ### Refactors
 
 *   Use the new generic function syntax, stop using `package:func`.
+*   Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
 
 ## 5.0.0-alpha
 
