@@ -12,8 +12,11 @@ import 'package:angular/src/core/linker/view_ref.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 
 import 'deferred_view.dart';
+import 'deferred_component_test.template.dart' as ng_generated;
 
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   test('should load a @deferred component', () async {

@@ -7,7 +7,11 @@ import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_test/angular_test.dart';
 
+import 'ng_control_repeated_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   // Regression test for https://github.com/dart-lang/angular2/issues/164.

@@ -5,8 +5,12 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
+import 'directive_test.template.dart' as ng_generated;
+
 /// Verifies whether injection through directives/components is correct.
 void main() {
+  ng_generated.initReflector();
+
   bool _isReified<T>() => !identical(T, dynamic);
   final isStrongMode = _isReified<String>();
 

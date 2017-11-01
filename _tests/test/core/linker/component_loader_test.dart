@@ -9,6 +9,8 @@ import 'package:angular_test/angular_test.dart';
 import 'component_loader_test.template.dart' as ng;
 
 void main() {
+  ng.initReflector();
+
   group('ComponentLoader', () {
     tearDown(() => disposeAnyRunningTest());
 

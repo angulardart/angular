@@ -35,8 +35,11 @@ import 'package:angular/src/facade/exception_handler.dart'
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'core_mocks.dart';
+import 'application_ref_test.template.dart' as ng_generated;
 
 void main() {
+  ng_generated.initReflector();
+
   group('bootstrap', () {
     PlatformRef platform;
     Logger errorLogger;

@@ -9,7 +9,11 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
 
+import 'on_push_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   test('should use ChangeDetectorRef to manually request a check', () async {

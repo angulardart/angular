@@ -8,7 +8,11 @@ import 'package:angular/angular.dart';
 import 'exports_statics.dart' as lib;
 import 'exports_statics.dart';
 
+import 'exports_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('exports', () {
     tearDown(disposeAnyRunningTest);
 

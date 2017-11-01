@@ -9,7 +9,11 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
+import 'error_integration_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('Error handling', () {
     tearDown(() => disposeAnyRunningTest());
     test('should preserve Error stack traces thrown from components', () async {
