@@ -7,7 +7,7 @@ import 'expression_converter.dart';
 import "view_compiler_utils.dart" show getPropertyInView;
 
 /// State shared amongst all name resolvers of a view, regardless of scope.
-class _ViewState {
+class _ViewNameResolverState {
   final List<o.ClassField> fields = [];
   final Map<String, o.Expression> locals = {};
   final Map<String, o.OutputType> localTypes = {};
@@ -22,17 +22,18 @@ class _ViewState {
   /// Used to generate unique field names for property bindings.
   int bindingCount = 0;
 
-  _ViewState(this.view);
+  _ViewNameResolverState(this.view);
 }
 
 /// Name resolver for binding expressions that resolves locals and pipes.
 ///
 /// Provides unique names for literal arrays and maps for the view.
 class ViewNameResolver implements NameResolver {
-  final _ViewState _state;
+  final _ViewNameResolverState _state;
 
   /// Creates a name resolver for [view].
-  ViewNameResolver(CompileView view) : _state = new _ViewState(view);
+  ViewNameResolver(CompileView view)
+      : _state = new _ViewNameResolverState(view);
 
   /// Creates a scoped name resolver with shared [_state].
   ViewNameResolver._scope(this._state);
