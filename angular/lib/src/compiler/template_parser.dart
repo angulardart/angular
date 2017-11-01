@@ -46,7 +46,9 @@ import 'template_ast.dart'
         PropertyBindingType,
         DirectiveAst,
         BoundDirectivePropertyAst,
-        VariableAst;
+        VariableAst,
+        templateVisitAll;
+import 'template_optimize.dart';
 import 'template_preparser.dart' show preparseElement;
 
 // Group 1 = 'bind-'
@@ -167,6 +169,8 @@ class TemplateParserImpl implements TemplateParser {
             component.template?.preserveWhitespace ?? false);
         result = htmlVisitAll(
             parseVisitor, htmlAstWithErrors.rootNodes, EMPTY_ELEMENT_CONTEXT);
+        var optimizeVisitor = new OptimizeTemplateAstVisitor(component);
+        templateVisitAll(optimizeVisitor, result);
         errors = new List.from(errors)
           ..addAll(parseVisitor.errors)
           ..addAll(providerViewContext.errors);

@@ -10,6 +10,7 @@ import "view_compiler_utils.dart" show getPropertyInView;
 class _ViewState {
   final List<o.ClassField> fields = [];
   final Map<String, o.Expression> locals = {};
+  final Map<String, o.OutputType> localTypes = {};
   final CompileView view;
 
   /// Used to generate unique field names for literal list bindings.
@@ -36,8 +37,9 @@ class ViewNameResolver implements NameResolver {
   /// Creates a scoped name resolver with shared [_state].
   ViewNameResolver._scope(this._state);
 
-  void addLocal(String name, o.Expression e) {
+  void addLocal(String name, o.Expression e, [o.OutputType type]) {
     _state.locals[name] = e;
+    _state.localTypes[name] = type;
   }
 
   void addField(o.ClassField field) {
