@@ -394,7 +394,7 @@ class CompileElement extends CompileNode {
     }
     for (List<CompileQuery> queries in _queries.values) {
       for (CompileQuery query in queries) {
-        query.generateImmediateUpdate(view.createMethod);
+        view.updateQueryAtStartup(query);
         query.generateDynamicUpdate(view.updateContentQueriesMethod);
       }
     }
