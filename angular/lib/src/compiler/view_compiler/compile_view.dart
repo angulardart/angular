@@ -147,6 +147,9 @@ abstract class AppViewBuilder {
   o.Expression createQueryListField(
       CompileQueryMetadata query, String propertyName);
 
+  /// Initializes query target on component at startup/build time.
+  void updateQueryAtStartup(CompileQuery query);
+
   /// Creates a provider as a field or local expression.
   o.Expression createProvider(
       String propName,
@@ -168,6 +171,9 @@ abstract class AppViewBuilder {
   /// Constructs a pure proxy and stores instance in class member.
   void createPureProxy(
       o.Expression fn, num argCount, o.ReadClassMemberExpr pureProxyProp);
+
+  /// Finally writes build statements into target.
+  void writeBuildStatements(List<o.Statement> targetStatements);
 }
 
 /// Represents data to generate a host, component or embedded AppView.
@@ -529,6 +535,11 @@ class CompileView implements AppViewBuilder {
     return new o.ReadClassMemberExpr(propertyName);
   }
 
+  @override
+  void updateQueryAtStartup(CompileQuery query) {
+    query.generateImmediateUpdate(createMethod);
+  }
+
   /// Creates a class field and assigns the resolvedProviderValueExpr.
   ///
   /// Eager Example:
@@ -708,6 +719,11 @@ class CompileView implements AppViewBuilder {
     createMethod.addStmt(new o.ReadClassMemberExpr(pureProxyProp.name)
         .set(o.importExpr(pureProxyId).callFn([fn]))
         .toStmt());
+  }
+
+  @override
+  void writeBuildStatements(List<o.Statement> targetStatements) {
+    targetStatements.addAll(createMethod.finish());
   }
 }
 

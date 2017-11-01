@@ -878,7 +878,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   }
 
   statements.addAll(parentRenderNodeStmts);
-  statements.addAll(view.createMethod.finish());
+  view.writeBuildStatements(statements);
 
   final rootElements = createFlatArray(view.rootNodesOrViewContainers);
   final initParams = [rootElements];
