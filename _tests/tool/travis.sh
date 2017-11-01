@@ -12,7 +12,8 @@ dartanalyzer --fatal-warnings .
 dartium --version
 pub run test -p vm -x codegen
 pub run angular_test \
+    --experimental-serve-script=tool/build.dart \
     --serve-arg=--port=8080 \
-    --test-arg=--platform=dartium \
+    --test-arg=--platform=chrome \
     --test-arg=--tags=codegen \
     --test-arg=--exclude-tags=known_pub_serve_failure
