@@ -13,6 +13,7 @@ dartium --version
 pub run test -p vm -x codegen
 pub run angular_test \
     --experimental-serve-script=tool/build.dart \
+    --verbose \
     --serve-arg=--port=8080 \
     --test-arg=--platform=chrome \
     --test-arg=--tags=codegen \
