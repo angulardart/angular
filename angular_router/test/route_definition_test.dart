@@ -14,6 +14,8 @@ import 'route_definition_test.template.dart'
     as ng; // ignore: uri_has_not_been_generated
 
 void main() {
+  ng.initReflector();
+
   group('$RouteDefinition', () {
     group(':$ComponentRouteDefinition', () {
       test('should create a route to an `@Component` type', () {

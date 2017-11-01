@@ -25,11 +25,37 @@ dependency_overrides:
   angular_ast:
     path: ../angular_ast
   angular_compiler:
-      path: ../angular_compiler
+    path: ../angular_compiler
   angular_forms:
-      path: ../angular_forms
+    path: ../angular_forms
   angular_test:
-      path: ../angular_test
+    path: ../angular_test
+  angular_router.example:
+    path: example
+  build:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build
+  build_barback:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_barback
+  build_compilers:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_compilers
+  build_runner:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_runner
+  build_test:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_test
+  scratch_space:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: scratch_space
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:

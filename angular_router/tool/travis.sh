@@ -17,6 +17,9 @@ popd
 
 dartium --version
 pub run test -p vm
+# TODO(alorenzen): Refactor the build.dart script to a more common location.
 pub run angular_test \
-    --serve-arg=--port=8080 \
-    --test-arg=--platform=dartium
+    --experimental-serve-script=../_tests/tool/build.dart \
+    --verbose \
+    --port=8080 \
+    --test-arg=--platform=chrome
