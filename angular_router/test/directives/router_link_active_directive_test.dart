@@ -10,7 +10,11 @@ import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_test/angular_test.dart';
 
+import 'router_link_active_directive_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   FakeRouter fakeRouter;
 
   setUp(() {
