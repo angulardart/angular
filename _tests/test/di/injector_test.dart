@@ -10,6 +10,8 @@ import 'package:angular/src/di/reflector.dart' as reflector;
 import 'injector_test.template.dart' as ng;
 
 void main() {
+  ng.initReflector();
+
   bool _isReified<T>() => !identical(T, dynamic);
   final isStrongMode = _isReified<String>();
 

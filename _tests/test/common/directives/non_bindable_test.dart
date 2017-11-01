@@ -7,7 +7,11 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'non_bindable_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('ngNonBindable', () {
     tearDown(() => disposeAnyRunningTest());
 

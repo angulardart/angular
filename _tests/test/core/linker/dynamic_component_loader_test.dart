@@ -10,7 +10,11 @@ import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular_test/angular_test.dart';
 
+import 'dynamic_component_loader_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('SlowComponentLoader', () {
     tearDown(() => disposeAnyRunningTest());
 

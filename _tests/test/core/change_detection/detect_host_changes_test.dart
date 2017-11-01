@@ -8,14 +8,17 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'detect_host_changes_test.template.dart' as ng_generated;
+
 /// This is a regression test for instances where a directive on a component
 /// is also a Provider. When checking DirectiveAst's on a CompileElement
 /// the source is ambiguous and it is easy to call the directives' change
 /// detector instead of treating it as a provider.
 ///
 /// This test will crash if code generation is broken.
-@AngularEntrypoint()
 void main() {
+  ng_generated.initReflector();
+
   tearDown(() => disposeAnyRunningTest());
 
   test('Should update bound properties when setState is called', () async {

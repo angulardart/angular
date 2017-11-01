@@ -4,7 +4,11 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'container_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   test('should *not* assign any values if the initial value is null', () async {

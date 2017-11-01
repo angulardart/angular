@@ -8,7 +8,11 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'if_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('ngIf', () {
     tearDown(() => disposeAnyRunningTest());
 

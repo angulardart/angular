@@ -6,7 +6,11 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'crash_detection_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   test('Should normally run change detection', () async {

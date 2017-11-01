@@ -10,7 +10,11 @@ import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_test/angular_test.dart';
 
+import 'accessor_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('accessor test', () {
     tearDown(disposeAnyRunningTest);
 

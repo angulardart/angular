@@ -7,8 +7,11 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/security.dart';
 
-@AngularEntrypoint()
+import 'safe_inner_html_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   tearDown(() => disposeAnyRunningTest());
 
   group('$SafeInnerHtmlDirective', () {

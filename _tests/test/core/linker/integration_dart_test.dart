@@ -9,7 +9,11 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular_test/angular_test.dart';
 
+import 'integration_dart_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   group('Property access', () {

@@ -10,7 +10,11 @@ import 'package:angular/src/core/linker.dart'
 import 'package:angular/src/debug/debug_node.dart' show getAllDebugNodes;
 import 'package:angular_test/angular_test.dart';
 
+import 'projection_integration_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('projection', () {
     tearDown(disposeAnyRunningTest);
 

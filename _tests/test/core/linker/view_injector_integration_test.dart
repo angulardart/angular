@@ -8,7 +8,11 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
 
+import 'view_injector_integration_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('View Injector', () {
     tearDown(disposeAnyRunningTest);
     group('injection', () {

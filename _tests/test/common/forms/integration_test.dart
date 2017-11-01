@@ -9,11 +9,15 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular_forms/angular_forms.dart';
 
+import 'integration_test.template.dart' as ng_generated;
+
 void dispatchEvent(Element element, String eventType) {
   element.dispatchEvent(new Event(eventType, canBubble: true));
 }
 
 void main() {
+  ng_generated.initReflector();
+
   group('ngForm', () {
     tearDown(() => disposeAnyRunningTest());
 

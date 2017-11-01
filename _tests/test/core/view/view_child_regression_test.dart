@@ -4,7 +4,11 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'view_child_regression_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   test('$ViewChild#nativeElement should be accessible', () async {
     final fixture = await new NgTestBed<ViewChildTest>().create();
     await fixture.update((component) {

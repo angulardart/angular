@@ -10,7 +10,11 @@ import 'package:angular/src/common/directives/ng_template_outlet.dart'
 import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular_test/angular_test.dart';
 
+import 'ng_template_outlet_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group("insert", () {
     tearDown(() => disposeAnyRunningTest());
     test("should do nothing if templateRef is null", () async {

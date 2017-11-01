@@ -5,7 +5,11 @@ import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'ng_zone_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   group('$NgZone', () {
     NgZone zone;
     List<String> log;

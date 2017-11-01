@@ -5,8 +5,12 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
+import 'visibility_test.template.dart' as ng_generated;
+
 // TODO(leonsenft): expect specific DI error when introduced; b/64980526.
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   group('Visibility.none', () {
