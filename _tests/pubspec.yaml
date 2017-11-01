@@ -48,6 +48,10 @@ dependency_overrides:
     git:
       url: https://github.com/dart-lang/build.git
       path: build_test
+  scratch_space:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: scratch_space
 
 transformers:
   - angular:
