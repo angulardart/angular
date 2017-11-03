@@ -11,7 +11,7 @@ dependencies:
   angular_ast: ^0.4.0-alpha.0
   angular_compiler: ^0.4.0-alpha
   barback: ^0.15.2+2
-  build: ^0.10.0
+  build: '>=0.10.0 <0.12.0'
   build_barback: ^0.4.0
   code_builder: '>=2.0.0-beta <3.0.0'
   collection: '^1.12.0'
