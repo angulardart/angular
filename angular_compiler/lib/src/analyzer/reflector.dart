@@ -238,8 +238,12 @@ class ReflectableReader {
     // "lib/some_file.dart" instead of "package:some_lib/some_file.dart".
     final from = new AssetId.resolve(fromUri);
     final source = new AssetId.resolve(sourceUri, from: from);
-    return source.package == from.package &&
+    final result = source.package == from.package &&
         generatorInputs.any((glob) => glob.matches(source.path));
+    if (result) {
+      log.fine('Avoiding a lookup on $source (matched generator_inputs)');
+    }
+    return result;
   }
 
   bool _shouldRecordFactory(ClassElement element) =>

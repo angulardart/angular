@@ -18,6 +18,8 @@ Future<TemplateCompilerOutputs> processTemplates(
   final templateCompiler = createTemplateCompiler(buildStep, flags);
   final resolver = buildStep.resolver;
   final reflectables = await new ReflectableReader(
+    generatorInputs: flags.generatorInputs,
+
     // For a given import or export directive, return whether we have the
     // Dart file's URI in our inputs (for Bazel, it will be in the srcs =
     // [ ... ]).
