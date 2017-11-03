@@ -1,20 +1,15 @@
-import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/output/output_ast.dart';
-import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show
         ChangeDetectorState,
         ChangeDetectionStrategy,
         isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 
 import '../compile_metadata.dart'
-    show
-        CompileDirectiveMetadata,
-        CompileTypeMetadata,
-        CompileIdentifierMetadata;
+    show CompileDirectiveMetadata, CompileTypeMetadata;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
@@ -34,13 +29,11 @@ import '../template_ast.dart'
         EmbeddedTemplateAst,
         NgContentAst,
         ReferenceAst,
-        TemplateAst,
         TemplateAstVisitor,
         VariableAst,
         TextAst,
         templateVisitAll;
 import 'compile_element.dart' show CompileElement, CompileNode;
-import 'compile_method.dart';
 import 'compile_view.dart';
 import 'constants.dart'
     show
@@ -59,16 +52,13 @@ import 'parse_utils.dart';
 import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
-        astAttribListToMap,
         cachedParentIndexVarName,
         createFlatArray,
         createDebugInfoTokenExpression,
-        createDbgElementCall,
         createSetAttributeStatement,
+        detectHtmlElementFromTagName,
         componentFromDirectives,
-        getParentRenderNode,
         identifierFromTagName,
-        mergeHtmlAndDirectiveAttrs,
         ViewCompileDependency;
 
 var rootSelectorVar = o.variable("rootSelector");
@@ -133,29 +123,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
   dynamic visitNgContent(NgContentAst ast, dynamic context) {
     CompileElement parent = context;
-    // The projected nodes originate from a different view, so we don't
-    // have debug information for them.
-    this.view.createMethod.resetDebugInfo(null, ast);
-    var parentRenderNode = getParentRenderNode(view, parent);
-    // AppView.projectableNodes property contains the list of nodes
-    // to project for each NgContent.
-    // Creates a call to project(parentNode, nodeIndex).
-    var nodesExpression = ViewProperties.projectableNodes.key(
-        o.literal(ast.index),
-        new o.ArrayType(o.importType(Identifiers.HTML_NODE)));
-    if (!identical(parentRenderNode, o.NULL_EXPR)) {
-      view.createMethod.addStmt(new o.InvokeMemberMethodExpr(
-          'project', [parentRenderNode, o.literal(ast.index)]).toStmt());
-    } else if (this._isRootNode(parent)) {
-      if (!identical(this.view.viewType, ViewType.COMPONENT)) {
-        // store root nodes only for embedded/host views
-        this.view.rootNodesOrViewContainers.add(nodesExpression);
-      }
-    } else {
-      if (parent.component != null && ast.ngContentIndex != null) {
-        parent.addContentNode(ast.ngContentIndex, nodesExpression);
-      }
-    }
+    view.projectNodesIntoElement(parent, ast.index, ast);
     return null;
   }
 
@@ -195,54 +163,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       List<CompileDirectiveMetadata> directives,
       ElementAst ast,
       {bool isDeferred: false}) {
-    AppViewReference compAppViewExpr = view.createAppView(parent, component,
-        elementRef, nodeIndex, isDeferred, ast, targetDependencies);
-
-    bool isHtmlElement;
-    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
-    if (isHostRootView) {
-      // Assign root element created by viewfactory call to our own root.
-      view.createMethod.addStmt(elementRef
-          .toWriteExpr(
-              compAppViewExpr.toReadExpr().prop(appViewRootElementName))
-          .toStmt());
-      if (view.genConfig.genDebugInfo) {
-        view.createMethod.addStmt(createDbgIndexElementCall(
-            elementRef.toReadExpr(), view.nodes.length, ast));
-      }
-      isHtmlElement = false;
-    } else {
-      isHtmlElement = detectHtmlElementFromTagName(ast.name);
-      var parentRenderNodeExpr = getParentRenderNode(view, parent);
-      final generateDebugInfo = view.genConfig.genDebugInfo;
-      view.createMethod.addStmt(elementRef
-          .toWriteExpr(
-              compAppViewExpr.toReadExpr().prop(appViewRootElementName))
-          .toStmt());
-      if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-        // Write code to append to parent node.
-        view.createMethod.addStmt(parentRenderNodeExpr
-            .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-      }
-      if (generateDebugInfo) {
-        view.createMethod.addStmt(createDbgElementCall(
-            elementRef.toReadExpr(), view.nodes.length, ast));
-      }
-    }
+    AppViewReference compAppViewExpr = view.createComponentNodeAndAppend(
+        component, parent, elementRef, nodeIndex, ast, targetDependencies,
+        isDeferred: isDeferred);
 
     if (view.viewType != ViewType.HOST) {
-      _writeLiteralAttributeValues(
-          ast, elementRef.toReadExpr(), directives, view.createMethod);
+      view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
     }
 
-    if (!isHostRootView &&
-        view.component.template.encapsulation == ViewEncapsulation.Emulated) {
-      // Set ng_content class for CSS shim.
-      String shimMethod = 'addShimC';
-      o.Expression shimClassExpr =
-          new o.InvokeMemberMethodExpr(shimMethod, [elementRef.toReadExpr()]);
-      view.createMethod.addStmt(shimClassExpr.toStmt());
-    }
+    view.shimCssForNode(elementRef, nodeIndex, Identifiers.HTML_HTML_ELEMENT);
 
     var compileElement = new CompileElement(
         parent,
@@ -257,7 +186,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
         false,
         ast.references,
         logger,
-        isHtmlElement: isHtmlElement,
+        isHtmlElement: detectHtmlElementFromTagName(ast.name),
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
 
     view.nodes.add(compileElement);
@@ -274,20 +203,16 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
 
-    if (compAppViewExpr != null) {
-      o.Expression codeGenContentNodes;
-      if (this.view.component.type.isHost) {
-        codeGenContentNodes = ViewProperties.projectableNodes;
-      } else {
-        codeGenContentNodes = o.literalArr(compileElement
-            .contentNodesByNgContentIndex
-            .map((nodes) => createFlatArray(nodes))
-            .toList());
-      }
-      view.createMethod.addStmt(compAppViewExpr.toReadExpr().callMethod(
-          'create',
-          [compileElement.getComponent(), codeGenContentNodes]).toStmt());
+    o.Expression projectables;
+    if (view.component.type.isHost) {
+      projectables = ViewProperties.projectableNodes;
+    } else {
+      projectables = o.literalArr(compileElement.contentNodesByNgContentIndex
+          .map((nodes) => createFlatArray(nodes))
+          .toList());
     }
+    var componentInstance = compileElement.getComponent();
+    view.createAppView(compAppViewExpr, componentInstance, projectables);
   }
 
   void _visitHtmlElement(
@@ -296,63 +221,27 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
       NodeReference elementRef,
       List<CompileDirectiveMetadata> directives,
       ElementAst ast) {
-    var createRenderNodeExpr;
-
     String tagName = ast.name;
-    var parentRenderNodeExpr = getParentRenderNode(view, parent);
-    final generateDebugInfo = view.genConfig.genDebugInfo;
-
-    bool isHostRoot = nodeIndex == 0 && view.viewType == ViewType.HOST;
-    if (!isHostRoot) {
-      // TODO: move to compile_view.
-      String name = (elementRef.toReadExpr() as o.ReadClassMemberExpr).name;
-      view.nameResolver.addField(new o.ClassField(name,
-          outputType: o.importType(identifierFromTagName(tagName)),
-          modifiers: const [o.StmtModifier.Private]));
-    }
-
     // Create element or elementNS. AST encodes svg path element as
     // @svg:path.
     bool isNamespacedElement = tagName.startsWith('@') && tagName.contains(':');
     if (isNamespacedElement) {
-      var nameParts = tagName.substring(1).split(':');
+      var nameParts = ast.name.substring(1).split(':');
       String ns = namespaceUris[nameParts[0]];
-      createRenderNodeExpr = o.importExpr(Identifiers.HTML_DOCUMENT).callMethod(
-          'createElementNS', [o.literal(ns), o.literal(nameParts[1])]);
-      view.createMethod
-          .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
-      if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-        // Write code to append to parent node.
-        view.createMethod.addStmt(parentRenderNodeExpr
-            .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-      }
-      if (generateDebugInfo) {
-        view.createMethod.addStmt(createDbgElementCall(
-            elementRef.toReadExpr(), view.nodes.length, ast));
-      }
+      view.createElementNs(
+          parent, elementRef, nodeIndex, ns, nameParts[1], ast);
     } else {
-      // Generate code to create Html element, append to parent and
-      // optionally add dbg info in single call.
-      _createElementAndAppend(tagName, parentRenderNodeExpr, elementRef,
-          generateDebugInfo, ast.sourceSpan, nodeIndex);
+      view.createElement(parent, elementRef, nodeIndex, tagName, ast);
     }
 
-    _writeLiteralAttributeValues(
-        ast, elementRef.toReadExpr(), directives, view.createMethod);
+    view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
 
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
-    if (!isHostRootView &&
-        view.component.template.encapsulation == ViewEncapsulation.Emulated) {
-      // Set ng_content class for CSS shim.
-      var elementType = isHostRootView
-          ? Identifiers.HTML_HTML_ELEMENT
-          : identifierFromTagName(ast.name);
-      String shimMethod =
-          elementType != Identifiers.HTML_ELEMENT ? 'addShimC' : 'addShimE';
-      o.Expression shimClassExpr =
-          new o.InvokeMemberMethodExpr(shimMethod, [elementRef.toReadExpr()]);
-      view.createMethod.addStmt(shimClassExpr.toStmt());
-    }
+    // Set ng_content class for CSS shim.
+    var elementType = isHostRootView
+        ? Identifiers.HTML_HTML_ELEMENT
+        : identifierFromTagName(ast.name);
+    view.shimCssForNode(elementRef, nodeIndex, elementType);
 
     var compileElement = new CompileElement(
         parent,
@@ -377,96 +266,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
-  }
-
-  void _createElementAndAppend(
-      String tagName,
-      o.Expression parent,
-      NodeReference elementRef,
-      bool generateDebugInfo,
-      SourceSpan debugSpan,
-      int debugNodeIndex) {
-    // No namespace just call [document.createElement].
-    if (docVarName == null) {
-      view.createMethod.addStmt(_createLocalDocumentVar());
-    }
-    if (parent != null && parent != o.NULL_EXPR) {
-      o.Expression createExpr;
-      List<o.Expression> createParams;
-      if (generateDebugInfo) {
-        createParams = <o.Expression>[
-          o.THIS_EXPR,
-          new o.ReadVarExpr(docVarName)
-        ];
-      } else {
-        createParams = <o.Expression>[new ReadVarExpr(docVarName)];
-      }
-
-      CompileIdentifierMetadata createAndAppendMethod;
-      switch (tagName) {
-        case 'div':
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createDivAndAppendDbg
-              : Identifiers.createDivAndAppend;
-          break;
-        case 'span':
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createSpanAndAppendDbg
-              : Identifiers.createSpanAndAppend;
-          break;
-        default:
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createAndAppendDbg
-              : Identifiers.createAndAppend;
-          createParams.add(o.literal(tagName));
-          break;
-      }
-      createParams.add(parent);
-      if (generateDebugInfo) {
-        createParams.addAll([
-          o.literal(debugNodeIndex),
-          debugSpan?.start == null
-              ? o.NULL_EXPR
-              : o.literal(debugSpan.start.line),
-          debugSpan?.start == null
-              ? o.NULL_EXPR
-              : o.literal(debugSpan.start.column)
-        ]);
-      }
-      createExpr = o.importExpr(createAndAppendMethod).callFn(createParams);
-      view.createMethod.addStmt(elementRef.toWriteExpr(createExpr).toStmt());
-    } else {
-      // No parent node, just create element and assign.
-      var createRenderNodeExpr = new o.ReadVarExpr(docVarName)
-          .callMethod('createElement', [o.literal(tagName)]);
-      view.createMethod
-          .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
-      if (generateDebugInfo) {
-        view.createMethod.addStmt(o.importExpr(Identifiers.dbgElm).callFn([
-          o.THIS_EXPR,
-          elementRef.toReadExpr(),
-          o.literal(debugNodeIndex),
-          debugSpan?.start == null
-              ? o.NULL_EXPR
-              : o.literal(debugSpan.start.line),
-          debugSpan?.start == null
-              ? o.NULL_EXPR
-              : o.literal(debugSpan.start.column)
-        ]).toStmt());
-      }
-    }
-  }
-
-  o.Statement _createLocalDocumentVar() {
-    docVarName = defaultDocVarName;
-    return new o.DeclareVarStmt(
-        docVarName, o.importExpr(Identifiers.HTML_DOCUMENT));
-  }
-
-  o.Statement createDbgIndexElementCall(
-      o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
-    return new o.InvokeMemberMethodExpr(
-        'dbgIdx', [nodeExpr, o.literal(nodeIndex)]).toStmt();
   }
 
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
@@ -518,13 +317,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     compileElement.afterChildren(0);
     if (ast.hasDeferredComponent) {
-      var statements = <o.Statement>[];
-      compileElement.writeDeferredLoader(
-          embeddedView, compileElement.appViewContainer, statements);
-      view.createMethod.addStmts(statements);
-      view.detectChangesRenderPropertiesMethod.addStmt(compileElement
-          .appViewContainer
-          .callMethod('detectChangesInNestedViews', const []).toStmt());
+      view.deferLoadEmbeddedTemplate(embeddedView, compileElement);
     }
     return null;
   }
@@ -556,25 +349,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
 
   dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
     return null;
-  }
-}
-
-/// Writes literal attribute values on the element itself and those
-/// contributed from directives on the ast node.
-///
-/// !Component level attributes are excluded since we want to avoid per
-//  call site duplication.
-void _writeLiteralAttributeValues(ElementAst ast, o.Expression renderNode,
-    List<CompileDirectiveMetadata> directives, CompileMethod method) {
-  var htmlAttrs = astAttribListToMap(ast.attrs);
-  // Create statements to initialize literal attribute values.
-  // For example, a directive may have hostAttributes setting class name.
-  var attrNameAndValues =
-      mergeHtmlAndDirectiveAttrs(htmlAttrs, directives, excludeComponent: true);
-  for (int i = 0, len = attrNameAndValues.length; i < len; i++) {
-    o.Statement stmt = createSetAttributeStatement(
-        ast.name, renderNode, attrNameAndValues[i][0], attrNameAndValues[i][1]);
-    method.addStmt(stmt);
   }
 }
 
@@ -1158,149 +932,6 @@ int getChangeDetectionMode(CompileView view) {
     mode = ChangeDetectionStrategy.CheckAlways;
   }
   return mode;
-}
-
-Set<String> _tagNameSet;
-
-/// Returns true if tag name is HtmlElement.
-///
-/// Returns false if tag name is svg element or other. Used for optimizations.
-/// Should not generate false positives but returning false when unknown is
-/// fine since code will fallback to general Element case.
-bool detectHtmlElementFromTagName(String tagName) {
-  const htmlTagNames = const <String>[
-    'a',
-    'abbr',
-    'acronym',
-    'address',
-    'applet',
-    'area',
-    'article',
-    'aside',
-    'audio',
-    'b',
-    'base',
-    'basefont',
-    'bdi',
-    'bdo',
-    'bgsound',
-    'big',
-    'blockquote',
-    'body',
-    'br',
-    'button',
-    'canvas',
-    'caption',
-    'center',
-    'cite',
-    'code',
-    'col',
-    'colgroup',
-    'command',
-    'data',
-    'datalist',
-    'dd',
-    'del',
-    'details',
-    'dfn',
-    'dialog',
-    'dir',
-    'div',
-    'dl',
-    'dt',
-    'element',
-    'em',
-    'embed',
-    'fieldset',
-    'figcaption',
-    'figure',
-    'font',
-    'footer',
-    'form',
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'head',
-    'header',
-    'hr',
-    'i',
-    'iframe',
-    'img',
-    'input',
-    'ins',
-    'kbd',
-    'keygen',
-    'label',
-    'legend',
-    'li',
-    'link',
-    'listing',
-    'main',
-    'map',
-    'mark',
-    'menu',
-    'menuitem',
-    'meta',
-    'meter',
-    'nav',
-    'object',
-    'ol',
-    'optgroup',
-    'option',
-    'output',
-    'p',
-    'param',
-    'picture',
-    'pre',
-    'progress',
-    'q',
-    'rp',
-    'rt',
-    'rtc',
-    'ruby',
-    's',
-    'samp',
-    'script',
-    'section',
-    'select',
-    'shadow',
-    'small',
-    'source',
-    'span',
-    'strong',
-    'style',
-    'sub',
-    'summary',
-    'sup',
-    'table',
-    'tbody',
-    'td',
-    'template',
-    'textarea',
-    'tfoot',
-    'th',
-    'thead',
-    'time',
-    'title',
-    'tr',
-    'track',
-    'tt',
-    'u',
-    'ul',
-    'var',
-    'video',
-    'wbr'
-  ];
-  if (_tagNameSet == null) {
-    _tagNameSet = new Set<String>();
-    for (String name in htmlTagNames) {
-      _tagNameSet.add(name);
-    }
-  }
-  return _tagNameSet.contains(tagName);
 }
 
 /// Writes proxy for setting an @Input property.

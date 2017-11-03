@@ -121,6 +121,11 @@ void main() {
       Element elm = testFixture.rootElement.querySelector('feature-promo');
       expect(elm.className.startsWith('position-class _nghost-'), true);
     });
+
+    test('Should shim svg elements with no compile type errors', () async {
+      var testBed = new NgTestBed<SvgComponentTest>();
+      await testBed.create();
+    });
   });
 }
 
@@ -236,6 +241,29 @@ class ComponentContainerTestComponent {
   styles: const [':host { color: #FF0000; }'],
 )
 class ChildComponent {}
+
+@Component(
+  selector: 'test-with-inline-svg',
+  template: '''<div>
+      <svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-775.000000, -998.000000)">
+              <g transform="translate(775.000000, 998.000000)">
+                <circle fill="#979797" cx="24" cy="24" r="24"></circle>
+                <path d="M19.2,32 L16,32 L16,20.8 Z" id="Shape" fill="#FFFFFF"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>''',
+  styles: const [
+    'section { color: green; }'
+        'section.activated { color: red; }'
+        'section.disabled { color: blue; }'
+  ],
+)
+class SvgComponentTest {}
 
 void expectColor(Element element, String color) {
   String elementColor = element.getComputedStyle().color;

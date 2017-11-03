@@ -199,6 +199,8 @@ class Identifiers {
   static final HTML_SHADOW_ROOT_ELEMENT =
       new CompileIdentifierMetadata<dynamic>(
           name: "ShadowRoot", moduleUrl: "dart:html");
+  static final SVG_SVG_ELEMENT = new CompileIdentifierMetadata<dynamic>(
+      name: "SvgSvgElement", moduleUrl: "dart:svg");
   static final SVG_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "SvgElement", moduleUrl: "dart:svg");
   static final HTML_ANCHOR_ELEMENT = new CompileIdentifierMetadata<dynamic>(
