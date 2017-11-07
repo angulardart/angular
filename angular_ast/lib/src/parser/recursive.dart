@@ -17,12 +17,14 @@ class RecursiveAstParser {
   final NgTokenReversibleReader _reader;
   final SourceFile _source;
   final List<String> _voidElements;
+  final List<String> _svgElements;
   final exceptionHandler;
 
   RecursiveAstParser(
     SourceFile sourceFile,
     Iterable<NgToken> tokens,
     this._voidElements,
+    this._svgElements,
     this.exceptionHandler,
   )
       : _reader = new NgTokenReversibleReader<NgTokenType>(sourceFile, tokens),
@@ -277,6 +279,7 @@ class RecursiveAstParser {
       isTemplateElement = true;
     }
     var isVoidElement = _voidElements.contains(nameToken.lexeme);
+    var isSvgElement = _svgElements.contains(nameToken.lexeme);
 
     // Start collecting decorators.
     var attributes = <AttributeAst>[];
@@ -355,7 +358,9 @@ class RecursiveAstParser {
     } while (nextToken.type != NgTokenType.openElementEnd &&
         nextToken.type != NgTokenType.openElementEndVoid);
 
-    if (!isVoidElement && nextToken.type == NgTokenType.openElementEndVoid) {
+    if (!isVoidElement &&
+        !isSvgElement &&
+        nextToken.type == NgTokenType.openElementEndVoid) {
       exceptionHandler.handle(new AngularParserException(
         NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END,
         nextToken.offset,
