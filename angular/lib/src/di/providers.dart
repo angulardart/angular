@@ -97,7 +97,18 @@ abstract class Provider<T> {
   /// * `useValue` -> [ValueProvider]
   /// * `useFactory` -> [FactoryProvider]
   /// * `useExisting` -> [ExistingProvider]
-  const Provider(
+  const factory Provider(
+    Object token, {
+    Type useClass,
+    Object useValue,
+    Object useExisting,
+    Function useFactory,
+    List<Object> deps,
+    bool multi,
+  }) = Provider<T>._;
+
+  // Prevents extending this class.
+  const Provider._(
     this.token, {
     this.useClass,
     this.useValue: noValueProvided,
@@ -128,15 +139,116 @@ List<T> listOfMulti<T>(Provider<T> provider) => provider._listOfMulti();
 /// ```dart
 /// const ClassProvider(Service, useClass: CachedService);
 /// ```
+@optionalTypeArgs
 class ClassProvider<T> extends Provider<T> {
-  const ClassProvider(
+  const factory ClassProvider(
+    Type token, {
+    Type useClass,
+    bool multi,
+  }) = ClassProvider<T>._;
+
+  // Prevents extending this class.
+  const ClassProvider._(
     Type token, {
     Type useClass,
     bool multi: false,
   })
-      : super(
+      : super._(
           token,
           useClass: useClass ?? token,
+          multi: multi,
+        );
+}
+
+/// Describes at compile-time configuring to redirect to another token.
+///
+/// The provided [token] instead injects [useExisting].
+///
+/// Commonly used for deprecation strategies or to-export an interface.
+@optionalTypeArgs
+class ExistingProvider<T> extends Provider<T> {
+  const factory ExistingProvider(
+    Object token,
+    Object useExisting, {
+    bool multi,
+  }) = ExistingProvider<T>._;
+
+  // Prevents extending this class.
+  const ExistingProvider._(
+    Object token,
+    Object useExisting, {
+    bool multi,
+  })
+      : super._(
+          token,
+          useExisting: useExisting,
+          multi: multi,
+        );
+}
+
+/// Describes at compile-time configuring to invoke a factory function.
+///
+/// For static forms of injection (i.e. compile-time), the [deps] argument is
+/// **not required**, but to use with `ReflectiveInjector` it is required
+/// unless you have no arguments:
+/// ```dart
+/// ReflectiveInjector.resolveAndCreate([
+///   new Provider(Foo, useFactory: (Bar bar) => new Foo(bar), deps: [Bar]),
+/// ]);
+/// ```
+@optionalTypeArgs
+class FactoryProvider<T> extends Provider<T> {
+  const factory FactoryProvider(
+    Object token,
+    Function useFactory, {
+    bool multi,
+    List<Object> deps,
+  }) = FactoryProvider<T>._;
+
+  // Prevents extending this class.
+  const FactoryProvider._(
+    Object token,
+    Function useFactory, {
+    bool multi,
+    List<Object> deps,
+  })
+      : super._(
+          token,
+          useFactory: useFactory,
+          multi: multi,
+          deps: deps,
+        );
+}
+
+/// Describes at compile-time using a constant value to represent a token.
+///
+/// It is recommended to use [useValue] with an [OpaqueToken] as [token]:
+/// ```dart
+/// const animationDelay = const OpaqueToken('animationDelay');
+///
+/// const Provider(animationDelay, useValue: const Duration(seconds: 1));
+/// ```
+///
+/// **NOTE**: The AngularDart compiler has limited heuristics for supporting
+/// complex nested objects beyond simple literals. If you encounter problems
+/// it is recommended to use [useFactory] instead.
+@optionalTypeArgs
+class ValueProvider<T> extends Provider<T> {
+  const factory ValueProvider(
+    Object token,
+    Object useExisting, {
+    bool multi,
+  }) = ValueProvider<T>._;
+
+  // Prevents extending this class.
+  const ValueProvider._(
+    Object token,
+    Object useExisting, {
+    bool multi,
+  })
+      : super._(
+          token,
+          useExisting: useExisting,
           multi: multi,
         );
 }
