@@ -10,7 +10,7 @@ void main() {
   test('createFactory should return a factory function', () {
     emitter.visitMeta('FooInjector', 'fooInjector');
     expect(
-      new File((b) => b.body.add(emitter.createFactory())),
+      new Library((b) => b.body.add(emitter.createFactory())),
       equalsDart(r'''
         Injector fooInjector([Injector parent]) => new FooInjector._(parent);
       '''),
