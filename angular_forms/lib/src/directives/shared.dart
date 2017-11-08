@@ -75,7 +75,7 @@ ControlValueAccessor selectValueAccessor(
   for (var v in valueAccessors) {
     if (v is DefaultValueAccessor) {
       defaultAccessor = v;
-    } else if (v.runtimeType == CheckboxControlValueAccessor ||
+    } else if (v is CheckboxControlValueAccessor ||
         v is NumberValueAccessor ||
         v is SelectControlValueAccessor ||
         v is RadioControlValueAccessor) {
