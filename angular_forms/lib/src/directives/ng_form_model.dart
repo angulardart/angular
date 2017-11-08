@@ -144,7 +144,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   }
 
   @override
-  Control getControl(NgControl dir) => form.find(dir.path) as Control;
+  Control getControl(NgControl dir) => form?.find(dir.path) as Control;
 
   @override
   void removeControl(NgControl dir) {
