@@ -53,7 +53,7 @@ class SafeInnerHtmlDirective {
       // of code which could introduce mutations making security auditing
       // hard.
       throw new UnsupportedError(
-        'SafeHtml required (got ${safeInnerHtml.runtimeType})',
+        'SafeHtml required (got $safeInnerHtml)',
       );
     }
   }
