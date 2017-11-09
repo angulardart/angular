@@ -15,6 +15,7 @@ enum LifecycleHooks {
   OnDestroy,
   DoCheck,
   OnChanges,
+  AfterChanges,
   AfterContentInit,
   AfterContentChecked,
   AfterViewInit,
@@ -53,6 +54,17 @@ enum LifecycleHooks {
 /// [ex]: http://angular-examples.github.io/lifecycle-hooks#onchanges
 abstract class OnChanges {
   ngOnChanges(Map<String, SimpleChange> changes);
+}
+
+/// Implement this interface to get notified when any data-bound property of
+/// your directive changes.
+///
+/// [ngAfterChanges] is called right after the data-bound properties have been
+/// checked and before view and content children are checked if at least one of
+/// them has changed.
+///
+abstract class AfterChanges {
+  ngAfterChanges();
 }
 
 /// Implement to execute [ngOnInit] after the first change-detection completed.

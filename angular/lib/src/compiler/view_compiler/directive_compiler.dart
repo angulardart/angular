@@ -26,6 +26,7 @@ class DirectiveCompiler {
   final CompileDirectiveMetadata directive;
   final bool genDebugInfo;
   final bool hasOnChangesLifecycle;
+  final bool hasAfterChangesLifecycle;
   final Parser _parser;
   final ElementSchemaRegistry _schemaRegistry;
   final viewMethods = <o.ClassMethod>[];
@@ -38,7 +39,9 @@ class DirectiveCompiler {
   DirectiveCompiler(
       this.directive, this._parser, this._schemaRegistry, this.genDebugInfo)
       : hasOnChangesLifecycle =
-            directive.lifecycleHooks.contains(LifecycleHooks.OnChanges);
+            directive.lifecycleHooks.contains(LifecycleHooks.OnChanges),
+        hasAfterChangesLifecycle =
+            directive.lifecycleHooks.contains(LifecycleHooks.AfterChanges);
 
   DirectiveCompileResult compile() {
     assert(directive.requiresDirectiveChangeDetector);
@@ -54,7 +57,9 @@ class DirectiveCompiler {
 
     _buildDetectHostChanges();
     var superClassExpr;
-    if (hasOnChangesLifecycle || _hasChangeDetector) {
+    if (hasOnChangesLifecycle ||
+        hasAfterChangesLifecycle ||
+        _hasChangeDetector) {
       superClassExpr = o.importExpr(Identifiers.DirectiveChangeDetector);
     }
     var changeDetectorClass = new o.ClassStmt(
@@ -79,7 +84,7 @@ class DirectiveCompiler {
     ));
     var constructorArgs = [new o.FnParam('this.instance', instanceType)];
     var statements;
-    if (hasOnChangesLifecycle) {
+    if (hasOnChangesLifecycle || hasAfterChangesLifecycle) {
       statements = [
         new o.WriteClassMemberExpr(
                 'directive', new o.ReadClassMemberExpr('instance'))

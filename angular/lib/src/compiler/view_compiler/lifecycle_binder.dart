@@ -26,6 +26,11 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
           .callMethod('ngOnChanges', [DetectChangesVars.changes]).toStmt()
     ]));
   }
+  if (lifecycleHooks.contains(LifecycleHooks.AfterChanges) &&
+      directiveAst.inputs.isNotEmpty) {
+    detectChangesInInputsMethod.addStmt(new o.IfStmt(DetectChangesVars.changed,
+        [directiveInstance.callMethod('ngAfterChanges', const []).toStmt()]));
+  }
   if (lifecycleHooks.contains(LifecycleHooks.OnInit)) {
     if (view.genConfig.genDebugInfo) {
       detectChangesInInputsMethod.addStmt(new o.IfStmt(

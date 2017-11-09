@@ -7,6 +7,7 @@ import 'metadata/visibility.dart';
 export 'di/decorators.dart';
 export 'metadata/lifecycle_hooks.dart'
     show
+        AfterChanges,
         AfterContentInit,
         AfterContentChecked,
         AfterViewInit,
