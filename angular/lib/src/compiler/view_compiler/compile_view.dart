@@ -285,6 +285,7 @@ class CompileView implements AppViewBuilder {
   o.OutputType classType;
   o.ReadVarExpr viewFactory;
   bool requiresOnChangesCall = false;
+  bool requiresAfterChangesCall = false;
   var pipeCount = 0;
   ViewNameResolver nameResolver;
   static final defaultDocVarName = 'doc';

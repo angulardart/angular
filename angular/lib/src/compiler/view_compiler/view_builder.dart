@@ -886,8 +886,9 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
         .toDeclStmt(contextType, [o.StmtModifier.Final]));
   }
   if (readVars.contains(DetectChangesVars.changed.name)) {
-    varStmts.add(
-        DetectChangesVars.changed.set(o.literal(true)).toDeclStmt(o.BOOL_TYPE));
+    varStmts.add(DetectChangesVars.changed
+        .set(o.literal(false))
+        .toDeclStmt(o.BOOL_TYPE));
   }
   if (readVars.contains(DetectChangesVars.changes.name) ||
       view.requiresOnChangesCall) {
