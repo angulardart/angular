@@ -10,8 +10,11 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/src/bootstrap.dart';
 
-@AngularEntrypoint()
+import 'bootstrap_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   test('should create a new component in the DOM', () async {
     final host = new Element.div();
     final test = await bootstrapForTest(
