@@ -8,8 +8,11 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-@AngularEntrypoint()
+import 'query_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   test('should support querying for a component', () async {
