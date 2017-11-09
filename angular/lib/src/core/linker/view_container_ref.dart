@@ -66,10 +66,12 @@ abstract class ViewContainerRef implements ComponentLoader {
   ///
   ///Returns the [ComponentRef] of the Host View created for the newly
   /// instantiated Component.
-  ComponentRef<T> createComponent<T>(ComponentFactory<T> componentFactory,
-      [num index = -1,
-      Injector injector,
-      List<List<dynamic>> projectableNodes]);
+  ComponentRef<T> createComponent<T>(
+    ComponentFactory<T> componentFactory, [
+    int index = -1,
+    Injector injector,
+    List<List<dynamic>> projectableNodes,
+  ]);
 
   /// Inserts a View identified by a [ViewRef] into the container.
   ///
@@ -78,7 +80,7 @@ abstract class ViewContainerRef implements ComponentLoader {
   ///
   /// Returns the inserted [ViewRef].
   /// TODO(i): refactor insert+remove into move
-  ViewRef insert(ViewRef viewRef, [num index = -1]);
+  ViewRef insert(ViewRef viewRef, [int index = -1]);
 
   ViewRef move(ViewRef viewRef, int currentIndex);
 
@@ -91,13 +93,13 @@ abstract class ViewContainerRef implements ComponentLoader {
   /// If `index` is not specified, the last View in the container will be
   /// removed.
   /// TODO(i): rename to destroy
-  void remove([num index = -1]);
+  void remove([int index = -1]);
 
   /// Use along with [#insert] to move a View within the current container.
   ///
   /// If the `index` param is omitted, the last [ViewRef] is detached.
   /// TODO(i): refactor insert+remove into move
-  ViewRef detach([num index = -1]);
+  ViewRef detach([int index = -1]);
 
   /// Destroys all Views in this container.
   void clear();
