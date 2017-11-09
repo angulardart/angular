@@ -3,11 +3,11 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:build/build.dart';
-import 'package:build_test/build_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart';
+
+import '../resolve_util.dart';
 
 void main() {
   group('inferExpressionType', () {
@@ -60,10 +60,7 @@ void main() {
 }
 
 Future<AnalyzedClass> analyzeClass(String source) async {
-  final testAssetId = new AssetId('analyzed_class_test', 'lib/test.dart');
-  final library = await resolveSource(
-      source, (resolver) => resolver.libraryFor(testAssetId),
-      inputId: testAssetId);
+  final library = await resolve(source);
   final visitor = new AnalyzedClassVisitor();
   return library.accept(visitor);
 }
