@@ -1,12 +1,7 @@
 @TestOn('vm')
-
-import 'dart:async';
-
-import 'package:build/build.dart';
-import 'package:build_test/build_test.dart';
 import 'package:test/test.dart';
-import 'package:angular/src/compiler/offline_compiler.dart';
-import 'package:angular/src/source_gen/template_compiler/find_components.dart';
+
+import '../../resolve_util.dart';
 
 void main() {
   group('should be mock-like', () {
@@ -109,16 +104,4 @@ void main() {
       expect(normalizedComponent.component.inputTypes['value'].name, 'String');
     });
   });
-}
-
-Future<NormalizedComponentWithViewDirectives> resolveAndFindComponent(
-  String source,
-) async {
-  final testAssetId = new AssetId('find_components_test', 'lib/test.dart');
-  final library = await resolveSource('''
-    import 'package:angular/angular.dart';
-    $source
-  ''', (r) => r.libraryFor(testAssetId), inputId: testAssetId);
-  final artifacts = findComponentsAndDirectives(library);
-  return artifacts.components.first;
 }
