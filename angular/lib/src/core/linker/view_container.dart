@@ -90,10 +90,12 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     return viewRef;
   }
 
-  ComponentRef<T> createComponent<T>(ComponentFactory<T> componentFactory,
-      [num index = -1,
-      Injector injector,
-      List<List<dynamic>> projectableNodes]) {
+  ComponentRef<T> createComponent<T>(
+    ComponentFactory<T> componentFactory, [
+    int index = -1,
+    Injector injector,
+    List<List<dynamic>> projectableNodes,
+  ]) {
     var contextInjector = injector ?? parentInjector;
     var componentRef =
         componentFactory.create(contextInjector, projectableNodes);
@@ -102,7 +104,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   @override
-  ViewRef insert(ViewRef viewRef, [num index = -1]) {
+  ViewRef insert(ViewRef viewRef, [int index = -1]) {
     if (index == -1) index = this.length;
     var viewRef_ = (viewRef as ViewRefImpl);
     attachView(viewRef_.appView, index);
@@ -129,7 +131,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// removed.
   /// TODO(i): rename to destroy
   @override
-  void remove([num index = -1]) {
+  void remove([int index = -1]) {
     if (index == -1) index = this.length - 1;
     var view = detachView(index);
     view.destroy();
@@ -140,7 +142,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// If the `index` param is omitted, the last [ViewRef] is detached.
   /// TODO(i): refactor insert+remove into move
   @override
-  ViewRef detach([num index = -1]) {
+  ViewRef detach([int index = -1]) {
     if (index == -1) index = this.length - 1;
     return detachView(index).viewData.ref;
   }

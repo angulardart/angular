@@ -11,13 +11,11 @@ class StaticNodeDebugInfo {
       this.providerTokens, this.componentToken, this.refTokens);
 }
 
-var _EMPTY_DEBUG_PROVIDERS = const [];
-
 class DebugContext<T> implements RenderDebugInfo {
   DebugAppView<T> _view;
-  final num _nodeIndex;
-  final num _tplRow;
-  final num _tplCol;
+  final int _nodeIndex;
+  final int _tplRow;
+  final int _tplCol;
 
   DebugContext(this._view, this._nodeIndex, this._tplRow, this._tplCol);
 
@@ -52,7 +50,7 @@ class DebugContext<T> implements RenderDebugInfo {
   List<dynamic> get providerTokens {
     var staticNodeInfo = _staticNodeInfo;
     return staticNodeInfo == null
-        ? _EMPTY_DEBUG_PROVIDERS
+        ? const <dynamic>[]
         : staticNodeInfo.providerTokens;
   }
 
