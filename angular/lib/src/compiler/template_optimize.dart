@@ -1,5 +1,3 @@
-import 'package:analyzer/dart/element/type.dart';
-
 import 'analyzed_class.dart';
 import 'compile_metadata.dart';
 import 'identifiers.dart';
@@ -84,9 +82,9 @@ void _typeNgForLocals(
     switch (variable.value) {
       case r'$implicit':
         // This local is the generic type of the `Iterable` bound to [ngForOf].
-        if (ngForOfType is ParameterizedType) {
-          final iterableTypeArgument = ngForOfType.typeArguments.first;
-          variable.type = fromDartType(iterableTypeArgument);
+        final iterableItemType = getIterableElementType(ngForOfType);
+        if (iterableItemType != null) {
+          variable.type = fromDartType(iterableItemType);
         }
         break;
       case 'index':
