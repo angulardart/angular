@@ -92,7 +92,7 @@ void main() {
       ]);
     });
 
-    test("shouldn't be typed if bound type can't be resolve", () async {
+    test('should be typed if bound expression has receiver', () async {
       final component = await resolveAndFindComponent("""
         @Component(
           selector: 'app',
@@ -105,7 +105,7 @@ void main() {
       final template = getHumanizedTemplate(component);
       expect(template, [
         [EmbeddedTemplateAst],
-        [VariableAst, 'value', r'$implicit'],
+        [VariableAst, 'value', r'$implicit', 'int'],
         [DirectiveAst, component.directives.first], // NgFor
         [BoundDirectivePropertyAst, 'ngForOf', 'values.reversed'],
         [ElementAst, 'div'],
