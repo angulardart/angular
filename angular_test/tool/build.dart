@@ -25,17 +25,17 @@ Future main(List<String> args) async {
   buildActions.add(new BuildAction(new TestBootstrapBuilder(), graph.root.name,
       inputs: ['test/**_test.dart']));
 
-  void addBuilderForAll(Builder builder, String inputExtension) {
+  void addBuilderForAll(Builder builder) {
     for (var packageNode in graph.orderedPackages) {
       buildActions
           .add(new BuildAction(builder, packageNode.name, isOptional: true));
     }
   }
 
-  addBuilderForAll(new ModuleBuilder(), '.dart');
-  addBuilderForAll(new UnlinkedSummaryBuilder(), moduleExtension);
-  addBuilderForAll(new LinkedSummaryBuilder(), moduleExtension);
-  addBuilderForAll(new DevCompilerBuilder(), moduleExtension);
+  addBuilderForAll(new ModuleBuilder());
+  addBuilderForAll(new UnlinkedSummaryBuilder());
+  addBuilderForAll(new LinkedSummaryBuilder());
+  addBuilderForAll(new DevCompilerBuilder());
 
   buildActions.add(new BuildAction(
       new DevCompilerBootstrapBuilder(), graph.root.name,
