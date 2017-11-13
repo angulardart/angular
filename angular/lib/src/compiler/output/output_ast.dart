@@ -1353,16 +1353,33 @@ class _ReplaceVariableTransformer extends ExpressionTransformer {
 }
 
 Set<String> findReadVarNames(List<Statement> stmts) {
-  var finder = new _VariableFinder();
+  var finder = new _VariableReadFinder();
   finder.visitAllStatements(stmts, null);
   return finder.varNames;
 }
 
-class _VariableFinder extends RecursiveExpressionVisitor {
+Set<String> findWriteVarNames(List<Statement> stmts) {
+  var finder = new _VariableWriteFinder();
+  finder.visitAllStatements(stmts, null);
+  return finder.varNames;
+}
+
+class _VariableReadFinder extends RecursiveExpressionVisitor {
   final varNames = new Set<String>();
 
   @override
   dynamic visitReadVarExpr(ReadVarExpr ast, dynamic context) {
+    this.varNames.add(ast.name);
+    return null;
+  }
+}
+
+class _VariableWriteFinder extends RecursiveExpressionVisitor {
+  final varNames = new Set<String>();
+
+  @override
+  dynamic visitWriteVarExpr(WriteVarExpr ast, dynamic context,
+      {bool checkForNull}) {
     this.varNames.add(ast.name);
     return null;
   }

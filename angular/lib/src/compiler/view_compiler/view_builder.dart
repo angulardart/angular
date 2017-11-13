@@ -870,6 +870,7 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
   }
   var varStmts = [];
   var readVars = o.findReadVarNames(stmts);
+  var writeVars = o.findWriteVarNames(stmts);
   if (readVars.contains(cachedParentIndexVarName)) {
     varStmts.add(new o.DeclareVarStmt(cachedParentIndexVarName,
         new ReadClassMemberExpr('viewData').prop('parentIndex')));
@@ -885,7 +886,8 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
         .set(new o.ReadClassMemberExpr('ctx'))
         .toDeclStmt(contextType, [o.StmtModifier.Final]));
   }
-  if (readVars.contains(DetectChangesVars.changed.name)) {
+  if (readVars.contains(DetectChangesVars.changed.name) ||
+      writeVars.contains(DetectChangesVars.changed.name)) {
     varStmts.add(DetectChangesVars.changed
         .set(o.literal(false))
         .toDeclStmt(o.BOOL_TYPE));
