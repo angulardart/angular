@@ -35,6 +35,10 @@ dependency_overrides:
     path: ../angular_test
   angular_router.example:
     path: example
+  bazel_worker:
+    git:
+      url: https://github.com/dart-lang/bazel_worker.git
+      ref: log-stderr
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
