@@ -275,7 +275,8 @@ class DynamicView implements OnInit {
   @override
   void ngOnInit() {
     // Now synchronous.
-    _componentRef = _loader.loadNextToLocation(foo.FooComponent, location);
+    _componentRef =
+        _loader.loadNextToLocation(foo.FooComponentNgFactory, location);
   }
 
   @ViewChild('location', read: ViewContainerRef)
