@@ -34,13 +34,14 @@ class AstTemplateParser implements TemplateParser {
       List<CompilePipeMetadata> pipes,
       String name) {
     final parsedAst = _parseTemplate(template);
+    if (parsedAst.isEmpty) return const [];
     final implicNamespace = _applyImplicitNamespace(parsedAst);
     final desugaredAst = _inlineTemplates(implicNamespace);
     final filteredAst = _filterElements(desugaredAst);
     final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
-    _bindProviders(compMeta, desugaredAst, boundAsts);
-    _optimize(compMeta, boundAsts);
-    return boundAsts;
+    final providedAsts = _bindProviders(compMeta, desugaredAst, boundAsts);
+    _optimize(compMeta, providedAsts);
+    return providedAsts;
   }
 
   List<ast.TemplateAst> _parseTemplate(String template) {
@@ -50,8 +51,6 @@ class AstTemplateParser implements TemplateParser {
         desugar: true,
         toolFriendlyAst: true,
         parseExpressions: false);
-    // TODO(alorenzen): Remove once all tests are passing.
-    parsedAst.forEach(print);
     return parsedAst;
   }
 
@@ -59,8 +58,6 @@ class AstTemplateParser implements TemplateParser {
     var values = parsedAst
         .map((asNode) => asNode.accept(new _InlineTemplateDesugar()))
         .toList();
-    // TODO(alorenzen): Remove once all tests are passing.
-    values.forEach(print);
     return values;
   }
 
@@ -82,16 +79,17 @@ class AstTemplateParser implements TemplateParser {
         .toList();
   }
 
-  void _bindProviders(CompileDirectiveMetadata compMeta,
+  List<ng.TemplateAst> _bindProviders(CompileDirectiveMetadata compMeta,
       List<ast.TemplateAst> parsedAst, List<ng.TemplateAst> visitedAsts) {
     var providerViewContext =
         new ProviderViewContext(compMeta, parsedAst.first.sourceSpan);
     final providerVisitor = new _ProviderVisitor(providerViewContext);
     final ProviderElementContext providerContext = new ProviderElementContext(
         providerViewContext, null, false, [], [], [], null);
-    for (var astNode in visitedAsts) {
-      astNode.visit(providerVisitor, providerContext);
-    }
+    return visitedAsts
+        .map((templateAst) =>
+            templateAst.visit(providerVisitor, providerContext))
+        .toList();
   }
 
   void _optimize(CompileDirectiveMetadata compMeta, List<ng.TemplateAst> asts) {
@@ -196,8 +194,8 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitEvent(ast.EventAst astNode, [_ParseContext context]) {
-    var value = context.templateContext.parser
-        .parseAction(astNode.value, _location(astNode), const []);
+    var value = context.templateContext.parser.parseAction(
+        astNode.value, _location(astNode), context.templateContext.exports);
     return new ng.BoundEventAst(astNode.name, value, astNode.sourceSpan);
   }
 
@@ -212,8 +210,10 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitProperty(ast.PropertyAst astNode,
       [_ParseContext context]) {
-    var value = context.templateContext.parser
-        .parseBinding(astNode.value ?? 'null', _location(astNode), []);
+    var value = context.templateContext.parser.parseBinding(
+        astNode.value ?? 'null',
+        _location(astNode),
+        context.templateContext.exports);
     if (context.bindPropertyToDirective(astNode, value)) return null;
     return createElementPropertyAst(
         context.elementName,
@@ -255,8 +255,10 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitInterpolation(ast.InterpolationAst astNode,
       [_ParseContext context]) {
-    var element = context.templateContext.parser
-        .parseInterpolation('{{${astNode.value}}}', _location(astNode), []);
+    var element = context.templateContext.parser.parseInterpolation(
+        '{{${astNode.value}}}',
+        _location(astNode),
+        context.templateContext.exports);
     return new ng.BoundTextAst(element,
         context.findNgContentIndex(TEXT_CSS_SELECTOR), astNode.sourceSpan);
   }
@@ -633,65 +635,92 @@ class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
 /// These providers are provided by the bound directives on the element or by
 /// parent elements.
 class _ProviderVisitor
-    implements ng.TemplateAstVisitor<Null, ProviderElementContext> {
+    implements ng.TemplateAstVisitor<ng.TemplateAst, ProviderElementContext> {
   final ProviderViewContext _rootContext;
 
   _ProviderVisitor(this._rootContext);
 
   @override
-  visitElement(ng.ElementAst ast, ProviderElementContext context) {
+  ng.ElementAst visitElement(
+      ng.ElementAst ast, ProviderElementContext context) {
     var elementContext = new ProviderElementContext(_rootContext, context,
         false, ast.directives, ast.attrs, ast.references, ast.sourceSpan);
+    var children = <ng.TemplateAst>[];
     for (var child in ast.children) {
-      child.visit(this, elementContext);
+      children.add(child.visit(this, elementContext));
     }
     elementContext.afterElement();
-    ast.providers.addAll(elementContext.transformProviders);
+    return new ng.ElementAst(
+        ast.name,
+        ast.attrs,
+        ast.inputs,
+        ast.outputs,
+        ast.references,
+        elementContext.transformedDirectiveAsts,
+        elementContext.transformProviders,
+        elementContext,
+        children,
+        ast.ngContentIndex,
+        ast.sourceSpan);
   }
 
   @override
-  visitEmbeddedTemplate(
+  ng.EmbeddedTemplateAst visitEmbeddedTemplate(
       ng.EmbeddedTemplateAst ast, ProviderElementContext context) {
     var elementContext = new ProviderElementContext(_rootContext, context, true,
         ast.directives, ast.attrs, ast.references, ast.sourceSpan);
+    var children = <ng.TemplateAst>[];
     for (var child in ast.children) {
-      child.visit(this, elementContext);
+      children.add(child.visit(this, elementContext));
     }
     elementContext.afterElement();
     ast.providers.addAll(elementContext.transformProviders);
+    return new ng.EmbeddedTemplateAst(
+        ast.attrs,
+        ast.outputs,
+        ast.references,
+        ast.variables,
+        elementContext.transformedDirectiveAsts,
+        elementContext.transformProviders,
+        elementContext,
+        children,
+        ast.ngContentIndex,
+        ast.sourceSpan);
   }
 
   @override
-  visitAttr(ng.AttrAst ast, ProviderElementContext context) {}
+  visitAttr(ng.AttrAst ast, ProviderElementContext context) => ast;
 
   @override
-  visitBoundText(ng.BoundTextAst ast, ProviderElementContext context) {}
+  visitBoundText(ng.BoundTextAst ast, ProviderElementContext context) => ast;
 
   @override
-  visitDirective(ng.DirectiveAst ast, ProviderElementContext context) {}
+  visitDirective(ng.DirectiveAst ast, ProviderElementContext context) => ast;
 
   @override
   visitDirectiveProperty(
-      ng.BoundDirectivePropertyAst ast, ProviderElementContext context) {}
+          ng.BoundDirectivePropertyAst ast, ProviderElementContext context) =>
+      ast;
 
   @override
   visitElementProperty(
-      ng.BoundElementPropertyAst ast, ProviderElementContext context) {}
+          ng.BoundElementPropertyAst ast, ProviderElementContext context) =>
+      ast;
 
   @override
-  visitEvent(ng.BoundEventAst ast, ProviderElementContext context) {}
+  visitEvent(ng.BoundEventAst ast, ProviderElementContext context) => ast;
 
   @override
-  visitNgContent(ng.NgContentAst ast, ProviderElementContext context) {}
+  visitNgContent(ng.NgContentAst ast, ProviderElementContext context) => ast;
 
   @override
-  visitReference(ng.ReferenceAst ast, ProviderElementContext context) {}
+  visitReference(ng.ReferenceAst ast, ProviderElementContext context) => ast;
 
   @override
-  visitText(ng.TextAst ast, ProviderElementContext context) {}
+  visitText(ng.TextAst ast, ProviderElementContext context) => ast;
 
   @override
-  visitVariable(ng.VariableAst ast, ProviderElementContext context) {}
+  visitVariable(ng.VariableAst ast, ProviderElementContext context) => ast;
 }
 
 /// Visitor which extracts inline templates.
