@@ -152,7 +152,6 @@ class RouterImpl extends Router {
     }
 
     await _activateRouterState(nextState);
-    _streamController.add(_activeState);
     if (navigationParams == null || navigationParams.updateUrl) {
       _location.go(nextState.build().toUrl());
     }
@@ -418,6 +417,7 @@ class RouterImpl extends Router {
       }
     }
 
+    _streamController.add(nextState);
     _activeState = nextState;
     _activeComponentRefs = mutableNextState.components;
   }
