@@ -53,7 +53,8 @@ class NoInterpolationTest {
 @Component(
   selector: 'ignore-directives-test',
   directives: const [TestDirective],
-  template: '<div ngNonBindable><span id=child test-dec>{{text}}</span></div>',
+  template:
+      '<div ngNonBindable><span id="child" test-dec>{{text}}</span></div>',
 )
 class IgnoreDirectivesTest {
   String text = 'foo';
@@ -62,7 +63,8 @@ class IgnoreDirectivesTest {
 @Component(
   selector: 'directive-same-node-test',
   directives: const [TestDirective],
-  template: '<div><span id=child ngNonBindable test-dec>{{text}}</span></div>',
+  template:
+      '<div><span id="child" ngNonBindable test-dec>{{text}}</span></div>',
 )
 class DirectiveSameNodeTest {
   String text = 'foo';

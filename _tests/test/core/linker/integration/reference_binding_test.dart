@@ -89,7 +89,7 @@ class ChildComponent {
 
 @Component(
   selector: 'component-reference-binding',
-  template: '<p><child ref-alice></child></p>',
+  template: '<p><child #alice></child></p>',
   directives: const [ChildComponent],
 )
 class ComponentReferenceBindingComponent {}
@@ -109,14 +109,14 @@ class DirectiveReferenceBindingComponent {}
 
 @Component(
   selector: 'element-reference-binding',
-  template: '<div><div ref-alice><i>Hello</i></div></div>',
+  template: '<div><div #alice><i>Hello</i></div></div>',
 )
 class ElementReferenceBindingComponent {}
 
 @Component(
   selector: 'use-ref-before-declaration',
   template: '<template [ngIf]="true">{{alice.value}}</template>'
-      '|{{alice.value}}|<child ref-alice></child>',
+      '|{{alice.value}}|<child #alice></child>',
   directives: const [
     ChildComponent,
     NgIf,
@@ -126,7 +126,7 @@ class UseRefBeforeDeclarationComponent {}
 
 @Component(
   selector: 'two-component-references',
-  template: '<p><child ref-alice></child><child ref-bob></child></p>',
+  template: '<p><child #alice></child><child #bob></child></p>',
   directives: const [ChildComponent],
 )
 class TwoComponentReferencesComponent {}
@@ -140,7 +140,7 @@ class ShorthandRefComponent {}
 
 @Component(
   selector: 'case-sensitive-ref',
-  template: '<child ref-superAlice></child>',
+  template: '<child #superAlice></child>',
   directives: const [ChildComponent],
 )
 class CaseSensitiveRefComponent {}
