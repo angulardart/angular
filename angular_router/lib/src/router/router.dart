@@ -27,7 +27,6 @@ enum NavigationResult { SUCCESS, BLOCKED_BY_GUARD, INVALID_ROUTE }
 ///   }
 /// }
 /// ```
-/// TODO(nxl): Implement Stream<RouterState>.
 abstract class Router {
   /// Current state of the router.
   ///
