@@ -33,6 +33,10 @@ dependency_overrides:
     git:
       url: https://github.com/dart-lang/bazel_worker.git
       ref: log-stderr
+  build_runner:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_runner
 
 transformers:
   - angular:
