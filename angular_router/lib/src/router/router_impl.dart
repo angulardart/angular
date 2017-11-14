@@ -36,13 +36,12 @@ class RouterImpl extends Router {
   RouterImpl(
       this._location,
       @Optional() this._routerHook,
-      LocationStrategy locationStrategy,
       PlatformLocation platformLocation,
       @Optional() @Inject(APP_BASE_HREF) String baseHref)
       : _baseHref = Url.normalizePath(
             baseHref ?? platformLocation.getBaseHrefFromDOM() ?? '',
-            locationStrategy is HashLocationStrategy) {
-    Url.isHashStrategy = locationStrategy is HashLocationStrategy;
+            _location.platformStrategy is HashLocationStrategy) {
+    Url.isHashStrategy = _location.platformStrategy is HashLocationStrategy;
 
     _location.subscribe((_) async {
       var url = Url.parse(_location.path());
