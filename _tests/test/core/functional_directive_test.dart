@@ -140,7 +140,7 @@ void addAttributesDirective(
 
 @Component(
   selector: 'test-dependency-injection',
-  template: '<div id="test" addAttributes>',
+  template: '<div id="test" addAttributes></div>',
   directives: const [addAttributesDirective],
   visibility: Visibility.none,
 )
@@ -156,7 +156,7 @@ void addAttributesForTokenDirective(
 
 @Component(
   selector: 'test-dependency-injection',
-  template: '<div id="test" addAttributes>',
+  template: '<div id="test" addAttributes></div>',
   directives: const [addAttributesForTokenDirective],
   visibility: Visibility.none,
 )

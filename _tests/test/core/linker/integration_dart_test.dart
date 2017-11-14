@@ -58,7 +58,7 @@ void main() {
 
 @Component(
   selector: 'my-comp-with-tref',
-  template: '<template ref-alice>Unstamped tmp</template>'
+  template: '<template #alice>Unstamped tmp</template>'
       '<ref-reader [ref1]="alice"></ref-reader>',
   directives: const [RefReaderComponent],
 )

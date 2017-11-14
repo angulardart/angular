@@ -573,14 +573,14 @@ class DuplicatePipe2 implements PipeTransform {
 
 @Component(
   selector: 'no-dependency-test',
-  template: '<div simpleDirective>',
+  template: '<div simpleDirective></div>',
   directives: const [SimpleDirective],
 )
 class NoDependencyTest {}
 
 @Component(
   selector: 'simple-dependency-test',
-  template: '<div simpleDirective needsDirective>',
+  template: '<div simpleDirective needsDirective></div>',
   directives: const [SimpleDirective, NeedsDirective],
 )
 class SimpleDependencyTest {}
