@@ -15,8 +15,8 @@ import 'admin_heroes_component.template.dart' as admin_heroes_component;
   template: '''
       <h3>ADMIN</h3>
       <nav>
-        <a routerLink="adminDashboardRoute">Dashboard</a>
-        <a routerLink="adminHeroRoute">Manage Heroes</a>
+        <a [routerLink]="adminDashboardRoute">Dashboard</a>
+        <a [routerLink]="adminHeroRoute">Manage Heroes</a>
       </nav>
       <router-outlet [routes]="routes"></router-outlet>
     ''',
