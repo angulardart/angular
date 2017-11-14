@@ -47,6 +47,7 @@ Future main(List<String> args) async {
     buildActions,
     deleteFilesByDefault: true,
     writeToCache: true,
+    enableLowResourcesMode: true
   );
 
   var testServer =
