@@ -15,7 +15,6 @@ import '../router_hook.dart';
 import '../url.dart';
 import 'navigation_params.dart';
 import 'router.dart';
-import 'router_coordinator.dart';
 import 'router_outlet_token.dart';
 import 'router_state.dart';
 
@@ -30,9 +29,6 @@ class RouterImpl extends Router {
   final Location _location;
   final RouterHook _routerHook;
   final String _baseHref;
-
-  /// The top-level routes at the roots of the router's route trees.
-  int _coordinatorIndex;
   RouterState _activeState;
   Iterable<ComponentRef> _activeComponentRefs = [];
   RouterOutlet _rootOutlet;
@@ -48,7 +44,6 @@ class RouterImpl extends Router {
             locationStrategy is HashLocationStrategy) {
     Url.isHashStrategy = locationStrategy is HashLocationStrategy;
 
-    _coordinatorIndex = RouterCoordinator.INSTANCE.registerRouter(this);
     _location.subscribe((_) async {
       var url = Url.parse(_location.path());
 
@@ -103,7 +98,7 @@ class RouterImpl extends Router {
       [NavigationParams navigationParams]) {
     var absolutePath = _getAbsolutePath(path, _activeState);
 
-    return RouterCoordinator.INSTANCE.navigate(_coordinatorIndex,
+    return navigateRouter(
         Location.joinWithSlash(_baseHref, absolutePath), navigationParams);
   }
 
