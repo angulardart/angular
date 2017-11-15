@@ -5,9 +5,8 @@ analyzer:
    # implicit-dynamic: false
    # implicit-casts: false
  exclude:
-    # This exclude does not work on Dart 1.24.x
-    # See `tool/travis.sh` for this is handled on Travis
-    - tools/analyzer_plugin/bin/plugin.dart
+    - "tool/build.dart"
+    - "tools/analyzer_plugin/bin/plugin.dart"
  errors:
    unused_element: error
    unused_import: error
