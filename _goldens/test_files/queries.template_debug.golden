@@ -17,17 +17,20 @@ import 'package:angular/angular.template.dart'
 
 import 'package:angular/src/debug/debug_context.dart';
 import 'queries.dart' as import1;
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'package:angular/src/core/linker/query_list.dart'
-    as import3;
-import 'dart:html' as import4;
+    as import5;
+import 'dart:html' as import6;
+import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/view_type.dart'
-    as import7;
+    as import10;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import9;
+    as import12;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
 
@@ -37,54 +40,33 @@ List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent0 = [
       [import1.AnotherDirective], null, <String, dynamic>{'q1': null}),
   new StaticNodeDebugInfo(
       [import1.AnotherDirective], null, <String, dynamic>{'q2': null}),
-  new StaticNodeDebugInfo(
-      [import1.AnotherDirective], null, <String, dynamic>{'q3': null}),
-  new StaticNodeDebugInfo(
-      [import1.AnotherDirective], null, <String, dynamic>{'q4': null}),
-  new StaticNodeDebugInfo(
-      [import1.AnotherDirective], null, <String, dynamic>{'q5': null}),
-  new StaticNodeDebugInfo(
-      [import1.AnotherDirective], null, <String, dynamic>{'q6': null}),
-  new StaticNodeDebugInfo(
-      [import1.AnotherDirective], null, <String, dynamic>{'q7': null}),
-  new StaticNodeDebugInfo(
-      [import1.AnotherDirective], null, <String, dynamic>{'q8': null})
+  new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{})
 ];
 
 class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
-  import3.QueryList _viewQuery_q6_0;
-  import3.QueryList _viewQuery_q8_1;
-  import3.QueryList _viewQuery_q8_2;
-  import3.QueryList _viewQuery_q8_3;
-  import3.QueryList _viewQuery_q8_4;
-  import3.QueryList _viewQuery_AnotherDirective_5;
-  import4.Element _el_0;
+  import5.QueryList _viewQuery_q2_0;
+  import5.QueryList _viewQuery_q2_1;
+  import5.QueryList _viewQuery_q2_2;
+  import5.QueryList _viewQuery_q2_3;
+  import5.QueryList _viewQuery_q2_4;
+  import5.QueryList _viewQuery_AnotherDirective_5;
+  import6.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_4;
-  import4.Element _el_1;
+  import6.Element _el_1;
   import1.AnotherDirective _AnotherDirective_1_4;
-  import4.Element _el_2;
-  import1.AnotherDirective _AnotherDirective_2_4;
-  import4.Element _el_3;
-  import1.AnotherDirective _AnotherDirective_3_4;
-  import4.Element _el_4;
-  import1.AnotherDirective _AnotherDirective_4_4;
-  import4.Element _el_5;
-  import1.AnotherDirective _AnotherDirective_5_4;
-  import4.Element _el_6;
-  import1.AnotherDirective _AnotherDirective_6_4;
-  import4.Element _el_7;
-  import1.AnotherDirective _AnotherDirective_7_4;
+  ViewContainer _appEl_2;
+  NgIf _NgIf_2_7;
   static RenderComponentType _renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            import7.ViewType.COMPONENT,
+            import10.ViewType.COMPONENT,
             {},
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_QueriesComponent0) {
-    rootEl = import4.document.createElement('queries');
-    _renderType ??= import9.appViewUtils.createRenderType(
+    rootEl = import6.document.createElement('queries');
+    _renderType ??= import12.appViewUtils.createRenderType(
         'asset:_goldens/test_files/queries.dart class QueriesComponent - inline template',
         ViewEncapsulation.None,
         styles$QueriesComponent);
@@ -92,40 +74,36 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   }
   @override
   ComponentRef<import1.QueriesComponent> build() {
-    final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _viewQuery_q6_0 = new import3.QueryList();
-    _viewQuery_q8_1 = new import3.QueryList();
-    _viewQuery_q8_2 = new import3.QueryList();
-    _viewQuery_q8_3 = new import3.QueryList();
-    _viewQuery_q8_4 = new import3.QueryList();
-    _viewQuery_AnotherDirective_5 = new import3.QueryList();
-    var doc = import4.document;
-    _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
+    final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _viewQuery_q2_0 = new import5.QueryList();
+    _viewQuery_q2_1 = new import5.QueryList();
+    _viewQuery_q2_2 = new import5.QueryList();
+    _viewQuery_q2_3 = new import5.QueryList();
+    _viewQuery_q2_4 = new import5.QueryList();
+    _viewQuery_AnotherDirective_5 = new import5.QueryList();
+    dbg(null, 0, 4);
+    project(parentRenderNode, 0);
+    var doc = import6.document;
+    _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 1, 4);
     _AnotherDirective_0_4 = new import1.AnotherDirective();
-    _el_1 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 1, 1, 4);
+    _el_1 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 1, 2, 4);
     _AnotherDirective_1_4 = new import1.AnotherDirective();
-    _el_2 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 2, 2, 4);
-    _AnotherDirective_2_4 = new import1.AnotherDirective();
-    _el_3 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 3, 3, 4);
-    _AnotherDirective_3_4 = new import1.AnotherDirective();
-    _el_4 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 4, 4, 4);
-    _AnotherDirective_4_4 = new import1.AnotherDirective();
-    _el_5 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 5, 5, 4);
-    _AnotherDirective_5_4 = new import1.AnotherDirective();
-    _el_6 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 6, 6, 4);
-    _AnotherDirective_6_4 = new import1.AnotherDirective();
-    _el_7 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 7, 7, 4);
-    _AnotherDirective_7_4 = new import1.AnotherDirective();
-    _viewQuery_q8_1.reset([new ElementRef(_el_7)]);
-    ctx.viewChildFromField = _viewQuery_q8_1.first;
-    _viewQuery_q8_2.reset([new ElementRef(_el_7)]);
-    ctx.readDIFromElementRef = _viewQuery_q8_2.first;
-    _viewQuery_q8_3.reset([_el_7]);
-    ctx.readDIFromElement = _viewQuery_q8_3.first;
-    _viewQuery_q8_4.reset([_el_7]);
-    ctx.readDIFromHtmlElement = _viewQuery_q8_4.first;
-    init(const [], null,
-        [_el_0, _el_1, _el_2, _el_3, _el_4, _el_5, _el_6, _el_7]);
+    var _anchor_2 = ngAnchor.clone(false);
+    parentRenderNode.append(_anchor_2);
+    dbgElm(this, _anchor_2, 2, 3, 4);
+    _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_6 =
+        new TemplateRef(_appEl_2, viewFactory_QueriesComponent1);
+    _NgIf_2_7 = new NgIf(_appEl_2, _TemplateRef_2_6);
+    _viewQuery_q2_1.reset([new ElementRef(_el_1)]);
+    ctx.viewChildFromField = _viewQuery_q2_1.first;
+    _viewQuery_q2_2.reset([new ElementRef(_el_1)]);
+    ctx.readDIFromElementRef = _viewQuery_q2_2.first;
+    _viewQuery_q2_3.reset([_el_1]);
+    ctx.readDIFromElement = _viewQuery_q2_3.first;
+    _viewQuery_q2_4.reset([_el_1]);
+    ctx.readDIFromHtmlElement = _viewQuery_q2_4.first;
+    init(const [], null, [_el_0, _el_1, _anchor_2]);
     return null;
   }
 
@@ -138,56 +116,95 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     if ((identical(token, import1.AnotherDirective) && (1 == nodeIndex))) {
       return _AnotherDirective_1_4;
     }
-    if ((identical(token, import1.AnotherDirective) && (2 == nodeIndex))) {
-      return _AnotherDirective_2_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (3 == nodeIndex))) {
-      return _AnotherDirective_3_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (4 == nodeIndex))) {
-      return _AnotherDirective_4_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (5 == nodeIndex))) {
-      return _AnotherDirective_5_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (6 == nodeIndex))) {
-      return _AnotherDirective_6_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (7 == nodeIndex))) {
-      return _AnotherDirective_7_4;
-    }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    if (!import9.AppViewUtils.throwOnChanges) {
-      if (_viewQuery_q6_0.dirty) {
-        _viewQuery_q6_0.reset([new ElementRef(_el_5)]);
-        ctx.viewChildrenFromField = _viewQuery_q6_0;
-        _viewQuery_q6_0.notifyOnChanges();
+    final import1.QueriesComponent _ctx = ctx;
+    dbg(2, 3, 17);
+    _NgIf_2_7.ngIf = _ctx.someValue;
+    _appEl_2.detectChangesInNestedViews();
+    if (!import12.AppViewUtils.throwOnChanges) {
+      if (_viewQuery_q2_0.dirty) {
+        _viewQuery_q2_0.reset([new ElementRef(_el_1)]);
+        ctx.viewChildrenFromField = _viewQuery_q2_0;
+        _viewQuery_q2_0.notifyOnChanges();
       }
       if (_viewQuery_AnotherDirective_5.dirty) {
         _viewQuery_AnotherDirective_5.reset([
           _AnotherDirective_0_4,
           _AnotherDirective_1_4,
-          _AnotherDirective_2_4,
-          _AnotherDirective_3_4,
-          _AnotherDirective_4_4,
-          _AnotherDirective_5_4,
-          _AnotherDirective_6_4,
-          _AnotherDirective_7_4
+          _appEl_2.mapNestedViews(_ViewQueriesComponent1,
+              (_ViewQueriesComponent1 nestedView) {
+            return [nestedView._AnotherDirective_0_4];
+          })
         ]);
         ctx.usingTypeFromField = _viewQuery_AnotherDirective_5;
         _viewQuery_AnotherDirective_5.notifyOnChanges();
       }
     }
   }
+
+  @override
+  void destroyInternal() {
+    _appEl_2?.destroyNestedViews();
+  }
 }
 
 AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(
     AppView<dynamic> parentView, num parentIndex) {
   return new ViewQueriesComponent0(parentView, parentIndex);
+}
+
+List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent1 = [
+  new StaticNodeDebugInfo(
+      [import1.AnotherDirective], null, <String, dynamic>{'q3': null})
+];
+
+class _ViewQueriesComponent1 extends DebugAppView<import1.QueriesComponent> {
+  import6.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_4;
+  _ViewQueriesComponent1(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import10.ViewType.EMBEDDED,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_QueriesComponent1) {
+    componentType = ViewQueriesComponent0._renderType;
+  }
+  @override
+  ComponentRef<import1.QueriesComponent> build() {
+    var doc = import6.document;
+    _el_0 = doc.createElement('another');
+    dbgElm(this, _el_0, 0, 3, 4);
+    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    init0Dbg(_el_0, [_el_0]);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
+      return _AnotherDirective_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void dirtyParentQueriesInternal() {
+    (parentView as ViewQueriesComponent0)
+        ._viewQuery_AnotherDirective_5
+        .setDirty();
+  }
+}
+
+AppView<import1.QueriesComponent> viewFactory_QueriesComponent1(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewQueriesComponent1(parentView, parentIndex);
 }
 
 const List<dynamic> styles$QueriesComponentHost = const [];
@@ -199,18 +216,18 @@ List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = [
 class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_4;
-  import3.QueryList _query_q5_0_0;
-  import3.QueryList _query_q7_0_1;
+  import5.QueryList _query_AnotherDirective_0_0;
+  import5.QueryList _query_AnotherDirective_0_1;
   static RenderComponentType _renderType;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
-            import7.ViewType.HOST,
+            import10.ViewType.HOST,
             {},
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
             nodeDebugInfos_QueriesComponentHost0) {
-    _renderType ??= import9.appViewUtils.createRenderType(
+    _renderType ??= import12.appViewUtils.createRenderType(
         '', ViewEncapsulation.Emulated, styles$QueriesComponentHost);
     setupComponentType(_renderType);
   }
@@ -220,10 +237,11 @@ class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _QueriesComponent_0_4 = new import1.QueriesComponent();
-    _query_q5_0_0 = new import3.QueryList();
-    _query_q7_0_1 = new import3.QueryList();
-    _query_q7_0_1.reset([]);
-    _QueriesComponent_0_4.contentChildFromField = _query_q7_0_1.first;
+    _query_AnotherDirective_0_0 = new import5.QueryList();
+    _query_AnotherDirective_0_1 = new import5.QueryList();
+    _query_AnotherDirective_0_1.reset([]);
+    _QueriesComponent_0_4.contentChildFromField =
+        _query_AnotherDirective_0_1.first;
     _compView_0.create(_QueriesComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import1.QueriesComponent>(
@@ -241,11 +259,12 @@ class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   void detectChangesInternal() {
-    if (!import9.AppViewUtils.throwOnChanges) {
-      if (_query_q5_0_0.dirty) {
-        _query_q5_0_0.reset([]);
-        _QueriesComponent_0_4.contentChildrenFromField = _query_q5_0_0;
-        _query_q5_0_0.notifyOnChanges();
+    if (!import12.AppViewUtils.throwOnChanges) {
+      if (_query_AnotherDirective_0_0.dirty) {
+        _query_AnotherDirective_0_0.reset([]);
+        _QueriesComponent_0_4.contentChildrenFromField =
+            _query_AnotherDirective_0_0;
+        _query_AnotherDirective_0_0.notifyOnChanges();
       }
     }
     _compView_0.detectChanges();

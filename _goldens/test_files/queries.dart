@@ -3,39 +3,40 @@ import 'package:angular/angular.dart';
 
 @Component(
   selector: 'queries',
-  directives: const [AnotherDirective],
+  directives: const [
+    AnotherDirective,
+    NgIf,
+  ],
   template: r'''
+    <ng-content></ng-content>
     <another #q1></another>
     <another #q2></another>
-    <another #q3></another>
-    <another #q4></another>
-    <another #q5></another>
-    <another #q6></another>
-    <another #q7></another>
-    <another #q8></another>
+    <another #q3 *ngIf="someValue"></another>
   ''',
 )
 class QueriesComponent {
-  @ContentChildren('q5')
+  bool someValue = false;
+
+  @ContentChildren(AnotherDirective)
   QueryList<AnotherDirective> contentChildrenFromField;
 
-  @ViewChildren('q6')
-  QueryList<AnotherDirective> viewChildrenFromField;
-
-  @ContentChild('q7')
+  @ContentChild(AnotherDirective)
   AnotherDirective contentChildFromField;
 
-  @ViewChild('q8')
+  @ViewChildren('q2')
+  QueryList<AnotherDirective> viewChildrenFromField;
+
+  @ViewChild('q2')
   AnotherDirective viewChildFromField;
 
-  @ViewChild('q8', read: ElementRef)
+  @ViewChild('q2', read: ElementRef)
   ElementRef readDIFromElementRef;
 
-  @ViewChild('q8', read: Element)
-  ElementRef readDIFromElement;
+  @ViewChild('q2', read: Element)
+  Element readDIFromElement;
 
-  @ViewChild('q8', read: HtmlElement)
-  ElementRef readDIFromHtmlElement;
+  @ViewChild('q2', read: HtmlElement)
+  HtmlElement readDIFromHtmlElement;
 
   @ViewChildren(AnotherDirective)
   QueryList<AnotherDirective> usingTypeFromField;
