@@ -6,10 +6,9 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'deferred_component_ngmodel_test.template.dart' as ng_generated;
 import 'deferred_view_with_ngmodel.dart';
 import 'deferred_view_with_ngmodel.template.dart' deferred as deflib0;
-
-import 'deferred_component_ngmodel_test.template.dart' as ng_generated;
 
 void main() {
   ng_generated.initReflector();

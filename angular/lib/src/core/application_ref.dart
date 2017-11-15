@@ -91,8 +91,10 @@ Future<ComponentRef<T>> coreLoadAndBootstrap<T>(
   appViewUtils = injector.get(AppViewUtils);
   ApplicationRef appRef = injector.get(ApplicationRef);
   return await appRef.run(() async {
+    // ignore: deprecated_member_use
     ComponentResolver componentResolver = injector.get(ComponentResolver);
     ComponentFactory factory =
+        // ignore: deprecated_member_use
         await componentResolver.resolveComponent(componentType);
     await appRef.waitForAsyncInitializers();
     return appRef.bootstrap(factory);
@@ -197,8 +199,8 @@ abstract class ApplicationRef {
   ///
   /// When bootstrapping a new root component into an application,
   /// Angular mounts the specified application component onto DOM elements
-  /// identified by the [ComponentFactory.componentType]'s selector and kicks
-  /// off automatic change detection to finish initializing the component.
+  /// identified by the component's selector and kicks off automatic change
+  /// detection to finish initializing the component.
   ComponentRef<T> bootstrap<T>(
     ComponentFactory<T> componentFactory, [
     // TODO(matanl): Remove from the public API before 5.x.
@@ -524,6 +526,7 @@ class ApplicationRefImpl extends ApplicationRef {
 
   @override
   List<Type> get componentTypes =>
+      // ignore: deprecated_member_use
       _rootComponentFactories.map((factory) => factory.componentType).toList();
 
   @override

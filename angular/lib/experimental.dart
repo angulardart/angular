@@ -19,6 +19,7 @@ import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
 import 'src/core/render/api.dart';
 import 'src/di/injector/injector.dart';
+import 'src/di/reflector.dart' as reflector;
 import 'src/platform/bootstrap.dart';
 import 'src/platform/dom/shared_styles_host.dart';
 
@@ -58,6 +59,17 @@ ComponentRef<T> bootstrapFactory<T>(
   final appRef = appInjector.get(ApplicationRef) as ApplicationRef;
   return appRef.bootstrap(factory, appInjector);
 }
+
+/// Transitional API: Returns a [ComponentFactory] for [typeOrFactory].
+///
+/// If [typeOrFactory] is already a [ComponentFactory] this does nothing.
+///
+/// This API is slated for removal once the transition to factories is done.
+@experimental
+ComponentFactory<T> typeToFactory<T>(Object typeOrFactory) =>
+    typeOrFactory is ComponentFactory<T>
+        ? typeOrFactory
+        : reflector.getComponent(typeOrFactory);
 
 /// Creates a root application injector by invoking [createAppInjector].
 ///

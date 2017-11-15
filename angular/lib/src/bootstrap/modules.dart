@@ -1,6 +1,8 @@
 /// Contains the internal dependency injection "modules" required for bootstrap.
 library angular.src.bootstrap.modules;
 
+// ignore_for_file: deprecated_member_use
+
 import 'dart:html';
 import 'dart:math';
 
@@ -99,7 +101,7 @@ String createRandomAppId() {
 @experimental
 const bootstrapLegacyModule = const <Object>[
   bootstrapMinimalModule,
-  const Provider(ComponentResolver, useClass: ReflectorComponentResolver),
+  const Provider(ComponentResolver, useClass: ComponentResolver),
   const Provider(SlowComponentLoader),
   const Provider(Testability, useClass: Testability),
 ];

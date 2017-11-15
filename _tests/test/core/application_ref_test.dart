@@ -34,8 +34,8 @@ import 'package:angular/src/facade/exception_handler.dart'
     show ExceptionHandler;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
-import 'core_mocks.dart';
 import 'application_ref_test.template.dart' as ng_generated;
+import 'core_mocks.dart';
 
 void main() {
   ng_generated.initReflector();
@@ -67,6 +67,7 @@ void main() {
         bootstrapLegacyModule,
         new Provider(ExceptionHandler,
             useValue: new ExceptionHandler(errorLogger)),
+        // ignore: deprecated_member_use
         new Provider(ComponentResolver,
             useValue: new _MockComponentResolver(someCompFactory)),
         providers
@@ -183,6 +184,7 @@ class _MockComponentFactory extends ComponentFactory {
   }
 }
 
+// ignore: deprecated_member_use
 class _MockComponentResolver implements ComponentResolver {
   final ComponentFactory _compFactory;
   _MockComponentResolver(this._compFactory);
@@ -191,12 +193,6 @@ class _MockComponentResolver implements ComponentResolver {
   Future<ComponentFactory> resolveComponent(Type type) {
     return new Future.value(this._compFactory);
   }
-
-  @override
-  ComponentFactory resolveComponentSync(Type type) => _compFactory;
-
-  @override
-  void clearCache() {}
 }
 
 class _MockComponentRef extends ComponentRef {
