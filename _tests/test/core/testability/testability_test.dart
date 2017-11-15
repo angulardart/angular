@@ -25,12 +25,16 @@ class MockCallback extends Mock implements TestabilityCallback {}
 @Injectable()
 class TestZone extends NgZone {
   StreamController<dynamic> _onUnstableStream;
-  Stream get onTurnStart {
+
+  @override
+  Stream<Null> get onTurnStart {
     return _onUnstableStream.stream;
   }
 
   StreamController<dynamic> _onStableStream;
-  Stream get onTurnDone {
+
+  @override
+  Stream<Null> get onTurnDone {
     return _onStableStream.stream;
   }
 
