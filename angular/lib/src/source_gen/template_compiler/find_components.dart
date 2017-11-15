@@ -637,6 +637,7 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
     const TypeChecker.fromRuntime(OnDestroy): LifecycleHooks.OnDestroy,
     const TypeChecker.fromRuntime(DoCheck): LifecycleHooks.DoCheck,
     const TypeChecker.fromRuntime(OnChanges): LifecycleHooks.OnChanges,
+    const TypeChecker.fromRuntime(AfterChanges): LifecycleHooks.AfterChanges,
     const TypeChecker.fromRuntime(AfterContentInit):
         LifecycleHooks.AfterContentInit,
     const TypeChecker.fromRuntime(AfterContentChecked):

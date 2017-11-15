@@ -250,7 +250,7 @@ void main() {
         ..onRecord.listen((r) {
           logs.add(r.message);
         });
-      scopeLog(() {
+      await scopeLogAsync(() async {
         reader.parseDependencies(classNamed('BadField'));
       }, logger);
       await new Future.value();

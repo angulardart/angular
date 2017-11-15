@@ -3,15 +3,16 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:build/build.dart';
-import 'package:build_test/build_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart';
 
+import '../resolve_util.dart';
+
 void main() {
   group('inferExpressionType', () {
-    test('should infer MethodCall with implicit receiver', () async {
+    test('should resolve return type of method with implicit receiver',
+        () async {
       final analyzedClass = await analyzeClass('''
         class AppComponent {
           final List<String> _names;
@@ -22,7 +23,8 @@ void main() {
       expect(type.toString(), 'List<String>');
     });
 
-    test('should infer dynamic for method with explicit receiver', () async {
+    test('should resolve return type of method with explicit receiver',
+        () async {
       final analyzedClass = await analyzeClass('''
         class AppComponent {
           final List<String> names;
@@ -33,10 +35,10 @@ void main() {
         new LiteralPrimitive(4),
       ]);
       final type = getExpressionType(rangeExpr, analyzedClass);
-      expect(type.toString(), 'dynamic');
+      expect(type.toString(), 'Iterable<String>');
     });
 
-    test('should infer PropertyRead with implicit receiver', () async {
+    test('should resolve property type with implicit receiver', () async {
       final analyzedClass = await analyzeClass('''
         class AppComponent {
           final List<int> values;
@@ -46,7 +48,7 @@ void main() {
       expect(type.toString(), 'List<int>');
     });
 
-    test('should infer dynamic for property with explicit receiver', () async {
+    test('should resolve property type with explicit receiver', () async {
       final analyzedClass = await analyzeClass('''
         class AppComponent {
           final List<int> values;
@@ -54,16 +56,13 @@ void main() {
       final valuesExpr = new PropertyRead(new ImplicitReceiver(), 'values');
       final lengthExpr = new PropertyRead(valuesExpr, 'length');
       final type = getExpressionType(lengthExpr, analyzedClass);
-      expect(type.toString(), 'dynamic');
+      expect(type.toString(), 'int');
     });
   });
 }
 
 Future<AnalyzedClass> analyzeClass(String source) async {
-  final testAssetId = new AssetId('analyzed_class_test', 'lib/test.dart');
-  final library = await resolveSource(
-      source, (resolver) => resolver.libraryFor(testAssetId),
-      inputId: testAssetId);
+  final library = await resolve(source);
   final visitor = new AnalyzedClassVisitor();
   return library.accept(visitor);
 }

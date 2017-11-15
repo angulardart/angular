@@ -6,9 +6,7 @@ import 'package:angular/src/source_gen/source_gen.dart';
 import 'package:angular/src/transform/stylesheet_compiler/transformer.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:build/build.dart';
-
 import 'package:build_compilers/build_compilers.dart';
-
 import 'package:build_runner/build_runner.dart';
 import 'package:build_test/builder.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -47,7 +45,6 @@ Future main(List<String> args) async {
     buildActions,
     deleteFilesByDefault: true,
     writeToCache: true,
-    enableLowResourcesMode: true
   );
 
   var testServer =

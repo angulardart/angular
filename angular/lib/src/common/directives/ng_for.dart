@@ -106,9 +106,8 @@ class NgFor implements DoCheck {
   set ngForOf(value) {
     assert(
         value == null || value is Iterable,
-        'Cannot diff `$value` of type ${value.runtimeType}. $NgFor only '
-        'supports binding to something that implements the `Iterable` '
-        'interface, such as `List`.');
+        'Cannot diff `$value`. $NgFor only supports binding to something that '
+        'implements the `Iterable` interface, such as `List`.');
     _ngForOf = value as Iterable;
     if (_differ == null && value != null) {
       _differ = new DefaultIterableDiffer(_ngForTrackBy);
