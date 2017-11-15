@@ -92,13 +92,13 @@ class NgZone {
     }
   }
 
-  final StreamController _onUnstableController =
+  final StreamController _onTurnStart =
       new StreamController.broadcast(sync: true);
-  final StreamController _onMicrotaskEmptyController =
+  final StreamController _onMicrotaskEmpty =
       new StreamController.broadcast(sync: true);
-  final StreamController _onStableController =
+  final StreamController _onTurnDone =
       new StreamController.broadcast(sync: true);
-  final StreamController<NgZoneError> _onErrorController =
+  final StreamController<NgZoneError> _onError =
       new StreamController<NgZoneError>.broadcast(sync: true);
 
   Zone _outerZone;
@@ -204,7 +204,7 @@ class NgZone {
     if (_isStable) {
       _isStable = false;
       _isRunning = true;
-      _onUnstableController.add(null);
+      _onTurnStart.add(null);
     }
   }
 
@@ -217,13 +217,13 @@ class NgZone {
   // Called by Chain.capture() on errors when long stack traces are enabled
   void _onErrorWithLongStackTrace(error, Chain chain) {
     final traces = chain.terse.traces.map((t) => t.toString()).toList();
-    _onErrorController.add(new NgZoneError(error, traces));
+    _onError.add(new NgZoneError(error, traces));
   }
 
   // Outer zone handleUnchaughtError when long stack traces are not used
   void _onErrorWithoutLongStackTrace(
       Zone self, ZoneDelegate parent, Zone zone, error, StackTrace trace) {
-    _onErrorController.add(new NgZoneError(error, [trace.toString()]));
+    _onError.add(new NgZoneError(error, [trace.toString()]));
   }
 
   Timer _createTimer(
@@ -265,14 +265,14 @@ class NgZone {
           // console.log('ZONE.microtaskEmpty');
           _nesting++;
           _isRunning = false;
-          if (!_disposed) _onMicrotaskEmptyController.add(null);
+          if (!_disposed) _onMicrotaskEmpty.add(null);
         } finally {
           _nesting--;
           if (!_hasPendingMicrotasks) {
             try {
               // console.log('ZONE.stable', this._nesting, this._isStable);
               runOutsideAngular(() {
-                if (!_disposed) _onStableController.add(null);
+                if (!_disposed) _onTurnDone.add(null);
               });
             } finally {
               _isStable = true;
@@ -331,14 +331,14 @@ class NgZone {
   bool get isRunning => _isRunning;
 
   /// Notify that an error has been delivered.
-  Stream<NgZoneError> get onError => _onErrorController.stream;
+  Stream<NgZoneError> get onError => _onError.stream;
 
   /// Notifies when there is no more microtasks enqueue in the current VM Turn.
   ///
   /// This is a hint for Angular to do change detection, which may enqueue more
   /// microtasks.
   /// For this reason this event can fire multiple times per VM Turn.
-  Stream get onMicrotaskEmpty => _onMicrotaskEmptyController.stream;
+  Stream<Null> get onMicrotaskEmpty => _onMicrotaskEmpty.stream;
 
   /// A synchronous stream that fires when the VM turn has started, which means
   /// that the inner (managed) zone has not executed any microtasks.
@@ -346,7 +346,7 @@ class NgZone {
   /// Note:
   /// - Causing any turn action, e.g., spawning a Future, within this zone will
   ///   cause an infinite loop.
-  Stream get onTurnStart => _onUnstableController.stream;
+  Stream<Null> get onTurnStart => _onTurnStart.stream;
 
   /// A synchronous stream that fires when the VM turn is finished, which means
   /// when the inner (managed) zone has completed it's private microtask queue.
@@ -355,7 +355,7 @@ class NgZone {
   /// - This won't wait for microtasks schedules in outer zones.
   /// - Causing any turn action, e.g., spawning a Future, within this zone will
   ///   cause an infinite loop.
-  Stream get onTurnDone => _onStableController.stream;
+  Stream<Null> get onTurnDone => _onTurnDone.stream;
 
   /// A synchronous stream that fires when the last turn in an event completes.
   /// This indicates VM event loop end.
@@ -364,18 +364,12 @@ class NgZone {
   /// - This won't wait for microtasks schedules in outer zones.
   /// - Causing any turn action, e.g., spawning a Future, within this zone will
   ///   cause an infinite loop.
-  Stream get onEventDone => _onMicrotaskEmptyController.stream;
+  Stream<Null> get onEventDone => _onMicrotaskEmpty.stream;
 
   /// App is disposed stop sending events.
   void dispose() {
     _disposed = true;
   }
-
-  @Deprecated('Use onTurnDone')
-  Stream get onStable => _onStableController.stream;
-
-  @Deprecated('Use onTurnStart')
-  Stream get onUnstable => _onUnstableController.stream;
 }
 
 /// A `Timer` wrapper that lets you specify additional functions to call when it
