@@ -98,15 +98,16 @@ class TestRouterLinkActive {
 }
 
 class FakeRouter implements Router {
-  final _streamController = new StreamController<RouterState>();
+  final _streamController =
+      new StreamController<RouterState>.broadcast(sync: true);
 
   RouterState _current;
 
   @override
   RouterState get current => _current;
   set current(RouterState current) {
+    _streamController.add(current);
     _current = current;
-    _streamController.add(_current);
   }
 
   @override
