@@ -11,8 +11,8 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 
-import 'deferred_view.dart';
 import 'deferred_component_test.template.dart' as ng_generated;
+import 'deferred_view.dart';
 
 void main() {
   ng_generated.initReflector();

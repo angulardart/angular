@@ -121,11 +121,13 @@ class ChildCompUsingService {
 class DynamicViewport {
   Future<dynamic> done;
 
+  // ignore: deprecated_member_use
   DynamicViewport(ViewContainerRef vc, ComponentResolver compiler) {
     final myService = new MyService()..greeting = 'dynamic greet';
     final injector = new Injector.map({
       MyService: myService,
     }, vc.injector);
+    // ignore: deprecated_member_use
     done = compiler.resolveComponent(ChildCompUsingService).then(
         (componentFactory) =>
             vc.createComponent(componentFactory, 0, injector));
