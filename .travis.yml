@@ -2,6 +2,7 @@ language: dart
 
 dart:
   - dev
+  - "dev/release/2.0.0-dev.6.0"
 
 env:
   - PKG=_goldens
