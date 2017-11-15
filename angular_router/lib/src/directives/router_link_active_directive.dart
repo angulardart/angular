@@ -9,6 +9,7 @@ import 'package:collection/collection.dart';
 import 'package:angular/angular.dart';
 
 import '../router/router.dart';
+import '../router/router_state.dart';
 import 'router_link_directive.dart';
 
 /// Adds a CSS class to the bound element when the link's route becomes active.
@@ -41,8 +42,8 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
 
   @override
   void ngAfterViewInit() {
-    _routeChanged = _router.stream.listen((_) => _update());
-    _update();
+    _routeChanged = _router.stream.listen(_update);
+    _update(_router.current);
   }
 
   @Input()
@@ -61,21 +62,21 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
     }
   }
 
-  void _update() {
-    if (_router.current != null &&
+  void _update(RouterState routerState) {
+    if (routerState != null &&
         links.isNotEmpty &&
         links.any((link) {
-          if (link.url.path != _router.current.path) {
+          if (link.url.path != routerState.path) {
             return false;
           }
           // Only check queryParameter/fragment if included in the [routerLink].
           if (link.url.queryParameters.length > 0 &&
               !const MapEquality().equals(
-                  link.url.queryParameters, _router.current.queryParameters)) {
+                  link.url.queryParameters, routerState.queryParameters)) {
             return false;
           }
           if (link.url.fragment.length > 0 &&
-              link.url.fragment != _router.current.fragment) {
+              link.url.fragment != routerState.fragment) {
             return false;
           }
 
