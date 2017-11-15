@@ -38,6 +38,9 @@ projects.
 
 *   Removed unused `context` parameter from `TemplateRef.createEmbeddedView`.
 
+*   Removed deprecated getters `onStable`|`onUnstable` from `NgZone`. They have
+    been reachable as `onTurnDone`|`onTurnStart` for a few releases.
+
 ### Bug fixes
 
 *   Correctly depend on `analyzer: ^0.31.0-alpha.1`.
