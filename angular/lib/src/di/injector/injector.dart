@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'empty.dart';
 import 'hierarchical.dart';
 import 'map.dart';
-import 'reflective.dart';
+import 'runtime.dart';
 
 // TODO(matanl): Remove export after we have a 'runtime.dart' import.
 export '../../core/di/opaque_token.dart' show OpaqueToken;

@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import 'provider.dart';
+import 'providers.dart';
 
 /// Encapsulates a reusable set of dependency injection configurations.
 ///
@@ -45,11 +45,11 @@ import 'provider.dart';
 @experimental
 class Module {
   final List<Module> include;
-  final List<StaticProvider<Object>> provide;
+  final List<Provider<Object>> provide;
 
   const factory Module({
     List<Module> include,
-    List<StaticProvider<Object>> provide,
+    List<Provider<Object>> provide,
   }) = Module._;
 
   const Module._({

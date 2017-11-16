@@ -15,7 +15,7 @@ import 'package:angular/src/core/linker/component_resolver.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
 import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/core/zone.dart';
-import 'package:angular/src/di/provider.dart';
+import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
 import 'package:angular/src/facade/lang.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';

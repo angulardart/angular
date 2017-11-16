@@ -6,7 +6,7 @@ const _meta = '$_angular/src/core/metadata.dart';
 const _di = '$_angular/src/core/di/decorators.dart';
 const _injector = '$_angular/src/di/injector/injector.dart';
 const _module = '$_angular/src/di/module.dart';
-const _provider = '$_angular/src/di/provider.dart';
+const _provider = '$_angular/src/di/providers.dart';
 const _providerOf = '$_provider#Provider';
 const _token = '$_angular/src/core/di/opaque_token.dart';
 
@@ -39,7 +39,4 @@ const $_GenerateInjector =
     const TypeChecker.fromUrl('$_injector#_GenerateInjector');
 const $Module = const TypeChecker.fromUrl('$_module#Module');
 const $Provider = const TypeChecker.fromUrl('$_provider#Provider');
-const $StaticProvider = const TypeChecker.fromUrl('$_provider#StaticProvider');
-const $ProviderUseClass = const TypeChecker.fromUrl('${_providerOf}UseClass');
-const $ProviderUseMulti = const TypeChecker.fromUrl('${_providerOf}UseMulti');
 const $OpaqueToken = const TypeChecker.fromUrl('$_token#OpaqueToken');

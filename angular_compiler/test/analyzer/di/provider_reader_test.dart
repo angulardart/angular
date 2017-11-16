@@ -70,9 +70,6 @@ void main() {
           const Provider(exampleToken, useValue: const [
             const Duration(seconds: 5),
           ]),
-
-          // [9] New ProviderUseClass
-          const ProviderUseClass<Example, ExamplePrime>(),
         ];
       ''');
       $Example = testLib.getType('Example');
@@ -211,20 +208,6 @@ void main() {
           urlOf($Example),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
-            const [],
-          ),
-        ),
-      );
-    });
-
-    test('using the new "ProviderUseClass" type', () {
-      expect(
-        reader.parseProvider(providers[9]),
-        new UseClassProviderElement(
-          new TypeTokenElement(urlOf($Example)),
-          urlOf($ExamplePrime),
-          dependencies: new DependencyInvocation(
-            $ExamplePrime.unnamedConstructor,
             const [],
           ),
         ),

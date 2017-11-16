@@ -11,9 +11,6 @@ import 'directive_test.template.dart' as ng_generated;
 void main() {
   ng_generated.initReflector();
 
-  bool _isReified<T>() => !identical(T, dynamic);
-  final isStrongMode = _isReified<String>();
-
   tearDown(disposeAnyRunningTest);
 
   test('should use the proper provider bindings in a hierarchy', () async {
@@ -58,7 +55,6 @@ void main() {
     expect(
       fixture.assertOnlyInstance.usPresidents,
       const isInstanceOf<List<String>>(),
-      skip: !isStrongMode ? 'Skipped in non-strong runtime' : false,
     );
     expect(fixture.text, '[George, Abraham]');
   });
@@ -222,8 +218,8 @@ class ErasedMultiGenerics {
 @Component(
   selector: 'reified-multi-generics',
   providers: const [
-    const ProviderUseMulti.ofTokenToValue(usPresidentsToken, 'George'),
-    const ProviderUseMulti.ofTokenToValue(usPresidentsToken, 'Abraham'),
+    const Provider<String>(usPresidentsToken, useValue: 'George', multi: true),
+    const Provider<String>(usPresidentsToken, useValue: 'Abraham', multi: true),
   ],
   template: "{{usPresidents}}",
 )

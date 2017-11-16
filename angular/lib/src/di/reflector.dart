@@ -79,6 +79,6 @@ void registerDependencies(Object invokable, List<List<Object>> dependencies) {
 }
 
 /// Returns dependencies needed to invoke [object].
-List<List<Object>> getDependencies(Object object) {
+List<Object> getDependencies(Object object) {
   return _dependencies[object] ?? const <List<Object>>[];
 }
