@@ -19,10 +19,15 @@ import 'directives/validators.dart'
         MaxLengthValidator,
         PatternValidator;
 
+export 'directives/abstract_control_directive.dart'
+    show AbstractControlDirective;
 export 'directives/checkbox_value_accessor.dart'
     show CheckboxControlValueAccessor;
-export 'directives/control_value_accessor.dart' show ControlValueAccessor;
+export 'directives/control_container.dart' show ControlContainer;
+export 'directives/control_value_accessor.dart'
+    show ControlValueAccessor, TouchFunction, ChangeFunction, NG_VALUE_ACCESSOR;
 export 'directives/default_value_accessor.dart' show DefaultValueAccessor;
+export 'directives/form_interface.dart' show Form;
 export 'directives/ng_control.dart' show NgControl;
 export 'directives/ng_control_group.dart' show NgControlGroup;
 export 'directives/ng_control_name.dart' show NgControlName;
@@ -36,12 +41,16 @@ export 'directives/radio_control_value_accessor.dart'
     show RadioControlValueAccessor, RadioButtonState;
 export 'directives/select_control_value_accessor.dart'
     show SelectControlValueAccessor, NgSelectOption;
+export 'directives/shared.dart'
+    show composeValidators, setUpControlGroup, setUpControl;
 export 'directives/validators.dart'
     show
         RequiredValidator,
         MinLengthValidator,
         MaxLengthValidator,
-        PatternValidator;
+        PatternValidator,
+        Validator,
+        ValidatorFn;
 
 /// A list of all the form directives used as part of a `@Component` annotation.
 ///
