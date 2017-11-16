@@ -152,7 +152,7 @@ class CompileTypeMetadataVisitor
       if (maybeUseFactory.type.element is FunctionTypedElement) {
         return _factoryForFunction(
           maybeUseFactory.type.element,
-          dart_objects.coerceList(provider, 'dependencies', defaultTo: null),
+          dart_objects.coerceList(provider, 'deps', defaultTo: null),
         );
       } else {
         _logger.severe('Provider.useFactory can only be used with a function, '

@@ -12,9 +12,6 @@ import 'injector_test.template.dart' as ng;
 void main() {
   ng.initReflector();
 
-  bool _isReified<T>() => !identical(T, dynamic);
-  final isStrongMode = _isReified<String>();
-
   group('Injector', () {
     test('.get should delegate token to .inject', () {
       final injector = new CaptureInjectInjector();
@@ -224,11 +221,19 @@ void main() {
       test('should reify a MultiProvider<T> in strong-mode runtimes', () {
         const usPresidents = const OpaqueToken<String>('usPresidents');
         final injector = new Injector.slowReflective([
-          const ProviderUseMulti.ofTokenToValue(usPresidents, 'George W.'),
-          const ProviderUseMulti.ofTokenToValue(usPresidents, 'Abraham L.'),
+          const Provider<String>(
+            usPresidents,
+            useValue: 'George W.',
+            multi: true,
+          ),
+          const Provider<String>(
+            usPresidents,
+            useValue: 'Abraham L.',
+            multi: true,
+          ),
         ]);
         expect(injector.get(usPresidents), const isInstanceOf<List<String>>());
-      }, skip: !isStrongMode ? 'Skipped in non-strong runtime' : false);
+      });
     });
 
     group('.generate', () {

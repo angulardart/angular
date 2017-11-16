@@ -65,13 +65,15 @@ typedef dynamic ChangeFunctionSimple(value);
 @Directive(
   selector: "input[integer]",
   providers: const [
-    const ProviderUseMulti.ofTokenToExisting(
+    const Provider(
       NG_VALUE_ACCESSOR,
-      IntValueAccessor,
+      useExisting: IntValueAccessor,
+      multi: true,
     ),
-    const ProviderUseMulti.ofTokenToExisting(
+    const Provider(
       NG_VALIDATORS,
-      IntValueAccessor,
+      useExisting: IntValueAccessor,
+      multi: true,
     ),
   ],
 )

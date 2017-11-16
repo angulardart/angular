@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
@@ -20,8 +19,6 @@ class ProviderReader {
       TokenReader tokenReader: const TokenReader()})
       : _dependencyReader = dependencyReader,
         _tokenReader = tokenReader;
-
-  static bool _isNullOrDynamic(DartType t) => t.isDynamic || t.isDartCoreNull;
 
   /// Returns whether an object represents a `Provider`.
   @protected
@@ -50,9 +47,6 @@ class ProviderReader {
 
   ProviderElement _parseProvider(DartObject o) {
     final reader = new ConstantReader(o);
-    if (reader.instanceOf($StaticProvider)) {
-      return _parseStaticProvider(reader);
-    }
     final token = _tokenReader.parseTokenObject(o.getField('token'));
     final useClass = reader.read('useClass');
     if (!useClass.isNull) {
@@ -87,26 +81,6 @@ class ProviderReader {
     throw new UnsupportedError('Could not parse provider: $o.');
   }
 
-  ProviderElement _parseStaticProvider(ConstantReader reader) {
-    final object = reader.objectValue;
-    if (reader.instanceOf($ProviderUseClass)) {
-      final token = _tokenReader.parseTokenTypeOf(
-        object.type.typeArguments[0],
-      );
-      if (object.type.typeArguments.any(_isNullOrDynamic)) {
-        throw new UnsupportedError(
-          'Unresolved types: ${object.type.typeArguments} on $object.',
-        );
-      }
-      return _parseUseClass(
-        token,
-        object.type.typeArguments[1].element,
-      );
-    } else {
-      throw new UnsupportedError('Could not parse provider: $object');
-    }
-  }
-
   // const Provider(<token>, useClass: Foo)
   ProviderElement _parseUseClass(
     TokenElement token,
@@ -137,7 +111,7 @@ class ProviderReader {
     ConstantReader provider,
   ) {
     final factoryElement = provider.read('useFactory').objectValue.type.element;
-    final manualDeps = provider.read('dependencies');
+    final manualDeps = provider.read('deps');
     // TODO(matanl): Validate that Foo has @Injectable() when flag is set.
     return new UseFactoryProviderElement(
       token,

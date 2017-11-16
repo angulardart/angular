@@ -10,6 +10,49 @@ import '../core/di/opaque_token.dart';
 @visibleForTesting
 const Object noValueProvided = '__noValueProvided__';
 
+/// A contract for creating implementations of [Injector] at runtime.
+///
+/// Implementing this interface removes the need to do inspection of the
+/// presence of fields on various [Provider] implementations, as well allows
+/// further optimizations in the future.
+abstract class RuntimeInjectorBuilder {
+  /// Configures the injector for a [ClassProvider].
+  Object useClass(Type clazz, {List<Object> deps});
+
+  /// Configures the injector for an [ExistingProvider].
+  Object useExisting(Object to);
+
+  /// Configures the injector for a [FactoryProvider].
+  Object useFactory(Function factory, {List<Object> deps});
+
+  /// Configures the injector for a [ValueProvider].
+  Object useValue(Object value);
+}
+
+/// Short-hand for `new Provider(...)`.
+///
+/// It is strongly recommended to prefer the constructor, not this function,
+/// and to use `const Provider(...)` whenever possible to enable future
+/// optimizations.
+Provider<T> provide<T>(
+  Object token, {
+  Type useClass,
+  Object useValue: noValueProvided,
+  Object useExisting,
+  Function useFactory,
+  List<Object> deps,
+  bool multi,
+}) =>
+    new Provider<T>(
+      token,
+      useClass: useClass,
+      useValue: useValue,
+      useExisting: useExisting,
+      useFactory: useFactory,
+      deps: deps,
+      multi: multi,
+    );
+
 /// Describes at compile-time how an `Injector` should be configured.
 ///
 /// Loosely put, a [Provider] is a binding between a _token_ (commonly either
@@ -20,7 +63,7 @@ const Object noValueProvided = '__noValueProvided__';
 /// inspected or accessed at runtime. Future implementations may optimize by
 /// removing them entirely.
 @optionalTypeArgs
-abstract class Provider<T> {
+class Provider<T> {
   /// Key used for injection, commonly a [Type] or [OpaqueToken].
   final Object token;
 
@@ -118,8 +161,31 @@ abstract class Provider<T> {
     this.multi: false,
   });
 
+  /// Configures the provided [builder] using this provider object.
+  ///
+  /// See [buildAtRuntime] for the implementation invoked in the framework.
+  @protected
+  Object _buildAtRuntime(RuntimeInjectorBuilder builder) {
+    // TODO(matanl): Sub-class to optimize the other provider implementations.
+    if (!identical(useValue, noValueProvided)) {
+      return builder.useValue(useValue);
+    }
+    if (useFactory != null) {
+      return builder.useFactory(useFactory, deps: deps);
+    }
+    if (useExisting != null) {
+      return builder.useExisting(useExisting);
+    }
+    return builder.useClass(useClass ?? token, deps: deps);
+  }
+
   // Internal. See `listOfMulti`.
   List<T> _listOfMulti() => <T>[];
+}
+
+/// **INTERNAL ONLY**: Used to build an injector at runtime.
+Object buildAtRuntime(Provider provider, RuntimeInjectorBuilder builder) {
+  return provider._buildAtRuntime(builder);
 }
 
 /// **INTERNAL ONLY**: Used to provide type inference for `multi: true`.
@@ -231,7 +297,7 @@ class FactoryProvider<T> extends Provider<T> {
 ///
 /// **NOTE**: The AngularDart compiler has limited heuristics for supporting
 /// complex nested objects beyond simple literals. If you encounter problems
-/// it is recommended to use [useFactory] instead.
+/// it is recommended to use [FactoryProvider] instead.
 @optionalTypeArgs
 class ValueProvider<T> extends Provider<T> {
   const factory ValueProvider(
