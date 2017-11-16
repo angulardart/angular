@@ -83,9 +83,8 @@ Future<ComponentRef> _runAndLoadComponent<E>(
   Element hostElement,
   Injector appInjector, {
   void beforeChangeDetection(E componentInstance),
-}) async {
-  final resolver = appInjector.get(ComponentResolver) as ComponentResolver;
-  final componentFactory = await resolver.resolveComponent(appComponentType);
+}) {
+  final componentFactory = typeToFactory(appComponentType);
   final componentRef = componentFactory.create(appInjector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&
@@ -105,5 +104,5 @@ Future<ComponentRef> _runAndLoadComponent<E>(
     appRef.unregisterChangeDetector(componentRef.changeDetectorRef);
   });
   appRef.tick();
-  return componentRef;
+  return new Future.value(componentRef);
 }

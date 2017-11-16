@@ -1,4 +1,5 @@
 -   Use the new generic function syntax, stop using `package:func`.
+-   Support breaking changes and deprecations in angular 5.0.0-alpha+1.
 
 ## 1.0.2-alpha
 
