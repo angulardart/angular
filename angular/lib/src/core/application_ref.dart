@@ -532,9 +532,3 @@ class ApplicationRefImpl extends ApplicationRef {
   @override
   List<ComponentFactory> get componentFactories => _rootComponentFactories;
 }
-
-const APPLICATION_CORE_PROVIDERS = const [
-  const Provider(NgZone, useFactory: createNgZone, deps: const []),
-  ApplicationRefImpl,
-  const Provider(ApplicationRef, useExisting: ApplicationRefImpl)
-];
