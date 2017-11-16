@@ -5,25 +5,19 @@ import 'package:angular/angular.dart'
         Directive,
         Inject,
         Input,
-        OnChanges,
+        AfterChanges,
         OnInit,
         Optional,
         Output,
         Provider,
-        Self,
-        SimpleChange;
-
+        Self;
+import 'package:angular/src/facade/lang.dart' show looseIdentical;
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart'
-    show
-        setUpControl,
-        isPropertyUpdated,
-        selectValueAccessor,
-        composeValidators;
+import 'shared.dart' show setUpControl, selectValueAccessor, composeValidators;
 import 'validators.dart' show ValidatorFn;
 
 const formControlBinding = const Provider(NgControl, useExisting: NgModel);
@@ -66,12 +60,20 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
     selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
     providers: const [formControlBinding],
     exportAs: 'ngForm')
-class NgModel extends NgControl implements OnChanges, OnInit {
+class NgModel extends NgControl implements AfterChanges, OnInit {
   final List<dynamic> _validators;
-  final _control = new Control();
-  final _update = new StreamController.broadcast(sync: true);
+  Control _control;
+  StreamController _update;
+  dynamic _model;
+  bool _modelChanged = false;
+
   @Input('ngModel')
-  dynamic model;
+  set model(dynamic value) {
+    _model = value;
+    if (looseIdentical(value, viewModel)) return;
+    _modelChanged = true;
+  }
+
   dynamic viewModel;
 
   NgModel(
@@ -84,17 +86,29 @@ class NgModel extends NgControl implements OnChanges, OnInit {
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors)
       : super() {
+    _init(valueAccessors);
+  }
+
+  // This function prevents constructor inlining for smaller code size since
+  // NgModel is constructed for majority of form components.
+  void _init(List<ControlValueAccessor> valueAccessors) {
+    _control = new Control();
+    _update = new StreamController.broadcast(sync: true);
     valueAccessor = selectValueAccessor(this, valueAccessors);
+    // ! Please don't remove, the multiple return paths prevent inlining.
+    return; // ignore: dead_code
+    return; // ignore: dead_code
   }
 
   @Output('ngModelChange')
   Stream get update => _update.stream;
 
   @override
-  void ngOnChanges(Map<String, SimpleChange> changes) {
-    if (isPropertyUpdated(changes, viewModel)) {
-      _control.updateValue(model);
-      viewModel = model;
+  void ngAfterChanges() {
+    if (_modelChanged) {
+      _control.updateValue(_model);
+      viewModel = _model;
+      _modelChanged = false;
     }
   }
 

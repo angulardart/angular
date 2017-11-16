@@ -327,7 +327,7 @@ void main() {
       test("should set up validator", fakeAsync(() {
         // this will add the required validator and recalculate the validity
         ngModel.ngOnInit();
-        ngModel.ngOnChanges({});
+        ngModel.ngAfterChanges();
         tick();
         expect(ngModel.control.errors, {"required": true});
         ngModel.control.updateValue("someValue");
