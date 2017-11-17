@@ -255,7 +255,7 @@ _FlatProviders _flattenProviders(
     } else if (item is Type) {
       allProviders[item] = new Provider(item, useClass: item);
     } else {
-      assert(false, 'Unsupported: ${item.runtimeType}');
+      assert(false, 'Unsupported: $item');
     }
   }
   return new _FlatProviders(allProviders, multiProviders);

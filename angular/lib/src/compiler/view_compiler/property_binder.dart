@@ -2,6 +2,7 @@ import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
+import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
@@ -402,7 +403,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   dynamicInputsMethod.resetDebugInfo(
       compileElement.nodeIndex, compileElement.sourceAst);
   var lifecycleHooks = directive.lifecycleHooks;
-  var calcChangesMap = lifecycleHooks.contains(LifecycleHooks.OnChanges);
+  bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.OnChanges);
+  bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.AfterChanges);
   var isOnPushComp = directive.isComponent &&
       !isDefaultChangeDetectionStrategy(directive.changeDetection);
   var isStatefulComp = directive.isComponent &&
@@ -414,7 +416,17 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changes.set(o.NULL_EXPR).toStmt());
   }
-  if (!isStatefulComp && isOnPushComp) {
+  if (calcChangedState) {
+    view.requiresAfterChangesCall = true;
+  }
+
+  // We want to call AfterChanges lifecycle only if we detect a change,
+  // unlike OnChanges, we don't need to collect a map of SimpleChange(s)
+  // therefore we keep track of changes using bool changed variable.
+  // At the beginning of change detecting inputs we reset this flag to false,
+  // and then set it to true if any of it's inputs change.
+  if (((!isStatefulComp && isOnPushComp) || calcChangedState) &&
+      view.viewType != ViewType.HOST) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }
@@ -477,7 +489,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
               .instantiate([fieldExpr, currValExpr]))
           .toStmt());
     }
-    if (!isStatefulComp && isOnPushComp) {
+    if ((!isStatefulComp && isOnPushComp) || calcChangedState) {
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
     // Execute actions and assign result to fieldExpr which hold previous value.

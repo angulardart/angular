@@ -1,3 +1,4 @@
+import 'package:angular/src/compiler/output/dart_emitter.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 
 import 'expression_parser/unparser.dart' show Unparser;
@@ -46,6 +47,9 @@ class TemplateHumanizer implements TemplateAstVisitor {
 
   dynamic visitVariable(VariableAst ast, dynamic context) {
     var res = [VariableAst, ast.name, ast.value];
+    if (ast.type != null) {
+      res.add(debugOutputAstAsDart(ast.type));
+    }
     this.result.add(this._appendContext(ast, res));
     return null;
   }

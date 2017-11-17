@@ -7,8 +7,9 @@ dev_dependencies:
   angular: '^4.0.0'
   angular_forms: '^1.0.0'
   angular_test: '^1.0.2'
-  build_runner: ^0.4.0
-  build_test: ^0.7.0
+  build_compilers: ^0.0.1
+  build_runner: ^0.6.0
+  build_test: ^0.9.0
   cli_util: ^0.1.0
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
@@ -28,30 +29,20 @@ dependency_overrides:
     path: ../angular_router
   angular_test:
     path: ../angular_test
-  build:
+  bazel_worker:
     git:
-      url: https://github.com/dart-lang/build.git
-      path: build
-  build_barback:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_barback
-  build_compilers:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_compilers
+      url: https://github.com/dart-lang/bazel_worker.git
+      ref: log-stderr
   build_runner:
     git:
       url: https://github.com/dart-lang/build.git
       path: build_runner
-  build_test:
+      ref: build-dir
+  build_compilers:
     git:
       url: https://github.com/dart-lang/build.git
-      path: build_test
-  scratch_space:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: scratch_space
+      path: build_compilers
+      ref: build-dir
 
 transformers:
   - angular:

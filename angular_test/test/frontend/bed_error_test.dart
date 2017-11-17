@@ -10,8 +10,10 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-@AngularEntrypoint()
+import 'bed_error_test.template.dart' as ng_generated;
+
 void main() {
+  ng_generated.initReflector();
   tearDown(disposeAnyRunningTest);
 
   test('should be able to catch errors that occur synchronously', () {

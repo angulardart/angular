@@ -28,10 +28,11 @@ void main() {
         'ngOnInit > ngDoCheck > ngAfterContentChecked', () async {
       String startUp = log.toString();
       expect(
-          startUp.startsWith(
-              'ngOnChanges; ngOnInit; ngDoCheck; ngAfterContentInit; '
-              'ngAfterContentChecked; child_ngDoCheck; '
-              'ngAfterViewInit; ngAfterViewChecked'),
+          startUp
+              .startsWith('ngOnChanges; ngAfterChanges; ngOnInit; ngDoCheck; '
+                  'ngAfterContentInit; '
+                  'ngAfterContentChecked; child_ngDoCheck; '
+                  'ngAfterViewInit; ngAfterViewChecked'),
           isTrue);
       log.clear();
       await fixture.update((MyComp _) {});
@@ -78,6 +79,7 @@ class LifecycleCmp
         OnChanges,
         OnInit,
         DoCheck,
+        AfterChanges,
         AfterContentInit,
         AfterContentChecked,
         AfterViewInit,
@@ -98,6 +100,10 @@ class LifecycleCmp
 
   ngDoCheck() {
     _log.add("ngDoCheck");
+  }
+
+  ngAfterChanges() {
+    _log.add("ngAfterChanges");
   }
 
   ngAfterContentInit() {

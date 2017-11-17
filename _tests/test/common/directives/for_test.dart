@@ -148,8 +148,7 @@ void main() {
       }).catchError((e) {
         expect(
             e.toString(),
-            contains(
-                'Cannot diff `this is not iterable` of type String. NgFor only '
+            contains('Cannot diff `this is not iterable`. NgFor only '
                 'supports binding to something that implements the `Iterable` '
                 'interface, such as `List`.'));
         didThrowException = true;

@@ -16,6 +16,9 @@ dependencies:
 
 dev_dependencies:
   angular_test: ^1.0.1
+  build_compilers: ^0.0.1
+  build_runner: ^0.6.0
+  build_test: ^0.9.0
   test: ^0.12.6
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
@@ -32,30 +35,10 @@ dependency_overrides:
     path: ../angular_test
   angular_router.example:
     path: example
-  build:
+  bazel_worker:
     git:
-      url: https://github.com/dart-lang/build.git
-      path: build
-  build_barback:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_barback
-  build_compilers:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_compilers
-  build_runner:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_runner
-  build_test:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_test
-  scratch_space:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: scratch_space
+      url: https://github.com/dart-lang/bazel_worker.git
+      ref: log-stderr
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:

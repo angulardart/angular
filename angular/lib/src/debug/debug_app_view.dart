@@ -213,11 +213,11 @@ class DebugAppView<T> extends AppView<T> {
 
   /// Sets up current debug context to node so that failures can be associated
   /// with template source location and DebugElement.
-  DebugContext dbg(num nodeIndex, num rowNum, num colNum) =>
+  DebugContext dbg(int nodeIndex, int rowNum, int colNum) =>
       _currentDebugContext = new DebugContext(this, nodeIndex, rowNum, colNum);
 
   /// Creates DebugElement for root element of a component.
-  void dbgIdx(element, num nodeIndex) {
+  void dbgIdx(element, int nodeIndex) {
     var debugInfo = new DebugContext<T>(this, nodeIndex, 0, 0);
     if (element is Text) return;
     var debugEl;
@@ -385,7 +385,7 @@ void _setGlobalVar(String path, value) {
 }
 
 /// Registers dom node in global debug index.
-void dbgElm(DebugAppView view, element, num nodeIndex, num rowNum, num colNum) {
+void dbgElm(DebugAppView view, element, int nodeIndex, int rowNum, int colNum) {
   var debugInfo = new DebugContext(view, nodeIndex, rowNum, colNum);
   if (element is Text) return;
   var debugEl;

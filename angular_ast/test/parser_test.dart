@@ -413,6 +413,16 @@ void main() {
     );
   });
 
+  test('should parse svg elements as void (explicit) or non void', () {
+    expect(
+      parse('<path /><path></path>'),
+      [
+        new ElementAst('path', null),
+        new ElementAst('path', new CloseElementAst('path')),
+      ],
+    );
+  });
+
   test('should parse a banana syntax', () {
     expect(
       parse('<custom [(name)] ="myName"></custom>'),
