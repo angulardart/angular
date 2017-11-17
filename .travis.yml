@@ -44,4 +44,4 @@ branches:
 cache:
  directories:
    - $HOME/.pub-cache
-   - $HOME/_tests/.dart_tool
+   - _tests/.dart_tool
