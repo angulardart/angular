@@ -1,6 +1,14 @@
 ## 5.0.0-alpha+1
 
-### Breaking Changes
+### New features
+
+*   Added an optional input to `NgTemplateOutlet` named
+    `ngTemplateOutletContext` for setting local variables in the embedded view.
+    These variables are assignable to template input variables declared using
+    `let`, which can be bound within the template. See the `NgTemplateOutlet`
+    documentation for examples.
+
+### Breaking changes
 
 *   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
     `WrappedValue` when the transformed result changes, and instead will rely on
