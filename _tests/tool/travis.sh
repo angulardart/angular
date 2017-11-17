@@ -12,7 +12,15 @@ dartanalyzer --fatal-warnings .
 dartium --version
 pub run test -p vm -x codegen
 dart tool/build.dart
-pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j 1
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/common
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/compiler
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/core
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/di
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/platform
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/security
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/source_gen
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
+pub run test --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/security
 # pub run angular_test \
 #     --experimental-serve-script=tool/build.dart \
 #     --verbose \
